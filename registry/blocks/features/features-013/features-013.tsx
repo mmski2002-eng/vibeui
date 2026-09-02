@@ -3,6 +3,8 @@ import type { CSSProperties } from "react"
 export type Features013Badge = {
   name: string
   status: string
+  /** Сертификат ещё в работе: щит перекрашивается в предупреждающий оттенок. */
+  pending?: boolean
 }
 
 export type Features013Control = {
@@ -105,7 +107,7 @@ const DEFAULT_BADGES: Features013Badge[] = [
   { name: "ISO 27001", status: "Сертификат действует" },
   { name: "SOC 2 Type II", status: "Аудит пройден" },
   { name: "152-ФЗ", status: "Данные в РФ" },
-  { name: "GDPR", status: "Оценка в процессе" },
+  { name: "GDPR", status: "Оценка в процессе", pending: true },
 ]
 
 const DEFAULT_CONTROLS: Features013Control[] = [
@@ -174,11 +176,7 @@ export function Features013({
               <li
                 key={badge.name}
                 data-part="badge"
-                data-pending={
-                  badge.status.toLowerCase().includes("процесс")
-                    ? "true"
-                    : undefined
-                }
+                data-pending={badge.pending ? "true" : undefined}
               >
                 <span data-part="shield" aria-hidden="true">
                   <svg viewBox="0 0 24 24" width="18" height="18" fill="none">

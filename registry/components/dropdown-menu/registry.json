@@ -36,16 +36,19 @@
             "стилизацию меню по атрибуту и передачу палитры отдельным style: в верхнем слое меню перестаёт быть потомком корня",
             "position-try-fallbacks: у нижнего края экрана меню должно переворачиваться, а не уезжать за границу",
             "линию перед опасным пунктом и его отдельный цвет — «Удалить» не должно стоять вплотную к обычным пунктам",
-            "блок <style> внутри компонента — в нём вся палитра, позиционирование и анимация"
+            "блок <style> внутри компонента — в нём вся палитра, позиционирование и анимация",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массив items: подписи, адреса, флаги separated и danger",
             "trigger — подпись кнопки",
             "id — свой на каждое меню на странице",
             "open — развернуть меню в потоке страницы: витрина, скриншот, отладка",
-            "акцент через проп accent — цвет кольца фокуса"
+            "акцент через проп accent — цвет кольца фокуса",
+            "background — подложка кнопки и меню; пусто означает собственный фон компонента по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Клавиатурная навигация внутри меню ограничена Tab: стрелки по пунктам — это уже role=\"menu\" с обработчиком, то есть JS.",
             "Два меню с одинаковым id на странице конфликтуют: кнопка откроет первое попавшееся.",
             "Пункты — ссылки. Если пункт запускает действие, замените <a> на <button type=\"button\"> в своей копии.",
@@ -71,6 +74,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -86,16 +95,19 @@
                 "styling the menu by attribute and passing the palette through its own style: in the top layer it is no longer a descendant of the root",
                 "position-try-fallbacks: near the bottom edge the menu has to flip rather than run off screen",
                 "the rule above the destructive item and its separate colour — Delete must not sit flush against ordinary items",
-                "the <style> block inside the component — it holds the palette, the positioning and the animation"
+                "the <style> block inside the component — it holds the palette, the positioning and the animation",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the items array: labels, hrefs, the separated and danger flags",
                 "trigger — the button label",
                 "id — one per menu on the page",
                 "open — expand the menu in the page flow: showcase, screenshots, debugging",
-                "the accent through the accent prop — it colours the focus ring"
+                "the accent through the accent prop — it colours the focus ring",
+                "background — the backdrop of the button and the menu; empty means the component keeps its own surface from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Keyboard navigation inside the menu is limited to Tab: arrow keys between items mean role=\"menu\" and a handler, which means JS.",
                 "Two menus sharing an id conflict: the button opens whichever it finds first.",
                 "The items are links. If an item runs an action, swap <a> for <button type=\"button\"> in your copy.",
@@ -113,11 +125,41 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Anchored Dropdown"
+            "title": "Anchored Dropdown",
+            "preview": {
+              "props": {
+                "open": true,
+                "trigger": "Project",
+                "items": [
+                  {
+                    "label": "Project settings",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Members",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Publish history",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Delete project",
+                    "href": "#",
+                    "separated": true,
+                    "danger": true
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["open", "background"]
       }
     },
     {
@@ -148,15 +190,18 @@
             "запасное правило в @supports: без anchor positioning меню должно остаться под кнопкой",
             "разделение групп чертой — опасное действие не соседствует с обычными",
             "цвет только на тексте опасного пункта, без заливки строки",
-            "role=\"menu\" с именем и role=\"menuitem\" на пунктах"
+            "role=\"menu\" с именем и role=\"menuitem\" на пунктах",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массив groups и подписи пунктов",
             "label — подпись кнопки",
             "подсказки горячих клавиш",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка кнопки и меню; пусто означает собственный фон компонента по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пункты ничего не делают: обработчики навешивает вызывающий код.",
             "Стрелки по пунктам браузер не даёт: для полной клавиатурной модели меню нужен JS, и это осознанный размен.",
             "Подсказка клавиши должна совпадать с реальной: несуществующее сочетание хуже его отсутствия.",
@@ -176,6 +221,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -189,15 +240,18 @@
                 "the @supports fallback: without anchor positioning the menu must still sit under the button",
                 "the divider between groups — the destructive action never neighbours ordinary ones",
                 "colour on the destructive item's text only, without filling the row",
-                "role=\"menu\" with a name and role=\"menuitem\" on the items"
+                "role=\"menu\" with a name and role=\"menuitem\" on the items",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the groups array and item labels",
                 "label — the button's text",
                 "the shortcut hints",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the backdrop of the button and the menu; empty means the component keeps its own surface from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The items do nothing: handlers belong to the caller.",
                 "The browser gives no arrow-key roving: a full menu keyboard model needs JS, and skipping it is a deliberate trade.",
                 "A shortcut hint must match reality: a fake combination is worse than none.",
@@ -212,11 +266,50 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Action Menu"
+            "title": "Action Menu",
+            "preview": {
+              "props": {
+                "label": "Actions",
+                "groups": [
+                  [
+                    {
+                      "label": "Rename",
+                      "hint": "F2"
+                    },
+                    {
+                      "label": "Duplicate",
+                      "hint": "⌘D"
+                    },
+                    {
+                      "label": "Move"
+                    }
+                  ],
+                  [
+                    {
+                      "label": "Share link"
+                    },
+                    {
+                      "label": "Download a copy"
+                    }
+                  ],
+                  [
+                    {
+                      "label": "Delete project",
+                      "hint": "⌫",
+                      "danger": true
+                    }
+                  ]
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -247,15 +340,20 @@
             "выход отдельной группой и цветом текста",
             "выравнивание слоя по правому краю кнопки — меню профиля стоит в правом углу шапки",
             "запасное правило в @supports для браузеров без anchor positioning",
-            "aria-label у кнопки с именем: инициалы вслух бесполезны"
+            "aria-label у кнопки с именем: инициалы вслух бесполезны",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "name, email и plan",
-            "пункты меню",
-            "акцент через проп accent",
+            "items — подписи пунктов меню",
+            "exitLabel — подпись выхода",
+            "menuLabel и triggerLabel — имена для скринридера; в triggerLabel подставляется {name}",
+            "акцент через проп accent — цвет плашки тарифа и кольца фокуса",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения",
             "форму кнопки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Почта в шапке — персональные данные: на общем экране её лучше сокращать.",
             "Пункты ничего не делают: обработчики навешивает вызывающий код.",
             "Выход стоит подтверждать, если в приложении есть несохранённые черновики.",
@@ -283,6 +381,18 @@
             "type": "text",
             "default": "Команда",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -296,15 +406,20 @@
                 "sign-out in its own group and coloured by text",
                 "aligning the layer to the button's right edge — a profile menu lives in the top-right corner",
                 "the @supports fallback for browsers without anchor positioning",
-                "the aria-label on the button carrying the name: initials say nothing aloud"
+                "the aria-label on the button carrying the name: initials say nothing aloud",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "name, email and plan",
-                "the menu items",
-                "the accent through the accent prop",
+                "items — the menu item labels",
+                "exitLabel — the sign-out label",
+                "menuLabel and triggerLabel — the screen-reader names; triggerLabel interpolates {name}",
+                "the accent through the accent prop — it colours the plan pill and the focus ring",
+                "background — the component backdrop; empty means it keeps its own surface from the surrounding theme",
                 "the button shape"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The email is personal data: shorten it on shared screens.",
                 "The items do nothing: handlers belong to the caller.",
                 "Sign-out deserves a confirmation when unsaved drafts exist.",
@@ -324,11 +439,33 @@
               "plan": {
                 "label": "Plan",
                 "default": "Team"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Profile Menu"
+            "title": "Profile Menu",
+            "preview": {
+              "props": {
+                "name": "Anna Petrova",
+                "email": "anna@example.com",
+                "plan": "Team",
+                "items": [
+                  "Profile and settings",
+                  "Billing and invoices",
+                  "Invite your team"
+                ],
+                "exitLabel": "Sign out",
+                "menuLabel": "Profile",
+                "triggerLabel": "Profile menu: {name}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -359,15 +496,18 @@
             "постоянное место под отметку — иначе строки прыгают при переключении",
             "роли menuitemradio и menuitemcheckbox с aria-checked",
             "настоящие radio и checkbox под подписями вместо кнопок",
-            "разделитель между выбором вида и переключателями"
+            "разделитель между выбором вида и переключателями",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массивы views и toggles",
             "label — заголовок раздела",
             "обработчик onChange",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Настройки применяются сразу: если действие дорогое, добавьте кнопку «применить».",
             "Компонент показывает само меню без кнопки-триггера: оберните его в popover из menu-001.",
             "Больше семи строк — повод разделить меню на разделы с заголовками.",
@@ -387,6 +527,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -400,15 +546,18 @@
                 "the permanent slot for the check mark — otherwise rows jump on toggle",
                 "the menuitemradio and menuitemcheckbox roles with aria-checked",
                 "real radios and checkboxes under the labels instead of buttons",
-                "the separator between the view choice and the toggles"
+                "the separator between the view choice and the toggles",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the views and toggles arrays",
                 "label — the section heading",
                 "the onChange handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component backdrop; empty means it keeps its own surface from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Settings apply immediately: if the action is expensive, add an Apply button.",
                 "This is the menu body without a trigger: wrap it in the popover from menu-001.",
                 "Beyond seven rows, split the menu into labelled sections.",
@@ -423,11 +572,22 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Settings Menu"
+            "title": "Settings Menu",
+            "preview": {
+              "props": {
+                "label": "Catalog view",
+                "views": ["Grid", "List", "Table"],
+                "toggles": ["Show descriptions", "Mine only", "Hide archive"]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -445,7 +605,7 @@
           "target": "@components/vibeui/dropdown-002.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, палитра в переменных --vibeui-dropdown-002-*. Клиентский: обработчик стрелок водит фокус по пунктам. Открытие, верхний слой, Escape и клик мимо держит HTML popover; положение у кнопки — CSS anchor positioning (anchor-name на триггере, position-area на меню) внутри @supports, поэтому без якорей меню просто открывается по центру экрана. Разделы размечены role=group с aria-labelledby на видимый заголовок, между ними лежит role=separator. Пропс align меняет сторону раскрытия одним правилом position-area. Корень несёт собственную светлую подложку: на тёмной карточке каталога тёмный текст иначе не виден.",
+      "docs": "Один файл, ноль зависимостей, палитра в переменных --vibeui-dropdown-002-*. Клиентский: обработчик стрелок водит фокус по пунктам. Открытие, верхний слой, Escape и клик мимо держит HTML popover; положение у кнопки — CSS anchor positioning (anchor-name на триггере, position-area на меню) внутри @supports, поэтому без якорей меню просто открывается по центру экрана. Разделы размечены role=group с aria-labelledby на видимый заголовок, между ними лежит role=separator. Пропс align меняет сторону раскрытия одним правилом position-area. Корень несёт собственную подложку и границу, а её светлота берётся из color-scheme окружения через light-dark().",
       "meta": {
         "tags": ["menu", "dropdown", "sections", "popover"],
         "preview": {
@@ -461,15 +621,19 @@
             "обёртку @supports (anchor-name) вокруг якорных правил: без неё меню в старом браузере встанет не туда, а не сломается",
             "разметку role=menu, role=menuitem и role=group с aria-labelledby — иначе заголовок раздела для скринридера просто текст",
             "обработчик стрелок вверх-вниз: в меню фокус водят стрелками, таб — запасной путь",
-            "собственную светлую подложку корня: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную подложку и границу корня: это карточка, а не текст на фоне страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "подпись кнопки через trigger",
             "сторону раскрытия через align",
             "состав разделов и пунктов через sections",
-            "цвет обводки фокуса через accent"
+            "цвет обводки фокуса через accent",
+            "подпись слева от кнопки через caption",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Меню открывается по нажатию, а не по наведению: случайный проход мышью не должен вываливать список.",
             "Пункты сделаны кнопками; для навигации замените их на a и оставьте те же роли.",
             "Без поддержки anchor positioning меню окажется по центру экрана — это запасной вид, а не основной.",
@@ -490,6 +654,25 @@
             "type": "select",
             "default": "right",
             "options": ["left", "right"]
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Годовой отчёт",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -503,15 +686,19 @@
                 "the @supports (anchor-name) wrapper around the anchor rules: without it an older browser misplaces the menu instead of breaking it",
                 "the role=menu, role=menuitem and role=group with aria-labelledby markup — otherwise a section heading is plain text to a screen reader",
                 "the up/down arrow handler: menus are walked with arrows, Tab is the fallback",
-                "the root's own light surface: on the dark catalog card dark text disappears"
+                "the root's own surface and border: this is a card, not text on the page background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the button caption through trigger",
                 "the side it opens to through align",
                 "the sections and their items through sections",
-                "the focus ring colour through accent"
+                "the focus ring colour through accent",
+                "the caption to the left of the button through caption",
+                "background — the component backdrop; empty means it keeps its own surface from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The menu opens on click, not on hover: an accidental mouse pass must not drop the list open.",
                 "Items are buttons; for navigation swap them for a elements and keep the same roles.",
                 "Without anchor positioning support the menu lands in the middle of the screen — that is the fallback, not the design.",
@@ -527,11 +714,42 @@
               "align": {
                 "label": "Side",
                 "default": "right"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "Annual report"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Section Menu"
+            "title": "Section Menu",
+            "preview": {
+              "props": {
+                "trigger": "Actions",
+                "caption": "Annual report",
+                "sections": [
+                  {
+                    "title": "Document",
+                    "items": ["Rename", "Duplicate", "Move"]
+                  },
+                  {
+                    "title": "Access",
+                    "items": ["Invite people", "Read-only link"]
+                  },
+                  {
+                    "title": "Export",
+                    "items": ["PDF", "Markdown", "HTML"]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -562,15 +780,18 @@
             "моноширинный шрифт в сочетаниях: пропорциональный разваливает колонку клавиш",
             "грид из трёх колонок в пункте: без него подписи разной длины сдвигают клавиши",
             "тег kbd вокруг сочетания — это разметка клавиши, а не декоративный span",
-            "разделительную линию перед опасным пунктом: соседство с «дублировать» ловит промах мышью"
+            "разделительную линию перед опасным пунктом: соседство с «дублировать» ловит промах мышью",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "подпись кнопки через trigger",
             "подсказку рядом с кнопкой через keysLabel",
             "состав пунктов, иконки и клавиши через items",
-            "цвет кнопки и фокуса через accent"
+            "цвет кнопки и фокуса через accent",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Символы ⌘ и ⇧ — маковские: для Windows подставьте Ctrl и Shift, иначе подсказка врёт.",
             "Иконок в таблице пять; новая иконка добавляется путём в PATHS, а не импортом.",
             "Компонент не вешает обработчики клавиш на документ: показать сочетание и выполнить его — разные задачи.",
@@ -591,6 +812,18 @@
             "type": "text",
             "default": "⌘K",
             "maxLength": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -604,15 +837,18 @@
                 "the monospace face on the shortcuts: a proportional one destroys the key column",
                 "the three-column grid inside an item: without it captions of different length shift the keys around",
                 "the kbd tag around a shortcut — it is key markup, not a decorative span",
-                "the separator before the destructive item: sitting next to \"duplicate\" it catches every mouse slip"
+                "the separator before the destructive item: sitting next to \"duplicate\" it catches every mouse slip",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the button caption through trigger",
                 "the hint beside the button through keysLabel",
                 "the items, their icons and keys through items",
-                "the button and focus colour through accent"
+                "the button and focus colour through accent",
+                "background — the component backdrop; empty means it keeps its own surface from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The ⌘ and ⇧ glyphs are Mac ones: on Windows substitute Ctrl and Shift or the hint lies.",
                 "The table holds five icons; a new one is added as a path in PATHS, never as an import.",
                 "The component does not bind document-level key handlers: showing a shortcut and running it are separate jobs.",
@@ -628,11 +864,52 @@
               "keysLabel": {
                 "label": "Hint",
                 "default": "⌘K"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Shortcut Menu"
+            "title": "Shortcut Menu",
+            "preview": {
+              "props": {
+                "trigger": "Edit",
+                "keysLabel": "⌘K",
+                "items": [
+                  {
+                    "label": "Rename",
+                    "keys": "F2",
+                    "icon": "pencil"
+                  },
+                  {
+                    "label": "Duplicate",
+                    "keys": "⌘D",
+                    "icon": "copy"
+                  },
+                  {
+                    "label": "Share",
+                    "keys": "⇧⌘S",
+                    "icon": "share"
+                  },
+                  {
+                    "label": "Archive",
+                    "keys": "⌘E",
+                    "icon": "archive"
+                  },
+                  {
+                    "label": "Delete",
+                    "keys": "⌘⌫",
+                    "icon": "trash",
+                    "danger": true
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -650,7 +927,7 @@
           "target": "@components/vibeui/dropdown-004.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-004-*. Клиентский: состояние включённых пунктов держит useState. Пункты размечены role=menuitemcheckbox с aria-checked, отметка нарисована рамкой и инлайновым SVG, место под неё зарезервировано всегда — иначе строки прыгают при переключении. Пропс mark переключает вид отметки (галочка или точка) через data-атрибут на корне. hidePopover при выборе намеренно не вызывается: настройки меняют пачкой. В подвале меню счёт включённого и кнопка сброса к начальному набору.",
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-004-*. Клиентский: состояние включённых пунктов держит useState. Пункты размечены role=menuitemcheckbox с aria-checked, отметка нарисована рамкой и инлайновым SVG, место под неё зарезервировано всегда — иначе строки прыгают при переключении. Пропс mark переключает вид отметки (галочка или точка) через data-атрибут на корне. hidePopover при выборе намеренно не вызывается: настройки меняют пачкой. В подвале меню счёт включённого и кнопка сброса к начальному набору. Палитра переведена на light-dark(): в тёмном окружении панель светлее фона страницы, а её граница светлее панели.",
       "meta": {
         "tags": ["menu", "dropdown", "checkbox", "columns"],
         "ai": {
@@ -663,15 +940,21 @@
             "то, что меню не закрывается по нажатию: колонки включают пачкой, а не по одной",
             "зарезервированное место под отметку: иначе строки прыгают при каждом переключении",
             "счётчик в кнопке — после закрытия меню это единственный след выбора",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную подложку и границу корня: это карточка, а не текст на фоне страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "подпись кнопки через trigger",
             "вид отметки через mark: галочка или точка",
             "список колонок через columns и начальный набор через initial",
-            "цвет отметки и фокуса через accent"
+            "цвет отметки и фокуса через accent",
+            "подпись над кнопкой через caption",
+            "строку подвала через countText: {shown} и {total} подставляются числами",
+            "подпись сброса через resetLabel",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Состояние живёт внутри компонента: чтобы поднять его наверх, замените useState на пропсы value и onChange.",
             "Кнопка сброса возвращает набор initial, а не пустой список — «сбросить в ничего» прячет всю таблицу.",
             "Пунктов больше десяти — добавьте прокрутку списку, меню не должно уезжать за экран.",
@@ -692,6 +975,25 @@
             "type": "select",
             "default": "check",
             "options": ["check", "dot"]
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Таблица задач",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -705,15 +1007,21 @@
                 "the fact that the menu does not close on a click: columns are switched in batches, not one by one",
                 "the space reserved for the check mark: otherwise rows jump on every toggle",
                 "the counter in the button — once the menu is closed it is the only trace of the choice",
-                "the component's own light surface: on the dark catalog card dark text disappears"
+                "the root's own surface and border: this is a card, not text on the page background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the button caption through trigger",
                 "the mark style through mark: a check or a dot",
                 "the column list through columns and the starting set through initial",
-                "the mark and focus colour through accent"
+                "the mark and focus colour through accent",
+                "the caption above the button through caption",
+                "the footer line through countText: {shown} and {total} are filled with numbers",
+                "the reset label through resetLabel",
+                "background — the component backdrop; empty means it keeps its own surface from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "State lives inside the component: to lift it up, replace useState with value and onChange props.",
                 "Reset returns the initial set, not an empty one — resetting to nothing hides the whole table.",
                 "Past ten items give the list its own scroll; the menu must not run off the screen.",
@@ -729,11 +1037,32 @@
               "mark": {
                 "label": "Mark",
                 "default": "check"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "Task table"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Checkbox Menu"
+            "title": "Checkbox Menu",
+            "preview": {
+              "props": {
+                "trigger": "Columns",
+                "caption": "Task table",
+                "columns": ["Status", "Owner", "Updated", "Priority", "Labels"],
+                "initial": ["Status", "Updated"],
+                "countText": "Showing {shown} of {total}",
+                "resetLabel": "Reset"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -751,7 +1080,7 @@
           "target": "@components/vibeui/dropdown-005.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-005-*. Клиентский: выбранный вариант держит useState. Пункты размечены role=menuitemradio с aria-checked внутри обёртки role=group с aria-labelledby на заголовок «Тема». Образец темы собран двумя блоками с разной заливкой и переключается data-атрибутом индекса, поэтому вариантов не нужно рисовать иконками. Меню закрывается сразу после выбора — второго варианта выбирать уже нечего. Стрелка вниз с кнопки открывает меню и ставит фокус на выбранный пункт, а не на первый.",
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-005-*. Клиентский: выбранный вариант держит useState. Пункты размечены role=menuitemradio с aria-checked внутри обёртки role=group с aria-labelledby на заголовок «Тема». Образец темы собран двумя блоками с разной заливкой и переключается data-атрибутом индекса, поэтому вариантов не нужно рисовать иконками. Меню закрывается сразу после выбора — второго варианта выбирать уже нечего. Стрелка вниз с кнопки открывает меню и ставит фокус на выбранный пункт, а не на первый. Палитра переведена на light-dark(); полосы образца остаются постоянными — они изображают сами темы.",
       "meta": {
         "tags": ["menu", "dropdown", "radio", "theme"],
         "ai": {
@@ -764,15 +1093,21 @@
             "закрытие меню сразу после выбора: в радиогруппе второй вариант выбирать уже нечего",
             "образцы тем: «светлая» и «как в системе» на слух не различаются, картинка отвечает быстрее слова",
             "фокус на выбранном пункте при открытии стрелкой — так пользователь сразу видит, где он сейчас",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную подложку и границу корня: это карточка, а не текст на фоне страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "постоянные цвета полос образца: они изображают светлую и тёмную тему, а не следуют текущей"
           ],
           "adapt": [
             "подпись кнопки через trigger",
             "выбранный вариант через value и набор вариантов через themes",
             "реакцию приложения через onChange",
-            "цвет отметки и фокуса через accent"
+            "цвет отметки и фокуса через accent",
+            "подпись слева от кнопки через caption",
+            "заголовок радиогруппы через groupLabel",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не переключает тему сам: он сообщает выбор через onChange, а применяет его приложение.",
             "Образец нарисован двумя полосами: для четвёртой темы придётся добавить своё правило заливки.",
             "Выбранный вариант хранится внутри; для внешнего управления снимите useState и получайте value сверху.",
@@ -793,6 +1128,25 @@
             "type": "select",
             "default": "Как в системе",
             "options": ["Светлая", "Тёмная", "Как в системе"]
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Внешний вид",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -806,15 +1160,21 @@
                 "closing the menu right after a pick: in a radio group there is nothing left to choose",
                 "the theme swatches: \"light\" and \"system\" sound identical, a picture answers faster than a word",
                 "focus landing on the selected item when the menu opens with the arrow key — the user sees where they are",
-                "the component's own light surface: on the dark catalog card dark text disappears"
+                "the root's own surface and border: this is a card, not text on the page background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the fixed colours of the swatch stripes: they depict the light and the dark theme rather than follow the current one"
               ],
               "adapt": [
                 "the button caption through trigger",
                 "the selected option through value and the option set through themes",
                 "the application's reaction through onChange",
-                "the check and focus colour through accent"
+                "the check and focus colour through accent",
+                "the caption to the left of the button through caption",
+                "the radio group heading through groupLabel",
+                "background — the component backdrop; empty means it keeps its own surface from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not switch the theme itself: it reports the choice through onChange, the app applies it.",
                 "The swatch is two stripes: a fourth theme needs its own fill rule.",
                 "The selection is kept inside; for external control drop useState and take value from above.",
@@ -829,12 +1189,32 @@
               },
               "value": {
                 "label": "Theme",
-                "default": "Как в системе"
+                "default": "System"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "Appearance"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Theme Radio"
+            "title": "Theme Radio",
+            "preview": {
+              "props": {
+                "trigger": "Appearance",
+                "caption": "Appearance",
+                "groupLabel": "Theme",
+                "themes": ["Light", "Dark", "System"],
+                "value": "System"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -852,7 +1232,7 @@
           "target": "@components/vibeui/dropdown-006.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-006-*. Клиентский: раскрытие подменю держит useState. Первый уровень — HTML popover с якорным позиционированием, второй — обычный абсолютно спозиционированный слой внутри него: вложенный popover=auto закрыл бы родителя, потому что открытие второго auto-попапа гасит первый. Родительский пункт помечен aria-haspopup=menu и aria-expanded, подменю — role=menu с aria-label. Стрелка вправо открывает подменю и ставит фокус на первый пункт, влево — закрывает и возвращает фокус; без этого из подменю не выйти с клавиатуры. Пропс side меняет сторону раскрытия.",
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-006-*. Клиентский: раскрытие подменю держит useState. Первый уровень — HTML popover с якорным позиционированием, второй — обычный абсолютно спозиционированный слой внутри него: вложенный popover=auto закрыл бы родителя, потому что открытие второго auto-попапа гасит первый. Родительский пункт помечен aria-haspopup=menu и aria-expanded, подменю — role=menu с aria-label. Стрелка вправо открывает подменю и ставит фокус на первый пункт, влево — закрывает и возвращает фокус; без этого из подменю не выйти с клавиатуры. Пропс side меняет сторону раскрытия. Палитра переведена на light-dark(): в тёмном окружении панель светлее фона страницы, а её граница светлее панели.",
       "meta": {
         "tags": ["menu", "dropdown", "submenu", "keyboard"],
         "ai": {
@@ -865,15 +1245,20 @@
             "пару aria-haspopup и aria-expanded на родительском пункте — скринридер иначе не скажет, что там есть второй уровень",
             "возврат фокуса на родителя по стрелке влево: без него из подменю нет выхода с клавиатуры",
             "открытие подменю и по наведению, и по нажатию — мышь и клавиатура ведут себя по-разному",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную подложку и границу корня: это карточка, а не текст на фоне страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "подпись кнопки через trigger",
             "сторону раскрытия подменю через side",
             "заголовок второго уровня через submenuLabel и его пункты через folders",
-            "цвет фокуса через accent"
+            "цвет фокуса через accent",
+            "подпись над кнопкой через caption",
+            "пункты до подменю через items и пункт после него через archiveLabel",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Третий уровень вложенности не предусмотрен: на нём меню перестают попадать мышью, лучше диалог.",
             "Подменю закрывается при уходе курсора; если нужен зазор прощения, добавьте задержку в onMouseLeave.",
             "Подменю не переворачивается у края экрана само — на узком окне поставьте side=\"left\".",
@@ -894,6 +1279,25 @@
             "type": "select",
             "default": "right",
             "options": ["right", "left"]
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Отчёт за март.pdf",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -907,15 +1311,20 @@
                 "the aria-haspopup and aria-expanded pair on the parent item — otherwise a screen reader never mentions the second level",
                 "returning focus to the parent on the left arrow: without it there is no keyboard way out of the submenu",
                 "opening the submenu both on hover and on click — mouse and keyboard behave differently",
-                "the component's own light surface: on the dark catalog card dark text disappears"
+                "the root's own surface and border: this is a card, not text on the page background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the button caption through trigger",
                 "which way the submenu opens through side",
                 "the second-level heading through submenuLabel and its items through folders",
-                "the focus colour through accent"
+                "the focus colour through accent",
+                "the caption above the button through caption",
+                "the entries before the submenu through items and the one after it through archiveLabel",
+                "background — the component backdrop; empty means it keeps its own surface from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A third nesting level is not provided: at that depth people stop hitting items with the mouse — use a dialog.",
                 "The submenu closes when the pointer leaves; add a delay in onMouseLeave if you want a forgiving gap.",
                 "The submenu does not flip near the screen edge by itself — in a narrow window pass side=\"left\".",
@@ -931,11 +1340,32 @@
               "side": {
                 "label": "Submenu side",
                 "default": "right"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "March report.pdf"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Nested Submenu"
+            "title": "Nested Submenu",
+            "preview": {
+              "props": {
+                "trigger": "Message",
+                "caption": "March report.pdf",
+                "submenuLabel": "Move to",
+                "folders": ["Inbox", "Projects 2026", "Archive", "Drafts"],
+                "items": ["Reply", "Forward"],
+                "archiveLabel": "Archive"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -953,7 +1383,7 @@
           "target": "@components/vibeui/dropdown-007.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-007-*. Клиентский: шаг подтверждения держит useState, сброс происходит на событие toggle попапа — закрытое меню всегда открывается в исходном виде. Опасная зона отрисована отдельным блоком с собственной подложкой, отрицательными полями до краёв меню и верхней границей, поэтому промах мышью по последнему пункту списка в неё не попадает. Подтверждение живёт в том же меню: диалог поверх открытого popover — это второй верхний слой, который нечем закрыть по Escape по очереди. Кнопка подтверждения связана с вопросом через aria-describedby.",
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-007-*. Клиентский: шаг подтверждения держит useState, сброс происходит на событие toggle попапа — закрытое меню всегда открывается в исходном виде. Опасная зона отрисована отдельным блоком с собственной подложкой, отрицательными полями до краёв меню и верхней границей, поэтому промах мышью по последнему пункту списка в неё не попадает. Подтверждение живёт в том же меню: диалог поверх открытого popover — это второй верхний слой, который нечем закрыть по Escape по очереди. Кнопка подтверждения связана с вопросом через aria-describedby. Палитра переведена на light-dark(): в тёмном окружении панель светлее фона страницы, а её граница светлее панели.",
       "meta": {
         "tags": ["menu", "dropdown", "danger", "confirm"],
         "ai": {
@@ -966,15 +1396,21 @@
             "второй шаг подтверждения внутри меню — диалог поверх popover даёт второй верхний слой и путаницу с Escape",
             "сброс подтверждения при закрытии меню: открывшееся меню обязано быть в исходном состоянии",
             "связь кнопки с вопросом через aria-describedby — «да, удалить» без вопроса ничего не значит",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную подложку и границу корня: это карточка, а не текст на фоне страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "подпись кнопки через trigger",
             "название опасного действия через dangerLabel",
             "обычные пункты через items",
-            "цвет фокуса через accent"
+            "цвет фокуса через accent",
+            "подпись слева от кнопки через caption",
+            "тексты второго шага через confirmQuestion, confirmLabel и cancelLabel",
+            "имя опасной зоны для скринридера через zoneLabel",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Подтверждение не заменяет отмену действия: для важных данных нужен ещё и откат.",
             "Кнопка-триггер — иконка «•••»: у неё обязан быть aria-label, он берётся из trigger.",
             "Опасных действий может быть несколько, но зона должна остаться одна — иначе смысл разделения теряется.",
@@ -995,6 +1431,25 @@
             "type": "text",
             "default": "Удалить проект",
             "maxLength": 24
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Лендинг «Весна»",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1008,15 +1463,21 @@
                 "the second confirmation step inside the menu — a dialog above a popover adds a second top layer and confuses Escape",
                 "resetting the confirmation when the menu closes: a reopened menu must start from scratch",
                 "the aria-describedby link between the button and the question — \"yes, delete\" alone means nothing",
-                "the component's own light surface: on the dark catalog card dark text disappears"
+                "the root's own surface and border: this is a card, not text on the page background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the button caption through trigger",
                 "the destructive action's name through dangerLabel",
                 "the ordinary entries through items",
-                "the focus colour through accent"
+                "the focus colour through accent",
+                "the caption to the left of the button through caption",
+                "the second-step wording through confirmQuestion, confirmLabel and cancelLabel",
+                "the danger zone's screen-reader name through zoneLabel",
+                "background — the component backdrop; empty means it keeps its own surface from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Confirmation is not a replacement for undo: important data needs a way back as well.",
                 "The trigger is a \"•••\" icon: it needs an aria-label, taken from trigger.",
                 "There may be several destructive actions, but only one zone — otherwise the separation loses its point.",
@@ -1032,11 +1493,34 @@
               "dangerLabel": {
                 "label": "Destructive item",
                 "default": "Delete project"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "Spring landing"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Danger Zone"
+            "title": "Danger Zone",
+            "preview": {
+              "props": {
+                "trigger": "More",
+                "caption": "Spring landing",
+                "dangerLabel": "Delete project",
+                "items": ["Open", "Rename", "Duplicate", "Archive"],
+                "zoneLabel": "Irreversible action",
+                "confirmQuestion": "Delete with no way back?",
+                "confirmLabel": "Yes, delete",
+                "cancelLabel": "Cancel"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -1054,7 +1538,7 @@
           "target": "@components/vibeui/dropdown-008.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-008-*. Клиентский: выбранное пространство держит useState. Шапка меню — не пункт, а справка: она не фокусируется и не нажимается, поэтому не мешает ходить стрелками. Инициалы считаются из имени функцией, аватар — цветной круг на color-mix от акцента. Пространства размечены role=menuitemradio с aria-checked внутри role=group: их выбирают, а не выполняют. Выход отделён линией и покрашен только текстом. Открытие и слой — HTML popover, положение — anchor-name и position-area под @supports.",
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-008-*. Клиентский: выбранное пространство держит useState. Шапка меню — не пункт, а справка: она не фокусируется и не нажимается, поэтому не мешает ходить стрелками. Инициалы считаются из имени функцией, аватар — цветной круг на color-mix от акцента. Пространства размечены role=menuitemradio с aria-checked внутри role=group: их выбирают, а не выполняют. Выход отделён линией и покрашен только текстом. Открытие и слой — HTML popover, положение — anchor-name и position-area под @supports. Палитра переведена на light-dark(): в тёмном окружении панель светлее фона страницы, а её граница светлее панели.",
       "meta": {
         "tags": ["menu", "dropdown", "profile", "account"],
         "ai": {
@@ -1067,15 +1551,19 @@
             "роль menuitemradio у пространств — это выбор одного из, а не команда",
             "выход последним и за разделителем: это единственное необратимое действие списка",
             "обрезку длинной почты многоточием: адрес в 40 символов иначе растянет меню",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную подложку и границу корня: это карточка, а не текст на фоне страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "имя через name, почту через email и тариф через plan",
             "список рабочих пространств через workspaces",
             "цвет аватара, значка тарифа и фокуса через accent",
-            "состав пунктов ниже разделителя прямо в разметке"
+            "пункты между разделителями через items и подпись выхода через exitLabel",
+            "заголовок радиогруппы через spacesLabel и имя слоя через menuLabel, где подставляется {name}",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Инициалы берутся из первых двух слов имени: для одного слова получится одна буква, и это нормально.",
             "Аватар нарисован буквами; чтобы поставить фото, замените содержимое узла face на img с alt.",
             "Пространств больше шести — добавьте списку прокрутку и поиск, иначе меню перерастёт экран.",
@@ -1096,6 +1584,18 @@
             "type": "text",
             "default": "Pro",
             "maxLength": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1109,15 +1609,19 @@
                 "the menuitemradio role on workspaces — that is a single choice, not a command",
                 "sign-out last and behind a separator: it is the only irreversible entry in the list",
                 "the ellipsis on a long address: a 40-character email would stretch the menu",
-                "the component's own light surface: on the dark catalog card dark text disappears"
+                "the root's own surface and border: this is a card, not text on the page background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the name through name, the address through email and the plan through plan",
                 "the workspace list through workspaces",
                 "the avatar, badge and focus colour through accent",
-                "the entries below the separator directly in the markup"
+                "the entries between the separators through items and the sign-out label through exitLabel",
+                "the radio group heading through spacesLabel and the layer name through menuLabel, which interpolates {name}",
+                "background — the component backdrop; empty means it keeps its own surface from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Initials come from the first two words of the name: a single word yields one letter, which is fine.",
                 "The avatar is drawn with letters; for a photo replace the face node with an img and an alt.",
                 "Past six workspaces give the list a scroll and a search box, or the menu outgrows the screen.",
@@ -1133,11 +1637,30 @@
               "plan": {
                 "label": "Plan",
                 "default": "Pro"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Account Menu"
+            "title": "Account Menu",
+            "preview": {
+              "props": {
+                "name": "Vera Loginova",
+                "email": "vera@poldenstudio.com",
+                "plan": "Pro",
+                "workspaces": ["Personal", "Polden Studio", "Client: Aurora"],
+                "menuLabel": "Profile: {name}",
+                "spacesLabel": "Workspaces",
+                "items": ["Account settings", "Billing and invoices"],
+                "exitLabel": "Sign out"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1155,7 +1678,7 @@
           "target": "@components/vibeui/dropdown-009.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-009-*. Клиентский: поле и направление держит useState, наружу они уходят одним объектом через onChange. В меню две радиогруппы — поле и порядок, — каждая с role=group и aria-labelledby на свой заголовок; пункты помечены role=menuitemradio с aria-checked. Стрелка направления — инлайновый SVG, разворот на 180° делает data-desc на корне, а не второй значок. Стрелка вниз с кнопки открывает меню и ставит фокус на выбранное поле. Положение меню — anchor-name с position-area под @supports.",
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-009-*. Клиентский: поле и направление держит useState, наружу они уходят одним объектом через onChange. В меню две радиогруппы — поле и порядок, — каждая с role=group и aria-labelledby на свой заголовок; пункты помечены role=menuitemradio с aria-checked. Стрелка направления — инлайновый SVG, разворот на 180° делает data-desc на корне, а не второй значок. Стрелка вниз с кнопки открывает меню и ставит фокус на выбранное поле. Положение меню — anchor-name с position-area под @supports. Палитра переведена на light-dark(): в тёмном окружении панель светлее фона страницы, а её граница светлее панели.",
       "meta": {
         "tags": ["menu", "dropdown", "sort", "radio"],
         "ai": {
@@ -1168,15 +1691,20 @@
             "две отдельные радиогруппы: поле и направление — разные вопросы, а не один список из шести пунктов",
             "поворот стрелки через data-атрибут, а не подмену иконки: так направление читается одним взглядом",
             "роль menuitemradio с aria-checked в обеих группах — это выбор, а не команда",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную подложку и границу корня: это карточка, а не текст на фоне страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "подпись перед значением через label",
             "выбранное поле через value и набор полей через fields",
             "реакцию на выбор через onChange",
-            "цвет стрелки и фокуса через accent"
+            "цвет стрелки и фокуса через accent",
+            "заголовки групп через fieldsLabel и orderLabel",
+            "подписи направления через directionText (в кнопке) и orderText (в меню): ключи asc и desc",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент ничего не сортирует: он сообщает пару «поле и направление» через onChange.",
             "Смена поля меню закрывает, смена направления — нет: направление часто щёлкают дважды подряд.",
             "Длинное название поля растянет кнопку; для узкой панели обрежьте текст многоточием.",
@@ -1197,6 +1725,18 @@
             "type": "select",
             "default": "Дата изменения",
             "options": ["Дата изменения", "Название", "Размер", "Автор"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1210,15 +1750,20 @@
                 "the two separate radio groups: field and direction are different questions, not one six-item list",
                 "rotating the arrow through a data attribute rather than swapping icons: direction then reads at a glance",
                 "the menuitemradio role with aria-checked in both groups — this is a choice, not a command",
-                "the component's own light surface: on the dark catalog card dark text disappears"
+                "the root's own surface and border: this is a card, not text on the page background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the caption before the value through label",
                 "the selected field through value and the field set through fields",
                 "the reaction to a pick through onChange",
-                "the arrow and focus colour through accent"
+                "the arrow and focus colour through accent",
+                "the group headings through fieldsLabel and orderLabel",
+                "the direction wording through directionText (on the button) and orderText (in the menu): keys asc and desc",
+                "background — the component backdrop; empty means it keeps its own surface from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component sorts nothing: it reports the field and direction pair through onChange.",
                 "Changing the field closes the menu, changing the direction does not: direction is often toggled twice in a row.",
                 "A long field name stretches the button; in a narrow toolbar clip the text with an ellipsis.",
@@ -1233,12 +1778,36 @@
               },
               "value": {
                 "label": "Field",
-                "default": "Дата изменения"
+                "default": "Modified"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Sort Menu"
+            "title": "Sort Menu",
+            "preview": {
+              "props": {
+                "label": "Sort",
+                "value": "Modified",
+                "fields": ["Modified", "Name", "Size", "Owner"],
+                "fieldsLabel": "Field",
+                "orderLabel": "Order",
+                "directionText": {
+                  "asc": "ascending",
+                  "desc": "descending"
+                },
+                "orderText": {
+                  "asc": "Ascending",
+                  "desc": "Descending"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1269,15 +1838,18 @@
             "связь пояснения с пунктом через aria-describedby — иначе скринридер прочитает его отдельным текстом",
             "ширину меню в переменной: пояснение в две строки на 12rem читать невозможно",
             "пояснение одной короткой фразой: абзац в меню никто не читает",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную подложку и границу корня: это панель с кнопкой, а не текст на фоне страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "подпись кнопки через trigger",
             "ширину меню через menuWidth",
             "состав пунктов, пояснений и значков через items",
-            "цвет кнопки и фокуса через accent"
+            "цвет кнопки и фокуса через accent",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Значок — текстовый символ: чтобы поставить SVG, замените содержимое узла badge, сетка не изменится.",
             "Пунктов больше шести — меню становится страницей выбора, лучше показать диалог.",
             "menuWidth задан в rem: на очень узком экране меню всё равно упрётся в края, проверьте на телефоне.",
@@ -1299,6 +1871,18 @@
             "default": 18,
             "min": 14,
             "max": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1312,15 +1896,18 @@
                 "the aria-describedby link between item and description — otherwise a screen reader reads it as loose text",
                 "the menu width in a variable: a two-line description inside 12rem is unreadable",
                 "descriptions kept to one short phrase: nobody reads a paragraph inside a menu",
-                "the component's own light surface: on the dark catalog card dark text disappears"
+                "the root's own surface and border: this is a panel around a button, not text on the page background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the button caption through trigger",
                 "the menu width through menuWidth",
                 "the items, their descriptions and glyphs through items",
-                "the button and focus colour through accent"
+                "the button and focus colour through accent",
+                "background — the component surface; empty means its own background from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The glyph is a text character: to use an SVG replace the badge node's content, the grid stays the same.",
                 "Past six entries the menu becomes a chooser page — show a dialog instead.",
                 "menuWidth is in rem: on a very narrow screen the menu still meets the edges, check it on a phone.",
@@ -1336,11 +1923,45 @@
               "menuWidth": {
                 "label": "Menu width, rem",
                 "default": 18
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Described Items"
+            "title": "Described Items",
+            "preview": {
+              "props": {
+                "trigger": "New",
+                "items": [
+                  {
+                    "label": "Document",
+                    "hint": "Text with headings and images, like a wiki page",
+                    "glyph": "¶"
+                  },
+                  {
+                    "label": "Table",
+                    "hint": "Rows with fields: status, due date, owner",
+                    "glyph": "▦"
+                  },
+                  {
+                    "label": "Board",
+                    "hint": "Cards in columns you drag with the mouse",
+                    "glyph": "▤"
+                  },
+                  {
+                    "label": "Import",
+                    "hint": "Pull content in from Notion, CSV or Markdown",
+                    "glyph": "↧"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["menuWidth", "accent", "background"]
       }
     },
     {
@@ -1374,15 +1995,19 @@
             "перевод фокуса в поле поиска на событии toggle, а не autoFocus — иначе фокус уедет при монтировании страницы",
             "строку «ничего не найдено»: пустое меню выглядит поломкой, а не результатом поиска",
             "доступное имя кнопки из подписи и значения — «Проект: Портал» понятнее, чем просто «Портал»",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную подложку и границу корня: это поле, а не текст на фоне страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "подпись поля через label",
             "текст-подсказку поиска через placeholder",
             "набор вариантов через options и реакцию через onChange",
-            "цвет отметки и фокуса через accent"
+            "строку пустой выборки через emptyText",
+            "цвет отметки и фокуса через accent",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Поиск идёт по подстроке без учёта регистра: для длинных списков подключите свой алгоритм.",
             "Компонент не заменяет select в форме: чтобы отправить значение, добавьте скрытый input с ним.",
             "Список ограничен по высоте и прокручивается — не убирайте max-height, иначе меню перерастёт экран.",
@@ -1403,6 +2028,18 @@
             "type": "text",
             "default": "Поиск по названию",
             "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1416,15 +2053,19 @@
                 "moving focus into the search box on the toggle event rather than autoFocus — otherwise focus jumps on mount",
                 "the \"nothing found\" line: an empty menu looks broken instead of looking like a result",
                 "the button's accessible name built from the caption and the value — \"Project: Portal\" beats \"Portal\"",
-                "the component's own light surface: on the dark catalog card dark text disappears"
+                "the root's own surface and border: this is a field, not text on the page background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the field caption through label",
                 "the search hint through placeholder",
                 "the option set through options and the reaction through onChange",
-                "the tick and focus colour through accent"
+                "the empty-result line through emptyText",
+                "the tick and focus colour through accent",
+                "background — the component surface; empty means its own background from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Search is a case-insensitive substring match: plug in your own algorithm for long lists.",
                 "The component is not a form select: add a hidden input if the value has to be submitted.",
                 "The list is height-capped and scrolls — keep max-height or the menu outgrows the screen.",
@@ -1440,11 +2081,33 @@
               "placeholder": {
                 "label": "Search hint",
                 "default": "Search by name"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Searchable Select"
+            "title": "Searchable Select",
+            "preview": {
+              "props": {
+                "label": "Project",
+                "placeholder": "Search by name",
+                "emptyText": "Nothing found",
+                "options": [
+                  "Component showcase",
+                  "Internal portal",
+                  "Mobile app",
+                  "Conference site",
+                  "Design system",
+                  "API documentation"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1478,18 +2141,25 @@
             "выключенную, а не спрятанную кнопку при пустом выборе: исчезающий элемент сдвигает шапку",
             "aria-disabled с подписью-причиной у неприменимого пункта — молчаливое несрабатывание пользователь считает поломкой",
             "role=status у счётчика: смену выделения обязан услышать и тот, кто не видит экран",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную подложку и границу корня: это карточка, а не текст на фоне страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "заголовок панели через title",
             "подпись кнопки меню через actionLabel",
             "состав строк через rows",
-            "цвет подсветки и фокуса через accent"
+            "пункты меню через actionsText: ключи assign, due, rename, archive, remove",
+            "пометки у пунктов через noteText: ключи single и count с плейсхолдером {count}",
+            "счётчик и заголовок меню через selectedTemplate, scopeTemplate и menuLabelTemplate с плейсхолдерами {count} и {action}",
+            "цвет подсветки и фокуса через accent",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Строки здесь — упрощённая таблица на label с чекбоксами: в бою подставьте свою таблицу и оставьте шапку.",
             "Удаление сразу очищает выделение — иначе меню остаётся открытым для строк, которых уже нет.",
             "aria-disabled не блокирует нажатие сам: проверка в обработчике обязательна, она здесь есть.",
+            "Шаблоны со счётчиком не склоняют существительное: для языков с падежами подставьте готовую строку из своего i18n.",
             "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
           ]
         },
@@ -1507,6 +2177,18 @@
             "type": "text",
             "default": "Действия",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1520,18 +2202,25 @@
                 "the button disabled rather than hidden on an empty selection: a vanishing element shifts the header",
                 "aria-disabled plus a reason caption on an inapplicable entry — a silent no-op reads as a bug",
                 "role=status on the counter: a change of selection must be heard, not only seen",
-                "the component's own light surface: on the dark catalog card dark text disappears"
+                "the root's own surface and border: this is a card, not text on the page background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the panel heading through title",
                 "the menu button caption through actionLabel",
                 "the rows through rows",
-                "the highlight and focus colour through accent"
+                "the menu entries through actionsText: keys assign, due, rename, archive, remove",
+                "the entry notes through noteText: keys single and count with the {count} placeholder",
+                "the counter and menu heading through selectedTemplate, scopeTemplate and menuLabelTemplate with the {count} and {action} placeholders",
+                "the highlight and focus colour through accent",
+                "background — the component surface; empty means its own background from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The rows are a simplified table of labels with checkboxes: in production drop in your own table and keep the header.",
                 "Deleting clears the selection at once — otherwise the menu stays open for rows that no longer exist.",
                 "aria-disabled does not block the click by itself: the guard in the handler is required, and it is there.",
+                "The counted templates do not inflect the noun: for case-marked languages pass a ready string from your own i18n.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Dropdown012\n  title=\"Sprint tasks\"\n  actionLabel=\"Actions\"\n  rows={[\"Build the report\", \"Update prices\"]}\n/>"
@@ -1544,11 +2233,43 @@
               "actionLabel": {
                 "label": "Menu button",
                 "default": "Actions"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Bulk Actions"
+            "title": "Bulk Actions",
+            "preview": {
+              "props": {
+                "title": "Sprint tasks",
+                "actionLabel": "Actions",
+                "rows": [
+                  "Put the weekly report together",
+                  "Update prices on the site",
+                  "Check the payment forms"
+                ],
+                "selectedTemplate": "Selected: {count}",
+                "scopeTemplate": "For {count} rows",
+                "menuLabelTemplate": "{action}: {count} selected",
+                "actionsText": {
+                  "assign": "Assign an owner",
+                  "due": "Set a due date",
+                  "rename": "Rename",
+                  "archive": "Archive",
+                  "remove": "Delete"
+                },
+                "noteText": {
+                  "single": "one row only",
+                  "count": "{count} items"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1578,15 +2299,21 @@
             "копирование через navigator.clipboard.writeText в try/catch — без него отказ буфера обмена уронит обработчик",
             "aria-live=\"polite\" на подписи «Скопировано» — иначе смену текста не услышит пользователь скринридера",
             "явный возврат фокуса на кнопку-триггер после каждого пункта — не полагайтесь только на встроенное поведение popover",
-            "выход последним пунктом за чертой и с отдельным цветом — это единственное необратимое действие списка"
+            "выход последним пунктом за чертой и с отдельным цветом — это единственное необратимое действие списка",
+            "собственную подложку и границу кнопки и меню: это плашка, а не текст на фоне страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "имя, почту и должность через name, email и role",
             "хеш имени, который красит инициалы аватара, — код не трогать, только имя",
             "цвет фокуса и подложки аватара через accent",
-            "состав обычных пунктов и текст выхода прямо в разметке"
+            "пункты меню через itemsText: ключи settings и signOut",
+            "подсказку у почты через copyText: ключи copy и copied",
+            "доступные имена через triggerLabelTemplate с плейсхолдером {name} и menuLabel",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Таймаут подписи «Скопировано» — 1.6 секунды: для медленных читалок экрана этого может не хватить, увеличьте setTimeout.",
             "Буфер обмена работает только по HTTPS или на localhost: в другом окружении клик по почте молча ничего не сделает.",
             "Пункты «Настройки» и «Выйти» ничего не делают: обработчики навешивает вызывающий код.",
@@ -1614,6 +2341,18 @@
             "type": "text",
             "default": "Продуктовый дизайнер",
             "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1626,15 +2365,21 @@
                 "copying through navigator.clipboard.writeText wrapped in try/catch — without it a clipboard failure crashes the handler",
                 "the aria-live=\"polite\" caption on \"Copied\" — otherwise a screen reader user never hears the text change",
                 "explicitly returning focus to the trigger button after every item — do not rely on the popover's built-in behaviour alone",
-                "sign-out as the last entry behind a rule and its own colour — it is the only irreversible action in the list"
+                "sign-out as the last entry behind a rule and its own colour — it is the only irreversible action in the list",
+                "the button's and the menu's own surface and border: this is a panel, not text on the page background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the name, email and role through name, email and role",
                 "the name hash that colours the avatar initials — leave the code, change only the name",
                 "the focus and avatar background colour through accent",
-                "the ordinary items and the sign-out label directly in the markup"
+                "the menu entries through itemsText: keys settings and signOut",
+                "the email hint through copyText: keys copy and copied",
+                "the accessible names through triggerLabelTemplate with the {name} placeholder and menuLabel",
+                "background — the component surface; empty means its own background from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The \"Copied\" caption times out after 1.6 seconds: that may be too short for a slow screen reader, raise the setTimeout.",
                 "Clipboard access needs HTTPS or localhost: elsewhere a click on the email silently does nothing.",
                 "The Settings and Sign out items do nothing: handlers belong to the caller.",
@@ -1654,11 +2399,35 @@
               "role": {
                 "label": "Role",
                 "default": "Product designer"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Session Menu"
+            "title": "Session Menu",
+            "preview": {
+              "props": {
+                "name": "Mark Sokolov",
+                "email": "mark@example.com",
+                "role": "Product designer",
+                "triggerLabelTemplate": "Profile menu: {name}",
+                "menuLabel": "Profile",
+                "copyText": {
+                  "copy": "Copy",
+                  "copied": "Copied"
+                },
+                "itemsText": {
+                  "settings": "Account settings",
+                  "signOut": "Sign out"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1688,15 +2457,20 @@
             "aria-label кнопки и меню, собранный из содержимого строки — одинаковые подписи «Действия» неразличимы в длинной таблице",
             "опасный пункт последним за линией и с отдельным цветом текста, без заливки строки",
             "aria-expanded на кнопке, синхронизированный с событием toggle попапа",
-            "явный возврат фокуса на кнопку после закрытия меню любым пунктом"
+            "явный возврат фокуса на кнопку после закрытия меню любым пунктом",
+            "собственную подложку и границу строки: это карточка, а не текст на фоне страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "содержимое строки через row и подпись под ней через meta",
-            "состав обычных пунктов и подпись опасного через разметку",
+            "пункты меню через itemsText: ключи open, rename, duplicate, download, remove",
+            "доступное имя кнопки и меню через actionsLabelTemplate с плейсхолдером {row}",
             "цвет фокуса через accent",
-            "ширину карточки-строки через max-width в своей копии"
+            "ширину карточки-строки через max-width в своей копии",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент показывает одну строку-образец: в таблице повторите обёртку на каждую строку с уникальным row.",
             "Пункты ничего не делают: обработчики навешивает вызывающий код.",
             "Для действительно необратимых действий (например, удаление аккаунта) используйте компонент с подтверждением, а не этот.",
@@ -1717,6 +2491,18 @@
             "type": "text",
             "default": "Изменён вчера в 14:02",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1729,15 +2515,20 @@
                 "the button and menu aria-label built from the row's content — identical \"Actions\" labels are indistinguishable in a long table",
                 "the destructive item last behind a rule with its own text colour, without filling the row",
                 "aria-expanded on the button, kept in sync with the popover's toggle event",
-                "explicitly returning focus to the button once any item closes the menu"
+                "explicitly returning focus to the button once any item closes the menu",
+                "the row's own surface and border: this is a card, not text on the page background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the row's content through row and the caption below it through meta",
-                "the ordinary items and the destructive item's label in the markup",
+                "the menu entries through itemsText: keys open, rename, duplicate, download, remove",
+                "the button and menu accessible name through actionsLabelTemplate with the {row} placeholder",
                 "the focus colour through accent",
-                "the row card's max-width in your own copy"
+                "the row card's max-width in your own copy",
+                "background — the component surface; empty means its own background from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component shows a single sample row: in a table repeat the wrapper for every row with a unique row value.",
                 "The items do nothing: handlers belong to the caller.",
                 "For a truly irreversible action (deleting an account, say) use a component with confirmation instead of this one.",
@@ -1753,11 +2544,32 @@
               "meta": {
                 "label": "Caption",
                 "default": "Edited yesterday at 14:02"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Row Actions"
+            "title": "Row Actions",
+            "preview": {
+              "props": {
+                "row": "Sales report.xlsx",
+                "meta": "Edited yesterday at 14:02",
+                "actionsLabelTemplate": "Row actions: {row}",
+                "itemsText": {
+                  "open": "Open",
+                  "rename": "Rename",
+                  "duplicate": "Duplicate",
+                  "download": "Download",
+                  "remove": "Delete row"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1787,18 +2599,24 @@
             "подменю обычным слоем внутри popover — второй popover=auto закрыл бы первый, и меню замигает",
             "пару aria-haspopup и aria-expanded на родительском пункте на обоих уровнях",
             "возврат фокуса на родительский пункт по стрелке влево — без него из подменю нет выхода с клавиатуры",
-            "открытие подменю и по наведению, и по нажатию — мышь и клавиатура ведут себя по-разному"
+            "открытие подменю и по наведению, и по нажатию — мышь и клавиатура ведут себя по-разному",
+            "собственную подложку и границу карточки: это плашка, а не текст на фоне страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "подпись кнопки через trigger и сторону раскрытия подменю через side",
             "заголовок второго уровня через submenuLabel и список форматов через formats",
-            "расширения файлов в таблице EXTENSIONS при добавлении нового формата",
-            "цвет фокуса через accent"
+            "расширения файлов через extensionText: ключ — название формата",
+            "имя файла над кнопкой через caption",
+            "пункты первого уровня через itemsText: ключи link и invite",
+            "цвет фокуса через accent",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Третий уровень вложенности не предусмотрен: на этой глубине проще показать диалог, чем ещё одно подменю.",
             "Подменю закрывается при уходе курсора мышью; для зазора прощения добавьте задержку в onMouseLeave.",
-            "Формат без записи в EXTENSIONS останется без расширения справа — это не ошибка, а пропуск подписи.",
+            "Формат без записи в extensionText останется без расширения справа — это не ошибка, а пропуск подписи.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -1816,6 +2634,18 @@
             "type": "select",
             "default": "right",
             "options": ["right", "left"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1828,18 +2658,24 @@
                 "the submenu as a plain layer inside the popover — a second popover=auto would close the first and make the menu blink",
                 "the aria-haspopup and aria-expanded pair on the parent item at both levels",
                 "returning focus to the parent item on the left arrow — without it there is no keyboard way out of the submenu",
-                "opening the submenu both on hover and on click — mouse and keyboard behave differently"
+                "opening the submenu both on hover and on click — mouse and keyboard behave differently",
+                "the card's own surface and border: this is a panel, not text on the page background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the button caption through trigger and which way the submenu opens through side",
                 "the second-level heading through submenuLabel and the format list through formats",
-                "the file extensions in the EXTENSIONS table when adding a new format",
-                "the focus colour through accent"
+                "the file extensions through extensionText, keyed by format name",
+                "the file name above the button through caption",
+                "the first-level entries through itemsText: keys link and invite",
+                "the focus colour through accent",
+                "background — the component surface; empty means its own background from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A third nesting level is not provided: at that depth a dialog is simpler than another submenu.",
                 "The submenu closes when the pointer leaves; add a delay in onMouseLeave for a forgiving gap.",
-                "A format missing from EXTENSIONS shows no extension on the right — that is a missing caption, not a bug.",
+                "A format missing from extensionText shows no extension on the right — that is a missing caption, not a bug.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Dropdown015\n  trigger=\"Share\"\n  side=\"right\"\n  submenuLabel=\"Export as\"\n  formats={[\"PDF document\", \"PNG image\"]}\n/>"
@@ -1852,11 +2688,35 @@
               "side": {
                 "label": "Submenu side",
                 "default": "right"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Export Submenu"
+            "title": "Export Submenu",
+            "preview": {
+              "props": {
+                "trigger": "Share",
+                "caption": "Q3 deck.key",
+                "submenuLabel": "Export as",
+                "formats": ["PDF document", "PNG image", "CSV table"],
+                "extensionText": {
+                  "PDF document": ".pdf",
+                  "PNG image": ".png",
+                  "CSV table": ".csv"
+                },
+                "itemsText": {
+                  "link": "View-only link",
+                  "invite": "Invite a collaborator"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["side", "accent", "background"]
       }
     },
     {
@@ -1886,15 +2746,20 @@
             "роль menuitemcheckbox с aria-checked — без неё скринридер объявит фильтр обычной командой",
             "то, что меню не закрывается по нажатию: метки включают пачкой, а не по одной",
             "зарезервированное место под отметку — иначе строки прыгают при каждом переключении",
-            "цвет метки через инлайновую переменную на пункте, а не через заранее заданный класс — палитра меток приходит из данных"
+            "цвет метки через инлайновую переменную на пункте, а не через заранее заданный класс — палитра меток приходит из данных",
+            "собственную подложку и границу карточки: это плашка, а не текст на фоне страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
-            "подпись кнопки через trigger",
+            "подпись кнопки через trigger и подпись над ней через caption",
             "массив labels: name, hue и count на каждую метку",
             "цвет отметки и фокуса через accent",
-            "текст подвала через условие в разметке"
+            "текст подвала через selectedTemplate с плейсхолдером {count}, allShownText и resetText",
+            "значок «фильтр не включён» в кнопке через allText",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Состояние выбора живёт внутри компонента: чтобы поднять его наверх, замените useState на пропсы value и onChange.",
             "hue — число от 0 до 360 для oklch: готовый HEX-цвет придётся сперва перевести.",
             "Меток больше десяти — добавьте списку прокрутку, меню не должно уезжать за экран.",
@@ -1908,6 +2773,25 @@
             "type": "text",
             "default": "Метки",
             "maxLength": 20
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Доска спринта",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1920,15 +2804,20 @@
                 "the menuitemcheckbox role with aria-checked — without it a screen reader announces the filter as a plain command",
                 "the fact that the menu does not close on click: labels are switched in batches, not one by one",
                 "the space reserved for the check mark — otherwise rows jump on every toggle",
-                "the label colour through an inline variable on the item, not a preset class — the label palette comes from data"
+                "the label colour through an inline variable on the item, not a preset class — the label palette comes from data",
+                "the card's own surface and border: this is a panel, not text on the page background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
-                "the button caption through trigger",
+                "the button caption through trigger and the caption above it through caption",
                 "the labels array: name, hue and count per label",
                 "the mark and focus colour through accent",
-                "the footer text through the condition in the markup"
+                "the footer text through selectedTemplate with the {count} placeholder, allShownText and resetText",
+                "the \"no filter\" badge inside the button through allText",
+                "background — the component surface; empty means its own background from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Selection state lives inside the component: to lift it up, replace useState with value and onChange props.",
                 "hue is a 0–360 number for oklch: convert a ready-made hex colour first.",
                 "Past ten labels give the list its own scroll; the menu must not run off the screen.",
@@ -1940,11 +2829,54 @@
               "trigger": {
                 "label": "Button",
                 "default": "Labels"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "Sprint board"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Label Filter"
+            "title": "Label Filter",
+            "preview": {
+              "props": {
+                "trigger": "Labels",
+                "caption": "Sprint board",
+                "allText": "All",
+                "selectedTemplate": "Labels selected: {count}",
+                "allShownText": "Showing every card",
+                "resetText": "Reset",
+                "labels": [
+                  {
+                    "name": "Urgent",
+                    "hue": 25,
+                    "count": 4
+                  },
+                  {
+                    "name": "Bug",
+                    "hue": 340,
+                    "count": 9
+                  },
+                  {
+                    "name": "Improvement",
+                    "hue": 210,
+                    "count": 6
+                  },
+                  {
+                    "name": "Question",
+                    "hue": 60,
+                    "count": 2
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1974,15 +2906,20 @@
             "роль menuitemradio с aria-checked и обёртку role=group — это выбор одного варианта, а не список команд",
             "aria-label кнопки, собранный из текущего значения — иконка без текста молчит для скринридера без него",
             "бейдж рекомендованного поля, уступающий место галочке после выбора, а не сосуществующий с ней",
-            "закрытие меню сразу после выбора и явный возврат фокуса на кнопку"
+            "закрытие меню сразу после выбора и явный возврат фокуса на кнопку",
+            "собственную подложку и границу плашки: это карточка, а не текст на фоне страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "выбранное поле через value и список полей через fields",
-            "рекомендованное поле через recommended",
+            "рекомендованное поле через recommended и подпись бейджа через recommendedText",
             "реакцию на выбор через onChange",
-            "цвет бейджа, галочки и фокуса через accent"
+            "цвет бейджа, галочки и фокуса через accent",
+            "заголовок меню через menuLabel и доступное имя кнопки через triggerLabelTemplate с плейсхолдером {value}",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент ничего не сортирует: он сообщает выбранное поле через onChange, применяет его приложение.",
             "Направление сортировки этот компонент не хранит — для него нужна вторая радиогруппа или отдельный переключатель.",
             "Подпись значения растёт вместе с названием поля: для длинных названий обрежьте текст многоточием в своей копии.",
@@ -1996,6 +2933,18 @@
             "type": "select",
             "default": "Дата создания",
             "options": ["Дата создания", "Название", "Приоритет", "Исполнитель"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2008,15 +2957,20 @@
                 "the menuitemradio role with aria-checked and the role=group wrapper — this is a single choice, not a command list",
                 "the button's aria-label built from the current value — a text-less icon says nothing to a screen reader without it",
                 "the recommended field's badge giving way to the check mark once chosen, rather than coexisting with it",
-                "closing the menu right after a pick and explicitly returning focus to the button"
+                "closing the menu right after a pick and explicitly returning focus to the button",
+                "the pill's own surface and border: this is a card, not text on the page background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the selected field through value and the field list through fields",
-                "the recommended field through recommended",
+                "the recommended field through recommended and its badge caption through recommendedText",
                 "the reaction to a pick through onChange",
-                "the badge, check mark and focus colour through accent"
+                "the badge, check mark and focus colour through accent",
+                "the menu heading through menuLabel and the button's accessible name through triggerLabelTemplate with the {value} placeholder",
+                "background — the component surface; empty means its own background from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component sorts nothing: it reports the chosen field through onChange, the app applies it.",
                 "This component keeps no sort direction — pair it with a second radio group or a separate toggle for that.",
                 "The value caption grows with the field name: clip long names with an ellipsis in your own copy.",
@@ -2027,12 +2981,29 @@
             "controls": {
               "value": {
                 "label": "Field",
-                "default": "Дата создания"
+                "default": "Created"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Order Menu"
+            "title": "Order Menu",
+            "preview": {
+              "props": {
+                "value": "Created",
+                "fields": ["Created", "Name", "Priority", "Assignee"],
+                "recommended": "Created",
+                "menuLabel": "Sort by",
+                "triggerLabelTemplate": "Sort order: {value}",
+                "recommendedText": "Recommended"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["value", "accent", "background"]
       }
     },
     {
@@ -2062,15 +3033,21 @@
             "перевод фокуса в поле поиска на событии toggle, а не autoFocus — иначе фокус уедет при монтировании страницы",
             "роль menuitemradio с aria-checked: список выбирают, а не выполняют команды",
             "строку «Никого не нашлось» при пустой выборке — иначе пустое меню выглядит поломкой",
-            "смену вида кнопки-триггера после выбора (пунктир на сплошную рамку с инициалами) — это единственный след выбора после закрытия меню"
+            "смену вида кнопки-триггера после выбора (пунктир на сплошную рамку с инициалами) — это единственный след выбора после закрытия меню",
+            "собственную подложку и границу плашки: это карточка, а не текст на фоне страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "подсказку поиска через placeholder и список людей через people",
             "реакцию на выбор через onChange",
             "цвет фокуса и подложки инициалов через accent",
-            "aria-label кнопки-триггера при необходимости своей формулировки"
+            "строку слева через assignedTemplate с плейсхолдером {name} и unassignedText",
+            "доступные имена через changeLabelTemplate с плейсхолдером {name} и assignLabel",
+            "строку пустой выборки через emptyText",
+            "background — подложка компонента; пусто означает собственный фон по теме окружения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Поиск идёт по подстроке без учёта регистра: для длинных списков подключите свой алгоритм.",
             "Инициалы и оттенок аватара считаются из имени функцией hue: смена имени меняет и цвет.",
             "Компонент не хранит исполнителя вне себя: для внешнего управления снимите useState и получайте значение сверху.",
@@ -2084,6 +3061,18 @@
             "type": "text",
             "default": "Поиск по имени",
             "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2096,15 +3085,21 @@
                 "moving focus into the search field on the toggle event rather than autoFocus — otherwise focus jumps on page mount",
                 "the menuitemradio role with aria-checked: the list is picked, not run as commands",
                 "the \"Nobody found\" line on an empty result — otherwise an empty menu looks broken",
-                "the trigger button changing look after a pick (dashed to solid border with initials) — it is the only trace of the choice once the menu closes"
+                "the trigger button changing look after a pick (dashed to solid border with initials) — it is the only trace of the choice once the menu closes",
+                "the pill's own surface and border: this is a card, not text on the page background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the search hint through placeholder and the people list through people",
                 "the reaction to a pick through onChange",
                 "the focus and avatar background colour through accent",
-                "the trigger button's aria-label for your own wording if needed"
+                "the line on the left through assignedTemplate with the {name} placeholder and unassignedText",
+                "the accessible names through changeLabelTemplate with the {name} placeholder and assignLabel",
+                "the empty-result line through emptyText",
+                "background — the component surface; empty means its own background from the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Search is a case-insensitive substring match: plug in your own algorithm for long lists.",
                 "The initials and avatar hue are computed from the name by the hue function: renaming someone changes their colour too.",
                 "The component keeps the assignee to itself: for external control drop useState and take the value from above.",
@@ -2116,11 +3111,35 @@
               "placeholder": {
                 "label": "Search hint",
                 "default": "Search by name"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Assignee Picker"
+            "title": "Assignee Picker",
+            "preview": {
+              "props": {
+                "placeholder": "Search by name",
+                "people": [
+                  "Ilya Vesnin",
+                  "Olga Krylova",
+                  "Timur Sharipov",
+                  "Daria Luneva",
+                  "Zhenya Osipov"
+                ],
+                "assignedTemplate": "Assignee: {name}",
+                "unassignedText": "No assignee yet",
+                "changeLabelTemplate": "Change assignee: {name}",
+                "assignLabel": "Assign someone",
+                "emptyText": "Nobody found"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

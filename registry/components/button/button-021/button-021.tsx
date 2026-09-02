@@ -23,10 +23,10 @@ export type Button021Props = Omit<
 // длинной из них и не прыгает при смене состояния.
 const STYLES = `
 :where([data-vibeui-block="button-021"]){
---vibeui-button-021-accent:oklch(0.55 0.17 265);
+--vibeui-button-021-accent:light-dark(oklch(0.55 0.17 265),oklch(0.63 0.18 265));
 --vibeui-button-021-fg:oklch(0.99 0.01 265);
---vibeui-button-021-error:oklch(0.55 0.19 25);
---vibeui-button-021-done:oklch(0.53 0.14 152);
+--vibeui-button-021-error:light-dark(oklch(0.55 0.19 25),oklch(0.62 0.2 25));
+--vibeui-button-021-done:light-dark(oklch(0.53 0.14 152),oklch(0.6 0.15 152));
 --vibeui-button-021-radius:0.625rem;
 --vibeui-button-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

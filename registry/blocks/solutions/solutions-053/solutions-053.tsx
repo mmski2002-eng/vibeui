@@ -22,7 +22,31 @@ export type Solutions053Props = {
   couriers?: Solutions053Courier[]
   queue?: Solutions053QueueItem[]
   queueTitle?: string
+  /** Вместимость сумки курьера: от неё считается полоса загрузки. */
+  capacity?: number
+  /** С какого ожидания заказ в очереди подсвечивается как долгий, мин. */
+  longWaitMinutes?: number
+  /** Подписи плиток: couriers, orders, late. */
+  statsText?: Record<string, string>
+  /** Загрузка курьера. {orders} и {capacity} подставляются на месте. */
+  loadText?: string
+  /** Скрытая подпись полосы загрузки. {name} — имя курьера. */
+  loadLabel?: string
+  /** Приставка следующего адреса. */
+  nextText?: string
+  /** Окно доставки. {from} и {to} — границы окна. */
+  windowText?: string
+  /** Опоздание. {minutes} — число минут. */
+  lateText?: string
+  /** Запас по времени. {minutes} — число минут. */
+  spareText?: string
+  /** Число позиций в заказе очереди. {count} — их число. */
+  itemsText?: string
+  /** Ожидание заказа в очереди. {minutes} — число минут. */
+  waitText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -38,14 +62,14 @@ export type Solutions053Props = {
 // заполненности относительно вместимости сумки, а не голой цифрой.
 const STYLES = `
 :where([data-vibeui-block="solutions-053"]){
---vibeui-solutions-053-bg:oklch(1 0 0);
---vibeui-solutions-053-panel:oklch(0.977 0.005 55);
---vibeui-solutions-053-fg:oklch(0.22 0.016 55);
---vibeui-solutions-053-muted:oklch(0.54 0.014 55);
---vibeui-solutions-053-border:oklch(0.9 0.007 55);
---vibeui-solutions-053-accent:oklch(0.62 0.17 55);
---vibeui-solutions-053-good:oklch(0.58 0.14 152);
---vibeui-solutions-053-late:oklch(0.57 0.19 25);
+--vibeui-solutions-053-bg:transparent;
+--vibeui-solutions-053-panel:light-dark(oklch(0.977 0.005 55),oklch(0.27 0.014 55));
+--vibeui-solutions-053-fg:light-dark(oklch(0.22 0.016 55),oklch(0.94 0.006 55));
+--vibeui-solutions-053-muted:light-dark(oklch(0.54 0.014 55),oklch(0.69 0.013 55));
+--vibeui-solutions-053-border:light-dark(oklch(0.9 0.007 55),oklch(0.36 0.014 55));
+--vibeui-solutions-053-accent:light-dark(oklch(0.62 0.17 55),oklch(0.77 0.15 55));
+--vibeui-solutions-053-good:light-dark(oklch(0.58 0.14 152),oklch(0.73 0.13 152));
+--vibeui-solutions-053-late:light-dark(oklch(0.57 0.19 25),oklch(0.73 0.16 25));
 --vibeui-solutions-053-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-053-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -118,7 +142,7 @@ display:inline-flex;align-items:center;gap:0.3125rem;margin-left:0.5rem;font-wei
 [data-vibeui-block="solutions-053"] [data-late="false"] [data-part="eta"]{color:var(--vibeui-solutions-053-good)}
 [data-vibeui-block="solutions-053"] [data-part="eta-mark"]{
 width:1rem;height:1rem;border-radius:9999px;display:inline-grid;place-items:center;flex-shrink:0;
-font-size:0.5625rem;font-weight:700;color:oklch(1 0 0);
+font-size:0.5625rem;font-weight:700;color:light-dark(oklch(1 0 0),oklch(0.18 0.02 55));
 }
 [data-vibeui-block="solutions-053"] [data-late="true"] [data-part="eta-mark"]{background:var(--vibeui-solutions-053-late)}
 [data-vibeui-block="solutions-053"] [data-late="false"] [data-part="eta-mark"]{background:var(--vibeui-solutions-053-good)}
@@ -146,7 +170,33 @@ flex-shrink:0;font-variant-numeric:tabular-nums;font-weight:650;color:var(--vibe
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="solutions-053"] *{animation:none!important;transition:none!important}}
 `
 
-const CAPACITY = 6
+const STATS_LABEL: Record<string, string> = {
+  couriers: "курьеров на смене",
+  orders: "заказов в руках",
+  late: "рискуют опоздать",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_COURIERS: Solutions053Courier[] = [
   {
@@ -214,10 +264,23 @@ export function Solutions053({
   couriers = DEFAULT_COURIERS,
   queue = DEFAULT_QUEUE,
   queueTitle = "Очередь без курьера",
+  capacity = 6,
+  longWaitMinutes = 20,
+  statsText = STATS_LABEL,
+  loadText = "{orders} из {capacity}",
+  loadLabel = "Заказов в руках у {name}",
+  nextText = "Далее:",
+  windowText = "· окно {from}–{to}",
+  lateText = "опоздание {minutes} мин",
+  spareText = "в запасе {minutes} мин",
+  itemsText = "{count} позиция(й)",
+  waitText = "{minutes} мин",
   accent,
+  background = "",
   className,
   style,
 }: Solutions053Props) {
+  const stat = (key: string) => statsText[key] ?? STATS_LABEL[key]
   const ordersInHand = couriers.reduce(
     (sum, courier) => sum + courier.orders,
     0,
@@ -226,6 +289,12 @@ export function Solutions053({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-053-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-053-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -250,15 +319,15 @@ export function Solutions053({
         <div data-part="summary">
           <p data-part="tile">
             <b>{couriers.length}</b>
-            <span>курьеров на смене</span>
+            <span>{stat("couriers")}</span>
           </p>
           <p data-part="tile">
             <b>{ordersInHand}</b>
-            <span>заказов в руках</span>
+            <span>{stat("orders")}</span>
           </p>
           <p data-part="tile">
             <b>{lateCount}</b>
-            <span>рискуют опоздать</span>
+            <span>{stat("late")}</span>
           </p>
         </div>
 
@@ -267,7 +336,10 @@ export function Solutions053({
             {couriers.map((courier) => {
               const late = courier.etaOffset > 0
               const abs = Math.abs(courier.etaOffset)
-              const fill = Math.min((courier.orders / CAPACITY) * 100, 100)
+              const fill =
+                capacity > 0
+                  ? Math.min((courier.orders / capacity) * 100, 100)
+                  : 0
 
               return (
                 <article
@@ -281,15 +353,17 @@ export function Solutions053({
                   </div>
                   <div data-part="load">
                     <span>
-                      {courier.orders} из {CAPACITY}
+                      {loadText
+                        .replace("{orders}", String(courier.orders))
+                        .replace("{capacity}", String(capacity))}
                     </span>
                     <div
                       data-part="load-bar"
                       role="progressbar"
                       aria-valuenow={courier.orders}
                       aria-valuemin={0}
-                      aria-valuemax={CAPACITY}
-                      aria-label={`Заказов в руках у ${courier.name}`}
+                      aria-valuemax={capacity}
+                      aria-label={loadLabel.replace("{name}", courier.name)}
                       style={
                         {
                           "--vibeui-solutions-053-fill": `${fill}%`,
@@ -300,15 +374,19 @@ export function Solutions053({
                     </div>
                   </div>
                   <p data-part="next">
-                    Далее:{" "}
-                    <span data-part="address">{courier.nextAddress}</span>
-                    {" · окно "}
-                    {courier.windowFrom}–{courier.windowTo}
+                    {nextText}{" "}
+                    <span data-part="address">{courier.nextAddress}</span>{" "}
+                    {windowText
+                      .replace("{from}", courier.windowFrom)
+                      .replace("{to}", courier.windowTo)}
                     <span data-part="eta">
                       <span data-part="eta-mark" aria-hidden="true">
                         {late ? "!" : "✓"}
                       </span>
-                      {late ? `опоздание ${abs} мин` : `в запасе ${abs} мин`}
+                      {(late ? lateText : spareText).replace(
+                        "{minutes}",
+                        String(abs),
+                      )}
                     </span>
                   </p>
                 </article>
@@ -322,7 +400,7 @@ export function Solutions053({
             </p>
             <ol data-part="queue-list">
               {queue.map((item) => {
-                const waitLong = item.waitingMinutes >= 20
+                const waitLong = item.waitingMinutes >= longWaitMinutes
 
                 return (
                   <li key={item.address} data-wait-long={waitLong}>
@@ -330,10 +408,15 @@ export function Solutions053({
                       <span>
                         <span data-part="queue-addr">{item.address}</span>
                         <span data-part="queue-items">
-                          {item.items} позиция(й)
+                          {itemsText.replace("{count}", String(item.items))}
                         </span>
                       </span>
-                      <span data-part="wait">{item.waitingMinutes} мин</span>
+                      <span data-part="wait">
+                        {waitText.replace(
+                          "{minutes}",
+                          String(item.waitingMinutes),
+                        )}
+                      </span>
                     </div>
                   </li>
                 )

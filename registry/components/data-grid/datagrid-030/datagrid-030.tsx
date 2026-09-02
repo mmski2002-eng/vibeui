@@ -16,6 +16,18 @@ export type Datagrid030Props = Omit<
   days?: string[]
   caption?: string
   scrollHint?: string
+  /** Заголовок панели над графиком. */
+  heading?: string
+  /** Заголовок закреплённой колонки. */
+  leadText?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Коды смен по ключу: компонент несёт русские. */
+  shiftText?: Record<string, string>
+  /** Названия смен по ключу: они же идут в aria-label и в легенду. */
+  shiftNameText?: Record<string, string>
+  /** Пусто — подложки нет, график лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,19 +35,24 @@ export type Datagrid030Props = Omit<
 // колонка — имя сотрудника. Остальное уезжает при прокрутке. В отличие от
 // сетки с закреплёнными обеими сторонами, здесь нечего закреплять справа:
 // день, до которого долистали, важнее итоговой колонки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): график темнеет
+// вместе со страницей и не носит собственной подложки. Непрозрачной остаётся
+// только липкая колонка — сквозь неё не должны просвечивать дни.
 const STYLES = `
 :where([data-vibeui-block="datagrid-030"]){
---vibeui-datagrid-030-bg:oklch(1 0 0);
---vibeui-datagrid-030-fg:oklch(0.23 0.014 250);
---vibeui-datagrid-030-muted:oklch(0.55 0.014 250);
---vibeui-datagrid-030-border:oklch(0.92 0.006 250);
---vibeui-datagrid-030-head:oklch(0.975 0.003 250);
---vibeui-datagrid-030-accent:oklch(0.52 0.14 250);
---vibeui-datagrid-030-day:oklch(0.58 0.14 235);
---vibeui-datagrid-030-night:oklch(0.46 0.09 280);
---vibeui-datagrid-030-off:oklch(0.85 0.006 250);
---vibeui-datagrid-030-vacation:oklch(0.62 0.14 150);
---vibeui-datagrid-030-shadow:oklch(0.23 0.014 250 / 18%);
+--vibeui-datagrid-030-bg:transparent;
+--vibeui-datagrid-030-surface:light-dark(oklch(1 0 0),oklch(0.22 0.012 250));
+--vibeui-datagrid-030-fg:light-dark(oklch(0.23 0.014 250),oklch(0.93 0.006 250));
+--vibeui-datagrid-030-muted:light-dark(oklch(0.55 0.014 250),oklch(0.68 0.012 250));
+--vibeui-datagrid-030-border:light-dark(oklch(0.92 0.006 250),oklch(0.35 0.012 250));
+--vibeui-datagrid-030-head:light-dark(oklch(0.975 0.003 250),oklch(0.27 0.012 250));
+--vibeui-datagrid-030-accent:light-dark(oklch(0.52 0.14 250),oklch(0.75 0.13 250));
+--vibeui-datagrid-030-day:light-dark(oklch(0.58 0.14 235),oklch(0.6 0.14 235));
+--vibeui-datagrid-030-night:light-dark(oklch(0.46 0.09 280),oklch(0.53 0.1 280));
+--vibeui-datagrid-030-off:light-dark(oklch(0.85 0.006 250),oklch(0.4 0.008 250));
+--vibeui-datagrid-030-vacation:light-dark(oklch(0.62 0.14 150),oklch(0.6 0.14 150));
+--vibeui-datagrid-030-shadow:light-dark(oklch(0.23 0.014 250 / 18%),oklch(0 0 0 / 55%));
 --vibeui-datagrid-030-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-030"]{
@@ -75,6 +92,7 @@ background:var(--vibeui-datagrid-030-bg);
    прокрученные дни видно сквозь неё. */
 [data-vibeui-block="datagrid-030"] [data-part="lead"]{
 position:sticky;left:0;z-index:2;min-width:11rem;text-align:left;
+background:var(--vibeui-datagrid-030-surface);
 border-right:1px solid var(--vibeui-datagrid-030-border);
 }
 [data-vibeui-block="datagrid-030"] thead [data-part="lead"]{z-index:3;background:var(--vibeui-datagrid-030-head)}
@@ -117,18 +135,42 @@ to{box-shadow:0.5rem 0 0.75rem -0.5rem var(--vibeui-datagrid-030-shadow)}
 
 const DEFAULT_DAYS = Array.from({ length: 14 }, (_, index) => `${index + 1}`)
 
-const SHIFT_LABEL: Record<Datagrid030Shift, string> = {
+const SHIFT_ORDER: Datagrid030Shift[] = ["day", "night", "off", "vacation"]
+
+const SHIFT_TEXT: Record<string, string> = {
   day: "Д",
   night: "Н",
   off: "В",
   vacation: "О",
 }
 
-const SHIFT_NAME: Record<Datagrid030Shift, string> = {
+const SHIFT_NAME_TEXT: Record<string, string> = {
   day: "дневная смена",
   night: "ночная смена",
   off: "выходной",
   vacation: "отпуск",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 const DEFAULT_ROWS: Datagrid030Row[] = [
@@ -223,6 +265,12 @@ export function Datagrid030({
   days = DEFAULT_DAYS,
   caption = "График смен на две недели",
   scrollHint = "Прокрутите вбок: колонка с именем закреплена",
+  heading = "График смен",
+  leadText = "Сотрудник",
+  scrollLabel = "Таблица графика смен, прокручивается вбок",
+  shiftText = SHIFT_TEXT,
+  shiftNameText = SHIFT_NAME_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -230,6 +278,13 @@ export function Datagrid030({
 }: Datagrid030Props) {
   const palette = {
     ...(accent ? { "--vibeui-datagrid-030-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-030-bg": background,
+          "--vibeui-datagrid-030-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -245,13 +300,13 @@ export function Datagrid030({
         style={palette}
       >
         <div data-part="head">
-          <h3 data-part="title">График смен</h3>
+          <h3 data-part="title">{heading}</h3>
           <p data-part="hint">{scrollHint}</p>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица графика смен, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
@@ -259,7 +314,7 @@ export function Datagrid030({
             <thead>
               <tr>
                 <th scope="col" data-part="lead">
-                  Сотрудник
+                  {leadText}
                 </th>
                 {days.map((day) => (
                   <th key={day} scope="col">
@@ -282,9 +337,11 @@ export function Datagrid030({
                       <span
                         data-part="badge"
                         data-shift={shift}
-                        aria-label={SHIFT_NAME[shift]}
+                        aria-label={
+                          shiftNameText[shift] ?? SHIFT_NAME_TEXT[shift]
+                        }
                       >
-                        {SHIFT_LABEL[shift]}
+                        {shiftText[shift] ?? SHIFT_TEXT[shift]}
                       </span>
                     </td>
                   ))}
@@ -294,10 +351,11 @@ export function Datagrid030({
           </table>
         </div>
         <ul data-part="key">
-          {(Object.keys(SHIFT_LABEL) as Datagrid030Shift[]).map((shift) => (
+          {SHIFT_ORDER.map((shift) => (
             <li key={shift}>
               <span data-part="chip" data-shift={shift} aria-hidden="true" />
-              {SHIFT_LABEL[shift]} — {SHIFT_NAME[shift]}
+              {shiftText[shift] ?? SHIFT_TEXT[shift]} —{" "}
+              {shiftNameText[shift] ?? SHIFT_NAME_TEXT[shift]}
             </li>
           ))}
         </ul>

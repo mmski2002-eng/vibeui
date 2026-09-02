@@ -10,7 +10,19 @@ export type File008Props = Omit<
   label?: string
   current?: string
   meta?: string
+  /** Подпись кнопки выбора нового файла. */
+  replaceText?: string
+  /** Подпись кнопки возврата. */
+  undoText?: string
+  /** Строка с прошлым именем: {name} — прежнее имя файла. */
+  wasText?: string
+  /** Пометка новой, ещё не сохранённой версии. */
+  stagedText?: string
+  /** Пояснение под карточкой, пока замены не было. */
+  hint?: string
   onChange?: (name: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,18 +31,21 @@ export type File008Props = Omit<
 // не вернуть — а перепутать соседние файлы в диалоге проще всего. Здесь
 // прошлое имя остаётся на виду вместе с кнопкой «Вернуть», пока страницу не
 // сохранили: отмена стоит одного нажатия, а не повторного поиска файла.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у карточки
+// по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="file-008"]){
---vibeui-file-008-surface:oklch(1 0 0);
---vibeui-file-008-tile:oklch(0.975 0.004 265);
---vibeui-file-008-fg:oklch(0.23 0.014 265);
---vibeui-file-008-muted:oklch(0.55 0.014 265);
---vibeui-file-008-border:oklch(0.88 0.008 265);
---vibeui-file-008-shell:oklch(0.91 0.006 265);
---vibeui-file-008-accent:oklch(0.5 0.17 300);
+--vibeui-file-008-surface:transparent;
+--vibeui-file-008-tile:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.012 265));
+--vibeui-file-008-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-file-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-file-008-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-file-008-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-file-008-accent:light-dark(oklch(0.5 0.17 300),oklch(0.76 0.15 300));
 --vibeui-file-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: карточку показывают поверх любого фона. */
+/* Панель без собственной заливки: рамка очерчивает карточку на любом фоне. */
 [data-vibeui-block="file-008"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:23rem;box-sizing:border-box;padding:0.875rem;
@@ -86,7 +101,7 @@ overflow:hidden;clip-path:inset(50%);border:0;
 [data-vibeui-block="file-008"] [data-part="undo"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
 padding:0.4375rem 0.625rem;border-radius:0.5rem;
-background:color-mix(in oklab,var(--vibeui-file-008-accent) 7%,oklch(1 0 0));
+background:color-mix(in oklab,var(--vibeui-file-008-accent) 12%,transparent);
 font-size:0.75rem;line-height:1.4;
 }
 [data-vibeui-block="file-008"] [data-part="was"]{
@@ -106,6 +121,28 @@ margin:0;font-size:0.6875rem;line-height:1.4;color:var(--vibeui-file-008-muted);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Замена уже загруженного файла с возвратом прошлой версии одним нажатием.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -113,7 +150,13 @@ export function File008({
   label = "Договор оферты",
   current = "oferta-2025-v4.pdf",
   meta = "PDF · 1,8 МБ · загружен 12 марта",
+  replaceText = "Заменить",
+  undoText = "Вернуть",
+  wasText = "Было: {name}",
+  stagedText = "Новая версия, ещё не сохранена",
+  hint = "Замена не удаляет прошлую версию — она остаётся в истории документа.",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -125,6 +168,12 @@ export function File008({
 
   const palette = {
     ...(accent ? { "--vibeui-file-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-file-008-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -158,12 +207,10 @@ export function File008({
           <span data-part="sheet" aria-hidden="true" />
           <span data-part="body">
             <span data-part="name">{name}</span>
-            <span data-part="meta">
-              {previous ? "Новая версия, ещё не сохранена" : meta}
-            </span>
+            <span data-part="meta">{previous ? stagedText : meta}</span>
           </span>
           <label htmlFor={id}>
-            Заменить
+            {replaceText}
             <input
               id={id}
               type="file"
@@ -175,15 +222,13 @@ export function File008({
 
         {previous ? (
           <p data-part="undo" role="status">
-            <span data-part="was">Было: {previous}</span>
+            <span data-part="was">{wasText.replace("{name}", previous)}</span>
             <button type="button" onClick={undo}>
-              Вернуть
+              {undoText}
             </button>
           </p>
         ) : (
-          <p data-part="hint">
-            Замена не удаляет прошлую версию — она остаётся в истории документа.
-          </p>
+          <p data-part="hint">{hint}</p>
         )}
       </div>
     </>

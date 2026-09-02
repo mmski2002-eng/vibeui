@@ -17,6 +17,10 @@ export type Select031Props = Omit<
   options?: Select031Option[]
   defaultValue?: string
   storageKey?: string
+  /** Метка чипа с прошлым выбором: компонент несёт русскую. */
+  recentText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,14 +31,15 @@ export type Select031Props = Omit<
 // зависит от localStorage и остаётся предсказуемым.
 const STYLES = `
 :where([data-vibeui-block="select-031"]){
---vibeui-select-031-surface:oklch(1 0 0);
---vibeui-select-031-surface-border:oklch(0.91 0.006 265);
---vibeui-select-031-fg:oklch(0.22 0.014 265);
---vibeui-select-031-muted:oklch(0.55 0.014 265);
---vibeui-select-031-field:oklch(0.985 0.002 265);
---vibeui-select-031-border:oklch(0.87 0.008 265);
---vibeui-select-031-accent:oklch(0.55 0.19 262);
---vibeui-select-031-tint:oklch(0.55 0.19 262 / 12%);
+--vibeui-select-031-surface:transparent;
+--vibeui-select-031-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-select-031-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-select-031-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-031-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-select-031-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.012 265));
+--vibeui-select-031-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
+--vibeui-select-031-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.012 265));
+--vibeui-select-031-tint:color-mix(in oklab,var(--vibeui-select-031-accent) 12%,transparent);
 --vibeui-select-031-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="select-031"]{
@@ -80,7 +85,7 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-select-031-accent) 22%,tran
 }
 [data-vibeui-block="select-031"] [data-part="recent-tag"]{
 padding:0.0625rem 0.375rem;border-radius:9999px;
-background:var(--vibeui-select-031-accent);color:var(--vibeui-select-031-surface);
+background:var(--vibeui-select-031-accent);color:var(--vibeui-select-031-on-accent);
 font-size:0.625rem;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="select-031"] *{animation:none!important;transition:none!important}}
@@ -94,6 +99,28 @@ const DEFAULT_OPTIONS: Select031Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Select, который помнит последний выбор в localStorage и предлагает его
  * чипом «Недавнее» — применить можно одним кликом, а не заново листать
  * список. Один файл, ноль зависимостей, клиентский компонент.
@@ -104,6 +131,8 @@ export function Select031({
   options = DEFAULT_OPTIONS,
   defaultValue = options[0]?.value,
   storageKey = "vibeui-select-031-recent",
+  recentText = "Недавнее",
+  background = "",
   accent,
   id,
   className,
@@ -144,6 +173,12 @@ export function Select031({
 
   const palette = {
     ...(accent ? { "--vibeui-select-031-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-select-031-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -182,7 +217,7 @@ export function Select031({
             data-part="recent"
             onClick={() => commitValue(recentOption.value)}
           >
-            <span data-part="recent-tag">Недавнее</span>
+            <span data-part="recent-tag">{recentText}</span>
             {recentOption.label}
           </button>
         ) : null}

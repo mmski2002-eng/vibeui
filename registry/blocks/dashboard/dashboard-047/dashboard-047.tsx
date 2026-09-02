@@ -27,6 +27,18 @@ export type Dashboard047Props = {
   retryLabel?: string
   dropLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Заголовок раздела упавших задач. */
+  failuresTitle?: string
+  /** Подписи счётчиков очереди по ключам. */
+  statsText?: Record<string, string>
+  /** Шаблон подписи полосы: {name}, {waiting} и {limit}. */
+  depthAriaText?: string
+  /** Шаблон подсказки попыток: {attempt} и {attempts}. */
+  attemptTitleText?: string
+  /** Шаблон строки попытки: {attempt}, {attempts} и {next}. */
+  attemptText?: string
   className?: string
   style?: CSSProperties
 }
@@ -41,14 +53,17 @@ export type Dashboard047Props = {
 // него ручной перезапуск чаще всего не нужен.
 const STYLES = `
 :where([data-vibeui-block="dashboard-047"]){
---vibeui-dashboard-047-bg:oklch(0.985 0.003 285);
---vibeui-dashboard-047-card:oklch(1 0 0);
---vibeui-dashboard-047-fg:oklch(0.22 0.014 285);
---vibeui-dashboard-047-muted:oklch(0.55 0.014 285);
---vibeui-dashboard-047-border:oklch(0.91 0.006 285);
---vibeui-dashboard-047-accent:oklch(0.52 0.16 285);
---vibeui-dashboard-047-soft:oklch(0.96 0.02 285);
---vibeui-dashboard-047-bad:oklch(0.58 0.19 25);
+--vibeui-dashboard-047-bg:transparent;
+/* Плитки и жёлоб полосы: подложка блока прозрачна, и рисовать их ею нечем. */
+--vibeui-dashboard-047-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 285));
+--vibeui-dashboard-047-track:light-dark(oklch(0.96 0.005 285),oklch(0.21 0.012 285));
+--vibeui-dashboard-047-fg:light-dark(oklch(0.22 0.014 285),oklch(0.94 0.005 285));
+--vibeui-dashboard-047-muted:light-dark(oklch(0.55 0.014 285),oklch(0.72 0.012 285));
+--vibeui-dashboard-047-border:light-dark(oklch(0.91 0.006 285),oklch(0.36 0.012 285));
+--vibeui-dashboard-047-accent:light-dark(oklch(0.52 0.16 285),oklch(0.75 0.14 285));
+--vibeui-dashboard-047-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 285));
+--vibeui-dashboard-047-soft:light-dark(oklch(0.96 0.02 285),oklch(0.32 0.045 285));
+--vibeui-dashboard-047-bad:light-dark(oklch(0.58 0.19 25),oklch(0.73 0.17 25));
 --vibeui-dashboard-047-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-dashboard-047-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;
@@ -81,7 +96,7 @@ font-size:0.6875rem;color:var(--vibeui-dashboard-047-muted);text-align:right;whi
 [data-vibeui-block="dashboard-047"] [data-part="depth"]{grid-column:1/-1;display:grid;gap:0.25rem}
 [data-vibeui-block="dashboard-047"] [data-part="track"]{
 height:0.4375rem;border-radius:9999px;overflow:hidden;
-background:var(--vibeui-dashboard-047-bg);
+background:var(--vibeui-dashboard-047-track);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-047-border);
 }
 [data-vibeui-block="dashboard-047"] [data-part="fill"]{
@@ -131,7 +146,7 @@ font-size:0.625rem;color:var(--vibeui-dashboard-047-muted);
 [data-vibeui-block="dashboard-047"] [data-part="retry"]{
 appearance:none;border:0;cursor:pointer;font:inherit;
 font-size:0.6875rem;font-weight:700;padding:0.3125rem 0.625rem;border-radius:0.4375rem;
-background:var(--vibeui-dashboard-047-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-047-accent);color:var(--vibeui-dashboard-047-on-accent);
 }
 [data-vibeui-block="dashboard-047"] [data-part="drop"]{
 appearance:none;cursor:pointer;font:inherit;
@@ -215,6 +230,35 @@ const DEFAULT_FAILURES: Dashboard047Failure[] = [
   },
 ]
 
+const STATS_LABEL: Record<string, string> = {
+  waiting: "в очереди",
+  running: "в работе",
+  failed: "упало",
+  wait: "ожидание",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Экран очередей задач: глубина очереди полосой от предела и разбор упавших
  * задач с точками попыток и временем следующего повтора. Один файл, ноль
@@ -228,11 +272,23 @@ export function Dashboard047({
   retryLabel = "Повторить",
   dropLabel = "Снять",
   accent,
+  background = "",
+  failuresTitle = "Упавшие задачи и повторы",
+  statsText = STATS_LABEL,
+  depthAriaText = "{name}: {waiting} задач в очереди из {limit}",
+  attemptTitleText = "Попытка {attempt} из {attempts}",
+  attemptText = "попытка {attempt} из {attempts} · {next}",
   className,
   style,
 }: Dashboard047Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-047-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-047-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -276,22 +332,28 @@ export function Dashboard047({
                       aria-valuenow={queue.waiting}
                       aria-valuemin={0}
                       aria-valuemax={queue.limit}
-                      aria-label={`${queue.name}: ${queue.waiting} задач в очереди из ${queue.limit}`}
+                      aria-label={depthAriaText
+                        .replace("{name}", queue.name)
+                        .replace("{waiting}", String(queue.waiting))
+                        .replace("{limit}", String(queue.limit))}
                     >
                       <span data-part="fill" style={{ width: `${share}%` }} />
                     </div>
                     <p data-part="nums">
                       <span>
-                        в очереди <b>{queue.waiting}</b>
+                        {statsText.waiting ?? STATS_LABEL.waiting}{" "}
+                        <b>{queue.waiting}</b>
                       </span>
                       <span>
-                        в работе <b>{queue.running}</b>
+                        {statsText.running ?? STATS_LABEL.running}{" "}
+                        <b>{queue.running}</b>
                       </span>
                       <span data-bad={queue.failed > 0 ? "" : undefined}>
-                        упало <b>{queue.failed}</b>
+                        {statsText.failed ?? STATS_LABEL.failed}{" "}
+                        <b>{queue.failed}</b>
                       </span>
                       <span>
-                        ожидание <b>{queue.wait}</b>
+                        {statsText.wait ?? STATS_LABEL.wait} <b>{queue.wait}</b>
                       </span>
                     </p>
                   </div>
@@ -301,7 +363,7 @@ export function Dashboard047({
           </div>
 
           <div data-part="fails">
-            <h3>Упавшие задачи и повторы</h3>
+            <h3>{failuresTitle}</h3>
             {failures.map((failure) => (
               <div key={failure.job} data-part="fail">
                 <span data-part="job">{failure.job}</span>
@@ -310,7 +372,9 @@ export function Dashboard047({
                 <span data-part="tries">
                   <span
                     data-part="dots"
-                    title={`Попытка ${failure.attempt} из ${failure.attempts}`}
+                    title={attemptTitleText
+                      .replace("{attempt}", String(failure.attempt))
+                      .replace("{attempts}", String(failure.attempts))}
                   >
                     {Array.from({ length: failure.attempts }).map(
                       (_, index) => (
@@ -323,8 +387,10 @@ export function Dashboard047({
                     )}
                   </span>
                   <span data-part="when">
-                    попытка {failure.attempt} из {failure.attempts} ·{" "}
-                    {failure.nextTry}
+                    {attemptText
+                      .replace("{attempt}", String(failure.attempt))
+                      .replace("{attempts}", String(failure.attempts))
+                      .replace("{next}", failure.nextTry)}
                   </span>
                 </span>
 

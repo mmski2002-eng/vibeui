@@ -14,6 +14,10 @@ export type Contact004Props = {
   formHint?: string
   submitLabel?: string
   responseNote?: string
+  /** Подписи полей: компонент несёт русские, проект подставляет свои. */
+  fieldText?: Record<string, string>
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -35,13 +39,15 @@ export type Contact004Props = {
 // вызывающий код, блок несёт разметку и нативную проверку.
 const STYLES = `
 :where([data-vibeui-block="contact-004"]){
---vibeui-contact-004-bg:oklch(1 0 0);
---vibeui-contact-004-soft:oklch(0.975 0.004 265);
---vibeui-contact-004-fg:oklch(0.2 0.014 265);
---vibeui-contact-004-muted:oklch(0.52 0.014 265);
---vibeui-contact-004-border:oklch(0.9 0.006 265);
---vibeui-contact-004-accent:oklch(0.5 0.15 200);
---vibeui-contact-004-alarm:oklch(0.55 0.19 25);
+--vibeui-contact-004-bg:transparent;
+--vibeui-contact-004-card:light-dark(oklch(1 0 0),oklch(0.23 0.012 265));
+--vibeui-contact-004-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.01 265));
+--vibeui-contact-004-fg:light-dark(oklch(0.2 0.014 265),oklch(0.94 0.005 265));
+--vibeui-contact-004-muted:light-dark(oklch(0.52 0.014 265),oklch(0.72 0.012 265));
+--vibeui-contact-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-contact-004-accent:light-dark(oklch(0.5 0.15 200),oklch(0.76 0.12 200));
+--vibeui-contact-004-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 200));
+--vibeui-contact-004-alarm:light-dark(oklch(0.55 0.19 25),oklch(0.73 0.16 25));
 --vibeui-contact-004-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -67,7 +73,7 @@ margin:0.5rem 0 1.25rem;max-width:46ch;font-size:0.9375rem;line-height:1.65;colo
 [data-vibeui-block="contact-004"] [data-part="list"]{display:grid;gap:0.5rem}
 [data-vibeui-block="contact-004"] details{
 border:1px solid var(--vibeui-contact-004-border);border-radius:0.875rem;
-background:var(--vibeui-contact-004-bg);
+background:var(--vibeui-contact-004-card);
 transition:border-color .16s ease;
 }
 [data-vibeui-block="contact-004"] details[open]{border-color:color-mix(in oklab,var(--vibeui-contact-004-accent) 40%,var(--vibeui-contact-004-border))}
@@ -108,7 +114,7 @@ margin:0;font-size:0.8125rem;line-height:1.55;color:var(--vibeui-contact-004-mut
 [data-vibeui-block="contact-004"] textarea{
 width:100%;padding:0.5625rem 0.75rem;border-radius:0.6875rem;
 border:1px solid var(--vibeui-contact-004-border);
-background:var(--vibeui-contact-004-bg);color:inherit;font:inherit;font-size:0.875rem;
+background:var(--vibeui-contact-004-card);color:inherit;font:inherit;font-size:0.875rem;
 }
 [data-vibeui-block="contact-004"] textarea{min-height:5rem;resize:vertical;line-height:1.55}
 [data-vibeui-block="contact-004"] input:user-invalid,
@@ -124,7 +130,7 @@ position:static;width:auto;height:auto;clip-path:none;
 [data-vibeui-block="contact-004"] button{
 appearance:none;cursor:pointer;border:0;
 height:2.625rem;padding:0 1.125rem;border-radius:0.6875rem;
-background:var(--vibeui-contact-004-accent);color:oklch(1 0 0);
+background:var(--vibeui-contact-004-accent);color:var(--vibeui-contact-004-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="contact-004"] [data-part="response"]{
@@ -166,6 +172,38 @@ const DEFAULT_QUESTIONS: Contact004Question[] = [
   },
 ]
 
+const FIELD_TEXT: Record<string, string> = {
+  email: "Почта для ответа",
+  emailPlaceholder: "you@company.ru",
+  emailError: "Проверьте адрес: нужен символ @ и домен.",
+  question: "Вопрос",
+  questionPlaceholder:
+    "Например: как перенести историю заказов из старой системы?",
+  questionError: "Одного слова мало — напишите вопрос целиком.",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Частые вопросы и короткая форма для тех, кто ответа не нашёл.
  * Один файл, ноль зависимостей, отправку реализует вызывающий код.
@@ -179,12 +217,21 @@ export function Contact004({
   formHint = "Опишите вопрос своими словами — ответим на почту.",
   submitLabel = "Отправить вопрос",
   responseNote = "Отвечаем в рабочие дни, обычно за несколько часов.",
+  fieldText,
+  background = "",
   accent,
   className,
   style,
 }: Contact004Props) {
+  const labels = { ...FIELD_TEXT, ...fieldText }
   const palette = {
     ...(accent ? { "--vibeui-contact-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-contact-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -223,33 +270,33 @@ export function Contact004({
             <p data-part="form-hint">{formHint}</p>
 
             <div data-part="field">
-              <label htmlFor="contact-004-email">Почта для ответа</label>
+              <label htmlFor="contact-004-email">{labels.email}</label>
               <input
                 id="contact-004-email"
                 type="email"
                 name="email"
                 required
                 autoComplete="email"
-                placeholder="you@company.ru"
+                placeholder={labels.emailPlaceholder}
                 aria-describedby="contact-004-email-error"
               />
               <span id="contact-004-email-error" data-part="error">
-                Проверьте адрес: нужен символ @ и домен.
+                {labels.emailError}
               </span>
             </div>
 
             <div data-part="field">
-              <label htmlFor="contact-004-question">Вопрос</label>
+              <label htmlFor="contact-004-question">{labels.question}</label>
               <textarea
                 id="contact-004-question"
                 name="question"
                 required
                 minLength={10}
-                placeholder="Например: как перенести историю заказов из старой системы?"
+                placeholder={labels.questionPlaceholder}
                 aria-describedby="contact-004-question-error"
               />
               <span id="contact-004-question-error" data-part="error">
-                Одного слова мало — напишите вопрос целиком.
+                {labels.questionError}
               </span>
             </div>
 

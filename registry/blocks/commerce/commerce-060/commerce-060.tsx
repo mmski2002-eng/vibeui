@@ -35,6 +35,8 @@ export type Commerce060Props = {
   cta?: string
   note?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -48,13 +50,14 @@ export type Commerce060Props = {
 // пересчитать итог нечем, а спрятать разницу — значит соврать.
 const STYLES = `
 :where([data-vibeui-block="commerce-060"]){
---vibeui-commerce-060-bg:oklch(1 0 0);
---vibeui-commerce-060-fg:oklch(0.21 0.014 200);
---vibeui-commerce-060-muted:oklch(0.53 0.016 200);
---vibeui-commerce-060-border:oklch(0.9 0.008 200);
---vibeui-commerce-060-soft:oklch(0.972 0.006 200);
---vibeui-commerce-060-accent:oklch(0.48 0.12 200);
---vibeui-commerce-060-late:oklch(0.56 0.13 60);
+--vibeui-commerce-060-bg:transparent;
+--vibeui-commerce-060-fg:light-dark(oklch(0.21 0.014 200),oklch(0.94 0.006 200));
+--vibeui-commerce-060-muted:light-dark(oklch(0.53 0.016 200),oklch(0.73 0.013 200));
+--vibeui-commerce-060-border:light-dark(oklch(0.9 0.008 200),oklch(0.38 0.014 200));
+--vibeui-commerce-060-soft:light-dark(oklch(0.972 0.006 200),oklch(0.27 0.012 200));
+--vibeui-commerce-060-accent:light-dark(oklch(0.48 0.12 200),oklch(0.74 0.12 200));
+--vibeui-commerce-060-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.03 200));
+--vibeui-commerce-060-late:light-dark(oklch(0.56 0.13 60),oklch(0.81 0.12 70));
 --vibeui-commerce-060-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -106,7 +109,7 @@ box-shadow:inset 0 0 0 1px var(--vibeui-commerce-060-accent);
 [data-vibeui-block="commerce-060"] [data-part="prices"] strong{font-weight:750;font-variant-numeric:tabular-nums}
 [data-vibeui-block="commerce-060"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;height:2.875rem;padding:0 1.75rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-060-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-060-accent);color:var(--vibeui-commerce-060-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-060"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-commerce-060-accent);outline-offset:2px}
 [data-vibeui-block="commerce-060"] [data-part="note"]{margin:0.875rem 0 0;max-width:56ch;font-size:0.75rem;line-height:1.5;color:var(--vibeui-commerce-060-muted)}
@@ -117,6 +120,28 @@ background:var(--vibeui-commerce-060-accent);color:oklch(0.99 0 0);font:inherit;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-060"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_PARCELS: Commerce060Parcel[] = [
   {
@@ -192,11 +217,18 @@ export function Commerce060({
   cta = "Перейти к оплате",
   note = "Сумма товаров одинаковая в обоих вариантах: различается только доставка. Разделение посылок нельзя отменить после оформления — курьерская служба забирает груз сразу.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce060Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-060-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-060-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

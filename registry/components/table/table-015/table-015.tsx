@@ -16,8 +16,16 @@ export type Table015Props = Omit<
   notes?: string[]
   notesTitle?: string
   caption?: string
+  /** Заголовки колонок: ключи title, value и share. */
+  columnText?: Record<string, string>
+  /** Подпись маркера сноски для озвучки; {n} — номер сноски. */
+  noteLabel?: string
+  /** Подпись обратной ссылки; {n} — номер сноски. */
+  backLabel?: string
   /** Префикс id: два экземпляра на странице не должны делить якоря сносок. */
   idPrefix?: string
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,14 +33,17 @@ export type Table015Props = Omit<
 // — настоящая ссылка на пункт списка под таблицей, у пункта есть обратная
 // ссылка, а ячейка связана со сноской через aria-describedby: скринридер
 // прочитает пояснение сразу, не уводя пользователя из строки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-015"]){
---vibeui-table-015-bg:oklch(1 0 0);
---vibeui-table-015-fg:oklch(0.24 0.014 265);
---vibeui-table-015-muted:oklch(0.56 0.014 265);
---vibeui-table-015-border:oklch(0.92 0.006 265);
---vibeui-table-015-head:oklch(0.975 0.003 265);
---vibeui-table-015-accent:oklch(0.55 0.2 262);
+--vibeui-table-015-bg:transparent;
+--vibeui-table-015-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-015-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-table-015-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
+--vibeui-table-015-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-015-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
 --vibeui-table-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="table-015"]{
@@ -100,11 +111,39 @@ const DEFAULT_ROWS: Table015Row[] = [
   { title: "Отток за квартал", value: "3,4%", share: "−0,6 п. п.", note: 3 },
 ]
 
+const DEFAULT_COLUMNS: Record<string, string> = {
+  title: "Показатель",
+  value: "Значение",
+  share: "К прошлому",
+}
+
 const DEFAULT_NOTES = [
   "Учитываются команды хотя бы с одной оплатой за последние 90 дней.",
   "Без учёта разовых продлений и партнёрских скидок.",
   "Пункты процента, а не проценты: сравнение с прошлым кварталом.",
 ]
+
+/**
+ * Ветка темы для заданного фона: light-dark() смотрит на color-scheme, а не
+ * на цвет подложки, поэтому светлую плашку приходится объявлять светлой.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Таблица со сносками под ней: маркеры — якорные ссылки, у пунктов есть возврат.
@@ -115,7 +154,11 @@ export function Table015({
   notes = DEFAULT_NOTES,
   notesTitle = "Примечания",
   caption = "Показатели за III квартал",
+  columnText = DEFAULT_COLUMNS,
+  noteLabel = "Сноска {n}",
+  backLabel = "Вернуться к строке со сноской {n}",
   idPrefix = "table-015",
+  background = "",
   accent,
   className,
   style,
@@ -123,6 +166,12 @@ export function Table015({
 }: Table015Props) {
   const palette = {
     ...(accent ? { "--vibeui-table-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-table-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -148,12 +197,14 @@ export function Table015({
               <caption>{caption}</caption>
               <thead>
                 <tr>
-                  <th scope="col">Показатель</th>
-                  <th scope="col" data-align="end">
-                    Значение
+                  <th scope="col">
+                    {columnText.title ?? DEFAULT_COLUMNS.title}
                   </th>
                   <th scope="col" data-align="end">
-                    К прошлому
+                    {columnText.value ?? DEFAULT_COLUMNS.value}
+                  </th>
+                  <th scope="col" data-align="end">
+                    {columnText.share ?? DEFAULT_COLUMNS.share}
                   </th>
                 </tr>
               </thead>
@@ -172,7 +223,10 @@ export function Table015({
                           <a
                             id={`${idPrefix}-ref-${row.note}`}
                             href={`#${idPrefix}-note-${row.note}`}
-                            aria-label={`Сноска ${row.note}`}
+                            aria-label={noteLabel.replace(
+                              "{n}",
+                              String(row.note),
+                            )}
                           >
                             {row.note}
                           </a>
@@ -194,7 +248,7 @@ export function Table015({
                 <a
                   data-part="back"
                   href={`#${idPrefix}-ref-${index + 1}`}
-                  aria-label={`Вернуться к строке со сноской ${index + 1}`}
+                  aria-label={backLabel.replace("{n}", String(index + 1))}
                 >
                   ↩
                 </a>

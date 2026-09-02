@@ -9,6 +9,17 @@ export type Auth010Props = {
   submit?: string
   cooldown?: number
   steps?: string[]
+  emailLabel?: string
+  emailPlaceholder?: string
+  /** Заголовок колонки с шагами. */
+  stepsTitle?: string
+  /** Подпись кнопки во время отсчёта; {left} — секунды. */
+  waitTemplate?: string
+  /** Сообщение после отправки; {left} — секунды до повтора. */
+  sentTemplate?: string
+  back?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -26,15 +37,21 @@ export type Auth010Props = {
 // из которых рабочей будет только последняя.
 //
 // Демонстрация интерфейса: письма не отправляются, лимит нужен и на сервере.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не выкладывает под себя плашку — подложка приходит
+// пропом background.
 const STYLES = `
 :where([data-vibeui-block="auth-010"]){
---vibeui-auth-010-bg:oklch(0.96 0.008 90);
---vibeui-auth-010-card:oklch(1 0 0);
---vibeui-auth-010-side:oklch(0.98 0.012 90);
---vibeui-auth-010-fg:oklch(0.24 0.016 60);
---vibeui-auth-010-muted:oklch(0.54 0.014 60);
---vibeui-auth-010-border:oklch(0.89 0.01 80);
---vibeui-auth-010-accent:oklch(0.56 0.15 42);
+--vibeui-auth-010-bg:transparent;
+--vibeui-auth-010-card:light-dark(oklch(1 0 0),oklch(0.23 0.012 60));
+--vibeui-auth-010-side:light-dark(oklch(0.98 0.012 90),oklch(0.27 0.014 60));
+--vibeui-auth-010-fg:light-dark(oklch(0.24 0.016 60),oklch(0.94 0.006 60));
+--vibeui-auth-010-muted:light-dark(oklch(0.54 0.014 60),oklch(0.7 0.013 60));
+--vibeui-auth-010-border:light-dark(oklch(0.89 0.01 80),oklch(0.35 0.012 70));
+--vibeui-auth-010-accent:light-dark(oklch(0.56 0.15 42),oklch(0.77 0.13 42));
+--vibeui-auth-010-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.02 60));
+--vibeui-auth-010-accent-wash:light-dark(oklch(0.56 0.15 42 / 9%),oklch(0.77 0.13 42 / 16%));
 --vibeui-auth-010-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -71,7 +88,7 @@ background:var(--vibeui-auth-010-card);color:inherit;font:inherit;font-size:0.87
 [data-vibeui-block="auth-010"] [data-part="submit"]{
 width:100%;appearance:none;cursor:pointer;height:2.75rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-010-accent);color:oklch(1 0 0);
+background:var(--vibeui-auth-010-accent);color:var(--vibeui-auth-010-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 transition:opacity .16s ease;
 }
@@ -79,7 +96,7 @@ transition:opacity .16s ease;
 [data-vibeui-block="auth-010"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-auth-010-accent);outline-offset:2px}
 [data-vibeui-block="auth-010"] [data-part="status"]{
 display:flex;gap:0.5rem;margin:1rem 0 0;padding:0.6875rem 0.8125rem;
-border-radius:0.625rem;background:oklch(0.56 0.15 42 / 9%);
+border-radius:0.625rem;background:var(--vibeui-auth-010-accent-wash);
 font-size:0.8125rem;line-height:1.45;
 }
 [data-vibeui-block="auth-010"] ol{list-style:none;counter-reset:s;margin:0;padding:0;display:flex;flex-direction:column;gap:0.875rem}
@@ -103,6 +120,28 @@ const DEFAULT_STEPS = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Запрос ссылки на смену пароля с колонкой «что будет дальше»
  * и обратным отсчётом до повторной отправки. Один файл, ноль зависимостей.
  */
@@ -112,6 +151,13 @@ export function Auth010({
   submit = "Прислать ссылку",
   cooldown = 45,
   steps = DEFAULT_STEPS,
+  emailLabel = "Почта аккаунта",
+  emailPlaceholder = "name@company.ru",
+  stepsTitle = "Что будет дальше",
+  waitTemplate = "Повтор через {left} с",
+  sentTemplate = "Если такой адрес зарегистрирован, письмо уже отправлено. Отправить ещё раз можно через {left} с.",
+  back = "Вспомнил пароль — вернуться ко входу",
+  background = "",
   accent,
   className,
   style,
@@ -130,6 +176,12 @@ export function Auth010({
 
   const palette = {
     ...(accent ? { "--vibeui-auth-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -155,36 +207,35 @@ export function Auth010({
               }}
             >
               <div data-part="field">
-                <label htmlFor="vibeui-auth-010-email">Почта аккаунта</label>
+                <label htmlFor="vibeui-auth-010-email">{emailLabel}</label>
                 <input
                   id="vibeui-auth-010-email"
                   name="email"
                   type="email"
                   autoComplete="username"
-                  placeholder="name@company.ru"
+                  placeholder={emailPlaceholder}
                   required
                 />
               </div>
               <button type="submit" data-part="submit" disabled={left > 0}>
-                {left > 0 ? `Повтор через ${left} с` : submit}
+                {left > 0
+                  ? waitTemplate.replace("{left}", String(left))
+                  : submit}
               </button>
             </form>
             {left > 0 ? (
               <p data-part="status" role="status">
                 <span aria-hidden="true">✓</span>
-                <span>
-                  Если такой адрес зарегистрирован, письмо уже отправлено.
-                  Отправить ещё раз можно через {left} с.
-                </span>
+                <span>{sentTemplate.replace("{left}", String(left))}</span>
               </p>
             ) : null}
             <a data-part="back" href="#">
-              Вспомнил пароль — вернуться ко входу
+              {back}
             </a>
           </div>
 
           <aside data-part="aside">
-            <h3>Что будет дальше</h3>
+            <h3>{stepsTitle}</h3>
             <ol>
               {steps.map((step) => (
                 <li key={step}>

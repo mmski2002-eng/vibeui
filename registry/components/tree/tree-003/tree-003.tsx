@@ -9,6 +9,9 @@ export type Tree003Node = {
 export type Tree003Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
   nodes?: Tree003Node[]
   label?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  accent?: string
 }
 
 // Идея компонента: дерево разделов вообще без клиентского кода. Раскрытие
@@ -16,15 +19,18 @@ export type Tree003Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
 // гидратации и находится встроенным поиском браузера. aria-level проставлен
 // явно при обходе: из вложенности details скринридер глубину не выводит.
 // В бейдже — число страниц во всей ветке, а не только в первом её уровне.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="tree-003"]){
---vibeui-tree-003-bg:oklch(1 0 0);
---vibeui-tree-003-fg:oklch(0.24 0.014 265);
---vibeui-tree-003-muted:oklch(0.56 0.014 265);
---vibeui-tree-003-border:oklch(0.9 0.006 265);
---vibeui-tree-003-hover:oklch(0.97 0.004 265);
---vibeui-tree-003-chip:oklch(0.955 0.004 265);
---vibeui-tree-003-accent:oklch(0.55 0.17 265);
+--vibeui-tree-003-bg:transparent;
+--vibeui-tree-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-tree-003-muted:light-dark(oklch(0.56 0.014 265),oklch(0.67 0.012 265));
+--vibeui-tree-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-tree-003-hover:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.01 265));
+--vibeui-tree-003-chip:light-dark(oklch(0.955 0.004 265),oklch(0.32 0.012 265));
+--vibeui-tree-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-tree-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="tree-003"]{
@@ -151,16 +157,51 @@ function renderNodes(nodes: Tree003Node[], level: number) {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Дерево разделов на нативных details: серверный рендер без клиентского кода.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tree003({
   nodes = DEFAULT_NODES,
   label = "Документация",
+  background = "",
+  accent,
   className,
   style,
   ...props
 }: Tree003Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-tree-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tree-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-tree-003" precedence="medium">
@@ -170,7 +211,7 @@ export function Tree003({
         {...props}
         data-vibeui-block="tree-003"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="caption">{label}</span>
         <div role="tree" aria-label={label}>

@@ -12,18 +12,33 @@ export type Hovercard004Props = Omit<
   languageColor?: string
   stars?: string
   forks?: string
+  /** Текст строки до ссылки. */
+  leadText?: string
+  /** Текст строки после ссылки. */
+  tailText?: string
+  /** Подпись у счётчика звёзд. */
+  starsLabel?: string
+  /** Подпись у счётчика форков. */
+  forksLabel?: string
+  accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: карточка репозитория у ссылки вида владелец/имя. Владелец
 // набран тонко, имя — жирно: так пара читается одним взглядом. Язык помечен
 // точкой и словом, потому что цветная точка без подписи ничего не говорит.
+//
+// Тема берётся из color-scheme окружения через light-dark(): собственной
+// тёмной темы у компонента нет, он следует за страницей.
 const STYLES = `
 :where([data-vibeui-block="hovercard-004"]){
---vibeui-hovercard-004-bg:oklch(1 0 0);
---vibeui-hovercard-004-fg:oklch(0.22 0.014 265);
---vibeui-hovercard-004-muted:oklch(0.53 0.014 265);
---vibeui-hovercard-004-border:oklch(0.9 0.006 265);
---vibeui-hovercard-004-accent:oklch(0.5 0.16 260);
+--vibeui-hovercard-004-bg:transparent;
+--vibeui-hovercard-004-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-hovercard-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-hovercard-004-muted:light-dark(oklch(0.53 0.014 265),oklch(0.71 0.012 265));
+--vibeui-hovercard-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-hovercard-004-accent:light-dark(oklch(0.5 0.16 260),oklch(0.76 0.13 260));
 --vibeui-hovercard-004-lang:oklch(0.72 0.15 85);
 --vibeui-hovercard-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-hovercard-004-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -51,7 +66,7 @@ position:absolute;left:0;top:calc(100% + 0.5rem);z-index:20;
 display:flex;flex-direction:column;gap:0.4375rem;
 width:18rem;box-sizing:border-box;padding:0.8125rem 0.875rem;
 border:1px solid var(--vibeui-hovercard-004-border);border-radius:0.875rem;
-background:var(--vibeui-hovercard-004-bg);
+background:var(--vibeui-hovercard-004-card);
 box-shadow:0 22px 46px -28px oklch(0.2 0.02 265 / 55%);
 opacity:0;visibility:hidden;translate:0 -0.25rem;
 transition:opacity .15s ease,translate .15s ease,visibility .15s;
@@ -79,6 +94,28 @@ box-shadow:inset 0 0 0 1px oklch(0 0 0 / 10%);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Карточка репозитория у ссылки владелец/имя: описание, язык и счётчики.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -90,12 +127,25 @@ export function Hovercard004({
   languageColor = "oklch(0.62 0.14 250)",
   stars = "3.1k",
   forks = "214",
+  leadText = "Исходники лежат в ",
+  tailText = " — наведите, чтобы не открывать вкладку ради описания.",
+  starsLabel = "звёзд",
+  forksLabel = "форков",
+  accent,
+  background = "",
   className,
   style,
   ...props
 }: Hovercard004Props) {
   const palette = {
     "--vibeui-hovercard-004-lang": languageColor,
+    ...(accent ? { "--vibeui-hovercard-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-hovercard-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -111,7 +161,7 @@ export function Hovercard004({
         style={palette}
       >
         <p data-part="line">
-          Исходники лежат в{" "}
+          {leadText}
           <span data-part="host">
             <a
               data-part="link"
@@ -136,15 +186,15 @@ export function Hovercard004({
                   {language}
                 </span>
                 <span data-part="stat">
-                  <span aria-hidden="true">★</span> <b>{stars}</b> звёзд
+                  <span aria-hidden="true">★</span> <b>{stars}</b> {starsLabel}
                 </span>
                 <span data-part="stat">
-                  <span aria-hidden="true">⑂</span> <b>{forks}</b> форков
+                  <span aria-hidden="true">⑂</span> <b>{forks}</b> {forksLabel}
                 </span>
               </span>
             </span>
-          </span>{" "}
-          — наведите, чтобы не открывать вкладку ради описания.
+          </span>
+          {tailText}
         </p>
       </div>
     </>

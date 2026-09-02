@@ -10,20 +10,31 @@ export type Toast005Props = Omit<
   retryLabel?: string
   /** Технические подробности под раскрытием: код, адрес, время. */
   details?: string
+  /** Подпись строки раскрытия. */
+  detailsLabel?: string
   onRetry?: () => void
+  /** Цвет тона ошибки: грань, значок и кнопка повтора. */
+  tone?: string
+  /** Пусто — подложка берётся из темы окружения. */
+  background?: string
 }
 
 // Идея компонента: уведомление об ошибке, из которого можно выйти. Действие
 // «Повторить» стоит первым, а технические подробности спрятаны в <details> —
 // они нужны раз в сто ошибок и не должны занимать место в остальных случаях.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
+// граница карточки светлее её подложки, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="toast-005"]){
---vibeui-toast-005-bg:oklch(0.99 0.008 25);
---vibeui-toast-005-fg:oklch(0.26 0.03 25);
---vibeui-toast-005-muted:oklch(0.5 0.03 25);
---vibeui-toast-005-border:oklch(0.87 0.04 25);
---vibeui-toast-005-tone:oklch(0.55 0.2 25);
---vibeui-toast-005-code:oklch(0.96 0.012 25);
+--vibeui-toast-005-bg:light-dark(oklch(0.99 0.008 25),oklch(0.25 0.02 25));
+--vibeui-toast-005-fg:light-dark(oklch(0.26 0.03 25),oklch(0.95 0.008 25));
+--vibeui-toast-005-muted:light-dark(oklch(0.5 0.03 25),oklch(0.75 0.015 25));
+--vibeui-toast-005-border:light-dark(oklch(0.87 0.04 25),oklch(0.4 0.03 25));
+--vibeui-toast-005-tone:light-dark(oklch(0.55 0.2 25),oklch(0.7 0.18 25));
+--vibeui-toast-005-on-tone:light-dark(oklch(0.99 0.01 25),oklch(0.22 0.02 25));
+--vibeui-toast-005-shadow:light-dark(oklch(0.3 0.06 25 / 45%),oklch(0.12 0.03 25 / 70%));
+--vibeui-toast-005-code:light-dark(oklch(0.96 0.012 25),oklch(0.3 0.02 25));
 --vibeui-toast-005-radius:0.875rem;
 --vibeui-toast-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-toast-005-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,12 +48,12 @@ border-left:3px solid var(--vibeui-toast-005-tone);
 border-radius:var(--vibeui-toast-005-radius);
 background:var(--vibeui-toast-005-bg);color:var(--vibeui-toast-005-fg);
 font-family:var(--vibeui-toast-005-font);
-box-shadow:0 18px 38px -26px oklch(0.3 0.06 25 / 45%);
+box-shadow:0 18px 38px -26px var(--vibeui-toast-005-shadow);
 }
 [data-vibeui-block="toast-005"] [data-part="badge"]{
 flex:none;display:flex;align-items:center;justify-content:center;
 width:1.375rem;height:1.375rem;margin-top:0.0625rem;border-radius:9999px;
-background:var(--vibeui-toast-005-tone);color:oklch(0.99 0.01 25);
+background:var(--vibeui-toast-005-tone);color:var(--vibeui-toast-005-on-tone);
 font-size:0.8125rem;font-weight:800;line-height:1;
 }
 [data-vibeui-block="toast-005"] [data-part="body"]{display:flex;flex-direction:column;gap:0.375rem;min-width:0;flex:1 1 auto}
@@ -52,7 +63,7 @@ font-size:0.8125rem;font-weight:800;line-height:1;
 [data-vibeui-block="toast-005"] [data-part="retry"]{
 appearance:none;cursor:pointer;border:0;
 height:1.875rem;padding:0 0.75rem;border-radius:0.5rem;
-background:var(--vibeui-toast-005-tone);color:oklch(0.99 0.01 25);
+background:var(--vibeui-toast-005-tone);color:var(--vibeui-toast-005-on-tone);
 font:inherit;font-size:0.8125rem;font-weight:650;
 transition:filter .16s ease;
 }
@@ -78,6 +89,28 @@ white-space:pre-wrap;word-break:break-word;color:var(--vibeui-toast-005-muted);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Уведомление об ошибке с повтором и техническими подробностями под раскрытием.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -86,11 +119,25 @@ export function Toast005({
   message = "Соединение оборвалось на середине. Текст остался в браузере.",
   retryLabel = "Повторить",
   details = "PUT /api/drafts/8412 — 504 Gateway Timeout\n17:42:06, попытка 2 из 3",
+  detailsLabel = "Подробности",
   onRetry,
+  tone,
+  background = "",
   className,
   style,
   ...props
 }: Toast005Props) {
+  const palette = {
+    ...(tone ? { "--vibeui-toast-005-tone": tone } : null),
+    ...(background
+      ? {
+          "--vibeui-toast-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-toast-005" precedence="medium">
@@ -101,7 +148,7 @@ export function Toast005({
         data-vibeui-block="toast-005"
         role="alert"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="badge" aria-hidden="true">
           !
@@ -115,7 +162,7 @@ export function Toast005({
             </button>
             {details ? (
               <details data-part="more">
-                <summary data-part="summary">Подробности</summary>
+                <summary data-part="summary">{detailsLabel}</summary>
                 <pre data-part="code">{details}</pre>
               </details>
             ) : null}

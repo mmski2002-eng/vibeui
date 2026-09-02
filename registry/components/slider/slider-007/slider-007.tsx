@@ -13,6 +13,8 @@ export type Slider007Props = Omit<
   step?: number
   defaultValue?: number
   unit?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,14 +23,18 @@ export type Slider007Props = Omit<
 // трансформом, а writing-mode: элемент честно занимает вертикальную коробку,
 // поэтому раскладка вокруг него не разъезжается и клавиатура работает как
 // ожидается — стрелка вверх увеличивает значение.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="slider-007"]){
---vibeui-slider-007-bg:oklch(1 0 0);
---vibeui-slider-007-fg:oklch(0.22 0.014 265);
---vibeui-slider-007-muted:oklch(0.55 0.014 265);
---vibeui-slider-007-border:oklch(0.9 0.006 265);
---vibeui-slider-007-track:oklch(0.92 0.006 265);
---vibeui-slider-007-accent:oklch(0.62 0.15 85);
+--vibeui-slider-007-bg:transparent;
+--vibeui-slider-007-surface:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
+--vibeui-slider-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-slider-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-slider-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-slider-007-track:light-dark(oklch(0.92 0.006 265),oklch(0.42 0.012 265));
+--vibeui-slider-007-accent:light-dark(oklch(0.62 0.15 85),oklch(0.78 0.14 85));
 --vibeui-slider-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-007-fill:50%;
 }
@@ -60,12 +66,12 @@ background:linear-gradient(to top,var(--vibeui-slider-007-accent) var(--vibeui-s
 [data-vibeui-block="slider-007"] input::-webkit-slider-thumb{
 appearance:none;-webkit-appearance:none;margin-left:-0.3125rem;
 width:1.125rem;height:1.125rem;border-radius:9999px;
-background:var(--vibeui-slider-007-bg);border:3px solid var(--vibeui-slider-007-accent);
+background:var(--vibeui-slider-007-surface);border:3px solid var(--vibeui-slider-007-accent);
 box-shadow:0 1px 4px oklch(0.2 0.02 265 / 30%);
 }
 [data-vibeui-block="slider-007"] input::-moz-range-thumb{
 width:1.125rem;height:1.125rem;border-radius:9999px;box-sizing:border-box;
-background:var(--vibeui-slider-007-bg);border:3px solid var(--vibeui-slider-007-accent);
+background:var(--vibeui-slider-007-surface);border:3px solid var(--vibeui-slider-007-accent);
 }
 [data-vibeui-block="slider-007"] input:focus-visible{outline:2px solid var(--vibeui-slider-007-accent);outline-offset:3px;border-radius:0.75rem}
 /* Шкала стоит рядом столбиком и подписана сверху вниз: снизу минимум,
@@ -82,6 +88,28 @@ font-size:1rem;font-weight:700;font-variant-numeric:tabular-nums;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Вертикальный ползунок на writing-mode: клавиатура и раскладка не ломаются.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -92,6 +120,7 @@ export function Slider007({
   step = 5,
   defaultValue = 65,
   unit = "%",
+  background = "",
   accent,
   className,
   style,
@@ -103,6 +132,12 @@ export function Slider007({
   const palette = {
     "--vibeui-slider-007-fill": `${((value - min) / (max - min)) * 100}%`,
     ...(accent ? { "--vibeui-slider-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-slider-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

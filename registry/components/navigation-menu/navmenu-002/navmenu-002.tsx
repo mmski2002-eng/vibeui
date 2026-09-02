@@ -13,6 +13,14 @@ export type Navmenu002Props = {
   promoTitle?: string
   promoText?: string
   promoAction?: string
+  /** Метка на промо-карточке. */
+  badgeText?: string
+  /** Заголовок над списком ссылок. */
+  linksTitle?: string
+  /** Подпись навигации для скринридера. */
+  label?: string
+  /** Подложка полосы и панели. Пусто — своя палитра компонента. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -24,13 +32,16 @@ export type Navmenu002Props = {
 // Панель открывает HTML popover: Escape и клик мимо достаются от браузера.
 const STYLES = `
 :where([data-vibeui-block="navmenu-002"]){
---vibeui-navmenu-002-bg:oklch(1 0 0);
---vibeui-navmenu-002-fg:oklch(0.22 0.014 265);
---vibeui-navmenu-002-muted:oklch(0.55 0.014 265);
---vibeui-navmenu-002-border:oklch(0.91 0.006 265);
---vibeui-navmenu-002-hover:oklch(0.55 0.02 265 / 8%);
---vibeui-navmenu-002-accent:oklch(0.55 0.2 262);
---vibeui-navmenu-002-promo:oklch(0.96 0.03 262);
+--vibeui-navmenu-002-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
+--vibeui-navmenu-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-navmenu-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-navmenu-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-navmenu-002-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 12%));
+--vibeui-navmenu-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-navmenu-002-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-navmenu-002-promo:light-dark(oklch(0.96 0.03 262),oklch(0.3 0.045 262));
+--vibeui-navmenu-002-sheen:light-dark(oklch(1 0 0 / 65%),oklch(1 0 0 / 10%));
+--vibeui-navmenu-002-shadow:light-dark(oklch(0.2 0.03 265 / 40%),oklch(0 0 0 / 70%));
 --vibeui-navmenu-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="navmenu-002"]{
@@ -62,7 +73,7 @@ gap:0.75rem;
 background:var(--vibeui-navmenu-002-bg);color:var(--vibeui-navmenu-002-fg);
 border:1px solid var(--vibeui-navmenu-002-border);border-radius:0.875rem;
 font-family:var(--vibeui-navmenu-002-font);
-box-shadow:0 24px 48px -24px oklch(0.2 0.03 265 / 40%);
+box-shadow:0 24px 48px -24px var(--vibeui-navmenu-002-shadow);
 }
 /* Раскладка только для открытой панели: display на элементе с popover
    перебивает display:none из стилей браузера, и панель видна всегда. */
@@ -79,7 +90,7 @@ position-try-fallbacks:flip-block;
 display:flex;flex-direction:column;justify-content:flex-end;gap:0.375rem;
 padding:0.875rem;border-radius:0.75rem;text-decoration:none;color:inherit;
 background:
-radial-gradient(120% 90% at 15% 10%,oklch(1 0 0 / 65%),transparent 60%),
+radial-gradient(120% 90% at 15% 10%,var(--vibeui-navmenu-002-sheen),transparent 60%),
 var(--vibeui-navmenu-002-promo);
 border:1px solid var(--vibeui-navmenu-002-border);
 min-height:9rem;
@@ -89,7 +100,7 @@ min-height:9rem;
 [data-vibeui-block="navmenu-002"] [data-part="badge"]{
 align-self:flex-start;margin-bottom:auto;
 padding:0.125rem 0.4375rem;border-radius:999px;
-background:var(--vibeui-navmenu-002-accent);color:oklch(1 0 0);
+background:var(--vibeui-navmenu-002-accent);color:var(--vibeui-navmenu-002-on-accent);
 font-size:0.625rem;letter-spacing:0.04em;text-transform:uppercase;
 }
 [data-vibeui-block="navmenu-002"] [data-part="promo-title"]{margin:0;font-size:1rem;line-height:1.25}
@@ -118,6 +129,29 @@ const DEFAULT_LINKS: Navmenu002Link[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Навигация с выпадающей панелью, где слева промо-блок, справа ссылки.
  * Один файл, ноль зависимостей, собственная палитра, клиентского JS нет.
  */
@@ -128,12 +162,22 @@ export function Navmenu002({
   promoTitle = "Конструктор писем",
   promoText = "Рассылка собирается из тех же блоков, что и страницы сайта.",
   promoAction = "Смотреть →",
+  badgeText = "Новое",
+  linksTitle = "Всё остальное",
+  label = "Основная навигация",
+  background = "",
   accent,
   className,
   style,
 }: Navmenu002Props) {
   const palette = {
     ...(accent ? { "--vibeui-navmenu-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-navmenu-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -144,7 +188,7 @@ export function Navmenu002({
       </style>
       <nav
         data-vibeui-block="navmenu-002"
-        aria-label="Основная навигация"
+        aria-label={label}
         className={className}
         style={palette}
       >
@@ -172,13 +216,13 @@ export function Navmenu002({
           aria-label={panelLabel}
         >
           <a data-part="promo" href="#">
-            <span data-part="badge">Новое</span>
+            <span data-part="badge">{badgeText}</span>
             <p data-part="promo-title">{promoTitle}</p>
             <p data-part="promo-text">{promoText}</p>
             <span data-part="promo-action">{promoAction}</span>
           </a>
           <div>
-            <p data-part="title">Всё остальное</p>
+            <p data-part="title">{linksTitle}</p>
             <ul data-part="list">
               {links.map((link) => (
                 <li key={link.label}>

@@ -3,6 +3,8 @@ import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 export type Button034Props = ComponentPropsWithoutRef<"button"> & {
   /** Толщина обводки: волосяная, обычная или тяжёлая. */
   emphasis?: "hairline" | "regular" | "heavy"
+  /** Бумага внутри обводки. Пусто — своя, из палитры. */
+  background?: string
   accent?: string
 }
 
@@ -11,9 +13,9 @@ export type Button034Props = ComponentPropsWithoutRef<"button"> & {
 // заливка и рамка меняются местами — контур становится пятном.
 const STYLES = `
 :where([data-vibeui-block="button-034"]){
---vibeui-button-034-paper:oklch(1 0 0);
---vibeui-button-034-accent:oklch(0.52 0.14 196);
---vibeui-button-034-accent-fg:oklch(0.99 0.01 196);
+--vibeui-button-034-paper:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-button-034-accent:light-dark(oklch(0.52 0.14 196),oklch(0.74 0.12 196));
+--vibeui-button-034-accent-fg:light-dark(oklch(0.99 0.01 196),oklch(0.19 0.03 196));
 --vibeui-button-034-line:1.5px;
 --vibeui-button-034-radius:0.5rem;
 --vibeui-button-034-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -49,11 +51,34 @@ border:var(--vibeui-button-034-line) solid currentColor;border-radius:50%;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кнопка на обводке: бумажная внутри, контурная снаружи, на наведении
  * заливается акцентом. Один файл, ноль зависимостей, собственная палитра.
  */
 export function Button034({
   emphasis = "regular",
+  background = "",
   accent,
   type = "button",
   className,
@@ -63,6 +88,12 @@ export function Button034({
 }: Button034Props) {
   const palette = {
     ...(accent ? { "--vibeui-button-034-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-034-paper": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

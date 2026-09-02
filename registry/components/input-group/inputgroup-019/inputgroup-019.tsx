@@ -12,11 +12,43 @@ export type Inputgroup019Props = Omit<
   scopes?: string[]
   placeholder?: string
   onChange?: (value: string, scope: string) => void
+  /** Подпись списка областей для скринридера. */
+  scopeLabel?: string
+  /** Подпись кнопки очистки. */
+  clearLabel?: string
+  /** Текст статуса, пока запрос пуст. */
+  emptyText?: string
+  /** Статус запроса; {query} — текст, {scope} — область. */
+  statusTemplate?: string
   hint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
 const DEFAULT_SCOPES = ["Везде", "В названии", "В тексте"]
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 // Идея компонента: живой поиск без кнопки отправки — область поиска слева
 // сужает список так же, как текст справа, и оба меняют один и тот же
@@ -25,14 +57,14 @@ const DEFAULT_SCOPES = ["Везде", "В названии", "В тексте"]
 // с текстом и возвращает фокус в поле после очистки.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-019"]){
---vibeui-inputgroup-019-surface:oklch(1 0 0);
---vibeui-inputgroup-019-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-019-fg:oklch(0.22 0.014 265);
---vibeui-inputgroup-019-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-019-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-019-fixed:oklch(0.96 0.004 265);
---vibeui-inputgroup-019-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-019-accent:oklch(0.56 0.11 190);
+--vibeui-inputgroup-019-surface:transparent;
+--vibeui-inputgroup-019-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-inputgroup-019-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-019-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-inputgroup-019-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
+--vibeui-inputgroup-019-fixed:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-inputgroup-019-border:light-dark(oklch(0.86 0.008 265),oklch(0.4 0.014 265));
+--vibeui-inputgroup-019-accent:light-dark(oklch(0.56 0.11 190),oklch(0.76 0.1 190));
 --vibeui-inputgroup-019-radius:0.75rem;
 --vibeui-inputgroup-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -114,7 +146,12 @@ export function Inputgroup019({
   scopes = DEFAULT_SCOPES,
   placeholder = "Введите запрос",
   onChange,
+  scopeLabel = "Область поиска",
+  clearLabel = "Очистить поле",
+  emptyText = "Начните вводить запрос",
+  statusTemplate = "Ищем «{query}»: {scope}",
   hint = "Область слева и текст справа сужают один и тот же список без отдельной кнопки — результат меняется по мере ввода.",
+  background = "",
   accent,
   className,
   style,
@@ -122,11 +159,21 @@ export function Inputgroup019({
 }: Inputgroup019Props) {
   const id = useId()
   const field = useRef<HTMLInputElement | null>(null)
-  const [scope, setScope] = useState(scopes[0] ?? "Везде")
+  const [scope, setScope] = useState(scopes[0] ?? DEFAULT_SCOPES[0])
   const [query, setQuery] = useState("")
+
+  const [statusBefore, statusAfter = ""] = statusTemplate
+    .replace("{query}", query)
+    .split("{scope}")
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-019-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-019-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -146,7 +193,7 @@ export function Inputgroup019({
           <select
             data-part="scope"
             name={`${name}-scope`}
-            aria-label="Область поиска"
+            aria-label={scopeLabel}
             value={scope}
             onChange={(event) => {
               setScope(event.target.value)
@@ -177,7 +224,7 @@ export function Inputgroup019({
             <button
               type="button"
               data-part="clear"
-              aria-label="Очистить поле"
+              aria-label={clearLabel}
               onClick={() => {
                 setQuery("")
                 onChange?.("", scope)
@@ -199,10 +246,12 @@ export function Inputgroup019({
         <p data-part="status" id={`${id}-status`} aria-live="polite">
           {query ? (
             <>
-              Ищем «{query}»: <b>{scope.toLowerCase()}</b>
+              {statusBefore}
+              <b>{scope.toLowerCase()}</b>
+              {statusAfter}
             </>
           ) : (
-            "Начните вводить запрос"
+            emptyText
           )}
         </p>
         <p data-part="hint" id={`${id}-hint`}>

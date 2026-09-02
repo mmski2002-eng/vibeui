@@ -16,6 +16,15 @@ export type Sortable008Props = Omit<
   title?: string
   tasks?: Sortable008Task[]
   onChange?: (tasks: Sortable008Task[]) => void
+  /** Подпись чекбокса: {item} — текст задачи. */
+  doneLabel?: string
+  /** Подписи кнопок переноса: {item}, {position}, {total}. */
+  moveUpLabel?: string
+  moveDownLabel?: string
+  /** Реплика живой области: {order} — весь список через запятую. */
+  orderLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,12 +36,12 @@ export type Sortable008Props = Omit<
 // только сдвинутую строку, — так порядок слышен весь, а не по кусочкам.
 const STYLES = `
 :where([data-vibeui-block="sortable-008"]){
---vibeui-sortable-008-bg:oklch(1 0 0);
---vibeui-sortable-008-row:oklch(0.99 0.002 265);
---vibeui-sortable-008-fg:oklch(0.24 0.014 265);
---vibeui-sortable-008-muted:oklch(0.56 0.014 265);
---vibeui-sortable-008-border:oklch(0.9 0.006 265);
---vibeui-sortable-008-accent:oklch(0.55 0.2 262);
+--vibeui-sortable-008-bg:transparent;
+--vibeui-sortable-008-row:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.011 265));
+--vibeui-sortable-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-sortable-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-sortable-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-sortable-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
 --vibeui-sortable-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="sortable-008"]{
@@ -81,6 +90,28 @@ clip-path:inset(50%);white-space:nowrap;border:0;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="sortable-008"] *{animation:none!important;transition:none!important}}
 `
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 const DEFAULT_TASKS: Sortable008Task[] = [
   { id: "brief", text: "Собрать бриф" },
   { id: "mock", text: "Сделать макет" },
@@ -98,6 +129,11 @@ export function Sortable008({
   title = "Задачи на сегодня",
   tasks = DEFAULT_TASKS,
   onChange,
+  doneLabel = "Готово: {item}",
+  moveUpLabel = "Поднять «{item}», сейчас {position} из {total}",
+  moveDownLabel = "Опустить «{item}», сейчас {position} из {total}",
+  orderLabel = "Новый порядок: {order}.",
+  background = "",
   accent,
   className,
   style,
@@ -113,7 +149,7 @@ export function Sortable008({
     onChange?.(next)
     if (announceOrder) {
       setAnnouncement(
-        `Новый порядок: ${next.map((task) => task.text).join(", ")}.`,
+        orderLabel.replace("{order}", next.map((task) => task.text).join(", ")),
       )
     }
   }
@@ -148,6 +184,12 @@ export function Sortable008({
 
   const palette = {
     ...(accent ? { "--vibeui-sortable-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-sortable-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -191,7 +233,7 @@ export function Sortable008({
                 type="checkbox"
                 data-part="check"
                 checked={Boolean(task.done)}
-                aria-label={`Готово: ${task.text}`}
+                aria-label={doneLabel.replace("{item}", task.text)}
                 onChange={() => toggle(task.id)}
               />
               <span data-part="text">{task.text}</span>
@@ -199,7 +241,10 @@ export function Sortable008({
                 type="button"
                 data-part="move"
                 disabled={index === 0}
-                aria-label={`Поднять «${task.text}», сейчас ${index + 1} из ${order.length}`}
+                aria-label={moveUpLabel
+                  .replace("{item}", task.text)
+                  .replace("{position}", String(index + 1))
+                  .replace("{total}", String(order.length))}
                 onClick={() => move(index, index - 1)}
               >
                 ▲
@@ -208,7 +253,10 @@ export function Sortable008({
                 type="button"
                 data-part="move"
                 disabled={index === order.length - 1}
-                aria-label={`Опустить «${task.text}», сейчас ${index + 1} из ${order.length}`}
+                aria-label={moveDownLabel
+                  .replace("{item}", task.text)
+                  .replace("{position}", String(index + 1))
+                  .replace("{total}", String(order.length))}
                 onClick={() => move(index, index + 1)}
               >
                 ▼

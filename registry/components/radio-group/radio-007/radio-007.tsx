@@ -18,6 +18,14 @@ export type Radio007Props = Omit<
   methods?: Radio007Method[]
   name?: string
   defaultValue?: string
+  /** Что стоит вместо цены у бесплатного способа. */
+  freeLabel?: string
+  /** Строка под списком: чем цена доставки обернётся в заказе. */
+  footnote?: string
+  /** Правая половина той же строки: место шага в оформлении заказа. */
+  stepLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,16 +34,18 @@ export type Radio007Props = Omit<
 // моноширинными цифрами и выровнена по правому краю: так три варианта
 // сравниваются вертикально, без чтения предложений. Недоступный способ
 // не исчезает, а гаснет и объясняет причину.
+//
+// Тема берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="radio-007"]){
---vibeui-radio-007-bg:oklch(1 0 0);
---vibeui-radio-007-fg:oklch(0.22 0.014 265);
---vibeui-radio-007-muted:oklch(0.55 0.014 265);
---vibeui-radio-007-border:oklch(0.9 0.006 265);
---vibeui-radio-007-ring:oklch(0.74 0.012 265);
---vibeui-radio-007-accent:oklch(0.5 0.16 250);
---vibeui-radio-007-free:oklch(0.5 0.15 155);
---vibeui-radio-007-tint:oklch(0.5 0.16 250 / 7%);
+--vibeui-radio-007-bg:transparent;
+--vibeui-radio-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-radio-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-radio-007-ring:light-dark(oklch(0.74 0.012 265),oklch(0.53 0.014 265));
+--vibeui-radio-007-accent:light-dark(oklch(0.5 0.16 250),oklch(0.72 0.14 250));
+--vibeui-radio-007-free:light-dark(oklch(0.5 0.15 155),oklch(0.76 0.14 155));
+--vibeui-radio-007-tint:light-dark(oklch(0.5 0.16 250 / 7%),oklch(0.72 0.14 250 / 15%));
 --vibeui-radio-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="radio-007"]{
@@ -70,11 +80,13 @@ cursor:not-allowed;opacity:.55;background:transparent;
 appearance:none;-webkit-appearance:none;flex:none;margin:0;cursor:inherit;
 width:1.0625rem;height:1.0625rem;border-radius:9999px;
 border:1.5px solid var(--vibeui-radio-007-ring);
-background:var(--vibeui-radio-007-bg);
+background:transparent;
 }
+/* Точка нарисована фоном самого кружка: внутренней тенью зазор пришлось бы
+   закрашивать цветом подложки, а подложки у компонента по умолчанию нет. */
 [data-vibeui-block="radio-007"] input:checked{
 border-color:var(--vibeui-radio-007-accent);
-box-shadow:inset 0 0 0 0.1875rem var(--vibeui-radio-007-bg),inset 0 0 0 1rem var(--vibeui-radio-007-accent);
+background:radial-gradient(circle at 50% 50%,var(--vibeui-radio-007-accent) 0 0.25rem,transparent 0.25rem);
 }
 [data-vibeui-block="radio-007"] [data-part="text"]{display:flex;flex-direction:column;gap:0.125rem;flex:1 1 auto;min-width:0}
 [data-vibeui-block="radio-007"] [data-part="name"]{font-size:0.875rem;font-weight:600;line-height:1.3}
@@ -125,6 +137,28 @@ const DEFAULT_METHODS: Radio007Method[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор доставки: срок слева, цена отдельной колонкой справа.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -133,6 +167,10 @@ export function Radio007({
   methods = DEFAULT_METHODS,
   name = "vibeui-radio-007",
   defaultValue = "courier",
+  freeLabel = "бесплатно",
+  footnote = "Цена доставки добавится к заказу",
+  stepLabel = "шаг 2 из 3",
+  background = "",
   accent,
   className,
   style,
@@ -140,6 +178,12 @@ export function Radio007({
 }: Radio007Props) {
   const palette = {
     ...(accent ? { "--vibeui-radio-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-radio-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -170,14 +214,14 @@ export function Radio007({
                 <span data-part="eta">{method.eta}</span>
               </span>
               <span data-part="price" data-free={Boolean(method.free)}>
-                {method.free ? "бесплатно" : method.price}
+                {method.free ? freeLabel : method.price}
               </span>
             </label>
           ))}
         </div>
         <p data-part="total">
-          <span>Цена доставки добавится к заказу</span>
-          <span>шаг 2 из 3</span>
+          <span>{footnote}</span>
+          <span>{stepLabel}</span>
         </p>
       </fieldset>
     </>

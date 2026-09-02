@@ -31,16 +31,20 @@
             "::backdrop и его затемнение — без подложки модальное окно не читается как модальное",
             "aria-labelledby, связывающий окно с заголовком, и role=\"dialog\"",
             "@starting-style вместе с transition-behavior для display и overlay: без них появление будет рывком",
-            "блок <style> внутри компонента — в нём вся палитра, кнопки и анимация"
+            "блок <style> внутри компонента — в нём вся палитра, кнопки и анимация",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку самого окна: модальное окно обязано перекрывать страницу, поэтому подложка у него есть по умолчанию, а проп background её только перекрашивает"
           ],
           "adapt": [
             "id — обязателен свой на каждое окно на странице: он связывает кнопку и окно",
             "тексты trigger, title, description, confirmLabel и cancelLabel",
             "children — своё содержимое вместо описания: форма, список, что угодно",
             "акцент через проп accent — цвет кнопок и кольца фокуса",
-            "обработчик подтверждения: повесьте onClick на кнопку подтверждения в своей копии"
+            "обработчик подтверждения: повесьте onClick на кнопку подтверждения в своей копии",
+            "background — подложка окна; пусто означает цвет из собственной палитры компонента"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Два экземпляра с одинаковым id на одной странице конфликтуют: кнопка откроет первое попавшееся окно. Давайте каждому свой id.",
             "popover=\"auto\" закрывается кликом мимо. Для окна, которое нельзя закрыть случайно, поставьте popover=\"manual\" и уберите кнопку отмены из списка закрывающих.",
             "Это не <dialog>: у popover нет модальности в смысле inert для остальной страницы. Для формы платежа берите <dialog> с showModal и клиентским кодом.",
@@ -81,6 +85,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -96,16 +106,20 @@
                 "::backdrop and its dimming — without a backdrop a modal does not read as modal",
                 "aria-labelledby tying the window to its heading, and role=\"dialog\"",
                 "@starting-style together with transition-behavior for display and overlay: without them the entrance jumps",
-                "the <style> block inside the component — it holds the palette, the buttons and the animation"
+                "the <style> block inside the component — it holds the palette, the buttons and the animation",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque surface of the window itself: a modal has to cover the page, so it carries a background by default and the background prop only recolours it"
               ],
               "adapt": [
                 "id — every dialog on a page needs its own: it is what links button and window",
                 "the trigger, title, description, confirmLabel and cancelLabel copy",
                 "children — your own content instead of the description: a form, a list, anything",
                 "the accent through the accent prop — it colours the buttons and the focus ring",
-                "the confirm handler: attach onClick to the confirm button in your copy"
+                "the confirm handler: attach onClick to the confirm button in your copy",
+                "background — the dialog surface; empty means the colour from the component's own palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Two instances sharing an id on one page conflict: the button opens whichever window it finds first. Give each its own id.",
                 "popover=\"auto\" closes on an outside click. For a window that must not be dismissed by accident use popover=\"manual\".",
                 "This is not <dialog>: popover has no modality in the sense of making the rest of the page inert. For a payment form use <dialog> with showModal and client code.",
@@ -132,11 +146,24 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Popover Dialog"
+            "title": "Popover Dialog",
+            "preview": {
+              "props": {
+                "trigger": "Delete project",
+                "title": "Delete this project?",
+                "description": "The pages, domains and publish history go with it. This cannot be undone.",
+                "confirmLabel": "Delete",
+                "cancelLabel": "Cancel"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -167,16 +194,21 @@
             "механику popover: атрибуты popovertarget и popover=\"auto\" дают Esc и клик мимо",
             "стилизацию окна по атрибуту и передачу палитры отдельным style: в верхнем слое окно перестаёт быть потомком корня",
             "role=\"alertdialog\" и aria-labelledby, связывающий окно с заголовком",
-            "порядок кнопок: отмена первой — при необратимом действии выход должен быть под рукой"
+            "порядок кнопок: отмена первой — при необратимом действии выход должен быть под рукой",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку самого окна: модальное окно обязано перекрывать страницу, поэтому подложка у него есть по умолчанию, а проп background её только перекрашивает"
           ],
           "adapt": [
             "id — свой на каждое окно на странице",
             "тексты title, description и подписи кнопок",
             "losses — перечень того, что исчезнет",
             "обработчик подтверждения: повесьте onClick на кнопку подтверждения в своей копии",
-            "trigger — подпись кнопки, открывающей окно"
+            "trigger — подпись кнопки, открывающей окно",
+            "danger — цвет опасного действия: кнопка, значок и маркеры перечня",
+            "background — подложка окна; пусто означает цвет из собственной палитры компонента"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "popover=\"auto\" закрывается кликом мимо. Для окна, которое нельзя закрыть случайно, берите dialog-006 с popover=\"manual\".",
             "Это не <dialog>: остальная страница не становится inert. Для платежей и подписи документов нужен настоящий showModal.",
             "Если удаляемое можно перепутать, добавьте ввод названия — как в alert-020.",
@@ -204,6 +236,18 @@
             "type": "text",
             "default": "Удалить навсегда",
             "maxLength": 30
+          },
+          {
+            "prop": "danger",
+            "label": "Опасность",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -217,16 +261,21 @@
                 "the popover mechanism: popovertarget and popover=\"auto\" supply Esc and click-outside",
                 "styling the window by attribute and passing the palette through its own style: in the top layer it is no longer a descendant of the root",
                 "role=\"alertdialog\" and the aria-labelledby tying the window to its heading",
-                "the button order: cancel first — with an irreversible action the exit must be within reach"
+                "the button order: cancel first — with an irreversible action the exit must be within reach",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque surface of the window itself: a modal has to cover the page, so it carries a background by default and the background prop only recolours it"
               ],
               "adapt": [
                 "id — one per dialog on the page",
                 "the title, description and button copy",
                 "losses — what will disappear",
                 "the confirm handler: attach onClick to the confirm button in your copy",
-                "trigger — the label of the button that opens the dialog"
+                "trigger — the label of the button that opens the dialog",
+                "danger — the colour of the destructive action: the button, the mark and the list bullets",
+                "background — the dialog surface; empty means the colour from the component's own palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "popover=\"auto\" closes on an outside click. For a window that must not be dismissed by accident use dialog-006 with popover=\"manual\".",
                 "This is not <dialog>: the rest of the page does not become inert. Payments and signatures need a real showModal.",
                 "If the target can be confused with another, add a name-typing step as in alert-020.",
@@ -246,11 +295,32 @@
               "confirmLabel": {
                 "label": "Confirm",
                 "default": "Delete forever"
+              },
+              "danger": {
+                "label": "Danger"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Destructive Dialog"
+            "title": "Destructive Dialog",
+            "preview": {
+              "props": {
+                "trigger": "Delete project",
+                "title": "Delete the «Studio site» project?",
+                "description": "This is irreversible: we will not be able to restore the project from a backup.",
+                "losses": [
+                  "18 pages and the whole publish history",
+                  "the studio-polet.com domain and its certificate",
+                  "access for four teammates"
+                ],
+                "confirmLabel": "Delete for good",
+                "cancelLabel": "Cancel"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["danger", "background"]
       }
     },
     {
@@ -281,15 +351,19 @@
             "autoFocus у поля — окно с полем, где надо ещё раз кликнуть, раздражает",
             "одно поле: как только полей становится три, это уже страница настроек, а не окно",
             "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое",
-            "кольцо фокуса у поля: в модальном окне это единственный ориентир"
+            "кольцо фокуса у поля: в модальном окне это единственный ориентир",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку самого окна: модальное окно обязано перекрывать страницу, поэтому подложка у него есть по умолчанию, а проп background её только перекрашивает"
           ],
           "adapt": [
             "тексты title, label, hint и подписи кнопок",
             "defaultValue — начальное значение поля",
             "акцент через проп accent — цвет фокуса и кнопки отправки",
-            "обработку значения: читайте поле по name в onSubmit своей копии"
+            "обработку значения: читайте поле по name в onSubmit своей копии",
+            "background — подложка окна; пусто означает цвет из собственной палитры компонента"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не проверяет введённое: валидацию добавляйте атрибутами input (required, pattern, maxLength) или в обработчике.",
             "Для двух и более полей это уже не то окно: разбейте на шаги, как в dialog-009.",
             "id должен быть уникальным: два окна с одним id откроют одно и то же.",
@@ -323,6 +397,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -336,15 +416,19 @@
                 "autoFocus on the field — a dialog that needs another click before typing is a nuisance",
                 "the single field: at three fields this is a settings page, not a dialog",
                 "styling the window by attribute and the palette through its own style — the window sits in the top layer",
-                "the focus ring on the field: inside a modal it is the only orientation point"
+                "the focus ring on the field: inside a modal it is the only orientation point",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque surface of the window itself: a modal has to cover the page, so it carries a background by default and the background prop only recolours it"
               ],
               "adapt": [
                 "the title, label, hint and button copy",
                 "defaultValue — the initial field value",
                 "the accent through the accent prop — the focus ring and submit colour",
-                "handling the value: read the field by name in your copy's onSubmit"
+                "handling the value: read the field by name in your copy's onSubmit",
+                "background — the dialog surface; empty means the colour from the component's own palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component validates nothing: add constraints through input attributes (required, pattern, maxLength) or in your handler.",
                 "Two or more fields make this the wrong dialog: split them into steps as in dialog-009.",
                 "The id has to be unique: two dialogs sharing one id open the same window.",
@@ -367,11 +451,26 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Form Dialog"
+            "title": "Form Dialog",
+            "preview": {
+              "props": {
+                "trigger": "Rename",
+                "title": "Rename the project",
+                "label": "Name",
+                "defaultValue": "Studio site",
+                "hint": "The project address stays the same: you change it separately, in the domain settings.",
+                "submitLabel": "Save",
+                "cancelLabel": "Cancel"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -402,15 +501,19 @@
             "подсветку через :has(input:checked), а не через состояние в React",
             "пояснение под каждым вариантом: выбор из трёх голых подписей заставляет угадывать",
             "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое",
-            "кольцо фокуса у radio: выбор часто делают с клавиатуры"
+            "кольцо фокуса у radio: выбор часто делают с клавиатуры",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку самого окна: модальное окно обязано перекрывать страницу, поэтому подложка у него есть по умолчанию, а проп background её только перекрашивает"
           ],
           "adapt": [
             "массив options: значение, подпись и пояснение",
             "defaultValue — что выбрано изначально",
             "тексты title и подписи кнопок",
-            "акцент через проп accent — цвет выбранной карточки и кнопки"
+            "акцент через проп accent — цвет выбранной карточки и кнопки",
+            "background — подложка окна; пусто означает цвет из собственной палитры компонента"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше пяти вариантов — это уже список, а не окно выбора: возьмите отдельную страницу или select.",
             "Имя radio строится из id окна: два окна с одинаковым id объединят свои варианты в одну группу.",
             "Компонент не сообщает выбор наружу: читайте значение по name в обработчике отправки.",
@@ -437,6 +540,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -450,15 +559,19 @@
                 "the highlight through :has(input:checked) rather than React state",
                 "the explanation under each option: choosing between three bare labels means guessing",
                 "styling the window by attribute and the palette through its own style — the window sits in the top layer",
-                "the focus ring on the radios: the choice is often made from the keyboard"
+                "the focus ring on the radios: the choice is often made from the keyboard",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque surface of the window itself: a modal has to cover the page, so it carries a background by default and the background prop only recolours it"
               ],
               "adapt": [
                 "the options array: value, label and description",
                 "defaultValue — what starts selected",
                 "the title and button copy",
-                "the accent through the accent prop — the selected card and the submit button"
+                "the accent through the accent prop — the selected card and the submit button",
+                "background — the dialog surface; empty means the colour from the component's own palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "More than five options is a list, not a choice dialog: use a page or a select.",
                 "The radio name is built from the dialog id: two dialogs sharing an id merge their options into one group.",
                 "The component does not report the choice: read the value by name in your submit handler.",
@@ -476,11 +589,40 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Choice Dialog"
+            "title": "Choice Dialog",
+            "preview": {
+              "props": {
+                "trigger": "Publish",
+                "title": "What should happen to the changes?",
+                "options": [
+                  {
+                    "value": "draft",
+                    "label": "Save as a draft",
+                    "description": "The changes stay in the editor and do not reach the site."
+                  },
+                  {
+                    "value": "publish",
+                    "label": "Publish right away",
+                    "description": "The pages update on the site within a minute."
+                  },
+                  {
+                    "value": "schedule",
+                    "label": "Schedule the publish",
+                    "description": "You pick the date and time on the next step."
+                  }
+                ],
+                "submitLabel": "Continue",
+                "cancelLabel": "Cancel"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -511,15 +653,19 @@
             "центрированную колонку — у окна результата один смысловой центр",
             "строку-итог в плашке: адрес или номер обращения ищут глазами, а не читают в абзаце",
             "тихую кнопку закрытия: окно результата не требует решения",
-            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое"
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку самого окна: модальное окно обязано перекрывать страницу, поэтому подложка у него есть по умолчанию, а проп background её только перекрашивает"
           ],
           "adapt": [
             "tone: success или danger",
             "тексты title, description и detail",
             "primaryLabel и primaryHref — куда ведёт результат",
-            "closeLabel — подпись тихого закрытия"
+            "closeLabel — подпись тихого закрытия",
+            "background — подложка окна; пусто означает цвет из собственной палитры компонента"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не показывайте окно результата после каждой мелочи: успех, о котором и так видно по интерфейсу, лучше сообщать тостом.",
             "В тоне danger описание должно объяснять, что делать дальше, а не повторять «произошла ошибка».",
             "Компонент не открывает себя: показ после операции — задача вызывающего кода.",
@@ -547,6 +693,12 @@
             "type": "text",
             "default": "studio-polet.ru",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -560,15 +712,19 @@
                 "the centred column — a result dialog has a single focal point",
                 "the summary chip: an address or a case number is scanned, not read in a paragraph",
                 "the quiet close button: a result dialog asks for no decision",
-                "styling the window by attribute and the palette through its own style — the window sits in the top layer"
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque surface of the window itself: a modal has to cover the page, so it carries a background by default and the background prop only recolours it"
               ],
               "adapt": [
                 "tone: success or danger",
                 "the title, description and detail copy",
                 "primaryLabel and primaryHref — where the result leads",
-                "closeLabel — the quiet dismissal"
+                "closeLabel — the quiet dismissal",
+                "background — the dialog surface; empty means the colour from the component's own palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not show a result dialog after every small thing: a success already visible in the UI belongs in a toast.",
                 "In the danger tone the description must say what to do next rather than repeat \"an error occurred\".",
                 "The component does not open itself: showing it after the operation is the caller's job.",
@@ -587,11 +743,25 @@
               "detail": {
                 "label": "Summary",
                 "default": "studio-polet.ru"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Result Dialog"
+            "title": "Result Dialog",
+            "preview": {
+              "props": {
+                "trigger": "Show the result",
+                "title": "The project is published",
+                "description": "The build took 42 seconds. Visitors can already see the changes.",
+                "detail": "studio-polet.com",
+                "primaryLabel": "Open the site",
+                "closeLabel": "Close"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["tone", "background"]
       }
     },
     {
@@ -622,15 +792,19 @@
             "кнопку отмены как единственный выход: окно без выхода запирает человека",
             "честное состояние неизвестной длительности вместо выдуманного процента",
             "aria-busy и разметку progressbar с aria-valuenow только при известном значении",
-            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое"
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку самого окна: модальное окно обязано перекрывать страницу, поэтому подложка у него есть по умолчанию, а проп background её только перекрашивает"
           ],
           "adapt": [
             "тексты title, step и note",
             "value — 0–100 или null",
             "cancelLabel — подпись прерывания",
-            "акцент через проп accent — цвет полосы и спиннера"
+            "акцент через проп accent — цвет полосы и спиннера",
+            "background — подложка окна; пусто означает цвет из собственной палитры компонента"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Окно не закрывает себя по завершении: закрытие и показ результата — задача вызывающего кода.",
             "Не блокируйте так короткие операции: до трёх секунд достаточно спиннера на кнопке.",
             "Отмена должна действительно прерывать операцию, а не только прятать окно.",
@@ -665,6 +839,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -678,15 +858,19 @@
                 "the cancel button as the only exit: a window with no way out traps people",
                 "the honest unknown-duration state instead of an invented percentage",
                 "aria-busy and progressbar semantics with aria-valuenow only when the value is known",
-                "styling the window by attribute and the palette through its own style — the window sits in the top layer"
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque surface of the window itself: a modal has to cover the page, so it carries a background by default and the background prop only recolours it"
               ],
               "adapt": [
                 "the title, step and note copy",
                 "value — 0–100 or null",
                 "cancelLabel — the abort wording",
-                "the accent through the accent prop — the bar and spinner colour"
+                "the accent through the accent prop — the bar and spinner colour",
+                "background — the dialog surface; empty means the colour from the component's own palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The dialog does not close itself when the work finishes: closing and showing the result belong to the caller.",
                 "Do not block for short operations: under three seconds a spinner on the button is enough.",
                 "Cancel must actually abort the operation, not merely hide the window.",
@@ -708,11 +892,24 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Blocking Progress Dialog"
+            "title": "Blocking Progress Dialog",
+            "preview": {
+              "props": {
+                "trigger": "Move the domain",
+                "title": "Moving the domain",
+                "step": "Checking the DNS records — 2 of 5",
+                "note": "Do not close the tab: the move goes on, but you will not see the notifications.",
+                "cancelLabel": "Stop"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -743,15 +940,20 @@
             "полоску-ручку в мобильной раскладке — она сообщает, откуда лист пришёл",
             "медиазапрос по ширине окна, а не контейнерный: лист позиционируется относительно экрана",
             "крупные строки действий (не меньше 2.75rem высотой) — по ним попадают пальцем",
-            "отдельную кнопку отмены внизу: на телефоне закрыть кликом мимо труднее, чем кажется"
+            "отдельную кнопку отмены внизу: на телефоне закрыть кликом мимо труднее, чем кажется",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку самого окна: модальное окно обязано перекрывать страницу, поэтому подложка у него есть по умолчанию, а проп background её только перекрашивает"
           ],
           "adapt": [
             "массив actions: подписи, адреса и флаг danger",
             "children — собственное содержимое вместо списка",
             "тексты title, description и cancelLabel",
-            "порог 40rem, если у вас другая граница мобильной раскладки"
+            "порог 40rem, если у вас другая граница мобильной раскладки",
+            "акцент через проп accent — цвет кольца фокуса на листе",
+            "background — подложка окна; пусто означает цвет из собственной палитры компонента"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше шести действий в листе не помещается: остальное уводите на страницу.",
             "Опасное действие ставьте последним и выделяйте цветом — но не делайте его единственным заметным.",
             "Пункты — ссылки. Если пункт запускает действие, замените <a> на <button type=\"button\"> в своей копии.",
@@ -779,6 +981,18 @@
             "type": "text",
             "default": "Отмена",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -792,15 +1006,20 @@
                 "the grip in the mobile layout — it says where the sheet came from",
                 "the media query on the viewport rather than a container query: the sheet is positioned against the screen",
                 "the tall action rows (no less than 2.75rem) — they are hit with a thumb",
-                "the separate cancel button: dismissing by tapping outside is harder on a phone than it looks"
+                "the separate cancel button: dismissing by tapping outside is harder on a phone than it looks",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque surface of the window itself: a modal has to cover the page, so it carries a background by default and the background prop only recolours it"
               ],
               "adapt": [
                 "the actions array: labels, hrefs and the danger flag",
                 "children — your own content instead of the list",
                 "the title, description and cancelLabel copy",
-                "the 40rem breakpoint if your mobile boundary differs"
+                "the 40rem breakpoint if your mobile boundary differs",
+                "the accent through the accent prop — it colours the focus ring on the sheet",
+                "background — the dialog surface; empty means the colour from the component's own palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "More than six actions do not fit: move the rest to a page.",
                 "Put the destructive action last and colour it — but do not make it the only thing that stands out.",
                 "The items are links. If one runs an action, swap <a> for <button type=\"button\"> in your copy.",
@@ -820,11 +1039,45 @@
               "cancelLabel": {
                 "label": "Cancel",
                 "default": "Cancel"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Action Sheet"
+            "title": "Action Sheet",
+            "preview": {
+              "props": {
+                "trigger": "Actions",
+                "title": "Studio site",
+                "description": "Published on 12 March",
+                "actions": [
+                  {
+                    "label": "Duplicate the project",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Export to an archive",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Move to another folder",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Delete the project",
+                    "href": "#",
+                    "danger": true
+                  }
+                ],
+                "cancelLabel": "Cancel"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -855,16 +1108,21 @@
             "моноширинный шрифт у ссылки — в ней различают дефисы и единицы",
             "список тех, у кого доступ уже есть: прежде чем звать нового, человек смотрит, кто там",
             "вывод цвета инициалов из имени, а не случайный",
-            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое"
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку самого окна: модальное окно обязано перекрывать страницу, поэтому подложка у него есть по умолчанию, а проп background её только перекрашивает"
           ],
           "adapt": [
             "link — сама ссылка",
             "массив people: имя и роль",
             "тексты title, accessLabel и подписи кнопок",
             "обработчик копирования: повесьте onClick на кнопку в своей копии",
-            "акцент через проп accent — цвет кнопки копирования и фокуса"
+            "акцент через проп accent — цвет кнопки копирования и фокуса",
+            "linkLabel — подпись поля со ссылкой, её читает скринридер",
+            "background — подложка окна; пусто означает цвет из собственной палитры компонента"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не копирует в буфер: navigator.clipboard требует клиентского кода, и он остаётся за вами.",
             "Не показывайте здесь больше пяти участников: остальных уводите на страницу доступа.",
             "Роль — это то, что человек может делать, а не должность: «Редактор», а не «Дизайнер».",
@@ -891,6 +1149,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -904,16 +1168,21 @@
                 "the monospaced link — hyphens and ones have to be distinguishable",
                 "the list of existing members: before inviting someone new, people check who is already there",
                 "deriving the initials colour from the name rather than at random",
-                "styling the window by attribute and the palette through its own style — the window sits in the top layer"
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque surface of the window itself: a modal has to cover the page, so it carries a background by default and the background prop only recolours it"
               ],
               "adapt": [
                 "link — the address itself",
                 "the people array: name and role",
                 "the title, accessLabel and button copy",
                 "the copy handler: attach onClick to the button in your copy",
-                "the accent through the accent prop — the copy button and focus ring"
+                "the accent through the accent prop — the copy button and focus ring",
+                "linkLabel — the label of the link field, read out by a screen reader",
+                "background — the dialog surface; empty means the colour from the component's own palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not write to the clipboard: navigator.clipboard needs client code and stays yours.",
                 "Do not list more than five members here: move the rest to an access page.",
                 "The role is what a person may do, not their job title: \"Editor\", not \"Designer\".",
@@ -932,11 +1201,40 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Share Dialog"
+            "title": "Share Dialog",
+            "preview": {
+              "props": {
+                "trigger": "Share",
+                "title": "Project access",
+                "link": "https://vibeui.ru/p/studio-polet",
+                "linkLabel": "Project link",
+                "people": [
+                  {
+                    "name": "Anna Kovaleva",
+                    "role": "Editor"
+                  },
+                  {
+                    "name": "Dmitry Orlov",
+                    "role": "Viewer"
+                  },
+                  {
+                    "name": "Sergey Mokhov",
+                    "role": "Owner"
+                  }
+                ],
+                "accessLabel": "Already have access",
+                "copyLabel": "Copy",
+                "doneLabel": "Done"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -967,16 +1265,20 @@
             "переключение экранов через :has(...:checked) на окне, а не display у соседей",
             "точки прогресса: мастер без индикатора ощущается бесконечным",
             "aria-hidden и tabIndex={-1} у служебных radio — в Tab-порядке им делать нечего",
-            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое"
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку самого окна: модальное окно обязано перекрывать страницу, поэтому подложка у него есть по умолчанию, а проп background её только перекрашивает"
           ],
           "adapt": [
             "steps — ровно два шага: заголовок, объяснение и подпись поля",
             "тексты nextLabel, backLabel и submitLabel",
             "акцент через проп accent — цвет точек и кнопок",
             "поля внутри шагов: замените input на свои в собственной копии",
-            "trigger — подпись кнопки, открывающей мастер"
+            "trigger — подпись кнопки, открывающей мастер",
+            "background — подложка окна; пусто означает цвет из собственной палитры компонента"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Шага ровно два. Для трёх и больше приём с :has разрастается — там уже нужен обычный мастер с состоянием.",
             "Значения полей между шагами не сохраняются компонентом: они остаются в DOM, читайте их при отправке.",
             "Кнопки перехода — это <label>, поэтому они не участвуют в отправке формы. Это намеренно.",
@@ -1010,6 +1312,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1023,16 +1331,20 @@
                 "swapping screens through :has(...:checked) on the window rather than sibling display rules",
                 "the progress dots: a wizard without an indicator feels endless",
                 "aria-hidden and tabIndex={-1} on the utility radios — they have no business in the Tab order",
-                "styling the window by attribute and the palette through its own style — the window sits in the top layer"
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque surface of the window itself: a modal has to cover the page, so it carries a background by default and the background prop only recolours it"
               ],
               "adapt": [
                 "steps — exactly two: heading, explanation and field label",
                 "the nextLabel, backLabel and submitLabel copy",
                 "the accent through the accent prop — the dots and buttons",
                 "the fields inside the steps: replace the inputs in your own copy",
-                "trigger — the label of the button that opens the wizard"
+                "trigger — the label of the button that opens the wizard",
+                "background — the dialog surface; empty means the colour from the component's own palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There are exactly two steps. Three or more makes the :has trick unwieldy — that needs a stateful wizard.",
                 "Field values are not carried between steps by the component: they stay in the DOM, read them on submit.",
                 "The navigation buttons are <label>s, so they take no part in form submission. That is deliberate.",
@@ -1055,11 +1367,37 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Two-Step Dialog"
+            "title": "Two-Step Dialog",
+            "preview": {
+              "props": {
+                "trigger": "Create a project",
+                "steps": [
+                  {
+                    "title": "Project name",
+                    "description": "Your teammates will see it. You can change it at any time.",
+                    "fieldLabel": "Name",
+                    "placeholder": "Studio site"
+                  },
+                  {
+                    "title": "Project address",
+                    "description": "The site opens at it until you connect a domain of your own.",
+                    "fieldLabel": "Address",
+                    "placeholder": "studio-polet"
+                  }
+                ],
+                "nextLabel": "Next",
+                "backLabel": "Back",
+                "submitLabel": "Create"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1090,16 +1428,21 @@
             "разбиение на группы: тридцать строк подряд не запоминаются",
             "разметку <dl> с dt/dd — это словарь действий, а не таблица",
             "внутреннюю прокрутку окна с ограничением по высоте экрана",
-            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое"
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку самого окна: модальное окно обязано перекрывать страницу, поэтому подложка у него есть по умолчанию, а проп background её только перекрашивает"
           ],
           "adapt": [
             "массив groups: заголовок группы и список сочетаний",
             "клавиши в keys: пишите их так, как они подписаны на клавиатуре пользователя",
             "тексты title и closeLabel",
             "порядок групп: самые частые действия сверху",
-            "trigger — подпись кнопки, открывающей справку"
+            "trigger — подпись кнопки, открывающей справку",
+            "акцент через проп accent — цвет кольца фокуса",
+            "background — подложка окна; пусто означает цвет из собственной палитры компонента"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сами сочетания компонент не вешает: обработчики клавиш остаются в вашем коде.",
             "Не смешивайте раскладки: если у вас Mac-подписи (⌘), не показывайте их пользователям Windows.",
             "Открывать это окно принято по «?» — не забудьте повесить такой обработчик снаружи.",
@@ -1120,6 +1463,18 @@
             "type": "text",
             "default": "Горячие клавиши",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1133,16 +1488,21 @@
                 "the grouping: thirty rows in a row are not memorable",
                 "the <dl> markup with dt/dd — this is a dictionary of actions, not a table",
                 "the internal scrolling with a max height against the viewport",
-                "styling the window by attribute and the palette through its own style — the window sits in the top layer"
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque surface of the window itself: a modal has to cover the page, so it carries a background by default and the background prop only recolours it"
               ],
               "adapt": [
                 "the groups array: group title and its shortcuts",
                 "the key names: write them as they are printed on the user's keyboard",
                 "the title and closeLabel copy",
                 "the group order: the most used actions first",
-                "trigger — the label of the button that opens the reference"
+                "trigger — the label of the button that opens the reference",
+                "the accent through the accent prop — it colours the focus ring",
+                "background — the dialog surface; empty means the colour from the component's own palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component binds no shortcuts: the key handlers stay in your code.",
                 "Do not mix platforms: Mac glyphs (⌘) should not be shown to Windows users.",
                 "This window is conventionally opened with \"?\" — remember to bind that outside.",
@@ -1158,11 +1518,78 @@
               "title": {
                 "label": "Title",
                 "default": "Keyboard shortcuts"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Shortcuts Dialog"
+            "title": "Shortcuts Dialog",
+            "preview": {
+              "props": {
+                "trigger": "Keyboard shortcuts",
+                "title": "Keyboard shortcuts",
+                "groups": [
+                  {
+                    "title": "Project",
+                    "shortcuts": [
+                      {
+                        "keys": ["Ctrl", "S"],
+                        "action": "Save the draft"
+                      },
+                      {
+                        "keys": ["Ctrl", "Enter"],
+                        "action": "Publish"
+                      },
+                      {
+                        "keys": ["Ctrl", "Z"],
+                        "action": "Undo the last action"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Navigation",
+                    "shortcuts": [
+                      {
+                        "keys": ["G", "P"],
+                        "action": "Go to the page list"
+                      },
+                      {
+                        "keys": ["G", "D"],
+                        "action": "Go to the domain settings"
+                      },
+                      {
+                        "keys": ["/"],
+                        "action": "Search the project"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Editor",
+                    "shortcuts": [
+                      {
+                        "keys": ["Esc"],
+                        "action": "Deselect the block"
+                      },
+                      {
+                        "keys": ["Alt", "↑"],
+                        "action": "Move the block up"
+                      },
+                      {
+                        "keys": ["Alt", "↓"],
+                        "action": "Move the block down"
+                      }
+                    ]
+                  }
+                ],
+                "closeLabel": "Close"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1193,15 +1620,19 @@
             "пропорцию 16/9 у обложки — при замене на <img> сохраните её, иначе окно будет прыгать при загрузке",
             "затемнение снизу обложки: без него светлая картинка сливается с телом окна",
             "строку характеристик моноширинными цифрами",
-            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое"
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку самого окна: модальное окно обязано перекрывать страницу, поэтому подложка у него есть по умолчанию, а проп background её только перекрашивает"
           ],
           "adapt": [
             "тексты title, description и meta",
             "primaryLabel и primaryHref — главное действие",
             "обложку: замените [data-part=\"cover\"] на <img> с тем же aspect-ratio",
-            "акцент через проп accent — цвет обложки и главной кнопки"
+            "акцент через проп accent — цвет обложки и главной кнопки",
+            "background — подложка окна; пусто означает цвет из собственной палитры компонента"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не растягивайте окно под большую картинку: превью должно оставаться превью, а не просмотрщиком.",
             "У <img> в обложке обязателен alt — иначе скринридер прочитает пустоту вместо описания.",
             "Компонент не загружает изображения и не показывает состояние загрузки.",
@@ -1228,6 +1659,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1241,15 +1678,19 @@
                 "the 16/9 ratio on the cover — keep it when swapping in an <img>, or the window jumps as it loads",
                 "the darkening at the bottom of the cover: without it a light image merges into the body",
                 "the specs line in tabular figures",
-                "styling the window by attribute and the palette through its own style — the window sits in the top layer"
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque surface of the window itself: a modal has to cover the page, so it carries a background by default and the background prop only recolours it"
               ],
               "adapt": [
                 "the title, description and meta copy",
                 "primaryLabel and primaryHref — the main action",
                 "the cover: replace [data-part=\"cover\"] with an <img> at the same aspect-ratio",
-                "the accent through the accent prop — the cover tint and the main button"
+                "the accent through the accent prop — the cover tint and the main button",
+                "background — the dialog surface; empty means the colour from the component's own palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not stretch the window for a large image: a preview should stay a preview, not become a viewer.",
                 "An <img> cover needs an alt — otherwise a screen reader announces emptiness instead of the description.",
                 "The component loads no images and shows no loading state.",
@@ -1268,11 +1709,25 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Preview Dialog"
+            "title": "Preview Dialog",
+            "preview": {
+              "props": {
+                "trigger": "Open the preview",
+                "title": "Home page",
+                "description": "A draft with changes from 12 March. The published version has a different pricing block.",
+                "meta": "1440 × 900 · 320 KB · 12 March, 14:08",
+                "primaryLabel": "Publish",
+                "closeLabel": "Close"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1303,15 +1758,20 @@
             "тёмную подложку под ключом — она отделяет данные от текста и намекает на «скопировать целиком»",
             "предупреждение после ключа, а не до: его читают, уже увидев, что нужно сохранить",
             "тихую кнопку «я сохранил» рядом с акцентным копированием",
-            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое"
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку самого окна: модальное окно обязано перекрывать страницу, поэтому подложка у него есть по умолчанию, а проп background её только перекрашивает"
           ],
           "adapt": [
             "value — сам ключ или токен",
             "тексты title, description и warning",
             "подписи copyLabel и doneLabel",
-            "обработчик копирования: повесьте onClick на кнопку в своей копии"
+            "обработчик копирования: повесьте onClick на кнопку в своей копии",
+            "акцент через проп accent — цвет кнопки действия и кольца фокуса",
+            "background — подложка окна; пусто означает цвет из собственной палитры компонента"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ключ приходит готовым: компонент ничего не генерирует и никуда не отправляет.",
             "Не логируйте значение и не кладите его в адресную строку — оно должно жить только в этом окне.",
             "Если ключ можно показать повторно, уберите предупреждение: обещание «только один раз» должно быть правдой.",
@@ -1339,6 +1799,18 @@
             "type": "text",
             "default": "Я сохранил",
             "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1352,15 +1824,20 @@
                 "the dark ground under the key — it separates data from prose and suggests copying it whole",
                 "the warning after the key rather than before: it is read once people see what to save",
                 "the quiet \"I saved it\" button beside the accented copy button",
-                "styling the window by attribute and the palette through its own style — the window sits in the top layer"
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque surface of the window itself: a modal has to cover the page, so it carries a background by default and the background prop only recolours it"
               ],
               "adapt": [
                 "value — the key or token itself",
                 "the title, description and warning copy",
                 "the copyLabel and doneLabel wording",
-                "the copy handler: attach onClick to the button in your copy"
+                "the copy handler: attach onClick to the button in your copy",
+                "the accent through the accent prop — it colours the action button and the focus ring",
+                "background — the dialog surface; empty means the colour from the component's own palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The key arrives ready: the component generates nothing and sends nothing anywhere.",
                 "Do not log the value or put it in the URL — it should live only inside this window.",
                 "If the key can be shown again, drop the warning: \"only once\" has to be true.",
@@ -1380,11 +1857,29 @@
               "doneLabel": {
                 "label": "Dismiss",
                 "default": "I saved it"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Secret Dialog"
+            "title": "Secret Dialog",
+            "preview": {
+              "props": {
+                "trigger": "Create a key",
+                "title": "API access key",
+                "description": "The key gives full access to your team's projects.",
+                "value": "vibeui_sk_8f2c41ab9d70e5b3c6a1f4820d7e93bb5c02af61",
+                "warning": "We show the key once. Save it now — it cannot be recovered, only replaced with a new one.",
+                "copyLabel": "Copy the key",
+                "doneLabel": "I have saved it"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1402,7 +1897,7 @@
           "target": "@components/vibeui/dialog-013.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-013-*. Оценка — ряд нативных radio в подписях, выбранная подсвечивается через :has(input:checked); сами radio визуально скрыты, но остаются в потоке и доступны с клавиатуры. Поле комментария необязательное и стоит после оценки: сначала одно нажатие, потом слова.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-013-*. Оценка — ряд нативных radio в подписях, выбранная подсвечивается через :has(input:checked); сами radio визуально скрыты, но остаются в потоке и доступны с клавиатуры. Поле комментария необязательное и стоит после оценки: сначала одно нажатие, потом слова. Палитра переведена на light-dark(): окно следует color-scheme окружения, а проп background меняет подложку окна и кнопки.",
       "meta": {
         "tags": ["dialog", "feedback", "survey", "rating"],
         "ai": {
@@ -1415,15 +1910,20 @@
             "необязательность комментария и его место после оценки: сначала одно нажатие, потом слова",
             "подсветку выбранного через :has(input:checked), а не через состояние",
             "role=\"group\" с подписью у ряда оценок",
-            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое"
+            "стилизацию окна по атрибуту и палитру отдельным style — окно в верхнем слое",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку окна: диалог перекрывает страницу, и просвечивающее окно нечитаемо — прозрачным по умолчанию он быть не может"
           ],
           "adapt": [
             "scale — подписи оценок от худшей к лучшей; их может быть три или пять",
             "тексты title, description, fieldLabel и placeholder",
             "подписи submitLabel и skipLabel",
-            "акцент через проп accent — цвет выбранной оценки и кнопки"
+            "акцент через проп accent — цвет выбранной оценки и кнопки",
+            "background — подложка окна и кнопки-триггера; пусто означает собственную подложку компонента по теме",
+            "scaleLabel — подпись ряда оценок для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не спрашивайте отзыв в середине работы: окно посреди задачи закрывают не читая.",
             "Пять делений — потолок. Семь и больше отвечающие всё равно сводят к трём.",
             "Компонент ничего не отправляет: значения читайте по name в обработчике отправки.",
@@ -1457,6 +1957,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1470,15 +1976,20 @@
                 "the comment staying optional and placed after the rating: one tap first, words second",
                 "the highlight through :has(input:checked) rather than state",
                 "role=\"group\" with a label on the rating row",
-                "styling the window by attribute and the palette through its own style — the window sits in the top layer"
+                "styling the window by attribute and the palette through its own style — the window sits in the top layer",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque window surface: a dialog covers the page, and a see-through window would be unreadable — it cannot default to transparent"
               ],
               "adapt": [
                 "scale — the rating labels from worst to best; three or five of them",
                 "the title, description, fieldLabel and placeholder copy",
                 "the submitLabel and skipLabel wording",
-                "the accent through the accent prop — the selected rating and the button"
+                "the accent through the accent prop — the selected rating and the button",
+                "background — the window and trigger surface; empty means the component keeps its own themed surface",
+                "scaleLabel — the label of the rating row for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not ask for feedback mid-task: a dialog in the middle of work gets dismissed unread.",
                 "Five steps is the ceiling. With seven or more people collapse the scale to three anyway.",
                 "The component sends nothing: read the values by name in your submit handler.",
@@ -1501,11 +2012,28 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Feedback Dialog"
+            "title": "Feedback Dialog",
+            "preview": {
+              "props": {
+                "trigger": "Leave feedback",
+                "title": "How did building the page go?",
+                "description": "The answer is anonymous and takes a couple of seconds. It goes straight to the people who build the editor.",
+                "scale": ["Painful", "Tolerable", "Fine", "Smooth", "Great"],
+                "scaleLabel": "Rating",
+                "fieldLabel": "What could be better? Optional",
+                "placeholder": "For example: the pricing block is hard to drag on a phone",
+                "submitLabel": "Send",
+                "skipLabel": "Not now"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1523,7 +2051,7 @@
           "target": "@components/vibeui/dialog-014.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-014-*. Полоса времени — CSS-анимация scaleX, длительность приходит переменной --vibeui-dialog-014-seconds из пропа seconds: отсчёт не считается в JS и не перерисовывает страницу каждую секунду. Кнопка «остаться» акцентная и стоит справа: выход по бездействию должен требовать бездействия, а не клика.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-dialog-014-*. Полоса времени — CSS-анимация scaleX, длительность приходит переменной --vibeui-dialog-014-seconds из пропа seconds: отсчёт не считается в JS и не перерисовывает страницу каждую секунду. Кнопка «остаться» акцентная и стоит справа: выход по бездействию должен требовать бездействия, а не клика. Палитра переведена на light-dark(): окно следует color-scheme окружения, а проп background меняет подложку окна и кнопки.",
       "meta": {
         "tags": ["dialog", "session", "timeout", "security"],
         "ai": {
@@ -1536,15 +2064,20 @@
             "совпадение seconds и реального времени выхода: разошлись — окно начинает врать",
             "акцент на кнопке «остаться»: выход по бездействию должен требовать бездействия",
             "role=\"alertdialog\": сообщение прерывает работу и должно быть объявлено",
-            "правило prefers-reduced-motion, оставляющее полосу неподвижной"
+            "правило prefers-reduced-motion, оставляющее полосу неподвижной",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку окна: диалог перекрывает страницу, и просвечивающее окно нечитаемо — прозрачным по умолчанию он быть не может"
           ],
           "adapt": [
             "seconds — сколько секунд осталось",
             "тексты title и description",
             "подписи stayLabel и leaveLabel",
-            "обработчики: продление сессии и выход вешает вызывающий код"
+            "обработчики: продление сессии и выход вешает вызывающий код",
+            "accent — цвет кнопки «остаться» и обводки фокуса",
+            "background — подложка окна и кнопки-триггера; пусто означает собственную подложку компонента по теме"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не продлевает сессию и не выходит из аккаунта: он только предупреждает.",
             "Показывайте окно не позже чем за минуту до конца — за десять секунд человек не успеет среагировать.",
             "Если сессия продлевается автоматически при активности, окно должно закрываться само: следите за этим снаружи.",
@@ -1573,6 +2106,18 @@
             "type": "text",
             "default": "Остаться",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1586,15 +2131,20 @@
                 "keeping seconds in sync with the real logout time: once they diverge the dialog lies",
                 "the accent on the stay button: logging out through inaction should require inaction",
                 "role=\"alertdialog\": the message interrupts work and has to be announced",
-                "the prefers-reduced-motion rule that leaves the bar still"
+                "the prefers-reduced-motion rule that leaves the bar still",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque window surface: a dialog covers the page, and a see-through window would be unreadable — it cannot default to transparent"
               ],
               "adapt": [
                 "seconds — how long is left",
                 "the title and description copy",
                 "the stayLabel and leaveLabel wording",
-                "the handlers: extending the session and signing out belong to the caller"
+                "the handlers: extending the session and signing out belong to the caller",
+                "accent — the colour of the stay button and the focus ring",
+                "background — the window and trigger surface; empty means the component keeps its own themed surface"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component neither extends the session nor signs anyone out: it only warns.",
                 "Show it at least a minute before the end — ten seconds is not enough time to react.",
                 "If activity extends the session automatically, the dialog must close itself: handle that outside.",
@@ -1613,11 +2163,27 @@
               "stayLabel": {
                 "label": "Stay",
                 "default": "Stay signed in"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Session Dialog"
+            "title": "Session Dialog",
+            "preview": {
+              "props": {
+                "trigger": "Show session dialog",
+                "title": "Your session is about to end",
+                "description": "We will sign you out after a minute of inactivity. Unsaved changes stay in the draft.",
+                "stayLabel": "Stay signed in",
+                "leaveLabel": "Sign out"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["seconds", "accent", "background"]
       }
     }
   ]

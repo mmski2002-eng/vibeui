@@ -6,6 +6,11 @@ export type Commerce032Step = {
   done: string
 }
 
+export type Commerce032Row = {
+  label: string
+  value: string
+}
+
 export type Commerce032Props = {
   title?: string
   current?: number
@@ -14,7 +19,22 @@ export type Commerce032Props = {
   cta?: string
   back?: string
   note?: string
+  /** Подпись открытого шага: {number} и {total} подставляют номера. */
+  stepOfText?: string
+  /** Подпись и заголовок кнопки возврата к пройденному шагу. */
+  editText?: string
+  editLabel?: string
+  /** Подписи и значения полей открытого шага. */
+  fieldLabels?: Record<string, string>
+  fieldValues?: Record<string, string>
+  /** Колонка итога: заголовок, подпись для скринридера и строки сводки. */
+  summaryTitle?: string
+  summaryLabel?: string
+  summaryRows?: Commerce032Row[]
+  totalLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -28,17 +48,21 @@ export type Commerce032Props = {
 // поэтому блок серверный: состояние живёт в маршруте, а не в компоненте.
 const STYLES = `
 :where([data-vibeui-block="commerce-032"]){
---vibeui-commerce-032-bg:oklch(1 0 0);
---vibeui-commerce-032-fg:oklch(0.21 0.014 265);
---vibeui-commerce-032-muted:oklch(0.55 0.014 265);
---vibeui-commerce-032-border:oklch(0.91 0.006 265);
---vibeui-commerce-032-soft:oklch(0.975 0.004 265);
---vibeui-commerce-032-accent:oklch(0.5 0.15 155);
+--vibeui-commerce-032-bg:transparent;
+--vibeui-commerce-032-radius:0;
+--vibeui-commerce-032-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-032-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-032-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-commerce-032-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-commerce-032-card:light-dark(oklch(1 0 0),oklch(0.22 0.01 265));
+--vibeui-commerce-032-accent:light-dark(oklch(0.5 0.15 155),oklch(0.76 0.14 155));
+--vibeui-commerce-032-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 155));
 --vibeui-commerce-032-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 [data-vibeui-block="commerce-032"]{
 box-sizing:border-box;background:var(--vibeui-commerce-032-bg);
+border-radius:var(--vibeui-commerce-032-radius);
 color:var(--vibeui-commerce-032-fg);font-family:var(--vibeui-commerce-032-sans);
 }
 [data-vibeui-block="commerce-032"] *{box-sizing:border-box}
@@ -64,11 +88,11 @@ font-size:0.75rem;font-weight:700;
 border:2px solid var(--vibeui-commerce-032-border);color:var(--vibeui-commerce-032-muted);
 }
 [data-vibeui-block="commerce-032"] [data-part="step"][data-state="done"] [data-part="mark"]{
-border-color:var(--vibeui-commerce-032-accent);background:var(--vibeui-commerce-032-accent);color:oklch(1 0 0);
+border-color:var(--vibeui-commerce-032-accent);background:var(--vibeui-commerce-032-accent);color:var(--vibeui-commerce-032-on-accent);
 }
 [data-vibeui-block="commerce-032"] [data-part="step"][data-state="open"] [data-part="mark"]{
 border-color:var(--vibeui-commerce-032-accent);color:var(--vibeui-commerce-032-accent);
-box-shadow:inset 0 0 0 3px var(--vibeui-commerce-032-bg),inset 0 0 0 6px color-mix(in oklab,var(--vibeui-commerce-032-accent) 35%,transparent);
+box-shadow:inset 0 0 0 3px var(--vibeui-commerce-032-card),inset 0 0 0 6px color-mix(in oklab,var(--vibeui-commerce-032-accent) 35%,transparent);
 }
 [data-vibeui-block="commerce-032"] [data-part="bar"] h3{margin:0;font-size:0.9375rem;font-weight:650;flex:1 1 auto}
 [data-vibeui-block="commerce-032"] [data-part="answer"]{
@@ -106,6 +130,7 @@ background:var(--vibeui-commerce-032-soft);
 }
 [data-vibeui-block="commerce-032"] [data-part="aside"] h3{margin:0 0 0.5rem;font-size:0.8125rem;font-weight:700}
 [data-vibeui-block="commerce-032"] dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:0.375rem 0.5rem;font-size:0.8125rem}
+[data-vibeui-block="commerce-032"] dl [data-part="row"]{display:contents}
 [data-vibeui-block="commerce-032"] dt{color:var(--vibeui-commerce-032-muted)}
 [data-vibeui-block="commerce-032"] dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
 [data-vibeui-block="commerce-032"] [data-part="total"]{
@@ -115,7 +140,7 @@ font-size:1.125rem;font-weight:750;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="commerce-032"] [data-part="go"]{
 margin-top:0.75rem;width:100%;appearance:none;border:0;cursor:pointer;height:2.875rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-032-accent);color:oklch(1 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-032-accent);color:var(--vibeui-commerce-032-on-accent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-032"] [data-part="back"]{
 margin-top:0.5rem;width:100%;appearance:none;cursor:pointer;height:2.5rem;border-radius:0.875rem;
@@ -146,6 +171,48 @@ const DEFAULT_STEPS: Commerce032Step[] = [
   },
 ]
 
+const DEFAULT_FIELD_LABELS: Record<string, string> = {
+  street: "Улица и дом",
+  flat: "Квартира",
+  date: "Дата доставки",
+  slot: "Интервал",
+}
+
+const DEFAULT_FIELD_VALUES: Record<string, string> = {
+  street: "ул. Кирова, 12",
+  flat: "47",
+  date: "12 марта",
+  slot: "12:00–18:00",
+}
+
+const DEFAULT_ROWS: Commerce032Row[] = [
+  { label: "Товары, 3 шт.", value: "51 015 ₽" },
+  { label: "Доставка", value: "490 ₽" },
+  { label: "Скидка по промокоду", value: "−0 ₽" },
+]
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Оформление в три шага: пройденные свёрнуты с ответом, открыт только текущий.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -158,12 +225,30 @@ export function Commerce032({
   cta = "Дальше к оплате",
   back = "Вернуться в корзину",
   note = "Нажимая кнопку, вы соглашаетесь с условиями продажи и обработкой персональных данных.",
+  stepOfText = "— шаг {number} из {total}",
+  editText = "Изменить",
+  editLabel = "Изменить шаг «{title}»",
+  fieldLabels = DEFAULT_FIELD_LABELS,
+  fieldValues = DEFAULT_FIELD_VALUES,
+  summaryTitle = "Заказ",
+  summaryLabel = "Итог заказа",
+  summaryRows = DEFAULT_ROWS,
+  totalLabel = "К оплате",
   accent,
+  background = "",
   className,
   style,
 }: Commerce032Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-032-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-032-bg": background,
+          "--vibeui-commerce-032-card": background,
+          "--vibeui-commerce-032-radius": "1.25rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -200,16 +285,21 @@ export function Commerce032({
                       <h3>
                         {step.title}
                         {state === "open" ? (
-                          <span data-part="answer"> — шаг {number} из 3</span>
+                          <span data-part="answer">
+                            {" "}
+                            {stepOfText
+                              .replace("{number}", String(number))
+                              .replace("{total}", String(steps.length))}
+                          </span>
                         ) : null}
                       </h3>
                       {state === "done" ? (
                         <button
                           type="button"
                           data-part="edit"
-                          aria-label={`Изменить шаг «${step.title}»`}
+                          aria-label={editLabel.replace("{title}", step.title)}
                         >
-                          Изменить
+                          {editText}
                         </button>
                       ) : null}
                     </div>
@@ -221,22 +311,19 @@ export function Commerce032({
                     {state === "open" ? (
                       <div data-part="body">
                         <div data-part="fields">
-                          <label data-part="field">
-                            <span>Улица и дом</span>
-                            <input type="text" defaultValue="ул. Кирова, 12" />
-                          </label>
-                          <label data-part="field">
-                            <span>Квартира</span>
-                            <input type="text" defaultValue="47" />
-                          </label>
-                          <label data-part="field">
-                            <span>Дата доставки</span>
-                            <input type="text" defaultValue="12 марта" />
-                          </label>
-                          <label data-part="field">
-                            <span>Интервал</span>
-                            <input type="text" defaultValue="12:00–18:00" />
-                          </label>
+                          {["street", "flat", "date", "slot"].map((key) => (
+                            <label data-part="field" key={key}>
+                              <span>
+                                {fieldLabels[key] ?? DEFAULT_FIELD_LABELS[key]}
+                              </span>
+                              <input
+                                type="text"
+                                defaultValue={
+                                  fieldValues[key] ?? DEFAULT_FIELD_VALUES[key]
+                                }
+                              />
+                            </label>
+                          ))}
                         </div>
                       </div>
                     ) : null}
@@ -245,18 +332,18 @@ export function Commerce032({
               })}
             </ol>
 
-            <aside data-part="aside" aria-label="Итог заказа">
-              <h3>Заказ</h3>
+            <aside data-part="aside" aria-label={summaryLabel}>
+              <h3>{summaryTitle}</h3>
               <dl>
-                <dt>Товары, 3 шт.</dt>
-                <dd>51 015 ₽</dd>
-                <dt>Доставка</dt>
-                <dd>490 ₽</dd>
-                <dt>Скидка по промокоду</dt>
-                <dd>−0 ₽</dd>
+                {summaryRows.map((row) => (
+                  <div key={row.label} data-part="row">
+                    <dt>{row.label}</dt>
+                    <dd>{row.value}</dd>
+                  </div>
+                ))}
               </dl>
               <p data-part="total">
-                <span>К оплате</span>
+                <span>{totalLabel}</span>
                 <span>{total}</span>
               </p>
               <button type="button" data-part="go">

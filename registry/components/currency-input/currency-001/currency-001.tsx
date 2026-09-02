@@ -11,7 +11,11 @@ export type Currency001Props = Omit<
   currency?: string
   hint?: string
   presets?: number[]
+  /** Локаль разрядов: компонент несёт русскую, проект подставляет свою. */
+  locale?: string
   onChange?: (value: number) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,14 +23,18 @@ export type Currency001Props = Omit<
 // каждой букве. Разряды, расставляемые прямо во время ввода, прыгают под
 // курсором и мешают править число; по blur они появляются один раз и остаются.
 // Быстрые суммы рядом: чаще всего вводят одно из нескольких круглых значений.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у поля по
+// умолчанию нет, оно лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="currency-001"]){
---vibeui-currency-001-bg:oklch(1 0 0);
---vibeui-currency-001-fg:oklch(0.22 0.014 265);
---vibeui-currency-001-muted:oklch(0.56 0.014 265);
---vibeui-currency-001-border:oklch(0.9 0.006 265);
---vibeui-currency-001-field:oklch(0.985 0.002 265);
---vibeui-currency-001-accent:oklch(0.55 0.17 265);
+--vibeui-currency-001-bg:transparent;
+--vibeui-currency-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-currency-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.014 265));
+--vibeui-currency-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-currency-001-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-currency-001-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
+--vibeui-currency-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-currency-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="currency-001"]{
@@ -64,7 +72,7 @@ border:1px solid var(--vibeui-currency-001-border);border-radius:9999px;
 background:transparent;color:inherit;
 font:inherit;font-size:0.75rem;font-weight:600;font-variant-numeric:tabular-nums;
 }
-[data-vibeui-block="currency-001"] button:hover{background:oklch(0.96 0.004 265)}
+[data-vibeui-block="currency-001"] button:hover{background:var(--vibeui-currency-001-hover)}
 [data-vibeui-block="currency-001"] button:focus-visible{outline:2px solid var(--vibeui-currency-001-accent);outline-offset:2px}
 [data-vibeui-block="currency-001"] [data-part="hint"]{font-size:0.75rem;line-height:1.4;color:var(--vibeui-currency-001-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="currency-001"] *{animation:none!important;transition:none!important}}
@@ -73,8 +81,30 @@ font:inherit;font-size:0.75rem;font-weight:600;font-variant-numeric:tabular-nums
 const DEFAULT_PRESETS = [1000, 2500, 5000, 10000]
 
 // Разряды ставятся по уходу из поля: во время ввода они прыгают под курсором.
-function pretty(value: number) {
-  return value ? value.toLocaleString("ru-RU") : ""
+function pretty(value: number, locale: string) {
+  return value ? value.toLocaleString(locale) : ""
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -86,7 +116,9 @@ export function Currency001({
   currency = "₽",
   hint = "Минимум 100 ₽, зачислится в течение минуты",
   presets = DEFAULT_PRESETS,
+  locale = "ru-RU",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -94,16 +126,22 @@ export function Currency001({
 }: Currency001Props) {
   const id = useId()
   const [amount, setAmount] = useState(2500)
-  const [text, setText] = useState(pretty(2500))
+  const [text, setText] = useState(pretty(2500, locale))
 
   const palette = {
     ...(accent ? { "--vibeui-currency-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-currency-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
   const apply = (value: number) => {
     setAmount(value)
-    setText(pretty(value))
+    setText(pretty(value, locale))
     onChange?.(value)
   }
 
@@ -143,7 +181,7 @@ export function Currency001({
               aria-pressed={amount === preset}
               onClick={() => apply(preset)}
             >
-              {pretty(preset)} {currency}
+              {pretty(preset, locale)} {currency}
             </button>
           ))}
         </div>

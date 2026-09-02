@@ -15,19 +15,25 @@ export type Card009Props = Omit<
   rows?: Card009Row[]
   moreLabel?: string
   defaultOpen?: boolean
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
+  accent?: string
 }
 
 // Идея компонента: карточка с подробностями, которые раскрываются на месте.
 // Внутри нативный details: раскрытие без клиентского кода, с клавиатуры и с
 // правильной ролью. Главное — сумма и статус — остаётся видимым всегда, а
 // под кат уходит только то, что нужно не каждому.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте рамка светлее подложки, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="card-009"]){
---vibeui-card-009-bg:oklch(1 0 0);
---vibeui-card-009-fg:oklch(0.22 0.014 265);
---vibeui-card-009-muted:oklch(0.56 0.014 265);
---vibeui-card-009-border:oklch(0.91 0.006 265);
---vibeui-card-009-accent:oklch(0.55 0.17 265);
+--vibeui-card-009-bg:transparent;
+--vibeui-card-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-card-009-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-card-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-card-009-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-card-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="card-009"]{
@@ -74,6 +80,29 @@ const DEFAULT_ROWS: Card009Row[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Карточка с подробностями на нативном details: главное видно всегда.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -83,11 +112,24 @@ export function Card009({
   rows = DEFAULT_ROWS,
   moreLabel = "Подробности заказа",
   defaultOpen = false,
+  background = "",
+  accent,
   className,
   style,
   ...props
 }: Card009Props) {
   const id = useId()
+
+  const palette = {
+    ...(accent ? { "--vibeui-card-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-card-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -98,7 +140,7 @@ export function Card009({
         {...props}
         data-vibeui-block="card-009"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <h3 data-part="title">{title}</h3>
         <p data-part="summary">{summary}</p>

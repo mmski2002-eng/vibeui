@@ -19,7 +19,30 @@ export type Solutions051Props = {
   subtitle?: string
   promos?: Solutions051Promo[]
   foot?: string
+  /** Доля израсходованного лимита, с которой акция считается на исходе, %. */
+  lowAt?: number
+  /** Подписи плиток: revenue, cost, margin. */
+  statsText?: Record<string, string>
+  /** Подписи механик: discount, gift, cashback. */
+  mechanicText?: Record<string, string>
+  /** Буквы в кружке механики: те же ключи, что и в mechanicText. */
+  mechanicLetter?: Record<string, string>
+  /** Строка активаций. {used} и {limit} подставляются на месте. */
+  usedText?: string
+  /** Приписка при почти исчерпанном лимите. */
+  lowText?: string
+  /** Остаток активаций. {count} — сколько осталось. */
+  remainingText?: string
+  /** Скрытая подпись полосы. {code} — промокод. */
+  progressLabel?: string
+  /** Подписи денежной строки карточки: revenue, cost. */
+  moneyText?: Record<string, string>
+  currency?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -36,15 +59,15 @@ export type Solutions051Props = {
 // путаться при дальтонизме.
 const STYLES = `
 :where([data-vibeui-block="solutions-051"]){
---vibeui-solutions-051-bg:oklch(1 0 0);
---vibeui-solutions-051-panel:oklch(0.976 0.004 330);
---vibeui-solutions-051-fg:oklch(0.22 0.02 330);
---vibeui-solutions-051-muted:oklch(0.54 0.016 330);
---vibeui-solutions-051-border:oklch(0.9 0.008 330);
---vibeui-solutions-051-accent:oklch(0.58 0.19 340);
---vibeui-solutions-051-gift:oklch(0.6 0.14 150);
---vibeui-solutions-051-cashback:oklch(0.58 0.14 235);
---vibeui-solutions-051-low:oklch(0.57 0.19 35);
+--vibeui-solutions-051-bg:transparent;
+--vibeui-solutions-051-panel:light-dark(oklch(0.976 0.004 330),oklch(0.27 0.014 330));
+--vibeui-solutions-051-fg:light-dark(oklch(0.22 0.02 330),oklch(0.94 0.006 330));
+--vibeui-solutions-051-muted:light-dark(oklch(0.54 0.016 330),oklch(0.69 0.014 330));
+--vibeui-solutions-051-border:light-dark(oklch(0.9 0.008 330),oklch(0.36 0.014 330));
+--vibeui-solutions-051-accent:light-dark(oklch(0.58 0.19 340),oklch(0.75 0.16 340));
+--vibeui-solutions-051-gift:light-dark(oklch(0.6 0.14 150),oklch(0.74 0.13 150));
+--vibeui-solutions-051-cashback:light-dark(oklch(0.58 0.14 235),oklch(0.74 0.13 235));
+--vibeui-solutions-051-low:light-dark(oklch(0.57 0.19 35),oklch(0.73 0.16 35));
 --vibeui-solutions-051-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-051-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -107,7 +130,7 @@ font-size:0.625rem;font-weight:650;color:var(--vibeui-solutions-051-muted);white
 }
 [data-vibeui-block="solutions-051"] [data-part="letter"]{
 width:1rem;height:1rem;border-radius:9999px;display:grid;place-items:center;flex-shrink:0;
-background:var(--vibeui-solutions-051-panel);color:oklch(1 0 0);font-size:0.5625rem;font-weight:700;line-height:1;
+background:var(--vibeui-solutions-051-panel);color:light-dark(oklch(1 0 0),oklch(0.18 0.02 330));font-size:0.5625rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="solutions-051"] [data-mechanic="discount"] [data-part="letter"]{background:var(--vibeui-solutions-051-accent)}
 [data-vibeui-block="solutions-051"] [data-mechanic="discount"] [data-part="badge"]{color:var(--vibeui-solutions-051-accent);border-color:color-mix(in oklab,var(--vibeui-solutions-051-accent) 45%,transparent)}
@@ -144,11 +167,28 @@ margin:0;padding:0 1rem 1rem;font-size:0.75rem;color:var(--vibeui-solutions-051-
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="solutions-051"] *{animation:none!important;transition:none!important}}
 `
 
-const MECHANIC = {
-  discount: { letter: "%", label: "скидка" },
-  gift: { letter: "П", label: "подарок" },
-  cashback: { letter: "К", label: "кэшбэк" },
-} as const
+const MECHANIC_LABEL: Record<string, string> = {
+  discount: "скидка",
+  gift: "подарок",
+  cashback: "кэшбэк",
+}
+
+const MECHANIC_LETTER: Record<string, string> = {
+  discount: "%",
+  gift: "П",
+  cashback: "К",
+}
+
+const STATS_LABEL: Record<string, string> = {
+  revenue: "выручка по промо",
+  cost: "стоимость промо",
+  margin: "маржа",
+}
+
+const MONEY_LABEL: Record<string, string> = {
+  revenue: "Выручка",
+  cost: "Стоимость",
+}
 
 const DEFAULT_PROMOS: Solutions051Promo[] = [
   {
@@ -219,7 +259,27 @@ const DEFAULT_PROMOS: Solutions051Promo[] = [
   },
 ]
 
-const money = (value: number) => `${value.toLocaleString("ru-RU")} ₽`
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Витрина промоакций: карточка на акцию с полосой расхода лимита активаций
@@ -230,16 +290,37 @@ export function Solutions051({
   subtitle = "Активные и недавно завершённые",
   promos = DEFAULT_PROMOS,
   foot = "Маржа — выручка по промо за вычетом его стоимости; ROI ниже 3× считается на грани окупаемости.",
+  lowAt = 90,
+  statsText = STATS_LABEL,
+  mechanicText = MECHANIC_LABEL,
+  mechanicLetter = MECHANIC_LETTER,
+  usedText = "Активаций: {used} из {limit}",
+  lowText = "лимит почти исчерпан",
+  remainingText = "осталось {count}",
+  progressLabel = "Активации промокода {code}",
+  moneyText = MONEY_LABEL,
+  currency = "₽",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions051Props) {
+  const money = (value: number) => `${value.toLocaleString(locale)} ${currency}`
+  const stat = (key: string) => statsText[key] ?? STATS_LABEL[key]
+  const [usedBefore = "", usedAfter = ""] = usedText.split("{used}")
   const revenueSum = promos.reduce((sum, promo) => sum + promo.revenue, 0)
   const costSum = promos.reduce((sum, promo) => sum + promo.cost, 0)
   const marginSum = revenueSum - costSum
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-051-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-051-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -264,22 +345,22 @@ export function Solutions051({
         <div data-part="summary">
           <p data-part="tile">
             <b>{money(revenueSum)}</b>
-            <span>выручка по промо</span>
+            <span>{stat("revenue")}</span>
           </p>
           <p data-part="tile">
             <b>{money(costSum)}</b>
-            <span>стоимость промо</span>
+            <span>{stat("cost")}</span>
           </p>
           <p data-part="tile" data-tile="margin">
             <b>{money(marginSum)}</b>
-            <span>маржа</span>
+            <span>{stat("margin")}</span>
           </p>
         </div>
 
         <div data-part="grid">
           {promos.map((promo) => {
             const ratio = promo.limit > 0 ? promo.used / promo.limit : 0
-            const low = ratio >= 0.9
+            const low = ratio * 100 >= lowAt
             const remaining = Math.max(promo.limit - promo.used, 0)
 
             return (
@@ -296,9 +377,11 @@ export function Solutions051({
                   </div>
                   <span data-part="badge">
                     <span data-part="letter" aria-hidden="true">
-                      {MECHANIC[promo.mechanic].letter}
+                      {mechanicLetter[promo.mechanic] ??
+                        MECHANIC_LETTER[promo.mechanic]}
                     </span>
-                    {MECHANIC[promo.mechanic].label}
+                    {mechanicText[promo.mechanic] ??
+                      MECHANIC_LABEL[promo.mechanic]}
                   </span>
                 </div>
 
@@ -310,10 +393,14 @@ export function Solutions051({
                 <div>
                   <p data-part="limit-row">
                     <span>
-                      Активаций: <b>{promo.used}</b> из {promo.limit}
+                      {usedBefore}
+                      <b>{promo.used}</b>
+                      {usedAfter.replace("{limit}", String(promo.limit))}
                     </span>
                     <span>
-                      {low ? "лимит почти исчерпан" : `осталось ${remaining}`}
+                      {low
+                        ? lowText
+                        : remainingText.replace("{count}", String(remaining))}
                     </span>
                   </p>
                   <div
@@ -321,7 +408,7 @@ export function Solutions051({
                     aria-valuenow={promo.used}
                     aria-valuemin={0}
                     aria-valuemax={promo.limit}
-                    aria-label={`Активации промокода ${promo.code}`}
+                    aria-label={progressLabel.replace("{code}", promo.code)}
                     style={
                       {
                         "--vibeui-solutions-051-fill": `${Math.min(ratio * 100, 100)}%`,
@@ -334,10 +421,12 @@ export function Solutions051({
 
                 <p data-part="money">
                   <span>
-                    Выручка <b>{money(promo.revenue)}</b>
+                    {moneyText.revenue ?? MONEY_LABEL.revenue}{" "}
+                    <b>{money(promo.revenue)}</b>
                   </span>
                   <span>
-                    Стоимость <b>{money(promo.cost)}</b>
+                    {moneyText.cost ?? MONEY_LABEL.cost}{" "}
+                    <b>{money(promo.cost)}</b>
                   </span>
                 </p>
               </article>

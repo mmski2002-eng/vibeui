@@ -19,6 +19,20 @@ export type Dashboard001Props = {
   metrics?: Dashboard001Metric[]
   points?: number[]
   rows?: Dashboard001Row[]
+  /** Подпись изменения: {delta} — само число из метрики. */
+  deltaText?: string
+  chartTitle?: string
+  /** Подпись графика для скринридера: {from} и {to} — крайние точки. */
+  chartText?: string
+  /** Подписи по краям оси: начало и конец периода. */
+  axis?: string[]
+  sourcesTitle?: string
+  /** Заголовки таблицы по ключам source, visits, share. */
+  columnText?: Record<string, string>
+  /** Подпись доли: {share} — число из строки. */
+  shareText?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -34,17 +48,20 @@ export type Dashboard001Props = {
 // с viewBox и preserveAspectRatio="none", то есть тянется под любую ширину;
 // доли в таблице — фон ячейки градиентом. Направление показателя передаётся
 // не только цветом: рядом стоит стрелка и подпись за какой период сравнение.
+//
+// Тема берётся из color-scheme окружения через light-dark(): собственной
+// подложки у блока нет, карточки внутри держат свою поверхность.
 const STYLES = `
 :where([data-vibeui-block="dashboard-001"]){
---vibeui-dashboard-001-bg:oklch(0.985 0.002 265);
---vibeui-dashboard-001-card:oklch(1 0 0);
---vibeui-dashboard-001-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-001-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-001-border:oklch(0.91 0.006 265);
---vibeui-dashboard-001-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-001-up:oklch(0.58 0.14 152);
---vibeui-dashboard-001-down:oklch(0.57 0.19 25);
---vibeui-dashboard-001-bar:oklch(0.55 0.2 262 / 14%);
+--vibeui-dashboard-001-bg:transparent;
+--vibeui-dashboard-001-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-dashboard-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-dashboard-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-dashboard-001-up:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
+--vibeui-dashboard-001-down:light-dark(oklch(0.57 0.19 25),oklch(0.73 0.16 25));
+--vibeui-dashboard-001-bar:light-dark(oklch(0.55 0.2 262 / 14%),oklch(0.74 0.16 262 / 24%));
 --vibeui-dashboard-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -144,6 +161,42 @@ const DEFAULT_ROWS: Dashboard001Row[] = [
   { source: "Реклама", visits: "3 211", share: 8 },
 ]
 
+const DEFAULT_AXIS = ["8 марта", "14 марта"]
+
+const DEFAULT_COLUMNS: Record<string, string> = {
+  source: "Источник",
+  visits: "Визиты",
+  share: "Доля",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+function fill(template: string, values: Record<string, string>) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? values[key] : match,
+  )
+}
+
 function line(points: number[]) {
   const max = Math.max(...points, 1)
   const step = 100 / Math.max(points.length - 1, 1)
@@ -165,6 +218,14 @@ export function Dashboard001({
   metrics = DEFAULT_METRICS,
   points = DEFAULT_POINTS,
   rows = DEFAULT_ROWS,
+  deltaText = "{delta} к прошлой неделе",
+  chartTitle = "Установки по дням",
+  chartText = "Установки по дням: от {from} до {to}",
+  axis = DEFAULT_AXIS,
+  sourcesTitle = "Источники",
+  columnText = DEFAULT_COLUMNS,
+  shareText = "{share} %",
+  background = "",
   accent,
   className,
   style,
@@ -173,6 +234,12 @@ export function Dashboard001({
 
   const palette = {
     ...(accent ? { "--vibeui-dashboard-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -203,8 +270,8 @@ export function Dashboard001({
               <p data-part="value">{metric.value}</p>
               {metric.delta ? (
                 <p data-part="delta">
-                  {metric.trend === "down" ? "↓" : "↑"} {metric.delta} к прошлой
-                  неделе
+                  {metric.trend === "down" ? "↓" : "↑"}{" "}
+                  {fill(deltaText, { delta: metric.delta })}
                 </p>
               ) : null}
             </article>
@@ -213,34 +280,40 @@ export function Dashboard001({
 
         <div data-part="grid">
           <article data-part="card">
-            <p data-part="label">Установки по дням</p>
+            <p data-part="label">{chartTitle}</p>
             <svg
               data-part="chart"
               viewBox="0 0 100 100"
               preserveAspectRatio="none"
               role="img"
-              aria-label={`Установки по дням: от ${points[0]} до ${points[points.length - 1]}`}
+              aria-label={fill(chartText, {
+                from: String(points[0]),
+                to: String(points[points.length - 1]),
+              })}
             >
               <polygon data-part="area" points={`0,100 ${shape} 100,100`} />
               <polyline data-part="line" points={shape} />
             </svg>
             <p data-part="axis">
-              <span>8 марта</span>
-              <span>14 марта</span>
+              {axis.map((caption) => (
+                <span key={caption}>{caption}</span>
+              ))}
             </p>
           </article>
 
           <article data-part="card">
-            <p data-part="label">Источники</p>
+            <p data-part="label">{sourcesTitle}</p>
             <table>
               <thead>
                 <tr>
-                  <th scope="col">Источник</th>
-                  <th scope="col" data-align="end">
-                    Визиты
+                  <th scope="col">
+                    {columnText.source ?? DEFAULT_COLUMNS.source}
                   </th>
                   <th scope="col" data-align="end">
-                    Доля
+                    {columnText.visits ?? DEFAULT_COLUMNS.visits}
+                  </th>
+                  <th scope="col" data-align="end">
+                    {columnText.share ?? DEFAULT_COLUMNS.share}
                   </th>
                 </tr>
               </thead>
@@ -258,7 +331,7 @@ export function Dashboard001({
                         } as CSSProperties
                       }
                     >
-                      {row.share} %
+                      {fill(shareText, { share: String(row.share) })}
                     </td>
                   </tr>
                 ))}

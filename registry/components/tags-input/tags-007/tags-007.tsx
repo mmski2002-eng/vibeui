@@ -7,6 +7,10 @@ export type Tags007Props = Omit<
   label?: string
   tags?: string[]
   visible?: number
+  /** Подпись счётчика: {count} — число скрытых, {tags} — их перечисление. */
+  moreText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -16,18 +20,21 @@ export type Tags007Props = Omit<
 // показаны, а остальные свёрнуты в «+3», и скрытые перечислены в title и
 // aria-label — их можно узнать наведением и услышать скринридером. Компонент
 // серверный: раскрывать список некуда, это витрина, а не форма.
+//
+// Тема берётся из color-scheme окружения через light-dark(): список темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="tags-007"]){
---vibeui-tags-007-surface:oklch(1 0 0);
---vibeui-tags-007-shell:oklch(0.9 0.006 265);
---vibeui-tags-007-fg:oklch(0.23 0.014 265);
---vibeui-tags-007-muted:oklch(0.55 0.014 265);
---vibeui-tags-007-border:oklch(0.88 0.008 265);
---vibeui-tags-007-chip:oklch(0.96 0.004 265);
---vibeui-tags-007-accent:oklch(0.5 0.15 265);
+--vibeui-tags-007-surface:transparent;
+--vibeui-tags-007-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.01 265));
+--vibeui-tags-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tags-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-tags-007-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-tags-007-chip:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.012 265));
+--vibeui-tags-007-accent:light-dark(oklch(0.5 0.15 265),oklch(0.78 0.13 265));
 --vibeui-tags-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: список показывают поверх любого фона. */
+/* Подложка по умолчанию прозрачная: список ложится на фон страницы. */
 [data-vibeui-block="tags-007"]{
 display:flex;flex-direction:column;gap:0.375rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -69,6 +76,28 @@ const DEFAULT_TAGS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Список тегов только для чтения со счётчиком скрытых и их перечислением.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -76,6 +105,8 @@ export function Tags007({
   label = "Метки объявления",
   tags = DEFAULT_TAGS,
   visible = 4,
+  moreText = "Ещё {count}: {tags}",
+  background = "",
   accent,
   className,
   style,
@@ -86,6 +117,12 @@ export function Tags007({
 
   const palette = {
     ...(accent ? { "--vibeui-tags-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tags-007-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -109,7 +146,9 @@ export function Tags007({
             <li
               data-part="more"
               title={hidden.join(", ")}
-              aria-label={`Ещё ${hidden.length}: ${hidden.join(", ")}`}
+              aria-label={moreText
+                .replace("{count}", String(hidden.length))
+                .replace("{tags}", hidden.join(", "))}
             >
               +{hidden.length}
             </li>

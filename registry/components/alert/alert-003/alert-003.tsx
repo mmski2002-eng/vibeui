@@ -12,10 +12,13 @@ export type Alert003Props = Omit<ComponentPropsWithoutRef<"p">, "children"> & {
 // потому что второй уровень текста в таком месте никто не читает. Высота
 // строки совпадает с подписью поля, поэтому появление сообщения не сдвигает
 // раскладку формы.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сообщение
+// темнеет вместе с формой и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-003"]){
---vibeui-alert-003-fg:oklch(0.38 0.014 265);
---vibeui-alert-003-tone:oklch(0.58 0.18 262);
+--vibeui-alert-003-fg:light-dark(oklch(0.38 0.014 265),oklch(0.78 0.012 265));
+--vibeui-alert-003-tone:light-dark(oklch(0.58 0.18 262),oklch(0.74 0.16 262));
 --vibeui-alert-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="alert-003"]{
@@ -23,9 +26,9 @@ display:flex;align-items:flex-start;gap:0.4375rem;
 margin:0;font-family:var(--vibeui-alert-003-font);
 font-size:0.8125rem;line-height:1.4;color:var(--vibeui-alert-003-fg);
 }
-[data-vibeui-block="alert-003"][data-tone="success"]{--vibeui-alert-003-tone:oklch(0.58 0.15 152)}
-[data-vibeui-block="alert-003"][data-tone="warning"]{--vibeui-alert-003-tone:oklch(0.68 0.15 70)}
-[data-vibeui-block="alert-003"][data-tone="danger"]{--vibeui-alert-003-tone:oklch(0.56 0.19 25);color:var(--vibeui-alert-003-tone)}
+[data-vibeui-block="alert-003"][data-tone="success"]{--vibeui-alert-003-tone:light-dark(oklch(0.58 0.15 152),oklch(0.75 0.14 152))}
+[data-vibeui-block="alert-003"][data-tone="warning"]{--vibeui-alert-003-tone:light-dark(oklch(0.68 0.15 70),oklch(0.81 0.14 75))}
+[data-vibeui-block="alert-003"][data-tone="danger"]{--vibeui-alert-003-tone:light-dark(oklch(0.56 0.19 25),oklch(0.74 0.16 25));color:var(--vibeui-alert-003-tone)}
 /* Точка выровнена по первой строке текста, а не по центру блока: при
    переносе на две строки она осталась бы висеть посередине. */
 [data-vibeui-block="alert-003"] [data-part="dot"]{

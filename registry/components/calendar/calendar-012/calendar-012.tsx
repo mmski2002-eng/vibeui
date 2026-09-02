@@ -12,6 +12,14 @@ export type Calendar012Props = Omit<
   max?: number
   onChange?: (year: number) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  previousLabel?: string
+  nextLabel?: string
+  groupLabel?: string
+  /** Подпись в подвале. {year} подставляется числом. */
+  pickedText?: string
 }
 
 // Идея компонента: год выбирается десятилетием, а не прокруткой списка.
@@ -19,12 +27,13 @@ export type Calendar012Props = Omit<
 // краёв — переход через границу (1999 → 2000) не требует нажатия стрелки.
 const STYLES = `
 :where([data-vibeui-block="calendar-012"]){
---vibeui-calendar-012-bg:oklch(1 0 0);
---vibeui-calendar-012-fg:oklch(0.24 0.014 265);
---vibeui-calendar-012-muted:oklch(0.62 0.014 265);
---vibeui-calendar-012-border:oklch(0.91 0.006 265);
---vibeui-calendar-012-hover:oklch(0.96 0.004 265);
---vibeui-calendar-012-accent:oklch(0.54 0.16 285);
+--vibeui-calendar-012-bg:transparent;
+--vibeui-calendar-012-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-calendar-012-muted:light-dark(oklch(0.62 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-012-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-calendar-012-hover:light-dark(oklch(0.96 0.004 265),oklch(0.29 0.014 265));
+--vibeui-calendar-012-accent:light-dark(oklch(0.54 0.16 285),oklch(0.72 0.14 285));
+--vibeui-calendar-012-on-accent:light-dark(oklch(0.99 0.01 285),oklch(0.19 0.03 285));
 --vibeui-calendar-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="calendar-012"]{
@@ -73,7 +82,7 @@ transition:background-color .14s ease;
 [data-vibeui-block="calendar-012"] [data-part="grid"] button[data-outside="true"]{color:var(--vibeui-calendar-012-muted);opacity:.6}
 [data-vibeui-block="calendar-012"] [data-part="grid"] button:disabled{opacity:.25;cursor:not-allowed;text-decoration:line-through}
 [data-vibeui-block="calendar-012"] [data-part="grid"] button[aria-pressed="true"]{
-background:var(--vibeui-calendar-012-accent);color:oklch(0.99 0.01 285);font-weight:700;opacity:1;
+background:var(--vibeui-calendar-012-accent);color:var(--vibeui-calendar-012-on-accent);font-weight:700;opacity:1;
 }
 [data-vibeui-block="calendar-012"] [data-part="foot"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
@@ -90,6 +99,28 @@ function decadeStart(year: number) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор года десятилетиями: сетка 4×3 и стрелки по десять лет.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -99,6 +130,11 @@ export function Calendar012({
   max = 2040,
   onChange,
   accent,
+  background = "",
+  previousLabel = "Предыдущее десятилетие",
+  nextLabel = "Следующее десятилетие",
+  groupLabel = "Годы десятилетия",
+  pickedText = "Выбран год {year}",
   className,
   style,
   ...props
@@ -110,6 +146,12 @@ export function Calendar012({
 
   const palette = {
     ...(accent ? { "--vibeui-calendar-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -137,7 +179,7 @@ export function Calendar012({
           <span data-part="nav">
             <button
               type="button"
-              aria-label="Предыдущее десятилетие"
+              aria-label={previousLabel}
               disabled={decade - 10 + 9 < min}
               onClick={() => setDecade(decade - 10)}
             >
@@ -145,7 +187,7 @@ export function Calendar012({
             </button>
             <button
               type="button"
-              aria-label="Следующее десятилетие"
+              aria-label={nextLabel}
               disabled={decade + 10 > max}
               onClick={() => setDecade(decade + 10)}
             >
@@ -153,7 +195,7 @@ export function Calendar012({
             </button>
           </span>
         </div>
-        <div data-part="grid" role="group" aria-label="Годы десятилетия">
+        <div data-part="grid" role="group" aria-label={groupLabel}>
           {years.map((year) => (
             <button
               key={year}
@@ -169,7 +211,9 @@ export function Calendar012({
         </div>
         <div data-part="foot">
           <span>
-            Выбран год <strong>{selected}</strong>
+            {pickedText.split("{year}")[0]}
+            <strong>{selected}</strong>
+            {pickedText.split("{year}")[1] ?? ""}
           </span>
           <span>
             {min}—{max}

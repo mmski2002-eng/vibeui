@@ -12,6 +12,18 @@ export type Cascader012Props = {
   heading?: string
   delay?: number
   tree?: Cascader012Node[]
+  /** Подпись рядом со спиннером. */
+  loadingText?: string
+  /** Счётчик готового уровня: {count}. */
+  countText?: string
+  /** aria-подписи колонок по ключам branch и leaf. */
+  paneText?: Record<string, string>
+  /** Подпись перед выбранным путём. */
+  selectedText?: string
+  /** Чем подписан выбор без города. */
+  noLeafText?: string
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -25,12 +37,14 @@ export type Cascader012Props = {
 // друга и в списке оказывается ветка, которую уже никто не выбирал.
 const STYLES = `
 :where([data-vibeui-block="cascader-012"]){
---vibeui-cascader-012-bg:oklch(1 0 0);
---vibeui-cascader-012-panel:oklch(0.975 0.003 265);
---vibeui-cascader-012-fg:oklch(0.23 0.014 265);
---vibeui-cascader-012-muted:oklch(0.55 0.012 265);
---vibeui-cascader-012-border:oklch(0.9 0.006 265);
---vibeui-cascader-012-accent:oklch(0.58 0.17 35);
+--vibeui-cascader-012-bg:transparent;
+--vibeui-cascader-012-panel:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.012 265));
+--vibeui-cascader-012-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-cascader-012-muted:light-dark(oklch(0.55 0.012 265),oklch(0.71 0.011 265));
+--vibeui-cascader-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.011 265));
+--vibeui-cascader-012-accent:light-dark(oklch(0.58 0.17 35),oklch(0.77 0.14 35));
+--vibeui-cascader-012-skeleton:light-dark(oklch(0.93 0.006 265),oklch(0.32 0.012 265));
+--vibeui-cascader-012-skeleton-lit:light-dark(oklch(0.97 0.004 265),oklch(0.38 0.012 265));
 --vibeui-cascader-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="cascader-012"]{
@@ -97,9 +111,9 @@ transform:rotate(45deg);opacity:.5;
 [data-vibeui-block="cascader-012"] [data-part="skeleton"]{
 height:1.625rem;margin:0 0.0625rem;border-radius:0.5rem;
 background:linear-gradient(90deg,
-oklch(0.93 0.006 265) 0%,
-oklch(0.97 0.004 265) 50%,
-oklch(0.93 0.006 265) 100%);
+var(--vibeui-cascader-012-skeleton) 0%,
+var(--vibeui-cascader-012-skeleton-lit) 50%,
+var(--vibeui-cascader-012-skeleton) 100%);
 background-size:200% 100%;
 animation:vibeui-cascader-012-shimmer 1.1s ease-in-out infinite;
 }
@@ -138,6 +152,33 @@ const DEFAULT_TREE: Cascader012Node[] = [
   },
 ]
 
+const PANE_LABEL: Record<string, string> = {
+  branch: "Регион",
+  leaf: "Город",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Каскад с ленивой подгрузкой уровня: скелетоны на время запроса и aria-busy.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -146,6 +187,12 @@ export function Cascader012({
   heading = "Регион и город",
   delay = 700,
   tree = DEFAULT_TREE,
+  loadingText = "Загружаем города",
+  countText = "{count} городов",
+  paneText = PANE_LABEL,
+  selectedText = "Выбрано:",
+  noLeafText = "только регион",
+  background = "",
   accent,
   className,
   style,
@@ -167,6 +214,12 @@ export function Cascader012({
 
   const palette = {
     ...(accent ? { "--vibeui-cascader-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cascader-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -186,15 +239,18 @@ export function Cascader012({
             {loading ? (
               <>
                 <i data-part="spinner" aria-hidden="true" />
-                Загружаем города
+                {loadingText}
               </>
             ) : (
-              `${children.length} городов`
+              countText.replace("{count}", String(children.length))
             )}
           </span>
         </div>
         <div data-part="grid">
-          <ul data-part="pane" aria-label="Регион">
+          <ul
+            data-part="pane"
+            aria-label={paneText.branch ?? PANE_LABEL.branch}
+          >
             {tree.map((node, index) => (
               <li key={node.label}>
                 <button
@@ -212,7 +268,11 @@ export function Cascader012({
               </li>
             ))}
           </ul>
-          <ul data-part="pane" aria-label="Город" aria-busy={loading}>
+          <ul
+            data-part="pane"
+            aria-label={paneText.leaf ?? PANE_LABEL.leaf}
+            aria-busy={loading}
+          >
             {loading
               ? [0, 1, 2, 3].map((row) => (
                   <li key={row} data-part="skeleton" aria-hidden="true" />
@@ -232,8 +292,8 @@ export function Cascader012({
           </ul>
         </div>
         <p data-part="footer" aria-live="polite">
-          Выбрано:{" "}
-          <b>{leaf ? `${tree[branch].label} → ${leaf}` : "только регион"}</b>
+          {selectedText}{" "}
+          <b>{leaf ? `${tree[branch].label} → ${leaf}` : noLeafText}</b>
         </p>
       </div>
     </>

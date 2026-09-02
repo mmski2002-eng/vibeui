@@ -12,7 +12,11 @@ export type Tabs007Item = {
 export type Tabs007Props = {
   items?: Tabs007Item[]
   defaultId?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
+  /** Подпись списка вкладок для скринридера. */
+  listLabel?: string
   className?: string
   style?: CSSProperties
 }
@@ -21,14 +25,19 @@ export type Tabs007Props = {
 // появляются тени — но только с той стороны, где содержимое ещё осталось. Это
 // делает пара градиентов с разной привязкой фона: «маска» едет вместе с
 // содержимым (local), «тень» стоит на месте (scroll). Ни наблюдателя, ни JS.
+//
+// Тема берётся из color-scheme окружения через light-dark(). Маска края —
+// отдельная переменная: градиенту нужен непрозрачный цвет той поверхности,
+// на которой лежит ряд, а сама подложка компонента прозрачна.
 const STYLES = `
 :where([data-vibeui-block="tabs-007"]){
---vibeui-tabs-007-bg:oklch(1 0 0);
---vibeui-tabs-007-fg:oklch(0.22 0.014 265);
---vibeui-tabs-007-muted:oklch(0.55 0.014 265);
---vibeui-tabs-007-border:oklch(0.91 0.006 265);
---vibeui-tabs-007-shade:oklch(0.35 0.03 265 / 16%);
---vibeui-tabs-007-accent:oklch(0.55 0.2 262);
+--vibeui-tabs-007-bg:transparent;
+--vibeui-tabs-007-mask:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-tabs-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tabs-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-tabs-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-tabs-007-shade:light-dark(oklch(0.35 0.03 265 / 16%),oklch(0.08 0.02 265 / 45%));
+--vibeui-tabs-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-tabs-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="tabs-007"]{
@@ -43,8 +52,8 @@ display:flex;gap:0.25rem;padding:0 0.75rem;
 overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain;
 border-bottom:1px solid var(--vibeui-tabs-007-border);
 background-image:
-linear-gradient(to right,var(--vibeui-tabs-007-bg),transparent),
-linear-gradient(to left,var(--vibeui-tabs-007-bg),transparent),
+linear-gradient(to right,var(--vibeui-tabs-007-mask),transparent),
+linear-gradient(to left,var(--vibeui-tabs-007-mask),transparent),
 linear-gradient(to right,var(--vibeui-tabs-007-shade),transparent),
 linear-gradient(to left,var(--vibeui-tabs-007-shade),transparent);
 background-position:left center,right center,left center,right center;
@@ -84,21 +93,54 @@ const DEFAULT_ITEMS: Tabs007Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Прокручиваемый ряд вкладок с тенями по краям.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tabs007({
   items = DEFAULT_ITEMS,
   defaultId,
+  background = "",
   accent,
+  listLabel = "Города",
   className,
   style,
 }: Tabs007Props) {
   const [active, setActive] = useState(defaultId ?? items[0]?.id)
   const listRef = useRef<HTMLDivElement>(null)
 
+  // Маска края обязана повторять цвет подложки: иначе градиент гасит ряд
+  // не тем цветом и по краям остаётся полоса.
   const palette = {
     ...(accent ? { "--vibeui-tabs-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tabs-007-bg": background,
+          "--vibeui-tabs-007-mask": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -148,7 +190,7 @@ export function Tabs007({
         <div
           data-part="list"
           role="tablist"
-          aria-label="Города"
+          aria-label={listLabel}
           ref={listRef}
           onKeyDown={onKeyDown}
         >

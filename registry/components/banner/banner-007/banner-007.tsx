@@ -12,19 +12,27 @@ export type Banner007Props = Omit<
   /** Машиночитаемое значение для <time datetime>. */
   datetime?: string
   note?: string
+  /** Шаблон доступного имени: «{title}», «{date}», «{from}», «{to}». */
+  labelTemplate?: string
+  accent?: string
+  /** Подложка полосы. Пусто — остаётся собственная. */
+  background?: string
 }
 
 // Идея компонента: полоса плановых работ, у которой время — главный герой.
 // Слева отдельным блоком стоит окно недоступности, справа объяснение; время
 // размечено тегом <time>, поэтому его понимает не только человек.
+//
+// Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не
+// инверсия светлой, блок времени в ней светлее подложки, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="banner-007"]){
---vibeui-banner-007-bg:oklch(0.98 0.012 285);
---vibeui-banner-007-fg:oklch(0.26 0.04 285);
---vibeui-banner-007-muted:oklch(0.48 0.04 285);
---vibeui-banner-007-border:oklch(0.88 0.03 285);
---vibeui-banner-007-slot:oklch(0.94 0.04 285);
---vibeui-banner-007-accent:oklch(0.5 0.14 290);
+--vibeui-banner-007-bg:light-dark(oklch(0.98 0.012 285),oklch(0.26 0.028 285));
+--vibeui-banner-007-fg:light-dark(oklch(0.26 0.04 285),oklch(0.93 0.018 285));
+--vibeui-banner-007-muted:light-dark(oklch(0.48 0.04 285),oklch(0.73 0.025 285));
+--vibeui-banner-007-border:light-dark(oklch(0.88 0.03 285),oklch(0.4 0.03 285));
+--vibeui-banner-007-slot:light-dark(oklch(0.94 0.04 285),oklch(0.34 0.035 285));
+--vibeui-banner-007-accent:light-dark(oklch(0.5 0.14 290),oklch(0.79 0.13 290));
 --vibeui-banner-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -61,6 +69,35 @@ font-variant-numeric:tabular-nums;white-space:nowrap;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="banner-007"] *{animation:none!important;transition:none!important}}
 `
 
+function fill(template: string, values: Record<string, string>): string {
+  return template.replace(
+    /\{(\w+)\}/g,
+    (placeholder, key: string) => values[key] ?? placeholder,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Полоса плановых работ с окном недоступности, размеченным тегом time.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -72,10 +109,24 @@ export function Banner007({
   to = "04:30",
   datetime = "2026-09-14T02:00",
   note = "Каталог останется доступен только на чтение. Публикация и загрузка файлов не сработают.",
+  labelTemplate = "{title}: {date}, с {from} до {to}",
+  accent,
+  background = "",
   className,
   style,
   ...props
 }: Banner007Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-banner-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-banner-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-banner-007" precedence="medium">
@@ -85,9 +136,9 @@ export function Banner007({
         {...props}
         data-vibeui-block="banner-007"
         role="note"
-        aria-label={`${title}: ${date}, с ${from} до ${to}`}
+        aria-label={fill(labelTemplate, { title, date, from, to })}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="shell">
           <time data-part="slot" dateTime={datetime}>

@@ -8,18 +8,23 @@ export type Carousel004Props = Omit<
   label?: string
   /** Секунд на полный проход ленты. Меньше 20 — рябит в глазах. */
   duration?: number
+  /** Пусто — подложка своя; цвет заменяет её целиком. */
+  background?: string
 }
 
 // Идея компонента: бегущая лента логотипов. Список дублируется в разметке и
 // сдвигается на половину ширины — только так шов между повторами не виден.
 // Копия помечена aria-hidden: скринридер должен прочитать список один раз.
 // При prefers-reduced-motion лента останавливается и просто прокручивается.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложка и текст
+// темнеют вместе со страницей, своей тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="carousel-004"]){
---vibeui-carousel-004-bg:oklch(1 0 0);
---vibeui-carousel-004-fg:oklch(0.35 0.014 265);
---vibeui-carousel-004-muted:oklch(0.58 0.014 265);
---vibeui-carousel-004-border:oklch(0.91 0.006 265);
+--vibeui-carousel-004-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-carousel-004-fg:light-dark(oklch(0.35 0.014 265),oklch(0.92 0.007 265));
+--vibeui-carousel-004-muted:light-dark(oklch(0.58 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-carousel-004-duration:32s;
 --vibeui-carousel-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -68,6 +73,28 @@ const DEFAULT_ITEMS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Бегущая лента логотипов: список продублирован, копия скрыта от скринридера.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -75,12 +102,19 @@ export function Carousel004({
   items = DEFAULT_ITEMS,
   label = "Нам доверяют",
   duration = 32,
+  background = "",
   className,
   style,
   ...props
 }: Carousel004Props) {
   const palette = {
     "--vibeui-carousel-004-duration": `${Math.max(20, duration)}s`,
+    ...(background
+      ? {
+          "--vibeui-carousel-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

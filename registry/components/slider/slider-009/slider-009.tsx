@@ -9,6 +9,8 @@ export type Slider009Props = Omit<
 > & {
   label?: string
   defaultValue?: number
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,15 +19,19 @@ export type Slider009Props = Omit<
 // растущие, как индикатор сигнала. Значки не реагируют на перетаскивание:
 // это подписи концов шкалы, а не кнопки. Текущее значение читается в пузыре
 // над ручкой — глаз не должен искать его в стороне от жеста.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="slider-009"]){
---vibeui-slider-009-bg:oklch(1 0 0);
---vibeui-slider-009-fg:oklch(0.22 0.014 265);
---vibeui-slider-009-muted:oklch(0.6 0.014 265);
---vibeui-slider-009-border:oklch(0.9 0.006 265);
---vibeui-slider-009-track:oklch(0.92 0.006 265);
---vibeui-slider-009-accent:oklch(0.58 0.19 292);
---vibeui-slider-009-on-accent:oklch(1 0 0);
+--vibeui-slider-009-bg:transparent;
+--vibeui-slider-009-surface:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
+--vibeui-slider-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-slider-009-muted:light-dark(oklch(0.6 0.014 265),oklch(0.68 0.012 265));
+--vibeui-slider-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-slider-009-track:light-dark(oklch(0.92 0.006 265),oklch(0.42 0.012 265));
+--vibeui-slider-009-accent:light-dark(oklch(0.58 0.19 292),oklch(0.74 0.16 292));
+--vibeui-slider-009-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.014 292));
 --vibeui-slider-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-009-fill:60%;
 --vibeui-slider-009-ratio:0.6;
@@ -82,16 +88,38 @@ background:linear-gradient(to right,var(--vibeui-slider-009-accent) var(--vibeui
 [data-vibeui-block="slider-009"] input::-webkit-slider-thumb{
 appearance:none;margin-top:-0.375rem;
 width:1.125rem;height:1.125rem;border-radius:9999px;
-background:var(--vibeui-slider-009-accent);border:3px solid var(--vibeui-slider-009-bg);
+background:var(--vibeui-slider-009-accent);border:3px solid var(--vibeui-slider-009-surface);
 box-shadow:0 1px 4px oklch(0.2 0.02 265 / 30%);
 }
 [data-vibeui-block="slider-009"] input::-moz-range-thumb{
 width:1.125rem;height:1.125rem;border-radius:9999px;box-sizing:border-box;
-background:var(--vibeui-slider-009-accent);border:3px solid var(--vibeui-slider-009-bg);
+background:var(--vibeui-slider-009-accent);border:3px solid var(--vibeui-slider-009-surface);
 }
 [data-vibeui-block="slider-009"] input:focus-visible{outline:2px solid var(--vibeui-slider-009-accent);outline-offset:4px;border-radius:0.5rem}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="slider-009"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Ползунок громкости между двумя статичными значками уровня, с пузырём
@@ -100,6 +128,7 @@ background:var(--vibeui-slider-009-accent);border:3px solid var(--vibeui-slider-
 export function Slider009({
   label = "Громкость звонка",
   defaultValue = 60,
+  background = "",
   accent,
   className,
   style,
@@ -113,6 +142,12 @@ export function Slider009({
     "--vibeui-slider-009-fill": `${value}%`,
     "--vibeui-slider-009-ratio": String(ratio),
     ...(accent ? { "--vibeui-slider-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-slider-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

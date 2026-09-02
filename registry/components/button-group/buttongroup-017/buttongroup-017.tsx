@@ -11,6 +11,8 @@ export type Buttongroup017Props = Omit<
   noHint?: string
   defaultValue?: "yes" | "no"
   name?: string
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,13 +24,14 @@ export type Buttongroup017Props = Omit<
 // меняется правилами CSS — оба текста лежат в разметке, показан один.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-017"]){
---vibeui-buttongroup-017-surface:oklch(1 0 0);
---vibeui-buttongroup-017-track:oklch(0.955 0.004 265);
---vibeui-buttongroup-017-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-017-muted:oklch(0.55 0.014 265);
---vibeui-buttongroup-017-border:oklch(0.9 0.006 265);
---vibeui-buttongroup-017-accent:oklch(0.55 0.15 150);
---vibeui-buttongroup-017-deny:oklch(0.6 0.15 25);
+--vibeui-buttongroup-017-surface:transparent;
+--vibeui-buttongroup-017-track:light-dark(oklch(0.955 0.004 265),oklch(0.28 0.01 265));
+--vibeui-buttongroup-017-fg:light-dark(oklch(0.25 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-017-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-buttongroup-017-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-buttongroup-017-accent:light-dark(oklch(0.55 0.15 150),oklch(0.62 0.15 150));
+--vibeui-buttongroup-017-deny:light-dark(oklch(0.6 0.15 25),oklch(0.63 0.16 25));
+--vibeui-buttongroup-017-on-thumb:oklch(0.99 0.004 265);
 --vibeui-buttongroup-017-thumb:var(--vibeui-buttongroup-017-accent);
 --vibeui-buttongroup-017-radius:0.5rem;
 --vibeui-buttongroup-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -76,7 +79,7 @@ transition:color .18s ease;
 position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;
 }
 [data-vibeui-block="buttongroup-017"] [data-part="option"]:has(input:checked){
-color:oklch(0.99 0.004 265);
+color:var(--vibeui-buttongroup-017-on-thumb);
 }
 [data-vibeui-block="buttongroup-017"] [data-part="option"]:has(input:focus-visible){
 outline:2px solid var(--vibeui-buttongroup-017-fg);outline-offset:2px;
@@ -94,6 +97,28 @@ font-size:0.75rem;line-height:1.4;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Ответ «да / нет» парой сегментов с переезжающей подложкой без JS.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -105,6 +130,7 @@ export function Buttongroup017({
   noHint = "Отчёт останется доступен только в интерфейсе.",
   defaultValue = "yes",
   name = "buttongroup-017",
+  background = "",
   accent,
   className,
   style,
@@ -112,6 +138,12 @@ export function Buttongroup017({
 }: Buttongroup017Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-017-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

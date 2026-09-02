@@ -13,7 +13,21 @@ export type Dashboard019Props = {
   visibility?: string
   visibilities?: string[]
   saveLabel?: string
+  resetLabel?: string
+  nameLabel?: string
+  roleLabel?: string
+  cityLabel?: string
+  bioLabel?: string
+  visibilityLabel?: string
+  /** Шаблон остатка символов: {count}. */
+  leftText?: string
+  previewTitle?: string
+  /** Заглушки карточки, когда поле пустое. */
+  emptyName?: string
+  emptyRole?: string
   accent?: string
+  /** Подложка карточки; пусто — цвет из палитры блока. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -28,12 +42,13 @@ export type Dashboard019Props = {
 // символов осталось, вместо того чтобы молча обрезать текст.
 const STYLES = `
 :where([data-vibeui-block="dashboard-019"]){
---vibeui-dashboard-019-bg:oklch(1 0 0);
---vibeui-dashboard-019-panel:oklch(0.985 0.003 265);
---vibeui-dashboard-019-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-019-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-019-border:oklch(0.91 0.006 265);
---vibeui-dashboard-019-accent:oklch(0.55 0.2 262);
+--vibeui-dashboard-019-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
+--vibeui-dashboard-019-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.013 265));
+--vibeui-dashboard-019-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-019-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-dashboard-019-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-019-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.15 262));
+--vibeui-dashboard-019-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
 --vibeui-dashboard-019-hue:262;
 --vibeui-dashboard-019-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -79,7 +94,7 @@ outline:2px solid var(--vibeui-dashboard-019-accent);outline-offset:2px;
 [data-vibeui-block="dashboard-019"] [data-part="save"]{
 appearance:none;border:0;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:650;
 padding:0.5rem 0.875rem;border-radius:0.5rem;
-background:var(--vibeui-dashboard-019-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-019-accent);color:var(--vibeui-dashboard-019-on-accent);
 }
 [data-vibeui-block="dashboard-019"] [data-part="reset"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:650;
@@ -104,15 +119,15 @@ overflow:hidden;
 }
 [data-vibeui-block="dashboard-019"] [data-part="cover"]{
 height:3.25rem;
-background:linear-gradient(120deg,oklch(0.72 0.14 var(--vibeui-dashboard-019-hue)),oklch(0.88 0.07 var(--vibeui-dashboard-019-hue)));
+background:linear-gradient(120deg,light-dark(oklch(0.72 0.14 var(--vibeui-dashboard-019-hue)),oklch(0.52 0.12 var(--vibeui-dashboard-019-hue))),light-dark(oklch(0.88 0.07 var(--vibeui-dashboard-019-hue)),oklch(0.34 0.06 var(--vibeui-dashboard-019-hue))));
 }
 [data-vibeui-block="dashboard-019"] [data-part="body"]{padding:0 0.875rem 0.875rem}
 [data-vibeui-block="dashboard-019"] [data-part="avatar"]{
 width:3rem;height:3rem;margin-top:-1.5rem;border-radius:9999px;
 display:grid;place-items:center;font-size:0.9375rem;font-weight:700;
 border:3px solid var(--vibeui-dashboard-019-bg);
-background:oklch(0.94 0.04 var(--vibeui-dashboard-019-hue));
-color:oklch(0.36 0.1 var(--vibeui-dashboard-019-hue));
+background:light-dark(oklch(0.94 0.04 var(--vibeui-dashboard-019-hue)),oklch(0.36 0.06 var(--vibeui-dashboard-019-hue)));
+color:light-dark(oklch(0.36 0.1 var(--vibeui-dashboard-019-hue)),oklch(0.9 0.05 var(--vibeui-dashboard-019-hue)));
 }
 [data-vibeui-block="dashboard-019"] [data-part="cardname"]{margin:0.5rem 0 0;font-size:0.9375rem;font-weight:700}
 [data-vibeui-block="dashboard-019"] [data-part="cardrole"]{margin:0.0625rem 0 0;font-size:0.75rem;color:var(--vibeui-dashboard-019-muted)}
@@ -158,6 +173,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Настройки профиля с живой карточкой: превью перерисовывается на каждый
  * символ. Один файл, ноль зависимостей, собственная палитра.
  */
@@ -171,7 +208,18 @@ export function Dashboard019({
   visibility = "Видно команде",
   visibilities = ["Видно всем", "Видно команде", "Только мне"],
   saveLabel = "Сохранить",
+  resetLabel = "Вернуть как было",
+  nameLabel = "Имя",
+  roleLabel = "Роль",
+  cityLabel = "Город",
+  bioLabel = "О себе",
+  visibilityLabel = "Кому виден профиль",
+  leftText = "осталось {count}",
+  previewTitle = "Превью карточки",
+  emptyName = "Без имени",
+  emptyRole = "Роль не указана",
   accent,
+  background = "",
   className,
   style,
 }: Dashboard019Props) {
@@ -182,6 +230,12 @@ export function Dashboard019({
 
   const palette = {
     ...(accent ? { "--vibeui-dashboard-019-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     "--vibeui-dashboard-019-hue": `${hue(draftName)}`,
     ...style,
   } as CSSProperties
@@ -207,7 +261,7 @@ export function Dashboard019({
             <p data-part="hint">{hint}</p>
 
             <label data-part="field">
-              <span data-part="fieldlabel">Имя</span>
+              <span data-part="fieldlabel">{nameLabel}</span>
               <input
                 value={draftName}
                 onChange={(event) => setDraftName(event.target.value)}
@@ -216,23 +270,26 @@ export function Dashboard019({
 
             <div data-part="pair">
               <label data-part="field">
-                <span data-part="fieldlabel">Роль</span>
+                <span data-part="fieldlabel">{roleLabel}</span>
                 <input
                   value={draftRole}
                   onChange={(event) => setDraftRole(event.target.value)}
                 />
               </label>
               <label data-part="field">
-                <span data-part="fieldlabel">Город</span>
+                <span data-part="fieldlabel">{cityLabel}</span>
                 <input defaultValue={city} />
               </label>
             </div>
 
             <label data-part="field">
               <span data-part="fieldlabel">
-                О себе
+                {bioLabel}
                 <span data-part="left">
-                  осталось {Math.max(0, BIO_LIMIT - draftBio.length)}
+                  {leftText.replace(
+                    "{count}",
+                    String(Math.max(0, BIO_LIMIT - draftBio.length)),
+                  )}
                 </span>
               </span>
               <textarea
@@ -243,7 +300,7 @@ export function Dashboard019({
             </label>
 
             <label data-part="field">
-              <span data-part="fieldlabel">Кому виден профиль</span>
+              <span data-part="fieldlabel">{visibilityLabel}</span>
               <select
                 value={draftVisibility}
                 onChange={(event) => setDraftVisibility(event.target.value)}
@@ -268,21 +325,21 @@ export function Dashboard019({
                   setDraftVisibility(visibility)
                 }}
               >
-                Вернуть как было
+                {resetLabel}
               </button>
             </div>
           </form>
 
           <aside data-part="preview" aria-live="polite">
-            <p data-part="previewhead">Превью карточки</p>
+            <p data-part="previewhead">{previewTitle}</p>
             <div data-part="card">
               <div data-part="cover" />
               <div data-part="body">
                 <div data-part="avatar" aria-hidden="true">
                   {initials(draftName)}
                 </div>
-                <p data-part="cardname">{draftName || "Без имени"}</p>
-                <p data-part="cardrole">{draftRole || "Роль не указана"}</p>
+                <p data-part="cardname">{draftName || emptyName}</p>
+                <p data-part="cardrole">{draftRole || emptyRole}</p>
                 <p data-part="cardbio">{draftBio}</p>
                 <span data-part="chip">{draftVisibility}</span>
               </div>

@@ -16,7 +16,7 @@
           "target": "@components/vibeui/aspect-001.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-001-*. Соотношение приходит пропом в переменную --vibeui-aspect-001-ratio и подставляется в aspect-ratio: плодить класс на каждую пропорцию значит заранее решать за пользователя, какие ему понадобятся. Прямые потомки img, video и iframe растягиваются на всю рамку с object-fit:cover. Пустая рамка показывает штриховку и подпись, чтобы не выглядеть поломкой.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-001-*. Соотношение приходит пропом в переменную --vibeui-aspect-001-ratio и подставляется в aspect-ratio: плодить класс на каждую пропорцию значит заранее решать за пользователя, какие ему понадобятся. Прямые потомки img, video и iframe растягиваются на всю рамку с object-fit:cover. Пустая рамка показывает штриховку и подпись, чтобы не выглядеть поломкой. Тема берётся из color-scheme окружения через light-dark(): подложки у рамки по умолчанию нет, она лежит на фоне страницы и темнеет вместе с ней, а проп background включает заливку.",
       "meta": {
         "tags": ["aspect ratio", "media", "placeholder", "layout"],
         "preview": {
@@ -32,15 +32,19 @@
             "object-fit:cover у прямых потомков: без него картинка растягивается и соотношение теряет смысл",
             "overflow:hidden вместе со скруглением — иначе картинка вылезет за углы",
             "штриховку и подпись у пустой рамки: пустой серый прямоугольник читается как поломка",
-            "aria-hidden у подписи-заглушки: она декоративная"
+            "aria-hidden у подписи-заглушки: она декоративная",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "ratio — любое соотношение строкой: «16 / 9», «4 / 3», «1 / 1»",
             "children — img, video, iframe или собственная разметка",
             "label — подпись пустой рамки",
-            "ширину и внешние отступы через className"
+            "ширину и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не грузит изображения и не следит за загрузкой: он только держит место.",
             "У <img> внутри обязателен alt — рамка его не подставляет.",
             "Не задавайте высоту рамке через className: она вычисляется из ширины и соотношения.",
@@ -61,6 +65,12 @@
             "type": "text",
             "default": "16 / 9",
             "maxLength": 20
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -74,15 +84,19 @@
                 "object-fit:cover on the direct children: without it the image stretches and the ratio loses its point",
                 "overflow:hidden together with the radius — otherwise the image escapes the corners",
                 "the hatching and label on an empty frame: a plain grey box reads as broken",
-                "aria-hidden on the placeholder label: it is decorative"
+                "aria-hidden on the placeholder label: it is decorative",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "ratio — any proportion as a string: \"16 / 9\", \"4 / 3\", \"1 / 1\"",
                 "children — an img, video, iframe or your own markup",
                 "label — the empty-frame caption",
-                "width and outer spacing through className"
+                "width and outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component loads no images and tracks no loading: it only holds the space.",
                 "An <img> inside needs an alt — the frame does not supply one.",
                 "Do not set a height through className: it is derived from the width and the ratio.",
@@ -97,11 +111,15 @@
               "label": {
                 "label": "Caption",
                 "default": "16 / 9"
+              },
+              "background": {
+                "label": "Background"
               }
             },
             "title": "Ratio Frame"
           }
-        }
+        },
+        "cardControls": ["ratio", "background"]
       }
     },
     {
@@ -119,7 +137,7 @@
           "target": "@components/vibeui/aspect-002.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-002-*. Кадр держит 16:9 и по умолчанию рендерится ссылкой: iframe плеера весит сотни килобайт и подключается уже по клику. Треугольник воспроизведения нарисован границами, длительность лежит плашкой в углу, подпись — поверх градиента снизу.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-002-*. Кадр держит 16:9 и по умолчанию рендерится ссылкой: iframe плеера весит сотни килобайт и подключается уже по клику. Треугольник воспроизведения нарисован границами, длительность лежит плашкой в углу, подпись — поверх градиента снизу. Кадр намеренно остаётся тёмным в обеих темах: это постер ролика, а не панель интерфейса. Подпись ссылки для скринридера вынесена в пропы watchLabel и watchFallbackLabel, где {title} подставляется названием.",
       "meta": {
         "tags": ["aspect ratio", "video", "thumbnail", "performance"],
         "preview": {
@@ -135,13 +153,15 @@
             "треугольник из границ вместо иконки: библиотека ради одного знака не нужна",
             "градиент под подписью — без него текст не читается на светлом кадре",
             "aria-label у ссылки с названием ролика: «ссылка» без текста непонятна",
-            "пропорцию 16:9: при другой видео придётся обрезать"
+            "пропорцию 16:9: при другой видео придётся обрезать",
+            "тёмный кадр в обеих темах: это постер ролика, а не панель интерфейса — светлая заливка сделала бы подпись поверх обложки нечитаемой"
           ],
           "adapt": [
             "title и duration — подпись и длительность",
             "href — адрес страницы или плеера",
             "акцент через проп accent — цвет кнопки воспроизведения",
-            "обложку: положите <img> внутрь, он ляжет под кнопку"
+            "обложку: положите <img> внутрь, он ляжет под кнопку",
+            "watchLabel и watchFallbackLabel — подпись ссылки для скринридера; {title} подставляется названием ролика"
           ],
           "notes": [
             "Компонент ничего не воспроизводит: по клику вы сами подставляете плеер или ведёте на страницу.",
@@ -183,13 +203,15 @@
                 "the triangle built from borders instead of an icon: no library for a single glyph",
                 "the gradient under the title — without it the text disappears on a light frame",
                 "the aria-label on the link carrying the video title: a link with no text says nothing",
-                "the 16:9 ratio: anything else means cropping the video"
+                "the 16:9 ratio: anything else means cropping the video",
+                "the dark frame in both themes: this is a video poster, not an interface panel — a light fill would make the caption over the thumbnail unreadable"
               ],
               "adapt": [
                 "title and duration — the caption and length",
                 "href — the page or player address",
                 "the accent through the accent prop — the play button colour",
-                "the thumbnail: put an <img> inside and it sits under the button"
+                "the thumbnail: put an <img> inside and it sits under the button",
+                "watchLabel and watchFallbackLabel — the screen-reader link label; {title} is replaced with the video title"
               ],
               "notes": [
                 "The component plays nothing: on click you swap in a player or navigate.",
@@ -212,9 +234,18 @@
                 "label": "Accent"
               }
             },
-            "title": "Video Frame"
+            "title": "Video Frame",
+            "preview": {
+              "props": {
+                "title": "Build a landing page in an evening",
+                "duration": "12:04",
+                "watchLabel": "Watch: {title}",
+                "watchFallbackLabel": "Watch the video"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent"]
       }
     },
     {
@@ -232,7 +263,7 @@
           "target": "@components/vibeui/aspect-003.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-003-*. Кадр держит 1:1, плашка со скидкой лежит в его углу, название обрезается двумя строками, цена и зачёркнутая старая цена стоят под кадром. Ссылка названия растягивается на всю карточку через ::after, поэтому в сетке остаётся одна ссылка на товар.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-003-*. Кадр держит 1:1, плашка со скидкой лежит в его углу, название обрезается двумя строками, цена и зачёркнутая старая цена стоят под кадром. Ссылка названия растягивается на всю карточку через ::after, поэтому в сетке остаётся одна ссылка на товар. Тема берётся из color-scheme окружения через light-dark(): карточку держит рамка, а не заливка, подложки у неё по умолчанию нет, и проп background включает её при необходимости.",
       "meta": {
         "tags": ["aspect ratio", "product", "commerce", "grid"],
         "preview": {
@@ -248,15 +279,19 @@
             "цену под кадром, а не поверх: поверх её не прочитать на светлой фотографии",
             "обрезку названия двумя строками — иначе длинное имя ломает ряд",
             "зачёркнутую старую цену приглушённой: рядом с новой её только сравнивают",
-            "растянутую ссылку через ::after: в сетке из сорока товаров лишние ссылки мешают"
+            "растянутую ссылку через ::after: в сетке из сорока товаров лишние ссылки мешают",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты title, price, oldPrice и badge",
             "href — адрес карточки товара",
             "акцент через проп accent — цвет плашки скидки",
-            "фотографию: положите <img> внутрь [data-part=\"frame\"]"
+            "фотографию: положите <img> внутрь [data-part=\"frame\"]",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Цена — строка: форматирование и валюта остаются за вызывающим кодом.",
             "Не показывайте старую цену, если скидки нет: перечёркнутая цифра без скидки читается как обман.",
             "Плашка рассчитана на короткий текст — «−30 %», «Хит», не на предложение.",
@@ -290,6 +325,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -303,15 +344,19 @@
                 "the price under the frame rather than over it: over a light photo it cannot be read",
                 "clamping the title to two lines — a long name otherwise breaks the row",
                 "the struck-through old price kept muted: next to the new one it is only for comparison",
-                "the stretched ::after link: in a grid of forty products extra links get in the way"
+                "the stretched ::after link: in a grid of forty products extra links get in the way",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the title, price, oldPrice and badge copy",
                 "href — the product page",
                 "the accent through the accent prop — the discount pill colour",
-                "the photo: put an <img> inside [data-part=\"frame\"]"
+                "the photo: put an <img> inside [data-part=\"frame\"]",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The price is a string: formatting and currency belong to the caller.",
                 "Do not show an old price without a discount: a struck-through figure with no saving reads as a trick.",
                 "The pill fits short text — \"−30 %\", \"Top\" — not an offer.",
@@ -334,11 +379,23 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Product Frame"
+            "title": "Product Frame",
+            "preview": {
+              "props": {
+                "title": "Flight desk lamp, warm light",
+                "price": "€49",
+                "oldPrice": "€69",
+                "badge": "−30 %"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -356,7 +413,7 @@
           "target": "@components/vibeui/aspect-004.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-004-*. Кадр держит 3:4 и рендерится ссылкой. Кегль заголовка считается в cqi от собственной ширины кадра, поэтому подпись не ломается в узкой колонке. Градиент под текстом собран из собственного тёмного тона, а не из полупрозрачного чёрного.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-004-*. Кадр держит 3:4 и рендерится ссылкой. Кегль заголовка считается в cqi от собственной ширины кадра, поэтому подпись не ломается в узкой колонке. Градиент под текстом собран из собственного тёмного тона, а не из полупрозрачного чёрного. Кадр намеренно остаётся тёмным в обеих темах: это обложка со снимком, а не панель интерфейса. Тон градиента под подписью открыт пропом ink.",
       "meta": {
         "tags": ["aspect ratio", "portrait", "cover", "editorial"],
         "preview": {
@@ -372,13 +429,15 @@
             "пропорцию 3:4 — она для портретов и вертикальных обложек",
             "кегль заголовка в cqi: в узкой колонке фиксированный размер ломает подпись",
             "засечную гарнитуру заголовка: она отличает обложку от карточки товара",
-            "aria-hidden у слоя градиента"
+            "aria-hidden у слоя градиента",
+            "тёмный кадр в обеих темах: это обложка со снимком, а не панель интерфейса — светлая ветка сделала бы подпись поверх фотографии нечитаемой"
           ],
           "adapt": [
             "тексты eyebrow, title и subtitle",
             "href — адрес материала",
             "акцент через проп accent — цвет кольца фокуса",
-            "фотографию: положите <img> внутрь, он ляжет под градиент"
+            "фотографию: положите <img> внутрь, он ляжет под градиент",
+            "ink — тон градиента под подписью: им кадр тонируется, а не чернится"
           ],
           "notes": [
             "Не ставьте сюда длинный заголовок: три строки поверх снимка перестают читаться.",
@@ -408,6 +467,12 @@
             "type": "text",
             "default": "Съёмка студии «Полёт», март",
             "maxLength": 50
+          },
+          {
+            "prop": "ink",
+            "label": "Тон градиента",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -421,13 +486,15 @@
                 "the 3:4 ratio — it is for portraits and vertical covers",
                 "the cqi-based heading size: a fixed size breaks the caption in a narrow column",
                 "the serif heading: it separates a cover from a product card",
-                "aria-hidden on the gradient layer"
+                "aria-hidden on the gradient layer",
+                "the dark frame in both themes: this is a photo cover, not an interface panel — a light branch would make the caption over the photograph unreadable"
               ],
               "adapt": [
                 "the eyebrow, title and subtitle copy",
                 "href — the destination",
                 "the accent through the accent prop — the focus ring",
-                "the photo: put an <img> inside and it sits under the gradient"
+                "the photo: put an <img> inside and it sits under the gradient",
+                "ink — the tone of the gradient under the caption: it tints the frame rather than blackening it"
               ],
               "notes": [
                 "Do not use a long heading here: three lines over a photograph stop being readable.",
@@ -449,11 +516,22 @@
               "subtitle": {
                 "label": "Caption",
                 "default": "Shot at Flight studio, March"
+              },
+              "ink": {
+                "label": "Gradient tone"
               }
             },
-            "title": "Portrait Frame"
+            "title": "Portrait Frame",
+            "preview": {
+              "props": {
+                "eyebrow": "Portfolio",
+                "title": "Evening light over the workshop",
+                "subtitle": "Shot at Flight studio, March"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["ink"]
       }
     },
     {
@@ -471,7 +549,7 @@
           "target": "@components/vibeui/aspect-005.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-005-*. Соотношение и вся раскладка живут на внутренней рамке, а не на корне: корень объявлен контейнером, а контейнерный запрос применяется только к потомкам. От 30rem собственной ширины пропорция переключается с 21:9 на 4:3. Кегль и отступы считаются в cqi.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-005-*. Соотношение и вся раскладка живут на внутренней рамке, а не на корне: корень объявлен контейнером, а контейнерный запрос применяется только к потомкам. От 30rem собственной ширины пропорция переключается с 21:9 на 4:3. Кегль и отступы считаются в cqi. Полоса намеренно остаётся тёмной в обеих темах: это подложка под фотографию и светлый текст, а не панель интерфейса.",
       "meta": {
         "tags": ["aspect ratio", "banner", "hero", "responsive"],
         "preview": {
@@ -487,7 +565,8 @@
             "раскладку на внутренней рамке: контейнерный запрос не применяется к самому контейнеру",
             "кегль и отступы в cqi — они считаются от ширины полосы, а не окна",
             "ограничение ширины текста: на широком экране строка через весь баннер не читается",
-            "контраст текста: под ним лежит градиент, а не сплошная заливка"
+            "контраст текста: под ним лежит градиент, а не сплошная заливка",
+            "тёмную полосу в обеих темах: это подложка под фотографию и светлый текст, а не панель интерфейса — на светлой ветке баннер потерял бы контраст"
           ],
           "adapt": [
             "тексты title и description",
@@ -542,7 +621,8 @@
                 "the layout on the inner frame: a container query does not apply to the container itself",
                 "the cqi-based type and padding — measured against the band, not the window",
                 "the text width limit: a line spanning the whole banner does not read",
-                "the text contrast: a gradient sits beneath it, not a flat fill"
+                "the text contrast: a gradient sits beneath it, not a flat fill",
+                "the dark band in both themes: it is a ground for a photo and light text, not an interface panel — a light branch would cost the banner its contrast"
               ],
               "adapt": [
                 "the title and description copy",
@@ -575,9 +655,17 @@
                 "label": "Accent"
               }
             },
-            "title": "Cinematic Banner"
+            "title": "Cinematic Banner",
+            "preview": {
+              "props": {
+                "title": "Build a page in an evening",
+                "description": "Ready-made blocks, one-command install and instructions your agent can follow.",
+                "actionLabel": "Open the catalog"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent"]
       }
     },
     {
@@ -595,7 +683,7 @@
           "target": "@components/vibeui/aspect-006.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-006-*. Сетка и её соотношение 3:2 живут на внутреннем элементе, потому что корень объявлен контейнером, а контейнерный запрос действует только на потомков. Первая плитка занимает две колонки и две строки; в узкой колонке сетка перестраивается в две колонки и три строки с пропорцией 3:4. Оттенок плитки задаётся переменной.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-006-*. Сетка и её соотношение 3:2 живут на внутреннем элементе, потому что корень объявлен контейнером, а контейнерный запрос действует только на потомков. Первая плитка занимает две колонки и две строки; в узкой колонке сетка перестраивается в две колонки и три строки с пропорцией 3:4. Оттенок плитки задаётся переменной. Заливка плиток строится из оттенка и читается в обеих темах; из фиксированных цветов остаётся рамка, и она следует color-scheme окружения через light-dark(). Своей подложки у коллажа нет.",
       "meta": {
         "tags": ["aspect ratio", "collage", "gallery", "grid"],
         "preview": {
@@ -611,7 +699,8 @@
             "сетку на внутреннем элементе: контейнерный запрос не применяется к самому контейнеру",
             "главную плитку размером в две колонки и две строки — без иерархии коллаж читается как мозаика",
             "счётчик на последней плитке: галерея не должна расти бесконечно",
-            "перестроение в две колонки в узкой ширине"
+            "перестроение в две колонки в узкой ширине",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массив tiles: подпись и оттенок каждой плитки",
@@ -620,6 +709,7 @@
             "фотографии: положите <img> внутрь плиток"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Меньше трёх кадров ломают композицию: главная плитка займёт всё, а мелких не останется.",
             "Оттенок — заглушка на случай, когда фотографии ещё нет. С реальными снимками он не виден.",
             "Компонент не открывает просмотрщик: клик по плитке вешает вызывающий код.",
@@ -654,7 +744,8 @@
                 "the grid on an inner element: a container query does not apply to the container itself",
                 "the lead tile spanning two columns and two rows — without hierarchy a collage reads as mosaic",
                 "the counter on the last tile: a gallery must not grow without end",
-                "the reflow to two columns at narrow widths"
+                "the reflow to two columns at narrow widths",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the tiles array: label and hue per tile",
@@ -663,6 +754,7 @@
                 "the photos: put an <img> inside the tiles"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Fewer than three frames break the composition: the lead tile takes everything and no small ones remain.",
                 "The hue is a placeholder for when a photo is missing. With real images it is invisible.",
                 "The component opens no lightbox: clicking a tile is the caller's job.",
@@ -679,9 +771,41 @@
                 "default": "+"
               }
             },
-            "title": "Collage Grid"
+            "title": "Collage Grid",
+            "preview": {
+              "props": {
+                "tiles": [
+                  {
+                    "label": "Home",
+                    "hue": 250
+                  },
+                  {
+                    "label": "Services",
+                    "hue": 30
+                  },
+                  {
+                    "label": "Studio",
+                    "hue": 150
+                  },
+                  {
+                    "label": "Contact",
+                    "hue": 300
+                  },
+                  {
+                    "label": "Blog",
+                    "hue": 90
+                  },
+                  {
+                    "label": "Work",
+                    "hue": 200
+                  }
+                ],
+                "moreLabel": "+"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["visible"]
       }
     },
     {
@@ -699,7 +823,7 @@
           "target": "@components/vibeui/aspect-007.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-007-*. Кадр держит 16:10 — привычную пропорцию карты и презентации. У iframe проставлены loading=\"lazy\" и title: без title скринридер называет вставку просто «frame». Заглушка нарисована сеткой из двух градиентов и меткой-каплей, поэтому пустая рамка читается как карта.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-007-*. Кадр держит 16:10 — привычную пропорцию карты и презентации. У iframe проставлены loading=\"lazy\" и title: без title скринридер называет вставку просто «frame». Заглушка нарисована сеткой из двух градиентов и меткой-каплей, поэтому пустая рамка читается как карта. Тема берётся из color-scheme окружения через light-dark(): подложки у рамки по умолчанию нет, она лежит на фоне страницы и темнеет вместе с ней, а проп background включает заливку.",
       "meta": {
         "tags": ["aspect ratio", "embed", "map", "iframe"],
         "preview": {
@@ -715,15 +839,19 @@
             "заглушку с сеткой: пустой прямоугольник вместо карты выглядит поломкой",
             "подпись источника под кадром — у чужого содержимого должен быть виден автор",
             "пропорцию 16:10: карты и презентации приходят в ней",
-            "фигуру figure/figcaption: кадр с подписью — это иллюстрация"
+            "фигуру figure/figcaption: кадр с подписью — это иллюстрация",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "src — адрес встраиваемого документа",
             "title — что именно встроено; он же уходит в title у iframe",
             "source — строка источника под кадром",
-            "акцент через проп accent — цвет метки на заглушке"
+            "акцент через проп accent — цвет метки на заглушке",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Чужой iframe тянет сторонние скрипты и cookie: подключайте его после согласия, если это требуется по закону.",
             "Не отдавайте в src ненадёжный адрес из пользовательского ввода без проверки.",
             "Заглушка не имитирует конкретную карту: это схема, а не скриншот сервиса.",
@@ -750,6 +878,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -763,15 +897,19 @@
                 "the grid placeholder: an empty rectangle in place of a map reads as broken",
                 "the source line under the frame — third-party content should name its author",
                 "the 16:10 ratio: maps and slides arrive in it",
-                "the figure/figcaption pairing: a frame with a caption is an illustration"
+                "the figure/figcaption pairing: a frame with a caption is an illustration",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "src — the embedded document",
                 "title — what is embedded; it also becomes the iframe's title",
                 "source — the attribution line",
-                "the accent through the accent prop — the placeholder pin"
+                "the accent through the accent prop — the placeholder pin",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A third-party iframe pulls in scripts and cookies: load it after consent where the law requires it.",
                 "Do not pass an unvetted user-supplied URL into src.",
                 "The placeholder imitates no particular map: it is a diagram, not a screenshot of a service.",
@@ -790,11 +928,21 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Embed Frame"
+            "title": "Embed Frame",
+            "preview": {
+              "props": {
+                "title": "Directions to the studio",
+                "source": "Source: OpenStreetMap"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -812,7 +960,7 @@
           "target": "@components/vibeui/aspect-008.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-008-*. Сетка живёт на внутреннем элементе, потому что корень объявлен контейнером. Соотношение задаётся один раз переменной и применяется ко всем плиткам. Блик идёт по градиенту с задержкой по плиткам: одновременная вспышка выглядит как мигание экрана. Контейнер объявлен role=\"status\" с aria-busy.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-aspect-008-*. Сетка живёт на внутреннем элементе, потому что корень объявлен контейнером. Соотношение задаётся один раз переменной и применяется ко всем плиткам. Блик идёт по градиенту с задержкой по плиткам: одновременная вспышка выглядит как мигание экрана. Контейнер объявлен role=\"status\" с aria-busy. Тема берётся из color-scheme окружения через light-dark(): заглушка темнеет вместе со страницей, иначе светлые плитки прожигали бы тёмный макет.",
       "meta": {
         "tags": ["aspect ratio", "skeleton", "gallery", "loading"],
         "preview": {
@@ -828,7 +976,8 @@
             "сетку на внутреннем элементе: контейнерный запрос не применяется к самому контейнеру",
             "задержку блика по плиткам — одновременная вспышка читается как мигание экрана",
             "role=\"status\" и aria-busy: без них загрузка для скринридера не существует",
-            "правило prefers-reduced-motion, гасящее блик"
+            "правило prefers-reduced-motion, гасящее блик",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "ratio — пропорция будущих снимков",
@@ -837,6 +986,7 @@
             "ширину и внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Число заглушек должно совпадать с ожидаемым числом снимков: шесть плиток перед двумя фотографиями выглядят как ошибка.",
             "Не держите заглушку дольше пары секунд как единственный ответ: для долгой загрузки нужен прогресс или объяснение.",
             "Задержка блика прописана для шести плиток; для большего числа добавьте правила nth-child в своей копии.",
@@ -878,7 +1028,8 @@
                 "the grid on an inner element: a container query does not apply to the container itself",
                 "the staggered shimmer — a simultaneous flash reads as the screen blinking",
                 "role=\"status\" and aria-busy: without them the loading state does not exist for a screen reader",
-                "the prefers-reduced-motion rule that kills the shimmer"
+                "the prefers-reduced-motion rule that kills the shimmer",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "ratio — the proportion of the coming photos",
@@ -887,6 +1038,7 @@
                 "width and outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The placeholder count should match the expected photo count: six tiles before two images reads as a bug.",
                 "Do not leave the skeleton as the only answer for more than a couple of seconds: long loads need progress or an explanation.",
                 "The shimmer delays are written for six tiles; for more, add nth-child rules in your copy.",
@@ -906,9 +1058,15 @@
                 "default": "Loading photos"
               }
             },
-            "title": "Gallery Skeleton"
+            "title": "Gallery Skeleton",
+            "preview": {
+              "props": {
+                "label": "Loading photos"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["ratio", "count"]
       }
     }
   ]

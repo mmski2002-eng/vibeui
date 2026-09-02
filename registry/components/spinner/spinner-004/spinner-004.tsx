@@ -7,6 +7,10 @@ export type Spinner004Props = Omit<
   value?: number
   label?: string
   size?: "sm" | "md" | "lg"
+  /** Вторая строка: {value} заменяется текущим значением. */
+  hintTemplate?: string
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: кольцо с числом внутри. Дуга нарисована conic-gradient и
@@ -14,20 +18,23 @@ export type Spinner004Props = Omit<
 // svg и без второго круга-заглушки в центре. Число набрано моноширинными
 // цифрами: при обычных цифрах ширина «11 %» и «88 %» разная, и подпись
 // дёргается на каждом обновлении. Значение зажато в 0–100 внутри компонента.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="spinner-004"]){
 --vibeui-spinner-004-size:4.5rem;
 --vibeui-spinner-004-thickness:0.5rem;
 --vibeui-spinner-004-value:0;
---vibeui-spinner-004-surface:oklch(1 0 0);
---vibeui-spinner-004-border:oklch(0.9 0.006 265);
---vibeui-spinner-004-fg:oklch(0.24 0.014 265);
---vibeui-spinner-004-muted:oklch(0.55 0.014 265);
---vibeui-spinner-004-track:oklch(0.93 0.006 265);
---vibeui-spinner-004-accent:oklch(0.55 0.17 262);
+--vibeui-spinner-004-surface:transparent;
+--vibeui-spinner-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.32 0.012 265));
+--vibeui-spinner-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.95 0.005 265));
+--vibeui-spinner-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-spinner-004-track:light-dark(oklch(0.93 0.006 265),oklch(0.36 0.012 265));
+--vibeui-spinner-004-accent:light-dark(oklch(0.55 0.17 262),oklch(0.72 0.16 262));
 --vibeui-spinner-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: число и подпись тёмные. */
+/* Подложки нет по умолчанию: плашка появляется только пропом background. */
 [data-vibeui-block="spinner-004"]{
 display:inline-flex;align-items:center;gap:0.875rem;
 box-sizing:border-box;padding:0.875rem 1.125rem 0.875rem 0.875rem;
@@ -64,6 +71,28 @@ display:flex;flex-direction:column;gap:0.125rem;min-width:0;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кольцо прогресса с процентом внутри на conic-gradient и маске.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -71,6 +100,8 @@ export function Spinner004({
   value = 68,
   label = "Загружаем компоненты",
   size = "md",
+  hintTemplate = "Готово {value} из 100",
+  background = "",
   className,
   style,
   ...props
@@ -78,6 +109,12 @@ export function Spinner004({
   const safe = Math.min(100, Math.max(0, Math.round(value)))
   const palette = {
     "--vibeui-spinner-004-value": safe,
+    ...(background
+      ? {
+          "--vibeui-spinner-004-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -108,7 +145,9 @@ export function Spinner004({
         </div>
         <span data-part="text">
           <span data-part="label">{label}</span>
-          <span data-part="hint">Готово {safe} из 100</span>
+          <span data-part="hint">
+            {hintTemplate.replace("{value}", String(safe))}
+          </span>
         </span>
       </div>
     </>

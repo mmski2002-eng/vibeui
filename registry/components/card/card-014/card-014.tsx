@@ -14,6 +14,14 @@ export type Card014Props = Omit<
   baseline?: string
   /** true для метрик, где рост — плохая новость: отток, ошибки, время ответа. */
   invert?: boolean
+  /** Что читает скринридер перед процентом: рост, снижение, без изменений. */
+  directionText?: Record<string, string>
+  /** Шаблон процента: {sign} — знак, {value} — величина без знака. */
+  deltaTemplate?: string
+  /** Локаль для форматирования процента. */
+  locale?: string
+  /** Пусто — подложки нет, плитка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,13 +31,15 @@ export type Card014Props = Omit<
 // и рост выручки — разные новости, а не разный знак.
 const STYLES = `
 :where([data-vibeui-block="card-014"]){
---vibeui-card-014-bg:oklch(1 0 0);
---vibeui-card-014-fg:oklch(0.21 0.015 265);
---vibeui-card-014-muted:oklch(0.55 0.013 265);
---vibeui-card-014-border:oklch(0.91 0.006 265);
---vibeui-card-014-good:oklch(0.55 0.14 152);
---vibeui-card-014-bad:oklch(0.56 0.19 27);
---vibeui-card-014-flat:oklch(0.55 0.012 265);
+--vibeui-card-014-bg:transparent;
+--vibeui-card-014-surface:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-card-014-ink:light-dark(oklch(0.2 0.02 265),oklch(0.97 0.005 265));
+--vibeui-card-014-fg:light-dark(oklch(0.21 0.015 265),oklch(0.94 0.006 265));
+--vibeui-card-014-muted:light-dark(oklch(0.55 0.013 265),oklch(0.71 0.012 265));
+--vibeui-card-014-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-card-014-good:light-dark(oklch(0.55 0.14 152),oklch(0.74 0.13 152));
+--vibeui-card-014-bad:light-dark(oklch(0.56 0.19 27),oklch(0.72 0.16 27));
+--vibeui-card-014-flat:light-dark(oklch(0.55 0.012 265),oklch(0.72 0.011 265));
 --vibeui-card-014-tone:var(--vibeui-card-014-flat);
 --vibeui-card-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -58,8 +68,8 @@ font-variant-numeric:tabular-nums;
 [data-vibeui-block="card-014"] [data-part="delta"]{
 position:relative;display:inline-flex;align-items:center;gap:0.25rem;
 height:1.375rem;padding:0 0.4375rem;border-radius:0.4375rem;
-background:color-mix(in oklab,var(--vibeui-card-014-tone) 12%,oklch(1 0 0));
-color:color-mix(in oklab,var(--vibeui-card-014-tone) 82%,oklch(0.2 0.02 265));
+background:color-mix(in oklab,var(--vibeui-card-014-tone) 12%,var(--vibeui-card-014-surface));
+color:color-mix(in oklab,var(--vibeui-card-014-tone) 82%,var(--vibeui-card-014-ink));
 font-size:0.75rem;font-weight:680;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="card-014"] [data-part="arrow"]{width:0.625rem;height:0.625rem;flex:none}
@@ -80,6 +90,34 @@ color:var(--vibeui-card-014-fg);font-weight:640;font-variant-numeric:tabular-num
 }
 `
 
+const DIRECTION_TEXT: Record<string, string> = {
+  up: "рост на ",
+  down: "снижение на ",
+  flat: "без изменений, ",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Плитка показателя с дельтой: знак, процент и абсолютное изменение
  * рядом с базой сравнения. Один файл, ноль зависимостей.
@@ -91,6 +129,10 @@ export function Card014({
   deltaValue = "+164 000 ₽",
   baseline = "против прошлой недели",
   invert = false,
+  directionText = DIRECTION_TEXT,
+  deltaTemplate = "{sign}{value} %",
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -104,10 +146,19 @@ export function Card014({
         ? "good"
         : "bad"
   const sign = delta > 0 ? "+" : delta < 0 ? "−" : ""
-  const printed = `${sign}${Math.abs(delta).toLocaleString("ru-RU")} %`
+  const printed = deltaTemplate
+    .replace("{sign}", sign)
+    .replace("{value}", Math.abs(delta).toLocaleString(locale))
 
   const palette = {
     ...(accent ? { "--vibeui-card-014-good": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-card-014-bg": background,
+          "--vibeui-card-014-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -129,11 +180,7 @@ export function Card014({
           <span data-part="value">{value}</span>
           <span data-part="delta">
             <span data-part="sr">
-              {direction === "down"
-                ? "снижение на "
-                : direction === "up"
-                  ? "рост на "
-                  : "без изменений, "}
+              {directionText[direction] ?? DIRECTION_TEXT[direction]}
             </span>
             <svg
               data-part="arrow"

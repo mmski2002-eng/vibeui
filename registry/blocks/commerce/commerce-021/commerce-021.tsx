@@ -17,7 +17,15 @@ export type Commerce021Props = {
   days?: { date: string; day: string }[]
   cta?: string
   note?: string
+  /** Скрытая подпись выбора способа доставки. */
+  wayLabel?: string
+  /** Скрытая подпись выбора дня. */
+  dayLabel?: string
+  /** Подпись выбора интервала. */
+  slotLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,13 +39,15 @@ export type Commerce021Props = {
 // День и интервал появляются только под курьером — на :has(), без состояния.
 const STYLES = `
 :where([data-vibeui-block="commerce-021"]){
---vibeui-commerce-021-bg:oklch(1 0 0);
---vibeui-commerce-021-fg:oklch(0.21 0.014 265);
---vibeui-commerce-021-muted:oklch(0.55 0.014 265);
---vibeui-commerce-021-border:oklch(0.91 0.006 265);
---vibeui-commerce-021-soft:oklch(0.975 0.004 265);
---vibeui-commerce-021-accent:oklch(0.55 0.2 262);
---vibeui-commerce-021-mark:oklch(0.58 0.14 152);
+--vibeui-commerce-021-bg:transparent;
+--vibeui-commerce-021-paper:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-commerce-021-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-021-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-021-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-commerce-021-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.01 265));
+--vibeui-commerce-021-accent:light-dark(oklch(0.55 0.2 262),oklch(0.7 0.17 262));
+--vibeui-commerce-021-on-accent:light-dark(oklch(1 0 0),oklch(0.16 0.02 265));
+--vibeui-commerce-021-mark:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
 --vibeui-commerce-021-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -81,13 +91,13 @@ border:1px solid var(--vibeui-commerce-021-border);font-size:0.8125rem;font-weig
 }
 [data-vibeui-block="commerce-021"] [data-part="day"] input{position:absolute;width:1px;height:1px;opacity:0}
 [data-vibeui-block="commerce-021"] [data-part="day"] span{font-size:0.625rem;font-weight:500;color:var(--vibeui-commerce-021-muted)}
-[data-vibeui-block="commerce-021"] [data-part="day"]:has(input:checked){border-color:var(--vibeui-commerce-021-accent);background:var(--vibeui-commerce-021-bg)}
+[data-vibeui-block="commerce-021"] [data-part="day"]:has(input:checked){border-color:var(--vibeui-commerce-021-accent);background:var(--vibeui-commerce-021-paper)}
 [data-vibeui-block="commerce-021"] [data-part="day"]:has(input:focus-visible){outline:2px solid var(--vibeui-commerce-021-accent);outline-offset:2px}
 [data-vibeui-block="commerce-021"] [data-part="slot"]{display:flex;align-items:center;gap:0.5rem;margin-top:0.5rem;font-size:0.75rem;color:var(--vibeui-commerce-021-muted)}
 [data-vibeui-block="commerce-021"] select{
 appearance:none;font:inherit;font-size:0.8125rem;color:inherit;height:2.25rem;flex:1;
 padding:0 1.75rem 0 0.625rem;border-radius:0.625rem;
-border:1px solid var(--vibeui-commerce-021-border);background:var(--vibeui-commerce-021-bg);
+border:1px solid var(--vibeui-commerce-021-border);background:var(--vibeui-commerce-021-paper);
 background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
 background-position:calc(100% - 1rem) 55%,calc(100% - 0.75rem) 55%;
 background-size:0.25rem 0.25rem,0.25rem 0.25rem;background-repeat:no-repeat;
@@ -95,7 +105,7 @@ background-size:0.25rem 0.25rem,0.25rem 0.25rem;background-repeat:no-repeat;
 [data-vibeui-block="commerce-021"] select:focus-visible{outline:2px solid var(--vibeui-commerce-021-accent);outline-offset:2px}
 [data-vibeui-block="commerce-021"] [data-part="go"]{
 width:100%;margin-top:0.875rem;appearance:none;border:0;cursor:pointer;height:2.625rem;border-radius:0.75rem;
-background:var(--vibeui-commerce-021-accent);color:oklch(1 0 0);font:inherit;font-size:0.875rem;font-weight:650;
+background:var(--vibeui-commerce-021-accent);color:var(--vibeui-commerce-021-on-accent);font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-021"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-commerce-021-accent);outline-offset:2px}
 [data-vibeui-block="commerce-021"] [data-part="foot"]{margin:0.625rem 0 0;font-size:0.6875rem;line-height:1.45;color:var(--vibeui-commerce-021-muted)}
@@ -141,6 +151,28 @@ const DEFAULT_DAYS = [
 const DEFAULT_SLOTS = ["10:00 – 14:00", "14:00 – 18:00", "18:00 – 22:00"]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор доставки: цена и срок у каждого способа, день и интервал — под курьером.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -152,12 +184,23 @@ export function Commerce021({
   days = DEFAULT_DAYS,
   cta = "Подтвердить доставку",
   note = "Если товара не окажется на складе, предупредим до отправки и предложим другой срок.",
+  wayLabel = "Способ доставки",
+  dayLabel = "День доставки",
+  slotLabel = "Интервал",
   accent,
+  background = "",
   className,
   style,
 }: Commerce021Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-021-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-021-bg": background,
+          "--vibeui-commerce-021-paper": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -177,7 +220,7 @@ export function Commerce021({
           <p data-part="lead">{lead}</p>
 
           <fieldset data-part="ways">
-            <legend data-part="vh">Способ доставки</legend>
+            <legend data-part="vh">{wayLabel}</legend>
             {ways.map((way, index) => (
               <label key={way.value} data-part="way">
                 <input
@@ -201,7 +244,7 @@ export function Commerce021({
 
             <div data-part="when-box">
               <fieldset>
-                <legend data-part="vh">День доставки</legend>
+                <legend data-part="vh">{dayLabel}</legend>
                 <div data-part="days">
                   {days.map((day, index) => (
                     <label key={day.date} data-part="day">
@@ -218,7 +261,7 @@ export function Commerce021({
                 </div>
               </fieldset>
               <p data-part="slot">
-                <label htmlFor="commerce-021-slot">Интервал</label>
+                <label htmlFor="commerce-021-slot">{slotLabel}</label>
                 <select id="commerce-021-slot" defaultValue={slots[1]}>
                   {slots.map((slot) => (
                     <option key={slot}>{slot}</option>

@@ -16,8 +16,16 @@ export type Togglegroup009Props = Omit<
 > & {
   label?: string
   defaultValue?: string
+  /** Заголовок над списком. */
+  heading?: string
   items?: Togglegroup009Item[]
+  /** Подписи кнопок по идентификатору вида. */
+  viewText?: Record<string, string>
+  /** Заголовки колонок таблицы: name, size, updated. */
+  columnText?: Record<string, string>
   onChange?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,14 +33,19 @@ export type Togglegroup009Props = Omit<
 // разметки одних и тех же данных, а не три набора CSS-правил над одним HTML.
 // Таблица остаётся table с th, список — ul с li: скринридер получает верную
 // семантику для каждого вида вместо визуальной подмены одной и той же разметки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте панель темнеет, а границы становятся светлее фона.
 const STYLES = `
 :where([data-vibeui-block="togglegroup-009"]){
---vibeui-togglegroup-009-bg:oklch(1 0 0);
---vibeui-togglegroup-009-fg:oklch(0.22 0.014 265);
---vibeui-togglegroup-009-muted:oklch(0.55 0.014 265);
---vibeui-togglegroup-009-border:oklch(0.9 0.006 265);
---vibeui-togglegroup-009-surface:oklch(0.97 0.004 265);
---vibeui-togglegroup-009-accent:oklch(0.56 0.16 230);
+--vibeui-togglegroup-009-bg:transparent;
+--vibeui-togglegroup-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-togglegroup-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-togglegroup-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-togglegroup-009-surface:light-dark(oklch(0.97 0.004 265),oklch(0.26 0.01 265));
+--vibeui-togglegroup-009-raised:light-dark(oklch(1 0 0),oklch(0.34 0.012 265));
+--vibeui-togglegroup-009-shadow:light-dark(oklch(0.2 0.02 265 / 14%),oklch(0 0 0 / 45%));
+--vibeui-togglegroup-009-accent:light-dark(oklch(0.56 0.16 230),oklch(0.76 0.14 230));
 --vibeui-togglegroup-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="togglegroup-009"]{
@@ -65,8 +78,8 @@ transition:background-color .15s ease,color .15s ease;
 outline:2px solid var(--vibeui-togglegroup-009-accent);outline-offset:1px;
 }
 [data-vibeui-block="togglegroup-009"] [data-part="group"] button[aria-pressed="true"]{
-background:var(--vibeui-togglegroup-009-bg);color:var(--vibeui-togglegroup-009-accent);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 14%);
+background:var(--vibeui-togglegroup-009-raised);color:var(--vibeui-togglegroup-009-accent);
+box-shadow:0 1px 2px var(--vibeui-togglegroup-009-shadow);
 }
 [data-vibeui-block="togglegroup-009"] [data-part="grid"]{
 display:grid;grid-template-columns:1fr;gap:0.5rem;
@@ -106,12 +119,23 @@ padding:0.375rem 0.5rem;text-align:left;border-bottom:1px solid var(--vibeui-tog
 const VIEWS = [
   {
     id: "grid",
-    label: "Сетка",
     d: "M2 2.5h4v4H2zM8 2.5h4v4H8zM2 8.5h4v4H2zM8 8.5h4v4H8z",
   },
-  { id: "list", label: "Список", d: "M2 4h10M2 7h10M2 10h10" },
-  { id: "table", label: "Таблица", d: "M2 3h10v8H2zM2 6.5h10M7 6.5v4.5" },
+  { id: "list", d: "M2 4h10M2 7h10M2 10h10" },
+  { id: "table", d: "M2 3h10v8H2zM2 6.5h10M7 6.5v4.5" },
 ]
+
+const VIEW_TEXT: Record<string, string> = {
+  grid: "Сетка",
+  list: "Список",
+  table: "Таблица",
+}
+
+const COLUMN_TEXT: Record<string, string> = {
+  name: "Имя",
+  size: "Размер",
+  updated: "Изменён",
+}
 
 const DEFAULT_ITEMS: Togglegroup009Item[] = [
   { id: "1", name: "Бриф для дизайнера.pdf", size: "1.2 МБ", updated: "14.03" },
@@ -121,14 +145,40 @@ const DEFAULT_ITEMS: Togglegroup009Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Переключатель вида списка одиночным выбором: сетка, список и таблица —
  * три реальные разметки одних данных. Один файл, ноль зависимостей.
  */
 export function Togglegroup009({
   label = "Вид списка",
   defaultValue = "list",
+  heading = "Документы",
   items = DEFAULT_ITEMS,
+  viewText = VIEW_TEXT,
+  columnText = COLUMN_TEXT,
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -139,6 +189,12 @@ export function Togglegroup009({
 
   const palette = {
     ...(accent ? { "--vibeui-togglegroup-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-togglegroup-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -154,7 +210,7 @@ export function Togglegroup009({
         style={palette}
       >
         <div data-part="head">
-          <h3>Документы</h3>
+          <h3>{heading}</h3>
           <div data-part="group" role="group" aria-label={label}>
             {VIEWS.map((view) => (
               <button
@@ -176,7 +232,7 @@ export function Togglegroup009({
                     strokeLinejoin="round"
                   />
                 </svg>
-                {view.label}
+                {viewText[view.id] ?? VIEW_TEXT[view.id]}
               </button>
             ))}
           </div>
@@ -198,9 +254,11 @@ export function Togglegroup009({
               <table>
                 <thead>
                   <tr>
-                    <th scope="col">Имя</th>
-                    <th scope="col">Размер</th>
-                    <th scope="col">Изменён</th>
+                    <th scope="col">{columnText.name ?? COLUMN_TEXT.name}</th>
+                    <th scope="col">{columnText.size ?? COLUMN_TEXT.size}</th>
+                    <th scope="col">
+                      {columnText.updated ?? COLUMN_TEXT.updated}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>

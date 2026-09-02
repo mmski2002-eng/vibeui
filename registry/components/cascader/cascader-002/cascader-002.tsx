@@ -11,6 +11,18 @@ export type Cascader002Node = {
 export type Cascader002Props = {
   heading?: string
   tree?: Cascader002Node[]
+  /** Шаблон aria-подписи колонки: {level}. */
+  levelText?: string
+  /** Подсказка в пустом слоте. */
+  emptyText?: string
+  /** Подпись перед выбранным путём. */
+  pathText?: string
+  /** Чем подписан пустой путь. */
+  nothingText?: string
+  /** Подпись кнопки сброса. */
+  resetText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -23,12 +35,12 @@ export type Cascader002Props = {
 // пропадает, панель прыгает по ширине на каждый клик.
 const STYLES = `
 :where([data-vibeui-block="cascader-002"]){
---vibeui-cascader-002-bg:oklch(1 0 0);
---vibeui-cascader-002-panel:oklch(0.98 0.003 265);
---vibeui-cascader-002-fg:oklch(0.24 0.014 265);
---vibeui-cascader-002-muted:oklch(0.56 0.014 265);
---vibeui-cascader-002-border:oklch(0.9 0.006 265);
---vibeui-cascader-002-accent:oklch(0.55 0.2 262);
+--vibeui-cascader-002-bg:transparent;
+--vibeui-cascader-002-panel:light-dark(oklch(0.98 0.003 265),oklch(0.27 0.012 265));
+--vibeui-cascader-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-cascader-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-cascader-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.011 265));
+--vibeui-cascader-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.15 262));
 --vibeui-cascader-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="cascader-002"]{
@@ -97,7 +109,7 @@ color:var(--vibeui-cascader-002-fg);font-weight:650;
 [data-vibeui-block="cascader-002"] [data-part="reset"]{
 flex:0 0 auto;padding:0.3125rem 0.625rem;border-radius:0.5rem;cursor:pointer;
 border:1px solid var(--vibeui-cascader-002-border);
-background:var(--vibeui-cascader-002-bg);color:var(--vibeui-cascader-002-muted);
+background:var(--vibeui-cascader-002-panel);color:var(--vibeui-cascader-002-muted);
 font:inherit;font-size:0.75rem;
 transition:color .14s ease,border-color .14s ease;
 }
@@ -159,6 +171,41 @@ const DEFAULT_TREE: Cascader002Node[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/** Начальный путь считается от дерева, а не зашит подписями. */
+function initialPath(tree: Cascader002Node[]): string[] {
+  const first = tree[0]
+
+  if (!first) {
+    return []
+  }
+
+  const second = first.children?.[0]
+
+  return second ? [first.label, second.label] : [first.label]
+}
+
 function columnsFor(tree: Cascader002Node[], path: string[]) {
   const columns: Cascader002Node[][] = [tree]
   let nodes = tree
@@ -184,16 +231,28 @@ function columnsFor(tree: Cascader002Node[], path: string[]) {
 export function Cascader002({
   heading = "Раздел каталога",
   tree = DEFAULT_TREE,
+  levelText = "Уровень {level}",
+  emptyText = "Выберите слева",
+  pathText = "Путь:",
+  nothingText = "не выбран",
+  resetText = "Сбросить",
+  background = "",
   accent,
   className,
   style,
 }: Cascader002Props) {
-  const [path, setPath] = useState<string[]>(["Электроника", "Ноутбуки"])
+  const [path, setPath] = useState<string[]>(() => initialPath(tree))
   const columns = columnsFor(tree, path)
   const slots = [columns[0], columns[1], columns[2]]
 
   const palette = {
     ...(accent ? { "--vibeui-cascader-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cascader-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -214,7 +273,7 @@ export function Cascader002({
               <ul
                 key={level}
                 data-part="column"
-                aria-label={`Уровень ${level + 1}`}
+                aria-label={levelText.replace("{level}", String(level + 1))}
               >
                 {nodes.map((node) => (
                   <li key={node.label}>
@@ -238,14 +297,14 @@ export function Cascader002({
               </ul>
             ) : (
               <p key={level} data-part="empty">
-                Выберите слева
+                {emptyText}
               </p>
             ),
           )}
         </div>
         <div data-part="footer">
           <p data-part="path" aria-live="polite">
-            Путь: <b>{path.length ? path.join(" / ") : "не выбран"}</b>
+            {pathText} <b>{path.length ? path.join(" / ") : nothingText}</b>
           </p>
           <button
             data-part="reset"
@@ -253,7 +312,7 @@ export function Cascader002({
             onClick={() => setPath([])}
             disabled={path.length === 0}
           >
-            Сбросить
+            {resetText}
           </button>
         </div>
       </div>

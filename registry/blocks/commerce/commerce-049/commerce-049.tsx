@@ -26,7 +26,15 @@ export type Commerce049Props = {
   storyTitle?: string
   story?: string
   items?: Commerce049Item[]
+  /** Подпись даты выпуска на баннере. */
+  releasedLabel?: string
+  /** Подпись числа вещей на баннере. */
+  countLabel?: string
+  /** Подпись хлебных крошек для читалки. */
+  navAriaText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -39,12 +47,12 @@ export type Commerce049Props = {
 // баннера и сетки считается контейнерными запросами от ширины блока.
 const STYLES = `
 :where([data-vibeui-block="commerce-049"]){
---vibeui-commerce-049-bg:oklch(1 0 0);
---vibeui-commerce-049-fg:oklch(0.2 0.012 250);
---vibeui-commerce-049-muted:oklch(0.53 0.014 250);
---vibeui-commerce-049-border:oklch(0.91 0.006 250);
---vibeui-commerce-049-soft:oklch(0.975 0.004 250);
---vibeui-commerce-049-accent:oklch(0.48 0.12 195);
+--vibeui-commerce-049-bg:transparent;
+--vibeui-commerce-049-fg:light-dark(oklch(0.2 0.012 250),oklch(0.93 0.006 250));
+--vibeui-commerce-049-muted:light-dark(oklch(0.53 0.014 250),oklch(0.72 0.012 250));
+--vibeui-commerce-049-border:light-dark(oklch(0.91 0.006 250),oklch(0.36 0.012 250));
+--vibeui-commerce-049-soft:light-dark(oklch(0.975 0.004 250),oklch(0.27 0.009 250));
+--vibeui-commerce-049-accent:light-dark(oklch(0.48 0.12 195),oklch(0.74 0.12 195));
 --vibeui-commerce-049-onbanner:oklch(0.99 0 0);
 --vibeui-commerce-049-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -153,6 +161,28 @@ const DEFAULT_ITEMS: Commerce049Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Страница коллекции с баннером: над обложкой стоит контекст — кто собрал,
  * когда и сколько вещей. Один файл, ноль зависимостей, собственная палитра.
  */
@@ -169,12 +199,22 @@ export function Commerce049({
   storyTitle = "О коллекции",
   story = "Лён закупают в Вологодской области и ткут на станках 1970-х годов: они дают неровную фактуру, которую современное оборудование не повторяет. Каждую вещь стирают до продажи, поэтому после первой домашней стирки она почти не садится.",
   items = DEFAULT_ITEMS,
+  releasedLabel = "Выпуск",
+  countLabel = "В коллекции",
+  navAriaText = "Навигация по каталогу",
   accent,
+  background = "",
   className,
   style,
 }: Commerce049Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-049-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-049-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -190,7 +230,7 @@ export function Commerce049({
         aria-label={title}
       >
         <div data-part="shell">
-          <nav aria-label="Навигация по каталогу">
+          <nav aria-label={navAriaText}>
             <ol>
               {crumbs.map((crumb, index) => (
                 <li key={crumb.id}>
@@ -213,10 +253,10 @@ export function Commerce049({
                 {curatorRole}: <strong>{curator}</strong>
               </li>
               <li>
-                Выпуск: <strong>{released}</strong>
+                {releasedLabel}: <strong>{released}</strong>
               </li>
               <li>
-                В коллекции: <strong>{count}</strong>
+                {countLabel}: <strong>{count}</strong>
               </li>
             </ul>
             <button type="button" data-part="go">

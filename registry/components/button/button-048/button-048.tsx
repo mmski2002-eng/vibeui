@@ -1,12 +1,18 @@
 import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
+export type Button048Provider = "google" | "github" | "apple"
+
 export type Button048Props = Omit<
   ComponentPropsWithoutRef<"button">,
   "children"
 > & {
   /** Провайдер входа: от него зависят подпись и знак слева. */
-  provider?: "google" | "github" | "apple"
+  provider?: Button048Provider
   label?: string
+  /** Подписи провайдеров: компонент несёт русские, проект подставляет свои. */
+  providerText?: Record<string, string>
+  /** Поверхность кнопки. Пусто — своя, из палитры. */
+  background?: string
 }
 
 // Идея компонента: кнопка входа через провайдера. Знак прибит к левому краю,
@@ -15,10 +21,13 @@ export type Button048Props = Omit<
 // настоящие логотипы приносит проект, у них свои правила использования.
 const STYLES = `
 :where([data-vibeui-block="button-048"]){
---vibeui-button-048-surface:oklch(1 0 0);
---vibeui-button-048-border:oklch(0.87 0.006 265);
---vibeui-button-048-fg:oklch(0.24 0.02 265);
---vibeui-button-048-ring:oklch(0.55 0.02 265 / 65%);
+--vibeui-button-048-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
+--vibeui-button-048-border:light-dark(oklch(0.87 0.006 265),oklch(0.42 0.014 265));
+--vibeui-button-048-fg:light-dark(oklch(0.24 0.02 265),oklch(0.94 0.008 265));
+--vibeui-button-048-ring:light-dark(oklch(0.55 0.02 265 / 65%),oklch(0.78 0.02 265 / 70%));
+--vibeui-button-048-hover:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.016 265));
+--vibeui-button-048-hover-border:light-dark(oklch(0.8 0.008 265),oklch(0.52 0.016 265));
+--vibeui-button-048-mark:light-dark(oklch(0.24 0.01 265),oklch(0.9 0.008 265));
 --vibeui-button-048-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-048"]{
@@ -32,7 +41,7 @@ box-shadow:0 1px 2px oklch(0 0 0 / 6%);
 transition:background-color .16s ease,border-color .16s ease;
 }
 [data-vibeui-block="button-048"]:hover:not(:disabled){
-background:oklch(0.97 0.003 265);border-color:oklch(0.8 0.008 265);
+background:var(--vibeui-button-048-hover);border-color:var(--vibeui-button-048-hover-border);
 }
 [data-vibeui-block="button-048"]:focus-visible{outline:2px solid var(--vibeui-button-048-ring);outline-offset:2px}
 [data-vibeui-block="button-048"]:disabled{cursor:not-allowed;opacity:.55}
@@ -49,7 +58,7 @@ content:"";position:absolute;left:50%;top:50%;width:0.5rem;height:0.5rem;
 margin:-0.25rem 0 0 -0.25rem;border-radius:50%;background:var(--vibeui-button-048-surface);
 }
 [data-vibeui-block="button-048"][data-provider="github"] [data-part="mark"]{
-background:oklch(0.24 0.01 265);
+background:var(--vibeui-button-048-mark);
 }
 [data-vibeui-block="button-048"][data-provider="github"] [data-part="mark"]::after{
 content:"";position:absolute;left:50%;top:0.5rem;width:0.625rem;height:0.4375rem;
@@ -57,7 +66,7 @@ margin-left:-0.3125rem;border-radius:0.25rem 0.25rem 0 0;
 background:var(--vibeui-button-048-surface);
 }
 [data-vibeui-block="button-048"][data-provider="apple"] [data-part="mark"]{
-background:oklch(0.2 0 0);border-radius:0.375rem;
+background:var(--vibeui-button-048-mark);border-radius:0.375rem;
 }
 [data-vibeui-block="button-048"][data-provider="apple"] [data-part="mark"]::after{
 content:"";position:absolute;left:50%;top:50%;width:0.4375rem;height:0.4375rem;
@@ -67,10 +76,33 @@ background:var(--vibeui-button-048-surface);transform:rotate(-45deg);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="button-048"]{transition:none!important}}
 `
 
-const LABELS = {
+const LABELS: Record<string, string> = {
   google: "Продолжить с Google",
   github: "Продолжить с GitHub",
   apple: "Продолжить с Apple",
+}
+
+/**
+ * Ветка темы для заданной поверхности. Без неё светлая заливка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -80,11 +112,23 @@ const LABELS = {
 export function Button048({
   provider = "google",
   label,
+  providerText = LABELS,
+  background = "",
   type = "button",
   className,
   style,
   ...props
 }: Button048Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-button-048-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-button-048" precedence="medium">
@@ -96,10 +140,10 @@ export function Button048({
         data-vibeui-block="button-048"
         data-provider={provider}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="mark" aria-hidden="true" />
-        {label ?? LABELS[provider]}
+        {label ?? providerText[provider] ?? LABELS[provider]}
       </button>
     </>
   )

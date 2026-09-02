@@ -15,6 +15,11 @@ export type Tree007Props = {
   label?: string
   /** Задержка имитации запроса в миллисекундах. */
   delay?: number
+  /** Подпись загружаемой ветки; {name} — её имя. */
+  loadingText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  accent?: string
   className?: string
   style?: CSSProperties
 }
@@ -23,15 +28,18 @@ export type Tree007Props = {
 // дерева. Пока идёт запрос, ветка помечена aria-busy и держит место тремя
 // строками-заглушками: без них дерево прыгает на высоту пришедшего списка.
 // Результат кладётся в кэш, поэтому повторное раскрытие уже не грузит ничего.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="tree-007"]){
---vibeui-tree-007-bg:oklch(1 0 0);
---vibeui-tree-007-fg:oklch(0.24 0.014 265);
---vibeui-tree-007-muted:oklch(0.56 0.014 265);
---vibeui-tree-007-border:oklch(0.9 0.006 265);
---vibeui-tree-007-hover:oklch(0.97 0.004 265);
---vibeui-tree-007-skeleton:oklch(0.93 0.005 265);
---vibeui-tree-007-accent:oklch(0.53 0.19 265);
+--vibeui-tree-007-bg:transparent;
+--vibeui-tree-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-tree-007-muted:light-dark(oklch(0.56 0.014 265),oklch(0.67 0.012 265));
+--vibeui-tree-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-tree-007-hover:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.01 265));
+--vibeui-tree-007-skeleton:light-dark(oklch(0.93 0.005 265),oklch(0.33 0.01 265));
+--vibeui-tree-007-accent:light-dark(oklch(0.53 0.19 265),oklch(0.75 0.16 265));
 --vibeui-tree-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="tree-007"]{
@@ -114,6 +122,28 @@ const DEFAULT_NODES: Tree007Node[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Дерево с ленивой подгрузкой ветки при первом раскрытии.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -121,6 +151,9 @@ export function Tree007({
   nodes = DEFAULT_NODES,
   label = "Сервисы",
   delay = 900,
+  loadingText = "{name}: загрузка",
+  background = "",
+  accent,
   className,
   style,
 }: Tree007Props) {
@@ -177,12 +210,23 @@ export function Tree007({
     timers.current.push(timer)
   }
 
+  const palette = {
+    ...(accent ? { "--vibeui-tree-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tree-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-tree-007" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="tree-007" className={className} style={style}>
+      <div data-vibeui-block="tree-007" className={className} style={palette}>
         <ul role="tree" aria-label={label}>
           {nodes.map((node) => {
             const id = node.name
@@ -214,7 +258,10 @@ export function Tree007({
                 </button>
                 {expanded ? (
                   busy ? (
-                    <div role="group" aria-label={`${node.name}: загрузка`}>
+                    <div
+                      role="group"
+                      aria-label={loadingText.replace("{name}", node.name)}
+                    >
                       <span data-part="ghost" />
                       <span data-part="ghost" />
                       <span data-part="ghost" />

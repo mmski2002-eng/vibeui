@@ -6,8 +6,13 @@ export type Phoneinput007Props = Omit<
   "children"
 > & {
   label?: string
+  placeholder?: string
   extensionLabel?: string
   extensionPlaceholder?: string
+  /** Строка под парой полей. */
+  hint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -16,14 +21,17 @@ export type Phoneinput007Props = Omit<
 // не подставляет его в основной номер и не путает автозаполнение.
 // Ширина добавочного фиксирована и мала: она сама говорит, что там
 // три-четыре цифры, а не второй телефон.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="phoneinput-007"]){
---vibeui-phoneinput-007-surface:oklch(1 0 0);
---vibeui-phoneinput-007-surface-border:oklch(0.91 0.006 265);
---vibeui-phoneinput-007-fg:oklch(0.24 0.016 265);
---vibeui-phoneinput-007-muted:oklch(0.54 0.014 265);
---vibeui-phoneinput-007-field-border:oklch(0.85 0.01 265);
---vibeui-phoneinput-007-accent:oklch(0.55 0.2 262);
+--vibeui-phoneinput-007-surface:transparent;
+--vibeui-phoneinput-007-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-phoneinput-007-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-phoneinput-007-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-phoneinput-007-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-phoneinput-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
 --vibeui-phoneinput-007-radius:0.625rem;
 --vibeui-phoneinput-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -78,13 +86,39 @@ flex-direction:row;align-items:flex-end;gap:0.5rem;
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Телефон с отдельным полем добавочного: два значения, два поля, разные
  * подсказки автозаполнения. Один файл, ноль зависимостей.
  */
 export function Phoneinput007({
   label = "Рабочий телефон",
+  placeholder = "+7 495 123-45-67",
   extensionLabel = "Добавочный",
   extensionPlaceholder = "1234",
+  hint = "Добавочный необязателен: без него позвоним на общий номер.",
+  background = "",
   accent,
   className,
   style,
@@ -95,6 +129,12 @@ export function Phoneinput007({
   const hintId = `${id}-hint`
   const palette = {
     ...(accent ? { "--vibeui-phoneinput-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-phoneinput-007-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -118,7 +158,7 @@ export function Phoneinput007({
               type="tel"
               inputMode="tel"
               autoComplete="tel"
-              placeholder="+7 495 123-45-67"
+              placeholder={placeholder}
               aria-describedby={hintId}
             />
           </div>
@@ -135,7 +175,7 @@ export function Phoneinput007({
           </div>
         </div>
         <p data-part="hint" id={hintId}>
-          Добавочный необязателен: без него позвоним на общий номер.
+          {hint}
         </p>
       </div>
     </>

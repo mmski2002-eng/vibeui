@@ -7,6 +7,12 @@ export type Pagination007Props = {
   total?: number
   defaultPerPage?: number
   sizes?: number[]
+  /** Строка диапазона. {from}, {to} и {total} подставляются. */
+  rangeText?: string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labelText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -18,13 +24,13 @@ export type Pagination007Props = {
 // «показывать по 50» оказывается в начале и теряет место в списке.
 const STYLES = `
 :where([data-vibeui-block="pagination-007"]){
---vibeui-pagination-007-bg:oklch(1 0 0);
---vibeui-pagination-007-fg:oklch(0.24 0.014 265);
---vibeui-pagination-007-muted:oklch(0.55 0.014 265);
---vibeui-pagination-007-border:oklch(0.91 0.006 265);
---vibeui-pagination-007-field:oklch(0.97 0.003 265);
---vibeui-pagination-007-hover:oklch(0.55 0.02 265 / 8%);
---vibeui-pagination-007-accent:oklch(0.55 0.2 262);
+--vibeui-pagination-007-bg:transparent;
+--vibeui-pagination-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-pagination-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-pagination-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.012 265));
+--vibeui-pagination-007-field:light-dark(oklch(0.97 0.003 265),oklch(0.29 0.009 265));
+--vibeui-pagination-007-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.82 0.02 265 / 14%));
+--vibeui-pagination-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
 --vibeui-pagination-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -85,6 +91,38 @@ padding:0 0.5rem;font-size:0.8125rem;font-variant-numeric:tabular-nums;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="pagination-007"] *{animation:none!important;transition:none!important}}
 `
 
+const LABEL: Record<string, string> = {
+  nav: "Навигация по списку",
+  prev: "Предыдущая страница",
+  next: "Следующая страница",
+  size: "Показывать по",
+  where: "{page} / {pages}",
+}
+
+const RANGE_TEXT = "{from}–{to} из {total}"
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Пагинация с выбором размера страницы и сохранением места в списке.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -93,6 +131,9 @@ export function Pagination007({
   total = 214,
   defaultPerPage = 20,
   sizes = [10, 20, 50, 100],
+  rangeText = RANGE_TEXT,
+  labelText = LABEL,
+  background = "",
   accent,
   className,
   style,
@@ -102,6 +143,12 @@ export function Pagination007({
 
   const palette = {
     ...(accent ? { "--vibeui-pagination-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pagination-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -124,13 +171,16 @@ export function Pagination007({
       </style>
       <nav
         data-vibeui-block="pagination-007"
-        aria-label="Навигация по списку"
+        aria-label={labelText.nav ?? LABEL.nav}
         className={className}
         style={palette}
       >
         <div data-part="shell">
           <p data-part="range">
-            {from}–{to} из {total}
+            {rangeText
+              .replace("{from}", String(from))
+              .replace("{to}", String(to))
+              .replace("{total}", String(total))}
           </p>
           <span data-part="steps">
             <button
@@ -138,27 +188,29 @@ export function Pagination007({
               data-part="step"
               data-dir="prev"
               disabled={page === 1}
-              aria-label="Предыдущая страница"
+              aria-label={labelText.prev ?? LABEL.prev}
               onClick={() => setPage(Math.max(page - 1, 1))}
             >
               <span data-part="arrow" aria-hidden="true" />
             </button>
             <span data-part="where" aria-current="page">
-              {page} / {pages}
+              {(labelText.where ?? LABEL.where)
+                .replace("{page}", String(page))
+                .replace("{pages}", String(pages))}
             </span>
             <button
               type="button"
               data-part="step"
               data-dir="next"
               disabled={page === pages}
-              aria-label="Следующая страница"
+              aria-label={labelText.next ?? LABEL.next}
               onClick={() => setPage(Math.min(page + 1, pages))}
             >
               <span data-part="arrow" aria-hidden="true" />
             </button>
           </span>
           <label data-part="size">
-            Показывать по
+            {labelText.size ?? LABEL.size}
             <select
               value={perPage}
               onChange={(event) => changeSize(Number(event.target.value))}

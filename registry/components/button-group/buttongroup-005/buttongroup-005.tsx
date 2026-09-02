@@ -16,6 +16,8 @@ export type Buttongroup005Props = Omit<
   defaultView?: string
   label?: string
   onChange?: (id: string) => void
+  /** Заливка трека. Пусто — остаётся своя, чуть отличная от фона страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,12 +27,12 @@ export type Buttongroup005Props = Omit<
 // был бы неправдой: значение никуда не отправляется, оно меняет вид списка.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-005"]){
---vibeui-buttongroup-005-surface:oklch(0.97 0.004 265);
---vibeui-buttongroup-005-on:oklch(1 0 0);
---vibeui-buttongroup-005-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-005-muted:oklch(0.54 0.014 265);
---vibeui-buttongroup-005-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-005-accent:oklch(0.55 0.17 265);
+--vibeui-buttongroup-005-surface:light-dark(oklch(0.97 0.004 265),oklch(0.28 0.012 265));
+--vibeui-buttongroup-005-on:light-dark(oklch(1 0 0),oklch(0.4 0.014 265));
+--vibeui-buttongroup-005-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.006 265));
+--vibeui-buttongroup-005-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-buttongroup-005-border:light-dark(oklch(0.89 0.008 265),oklch(0.38 0.012 265));
+--vibeui-buttongroup-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.75 0.15 265));
 --vibeui-buttongroup-005-radius:0.5rem;
 --vibeui-buttongroup-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -81,6 +83,29 @@ const ICONS: Record<string, string> = {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Переключатель представления списка с состоянием через aria-pressed.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -89,6 +114,7 @@ export function Buttongroup005({
   defaultView = "grid",
   label = "Вид списка",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -98,6 +124,12 @@ export function Buttongroup005({
 
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-005-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

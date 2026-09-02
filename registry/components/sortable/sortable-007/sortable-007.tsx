@@ -3,6 +3,8 @@
 import { useState } from "react"
 import type { ComponentPropsWithoutRef, CSSProperties, DragEvent } from "react"
 
+export type Sortable007Announcement = "moved" | "undone"
+
 export type Sortable007Props = Omit<
   ComponentPropsWithoutRef<"div">,
   "children" | "onChange"
@@ -11,6 +13,19 @@ export type Sortable007Props = Omit<
   items?: string[]
   undoLabel?: string
   onChange?: (items: string[]) => void
+  /** Описание шага: {item} — строка, {from} и {to} — позиции. */
+  stepLabel?: string
+  /** Строка полосы отмены: {step} — описание шага. */
+  lastLabel?: string
+  /** Подпись кнопки отмены: {undo} — её текст, {step} — описание шага. */
+  undoHint?: string
+  /** Подписи кнопок переноса: {item}, {position}, {total}. */
+  moveUpLabel?: string
+  moveDownLabel?: string
+  /** Реплики живой области: {item}, {position}, {total}, {step}. */
+  announcements?: Record<Sortable007Announcement, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,12 +38,12 @@ export type Sortable007Props = Omit<
 // был слышен, а не только виден.
 const STYLES = `
 :where([data-vibeui-block="sortable-007"]){
---vibeui-sortable-007-bg:oklch(1 0 0);
---vibeui-sortable-007-row:oklch(0.99 0.002 265);
---vibeui-sortable-007-fg:oklch(0.24 0.014 265);
---vibeui-sortable-007-muted:oklch(0.56 0.014 265);
---vibeui-sortable-007-border:oklch(0.9 0.006 265);
---vibeui-sortable-007-accent:oklch(0.55 0.2 262);
+--vibeui-sortable-007-bg:transparent;
+--vibeui-sortable-007-row:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.011 265));
+--vibeui-sortable-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-sortable-007-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-sortable-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-sortable-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
 --vibeui-sortable-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="sortable-007"]{
@@ -52,7 +67,7 @@ background:var(--vibeui-sortable-007-row);font-size:0.8125rem;
 /* Строка, которую только что вернули, подсвечена: иначе отмену не видно. */
 [data-vibeui-block="sortable-007"] li[data-restored="true"]{
 border-color:var(--vibeui-sortable-007-accent);
-background:color-mix(in oklab,var(--vibeui-sortable-007-accent) 8%,var(--vibeui-sortable-007-bg));
+background:color-mix(in oklab,var(--vibeui-sortable-007-accent) 8%,var(--vibeui-sortable-007-row));
 }
 [data-vibeui-block="sortable-007"] [data-part="grip"]{flex:none;display:grid;gap:2.5px;padding:0.25rem;cursor:grab}
 [data-vibeui-block="sortable-007"] [data-part="grip"] span{
@@ -84,7 +99,7 @@ flex:none;appearance:none;cursor:pointer;
 padding:0.1875rem 0.625rem;border-radius:0.5rem;
 border:1px solid color-mix(in oklab,var(--vibeui-sortable-007-accent) 45%,transparent);
 background:color-mix(in oklab,var(--vibeui-sortable-007-accent) 10%,transparent);
-color:color-mix(in oklab,var(--vibeui-sortable-007-accent) 80%,black);
+color:color-mix(in oklab,var(--vibeui-sortable-007-accent) 80%,light-dark(black,white));
 font:inherit;font-size:0.6875rem;font-weight:650;line-height:1.5;
 }
 [data-vibeui-block="sortable-007"] [data-part="undo"]:focus-visible{outline:2px solid var(--vibeui-sortable-007-accent);outline-offset:2px}
@@ -103,7 +118,34 @@ const DEFAULT_ITEMS = [
   "Возврат неактивных",
 ]
 
-type Step = { items: string[]; label: string }
+type Step = { items: string[]; label: string; item: string }
+
+const DEFAULT_ANNOUNCEMENTS: Record<Sortable007Announcement, string> = {
+  moved: "«{item}» на позиции {position} из {total}.",
+  undone: "Отменено: {step}. «{item}» снова на позиции {position} из {total}.",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Список с отменой последнего переноса: прежний порядок лежит в стеке.
@@ -113,7 +155,14 @@ export function Sortable007({
   title = "Цепочка писем",
   items = DEFAULT_ITEMS,
   undoLabel = "Отменить",
+  stepLabel = "«{item}»: {from} → {to}",
+  lastLabel = "Последний перенос: {step}",
+  undoHint = "{undo} последний перенос: {step}",
+  moveUpLabel = "Поднять «{item}», сейчас {position} из {total}",
+  moveDownLabel = "Опустить «{item}», сейчас {position} из {total}",
+  announcements = DEFAULT_ANNOUNCEMENTS,
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -126,6 +175,19 @@ export function Sortable007({
   const [over, setOver] = useState<string | null>(null)
   const [announcement, setAnnouncement] = useState("")
 
+  const say = (
+    key: Sortable007Announcement,
+    row: string,
+    position: number,
+    total: number,
+    step: string,
+  ) =>
+    (announcements[key] ?? DEFAULT_ANNOUNCEMENTS[key])
+      .replace("{item}", row)
+      .replace("{position}", String(position))
+      .replace("{total}", String(total))
+      .replace("{step}", step)
+
   const move = (from: number, to: number) => {
     if (to < 0 || to >= order.length) return
 
@@ -135,12 +197,19 @@ export function Sortable007({
 
     setHistory([
       ...history,
-      { items: order, label: `«${row}»: ${from + 1} → ${to + 1}` },
+      {
+        items: order,
+        item: row,
+        label: stepLabel
+          .replace("{item}", row)
+          .replace("{from}", String(from + 1))
+          .replace("{to}", String(to + 1)),
+      },
     ])
     setRestored(null)
     setOrder(next)
     onChange?.(next)
-    setAnnouncement(`«${row}» на позиции ${to + 1} из ${next.length}.`)
+    setAnnouncement(say("moved", row, to + 1, next.length, ""))
   }
 
   const undo = () => {
@@ -151,10 +220,15 @@ export function Sortable007({
     setOrder(step.items)
     onChange?.(step.items)
 
-    const back = step.label.split("»")[0].replace("«", "")
-    setRestored(back)
+    setRestored(step.item)
     setAnnouncement(
-      `Отменено: ${step.label}. «${back}» снова на позиции ${step.items.indexOf(back) + 1} из ${step.items.length}.`,
+      say(
+        "undone",
+        step.item,
+        step.items.indexOf(step.item) + 1,
+        step.items.length,
+        step.label,
+      ),
     )
   }
 
@@ -170,6 +244,12 @@ export function Sortable007({
 
   const palette = {
     ...(accent ? { "--vibeui-sortable-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-sortable-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -215,7 +295,10 @@ export function Sortable007({
                 type="button"
                 data-part="move"
                 disabled={index === 0}
-                aria-label={`Поднять «${row}», сейчас ${index + 1} из ${order.length}`}
+                aria-label={moveUpLabel
+                  .replace("{item}", row)
+                  .replace("{position}", String(index + 1))
+                  .replace("{total}", String(order.length))}
                 onClick={() => move(index, index - 1)}
               >
                 ▲
@@ -224,7 +307,10 @@ export function Sortable007({
                 type="button"
                 data-part="move"
                 disabled={index === order.length - 1}
-                aria-label={`Опустить «${row}», сейчас ${index + 1} из ${order.length}`}
+                aria-label={moveDownLabel
+                  .replace("{item}", row)
+                  .replace("{position}", String(index + 1))
+                  .replace("{total}", String(order.length))}
                 onClick={() => move(index, index + 1)}
               >
                 ▼
@@ -234,11 +320,15 @@ export function Sortable007({
         </ol>
         {last ? (
           <div data-part="undobar">
-            <span data-part="last">Последний перенос: {last.label}</span>
+            <span data-part="last">
+              {lastLabel.replace("{step}", last.label)}
+            </span>
             <button
               type="button"
               data-part="undo"
-              aria-label={`${undoLabel} последний перенос: ${last.label}`}
+              aria-label={undoHint
+                .replace("{undo}", undoLabel)
+                .replace("{step}", last.label)}
               onClick={undo}
             >
               {undoLabel}

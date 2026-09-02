@@ -5,6 +5,8 @@ export type Codeblock017Props = {
   changedLine?: number
   agoLabel?: string
   lines?: string[]
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -12,17 +14,20 @@ export type Codeblock017Props = {
 // Идея компонента: показать, что именно поменялось только что. Не диф целиком,
 // а одна строка: она получает метку в поле номеров, подложку и короткую
 // вспышку, которая гаснет сама и не оставляет мигающего элемента на экране.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, отметка изменения подобрана отдельно для светлой и тёмной ветки.
 const STYLES = `
 :where([data-vibeui-block="codeblock-017"]){
---vibeui-codeblock-017-bg:oklch(0.2 0.016 150);
---vibeui-codeblock-017-head:oklch(0.24 0.02 150);
---vibeui-codeblock-017-fg:oklch(0.93 0.008 150);
---vibeui-codeblock-017-muted:oklch(0.67 0.016 150);
---vibeui-codeblock-017-gutter:oklch(0.52 0.02 150);
---vibeui-codeblock-017-border:oklch(1 0 0 / 12%);
---vibeui-codeblock-017-mark:oklch(0.82 0.15 152);
---vibeui-codeblock-017-tint:oklch(0.6 0.14 152 / 16%);
---vibeui-codeblock-017-flash:oklch(0.7 0.16 152 / 42%);
+--vibeui-codeblock-017-bg:transparent;
+--vibeui-codeblock-017-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
+--vibeui-codeblock-017-fg:light-dark(oklch(0.26 0.018 150),oklch(0.93 0.008 150));
+--vibeui-codeblock-017-muted:light-dark(oklch(0.5 0.018 150),oklch(0.67 0.016 150));
+--vibeui-codeblock-017-gutter:light-dark(oklch(0.62 0.02 150),oklch(0.52 0.02 150));
+--vibeui-codeblock-017-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
+--vibeui-codeblock-017-mark:light-dark(oklch(0.48 0.15 152),oklch(0.82 0.15 152));
+--vibeui-codeblock-017-tint:light-dark(oklch(0.72 0.14 152 / 22%),oklch(0.6 0.14 152 / 16%));
+--vibeui-codeblock-017-flash:light-dark(oklch(0.78 0.16 152 / 52%),oklch(0.7 0.16 152 / 42%));
 --vibeui-codeblock-017-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -95,15 +100,48 @@ const LINES = [
   "}",
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Листинг с отметкой строки, изменённой последней правкой. */
 export function Codeblock017({
   path = "components/cart.tsx",
   changedLine = 3,
   agoLabel = "изменено только что",
   lines = LINES,
+  background = "",
   className,
   style,
 }: Codeblock017Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-codeblock-017" precedence="medium">
@@ -112,7 +150,7 @@ export function Codeblock017({
       <figure
         data-vibeui-block="codeblock-017"
         className={className}
-        style={style}
+        style={palette}
       >
         <figcaption data-part="head">
           <span data-part="path">{path}</span>

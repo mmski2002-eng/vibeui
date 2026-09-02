@@ -3,6 +3,8 @@ import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 export type Badge017Props = ComponentPropsWithoutRef<"span"> & {
   tone?: "accent" | "positive" | "danger"
   waves?: number
+  /** Пусто — плашка держит собственную заливку тона. */
+  background?: string
 }
 
 // Идея компонента: метка «новое» с расходящейся волной. Волна — отдельный
@@ -14,10 +16,10 @@ const STYLES = `
 :where([data-vibeui-block="badge-017"]){
 --vibeui-badge-017-hue:265;
 --vibeui-badge-017-chroma:0.16;
---vibeui-badge-017-mark:oklch(0.58 var(--vibeui-badge-017-chroma) var(--vibeui-badge-017-hue));
---vibeui-badge-017-bg:oklch(0.97 calc(var(--vibeui-badge-017-chroma) * 0.1) var(--vibeui-badge-017-hue));
---vibeui-badge-017-fg:oklch(0.36 calc(var(--vibeui-badge-017-chroma) * 0.55) var(--vibeui-badge-017-hue));
---vibeui-badge-017-border:oklch(0.9 calc(var(--vibeui-badge-017-chroma) * 0.2) var(--vibeui-badge-017-hue));
+--vibeui-badge-017-mark:light-dark(oklch(0.58 var(--vibeui-badge-017-chroma) var(--vibeui-badge-017-hue)),oklch(0.74 calc(var(--vibeui-badge-017-chroma) * 0.85) var(--vibeui-badge-017-hue)));
+--vibeui-badge-017-bg:light-dark(oklch(0.97 calc(var(--vibeui-badge-017-chroma) * 0.1) var(--vibeui-badge-017-hue)),oklch(0.28 calc(var(--vibeui-badge-017-chroma) * 0.2) var(--vibeui-badge-017-hue)));
+--vibeui-badge-017-fg:light-dark(oklch(0.36 calc(var(--vibeui-badge-017-chroma) * 0.55) var(--vibeui-badge-017-hue)),oklch(0.92 calc(var(--vibeui-badge-017-chroma) * 0.25) var(--vibeui-badge-017-hue)));
+--vibeui-badge-017-border:light-dark(oklch(0.9 calc(var(--vibeui-badge-017-chroma) * 0.2) var(--vibeui-badge-017-hue)),oklch(0.42 calc(var(--vibeui-badge-017-chroma) * 0.3) var(--vibeui-badge-017-hue)));
 --vibeui-badge-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="badge-017"]{
@@ -57,18 +59,51 @@ animation-delay:var(--vibeui-badge-017-delay,0s);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Метка «новое» с расходящейся волной поверх точки.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Badge017({
   tone = "accent",
   waves = 2,
+  background = "",
   className,
   style,
   children = "Новое",
   ...props
 }: Badge017Props) {
   const count = Math.min(3, Math.max(0, Math.round(waves)))
+
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-badge-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -80,7 +115,7 @@ export function Badge017({
         data-vibeui-block="badge-017"
         data-tone={tone}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="beacon" aria-hidden="true">
           {Array.from({ length: count }, (_, index) => (

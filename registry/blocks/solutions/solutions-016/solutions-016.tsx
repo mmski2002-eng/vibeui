@@ -15,7 +15,21 @@ export type Solutions016Props = {
   days?: string[]
   people?: Solutions016Person[]
   normHours?: number
+  /** Буква смены: ключи morning, evening, night, off, sick. */
+  shiftLetterText?: Record<string, string>
+  /** Время смены в клетке: те же ключи. */
+  shiftTimeText?: Record<string, string>
+  /** Подписи легенды: ключи morning, evening, night, sick. */
+  legendText?: Record<string, string>
+  /** Шапка таблицы: ключи person, hours, coverage. */
+  columnText?: Record<string, string>
+  /** Норма недели в шапке, {hours} — число часов. */
+  normText?: string
+  /** Часы в ячейке, {hours} — число часов. */
+  hoursText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,16 +45,18 @@ export type Solutions016Props = {
 // что дыру в четверге по клеткам глазами не сосчитать.
 const STYLES = `
 :where([data-vibeui-block="solutions-016"]){
---vibeui-solutions-016-bg:oklch(1 0 0);
---vibeui-solutions-016-panel:oklch(0.975 0.004 280);
---vibeui-solutions-016-fg:oklch(0.21 0.014 280);
---vibeui-solutions-016-muted:oklch(0.54 0.014 280);
---vibeui-solutions-016-border:oklch(0.9 0.006 280);
---vibeui-solutions-016-morning:oklch(0.62 0.14 200);
---vibeui-solutions-016-evening:oklch(0.62 0.15 300);
---vibeui-solutions-016-night:oklch(0.42 0.1 275);
---vibeui-solutions-016-sick:oklch(0.62 0.17 35);
---vibeui-solutions-016-accent:oklch(0.5 0.17 280);
+--vibeui-solutions-016-bg:transparent;
+/* Липкая колонка обязана быть непрозрачной: сквозь неё уезжали бы клетки. */
+--vibeui-solutions-016-sticky:light-dark(oklch(1 0 0),oklch(0.18 0.012 280));
+--vibeui-solutions-016-panel:light-dark(oklch(0.975 0.004 280),oklch(0.26 0.012 280));
+--vibeui-solutions-016-fg:light-dark(oklch(0.21 0.014 280),oklch(0.94 0.005 280));
+--vibeui-solutions-016-muted:light-dark(oklch(0.54 0.014 280),oklch(0.7 0.012 280));
+--vibeui-solutions-016-border:light-dark(oklch(0.9 0.006 280),oklch(0.36 0.012 280));
+--vibeui-solutions-016-morning:light-dark(oklch(0.62 0.14 200),oklch(0.68 0.13 200));
+--vibeui-solutions-016-evening:light-dark(oklch(0.62 0.15 300),oklch(0.66 0.14 300));
+--vibeui-solutions-016-night:light-dark(oklch(0.42 0.1 275),oklch(0.55 0.12 275));
+--vibeui-solutions-016-sick:light-dark(oklch(0.62 0.17 35),oklch(0.7 0.16 35));
+--vibeui-solutions-016-accent:light-dark(oklch(0.5 0.17 280),oklch(0.72 0.16 280));
 --vibeui-solutions-016-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -81,7 +97,7 @@ padding:0.375rem 0.3125rem;text-align:center;border-top:1px solid var(--vibeui-s
 /* Липкая первая колонка: без неё при прокрутке непонятно, чья это строка. */
 [data-vibeui-block="solutions-016"] [data-part="who"]{
 position:sticky;left:0;z-index:1;text-align:left;min-width:11rem;padding-left:1rem;
-background:var(--vibeui-solutions-016-bg);
+background:var(--vibeui-solutions-016-sticky);
 }
 [data-vibeui-block="solutions-016"] thead [data-part="who"]{background:var(--vibeui-solutions-016-panel)}
 [data-vibeui-block="solutions-016"] thead th{
@@ -167,13 +183,56 @@ const DEFAULT_PEOPLE: Solutions016Person[] = [
   },
 ]
 
-const SHIFT_LABEL = {
-  morning: { letter: "У", time: "07–15" },
-  evening: { letter: "В", time: "15–23" },
-  night: { letter: "Н", time: "23–07" },
-  off: { letter: "—", time: "выходной" },
-  sick: { letter: "Б", time: "больничный" },
-} as const
+const DEFAULT_SHIFT_LETTER_TEXT: Record<string, string> = {
+  morning: "У",
+  evening: "В",
+  night: "Н",
+  off: "—",
+  sick: "Б",
+}
+
+const DEFAULT_SHIFT_TIME_TEXT: Record<string, string> = {
+  morning: "07–15",
+  evening: "15–23",
+  night: "23–07",
+  off: "выходной",
+  sick: "больничный",
+}
+
+const DEFAULT_LEGEND_TEXT: Record<string, string> = {
+  morning: "утро 07–15",
+  evening: "вечер 15–23",
+  night: "ночь 23–07",
+  sick: "больничный",
+}
+
+const DEFAULT_COLUMN_TEXT: Record<string, string> = {
+  person: "Сотрудник",
+  hours: "Часы",
+  coverage: "На смене",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * График смен на неделю: матрица «человек × день» и строка покрытия внизу.
@@ -185,7 +244,14 @@ export function Solutions016({
   days = DEFAULT_DAYS,
   people = DEFAULT_PEOPLE,
   normHours = 40,
+  shiftLetterText = DEFAULT_SHIFT_LETTER_TEXT,
+  shiftTimeText = DEFAULT_SHIFT_TIME_TEXT,
+  legendText = DEFAULT_LEGEND_TEXT,
+  columnText = DEFAULT_COLUMN_TEXT,
+  normText = "Норма недели — {hours} ч",
+  hoursText = "{hours} ч",
   accent,
+  background = "",
   className,
   style,
 }: Solutions016Props) {
@@ -199,6 +265,13 @@ export function Solutions016({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-016-bg": background,
+          "--vibeui-solutions-016-sticky": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -218,34 +291,20 @@ export function Solutions016({
             <h2>{title}</h2>
             <p data-part="week">{week}</p>
           </div>
-          <p data-part="week">Норма недели — {normHours} ч</p>
+          <p data-part="week">
+            {normText.replace("{hours}", String(normHours))}
+          </p>
         </header>
 
         <p data-part="legend">
-          <span>
-            <span data-part="chip" data-shift="morning" aria-hidden="true">
-              У
+          {["morning", "evening", "night", "sick"].map((shift) => (
+            <span key={shift}>
+              <span data-part="chip" data-shift={shift} aria-hidden="true">
+                {shiftLetterText[shift] ?? DEFAULT_SHIFT_LETTER_TEXT[shift]}
+              </span>
+              {legendText[shift] ?? DEFAULT_LEGEND_TEXT[shift]}
             </span>
-            утро 07–15
-          </span>
-          <span>
-            <span data-part="chip" data-shift="evening" aria-hidden="true">
-              В
-            </span>
-            вечер 15–23
-          </span>
-          <span>
-            <span data-part="chip" data-shift="night" aria-hidden="true">
-              Н
-            </span>
-            ночь 23–07
-          </span>
-          <span>
-            <span data-part="chip" data-shift="sick" aria-hidden="true">
-              Б
-            </span>
-            больничный
-          </span>
+          ))}
         </p>
 
         <div data-part="scroll">
@@ -253,7 +312,7 @@ export function Solutions016({
             <thead>
               <tr>
                 <th scope="col" data-part="who">
-                  Сотрудник
+                  {columnText.person ?? DEFAULT_COLUMN_TEXT.person}
                 </th>
                 {days.map((day) => (
                   <th scope="col" key={day}>
@@ -261,7 +320,7 @@ export function Solutions016({
                   </th>
                 ))}
                 <th scope="col" data-part="hours">
-                  Часы
+                  {columnText.hours ?? DEFAULT_COLUMN_TEXT.hours}
                 </th>
               </tr>
             </thead>
@@ -275,9 +334,10 @@ export function Solutions016({
                   {person.week.map((shift, index) => (
                     <td key={days[index]}>
                       <span data-part="cell" data-cell={shift}>
-                        {SHIFT_LABEL[shift].letter}
+                        {shiftLetterText[shift] ??
+                          DEFAULT_SHIFT_LETTER_TEXT[shift]}
                         <br />
-                        {SHIFT_LABEL[shift].time}
+                        {shiftTimeText[shift] ?? DEFAULT_SHIFT_TIME_TEXT[shift]}
                       </span>
                     </td>
                   ))}
@@ -285,7 +345,7 @@ export function Solutions016({
                     data-part="hours"
                     data-under={person.hours < normHours ? "true" : "false"}
                   >
-                    {person.hours} ч
+                    {hoursText.replace("{hours}", String(person.hours))}
                   </td>
                 </tr>
               ))}
@@ -293,7 +353,7 @@ export function Solutions016({
             <tfoot>
               <tr>
                 <th scope="row" data-part="who">
-                  На смене
+                  {columnText.coverage ?? DEFAULT_COLUMN_TEXT.coverage}
                 </th>
                 {coverage.map((count, index) => (
                   <td
@@ -304,7 +364,12 @@ export function Solutions016({
                   </td>
                 ))}
                 <td data-part="hours">
-                  {people.reduce((sum, person) => sum + person.hours, 0)} ч
+                  {hoursText.replace(
+                    "{hours}",
+                    String(
+                      people.reduce((sum, person) => sum + person.hours, 0),
+                    ),
+                  )}
                 </td>
               </tr>
             </tfoot>

@@ -14,6 +14,12 @@ export type Sidebar006Props = Omit<
   userName?: string
   userMeta?: string
   menu?: Sidebar006Item[]
+  /** Подпись списка разделов для скринридера. */
+  navLabel?: string
+  /** Подпись кнопки профиля: {name} — имя пользователя. */
+  menuLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,13 +28,21 @@ export type Sidebar006Props = Omit<
 // общем списке разделов, поэтому их невозможно нажать по ошибке при выборе
 // раздела. Меню профиля собрано на <details> — состояние держит браузер,
 // клиентского JS в компоненте нет вообще.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// становится тёмным там, где тёмный контекст, и не носит собственного фона.
+// Всплывающее меню — исключение: у него подложка непрозрачная, иначе сквозь
+// него просвечивают разделы.
 const STYLES = `
 :where([data-vibeui-block="sidebar-006"]){
---vibeui-sidebar-006-bg:oklch(1 0 0);
---vibeui-sidebar-006-fg:oklch(0.25 0.016 265);
---vibeui-sidebar-006-muted:oklch(0.55 0.014 265);
---vibeui-sidebar-006-border:oklch(0.91 0.006 265);
---vibeui-sidebar-006-accent:oklch(0.55 0.16 200);
+--vibeui-sidebar-006-bg:transparent;
+--vibeui-sidebar-006-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-sidebar-006-fg:light-dark(oklch(0.25 0.016 265),oklch(0.93 0.006 265));
+--vibeui-sidebar-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-sidebar-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-sidebar-006-hover:light-dark(oklch(0.55 0.02 265 / 7%),oklch(0.85 0.02 265 / 10%));
+--vibeui-sidebar-006-shadow:light-dark(oklch(0.2 0.02 265 / 14%),oklch(0 0 0 / 55%));
+--vibeui-sidebar-006-accent:light-dark(oklch(0.55 0.16 200),oklch(0.74 0.14 200));
 --vibeui-sidebar-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="sidebar-006"]{
@@ -43,7 +57,7 @@ font-family:var(--vibeui-sidebar-006-font);
 display:block;padding:0.4375rem 0.5rem;border-radius:0.5rem;
 color:var(--vibeui-sidebar-006-muted);text-decoration:none;font-size:0.875rem;line-height:1.3;
 }
-[data-vibeui-block="sidebar-006"] [data-part="nav"] a:hover{background:oklch(0.55 0.02 265 / 7%);color:var(--vibeui-sidebar-006-fg)}
+[data-vibeui-block="sidebar-006"] [data-part="nav"] a:hover{background:var(--vibeui-sidebar-006-hover);color:var(--vibeui-sidebar-006-fg)}
 [data-vibeui-block="sidebar-006"] [data-part="nav"] a:focus-visible{outline:2px solid var(--vibeui-sidebar-006-accent);outline-offset:-2px}
 [data-vibeui-block="sidebar-006"] [data-part="nav"] a[aria-current="page"]{
 background:color-mix(in oklab,var(--vibeui-sidebar-006-accent) 14%,transparent);
@@ -57,7 +71,7 @@ display:flex;align-items:center;gap:0.5rem;cursor:pointer;list-style:none;
 padding:0.375rem 0.5rem;border-radius:0.5rem;
 }
 [data-vibeui-block="sidebar-006"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="sidebar-006"] summary:hover{background:oklch(0.55 0.02 265 / 7%)}
+[data-vibeui-block="sidebar-006"] summary:hover{background:var(--vibeui-sidebar-006-hover)}
 [data-vibeui-block="sidebar-006"] summary:focus-visible{outline:2px solid var(--vibeui-sidebar-006-accent);outline-offset:-2px}
 [data-vibeui-block="sidebar-006"] [data-part="avatar"]{
 display:flex;align-items:center;justify-content:center;flex:none;
@@ -75,15 +89,15 @@ margin-left:auto;flex:none;color:var(--vibeui-sidebar-006-muted);font-size:0.875
 [data-vibeui-block="sidebar-006"] [data-part="menu"]{
 position:absolute;left:0;right:0;bottom:calc(100% - 0.25rem);z-index:2;
 margin:0;padding:0.25rem;list-style:none;
-background:var(--vibeui-sidebar-006-bg);
+background:var(--vibeui-sidebar-006-panel);
 border:1px solid var(--vibeui-sidebar-006-border);border-radius:0.625rem;
-box-shadow:0 8px 24px oklch(0.2 0.02 265 / 14%);
+box-shadow:0 8px 24px var(--vibeui-sidebar-006-shadow);
 }
 [data-vibeui-block="sidebar-006"] [data-part="menu"] a{
 display:block;padding:0.375rem 0.5rem;border-radius:0.375rem;
 color:var(--vibeui-sidebar-006-fg);text-decoration:none;font-size:0.8125rem;
 }
-[data-vibeui-block="sidebar-006"] [data-part="menu"] a:hover{background:oklch(0.55 0.02 265 / 8%)}
+[data-vibeui-block="sidebar-006"] [data-part="menu"] a:hover{background:var(--vibeui-sidebar-006-hover)}
 [data-vibeui-block="sidebar-006"] [data-part="menu"] a:focus-visible{outline:2px solid var(--vibeui-sidebar-006-accent);outline-offset:-2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="sidebar-006"] *{animation:none!important;transition:none!important}}
 `
@@ -102,6 +116,28 @@ const DEFAULT_MENU: Sidebar006Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Меню с карточкой профиля внизу и меню аккаунта, раскрывающимся вверх.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -111,6 +147,9 @@ export function Sidebar006({
   userName = "Ольга Дорн",
   userMeta = "olga@studio.ru",
   menu = DEFAULT_MENU,
+  navLabel = "Разделы",
+  menuLabel = "Меню профиля: {name}",
+  background = "",
   accent,
   className,
   style,
@@ -118,6 +157,13 @@ export function Sidebar006({
 }: Sidebar006Props) {
   const palette = {
     ...(accent ? { "--vibeui-sidebar-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-sidebar-006-bg": background,
+          "--vibeui-sidebar-006-panel": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -138,7 +184,7 @@ export function Sidebar006({
         className={className}
         style={palette}
       >
-        <nav data-part="nav" aria-label="Разделы">
+        <nav data-part="nav" aria-label={navLabel}>
           <ul>
             {items.map((item) => (
               <li key={item.label}>
@@ -155,7 +201,7 @@ export function Sidebar006({
         <div data-part="spacer" />
         <div data-part="profile">
           <details>
-            <summary aria-label={`Меню профиля: ${userName}`}>
+            <summary aria-label={menuLabel.replace("{name}", userName)}>
               <span data-part="avatar" aria-hidden="true">
                 {short}
               </span>

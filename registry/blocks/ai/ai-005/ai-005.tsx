@@ -15,7 +15,11 @@ export type Ai005Props = {
   sources?: Ai005Source[]
   sourcesTitle?: string
   disclaimer?: string
+  /** Подпись сноски для скринридера: {index} — номер источника. */
+  sourceLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,12 +35,13 @@ export type Ai005Props = {
 // от собственной ширины блока.
 const STYLES = `
 :where([data-vibeui-block="ai-005"]){
---vibeui-ai-005-bg:oklch(1 0 0);
---vibeui-ai-005-soft:oklch(0.975 0.004 265);
---vibeui-ai-005-fg:oklch(0.22 0.014 265);
---vibeui-ai-005-muted:oklch(0.53 0.014 265);
---vibeui-ai-005-border:oklch(0.91 0.006 265);
---vibeui-ai-005-accent:oklch(0.52 0.16 232);
+--vibeui-ai-005-bg:transparent;
+--vibeui-ai-005-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-ai-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-ai-005-muted:light-dark(oklch(0.53 0.014 265),oklch(0.69 0.012 265));
+--vibeui-ai-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-ai-005-accent:light-dark(oklch(0.52 0.16 232),oklch(0.75 0.13 232));
+--vibeui-ai-005-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 232));
 --vibeui-ai-005-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -51,7 +56,7 @@ border:1px solid var(--vibeui-ai-005-border);border-radius:1.125rem;
 [data-vibeui-block="ai-005"] [data-part="mark"]{
 flex:none;display:inline-flex;align-items:center;justify-content:center;
 width:1.75rem;height:1.75rem;border-radius:0.625rem;
-background:var(--vibeui-ai-005-accent);color:oklch(1 0 0);
+background:var(--vibeui-ai-005-accent);color:var(--vibeui-ai-005-on-accent);
 font-size:0.6875rem;font-weight:700;
 }
 [data-vibeui-block="ai-005"] h2{margin:0;font-size:0.875rem;font-weight:680}
@@ -141,6 +146,28 @@ const DEFAULT_SOURCES: Ai005Source[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Ответ ассистента со сносками и карточками источников с цитатами.
  * Один файл, ноль зависимостей, клиентского JS нет.
  */
@@ -151,12 +178,20 @@ export function Ai005({
   sources = DEFAULT_SOURCES,
   sourcesTitle = "Источники",
   disclaimer = "Ответ собран по трём страницам. Проверьте цитаты перед публикацией.",
+  sourceLabel = "Источник {index}",
   accent,
+  background = "",
   className,
   style,
 }: Ai005Props) {
   const palette = {
     ...(accent ? { "--vibeui-ai-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-ai-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -168,7 +203,7 @@ export function Ai005({
         <sup key={`${position}-${piece}`}>
           <a
             href={`#ai-005-source-${match[1]}`}
-            aria-label={`Источник ${match[1]}`}
+            aria-label={sourceLabel.replace("{index}", match[1])}
           >
             {match[1]}
           </a>

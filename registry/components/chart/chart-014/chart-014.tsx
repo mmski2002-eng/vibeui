@@ -15,23 +15,30 @@ export type Chart014Props = Omit<
   max?: number
   unit?: string
   zones?: Chart014Zone[]
+  /** Имя картинки для скринридера: {title}, {value}, {max} и {zone}. */
+  chartLabel?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: датчик с зонами вместо одной дуги. Стрелка отвечает
 // «сколько», а окрашенные участки — «это норма или уже плохо». Границы зон
 // продублированы текстом под шкалой: цвет один смысл не несёт ни на печати,
 // ни при дальтонизме.
+//
+// Тема берётся из color-scheme окружения через light-dark(): датчик темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="chart-014"]){
---vibeui-chart-014-bg:oklch(1 0 0);
---vibeui-chart-014-fg:oklch(0.22 0.014 265);
---vibeui-chart-014-muted:oklch(0.55 0.014 265);
---vibeui-chart-014-border:oklch(0.91 0.006 265);
---vibeui-chart-014-bad:oklch(0.68 0.16 28);
---vibeui-chart-014-warn:oklch(0.79 0.14 85);
---vibeui-chart-014-good:oklch(0.68 0.14 155);
---vibeui-chart-014-needle:oklch(0.25 0.016 265);
+--vibeui-chart-014-bg:transparent;
+--vibeui-chart-014-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-014-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-014-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-chart-014-bad:light-dark(oklch(0.63 0.18 28),oklch(0.71 0.16 28));
+--vibeui-chart-014-warn:light-dark(oklch(0.76 0.15 85),oklch(0.83 0.14 85));
+--vibeui-chart-014-good:light-dark(oklch(0.64 0.15 155),oklch(0.76 0.14 155));
+--vibeui-chart-014-needle:light-dark(oklch(0.25 0.016 265),oklch(0.9 0.008 265));
 --vibeui-chart-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="chart-014"]{
@@ -102,6 +109,37 @@ const DEFAULT_ZONES: Chart014Zone[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+function fillTemplate(
+  template: string,
+  values: Record<string, string | number>,
+) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
+/**
  * Полукруговой датчик с зонами и стрелкой.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -111,7 +149,9 @@ export function Chart014({
   max = 100,
   unit = "баллов из 100",
   zones = DEFAULT_ZONES,
+  chartLabel = "{title}: {value} из {max}, зона «{zone}»",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -124,6 +164,12 @@ export function Chart014({
 
   const palette = {
     ...(accent ? { "--vibeui-chart-014-good": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-chart-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -153,7 +199,12 @@ export function Chart014({
         <svg
           viewBox="0 0 180 106"
           role="img"
-          aria-label={`${title}: ${value} из ${max}, зона «${current?.label ?? ""}»`}
+          aria-label={fillTemplate(chartLabel, {
+            title,
+            value,
+            max,
+            zone: current?.label ?? "",
+          })}
         >
           {bands.map((band) => (
             <path

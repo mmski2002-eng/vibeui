@@ -12,19 +12,27 @@ export type Card001Props = Omit<
   href?: string
   /** Подвал: цена, автор, кнопка. Пустой подвал не рисуется. */
   footer?: ReactNode
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
 // Идея компонента: кликает вся карточка, но ссылка остаётся одна. Заголовок
 // растягивает свою область до краёв через ::after, поэтому в списке ссылок
 // не появляется по три штуки на карточку — и скринридер читает одну.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте рамка светлее подложки, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="card-001"]){
---vibeui-card-001-fg:oklch(0.22 0.016 265);
---vibeui-card-001-muted:oklch(0.52 0.014 265);
---vibeui-card-001-bg:oklch(1 0 0);
---vibeui-card-001-border:oklch(0.9 0.006 265);
---vibeui-card-001-accent:oklch(0.55 0.2 262);
+--vibeui-card-001-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.006 265));
+--vibeui-card-001-muted:light-dark(oklch(0.52 0.014 265),oklch(0.71 0.012 265));
+--vibeui-card-001-bg:transparent;
+--vibeui-card-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-card-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-card-001-media-from:light-dark(oklch(0.94 0.02 265),oklch(0.33 0.03 265));
+--vibeui-card-001-media-to:light-dark(oklch(0.88 0.03 250),oklch(0.27 0.035 250));
+--vibeui-card-001-shadow:light-dark(oklch(0.2 0.03 265 / 30%),oklch(0 0 0 / 55%));
 --vibeui-card-001-radius:0.875rem;
 --vibeui-card-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -40,7 +48,7 @@ transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease;
 }
 [data-vibeui-block="card-001"]:hover{
 border-color:color-mix(in oklab,var(--vibeui-card-001-accent) 35%,var(--vibeui-card-001-border));
-box-shadow:0 8px 24px -12px oklch(0.2 0.03 265 / 30%);
+box-shadow:0 8px 24px -12px var(--vibeui-card-001-shadow);
 transform:translateY(-2px);
 }
 [data-vibeui-block="card-001"]:focus-within{
@@ -51,7 +59,7 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-card-001-accent) 20%,transp
 aspect-ratio:16 / 9;border-radius:calc(var(--vibeui-card-001-radius) - 1px) calc(var(--vibeui-card-001-radius) - 1px) 0 0;
 background:
 radial-gradient(120% 90% at 15% 0%,color-mix(in oklab,var(--vibeui-card-001-accent) 35%,transparent),transparent 60%),
-linear-gradient(160deg,oklch(0.94 0.02 265),oklch(0.88 0.03 250));
+linear-gradient(160deg,var(--vibeui-card-001-media-from),var(--vibeui-card-001-media-to));
 }
 [data-vibeui-block="card-001"] [data-part="body"]{
 display:flex;flex-direction:column;gap:0.375rem;padding:1rem 1.125rem 1.125rem;
@@ -88,6 +96,29 @@ font-size:0.8125rem;color:var(--vibeui-card-001-muted);
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Карточка материала: обложка, заголовок-ссылка на всю площадь, подвал.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -97,6 +128,7 @@ export function Card001({
   eyebrow = "Практика",
   href = "#",
   footer = "8 минут чтения",
+  background = "",
   accent,
   className,
   style,
@@ -104,6 +136,12 @@ export function Card001({
 }: Card001Props) {
   const palette = {
     ...(accent ? { "--vibeui-card-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-card-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

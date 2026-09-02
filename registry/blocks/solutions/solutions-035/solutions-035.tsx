@@ -19,7 +19,26 @@ export type Solutions035Props = {
   hint?: string
   anomalyThreshold?: number
   meters?: Solutions035Meter[]
+  /** Буква в кружке по типу прибора: electricity, water, heat. */
+  kindLetter?: Record<string, string>
+  /** Названия типов приборов: electricity, water, heat. */
+  kindText?: Record<string, string>
+  /** Подписи плиток сводки: meters, total, anomalies. */
+  summaryText?: Record<string, string>
+  /** Заголовки колонок: meter, previous, current, consumption, tariff, sum. */
+  columnText?: Record<string, string>
+  /** Подпись среднего расхода. {average} — число, {unit} — единица. */
+  averageText?: string
+  /** Подпись аномалии. {percent} — превышение над средним. */
+  anomalyText?: string
+  /** Сноска под таблицей. {percent} — порог аномалии. */
+  footNote?: string
+  currency?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -35,16 +54,16 @@ export type Solutions035Props = {
 // адресом, чтобы список читался без легенды на каждой странице.
 const STYLES = `
 :where([data-vibeui-block="solutions-035"]){
---vibeui-solutions-035-bg:oklch(1 0 0);
---vibeui-solutions-035-panel:oklch(0.973 0.005 90);
---vibeui-solutions-035-fg:oklch(0.22 0.014 90);
---vibeui-solutions-035-muted:oklch(0.54 0.014 90);
---vibeui-solutions-035-border:oklch(0.9 0.007 90);
---vibeui-solutions-035-accent:oklch(0.6 0.15 85);
---vibeui-solutions-035-electricity:oklch(0.64 0.16 95);
---vibeui-solutions-035-water:oklch(0.58 0.13 235);
---vibeui-solutions-035-heat:oklch(0.58 0.18 30);
---vibeui-solutions-035-bad:oklch(0.57 0.19 25);
+--vibeui-solutions-035-bg:transparent;
+--vibeui-solutions-035-panel:light-dark(oklch(0.973 0.005 90),oklch(0.27 0.011 90));
+--vibeui-solutions-035-fg:light-dark(oklch(0.22 0.014 90),oklch(0.94 0.005 90));
+--vibeui-solutions-035-muted:light-dark(oklch(0.54 0.014 90),oklch(0.69 0.012 90));
+--vibeui-solutions-035-border:light-dark(oklch(0.9 0.007 90),oklch(0.36 0.012 90));
+--vibeui-solutions-035-accent:light-dark(oklch(0.6 0.15 85),oklch(0.78 0.14 85));
+--vibeui-solutions-035-electricity:light-dark(oklch(0.64 0.16 95),oklch(0.73 0.15 95));
+--vibeui-solutions-035-water:light-dark(oklch(0.58 0.13 235),oklch(0.68 0.13 235));
+--vibeui-solutions-035-heat:light-dark(oklch(0.58 0.18 30),oklch(0.69 0.17 30));
+--vibeui-solutions-035-bad:light-dark(oklch(0.57 0.19 25),oklch(0.71 0.17 25));
 --vibeui-solutions-035-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-035-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -127,16 +146,31 @@ margin:0;padding:0.75rem 1rem 1rem;font-size:0.75rem;color:var(--vibeui-solution
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="solutions-035"] *{animation:none!important;transition:none!important}}
 `
 
-const KIND_LETTER: Record<Solutions035Kind, string> = {
+const KIND_LETTER: Record<string, string> = {
   electricity: "Э",
   water: "В",
   heat: "Т",
 }
 
-const KIND_LABEL: Record<Solutions035Kind, string> = {
+const KIND_LABEL: Record<string, string> = {
   electricity: "Электричество",
   water: "Вода",
   heat: "Тепло",
+}
+
+const SUMMARY_LABEL: Record<string, string> = {
+  meters: "приборов в реестре",
+  total: "к начислению за месяц",
+  anomalies: "расход выше среднего",
+}
+
+const COLUMN_LABEL: Record<string, string> = {
+  meter: "Прибор",
+  previous: "Предыдущее",
+  current: "Текущее",
+  consumption: "Расход",
+  tariff: "Тариф",
+  sum: "Сумма",
 }
 
 const DEFAULT_METERS: Solutions035Meter[] = [
@@ -187,6 +221,28 @@ const DEFAULT_METERS: Solutions035Meter[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Показания приборов учёта: расход и сумма считаются из показаний и тарифа,
  * аномалия — из сравнения со средним. Один файл, ноль зависимостей.
  */
@@ -195,10 +251,22 @@ export function Solutions035({
   hint = "Март 2024 · управляющая компания «Двор»",
   anomalyThreshold = 30,
   meters = DEFAULT_METERS,
+  kindLetter = KIND_LETTER,
+  kindText = KIND_LABEL,
+  summaryText = SUMMARY_LABEL,
+  columnText = COLUMN_LABEL,
+  averageText = "среднее {average} {unit}",
+  anomalyText = "выше среднего на {percent}%",
+  footNote = "Аномалия — расход выше среднего по прибору на {percent}% и более. Проверьте счётчик перед начислением.",
+  currency = "₽",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions035Props) {
+  const column = (key: string) => columnText[key] ?? COLUMN_LABEL[key]
+  const summary = (key: string) => summaryText[key] ?? SUMMARY_LABEL[key]
   const rows = meters.map((meter) => {
     const consumption = meter.current - meter.previous
     const sum = Math.round(consumption * meter.tariffValue)
@@ -214,6 +282,12 @@ export function Solutions035({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-035-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-035-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -238,15 +312,17 @@ export function Solutions035({
         <div data-part="summary">
           <p data-part="tile">
             <b>{meters.length}</b>
-            <span>приборов в реестре</span>
+            <span>{summary("meters")}</span>
           </p>
           <p data-part="tile">
-            <b>{totalSum.toLocaleString("ru-RU")} ₽</b>
-            <span>к начислению за месяц</span>
+            <b>
+              {totalSum.toLocaleString(locale)} {currency}
+            </b>
+            <span>{summary("total")}</span>
           </p>
           <p data-part="tile" data-tile={anomalies.length ? "bad" : undefined}>
             <b>{anomalies.length}</b>
-            <span>расход выше среднего</span>
+            <span>{summary("anomalies")}</span>
           </p>
         </div>
 
@@ -254,21 +330,21 @@ export function Solutions035({
           <table>
             <thead>
               <tr>
-                <th scope="col">Прибор</th>
+                <th scope="col">{column("meter")}</th>
                 <th scope="col" data-align="end">
-                  Предыдущее
+                  {column("previous")}
                 </th>
                 <th scope="col" data-align="end">
-                  Текущее
+                  {column("current")}
                 </th>
                 <th scope="col" data-align="end">
-                  Расход
+                  {column("consumption")}
                 </th>
                 <th scope="col" data-align="end">
-                  Тариф
+                  {column("tariff")}
                 </th>
                 <th scope="col" data-align="end">
-                  Сумма
+                  {column("sum")}
                 </th>
               </tr>
             </thead>
@@ -283,40 +359,46 @@ export function Solutions035({
                           data-kind={meter.kind}
                           aria-hidden="true"
                         >
-                          {KIND_LETTER[meter.kind]}
+                          {kindLetter[meter.kind] ?? KIND_LETTER[meter.kind]}
                         </span>
                         <span>
                           <span data-part="location">{meter.location}</span>
                           <span data-part="id">
-                            {meter.id} · {KIND_LABEL[meter.kind]}
+                            {meter.id} ·{" "}
+                            {kindText[meter.kind] ?? KIND_LABEL[meter.kind]}
                           </span>
                         </span>
                       </span>
                     </td>
                     <td data-align="end">
                       <span data-part="num">
-                        {meter.previous.toLocaleString("ru-RU")}
+                        {meter.previous.toLocaleString(locale)}
                       </span>
                     </td>
                     <td data-align="end">
                       <span data-part="num">
-                        {meter.current.toLocaleString("ru-RU")}
+                        {meter.current.toLocaleString(locale)}
                       </span>
                     </td>
                     <td data-align="end">
                       <span data-part="num">
-                        {consumption.toLocaleString("ru-RU")} {meter.unit}
+                        {consumption.toLocaleString(locale)} {meter.unit}
                       </span>
                       <span data-part="delta">
                         {anomaly
-                          ? `выше среднего на ${deviationPercent}%`
-                          : `среднее ${meter.average} ${meter.unit}`}
+                          ? anomalyText.replace(
+                              "{percent}",
+                              String(deviationPercent),
+                            )
+                          : averageText
+                              .replace("{average}", String(meter.average))
+                              .replace("{unit}", meter.unit)}
                       </span>
                     </td>
                     <td data-align="end">{meter.tariffLabel}</td>
                     <td data-align="end">
                       <span data-part="num">
-                        {sum.toLocaleString("ru-RU")} ₽
+                        {sum.toLocaleString(locale)} {currency}
                       </span>
                     </td>
                   </tr>
@@ -327,8 +409,7 @@ export function Solutions035({
         </div>
 
         <p data-part="foot">
-          Аномалия — расход выше среднего по прибору на {anomalyThreshold}% и
-          более. Проверьте счётчик перед начислением.
+          {footNote.replace("{percent}", String(anomalyThreshold))}
         </p>
       </section>
     </>

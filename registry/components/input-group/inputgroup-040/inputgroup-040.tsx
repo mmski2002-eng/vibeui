@@ -10,7 +10,18 @@ export type Inputgroup040Props = Omit<
   label?: string
   defaultValue?: string
   hint?: string
+  /** Знак терминала слева от команды. */
+  prefix?: string
+  /** Подписи кнопки: ключи copy и copied. */
+  copyText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
+}
+
+const COPY_TEXT: Record<string, string> = {
+  copy: "Копировать",
+  copied: "Готово",
 }
 
 // Идея компонента: приставка «$» — неинтерактивный знак терминала, а не
@@ -20,14 +31,14 @@ export type Inputgroup040Props = Omit<
 // пробует writeText и на отказе просто выделяет текст вместо тихой неудачи.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-040"]){
---vibeui-inputgroup-040-surface:oklch(1 0 0);
---vibeui-inputgroup-040-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-040-fg:oklch(0.22 0.014 265);
---vibeui-inputgroup-040-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-040-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-040-fixed:oklch(0.96 0.004 265);
---vibeui-inputgroup-040-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-040-accent:oklch(0.55 0.15 230);
+--vibeui-inputgroup-040-surface:transparent;
+--vibeui-inputgroup-040-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-inputgroup-040-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-040-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-inputgroup-040-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
+--vibeui-inputgroup-040-fixed:light-dark(oklch(0.965 0.003 265),oklch(0.31 0.012 265));
+--vibeui-inputgroup-040-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-inputgroup-040-accent:light-dark(oklch(0.55 0.15 230),oklch(0.77 0.13 230));
 --vibeui-inputgroup-040-radius:0.75rem;
 --vibeui-inputgroup-040-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-inputgroup-040-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
@@ -90,6 +101,28 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-inputgroup-040-mut
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сцепка «$ + команда + копирование»: приставка терминала неинтерактивна,
  * поле readonly, но выделяемо, кнопка копирует через Clipboard API и на
  * отказе выделяет текст вместо тихой неудачи. Один файл, ноль зависимостей.
@@ -98,6 +131,9 @@ export function Inputgroup040({
   label = "Команда установки",
   defaultValue = "npm install vibeui-cli",
   hint = "Клик по кнопке копирует команду целиком вместе со знаком $.",
+  prefix = "$",
+  copyText = COPY_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -109,11 +145,19 @@ export function Inputgroup040({
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-040-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-040-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
+  const copyKey = copied ? "copied" : "copy"
+
   const copy = async () => {
-    const command = `$ ${defaultValue}`
+    const command = `${prefix} ${defaultValue}`
     try {
       await navigator.clipboard.writeText(command)
       setCopied(true)
@@ -137,7 +181,7 @@ export function Inputgroup040({
         <label htmlFor={id}>{label}</label>
         <div data-part="group">
           <span data-part="prefix" aria-hidden="true">
-            $
+            {prefix}
           </span>
           <input
             ref={field}
@@ -183,7 +227,7 @@ export function Inputgroup040({
                 />
               </svg>
             )}
-            {copied ? "Готово" : "Копировать"}
+            {copyText[copyKey] ?? COPY_TEXT[copyKey]}
           </button>
         </div>
         <p data-part="hint" id={`${id}-hint`}>

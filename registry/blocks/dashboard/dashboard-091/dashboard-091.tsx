@@ -22,7 +22,15 @@ export type Dashboard091Props = {
   title?: string
   subtitle?: string
   documents?: Dashboard091Document[]
+  /** Подписи карточки документа: компонент несёт русские. */
+  labels?: Record<string, string>
+  /** Ссылки под документом. */
+  links?: string[]
+  /** Локаль для разрядов числа непринявших. */
+  numberLocale?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -37,16 +45,21 @@ export type Dashboard091Props = {
 // нужна редко, но искать её в другом разделе невозможно. Документ, принятие
 // которого обязательно, помечен отдельно — от этого зависит, блокировать ли
 // вход. Черновик стоит в том же списке, но без даты вступления.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-091"]){
---vibeui-dashboard-091-bg:oklch(0.985 0.003 250);
---vibeui-dashboard-091-card:oklch(1 0 0);
---vibeui-dashboard-091-fg:oklch(0.21 0.014 250);
---vibeui-dashboard-091-muted:oklch(0.54 0.014 250);
---vibeui-dashboard-091-border:oklch(0.91 0.006 250);
---vibeui-dashboard-091-accent:oklch(0.46 0.13 250);
---vibeui-dashboard-091-soft:oklch(0.965 0.02 250);
---vibeui-dashboard-091-gap:oklch(0.62 0.16 45);
+--vibeui-dashboard-091-bg:transparent;
+/* Карточка документа, жёлоб полосы и список версий: блок прозрачен. */
+--vibeui-dashboard-091-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 250));
+--vibeui-dashboard-091-inset:light-dark(oklch(0.985 0.003 250),oklch(0.22 0.012 250));
+--vibeui-dashboard-091-fg:light-dark(oklch(0.21 0.014 250),oklch(0.94 0.005 250));
+--vibeui-dashboard-091-muted:light-dark(oklch(0.54 0.014 250),oklch(0.72 0.012 250));
+--vibeui-dashboard-091-border:light-dark(oklch(0.91 0.006 250),oklch(0.36 0.012 250));
+--vibeui-dashboard-091-accent:light-dark(oklch(0.46 0.13 250),oklch(0.74 0.13 250));
+--vibeui-dashboard-091-soft:light-dark(oklch(0.965 0.02 250),oklch(0.3 0.03 250));
+--vibeui-dashboard-091-gap:light-dark(oklch(0.62 0.16 45),oklch(0.76 0.14 45));
 --vibeui-dashboard-091-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 --vibeui-dashboard-091-serif:ui-serif,Georgia,"Times New Roman",serif;
 container-type:inline-size;
@@ -78,8 +91,8 @@ padding:0.0625rem 0.375rem;border-radius:0.25rem;
 background:var(--vibeui-dashboard-091-soft);color:var(--vibeui-dashboard-091-accent);
 }
 [data-vibeui-block="dashboard-091"] [data-part="tag"][data-req="true"]{
-background:color-mix(in oklab,var(--vibeui-dashboard-091-gap) 14%,white);
-color:color-mix(in oklab,var(--vibeui-dashboard-091-gap) 80%,black);
+background:color-mix(in oklab,var(--vibeui-dashboard-091-gap) 16%,light-dark(white,black));
+color:color-mix(in oklab,var(--vibeui-dashboard-091-gap) 80%,light-dark(black,white));
 }
 [data-vibeui-block="dashboard-091"] [data-part="ver"]{
 text-align:right;white-space:nowrap;display:flex;flex-direction:column;gap:0.0625rem;
@@ -91,7 +104,7 @@ grid-column:1 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:0.375rem 0
 }
 [data-vibeui-block="dashboard-091"] [data-part="track"]{
 flex:1 1 8rem;min-width:6rem;height:0.4375rem;border-radius:9999px;position:relative;overflow:hidden;
-background:var(--vibeui-dashboard-091-bg);
+background:var(--vibeui-dashboard-091-inset);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-091-border);
 }
 [data-vibeui-block="dashboard-091"] [data-part="track"] span{
@@ -101,7 +114,7 @@ position:absolute;inset:0 auto 0 0;border-radius:9999px;background:var(--vibeui-
 font-size:0.6875rem;color:var(--vibeui-dashboard-091-muted);font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="dashboard-091"] [data-part="ratio"] b{color:var(--vibeui-dashboard-091-fg);font-weight:750}
-[data-vibeui-block="dashboard-091"] [data-part="left"]{color:color-mix(in oklab,var(--vibeui-dashboard-091-gap) 80%,black);font-weight:700}
+[data-vibeui-block="dashboard-091"] [data-part="left"]{color:color-mix(in oklab,var(--vibeui-dashboard-091-gap) 80%,light-dark(black,white));font-weight:700}
 [data-vibeui-block="dashboard-091"] details{grid-column:1 / -1}
 [data-vibeui-block="dashboard-091"] summary{
 list-style:none;cursor:pointer;font-size:0.6875rem;font-weight:700;
@@ -110,7 +123,7 @@ color:var(--vibeui-dashboard-091-accent);padding:0.125rem 0;
 [data-vibeui-block="dashboard-091"] summary::-webkit-details-marker{display:none}
 [data-vibeui-block="dashboard-091"] [data-part="history"]{
 list-style:none;margin:0.375rem 0 0;padding:0.5rem 0.625rem;display:flex;flex-direction:column;gap:0.3125rem;
-border-radius:0.625rem;background:var(--vibeui-dashboard-091-bg);
+border-radius:0.625rem;background:var(--vibeui-dashboard-091-inset);
 border:1px solid var(--vibeui-dashboard-091-border);
 }
 [data-vibeui-block="dashboard-091"] [data-part="history"] li{
@@ -215,6 +228,41 @@ const DEFAULT_DOCUMENTS: Dashboard091Document[] = [
   },
 ]
 
+const LABELS: Record<string, string> = {
+  requiredTag: "принятие обязательно",
+  versionText: "версия {version}",
+  draftNote: "Черновик не показывается пользователям и не требует принятия.",
+  acceptLabel: "{name}: приняли {percent} процентов пользователей",
+  acceptedBefore: "приняли",
+  acceptedAfter: "активных пользователей",
+  leftText: " · осталось {people} человек",
+  historyText: "История версий ({count})",
+}
+
+const LINKS = ["Открыть текст", "Скачать PDF", "Кто ещё не принял"]
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Страница юридических документов: доля принятия полосой и дробью, история
  * версий свёрнута в details под каждым документом, обязательные и черновики
@@ -224,12 +272,26 @@ export function Dashboard091({
   title = "Юридические документы",
   subtitle = "Принятие фиксируется по учётной записи и хранится вместе с датой, версией и IP-адресом. Новая версия обязательного документа требует повторного принятия при следующем входе.",
   documents = DEFAULT_DOCUMENTS,
+  labels,
+  links = LINKS,
+  numberLocale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Dashboard091Props) {
+  const text = { ...LABELS, ...labels }
+  const fill = (template: string, values: Record<string, string>) =>
+    template.replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match)
+
   const palette = {
     ...(accent ? { "--vibeui-dashboard-091-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-091-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -263,22 +325,19 @@ export function Dashboard091({
                     <span data-part="tag">{document.kind}</span>
                     {document.required ? (
                       <span data-part="tag" data-req="true">
-                        принятие обязательно
+                        {text.requiredTag}
                       </span>
                     ) : null}
                   </span>
                 </div>
 
                 <div data-part="ver">
-                  <b>версия {document.version}</b>
+                  <b>{fill(text.versionText, { version: document.version })}</b>
                   <span>{document.effective}</span>
                 </div>
 
                 {document.state === "draft" ? (
-                  <p data-part="ratio">
-                    Черновик не показывается пользователям и не требует
-                    принятия.
-                  </p>
+                  <p data-part="ratio">{text.draftNote}</p>
                 ) : (
                   <div data-part="accept">
                     <span
@@ -287,21 +346,23 @@ export function Dashboard091({
                       aria-valuenow={document.accepted}
                       aria-valuemin={0}
                       aria-valuemax={100}
-                      aria-label={`${document.name}: приняли ${document.accepted} процентов пользователей`}
+                      aria-label={fill(text.acceptLabel, {
+                        name: document.name,
+                        percent: String(document.accepted),
+                      })}
                     >
                       <span style={{ width: `${document.accepted}%` }} />
                     </span>
                     <span data-part="ratio">
-                      приняли <b>{document.accepted} %</b> активных
-                      пользователей
+                      {text.acceptedBefore} <b>{document.accepted} %</b>{" "}
+                      {text.acceptedAfter}
                       {document.accepted < 100 ? (
                         <span data-part="left">
-                          {" "}
-                          · осталось{" "}
-                          {Math.round(
-                            (68200 * (100 - document.accepted)) / 100,
-                          ).toLocaleString("ru-RU")}{" "}
-                          человек
+                          {fill(text.leftText, {
+                            people: Math.round(
+                              (68200 * (100 - document.accepted)) / 100,
+                            ).toLocaleString(numberLocale),
+                          })}
                         </span>
                       ) : null}
                     </span>
@@ -309,7 +370,11 @@ export function Dashboard091({
                 )}
 
                 <details open={document.open}>
-                  <summary>История версий ({document.history.length})</summary>
+                  <summary>
+                    {fill(text.historyText, {
+                      count: String(document.history.length),
+                    })}
+                  </summary>
                   <ul data-part="history">
                     {document.history.map((version) => (
                       <li key={version.label}>
@@ -322,9 +387,11 @@ export function Dashboard091({
                 </details>
 
                 <p data-part="links">
-                  <a href="#dashboard-091">Открыть текст</a>
-                  <a href="#dashboard-091">Скачать PDF</a>
-                  <a href="#dashboard-091">Кто ещё не принял</a>
+                  {links.map((link) => (
+                    <a key={link} href="#dashboard-091">
+                      {link}
+                    </a>
+                  ))}
                 </p>
               </li>
             ))}

@@ -16,6 +16,12 @@ export type Table004Props = Omit<
 > & {
   rows?: Table004Row[]
   caption?: string
+  /** Заголовки колонок: компонент несёт русские, проект подставляет свои. */
+  columnText?: Record<string, string>
+  /** Локаль для группировки цифр и сравнения строк. */
+  locale?: string
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,15 +31,18 @@ type Column = "name" | "views" | "share" | "updated"
 // объявлено через aria-sort: без него скринридер не сообщит, по чему
 // отсортировано. Стрелка направления выводится текстом в разметке, а не
 // поворотом фона, поэтому она читается вслух вместе с названием колонки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-004"]){
---vibeui-table-004-bg:oklch(1 0 0);
---vibeui-table-004-fg:oklch(0.24 0.014 265);
---vibeui-table-004-muted:oklch(0.56 0.014 265);
---vibeui-table-004-border:oklch(0.92 0.006 265);
---vibeui-table-004-head:oklch(0.975 0.003 265);
---vibeui-table-004-hover:oklch(0.55 0.02 265 / 5%);
---vibeui-table-004-accent:oklch(0.55 0.2 262);
+--vibeui-table-004-bg:transparent;
+--vibeui-table-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-table-004-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
+--vibeui-table-004-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-004-hover:light-dark(oklch(0.55 0.02 265 / 5%),oklch(0.85 0.02 265 / 9%));
+--vibeui-table-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
 --vibeui-table-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="table-004"]{
@@ -78,12 +87,41 @@ const DEFAULT_ROWS: Table004Row[] = [
   { name: "Контакты", views: 3211, share: 8.1, updated: "20 февраля" },
 ]
 
-const COLUMNS: { key: Column; title: string; numeric?: boolean }[] = [
-  { key: "name", title: "Страница" },
-  { key: "views", title: "Просмотры", numeric: true },
-  { key: "share", title: "Доля", numeric: true },
-  { key: "updated", title: "Изменена" },
+const COLUMNS: { key: Column; numeric?: boolean }[] = [
+  { key: "name" },
+  { key: "views", numeric: true },
+  { key: "share", numeric: true },
+  { key: "updated" },
 ]
+
+const COLUMN_TEXT: Record<string, string> = {
+  name: "Страница",
+  views: "Просмотры",
+  share: "Доля",
+  updated: "Изменена",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Таблица с сортировкой по колонке: заголовок-кнопка и aria-sort.
@@ -92,6 +130,9 @@ const COLUMNS: { key: Column; title: string; numeric?: boolean }[] = [
 export function Table004({
   rows = DEFAULT_ROWS,
   caption = "Страницы сайта за март",
+  columnText = COLUMN_TEXT,
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -106,7 +147,7 @@ export function Table004({
     const result =
       typeof left === "number" && typeof right === "number"
         ? left - right
-        : String(left).localeCompare(String(right), "ru")
+        : String(left).localeCompare(String(right), locale)
     return descending ? -result : result
   })
 
@@ -118,6 +159,12 @@ export function Table004({
 
   const palette = {
     ...(accent ? { "--vibeui-table-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-table-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -150,7 +197,7 @@ export function Table004({
                   }
                 >
                   <button type="button" onClick={() => toggle(item.key)}>
-                    {item.title}
+                    {columnText[item.key] ?? COLUMN_TEXT[item.key]}
                     <span data-part="arrow" aria-hidden="true">
                       {item.key === column ? (descending ? "▼" : "▲") : "▼"}
                     </span>
@@ -163,8 +210,8 @@ export function Table004({
             {sorted.map((row) => (
               <tr key={row.name}>
                 <td>{row.name}</td>
-                <td data-align="end">{row.views.toLocaleString("ru-RU")}</td>
-                <td data-align="end">{row.share.toLocaleString("ru-RU")} %</td>
+                <td data-align="end">{row.views.toLocaleString(locale)}</td>
+                <td data-align="end">{row.share.toLocaleString(locale)} %</td>
                 <td>{row.updated}</td>
               </tr>
             ))}

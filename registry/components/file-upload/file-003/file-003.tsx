@@ -16,7 +16,19 @@ export type File003Props = Omit<
 > & {
   title?: string
   items?: File003Item[]
+  /** Текст, когда очередь опустела. */
+  emptyText?: string
+  /** Подпись завершённой строки вместо доли. */
+  doneText?: string
+  /** Подпись полоски: {name} — имя файла. */
+  progressLabel?: string
+  /** Подпись кнопки у незавершённой строки: {name} — имя файла. */
+  cancelLabel?: string
+  /** Подпись кнопки у завершённой строки: {name} — имя файла. */
+  removeLabel?: string
   onCancel?: (id: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,19 +37,22 @@ export type File003Props = Omit<
 // перепутал файл, а полоска всё ещё ползёт. Здесь у каждой строки своя
 // полоска на нативном <progress> и своя кнопка отмены, называющая файл по
 // имени, а завершённые строки меняют кнопку на «Убрать» — действие другое.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у панели
+// по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="file-003"]){
---vibeui-file-003-surface:oklch(1 0 0);
---vibeui-file-003-fg:oklch(0.23 0.014 265);
---vibeui-file-003-muted:oklch(0.55 0.014 265);
---vibeui-file-003-border:oklch(0.89 0.008 265);
---vibeui-file-003-shell:oklch(0.91 0.006 265);
---vibeui-file-003-track:oklch(0.93 0.006 265);
---vibeui-file-003-accent:oklch(0.55 0.18 255);
---vibeui-file-003-ok:oklch(0.52 0.13 155);
+--vibeui-file-003-surface:transparent;
+--vibeui-file-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-file-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-file-003-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.014 265));
+--vibeui-file-003-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-file-003-track:light-dark(oklch(0.93 0.006 265),oklch(0.32 0.012 265));
+--vibeui-file-003-accent:light-dark(oklch(0.55 0.18 255),oklch(0.74 0.16 255));
+--vibeui-file-003-ok:light-dark(oklch(0.52 0.13 155),oklch(0.76 0.14 155));
 --vibeui-file-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: очередь показывают поверх любого фона. */
+/* Панель без собственной заливки: рамка очерчивает очередь на любом фоне. */
 [data-vibeui-block="file-003"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:24rem;box-sizing:border-box;padding:0.875rem;
@@ -97,13 +112,41 @@ const DEFAULT_ITEMS: File003Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Очередь загрузки: полоска прогресса и отмена на каждой строке.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function File003({
   title = "Загружается 3 файла",
   items = DEFAULT_ITEMS,
+  emptyText = "Очередь пуста — все загрузки отменены.",
+  doneText = "загружен",
+  progressLabel = "Загрузка файла {name}",
+  cancelLabel = "Отменить {name}",
+  removeLabel = "Убрать {name}",
   onCancel,
+  background = "",
   accent,
   className,
   style,
@@ -113,6 +156,12 @@ export function File003({
 
   const palette = {
     ...(accent ? { "--vibeui-file-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-file-003-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -134,7 +183,7 @@ export function File003({
       >
         <h3>{title}</h3>
         {list.length === 0 ? (
-          <p data-part="empty">Очередь пуста — все загрузки отменены.</p>
+          <p data-part="empty">{emptyText}</p>
         ) : (
           <ul>
             {list.map((entry) => {
@@ -145,19 +194,20 @@ export function File003({
                   <span data-part="name">{entry.name}</span>
                   <span data-part="meta">
                     {done
-                      ? `${entry.size} · загружен`
+                      ? `${entry.size} · ${doneText}`
                       : `${entry.size} · ${entry.progress}%`}
                   </span>
                   <progress
                     max={100}
                     value={entry.progress}
-                    aria-label={`Загрузка файла ${entry.name}`}
+                    aria-label={progressLabel.replace("{name}", entry.name)}
                   />
                   <button
                     type="button"
-                    aria-label={
-                      done ? `Убрать ${entry.name}` : `Отменить ${entry.name}`
-                    }
+                    aria-label={(done ? removeLabel : cancelLabel).replace(
+                      "{name}",
+                      entry.name,
+                    )}
                     onClick={() => drop(entry.id)}
                   >
                     ×

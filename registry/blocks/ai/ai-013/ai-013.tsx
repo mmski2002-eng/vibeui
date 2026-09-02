@@ -4,15 +4,21 @@ export type Ai013Props = {
   title?: string
   answer?: string
   question?: string
+  /** Вопрос над парой кнопок оценки. */
+  voteLegend?: string
   upLabel?: string
   downLabel?: string
   reasons?: string[]
+  /** Заголовок списка причин. */
+  reasonsLegend?: string
   commentLabel?: string
   commentPlaceholder?: string
   submitLabel?: string
   privacyNote?: string
   name?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,12 +37,13 @@ export type Ai013Props = {
 // у плохого ответа обычно несколько бед сразу.
 const STYLES = `
 :where([data-vibeui-block="ai-013"]){
---vibeui-ai-013-bg:oklch(1 0 0);
---vibeui-ai-013-soft:oklch(0.975 0.004 265);
---vibeui-ai-013-fg:oklch(0.21 0.014 265);
---vibeui-ai-013-muted:oklch(0.53 0.014 265);
---vibeui-ai-013-border:oklch(0.91 0.006 265);
---vibeui-ai-013-accent:oklch(0.52 0.17 268);
+--vibeui-ai-013-bg:transparent;
+--vibeui-ai-013-soft:light-dark(oklch(0.975 0.004 265),oklch(0.26 0.012 265));
+--vibeui-ai-013-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-ai-013-muted:light-dark(oklch(0.53 0.014 265),oklch(0.7 0.012 265));
+--vibeui-ai-013-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-ai-013-accent:light-dark(oklch(0.52 0.17 268),oklch(0.74 0.14 268));
+--vibeui-ai-013-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 268));
 --vibeui-ai-013-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -102,7 +109,7 @@ font:inherit;font-size:0.8125rem;line-height:1.5;
 [data-vibeui-block="ai-013"] button{
 appearance:none;cursor:pointer;border:0;
 height:2.25rem;padding:0 1rem;border-radius:0.75rem;
-background:var(--vibeui-ai-013-accent);color:oklch(1 0 0);
+background:var(--vibeui-ai-013-accent);color:var(--vibeui-ai-013-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="ai-013"] [data-part="privacy"]{
@@ -129,6 +136,28 @@ const DEFAULT_ANSWER =
   "Для трёх планов с годовой скидкой подойдёт pricing-001: переключатель периода стоит над карточками, поэтому обе цены видно сразу. Блок ставится одной командой и не тянет зависимостей."
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Оценка ответа: отрицательная раскрывает причины и поле комментария.
  * Один файл, ноль зависимостей, раскрытие на :has() без JS.
  */
@@ -136,20 +165,29 @@ export function Ai013({
   title = "Оценка ответа",
   answer = DEFAULT_ANSWER,
   question = "Вопрос: какой блок взять для страницы тарифов?",
+  voteLegend = "Ответ оказался полезным?",
   upLabel = "Помог",
   downLabel = "Не помог",
   reasons = DEFAULT_REASONS,
+  reasonsLegend = "Что именно не так",
   commentLabel = "Что пошло не так",
   commentPlaceholder = "Одной-двумя фразами: чего не хватило в ответе",
   submitLabel = "Отправить оценку",
   privacyNote = "Оценка уходит вместе с этим ответом. Текст запроса и файлы не передаются.",
   name = "ai-013-vote",
   accent,
+  background = "",
   className,
   style,
 }: Ai013Props) {
   const palette = {
     ...(accent ? { "--vibeui-ai-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-ai-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -173,7 +211,7 @@ export function Ai013({
 
           <form>
             <fieldset>
-              <legend>Ответ оказался полезным?</legend>
+              <legend>{voteLegend}</legend>
               <div data-part="votes">
                 <label data-part="vote">
                   <input type="radio" name={name} value="up" data-vote="up" />
@@ -193,7 +231,7 @@ export function Ai013({
 
             <div data-part="detail">
               <fieldset>
-                <legend>Что именно не так</legend>
+                <legend>{reasonsLegend}</legend>
                 <div data-part="reasons">
                   {reasons.map((reason) => (
                     <label key={reason} data-part="reason">

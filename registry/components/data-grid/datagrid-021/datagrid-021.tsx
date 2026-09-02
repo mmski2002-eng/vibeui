@@ -18,6 +18,30 @@ export type Datagrid021Props = Omit<
   rows?: Datagrid021Row[]
   caption?: string
   editLabel?: string
+  /** Заголовок панели над таблицей. */
+  heading?: string
+  /** Строка панели, когда правок нет. */
+  noEditsText?: string
+  /** Счётчик правок. {count} — число. */
+  editsTemplate?: string
+  /** Подпись кнопки сброса черновика. */
+  revertAllText?: string
+  /** Подпись кнопки сохранения черновика. */
+  saveAllText?: string
+  /** Заголовки колонок по ключу: компонент несёт русские. */
+  columnText?: Record<string, string>
+  /** Подпись поля в ячейке. {field} и {position} — подстановки. */
+  cellLabel?: string
+  /** Заголовок журнала правок. */
+  logText?: string
+  /** Подпись кнопки отмены одной правки. */
+  undoText?: string
+  /** Подпись кнопки отмены для скринридера. {field} и {position}. */
+  undoLabel?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,15 +50,21 @@ export type Datagrid021Props = Omit<
 // от базовых строк, а журнал изменений показывает пары «было → стало» с
 // точечной отменой. Общее «Сохранить» переносит черновик в базу, общее
 // «Отменить» выбрасывает его целиком — по одной ячейке ничего не уезжает.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-021"]){
---vibeui-datagrid-021-bg:oklch(1 0 0);
---vibeui-datagrid-021-fg:oklch(0.23 0.014 285);
---vibeui-datagrid-021-muted:oklch(0.55 0.014 285);
---vibeui-datagrid-021-border:oklch(0.92 0.006 285);
---vibeui-datagrid-021-head:oklch(0.975 0.003 285);
---vibeui-datagrid-021-accent:oklch(0.5 0.15 250);
---vibeui-datagrid-021-dirty:oklch(0.96 0.05 95);
+--vibeui-datagrid-021-bg:transparent;
+--vibeui-datagrid-021-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-021-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-021-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
+--vibeui-datagrid-021-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
+--vibeui-datagrid-021-panel:light-dark(oklch(0.985 0.004 285),oklch(0.26 0.011 285));
+--vibeui-datagrid-021-accent:light-dark(oklch(0.5 0.15 250),oklch(0.74 0.14 250));
+--vibeui-datagrid-021-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.014 285));
+--vibeui-datagrid-021-dirty:light-dark(oklch(0.96 0.05 95),oklch(0.33 0.05 95));
+--vibeui-datagrid-021-dirty-line:light-dark(oklch(0.62 0.14 85),oklch(0.72 0.13 85));
 --vibeui-datagrid-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-021"]{
@@ -54,9 +84,9 @@ padding:0.625rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-021-bord
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:600;
 padding:0.375rem 0.75rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-021-border);
-background:var(--vibeui-datagrid-021-bg);color:var(--vibeui-datagrid-021-fg);
+background:transparent;color:var(--vibeui-datagrid-021-fg);
 }
-[data-vibeui-block="datagrid-021"] [data-part="primary"]{border-color:transparent;background:var(--vibeui-datagrid-021-accent);color:oklch(1 0 0)}
+[data-vibeui-block="datagrid-021"] [data-part="primary"]{border-color:transparent;background:var(--vibeui-datagrid-021-accent);color:var(--vibeui-datagrid-021-on-accent)}
 [data-vibeui-block="datagrid-021"] button:disabled{opacity:.4;cursor:not-allowed}
 [data-vibeui-block="datagrid-021"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-021-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-021"] [data-part="scroll"]{overflow-x:auto}
@@ -75,15 +105,15 @@ border-top:1px solid var(--vibeui-datagrid-021-border);
 [data-vibeui-block="datagrid-021"] [data-part="input"]{
 width:6rem;font:inherit;font-size:0.8125rem;text-align:right;color:inherit;
 padding:0.1875rem 0.375rem;border-radius:0.375rem;
-border:1px solid var(--vibeui-datagrid-021-border);background:var(--vibeui-datagrid-021-bg);
+border:1px solid var(--vibeui-datagrid-021-border);background:transparent;
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="datagrid-021"] [data-part="input"]:focus-visible{outline:2px solid var(--vibeui-datagrid-021-accent);outline-offset:1px}
 [data-vibeui-block="datagrid-021"] td[data-changed="true"]{background:var(--vibeui-datagrid-021-dirty)}
-[data-vibeui-block="datagrid-021"] td[data-changed="true"] [data-part="input"]{border-color:oklch(0.62 0.14 85)}
+[data-vibeui-block="datagrid-021"] td[data-changed="true"] [data-part="input"]{border-color:var(--vibeui-datagrid-021-dirty-line)}
 [data-vibeui-block="datagrid-021"] [data-part="log"]{
 margin:0;padding:0.625rem 0.875rem 0.75rem;border-top:1px solid var(--vibeui-datagrid-021-border);
-background:oklch(0.985 0.004 285);font-size:0.75rem;
+background:var(--vibeui-datagrid-021-panel);font-size:0.75rem;
 }
 [data-vibeui-block="datagrid-021"] [data-part="log"] h4{margin:0 0 0.375rem;font-size:0.6875rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--vibeui-datagrid-021-muted)}
 [data-vibeui-block="datagrid-021"] [data-part="entry"]{
@@ -138,10 +168,37 @@ const DEFAULT_ROWS: Datagrid021Row[] = [
 
 type Draft = Record<string, number>
 
-const FIELDS = [
-  { key: "quantity" as const, label: "Количество" },
-  { key: "price" as const, label: "Цена" },
-]
+const FIELDS = ["quantity", "price"] as const
+
+const COLUMN_TEXT: Record<string, string> = {
+  position: "Позиция",
+  unit: "Ед.",
+  quantity: "Количество",
+  price: "Цена",
+  total: "Стоимость, ₽",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Сетка с пакетной правкой: все числовые ячейки редактируются разом,
@@ -151,19 +208,48 @@ export function Datagrid021({
   rows = DEFAULT_ROWS,
   caption = "Правки копятся в черновике и уезжают одним сохранением",
   editLabel = "Режим правки",
+  heading = "Спецификация заказа",
+  noEditsText = "Несохранённых правок нет",
+  editsTemplate = "Несохранённых правок: {count}",
+  revertAllText = "Отменить всё",
+  saveAllText = "Сохранить всё",
+  columnText = COLUMN_TEXT,
+  cellLabel = "{field}, {position}",
+  logText = "Журнал правок",
+  undoText = "Вернуть",
+  undoLabel = "Отменить правку «{field}» в позиции «{position}»",
+  scrollLabel = "Таблица спецификации, прокручивается вбок",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Datagrid021Props) {
-  const [base, setBase] = useState(rows)
+  // Сохранённые правки живут рядом с пропом, а не вместо него: смена rows
+  // снаружи обязана переставить таблицу, иначе проп сработал бы один раз.
+  const [saved, setSaved] = useState<Datagrid021Row[] | null>(null)
+  const [seed, setSeed] = useState(rows)
   const [draft, setDraft] = useState<Draft>({})
   const [editing, setEditing] = useState(true)
 
+  if (seed !== rows) {
+    setSeed(rows)
+    setSaved(null)
+    setDraft({})
+  }
+
+  const base = saved ?? rows
   const entries = Object.entries(draft)
+  const fieldText = (key: string) => columnText[key] ?? COLUMN_TEXT[key]
 
   const palette = {
     ...(accent ? { "--vibeui-datagrid-021-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-021-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -185,11 +271,11 @@ export function Datagrid021({
         style={palette}
       >
         <div data-part="bar">
-          <h3 data-part="title">Спецификация заказа</h3>
+          <h3 data-part="title">{heading}</h3>
           <p data-part="count" role="status" aria-live="polite">
             {entries.length === 0
-              ? "Несохранённых правок нет"
-              : `Несохранённых правок: ${entries.length}`}
+              ? noEditsText
+              : editsTemplate.replace("{count}", String(entries.length))}
           </p>
           <button
             type="button"
@@ -203,15 +289,15 @@ export function Datagrid021({
             disabled={entries.length === 0}
             onClick={() => setDraft({})}
           >
-            Отменить всё
+            {revertAllText}
           </button>
           <button
             type="button"
             data-part="primary"
             disabled={entries.length === 0}
             onClick={() => {
-              setBase((current) =>
-                current.map((row) => ({
+              setSaved((current) =>
+                (current ?? rows).map((row) => ({
                   ...row,
                   quantity: valueOf(row, "quantity"),
                   price: valueOf(row, "price"),
@@ -220,28 +306,30 @@ export function Datagrid021({
               setDraft({})
             }}
           >
-            Сохранить всё
+            {saveAllText}
           </button>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица спецификации, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
             <caption>{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Позиция</th>
-                <th scope="col">Ед.</th>
+                <th scope="col">
+                  {columnText.position ?? COLUMN_TEXT.position}
+                </th>
+                <th scope="col">{columnText.unit ?? COLUMN_TEXT.unit}</th>
                 {FIELDS.map((field) => (
-                  <th key={field.key} scope="col" data-align="end">
-                    {field.label}
+                  <th key={field} scope="col" data-align="end">
+                    {fieldText(field)}
                   </th>
                 ))}
                 <th scope="col" data-align="end">
-                  Стоимость, ₽
+                  {columnText.total ?? COLUMN_TEXT.total}
                 </th>
               </tr>
             </thead>
@@ -251,12 +339,12 @@ export function Datagrid021({
                   <th scope="row">{row.position}</th>
                   <td>{row.unit}</td>
                   {FIELDS.map((field) => {
-                    const cell = `${row.id}:${field.key}`
+                    const cell = `${row.id}:${field}`
                     const changed = draft[cell] !== undefined
 
                     return (
                       <td
-                        key={field.key}
+                        key={field}
                         data-align="end"
                         data-changed={changed ? "true" : undefined}
                       >
@@ -265,18 +353,17 @@ export function Datagrid021({
                             data-part="input"
                             type="number"
                             min={0}
-                            value={valueOf(row, field.key)}
-                            aria-label={`${field.label}, ${row.position}`}
+                            value={valueOf(row, field)}
+                            aria-label={cellLabel
+                              .replace("{field}", fieldText(field))
+                              .replace("{position}", row.position)}
                             onChange={(event) => {
                               const next = Number(event.target.value)
 
                               setDraft((current) => {
                                 const copy = { ...current }
 
-                                if (
-                                  Number.isNaN(next) ||
-                                  next === row[field.key]
-                                ) {
+                                if (Number.isNaN(next) || next === row[field]) {
                                   delete copy[cell]
                                 } else {
                                   copy[cell] = next
@@ -287,7 +374,7 @@ export function Datagrid021({
                             }}
                           />
                         ) : (
-                          valueOf(row, field.key).toLocaleString("ru-RU")
+                          valueOf(row, field).toLocaleString("ru-RU")
                         )}
                       </td>
                     )
@@ -304,11 +391,11 @@ export function Datagrid021({
         </div>
         {entries.length > 0 ? (
           <div data-part="log">
-            <h4>Журнал правок</h4>
+            <h4>{logText}</h4>
             {entries.map(([cell, next]) => {
               const [rowId, key] = cell.split(":")
               const row = base.find((item) => item.id === rowId)
-              const field = FIELDS.find((item) => item.key === key)
+              const field = FIELDS.find((item) => item === key)
 
               if (!row || !field) {
                 return null
@@ -317,17 +404,19 @@ export function Datagrid021({
               return (
                 <p key={cell} data-part="entry">
                   <span>
-                    {row.position} · {field.label}
+                    {row.position} · {fieldText(field)}
                   </span>
                   <span data-part="was">
-                    {row[field.key].toLocaleString("ru-RU")}
+                    {row[field].toLocaleString("ru-RU")}
                   </span>
                   <span aria-hidden="true">→</span>
                   <span data-part="now">{next.toLocaleString("ru-RU")}</span>
                   <button
                     type="button"
                     data-part="undo"
-                    aria-label={`Отменить правку «${field.label}» в позиции «${row.position}»`}
+                    aria-label={undoLabel
+                      .replace("{field}", fieldText(field))
+                      .replace("{position}", row.position)}
                     onClick={() =>
                       setDraft((current) => {
                         const copy = { ...current }
@@ -337,7 +426,7 @@ export function Datagrid021({
                       })
                     }
                   >
-                    Вернуть
+                    {undoText}
                   </button>
                 </p>
               )

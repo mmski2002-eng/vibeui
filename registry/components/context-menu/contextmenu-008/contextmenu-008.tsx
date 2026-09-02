@@ -19,6 +19,16 @@ export type Contextmenu008Props = Omit<
 > & {
   hint?: string
   items?: Contextmenu008Item[]
+  /** Доступное имя блока для скринридера. */
+  sectionLabel?: string
+  /** Замечание про телефон под холстом. */
+  touchNote?: string
+  /** Подпись кнопки-дублёра. */
+  actionLabel?: string
+  /** Доступное имя открытого меню. */
+  menuLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -29,12 +39,16 @@ export type Contextmenu008Props = Omit<
 // пользователь однажды уходит на клавиатуру. Долгое нажатие открывает то же меню.
 const STYLES = `
 :where([data-vibeui-block="contextmenu-008"]){
---vibeui-contextmenu-008-bg:oklch(1 0 0);
---vibeui-contextmenu-008-fg:oklch(0.24 0.014 265);
---vibeui-contextmenu-008-muted:oklch(0.55 0.014 265);
---vibeui-contextmenu-008-border:oklch(0.9 0.006 265);
---vibeui-contextmenu-008-hover:oklch(0.96 0.004 265);
---vibeui-contextmenu-008-accent:oklch(0.55 0.19 320);
+--vibeui-contextmenu-008-bg:transparent;
+--vibeui-contextmenu-008-surface:light-dark(oklch(1 0 0),oklch(0.24 0.013 265));
+--vibeui-contextmenu-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-contextmenu-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-contextmenu-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-contextmenu-008-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.014 265));
+--vibeui-contextmenu-008-accent:light-dark(oklch(0.55 0.19 320),oklch(0.76 0.15 320));
+--vibeui-contextmenu-008-shadow:light-dark(oklch(0.2 0.03 265 / 50%),oklch(0 0 0 / 72%));
+--vibeui-contextmenu-008-lift:light-dark(oklch(0.2 0.03 265 / 60%),oklch(0 0 0 / 76%));
+--vibeui-contextmenu-008-lift-strong:light-dark(oklch(0.2 0.03 265 / 70%),oklch(0 0 0 / 84%));
 --vibeui-contextmenu-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-contextmenu-008-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
 --vibeui-contextmenu-008-x:50%;
@@ -61,9 +75,9 @@ touch-action:manipulation;
 [data-vibeui-block="contextmenu-008"] [data-part="badge"]{
 display:inline-flex;align-items:center;gap:0.375rem;
 padding:0.3125rem 0.625rem;border-radius:9999px;
-background:var(--vibeui-contextmenu-008-bg);
+background:var(--vibeui-contextmenu-008-surface);
 border:1px solid var(--vibeui-contextmenu-008-border);
-box-shadow:0 8px 20px -12px oklch(0.2 0.03 265 / 60%);
+box-shadow:0 8px 20px -12px var(--vibeui-contextmenu-008-lift);
 font-size:0.75rem;font-weight:600;color:var(--vibeui-contextmenu-008-fg);
 animation:vibeui-contextmenu-008-pulse 2.4s ease-in-out infinite;
 }
@@ -72,8 +86,8 @@ animation:vibeui-contextmenu-008-pulse 2.4s ease-in-out infinite;
 width:0.875rem;height:0.875rem;color:var(--vibeui-contextmenu-008-accent);
 }
 @keyframes vibeui-contextmenu-008-pulse{
-0%,100%{transform:translateY(0);box-shadow:0 8px 20px -12px oklch(0.2 0.03 265 / 60%)}
-50%{transform:translateY(-0.1875rem);box-shadow:0 14px 26px -14px oklch(0.2 0.03 265 / 70%)}
+0%,100%{transform:translateY(0);box-shadow:0 8px 20px -12px var(--vibeui-contextmenu-008-lift)}
+50%{transform:translateY(-0.1875rem);box-shadow:0 14px 26px -14px var(--vibeui-contextmenu-008-lift-strong)}
 }
 [data-vibeui-block="contextmenu-008"] [data-part="row"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
@@ -83,7 +97,7 @@ display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
 appearance:none;cursor:pointer;flex:none;
 height:1.875rem;padding:0 0.75rem;
 border:1px solid var(--vibeui-contextmenu-008-border);border-radius:0.5rem;
-background:var(--vibeui-contextmenu-008-bg);color:inherit;font:inherit;font-size:0.75rem;font-weight:600;
+background:none;color:inherit;font:inherit;font-size:0.75rem;font-weight:600;
 }
 [data-vibeui-block="contextmenu-008"] [data-part="fallback"]:hover{background:var(--vibeui-contextmenu-008-hover)}
 [data-vibeui-block="contextmenu-008"] [data-part="fallback"]:focus-visible{outline:2px solid var(--vibeui-contextmenu-008-accent);outline-offset:2px}
@@ -91,9 +105,9 @@ background:var(--vibeui-contextmenu-008-bg);color:inherit;font:inherit;font-size
 position:fixed;margin:0;padding:0.3125rem;
 top:var(--vibeui-contextmenu-008-y);left:var(--vibeui-contextmenu-008-x);
 min-width:13rem;box-sizing:border-box;
-background:var(--vibeui-contextmenu-008-bg);color:var(--vibeui-contextmenu-008-fg);
+background:var(--vibeui-contextmenu-008-surface);color:var(--vibeui-contextmenu-008-fg);
 border:1px solid var(--vibeui-contextmenu-008-border);border-radius:0.75rem;
-box-shadow:0 18px 40px -20px oklch(0.2 0.03 265 / 50%);
+box-shadow:0 18px 40px -20px var(--vibeui-contextmenu-008-shadow);
 font-family:var(--vibeui-contextmenu-008-font);
 }
 [data-vibeui-block="contextmenu-008"] [data-part="item"]{
@@ -127,12 +141,39 @@ const DEFAULT_ITEMS: Contextmenu008Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Контекстное меню с сочетаниями клавиш и подсказкой о правом клике.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Contextmenu008({
   hint = "Правый клик по холсту",
   items = DEFAULT_ITEMS,
+  sectionLabel = "Холст с контекстным меню",
+  touchNote = "на телефоне — долгое нажатие",
+  actionLabel = "Открыть меню",
+  menuLabel = "Правка",
+  background = "",
   accent,
   className,
   style,
@@ -170,6 +211,12 @@ export function Contextmenu008({
 
   const palette = {
     ...(accent ? { "--vibeui-contextmenu-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-contextmenu-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...(spot
       ? {
           "--vibeui-contextmenu-008-x": spot.x,
@@ -188,7 +235,7 @@ export function Contextmenu008({
         {...props}
         data-vibeui-block="contextmenu-008"
         data-used={used || undefined}
-        aria-label="Холст с контекстным меню"
+        aria-label={sectionLabel}
         className={className}
         style={palette}
       >
@@ -220,7 +267,7 @@ export function Contextmenu008({
           </span>
         </div>
         <div data-part="row">
-          <span data-part="note">на телефоне — долгое нажатие</span>
+          <span data-part="note">{touchNote}</span>
           <button
             type="button"
             data-part="fallback"
@@ -230,7 +277,7 @@ export function Contextmenu008({
               openAt(box.left, box.bottom + 6)
             }}
           >
-            Открыть меню
+            {actionLabel}
           </button>
         </div>
         <div
@@ -238,7 +285,7 @@ export function Contextmenu008({
           data-part="menu"
           popover="auto"
           role="menu"
-          aria-label="Правка"
+          aria-label={menuLabel}
           onKeyDown={(event) => {
             if (event.key !== "ArrowDown" && event.key !== "ArrowUp") {
               return

@@ -16,6 +16,10 @@ export type Radio011Props = Omit<
   slots?: Radio011Slot[]
   name?: string
   defaultValue?: string
+  /** Что стоит вместо цены у занятого слота. */
+  busyLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,15 +27,17 @@ export type Radio011Props = Omit<
 // принимают в два взгляда, день и время, а не читая дату в каждой строке.
 // Группировка считается один раз при рендере из плоского массива, разметка
 // остаётся одной radio-группой с общим name на все дни и слоты.
+//
+// Тема берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="radio-011"]){
---vibeui-radio-011-bg:oklch(1 0 0);
---vibeui-radio-011-card:oklch(0.99 0.002 265);
---vibeui-radio-011-fg:oklch(0.22 0.014 265);
---vibeui-radio-011-muted:oklch(0.55 0.014 265);
---vibeui-radio-011-border:oklch(0.9 0.006 265);
---vibeui-radio-011-accent:oklch(0.58 0.17 40);
---vibeui-radio-011-tint:oklch(0.58 0.17 40 / 8%);
+--vibeui-radio-011-bg:transparent;
+--vibeui-radio-011-card:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.008 265));
+--vibeui-radio-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-011-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-radio-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-radio-011-accent:light-dark(oklch(0.58 0.17 40),oklch(0.76 0.14 40));
+--vibeui-radio-011-tint:light-dark(oklch(0.58 0.17 40 / 8%),oklch(0.76 0.14 40 / 16%));
 --vibeui-radio-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="radio-011"]{
@@ -119,6 +125,28 @@ function groupByDay(slots: Radio011Slot[]) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор слота доставки: слоты сгруппированы по дню, недоступные погашены.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -127,6 +155,8 @@ export function Radio011({
   slots = DEFAULT_SLOTS,
   name = "vibeui-radio-011",
   defaultValue = "tomorrow-1",
+  busyLabel = "занято",
+  background = "",
   accent,
   className,
   style,
@@ -134,6 +164,12 @@ export function Radio011({
 }: Radio011Props) {
   const palette = {
     ...(accent ? { "--vibeui-radio-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-radio-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -164,7 +200,7 @@ export function Radio011({
                   />
                   <span data-part="time">{slot.time}</span>
                   <span data-part="price">
-                    {slot.disabled ? "занято" : slot.price}
+                    {slot.disabled ? busyLabel : slot.price}
                   </span>
                 </label>
               ))}

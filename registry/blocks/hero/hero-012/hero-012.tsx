@@ -10,6 +10,8 @@ export type Hero012Props = {
   secondary?: { label: string; href: string }
   release?: { date: string; version: string; items: string[] }
   accent?: string
+  /** Пусто — подложки нет, секция ложится на фон страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -21,13 +23,13 @@ export type Hero012Props = {
 // «новое» повисает обещанием. Стрелка сдвигается на hover, но только у ссылки.
 const STYLES = `
 :where([data-vibeui-block="hero-012"]){
---vibeui-hero-012-bg:oklch(0.985 0.003 265);
---vibeui-hero-012-fg:oklch(0.2 0.012 265);
---vibeui-hero-012-muted:oklch(0.51 0.012 265);
---vibeui-hero-012-card:oklch(1 0 0);
---vibeui-hero-012-line:oklch(0.9 0.006 265);
---vibeui-hero-012-accent:oklch(0.55 0.2 300);
---vibeui-hero-012-accent-fg:oklch(0.99 0 0);
+--vibeui-hero-012-bg:transparent;
+--vibeui-hero-012-fg:light-dark(oklch(0.2 0.012 265),oklch(0.96 0.004 265));
+--vibeui-hero-012-muted:light-dark(oklch(0.51 0.012 265),oklch(0.72 0.012 265));
+--vibeui-hero-012-card:light-dark(oklch(1 0 0),oklch(0.235 0.012 265));
+--vibeui-hero-012-line:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.011 265));
+--vibeui-hero-012-accent:light-dark(oklch(0.55 0.2 300),oklch(0.73 0.17 300));
+--vibeui-hero-012-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 300));
 --vibeui-hero-012-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-hero-012-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;
@@ -106,6 +108,28 @@ const DEFAULT_RELEASE = {
   ],
 }
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлый фон достался бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Hero с бейджем «новое»: анонс-ссылка сверху и карточка релиза снизу. */
 export function Hero012({
   badge = "Новое",
@@ -117,11 +141,18 @@ export function Hero012({
   secondary = { label: "Список изменений", href: "#" },
   release = DEFAULT_RELEASE,
   accent,
+  background = "",
   className,
   style,
 }: Hero012Props) {
   const palette = {
     ...(accent ? { "--vibeui-hero-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-hero-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

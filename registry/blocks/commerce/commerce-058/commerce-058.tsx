@@ -30,7 +30,14 @@ export type Commerce058Props = {
   modules?: Commerce058Module[]
   openFirst?: boolean
   guarantee?: string
+  accessLabel?: string
+  /** Число уроков в модуле: {count} подставляется числом. */
+  lessonsCountTemplate?: string
+  /** Старая цена: {price} подставляется зачёркнутой суммой. */
+  oldPriceTemplate?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -44,13 +51,14 @@ export type Commerce058Props = {
 // именно с них начинают знакомство с курсом.
 const STYLES = `
 :where([data-vibeui-block="commerce-058"]){
---vibeui-commerce-058-bg:oklch(1 0 0);
---vibeui-commerce-058-fg:oklch(0.2 0.014 260);
---vibeui-commerce-058-muted:oklch(0.53 0.016 260);
---vibeui-commerce-058-border:oklch(0.9 0.008 260);
---vibeui-commerce-058-soft:oklch(0.973 0.006 260);
---vibeui-commerce-058-accent:oklch(0.5 0.16 265);
---vibeui-commerce-058-free:oklch(0.47 0.12 150);
+--vibeui-commerce-058-bg:transparent;
+--vibeui-commerce-058-fg:light-dark(oklch(0.2 0.014 260),oklch(0.94 0.006 260));
+--vibeui-commerce-058-muted:light-dark(oklch(0.53 0.016 260),oklch(0.73 0.013 260));
+--vibeui-commerce-058-border:light-dark(oklch(0.9 0.008 260),oklch(0.38 0.014 260));
+--vibeui-commerce-058-soft:light-dark(oklch(0.973 0.006 260),oklch(0.27 0.012 260));
+--vibeui-commerce-058-accent:light-dark(oklch(0.5 0.16 265),oklch(0.74 0.14 265));
+--vibeui-commerce-058-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.04 265));
+--vibeui-commerce-058-free:light-dark(oklch(0.47 0.12 150),oklch(0.72 0.13 152));
 --vibeui-commerce-058-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -81,7 +89,7 @@ display:flex;gap:0.75rem;align-items:baseline;
 [data-vibeui-block="commerce-058"] summary:focus-visible{outline:2px solid var(--vibeui-commerce-058-accent);outline-offset:2px}
 [data-vibeui-block="commerce-058"] [data-part="num"]{
 flex:none;width:1.5rem;height:1.5rem;border-radius:0.5rem;display:flex;align-items:center;justify-content:center;
-background:var(--vibeui-commerce-058-accent);color:oklch(0.99 0 0);font-size:0.6875rem;font-weight:750;
+background:var(--vibeui-commerce-058-accent);color:var(--vibeui-commerce-058-onaccent);font-size:0.6875rem;font-weight:750;
 font-variant-numeric:tabular-nums;align-self:center;
 }
 [data-vibeui-block="commerce-058"] [data-part="mtitle"]{flex:1;min-width:0;font-size:0.9375rem;font-weight:650}
@@ -96,7 +104,7 @@ border-top:1px solid var(--vibeui-commerce-058-border);
 [data-vibeui-block="commerce-058"] [data-part="llength"]{flex:none;font-variant-numeric:tabular-nums;color:var(--vibeui-commerce-058-muted)}
 [data-vibeui-block="commerce-058"] [data-part="free"]{
 flex:none;display:inline-flex;align-items:center;height:1.25rem;padding:0 0.4375rem;border-radius:0.375rem;
-background:var(--vibeui-commerce-058-free);color:oklch(0.99 0 0);font-size:0.625rem;font-weight:700;
+background:var(--vibeui-commerce-058-free);color:var(--vibeui-commerce-058-onaccent);font-size:0.625rem;font-weight:700;
 letter-spacing:0.04em;text-transform:uppercase;
 }
 [data-vibeui-block="commerce-058"] [data-part="panel"]{
@@ -108,7 +116,7 @@ background:var(--vibeui-commerce-058-soft);
 [data-vibeui-block="commerce-058"] [data-part="old"] s{text-decoration-thickness:1px}
 [data-vibeui-block="commerce-058"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;width:100%;height:2.875rem;margin-top:0.875rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-058-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-058-accent);color:var(--vibeui-commerce-058-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-058"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-commerce-058-accent);outline-offset:2px}
 [data-vibeui-block="commerce-058"] [data-part="author"]{display:flex;gap:0.75rem;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--vibeui-commerce-058-border)}
@@ -124,6 +132,28 @@ background:linear-gradient(140deg,oklch(0.9 0.06 265),oklch(0.76 0.12 285));
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-058"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_MODULES: Commerce058Module[] = [
   {
@@ -198,12 +228,24 @@ export function Commerce058({
   modules = DEFAULT_MODULES,
   openFirst = true,
   guarantee = "Первые семь дней возвращаем деньги без вопросов — даже если вы прошли половину курса.",
+  accessLabel = "Доступ навсегда",
+  lessonsCountTemplate = "{count} уроков",
+  oldPriceTemplate = "вместо {price}",
   accent,
+  background = "",
   className,
   style,
 }: Commerce058Props) {
+  const [beforeOldPrice, afterOldPrice] = oldPriceTemplate.split("{price}")
+
   const palette = {
     ...(accent ? { "--vibeui-commerce-058-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-058-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -226,7 +268,7 @@ export function Commerce058({
             <ul data-part="chips">
               <li data-part="chip">{level}</li>
               <li data-part="chip">{total}</li>
-              <li data-part="chip">Доступ навсегда</li>
+              <li data-part="chip">{accessLabel}</li>
             </ul>
 
             <h3>{syllabusTitle}</h3>
@@ -241,7 +283,10 @@ export function Commerce058({
                         <span data-part="msummary">{module.summary}</span>
                       </span>
                       <span data-part="mcount">
-                        {module.lessons.length} уроков
+                        {lessonsCountTemplate.replace(
+                          "{count}",
+                          String(module.lessons.length),
+                        )}
                       </span>
                     </summary>
                     <ol>
@@ -264,7 +309,9 @@ export function Commerce058({
           <aside data-part="panel">
             <p data-part="price">{price}</p>
             <p data-part="old">
-              вместо <s>{oldPrice}</s>
+              {beforeOldPrice}
+              <s>{oldPrice}</s>
+              {afterOldPrice}
             </p>
             <button type="button" data-part="go">
               {cta}

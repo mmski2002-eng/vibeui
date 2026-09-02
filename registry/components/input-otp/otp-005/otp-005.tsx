@@ -15,7 +15,11 @@ export type Otp005Props = Omit<
   label?: string
   groups?: number[]
   hint?: string
+  /** Подпись клетки для screen reader: {index} — номер, {total} — всего. */
+  digitLabel?: string
   onChange?: (code: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,19 +30,20 @@ export type Otp005Props = Omit<
 // поэтому «3-3», «2-2-2» и «4-4» — один и тот же компонент.
 const STYLES = `
 :where([data-vibeui-block="otp-005"]){
---vibeui-otp-005-surface:oklch(1 0 0);
---vibeui-otp-005-shell:oklch(0.91 0.006 265);
---vibeui-otp-005-fg:oklch(0.21 0.014 265);
---vibeui-otp-005-muted:oklch(0.56 0.014 265);
---vibeui-otp-005-field:oklch(0.98 0.002 265);
---vibeui-otp-005-border:oklch(0.87 0.008 265);
---vibeui-otp-005-accent:oklch(0.5 0.15 160);
+--vibeui-otp-005-bg:transparent;
+--vibeui-otp-005-surface:light-dark(oklch(1 0 0),oklch(0.31 0.014 265));
+--vibeui-otp-005-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-otp-005-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-otp-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-otp-005-field:light-dark(oklch(0.98 0.002 265),oklch(0.25 0.014 265));
+--vibeui-otp-005-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-otp-005-accent:light-dark(oklch(0.5 0.15 160),oklch(0.74 0.14 160));
 --vibeui-otp-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="otp-005"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
-background:var(--vibeui-otp-005-surface);
+background:var(--vibeui-otp-005-bg);
 border:1px solid var(--vibeui-otp-005-shell);border-radius:0.875rem;
 font-family:var(--vibeui-otp-005-font);color:var(--vibeui-otp-005-fg);
 }
@@ -79,6 +84,28 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-otp-005-muted);
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Код подтверждения группами через дефис: так его диктуют и так печатают в письме.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -86,7 +113,9 @@ export function Otp005({
   label = "Код из письма",
   groups = [3, 3],
   hint = "Дефис ставить не нужно — он нарисован, а не набирается.",
+  digitLabel = "Цифра {index} из {total}",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -99,8 +128,19 @@ export function Otp005({
 
   const palette = {
     ...(accent ? { "--vibeui-otp-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-otp-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const digitName = (index: number) =>
+    digitLabel
+      .replace("{index}", String(index + 1))
+      .replace("{total}", String(size))
 
   const push = (next: string[]) => {
     setCode(next)
@@ -186,7 +226,7 @@ export function Otp005({
                         maxLength={1}
                         placeholder=" "
                         value={code[index]}
-                        aria-label={`Цифра ${index + 1} из ${size}`}
+                        aria-label={digitName(index)}
                         aria-describedby={`${id}-hint`}
                         onChange={(event) => type(index, event.target.value)}
                         onPaste={paste}

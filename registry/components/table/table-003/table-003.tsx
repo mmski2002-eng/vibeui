@@ -16,6 +16,13 @@ export type Table003Props = Omit<
   taxRate?: number
   currency?: string
   caption?: string
+  /** Подписи колонок: компонент несёт русские, проект подставляет свои. */
+  headingText?: Record<string, string>
+  /** Строка налога; {rate} подставляет ставку. */
+  taxText?: string
+  totalText?: string
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,14 +30,17 @@ export type Table003Props = Omit<
 // итога стоит в <tfoot> и липнет к низу обёртки, суммы идут моноширинными
 // цифрами по правому краю, а сам итог считается из строк, а не задаётся
 // отдельным пропом — разойтись они не могут.
+//
+// Тема берётся из color-scheme окружения через light-dark(): счёт темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-003"]){
---vibeui-table-003-fg:oklch(0.24 0.016 265);
---vibeui-table-003-muted:oklch(0.54 0.014 265);
---vibeui-table-003-bg:oklch(1 0 0);
---vibeui-table-003-foot:oklch(0.975 0.003 265);
---vibeui-table-003-border:oklch(0.91 0.006 265);
---vibeui-table-003-accent:oklch(0.55 0.2 262);
+--vibeui-table-003-fg:light-dark(oklch(0.24 0.016 265),oklch(0.93 0.006 265));
+--vibeui-table-003-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-table-003-bg:transparent;
+--vibeui-table-003-foot:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.012 265));
+--vibeui-table-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-table-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
 --vibeui-table-003-radius:0.75rem;
 --vibeui-table-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -91,6 +101,34 @@ const DEFAULT_LINES: Table003Line[] = [
   { title: "Домен .ru", hint: "Продление на год", quantity: 1, amount: 890 },
 ]
 
+const HEADING_TEXT: Record<string, string> = {
+  title: "Позиция",
+  quantity: "Кол-во",
+  amount: "Сумма",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Пробел вместо разделителя тысяч и запятая в дробной части — как в рублях. */
 function formatAmount(value: number, currency: string) {
   const rounded = Math.round(value * 100) / 100
@@ -109,6 +147,10 @@ export function Table003({
   taxRate = 20,
   currency = "₽",
   caption = "Счёт на оплату",
+  headingText = HEADING_TEXT,
+  taxText = "НДС {rate} %",
+  totalText = "Итого",
+  background = "",
   accent,
   className,
   style,
@@ -116,6 +158,12 @@ export function Table003({
 }: Table003Props) {
   const palette = {
     ...(accent ? { "--vibeui-table-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-table-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -138,12 +186,12 @@ export function Table003({
           {caption ? <caption>{caption}</caption> : null}
           <thead>
             <tr>
-              <th scope="col">Позиция</th>
+              <th scope="col">{headingText.title ?? HEADING_TEXT.title}</th>
               <th scope="col" data-numeric="true">
-                Кол-во
+                {headingText.quantity ?? HEADING_TEXT.quantity}
               </th>
               <th scope="col" data-numeric="true">
-                Сумма
+                {headingText.amount ?? HEADING_TEXT.amount}
               </th>
             </tr>
           </thead>
@@ -165,7 +213,7 @@ export function Table003({
             {taxRate > 0 ? (
               <tr>
                 <td colSpan={2} data-part="sub">
-                  НДС {taxRate} %
+                  {taxText.replace("{rate}", String(taxRate))}
                 </td>
                 <td data-numeric="true" data-part="sub">
                   {formatAmount(tax, currency)}
@@ -174,7 +222,7 @@ export function Table003({
             ) : null}
             <tr>
               <td colSpan={2} data-part="total">
-                Итого
+                {totalText}
               </td>
               <td data-numeric="true" data-part="total">
                 {formatAmount(total, currency)}

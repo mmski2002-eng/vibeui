@@ -12,6 +12,14 @@ export type Input020Props = Omit<
   defaultValue?: string
   taken?: string[]
   onChange?: (slug: string) => void
+  /** Подсказка в пустом поле. */
+  placeholder?: string
+  /** Бейдж состояния: ключи idle, checking, taken, free. */
+  badgeText?: Record<string, string>
+  /** Строка под полем: ключи idle, checking, taken, free. */
+  noteText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,16 +30,16 @@ export type Input020Props = Omit<
 // с подписью одним словом, а не тремя значками внутри рамки.
 const STYLES = `
 :where([data-vibeui-block="input-020"]){
---vibeui-input-020-surface:oklch(1 0 0);
---vibeui-input-020-shell:oklch(0.91 0.006 265);
---vibeui-input-020-fg:oklch(0.23 0.014 265);
---vibeui-input-020-muted:oklch(0.56 0.014 265);
---vibeui-input-020-field:oklch(0.985 0.002 265);
---vibeui-input-020-border:oklch(0.88 0.008 265);
---vibeui-input-020-chip:oklch(0.95 0.005 265);
---vibeui-input-020-accent:oklch(0.55 0.17 265);
---vibeui-input-020-bad:oklch(0.55 0.2 25);
---vibeui-input-020-ok:oklch(0.48 0.13 155);
+--vibeui-input-020-surface:transparent;
+--vibeui-input-020-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-input-020-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-020-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-input-020-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.011 265));
+--vibeui-input-020-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.013 265));
+--vibeui-input-020-chip:light-dark(oklch(0.95 0.005 265),oklch(0.33 0.011 265));
+--vibeui-input-020-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-input-020-bad:light-dark(oklch(0.55 0.2 25),oklch(0.73 0.16 25));
+--vibeui-input-020-ok:light-dark(oklch(0.48 0.13 155),oklch(0.76 0.13 155));
 --vibeui-input-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-020"]{
@@ -117,6 +125,28 @@ const BADGE: Record<string, string> = {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поле адреса рабочего пространства: проверка занятости с бейджем и живым
  * превью итоговой ссылки. Один файл, ноль зависимостей, собственная палитра.
  */
@@ -126,6 +156,10 @@ export function Input020({
   defaultValue = "acme-studio",
   taken = TAKEN,
   onChange,
+  placeholder = "acme-studio",
+  badgeText = BADGE,
+  noteText = NOTE,
+  background = "",
   accent,
   className,
   style,
@@ -161,6 +195,12 @@ export function Input020({
 
   const palette = {
     ...(accent ? { "--vibeui-input-020-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-020-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -178,7 +218,7 @@ export function Input020({
       >
         <div data-part="head">
           <label htmlFor={id}>{label}</label>
-          <span data-part="badge">{BADGE[state]}</span>
+          <span data-part="badge">{badgeText[state] ?? BADGE[state]}</span>
         </div>
         <span data-part="frame">
           <span data-part="prefix" aria-hidden="true">
@@ -190,7 +230,7 @@ export function Input020({
             inputMode="text"
             autoComplete="off"
             spellCheck={false}
-            placeholder="acme-studio"
+            placeholder={placeholder}
             value={slug}
             aria-invalid={state === "taken"}
             aria-describedby={`${id}-note`}
@@ -206,7 +246,7 @@ export function Input020({
             {prefix}
             {slug || "…"}
           </b>{" "}
-          — {NOTE[state]}
+          — {noteText[state] ?? NOTE[state]}
         </p>
       </div>
     </>

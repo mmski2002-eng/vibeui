@@ -9,6 +9,11 @@ export type Frame015Props = Omit<
   duration?: string
   progress?: number
   caption?: string
+  /** Надпись пустой обложки: компонент несёт русскую. */
+  posterStub?: string
+  accent?: string
+  /** Пусто — подложки нет, кадр ложится на фон страницы. */
+  background?: string
   children?: ReactNode
 }
 
@@ -19,13 +24,13 @@ export type Frame015Props = Omit<
 // инлайн-стиль в файле: процент приходит из пропа и не выражается классом.
 const STYLES = `
 :where([data-vibeui-block="frame-015"]){
---vibeui-frame-015-bg:oklch(1 0 0);
+--vibeui-frame-015-bg:transparent;
 --vibeui-frame-015-poster:oklch(0.24 0.02 265);
---vibeui-frame-015-fg:oklch(0.24 0.014 265);
---vibeui-frame-015-muted:oklch(0.55 0.014 265);
---vibeui-frame-015-border:oklch(0.89 0.006 265);
+--vibeui-frame-015-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-frame-015-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-frame-015-border:light-dark(oklch(0.89 0.006 265),oklch(0.4 0.011 265));
 --vibeui-frame-015-light:oklch(0.98 0.002 265);
---vibeui-frame-015-accent:oklch(0.7 0.16 45);
+--vibeui-frame-015-accent:light-dark(oklch(0.7 0.16 45),oklch(0.78 0.15 45));
 --vibeui-frame-015-radius:0.875rem;
 --vibeui-frame-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -103,6 +108,28 @@ font-size:0.75rem;line-height:1.4;color:var(--vibeui-frame-015-muted);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кадр видеоплеера: обложка, кнопка воспроизведения и дорожка времени
  * с пройденной долей. Один файл, ноль зависимостей, собственная палитра.
  */
@@ -112,12 +139,25 @@ export function Frame015({
   duration = "4:12",
   progress = 32,
   caption = "Кадр видеоплеера: обложка, кнопка воспроизведения и дорожка времени",
+  posterStub = "Обложка ролика",
+  accent,
+  background = "",
   children,
   className,
   style,
   ...props
 }: Frame015Props) {
   const fill = Math.min(100, Math.max(0, progress))
+  const palette = {
+    ...(accent ? { "--vibeui-frame-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-frame-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -128,12 +168,12 @@ export function Frame015({
         {...props}
         data-vibeui-block="frame-015"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="shell">
           <div data-part="stage">
             <div data-part="poster">
-              {children ?? <div data-part="stub">Обложка ролика</div>}
+              {children ?? <div data-part="stub">{posterStub}</div>}
             </div>
             <div data-part="scrim" aria-hidden="true" />
             <span data-part="play" aria-hidden="true">

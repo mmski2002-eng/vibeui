@@ -17,6 +17,18 @@ export type Number008Props = Omit<
   defaultValue?: number
   min?: number
   max?: number
+  /** Значок действующего шага. Подстановка: {step}. */
+  stepText?: string
+  /** Подпись точного шага в легенде. Подстановка: {step}. */
+  fineText?: string
+  /** Подпись крупного шага в легенде. Подстановка: {step}. */
+  bigText?: string
+  /** Строка про границы. Подстановки: {min}, {max}. */
+  boundsText?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,20 +38,25 @@ export type Number008Props = Omit<
 // Событие перехватывается и отменяется вручную: иначе браузер прибавит свой
 // step поверх нашего и значение прыгнет дважды. Подсказка с клавишами видна
 // всегда — скрытую горячую клавишу не находят.
+//
+// Тема берётся из color-scheme окружения через light-dark(): поле темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="number-008"]){
---vibeui-number-008-surface:oklch(1 0 0);
---vibeui-number-008-field:oklch(0.985 0.002 265);
---vibeui-number-008-shell:oklch(0.9 0.006 265);
---vibeui-number-008-fg:oklch(0.23 0.014 265);
---vibeui-number-008-muted:oklch(0.55 0.014 265);
---vibeui-number-008-border:oklch(0.88 0.008 265);
---vibeui-number-008-key:oklch(0.96 0.004 265);
---vibeui-number-008-accent:oklch(0.5 0.16 300);
+--vibeui-number-008-surface:transparent;
+--vibeui-number-008-field:light-dark(oklch(0.985 0.002 265),oklch(0.25 0.011 265));
+--vibeui-number-008-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-number-008-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-number-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-number-008-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-number-008-key:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.012 265));
+--vibeui-number-008-accent:light-dark(oklch(0.5 0.16 300),oklch(0.76 0.14 300));
+--vibeui-number-008-ring:light-dark(oklch(0.5 0.16 300 / 20%),oklch(0.76 0.14 300 / 30%));
+--vibeui-number-008-badge:light-dark(oklch(0.5 0.16 300 / 12%),oklch(0.76 0.14 300 / 20%));
 --vibeui-number-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-number-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="number-008"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -56,7 +73,7 @@ background:var(--vibeui-number-008-field);
 }
 [data-vibeui-block="number-008"] [data-part="field"]:focus-within{
 border-color:var(--vibeui-number-008-accent);
-box-shadow:0 0 0 2px oklch(0.5 0.16 300 / 20%);
+box-shadow:0 0 0 2px var(--vibeui-number-008-ring);
 }
 [data-vibeui-block="number-008"] input{
 flex:1 1 auto;min-width:0;width:100%;
@@ -70,7 +87,7 @@ font-variant-numeric:tabular-nums;
 /* Виден шаг, который сработает прямо сейчас: Shift переключает его на лету. */
 [data-vibeui-block="number-008"] [data-part="badge"]{
 flex:none;padding:0.1875rem 0.5rem;border-radius:9999px;
-background:oklch(0.5 0.16 300 / 12%);color:var(--vibeui-number-008-accent);
+background:var(--vibeui-number-008-badge);color:var(--vibeui-number-008-accent);
 font-size:0.75rem;font-weight:700;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="number-008"] [data-part="legend"]{
@@ -90,6 +107,28 @@ margin:0;font-size:0.75rem;color:var(--vibeui-number-008-muted);font-variant-num
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Число, где стрелки дают точный шаг, а Shift со стрелками — крупный.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -100,6 +139,12 @@ export function Number008({
   defaultValue = 2500,
   min = 0,
   max = 20000,
+  stepText = "шаг {step}",
+  fineText = "по {step}",
+  bigText = "+ стрелка по {step}",
+  boundsText = "от {min} до {max}",
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -126,6 +171,12 @@ export function Number008({
 
   const palette = {
     ...(accent ? { "--vibeui-number-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-number-008-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -166,19 +217,21 @@ export function Number008({
             }}
           />
           <span data-part="badge" aria-live="polite">
-            шаг {big ? bigStep : step}
+            {stepText.replace("{step}", String(big ? bigStep : step))}
           </span>
         </div>
         <p id={`${id}-legend`} data-part="legend">
           <kbd>↑</kbd>
           <kbd>↓</kbd>
-          <span>по {step}</span>
+          <span>{fineText.replace("{step}", String(step))}</span>
           <span aria-hidden="true">·</span>
           <kbd>Shift</kbd>
-          <span>+ стрелка по {bigStep}</span>
+          <span>{bigText.replace("{step}", String(bigStep))}</span>
         </p>
         <p data-part="bounds">
-          от {min.toLocaleString("ru-RU")} до {max.toLocaleString("ru-RU")}
+          {boundsText
+            .replace("{min}", min.toLocaleString(locale))
+            .replace("{max}", max.toLocaleString(locale))}
         </p>
       </div>
     </>

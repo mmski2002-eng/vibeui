@@ -36,9 +36,16 @@ export type Commerce053Props = {
   totalLabel?: string
   leadLabel?: string
   codeLabel?: string
+  extrasLegend?: string
+  baseLabel?: string
+  includedLabel?: string
+  /** Срок изготовления: {days} подставляется числом. */
+  daysTemplate?: string
   cta?: string
   note?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -51,12 +58,14 @@ export type Commerce053Props = {
 // собирается из значений опций — по нему заказ ищут в производстве.
 const STYLES = `
 :where([data-vibeui-block="commerce-053"]){
---vibeui-commerce-053-bg:oklch(1 0 0);
---vibeui-commerce-053-fg:oklch(0.21 0.014 90);
---vibeui-commerce-053-muted:oklch(0.53 0.016 90);
---vibeui-commerce-053-border:oklch(0.9 0.01 90);
---vibeui-commerce-053-soft:oklch(0.975 0.008 90);
---vibeui-commerce-053-accent:oklch(0.48 0.11 145);
+--vibeui-commerce-053-bg:transparent;
+--vibeui-commerce-053-fg:light-dark(oklch(0.21 0.014 90),oklch(0.94 0.006 90));
+--vibeui-commerce-053-muted:light-dark(oklch(0.53 0.016 90),oklch(0.73 0.013 90));
+--vibeui-commerce-053-border:light-dark(oklch(0.9 0.01 90),oklch(0.38 0.012 90));
+--vibeui-commerce-053-soft:light-dark(oklch(0.975 0.008 90),oklch(0.27 0.01 90));
+--vibeui-commerce-053-chip:light-dark(oklch(1 0 0),oklch(0.22 0.008 90));
+--vibeui-commerce-053-accent:light-dark(oklch(0.48 0.11 145),oklch(0.76 0.13 148));
+--vibeui-commerce-053-onaccent:light-dark(oklch(0.99 0 0),oklch(0.2 0.03 148));
 --vibeui-commerce-053-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -108,12 +117,12 @@ padding-top:0.75rem;border-top:1px solid var(--vibeui-commerce-053-border);
 [data-vibeui-block="commerce-053"] [data-part="meta"]{margin:0.625rem 0 0;font-size:0.8125rem;color:var(--vibeui-commerce-053-muted)}
 [data-vibeui-block="commerce-053"] [data-part="code"]{
 display:inline-block;margin-top:0.25rem;padding:0.1875rem 0.5rem;border-radius:0.375rem;
-background:var(--vibeui-commerce-053-bg);border:1px solid var(--vibeui-commerce-053-border);
+background:var(--vibeui-commerce-053-chip);border:1px solid var(--vibeui-commerce-053-border);
 font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:0.75rem;user-select:all;
 }
 [data-vibeui-block="commerce-053"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;width:100%;height:2.875rem;margin-top:0.875rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-053-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-053-accent);color:var(--vibeui-commerce-053-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-053"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-commerce-053-accent);outline-offset:2px}
 [data-vibeui-block="commerce-053"] [data-part="note"]{margin:0.75rem 0 0;font-size:0.75rem;line-height:1.5;color:var(--vibeui-commerce-053-muted)}
@@ -218,6 +227,28 @@ function money(value: number, currency: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Конфигуратор товара: цена и срок изготовления считаются из выбранных
  * опций, а не хранятся отдельно. Один файл, ноль зависимостей.
  */
@@ -232,9 +263,14 @@ export function Commerce053({
   totalLabel = "Итого",
   leadLabel = "Срок изготовления",
   codeLabel = "Код конфигурации",
+  extrasLegend = "Дополнительно",
+  baseLabel = "Базовая цена",
+  includedLabel = "включено",
+  daysTemplate = "{days} рабочих дней",
   cta = "Заказать сборку",
   note = "Код конфигурации сохраните: по нему мастерская восстановит заказ, даже если корзина потеряется.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce053Props) {
@@ -273,6 +309,12 @@ export function Commerce053({
 
   const palette = {
     ...(accent ? { "--vibeui-commerce-053-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-053-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -322,7 +364,7 @@ export function Commerce053({
                         </span>
                         <span data-part="oadd">
                           {option.add === 0
-                            ? "включено"
+                            ? includedLabel
                             : `+ ${money(option.add, currency)}`}
                         </span>
                       </span>
@@ -333,7 +375,7 @@ export function Commerce053({
             ))}
 
             <fieldset>
-              <legend>Дополнительно</legend>
+              <legend>{extrasLegend}</legend>
               <div data-part="options">
                 {extras.map((extra) => (
                   <label
@@ -371,7 +413,7 @@ export function Commerce053({
           <aside data-part="panel" aria-live="polite">
             <h3>{summaryTitle}</h3>
             <dl>
-              <dt>Базовая цена</dt>
+              <dt>{baseLabel}</dt>
               <dd>{money(base, currency)}</dd>
               {chosen.map((entry) => (
                 <div key={entry.group.id} data-part="pair">
@@ -391,7 +433,7 @@ export function Commerce053({
               <span data-part="sum">{money(total, currency)}</span>
             </p>
             <p data-part="meta">
-              {leadLabel}: {days} рабочих дней
+              {leadLabel}: {daysTemplate.replace("{days}", String(days))}
             </p>
             <p data-part="meta">
               {codeLabel}

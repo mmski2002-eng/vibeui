@@ -9,7 +9,15 @@ export type Togglegroup012Props = Omit<
 > & {
   label?: string
   defaultValue?: string
+  /** Подписи кнопок по идентификатору периода. */
+  periodText?: Record<string, string>
+  /** Подписи оси по идентификатору точки. */
+  tickText?: Record<string, string>
+  /** Итог с подстановками {period} и {count}. */
+  summaryText?: string
   onChange?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,14 +25,19 @@ export type Togglegroup012Props = Omit<
 // периода не перекрашивает старые столбцы — под каждым периодом свой набор
 // точек с собственными подписями оси, поэтому график пересобирается целиком,
 // а не растягивает прежние данные на новый масштаб.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте панель темнеет, а границы становятся светлее фона.
 const STYLES = `
 :where([data-vibeui-block="togglegroup-012"]){
---vibeui-togglegroup-012-bg:oklch(1 0 0);
---vibeui-togglegroup-012-fg:oklch(0.22 0.014 265);
---vibeui-togglegroup-012-muted:oklch(0.55 0.014 265);
---vibeui-togglegroup-012-border:oklch(0.9 0.006 265);
---vibeui-togglegroup-012-surface:oklch(0.97 0.004 265);
---vibeui-togglegroup-012-accent:oklch(0.6 0.15 165);
+--vibeui-togglegroup-012-bg:transparent;
+--vibeui-togglegroup-012-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-togglegroup-012-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-togglegroup-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-togglegroup-012-surface:light-dark(oklch(0.97 0.004 265),oklch(0.25 0.01 265));
+--vibeui-togglegroup-012-raised:light-dark(oklch(1 0 0),oklch(0.33 0.012 265));
+--vibeui-togglegroup-012-shadow:light-dark(oklch(0.2 0.02 265 / 14%),oklch(0 0 0 / 45%));
+--vibeui-togglegroup-012-accent:light-dark(oklch(0.6 0.15 165),oklch(0.74 0.14 165));
 --vibeui-togglegroup-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="togglegroup-012"]{
@@ -53,8 +66,8 @@ transition:background-color .15s ease,color .15s ease;
 outline:2px solid var(--vibeui-togglegroup-012-accent);outline-offset:1px;
 }
 [data-vibeui-block="togglegroup-012"] button[aria-pressed="true"]{
-background:var(--vibeui-togglegroup-012-bg);color:var(--vibeui-togglegroup-012-accent);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 14%);
+background:var(--vibeui-togglegroup-012-raised);color:var(--vibeui-togglegroup-012-accent);
+box-shadow:0 1px 2px var(--vibeui-togglegroup-012-shadow);
 }
 [data-vibeui-block="togglegroup-012"] [data-part="chart"]{
 display:flex;align-items:flex-end;gap:0.5rem;height:6rem;
@@ -81,49 +94,97 @@ margin:0;font-size:0.75rem;color:var(--vibeui-togglegroup-012-muted);
 const PERIODS = [
   {
     id: "day",
-    label: "День",
     points: [
-      { tick: "06", value: 18 },
-      { tick: "09", value: 42 },
-      { tick: "12", value: 65 },
-      { tick: "15", value: 58 },
-      { tick: "18", value: 80 },
-      { tick: "21", value: 36 },
+      { id: "06", value: 18 },
+      { id: "09", value: 42 },
+      { id: "12", value: 65 },
+      { id: "15", value: 58 },
+      { id: "18", value: 80 },
+      { id: "21", value: 36 },
     ],
   },
   {
     id: "week",
-    label: "Неделя",
     points: [
-      { tick: "Пн", value: 30 },
-      { tick: "Вт", value: 52 },
-      { tick: "Ср", value: 45 },
-      { tick: "Чт", value: 70 },
-      { tick: "Пт", value: 88 },
-      { tick: "Сб", value: 40 },
+      { id: "mon", value: 30 },
+      { id: "tue", value: 52 },
+      { id: "wed", value: 45 },
+      { id: "thu", value: 70 },
+      { id: "fri", value: 88 },
+      { id: "sat", value: 40 },
     ],
   },
   {
     id: "month",
-    label: "Месяц",
     points: [
-      { tick: "1н", value: 40 },
-      { tick: "2н", value: 62 },
-      { tick: "3н", value: 55 },
-      { tick: "4н", value: 90 },
+      { id: "w1", value: 40 },
+      { id: "w2", value: 62 },
+      { id: "w3", value: 55 },
+      { id: "w4", value: 90 },
     ],
   },
   {
     id: "year",
-    label: "Год",
     points: [
-      { tick: "Кв1", value: 48 },
-      { tick: "Кв2", value: 66 },
-      { tick: "Кв3", value: 58 },
-      { tick: "Кв4", value: 82 },
+      { id: "q1", value: 48 },
+      { id: "q2", value: 66 },
+      { id: "q3", value: 58 },
+      { id: "q4", value: 82 },
     ],
   },
 ]
+
+const PERIOD_TEXT: Record<string, string> = {
+  day: "День",
+  week: "Неделя",
+  month: "Месяц",
+  year: "Год",
+}
+
+const TICK_TEXT: Record<string, string> = {
+  "06": "06",
+  "09": "09",
+  "12": "12",
+  "15": "15",
+  "18": "18",
+  "21": "21",
+  mon: "Пн",
+  tue: "Вт",
+  wed: "Ср",
+  thu: "Чт",
+  fri: "Пт",
+  sat: "Сб",
+  w1: "1н",
+  w2: "2н",
+  w3: "3н",
+  w4: "4н",
+  q1: "Кв1",
+  q2: "Кв2",
+  q3: "Кв3",
+  q4: "Кв4",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Переключатель периода графика одиночным выбором: под каждым периодом
@@ -132,7 +193,11 @@ const PERIODS = [
 export function Togglegroup012({
   label = "Период графика",
   defaultValue = "week",
+  periodText = PERIOD_TEXT,
+  tickText = TICK_TEXT,
+  summaryText = "Период: {period}, точек на графике: {count}.",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -142,6 +207,12 @@ export function Togglegroup012({
 
   const palette = {
     ...(accent ? { "--vibeui-togglegroup-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-togglegroup-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -170,21 +241,28 @@ export function Togglegroup012({
                   onChange?.(entry.id)
                 }}
               >
-                {entry.label}
+                {periodText[entry.id] ?? PERIOD_TEXT[entry.id]}
               </button>
             ))}
           </div>
         </div>
         <div data-part="chart" aria-hidden="true">
           {period.points.map((point) => (
-            <div key={point.tick} data-part="col">
+            <div key={point.id} data-part="col">
               <span data-part="bar" style={{ height: `${point.value}%` }} />
-              <span data-part="tick">{point.tick}</span>
+              <span data-part="tick">
+                {tickText[point.id] ?? TICK_TEXT[point.id]}
+              </span>
             </div>
           ))}
         </div>
         <p data-part="summary" role="status">
-          Период: {period.label}, точек на графике: {period.points.length}.
+          {summaryText
+            .replace(
+              "{period}",
+              periodText[period.id] ?? PERIOD_TEXT[period.id],
+            )
+            .replace("{count}", String(period.points.length))}
         </p>
       </section>
     </>

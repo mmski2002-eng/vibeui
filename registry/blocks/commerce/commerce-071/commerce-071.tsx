@@ -19,6 +19,8 @@ export type Commerce071Props = {
   allLabel?: string
   note?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -33,13 +35,14 @@ export type Commerce071Props = {
 // клавиатуры, потому что карточки — обычные ссылки в списке.
 const STYLES = `
 :where([data-vibeui-block="commerce-071"]){
---vibeui-commerce-071-bg:oklch(1 0 0);
---vibeui-commerce-071-fg:oklch(0.21 0.014 130);
---vibeui-commerce-071-muted:oklch(0.53 0.016 130);
---vibeui-commerce-071-border:oklch(0.9 0.008 130);
---vibeui-commerce-071-soft:oklch(0.972 0.006 130);
---vibeui-commerce-071-accent:oklch(0.45 0.12 145);
---vibeui-commerce-071-warn:oklch(0.55 0.15 40);
+--vibeui-commerce-071-bg:transparent;
+--vibeui-commerce-071-fg:light-dark(oklch(0.21 0.014 130),oklch(0.94 0.007 130));
+--vibeui-commerce-071-muted:light-dark(oklch(0.53 0.016 130),oklch(0.73 0.013 130));
+--vibeui-commerce-071-border:light-dark(oklch(0.9 0.008 130),oklch(0.38 0.016 130));
+--vibeui-commerce-071-soft:light-dark(oklch(0.972 0.006 130),oklch(0.27 0.016 130));
+--vibeui-commerce-071-accent:light-dark(oklch(0.45 0.12 145),oklch(0.76 0.13 145));
+--vibeui-commerce-071-onaccent:light-dark(oklch(0.99 0 0),oklch(0.2 0.04 145));
+--vibeui-commerce-071-warn:light-dark(oklch(0.55 0.15 40),oklch(0.77 0.14 40));
 --vibeui-commerce-071-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -86,7 +89,7 @@ font-size:0.6875rem;line-height:1.45;color:var(--vibeui-commerce-071-muted);
 [data-vibeui-block="commerce-071"] [data-part="price"]{margin:0;font-size:0.9375rem;font-weight:750;font-variant-numeric:tabular-nums}
 [data-vibeui-block="commerce-071"] [data-part="add"]{
 position:relative;z-index:1;appearance:none;border:0;cursor:pointer;height:2rem;padding:0 0.75rem;border-radius:0.5rem;
-background:var(--vibeui-commerce-071-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.75rem;font-weight:700;
+background:var(--vibeui-commerce-071-accent);color:var(--vibeui-commerce-071-onaccent);font:inherit;font-size:0.75rem;font-weight:700;
 }
 [data-vibeui-block="commerce-071"] [data-part="sr"]{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 [data-vibeui-block="commerce-071"] [data-part="note"]{margin:0.75rem 0 0;max-width:56ch;font-size:0.75rem;line-height:1.5;color:var(--vibeui-commerce-071-muted)}
@@ -96,6 +99,28 @@ background:var(--vibeui-commerce-071-accent);color:oklch(0.99 0 0);font:inherit;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-071"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_ITEMS: Commerce071Item[] = [
   {
@@ -149,11 +174,18 @@ export function Commerce071({
   allLabel = "Все прошлые покупки",
   note = "Наличие проверяется в момент добавления: если товара нет, кнопка предложит подписку на возврат в продажу, а не пустую корзину.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce071Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-071-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-071-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

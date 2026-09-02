@@ -14,6 +14,10 @@ export type Menubar003Menu = {
 export type Menubar003Props = {
   menus?: Menubar003Menu[]
   platform?: "mac" | "windows"
+  /** Имя строки меню для скринридера. */
+  menubarLabel?: string
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -25,13 +29,15 @@ export type Menubar003Props = {
 // браузер сам следит, что открыт только один, без единой строки JS.
 const STYLES = `
 :where([data-vibeui-block="menubar-003"]){
---vibeui-menubar-003-bg:oklch(1 0 0);
---vibeui-menubar-003-fg:oklch(0.24 0.014 265);
---vibeui-menubar-003-muted:oklch(0.58 0.014 265);
---vibeui-menubar-003-border:oklch(0.9 0.006 265);
---vibeui-menubar-003-hover:oklch(0.55 0.02 265 / 10%);
---vibeui-menubar-003-key:oklch(0.96 0.004 265);
---vibeui-menubar-003-accent:oklch(0.55 0.2 262);
+--vibeui-menubar-003-bg:transparent;
+--vibeui-menubar-003-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-menubar-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-menubar-003-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-menubar-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-menubar-003-hover:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.88 0.02 265 / 14%));
+--vibeui-menubar-003-key:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-menubar-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-menubar-003-shadow:light-dark(oklch(0.2 0.03 265 / 45%),oklch(0 0 0 / 62%));
 --vibeui-menubar-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="menubar-003"]{
@@ -55,9 +61,9 @@ transition:background-color .14s ease;
 [data-vibeui-block="menubar-003"] [data-part="menu"]{
 position:absolute;top:calc(100% + 0.375rem);left:0;z-index:30;
 min-width:14rem;padding:0.25rem;box-sizing:border-box;
-background:var(--vibeui-menubar-003-bg);
+background:var(--vibeui-menubar-003-panel);
 border:1px solid var(--vibeui-menubar-003-border);border-radius:0.625rem;
-box-shadow:0 16px 36px -18px oklch(0.2 0.03 265 / 45%);
+box-shadow:0 16px 36px -18px var(--vibeui-menubar-003-shadow);
 }
 /* Пункт — сетка из двух колонок: подпись слева, сочетание всегда у правого края. */
 [data-vibeui-block="menubar-003"] [data-part="item"]{
@@ -120,18 +126,49 @@ function keysFor(keys: string, platform: "mac" | "windows") {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Строка меню с колонкой горячих клавиш и взаимно закрывающимися разделами.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Menubar003({
   menus = DEFAULT_MENUS,
   platform = "mac",
+  menubarLabel = "Меню приложения",
+  background = "",
   accent,
   className,
   style,
 }: Menubar003Props) {
   const palette = {
     ...(accent ? { "--vibeui-menubar-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-menubar-003-bg": background,
+          "--vibeui-menubar-003-panel": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -143,7 +180,7 @@ export function Menubar003({
       <div
         data-vibeui-block="menubar-003"
         role="menubar"
-        aria-label="Меню приложения"
+        aria-label={menubarLabel}
         className={className}
         style={palette}
       >

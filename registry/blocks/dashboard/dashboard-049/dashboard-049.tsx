@@ -20,6 +20,14 @@ export type Dashboard049Props = {
   exportLabel?: string
   keepHint?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подпись фильтра периода. */
+  periodLabel?: string
+  /** Подпись фильтра пользователя. */
+  actorLabel?: string
+  /** Подписи глаголов: ключ — значение verb. */
+  verbText?: Record<string, string>
   className?: string
   style?: CSSProperties
 }
@@ -36,15 +44,17 @@ export type Dashboard049Props = {
 // вообще можно найти.
 const STYLES = `
 :where([data-vibeui-block="dashboard-049"]){
---vibeui-dashboard-049-bg:oklch(0.985 0.003 265);
---vibeui-dashboard-049-card:oklch(1 0 0);
---vibeui-dashboard-049-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-049-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-049-border:oklch(0.91 0.006 265);
---vibeui-dashboard-049-accent:oklch(0.5 0.12 265);
---vibeui-dashboard-049-soft:oklch(0.96 0.018 265);
---vibeui-dashboard-049-del:oklch(0.58 0.19 25);
---vibeui-dashboard-049-add:oklch(0.55 0.13 155);
+--vibeui-dashboard-049-bg:transparent;
+/* Журнал и врезка подробностей: подложка блока прозрачна, и рисовать их ею нечем. */
+--vibeui-dashboard-049-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-dashboard-049-inset:light-dark(oklch(0.97 0.004 265),oklch(0.22 0.012 265));
+--vibeui-dashboard-049-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-049-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-dashboard-049-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-049-accent:light-dark(oklch(0.5 0.12 265),oklch(0.76 0.11 265));
+--vibeui-dashboard-049-soft:light-dark(oklch(0.96 0.018 265),oklch(0.32 0.04 265));
+--vibeui-dashboard-049-del:light-dark(oklch(0.58 0.19 25),oklch(0.73 0.17 25));
+--vibeui-dashboard-049-add:light-dark(oklch(0.55 0.13 155),oklch(0.74 0.13 155));
 --vibeui-dashboard-049-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-dashboard-049-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;
@@ -89,7 +99,7 @@ display:grid;grid-template-columns:auto 1fr;gap:0.1875rem 0.75rem;align-items:ce
 cursor:pointer;list-style:none;padding:0.625rem 0.875rem;
 }
 [data-vibeui-block="dashboard-049"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="dashboard-049"] summary:hover{background:var(--vibeui-dashboard-049-bg)}
+[data-vibeui-block="dashboard-049"] summary:hover{background:var(--vibeui-dashboard-049-inset)}
 [data-vibeui-block="dashboard-049"] [data-part="face"]{
 grid-row:1/3;width:1.75rem;height:1.75rem;border-radius:50%;flex:none;
 display:grid;place-items:center;font-size:0.625rem;font-weight:800;
@@ -107,11 +117,11 @@ background:var(--vibeui-dashboard-049-soft);
 }
 [data-vibeui-block="dashboard-049"] details[data-verb="Удалил"] [data-part="verb"]{
 color:var(--vibeui-dashboard-049-del);
-background:color-mix(in oklab,var(--vibeui-dashboard-049-del) 10%,white);
+background:color-mix(in oklab,var(--vibeui-dashboard-049-del) 14%,var(--vibeui-dashboard-049-card));
 }
 [data-vibeui-block="dashboard-049"] details[data-verb="Создал"] [data-part="verb"]{
 color:var(--vibeui-dashboard-049-add);
-background:color-mix(in oklab,var(--vibeui-dashboard-049-add) 10%,white);
+background:color-mix(in oklab,var(--vibeui-dashboard-049-add) 14%,var(--vibeui-dashboard-049-card));
 }
 [data-vibeui-block="dashboard-049"] [data-part="target"]{
 font-family:var(--vibeui-dashboard-049-mono);font-size:0.75rem;overflow-wrap:anywhere;
@@ -124,7 +134,7 @@ font-variant-numeric:tabular-nums;
 margin:0 0.875rem 0.75rem 3.375rem;padding:0.5rem 0.6875rem;border-radius:0.5rem;
 font-family:var(--vibeui-dashboard-049-mono);font-size:0.6875rem;line-height:1.55;
 white-space:pre-wrap;overflow-wrap:anywhere;
-background:var(--vibeui-dashboard-049-bg);
+background:var(--vibeui-dashboard-049-inset);
 border:1px solid var(--vibeui-dashboard-049-border);
 }
 [data-vibeui-block="dashboard-049"] [data-part="keep"]{
@@ -184,6 +194,36 @@ const DEFAULT_ENTRIES: Dashboard049Entry[] = [
   },
 ]
 
+const VERB_LABEL: Record<string, string> = {
+  Создал: "Создал",
+  Изменил: "Изменил",
+  Удалил: "Удалил",
+  Вошёл: "Вошёл",
+  Выгрузил: "Выгрузил",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Экран аудита: фильтры по периоду и пользователю, лента действий с
  * глаголом-плашкой, источником и подробностями, раскрытыми на месте.
@@ -205,11 +245,21 @@ export function Dashboard049({
   exportLabel = "Выгрузить журнал",
   keepHint = "Записи журнала хранятся 180 дней, затем удаляются без возможности восстановления.",
   accent,
+  background = "",
+  periodLabel = "Период",
+  actorLabel = "Кто",
+  verbText = VERB_LABEL,
   className,
   style,
 }: Dashboard049Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-049-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-049-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -229,7 +279,7 @@ export function Dashboard049({
             <h2>{title}</h2>
             <div data-part="filters">
               <label>
-                Период
+                {periodLabel}
                 <select defaultValue={period}>
                   {periods.map((item) => (
                     <option key={item}>{item}</option>
@@ -237,7 +287,7 @@ export function Dashboard049({
                 </select>
               </label>
               <label>
-                Кто
+                {actorLabel}
                 <select defaultValue={actor}>
                   {actors.map((item) => (
                     <option key={item}>{item}</option>
@@ -263,7 +313,9 @@ export function Dashboard049({
                   </span>
                   <span data-part="line">
                     <span data-part="who">{entry.who}</span>
-                    <span data-part="verb">{entry.verb}</span>
+                    <span data-part="verb">
+                      {verbText[entry.verb] ?? entry.verb}
+                    </span>
                     <span data-part="target">{entry.target}</span>
                   </span>
                   <span data-part="meta">

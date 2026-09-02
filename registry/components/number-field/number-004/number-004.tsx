@@ -10,6 +10,10 @@ export type Number004Props = Omit<
   label?: string
   defaultValue?: number
   error?: string
+  /** Подсказка в спокойном состоянии. Подстановка: {rest}. */
+  hintText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,21 +22,26 @@ export type Number004Props = Omit<
 // увидит верное на вид число и уедет с неверными данными. Поэтому выход за
 // 0–100 остаётся в поле, помечается aria-invalid и объясняется словами.
 // Полоса под полем показывает долю сразу: проценты воспринимают площадью.
+//
+// Тема берётся из color-scheme окружения через light-dark(): поле темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="number-004"]){
---vibeui-number-004-surface:oklch(1 0 0);
---vibeui-number-004-field:oklch(1 0 0);
---vibeui-number-004-shell:oklch(0.9 0.006 265);
---vibeui-number-004-fg:oklch(0.23 0.014 265);
---vibeui-number-004-muted:oklch(0.55 0.014 265);
---vibeui-number-004-border:oklch(0.88 0.008 265);
---vibeui-number-004-track:oklch(0.93 0.006 265);
---vibeui-number-004-accent:oklch(0.58 0.17 285);
---vibeui-number-004-danger:oklch(0.55 0.19 25);
+--vibeui-number-004-surface:transparent;
+--vibeui-number-004-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-number-004-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-number-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-number-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-number-004-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-number-004-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.011 265));
+--vibeui-number-004-accent:light-dark(oklch(0.58 0.17 285),oklch(0.76 0.15 285));
+--vibeui-number-004-ring:light-dark(oklch(0.58 0.17 285 / 20%),oklch(0.76 0.15 285 / 30%));
+--vibeui-number-004-danger:light-dark(oklch(0.55 0.19 25),oklch(0.72 0.16 25));
+--vibeui-number-004-danger-ring:light-dark(oklch(0.55 0.19 25 / 18%),oklch(0.72 0.16 25 / 28%));
 --vibeui-number-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-number-004-fill:0%;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="number-004"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:17rem;box-sizing:border-box;padding:0.875rem;
@@ -50,12 +59,12 @@ transition:border-color .14s ease,box-shadow .14s ease;
 }
 [data-vibeui-block="number-004"] [data-part="field"]:focus-within{
 border-color:var(--vibeui-number-004-accent);
-box-shadow:0 0 0 2px oklch(0.58 0.17 285 / 20%);
+box-shadow:0 0 0 2px var(--vibeui-number-004-ring);
 }
 /* Ошибка не прячется: неверное число остаётся в поле и подсвечивается. */
 [data-vibeui-block="number-004"][data-invalid="true"] [data-part="field"]{
 border-color:var(--vibeui-number-004-danger);
-box-shadow:0 0 0 2px oklch(0.55 0.19 25 / 18%);
+box-shadow:0 0 0 2px var(--vibeui-number-004-danger-ring);
 }
 [data-vibeui-block="number-004"] input{
 flex:1 1 auto;min-width:0;width:100%;
@@ -88,6 +97,28 @@ margin:0;min-height:1.05rem;font-size:0.75rem;line-height:1.4;color:var(--vibeui
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Ввод процента: выход за 0–100 не зажимается, а объясняется.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -95,6 +126,8 @@ export function Number004({
   label = "Доля скидки",
   defaultValue = 15,
   error = "Процент бывает только от 0 до 100.",
+  hintText = "Останется {rest}% от цены",
+  background = "",
   accent,
   className,
   style,
@@ -110,6 +143,12 @@ export function Number004({
   const palette = {
     "--vibeui-number-004-fill": `${fill}%`,
     ...(accent ? { "--vibeui-number-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-number-004-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -154,7 +193,9 @@ export function Number004({
           <span data-part="fill" />
         </div>
         <p id={`${id}-note`} data-part="note" aria-live="polite">
-          {invalid ? error : `Останется ${(100 - fill).toFixed(0)}% от цены`}
+          {invalid
+            ? error
+            : hintText.replace("{rest}", (100 - fill).toFixed(0))}
         </p>
       </div>
     </>

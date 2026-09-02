@@ -15,6 +15,12 @@ export type Inputgroup026Props = Omit<
   onChange?: (value: string) => void
   onSubmit?: (value: string) => void
   hint?: string
+  /** Заголовок панели истории для скринридера. */
+  panelLabel?: string
+  /** Текст пустой истории. */
+  emptyText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,15 +34,16 @@ const DEFAULT_HISTORY = ["кроссовки мужские", "куртка зи
 // подставится. Новый запрос уходит в начало списка, повтор не дублируется.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-026"]){
---vibeui-inputgroup-026-surface:oklch(1 0 0);
---vibeui-inputgroup-026-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-026-fg:oklch(0.22 0.014 265);
---vibeui-inputgroup-026-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-026-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-026-fixed:oklch(0.96 0.004 265);
---vibeui-inputgroup-026-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-026-accent:oklch(0.56 0.13 230);
---vibeui-inputgroup-026-hover:oklch(0.95 0.02 230);
+--vibeui-inputgroup-026-surface:transparent;
+--vibeui-inputgroup-026-panel:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-inputgroup-026-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-inputgroup-026-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-026-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-inputgroup-026-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
+--vibeui-inputgroup-026-fixed:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-inputgroup-026-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-inputgroup-026-accent:light-dark(oklch(0.56 0.13 230),oklch(0.77 0.12 230));
+--vibeui-inputgroup-026-hover:light-dark(oklch(0.95 0.02 230),oklch(0.32 0.03 230));
 --vibeui-inputgroup-026-radius:0.75rem;
 --vibeui-inputgroup-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -64,7 +71,7 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-inputgroup-026-accent) 18%,
 [data-vibeui-block="inputgroup-026"] [data-part="panel"]{
 position:absolute;left:0;right:0;top:calc(100% + 0.375rem);z-index:10;
 margin:0;padding:0.375rem;list-style:none;
-background:var(--vibeui-inputgroup-026-surface);
+background:var(--vibeui-inputgroup-026-panel);
 border:1px solid var(--vibeui-inputgroup-026-border);border-radius:0.625rem;
 box-shadow:0 10px 24px -12px oklch(0.2 0.02 265 / 0.35);
 }
@@ -91,6 +98,28 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-inputgroup-026-mut
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сцепка «поле поиска + история запросов»: список под полем открывается по
  * фокусу, пункт подставляется по mousedown до потери фокуса, Enter уводит
  * текущий запрос в начало истории без дублей.
@@ -105,6 +134,9 @@ export function Inputgroup026({
   onChange,
   onSubmit,
   hint = "Enter сохраняет запрос в историю, клик по пункту истории подставляет его в поле.",
+  panelLabel = "История запросов",
+  emptyText = "История запросов пуста",
+  background = "",
   accent,
   className,
   style,
@@ -118,6 +150,12 @@ export function Inputgroup026({
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-026-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-026-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -188,7 +226,7 @@ export function Inputgroup026({
               data-part="panel"
               id={`${id}-panel`}
               role="listbox"
-              aria-label="История запросов"
+              aria-label={panelLabel}
             >
               {history.length > 0 ? (
                 history.map((item) => (
@@ -222,7 +260,7 @@ export function Inputgroup026({
                   </li>
                 ))
               ) : (
-                <li data-part="empty">История запросов пуста</li>
+                <li data-part="empty">{emptyText}</li>
               )}
             </ul>
           ) : null}

@@ -9,6 +9,8 @@ export type Switch008Props = Omit<
   reason?: string
   actionText?: string
   actionHref?: string
+  /** Пусто — подложки нет, карточка держится рамкой на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,15 +20,15 @@ export type Switch008Props = Omit<
 // Ссылка не заблокирована — иначе выход из тупика тоже был бы недоступен.
 const STYLES = `
 :where([data-vibeui-block="switch-008"]){
---vibeui-switch-008-bg:oklch(1 0 0);
---vibeui-switch-008-fg:oklch(0.22 0.014 265);
---vibeui-switch-008-muted:oklch(0.55 0.014 265);
---vibeui-switch-008-border:oklch(0.91 0.006 265);
---vibeui-switch-008-track:oklch(0.9 0.006 265);
---vibeui-switch-008-thumb:oklch(0.97 0.002 265);
---vibeui-switch-008-accent:oklch(0.55 0.19 262);
---vibeui-switch-008-lock:oklch(0.66 0.13 75);
---vibeui-switch-008-lock-tint:oklch(0.66 0.13 75 / 12%);
+--vibeui-switch-008-bg:transparent;
+--vibeui-switch-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-switch-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-switch-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-switch-008-track:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-switch-008-thumb:light-dark(oklch(0.97 0.002 265),oklch(0.56 0.01 265));
+--vibeui-switch-008-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.16 262));
+--vibeui-switch-008-lock:light-dark(oklch(0.66 0.13 75),oklch(0.79 0.13 75));
+--vibeui-switch-008-lock-tint:light-dark(oklch(0.66 0.13 75 / 12%),oklch(0.79 0.13 75 / 16%));
 --vibeui-switch-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="switch-008"]{
@@ -84,6 +86,28 @@ text-decoration:underline;text-underline-offset:2px;border-radius:0.25rem;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Заблокированный переключатель: причина словами и ссылка на выход.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -92,6 +116,7 @@ export function Switch008({
   reason = "Доступно на тарифе «Команда»: на текущем плане выгрузка идёт только вручную.",
   actionText = "Сменить тариф",
   actionHref = "#pricing",
+  background = "",
   accent,
   className,
   style,
@@ -99,6 +124,12 @@ export function Switch008({
 }: Switch008Props) {
   const palette = {
     ...(accent ? { "--vibeui-switch-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-switch-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

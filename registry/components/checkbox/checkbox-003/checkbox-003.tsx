@@ -10,7 +10,13 @@ export type Checkbox003Props = Omit<
   legend?: string
   items?: string[]
   defaultValue?: string[]
+  /** Подпись родительского чекбокса. */
+  allLabel?: string
+  /** Строка счётчика. {selected} — отмечено, {total} — всего пунктов. */
+  countText?: string
   onChange?: (value: string[]) => void
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,13 +24,18 @@ export type Checkbox003Props = Omit<
 // отмечена часть детей, родитель не «выключен» и не «включён» — он показывает
 // черту. Это состояние нельзя задать атрибутом в разметке: indeterminate
 // живёт только в DOM, поэтому его ставит эффект.
+//
+// Тема берётся из color-scheme окружения через light-dark(): панель темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="checkbox-003"]){
---vibeui-checkbox-003-bg:oklch(1 0 0);
---vibeui-checkbox-003-fg:oklch(0.22 0.014 265);
---vibeui-checkbox-003-muted:oklch(0.56 0.014 265);
---vibeui-checkbox-003-border:oklch(0.88 0.008 265);
---vibeui-checkbox-003-accent:oklch(0.55 0.17 265);
+--vibeui-checkbox-003-surface:transparent;
+--vibeui-checkbox-003-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-checkbox-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-checkbox-003-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-checkbox-003-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
+--vibeui-checkbox-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-checkbox-003-mark:light-dark(oklch(0.99 0.01 265),oklch(0.2 0.014 265));
 --vibeui-checkbox-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="checkbox-003"]{
@@ -32,7 +43,7 @@ display:flex;flex-direction:column;gap:0.375rem;
 width:100%;max-width:18rem;box-sizing:border-box;
 margin:0;padding:0.875rem;
 border:1px solid var(--vibeui-checkbox-003-border);border-radius:0.875rem;
-background:var(--vibeui-checkbox-003-bg);
+background:var(--vibeui-checkbox-003-surface);
 font-family:var(--vibeui-checkbox-003-font);color:var(--vibeui-checkbox-003-fg);
 }
 /* legend у fieldset садится на рамку и обрезается — float возвращает
@@ -58,13 +69,14 @@ border-color:transparent;background:var(--vibeui-checkbox-003-accent);
 [data-vibeui-block="checkbox-003"] input:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;
-border-right:2px solid oklch(0.99 0.01 265);border-bottom:2px solid oklch(0.99 0.01 265);
+border-right:2px solid var(--vibeui-checkbox-003-mark);
+border-bottom:2px solid var(--vibeui-checkbox-003-mark);
 transform:rotate(45deg);
 }
 [data-vibeui-block="checkbox-003"] input:indeterminate::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.5rem;height:2px;margin:-1px 0 0 -0.25rem;
-background:oklch(0.99 0.01 265);border-radius:9999px;
+background:var(--vibeui-checkbox-003-mark);border-radius:9999px;
 }
 [data-vibeui-block="checkbox-003"] input:focus-visible{outline:2px solid var(--vibeui-checkbox-003-accent);outline-offset:2px}
 [data-vibeui-block="checkbox-003"] [data-part="count"]{margin-top:0.25rem;font-size:0.75rem;color:var(--vibeui-checkbox-003-muted)}
@@ -79,6 +91,28 @@ const DEFAULT_ITEMS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Родительский чекбокс с промежуточным состоянием и группой детей.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -86,7 +120,10 @@ export function Checkbox003({
   legend = "Что перенести в проект",
   items = DEFAULT_ITEMS,
   defaultValue = ["Каталог компонентов", "Тёмная тема"],
+  allLabel = "Выбрать всё",
+  countText = "Отмечено {selected} из {total}",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -106,6 +143,12 @@ export function Checkbox003({
 
   const palette = {
     ...(accent ? { "--vibeui-checkbox-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-checkbox-003-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -113,6 +156,10 @@ export function Checkbox003({
     setValue(next)
     onChange?.(next)
   }
+
+  const count = countText
+    .replace("{selected}", String(value.length))
+    .replace("{total}", String(items.length))
 
   return (
     <>
@@ -134,7 +181,7 @@ export function Checkbox003({
             aria-controls={`${id}-group`}
             onChange={() => update(all ? [] : [...items])}
           />
-          Выбрать всё
+          {allLabel}
         </label>
         <div id={`${id}-group`}>
           {items.map((item) => (
@@ -154,9 +201,7 @@ export function Checkbox003({
             </label>
           ))}
         </div>
-        <span data-part="count">
-          Отмечено {value.length} из {items.length}
-        </span>
+        <span data-part="count">{count}</span>
       </fieldset>
     </>
   )

@@ -7,6 +7,9 @@ export type Badge012Props = Omit<
   label?: string
   /** Сколько осталось: без оценки ожидание выглядит зависанием. */
   hint?: string
+  accent?: string
+  /** Пусто — плашка держит собственный нейтральный фон. */
+  background?: string
 }
 
 // Идея компонента: плашка процесса. Кольцо крутится, но текст обязателен:
@@ -15,11 +18,11 @@ export type Badge012Props = Omit<
 // остаётся видимым, движение уходит.
 const STYLES = `
 :where([data-vibeui-block="badge-012"]){
---vibeui-badge-012-bg:oklch(0.96 0.004 265);
---vibeui-badge-012-fg:oklch(0.32 0.014 265);
---vibeui-badge-012-muted:oklch(0.55 0.014 265);
---vibeui-badge-012-track:oklch(0.86 0.008 265);
---vibeui-badge-012-accent:oklch(0.58 0.16 265);
+--vibeui-badge-012-bg:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.009 265));
+--vibeui-badge-012-fg:light-dark(oklch(0.32 0.014 265),oklch(0.93 0.006 265));
+--vibeui-badge-012-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-badge-012-track:light-dark(oklch(0.86 0.008 265),oklch(0.41 0.011 265));
+--vibeui-badge-012-accent:light-dark(oklch(0.58 0.16 265),oklch(0.75 0.15 265));
 --vibeui-badge-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="badge-012"]{
@@ -49,16 +52,51 @@ border-color:var(--vibeui-badge-012-accent);background:var(--vibeui-badge-012-ac
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Плашка процесса: кольцо и обязательный текст, что происходит.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Badge012({
   label = "Отправляем",
   hint = "осталось ~20 с",
+  accent,
+  background = "",
   className,
   style,
   ...props
 }: Badge012Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-badge-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-badge-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-badge-012" precedence="medium">
@@ -68,7 +106,7 @@ export function Badge012({
         {...props}
         data-vibeui-block="badge-012"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
         role="status"
         aria-live="polite"
       >

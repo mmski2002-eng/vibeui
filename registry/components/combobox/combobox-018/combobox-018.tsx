@@ -15,6 +15,18 @@ export type Combobox018Props = Omit<
   delay?: number
   defaultValue?: string
   onSelect?: (value: string, available: boolean) => void
+  /** Строка статуса, пока идёт проверка. */
+  checkingText?: string
+  /** Строка удачной проверки; {count} — остаток, {noun} — слово из unitForms. */
+  okText?: string
+  /** Строка отказа. */
+  badText?: string
+  /** Строка, пока ничего не выбрано. */
+  idleText?: string
+  /** Три формы слова для счёта: 1 штука, 2 штуки, 5 штук. */
+  unitForms?: string[]
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,16 +37,16 @@ export type Combobox018Props = Omit<
 // значение уже выбрано — форму не блокируем, но и «готово» не говорим.
 const STYLES = `
 :where([data-vibeui-block="combobox-018"]){
---vibeui-combobox-018-bg:oklch(1 0 0);
---vibeui-combobox-018-fg:oklch(0.22 0.014 240);
---vibeui-combobox-018-muted:oklch(0.55 0.014 240);
---vibeui-combobox-018-border:oklch(0.9 0.008 240);
---vibeui-combobox-018-field:oklch(0.985 0.004 240);
---vibeui-combobox-018-soft:oklch(0.96 0.008 240);
---vibeui-combobox-018-accent:oklch(0.5 0.13 240);
---vibeui-combobox-018-accentsoft:oklch(0.94 0.04 240);
---vibeui-combobox-018-ok:oklch(0.5 0.11 150);
---vibeui-combobox-018-bad:oklch(0.55 0.18 25);
+--vibeui-combobox-018-bg:transparent;
+--vibeui-combobox-018-fg:light-dark(oklch(0.22 0.014 240),oklch(0.94 0.006 240));
+--vibeui-combobox-018-muted:light-dark(oklch(0.55 0.014 240),oklch(0.7 0.012 240));
+--vibeui-combobox-018-border:light-dark(oklch(0.9 0.008 240),oklch(0.35 0.012 240));
+--vibeui-combobox-018-field:light-dark(oklch(0.985 0.004 240),oklch(0.27 0.012 240));
+--vibeui-combobox-018-soft:light-dark(oklch(0.96 0.008 240),oklch(0.31 0.014 240));
+--vibeui-combobox-018-accent:light-dark(oklch(0.5 0.13 240),oklch(0.72 0.13 240));
+--vibeui-combobox-018-accentsoft:light-dark(oklch(0.94 0.04 240),oklch(0.36 0.06 240));
+--vibeui-combobox-018-ok:light-dark(oklch(0.5 0.11 150),oklch(0.76 0.12 150));
+--vibeui-combobox-018-bad:light-dark(oklch(0.55 0.18 25),oklch(0.72 0.16 25));
 --vibeui-combobox-018-radius:0.625rem;
 --vibeui-combobox-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -114,7 +126,10 @@ const STOCK: Record<string, number> = {
   "Склад Новосибирск · Толмачёво": 0,
 }
 
-function pluralize(count: number, forms: [string, string, string]) {
+const UNIT_FORMS = ["штука", "штуки", "штук"]
+
+/** Три формы слова: русский счёт требует их, английскому хватит двух. */
+function pluralize(count: number, forms: string[]) {
   const tens = count % 100
   const ones = count % 10
 
@@ -123,6 +138,28 @@ function pluralize(count: number, forms: [string, string, string]) {
   if (ones > 1 && ones < 5) return forms[1]
 
   return forms[2]
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -137,6 +174,12 @@ export function Combobox018({
   delay = 700,
   defaultValue = "Склад Казань · Технополис",
   onSelect,
+  checkingText = "Проверяем остаток на складе…",
+  okText = "На складе {count} {noun}",
+  badText = "Нет в наличии — выберите другой склад",
+  idleText = "Выберите склад, чтобы проверить остаток",
+  unitForms = UNIT_FORMS,
+  background = "",
   accent,
   className,
   style,
@@ -183,6 +226,12 @@ export function Combobox018({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-018-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-018-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -240,20 +289,22 @@ export function Combobox018({
           {state === "checking" ? (
             <>
               <span data-part="spin" aria-hidden="true" />
-              Проверяем остаток на складе…
+              {checkingText}
             </>
           ) : state === "ok" ? (
             <>
               <span data-part="dot" aria-hidden="true" />
-              На складе {left} {pluralize(left, ["штука", "штуки", "штук"])}
+              {okText
+                .replace("{count}", String(left))
+                .replace("{noun}", pluralize(left, unitForms))}
             </>
           ) : state === "bad" ? (
             <>
               <span data-part="dot" aria-hidden="true" />
-              Нет в наличии — выберите другой склад
+              {badText}
             </>
           ) : (
-            "Выберите склад, чтобы проверить остаток"
+            idleText
           )}
         </p>
       </div>

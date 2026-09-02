@@ -25,7 +25,18 @@ export type Commerce030Props = {
   rows?: Commerce030Row[]
   measureNote?: string
   cta?: string
+  /** Подпись над таблицей мерок. */
+  tableCaption?: string
+  /** Заголовки колонок таблицы. */
+  columnLabels?: Record<string, string>
+  /** Подписи переключателя таблицы. */
+  showText?: string
+  hideText?: string
+  /** Подпись блока для скринридера: {title} подставляет название товара. */
+  pickerLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -39,17 +50,23 @@ export type Commerce030Props = {
 // глазами и решают, что сайт сломался.
 const STYLES = `
 :where([data-vibeui-block="commerce-030"]){
---vibeui-commerce-030-bg:oklch(1 0 0);
---vibeui-commerce-030-fg:oklch(0.21 0.014 265);
---vibeui-commerce-030-muted:oklch(0.55 0.014 265);
---vibeui-commerce-030-border:oklch(0.91 0.006 265);
---vibeui-commerce-030-soft:oklch(0.975 0.004 265);
---vibeui-commerce-030-accent:oklch(0.45 0.13 300);
+--vibeui-commerce-030-bg:transparent;
+--vibeui-commerce-030-radius:0;
+--vibeui-commerce-030-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-030-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-030-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-commerce-030-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-commerce-030-card:light-dark(oklch(1 0 0),oklch(0.22 0.01 265));
+--vibeui-commerce-030-accent:light-dark(oklch(0.45 0.13 300),oklch(0.76 0.13 300));
+--vibeui-commerce-030-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 300));
+--vibeui-commerce-030-show:"Показать";
+--vibeui-commerce-030-hide:"Скрыть";
 --vibeui-commerce-030-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 [data-vibeui-block="commerce-030"]{
 box-sizing:border-box;background:var(--vibeui-commerce-030-bg);
+border-radius:var(--vibeui-commerce-030-radius);
 color:var(--vibeui-commerce-030-fg);font-family:var(--vibeui-commerce-030-sans);
 }
 [data-vibeui-block="commerce-030"] *{box-sizing:border-box}
@@ -97,8 +114,8 @@ cursor:pointer;list-style:none;padding:0.75rem 0.875rem;font-size:0.875rem;font-
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
 }
 [data-vibeui-block="commerce-030"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="commerce-030"] summary::after{content:"Показать";font-size:0.75rem;font-weight:600;color:var(--vibeui-commerce-030-accent)}
-[data-vibeui-block="commerce-030"] details[open] summary::after{content:"Скрыть"}
+[data-vibeui-block="commerce-030"] summary::after{content:var(--vibeui-commerce-030-show);font-size:0.75rem;font-weight:600;color:var(--vibeui-commerce-030-accent)}
+[data-vibeui-block="commerce-030"] details[open] summary::after{content:var(--vibeui-commerce-030-hide)}
 [data-vibeui-block="commerce-030"] summary:focus-visible{outline:2px solid var(--vibeui-commerce-030-accent);outline-offset:-2px}
 [data-vibeui-block="commerce-030"] [data-part="scroll"]{overflow-x:auto;border-top:1px solid var(--vibeui-commerce-030-border)}
 [data-vibeui-block="commerce-030"] table{border-collapse:collapse;width:100%;min-width:26rem;font-size:0.8125rem}
@@ -113,7 +130,7 @@ text-align:right;font-size:0.6875rem;font-weight:650;color:var(--vibeui-commerce
 border-bottom:1px solid var(--vibeui-commerce-030-border);
 }
 [data-vibeui-block="commerce-030"] th[scope="row"]{
-text-align:left;font-weight:700;position:sticky;left:0;background:var(--vibeui-commerce-030-bg);
+text-align:left;font-weight:700;position:sticky;left:0;background:var(--vibeui-commerce-030-card);
 }
 [data-vibeui-block="commerce-030"] tbody tr + tr th,
 [data-vibeui-block="commerce-030"] tbody tr + tr td{border-top:1px solid var(--vibeui-commerce-030-border)}
@@ -123,7 +140,7 @@ font-size:0.75rem;line-height:1.5;color:var(--vibeui-commerce-030-muted);backgro
 }
 [data-vibeui-block="commerce-030"] [data-part="cta"]{
 margin-top:1rem;width:100%;appearance:none;border:0;cursor:pointer;height:3rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-030-accent);color:oklch(1 0 0);font:inherit;font-size:1rem;font-weight:700;
+background:var(--vibeui-commerce-030-accent);color:var(--vibeui-commerce-030-on-accent);font:inherit;font-size:1rem;font-weight:700;
 }
 [data-vibeui-block="commerce-030"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-commerce-030-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-030"] *{animation:none!important;transition:none!important}}
@@ -147,6 +164,36 @@ const DEFAULT_ROWS: Commerce030Row[] = [
   { size: "2XL", chest: "124", waist: "112", length: "74", sleeve: "63" },
 ]
 
+const DEFAULT_COLUMNS: Record<string, string> = {
+  size: "Размер",
+  chest: "Грудь",
+  waist: "Талия",
+  length: "Длина",
+  sleeve: "Рукав",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Выбор размера с таблицей мерок в details: недоступный вариант остаётся видимым.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -161,12 +208,29 @@ export function Commerce030({
   rows = DEFAULT_ROWS,
   measureNote = "Мерки указаны в сантиметрах и сняты с изделия, разложенного на столе. Обхват груди измеряйте по самой широкой точке, длину — от плечевого шва.",
   cta = "Добавить в корзину",
+  tableCaption = "Мерки изделия, см",
+  columnLabels = DEFAULT_COLUMNS,
+  showText = "Показать",
+  hideText = "Скрыть",
+  pickerLabel = "Выбор размера: {title}",
   accent,
+  background = "",
   className,
   style,
 }: Commerce030Props) {
+  // Подписи переключателя живут в CSS-переменных: их печатает content у ::after.
   const palette = {
     ...(accent ? { "--vibeui-commerce-030-accent": accent } : null),
+    "--vibeui-commerce-030-show": JSON.stringify(showText),
+    "--vibeui-commerce-030-hide": JSON.stringify(hideText),
+    ...(background
+      ? {
+          "--vibeui-commerce-030-bg": background,
+          "--vibeui-commerce-030-card": background,
+          "--vibeui-commerce-030-radius": "1.25rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -179,7 +243,7 @@ export function Commerce030({
         data-vibeui-block="commerce-030"
         className={className}
         style={palette}
-        aria-label={`Выбор размера: ${title}`}
+        aria-label={pickerLabel.replace("{title}", title)}
       >
         <div data-part="shell">
           <div data-part="head">
@@ -214,14 +278,16 @@ export function Commerce030({
             <summary>{tableTitle}</summary>
             <div data-part="scroll">
               <table>
-                <caption>Мерки изделия, см</caption>
+                <caption>{tableCaption}</caption>
                 <thead>
                   <tr>
-                    <th scope="col">Размер</th>
-                    <th scope="col">Грудь</th>
-                    <th scope="col">Талия</th>
-                    <th scope="col">Длина</th>
-                    <th scope="col">Рукав</th>
+                    {["size", "chest", "waist", "length", "sleeve"].map(
+                      (column) => (
+                        <th scope="col" key={column}>
+                          {columnLabels[column] ?? DEFAULT_COLUMNS[column]}
+                        </th>
+                      ),
+                    )}
                   </tr>
                 </thead>
                 <tbody>

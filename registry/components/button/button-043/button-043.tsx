@@ -3,6 +3,8 @@ import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 export type Button043Props = ComponentPropsWithoutRef<"button"> & {
   /** Высота подъёма на наведении в пикселях. */
   lift?: number
+  /** Поверхность кнопки. Пусто — своя, из палитры. */
+  background?: string
   accent?: string
 }
 
@@ -13,11 +15,11 @@ export type Button043Props = ComponentPropsWithoutRef<"button"> & {
 const STYLES = `
 :where([data-vibeui-block="button-043"]){
 --vibeui-button-043-lift:6px;
---vibeui-button-043-surface:oklch(1 0 0);
---vibeui-button-043-border:oklch(0.9 0.006 265);
---vibeui-button-043-fg:oklch(0.24 0.02 265);
---vibeui-button-043-accent:oklch(0.58 0.16 45);
---vibeui-button-043-shadow:oklch(0.3 0.03 265 / 22%);
+--vibeui-button-043-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
+--vibeui-button-043-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
+--vibeui-button-043-fg:light-dark(oklch(0.24 0.02 265),oklch(0.94 0.006 265));
+--vibeui-button-043-accent:light-dark(oklch(0.58 0.16 45),oklch(0.74 0.16 45));
+--vibeui-button-043-shadow:light-dark(oklch(0.3 0.03 265 / 22%),oklch(0 0 0 / 55%));
 --vibeui-button-043-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-043"]{
@@ -61,11 +63,35 @@ background:var(--vibeui-button-043-accent);
 `
 
 /**
+ * Ветка темы для заданной поверхности. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кнопка с тенью-подъёмом: на наведении отрывается от поверхности.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Button043({
   lift = 6,
+  background = "",
   accent,
   type = "button",
   className,
@@ -76,6 +102,12 @@ export function Button043({
   const palette = {
     "--vibeui-button-043-lift": `${lift}px`,
     ...(accent ? { "--vibeui-button-043-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-043-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

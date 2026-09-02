@@ -10,9 +10,37 @@ export type Pricing010Props = {
   timeline?: { day: string; title: string; description: string }[]
   action?: { label: string; href: string }
   reassurance?: string[]
+  /** Подпись рядом с числом дней. */
+  daysLabel?: string
+  /** Строка под счётчиком. {price} выделяется жирным, {period} — обычный текст. */
+  afterText?: string
   accent?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 // Идея блока: продаётся не тариф, а спокойствие первых двух недель. Вместо
@@ -23,13 +51,13 @@ export type Pricing010Props = {
 // должен читаться голосом, а не только цветными точками.
 const STYLES = `
 :where([data-vibeui-block="pricing-010"]){
---vibeui-pricing-010-bg:oklch(0.98 0.006 145);
---vibeui-pricing-010-fg:oklch(0.19 0.016 145);
---vibeui-pricing-010-muted:oklch(0.5 0.016 145);
---vibeui-pricing-010-card:oklch(1 0 0);
---vibeui-pricing-010-line:oklch(0.88 0.01 145);
---vibeui-pricing-010-accent:oklch(0.5 0.13 150);
---vibeui-pricing-010-accent-fg:oklch(0.99 0 0);
+--vibeui-pricing-010-bg:transparent;
+--vibeui-pricing-010-fg:light-dark(oklch(0.19 0.016 145),oklch(0.95 0.006 145));
+--vibeui-pricing-010-muted:light-dark(oklch(0.5 0.016 145),oklch(0.71 0.014 145));
+--vibeui-pricing-010-card:light-dark(oklch(1 0 0),oklch(0.22 0.016 145));
+--vibeui-pricing-010-line:light-dark(oklch(0.88 0.01 145),oklch(0.34 0.016 145));
+--vibeui-pricing-010-accent:light-dark(oklch(0.5 0.13 150),oklch(0.75 0.13 150));
+--vibeui-pricing-010-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.03 150));
 --vibeui-pricing-010-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -136,14 +164,26 @@ export function Pricing010({
   timeline = DEFAULT_TIMELINE,
   action = { label: "Начать пробный период", href: "#" },
   reassurance = DEFAULT_REASSURANCE,
+  daysLabel = "дней бесплатно",
+  afterText = "Дальше — {price} {period}, если решите остаться.",
   accent,
+  background = "",
   className,
   style,
 }: Pricing010Props) {
   const palette = {
     ...(accent ? { "--vibeui-pricing-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pricing-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+  // Цена внутри строки остаётся в <b>, поэтому шаблон режется по {price},
+  // а не подставляется целиком.
+  const [beforePrice, afterPrice = ""] = afterText.split("{price}")
 
   return (
     <>
@@ -163,11 +203,13 @@ export function Pricing010({
 
             <p data-part="days">
               <span data-part="daysnum">{trialDays}</span>
-              <span data-part="dayslabel">дней бесплатно</span>
+              <span data-part="dayslabel">{daysLabel}</span>
             </p>
 
             <p data-part="after">
-              Дальше — <b>{price}</b> {period}, если решите остаться.
+              {beforePrice}
+              <b>{price}</b>
+              {afterPrice.replace("{period}", period)}
             </p>
 
             <a href={action.href}>{action.label}</a>

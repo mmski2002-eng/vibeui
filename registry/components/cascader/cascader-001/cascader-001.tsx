@@ -15,6 +15,16 @@ export type Cascader001Props = Omit<
   label?: string
   tree?: Cascader001Node[]
   onChange?: (path: string[]) => void
+  /** Подпись пустого пункта списка. */
+  placeholderText?: string
+  /** Подпись перед выбранным путём. */
+  selectedText?: string
+  /** Чем подписан пустой путь. */
+  emptyText?: string
+  /** Шаблон aria-подписи уровня: {label} и {level}. */
+  levelText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,11 +36,12 @@ export type Cascader001Props = Omit<
 // списков непонятно, что именно выбрано.
 const STYLES = `
 :where([data-vibeui-block="cascader-001"]){
---vibeui-cascader-001-bg:oklch(1 0 0);
---vibeui-cascader-001-fg:oklch(0.24 0.014 265);
---vibeui-cascader-001-muted:oklch(0.56 0.014 265);
---vibeui-cascader-001-border:oklch(0.88 0.008 265);
---vibeui-cascader-001-accent:oklch(0.55 0.2 262);
+--vibeui-cascader-001-bg:transparent;
+--vibeui-cascader-001-field:light-dark(oklch(1 0 0),oklch(0.26 0.013 265));
+--vibeui-cascader-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-cascader-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-cascader-001-border:light-dark(oklch(0.88 0.008 265),oklch(0.37 0.012 265));
+--vibeui-cascader-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-cascader-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="cascader-001"]{
@@ -45,7 +56,7 @@ font-family:var(--vibeui-cascader-001-font);color:var(--vibeui-cascader-001-fg);
 [data-vibeui-block="cascader-001"] [data-part="levels"]{display:flex;flex-wrap:wrap;gap:0.375rem}
 [data-vibeui-block="cascader-001"] select{
 flex:1 1 8rem;min-width:0;height:2.25rem;padding:0 0.5rem;
-background:var(--vibeui-cascader-001-bg);color:inherit;
+background:var(--vibeui-cascader-001-field);color:inherit;
 border:1px solid var(--vibeui-cascader-001-border);border-radius:0.5rem;
 font:inherit;font-size:0.8125rem;
 }
@@ -82,6 +93,41 @@ const DEFAULT_TREE: Cascader001Node[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/** Начальный путь считается от дерева, а не зашит подписями. */
+function initialPath(tree: Cascader001Node[]): string[] {
+  const first = tree[0]
+
+  if (!first) {
+    return []
+  }
+
+  const second = first.children?.[0]
+
+  return second ? [first.label, second.label] : [first.label]
+}
+
 function levelOptions(tree: Cascader001Node[], path: string[]) {
   const levels: Cascader001Node[][] = [tree]
   let nodes = tree
@@ -102,13 +148,18 @@ export function Cascader001({
   label = "Раздел каталога",
   tree = DEFAULT_TREE,
   onChange,
+  placeholderText = "Выберите…",
+  selectedText = "Выбрано:",
+  emptyText = "ничего",
+  levelText = "{label}: уровень {level}",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Cascader001Props) {
   const id = useId()
-  const [path, setPath] = useState<string[]>(["Компоненты", "Формы"])
+  const [path, setPath] = useState<string[]>(() => initialPath(tree))
   const levels = levelOptions(tree, path)
 
   const pick = (index: number, value: string) => {
@@ -119,6 +170,12 @@ export function Cascader001({
 
   const palette = {
     ...(accent ? { "--vibeui-cascader-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cascader-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -141,10 +198,12 @@ export function Cascader001({
             <select
               key={index}
               value={path[index] ?? ""}
-              aria-label={`${label}: уровень ${index + 1}`}
+              aria-label={levelText
+                .replace("{label}", label)
+                .replace("{level}", String(index + 1))}
               onChange={(event) => pick(index, event.target.value)}
             >
-              <option value="">Выберите…</option>
+              <option value="">{placeholderText}</option>
               {nodes.map((node) => (
                 <option key={node.label} value={node.label}>
                   {node.label}
@@ -154,7 +213,7 @@ export function Cascader001({
           ))}
         </div>
         <p data-part="path" aria-live="polite">
-          Выбрано: <b>{path.length ? path.join(" → ") : "ничего"}</b>
+          {selectedText} <b>{path.length ? path.join(" → ") : emptyText}</b>
         </p>
       </div>
     </>

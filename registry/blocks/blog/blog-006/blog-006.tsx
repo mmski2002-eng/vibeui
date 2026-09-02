@@ -12,9 +12,13 @@ export type Blog006Related = {
 export type Blog006Props = {
   title?: string
   afterTitle?: string
+  /** Подпись над карточками: {title} — название прочитанной статьи. */
+  afterLabel?: string
   items?: Blog006Related[]
   allLabel?: string
   allHref?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -33,12 +37,12 @@ export type Blog006Props = {
 // приглушённый, заголовки меньше, ни одной цветной заливки во всю ширину.
 const STYLES = `
 :where([data-vibeui-block="blog-006"]){
---vibeui-blog-006-bg:oklch(0.975 0.004 265);
---vibeui-blog-006-card:oklch(1 0 0);
---vibeui-blog-006-fg:oklch(0.2 0.014 265);
---vibeui-blog-006-muted:oklch(0.52 0.014 265);
---vibeui-blog-006-border:oklch(0.9 0.006 265);
---vibeui-blog-006-accent:oklch(0.5 0.16 190);
+--vibeui-blog-006-bg:transparent;
+--vibeui-blog-006-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-blog-006-fg:light-dark(oklch(0.2 0.014 265),oklch(0.95 0.005 265));
+--vibeui-blog-006-muted:light-dark(oklch(0.52 0.014 265),oklch(0.72 0.012 265));
+--vibeui-blog-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-blog-006-accent:light-dark(oklch(0.5 0.16 190),oklch(0.78 0.12 190));
 --vibeui-blog-006-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -135,23 +139,56 @@ const DEFAULT_ITEMS: Blog006Related[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Похожие статьи с объяснением, чем именно они связаны с прочитанной.
  * Один файл, ноль зависимостей, клиентского JS нет.
  */
 export function Blog006({
   title = "Что читать дальше",
   afterTitle = "Контейнерные запросы вместо брейкпоинтов",
+  afterLabel = "После статьи «{title}»",
   items = DEFAULT_ITEMS,
   allLabel = "Весь архив рубрики «Вёрстка»",
   allHref = "#",
+  background = "",
   accent,
   className,
   style,
 }: Blog006Props) {
   const palette = {
     ...(accent ? { "--vibeui-blog-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-blog-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+  // Название выделено внутри фразы, поэтому подпись приходит шаблоном и
+  // режется по метке: перевод волен ставить название куда угодно.
+  const [beforeTitle, afterTitleTail = ""] = afterLabel.split("{title}")
 
   return (
     <>
@@ -168,7 +205,9 @@ export function Blog006({
           <header data-part="head">
             <h2>{title}</h2>
             <p data-part="after">
-              После статьи <b>«{afterTitle}»</b>
+              {beforeTitle}
+              <b>{afterTitle}</b>
+              {afterTitleTail}
             </p>
           </header>
 

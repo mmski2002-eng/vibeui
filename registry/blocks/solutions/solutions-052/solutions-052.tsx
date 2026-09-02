@@ -15,7 +15,24 @@ export type Solutions052Props = {
   hint?: string
   points?: Solutions052Point[]
   foot?: string
+  /** Подписи плиток: revenue, compliance, behind. */
+  statsText?: Record<string, string>
+  /** Заголовки колонок: point, opened, revenue, royalty, compliance. */
+  columnText?: Record<string, string>
+  /** Скрытая подпись шкалы. {revenue} и {plan} подставляются на месте. */
+  barLabel?: string
+  /** Приписка под шкалой, когда план не выполнен. */
+  behindText?: string
+  /** Приписка под шкалой, когда план выполнен. */
+  onPlanText?: string
+  /** Ставка роялти. {rate} — процент ставки. */
+  rateText?: string
+  currency?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,15 +49,15 @@ export type Solutions052Props = {
 // порогам, а не бинарный «ок / не ок».
 const STYLES = `
 :where([data-vibeui-block="solutions-052"]){
---vibeui-solutions-052-bg:oklch(1 0 0);
---vibeui-solutions-052-panel:oklch(0.976 0.004 190);
---vibeui-solutions-052-fg:oklch(0.21 0.014 220);
---vibeui-solutions-052-muted:oklch(0.54 0.014 220);
---vibeui-solutions-052-border:oklch(0.9 0.006 220);
---vibeui-solutions-052-accent:oklch(0.55 0.13 190);
---vibeui-solutions-052-good:oklch(0.58 0.14 152);
---vibeui-solutions-052-warn:oklch(0.68 0.15 85);
---vibeui-solutions-052-risk:oklch(0.57 0.19 30);
+--vibeui-solutions-052-bg:transparent;
+--vibeui-solutions-052-panel:light-dark(oklch(0.976 0.004 190),oklch(0.27 0.012 220));
+--vibeui-solutions-052-fg:light-dark(oklch(0.21 0.014 220),oklch(0.94 0.005 220));
+--vibeui-solutions-052-muted:light-dark(oklch(0.54 0.014 220),oklch(0.69 0.012 220));
+--vibeui-solutions-052-border:light-dark(oklch(0.9 0.006 220),oklch(0.36 0.012 220));
+--vibeui-solutions-052-accent:light-dark(oklch(0.55 0.13 190),oklch(0.74 0.12 190));
+--vibeui-solutions-052-good:light-dark(oklch(0.58 0.14 152),oklch(0.73 0.13 152));
+--vibeui-solutions-052-warn:light-dark(oklch(0.68 0.15 85),oklch(0.8 0.14 85));
+--vibeui-solutions-052-risk:light-dark(oklch(0.57 0.19 30),oklch(0.73 0.16 30));
 --vibeui-solutions-052-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-052-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -191,8 +208,41 @@ const DEFAULT_POINTS: Solutions052Point[] = [
   },
 ]
 
-const money = (value: number) =>
-  `${Math.round(value).toLocaleString("ru-RU")} ₽`
+const STATS_LABEL: Record<string, string> = {
+  revenue: "суммарная выручка",
+  compliance: "среднее соответствие",
+  behind: "точек отстают от плана",
+}
+
+const COLUMN_LABEL: Record<string, string> = {
+  point: "Точка",
+  opened: "Открыта",
+  revenue: "Выручка / план",
+  royalty: "Роялти",
+  compliance: "Соответствие",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const complianceLevel = (value: number): "good" | "warn" | "risk" =>
   value >= 90 ? "good" : value >= 75 ? "warn" : "risk"
@@ -207,10 +257,23 @@ export function Solutions052({
   hint = "42 точки · I квартал",
   points = DEFAULT_POINTS,
   foot = "Метка на шкале — план месяца; закрашенная часть — факт. Роялти считается от факта выручки по ставке точки.",
+  statsText = STATS_LABEL,
+  columnText = COLUMN_LABEL,
+  barLabel = "Выручка {revenue} против плана {plan}",
+  behindText = "· отстаёт от плана",
+  onPlanText = "· план выполнен",
+  rateText = "ставка {rate}%",
+  currency = "₽",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions052Props) {
+  const money = (value: number) =>
+    `${Math.round(value).toLocaleString(locale)} ${currency}`
+  const stat = (key: string) => statsText[key] ?? STATS_LABEL[key]
+  const column = (key: string) => columnText[key] ?? COLUMN_LABEL[key]
   const revenueSum = points.reduce((sum, point) => sum + point.revenue, 0)
   const complianceAvg =
     points.length > 0
@@ -225,6 +288,12 @@ export function Solutions052({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-052-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-052-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -249,15 +318,15 @@ export function Solutions052({
         <div data-part="summary">
           <p data-part="tile">
             <b>{money(revenueSum)}</b>
-            <span>суммарная выручка</span>
+            <span>{stat("revenue")}</span>
           </p>
           <p data-part="tile">
             <b>{complianceAvg}%</b>
-            <span>среднее соответствие</span>
+            <span>{stat("compliance")}</span>
           </p>
           <p data-part="tile">
             <b>{behindCount}</b>
-            <span>точек отстают от плана</span>
+            <span>{stat("behind")}</span>
           </p>
         </div>
 
@@ -265,13 +334,13 @@ export function Solutions052({
           <table>
             <thead>
               <tr>
-                <th scope="col">Точка</th>
-                <th scope="col">Открыта</th>
-                <th scope="col">Выручка / план</th>
+                <th scope="col">{column("point")}</th>
+                <th scope="col">{column("opened")}</th>
+                <th scope="col">{column("revenue")}</th>
                 <th scope="col" data-align="end">
-                  Роялти
+                  {column("royalty")}
                 </th>
-                <th scope="col">Соответствие</th>
+                <th scope="col">{column("compliance")}</th>
               </tr>
             </thead>
             <tbody>
@@ -294,7 +363,9 @@ export function Solutions052({
                       <div
                         data-part="bar"
                         role="img"
-                        aria-label={`Выручка ${money(point.revenue)} против плана ${money(point.plan)}`}
+                        aria-label={barLabel
+                          .replace("{revenue}", money(point.revenue))
+                          .replace("{plan}", money(point.plan))}
                         style={
                           {
                             "--vibeui-solutions-052-fill": `${Math.min(fill, 100)}%`,
@@ -307,7 +378,7 @@ export function Solutions052({
                       </div>
                       <span data-part="bar-label">
                         {money(point.revenue)}{" "}
-                        {behind ? "· отстаёт от плана" : "· план выполнен"}
+                        {behind ? behindText : onPlanText}
                       </span>
                     </td>
                     <td data-align="end">
@@ -315,7 +386,7 @@ export function Solutions052({
                         {money((point.revenue * point.royaltyRate) / 100)}
                       </span>
                       <span data-part="royalty-rate">
-                        ставка {point.royaltyRate}%
+                        {rateText.replace("{rate}", String(point.royaltyRate))}
                       </span>
                     </td>
                     <td>

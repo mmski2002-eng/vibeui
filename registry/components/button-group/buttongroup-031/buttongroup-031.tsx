@@ -15,6 +15,8 @@ export type Buttongroup031Props = Omit<
   defaultValue?: string[]
   label?: string
   name?: string
+  /** Пусто — заливки нет, сцепка ложится на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,12 +29,13 @@ export type Buttongroup031Props = Omit<
 // checkbox: статусы складываются, а не заменяют друг друга.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-031"]){
---vibeui-buttongroup-031-surface:oklch(1 0 0);
---vibeui-buttongroup-031-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-031-muted:oklch(0.57 0.014 265);
---vibeui-buttongroup-031-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-031-accent:oklch(0.45 0.02 265);
---vibeui-buttongroup-031-mark:oklch(0.6 0.02 265);
+--vibeui-buttongroup-031-surface:transparent;
+--vibeui-buttongroup-031-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-031-muted:light-dark(oklch(0.57 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-031-border:light-dark(oklch(0.89 0.008 265),oklch(0.39 0.012 265));
+--vibeui-buttongroup-031-on:light-dark(oklch(0.965 0.004 265),oklch(0.33 0.014 265));
+--vibeui-buttongroup-031-accent:light-dark(oklch(0.45 0.02 265),oklch(0.82 0.02 265));
+--vibeui-buttongroup-031-mark:light-dark(oklch(0.6 0.02 265),oklch(0.72 0.02 265));
 --vibeui-buttongroup-031-radius:0.625rem;
 --vibeui-buttongroup-031-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -83,7 +86,7 @@ box-shadow:inset 0 0 0 2.5px var(--vibeui-buttongroup-031-mark);
 [data-vibeui-block="buttongroup-031"] [data-part="chip"]:hover{color:var(--vibeui-buttongroup-031-fg)}
 [data-vibeui-block="buttongroup-031"] [data-part="chip"]:has(input:checked){
 z-index:1;
-background:oklch(0.965 0.004 265);
+background:var(--vibeui-buttongroup-031-on);
 border-color:var(--vibeui-buttongroup-031-accent);
 color:var(--vibeui-buttongroup-031-fg);
 }
@@ -113,6 +116,28 @@ const DEFAULT_STATUSES: Buttongroup031Status[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Фильтр статусов, где метка различается формой, а не только цветом.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -121,6 +146,7 @@ export function Buttongroup031({
   defaultValue = ["new", "work"],
   label = "Статусы задач",
   name = "buttongroup-031",
+  background = "",
   accent,
   className,
   style,
@@ -128,6 +154,12 @@ export function Buttongroup031({
 }: Buttongroup031Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-031-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-031-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

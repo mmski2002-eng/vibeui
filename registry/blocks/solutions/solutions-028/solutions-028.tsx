@@ -13,7 +13,25 @@ export type Solutions028Props = {
   title?: string
   hint?: string
   items?: Solutions028Item[]
+  /** Счётчик в шапке. {count} — расхождений, {total} — позиций. */
+  mismatchText?: string
+  /** Подписи плиток сводки: shortage, overage, mismatched. */
+  summaryText?: Record<string, string>
+  /** Заголовки колонок таблицы. */
+  columnText?: Record<string, string>
+  /** Подписи статусов строки: short, over, none. */
+  statusText?: Record<string, string>
+  /** Единица измерения рядом с расхождением. */
+  unitText?: string
+  /** Скрытая подпись полосы. {name} — позиция, {delta} — расхождение со знаком. */
+  varianceLabel?: string
+  footNote?: string
+  currency?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -28,14 +46,14 @@ export type Solutions028Props = {
 // метки, чтобы не зависеть только от цвета столбика.
 const STYLES = `
 :where([data-vibeui-block="solutions-028"]){
---vibeui-solutions-028-bg:oklch(1 0 0);
---vibeui-solutions-028-panel:oklch(0.977 0.004 255);
---vibeui-solutions-028-fg:oklch(0.21 0.014 265);
---vibeui-solutions-028-muted:oklch(0.54 0.014 265);
---vibeui-solutions-028-border:oklch(0.9 0.006 265);
---vibeui-solutions-028-accent:oklch(0.5 0.15 250);
---vibeui-solutions-028-short:oklch(0.57 0.19 25);
---vibeui-solutions-028-over:oklch(0.55 0.14 152);
+--vibeui-solutions-028-bg:transparent;
+--vibeui-solutions-028-panel:light-dark(oklch(0.977 0.004 255),oklch(0.27 0.011 265));
+--vibeui-solutions-028-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-028-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-028-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-028-accent:light-dark(oklch(0.5 0.15 250),oklch(0.73 0.13 250));
+--vibeui-solutions-028-short:light-dark(oklch(0.57 0.19 25),oklch(0.71 0.17 25));
+--vibeui-solutions-028-over:light-dark(oklch(0.55 0.14 152),oklch(0.71 0.14 152));
 --vibeui-solutions-028-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-028-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -196,8 +214,52 @@ const DEFAULT_ITEMS: Solutions028Item[] = [
   },
 ]
 
-const formatRub = (value: number) =>
-  `${value < 0 ? "−" : ""}${Math.abs(Math.round(value)).toLocaleString("ru-RU")} ₽`
+const SUMMARY_LABEL: Record<string, string> = {
+  shortage: "сумма недостачи",
+  overage: "сумма излишка",
+  mismatched: "позиций с расхождением",
+}
+
+const COLUMN_LABEL: Record<string, string> = {
+  item: "Позиция",
+  location: "Место хранения",
+  counted: "Учётное",
+  actual: "Фактическое",
+  variance: "Расхождение",
+  sum: "Сумма отклонения",
+  status: "Статус",
+}
+
+const STATUS_LABEL: Record<string, string> = {
+  short: "недостача",
+  over: "излишек",
+  none: "совпадает",
+}
+
+const money = (value: number, currency: string, locale: string) =>
+  `${value < 0 ? "−" : ""}${Math.abs(Math.round(value)).toLocaleString(locale)} ${currency}`
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Инвентаризация с расхождениями: недостача и излишек считаются из учётного
@@ -208,7 +270,17 @@ export function Solutions028({
   title = "Инвентаризация: расхождения",
   hint = "Склад электротоваров · пересчёт от 3 марта 2026",
   items = DEFAULT_ITEMS,
+  mismatchText = "Расхождений {count} из {total} позиций",
+  summaryText = SUMMARY_LABEL,
+  columnText = COLUMN_LABEL,
+  statusText = STATUS_LABEL,
+  unitText = "шт",
+  varianceLabel = "Расхождение по {name}: {delta} шт",
+  footNote = "Расхождение и сумма отклонения посчитаны из учётного и фактического количества — метку статуса нельзя проставить вручную мимо чисел.",
+  currency = "₽",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions028Props) {
@@ -234,8 +306,17 @@ export function Solutions028({
     ...rows.map((row) => Math.abs(row.variance)),
   )
 
+  const column = (key: string) => columnText[key] ?? COLUMN_LABEL[key]
+  const summary = (key: string) => summaryText[key] ?? SUMMARY_LABEL[key]
+
   const palette = {
     ...(accent ? { "--vibeui-solutions-028-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-028-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -256,22 +337,24 @@ export function Solutions028({
             <p data-part="hint">{hint}</p>
           </div>
           <p data-part="hint">
-            Расхождений {mismatched} из {items.length} позиций
+            {mismatchText
+              .replace("{count}", String(mismatched))
+              .replace("{total}", String(items.length))}
           </p>
         </header>
 
         <div data-part="summary">
           <p data-part="tile" data-tile="short">
-            <b>{formatRub(shortageSum)}</b>
-            <span>сумма недостачи</span>
+            <b>{money(shortageSum, currency, locale)}</b>
+            <span>{summary("shortage")}</span>
           </p>
           <p data-part="tile" data-tile="over">
-            <b>{formatRub(overageSum)}</b>
-            <span>сумма излишка</span>
+            <b>{money(overageSum, currency, locale)}</b>
+            <span>{summary("overage")}</span>
           </p>
           <p data-part="tile">
             <b>{mismatched}</b>
-            <span>позиций с расхождением</span>
+            <span>{summary("mismatched")}</span>
           </p>
         </div>
 
@@ -279,19 +362,19 @@ export function Solutions028({
           <table>
             <thead>
               <tr>
-                <th scope="col">Позиция</th>
-                <th scope="col">Место хранения</th>
+                <th scope="col">{column("item")}</th>
+                <th scope="col">{column("location")}</th>
                 <th scope="col" data-align="end">
-                  Учётное
+                  {column("counted")}
                 </th>
                 <th scope="col" data-align="end">
-                  Фактическое
+                  {column("actual")}
                 </th>
-                <th scope="col">Расхождение</th>
+                <th scope="col">{column("variance")}</th>
                 <th scope="col" data-align="end">
-                  Сумма отклонения
+                  {column("sum")}
                 </th>
-                <th scope="col">Статус</th>
+                <th scope="col">{column("status")}</th>
               </tr>
             </thead>
             <tbody>
@@ -299,12 +382,8 @@ export function Solutions028({
                 const barPercent = Math.round(
                   (Math.abs(variance) / maxAbsVariance) * 100,
                 )
-                const statusLabel =
-                  dir === "short"
-                    ? "недостача"
-                    : dir === "over"
-                      ? "излишек"
-                      : "совпадает"
+                const statusLabel = statusText[dir] ?? STATUS_LABEL[dir]
+                const delta = `${variance > 0 ? "+" : ""}${variance}`
 
                 return (
                   <tr key={item.sku} data-dir={dir}>
@@ -321,7 +400,9 @@ export function Solutions028({
                       <span
                         data-part="diverge"
                         role="img"
-                        aria-label={`Расхождение по ${item.name}: ${variance > 0 ? "+" : ""}${variance} шт`}
+                        aria-label={varianceLabel
+                          .replace("{name}", item.name)
+                          .replace("{delta}", delta)}
                       >
                         <span
                           data-part="bar"
@@ -331,11 +412,10 @@ export function Solutions028({
                         />
                       </span>
                       <span data-part="delta">
-                        {variance > 0 ? "+" : ""}
-                        {variance} шт
+                        {delta} {unitText}
                       </span>
                     </td>
-                    <td data-align="end">{formatRub(sum)}</td>
+                    <td data-align="end">{money(sum, currency, locale)}</td>
                     <td>
                       <span data-part="status">{statusLabel}</span>
                     </td>
@@ -346,10 +426,7 @@ export function Solutions028({
           </table>
         </div>
 
-        <p data-part="foot">
-          Расхождение и сумма отклонения посчитаны из учётного и фактического
-          количества — метку статуса нельзя проставить вручную мимо чисел.
-        </p>
+        <p data-part="foot">{footNote}</p>
       </section>
     </>
   )

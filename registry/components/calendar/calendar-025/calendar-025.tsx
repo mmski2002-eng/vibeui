@@ -18,6 +18,16 @@ export type Calendar025Props = Omit<
   people?: Calendar025Person[]
   density?: "compact" | "comfortable"
   locale?: string
+  /** Полные названия смен: компонент несёт русские, проект подставляет свои. */
+  shiftText?: Record<Calendar025Shift, string>
+  /** Короткие коды смен в клетке. */
+  shiftCode?: Record<Calendar025Shift, string>
+  /** Заголовок первой колонки. */
+  staffLabel?: string
+  /** Подпись колонки итога для скринридера. */
+  totalLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,17 +37,17 @@ export type Calendar025Props = Omit<
 // видно как пустую колонку, а перегруз — как большое число в итоге.
 const STYLES = `
 :where([data-vibeui-block="calendar-025"]){
---vibeui-calendar-025-bg:oklch(1 0 0);
---vibeui-calendar-025-fg:oklch(0.23 0.014 250);
---vibeui-calendar-025-muted:oklch(0.57 0.014 250);
---vibeui-calendar-025-border:oklch(0.91 0.006 250);
---vibeui-calendar-025-soft:oklch(0.97 0.006 250);
---vibeui-calendar-025-day:oklch(0.93 0.06 95);
---vibeui-calendar-025-dayfg:oklch(0.4 0.09 75);
---vibeui-calendar-025-night:oklch(0.9 0.05 270);
---vibeui-calendar-025-nightfg:oklch(0.38 0.11 275);
---vibeui-calendar-025-leave:oklch(0.93 0.05 160);
---vibeui-calendar-025-leavefg:oklch(0.4 0.08 160);
+--vibeui-calendar-025-bg:transparent;
+--vibeui-calendar-025-fg:light-dark(oklch(0.23 0.014 250),oklch(0.94 0.005 250));
+--vibeui-calendar-025-muted:light-dark(oklch(0.57 0.014 250),oklch(0.68 0.012 250));
+--vibeui-calendar-025-border:light-dark(oklch(0.91 0.006 250),oklch(0.34 0.012 250));
+--vibeui-calendar-025-soft:light-dark(oklch(0.97 0.006 250),oklch(0.27 0.01 250));
+--vibeui-calendar-025-day:light-dark(oklch(0.93 0.06 95),oklch(0.43 0.07 95));
+--vibeui-calendar-025-dayfg:light-dark(oklch(0.4 0.09 75),oklch(0.92 0.06 90));
+--vibeui-calendar-025-night:light-dark(oklch(0.9 0.05 270),oklch(0.41 0.08 275));
+--vibeui-calendar-025-nightfg:light-dark(oklch(0.38 0.11 275),oklch(0.9 0.06 275));
+--vibeui-calendar-025-leave:light-dark(oklch(0.93 0.05 160),oklch(0.41 0.06 160));
+--vibeui-calendar-025-leavefg:light-dark(oklch(0.4 0.08 160),oklch(0.9 0.05 160));
 --vibeui-calendar-025-cell:2.1rem;
 --vibeui-calendar-025-radius:0.75rem;
 --vibeui-calendar-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -112,12 +122,21 @@ width:0.85rem;height:0.85rem;border-radius:0.25rem;background:var(--vibeui-calen
 [data-vibeui-block="calendar-025"] [data-part="chip"][data-shift="leave"]{background:var(--vibeui-calendar-025-leave)}
 `
 
-const MARKS: Record<Calendar025Shift, { short: string; title: string }> = {
-  day: { short: "Д", title: "дневная смена" },
-  night: { short: "Н", title: "ночная смена" },
-  off: { short: "·", title: "выходной" },
-  leave: { short: "О", title: "отпуск" },
+const SHIFT_CODE: Record<Calendar025Shift, string> = {
+  day: "Д",
+  night: "Н",
+  off: "·",
+  leave: "О",
 }
+
+const SHIFT_TEXT: Record<Calendar025Shift, string> = {
+  day: "дневная смена",
+  night: "ночная смена",
+  off: "выходной",
+  leave: "отпуск",
+}
+
+const SHIFT_ORDER: Calendar025Shift[] = ["day", "night", "off", "leave"]
 
 const CREW: Calendar025Person[] = [
   {
@@ -143,6 +162,28 @@ const CREW: Calendar025Person[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * График смен: сотрудники по строкам, дни недели по столбцам.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -152,6 +193,11 @@ export function Calendar025({
   people = CREW,
   density = "compact",
   locale = "ru-RU",
+  shiftText = SHIFT_TEXT,
+  shiftCode = SHIFT_CODE,
+  staffLabel = "Сотрудник",
+  totalLabel = "Смен",
+  background = "",
   accent,
   className,
   style,
@@ -173,6 +219,12 @@ export function Calendar025({
 
   const palette = {
     ...(accent ? { "--vibeui-calendar-025-night": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-025-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -199,7 +251,7 @@ export function Calendar025({
             <thead>
               <tr>
                 <th data-part="who" scope="col">
-                  Сотрудник
+                  {staffLabel}
                 </th>
                 {days.map((date, index) => (
                   <th
@@ -213,7 +265,7 @@ export function Calendar025({
                     {date.getDate()}
                   </th>
                 ))}
-                <th data-part="total" scope="col" abbr="Смен">
+                <th data-part="total" scope="col" abbr={totalLabel}>
                   Σ
                 </th>
               </tr>
@@ -230,10 +282,14 @@ export function Calendar025({
                       <span
                         data-part="cell"
                         data-shift={shift}
-                        title={`${person.name}: ${MARKS[shift].title}`}
+                        title={`${person.name}: ${shiftText[shift] ?? SHIFT_TEXT[shift]}`}
                       >
-                        <span aria-hidden="true">{MARKS[shift].short}</span>
-                        <span data-part="sr">{MARKS[shift].title}</span>
+                        <span aria-hidden="true">
+                          {shiftCode[shift] ?? SHIFT_CODE[shift]}
+                        </span>
+                        <span data-part="sr">
+                          {shiftText[shift] ?? SHIFT_TEXT[shift]}
+                        </span>
                       </span>
                     </td>
                   ))}
@@ -250,14 +306,12 @@ export function Calendar025({
           </table>
         </div>
         <p data-part="legend">
-          {(["day", "night", "off", "leave"] as Calendar025Shift[]).map(
-            (shift) => (
-              <span key={shift} data-part="key">
-                <span data-part="chip" data-shift={shift} aria-hidden="true" />
-                {MARKS[shift].title}
-              </span>
-            ),
-          )}
+          {SHIFT_ORDER.map((shift) => (
+            <span key={shift} data-part="key">
+              <span data-part="chip" data-shift={shift} aria-hidden="true" />
+              {shiftText[shift] ?? SHIFT_TEXT[shift]}
+            </span>
+          ))}
         </p>
       </section>
     </>

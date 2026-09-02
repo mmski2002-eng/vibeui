@@ -17,6 +17,10 @@ export type Filters010Props = Omit<
   defaultSelected?: string[]
   resetLabel?: string
   onChange?: (selected: string[]) => void
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,16 +31,17 @@ export type Filters010Props = Omit<
 // появляется сразу от одной фишки — тут это единственный способ снять выбор.
 const STYLES = `
 :where([data-vibeui-block="filters-010"]){
---vibeui-filters-010-surface:oklch(1 0 0);
---vibeui-filters-010-fill:oklch(0.975 0.004 265);
---vibeui-filters-010-fg:oklch(0.23 0.014 265);
---vibeui-filters-010-muted:oklch(0.55 0.014 265);
---vibeui-filters-010-border:oklch(0.89 0.008 265);
---vibeui-filters-010-shell:oklch(0.91 0.006 265);
---vibeui-filters-010-accent:oklch(0.55 0.17 300);
+--vibeui-filters-010-surface:transparent;
+--vibeui-filters-010-fill:light-dark(oklch(0.975 0.004 265),oklch(0.29 0.012 265));
+--vibeui-filters-010-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-filters-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-filters-010-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.014 265));
+--vibeui-filters-010-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-filters-010-accent:light-dark(oklch(0.55 0.17 300),oklch(0.76 0.14 300));
+--vibeui-filters-010-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 300));
 --vibeui-filters-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: панель показывают поверх любого фона. */
+/* Подложки по умолчанию нет: панель ложится на фон страницы. */
 [data-vibeui-block="filters-010"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:26rem;box-sizing:border-box;padding:0.875rem;
@@ -77,7 +82,7 @@ transition:border-color .16s ease,background-color .16s ease,color .16s ease;
 outline:2px solid var(--vibeui-filters-010-accent);outline-offset:2px;
 }
 [data-vibeui-block="filters-010"] [data-part="chip"][aria-pressed="true"]{
-border-color:var(--vibeui-filters-010-accent);color:oklch(1 0 0);
+border-color:var(--vibeui-filters-010-accent);color:var(--vibeui-filters-010-on-accent);
 background:var(--vibeui-filters-010-accent);
 }
 [data-vibeui-block="filters-010"] [data-part="reset"]{
@@ -100,6 +105,51 @@ const DEFAULT_GROUPS: Filters010Group[] = [
   { title: "Лицензия", options: ["MIT", "Коммерческая"] },
 ]
 
+/** Русский словарь по умолчанию: установленный файл не меняет язык проекта. */
+const DEFAULT_LABELS: Record<string, string> = {
+  empty: "Ничего не выбрано",
+  selected: "Выбрано: {count}",
+}
+
+function label(
+  labels: Record<string, string>,
+  key: string,
+  values?: Record<string, string>,
+): string {
+  const template = labels[key] ?? DEFAULT_LABELS[key] ?? ""
+
+  if (!values) {
+    return template
+  }
+
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, name: string) => values[name] ?? match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Панель фильтров-переключателей: сама фишка включает и выключает значение,
  * без отдельного списка чекбоксов. Один файл, ноль зависимостей, своя палитра.
@@ -110,6 +160,8 @@ export function Filters010({
   defaultSelected = [],
   resetLabel = "Сбросить всё",
   onChange,
+  labels = DEFAULT_LABELS,
+  background = "",
   accent,
   className,
   style,
@@ -119,6 +171,12 @@ export function Filters010({
 
   const palette = {
     ...(accent ? { "--vibeui-filters-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-filters-010-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -150,8 +208,8 @@ export function Filters010({
           <h3>{title}</h3>
           <p data-part="count" role="status">
             {selected.length === 0
-              ? "Ничего не выбрано"
-              : `Выбрано: ${selected.length}`}
+              ? label(labels, "empty")
+              : label(labels, "selected", { count: String(selected.length) })}
           </p>
         </div>
 

@@ -9,6 +9,12 @@ export type Phoneinput006Props = Omit<
   error?: string
   defaultValue?: string
   example?: string
+  /** Подпись строки с набранным номером. */
+  typedLabel?: string
+  /** Подпись строки с ожидаемым номером. */
+  expectedLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,16 +23,19 @@ export type Phoneinput006Props = Omit<
 // пропущенную цифру видно глазами. Введённое значение при этом остаётся
 // в поле: очищать его при ошибке — самый быстрый способ заставить
 // человека уйти с формы.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="phoneinput-006"]){
---vibeui-phoneinput-006-surface:oklch(1 0 0);
---vibeui-phoneinput-006-surface-border:oklch(0.91 0.006 265);
---vibeui-phoneinput-006-fg:oklch(0.24 0.016 265);
---vibeui-phoneinput-006-muted:oklch(0.54 0.014 265);
---vibeui-phoneinput-006-field-border:oklch(0.85 0.01 265);
---vibeui-phoneinput-006-accent:oklch(0.55 0.2 262);
---vibeui-phoneinput-006-error:oklch(0.55 0.2 25);
---vibeui-phoneinput-006-error-soft:oklch(0.96 0.03 25);
+--vibeui-phoneinput-006-surface:transparent;
+--vibeui-phoneinput-006-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-phoneinput-006-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-phoneinput-006-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-phoneinput-006-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-phoneinput-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-phoneinput-006-error:light-dark(oklch(0.55 0.2 25),oklch(0.75 0.16 25));
+--vibeui-phoneinput-006-error-soft:light-dark(oklch(0.96 0.03 25),oklch(0.3 0.05 25));
 --vibeui-phoneinput-006-radius:0.625rem;
 --vibeui-phoneinput-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-phoneinput-006-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
@@ -89,6 +98,29 @@ color:var(--vibeui-phoneinput-006-fg);
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Телефон в состоянии ошибки: рядом показаны набранное и ожидаемое, а
  * введённое значение не стирается. Один файл, ноль зависимостей.
  */
@@ -97,6 +129,9 @@ export function Phoneinput006({
   error = "Номер не похож на настоящий: после кода +7 должно быть десять цифр, а набрано семь.",
   defaultValue = "+7 999 12-34",
   example = "+7 999 123-45-67",
+  typedLabel = "набрано",
+  expectedLabel = "нужно",
+  background = "",
   accent,
   className,
   style,
@@ -106,6 +141,12 @@ export function Phoneinput006({
   const errorId = `${id}-error`
   const palette = {
     ...(accent ? { "--vibeui-phoneinput-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-phoneinput-006-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -134,9 +175,9 @@ export function Phoneinput006({
         <div data-part="error" id={errorId}>
           <span>{error}</span>
           <span data-part="compare">
-            <span data-part="key">набрано</span>
+            <span data-part="key">{typedLabel}</span>
             <samp>{defaultValue}</samp>
-            <span data-part="key">нужно</span>
+            <span data-part="key">{expectedLabel}</span>
             <samp>{example}</samp>
           </span>
         </div>

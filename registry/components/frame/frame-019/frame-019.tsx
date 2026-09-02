@@ -5,6 +5,12 @@ export type Frame019Props = Omit<
   "title"
 > & {
   caption?: string
+  /** Надпись пустого кадра: компонент несёт русскую. */
+  stub?: string
+  /** Первый цвет градиентной рамки; от него же берётся свечение. */
+  accent?: string
+  /** Заливка кадра под содержимым: она держит середину градиентной рамки. */
+  background?: string
   children?: ReactNode
 }
 
@@ -17,13 +23,13 @@ export type Frame019Props = Omit<
 // Едва заметная пульсация свечения гасится по prefers-reduced-motion.
 const STYLES = `
 :where([data-vibeui-block="frame-019"]){
---vibeui-frame-019-bg:oklch(1 0 0);
---vibeui-frame-019-fg:oklch(0.24 0.014 265);
---vibeui-frame-019-muted:oklch(0.55 0.014 265);
---vibeui-frame-019-border-a:oklch(0.72 0.19 320);
---vibeui-frame-019-border-b:oklch(0.75 0.17 230);
---vibeui-frame-019-glow-a:oklch(0.72 0.19 320 / 0.55);
---vibeui-frame-019-glow-b:oklch(0.75 0.17 230 / 0.4);
+--vibeui-frame-019-bg:light-dark(oklch(1 0 0),oklch(0.23 0.012 265));
+--vibeui-frame-019-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-frame-019-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-frame-019-border-a:light-dark(oklch(0.72 0.19 320),oklch(0.78 0.17 320));
+--vibeui-frame-019-border-b:light-dark(oklch(0.75 0.17 230),oklch(0.8 0.15 230));
+--vibeui-frame-019-glow-a:color-mix(in oklab,var(--vibeui-frame-019-border-a) 55%,transparent);
+--vibeui-frame-019-glow-b:color-mix(in oklab,var(--vibeui-frame-019-border-b) 40%,transparent);
 --vibeui-frame-019-radius:1rem;
 --vibeui-frame-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -84,17 +90,53 @@ color:var(--vibeui-frame-019-muted);
 `
 
 /**
+ * Ветка темы для заданной заливки. Без неё светлая заливка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кадр с рамкой-градиентом и мягким свечением под ним: сплошная заливка
  * держит середину рамки, размытый слой позади — эффект подсветки.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Frame019({
   caption = "Кадр с рамкой-градиентом и мягким свечением под ним",
+  stub = "Содержимое кадра",
+  accent,
+  background = "",
   children,
   className,
   style,
   ...props
 }: Frame019Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-frame-019-border-a": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-frame-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-frame-019" precedence="medium">
@@ -104,13 +146,13 @@ export function Frame019({
         {...props}
         data-vibeui-block="frame-019"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="stage">
           <div data-part="glow" aria-hidden="true" />
           <div data-part="border">
             <div data-part="card">
-              {children ?? <div data-part="stub">Содержимое кадра</div>}
+              {children ?? <div data-part="stub">{stub}</div>}
             </div>
           </div>
         </div>

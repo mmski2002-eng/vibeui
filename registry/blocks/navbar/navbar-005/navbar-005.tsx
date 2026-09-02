@@ -12,6 +12,14 @@ export type Navbar005Props = {
   searchHint?: string
   actionLabel?: string
   actionHref?: string
+  /** Буква в знаке: компонент несёт русскую. */
+  markLabel?: string
+  /** Подпись поля поиска для скринридера: компонент несёт русскую. */
+  searchLabel?: string
+  /** Подпись навигации для скринридера: компонент несёт русскую. */
+  navLabel?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -21,15 +29,18 @@ export type Navbar005Props = {
 // свободную ширину, а разделы ужимаются вокруг него. Поле — настоящая форма
 // с role="search", лупой из псевдоэлемента и подсказкой горячей клавиши,
 // поэтому блок работает и без JS: отправка уходит на страницу поиска.
+//
+// Тема берётся из color-scheme окружения через light-dark(): шапка темнеет
+// вместе с контекстом и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="navbar-005"]){
---vibeui-navbar-005-bg:oklch(0.99 0.002 265);
---vibeui-navbar-005-field:oklch(1 0 0);
---vibeui-navbar-005-ink:oklch(0.24 0.014 265);
---vibeui-navbar-005-muted:oklch(0.55 0.014 265);
---vibeui-navbar-005-border:oklch(0.9 0.006 265);
---vibeui-navbar-005-accent:oklch(0.55 0.17 232);
---vibeui-navbar-005-accent-fg:oklch(0.99 0 0);
+--vibeui-navbar-005-bg:transparent;
+--vibeui-navbar-005-field:light-dark(oklch(1 0 0),oklch(0.28 0.014 265));
+--vibeui-navbar-005-ink:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-navbar-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-navbar-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.011 265));
+--vibeui-navbar-005-accent:light-dark(oklch(0.55 0.17 232),oklch(0.74 0.14 232));
+--vibeui-navbar-005-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.03 232));
 --vibeui-navbar-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -80,7 +91,7 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-navbar-005-accent) 22%,tran
 [data-vibeui-block="navbar-005"] [data-part="kbd"]{
 position:absolute;right:0.625rem;display:inline-flex;align-items:center;height:1.375rem;padding:0 0.4375rem;
 border:1px solid var(--vibeui-navbar-005-border);border-radius:0.375rem;
-background:var(--vibeui-navbar-005-bg);color:var(--vibeui-navbar-005-muted);
+background:var(--vibeui-navbar-005-field);color:var(--vibeui-navbar-005-muted);
 font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;font-size:0.6875rem;
 pointer-events:none;
 }
@@ -115,6 +126,28 @@ const DEFAULT_LINKS: Navbar005Link[] = [
   { label: "Сообщество", href: "#community" },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Шапка вокруг поиска: поле в середине забирает всю свободную ширину. */
 export function Navbar005({
   brand = "Справочник",
@@ -123,12 +156,22 @@ export function Navbar005({
   searchHint = "/",
   actionLabel = "Войти",
   actionHref = "#login",
+  markLabel = "С",
+  searchLabel = "Поиск по сайту",
+  navLabel = "Разделы",
+  background = "",
   accent,
   className,
   style,
 }: Navbar005Props) {
   const palette = {
     ...(accent ? { "--vibeui-navbar-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-navbar-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -145,7 +188,7 @@ export function Navbar005({
         <div data-part="shell">
           <a data-part="brand" href="#top">
             <span data-part="mark" aria-hidden="true">
-              С
+              {markLabel}
             </span>
             {brand}
           </a>
@@ -156,11 +199,11 @@ export function Navbar005({
               type="search"
               name="q"
               placeholder={searchPlaceholder}
-              aria-label="Поиск по сайту"
+              aria-label={searchLabel}
             />
             <kbd data-part="kbd">{searchHint}</kbd>
           </form>
-          <nav data-part="links" aria-label="Разделы">
+          <nav data-part="links" aria-label={navLabel}>
             {links.map((link) => (
               <a key={link.href} href={link.href}>
                 {link.label}

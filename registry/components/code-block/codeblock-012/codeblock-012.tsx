@@ -8,23 +8,32 @@ export type Codeblock012Props = Omit<
   output?: string[]
   exitCode?: number
   duration?: string
+  /** Подпись блока для скринридера. */
+  blockLabel?: string
+  /** Подписи исхода: ключи ok и fail. */
+  statusText?: Record<string, string>
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: команда и её вывод — это две разные вещи, и они разведены
 // подложкой. Команду можно выделить и вставить в терминал, не зацепив ответ;
 // код возврата вынесен в подвал и красится по успеху, а не по угадыванию.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, а вывод отделён от команды полупрозрачной накладкой.
 const STYLES = `
 :where([data-vibeui-block="codeblock-012"]){
---vibeui-codeblock-012-bg:oklch(0.18 0.012 265);
---vibeui-codeblock-012-out-bg:oklch(0.23 0.014 265);
---vibeui-codeblock-012-fg:oklch(0.94 0.006 265);
---vibeui-codeblock-012-muted:oklch(0.7 0.014 265);
---vibeui-codeblock-012-border:oklch(1 0 0 / 12%);
---vibeui-codeblock-012-prompt:oklch(0.78 0.13 200);
---vibeui-codeblock-012-ok:oklch(0.84 0.15 152);
---vibeui-codeblock-012-ok-bg:oklch(0.5 0.13 152 / 24%);
---vibeui-codeblock-012-bad:oklch(0.76 0.18 25);
---vibeui-codeblock-012-bad-bg:oklch(0.5 0.16 25 / 24%);
+--vibeui-codeblock-012-bg:transparent;
+--vibeui-codeblock-012-out-bg:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
+--vibeui-codeblock-012-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.006 265));
+--vibeui-codeblock-012-muted:light-dark(oklch(0.5 0.016 265),oklch(0.7 0.014 265));
+--vibeui-codeblock-012-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
+--vibeui-codeblock-012-prompt:light-dark(oklch(0.5 0.12 200),oklch(0.78 0.13 200));
+--vibeui-codeblock-012-ok:light-dark(oklch(0.48 0.15 152),oklch(0.84 0.15 152));
+--vibeui-codeblock-012-ok-bg:light-dark(oklch(0.76 0.15 152 / 28%),oklch(0.5 0.13 152 / 24%));
+--vibeui-codeblock-012-bad:light-dark(oklch(0.5 0.19 25),oklch(0.76 0.18 25));
+--vibeui-codeblock-012-bad-bg:light-dark(oklch(0.76 0.17 25 / 26%),oklch(0.5 0.16 25 / 24%));
 --vibeui-codeblock-012-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -77,17 +86,57 @@ const OUTPUT = [
   "Готово за 1.9 s",
 ]
 
+const STATUS_TEXT: Record<string, string> = {
+  ok: "успешно",
+  fail: "с ошибкой",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Команда и её вывод: разные подложки, код возврата в подвале. */
 export function Codeblock012({
   command = "npm run registry:build",
   output = OUTPUT,
   exitCode = 0,
   duration = "1.9 s",
+  blockLabel = "Команда и её вывод",
+  statusText = STATUS_TEXT,
+  background = "",
   className,
   style,
   ...props
 }: Codeblock012Props) {
   const ok = exitCode === 0
+  const outcome = ok ? "ok" : "fail"
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -98,8 +147,8 @@ export function Codeblock012({
         {...props}
         data-vibeui-block="codeblock-012"
         className={className}
-        style={style as CSSProperties}
-        aria-label="Команда и её вывод"
+        style={palette}
+        aria-label={blockLabel}
       >
         <pre data-part="command">
           <code>{command}</code>
@@ -111,7 +160,7 @@ export function Codeblock012({
           <span data-part="code" data-ok={ok || undefined}>
             exit {exitCode}
           </span>
-          <span>{ok ? "успешно" : "с ошибкой"}</span>
+          <span>{statusText[outcome] ?? STATUS_TEXT[outcome]}</span>
           <span>· {duration}</span>
         </p>
       </section>

@@ -22,7 +22,15 @@ export type Pricing016Props = {
   promos?: Pricing016Promo[]
   hint?: string
   action?: { label: string; href: string }
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
+  /** Ответ на неизвестный код. Плейсхолдер {code}. */
+  notFoundText?: string
+  /** Ответ на принятый код. Плейсхолдер {caption}. */
+  appliedText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -35,15 +43,15 @@ export type Pricing016Props = {
 // озвучивается как удалённая, новая стоит рядом обычным текстом.
 const STYLES = `
 :where([data-vibeui-block="pricing-016"]){
---vibeui-pricing-016-bg:oklch(0.98 0.004 300);
---vibeui-pricing-016-fg:oklch(0.2 0.014 300);
---vibeui-pricing-016-muted:oklch(0.51 0.014 300);
---vibeui-pricing-016-card:oklch(1 0 0);
---vibeui-pricing-016-line:oklch(0.89 0.008 300);
---vibeui-pricing-016-accent:oklch(0.5 0.18 305);
---vibeui-pricing-016-accent-fg:oklch(0.99 0 0);
---vibeui-pricing-016-ok:oklch(0.5 0.13 150);
---vibeui-pricing-016-bad:oklch(0.53 0.16 25);
+--vibeui-pricing-016-bg:transparent;
+--vibeui-pricing-016-fg:light-dark(oklch(0.2 0.014 300),oklch(0.94 0.006 300));
+--vibeui-pricing-016-muted:light-dark(oklch(0.51 0.014 300),oklch(0.7 0.012 300));
+--vibeui-pricing-016-card:light-dark(oklch(1 0 0),oklch(0.25 0.013 300));
+--vibeui-pricing-016-line:light-dark(oklch(0.89 0.008 300),oklch(0.37 0.013 300));
+--vibeui-pricing-016-accent:light-dark(oklch(0.5 0.18 305),oklch(0.75 0.15 305));
+--vibeui-pricing-016-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.19 0.03 305));
+--vibeui-pricing-016-ok:light-dark(oklch(0.5 0.13 150),oklch(0.78 0.14 150));
+--vibeui-pricing-016-bad:light-dark(oklch(0.53 0.16 25),oklch(0.75 0.15 25));
 --vibeui-pricing-016-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-pricing-016-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;
@@ -123,6 +131,39 @@ const DEFAULT_PROMOS: Pricing016Promo[] = [
 
 const MONEY = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 })
 
+const DEFAULT_LABELS: Record<string, string> = {
+  field: "Промокод",
+  empty: "Введите промокод",
+}
+
+function fill(template: string, values: Record<string, string>): string {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? values[key] : match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Блок скидки по промокоду: проверка кода на месте, результат объявляется через role="status". */
 export function Pricing016({
   eyebrow = "Промокод",
@@ -137,7 +178,11 @@ export function Pricing016({
   promos = DEFAULT_PROMOS,
   hint = "Промокод действует на первую оплату и не суммируется с другими скидками.",
   action = { label: "Перейти к оплате", href: "#" },
+  labels = DEFAULT_LABELS,
+  notFoundText = "Код «{code}» не найден или уже использован",
+  appliedText = "{caption} применена",
   accent,
+  background = "",
   className,
   style,
 }: Pricing016Props) {
@@ -146,8 +191,16 @@ export function Pricing016({
   const [applied, setApplied] = useState<Pricing016Promo | null>(null)
   const [error, setError] = useState("")
 
+  const text = (key: string) => labels[key] ?? DEFAULT_LABELS[key]
+
   const palette = {
     ...(accent ? { "--vibeui-pricing-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pricing-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -167,9 +220,7 @@ export function Pricing016({
 
     setApplied(null)
     setError(
-      normalized
-        ? `Код «${normalized}» не найден или уже использован`
-        : "Введите промокод",
+      normalized ? fill(notFoundText, { code: normalized }) : text("empty"),
     )
   }
 
@@ -209,7 +260,7 @@ export function Pricing016({
                 apply()
               }}
             >
-              <label htmlFor={`${id}-code`}>Промокод</label>
+              <label htmlFor={`${id}-code`}>{text("field")}</label>
               <div data-part="row">
                 <input
                   id={`${id}-code`}
@@ -229,7 +280,9 @@ export function Pricing016({
               data-state={applied ? "ok" : error ? "bad" : undefined}
               role="status"
             >
-              {applied ? `${applied.caption} применена` : error}
+              {applied
+                ? fill(appliedText, { caption: applied.caption })
+                : error}
             </p>
 
             {hint ? <p data-part="hint">{hint}</p> : null}

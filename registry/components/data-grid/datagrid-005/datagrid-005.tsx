@@ -18,6 +18,24 @@ export type Datagrid005Props = Omit<
   rows?: Datagrid005Row[]
   caption?: string
   hint?: string
+  /** Заголовок панели над таблицей. */
+  heading?: string
+  /** Названия колонок: sku, name, price, stock. */
+  columnText?: Record<string, string>
+  /** Счётчик несохранённого. {count} — сколько ячеек изменено. */
+  statusText?: string
+  /** Подпись кнопки отмены правок. */
+  cancelLabel?: string
+  /** Подпись кнопки сохранения. */
+  saveLabel?: string
+  /** Подпись ячейки-кнопки. {column}, {row} и {value} подставляются. */
+  editLabel?: string
+  /** Подпись поля ввода. {column} и {row} подставляются. */
+  fieldLabel?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,15 +46,20 @@ type Field = "name" | "price" | "stock"
 // подтверждает, Escape возвращает прежнее значение, потерянный фокус
 // сохраняет. Изменённые ячейки помечены до нажатия «Сохранить», поэтому
 // видно, что именно уедет на сервер.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-005"]){
---vibeui-datagrid-005-bg:oklch(1 0 0);
---vibeui-datagrid-005-fg:oklch(0.23 0.014 60);
---vibeui-datagrid-005-muted:oklch(0.55 0.014 60);
---vibeui-datagrid-005-border:oklch(0.92 0.006 60);
---vibeui-datagrid-005-head:oklch(0.975 0.004 60);
---vibeui-datagrid-005-accent:oklch(0.58 0.15 55);
---vibeui-datagrid-005-dirty:oklch(0.58 0.15 55 / 12%);
+--vibeui-datagrid-005-bg:transparent;
+--vibeui-datagrid-005-fg:light-dark(oklch(0.23 0.014 60),oklch(0.93 0.006 60));
+--vibeui-datagrid-005-muted:light-dark(oklch(0.55 0.014 60),oklch(0.68 0.012 60));
+--vibeui-datagrid-005-border:light-dark(oklch(0.92 0.006 60),oklch(0.34 0.012 60));
+--vibeui-datagrid-005-head:light-dark(oklch(0.975 0.004 60),oklch(0.27 0.012 60));
+--vibeui-datagrid-005-field:light-dark(oklch(1 0 0),oklch(0.23 0.012 60));
+--vibeui-datagrid-005-accent:light-dark(oklch(0.58 0.15 55),oklch(0.78 0.13 55));
+--vibeui-datagrid-005-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.02 55));
+--vibeui-datagrid-005-dirty:light-dark(oklch(0.58 0.15 55 / 12%),oklch(0.78 0.13 55 / 18%));
 --vibeui-datagrid-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-005"]{
@@ -62,10 +85,10 @@ margin:0;font-size:0.75rem;font-weight:600;color:var(--vibeui-datagrid-005-accen
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:550;
 padding:0.375rem 0.75rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-005-border);
-background:var(--vibeui-datagrid-005-bg);color:var(--vibeui-datagrid-005-fg);
+background:var(--vibeui-datagrid-005-field);color:var(--vibeui-datagrid-005-fg);
 }
 [data-vibeui-block="datagrid-005"] [data-part="bar"] button[data-tone="primary"]{
-border-color:transparent;background:var(--vibeui-datagrid-005-accent);color:oklch(1 0 0);
+border-color:transparent;background:var(--vibeui-datagrid-005-accent);color:var(--vibeui-datagrid-005-on-accent);
 }
 [data-vibeui-block="datagrid-005"] [data-part="bar"] button:disabled{opacity:.45;cursor:not-allowed}
 [data-vibeui-block="datagrid-005"] [data-part="bar"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-005-accent);outline-offset:2px}
@@ -113,7 +136,7 @@ background:var(--vibeui-datagrid-005-accent);flex:none;
 width:100%;font:inherit;font-size:0.8125rem;color:inherit;
 padding:0.375rem 0.8125rem;margin:0;
 border:2px solid var(--vibeui-datagrid-005-accent);border-radius:0.375rem;
-background:var(--vibeui-datagrid-005-bg);
+background:var(--vibeui-datagrid-005-field);
 }
 [data-vibeui-block="datagrid-005"] td[data-align="end"] input{text-align:right}
 [data-vibeui-block="datagrid-005"] input:focus{outline:none}
@@ -129,11 +152,18 @@ const DEFAULT_ROWS: Datagrid005Row[] = [
   { id: "p5", name: "Ковёр Dune", sku: "TXT-0902", price: 24700, stock: 4 },
 ]
 
-const COLUMNS: { key: Field; title: string; numeric?: boolean }[] = [
-  { key: "name", title: "Позиция" },
-  { key: "price", title: "Цена, ₽", numeric: true },
-  { key: "stock", title: "Остаток", numeric: true },
+const COLUMNS: { key: Field; numeric?: boolean }[] = [
+  { key: "name" },
+  { key: "price", numeric: true },
+  { key: "stock", numeric: true },
 ]
+
+const COLUMN_LABEL: Record<string, string> = {
+  sku: "Артикул",
+  name: "Позиция",
+  price: "Цена, ₽",
+  stock: "Остаток",
+}
 
 function show(field: Field, raw: string) {
   if (field === "price") {
@@ -144,6 +174,28 @@ function show(field: Field, raw: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сетка с правкой ячейки на месте: Enter подтверждает, Escape отменяет,
  * изменённые ячейки помечены до сохранения. Один файл, ноль зависимостей.
  */
@@ -151,6 +203,15 @@ export function Datagrid005({
   rows = DEFAULT_ROWS,
   caption = "Нажмите на ячейку или дойдите до неё табом и нажмите Enter",
   hint = "Цена и остаток редактируются",
+  heading = "Прайс-лист",
+  columnText = COLUMN_LABEL,
+  statusText = "Не сохранено: {count}",
+  cancelLabel = "Отменить",
+  saveLabel = "Сохранить",
+  editLabel = "Изменить: {column}, {row}, сейчас {value}",
+  fieldLabel = "{column}, {row}",
+  scrollLabel = "Таблица прайс-листа, прокручивается вбок",
+  background = "",
   accent,
   className,
   style,
@@ -203,8 +264,16 @@ export function Datagrid005({
     setEditing(null)
   }
 
+  const label = (column: string) => columnText[column] ?? COLUMN_LABEL[column]
+
   const palette = {
     ...(accent ? { "--vibeui-datagrid-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -221,10 +290,10 @@ export function Datagrid005({
       >
         <div data-part="bar">
           <div data-part="bar-text">
-            <h3 data-part="title">Прайс-лист</h3>
+            <h3 data-part="title">{heading}</h3>
             {dirty.length > 0 ? (
               <p data-part="status" aria-live="polite">
-                Не сохранено: {dirty.length}
+                {statusText.replace("{count}", String(dirty.length))}
               </p>
             ) : (
               <p data-part="hint">{hint}</p>
@@ -238,7 +307,7 @@ export function Datagrid005({
               setEditing(null)
             }}
           >
-            Отменить
+            {cancelLabel}
           </button>
           <button
             type="button"
@@ -246,27 +315,27 @@ export function Datagrid005({
             disabled={dirty.length === 0}
             onClick={save}
           >
-            Сохранить
+            {saveLabel}
           </button>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица прайс-листа, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
             <caption>{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Артикул</th>
+                <th scope="col">{label("sku")}</th>
                 {COLUMNS.map((column) => (
                   <th
                     key={column.key}
                     scope="col"
                     data-align={column.numeric ? "end" : undefined}
                   >
-                    {column.title}
+                    {label(column.key)}
                   </th>
                 ))}
               </tr>
@@ -293,7 +362,9 @@ export function Datagrid005({
                             autoFocus
                             value={draft}
                             inputMode={column.numeric ? "numeric" : "text"}
-                            aria-label={`${column.title}, ${row.name}`}
+                            aria-label={fieldLabel
+                              .replace("{column}", label(column.key))
+                              .replace("{row}", row.name)}
                             onChange={(event) => setDraft(event.target.value)}
                             onBlur={commit}
                             onKeyDown={(event) => {
@@ -311,7 +382,10 @@ export function Datagrid005({
                           <button
                             type="button"
                             data-part="cell"
-                            aria-label={`Изменить: ${column.title}, ${row.name}, сейчас ${value}`}
+                            aria-label={editLabel
+                              .replace("{column}", label(column.key))
+                              .replace("{row}", row.name)
+                              .replace("{value}", value)}
                             onClick={() => open(row, column.key)}
                           >
                             {changed ? (

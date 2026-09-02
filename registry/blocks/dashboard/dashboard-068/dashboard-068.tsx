@@ -15,6 +15,18 @@ export type Dashboard068Props = {
   members?: Dashboard068Member[]
   note?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Итог по команде: {planned} и {available}. */
+  totalText?: string
+  /** Часы человека: {planned} и {available}. */
+  hoursText?: string
+  /** Расшифровка полосы: {name}, {planned}, {available}. */
+  trackAriaText?: string
+  /** Подсказка засечки ёмкости: {available}. */
+  capTitleText?: string
+  /** Строка проекта: {name} и {hours}. */
+  projectText?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,17 +43,20 @@ export type Dashboard068Props = {
 // а не усредняется по людям: усреднение прячет одного перегруженного.
 const STYLES = `
 :where([data-vibeui-block="dashboard-068"]){
---vibeui-dashboard-068-bg:oklch(0.985 0.003 175);
---vibeui-dashboard-068-card:oklch(1 0 0);
---vibeui-dashboard-068-fg:oklch(0.21 0.014 175);
---vibeui-dashboard-068-muted:oklch(0.54 0.014 175);
---vibeui-dashboard-068-border:oklch(0.91 0.006 175);
---vibeui-dashboard-068-accent:oklch(0.5 0.11 190);
---vibeui-dashboard-068-soft:oklch(0.965 0.02 190);
---vibeui-dashboard-068-over:oklch(0.57 0.19 25);
---vibeui-dashboard-068-free:oklch(0.62 0.12 155);
---vibeui-dashboard-068-alt:oklch(0.62 0.13 255);
---vibeui-dashboard-068-alt2:oklch(0.66 0.14 320);
+--vibeui-dashboard-068-bg:transparent;
+/* Карточки, жёлоб полосы и чип отсутствия: подложка блока прозрачна. */
+--vibeui-dashboard-068-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 175));
+--vibeui-dashboard-068-inset:light-dark(oklch(0.985 0.003 175),oklch(0.22 0.012 175));
+--vibeui-dashboard-068-fg:light-dark(oklch(0.21 0.014 175),oklch(0.94 0.005 175));
+--vibeui-dashboard-068-muted:light-dark(oklch(0.54 0.014 175),oklch(0.72 0.012 175));
+--vibeui-dashboard-068-border:light-dark(oklch(0.91 0.006 175),oklch(0.36 0.012 175));
+--vibeui-dashboard-068-accent:light-dark(oklch(0.5 0.11 190),oklch(0.7 0.11 190));
+--vibeui-dashboard-068-soft:light-dark(oklch(0.965 0.02 190),oklch(0.3 0.03 190));
+--vibeui-dashboard-068-over:light-dark(oklch(0.57 0.19 25),oklch(0.72 0.17 25));
+--vibeui-dashboard-068-over-line:light-dark(oklch(0.83 0.09 25),oklch(0.49 0.11 25));
+--vibeui-dashboard-068-free:light-dark(oklch(0.62 0.12 155),oklch(0.76 0.13 155));
+--vibeui-dashboard-068-alt:light-dark(oklch(0.62 0.13 255),oklch(0.7 0.13 255));
+--vibeui-dashboard-068-alt2:light-dark(oklch(0.66 0.14 320),oklch(0.74 0.13 320));
 --vibeui-dashboard-068-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -66,13 +81,13 @@ padding:0.25rem 0.5625rem;border-radius:0.5rem;background:var(--vibeui-dashboard
 display:grid;gap:0.3125rem;padding:0.6875rem 0.8125rem;border-radius:0.8125rem;
 background:var(--vibeui-dashboard-068-card);border:1px solid var(--vibeui-dashboard-068-border);
 }
-[data-vibeui-block="dashboard-068"] [data-member="over"]{border-color:color-mix(in oklab,var(--vibeui-dashboard-068-over) 42%,white)}
+[data-vibeui-block="dashboard-068"] [data-member="over"]{border-color:var(--vibeui-dashboard-068-over-line)}
 [data-vibeui-block="dashboard-068"] [data-part="top"]{display:flex;flex-wrap:wrap;align-items:baseline;gap:0.25rem 0.5rem}
 [data-vibeui-block="dashboard-068"] [data-part="top"] b{font-size:0.8125rem;font-weight:750}
 [data-vibeui-block="dashboard-068"] [data-part="top"] span{font-size:0.6875rem;color:var(--vibeui-dashboard-068-muted)}
 [data-vibeui-block="dashboard-068"] [data-part="absence"]{
 font-size:0.625rem;font-weight:700;padding:0.0625rem 0.375rem;border-radius:0.3125rem;
-background:var(--vibeui-dashboard-068-bg);border:1px solid var(--vibeui-dashboard-068-border);
+background:var(--vibeui-dashboard-068-inset);border:1px solid var(--vibeui-dashboard-068-border);
 }
 [data-vibeui-block="dashboard-068"] [data-part="hours"]{
 margin-left:auto;font-size:0.75rem;font-weight:750;font-variant-numeric:tabular-nums;white-space:nowrap;
@@ -81,7 +96,7 @@ margin-left:auto;font-size:0.75rem;font-weight:750;font-variant-numeric:tabular-
 [data-vibeui-block="dashboard-068"] [data-member="free"] [data-part="hours"]{color:var(--vibeui-dashboard-068-free)}
 [data-vibeui-block="dashboard-068"] [data-part="track"]{
 position:relative;height:0.875rem;border-radius:0.3125rem;overflow:visible;
-background:var(--vibeui-dashboard-068-bg);
+background:var(--vibeui-dashboard-068-inset);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-068-border);
 }
 [data-vibeui-block="dashboard-068"] [data-part="stack"]{
@@ -159,6 +174,28 @@ const DEFAULT_MEMBERS: Dashboard068Member[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Экран капасити команды: план полосой, доступная ёмкость засечкой, разбивка
  * плана по проектам долями и причина сокращения ёмкости словами. Один файл,
  * ноль зависимостей, клиентского JS нет.
@@ -169,11 +206,23 @@ export function Dashboard068({
   members = DEFAULT_MEMBERS,
   note = "Ёмкость уже уменьшена на отпуска и дежурства. Часы совещаний считаются занятыми: убрав их из плана, вы получите цифру, в которую никто не укладывается.",
   accent,
+  background = "",
+  totalText = "по команде {planned} из {available} ч",
+  hoursText = "{planned} / {available} ч",
+  trackAriaText = "{name}: запланировано {planned} часов из {available} доступных",
+  capTitleText = "Доступно {available} ч",
+  projectText = "{name} — {hours} ч",
   className,
   style,
 }: Dashboard068Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-068-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-068-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -199,7 +248,9 @@ export function Dashboard068({
             <h2>{title}</h2>
             <p data-part="week">{week}</p>
             <p data-part="total">
-              по команде {totalPlanned} из {totalAvailable} ч
+              {totalText
+                .replace("{planned}", String(totalPlanned))
+                .replace("{available}", String(totalAvailable))}
             </p>
           </div>
 
@@ -222,7 +273,9 @@ export function Dashboard068({
                       <span data-part="absence">{member.absence}</span>
                     ) : null}
                     <span data-part="hours">
-                      {member.planned} / {member.available} ч
+                      {hoursText
+                        .replace("{planned}", String(member.planned))
+                        .replace("{available}", String(member.available))}
                     </span>
                   </div>
 
@@ -232,7 +285,10 @@ export function Dashboard068({
                     aria-valuenow={member.planned}
                     aria-valuemin={0}
                     aria-valuemax={peak}
-                    aria-label={`${member.name}: запланировано ${member.planned} часов из ${member.available} доступных`}
+                    aria-label={trackAriaText
+                      .replace("{name}", member.name)
+                      .replace("{planned}", String(member.planned))
+                      .replace("{available}", String(member.available))}
                   >
                     <span
                       data-part="stack"
@@ -250,7 +306,10 @@ export function Dashboard068({
                     <span
                       data-part="cap"
                       style={{ left: `${(member.available / peak) * 100}%` }}
-                      title={`Доступно ${member.available} ч`}
+                      title={capTitleText.replace(
+                        "{available}",
+                        String(member.available),
+                      )}
                     />
                   </div>
 
@@ -258,7 +317,9 @@ export function Dashboard068({
                     {member.projects.map((project) => (
                       <li key={project.name}>
                         <i />
-                        {project.name} — {project.hours} ч
+                        {projectText
+                          .replace("{name}", project.name)
+                          .replace("{hours}", String(project.hours))}
                       </li>
                     ))}
                   </ul>

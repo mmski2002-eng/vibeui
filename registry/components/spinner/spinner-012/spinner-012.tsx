@@ -7,6 +7,8 @@ export type Spinner012Props = Omit<
   label?: string
   stages?: [string, string, string]
   speed?: number
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: индикатор с текстом стадии — «Готовим данные…» сменяется
@@ -15,16 +17,20 @@ export type Spinner012Props = Omit<
 // как в волне из точек, только на тексте. Смена стадий — декоративная: без
 // состояния скринридеру нечего внятно объявить на каждый кадр, поэтому
 // доступное имя — отдельная статичная подпись через aria-label.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="spinner-012"]){
 --vibeui-spinner-012-speed:4.5s;
---vibeui-spinner-012-surface:oklch(1 0 0);
---vibeui-spinner-012-border:oklch(0.9 0.006 265);
---vibeui-spinner-012-fg:oklch(0.26 0.014 265);
---vibeui-spinner-012-track:oklch(0.9 0.006 265);
---vibeui-spinner-012-accent:oklch(0.55 0.17 262);
+--vibeui-spinner-012-surface:transparent;
+--vibeui-spinner-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.32 0.012 265));
+--vibeui-spinner-012-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
+--vibeui-spinner-012-track:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-spinner-012-accent:light-dark(oklch(0.55 0.17 262),oklch(0.72 0.16 262));
 --vibeui-spinner-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Подложки нет по умолчанию: плашка появляется только пропом background. */
 [data-vibeui-block="spinner-012"]{
 display:inline-flex;align-items:center;gap:0.75rem;
 box-sizing:border-box;padding:0.75rem 1rem;
@@ -82,6 +88,28 @@ const DEFAULT_STAGES: [string, string, string] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Индикатор с текстом стадии: три сообщения перетекают друг в друга по кругу.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -89,12 +117,19 @@ export function Spinner012({
   label = "Идёт многоэтапная загрузка",
   stages = DEFAULT_STAGES,
   speed = 4.5,
+  background = "",
   className,
   style,
   ...props
 }: Spinner012Props) {
   const palette = {
     "--vibeui-spinner-012-speed": `${speed}s`,
+    ...(background
+      ? {
+          "--vibeui-spinner-012-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -12,8 +12,21 @@ export type Inputgroup034Props = Omit<
   defaultValue?: string
   onChange?: (value: string) => void
   hint?: string
+  /** Подписи кнопки: ключи show и hide. */
+  toggleText?: Record<string, string>
+  /** Подсказка, пока ключ открыт на экране. */
+  visibleHint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
+
+const TOGGLE_TEXT: Record<string, string> = {
+  show: "Показать",
+  hide: "Скрыть",
+}
+
+const VISIBLE_HINT = "Ключ виден на экране — не оставляйте его так надолго."
 
 // Идея компонента: секрет по умолчанию скрыт типом password — это системная
 // маскировка браузера, а не самодельные точки поверх текста, поэтому
@@ -23,14 +36,14 @@ export type Inputgroup034Props = Omit<
 // ключ снова скрыт.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-034"]){
---vibeui-inputgroup-034-surface:oklch(1 0 0);
---vibeui-inputgroup-034-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-034-fg:oklch(0.22 0.014 265);
---vibeui-inputgroup-034-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-034-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-034-fixed:oklch(0.96 0.004 265);
---vibeui-inputgroup-034-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-034-accent:oklch(0.55 0.15 25);
+--vibeui-inputgroup-034-surface:transparent;
+--vibeui-inputgroup-034-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-inputgroup-034-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-034-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-inputgroup-034-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
+--vibeui-inputgroup-034-fixed:light-dark(oklch(0.965 0.003 265),oklch(0.31 0.012 265));
+--vibeui-inputgroup-034-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-inputgroup-034-accent:light-dark(oklch(0.55 0.15 25),oklch(0.76 0.14 25));
 --vibeui-inputgroup-034-radius:0.75rem;
 --vibeui-inputgroup-034-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-inputgroup-034-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
@@ -87,6 +100,28 @@ color:var(--vibeui-inputgroup-034-accent);font-weight:600;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сцепка «поле ключа + показ/скрытие»: маскировка системная (type="password"),
  * кнопка справа явно объявляет своё состояние через aria-pressed, показ не
  * сохраняется между визитами. Один файл, ноль зависимостей, своя палитра.
@@ -97,6 +132,9 @@ export function Inputgroup034({
   defaultValue = "sk_live_4f8a2c9d1e3b7f6091ab",
   onChange,
   hint = "Ключ скрыт по умолчанию — не показывайте его на общем экране без необходимости.",
+  toggleText = TOGGLE_TEXT,
+  visibleHint = VISIBLE_HINT,
+  background = "",
   accent,
   className,
   style,
@@ -109,8 +147,16 @@ export function Inputgroup034({
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-034-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-034-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const toggleKey = visible ? "hide" : "show"
 
   const toggle = () => {
     setVisible((prev) => !prev)
@@ -179,13 +225,11 @@ export function Inputgroup034({
                 <circle cx="8" cy="8" r="2" />
               </svg>
             )}
-            {visible ? "Скрыть" : "Показать"}
+            {toggleText[toggleKey] ?? TOGGLE_TEXT[toggleKey]}
           </button>
         </div>
         <p data-part="hint" id={`${id}-hint`} data-visible={visible}>
-          {visible
-            ? "Ключ виден на экране — не оставляйте его так надолго."
-            : hint}
+          {visible ? visibleHint : hint}
         </p>
       </div>
     </>

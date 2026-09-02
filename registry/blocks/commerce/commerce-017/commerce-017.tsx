@@ -20,7 +20,19 @@ export type Commerce017Props = {
   rows?: Commerce017Row[]
   toggle?: string
   cta?: string
+  /** Скрытая подпись таблицы для скринридера. */
+  captionText?: string
+  /** Заголовок первой колонки. */
+  specLabel?: string
+  /** Заголовок строки с кнопками покупки. */
+  buyLabel?: string
+  /** Пометка рекомендованного товара. */
+  pickText?: string
+  /** Пометка лучшего значения в строке. */
+  bestText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,13 +46,15 @@ export type Commerce017Props = {
 // теряют подписи. Лучшее значение помечено словом «лучшее», а не только цветом.
 const STYLES = `
 :where([data-vibeui-block="commerce-017"]){
---vibeui-commerce-017-bg:oklch(1 0 0);
---vibeui-commerce-017-fg:oklch(0.21 0.014 265);
---vibeui-commerce-017-muted:oklch(0.55 0.014 265);
---vibeui-commerce-017-border:oklch(0.91 0.006 265);
---vibeui-commerce-017-soft:oklch(0.975 0.004 265);
---vibeui-commerce-017-accent:oklch(0.55 0.2 262);
---vibeui-commerce-017-ok:oklch(0.58 0.14 152);
+--vibeui-commerce-017-bg:transparent;
+--vibeui-commerce-017-paper:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-commerce-017-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-017-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-017-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-commerce-017-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.01 265));
+--vibeui-commerce-017-accent:light-dark(oklch(0.55 0.2 262),oklch(0.68 0.17 262));
+--vibeui-commerce-017-on-accent:light-dark(oklch(1 0 0),oklch(0.16 0.02 265));
+--vibeui-commerce-017-ok:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
 --vibeui-commerce-017-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -72,7 +86,7 @@ position:sticky;left:0;z-index:1;width:9rem;
 background:var(--vibeui-commerce-017-soft);color:var(--vibeui-commerce-017-muted);
 font-weight:600;font-size:0.75rem;
 }
-[data-vibeui-block="commerce-017"] thead th{background:var(--vibeui-commerce-017-bg);vertical-align:bottom}
+[data-vibeui-block="commerce-017"] thead th{background:var(--vibeui-commerce-017-paper);vertical-align:bottom}
 [data-vibeui-block="commerce-017"] thead [data-part="rowhead"]{background:var(--vibeui-commerce-017-soft)}
 [data-vibeui-block="commerce-017"] [data-part="shot"]{
 display:block;width:100%;max-width:5rem;aspect-ratio:4/3;border-radius:0.5rem;margin-bottom:0.375rem;
@@ -92,7 +106,7 @@ display:block;font-size:0.625rem;font-weight:700;color:var(--vibeui-commerce-017
 [data-vibeui-block="commerce-017"] [data-part="table"]:has([data-part="only"] input:checked) [data-same="true"]{display:none}
 [data-vibeui-block="commerce-017"] [data-part="buy"]{
 appearance:none;border:0;cursor:pointer;width:100%;height:2.25rem;border-radius:0.625rem;
-background:var(--vibeui-commerce-017-accent);color:oklch(1 0 0);font:inherit;font-size:0.75rem;font-weight:650;
+background:var(--vibeui-commerce-017-accent);color:var(--vibeui-commerce-017-on-accent);font:inherit;font-size:0.75rem;font-weight:650;
 }
 [data-vibeui-block="commerce-017"] [data-part="buy"]:focus-visible{outline:2px solid var(--vibeui-commerce-017-accent);outline-offset:2px}
 @container (min-width: 40rem){
@@ -118,6 +132,28 @@ const DEFAULT_ROWS: Commerce017Row[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сравнение товаров таблицей: одинаковые строки прячутся галочкой без JS.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -127,12 +163,25 @@ export function Commerce017({
   rows = DEFAULT_ROWS,
   toggle = "Только различия",
   cta = "В корзину",
+  captionText = "Характеристики трёх кресел по строкам",
+  specLabel = "Характеристика",
+  buyLabel = "Покупка",
+  pickText = "Наш выбор",
+  bestText = "лучшее",
   accent,
+  background = "",
   className,
   style,
 }: Commerce017Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-017-bg": background,
+          "--vibeui-commerce-017-paper": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -159,13 +208,11 @@ export function Commerce017({
 
             <div data-part="scroll" tabIndex={0}>
               <table>
-                <caption data-part="vh">
-                  Характеристики трёх кресел по строкам
-                </caption>
+                <caption data-part="vh">{captionText}</caption>
                 <thead>
                   <tr>
                     <th scope="col" data-part="rowhead">
-                      Характеристика
+                      {specLabel}
                     </th>
                     {products.map((product) => (
                       <th
@@ -181,7 +228,7 @@ export function Commerce017({
                         <span data-part="name">{product.title}</span>
                         <span data-part="price">{product.price}</span>
                         {product.best ? (
-                          <span data-part="pick">Наш выбор</span>
+                          <span data-part="pick">{pickText}</span>
                         ) : null}
                       </th>
                     ))}
@@ -203,7 +250,7 @@ export function Commerce017({
                           >
                             {value}
                             {row.best === index ? (
-                              <span data-part="best">лучшее</span>
+                              <span data-part="best">{bestText}</span>
                             ) : null}
                           </td>
                         ))}
@@ -212,7 +259,7 @@ export function Commerce017({
                   })}
                   <tr>
                     <th scope="row" data-part="rowhead">
-                      Покупка
+                      {buyLabel}
                     </th>
                     {products.map((product) => (
                       <td key={`buy-${product.id}`}>

@@ -13,7 +13,11 @@ export type Tabs005Item = {
 export type Tabs005Props = {
   items?: Tabs005Item[]
   defaultId?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
+  /** Подпись списка вкладок для скринридера. */
+  listLabel?: string
   className?: string
   style?: CSSProperties
 }
@@ -22,14 +26,17 @@ export type Tabs005Props = {
 // сверху вниз, поэтому длинные подписи и пояснения помещаются целиком — в
 // горизонтальном ряду они бы не влезли. Ориентация объявлена через
 // aria-orientation, и стрелки соответственно вертикальные: вверх и вниз.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте рамка светлее фона, а подсветка строки — светлая полупрозрачная.
 const STYLES = `
 :where([data-vibeui-block="tabs-005"]){
---vibeui-tabs-005-bg:oklch(1 0 0);
---vibeui-tabs-005-fg:oklch(0.22 0.014 265);
---vibeui-tabs-005-muted:oklch(0.55 0.014 265);
---vibeui-tabs-005-border:oklch(0.91 0.006 265);
---vibeui-tabs-005-hover:oklch(0.55 0.02 265 / 7%);
---vibeui-tabs-005-accent:oklch(0.55 0.2 262);
+--vibeui-tabs-005-bg:transparent;
+--vibeui-tabs-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tabs-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-tabs-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-tabs-005-hover:light-dark(oklch(0.55 0.02 265 / 7%),oklch(0.85 0.02 265 / 12%));
+--vibeui-tabs-005-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-tabs-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -125,13 +132,37 @@ const DEFAULT_ITEMS: Tabs005Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Вертикальные вкладки настроек: список слева, содержимое справа.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tabs005({
   items = DEFAULT_ITEMS,
   defaultId,
+  background = "",
   accent,
+  listLabel = "Настройки",
   className,
   style,
 }: Tabs005Props) {
@@ -140,6 +171,12 @@ export function Tabs005({
 
   const palette = {
     ...(accent ? { "--vibeui-tabs-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tabs-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -188,7 +225,7 @@ export function Tabs005({
             data-part="list"
             role="tablist"
             aria-orientation="vertical"
-            aria-label="Настройки"
+            aria-label={listLabel}
             ref={listRef}
             onKeyDown={onKeyDown}
           >

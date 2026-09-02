@@ -11,6 +11,13 @@ export type Table010Props = Omit<
 > & {
   rows?: Table010Row[]
   caption?: string
+  /** Заголовки колонок: компонент несёт русские, проект подставляет свои. */
+  columnText?: Record<string, string>
+  totalText?: string
+  /** Локаль для группировки цифр и дробной части. */
+  locale?: string
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,15 +26,18 @@ export type Table010Props = Omit<
 // Число остаётся рядом: полоса показывает соотношение, а точную величину
 // читают цифрой. Доля считается от суммы строк, а не задаётся отдельно, —
 // иначе итог перестаёт сходиться при правке данных.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-010"]){
---vibeui-table-010-bg:oklch(1 0 0);
---vibeui-table-010-fg:oklch(0.24 0.014 265);
---vibeui-table-010-muted:oklch(0.56 0.014 265);
---vibeui-table-010-border:oklch(0.92 0.006 265);
---vibeui-table-010-head:oklch(0.975 0.003 265);
---vibeui-table-010-bar:oklch(0.55 0.2 262 / 16%);
---vibeui-table-010-accent:oklch(0.55 0.2 262);
+--vibeui-table-010-bg:transparent;
+--vibeui-table-010-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-010-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-table-010-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
+--vibeui-table-010-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
+--vibeui-table-010-bar:color-mix(in oklab,var(--vibeui-table-010-accent) 16%,transparent);
 --vibeui-table-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="table-010"]{
@@ -65,6 +75,34 @@ const DEFAULT_ROWS: Table010Row[] = [
   { source: "Реклама", visits: 3211 },
 ]
 
+const COLUMN_TEXT: Record<string, string> = {
+  source: "Источник",
+  visits: "Визиты",
+  share: "Доля",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Таблица долей: полоса рисуется фоном ячейки, число остаётся рядом.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -72,15 +110,30 @@ const DEFAULT_ROWS: Table010Row[] = [
 export function Table010({
   rows = DEFAULT_ROWS,
   caption = "Источники трафика",
+  columnText = COLUMN_TEXT,
+  totalText = "Всего",
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Table010Props) {
   const total = rows.reduce((sum, row) => sum + row.visits, 0)
+  const percent = (value: number) =>
+    value.toLocaleString(locale, {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    })
 
   const palette = {
     ...(accent ? { "--vibeui-table-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-table-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -99,12 +152,12 @@ export function Table010({
           <caption>{caption}</caption>
           <thead>
             <tr>
-              <th scope="col">Источник</th>
+              <th scope="col">{columnText.source ?? COLUMN_TEXT.source}</th>
               <th scope="col" data-align="end">
-                Визиты
+                {columnText.visits ?? COLUMN_TEXT.visits}
               </th>
               <th scope="col" data-align="end">
-                Доля
+                {columnText.share ?? COLUMN_TEXT.share}
               </th>
             </tr>
           </thead>
@@ -114,7 +167,7 @@ export function Table010({
               return (
                 <tr key={row.source}>
                   <td>{row.source}</td>
-                  <td data-align="end">{row.visits.toLocaleString("ru-RU")}</td>
+                  <td data-align="end">{row.visits.toLocaleString(locale)}</td>
                   <td
                     data-part="share"
                     data-align="end"
@@ -124,11 +177,7 @@ export function Table010({
                       } as CSSProperties
                     }
                   >
-                    {share.toLocaleString("ru-RU", {
-                      minimumFractionDigits: 1,
-                      maximumFractionDigits: 1,
-                    })}{" "}
-                    %
+                    {percent(share)} %
                   </td>
                 </tr>
               )
@@ -136,9 +185,9 @@ export function Table010({
           </tbody>
           <tfoot>
             <tr>
-              <td data-part="total">Всего</td>
-              <td data-align="end">{total.toLocaleString("ru-RU")}</td>
-              <td data-align="end">100,0 %</td>
+              <td data-part="total">{totalText}</td>
+              <td data-align="end">{total.toLocaleString(locale)}</td>
+              <td data-align="end">{percent(100)} %</td>
             </tr>
           </tfoot>
         </table>

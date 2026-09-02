@@ -26,7 +26,11 @@ export type Dashboard065Props = {
   recent?: Dashboard065Recent[]
   today?: Dashboard065Today[]
   recentTitle?: string
+  /** Заголовок сводки дня. */
+  todayTitle?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -42,13 +46,20 @@ export type Dashboard065Props = {
 // не «что сделать», а «всё ли спокойно».
 const STYLES = `
 :where([data-vibeui-block="dashboard-065"]){
---vibeui-dashboard-065-bg:oklch(0.985 0.003 265);
---vibeui-dashboard-065-card:oklch(1 0 0);
---vibeui-dashboard-065-fg:oklch(0.21 0.014 265);
---vibeui-dashboard-065-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-065-border:oklch(0.91 0.006 265);
---vibeui-dashboard-065-accent:oklch(0.52 0.16 265);
---vibeui-dashboard-065-soft:oklch(0.965 0.02 265);
+--vibeui-dashboard-065-bg:transparent;
+/* Карточки, чипы и клавиши: подложка блока прозрачна. */
+--vibeui-dashboard-065-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-dashboard-065-inset:light-dark(oklch(0.985 0.003 265),oklch(0.22 0.012 265));
+--vibeui-dashboard-065-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-065-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-dashboard-065-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-065-accent:light-dark(oklch(0.52 0.16 265),oklch(0.72 0.14 265));
+--vibeui-dashboard-065-accent-line:light-dark(oklch(0.78 0.08 265),oklch(0.55 0.1 265));
+--vibeui-dashboard-065-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.04 265));
+--vibeui-dashboard-065-on-accent-muted:light-dark(oklch(0.92 0.03 265),oklch(0.32 0.06 265));
+--vibeui-dashboard-065-on-accent-chip:light-dark(oklch(0.6 0.14 265),oklch(0.62 0.12 265));
+--vibeui-dashboard-065-on-accent-line:light-dark(oklch(0.72 0.11 265),oklch(0.5 0.1 265));
+--vibeui-dashboard-065-soft:light-dark(oklch(0.965 0.02 265),oklch(0.3 0.035 265));
 --vibeui-dashboard-065-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 --vibeui-dashboard-065-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -74,22 +85,22 @@ background:var(--vibeui-dashboard-065-card);color:inherit;
 border:1px solid var(--vibeui-dashboard-065-border);
 transition:border-color 0.15s ease;
 }
-[data-vibeui-block="dashboard-065"] [data-part="action"]:hover{border-color:color-mix(in oklab,var(--vibeui-dashboard-065-accent) 45%,white)}
+[data-vibeui-block="dashboard-065"] [data-part="action"]:hover{border-color:var(--vibeui-dashboard-065-accent-line)}
 [data-vibeui-block="dashboard-065"] [data-part="action"][data-primary="true"]{
-background:var(--vibeui-dashboard-065-accent);color:oklch(1 0 0);border-color:transparent;
+background:var(--vibeui-dashboard-065-accent);color:var(--vibeui-dashboard-065-on-accent);border-color:transparent;
 }
 [data-vibeui-block="dashboard-065"] [data-part="action"] b{font-size:0.9375rem;font-weight:750;display:flex;align-items:center;gap:0.4375rem;flex-wrap:wrap}
 [data-vibeui-block="dashboard-065"] [data-part="action"] span{font-size:0.75rem;color:var(--vibeui-dashboard-065-muted);line-height:1.4}
-[data-vibeui-block="dashboard-065"] [data-part="action"][data-primary="true"] span{color:color-mix(in oklab,oklch(1 0 0) 82%,var(--vibeui-dashboard-065-accent))}
+[data-vibeui-block="dashboard-065"] [data-part="action"][data-primary="true"] span{color:var(--vibeui-dashboard-065-on-accent-muted)}
 [data-vibeui-block="dashboard-065"] kbd{
 font-family:var(--vibeui-dashboard-065-mono);font-size:0.625rem;font-weight:650;
 padding:0.0625rem 0.3125rem;border-radius:0.3125rem;
-background:var(--vibeui-dashboard-065-bg);color:var(--vibeui-dashboard-065-muted);
+background:var(--vibeui-dashboard-065-inset);color:var(--vibeui-dashboard-065-muted);
 border:1px solid var(--vibeui-dashboard-065-border);
 }
 [data-vibeui-block="dashboard-065"] [data-part="action"][data-primary="true"] kbd{
-background:color-mix(in oklab,oklch(1 0 0) 22%,var(--vibeui-dashboard-065-accent));
-color:oklch(1 0 0);border-color:color-mix(in oklab,oklch(1 0 0) 40%,var(--vibeui-dashboard-065-accent));
+background:var(--vibeui-dashboard-065-on-accent-chip);
+color:var(--vibeui-dashboard-065-on-accent);border-color:var(--vibeui-dashboard-065-on-accent-line);
 }
 [data-vibeui-block="dashboard-065"] [data-part="cols"]{display:grid;grid-template-columns:1fr;gap:0.875rem}
 [data-vibeui-block="dashboard-065"] [data-part="recent"]{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.25rem}
@@ -189,6 +200,28 @@ const DEFAULT_TODAY: Dashboard065Today[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Главная приложения с быстрыми действиями: крупные кнопки с подписью
  * последствия и горячей клавишей, возврат к недавним объектам и сводка дня.
  * Один файл, ноль зависимостей, клиентского JS нет.
@@ -200,12 +233,20 @@ export function Dashboard065({
   recent = DEFAULT_RECENT,
   today = DEFAULT_TODAY,
   recentTitle = "Продолжить работу",
+  todayTitle = "Сводка дня",
   accent,
+  background = "",
   className,
   style,
 }: Dashboard065Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-065-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-065-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -260,7 +301,7 @@ export function Dashboard065({
             </div>
 
             <div>
-              <h3>Сводка дня</h3>
+              <h3>{todayTitle}</h3>
               <ul data-part="today">
                 {today.map((entry) => (
                   <li key={entry.label}>

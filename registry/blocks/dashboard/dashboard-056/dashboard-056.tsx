@@ -17,6 +17,22 @@ export type Dashboard056Props = {
   importLabel?: string
   backLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подписи колонок таблицы: колонка файла, поле системы, состояние. */
+  columnLabels?: string[]
+  /** Подпись селекта для скринридера: {source}. */
+  targetAriaText?: string
+  /** Подписи состояний: ключ — значение state. */
+  stateText?: Record<string, string>
+  /** Подпись счётчика импортируемых колонок. */
+  mappedLabel?: string
+  /** Подпись счётчика пропущенных колонок. */
+  skippedLabel?: string
+  /** Подпись счётчика колонок с ошибкой. */
+  brokenLabel?: string
+  /** Пояснение под итогом. */
+  noteText?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,16 +48,20 @@ export type Dashboard056Props = {
 // потому что кнопку «Импортировать» нажимают, глядя именно на них.
 const STYLES = `
 :where([data-vibeui-block="dashboard-056"]){
---vibeui-dashboard-056-bg:oklch(0.985 0.003 210);
---vibeui-dashboard-056-card:oklch(1 0 0);
---vibeui-dashboard-056-fg:oklch(0.21 0.014 210);
---vibeui-dashboard-056-muted:oklch(0.55 0.014 210);
---vibeui-dashboard-056-border:oklch(0.91 0.006 210);
---vibeui-dashboard-056-accent:oklch(0.52 0.14 210);
---vibeui-dashboard-056-soft:oklch(0.965 0.02 210);
---vibeui-dashboard-056-ok:oklch(0.6 0.13 155);
---vibeui-dashboard-056-guess:oklch(0.68 0.15 72);
---vibeui-dashboard-056-error:oklch(0.57 0.19 25);
+--vibeui-dashboard-056-bg:transparent;
+/* Панели и селекты: подложка блока прозрачна, и рисовать их ею нечем. */
+--vibeui-dashboard-056-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 210));
+--vibeui-dashboard-056-inset:light-dark(oklch(0.97 0.004 210),oklch(0.22 0.012 210));
+--vibeui-dashboard-056-fg:light-dark(oklch(0.21 0.014 210),oklch(0.94 0.005 210));
+--vibeui-dashboard-056-muted:light-dark(oklch(0.55 0.014 210),oklch(0.72 0.012 210));
+--vibeui-dashboard-056-border:light-dark(oklch(0.91 0.006 210),oklch(0.36 0.012 210));
+--vibeui-dashboard-056-accent:light-dark(oklch(0.52 0.14 210),oklch(0.76 0.12 210));
+--vibeui-dashboard-056-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.035 210));
+--vibeui-dashboard-056-accent-line:light-dark(oklch(0.85 0.045 210),oklch(0.44 0.07 210));
+--vibeui-dashboard-056-soft:light-dark(oklch(0.965 0.02 210),oklch(0.31 0.04 210));
+--vibeui-dashboard-056-ok:light-dark(oklch(0.6 0.13 155),oklch(0.74 0.13 155));
+--vibeui-dashboard-056-guess:light-dark(oklch(0.68 0.15 72),oklch(0.79 0.14 72));
+--vibeui-dashboard-056-error:light-dark(oklch(0.57 0.19 25),oklch(0.72 0.17 25));
 --vibeui-dashboard-056-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 --vibeui-dashboard-056-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -88,7 +108,7 @@ color:var(--vibeui-dashboard-056-muted);overflow-wrap:anywhere;
 }
 [data-vibeui-block="dashboard-056"] select{
 font:inherit;font-size:0.8125rem;width:100%;min-width:11rem;
-padding:0.375rem 0.5rem;border-radius:0.5rem;background:var(--vibeui-dashboard-056-bg);
+padding:0.375rem 0.5rem;border-radius:0.5rem;background:var(--vibeui-dashboard-056-inset);
 color:inherit;border:1px solid var(--vibeui-dashboard-056-border);
 }
 [data-vibeui-block="dashboard-056"] tr[data-state="error"] select{border-color:var(--vibeui-dashboard-056-error)}
@@ -110,7 +130,7 @@ display:block;font-size:0.6875rem;color:var(--vibeui-dashboard-056-muted);margin
 display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem 1rem;
 padding:0.75rem 0.875rem;border-radius:0.875rem;
 background:var(--vibeui-dashboard-056-soft);
-border:1px solid color-mix(in oklab,var(--vibeui-dashboard-056-accent) 22%,white);
+border:1px solid var(--vibeui-dashboard-056-accent-line);
 }
 [data-vibeui-block="dashboard-056"] [data-part="stat"]{display:flex;flex-direction:column;gap:0.0625rem}
 [data-vibeui-block="dashboard-056"] [data-part="stat"] b{font-size:1.0625rem;font-weight:750;font-variant-numeric:tabular-nums}
@@ -118,7 +138,7 @@ border:1px solid color-mix(in oklab,var(--vibeui-dashboard-056-accent) 22%,white
 [data-vibeui-block="dashboard-056"] [data-part="go"]{
 margin-left:auto;appearance:none;border:0;cursor:pointer;font:inherit;
 font-size:0.8125rem;font-weight:700;padding:0.5rem 1rem;border-radius:0.625rem;
-background:var(--vibeui-dashboard-056-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-056-accent);color:var(--vibeui-dashboard-056-on-accent);
 }
 [data-vibeui-block="dashboard-056"] [data-part="go"][aria-disabled="true"]{
 background:var(--vibeui-dashboard-056-border);color:var(--vibeui-dashboard-056-muted);cursor:not-allowed;
@@ -189,11 +209,33 @@ const DEFAULT_COLUMNS: Dashboard056Column[] = [
   },
 ]
 
-const STATE_LABELS: Record<Dashboard056Column["state"], string> = {
+const STATE_LABELS: Record<string, string> = {
   mapped: "сопоставлено",
   guess: "угадано",
   skip: "пропущено",
   error: "ошибка",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -210,11 +252,25 @@ export function Dashboard056({
   importLabel = "Импортировать 4 812 строк",
   backLabel = "Другой файл",
   accent,
+  background = "",
+  columnLabels = ["Колонка файла", "Поле системы", "Состояние"],
+  targetAriaText = "Поле системы для колонки {source}",
+  stateText = STATE_LABELS,
+  mappedLabel = "колонок будет импортировано",
+  skippedLabel = "пропущено осознанно",
+  brokenLabel = "требует исправления",
+  noteText = "Пока есть колонка с ошибкой, импорт не запускается: частично загруженный файл чинить дороже, чем поправить сопоставление сейчас.",
   className,
   style,
 }: Dashboard056Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-056-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-056-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -250,9 +306,11 @@ export function Dashboard056({
             <table>
               <thead>
                 <tr>
-                  <th scope="col">Колонка файла</th>
-                  <th scope="col">Поле системы</th>
-                  <th scope="col">Состояние</th>
+                  {columnLabels.map((label) => (
+                    <th key={label} scope="col">
+                      {label}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
@@ -265,7 +323,10 @@ export function Dashboard056({
                     <td>
                       <select
                         defaultValue={column.target}
-                        aria-label={`Поле системы для колонки ${column.source}`}
+                        aria-label={targetAriaText.replace(
+                          "{source}",
+                          column.source,
+                        )}
                       >
                         {targets.map((target) => (
                           <option key={target} value={target}>
@@ -276,7 +337,7 @@ export function Dashboard056({
                     </td>
                     <td>
                       <span data-part="state">
-                        {STATE_LABELS[column.state]}
+                        {stateText[column.state] ?? column.state}
                       </span>
                       {column.hint ? (
                         <span data-part="hint">{column.hint}</span>
@@ -291,15 +352,15 @@ export function Dashboard056({
           <div data-part="summary">
             <p data-part="stat">
               <b>{mapped}</b>
-              <span>колонок будет импортировано</span>
+              <span>{mappedLabel}</span>
             </p>
             <p data-part="stat">
               <b>{skipped}</b>
-              <span>пропущено осознанно</span>
+              <span>{skippedLabel}</span>
             </p>
             <p data-part="stat">
               <b>{broken}</b>
-              <span>требует исправления</span>
+              <span>{brokenLabel}</span>
             </p>
             <button
               type="button"
@@ -312,8 +373,7 @@ export function Dashboard056({
           </div>
 
           <p id="dashboard-056-note" data-part="hint">
-            Пока есть колонка с ошибкой, импорт не запускается: частично
-            загруженный файл чинить дороже, чем поправить сопоставление сейчас.
+            {noteText}
           </p>
         </div>
       </section>

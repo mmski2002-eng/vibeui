@@ -10,7 +10,17 @@ export type File005Props = Omit<
   label?: string
   initials?: string
   zoom?: number
+  /** Пояснение под подписью. */
+  note?: string
+  /** Подпись поверх рамки. */
+  changeText?: string
+  /** Подпись ползунка: {value} — масштаб в процентах. */
+  zoomText?: string
+  /** Альтернативный текст выбранного фото. */
+  photoAlt?: string
   onChange?: (name: string | null) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,19 +29,22 @@ export type File005Props = Omit<
 // главный случай — лицо у края кадра. Масштаб живёт в transform, поэтому
 // картинка не перерисовывается, а сам ползунок — нативный input[type=range]:
 // его двигают стрелками с клавиатуры, и подпись значения объявляется вслух.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у карточки
+// по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="file-005"]){
---vibeui-file-005-surface:oklch(1 0 0);
---vibeui-file-005-tile:oklch(0.96 0.006 265);
---vibeui-file-005-fg:oklch(0.23 0.014 265);
---vibeui-file-005-muted:oklch(0.55 0.014 265);
---vibeui-file-005-border:oklch(0.88 0.008 265);
---vibeui-file-005-shell:oklch(0.91 0.006 265);
---vibeui-file-005-accent:oklch(0.55 0.19 20);
+--vibeui-file-005-surface:transparent;
+--vibeui-file-005-tile:light-dark(oklch(0.96 0.006 265),oklch(0.29 0.012 265));
+--vibeui-file-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-file-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-file-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-file-005-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-file-005-accent:light-dark(oklch(0.55 0.19 20),oklch(0.72 0.17 20));
 --vibeui-file-005-zoom:1;
 --vibeui-file-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: карточку показывают поверх любого фона. */
+/* Карточка без собственной заливки: рамка очерчивает её на любом фоне. */
 [data-vibeui-block="file-005"]{
 display:flex;align-items:center;gap:0.875rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
@@ -107,6 +120,28 @@ border:2px solid var(--vibeui-file-005-surface);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Загрузка аватара с круглой обрезкой и ползунком масштаба.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -114,7 +149,12 @@ export function File005({
   label = "Фото профиля",
   initials = "АК",
   zoom = 1.1,
+  note = "Квадрат обрежется по кругу — так фото увидят в комментариях.",
+  changeText = "сменить",
+  zoomText = "Масштаб · {value}%",
+  photoAlt = "Выбранное фото профиля",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -133,6 +173,12 @@ export function File005({
   const palette = {
     "--vibeui-file-005-zoom": String(scale),
     ...(accent ? { "--vibeui-file-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-file-005-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -149,13 +195,13 @@ export function File005({
       >
         <label htmlFor={id}>
           {preview ? (
-            <img src={preview} alt="Выбранное фото профиля" />
+            <img src={preview} alt={photoAlt} />
           ) : (
             <span data-part="initials" aria-hidden="true">
               {initials}
             </span>
           )}
-          <span data-part="veil">сменить</span>
+          <span data-part="veil">{changeText}</span>
           <input
             id={id}
             type="file"
@@ -171,12 +217,10 @@ export function File005({
 
         <div data-part="side">
           <span data-part="title">{label}</span>
-          <p data-part="note">
-            Квадрат обрежется по кругу — так фото увидят в комментариях.
-          </p>
+          <p data-part="note">{note}</p>
           <span data-part="zoom">
             <label htmlFor={`${id}-zoom`}>
-              Масштаб · {Math.round(scale * 100)}%
+              {zoomText.replace("{value}", String(Math.round(scale * 100)))}
             </label>
             <input
               id={`${id}-zoom`}

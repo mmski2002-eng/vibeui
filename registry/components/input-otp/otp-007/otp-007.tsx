@@ -13,8 +13,22 @@ export type Otp007Props = Omit<
 > & {
   label?: string
   length?: number
+  /** Подпись клетки для screen reader: {index} — номер, {total} — всего. */
+  digitLabel?: string
+  /** Строка состояния: ключи idle, sending и done. */
+  statusText?: Record<string, string>
+  /** Подпись кнопки возврата к вводу. */
+  retryText?: string
   onSubmit?: (code: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
+}
+
+const STATUS_LABEL: Record<string, string> = {
+  idle: "Кнопки нет: проверка начнётся на последней цифре.",
+  sending: "Проверяем код…",
+  done: "Код принят, входим.",
 }
 
 // Идея компонента: кнопки «Подтвердить» здесь нет. Как только набрана
@@ -25,20 +39,21 @@ export type Otp007Props = Omit<
 // после ошибки поле остаётся заблокированным навсегда.
 const STYLES = `
 :where([data-vibeui-block="otp-007"]){
---vibeui-otp-007-surface:oklch(1 0 0);
---vibeui-otp-007-shell:oklch(0.91 0.006 265);
---vibeui-otp-007-fg:oklch(0.21 0.014 265);
---vibeui-otp-007-muted:oklch(0.56 0.014 265);
---vibeui-otp-007-field:oklch(0.98 0.002 265);
---vibeui-otp-007-border:oklch(0.87 0.008 265);
---vibeui-otp-007-accent:oklch(0.5 0.17 250);
---vibeui-otp-007-ok:oklch(0.48 0.13 155);
+--vibeui-otp-007-bg:transparent;
+--vibeui-otp-007-surface:light-dark(oklch(1 0 0),oklch(0.26 0.014 265));
+--vibeui-otp-007-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-otp-007-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-otp-007-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-otp-007-field:light-dark(oklch(0.98 0.002 265),oklch(0.26 0.014 265));
+--vibeui-otp-007-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-otp-007-accent:light-dark(oklch(0.5 0.17 250),oklch(0.74 0.15 250));
+--vibeui-otp-007-ok:light-dark(oklch(0.48 0.13 155),oklch(0.74 0.14 155));
 --vibeui-otp-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="otp-007"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
-background:var(--vibeui-otp-007-surface);
+background:var(--vibeui-otp-007-bg);
 border:1px solid var(--vibeui-otp-007-shell);border-radius:0.875rem;
 font-family:var(--vibeui-otp-007-font);color:var(--vibeui-otp-007-fg);
 }
@@ -99,13 +114,39 @@ outline:2px solid var(--vibeui-otp-007-accent);outline-offset:2px;
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Код подтверждения с автоотправкой: последняя цифра запускает проверку сама.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Otp007({
   label = "Подтверждение входа",
   length = 6,
+  digitLabel = "Цифра {index} из {total}",
+  statusText = STATUS_LABEL,
+  retryText = "Ввести заново",
   onSubmit,
+  background = "",
   accent,
   className,
   style,
@@ -119,8 +160,19 @@ export function Otp007({
 
   const palette = {
     ...(accent ? { "--vibeui-otp-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-otp-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const digitName = (index: number) =>
+    digitLabel
+      .replace("{index}", String(index + 1))
+      .replace("{total}", String(size))
 
   // Отправка вынесена в общий шаг: код можно дособрать вводом, вставкой или
   // правкой средней клетки, и все эти пути обязаны привести к одному действию.
@@ -181,7 +233,7 @@ export function Otp007({
               maxLength={1}
               value={digit}
               disabled={state !== "idle"}
-              aria-label={`Цифра ${index + 1} из ${size}`}
+              aria-label={digitName(index)}
               aria-describedby={`${id}-status`}
               onChange={(event) => type(index, event.target.value)}
               onPaste={paste}
@@ -204,11 +256,7 @@ export function Otp007({
         ) : null}
         <div data-part="foot">
           <span data-part="status" id={`${id}-status`} aria-live="polite">
-            {state === "sending"
-              ? "Проверяем код…"
-              : state === "done"
-                ? "Код принят, входим."
-                : "Кнопки нет: проверка начнётся на последней цифре."}
+            {statusText[state] ?? STATUS_LABEL[state]}
           </span>
           {state === "done" ? (
             <button
@@ -220,7 +268,7 @@ export function Otp007({
                 boxes.current[0]?.focus()
               }}
             >
-              Ввести заново
+              {retryText}
             </button>
           ) : null}
         </div>

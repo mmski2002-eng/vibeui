@@ -14,11 +14,15 @@ export type Footer003Props = {
   brand?: string
   formTitle?: string
   formText?: string
+  /** Видимая подпись поля: она связана с input через htmlFor. */
+  emailLabel?: string
   placeholder?: string
   submitLabel?: string
   consent?: string
   columns?: Footer003Column[]
   legal?: string
+  /** Пусто — подложки нет, подвал лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -28,15 +32,18 @@ export type Footer003Props = {
 // если подписка нужна, она не должна прятаться сбоку от ссылок. Подпись
 // поля видимая, а не placeholder-заглушка, и рядом честная строка согласия —
 // подвал остаётся тем местом, где обещания дают, а не прячут.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подвал темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="footer-003"]){
---vibeui-footer-003-bg:oklch(0.97 0.005 250);
---vibeui-footer-003-field:oklch(1 0 0);
---vibeui-footer-003-ink:oklch(0.21 0.014 250);
---vibeui-footer-003-muted:oklch(0.5 0.014 250);
---vibeui-footer-003-border:oklch(0.89 0.008 250);
---vibeui-footer-003-accent:oklch(0.5 0.17 262);
---vibeui-footer-003-accent-fg:oklch(0.99 0 0);
+--vibeui-footer-003-bg:transparent;
+--vibeui-footer-003-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 250));
+--vibeui-footer-003-ink:light-dark(oklch(0.21 0.014 250),oklch(0.94 0.006 250));
+--vibeui-footer-003-muted:light-dark(oklch(0.5 0.014 250),oklch(0.71 0.012 250));
+--vibeui-footer-003-border:light-dark(oklch(0.89 0.008 250),oklch(0.36 0.014 250));
+--vibeui-footer-003-accent:light-dark(oklch(0.5 0.17 262),oklch(0.72 0.15 262));
+--vibeui-footer-003-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 262));
 --vibeui-footer-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -148,22 +155,52 @@ const DEFAULT_COLUMNS: Footer003Column[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Подвал с подпиской: форма занимает верхний ряд, ссылки идут под ней. */
 export function Footer003({
   brand = "Лоза",
   formTitle = "Письмо о новых партиях",
   formText = "Пишем, когда выходит новая партия и когда на складе остаются последние размеры. Обычно два письма в месяц.",
+  emailLabel = "Электронная почта",
   placeholder = "you@example.com",
   submitLabel = "Подписаться",
   consent = "Отправляя адрес, вы соглашаетесь с политикой обработки данных. Отписаться можно ссылкой в любом письме.",
   columns = DEFAULT_COLUMNS,
   legal = "© 2026 Мастерская «Лоза»",
+  background = "",
   accent,
   className,
   style,
 }: Footer003Props) {
   const palette = {
     ...(accent ? { "--vibeui-footer-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-footer-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -185,7 +222,7 @@ export function Footer003({
             </div>
             <form action="#subscribe" method="post">
               <label data-part="label" htmlFor="vibeui-footer-003-email">
-                Электронная почта
+                {emailLabel}
               </label>
               <div data-part="row">
                 <input

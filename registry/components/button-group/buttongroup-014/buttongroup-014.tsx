@@ -13,6 +13,8 @@ export type Buttongroup014Props = Omit<
   defaultValue?: string
   label?: string
   name?: string
+  /** Пусто — подложки нет, трек лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,12 +26,15 @@ export type Buttongroup014Props = Omit<
 // с клавиатуры значки иначе неразличимы.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-014"]){
---vibeui-buttongroup-014-surface:oklch(1 0 0);
---vibeui-buttongroup-014-muted:oklch(0.55 0.014 265);
---vibeui-buttongroup-014-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-014-accent:oklch(0.52 0.16 265);
+--vibeui-buttongroup-014-surface:transparent;
+--vibeui-buttongroup-014-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-014-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-buttongroup-014-border:light-dark(oklch(0.89 0.008 265),oklch(0.37 0.012 265));
+--vibeui-buttongroup-014-hover:light-dark(oklch(0.96 0.006 265),oklch(0.31 0.012 265));
+--vibeui-buttongroup-014-accent:light-dark(oklch(0.52 0.16 265),oklch(0.63 0.17 265));
 --vibeui-buttongroup-014-on-accent:oklch(0.99 0.004 265);
---vibeui-buttongroup-014-tip:oklch(0.26 0.016 265);
+--vibeui-buttongroup-014-tip:light-dark(oklch(0.26 0.016 265),oklch(0.9 0.008 265));
+--vibeui-buttongroup-014-on-tip:light-dark(oklch(0.99 0 0),oklch(0.21 0.014 265));
 --vibeui-buttongroup-014-radius:0.625rem;
 --vibeui-buttongroup-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -71,7 +76,7 @@ stroke-linecap:round;stroke-linejoin:round;
 position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);
 }
 [data-vibeui-block="buttongroup-014"] [data-part="segment"]:hover{
-background:oklch(0.96 0.006 265);color:var(--vibeui-buttongroup-014-tip);
+background:var(--vibeui-buttongroup-014-hover);color:var(--vibeui-buttongroup-014-fg);
 }
 [data-vibeui-block="buttongroup-014"] [data-part="segment"]:has(input:checked){
 z-index:1;
@@ -87,7 +92,7 @@ outline:2px solid var(--vibeui-buttongroup-014-accent);outline-offset:2px;
 position:absolute;top:calc(100% + 0.5rem);left:50%;z-index:3;
 padding:0.25rem 0.5rem;border-radius:0.375rem;
 background:var(--vibeui-buttongroup-014-tip);
-color:oklch(0.99 0 0);
+color:var(--vibeui-buttongroup-014-on-tip);
 font-size:0.6875rem;font-weight:600;line-height:1.3;white-space:nowrap;
 opacity:0;translate:-50% 0.25rem;pointer-events:none;
 transition:opacity .14s ease,translate .14s ease;
@@ -112,6 +117,28 @@ const DEFAULT_OPTIONS: Buttongroup014Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор одного варианта голыми значками: имя лежит текстом, подсказка снизу.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -120,6 +147,7 @@ export function Buttongroup014({
   defaultValue = "week",
   label = "Масштаб шкалы",
   name = "buttongroup-014",
+  background = "",
   accent,
   className,
   style,
@@ -127,6 +155,12 @@ export function Buttongroup014({
 }: Buttongroup014Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-014-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

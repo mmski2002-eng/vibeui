@@ -15,6 +15,8 @@ export type Buttongroup016Props = Omit<
   reasonId?: string
   label?: string
   name?: string
+  /** Пусто — подложки нет, сегменты лежат прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,13 +29,15 @@ export type Buttongroup016Props = Omit<
 // кликабельным для клавиатуры.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-016"]){
---vibeui-buttongroup-016-surface:oklch(1 0 0);
---vibeui-buttongroup-016-fg:oklch(0.26 0.016 265);
---vibeui-buttongroup-016-muted:oklch(0.56 0.014 265);
---vibeui-buttongroup-016-locked:oklch(0.72 0.01 265);
---vibeui-buttongroup-016-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-016-on:oklch(0.96 0.035 285);
---vibeui-buttongroup-016-accent:oklch(0.52 0.16 285);
+--vibeui-buttongroup-016-surface:transparent;
+--vibeui-buttongroup-016-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-016-muted:light-dark(oklch(0.56 0.014 265),oklch(0.69 0.012 265));
+--vibeui-buttongroup-016-locked:light-dark(oklch(0.72 0.01 265),oklch(0.55 0.012 265));
+--vibeui-buttongroup-016-border:light-dark(oklch(0.89 0.008 265),oklch(0.37 0.012 265));
+--vibeui-buttongroup-016-stripe-a:light-dark(oklch(0.98 0.002 265),oklch(0.28 0.007 265));
+--vibeui-buttongroup-016-stripe-b:light-dark(oklch(0.955 0.003 265),oklch(0.245 0.007 265));
+--vibeui-buttongroup-016-on:light-dark(oklch(0.96 0.035 285),oklch(0.3 0.05 285));
+--vibeui-buttongroup-016-accent:light-dark(oklch(0.52 0.16 285),oklch(0.75 0.14 285));
 --vibeui-buttongroup-016-radius:0.625rem;
 --vibeui-buttongroup-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -92,7 +96,7 @@ outline:2px solid var(--vibeui-buttongroup-016-accent);outline-offset:1px;
 [data-vibeui-block="buttongroup-016"] [data-part="segment"]:has(input:disabled){
 cursor:not-allowed;
 color:var(--vibeui-buttongroup-016-locked);
-background:repeating-linear-gradient(-45deg,oklch(0.98 0.002 265) 0 6px,oklch(0.955 0.003 265) 6px 12px);
+background:repeating-linear-gradient(-45deg,var(--vibeui-buttongroup-016-stripe-a) 0 6px,var(--vibeui-buttongroup-016-stripe-b) 6px 12px);
 }
 [data-vibeui-block="buttongroup-016"] [data-part="reason"]{
 display:flex;align-items:flex-start;gap:0.375rem;
@@ -113,6 +117,28 @@ const DEFAULT_OPTIONS: Buttongroup016Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Группа с запертым вариантом, который объясняет причину недоступности.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -123,6 +149,7 @@ export function Buttongroup016({
   reasonId = "buttongroup-016-reason",
   label = "Состояние материала",
   name = "buttongroup-016",
+  background = "",
   accent,
   className,
   style,
@@ -130,6 +157,12 @@ export function Buttongroup016({
 }: Buttongroup016Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-016-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -21,6 +21,8 @@ export type Combobox002Props = Omit<
   groups?: Combobox002Group[]
   emptyLabel?: string
   onSelect?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -30,13 +32,14 @@ export type Combobox002Props = Omit<
 // через него перепрыгивают, а скринридер всё равно называет раздел.
 const STYLES = `
 :where([data-vibeui-block="combobox-002"]){
---vibeui-combobox-002-bg:oklch(1 0 0);
---vibeui-combobox-002-fg:oklch(0.21 0.015 190);
---vibeui-combobox-002-muted:oklch(0.52 0.016 190);
---vibeui-combobox-002-border:oklch(0.9 0.008 190);
---vibeui-combobox-002-field:oklch(0.985 0.004 190);
---vibeui-combobox-002-active:oklch(0.95 0.03 190);
---vibeui-combobox-002-accent:oklch(0.52 0.11 190);
+--vibeui-combobox-002-bg:transparent;
+--vibeui-combobox-002-panel:light-dark(oklch(1 0 0),oklch(0.26 0.014 190));
+--vibeui-combobox-002-fg:light-dark(oklch(0.21 0.015 190),oklch(0.94 0.006 190));
+--vibeui-combobox-002-muted:light-dark(oklch(0.52 0.016 190),oklch(0.7 0.014 190));
+--vibeui-combobox-002-border:light-dark(oklch(0.9 0.008 190),oklch(0.37 0.014 190));
+--vibeui-combobox-002-field:light-dark(oklch(0.985 0.004 190),oklch(0.3 0.014 190));
+--vibeui-combobox-002-active:light-dark(oklch(0.95 0.03 190),oklch(0.36 0.035 190));
+--vibeui-combobox-002-accent:light-dark(oklch(0.52 0.11 190),oklch(0.78 0.12 190));
 --vibeui-combobox-002-radius:0.625rem;
 --vibeui-combobox-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -63,7 +66,7 @@ color:inherit;font:inherit;font-size:0.875rem;
 margin:0;padding:0.25rem;list-style:none;max-height:12rem;overflow-y:auto;
 border:1px solid var(--vibeui-combobox-002-border);
 border-radius:var(--vibeui-combobox-002-radius);
-background:var(--vibeui-combobox-002-bg);
+background:var(--vibeui-combobox-002-panel);
 }
 [data-vibeui-block="combobox-002"] [data-part="group"]{margin:0;padding:0;list-style:none}
 [data-vibeui-block="combobox-002"] [data-part="group"] + [data-part="group"]{
@@ -105,6 +108,28 @@ const DEFAULT_GROUPS: Combobox002Group[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая плашка иначе досталась бы тексту
+ * тёмной ветки, потому что light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox с группами: заголовки разделов остаются в списке при фильтрации,
  * пустые группы скрываются.
  */
@@ -114,6 +139,7 @@ export function Combobox002({
   groups = DEFAULT_GROUPS,
   emptyLabel = "Ничего не нашлось",
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -154,6 +180,12 @@ export function Combobox002({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

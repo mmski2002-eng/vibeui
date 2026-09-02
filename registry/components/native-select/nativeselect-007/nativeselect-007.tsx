@@ -8,6 +8,8 @@ export type Nativeselect007Props = Omit<
   label?: string
   size?: "sm" | "md" | "lg"
   options?: string[]
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -16,14 +18,18 @@ export type Nativeselect007Props = Omit<
 // переопределяет четыре переменные: высоту, кегль, отступ и величину
 // стрелки. Добавить ступень — значит добавить четыре строки, а не копию
 // компонента.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// блока по умолчанию нет, а поле и границы получают свои пары светлот.
 const STYLES = `
 :where([data-vibeui-block="nativeselect-007"]){
---vibeui-nativeselect-007-surface:oklch(1 0 0);
---vibeui-nativeselect-007-surface-border:oklch(0.91 0.006 265);
---vibeui-nativeselect-007-fg:oklch(0.24 0.016 265);
---vibeui-nativeselect-007-muted:oklch(0.54 0.014 265);
---vibeui-nativeselect-007-field-border:oklch(0.85 0.01 265);
---vibeui-nativeselect-007-accent:oklch(0.58 0.16 300);
+--vibeui-nativeselect-007-bg:transparent;
+--vibeui-nativeselect-007-line:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-nativeselect-007-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-nativeselect-007-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.004 265));
+--vibeui-nativeselect-007-muted:light-dark(oklch(0.54 0.014 265),oklch(0.68 0.012 265));
+--vibeui-nativeselect-007-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.42 0.014 265));
+--vibeui-nativeselect-007-accent:light-dark(oklch(0.58 0.16 300),oklch(0.76 0.14 300));
 --vibeui-nativeselect-007-height:2.5rem;
 --vibeui-nativeselect-007-text:0.9375rem;
 --vibeui-nativeselect-007-pad:0.75rem;
@@ -48,8 +54,8 @@ const STYLES = `
 [data-vibeui-block="nativeselect-007"]{
 box-sizing:border-box;width:100%;max-width:22rem;
 padding:1rem;border-radius:0.875rem;
-background:var(--vibeui-nativeselect-007-surface);
-border:1px solid var(--vibeui-nativeselect-007-surface-border);
+background:var(--vibeui-nativeselect-007-bg);
+border:1px solid var(--vibeui-nativeselect-007-line);
 font-family:var(--vibeui-nativeselect-007-font);color:var(--vibeui-nativeselect-007-fg);
 display:flex;flex-direction:column;gap:0.375rem;
 }
@@ -64,7 +70,7 @@ height:var(--vibeui-nativeselect-007-height);
 padding:0 calc(var(--vibeui-nativeselect-007-pad) * 2 + var(--vibeui-nativeselect-007-arrow)) 0 var(--vibeui-nativeselect-007-pad);
 font:inherit;font-size:var(--vibeui-nativeselect-007-text);line-height:1.2;
 color:var(--vibeui-nativeselect-007-fg);
-background:var(--vibeui-nativeselect-007-surface);
+background:var(--vibeui-nativeselect-007-field);
 border:1px solid var(--vibeui-nativeselect-007-field-border);
 border-radius:var(--vibeui-nativeselect-007-radius);
 cursor:pointer;
@@ -88,6 +94,29 @@ translate:0 calc(var(--vibeui-nativeselect-007-arrow) / -2);rotate:45deg;
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Нативный select с размерной шкалой sm / md / lg: три ступени описаны
  * одним набором правил и четырьмя переменными. Один файл, ноль
  * зависимостей.
@@ -96,6 +125,7 @@ export function Nativeselect007({
   label = "Размер упаковки",
   size = "md",
   options = ["Конверт", "Коробка S", "Коробка M", "Паллета"],
+  background = "",
   accent,
   className,
   style,
@@ -104,6 +134,12 @@ export function Nativeselect007({
   const id = useId()
   const palette = {
     ...(accent ? { "--vibeui-nativeselect-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-nativeselect-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

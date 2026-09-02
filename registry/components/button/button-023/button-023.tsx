@@ -13,6 +13,8 @@ export type Button023Props = Omit<
   doneLabel?: string
   /** Сколько держится подпись «Скопировано», мс. */
   hold?: number
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,12 +25,12 @@ export type Button023Props = Omit<
 // поэтому подтверждение не нужно закрывать руками.
 const STYLES = `
 :where([data-vibeui-block="button-023"]){
---vibeui-button-023-bg:oklch(1 0 0);
---vibeui-button-023-fg:oklch(0.26 0.016 265);
---vibeui-button-023-muted:oklch(0.55 0.014 265);
---vibeui-button-023-border:oklch(0.9 0.006 265);
---vibeui-button-023-accent:oklch(0.55 0.17 265);
---vibeui-button-023-done:oklch(0.5 0.14 152);
+--vibeui-button-023-bg:transparent;
+--vibeui-button-023-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-button-023-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-button-023-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-button-023-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-button-023-done:light-dark(oklch(0.5 0.14 152),oklch(0.76 0.14 152));
 --vibeui-button-023-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-button-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -79,6 +81,28 @@ transform:rotate(45deg);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поле-кнопка: показывает значение и копирует его целиком по клику.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -87,6 +111,7 @@ export function Button023({
   label = "Копировать",
   doneLabel = "Скопировано",
   hold = 2000,
+  background = "",
   accent,
   type = "button",
   className,
@@ -118,6 +143,12 @@ export function Button023({
 
   const palette = {
     ...(accent ? { "--vibeui-button-023-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-023-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -15,6 +15,12 @@ export type Dashboard006Props = {
   fromHour?: number
   toHour?: number
   events?: Dashboard006Event[]
+  /** Подпись часа в колонке: {hour} — целый час. */
+  hourText?: string
+  /** Время события: {start} и {end} — целые часы. */
+  rangeText?: string
+  /** Пусто — подложки нет, сетка ложится на фон страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -28,17 +34,24 @@ export type Dashboard006Props = {
 // липкими: при прокрутке видно, к какому времени относится строка. Тон
 // события дублируется полосой слева — на печати и при дальтонизме цвет один
 // не различается.
+//
+// Тема берётся из color-scheme окружения через light-dark(): собственной
+// подложки у сетки нет, липкой колонке часов оставлена своя поверхность.
 const STYLES = `
 :where([data-vibeui-block="dashboard-006"]){
---vibeui-dashboard-006-bg:oklch(1 0 0);
---vibeui-dashboard-006-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-006-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-006-border:oklch(0.92 0.006 265);
---vibeui-dashboard-006-line:oklch(0.95 0.004 265);
---vibeui-dashboard-006-work:oklch(0.55 0.2 262);
---vibeui-dashboard-006-call:oklch(0.62 0.16 40);
---vibeui-dashboard-006-focus:oklch(0.58 0.14 152);
---vibeui-dashboard-006-accent:oklch(0.55 0.2 262);
+--vibeui-dashboard-006-bg:transparent;
+--vibeui-dashboard-006-surface:light-dark(oklch(1 0 0),oklch(0.23 0.012 265));
+--vibeui-dashboard-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-dashboard-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-006-border:light-dark(oklch(0.92 0.006 265),oklch(0.38 0.012 265));
+--vibeui-dashboard-006-line:light-dark(oklch(0.95 0.004 265),oklch(0.32 0.008 265));
+--vibeui-dashboard-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-dashboard-006-work:var(--vibeui-dashboard-006-accent);
+--vibeui-dashboard-006-work-fill:light-dark(oklch(0.55 0.2 262 / 10%),oklch(0.74 0.16 262 / 18%));
+--vibeui-dashboard-006-call:light-dark(oklch(0.62 0.16 40),oklch(0.78 0.14 40));
+--vibeui-dashboard-006-call-fill:light-dark(oklch(0.62 0.16 40 / 12%),oklch(0.78 0.14 40 / 20%));
+--vibeui-dashboard-006-focus:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.13 152));
+--vibeui-dashboard-006-focus-fill:light-dark(oklch(0.58 0.14 152 / 12%),oklch(0.76 0.13 152 / 20%));
 --vibeui-dashboard-006-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -70,7 +83,7 @@ border-bottom:1px solid var(--vibeui-dashboard-006-border);
 [data-vibeui-block="dashboard-006"] [data-part="hour"]{
 position:sticky;left:0;z-index:1;
 padding:0 0.5rem;text-align:right;
-background:var(--vibeui-dashboard-006-bg);
+background:var(--vibeui-dashboard-006-surface);
 border-top:1px solid var(--vibeui-dashboard-006-line);
 font-size:0.6875rem;color:var(--vibeui-dashboard-006-muted);
 font-variant-numeric:tabular-nums;
@@ -84,14 +97,14 @@ border-left:1px solid var(--vibeui-dashboard-006-line);
 [data-vibeui-block="dashboard-006"] [data-part="event"]{
 margin:0.125rem;padding:0.3125rem 0.375rem;
 border-radius:0.5rem;border-left:3px solid var(--vibeui-dashboard-006-work);
-background:oklch(0.55 0.2 262 / 10%);
+background:var(--vibeui-dashboard-006-work-fill);
 font-size:0.6875rem;line-height:1.3;overflow:hidden;
 }
 [data-vibeui-block="dashboard-006"] [data-tone="call"]{
-border-left-color:var(--vibeui-dashboard-006-call);background:oklch(0.62 0.16 40 / 12%);
+border-left-color:var(--vibeui-dashboard-006-call);background:var(--vibeui-dashboard-006-call-fill);
 }
 [data-vibeui-block="dashboard-006"] [data-tone="focus"]{
-border-left-color:var(--vibeui-dashboard-006-focus);background:oklch(0.58 0.14 152 / 12%);
+border-left-color:var(--vibeui-dashboard-006-focus);background:var(--vibeui-dashboard-006-focus-fill);
 }
 [data-vibeui-block="dashboard-006"] [data-part="event"] b{display:block;font-weight:650}
 [data-vibeui-block="dashboard-006"] [data-part="event"] span{color:var(--vibeui-dashboard-006-muted);font-variant-numeric:tabular-nums}
@@ -109,6 +122,34 @@ const DEFAULT_EVENTS: Dashboard006Event[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+function fill(template: string, values: Record<string, string>) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? values[key] : match,
+  )
+}
+
+/**
  * Недельное расписание на гриде: длительность события видна геометрией.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -119,6 +160,9 @@ export function Dashboard006({
   fromHour = 9,
   toHour = 14,
   events = DEFAULT_EVENTS,
+  hourText = "{hour}:00",
+  rangeText = "{start}:00 — {end}:00",
+  background = "",
   accent,
   className,
   style,
@@ -131,6 +175,13 @@ export function Dashboard006({
   const palette = {
     "--vibeui-dashboard-006-days": days.length,
     ...(accent ? { "--vibeui-dashboard-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-006-bg": background,
+          "--vibeui-dashboard-006-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -170,7 +221,7 @@ export function Dashboard006({
                   } as CSSProperties
                 }
               >
-                {hour}:00
+                {fill(hourText, { hour: String(hour) })}
               </span>
             ))}
 
@@ -203,7 +254,10 @@ export function Dashboard006({
               >
                 <b>{event.title}</b>
                 <span>
-                  {event.start}:00 — {event.end}:00
+                  {fill(rangeText, {
+                    start: String(event.start),
+                    end: String(event.end),
+                  })}
                 </span>
               </article>
             ))}

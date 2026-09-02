@@ -33,16 +33,20 @@
             "выравнивание чисел вправо вместе с font-variant-numeric:tabular-nums: иначе разряды не совпадают между строками",
             "семантику таблицы: thead, tbody, th со scope=\"col\" и caption — это данные, а не сетка из div'ов",
             "border-collapse:separate вместе с border-bottom у ячеек: с collapse липкая шапка теряет границу",
-            "блок <style> внутри компонента — в нём вся палитра, отступы и липкая шапка"
+            "блок <style> внутри компонента — в нём вся палитра, отступы и липкая шапка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массивы columns и rows; ячейка принимает ReactNode — можно положить плашку или ссылку",
             "caption — подпись над таблицей, она же заголовок для скринридера",
             "dense — плотный режим для длинных списков",
             "акцент через проп accent — цвет ссылок внутри таблицы",
-            "максимальную высоту и ширину через className"
+            "максимальную высоту и ширину через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сортировки и фильтров здесь нет: это таблица, а не data grid. Сортировку добавляйте снаружи, меняя порядок rows.",
             "Не превращайте таблицу в раскладку карточек на мобильном: горизонтальная прокрутка честнее и сохраняет сравнимость строк.",
             "Ключи ячеек берутся из column.key. Если ключа нет в строке, ячейка останется пустой — это не ошибка компонента.",
@@ -68,6 +72,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -82,16 +92,20 @@
                 "right alignment together with font-variant-numeric:tabular-nums: otherwise digits do not line up between rows",
                 "the table semantics: thead, tbody, th with scope=\"col\" and a caption — this is data, not a grid of divs",
                 "border-collapse:separate together with per-cell borders: with collapse the sticky header loses its rule",
-                "the <style> block inside the component — it holds the palette, the spacing and the sticky header"
+                "the <style> block inside the component — it holds the palette, the spacing and the sticky header",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the columns and rows arrays; a cell takes a ReactNode, so a badge or link fits",
                 "caption — the label above the table, and the heading a screen reader announces",
                 "dense — the compact mode for long lists",
                 "the accent through the accent prop — it colours links inside the table",
-                "max height and width through className"
+                "max height and width through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is no sorting or filtering here: this is a table, not a data grid. Sort outside and pass reordered rows.",
                 "Do not turn the table into cards on mobile: horizontal scrolling is more honest and keeps rows comparable.",
                 "Cell keys come from column.key. A key missing from a row leaves the cell empty — that is not a bug.",
@@ -109,11 +123,72 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Data Table"
+            "title": "Data Table",
+            "preview": {
+              "props": {
+                "caption": "Site pages in March",
+                "columns": [
+                  {
+                    "key": "page",
+                    "label": "Page"
+                  },
+                  {
+                    "key": "updated",
+                    "label": "Updated"
+                  },
+                  {
+                    "key": "views",
+                    "label": "Views",
+                    "numeric": true
+                  },
+                  {
+                    "key": "share",
+                    "label": "Share",
+                    "numeric": true
+                  }
+                ],
+                "rows": [
+                  {
+                    "page": "Home",
+                    "updated": "12 March",
+                    "views": "18,402",
+                    "share": "46.1%"
+                  },
+                  {
+                    "page": "Services",
+                    "updated": "9 March",
+                    "views": "7,118",
+                    "share": "17.8%"
+                  },
+                  {
+                    "page": "Portfolio",
+                    "updated": "2 March",
+                    "views": "6,940",
+                    "share": "17.4%"
+                  },
+                  {
+                    "page": "About",
+                    "updated": "27 February",
+                    "views": "4,233",
+                    "share": "10.6%"
+                  },
+                  {
+                    "page": "Contact",
+                    "updated": "27 February",
+                    "views": "3,210",
+                    "share": "8.1%"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["dense", "background"]
       }
     },
     {
@@ -148,16 +223,22 @@
             "скрытое слово рядом с галочкой и прочерком: «✓» и «—» скринридер читает как символы",
             "th со scope=\"row\" у подписей строк и scope=\"col\" у вариантов — это то, что связывает ячейку с двумя заголовками",
             "горизонтальную прокрутку в обёртке: сравнение из пяти колонок не помещается на телефоне",
-            "блок <style> внутри компонента — в нём вся палитра, липкая колонка и подсветка"
+            "блок <style> внутри компонента — в нём вся палитра, липкая колонка и подсветка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "непрозрачную плашку под липкой первой колонкой: сквозь прозрачную подписи и значения наезжали бы друг на друга при прокрутке"
           ],
           "adapt": [
             "options — названия вариантов, rows — свойства и значения",
             "highlight — номер выделенной колонки; -1 убирает выделение",
             "значения: строка показывается как есть, булево превращается в галочку или прочерк",
             "акцент через проп accent — цвет подсветки выбранной колонки",
-            "ширину и внешние отступы через className"
+            "ширину и внешние отступы через className",
+            "featureLabel — заголовок первой колонки, valueText — подписи «да» и «нет» для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не сравнивайте больше четырёх вариантов: колонки становятся уже читаемого минимума.",
             "Строки должны быть про одно и то же у всех вариантов. Свойство, которого нет у остальных, выглядит как преимущество, а не как отличие.",
             "Кнопки выбора тарифа здесь нет намеренно: сравнение отвечает на вопрос «чем отличаются», а покупку делает блок тарифов.",
@@ -178,6 +259,19 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "featureLabel",
+            "label": "Первая колонка",
+            "type": "text",
+            "default": "Что входит",
+            "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -192,16 +286,22 @@
                 "the hidden word beside the check and the dash: a screen reader reads \"✓\" and \"—\" as symbols",
                 "th with scope=\"row\" on the feature labels and scope=\"col\" on the options — that is what ties a cell to both headers",
                 "horizontal scrolling in the wrapper: a five-column comparison does not fit a phone",
-                "the <style> block inside the component — it holds the palette, the sticky column and the highlight"
+                "the <style> block inside the component — it holds the palette, the sticky column and the highlight",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the opaque plate under the sticky first column: through a transparent one the labels and the values would run over each other while scrolling"
               ],
               "adapt": [
                 "options — the names being compared, rows — the features and values",
                 "highlight — the index of the highlighted column; -1 removes it",
                 "the values: a string shows as-is, a boolean becomes a check or a dash",
                 "the accent through the accent prop — it colours the highlighted column",
-                "width and outer spacing through className"
+                "width and outer spacing through className",
+                "featureLabel — the first column heading, valueText — the screen-reader words for yes and no",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not compare more than four options: the columns fall below a readable width.",
                 "Every row must describe the same thing across options. A feature only one option has reads as a benefit rather than a difference.",
                 "There is deliberately no buy button: comparison answers \"how do they differ\", while the pricing block does the selling.",
@@ -215,11 +315,51 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "featureLabel": {
+                "label": "First column",
+                "default": "What's included"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Comparison Table"
+            "title": "Comparison Table",
+            "preview": {
+              "props": {
+                "featureLabel": "What's included",
+                "valueText": {
+                  "yes": "yes",
+                  "no": "no"
+                },
+                "options": ["Start", "Team", "Studio"],
+                "rows": [
+                  {
+                    "label": "Projects",
+                    "values": ["1", "10", "Unlimited"]
+                  },
+                  {
+                    "label": "Custom domain",
+                    "values": [false, true, true]
+                  },
+                  {
+                    "label": "Collaboration",
+                    "values": [false, true, true]
+                  },
+                  {
+                    "label": "Publish history",
+                    "values": ["7 days", "90 days", "Forever"]
+                  },
+                  {
+                    "label": "Support",
+                    "values": ["Email", "Email", "Chat within an hour"]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["highlight", "accent", "background"]
       }
     },
     {
@@ -254,7 +394,10 @@
             "липкий tfoot: в длинном счёте сумма должна быть видна без прокрутки до конца",
             "выравнивание сумм вправо с tabular-nums — деньги читают по разрядам",
             "формат суммы: пробел между тысячами и запятая в дробной части, символ валюты отдельно",
-            "блок <style> внутри компонента — в нём вся палитра, отступы и липкий итог"
+            "блок <style> внутри компонента — в нём вся палитра, отступы и липкий итог",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "непрозрачную плашку под липким tfoot: сквозь прозрачную позиции проезжали бы сквозь итог"
           ],
           "adapt": [
             "массив lines: название, пояснение, количество и сумма позиции",
@@ -262,9 +405,12 @@
             "currency — символ валюты",
             "caption — заголовок документа",
             "ширину и максимальную высоту через className",
-            "акцент через проп accent — цвет итоговой суммы"
+            "акцент через проп accent — цвет итоговой суммы",
+            "headingText — подписи колонок, taxText — строка налога с подстановкой {rate}, totalText — слово «Итого»",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Суммы приходят числами в основных единицах. Если считаете в копейках, делите перед передачей — компонент арифметику не угадывает.",
             "Формат намеренно русский и не зависит от локали проекта. Для другой страны поменяйте formatAmount в своей копии.",
             "Скидки и предоплата не заложены: добавляйте их отдельными строками с отрицательной суммой.",
@@ -299,6 +445,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -313,7 +465,10 @@
                 "the sticky tfoot: in a long invoice the amount has to be visible without scrolling to the end",
                 "right-aligned amounts with tabular-nums — money is read by digit columns",
                 "the amount format: a space between thousands, a comma for the fraction, the currency symbol separate",
-                "the <style> block inside the component — it holds the palette, the spacing and the sticky total"
+                "the <style> block inside the component — it holds the palette, the spacing and the sticky total",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the opaque plate under the sticky tfoot: through a transparent one the lines would run through the total"
               ],
               "adapt": [
                 "the lines array: title, note, quantity and amount",
@@ -321,9 +476,12 @@
                 "currency — the currency symbol",
                 "caption — the document heading",
                 "width and max height through className",
-                "the accent through the accent prop — it colours the total amount"
+                "the accent through the accent prop — it colours the total amount",
+                "headingText — the column labels, taxText — the tax row with a {rate} placeholder, totalText — the word for the total",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Amounts arrive as numbers in major units. If you store cents, divide before passing them — the component does not guess the arithmetic.",
                 "The format is deliberately Russian and independent of the project locale. For another country change formatAmount in your copy.",
                 "Discounts and prepayments are not built in: add them as lines with a negative amount.",
@@ -345,11 +503,48 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Invoice Table"
+            "title": "Invoice Table",
+            "preview": {
+              "props": {
+                "caption": "Invoice",
+                "currency": "€",
+                "headingText": {
+                  "title": "Item",
+                  "quantity": "Qty",
+                  "amount": "Amount"
+                },
+                "taxText": "VAT {rate}%",
+                "totalText": "Total",
+                "lines": [
+                  {
+                    "title": "Team plan",
+                    "hint": "Annual subscription, 12 months",
+                    "quantity": 1,
+                    "amount": 28800
+                  },
+                  {
+                    "title": "Extra seats",
+                    "hint": "3 people beyond the plan",
+                    "quantity": 3,
+                    "amount": 10800
+                  },
+                  {
+                    "title": ".com domain",
+                    "hint": "Renewal for a year",
+                    "quantity": 1,
+                    "amount": 890
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["taxRate", "accent", "background"]
       }
     },
     {
@@ -383,15 +578,20 @@
             "кнопку внутри th: сортировка должна работать с клавиатуры",
             "стрелку текстом, а не поворотом фона",
             "localeCompare для строк: посимвольное сравнение путает русский алфавит",
-            "табличные цифры в числовых колонках"
+            "табличные цифры в числовых колонках",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив rows и набор колонок",
             "caption — подпись таблицы",
             "стартовую колонку сортировки",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "columnText — заголовки колонок, locale — локаль для группировки цифр и сравнения строк",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сортировка идёт на клиенте по всему массиву: для страниц с сервера сортируйте запросом.",
             "Копия массива обязательна: sort меняет исходный, а мутировать пропсы нельзя.",
             "Больше семи колонок таблица не читает — уводите редкие поля в подробности строки.",
@@ -405,6 +605,18 @@
             "type": "text",
             "default": "Страницы сайта за март",
             "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -418,15 +630,20 @@
                 "the button inside th: sorting must work from the keyboard",
                 "the arrow as text rather than a rotated background",
                 "localeCompare for strings: byte comparison mangles non-Latin alphabets",
-                "tabular figures in the numeric columns"
+                "tabular figures in the numeric columns",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the rows array and the column set",
                 "caption — the table caption",
                 "the initial sort column",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "columnText — the column headings, locale — the locale used to group digits and compare strings",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Sorting runs client-side over the whole array: for server pages sort in the query.",
                 "Copying the array is mandatory: sort mutates, and props must not be mutated.",
                 "Past seven columns a table stops reading — move rare fields into row details.",
@@ -438,11 +655,62 @@
               "caption": {
                 "label": "Caption",
                 "default": "Site pages in March"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Sortable Table"
+            "title": "Sortable Table",
+            "preview": {
+              "props": {
+                "caption": "Site pages in March",
+                "locale": "en-US",
+                "columnText": {
+                  "name": "Page",
+                  "views": "Views",
+                  "share": "Share",
+                  "updated": "Updated"
+                },
+                "rows": [
+                  {
+                    "name": "Home",
+                    "views": 18402,
+                    "share": 46.1,
+                    "updated": "12 March"
+                  },
+                  {
+                    "name": "Services",
+                    "views": 7118,
+                    "share": 17.8,
+                    "updated": "9 March"
+                  },
+                  {
+                    "name": "Portfolio",
+                    "views": 6940,
+                    "share": 17.4,
+                    "updated": "2 March"
+                  },
+                  {
+                    "name": "Blog",
+                    "views": 4233,
+                    "share": 10.6,
+                    "updated": "27 February"
+                  },
+                  {
+                    "name": "Contact",
+                    "views": 3211,
+                    "share": 8.1,
+                    "updated": "20 February"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -476,15 +744,20 @@
             "панель действий на месте подписи, а не поверх таблицы",
             "галочку и черту в флажке: цветом одним состояния не различить",
             "заливку выбранной строки — один флажок в ряду легко потерять",
-            "aria-label на каждом флажке с именем строки"
+            "aria-label на каждом флажке с именем строки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "caption, массив rows и колонки",
             "набор действий в панели",
             "стартовый выбор",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "columnText, actionText, pickedText, selectAllText и selectRowText — все подписи вынесены в пропсы",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Выбор живёт внутри компонента: чтобы отдать его наружу, добавьте свой обработчик.",
             "«Выбрать всех» отмечает только видимые строки: при страницах напишите об этом рядом.",
             "Опасные массовые действия требуют подтверждения — панель для этого слишком легко нажать.",
@@ -498,6 +771,18 @@
             "type": "text",
             "default": "Участники проекта",
             "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -511,15 +796,20 @@
                 "the bulk bar in place of the caption rather than over the table",
                 "the tick and the dash in the box: colour alone does not separate the states",
                 "the tint on a selected row — a lone checkbox is easy to lose",
-                "an aria-label on every checkbox naming its row"
+                "an aria-label on every checkbox naming its row",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "caption, the rows array and the columns",
                 "the set of bulk actions",
                 "the initial selection",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "columnText, actionText, pickedText, selectAllText and selectRowText — every caption is a prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Selection lives inside the component: add your own handler to lift it out.",
                 "\"Select all\" only marks the visible rows: with pagination say so next to it.",
                 "Destructive bulk actions need confirmation — this bar is too easy to hit.",
@@ -531,11 +821,61 @@
               "caption": {
                 "label": "Caption",
                 "default": "Project members"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Selectable Table"
+            "title": "Selectable Table",
+            "preview": {
+              "props": {
+                "caption": "Project members",
+                "columnText": {
+                  "name": "Member",
+                  "role": "Role",
+                  "status": "Status"
+                },
+                "actionText": {
+                  "message": "Message",
+                  "clear": "Clear selection"
+                },
+                "pickedText": "Selected: {count}",
+                "selectAllText": "Select all",
+                "selectRowText": "Select: {name}",
+                "rows": [
+                  {
+                    "id": "1",
+                    "name": "Anna Rebrova",
+                    "role": "Designer",
+                    "status": "Active"
+                  },
+                  {
+                    "id": "2",
+                    "name": "Ilya Mokhov",
+                    "role": "Frontend",
+                    "status": "Active"
+                  },
+                  {
+                    "id": "3",
+                    "name": "Kim Son",
+                    "role": "Analyst",
+                    "status": "Invited"
+                  },
+                  {
+                    "id": "4",
+                    "name": "Peter Gai",
+                    "role": "Frontend",
+                    "status": "Active"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -569,15 +909,20 @@
             "чекбокс как хранилище состояния — без JS оно больше нигде не живёт",
             "aria-label на чекбоксе с номером строки: голый шеврон ничего не сообщает",
             "поворот шеврона по состоянию, а не смену символа",
-            "заливку раскрытой строки, чтобы она связывалась с деталями"
+            "заливку раскрытой строки, чтобы она связывалась с деталями",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив rows и содержимое details",
             "caption и набор колонок",
             "акцент через проп accent",
-            "отступ блока подробностей"
+            "отступ блока подробностей",
+            "columnText — заголовки колонок, toggleText — подпись флажка с подстановкой {order}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Раскрытие не отражается в URL: ссылку на конкретную строку так не дать.",
             "Связь строки и деталей для скринридера держится на порядке: не меняйте местами tr.",
             "Все детали приходят сразу: тяжёлое содержимое лучше грузить по требованию своим кодом.",
@@ -591,6 +936,18 @@
             "type": "text",
             "default": "Счета за март",
             "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -604,15 +961,20 @@
                 "the checkbox as the state store — without JS the state lives nowhere else",
                 "an aria-label on the checkbox naming the row: a bare chevron says nothing",
                 "rotating the chevron by state rather than swapping glyphs",
-                "the tint on the open row so it reads together with its details"
+                "the tint on the open row so it reads together with its details",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the rows array and the details content",
                 "caption and the column set",
                 "the accent through the accent prop",
-                "the details block indent"
+                "the details block indent",
+                "columnText — the column headings, toggleText — the checkbox label with an {order} placeholder",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Expansion is not reflected in the URL: you cannot link to a specific open row.",
                 "The row-to-details link relies on order: do not reorder the tr elements.",
                 "Every detail ships at once: load heavy content on demand with your own code.",
@@ -624,11 +986,72 @@
               "caption": {
                 "label": "Caption",
                 "default": "March invoices"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Expandable Rows"
+            "title": "Expandable Rows",
+            "preview": {
+              "props": {
+                "caption": "March invoices",
+                "columnText": {
+                  "details": "Details",
+                  "order": "Invoice",
+                  "customer": "Customer",
+                  "sum": "Amount"
+                },
+                "toggleText": "Details of invoice {order}",
+                "rows": [
+                  {
+                    "id": "300",
+                    "order": "No. 300",
+                    "customer": "Polyot Ltd",
+                    "sum": "$240",
+                    "details": [
+                      {
+                        "label": "Contents",
+                        "value": "Annual subscription, 4 seats"
+                      },
+                      {
+                        "label": "Payment",
+                        "value": "Invoiced 12 March, due 20 March"
+                      },
+                      {
+                        "label": "Manager",
+                        "value": "Anna Rebrova"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "301",
+                    "order": "No. 301",
+                    "customer": "Gavrilov Sole Trader",
+                    "sum": "$59",
+                    "details": [
+                      {
+                        "label": "Contents",
+                        "value": "Annual subscription, 1 seat"
+                      },
+                      {
+                        "label": "Payment",
+                        "value": "Paid 13 March by card"
+                      },
+                      {
+                        "label": "Manager",
+                        "value": "Ilya Mokhov"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -662,15 +1085,20 @@
             "data-label у каждой ячейки — без подписи в карточке остаются голые значения",
             "контейнерный запрос вместо медиазапроса: таблица может стоять в узкой колонке",
             "скрытую, но существующую шапку: она нужна скринридеру и в карточном виде",
-            "тег table: карточки — это оформление, а не смена смысла данных"
+            "тег table: карточки — это оформление, а не смена смысла данных",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив rows и набор колонок",
             "порог перестроения в @container",
             "caption — подпись таблицы",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "columnText — заголовки колонок; они же уходят в data-label и подписывают карточки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Порог задан в rem: при крупном системном шрифте перестроение случится раньше — так и задумано.",
             "display:contents у ячейки убирает её рамку: рисуйте границы на строке.",
             "Шести колонок карточка не выдержит: оставьте в ней главное, остальное — в подробностях.",
@@ -684,6 +1112,12 @@
             "type": "text",
             "default": "Счета за март",
             "maxLength": 32
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -697,15 +1131,20 @@
                 "data-label on every cell — without it the cards hold bare values",
                 "a container query instead of a media query: the table may sit in a narrow column",
                 "the visually hidden but present header: screen readers still need it",
-                "the table element: cards are presentation, not a change of meaning"
+                "the table element: cards are presentation, not a change of meaning",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the rows array and the column set",
                 "the @container breakpoint",
                 "caption — the table caption",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "columnText — the column headings; they also feed data-label and label the cards",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The breakpoint is in rem: with a large system font the switch happens earlier, by design.",
                 "display:contents drops the cell's own border: draw the borders on the row.",
                 "Six columns will not fit a card: keep the essentials, move the rest into details.",
@@ -717,11 +1156,46 @@
               "caption": {
                 "label": "Caption",
                 "default": "March invoices"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Responsive Table"
+            "title": "Responsive Table",
+            "preview": {
+              "props": {
+                "caption": "March invoices",
+                "columnText": {
+                  "order": "Invoice",
+                  "customer": "Customer",
+                  "status": "Status",
+                  "sum": "Amount"
+                },
+                "rows": [
+                  {
+                    "order": "No. 300",
+                    "customer": "Polyot Ltd",
+                    "status": "Awaiting payment",
+                    "sum": "$240"
+                  },
+                  {
+                    "order": "No. 301",
+                    "customer": "Gavrilov Sole Trader",
+                    "status": "Paid",
+                    "sum": "$59"
+                  },
+                  {
+                    "order": "No. 302",
+                    "customer": "Vetka Ltd",
+                    "status": "Draft",
+                    "sum": "$124"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -755,15 +1229,21 @@
             "точку у кода: в потоке серого цвет теряется, а форма — нет",
             "разную форму точки для ошибки: круг и квадрат различимы без цвета",
             "табличные цифры и выравнивание длительности вправо",
-            "плотные строки: в логах важна плотность, а не воздух"
+            "плотные строки: в логах важна плотность, а не воздух",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив rows и набор колонок",
             "пороги тона в функции tone",
             "caption — подпись таблицы",
-            "цвета состояний"
+            "цвета состояний",
+            "columnText — заголовки колонок",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "accent — цвет точки удачного ответа"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Тон считается из кода: не передавайте его пропом, иначе данные и вид разойдутся.",
             "Длинные адреса не переносятся: таблица прокручивается по горизонтали.",
             "Для потока логов в реальном времени добавьте свою виртуализацию — тут её нет.",
@@ -777,6 +1257,18 @@
             "type": "text",
             "default": "Последние запросы",
             "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -790,15 +1282,21 @@
                 "the dot beside the code: in a field of grey the colour is lost, the shape is not",
                 "the different dot shape for failures: circle and square differ without colour",
                 "tabular figures and the right-aligned duration",
-                "the dense rows: logs need density, not air"
+                "the dense rows: logs need density, not air",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the rows array and the column set",
                 "the thresholds inside the tone function",
                 "caption — the table caption",
-                "the state colours"
+                "the state colours",
+                "columnText — the column headings",
+                "background — the component background; empty means no background, taking the page colour",
+                "accent — the colour of the dot on a successful response"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The tone is derived from the code: do not pass it as a prop or data and display will drift apart.",
                 "Long paths do not wrap: the table scrolls horizontally instead.",
                 "For a live log stream add your own virtualisation — there is none here.",
@@ -810,11 +1308,67 @@
               "caption": {
                 "label": "Caption",
                 "default": "Recent requests"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Log Table"
+            "title": "Log Table",
+            "preview": {
+              "props": {
+                "caption": "Recent requests",
+                "columnText": {
+                  "time": "Time",
+                  "method": "Method",
+                  "path": "Path",
+                  "code": "Code",
+                  "ms": "ms"
+                },
+                "rows": [
+                  {
+                    "time": "10:42:11",
+                    "method": "GET",
+                    "path": "/r/button-001.json",
+                    "code": 200,
+                    "ms": 34
+                  },
+                  {
+                    "time": "10:42:09",
+                    "method": "GET",
+                    "path": "/components/card-004",
+                    "code": 200,
+                    "ms": 128
+                  },
+                  {
+                    "time": "10:41:58",
+                    "method": "POST",
+                    "path": "/api/registry/build",
+                    "code": 202,
+                    "ms": 940
+                  },
+                  {
+                    "time": "10:41:40",
+                    "method": "GET",
+                    "path": "/r/table-404.json",
+                    "code": 404,
+                    "ms": 12
+                  },
+                  {
+                    "time": "10:41:22",
+                    "method": "GET",
+                    "path": "/c/hero-001",
+                    "code": 200,
+                    "ms": 51
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -848,15 +1402,20 @@
             "aria-busy на таблице во время ожидания",
             "полосы разной ширины: одинаковые читаются как узор, а не как будущий текст",
             "действие в пустом состоянии — экран должен объяснять следующий шаг",
-            "отключение пульсации при prefers-reduced-motion"
+            "отключение пульсации при prefers-reduced-motion",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "state, columns и количество строк-заглушек",
             "emptyTitle, emptyText и actionLabel",
             "акцент через проп accent",
-            "высоту полос"
+            "высоту полос",
+            "rows — сколько строк-заглушек показывать в ожидании",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Заглушка уместна до секунды-двух: для долгого ожидания честнее прогресс или объяснение.",
             "Пустое состояние и результат без совпадений — разные экраны: во втором нужна очистка фильтра.",
             "Число строк-заглушек берите близким к обычному ответу: десять полос вместо трёх обманывают.",
@@ -877,6 +1436,26 @@
             "type": "text",
             "default": "Счетов пока нет",
             "maxLength": 28
+          },
+          {
+            "prop": "rows",
+            "label": "Строк-заглушек",
+            "type": "number",
+            "default": 4,
+            "min": 1,
+            "max": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -890,15 +1469,20 @@
                 "aria-busy on the table while loading",
                 "bars of differing widths: equal ones read as a pattern, not as future text",
                 "the action in the empty state — the screen must explain the next step",
-                "switching the pulse off under prefers-reduced-motion"
+                "switching the pulse off under prefers-reduced-motion",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "state, columns and the skeleton row count",
                 "emptyTitle, emptyText and actionLabel",
                 "the accent through the accent prop",
-                "the bar height"
+                "the bar height",
+                "rows — how many skeleton rows the loading state shows",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A skeleton suits a second or two: for a long wait progress or an explanation is honest.",
                 "An empty state and a no-results state differ: the latter needs a way to clear the filter.",
                 "Keep the skeleton row count near the usual response: ten bars for three rows misleads.",
@@ -913,11 +1497,30 @@
               "emptyTitle": {
                 "label": "Empty heading",
                 "default": "No invoices yet"
+              },
+              "rows": {
+                "label": "Skeleton rows"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Table States"
+            "title": "Table States",
+            "preview": {
+              "props": {
+                "caption": "March invoices",
+                "columns": ["Invoice", "Customer", "Status", "Amount"],
+                "emptyTitle": "No invoices yet",
+                "emptyText": "Issued invoices will show up here. You can create the first one right now.",
+                "actionLabel": "Issue an invoice"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["state", "rows", "accent", "background"]
       }
     },
     {
@@ -951,15 +1554,22 @@
             "расчёт доли от суммы строк — заданная отдельно доля перестаёт сходиться",
             "число рядом с полосой: полоса показывает соотношение, точность даёт цифра",
             "итоговую строку в tfoot, а не в теле таблицы",
-            "табличные цифры в числовых колонках"
+            "табличные цифры в числовых колонках",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "полосу, посчитанную из accent через color-mix: иначе смена акцента не доходит до полосы"
           ],
           "adapt": [
             "массив rows и caption",
             "цвет полосы",
             "число знаков после запятой",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "columnText и totalText — заголовки колонок и подпись итога",
+            "locale — локаль для группировки цифр и дробной части",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Строки не сортируются автоматически: для порядка по убыванию отсортируйте данные снаружи.",
             "Округление до десятых даёт в сумме 99,9 % или 100,1 % — итог берётся из суммы, а не из процентов.",
             "Для сравнения по времени полосы недостаточно: возьмите график из категории charts.",
@@ -979,6 +1589,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -992,15 +1608,22 @@
                 "computing the share from the row total — a separately supplied share stops adding up",
                 "the figure next to the bar: the bar shows the ratio, the number gives precision",
                 "the total row in tfoot rather than in the body",
-                "tabular figures in the numeric columns"
+                "tabular figures in the numeric columns",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the bar mixed out of accent with color-mix: otherwise changing the accent never reaches the bar"
               ],
               "adapt": [
                 "the rows array and the caption",
                 "the bar colour",
                 "the number of decimals",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "columnText and totalText — the column headings and the total label",
+                "locale — the locale used to group digits and format the fraction",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Rows are not sorted automatically: sort the data outside for a descending order.",
                 "Rounding to tenths can total 99.9% or 100.1% — the total comes from the sum, not the percentages.",
                 "Bars cannot show change over time: use a chart from the charts category.",
@@ -1015,11 +1638,49 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Share Table"
+            "title": "Share Table",
+            "preview": {
+              "props": {
+                "caption": "Traffic sources",
+                "locale": "en-US",
+                "totalText": "Total",
+                "columnText": {
+                  "source": "Source",
+                  "visits": "Visits",
+                  "share": "Share"
+                },
+                "rows": [
+                  {
+                    "source": "Search",
+                    "visits": 18402
+                  },
+                  {
+                    "source": "Direct",
+                    "visits": 7118
+                  },
+                  {
+                    "source": "Social",
+                    "visits": 6940
+                  },
+                  {
+                    "source": "Email",
+                    "visits": 4233
+                  },
+                  {
+                    "source": "Ads",
+                    "visits": 3211
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1053,15 +1714,20 @@
             "скрытое слово «есть»/«нет» рядом с галочкой: значок сам по себе не озвучивается",
             "aria-hidden на символах ✓ и —: иначе скринридер прочитает их как случайный текст",
             "обёртку role=\"region\" с tabindex=0: без неё прокрутку широкой таблицы не достать с клавиатуры",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "набор тарифов и цены через plans",
             "список возможностей и их значения через features",
             "подсвеченный тариф через featured",
-            "подпись таблицы через caption"
+            "подпись таблицы через caption",
+            "featureLabel, featuredText и valueText — заголовок первой колонки, подпись рекомендованного тарифа и слова «есть»/«нет»",
+            "accent — цвет подсветки колонки и плашки «Рекомендуем»",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Значение может быть строкой — «50» или «без лимита»; тогда вместо галочки печатается текст.",
             "featured сверяется с plans по строке: опечатка просто снимет подсветку, ошибки не будет.",
             "Больше четырёх тарифов на телефон не помещаются — таблица уедет в горизонтальную прокрутку.",
@@ -1082,6 +1748,18 @@
             "type": "text",
             "default": "Что входит в тариф",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1095,15 +1773,20 @@
                 "the hidden \"yes\"/\"no\" word beside the check mark: a glyph alone is not announced",
                 "aria-hidden on the ✓ and — glyphs: otherwise a screen reader reads them as stray text",
                 "the role=\"region\" wrapper with tabindex=0: without it the wide table cannot be scrolled from the keyboard",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the plans and their prices through plans",
                 "the feature list and its values through features",
                 "the highlighted plan through featured",
-                "the table caption through caption"
+                "the table caption through caption",
+                "featureLabel, featuredText and valueText — the first column heading, the recommended badge and the yes/no words",
+                "accent — the colour of the highlighted column and of the recommended badge",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A value may be a string — \"50\" or \"unlimited\"; then text is printed instead of a check mark.",
                 "featured is matched against plans by string: a typo silently removes the highlight.",
                 "More than four plans do not fit a phone — the table moves into horizontal scrolling.",
@@ -1113,16 +1796,76 @@
             },
             "controls": {
               "featured": {
-                "label": "Highlighted plan"
+                "label": "Highlighted plan",
+                "default": "Team"
               },
               "caption": {
                 "label": "Caption",
                 "default": "What the plan includes"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Plan Matrix"
+            "title": "Plan Matrix",
+            "preview": {
+              "props": {
+                "caption": "What the plan includes",
+                "featureLabel": "Feature",
+                "featuredText": "Recommended",
+                "featured": "Team",
+                "valueText": {
+                  "yes": "yes",
+                  "no": "no"
+                },
+                "plans": [
+                  {
+                    "name": "Start",
+                    "price": "$0"
+                  },
+                  {
+                    "name": "Team",
+                    "price": "$12"
+                  },
+                  {
+                    "name": "Business",
+                    "price": "$39"
+                  }
+                ],
+                "features": [
+                  {
+                    "title": "Projects",
+                    "values": ["3", "50", "unlimited"]
+                  },
+                  {
+                    "title": "Collaboration",
+                    "values": [false, true, true]
+                  },
+                  {
+                    "title": "Version history",
+                    "values": [false, true, true]
+                  },
+                  {
+                    "title": "Custom domain",
+                    "values": [false, true, true]
+                  },
+                  {
+                    "title": "Single sign-on",
+                    "values": [false, false, true]
+                  },
+                  {
+                    "title": "Phone support",
+                    "values": [false, false, true]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1156,15 +1899,20 @@
             "th scope=\"row\" у подписей расчёта: «1 200 ₽» без слова рядом бесполезно в озвучке",
             "tabular-nums и nowrap в числовых колонках: без них разряды пляшут, а сумма рвётся переносом",
             "собственную функцию money() вместо Intl: локаль сервера и браузера расходятся и ломают гидрацию",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "состав работ, количества и цены через lines",
             "ставку налога через taxRate",
             "знак валюты через currency",
-            "подпись сметы через caption"
+            "подпись сметы через caption",
+            "columnText и totalsText — заголовки колонок и подписи расчёта; в tax подставляется {rate}",
+            "accent — цвет итоговой суммы и обводки фокуса у прокрутки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Налог считается поверх подытога; если он уже включён в цены, ставку нужно обнулить.",
             "Округление идёт до копеек в каждой строке — итог может разойтись с внешней бухгалтерией на копейку.",
             "Скидку компонент не считает: её проще внести отдельной позицией с отрицательной ценой.",
@@ -1186,6 +1934,18 @@
             "type": "text",
             "default": "Смета на запуск сайта",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1199,15 +1959,20 @@
                 "th scope=\"row\" on the calculation labels: a bare \"1,200\" is useless when announced",
                 "tabular-nums and nowrap in numeric columns: without them digits dance and sums break across lines",
                 "the local money() helper instead of Intl: server and browser locales differ and break hydration",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the work items, quantities and prices through lines",
                 "the tax rate through taxRate",
                 "the currency sign through currency",
-                "the quote caption through caption"
+                "the quote caption through caption",
+                "columnText and totalsText — the column headings and the calculation labels; tax takes a {rate} placeholder",
+                "accent — the colour of the amount due and of the scroll region focus ring",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Tax is applied on top of the subtotal; if prices already include it, set the rate to zero.",
                 "Rounding happens per line, so the total can differ from external bookkeeping by a cent.",
                 "Discounts are not computed: add them as a separate line with a negative price.",
@@ -1222,11 +1987,61 @@
               "caption": {
                 "label": "Caption",
                 "default": "Website launch quote"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Quote Totals"
+            "title": "Quote Totals",
+            "preview": {
+              "props": {
+                "caption": "Website launch quote",
+                "currency": "€",
+                "columnText": {
+                  "title": "Work",
+                  "quantity": "Qty",
+                  "price": "Price",
+                  "amount": "Amount"
+                },
+                "totalsText": {
+                  "subtotal": "Subtotal",
+                  "tax": "Tax {rate}%",
+                  "total": "Amount due"
+                },
+                "lines": [
+                  {
+                    "title": "Landing page design",
+                    "note": "5 screens, 2 revisions",
+                    "quantity": 1,
+                    "price": 84000
+                  },
+                  {
+                    "title": "Front-end build",
+                    "note": "responsive down to 360 px",
+                    "quantity": 1,
+                    "price": 46000
+                  },
+                  {
+                    "title": "Icons",
+                    "note": "per icon",
+                    "quantity": 12,
+                    "price": 900
+                  },
+                  {
+                    "title": "Support",
+                    "note": "hours per month",
+                    "quantity": 8,
+                    "price": 3200
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["taxRate", "accent", "background"]
       }
     },
     {
@@ -1260,15 +2075,20 @@
             "обёртку role=\"region\" с tabindex=0: широкая сетка иначе не прокручивается с клавиатуры",
             "min-width у колонок: сжатая до нечитаемого колонка хуже прокрутки",
             "скрытый caption: он остаётся доступным именем таблицы, даже когда заголовок нарисован рядом",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "названия дней через days",
             "временные интервалы и события через slots",
             "подсвеченный день через today",
-            "подпись расписания через caption"
+            "подпись расписания через caption",
+            "timeLabel и todayLabel — скрытые подписи для озвучки: заголовок оси времени и приписка к сегодняшнему дню",
+            "accent — цвет подсветки сегодняшнего дня и обводки фокуса у прокрутки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Событие на два часа подряд рисуется двумя ячейками: объединения по вертикали здесь нет.",
             "Пустая ячейка получает точку под aria-hidden — озвучивать «пусто» в каждой клетке избыточно.",
             "Семь дней на телефоне гарантированно уедут в прокрутку: это осознанный размен на читаемость.",
@@ -1289,6 +2109,18 @@
             "type": "text",
             "default": "Расписание встреч на неделю",
             "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1302,15 +2134,20 @@
                 "the role=\"region\" wrapper with tabindex=0: otherwise the wide grid cannot be scrolled from the keyboard",
                 "the min-width on columns: a column squeezed past legibility is worse than scrolling",
                 "the visually hidden caption: it stays the table's accessible name even when a heading is drawn beside it",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the day names through days",
                 "the time slots and their events through slots",
                 "the highlighted day through today",
-                "the schedule caption through caption"
+                "the schedule caption through caption",
+                "timeLabel and todayLabel — the hidden labels for screen readers: the time axis heading and the today suffix",
+                "accent — the colour of the today highlight and of the scroll region focus ring",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A two-hour event is drawn as two cells: there is no vertical merging here.",
                 "An empty cell gets an aria-hidden dot — announcing \"empty\" in every slot is noise.",
                 "Seven days will certainly scroll on a phone: that is a deliberate trade for legibility.",
@@ -1325,11 +2162,108 @@
               "caption": {
                 "label": "Caption",
                 "default": "Meetings this week"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Week Schedule"
+            "title": "Week Schedule",
+            "preview": {
+              "props": {
+                "caption": "Meetings this week",
+                "timeLabel": "Time",
+                "todayLabel": "— today",
+                "today": "Wed",
+                "days": ["Mon", "Tue", "Wed", "Thu", "Fri"],
+                "slots": [
+                  {
+                    "time": "09:00",
+                    "cells": [
+                      {
+                        "title": "Standup",
+                        "place": "Room 2"
+                      },
+                      null,
+                      {
+                        "title": "Standup",
+                        "place": "Room 2"
+                      },
+                      null,
+                      {
+                        "title": "Standup",
+                        "place": "Room 2"
+                      }
+                    ]
+                  },
+                  {
+                    "time": "11:00",
+                    "cells": [
+                      {
+                        "title": "Design review",
+                        "place": "Online",
+                        "tone": "violet"
+                      },
+                      {
+                        "title": "Interview",
+                        "place": "Meeting room",
+                        "tone": "amber"
+                      },
+                      null,
+                      {
+                        "title": "Design review",
+                        "place": "Online",
+                        "tone": "violet"
+                      },
+                      null
+                    ]
+                  },
+                  {
+                    "time": "14:00",
+                    "cells": [
+                      null,
+                      {
+                        "title": "Backlog grooming",
+                        "place": "Room 1",
+                        "tone": "green"
+                      },
+                      {
+                        "title": "Demo",
+                        "place": "Main hall",
+                        "tone": "green"
+                      },
+                      null,
+                      {
+                        "title": "Retro",
+                        "place": "Room 1",
+                        "tone": "green"
+                      }
+                    ]
+                  },
+                  {
+                    "time": "17:00",
+                    "cells": [
+                      {
+                        "title": "Support hour",
+                        "place": "On duty"
+                      },
+                      null,
+                      null,
+                      {
+                        "title": "Support hour",
+                        "place": "On duty"
+                      },
+                      null
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1363,15 +2297,19 @@
             "rowSpan={2} у первой ячейки: иначе подпись столбца строк повиснет над пустотой",
             "сборку колонок из групп через flatMap: ручной список ячеек рано или поздно разойдётся с шапкой",
             "границу между группами: два одинаковых столбца «План» без неё сливаются в один",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "группы и их колонки через groups",
             "строки и значения через rows",
             "подпись первой колонки через leadTitle",
-            "подпись таблицы через caption"
+            "подпись таблицы через caption",
+            "accent — цвет обводки фокуса у горизонтальной прокрутки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Порядок значений в строке обязан совпадать с порядком колонок в группах: соответствие позиционное.",
             "Третий этаж шапки компонент не рисует — для него понадобится ещё один ряд и scope у каждой ячейки.",
             "Пропущенное значение печатается прочерком, а не пустой ячейкой: пустота читается как ошибка вёрстки.",
@@ -1392,6 +2330,18 @@
             "type": "text",
             "default": "Выручка по регионам, млн ₽",
             "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1405,15 +2355,19 @@
                 "rowSpan={2} on the first cell: otherwise the row-header caption hangs over nothing",
                 "building columns from groups with flatMap: a hand-written cell list eventually drifts from the header",
                 "the divider between groups: two identical \"Plan\" columns merge into one without it",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the groups and their columns through groups",
                 "the rows and their values through rows",
                 "the first column caption through leadTitle",
-                "the table caption through caption"
+                "the table caption through caption",
+                "accent — the colour of the scroll region focus ring",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Value order in a row must match column order in the groups: the mapping is positional.",
                 "A third header storey is not drawn — it needs one more row and a scope on every cell.",
                 "A missing value prints a dash rather than an empty cell: emptiness reads as a layout bug.",
@@ -1429,11 +2383,52 @@
               "caption": {
                 "label": "Caption",
                 "default": "Revenue by region, m"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Grouped Header"
+            "title": "Grouped Header",
+            "preview": {
+              "props": {
+                "leadTitle": "Region",
+                "caption": "Revenue by region, m",
+                "groups": [
+                  {
+                    "title": "2024",
+                    "columns": ["Plan", "Actual"]
+                  },
+                  {
+                    "title": "2025",
+                    "columns": ["Plan", "Actual"]
+                  }
+                ],
+                "rows": [
+                  {
+                    "title": "North-West",
+                    "values": ["12.0", "11.4", "13.5", "14.2"]
+                  },
+                  {
+                    "title": "Central",
+                    "values": ["28.4", "30.1", "32.0", "31.6"]
+                  },
+                  {
+                    "title": "Urals",
+                    "values": ["9.8", "9.1", "10.4", "10.9"]
+                  },
+                  {
+                    "title": "Siberia",
+                    "values": ["7.2", "7.7", "8.1", "8.0"]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -1467,15 +2462,20 @@
             "обратную ссылку в пункте сноски: без возврата человек теряет место в таблице",
             "построение всех id от idPrefix: два экземпляра на странице иначе перехватят якоря друг у друга",
             "видимый фокус и padding у маркера: мелкий sup без них не нажать ни мышью, ни с клавиатуры",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "строки и значения через rows",
             "тексты сносок через notes",
             "заголовок блока сносок через notesTitle",
-            "подпись таблицы через caption и префикс якорей через idPrefix"
+            "подпись таблицы через caption и префикс якорей через idPrefix",
+            "columnText — заголовки колонок; noteLabel и backLabel — подписи ссылок сноски, {n} подставляет номер",
+            "accent — цвет маркеров сносок и обводки фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Номер сноски в строке — это индекс с единицы: ссылка на несуществующий пункт даст битый якорь.",
             "Больше трёх-четырёх сносок на таблицу читаются плохо: лишнее лучше вынести в текст под ней.",
             "Стрелка возврата озвучивается через aria-label — сам символ ↩ ничего не сообщает.",
@@ -1491,11 +2491,30 @@
             "maxLength": 24
           },
           {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Показатели за III квартал",
+            "maxLength": 48
+          },
+          {
             "prop": "idPrefix",
             "label": "Префикс якорей",
             "type": "text",
             "default": "table-015",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1509,15 +2528,20 @@
                 "the back link inside the footnote: without a return the reader loses their place in the table",
                 "building every id from idPrefix: two instances on a page would otherwise steal each other's anchors",
                 "the visible focus and padding on the marker: a tiny sup is unclickable and unfocusable without them",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the rows and their values through rows",
                 "the footnote texts through notes",
                 "the footnote block heading through notesTitle",
-                "the table caption through caption and the anchor prefix through idPrefix"
+                "the table caption through caption and the anchor prefix through idPrefix",
+                "columnText — the column headings; noteLabel and backLabel — the footnote link labels, where {n} takes the number",
+                "accent — the colour of the footnote markers and of the focus ring",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A row's note number is a one-based index: pointing at a missing item produces a dead anchor.",
                 "More than three or four notes per table read poorly: move the rest into prose below it.",
                 "The return arrow is announced through aria-label — the ↩ glyph itself says nothing.",
@@ -1530,14 +2554,68 @@
                 "label": "Notes heading",
                 "default": "Notes"
               },
+              "caption": {
+                "label": "Caption",
+                "default": "Third quarter metrics"
+              },
               "idPrefix": {
                 "label": "Anchor prefix",
                 "default": "table-015"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Footnoted Table"
+            "title": "Footnoted Table",
+            "preview": {
+              "props": {
+                "caption": "Third quarter metrics",
+                "notesTitle": "Notes",
+                "noteLabel": "Footnote {n}",
+                "backLabel": "Back to the row with footnote {n}",
+                "columnText": {
+                  "title": "Metric",
+                  "value": "Value",
+                  "share": "vs previous"
+                },
+                "rows": [
+                  {
+                    "title": "Active teams",
+                    "value": "1,284",
+                    "share": "+12%"
+                  },
+                  {
+                    "title": "Paying teams",
+                    "value": "417",
+                    "share": "+6%",
+                    "note": 1
+                  },
+                  {
+                    "title": "Revenue per team",
+                    "value": "€41",
+                    "share": "−2%",
+                    "note": 2
+                  },
+                  {
+                    "title": "Quarterly churn",
+                    "value": "3.4%",
+                    "share": "−0.6 pp",
+                    "note": 3
+                  }
+                ],
+                "notes": [
+                  "Counts teams with at least one payment in the last 90 days.",
+                  "Excludes one-off renewals and partner discounts.",
+                  "Percentage points, not percent: compared with the previous quarter."
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1571,15 +2649,20 @@
             "знак «−» вместо дефиса: дефис уже и в озвучке читается как перенос",
             "font-variant-numeric:tabular-nums: пропорциональные цифры ломают любое выравнивание по разряду",
             "то, что отрицательность несёт знак, а не цвет: при дальтонизме красный столбец неотличим",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "названия колонок через columns",
             "статьи и числа через rows",
             "число знаков после запятой через decimals",
-            "подпись таблицы через caption"
+            "подпись таблицы через caption",
+            "leadTitle и totalLabel — подпись первой колонки и итоговой строки",
+            "accent — цвет обводки фокуса у горизонтальной прокрутки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Числа хранятся как number и форматируются при рендере: строку компонент выровнять не сможет.",
             "Ширина колонки знака задана в ch — при смене шрифта её стоит перепроверить.",
             "Итог считается по колонке простым сложением: взвешенные средние сюда не подставить.",
@@ -1596,11 +2679,37 @@
             "max": 4
           },
           {
+            "prop": "leadTitle",
+            "label": "Первая колонка",
+            "type": "text",
+            "default": "Статья",
+            "maxLength": 24
+          },
+          {
+            "prop": "totalLabel",
+            "label": "Подпись итога",
+            "type": "text",
+            "default": "Итого",
+            "maxLength": 24
+          },
+          {
             "prop": "caption",
             "label": "Подпись",
             "type": "text",
             "default": "Движение денег за месяц, тыс. ₽",
             "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1614,15 +2723,20 @@
                 "the \"−\" sign instead of a hyphen: a hyphen is narrower and is announced as a dash",
                 "font-variant-numeric:tabular-nums: proportional digits break any decimal alignment",
                 "that negativity is carried by the sign, not the colour: a red column is indistinguishable to colour-blind readers",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the column titles through columns",
                 "the line items and their numbers through rows",
                 "the number of fractional digits through decimals",
-                "the table caption through caption"
+                "the table caption through caption",
+                "leadTitle and totalLabel — the first column caption and the totals row label",
+                "accent — the colour of the scroll region focus ring",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Numbers are stored as numbers and formatted at render: a pre-formatted string cannot be aligned.",
                 "The sign column width is set in ch units — re-check it after a font change.",
                 "The total is a plain column sum: weighted averages cannot be plugged in here.",
@@ -1634,14 +2748,59 @@
               "decimals": {
                 "label": "Fractional digits"
               },
+              "leadTitle": {
+                "label": "First column",
+                "default": "Line item"
+              },
+              "totalLabel": {
+                "label": "Total label",
+                "default": "Total"
+              },
               "caption": {
                 "label": "Caption",
                 "default": "Cash movement this month, k"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Aligned Numerals"
+            "title": "Aligned Numerals",
+            "preview": {
+              "props": {
+                "caption": "Cash movement this month, k",
+                "leadTitle": "Line item",
+                "totalLabel": "Total",
+                "columns": ["Plan", "Actual", "Variance"],
+                "rows": [
+                  {
+                    "title": "Subscriptions",
+                    "values": [1240.5, 1310.25, 69.75]
+                  },
+                  {
+                    "title": "One-off sales",
+                    "values": [420, 388.4, -31.6]
+                  },
+                  {
+                    "title": "Partner payouts",
+                    "values": [-96.3, -128.75, -32.45]
+                  },
+                  {
+                    "title": "Refunds",
+                    "values": [-18, -7.5, 10.5]
+                  },
+                  {
+                    "title": "Other",
+                    "values": [64.2, 64.2, 0]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["decimals", "background"]
       }
     },
     {
@@ -1675,15 +2834,19 @@
             "правила узкой раскладки на потомках shell: @container не применяется к самому контейнеру",
             "aria-hidden у подписи в ячейке: иначе скринридер услышит название колонки дважды",
             "th scope=\"row\" у первой ячейки: в режиме карточек она становится заголовком карточки",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "строки таблицы через rows",
             "минимальную ширину карточки через cardWidth",
             "подпись таблицы через caption",
-            "порог перестроения — правкой значения в @container"
+            "порог перестроения — правкой значения в @container",
+            "leadTitle и columnText — подпись первой колонки и заголовки остальных",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Порог 34rem — ширина блока, а не экрана: в узкой колонке карточки появятся и на десктопе.",
             "Больше пяти колонок в карточке выглядят как каша: лишние лучше прятать за ссылкой на подробности.",
             "display:contents у ячеек здесь не используется — карточка держится на grid самой строки.",
@@ -1699,11 +2862,24 @@
             "maxLength": 12
           },
           {
+            "prop": "leadTitle",
+            "label": "Первая колонка",
+            "type": "text",
+            "default": "Клиент",
+            "maxLength": 24
+          },
+          {
             "prop": "caption",
             "label": "Подпись",
             "type": "text",
             "default": "Подписки клиентов",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1717,15 +2893,19 @@
                 "the narrow-layout rules on shell's descendants: @container does not apply to the container itself",
                 "aria-hidden on the in-cell label: otherwise the column name is announced twice",
                 "th scope=\"row\" on the first cell: in card mode it becomes the card heading",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the table rows through rows",
                 "the minimum card width through cardWidth",
                 "the table caption through caption",
-                "the switch threshold by editing the value in @container"
+                "the switch threshold by editing the value in @container",
+                "leadTitle and columnText — the first column caption and the headings of the rest",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The 34rem threshold is the block width, not the screen: cards also appear in a narrow desktop column.",
                 "More than five fields per card turns to mush: hide the extras behind a details link.",
                 "display:contents is not used on cells here — the card is held by the row's own grid.",
@@ -1738,14 +2918,64 @@
                 "label": "Card width",
                 "default": "14rem"
               },
+              "leadTitle": {
+                "label": "First column",
+                "default": "Customer"
+              },
               "caption": {
                 "label": "Caption",
                 "default": "Customer subscriptions"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Card Breakpoint"
+            "title": "Card Breakpoint",
+            "preview": {
+              "props": {
+                "caption": "Customer subscriptions",
+                "leadTitle": "Customer",
+                "columnText": {
+                  "city": "City",
+                  "plan": "Plan",
+                  "renew": "Renews",
+                  "sum": "Amount"
+                },
+                "rows": [
+                  {
+                    "name": "Maria Kim",
+                    "city": "Lisbon",
+                    "plan": "Team",
+                    "renew": "12 September",
+                    "sum": "€19"
+                  },
+                  {
+                    "name": "Artem Volkov",
+                    "city": "Porto",
+                    "plan": "Business",
+                    "renew": "3 October",
+                    "sum": "€59"
+                  },
+                  {
+                    "name": "Liza Naumova",
+                    "city": "Braga",
+                    "plan": "Start",
+                    "renew": "—",
+                    "sum": "€0"
+                  },
+                  {
+                    "name": "Gosha Rybak",
+                    "city": "Faro",
+                    "plan": "Team",
+                    "renew": "28 September",
+                    "sum": "€19"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -1779,15 +3009,20 @@
             "подпись статуса словом рядом с точкой: цвет один смысл не несёт",
             "одну переменную цвета статуса на строке: точка, чип и кромка обязаны совпадать",
             "th scope=\"row\" у названия сервиса: именно он делает строку адресуемой в озвучке",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "список сервисов и их состояния через rows",
             "плотность строк через density",
             "подпись таблицы через caption",
-            "набор статусов — правкой LABELS и четырёх переменных цвета"
+            "набор статусов — правкой LABELS и четырёх переменных цвета",
+            "columnText и statusText — заголовки колонок и подписи состояний",
+            "accent — цвет обводки фокуса у горизонтальной прокрутки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Строка со статусом error дополнительно подкрашена фоном: на длинном списке одной кромки мало.",
             "Статусов ровно четыре; пятый потребует и новой переменной, и нового слова в LABELS.",
             "Компактная плотность режет только вертикальные отступы — кегль остаётся читаемым.",
@@ -1808,6 +3043,18 @@
             "type": "text",
             "default": "Состояние сервисов",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1821,15 +3068,20 @@
                 "the word label beside the dot: colour alone carries no meaning",
                 "the single status colour variable per row: dot, chip and rail must agree",
                 "th scope=\"row\" on the service name: it is what makes the row addressable when announced",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the services and their states through rows",
                 "the row density through density",
                 "the table caption through caption",
-                "the status set by editing LABELS and the four colour variables"
+                "the status set by editing LABELS and the four colour variables",
+                "columnText and statusText — the column headings and the status labels",
+                "accent — the colour of the scroll region focus ring",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "An error row also gets a tinted background: in a long list the rail alone is not enough.",
                 "There are exactly four statuses; a fifth needs both a new variable and a new word in LABELS.",
                 "Compact density trims vertical padding only — the type size stays legible.",
@@ -1844,11 +3096,73 @@
               "caption": {
                 "label": "Caption",
                 "default": "Service health"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Status Edge"
+            "title": "Status Edge",
+            "preview": {
+              "props": {
+                "caption": "Service health",
+                "columnText": {
+                  "service": "Service",
+                  "status": "State",
+                  "region": "Region",
+                  "latency": "Latency",
+                  "updated": "Checked"
+                },
+                "statusText": {
+                  "ok": "Healthy",
+                  "warn": "Degraded",
+                  "error": "Down",
+                  "off": "Disabled"
+                },
+                "rows": [
+                  {
+                    "service": "Payments",
+                    "region": "Frankfurt",
+                    "latency": "42 ms",
+                    "updated": "a minute ago",
+                    "status": "ok"
+                  },
+                  {
+                    "service": "Email notifications",
+                    "region": "Frankfurt",
+                    "latency": "310 ms",
+                    "updated": "3 minutes ago",
+                    "status": "warn"
+                  },
+                  {
+                    "service": "Report export",
+                    "region": "Dublin",
+                    "latency": "—",
+                    "updated": "12 minutes ago",
+                    "status": "error"
+                  },
+                  {
+                    "service": "CRM import",
+                    "region": "Dublin",
+                    "latency": "—",
+                    "updated": "yesterday",
+                    "status": "off"
+                  },
+                  {
+                    "service": "File storage",
+                    "region": "Frankfurt",
+                    "latency": "58 ms",
+                    "updated": "a minute ago",
+                    "status": "ok"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["density", "background"]
       }
     },
     {
@@ -1882,15 +3196,20 @@
             "число доли рядом с полоской: полоска под aria-hidden сама по себе не озвучивается",
             "подсчёт долей от суммы строк, а не от внешнего числа: иначе сумма долей перестанет давать 100%",
             "объяснение единиц в подписи итога: «итого 9 240» без единиц ничего не сообщает",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "источники и их значения через rows",
             "единицы измерения через unit",
             "подпись итоговой строки через totalLabel",
-            "подпись таблицы через caption"
+            "подпись таблицы через caption",
+            "columnText и totalHint — заголовки колонок и приписка к итогу; в неё подставляются {count} и {unit}",
+            "accent — цвет полоски доли и обводки фокуса у прокрутки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Доли округляются до десятой, поэтому их сумма может дать 99,9% — итог печатается как 100,0% намеренно.",
             "Отрицательные значения сломают полоску: она рассчитана на неотрицательные вклады в сумму.",
             "Полоска ограничена по ширине 6rem, иначе на широком экране она забирает всю колонку.",
@@ -1911,6 +3230,25 @@
             "type": "text",
             "default": "визитов",
             "maxLength": 24
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Источники трафика за неделю",
+            "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1924,15 +3262,20 @@
                 "the share number beside the bar: an aria-hidden bar announces nothing on its own",
                 "computing shares from the row sum rather than an external number: otherwise the shares stop adding to 100%",
                 "the unit explanation in the total label: \"total 9,240\" of what says nothing",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the sources and their values through rows",
                 "the unit of measurement through unit",
                 "the totals row caption through totalLabel",
-                "the table caption through caption"
+                "the table caption through caption",
+                "columnText and totalHint — the column headings and the totals note, which takes {count} and {unit}",
+                "accent — the colour of the share bar and of the scroll region focus ring",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Shares are rounded to one decimal, so they may add up to 99.9% — the total prints 100.0% on purpose.",
                 "Negative values break the bar: it assumes non-negative contributions to a sum.",
                 "The bar is capped at 6rem, otherwise it eats the whole column on a wide screen.",
@@ -1948,11 +3291,62 @@
               "unit": {
                 "label": "Unit",
                 "default": "visits"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "Traffic sources this week"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Share Totals"
+            "title": "Share Totals",
+            "preview": {
+              "props": {
+                "caption": "Traffic sources this week",
+                "totalLabel": "Total",
+                "unit": "visits",
+                "totalHint": "across {count} sources, {unit}",
+                "columnText": {
+                  "title": "Source",
+                  "value": "Value",
+                  "share": "Share"
+                },
+                "rows": [
+                  {
+                    "title": "Search",
+                    "hint": "organic",
+                    "value": 4120
+                  },
+                  {
+                    "title": "Newsletter",
+                    "hint": "emails and digest",
+                    "value": 2480
+                  },
+                  {
+                    "title": "Recommendations",
+                    "hint": "in product",
+                    "value": 1310
+                  },
+                  {
+                    "title": "Social",
+                    "hint": "posts and stories",
+                    "value": 860
+                  },
+                  {
+                    "title": "Partners",
+                    "hint": "integrations",
+                    "value": 470
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1986,15 +3380,20 @@
             "caption-side:top: без него печать уносит подпись под таблицу, и условия чтения приходят позже данных",
             "единицу в шапке колонки: «1 284» без «тыс. ₽» — это не число, а загадка",
             "abbr с title и пунктиром: сокращение «п. п.» иначе читается как опечатка",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "колонки, их единицы и расшифровки через columns",
             "точки продаж и значения через rows",
             "заголовок таблицы через caption",
-            "пояснение про единицы и дату среза через note"
+            "пояснение про единицы и дату среза через note",
+            "подпись первой колонки через leadTitle",
+            "accent — цвет обводки фокуса у горизонтальной прокрутки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пояснение ограничено 44ch: длинная простыня в caption перестаёт читаться перед таблицей.",
             "Значения приходят строками — компонент их не форматирует и не округляет, это делает источник данных.",
             "Подсказка abbr доступна только по наведению и фокусу: важное сокращение лучше раскрыть в note.",
@@ -2010,11 +3409,30 @@
             "maxLength": 48
           },
           {
+            "prop": "leadTitle",
+            "label": "Первая колонка",
+            "type": "text",
+            "default": "Точка продаж",
+            "maxLength": 24
+          },
+          {
             "prop": "note",
             "label": "Пояснение",
             "type": "text",
             "default": "Значения округлены до целых, выручка — в тысячах рублей без НДС. Срез данных на 31 августа, 23:59 по Москве.",
             "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2028,15 +3446,20 @@
                 "caption-side:top: without it print moves the caption below, and the reading rules arrive after the data",
                 "the unit in the column header: \"1,284\" without \"k\" is a riddle, not a number",
                 "abbr with a title and a dotted underline: otherwise \"pp\" reads as a typo",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the columns, their units and expansions through columns",
                 "the outlets and their values through rows",
                 "the table heading through caption",
-                "the units and cut-off explanation through note"
+                "the units and cut-off explanation through note",
+                "the first column caption through leadTitle",
+                "accent — the colour of the scroll region focus ring",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The note is capped at 44ch: a wall of text in a caption stops being read before the table.",
                 "Values arrive as strings — the component neither formats nor rounds them, the data source does.",
                 "An abbr tooltip is only available on hover and focus: spell an important abbreviation out in note.",
@@ -2049,14 +3472,69 @@
                 "label": "Heading",
                 "default": "Sales by outlet, August"
               },
+              "leadTitle": {
+                "label": "First column",
+                "default": "Outlet"
+              },
               "note": {
                 "label": "Note",
                 "default": "Values are rounded to whole units, revenue is in thousands, net of VAT. Data as of 31 August, 23:59."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Unit Caption"
+            "title": "Unit Caption",
+            "preview": {
+              "props": {
+                "caption": "Sales by outlet, August",
+                "leadTitle": "Outlet",
+                "note": "Values are rounded to whole units, revenue is in thousands, net of VAT. Data as of 31 August, 23:59.",
+                "columns": [
+                  {
+                    "title": "Revenue",
+                    "unit": "k€"
+                  },
+                  {
+                    "title": "Orders",
+                    "unit": "pcs"
+                  },
+                  {
+                    "title": "Average order",
+                    "unit": "€"
+                  },
+                  {
+                    "title": "Market share",
+                    "unit": "pp",
+                    "full": "percentage points"
+                  }
+                ],
+                "rows": [
+                  {
+                    "title": "Forest Street store",
+                    "values": ["1,284", "612", "2,098", "+0.4"]
+                  },
+                  {
+                    "title": "Riverside store",
+                    "values": ["948", "471", "2,013", "−0.2"]
+                  },
+                  {
+                    "title": "South pickup point",
+                    "values": ["402", "388", "1,036", "+0.1"]
+                  },
+                  {
+                    "title": "Online storefront",
+                    "values": ["3,116", "1,940", "1,606", "+1.2"]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     }
   ]

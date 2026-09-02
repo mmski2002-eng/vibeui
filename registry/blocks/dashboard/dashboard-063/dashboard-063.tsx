@@ -23,6 +23,16 @@ export type Dashboard063Props = {
   assignLabel?: string
   autoLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Заголовок левой колонки: {count}. */
+  unassignedText?: string
+  /** Заголовок правой колонки. */
+  peopleTitle?: string
+  /** Строка нагрузки: {load} и {total}. */
+  loadText?: string
+  /** Приписка к нагрузке сверх нормы. */
+  overText?: string
   className?: string
   style?: CSSProperties
 }
@@ -39,15 +49,19 @@ export type Dashboard063Props = {
 // вынесено отдельной строкой: ручное назначение — это отступление от него.
 const STYLES = `
 :where([data-vibeui-block="dashboard-063"]){
---vibeui-dashboard-063-bg:oklch(0.985 0.003 230);
---vibeui-dashboard-063-card:oklch(1 0 0);
---vibeui-dashboard-063-fg:oklch(0.21 0.014 230);
---vibeui-dashboard-063-muted:oklch(0.55 0.014 230);
---vibeui-dashboard-063-border:oklch(0.91 0.006 230);
---vibeui-dashboard-063-accent:oklch(0.52 0.15 230);
---vibeui-dashboard-063-soft:oklch(0.965 0.02 230);
---vibeui-dashboard-063-over:oklch(0.57 0.19 25);
---vibeui-dashboard-063-free:oklch(0.6 0.13 155);
+--vibeui-dashboard-063-bg:transparent;
+/* Карточки, жёлоб полосы и чип отсутствия: подложка блока прозрачна. */
+--vibeui-dashboard-063-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 230));
+--vibeui-dashboard-063-inset:light-dark(oklch(0.985 0.003 230),oklch(0.22 0.012 230));
+--vibeui-dashboard-063-fg:light-dark(oklch(0.21 0.014 230),oklch(0.94 0.005 230));
+--vibeui-dashboard-063-muted:light-dark(oklch(0.55 0.014 230),oklch(0.72 0.012 230));
+--vibeui-dashboard-063-border:light-dark(oklch(0.91 0.006 230),oklch(0.36 0.012 230));
+--vibeui-dashboard-063-accent:light-dark(oklch(0.52 0.15 230),oklch(0.74 0.13 230));
+--vibeui-dashboard-063-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.04 230));
+--vibeui-dashboard-063-soft:light-dark(oklch(0.965 0.02 230),oklch(0.31 0.04 230));
+--vibeui-dashboard-063-picked:light-dark(oklch(0.78 0.07 230),oklch(0.56 0.09 230));
+--vibeui-dashboard-063-over:light-dark(oklch(0.57 0.19 25),oklch(0.74 0.17 25));
+--vibeui-dashboard-063-free:light-dark(oklch(0.6 0.13 155),oklch(0.76 0.14 155));
 --vibeui-dashboard-063-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -74,7 +88,7 @@ background:var(--vibeui-dashboard-063-card);border:1px solid var(--vibeui-dashbo
 cursor:pointer;
 }
 [data-vibeui-block="dashboard-063"] [data-part="record"]:has(input:checked){
-border-color:color-mix(in oklab,var(--vibeui-dashboard-063-accent) 45%,white);
+border-color:var(--vibeui-dashboard-063-picked);
 background:var(--vibeui-dashboard-063-soft);
 }
 [data-vibeui-block="dashboard-063"] input[type="checkbox"]{margin:0.1875rem 0 0;width:1rem;height:1rem;accent-color:var(--vibeui-dashboard-063-accent)}
@@ -91,7 +105,7 @@ padding:0.5625rem 0.6875rem;border-radius:0.75rem;cursor:pointer;
 background:var(--vibeui-dashboard-063-card);border:1px solid var(--vibeui-dashboard-063-border);
 }
 [data-vibeui-block="dashboard-063"] [data-part="person"]:has(input:checked){
-border-color:color-mix(in oklab,var(--vibeui-dashboard-063-accent) 45%,white);
+border-color:var(--vibeui-dashboard-063-picked);
 background:var(--vibeui-dashboard-063-soft);
 }
 [data-vibeui-block="dashboard-063"] [data-part="who"]{display:flex;flex-wrap:wrap;align-items:baseline;gap:0.25rem 0.4375rem}
@@ -99,11 +113,11 @@ background:var(--vibeui-dashboard-063-soft);
 [data-vibeui-block="dashboard-063"] [data-part="who"] span{font-size:0.6875rem;color:var(--vibeui-dashboard-063-muted)}
 [data-vibeui-block="dashboard-063"] [data-part="away"]{
 font-size:0.625rem;font-weight:750;padding:0.0625rem 0.375rem;border-radius:0.3125rem;
-background:var(--vibeui-dashboard-063-bg);border:1px solid var(--vibeui-dashboard-063-border);
+background:var(--vibeui-dashboard-063-inset);border:1px solid var(--vibeui-dashboard-063-border);
 }
 [data-vibeui-block="dashboard-063"] [data-part="bar"]{
 grid-column:2;position:relative;height:0.375rem;border-radius:9999px;overflow:hidden;
-background:var(--vibeui-dashboard-063-bg);
+background:var(--vibeui-dashboard-063-inset);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-063-border);
 }
 [data-vibeui-block="dashboard-063"] [data-part="bar"] span{
@@ -120,7 +134,7 @@ padding-top:0.125rem;
 [data-vibeui-block="dashboard-063"] [data-part="assign"]{
 appearance:none;border:0;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:700;
 padding:0.5rem 1rem;border-radius:0.625rem;
-background:var(--vibeui-dashboard-063-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-063-accent);color:var(--vibeui-dashboard-063-on-accent);
 }
 [data-vibeui-block="dashboard-063"] [data-part="auto"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:700;
@@ -184,6 +198,28 @@ const DEFAULT_PEOPLE: Dashboard063Person[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Экран назначения владельцев: слева нераспределённые записи с чекбоксами и
  * сроком ожидания, справа люди с полосой нагрузки и отметкой отсутствия,
  * внизу правило автораспределения. Один файл, ноль зависимостей, без JS.
@@ -196,11 +232,22 @@ export function Dashboard063({
   assignLabel = "Назначить выбранные",
   autoLabel = "Распределить по правилу",
   accent,
+  background = "",
+  unassignedText = "Без владельца: {count}",
+  peopleTitle = "Кому назначить",
+  loadText = "в работе {load} из {total} заявок",
+  overText = "— сверх нормы",
   className,
   style,
 }: Dashboard063Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-063-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-063-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -222,7 +269,7 @@ export function Dashboard063({
           </div>
 
           <div data-part="col">
-            <h3>Без владельца: {records.length}</h3>
+            <h3>{unassignedText.replace("{count}", String(records.length))}</h3>
             <ul data-part="records">
               {records.map((record) => (
                 <li key={record.id}>
@@ -240,7 +287,7 @@ export function Dashboard063({
           </div>
 
           <div data-part="col">
-            <h3>Кому назначить</h3>
+            <h3>{peopleTitle}</h3>
             <ul data-part="people">
               {people.map((person) => {
                 const share = Math.min(
@@ -269,10 +316,10 @@ export function Dashboard063({
                         <span style={{ width: `${share}%` }} />
                       </span>
                       <span data-part="load">
-                        в работе {person.load} из {person.capacity} заявок
-                        {person.load > person.capacity
-                          ? " — сверх нормы"
-                          : null}
+                        {loadText
+                          .replace("{load}", String(person.load))
+                          .replace("{total}", String(person.capacity))}
+                        {person.load > person.capacity ? ` ${overText}` : null}
                       </span>
                     </label>
                   </li>

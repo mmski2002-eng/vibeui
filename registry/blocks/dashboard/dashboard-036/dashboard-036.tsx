@@ -20,6 +20,10 @@ export type Dashboard036Props = {
   planHint?: string
   planCta?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подпись всего меню для скринридера. */
+  navLabel?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,13 +38,16 @@ export type Dashboard036Props = {
 // пункты остаются различимы, а не превращаются в ряд одинаковых точек.
 const STYLES = `
 :where([data-vibeui-block="dashboard-036"]){
---vibeui-dashboard-036-bg:oklch(0.99 0.003 265);
---vibeui-dashboard-036-panel:oklch(1 0 0);
---vibeui-dashboard-036-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-036-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-036-border:oklch(0.91 0.006 265);
---vibeui-dashboard-036-accent:oklch(0.52 0.17 262);
---vibeui-dashboard-036-soft:oklch(0.96 0.02 262);
+--vibeui-dashboard-036-bg:transparent;
+--vibeui-dashboard-036-panel:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+/* Наведение и мелкие плашки: подложка блока прозрачна, и рисовать их ею нечем. */
+--vibeui-dashboard-036-hover:light-dark(oklch(0.97 0.004 265),oklch(0.31 0.012 265));
+--vibeui-dashboard-036-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-036-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-036-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-dashboard-036-accent:light-dark(oklch(0.52 0.17 262),oklch(0.74 0.16 262));
+--vibeui-dashboard-036-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
+--vibeui-dashboard-036-soft:light-dark(oklch(0.96 0.02 262),oklch(0.32 0.05 262));
 --vibeui-dashboard-036-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -71,7 +78,7 @@ background:var(--vibeui-dashboard-036-border);
 [data-vibeui-block="dashboard-036"] [data-part="head"]{display:flex;align-items:center;gap:0.5rem}
 [data-vibeui-block="dashboard-036"] [data-part="mark"]{
 width:1.875rem;height:1.875rem;border-radius:0.625rem;flex:none;display:grid;place-items:center;
-background:var(--vibeui-dashboard-036-accent);color:oklch(1 0 0);font-size:0.8125rem;font-weight:800;
+background:var(--vibeui-dashboard-036-accent);color:var(--vibeui-dashboard-036-on-accent);font-size:0.8125rem;font-weight:800;
 }
 [data-vibeui-block="dashboard-036"] [data-part="brand"]{font-size:0.9375rem;font-weight:750;letter-spacing:-0.01em}
 [data-vibeui-block="dashboard-036"] [data-part="toggle"]{
@@ -101,7 +108,7 @@ font-size:0.8125rem;font-weight:600;color:inherit;text-decoration:none;
 }
 [data-vibeui-block="dashboard-036"] summary::-webkit-details-marker{display:none}
 [data-vibeui-block="dashboard-036"] [data-part="row"]:hover,
-[data-vibeui-block="dashboard-036"] summary:hover{background:var(--vibeui-dashboard-036-bg)}
+[data-vibeui-block="dashboard-036"] summary:hover{background:var(--vibeui-dashboard-036-hover)}
 [data-vibeui-block="dashboard-036"] [data-part="row"][aria-current]{
 background:var(--vibeui-dashboard-036-soft);color:var(--vibeui-dashboard-036-accent);
 box-shadow:inset 0.1875rem 0 0 var(--vibeui-dashboard-036-accent);
@@ -110,10 +117,10 @@ box-shadow:inset 0.1875rem 0 0 var(--vibeui-dashboard-036-accent);
 width:1.375rem;height:1.375rem;border-radius:0.4375rem;flex:none;display:grid;place-items:center;
 font-size:0.625rem;font-weight:800;
 border:1px solid var(--vibeui-dashboard-036-border);
-background:var(--vibeui-dashboard-036-bg);color:var(--vibeui-dashboard-036-muted);
+background:var(--vibeui-dashboard-036-hover);color:var(--vibeui-dashboard-036-muted);
 }
 [data-vibeui-block="dashboard-036"] [data-part="row"][aria-current] [data-part="ico"]{
-background:var(--vibeui-dashboard-036-accent);color:oklch(1 0 0);border-color:transparent;
+background:var(--vibeui-dashboard-036-accent);color:var(--vibeui-dashboard-036-on-accent);border-color:transparent;
 }
 [data-vibeui-block="dashboard-036"] [data-part="text"]{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 [data-vibeui-block="dashboard-036"] [data-part="badge"]{
@@ -138,11 +145,11 @@ padding:0.3125rem 0.5rem;border-radius:0.4375rem;
 font-size:0.75rem;color:var(--vibeui-dashboard-036-muted);text-decoration:none;
 }
 [data-vibeui-block="dashboard-036"] [data-part="sub"] a:hover{
-background:var(--vibeui-dashboard-036-bg);color:var(--vibeui-dashboard-036-fg);
+background:var(--vibeui-dashboard-036-hover);color:var(--vibeui-dashboard-036-fg);
 }
 [data-vibeui-block="dashboard-036"] [data-part="plan"]{
 margin-top:auto;padding:0.6875rem;border-radius:0.75rem;
-border:1px solid var(--vibeui-dashboard-036-border);background:var(--vibeui-dashboard-036-bg);
+border:1px solid var(--vibeui-dashboard-036-border);background:var(--vibeui-dashboard-036-hover);
 }
 [data-vibeui-block="dashboard-036"] [data-part="plan"] strong{display:block;font-size:0.8125rem}
 [data-vibeui-block="dashboard-036"] [data-part="plan"] span{
@@ -152,7 +159,7 @@ color:var(--vibeui-dashboard-036-muted);
 [data-vibeui-block="dashboard-036"] [data-part="plan"] button{
 appearance:none;border:0;cursor:pointer;font:inherit;width:100%;
 font-size:0.75rem;font-weight:700;padding:0.4375rem;border-radius:0.5rem;
-background:var(--vibeui-dashboard-036-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-036-accent);color:var(--vibeui-dashboard-036-on-accent);
 }
 [data-vibeui-block="dashboard-036"] :is(a,button,summary):focus-visible{
 outline:2px solid var(--vibeui-dashboard-036-accent);outline-offset:2px;
@@ -197,6 +204,28 @@ const DEFAULT_GROUPS: Dashboard036Group[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Левое меню приложения: группы разделов, вложенные ветки на details и
  * свёртка в узкую рейку через скрытый чекбокс. Один файл, ноль зависимостей,
  * клиентского JS нет.
@@ -210,11 +239,19 @@ export function Dashboard036({
   planHint = "Осталось 9 дней пробного периода.",
   planCta = "Продлить",
   accent,
+  background = "",
+  navLabel = "Навигация приложения",
   className,
   style,
 }: Dashboard036Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-036-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-036-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -227,7 +264,7 @@ export function Dashboard036({
         data-vibeui-block="dashboard-036"
         className={className}
         style={palette}
-        aria-label="Навигация приложения"
+        aria-label={navLabel}
       >
         <div data-part="shell">
           <div data-part="head">

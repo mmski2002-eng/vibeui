@@ -12,6 +12,8 @@ export type Codeblock021Props = {
   rootLabel?: string
   openDepth?: number
   data?: Codeblock021Value
+  /** Пусто — подложки нет, дерево лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -19,19 +21,23 @@ export type Codeblock021Props = {
 // Идея компонента: JSON, который можно разбирать по частям. Каждый объект и
 // массив — нативный details, поэтому раскрытие работает без JS, переживает
 // поиск по странице и не требует хранить состояние дерева.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, цвета токенов подобраны отдельно для светлой и тёмной ветки.
 const STYLES = `
 :where([data-vibeui-block="codeblock-021"]){
---vibeui-codeblock-021-bg:oklch(0.99 0.003 250);
---vibeui-codeblock-021-head:oklch(0.96 0.006 250);
---vibeui-codeblock-021-fg:oklch(0.28 0.014 250);
---vibeui-codeblock-021-muted:oklch(0.55 0.012 250);
---vibeui-codeblock-021-border:oklch(0.89 0.008 250);
---vibeui-codeblock-021-key:oklch(0.45 0.14 265);
---vibeui-codeblock-021-string:oklch(0.48 0.14 150);
---vibeui-codeblock-021-number:oklch(0.55 0.16 45);
---vibeui-codeblock-021-bool:oklch(0.5 0.17 320);
---vibeui-codeblock-021-null:oklch(0.6 0.01 250);
---vibeui-codeblock-021-accent:oklch(0.5 0.14 265);
+--vibeui-codeblock-021-bg:transparent;
+--vibeui-codeblock-021-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
+--vibeui-codeblock-021-hover:light-dark(oklch(0.5 0.14 265 / 8%),oklch(0.75 0.13 265 / 14%));
+--vibeui-codeblock-021-fg:light-dark(oklch(0.28 0.014 250),oklch(0.93 0.008 250));
+--vibeui-codeblock-021-muted:light-dark(oklch(0.55 0.012 250),oklch(0.67 0.014 250));
+--vibeui-codeblock-021-border:light-dark(oklch(0.89 0.008 250),oklch(1 0 0 / 13%));
+--vibeui-codeblock-021-key:light-dark(oklch(0.45 0.14 265),oklch(0.8 0.12 265));
+--vibeui-codeblock-021-string:light-dark(oklch(0.48 0.14 150),oklch(0.83 0.12 150));
+--vibeui-codeblock-021-number:light-dark(oklch(0.55 0.16 45),oklch(0.84 0.12 60));
+--vibeui-codeblock-021-bool:light-dark(oklch(0.5 0.17 320),oklch(0.81 0.13 320));
+--vibeui-codeblock-021-null:light-dark(oklch(0.6 0.01 250),oklch(0.62 0.012 250));
+--vibeui-codeblock-021-accent:light-dark(oklch(0.5 0.14 265),oklch(0.8 0.13 265));
 --vibeui-codeblock-021-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -72,7 +78,7 @@ transition:transform .16s ease;
 user-select:none;-webkit-user-select:none;
 }
 [data-vibeui-block="codeblock-021"] details[open] > summary::before{transform:rotate(90deg)}
-[data-vibeui-block="codeblock-021"] summary:hover{background:oklch(0.5 0.14 265 / 8%)}
+[data-vibeui-block="codeblock-021"] summary:hover{background:var(--vibeui-codeblock-021-hover)}
 [data-vibeui-block="codeblock-021"] summary:focus-visible{
 outline:2px solid var(--vibeui-codeblock-021-accent);outline-offset:1px;
 }
@@ -194,14 +200,47 @@ function Node({
   )
 }
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** JSON-дерево с раскрытием вложенных узлов через нативный details. */
 export function Codeblock021({
   rootLabel = "response",
   openDepth = 2,
   data = DATA,
+  background = "",
   className,
   style,
 }: Codeblock021Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-021-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-codeblock-021" precedence="medium">
@@ -210,7 +249,7 @@ export function Codeblock021({
       <figure
         data-vibeui-block="codeblock-021"
         className={className}
-        style={style}
+        style={palette}
       >
         <figcaption data-part="head">
           <span>{rootLabel}.json</span>

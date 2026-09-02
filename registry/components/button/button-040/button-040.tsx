@@ -14,8 +14,8 @@ export type Button040Props = ComponentPropsWithoutRef<"button"> & {
 // а стрелка — вправо. Ширину задаёт родитель, кнопка её только занимает.
 const STYLES = `
 :where([data-vibeui-block="button-040"]){
---vibeui-button-040-accent:oklch(0.48 0.15 258);
---vibeui-button-040-fg:oklch(0.99 0.01 258);
+--vibeui-button-040-accent:light-dark(oklch(0.48 0.15 258),oklch(0.62 0.17 258));
+--vibeui-button-040-fg:light-dark(oklch(0.99 0.01 258),oklch(0.98 0.012 258));
 --vibeui-button-040-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-040"]{

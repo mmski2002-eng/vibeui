@@ -8,6 +8,8 @@ export type Label002Props = Omit<
   label?: string
   question?: string
   answer?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,14 +20,14 @@ export type Label002Props = Omit<
 // это обычная кнопка в порядке обхода.
 const STYLES = `
 :where([data-vibeui-block="label-002"]){
---vibeui-label-002-surface:oklch(1 0 0);
---vibeui-label-002-surface-border:oklch(0.91 0.006 265);
---vibeui-label-002-fg:oklch(0.24 0.016 265);
---vibeui-label-002-muted:oklch(0.54 0.014 265);
---vibeui-label-002-field-border:oklch(0.85 0.01 265);
---vibeui-label-002-accent:oklch(0.55 0.2 262);
---vibeui-label-002-tip-bg:oklch(0.22 0.02 265);
---vibeui-label-002-tip-fg:oklch(0.97 0.004 265);
+--vibeui-label-002-surface:transparent;
+--vibeui-label-002-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-label-002-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-label-002-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-label-002-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-label-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-label-002-tip-bg:light-dark(oklch(0.22 0.02 265),oklch(0.34 0.016 265));
+--vibeui-label-002-tip-fg:light-dark(oklch(0.97 0.004 265),oklch(0.96 0.004 265));
 --vibeui-label-002-radius:0.625rem;
 --vibeui-label-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -93,6 +95,28 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-label-002-accent) 22%,trans
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подпись с кнопкой-вопросом: объяснение живёт в нативном popover и
  * открывается без JS. Один файл, ноль зависимостей, собственная палитра.
  */
@@ -100,6 +124,7 @@ export function Label002({
   label = "Код подразделения",
   question = "Где взять код подразделения",
   answer = "Четыре цифры из шапки договора, строка «Подразделение». Если договора под рукой нет, код подскажет ваш менеджер.",
+  background = "",
   accent,
   className,
   style,
@@ -109,6 +134,12 @@ export function Label002({
   const tipId = `${id}-tip`
   const palette = {
     ...(accent ? { "--vibeui-label-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-label-002-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

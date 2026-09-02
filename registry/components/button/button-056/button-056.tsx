@@ -9,6 +9,8 @@ export type Button056Props = Omit<
   label?: string
   languages?: Button056Language[]
   accent?: string
+  /** Поверхность плашки. Пусто — своя, из палитры. */
+  background?: string
 }
 
 // Идея компонента: кнопка выбора языка, которой не нужен ни JS, ни слой меню.
@@ -17,11 +19,11 @@ export type Button056Props = Omit<
 // список на телефоне; кнопке остаётся нарисовать глобус, рамку и шеврон.
 const STYLES = `
 :where([data-vibeui-block="button-056"]){
---vibeui-button-056-surface:oklch(1 0 0);
---vibeui-button-056-border:oklch(0.88 0.006 265);
---vibeui-button-056-fg:oklch(0.26 0.02 265);
---vibeui-button-056-muted:oklch(0.56 0.014 265);
---vibeui-button-056-accent:oklch(0.52 0.15 275);
+--vibeui-button-056-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
+--vibeui-button-056-border:light-dark(oklch(0.88 0.006 265),oklch(0.42 0.014 265));
+--vibeui-button-056-fg:light-dark(oklch(0.26 0.02 265),oklch(0.93 0.008 265));
+--vibeui-button-056-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-button-056-accent:light-dark(oklch(0.52 0.15 275),oklch(0.74 0.13 275));
 --vibeui-button-056-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-056"]{
@@ -68,6 +70,29 @@ transform:rotate(45deg);
 `
 
 /**
+ * Ветка темы для заданной поверхности. Без неё светлая заливка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кнопка выбора языка на настоящем select: клавиатура и мобильный список даром.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -82,12 +107,19 @@ export function Button056({
   ],
   defaultValue = "ru",
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Button056Props) {
   const palette = {
     ...(accent ? { "--vibeui-button-056-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-056-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

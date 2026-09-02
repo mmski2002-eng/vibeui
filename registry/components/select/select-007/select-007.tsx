@@ -9,6 +9,10 @@ export type Select007Props = Omit<
   /** Пока список едет с сервера — поле выключено и объясняет почему. */
   loading?: boolean
   loadingText?: string
+  /** Первая строка готового списка. */
+  placeholder?: string
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -16,22 +20,31 @@ export type Select007Props = Omit<
 // строкой выглядит как поломка, поэтому поле выключено, подписано и рядом
 // крутится маленький индикатор — понятно, что ждать, а не чинить.
 // Ширина поля не прыгает при подмене списка: скелет занимает то же место.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="select-007"]){
---vibeui-select-007-surface:oklch(1 0 0);
---vibeui-select-007-surface-border:oklch(0.91 0.006 265);
---vibeui-select-007-fg:oklch(0.23 0.016 265);
---vibeui-select-007-muted:oklch(0.57 0.014 265);
---vibeui-select-007-field:oklch(0.985 0.002 265);
---vibeui-select-007-border:oklch(0.87 0.008 265);
---vibeui-select-007-accent:oklch(0.55 0.19 245);
+--vibeui-select-007-surface:transparent;
+--vibeui-select-007-surface-border:transparent;
+--vibeui-select-007-surface-pad:0;
+--vibeui-select-007-surface-radius:0;
+--vibeui-select-007-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-007-muted:light-dark(oklch(0.57 0.014 265),oklch(0.71 0.012 265));
+--vibeui-select-007-field:light-dark(oklch(0.985 0.002 265),oklch(0.25 0.012 265));
+--vibeui-select-007-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-select-007-accent:light-dark(oklch(0.55 0.19 245),oklch(0.76 0.15 245));
 --vibeui-select-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Подложка появляется только вместе с пропом background: по умолчанию поле
+   лежит прямо на фоне страницы. */
 [data-vibeui-block="select-007"]{
 display:flex;flex-direction:column;gap:0.375rem;
-width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:20rem;box-sizing:border-box;
+padding:var(--vibeui-select-007-surface-pad);
 background:var(--vibeui-select-007-surface);
-border:1px solid var(--vibeui-select-007-surface-border);border-radius:0.875rem;
+border:1px solid var(--vibeui-select-007-surface-border);
+border-radius:var(--vibeui-select-007-surface-radius);
 font-family:var(--vibeui-select-007-font);color:var(--vibeui-select-007-fg);
 }
 [data-vibeui-block="select-007"] [data-part="label"]{font-size:0.8125rem;font-weight:600}
@@ -94,6 +107,29 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Select во время загрузки списка: поле выключено, индикатор объясняет паузу.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -102,14 +138,28 @@ export function Select007({
   options = DEFAULT_OPTIONS,
   loading = true,
   loadingText = "Загружаем список городов",
+  placeholder = "Выберите город",
+  background = "",
   accent,
   id,
   className,
   style,
   ...props
 }: Select007Props) {
+  // Подложка приходит вместе с полями и скруглением: без неё поле лежит
+  // прямо на странице, и лишние поля по бокам ему только мешают.
   const palette = {
     ...(accent ? { "--vibeui-select-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-select-007-surface": background,
+          "--vibeui-select-007-surface-border":
+            "light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265))",
+          "--vibeui-select-007-surface-pad": "0.875rem",
+          "--vibeui-select-007-surface-radius": "0.875rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -136,7 +186,7 @@ export function Select007({
             defaultValue=""
           >
             <option value="" disabled>
-              {loading ? loadingText + "…" : "Выберите город"}
+              {loading ? loadingText + "…" : placeholder}
             </option>
             {loading
               ? null

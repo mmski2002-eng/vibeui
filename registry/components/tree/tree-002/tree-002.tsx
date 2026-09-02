@@ -14,6 +14,9 @@ export type Tree002Node = {
 export type Tree002Props = {
   nodes?: Tree002Node[]
   label?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  accent?: string
   className?: string
   style?: CSSProperties
 }
@@ -23,14 +26,17 @@ export type Tree002Props = {
 // сам, без таблицы соответствий. Раскрытием управляет состояние, а не details:
 // нужны role="treeitem" и aria-expanded, которых у details нет. Фокус
 // переезжает по узлам стрелками, в дереве всего один таб-стоп.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="tree-002"]){
---vibeui-tree-002-bg:oklch(1 0 0);
---vibeui-tree-002-fg:oklch(0.24 0.014 265);
---vibeui-tree-002-muted:oklch(0.56 0.014 265);
---vibeui-tree-002-border:oklch(0.9 0.006 265);
---vibeui-tree-002-hover:oklch(0.97 0.003 265);
---vibeui-tree-002-accent:oklch(0.55 0.17 265);
+--vibeui-tree-002-bg:transparent;
+--vibeui-tree-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-tree-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.67 0.012 265));
+--vibeui-tree-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-tree-002-hover:light-dark(oklch(0.97 0.003 265),oklch(0.29 0.01 265));
+--vibeui-tree-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-tree-002-hue:265;
 --vibeui-tree-002-level:1;
 --vibeui-tree-002-indent:0.875rem;
@@ -84,9 +90,9 @@ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 flex:none;font-size:0.6875rem;font-weight:700;
 color:var(--vibeui-tree-002-muted);
 }
-[data-vibeui-block="tree-002"] [data-part="status"][data-value="M"]{color:oklch(0.55 0.14 75)}
-[data-vibeui-block="tree-002"] [data-part="status"][data-value="A"]{color:oklch(0.52 0.14 155)}
-[data-vibeui-block="tree-002"] [data-part="status"][data-value="D"]{color:oklch(0.55 0.17 28)}
+[data-vibeui-block="tree-002"] [data-part="status"][data-value="M"]{color:light-dark(oklch(0.55 0.14 75),oklch(0.79 0.13 80))}
+[data-vibeui-block="tree-002"] [data-part="status"][data-value="A"]{color:light-dark(oklch(0.52 0.14 155),oklch(0.76 0.14 155))}
+[data-vibeui-block="tree-002"] [data-part="status"][data-value="D"]{color:light-dark(oklch(0.55 0.17 28),oklch(0.74 0.16 28))}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="tree-002"] *{animation:none!important;transition:none!important}
 }
@@ -190,12 +196,36 @@ function collectOpen(
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Дерево файлов с типовыми значками и переездом фокуса стрелками.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tree002({
   nodes = DEFAULT_NODES,
   label = "Файлы проекта",
+  background = "",
+  accent,
   className,
   style,
 }: Tree002Props) {
@@ -271,12 +301,23 @@ export function Tree002({
     }
   }
 
+  const palette = {
+    ...(accent ? { "--vibeui-tree-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tree-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-tree-002" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="tree-002" className={className} style={style}>
+      <div data-vibeui-block="tree-002" className={className} style={palette}>
         <ul role="tree" aria-label={label}>
           {rows.map((row, index) => {
             const extension = row.branch

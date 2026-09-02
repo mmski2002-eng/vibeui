@@ -12,6 +12,8 @@ export type Button015Props = Omit<
   doneLabel?: string
   /** Сколько держать состояние «скопировано», мс. */
   hold?: number
+  /** Пусто — подложки нет, кнопка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: кнопка копирования, которая честно отчитывается. Успех
@@ -20,12 +22,12 @@ export type Button015Props = Omit<
 // пару секунд и само возвращается — иначе непонятно, копировалось ли снова.
 const STYLES = `
 :where([data-vibeui-block="button-015"]){
---vibeui-button-015-fg:oklch(0.3 0.014 265);
---vibeui-button-015-bg:oklch(1 0 0);
---vibeui-button-015-border:oklch(0.9 0.006 265);
---vibeui-button-015-hover:oklch(0.96 0.004 265);
---vibeui-button-015-done:oklch(0.55 0.15 152);
---vibeui-button-015-accent:oklch(0.55 0.17 265);
+--vibeui-button-015-fg:light-dark(oklch(0.3 0.014 265),oklch(0.94 0.006 265));
+--vibeui-button-015-bg:transparent;
+--vibeui-button-015-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-button-015-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
+--vibeui-button-015-done:light-dark(oklch(0.55 0.15 152),oklch(0.76 0.14 152));
+--vibeui-button-015-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-button-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-015"]{
@@ -39,7 +41,7 @@ transition:color .16s ease,border-color .16s ease;
 }
 [data-vibeui-block="button-015"]:hover{background:var(--vibeui-button-015-hover)}
 [data-vibeui-block="button-015"]:focus-visible{outline:2px solid var(--vibeui-button-015-accent);outline-offset:2px}
-[data-vibeui-block="button-015"][data-done="true"]{color:var(--vibeui-button-015-done);border-color:color-mix(in oklab,var(--vibeui-button-015-done) 40%,oklch(1 0 0))}
+[data-vibeui-block="button-015"][data-done="true"]{color:var(--vibeui-button-015-done);border-color:color-mix(in oklab,var(--vibeui-button-015-done) 50%,transparent)}
 /* Два листа бумаги: один со сдвигом — знак копирования без пакета иконок. */
 [data-vibeui-block="button-015"] [data-part="copy"]{position:relative;flex:none;width:0.875rem;height:0.875rem}
 [data-vibeui-block="button-015"] [data-part="copy"]::before{
@@ -60,6 +62,28 @@ transform:rotate(45deg);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кнопка копирования с честным отчётом прямо в подписи.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -68,6 +92,7 @@ export function Button015({
   label = "Скопировать",
   doneLabel = "Скопировано",
   hold = 2000,
+  background = "",
   type = "button",
   className,
   style,
@@ -82,6 +107,16 @@ export function Button015({
     },
     [],
   )
+
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-button-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   const copy = async () => {
     try {
@@ -107,7 +142,7 @@ export function Button015({
         data-vibeui-block="button-015"
         data-done={done}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
         onClick={copy}
       >
         {done ? (

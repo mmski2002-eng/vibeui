@@ -18,7 +18,19 @@ export type Solutions009Props = {
   window?: number
   items?: Solutions009Subscription[]
   soonLabel?: string
+  /** Число мест в подписке, {seats} — количество. */
+  seatsText?: string
+  /** Обратный отсчёт, {count} и {unit} — число и склонённое слово. */
+  renewText?: string
+  /** Слово «день» по формам: ключи one, few, many. */
+  dayText?: Record<string, string>
+  /** Подпись полосы для скринридера, {customer} — имя клиента. */
+  renewLabelText?: string
+  /** Итоговая строка, {count} и {manual} — числа подписок. */
+  footText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -33,13 +45,13 @@ export type Solutions009Props = {
 // такие подписки молча заканчиваются.
 const STYLES = `
 :where([data-vibeui-block="solutions-009"]){
---vibeui-solutions-009-bg:oklch(1 0 0);
---vibeui-solutions-009-panel:oklch(0.98 0.004 240);
---vibeui-solutions-009-fg:oklch(0.22 0.014 265);
---vibeui-solutions-009-muted:oklch(0.55 0.014 265);
---vibeui-solutions-009-border:oklch(0.9 0.006 265);
---vibeui-solutions-009-accent:oklch(0.55 0.16 165);
---vibeui-solutions-009-warn:oklch(0.65 0.17 45);
+--vibeui-solutions-009-bg:transparent;
+--vibeui-solutions-009-panel:light-dark(oklch(0.98 0.004 240),oklch(0.27 0.011 250));
+--vibeui-solutions-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-solutions-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-solutions-009-accent:light-dark(oklch(0.55 0.16 165),oklch(0.75 0.14 165));
+--vibeui-solutions-009-warn:light-dark(oklch(0.65 0.17 45),oklch(0.79 0.14 48));
 --vibeui-solutions-009-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -74,7 +86,7 @@ border:1px solid var(--vibeui-solutions-009-border);
 /* Отключённое автопродление — предупреждение, а не настройка: рамка и слово. */
 [data-vibeui-block="solutions-009"] [data-manual="true"]{
 border-color:color-mix(in oklab,var(--vibeui-solutions-009-warn) 55%,transparent);
-background:color-mix(in oklab,var(--vibeui-solutions-009-warn) 7%,var(--vibeui-solutions-009-bg));
+background:color-mix(in oklab,var(--vibeui-solutions-009-warn) 9%,transparent);
 }
 [data-vibeui-block="solutions-009"] [data-part="customer"]{display:block;font-size:0.875rem;font-weight:650;line-height:1.3}
 [data-vibeui-block="solutions-009"] [data-part="plan"]{
@@ -147,14 +159,42 @@ const DEFAULT_ITEMS: Solutions009Subscription[] = [
   },
 ]
 
-function days(count: number) {
+const DAY_TEXT: Record<string, string> = {
+  one: "день",
+  few: "дня",
+  many: "дней",
+}
+
+function days(count: number, text: Record<string, string>) {
   const last = count % 10
   const teen = count % 100
 
-  if (teen >= 11 && teen <= 14) return "дней"
-  if (last === 1) return "день"
-  if (last >= 2 && last <= 4) return "дня"
-  return "дней"
+  if (teen >= 11 && teen <= 14) return text.many ?? DAY_TEXT.many
+  if (last === 1) return text.one ?? DAY_TEXT.one
+  if (last >= 2 && last <= 4) return text.few ?? DAY_TEXT.few
+  return text.many ?? DAY_TEXT.many
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -169,7 +209,13 @@ export function Solutions009({
   window = 30,
   items = DEFAULT_ITEMS,
   soonLabel = "автопродление выключено — подписка закончится сама",
+  seatsText = " · {seats} мест",
+  renewText = "через {count} {unit}",
+  dayText = DAY_TEXT,
+  renewLabelText = "До продления {customer}",
+  footText = "Всего {count} подписок, без автопродления — {manual}.",
   accent,
+  background = "",
   className,
   style,
 }: Solutions009Props) {
@@ -177,6 +223,12 @@ export function Solutions009({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -218,7 +270,9 @@ export function Solutions009({
                   <span data-part="customer">{item.customer}</span>
                   <span data-part="plan">
                     {item.plan}
-                    {item.seats ? ` · ${item.seats} мест` : ""}
+                    {item.seats
+                      ? seatsText.replace("{seats}", String(item.seats))
+                      : ""}
                   </span>
                 </div>
 
@@ -229,7 +283,9 @@ export function Solutions009({
 
                 <div>
                   <span data-part="renew">
-                    через {item.renewsIn} {days(item.renewsIn)}
+                    {renewText
+                      .replace("{count}", String(item.renewsIn))
+                      .replace("{unit}", days(item.renewsIn, dayText))}
                   </span>
                   <div
                     data-part="track"
@@ -237,7 +293,10 @@ export function Solutions009({
                     aria-valuenow={share}
                     aria-valuemin={0}
                     aria-valuemax={100}
-                    aria-label={`До продления ${item.customer}`}
+                    aria-label={renewLabelText.replace(
+                      "{customer}",
+                      item.customer,
+                    )}
                   >
                     <span data-part="fill" style={{ width: `${share}%` }} />
                   </div>
@@ -251,7 +310,9 @@ export function Solutions009({
         </ul>
 
         <p data-part="foot">
-          Всего {items.length} подписок, без автопродления — {manual}.
+          {footText
+            .replace("{count}", String(items.length))
+            .replace("{manual}", String(manual))}
         </p>
       </section>
     </>

@@ -14,20 +14,29 @@ export type Chart020Props = Omit<
   title?: string
   metrics?: Chart020Metric[]
   unit?: string
+  /** Подпись под кольцами: {unit}. */
+  unitLabel?: string
+  /** Абсолютное значение в легенде: {value} и {max}. */
+  rawLabel?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: несколько показателей одним объектом — концентрические
 // дуги. Каждая дуга живёт на своей окружности и заполняется через
 // stroke-dasharray, поэтому радиусы можно менять, не трогая математику.
 // Кольца сами по себе неразличимы, поэтому легенда с процентами обязательна.
+//
+// Тема берётся из color-scheme окружения через light-dark(): кольца темнеют
+// вместе со страницей и не носят собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="chart-020"]){
---vibeui-chart-020-bg:oklch(1 0 0);
---vibeui-chart-020-fg:oklch(0.22 0.014 265);
---vibeui-chart-020-muted:oklch(0.55 0.014 265);
---vibeui-chart-020-border:oklch(0.91 0.006 265);
---vibeui-chart-020-track:oklch(0.95 0.004 265);
+--vibeui-chart-020-bg:transparent;
+--vibeui-chart-020-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-020-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-020-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-chart-020-track:light-dark(oklch(0.95 0.004 265),oklch(0.29 0.01 265));
 --vibeui-chart-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="chart-020"]{
@@ -76,6 +85,37 @@ const DEFAULT_METRICS: Chart020Metric[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+function fillTemplate(
+  template: string,
+  values: Record<string, string | number>,
+) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
+/**
  * Радиальный прогресс нескольких метрик концентрическими дугами.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -83,13 +123,22 @@ export function Chart020({
   title = "Готовность релиза",
   metrics = DEFAULT_METRICS,
   unit = "процентов от цели",
+  unitLabel = "Единица измерения: {unit}",
+  rawLabel = "{value} из {max}",
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Chart020Props) {
   const palette = {
     ...(accent ? { "--vibeui-chart-020-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-chart-020-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -158,12 +207,15 @@ export function Chart020({
               <span data-part="name">{ring.metric.label}</span>
               <span data-part="share">{Math.round(ring.share * 100)}%</span>
               <span data-part="raw">
-                {ring.metric.value} из {ring.ceiling}
+                {fillTemplate(rawLabel, {
+                  value: ring.metric.value,
+                  max: ring.ceiling,
+                })}
               </span>
             </li>
           ))}
         </ul>
-        <p data-part="unit">Единица измерения: {unit}</p>
+        <p data-part="unit">{fillTemplate(unitLabel, { unit })}</p>
       </figure>
     </>
   )

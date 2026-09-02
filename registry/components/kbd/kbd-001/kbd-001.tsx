@@ -3,19 +3,24 @@ import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 export type Kbd001Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
   rows?: { action: string; keys: string[] }[]
   title?: string
+  /** Пусто — подложки нет, список лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: список горячих клавиш. Клавиши набраны тегом kbd — это его
 // прямое назначение, и скринридер объявит их как ввод, а не как текст.
 // Плюс между клавишами нарисован в разметке, а не в CSS: «⌘ + K» надо
 // прочитать вслух, иначе сочетание превращается в две отдельные клавиши.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// списка по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="kbd-001"]){
---vibeui-kbd-001-bg:oklch(1 0 0);
---vibeui-kbd-001-fg:oklch(0.24 0.014 265);
---vibeui-kbd-001-muted:oklch(0.56 0.014 265);
---vibeui-kbd-001-border:oklch(0.88 0.008 265);
---vibeui-kbd-001-key:oklch(0.985 0.002 265);
+--vibeui-kbd-001-bg:transparent;
+--vibeui-kbd-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-kbd-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-kbd-001-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-kbd-001-key:light-dark(oklch(0.985 0.002 265),oklch(0.3 0.012 265));
 --vibeui-kbd-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="kbd-001"]{
@@ -51,16 +56,49 @@ const DEFAULT_ROWS = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Список горячих клавиш: клавиши тегом kbd, плюс между ними в разметке.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Kbd001({
   rows = DEFAULT_ROWS,
   title = "Горячие клавиши",
+  background = "",
   className,
   style,
   ...props
 }: Kbd001Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-kbd-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-kbd-001" precedence="medium">
@@ -70,7 +108,7 @@ export function Kbd001({
         {...props}
         data-vibeui-block="kbd-001"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         {title ? <h3 data-part="title">{title}</h3> : null}
         {rows.map((row) => (

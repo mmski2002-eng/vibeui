@@ -15,7 +15,11 @@ export type Otp001Props = Omit<
   label?: string
   length?: number
   hint?: string
+  /** Подпись клетки для screen reader: {index} — номер, {total} — всего. */
+  digitLabel?: string
   onChange?: (code: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,12 +29,12 @@ export type Otp001Props = Omit<
 // набранное невозможно.
 const STYLES = `
 :where([data-vibeui-block="otp-001"]){
---vibeui-otp-001-bg:oklch(1 0 0);
---vibeui-otp-001-fg:oklch(0.22 0.014 265);
---vibeui-otp-001-muted:oklch(0.56 0.014 265);
---vibeui-otp-001-border:oklch(0.88 0.008 265);
---vibeui-otp-001-field:oklch(0.985 0.002 265);
---vibeui-otp-001-accent:oklch(0.55 0.17 265);
+--vibeui-otp-001-bg:transparent;
+--vibeui-otp-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-otp-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-otp-001-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-otp-001-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.014 265));
+--vibeui-otp-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-otp-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="otp-001"]{
@@ -58,6 +62,28 @@ outline:2px solid var(--vibeui-otp-001-accent);outline-offset:1px;border-color:t
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Код из СМС по клеткам: вставка целиком раскладывается сама.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -65,7 +91,9 @@ export function Otp001({
   label = "Код из СМС",
   length = 6,
   hint = "Отправили на +7 999 000-00-00. Код придёт в течение минуты",
+  digitLabel = "Цифра {index} из {total}",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -78,8 +106,19 @@ export function Otp001({
 
   const palette = {
     ...(accent ? { "--vibeui-otp-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-otp-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const digitName = (index: number) =>
+    digitLabel
+      .replace("{index}", String(index + 1))
+      .replace("{total}", String(size))
 
   const push = (next: string[]) => {
     setCode(next)
@@ -148,7 +187,7 @@ export function Otp001({
               maxLength={1}
               placeholder=" "
               value={digit}
-              aria-label={`Цифра ${index + 1} из ${size}`}
+              aria-label={digitName(index)}
               onChange={(event) => type(index, event.target.value)}
               onPaste={paste}
               onKeyDown={(event) => onKeyDown(event, index)}

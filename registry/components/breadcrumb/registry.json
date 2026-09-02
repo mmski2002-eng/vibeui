@@ -30,15 +30,20 @@
             "текущий уровень как текст с aria-current=\"page\", а не как ссылку на саму себя",
             "разделители с aria-hidden: скринридер не должен читать «стрелка» между уровнями",
             "многоточие как неинтерактивный знак: раскрывающееся меню — это уже другой компонент",
-            "блок <style> внутри компонента — в нём вся палитра, разделители и обрезка длинных подписей"
+            "блок <style> внутри компонента — в нём вся палитра, разделители и обрезка длинных подписей",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items: подписи и адреса; у последнего элемента адрес не нужен",
             "maxVisible — сколько уровней показывать до свёртки",
             "акцент через проп accent — цвет кольца фокуса",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "navLabel — подпись навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Крошки показывают положение в структуре сайта, а не историю переходов. Не собирайте их из истории браузера.",
             "Не делайте крошки единственным способом вернуться назад на мобильном: там для этого есть кнопка «назад».",
             "Свёртка считается по количеству уровней, а не по реальной ширине. Для очень длинных подписей уменьшайте maxVisible.",
@@ -59,6 +64,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -73,15 +84,20 @@
                 "the current level as text with aria-current=\"page\" rather than a link to itself",
                 "aria-hidden on the separators: a screen reader should not read \"arrow\" between levels",
                 "the ellipsis as a non-interactive mark: a menu that expands it is a different component",
-                "the <style> block inside the component — it holds the palette, the separators and the label truncation"
+                "the <style> block inside the component — it holds the palette, the separators and the label truncation",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array: labels and hrefs; the last item needs no href",
                 "maxVisible — how many levels show before collapsing",
                 "the accent through the accent prop — it colours the focus ring",
-                "outer spacing through className"
+                "outer spacing through className",
+                "background — the component's surface; empty means no surface, taking the page colour",
+                "navLabel — the navigation's label for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A breadcrumb shows position in the site structure, not browsing history. Do not build it from the history stack.",
                 "Do not make it the only way back on mobile: the platform back gesture already covers that.",
                 "The collapse counts levels, not real width. For very long labels lower maxVisible.",
@@ -95,11 +111,41 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Collapsing Breadcrumb"
+            "title": "Collapsing Breadcrumb",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "label": "Projects",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Polyot Studio",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Studio site",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Pages",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Home"
+                  }
+                ],
+                "navLabel": "Breadcrumbs"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["maxVisible", "background"]
       }
     },
     {
@@ -133,15 +179,20 @@
             "nav с aria-label и <ol> внутри — порядок уровней и есть смысл крошек",
             "aria-current=\"page\" на последнем уровне вместо ссылки на текущую страницу",
             "подчёркивание по наведению: цветом одним ссылку от текста не отличить",
-            "перенос на вторую строку вместо горизонтального обрезания"
+            "перенос на вторую строку вместо горизонтального обрезания",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items",
             "separator — символ между уровнями",
             "акцент через проп accent — цвет фокусного кольца",
-            "кегль под свою типографику"
+            "кегль под свою типографику",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "navLabel — подпись навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Длинный путь этот вариант не сворачивает: для него breadcrumb-001 или breadcrumb-004.",
             "Разделитель — украшение, а не содержание: не кладите в него стрелки со смыслом «дальше».",
             "Крошки показывают положение в структуре, а не историю переходов: не подменяйте их кнопкой «назад».",
@@ -161,6 +212,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -174,15 +231,20 @@
                 "nav with aria-label wrapping an <ol> — the order of levels is the whole point",
                 "aria-current=\"page\" on the last level instead of a link to the current page",
                 "the underline on hover: colour alone does not mark a link",
-                "wrapping to a second line rather than clipping horizontally"
+                "wrapping to a second line rather than clipping horizontally",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array",
                 "separator — the character between levels",
                 "the accent through the accent prop — the focus ring",
-                "the type size for your scale"
+                "the type size for your scale",
+                "background — the component's surface; empty means no surface, taking the page colour",
+                "navLabel — the navigation's label for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This variant does not collapse a long path: use breadcrumb-001 or breadcrumb-004 for that.",
                 "The separator is decoration, not content: do not put meaningful arrows in it.",
                 "Breadcrumbs show position in a structure, not history: they are not a back button.",
@@ -197,11 +259,37 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Slash Breadcrumb"
+            "title": "Slash Breadcrumb",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "label": "Home",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Catalog",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Components",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Breadcrumbs"
+                  }
+                ],
+                "navLabel": "Breadcrumbs"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -235,15 +323,20 @@
             "фигуры на бордюрах вместо иконочного пакета ради двух значков",
             "шеврон только как разделитель — он не должен выглядеть кнопкой",
             "aria-current=\"page\" на последнем уровне",
-            "видимое фокусное кольцо на ссылках"
+            "видимое фокусное кольцо на ссылках",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items",
             "homeLabel — как назвать корень",
             "акцент через проп accent",
-            "размер фигур через кегль"
+            "размер фигур через кегль",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "navLabel — подпись навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Домик заменяет слово «Главная»: если корень называется иначе, честнее написать словом.",
             "Не превращайте шевроны в кликабельные элементы: разделитель ничего не делает.",
             "Свёртки длинного пути здесь нет: возьмите breadcrumb-001 или breadcrumb-004.",
@@ -263,6 +356,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -276,15 +375,20 @@
                 "border-drawn shapes instead of an icon package for two glyphs",
                 "the chevron as a separator only — it must not look clickable",
                 "aria-current=\"page\" on the last level",
-                "the visible focus ring on links"
+                "the visible focus ring on links",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array",
                 "homeLabel — what the root is called",
                 "the accent through the accent prop",
-                "the glyph size through the type scale"
+                "the glyph size through the type scale",
+                "background — the component's surface; empty means no surface, taking the page colour",
+                "navLabel — the navigation's label for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The home mark stands in for the word \"Home\": if your root is called something else, write it.",
                 "Do not make chevrons clickable: a separator does nothing.",
                 "There is no collapsing here: use breadcrumb-001 or breadcrumb-004.",
@@ -299,11 +403,34 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Home Trail"
+            "title": "Home Trail",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "label": "Projects",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Catalog",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Settings"
+                  }
+                ],
+                "homeLabel": "Home",
+                "navLabel": "Breadcrumbs"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -337,15 +464,21 @@
             "aria-label на многоточии с числом скрытых уровней",
             "доступность скрытых уровней: троеточие без раскрытия — тупик",
             "первый уровень и хвост видимыми: «откуда» и «где я» прятать нельзя",
-            "z-index у выпадающего списка — иначе он уедет под соседний контент"
+            "z-index у выпадающего списка — иначе он уедет под соседний контент",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items и число visible",
             "акцент через проп accent",
             "ширину выпадающего списка",
-            "символ свёртки вместо многоточия"
+            "символ свёртки вместо многоточия",
+            "moreLabel — подпись многоточия; {n} заменяется числом скрытых уровней",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "navLabel — подпись навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Список раскрывается вниз и может выйти за край узкого контейнера: проверьте на телефоне.",
             "Два уровня сворачивать незачем: свёртка нужна от четырёх и больше.",
             "details закрывается кликом по summary, но не по внешнему клику: для этого нужен JS, и это осознанный размен.",
@@ -366,6 +499,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -379,15 +518,21 @@
                 "the aria-label on the ellipsis naming how many levels are hidden",
                 "keeping hidden levels reachable: an ellipsis with nothing behind it is a dead end",
                 "the first level and the tail visible: \"where from\" and \"where am I\" must not hide",
-                "the z-index on the popup list — otherwise it slides under neighbouring content"
+                "the z-index on the popup list — otherwise it slides under neighbouring content",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array and the visible count",
                 "the accent through the accent prop",
                 "the popup width",
-                "a different glyph in place of the ellipsis"
+                "a different glyph in place of the ellipsis",
+                "moreLabel — the ellipsis label; {n} is replaced by the number of hidden levels",
+                "background — the component's surface; empty means no surface, taking the page colour",
+                "navLabel — the navigation's label for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The list opens downward and can overflow a narrow container: check it on a phone.",
                 "Collapsing two levels is pointless: it pays off from four upward.",
                 "details closes on its summary but not on an outside click: that needs JS, and skipping it is a deliberate trade.",
@@ -401,11 +546,46 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Expandable Crumbs"
+            "title": "Expandable Crumbs",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "label": "Home",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Documents",
+                    "href": "#"
+                  },
+                  {
+                    "label": "2026",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Contracts",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Suppliers",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Act No. 142"
+                  }
+                ],
+                "navLabel": "Breadcrumbs",
+                "moreLabel": "Show {n} more levels"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["visible", "background"]
       }
     },
     {
@@ -439,15 +619,20 @@
             "sticky на текущем уровне — при прокрутке он обязан оставаться виден",
             "overscroll-behavior-x: contain, иначе прокрутка уходит на страницу",
             "запрет переноса: смысл варианта в том, что путь не сворачивается",
-            "видимую полосу прокрутки там, где система её показывает"
+            "видимую полосу прокрутки там, где система её показывает",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items",
             "ширину маски у края",
             "акцент через проп accent",
-            "кегль под свою типографику"
+            "кегль под свою типографику",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "navLabel — подпись навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "На мышином десктопе горизонтальную прокрутку заметить трудно: там уместнее свёртка из breadcrumb-004.",
             "Прокрутка начинается слева: если важнее конец пути, прокрутите контейнер в вызывающем коде.",
             "Маска рисуется поверх всего содержимого: не кладите внутрь ничего интерактивного правее края.",
@@ -458,6 +643,12 @@
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -473,15 +664,20 @@
                 "sticky on the current level — it must stay visible at any scroll offset",
                 "overscroll-behavior-x: contain, or the scroll escapes to the page",
                 "the no-wrap rule: the whole point is that the path never collapses",
-                "the visible scrollbar where the platform shows one"
+                "the visible scrollbar where the platform shows one",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array",
                 "the mask width at the edge",
                 "the accent through the accent prop",
-                "the type size for your scale"
+                "the type size for your scale",
+                "background — the component's surface; empty means no surface, taking the page colour",
+                "navLabel — the navigation's label for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Horizontal scrolling is hard to notice with a mouse: on desktop prefer the collapse from breadcrumb-004.",
                 "Scrolling starts at the left: if the end matters more, scroll the container from the caller.",
                 "The mask paints over everything: keep interactive elements away from the right edge.",
@@ -492,11 +688,49 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Scrolling Trail"
+            "title": "Scrolling Trail",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "label": "Drive",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Projects",
+                    "href": "#"
+                  },
+                  {
+                    "label": "VibeUI",
+                    "href": "#"
+                  },
+                  {
+                    "label": "registry",
+                    "href": "#"
+                  },
+                  {
+                    "label": "components",
+                    "href": "#"
+                  },
+                  {
+                    "label": "breadcrumb",
+                    "href": "#"
+                  },
+                  {
+                    "label": "breadcrumb-005.tsx"
+                  }
+                ],
+                "navLabel": "Breadcrumbs"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -530,15 +764,20 @@
             "настоящий h1 вместо крупного span — иначе ломается структура страницы",
             "nav с aria-label вокруг списка",
             "clamp у кегля заголовка: на телефоне он не должен съедать первый экран",
-            "порядок сверху вниз: путь, заголовок, служебная строка"
+            "порядок сверху вниз: путь, заголовок, служебная строка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items, title и meta",
             "акцент через проп accent",
             "максимальную ширину блока",
-            "уровень заголовка, если на странице уже есть h1"
+            "уровень заголовка, если на странице уже есть h1",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "navLabel — подпись навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Если h1 на странице уже занят, замените тег и оставьте кегль: двух h1 быть не должно.",
             "Служебная строка не место для действий: кнопки — в breadcrumb-007.",
             "Длинный заголовок переносится, а не режется: обрезать имя страницы нельзя.",
@@ -565,6 +804,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -578,15 +823,20 @@
                 "a real h1 instead of a large span — otherwise the page structure breaks",
                 "nav with aria-label around the list",
                 "the clamped heading size: on a phone it must not eat the first screen",
-                "the top-down order: trail, heading, meta line"
+                "the top-down order: trail, heading, meta line",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array, title and meta",
                 "the accent through the accent prop",
                 "the block's max width",
-                "the heading level if the page already has an h1"
+                "the heading level if the page already has an h1",
+                "background — the component's surface; empty means no surface, taking the page colour",
+                "navLabel — the navigation's label for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "If h1 is taken, swap the tag and keep the size: two h1s must not coexist.",
                 "The meta line is not for actions: buttons live in breadcrumb-007.",
                 "A long heading wraps rather than truncates: a page's name must not be cut.",
@@ -605,11 +855,36 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Page Header Trail"
+            "title": "Page Header Trail",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "label": "Home",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Projects",
+                    "href": "#"
+                  },
+                  {
+                    "label": "VibeUI",
+                    "href": "#"
+                  }
+                ],
+                "navLabel": "Breadcrumbs",
+                "title": "Breadcrumbs",
+                "meta": "12 components · updated today"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -643,15 +918,20 @@
             "подписи на кнопках в узкой ширине — иконка без слова угадывается неверно",
             "одно главное действие: две одинаково заметные кнопки заставляют выбирать",
             "обрезку текущего уровня многоточием, чтобы кнопки не уезжали",
-            "aria-label на nav — панель содержит не только крошки"
+            "aria-label на nav — панель содержит не только крошки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items",
             "actionLabel и secondaryLabel",
             "акцент через проп accent — цвет главной кнопки",
-            "порог переноса в контейнерном запросе"
+            "порог переноса в контейнерном запросе",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "navLabel — подпись навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Кнопки ничего не делают: обработчики навешивает вызывающий код.",
             "Больше двух действий в строку не ставьте: остальные — в меню.",
             "Опасные действия (удалить, отозвать) в этой панели неуместны: их место — рядом с подтверждением.",
@@ -678,6 +958,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -691,15 +977,20 @@
                 "the button labels at narrow widths — a bare icon gets guessed wrong",
                 "one primary action: two equally loud buttons force a choice",
                 "truncating the current level so the buttons stay put",
-                "the aria-label on nav — the bar holds more than crumbs"
+                "the aria-label on nav — the bar holds more than crumbs",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array",
                 "actionLabel and secondaryLabel",
                 "the accent through the accent prop — the primary button",
-                "the wrap threshold in the container query"
+                "the wrap threshold in the container query",
+                "background — the component's surface; empty means no surface, taking the page colour",
+                "navLabel — the navigation's label for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The buttons do nothing: handlers belong to the caller.",
                 "Do not put more than two actions in the bar: the rest belong in a menu.",
                 "Destructive actions do not belong here: they belong next to their confirmation.",
@@ -718,11 +1009,35 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Trail With Actions"
+            "title": "Trail With Actions",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "label": "Projects",
+                    "href": "#"
+                  },
+                  {
+                    "label": "VibeUI",
+                    "href": "#"
+                  },
+                  {
+                    "label": "The breadcrumb-007 component"
+                  }
+                ],
+                "navLabel": "Breadcrumbs",
+                "actionLabel": "Publish",
+                "secondaryLabel": "Settings"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -756,15 +1071,20 @@
             "моноширинный шрифт: в путях важны точки, дефисы и регистр",
             "разделитель через переменную — для Windows-пути меняется один проп",
             "выделение имени файла: в длинном пути глаз ищет именно его",
-            "aria-label «Путь к файлу» на nav вместо общего «Хлебные крошки»"
+            "aria-label «Путь к файлу» на nav вместо общего «Хлебные крошки»",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "собственную плашку кода: путь показан как фрагмент кода, и заливка здесь — часть дизайна, а не подложка под текст"
           ],
           "adapt": [
             "path и separator",
             "адреса уровней в вызывающем коде",
             "акцент через проп accent",
-            "фон и рамку под свой блок кода"
+            "фон и рамку под свой блок кода",
+            "background — заливка плашки кода; пусто означает «своя, из палитры компонента»",
+            "navLabel — подпись навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ссылки заглушены: подставьте настоящие адреса уровней, иначе путь только показывает.",
             "Пустые сегменты отбрасываются, поэтому ведущий слэш не даёт пустой крошки.",
             "Очень длинный путь переносится на вторую строку: если это мешает, возьмите прокрутку из breadcrumb-005.",
@@ -785,6 +1105,12 @@
             "type": "text",
             "default": "/",
             "maxLength": 2
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -798,15 +1124,20 @@
                 "the monospaced face: dots, dashes and case matter in paths",
                 "the separator as a variable — a Windows path is one prop away",
                 "the emphasis on the filename: that is what the eye hunts for",
-                "the \"file path\" aria-label on nav rather than a generic \"breadcrumbs\""
+                "the \"file path\" aria-label on nav rather than a generic \"breadcrumbs\"",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the code chip's own fill: the path is shown as a piece of code, so the surface here is part of the design, not a panel under the text"
               ],
               "adapt": [
                 "path and separator",
                 "the level URLs in the caller",
                 "the accent through the accent prop",
-                "the background and border to match your code blocks"
+                "the background and border to match your code blocks",
+                "background — the code chip's fill; empty means the component's own colour",
+                "navLabel — the navigation's label for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The links are placeholders: pass real level URLs or the path only displays.",
                 "Empty segments are dropped, so a leading slash does not create an empty crumb.",
                 "A very long path wraps: if that hurts, take the scrolling variant breadcrumb-005.",
@@ -822,11 +1153,20 @@
               "separator": {
                 "label": "Separator",
                 "default": "/"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "File Path"
+            "title": "File Path",
+            "preview": {
+              "props": {
+                "navLabel": "File path"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -860,15 +1200,20 @@
             "разницу форм: галочка у пройденного, номер у будущего — цвет не единственный признак",
             "aria-current=\"step\" на текущем шаге и номер шага в aria-label навигации",
             "линию между шагами как разделитель, а не как индикатор прогресса",
-            "перенос на вторую строку: шагов бывает пять и больше"
+            "перенос на вторую строку: шагов бывает пять и больше",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив steps и номер current",
             "акцент через проп accent",
             "цвет пройденного шага",
-            "подписи шагов"
+            "подписи шагов",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "navLabel — подпись навигации; {step} и {total} подставляются автоматически"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это навигация, а не индикатор: реальную защиту от прыжка вперёд делает маршрутизация.",
             "Больше пяти шагов в строку не помещаются: длинные мастера лучше разбивать на этапы.",
             "Если шаг можно пропустить, покажите это словом: галочка означает выполненный, а не пропущенный.",
@@ -889,6 +1234,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -902,15 +1253,20 @@
                 "the shape difference: a tick for done, a number for pending — colour is not the only cue",
                 "aria-current=\"step\" on the active step and the step number in the nav's aria-label",
                 "the connector line as a separator, not a progress indicator",
-                "wrapping to a second line: five steps and more are common"
+                "wrapping to a second line: five steps and more are common",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the steps array and the current index",
                 "the accent through the accent prop",
                 "the completed-step colour",
-                "the step labels"
+                "the step labels",
+                "background — the component's surface; empty means no surface, taking the page colour",
+                "navLabel — the navigation label; {step} and {total} are filled in automatically"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is navigation, not enforcement: routing must actually block forward jumps.",
                 "More than five steps do not fit a line: split long wizards into stages.",
                 "If a step is skippable, say so in words: a tick means done, not skipped.",
@@ -924,11 +1280,36 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Wizard Trail"
+            "title": "Wizard Trail",
+            "preview": {
+              "props": {
+                "steps": [
+                  {
+                    "label": "Cart",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Delivery",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Payment"
+                  },
+                  {
+                    "label": "Done"
+                  }
+                ],
+                "navLabel": "Step {step} of {total}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["current", "accent", "background"]
       }
     },
     {
@@ -962,15 +1343,21 @@
             "aria-label со словами у счётчика — голая цифра вслух бессмысленна",
             "табличные цифры, чтобы числа не дёргали строку",
             "приглушённый вид счётчика: он уточняет уровень, а не спорит с ним",
-            "шеврон-разделитель на бордюрах"
+            "шеврон-разделитель на бордюрах",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items с полем count",
             "акцент через проп accent",
             "формат числа в вызывающем коде",
-            "цвет и фон счётчика"
+            "цвет и фон счётчика",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "navLabel — подпись навигации для скринридера",
+            "countLabel — подпись счётчика для скринридера; {count} заменяется числом"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Число форматируйте заранее: компонент печатает то, что пришло, и разрядов не расставляет.",
             "Считать записи на каждом уровне дорого: если счёт неточен, лучше его не показывать.",
             "Счётчик текущего уровня полезен, а вот у корня он обычно шум: оставьте его пустым.",
@@ -981,6 +1368,12 @@
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -996,15 +1389,21 @@
                 "the worded aria-label on the counter — a bare number means nothing aloud",
                 "tabular figures so numbers do not jitter the line",
                 "the muted counter: it qualifies the level, it does not compete with it",
-                "the border-drawn chevron separator"
+                "the border-drawn chevron separator",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array with its count field",
                 "the accent through the accent prop",
                 "number formatting in the caller",
-                "the counter's colour and background"
+                "the counter's colour and background",
+                "background — the component's surface; empty means no surface, taking the page colour",
+                "navLabel — the navigation's label for screen readers",
+                "countLabel — the counter's label for screen readers; {count} is replaced by the number"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Format numbers upstream: the component prints what it is given and adds no separators.",
                 "Counting every level is expensive: if the count is approximate, better not to show it.",
                 "A count on the current level helps; on the root it is usually noise — leave it out.",
@@ -1015,11 +1414,37 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Counted Trail"
+            "title": "Counted Trail",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "label": "Catalog",
+                    "href": "#",
+                    "count": 1280
+                  },
+                  {
+                    "label": "Electronics",
+                    "href": "#",
+                    "count": 342
+                  },
+                  {
+                    "label": "Headphones",
+                    "count": 27
+                  }
+                ],
+                "navLabel": "Breadcrumbs",
+                "countLabel": "{count} entries in this section"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -1053,15 +1478,20 @@
             "скрытую подпись, связанную с select: поле без имени скринридер не назовёт",
             "стрелку на бордюрах — штатную стрелку select стилизовать нельзя",
             "высоту поля под палец",
-            "видимое фокусное кольцо"
+            "видимое фокусное кольцо",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "rootLabel, rootHref и массив siblings",
             "defaultValue — текущий раздел",
             "label — как называется поле",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "navLabel — подпись навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Переход по выбору не происходит сам: навесьте onChange в вызывающем коде.",
             "Соседей должно быть немного: длинный список в select читается плохо, там нужен поиск из категории autocomplete.",
             "Переключатель уместен, когда разделы равноправны: иерархию им не заменить.",
@@ -1088,6 +1518,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1101,15 +1537,20 @@
                 "the hidden label tied to the select: an unnamed field is unnamed to a screen reader",
                 "the border-drawn arrow — the built-in select arrow cannot be styled",
                 "the thumb-sized control height",
-                "the visible focus ring"
+                "the visible focus ring",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "rootLabel, rootHref and the siblings array",
                 "defaultValue — the current section",
                 "label — the field's name",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component's surface; empty means no surface, taking the page colour",
+                "navLabel — the navigation's label for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Selecting navigates nowhere by itself: wire an onChange in the caller.",
                 "Keep the sibling list short: a long select reads badly, and that case wants the autocomplete category.",
                 "A switcher fits equal siblings: it cannot stand in for a hierarchy.",
@@ -1128,11 +1569,29 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Sibling Switcher"
+            "title": "Sibling Switcher",
+            "preview": {
+              "props": {
+                "rootLabel": "Documents",
+                "siblings": [
+                  "Contracts",
+                  "Invoices",
+                  "Acts",
+                  "Powers of attorney"
+                ],
+                "defaultValue": "Invoices",
+                "label": "Section",
+                "navLabel": "Breadcrumbs"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -1166,15 +1625,20 @@
             "высоту цели нажатия 2rem — на телефоне это самая частая ссылка",
             "ссылку на родителя вместо history.back: назад и вверх — разные направления",
             "обрезку текущего уровня многоточием",
-            "aria-current=\"page\" на текущем уровне"
+            "aria-current=\"page\" на текущем уровне",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "parentLabel и parentHref",
             "currentLabel",
             "акцент через проп accent",
-            "разделитель между родителем и текущим"
+            "разделитель между родителем и текущим",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "navLabel — подпись навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это не кнопка «назад» браузера: ссылка ведёт на уровень выше, а не в предыдущую страницу истории.",
             "На десктопе полезнее полный путь: показывайте этот вариант только на узкой ширине.",
             "Если родителя нет (страница верхнего уровня), не рисуйте ссылку вовсе, а не ведите на главную.",
@@ -1201,6 +1665,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1214,15 +1684,20 @@
                 "the 2rem tap target — this is the most-tapped link on a phone",
                 "a link to the parent instead of history.back: back and up are different directions",
                 "truncating the current level with an ellipsis",
-                "aria-current=\"page\" on the current level"
+                "aria-current=\"page\" on the current level",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "parentLabel and parentHref",
                 "currentLabel",
                 "the accent through the accent prop",
-                "the separator between parent and current"
+                "the separator between parent and current",
+                "background — the component's surface; empty means no surface, taking the page colour",
+                "navLabel — the navigation's label for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is not the browser back button: the link goes one level up, not one page back.",
                 "On desktop a full path serves better: show this variant only at narrow widths.",
                 "With no parent (a top-level page) render no link at all rather than pointing at home.",
@@ -1241,11 +1716,22 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Parent Link"
+            "title": "Parent Link",
+            "preview": {
+              "props": {
+                "parentLabel": "Components",
+                "currentLabel": "Breadcrumbs on a phone",
+                "navLabel": "Breadcrumbs"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -1279,15 +1765,21 @@
             "уникальные id и anchor-name из useId — два экземпляра на странице иначе притянутся к одному якорю",
             "запасной вид без anchor positioning: там popover встаёт карточкой по центру, и это нормальное поведение, а не баг",
             "полосу-маркер у текущей строки меню: только цветом «где я» при дальтонизме не читается",
-            "собственную светлую подложку крошек: без неё тёмный текст пропадает на тёмном фоне"
+            "непрозрачную заливку меню: popover висит верхним слоем, и сквозь него не должно просвечивать содержимое страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "путь до текущей страницы через trail и её имя через current",
             "список соседей через siblings — label, href и пояснение hint",
             "заголовок меню через menuTitle",
-            "акцент через проп accent"
+            "подсказку на кнопке уровня через triggerHint",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "navLabel — подпись навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ссылки в меню никуда не ведут сами: подставьте реальные href, иначе клик закроет popover и ничего не произойдёт.",
             "Пояснения hint не должны быть длиннее строки: меню фиксированной ширины, длинный текст переносится на три строки.",
             "Соседей уместно до восьми: длиннее нужен поиск, а не меню.",
@@ -1308,6 +1800,18 @@
             "type": "text",
             "default": "Соседние страницы",
             "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1321,15 +1825,21 @@
                 "the unique id and anchor-name from useId — two instances otherwise latch onto one anchor",
                 "the fallback without anchor positioning: there the popover lands as a centred card, and that is normal behaviour, not a bug",
                 "the marker bar on the current menu row: colour alone does not answer \"where am I\" for colour-blind users",
-                "the breadcrumbs' own light surface: without it the dark text disappears on a dark background"
+                "the opaque menu fill: the popover sits in the top layer and page content must not show through it",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the path to the current page through trail and its name through current",
                 "the sibling list through siblings — label, href and the hint text",
                 "the menu heading through menuTitle",
-                "the accent through the accent prop"
+                "the trigger's hint through triggerHint",
+                "the accent through the accent prop",
+                "background — the component's surface; empty means no surface, taking the page colour",
+                "navLabel — the navigation's label for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Menu links lead nowhere on their own: pass real hrefs, otherwise a click just closes the popover.",
                 "Keep hint text to one line: the menu has a fixed width and long text wraps to three lines.",
                 "Up to eight siblings is fine: beyond that you need search, not a menu.",
@@ -1345,11 +1855,49 @@
               "menuTitle": {
                 "label": "Menu heading",
                 "default": "Sibling pages"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Level Menu"
+            "title": "Level Menu",
+            "preview": {
+              "props": {
+                "trail": ["Projects", "Storefront"],
+                "current": "Settings",
+                "menuTitle": "Sibling pages",
+                "triggerHint": "show sibling pages",
+                "navLabel": "Breadcrumbs",
+                "siblings": [
+                  {
+                    "label": "Overview",
+                    "href": "#",
+                    "hint": "Summary and recent events"
+                  },
+                  {
+                    "label": "Settings",
+                    "href": "#",
+                    "hint": "Domain, access, integrations"
+                  },
+                  {
+                    "label": "Members",
+                    "href": "#",
+                    "hint": "12 people, 3 invitations"
+                  },
+                  {
+                    "label": "History",
+                    "href": "#",
+                    "hint": "Change log for 90 days"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -1383,15 +1931,20 @@
             "скрытое название типа рядом со значком: сам значок для скринридера пустой",
             "инлайновый SVG вместо пакета иконок — иначе компонент перестаёт быть переносимым одним файлом",
             "одинаковую толщину штриха у всех пяти контуров: разнобой читается как разная важность уровней",
-            "собственную светлую подложку крошек: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "состав пути через items — label, href и kind каждого узла",
             "имя последнего уровня через currentLabel",
             "тип последнего уровня через currentKind",
-            "акцент фокуса через проп accent"
+            "названия типов через kindText — их произносит скринридер",
+            "акцент фокуса через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "navLabel — подпись навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Типов ровно пять: новый тип — это новый контур в PATHS и своя переменная цвета, подменой существующего не обойтись.",
             "Длинный путь переносится на вторую строку: на телефоне проверьте, что последний уровень не уехал один.",
             "Значки нарисованы под размер 0.875rem; при сильном увеличении шрифта их стоит увеличить вместе с ним.",
@@ -1412,6 +1965,18 @@
             "type": "select",
             "default": "record",
             "options": ["space", "folder", "database", "table", "record"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1425,15 +1990,20 @@
                 "the hidden type name next to the icon: the icon itself is empty to a screen reader",
                 "inline SVG instead of an icon package — otherwise the component stops being a portable single file",
                 "the same stroke width across all five outlines: a mismatch reads as levels of different importance",
-                "the breadcrumbs' own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the path contents through items — label, href and kind of every node",
                 "the last level's name through currentLabel",
                 "the last level's type through currentKind",
-                "the focus accent through the accent prop"
+                "the type names through kindText — a screen reader speaks them",
+                "the focus accent through the accent prop",
+                "background — the component's surface; empty means no surface, taking the page colour",
+                "navLabel — the navigation's label for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There are exactly five types: a new one means a new outline in PATHS and its own colour variable, not a repurposed existing type.",
                 "A long path wraps to a second line: check on a phone that the last level is not left alone there.",
                 "The icons are drawn for 0.875rem; at large text sizes scale them along with the type.",
@@ -1448,11 +2018,58 @@
               },
               "currentKind": {
                 "label": "Node type"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Typed Nodes"
+            "title": "Typed Nodes",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "label": "Analytics",
+                    "href": "#",
+                    "kind": "space"
+                  },
+                  {
+                    "label": "Sales",
+                    "href": "#",
+                    "kind": "folder"
+                  },
+                  {
+                    "label": "CRM",
+                    "href": "#",
+                    "kind": "database"
+                  },
+                  {
+                    "label": "Deals",
+                    "href": "#",
+                    "kind": "table"
+                  },
+                  {
+                    "label": "Deal #4471",
+                    "kind": "record"
+                  }
+                ],
+                "currentLabel": "Deal #4471",
+                "currentKind": "record",
+                "kindText": {
+                  "space": "Space",
+                  "folder": "Folder",
+                  "database": "Database",
+                  "table": "Table",
+                  "record": "Record"
+                },
+                "navLabel": "Breadcrumbs"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["currentKind", "background"]
       }
     },
     {
@@ -1486,15 +2103,19 @@
             "ширину заглушки в ch — привязка к шрифту строки, а не к пикселям экрана",
             "aria-busy и живую область role=\"status\": состояние загрузки нельзя объявлять одним цветом",
             "правило prefers-reduced-motion: бегущий блик и пульс — типовой раздражитель при вестибулярных нарушениях",
-            "собственную светлую подложку крошек: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "путь через trail и имя записи через currentLabel",
             "состояние через loading — при false вместо полосы появляется имя",
             "резерв места через placeholderWidth в символах",
-            "текст ожидания через loadingText и акцент через accent"
+            "текст ожидания через loadingText и акцент через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "navLabel — подпись навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "placeholderWidth задавайте по средней длине имени: слишком широкая полоса читается как ошибка загрузки.",
             "Живая область произносит текст ожидания один раз; готовое имя объявит сама страница, дублировать его в статусе не нужно.",
             "Скелетон уместен до пары секунд: дольше нужен явный текст о задержке, а не бесконечный блик.",
@@ -1502,6 +2123,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "currentLabel",
+            "label": "Имя записи",
+            "type": "text",
+            "default": "Партия A-1180",
+            "maxLength": 28
+          },
           {
             "prop": "loading",
             "label": "Идёт загрузка",
@@ -1515,6 +2143,18 @@
             "default": 10,
             "min": 4,
             "max": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1528,15 +2168,19 @@
                 "the placeholder width in ch — tied to the row's font, not to screen pixels",
                 "aria-busy and the role=\"status\" live region: a loading state must not be announced by colour alone",
                 "the prefers-reduced-motion rule: a travelling sheen and a pulse are a classic vestibular trigger",
-                "the breadcrumbs' own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the path through trail and the record name through currentLabel",
                 "the state through loading — at false the name replaces the bar",
                 "the reserved space through placeholderWidth, in characters",
-                "the waiting text through loadingText and the accent through accent"
+                "the waiting text through loadingText and the accent through accent",
+                "background — the component's surface; empty means no surface, taking the page colour",
+                "navLabel — the navigation's label for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Set placeholderWidth to the average name length: an over-wide bar reads as a failed load.",
                 "The live region speaks the waiting text once; the finished name is announced by the page itself, so do not duplicate it in the status.",
                 "A skeleton fits a couple of seconds: longer waits need an explicit delay message, not an endless sheen.",
@@ -1545,16 +2189,35 @@
               "usage": "<Breadcrumb015\n  trail={[\"Catalog\", \"Suppliers\", \"Batches\"]}\n  currentLabel=\"Batch A-1180\"\n  loading={false}\n  placeholderWidth={12}\n/>"
             },
             "controls": {
+              "currentLabel": {
+                "label": "Record name",
+                "default": "Batch A-1180"
+              },
               "loading": {
                 "label": "Loading"
               },
               "placeholderWidth": {
                 "label": "Placeholder width"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Pending Segment"
+            "title": "Pending Segment",
+            "preview": {
+              "props": {
+                "trail": ["Catalog", "Suppliers", "Batches"],
+                "currentLabel": "Batch A-1180",
+                "loadingText": "Loading the name",
+                "navLabel": "Breadcrumbs"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["loading", "placeholderWidth", "background"]
       }
     }
   ]

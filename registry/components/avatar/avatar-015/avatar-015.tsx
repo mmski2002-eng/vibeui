@@ -10,6 +10,7 @@ export type Avatar015Props = Omit<
   name?: string
   hint?: string
   editLabel?: string
+  captureLabel?: string
   removeLabel?: string
   accent?: string
   /** Пусто — подложки нет, компонент лежит на фоне страницы. */
@@ -146,6 +147,7 @@ export function Avatar015({
   name = "Анна Реброва",
   hint = "PNG или JPG до 2 МБ, квадрат от 200 пикселей",
   editLabel = "Загрузить фото",
+  captureLabel = "Сделать снимок",
   removeLabel = "Удалить фото",
   accent,
   className,
@@ -201,7 +203,7 @@ export function Avatar015({
               {editLabel}
             </button>
             <button type="button" data-part="item" role="menuitem">
-              Сделать снимок
+              {captureLabel}
             </button>
             <button
               type="button"

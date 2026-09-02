@@ -7,6 +7,8 @@ export type Item003Props = Omit<
   title?: string
   meta?: string
   action?: string
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -15,13 +17,16 @@ export type Item003Props = Omit<
 // и растянутая ссылка перекрыла бы кнопку. Поэтому кнопка остаётся отдельной
 // целью, а её подпись несёт название записи для скринридера: десять кнопок
 // «Пригласить» подряд неразличимы на слух.
+//
+// Тема берётся из color-scheme окружения через light-dark(): строка темнеет
+// там, где тёмный контекст, и не выкладывает под себя белую плашку.
 const STYLES = `
 :where([data-vibeui-block="item-003"]){
---vibeui-item-003-bg:oklch(1 0 0);
---vibeui-item-003-fg:oklch(0.23 0.014 265);
---vibeui-item-003-muted:oklch(0.56 0.014 265);
---vibeui-item-003-border:oklch(0.9 0.006 265);
---vibeui-item-003-accent:oklch(0.55 0.19 262);
+--vibeui-item-003-bg:transparent;
+--vibeui-item-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-item-003-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-item-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-item-003-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.16 262));
 --vibeui-item-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="item-003"]{
@@ -58,6 +63,28 @@ transition:background-color .15s ease;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Строка списка с отдельной кнопкой действия справа.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -65,6 +92,7 @@ export function Item003({
   title = "Мария Ковалёва",
   meta = "maria@studio.ru · читатель",
   action = "Пригласить",
+  background = "",
   accent,
   className,
   style,
@@ -72,6 +100,12 @@ export function Item003({
 }: Item003Props) {
   const palette = {
     ...(accent ? { "--vibeui-item-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-item-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

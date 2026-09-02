@@ -14,6 +14,12 @@ export type Inputgroup038Props = Omit<
   onChange?: (value: string) => void
   onLocate?: (latitude: number, longitude: number) => void
   hint?: string
+  /** Текст статуса по ключам: locating, done, denied, unsupported. */
+  statusText?: Record<string, string>
+  /** Подписи кнопки: ключи locate и locating. */
+  actionText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,6 +32,11 @@ const STATUS_TEXT: Record<Exclude<Status, "idle">, string> = {
   unsupported: "Браузер не поддерживает геолокацию — введите адрес вручную.",
 }
 
+const ACTION_TEXT: Record<string, string> = {
+  locate: "Определить",
+  locating: "Ищем…",
+}
+
 // Идея компонента: браузер отдаёт координаты, а не готовый адрес — обратного
 // геокодирования без стороннего сервиса нет, поэтому кнопка подставляет
 // координаты как текст и явно предупреждает, что их нужно превратить в
@@ -33,15 +44,15 @@ const STATUS_TEXT: Record<Exclude<Status, "idle">, string> = {
 // с разным текстом, а не одно общее «не получилось».
 const STYLES = `
 :where([data-vibeui-block="inputgroup-038"]){
---vibeui-inputgroup-038-surface:oklch(1 0 0);
---vibeui-inputgroup-038-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-038-fg:oklch(0.22 0.014 265);
---vibeui-inputgroup-038-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-038-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-038-fixed:oklch(0.96 0.004 265);
---vibeui-inputgroup-038-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-038-accent:oklch(0.55 0.14 140);
---vibeui-inputgroup-038-denied:oklch(0.56 0.19 25);
+--vibeui-inputgroup-038-surface:transparent;
+--vibeui-inputgroup-038-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-inputgroup-038-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-038-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-inputgroup-038-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
+--vibeui-inputgroup-038-fixed:light-dark(oklch(0.965 0.003 265),oklch(0.31 0.012 265));
+--vibeui-inputgroup-038-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-inputgroup-038-accent:light-dark(oklch(0.55 0.14 140),oklch(0.78 0.13 140));
+--vibeui-inputgroup-038-denied:light-dark(oklch(0.56 0.19 25),oklch(0.75 0.15 25));
 --vibeui-inputgroup-038-radius:0.75rem;
 --vibeui-inputgroup-038-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -109,6 +120,28 @@ color:var(--vibeui-inputgroup-038-accent);font-weight:600;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сцепка «адрес + геолокация»: кнопка справа запрашивает координаты через
  * Geolocation API и подставляет их в поле как текст, статус снизу различает
  * отказ доступа и отсутствие поддержки API. Один файл, ноль зависимостей.
@@ -121,6 +154,9 @@ export function Inputgroup038({
   onChange,
   onLocate,
   hint = "Определите адрес автоматически или введите его вручную.",
+  statusText = STATUS_TEXT,
+  actionText = ACTION_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -133,8 +169,16 @@ export function Inputgroup038({
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-038-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-038-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const actionKey = status === "locating" ? "locating" : "locate"
 
   const locate = () => {
     if (status === "locating") return
@@ -223,7 +267,7 @@ export function Inputgroup038({
                 <circle cx="8" cy="6.3" r="1.7" />
               </svg>
             )}
-            {status === "locating" ? "Ищем…" : "Определить"}
+            {actionText[actionKey] ?? ACTION_TEXT[actionKey]}
           </button>
         </div>
         <p
@@ -232,7 +276,9 @@ export function Inputgroup038({
           data-status={status}
           aria-live="polite"
         >
-          {status === "idle" ? hint : STATUS_TEXT[status]}
+          {status === "idle"
+            ? hint
+            : (statusText[status] ?? STATUS_TEXT[status])}
         </p>
       </div>
     </>

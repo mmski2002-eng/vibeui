@@ -13,6 +13,10 @@ export type Navbar007Props = {
   trialLabel?: string
   trialHref?: string
   trialNote?: string
+  /** Подпись навигации для скринридера: компонент несёт русскую. */
+  navLabel?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -22,14 +26,17 @@ export type Navbar007Props = {
 // текстовая ссылка, пробный период — единственная закрашенная кнопка, а под
 // ней мелкая строка, которая снимает возражение «сейчас попросят карту»
 // ровно в том месте, где человек решает нажимать или нет.
+//
+// Тема берётся из color-scheme окружения через light-dark(): шапка темнеет
+// вместе с контекстом и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="navbar-007"]){
---vibeui-navbar-007-bg:oklch(0.99 0.004 150);
---vibeui-navbar-007-ink:oklch(0.22 0.02 160);
---vibeui-navbar-007-muted:oklch(0.5 0.018 160);
---vibeui-navbar-007-border:oklch(0.89 0.012 160);
---vibeui-navbar-007-accent:oklch(0.53 0.14 158);
---vibeui-navbar-007-accent-fg:oklch(0.99 0 0);
+--vibeui-navbar-007-bg:transparent;
+--vibeui-navbar-007-ink:light-dark(oklch(0.22 0.02 160),oklch(0.94 0.008 160));
+--vibeui-navbar-007-muted:light-dark(oklch(0.5 0.018 160),oklch(0.71 0.015 160));
+--vibeui-navbar-007-border:light-dark(oklch(0.89 0.012 160),oklch(0.34 0.014 160));
+--vibeui-navbar-007-accent:light-dark(oklch(0.53 0.14 158),oklch(0.74 0.13 158));
+--vibeui-navbar-007-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 158));
 --vibeui-navbar-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -101,6 +108,28 @@ const DEFAULT_LINKS: Navbar007Link[] = [
   { label: "Поддержка", href: "#support" },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Шапка с пробным периодом: одна кнопка, вход ссылкой и строка про карту. */
 export function Navbar007({
   brand = "Ростки",
@@ -110,12 +139,20 @@ export function Navbar007({
   trialLabel = "14 дней бесплатно",
   trialHref = "#trial",
   trialNote = "Карта не нужна",
+  navLabel = "Основная навигация",
+  background = "",
   accent,
   className,
   style,
 }: Navbar007Props) {
   const palette = {
     ...(accent ? { "--vibeui-navbar-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-navbar-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -134,7 +171,7 @@ export function Navbar007({
             <span data-part="mark" aria-hidden="true" />
             {brand}
           </a>
-          <nav data-part="links" aria-label="Основная навигация">
+          <nav data-part="links" aria-label={navLabel}>
             {links.map((link) => (
               <a key={link.href} href={link.href}>
                 {link.label}

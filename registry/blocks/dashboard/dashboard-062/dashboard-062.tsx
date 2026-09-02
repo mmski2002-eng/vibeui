@@ -20,6 +20,20 @@ export type Dashboard062Props = {
   restoreLabel?: string
   purgeLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Строка об авторе удаления: {who} и {at}. */
+  deletedByText?: string
+  /** Подпись полосы срока для скринридера: {days}. */
+  trackAriaText?: string
+  /** Слово перед остатком срока. */
+  leftLabel?: string
+  /** Остаток срока: {days}. */
+  daysText?: string
+  /** Полный срок хранения: {total}. */
+  ofText?: string
+  /** Подпись записи, которой осталось меньше трёх дней. */
+  soonLabel?: string
   className?: string
   style?: CSSProperties
 }
@@ -36,14 +50,18 @@ export type Dashboard062Props = {
 // опасное действие не должно быть самым заметным.
 const STYLES = `
 :where([data-vibeui-block="dashboard-062"]){
---vibeui-dashboard-062-bg:oklch(0.985 0.003 40);
---vibeui-dashboard-062-card:oklch(1 0 0);
---vibeui-dashboard-062-fg:oklch(0.21 0.014 40);
---vibeui-dashboard-062-muted:oklch(0.55 0.014 40);
---vibeui-dashboard-062-border:oklch(0.91 0.006 40);
---vibeui-dashboard-062-accent:oklch(0.55 0.15 40);
---vibeui-dashboard-062-soft:oklch(0.965 0.02 40);
---vibeui-dashboard-062-soon:oklch(0.57 0.19 25);
+--vibeui-dashboard-062-bg:transparent;
+/* Карточки и жёлоб полосы: подложка блока прозрачна. */
+--vibeui-dashboard-062-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 40));
+--vibeui-dashboard-062-inset:light-dark(oklch(0.97 0.004 40),oklch(0.22 0.012 40));
+--vibeui-dashboard-062-fg:light-dark(oklch(0.21 0.014 40),oklch(0.94 0.005 40));
+--vibeui-dashboard-062-muted:light-dark(oklch(0.55 0.014 40),oklch(0.72 0.012 40));
+--vibeui-dashboard-062-border:light-dark(oklch(0.91 0.006 40),oklch(0.36 0.012 40));
+--vibeui-dashboard-062-accent:light-dark(oklch(0.55 0.15 40),oklch(0.77 0.13 40));
+--vibeui-dashboard-062-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.04 40));
+--vibeui-dashboard-062-soft:light-dark(oklch(0.965 0.02 40),oklch(0.31 0.04 40));
+--vibeui-dashboard-062-soon:light-dark(oklch(0.57 0.19 25),oklch(0.74 0.17 25));
+--vibeui-dashboard-062-soon-line:light-dark(oklch(0.83 0.09 25),oklch(0.47 0.11 25));
 --vibeui-dashboard-062-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -65,7 +83,7 @@ padding:0.3125rem 0.6875rem;border-radius:9999px;background:var(--vibeui-dashboa
 color:inherit;border:1px solid var(--vibeui-dashboard-062-border);
 }
 [data-vibeui-block="dashboard-062"] [data-part="tab"][aria-pressed="true"]{
-background:var(--vibeui-dashboard-062-accent);color:oklch(1 0 0);border-color:transparent;
+background:var(--vibeui-dashboard-062-accent);color:var(--vibeui-dashboard-062-on-accent);border-color:transparent;
 }
 [data-vibeui-block="dashboard-062"] [data-part="list"]{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:0.4375rem}
 [data-vibeui-block="dashboard-062"] [data-part="item"]{
@@ -73,7 +91,7 @@ display:grid;gap:0.4375rem;padding:0.6875rem 0.8125rem;border-radius:0.8125rem;
 background:var(--vibeui-dashboard-062-card);border:1px solid var(--vibeui-dashboard-062-border);
 }
 [data-vibeui-block="dashboard-062"] [data-part="item"][data-soon="true"]{
-border-color:color-mix(in oklab,var(--vibeui-dashboard-062-soon) 40%,white);
+border-color:var(--vibeui-dashboard-062-soon-line);
 }
 [data-vibeui-block="dashboard-062"] [data-part="top"]{display:flex;flex-wrap:wrap;align-items:baseline;gap:0.25rem 0.5rem}
 [data-vibeui-block="dashboard-062"] [data-part="name"]{font-size:0.875rem;font-weight:750}
@@ -84,7 +102,7 @@ padding:0.125rem 0.375rem;border-radius:0.3125rem;background:var(--vibeui-dashbo
 [data-vibeui-block="dashboard-062"] [data-part="who"]{margin:0;font-size:0.6875rem;color:var(--vibeui-dashboard-062-muted)}
 [data-vibeui-block="dashboard-062"] [data-part="track"]{
 position:relative;height:0.375rem;border-radius:9999px;overflow:hidden;
-background:var(--vibeui-dashboard-062-bg);
+background:var(--vibeui-dashboard-062-inset);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-062-border);
 }
 [data-vibeui-block="dashboard-062"] [data-part="fill"]{
@@ -101,13 +119,13 @@ color:var(--vibeui-dashboard-062-muted);
 [data-vibeui-block="dashboard-062"] [data-part="restore"]{
 appearance:none;border:0;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:700;
 padding:0.375rem 0.75rem;border-radius:0.5rem;
-background:var(--vibeui-dashboard-062-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-062-accent);color:var(--vibeui-dashboard-062-on-accent);
 }
 [data-vibeui-block="dashboard-062"] [data-part="purge"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:700;
 padding:0.375rem 0.75rem;border-radius:0.5rem;background:transparent;
 color:var(--vibeui-dashboard-062-soon);
-border:1px solid color-mix(in oklab,var(--vibeui-dashboard-062-soon) 35%,white);
+border:1px solid var(--vibeui-dashboard-062-soon-line);
 }
 [data-vibeui-block="dashboard-062"] [data-part="linked"]{
 margin:0;font-size:0.6875rem;color:var(--vibeui-dashboard-062-muted);
@@ -163,6 +181,28 @@ const DEFAULT_ITEMS: Dashboard062Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Экран восстановления удалённых записей: остаток срока полосой и словами,
  * связанные объекты названы прямо в строке, «удалить навсегда» намеренно
  * скромнее восстановления. Один файл, ноль зависимостей, без JS.
@@ -176,11 +216,24 @@ export function Dashboard062({
   restoreLabel = "Восстановить",
   purgeLabel = "Удалить навсегда",
   accent,
+  background = "",
+  deletedByText = "удалил {who} · {at}",
+  trackAriaText = "До окончательного удаления осталось дней: {days}",
+  leftLabel = "останется",
+  daysText = "{days} дн.",
+  ofText = "из {total}",
+  soonLabel = "скоро исчезнет безвозвратно",
   className,
   style,
 }: Dashboard062Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-062-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-062-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -230,7 +283,9 @@ export function Dashboard062({
                   </div>
 
                   <p data-part="who">
-                    удалил {item.deletedBy} · {item.deletedAt}
+                    {deletedByText
+                      .replace("{who}", item.deletedBy)
+                      .replace("{at}", item.deletedAt)}
                   </p>
 
                   <div
@@ -239,16 +294,21 @@ export function Dashboard062({
                     aria-valuenow={item.daysLeft}
                     aria-valuemin={0}
                     aria-valuemax={item.keepDays}
-                    aria-label={`До окончательного удаления осталось дней: ${item.daysLeft}`}
+                    aria-label={trackAriaText.replace(
+                      "{days}",
+                      String(item.daysLeft),
+                    )}
                   >
                     <span data-part="fill" style={{ width: `${share}%` }} />
                   </div>
 
                   <p data-part="left">
                     <span>
-                      останется <b>{item.daysLeft} дн.</b> из {item.keepDays}
+                      {leftLabel}{" "}
+                      <b>{daysText.replace("{days}", String(item.daysLeft))}</b>{" "}
+                      {ofText.replace("{total}", String(item.keepDays))}
                     </span>
-                    {soon ? <span>скоро исчезнет безвозвратно</span> : null}
+                    {soon ? <span>{soonLabel}</span> : null}
                   </p>
 
                   {item.linked ? <p data-part="linked">{item.linked}</p> : null}

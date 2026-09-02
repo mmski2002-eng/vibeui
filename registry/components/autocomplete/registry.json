@@ -27,17 +27,21 @@
             "локальную палитру --vibeui-autocomplete-001-* и не подменять её токенами вашей темы",
             "datalist вместо самодельного списка: он озвучен скринридером и переживает выключенный JS",
             "связку label/htmlFor и aria-describedby — без них поле безымянно",
-            "собственную светлую подложку: на тёмной странице подпись иначе сливается с фоном",
+            "прозрачную подложку: поле берёт цвет страницы, а читаемость держит палитра на light-dark()",
             "autoComplete=\"off\" у поля: браузерная история поверх datalist даёт два списка сразу",
-            "высоту поля 2.5rem — на телефоне в него надо попадать пальцем"
+            "высоту поля 2.5rem — на телефоне в него надо попадать пальцем",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "label и placeholder",
             "массив options — источник подсказок",
             "текст hint под полем",
-            "акцент через проп accent — цвет фокусного кольца"
+            "акцент через проп accent — цвет фокусного кольца",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Вид выпадающего списка задаёт браузер: стилизовать строки datalist нельзя. Нужен свой вид — берите autocomplete-002.",
             "Datalist не запрещает произвольный ввод: это подсказка, а не выбор из списка.",
             "Длинные списки лучше не отдавать целиком — браузер отрисует все опции сразу.",
@@ -71,6 +75,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -82,17 +92,21 @@
                 "the local --vibeui-autocomplete-001-* palette — do not swap it for your theme tokens",
                 "the datalist instead of a hand-rolled list: it is announced by screen readers and survives JS being off",
                 "the label/htmlFor and aria-describedby wiring — without it the field is nameless",
-                "the built-in light surface: on a dark page the label would otherwise vanish",
+                "the transparent surface: the field takes the page colour and light-dark() keeps it legible",
                 "autoComplete=\"off\" on the field: browser history over a datalist shows two lists at once",
-                "the 2.5rem field height — a thumb has to hit it on a phone"
+                "the 2.5rem field height — a thumb has to hit it on a phone",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label and placeholder",
                 "the options array — where suggestions come from",
                 "the hint text under the field",
-                "the accent through the accent prop — the focus ring"
+                "the accent through the accent prop — the focus ring",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The dropdown's look belongs to the browser: datalist rows cannot be styled. If you need your own, take autocomplete-002.",
                 "A datalist does not restrict typing: it suggests, it does not constrain.",
                 "Do not hand over huge lists — the browser renders every option at once.",
@@ -115,11 +129,32 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Datalist Field"
+            "title": "Datalist Field",
+            "preview": {
+              "props": {
+                "label": "City",
+                "placeholder": "For example, Berlin",
+                "hint": "Start typing — the browser suggests from the list",
+                "options": [
+                  "London",
+                  "Berlin",
+                  "Madrid",
+                  "Lisbon",
+                  "Warsaw",
+                  "Prague",
+                  "Vienna",
+                  "Dublin"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -155,15 +190,20 @@
             "role=\"combobox\" с aria-expanded и aria-controls — свой список браузер сам не озвучит",
             "onMouseDown с preventDefault вместо onClick: иначе blur закроет список до выбора",
             "подсветку совпадения через <mark> — она объясняет, почему строка в выдаче",
-            "Escape, закрывающий список без потери набранного"
+            "Escape, закрывающий список без потери набранного",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "label, placeholder и текст emptyLabel",
             "массив options и правило фильтрации",
             "обработчик onSelect",
-            "акцент через проп accent — фокус и подсветка"
+            "акцент через проп accent — фокус и подсветка",
+            "defaultOpen — открывать ли список сразу",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "defaultOpen нужен витрине и скриншотам: в форме список открывается по фокусу.",
             "Список в потоке двигает содержимое под собой. Нужен слой поверх — заверните в popover, но тогда позиционирование ваше.",
             "Фильтр ищет подстроку в любом месте. Для длинных списков замените на поиск с начала слова, иначе выдача шумит.",
@@ -187,14 +227,26 @@
           },
           {
             "prop": "emptyLabel",
-            "label": "Пустая выдача",
+            "label": "Пустой результат",
             "type": "text",
             "default": "Ничего не нашлось",
             "maxLength": 40
           },
           {
+            "prop": "defaultOpen",
+            "label": "Список открыт",
+            "type": "boolean",
+            "default": false
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -210,15 +262,20 @@
                 "role=\"combobox\" with aria-expanded and aria-controls — a custom list is not announced on its own",
                 "onMouseDown with preventDefault instead of onClick: blur would otherwise close the list before the pick",
                 "the <mark> highlight — it explains why a row is in the results",
-                "Escape closing the list without losing what was typed"
+                "Escape closing the list without losing what was typed",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label, placeholder and emptyLabel copy",
                 "the options array and the filtering rule",
                 "the onSelect handler",
-                "the accent through the accent prop — focus ring and highlight"
+                "the accent through the accent prop — focus ring and highlight",
+                "defaultOpen — whether the list starts open",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "defaultOpen exists for the showcase and screenshots: in a form the list opens on focus.",
                 "An in-flow list pushes the content below it. If you need an overlay, wrap it in a popover — the positioning is then yours.",
                 "The filter matches a substring anywhere. For long lists switch to prefix matching, otherwise the results get noisy.",
@@ -239,13 +296,42 @@
                 "label": "Empty state",
                 "default": "Nothing found"
               },
+              "defaultOpen": {
+                "label": "Open list"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Keyboard Combobox"
+            "title": "Keyboard Combobox",
+            "preview": {
+              "props": {
+                "label": "City",
+                "placeholder": "Start typing",
+                "emptyLabel": "Nothing found",
+                "defaultOpen": true,
+                "options": [
+                  "Amsterdam",
+                  "Barcelona",
+                  "Berlin",
+                  "Bristol",
+                  "Dublin",
+                  "Lisbon",
+                  "London",
+                  "Madrid",
+                  "Manchester",
+                  "Porto",
+                  "Prague",
+                  "Vienna"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultOpen", "accent", "background"]
       }
     },
     {
@@ -276,15 +362,20 @@
             "фильтр, убирающий уже выбранное — предлагать добавленное значит обманывать",
             "рост поля по числу фишек вместо горизонтального скролла",
             "aria-label у каждого крестика: «×» без имени фишки бесполезен для скринридера",
-            "фокусное кольцо на контейнере через :focus-within — рамка должна быть у поля целиком"
+            "фокусное кольцо на контейнере через :focus-within — рамка должна быть у поля целиком",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "label, placeholder и предел max",
             "массив options и стартовые фишки defaultValue",
             "обработчик onChange",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "removeLabel и hintText — подпись кнопки снятия фишки и строка под полем",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "При достижении max поле блокируется, а не молча игнорирует ввод: иначе непонятно, почему ничего не добавляется.",
             "Значения — строки. Для объектов замените ключ и рендер фишки, оставив поведение клавиатуры.",
             "Компонент не отправляет форму: чтобы значения ушли на сервер, добавьте скрытые input в вызывающем коде.",
@@ -315,8 +406,20 @@
             "max": 8
           },
           {
+            "prop": "hintText",
+            "label": "Строка под полем",
+            "type": "text",
+            "default": "{count} из {max} · Backspace снимает последнюю"
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -332,15 +435,20 @@
                 "the filter that hides already picked values — offering them again is a lie",
                 "the field growing with the chips instead of scrolling sideways",
                 "the aria-label on every remove button: a bare × means nothing to a screen reader",
-                "the :focus-within ring on the container — the whole field is what gets focus"
+                "the :focus-within ring on the container — the whole field is what gets focus",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label, placeholder and the max limit",
                 "the options array and the starting defaultValue chips",
                 "the onChange handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "removeLabel and hintText — the chip remove button and the line under the field",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "At the limit the field is disabled rather than silently ignoring input: otherwise nothing explains why typing does nothing.",
                 "Values are strings. For objects swap the key and the chip rendering, keeping the keyboard behaviour.",
                 "The component submits nothing: add hidden inputs in the caller to send values to a server.",
@@ -351,7 +459,7 @@
             "controls": {
               "label": {
                 "label": "Label",
-                "default": "Stack"
+                "default": "Technologies"
               },
               "placeholder": {
                 "label": "Placeholder",
@@ -360,13 +468,29 @@
               "max": {
                 "label": "Limit"
               },
+              "hintText": {
+                "label": "Hint",
+                "default": "{count} of {max} · Backspace removes the last"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Tag Picker"
+            "title": "Tag Picker",
+            "preview": {
+              "props": {
+                "label": "Technologies",
+                "placeholder": "Add a technology",
+                "removeLabel": "Remove {chip}",
+                "hintText": "{count} of {max} · Backspace removes the last"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["max", "accent", "background"]
       }
     },
     {
@@ -397,15 +521,20 @@
             "стрелки, идущие только по командам — остановка на заголовке сбивает счёт",
             "заголовки, вычисленные до рендера, без мутации переменных по ходу отрисовки",
             "aria-activedescendant при фокусе в поле вместо переноса фокуса на строку",
-            "подсказки горячих клавиш справа: они учат коротким путям"
+            "подсказки горячих клавиш справа: они учат коротким путям",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив commands: подпись, раздел и горячая клавиша",
             "placeholder и текст emptyLabel",
             "обработчик onSelect",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "listLabel — имя списка для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент — сама строка, без модального окна. Нужен вызов по Cmd+K — оберните в диалог из категории dialog.",
             "Порядок групп задаёт порядок массива: сортировать команды по алфавиту внутри группы полезно, между группами — нет.",
             "Символ ⌘ в подсказке уместен на macOS; на Windows подставляйте Ctrl в вызывающем коде.",
@@ -422,14 +551,27 @@
           },
           {
             "prop": "emptyLabel",
-            "label": "Пустая выдача",
+            "label": "Пустой результат",
             "type": "text",
             "default": "Ничего не нашлось",
             "maxLength": 40
           },
           {
+            "prop": "listLabel",
+            "label": "Имя списка",
+            "type": "text",
+            "default": "Команды",
+            "maxLength": 30
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -445,15 +587,20 @@
                 "arrows walking commands only — stopping on a header breaks the count",
                 "headers computed before render, with no variable mutated mid-render",
                 "aria-activedescendant with focus in the field instead of moving focus to a row",
-                "the shortcut hints on the right: they teach the faster path"
+                "the shortcut hints on the right: they teach the faster path",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the commands array: label, group and shortcut",
                 "the placeholder and emptyLabel copy",
                 "the onSelect handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "listLabel — the list name for screen readers",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is the search bar itself, not a modal. For a Cmd+K launcher wrap it in a dialog from the dialog category.",
                 "Group order follows the array: sorting commands inside a group helps, sorting across groups does not.",
                 "The ⌘ glyph suits macOS; substitute Ctrl in the caller on Windows.",
@@ -470,13 +617,65 @@
                 "label": "Empty state",
                 "default": "Nothing found"
               },
+              "listLabel": {
+                "label": "List name",
+                "default": "Commands"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Command Search"
+            "title": "Command Search",
+            "preview": {
+              "props": {
+                "placeholder": "Command or section",
+                "emptyLabel": "Nothing found",
+                "listLabel": "Commands",
+                "commands": [
+                  {
+                    "label": "Create a project",
+                    "group": "Actions",
+                    "hint": "N"
+                  },
+                  {
+                    "label": "Invite a teammate",
+                    "group": "Actions"
+                  },
+                  {
+                    "label": "Upload files",
+                    "group": "Actions",
+                    "hint": "U"
+                  },
+                  {
+                    "label": "Billing and invoices",
+                    "group": "Settings"
+                  },
+                  {
+                    "label": "Notifications",
+                    "group": "Settings"
+                  },
+                  {
+                    "label": "Access keys",
+                    "group": "Settings"
+                  },
+                  {
+                    "label": "Documentation",
+                    "group": "Help",
+                    "hint": "?"
+                  },
+                  {
+                    "label": "Contact support",
+                    "group": "Help"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -512,15 +711,20 @@
             "флаг alive: медленный ответ на короткий запрос иначе перезапишет свежий",
             "три раздельных состояния — ждём, нашли, не нашли: одно «нет результатов» на всё лжёт во время загрузки",
             "aria-busy и role=\"status\": ожидание должно быть слышно, а не только видно",
-            "правило prefers-reduced-motion, гасящее вращение спиннера"
+            "правило prefers-reduced-motion, гасящее вращение спиннера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "функцию search — свой запрос к API",
             "delay под скорость вашего бэкенда",
             "label, placeholder и тексты состояний",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "statusText — подписи состояний: loading, empty, idle",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Дефолтный search — локальный список с задержкой: он для витрины, в проекте передавайте свой.",
             "Ошибку сети компонент не показывает: заворачивайте свой search в try/catch и решайте, что выводить.",
             "Отмена запроса здесь логическая. Для реального прерывания передайте AbortController внутрь своего search.",
@@ -536,8 +740,15 @@
             "maxLength": 30
           },
           {
+            "prop": "placeholder",
+            "label": "Плейсхолдер",
+            "type": "text",
+            "default": "Начните вводить",
+            "maxLength": 40
+          },
+          {
             "prop": "delay",
-            "label": "Пауза, мс",
+            "label": "Пауза",
             "type": "number",
             "default": 320,
             "min": 0,
@@ -546,6 +757,12 @@
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -561,15 +778,20 @@
                 "the alive flag: a slow answer to a shorter query would otherwise overwrite the fresh one",
                 "three distinct states — waiting, found, nothing: a single \"no results\" lies while loading",
                 "aria-busy and role=\"status\": waiting has to be heard, not only seen",
-                "the prefers-reduced-motion rule that stops the spinner"
+                "the prefers-reduced-motion rule that stops the spinner",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the search function — your own API call",
                 "delay to match your backend",
                 "the label, placeholder and state copy",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "statusText — the state copy: loading, empty and idle",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The default search is a delayed local list for the showcase; pass your own in a project.",
                 "Network errors are not rendered: wrap your search in try/catch and decide what to show.",
                 "Cancellation here is logical only. For a real abort pass an AbortController inside your search.",
@@ -582,16 +804,36 @@
                 "label": "Label",
                 "default": "Delivery city"
               },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Start typing"
+              },
               "delay": {
-                "label": "Debounce, ms"
+                "label": "Delay"
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Async Suggestions"
+            "title": "Async Suggestions",
+            "preview": {
+              "props": {
+                "label": "Delivery city",
+                "placeholder": "Start typing",
+                "defaultQuery": "ка",
+                "statusText": {
+                  "loading": "Searching…",
+                  "empty": "Nothing found — check the spelling",
+                  "idle": "Suggestions come from the server"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -622,15 +864,20 @@
             "поиск по артикулу наравне с названием — на складе ищут по номеру",
             "выделение нулевого остатка цветом: его нельзя продать, и это надо видеть до клика",
             "табличные цифры у цены и остатка — колонки иначе прыгают",
-            "grid-раскладку строки вместо вложенных флексов"
+            "grid-раскладку строки вместо вложенных флексов",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items и названия полей под свою номенклатуру",
             "label и placeholder",
             "обработчик onSelect",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "stockText, outOfStockLabel и emptyLabel — подписи остатка и пустого результата",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Валюта и формат цены — строка: форматируйте её на своей стороне, компонент ничего не считает.",
             "Остаток 0 показан текстом «нет в наличии», а не пустым местом: пустое поле читается как отсутствие данных.",
             "Для больших каталогов замените локальный фильтр запросом к серверу — образец в autocomplete-005.",
@@ -653,8 +900,28 @@
             "maxLength": 40
           },
           {
+            "prop": "outOfStockLabel",
+            "label": "Нулевой остаток",
+            "type": "text",
+            "default": "нет в наличии",
+            "maxLength": 30
+          },
+          {
+            "prop": "emptyLabel",
+            "label": "Пустой результат",
+            "type": "text",
+            "default": "По запросу ничего не нашлось",
+            "maxLength": 40
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -670,15 +937,20 @@
                 "SKU matching alongside the name — warehouses search by number",
                 "the colour on zero stock: it cannot be sold, and that must be visible before the click",
                 "tabular figures for price and stock — the columns jump otherwise",
-                "the grid row layout instead of nested flexboxes"
+                "the grid row layout instead of nested flexboxes",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array and the field names for your catalogue",
                 "the label and placeholder",
                 "the onSelect handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "stockText, outOfStockLabel and emptyLabel — the stock and empty-result copy",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Price is a string: format it on your side, the component computes nothing.",
                 "Zero stock reads as \"out of stock\" rather than blank: an empty cell reads as missing data.",
                 "For large catalogues replace the local filter with a server query — see autocomplete-005.",
@@ -695,13 +967,61 @@
                 "label": "Placeholder",
                 "default": "Name or SKU"
               },
+              "outOfStockLabel": {
+                "label": "Out of stock",
+                "default": "out of stock"
+              },
+              "emptyLabel": {
+                "label": "Empty state",
+                "default": "Nothing matched your search"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Catalog Lookup"
+            "title": "Catalog Lookup",
+            "preview": {
+              "props": {
+                "label": "Product",
+                "placeholder": "Name or SKU",
+                "defaultQuery": "cable",
+                "stockText": "{count} pcs",
+                "outOfStockLabel": "out of stock",
+                "emptyLabel": "Nothing matched your search",
+                "items": [
+                  {
+                    "title": "USB-C / USB-C cable, 1 m",
+                    "meta": "SKU 41-208",
+                    "price": "£9.90",
+                    "stock": 34
+                  },
+                  {
+                    "title": "USB-C / Lightning cable, 2 m",
+                    "meta": "SKU 41-311",
+                    "price": "£15.90",
+                    "stock": 6
+                  },
+                  {
+                    "title": "HDMI 2.1 cable, 3 m",
+                    "meta": "SKU 52-104",
+                    "price": "£28.50",
+                    "stock": 0
+                  },
+                  {
+                    "title": "Ethernet Cat 6 cable, 5 m",
+                    "meta": "SKU 63-770",
+                    "price": "£11.90",
+                    "stock": 118
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -732,15 +1052,20 @@
             "смену заголовка панели вместе со списком, включая aria-label",
             "кнопку очистки истории: хранимые запросы человек обязан уметь стереть",
             "подъём выбранного в начало недавних и обрезку истории",
-            "объясняющий текст на месте пустой истории вместо пустого прямоугольника"
+            "объясняющий текст на месте пустой истории вместо пустого прямоугольника",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массивы suggestions и defaultRecent",
             "label, placeholder и подпись кнопки очистки",
             "обработчик onSelect",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "panelText — заголовки панели и тексты пустых состояний",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "История живёт в состоянии компонента и исчезает при перезагрузке. Нужна настоящая — храните её сами и передавайте через defaultRecent.",
             "Запросы человека — персональные данные: очистка обязана стирать их и в вашем хранилище, а не только на экране.",
             "Подсказки здесь локальные; для серверных возьмите приём из autocomplete-005.",
@@ -767,11 +1092,17 @@
             "label": "Кнопка очистки",
             "type": "text",
             "default": "Очистить",
-            "maxLength": 20
+            "maxLength": 30
           },
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -787,15 +1118,20 @@
                 "the panel heading changing with the list, aria-label included",
                 "the clear button: stored queries must be erasable by the person who made them",
                 "moving a pick to the top of the history and trimming the list",
-                "the explanatory copy where an empty history would leave a blank box"
+                "the explanatory copy where an empty history would leave a blank box",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the suggestions and defaultRecent arrays",
                 "the label, placeholder and clear button copy",
                 "the onSelect handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "panelText — the panel headings and the empty-state copy",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "History lives in component state and dies on reload. For real history store it yourself and pass defaultRecent.",
                 "Search queries are personal data: clearing must wipe your storage too, not just the screen.",
                 "Suggestions here are local; for server-side ones use the approach from autocomplete-005.",
@@ -810,7 +1146,7 @@
               },
               "placeholder": {
                 "label": "Placeholder",
-                "default": "What are you after?"
+                "default": "What are you looking for?"
               },
               "clearLabel": {
                 "label": "Clear button",
@@ -818,11 +1154,40 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Recent Searches"
+            "title": "Recent Searches",
+            "preview": {
+              "props": {
+                "label": "Search",
+                "placeholder": "What are you looking for?",
+                "clearLabel": "Clear",
+                "suggestions": [
+                  "camera",
+                  "head torch",
+                  "water filter",
+                  "usb stick 256 gb",
+                  "travel hair dryer"
+                ],
+                "defaultRecent": [
+                  "headphones",
+                  "30 l backpack",
+                  "coffee grinder"
+                ],
+                "panelText": {
+                  "recent": "Recent searches",
+                  "suggestions": "Suggestions",
+                  "notFound": "Nothing found — try something shorter",
+                  "history": "History is empty: your searches will show up here"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -853,15 +1218,20 @@
             "aria-hidden на слое: скринридер иначе прочитает адрес дважды",
             "подсказку только после «@» — до собаки угадывать нечего",
             "приём хвоста по Tab и по стрелке вправо в конце строки",
-            "тип поля email и inputMode: на телефоне это другая клавиатура"
+            "тип поля email и inputMode: на телефоне это другая клавиатура",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "список domains под свою аудиторию",
             "label, placeholder и текст подсказки",
             "обработчик onChange",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "acceptHint и idleHint — строки подсказки под полем",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Порядок доменов важен: первый в списке подставляется сразу после «@», ставьте туда самый частый.",
             "Компонент не проверяет адрес: валидацию делает форма, а не подсказка.",
             "Слой-тень не переносит строку: очень длинный адрес обрезается по краю поля, как и в самом поле.",
@@ -884,8 +1254,21 @@
             "maxLength": 40
           },
           {
+            "prop": "idleHint",
+            "label": "Строка под полем",
+            "type": "text",
+            "default": "После @ поле допишет домен",
+            "maxLength": 60
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -901,15 +1284,20 @@
                 "aria-hidden on the ghost layer: a screen reader would otherwise read the address twice",
                 "the suggestion appearing only after the @ — before it there is nothing to guess",
                 "accepting the tail with Tab and with ArrowRight at the end of the line",
-                "the email input type and inputMode: it is a different keyboard on a phone"
+                "the email input type and inputMode: it is a different keyboard on a phone",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the domains list for your audience",
                 "the label, placeholder and hint copy",
                 "the onChange handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "acceptHint and idleHint — the hint lines under the field",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Domain order matters: the first one is offered right after the @, so put the most common there.",
                 "The component validates nothing: validation belongs to the form, not the hint.",
                 "The ghost layer does not wrap: a very long address is clipped at the field edge, exactly as in the input.",
@@ -926,13 +1314,30 @@
                 "label": "Placeholder",
                 "default": "name@mail"
               },
+              "idleHint": {
+                "label": "Hint",
+                "default": "After @ the field completes the domain"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Email Domain"
+            "title": "Email Domain",
+            "preview": {
+              "props": {
+                "label": "Email",
+                "placeholder": "name@mail",
+                "defaultValue": "anna.taylor@gm",
+                "acceptHint": "completes the domain {domain}",
+                "idleHint": "After @ the field completes the domain"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -968,15 +1373,21 @@
             "код страны рядом с флагом — по одному флагу страну не назвать",
             "aria-label кнопки с названием и кодом: эмодзи-флаг скринридеру ничего не даёт",
             "флаги эмодзи вместо спрайта: набор картинок весит больше самого поля",
-            "разделение полей: страна и номер — разные значения, не склеивайте их в одну строку"
+            "разделение полей: страна и номер — разные значения, не склеивайте их в одну строку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив countries под свою географию",
             "label, placeholder и стартовый defaultCode",
             "обработчик onSelect",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "defaultOpen — открывать ли список стран сразу",
+            "countryText — подписи выбора страны и поиска по списку",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Номер не форматируется и не проверяется: маска и валидация — задача формы.",
             "Один код может принадлежать нескольким странам (+7 — Россия и Казахстан), поэтому в списке видно название.",
             "Эмодзи-флаги рисует система: на некоторых Windows-сборках вместо флага будут две буквы кода, это ожидаемо.",
@@ -999,8 +1410,27 @@
             "maxLength": 40
           },
           {
+            "prop": "defaultCode",
+            "label": "Страна",
+            "type": "select",
+            "default": "RU",
+            "options": ["RU", "KZ", "BY", "AM", "GE", "RS", "TR", "AE"]
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Список открыт",
+            "type": "boolean",
+            "default": false
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -1016,15 +1446,21 @@
                 "the dial code next to the flag — a flag alone does not name a country",
                 "the button's aria-label carrying name and code: an emoji flag tells a screen reader nothing",
                 "emoji flags instead of a sprite: an image set outweighs the field itself",
-                "keeping the fields apart: country and number are separate values, do not merge them"
+                "keeping the fields apart: country and number are separate values, do not merge them",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the countries array for your geography",
                 "the label, placeholder and starting defaultCode",
                 "the onSelect handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "defaultOpen — whether the country list starts open",
+                "countryText — the country picker and list search copy",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The number is neither formatted nor validated: masking and validation belong to the form.",
                 "One code can belong to several countries (+7 is Russia and Kazakhstan), which is why the name is shown.",
                 "Emoji flags are drawn by the OS: some Windows builds show the two-letter code instead, which is expected.",
@@ -1039,15 +1475,89 @@
               },
               "placeholder": {
                 "label": "Placeholder",
-                "default": "7700 000000"
+                "default": "900 000-00-00"
+              },
+              "defaultCode": {
+                "label": "Country"
+              },
+              "defaultOpen": {
+                "label": "Open list"
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Country Dial"
+            "title": "Country Dial",
+            "preview": {
+              "props": {
+                "label": "Phone",
+                "placeholder": "900 000-00-00",
+                "defaultOpen": true,
+                "countries": [
+                  {
+                    "name": "Russia",
+                    "code": "RU",
+                    "dial": "+7",
+                    "flag": "🇷🇺"
+                  },
+                  {
+                    "name": "Kazakhstan",
+                    "code": "KZ",
+                    "dial": "+7",
+                    "flag": "🇰🇿"
+                  },
+                  {
+                    "name": "Belarus",
+                    "code": "BY",
+                    "dial": "+375",
+                    "flag": "🇧🇾"
+                  },
+                  {
+                    "name": "Armenia",
+                    "code": "AM",
+                    "dial": "+374",
+                    "flag": "🇦🇲"
+                  },
+                  {
+                    "name": "Georgia",
+                    "code": "GE",
+                    "dial": "+995",
+                    "flag": "🇬🇪"
+                  },
+                  {
+                    "name": "Serbia",
+                    "code": "RS",
+                    "dial": "+381",
+                    "flag": "🇷🇸"
+                  },
+                  {
+                    "name": "Turkey",
+                    "code": "TR",
+                    "dial": "+90",
+                    "flag": "🇹🇷"
+                  },
+                  {
+                    "name": "UAE",
+                    "code": "AE",
+                    "dial": "+971",
+                    "flag": "🇦🇪"
+                  }
+                ],
+                "countryText": {
+                  "country": "Country: {name}, {dial}",
+                  "searchPlaceholder": "Country or code",
+                  "searchLabel": "Search countries",
+                  "listLabel": "Country",
+                  "empty": "No such country in the list"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultOpen", "defaultCode", "accent", "background"]
       }
     },
     {
@@ -1078,15 +1588,20 @@
             "исчезновение предложения при точном совпадении — дубликаты метки не нужны",
             "показ самого набранного текста в строке создания: человек должен видеть, что именно заведёт",
             "отличие строки создания цветом и плюсом: она меняет данные, а не выбирает из них",
-            "счётчик меток снизу — он подтверждает, что новая метка появилась"
+            "счётчик меток снизу — он подтверждает, что новая метка появилась",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "стартовый список defaultOptions",
             "label, placeholder и подпись createLabel",
             "обработчик onChange — сохранение новой метки",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "hintText — строка под списком с числом меток",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент заводит метку только в своём состоянии: сохранение на сервере — на стороне onChange.",
             "Перед созданием стоит подрезать пробелы и решить вопрос регистра, иначе «Баг» и «баг» станут двумя метками.",
             "Право на создание есть не у всех: если роль не позволяет, не рендерите строку создания вовсе.",
@@ -1110,14 +1625,26 @@
           },
           {
             "prop": "createLabel",
-            "label": "Слово действия",
+            "label": "Строка создания",
             "type": "text",
-            "default": "Создать",
-            "maxLength": 20
+            "default": "Создать «{value}»",
+            "maxLength": 40
+          },
+          {
+            "prop": "hintText",
+            "label": "Строка под списком",
+            "type": "text",
+            "default": "Меток: {count}. Enter выбирает строку под курсором"
           },
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -1133,15 +1660,20 @@
                 "hiding the offer on an exact match — duplicate labels help nobody",
                 "echoing the typed text in the create row: people must see what they are about to add",
                 "the colour and plus mark on the create row: it changes data rather than picking from it",
-                "the label counter below — it confirms the new label exists"
+                "the label counter below — it confirms the new label exists",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the starting defaultOptions list",
                 "the label, placeholder and createLabel copy",
                 "the onChange handler — persisting the new label",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "hintText — the line under the list with the label count",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component only adds to its own state: persistence belongs in onChange.",
                 "Trim whitespace and settle the casing question before creating, or \"Bug\" and \"bug\" become two labels.",
                 "Not everyone may create: if the role forbids it, do not render the create row at all.",
@@ -1152,23 +1684,41 @@
             "controls": {
               "label": {
                 "label": "Label",
-                "default": "Tag"
+                "default": "Label"
               },
               "placeholder": {
                 "label": "Placeholder",
                 "default": "Find or create"
               },
               "createLabel": {
-                "label": "Action word",
-                "default": "Create"
+                "label": "Create row",
+                "default": "Create “{value}”"
+              },
+              "hintText": {
+                "label": "Hint",
+                "default": "Labels: {count}. Enter picks the highlighted row"
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Create Option"
+            "title": "Create Option",
+            "preview": {
+              "props": {
+                "label": "Label",
+                "placeholder": "Find or create",
+                "defaultQuery": "refact",
+                "defaultOptions": ["Urgent", "Bug", "Design", "Docs", "Idea"],
+                "createLabel": "Create “{value}”",
+                "hintText": "Labels: {count}. Enter picks the highlighted row"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1199,15 +1749,20 @@
             "обрыв токена на пробеле — иначе список висит до конца абзаца",
             "отслеживание курсора на клике и стрелках, а не только при вводе",
             "подстановку с пробелом после логина: следующее слово иначе прилипнет к упоминанию",
-            "инициалы вместо фотографий: сорок аватаров ради списка не грузят"
+            "инициалы вместо фотографий: сорок аватаров ради списка не грузят",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив people: имя, логин и роль",
             "label, placeholder и стартовый текст",
             "обработчик onChange",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "listLabel и hintText — имя списка и строка под полем",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Список не позиционируется у курсора: он идёт под полем. Выпадание у каретки требует замера, а это уже другой компонент.",
             "Упоминание — просто текст: разбор «@логина» и отправку уведомления делает ваш бэкенд.",
             "Оттенок аватара считается из имени и стабилен, но не гарантирует уникальность: двум людям может достаться близкий цвет.",
@@ -1227,11 +1782,23 @@
             "label": "Плейсхолдер",
             "type": "text",
             "default": "Напишите и позовите коллегу через @",
-            "maxLength": 60
+            "maxLength": 50
+          },
+          {
+            "prop": "hintText",
+            "label": "Строка под полем",
+            "type": "text",
+            "default": "Список открывается после @ и закрывается на пробеле"
           },
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -1247,15 +1814,20 @@
                 "ending the token at a space — otherwise the list hangs around to the end of the paragraph",
                 "tracking the caret on click and arrow keys, not only while typing",
                 "inserting a trailing space after the handle: the next word would stick to the mention",
-                "initials instead of photos: forty avatars are not loaded for a dropdown"
+                "initials instead of photos: forty avatars are not loaded for a dropdown",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the people array: name, handle and role",
                 "the label, placeholder and starting text",
                 "the onChange handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "listLabel and hintText — the list name and the line under the field",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The list is not anchored to the caret: it sits under the field. Popping up at the caret needs measurement, which is a different component.",
                 "A mention is plain text: parsing @handles and sending notifications is your backend's job.",
                 "The avatar hue is derived from the name and stable, but not unique: two people can land on close colours.",
@@ -1270,15 +1842,59 @@
               },
               "placeholder": {
                 "label": "Placeholder",
-                "default": "Write and call a colleague with @"
+                "default": "Write and mention a teammate with @"
+              },
+              "hintText": {
+                "label": "Hint",
+                "default": "The list opens after @ and closes on a space"
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Mention Picker"
+            "title": "Mention Picker",
+            "preview": {
+              "props": {
+                "label": "Comment",
+                "placeholder": "Write and mention a teammate with @",
+                "defaultValue": "Please take a look at the mockup, @ma",
+                "listLabel": "Teammates",
+                "hintText": "The list opens after @ and closes on a space",
+                "people": [
+                  {
+                    "name": "Anna Petrova",
+                    "handle": "anna",
+                    "role": "design"
+                  },
+                  {
+                    "name": "Mark Ilyin",
+                    "handle": "mark",
+                    "role": "frontend"
+                  },
+                  {
+                    "name": "Maria Gurova",
+                    "handle": "masha",
+                    "role": "product"
+                  },
+                  {
+                    "name": "Oleg Drozdov",
+                    "handle": "oleg",
+                    "role": "backend"
+                  },
+                  {
+                    "name": "Irina Kim",
+                    "handle": "irina",
+                    "role": "support"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1309,15 +1925,20 @@
             "отказ дописывать при удалении — иначе стереть лишний символ невозможно",
             "выделение хвоста вместо серого текста: выделенное заменяется следующей буквой само",
             "aria-autocomplete=\"inline\": дописывание в строке объявляется отдельно от списка",
-            "собственный цвет ::selection — системный синий читается как выделение вручную"
+            "собственный цвет ::selection — системный синий читается как выделение вручную",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив options — источник совпадений",
             "label, placeholder и текст подсказки снизу",
             "обработчик onChange",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "matchHint и idleHint — строки под полем",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Приём годится для коротких предсказуемых значений — адресов, доменов, кодов. Для длинных фраз дописывание раздражает.",
             "Совпадение ищется с начала строки: для поиска по подстроке дописывание бессмысленно.",
             "На мобильных клавиатурах с автозаменой поведение может отличаться: проверяйте на устройстве.",
@@ -1340,8 +1961,20 @@
             "maxLength": 40
           },
           {
+            "prop": "idleHint",
+            "label": "Строка под полем",
+            "type": "text",
+            "default": "Поле дописывает совпадение и выделяет дописанное"
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -1357,15 +1990,20 @@
                 "refusing to complete while deleting — otherwise a stray character can never be erased",
                 "selecting the tail instead of greying it out: a selection is replaced by the next keystroke on its own",
                 "aria-autocomplete=\"inline\": in-field completion is announced differently from a list",
-                "the custom ::selection colour — the system blue reads as a manual selection"
+                "the custom ::selection colour — the system blue reads as a manual selection",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the options array — where matches come from",
                 "the label, placeholder and hint copy",
                 "the onChange handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "matchHint and idleHint — the lines under the field",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This suits short predictable values — addresses, domains, codes. On long phrases completion is irritating.",
                 "Matching is prefix-based: substring search makes inline completion meaningless.",
                 "Mobile keyboards with autocorrect may behave differently: test on a device.",
@@ -1382,13 +2020,29 @@
                 "label": "Placeholder",
                 "default": "Start typing"
               },
+              "idleHint": {
+                "label": "Hint",
+                "default": "The field completes the match and selects what it added"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Inline Typeahead"
+            "title": "Inline Typeahead",
+            "preview": {
+              "props": {
+                "label": "Address",
+                "placeholder": "Start typing",
+                "matchHint": "Match {match} — it fills in with the tail selected",
+                "idleHint": "The field completes the match and selects what it added"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

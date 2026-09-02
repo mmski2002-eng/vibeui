@@ -7,6 +7,10 @@ export type Collapsible006Props = Omit<
   title?: string
   people?: string[]
   visible?: number
+  /** Доступная подпись кружка «+N». {count} — число скрытых участников. */
+  restLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -15,13 +19,21 @@ export type Collapsible006Props = Omit<
 // не отвечает на главный вопрос — стоит ли разворачивать. Первые несколько
 // имён остаются на виду, остальные сворачиваются в кружок «+N», и он же
 // служит счётчиком. Инициалы берутся из имени, аватарки не нужны.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он темнеет вместе со страницей и не носит своей темы.
+// Рамка кружка вынесена в отдельную переменную: подложка прозрачна, а эффект
+// наложения в стеке держится именно на непрозрачном кольце.
 const STYLES = `
 :where([data-vibeui-block="collapsible-006"]){
---vibeui-collapsible-006-bg:oklch(1 0 0);
---vibeui-collapsible-006-fg:oklch(0.24 0.014 265);
---vibeui-collapsible-006-muted:oklch(0.56 0.014 265);
---vibeui-collapsible-006-border:oklch(0.9 0.006 265);
---vibeui-collapsible-006-accent:oklch(0.55 0.17 240);
+--vibeui-collapsible-006-bg:transparent;
+--vibeui-collapsible-006-ring:light-dark(oklch(1 0 0),oklch(0.19 0.013 265));
+--vibeui-collapsible-006-chip:light-dark(oklch(1 0 0),oklch(0.27 0.014 265));
+--vibeui-collapsible-006-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 240));
+--vibeui-collapsible-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-collapsible-006-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-collapsible-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-collapsible-006-accent:light-dark(oklch(0.55 0.17 240),oklch(0.74 0.14 240));
 --vibeui-collapsible-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="collapsible-006"]{
@@ -43,14 +55,14 @@ display:flex;margin-left:auto;padding-left:0.375rem;
 [data-vibeui-block="collapsible-006"] [data-part="chip"]{
 display:grid;place-items:center;
 width:1.625rem;height:1.625rem;margin-left:-0.375rem;box-sizing:border-box;
-border-radius:9999px;border:2px solid var(--vibeui-collapsible-006-bg);
-background:color-mix(in oklab,var(--vibeui-collapsible-006-accent) 16%,oklch(1 0 0));
+border-radius:9999px;border:2px solid var(--vibeui-collapsible-006-ring);
+background:color-mix(in oklab,var(--vibeui-collapsible-006-accent) 16%,var(--vibeui-collapsible-006-chip));
 color:var(--vibeui-collapsible-006-accent);
 font-size:0.625rem;font-weight:750;letter-spacing:0.01em;
 }
 /* Счётчик скрытых — это и есть ответ на вопрос «разворачивать ли». */
 [data-vibeui-block="collapsible-006"] [data-part="chip"][data-rest="true"]{
-background:var(--vibeui-collapsible-006-accent);color:oklch(1 0 0);
+background:var(--vibeui-collapsible-006-accent);color:var(--vibeui-collapsible-006-on-accent);
 }
 [data-vibeui-block="collapsible-006"][open] [data-part="chip"][data-rest="true"]{
 background:var(--vibeui-collapsible-006-fg);
@@ -89,6 +101,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Свёртка с подсчётом скрытых: первые участники на виду, остальные — за
  * кружком «+N». Один файл, ноль зависимостей, клиентского кода нет.
  */
@@ -96,6 +130,8 @@ export function Collapsible006({
   title = "Участники проекта",
   people = DEFAULT_PEOPLE,
   visible = 3,
+  restLabel = "Ещё {count} участников",
+  background = "",
   accent,
   className,
   style,
@@ -104,8 +140,17 @@ export function Collapsible006({
   const shown = people.slice(0, Math.max(0, visible))
   const hidden = people.slice(shown.length)
 
+  // Кольцо кружка красится в подложку: задали фон — стек снова читается как
+  // наложение, а не как слипшиеся круги.
   const palette = {
     ...(accent ? { "--vibeui-collapsible-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-collapsible-006-bg": background,
+          "--vibeui-collapsible-006-ring": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -132,7 +177,7 @@ export function Collapsible006({
               <span
                 data-part="chip"
                 data-rest="true"
-                aria-label={`Ещё ${hidden.length} участников`}
+                aria-label={restLabel.replace("{count}", String(hidden.length))}
               >
                 +{hidden.length}
               </span>

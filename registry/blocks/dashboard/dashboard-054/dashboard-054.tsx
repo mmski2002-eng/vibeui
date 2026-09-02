@@ -22,6 +22,16 @@ export type Dashboard054Props = {
   moreLabel?: string
   tipLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подпись блока поиска для скринридера. */
+  searchLabel?: string
+  /** Подпись кнопки очистки запроса. */
+  clearLabel?: string
+  /** Примеры операторов в подсказке. */
+  operators?: string[]
+  /** Фраза после списка операторов. */
+  tipNote?: string
   className?: string
   style?: CSSProperties
 }
@@ -37,14 +47,18 @@ export type Dashboard054Props = {
 // внизу, где её ищут после неудачного запроса.
 const STYLES = `
 :where([data-vibeui-block="dashboard-054"]){
---vibeui-dashboard-054-bg:oklch(0.985 0.003 265);
---vibeui-dashboard-054-card:oklch(1 0 0);
---vibeui-dashboard-054-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-054-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-054-border:oklch(0.91 0.006 265);
---vibeui-dashboard-054-accent:oklch(0.52 0.18 268);
---vibeui-dashboard-054-soft:oklch(0.96 0.02 268);
---vibeui-dashboard-054-mark:oklch(0.92 0.12 95);
+--vibeui-dashboard-054-bg:transparent;
+/* Список и поле ввода: подложка блока прозрачна, и рисовать их ею нечем. */
+--vibeui-dashboard-054-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-dashboard-054-inset:light-dark(oklch(0.97 0.004 265),oklch(0.22 0.012 265));
+--vibeui-dashboard-054-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-054-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-dashboard-054-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-054-accent:light-dark(oklch(0.52 0.18 268),oklch(0.75 0.14 268));
+--vibeui-dashboard-054-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.04 268));
+--vibeui-dashboard-054-soft:light-dark(oklch(0.96 0.02 268),oklch(0.32 0.05 268));
+--vibeui-dashboard-054-mark:light-dark(oklch(0.92 0.12 95),oklch(0.66 0.13 95));
+--vibeui-dashboard-054-on-mark:light-dark(oklch(0.22 0.014 265),oklch(0.18 0.03 95));
 --vibeui-dashboard-054-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-dashboard-054-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;
@@ -83,7 +97,7 @@ position:absolute;right:0.5rem;top:50%;transform:translateY(-50%);
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:700;
 width:1.5rem;height:1.5rem;border-radius:50%;display:grid;place-items:center;
 border:1px solid var(--vibeui-dashboard-054-border);
-background:var(--vibeui-dashboard-054-bg);color:var(--vibeui-dashboard-054-muted);
+background:var(--vibeui-dashboard-054-inset);color:var(--vibeui-dashboard-054-muted);
 }
 [data-vibeui-block="dashboard-054"] [data-part="bar"]{
 display:flex;flex-wrap:wrap;align-items:center;gap:0.375rem 0.625rem;
@@ -98,7 +112,7 @@ font-size:0.75rem;font-weight:650;color:var(--vibeui-dashboard-054-muted);
 border:1px solid var(--vibeui-dashboard-054-border);background:var(--vibeui-dashboard-054-card);
 }
 [data-vibeui-block="dashboard-054"] [data-part="chip"][aria-current]{
-color:oklch(1 0 0);background:var(--vibeui-dashboard-054-accent);border-color:transparent;
+color:var(--vibeui-dashboard-054-on-accent);background:var(--vibeui-dashboard-054-accent);border-color:transparent;
 }
 [data-vibeui-block="dashboard-054"] [data-part="chip"] b{
 font-weight:750;font-variant-numeric:tabular-nums;opacity:0.75;
@@ -116,7 +130,7 @@ position:relative;display:grid;grid-template-columns:auto 1fr;gap:0.1875rem 0.62
 padding:0.625rem 0.875rem;border-top:1px solid var(--vibeui-dashboard-054-border);
 }
 [data-vibeui-block="dashboard-054"] [data-part="hit"]:first-child{border-top:0}
-[data-vibeui-block="dashboard-054"] [data-part="hit"]:has(a:hover){background:var(--vibeui-dashboard-054-bg)}
+[data-vibeui-block="dashboard-054"] [data-part="hit"]:has(a:hover){background:var(--vibeui-dashboard-054-inset)}
 [data-vibeui-block="dashboard-054"] [data-part="hit"]:has(a:focus-visible){
 outline:2px solid var(--vibeui-dashboard-054-accent);outline-offset:-2px;
 }
@@ -137,7 +151,7 @@ grid-column:2;font-size:0.75rem;line-height:1.5;color:var(--vibeui-dashboard-054
 }
 [data-vibeui-block="dashboard-054"] mark{
 padding:0 0.125rem;border-radius:0.1875rem;
-background:var(--vibeui-dashboard-054-mark);color:var(--vibeui-dashboard-054-fg);
+background:var(--vibeui-dashboard-054-mark);color:var(--vibeui-dashboard-054-on-mark);
 }
 [data-vibeui-block="dashboard-054"] [data-part="meta"]{
 grid-column:2;font-size:0.625rem;color:var(--vibeui-dashboard-054-muted);
@@ -148,7 +162,7 @@ display:block;text-align:center;padding:0.625rem;
 border-top:1px solid var(--vibeui-dashboard-054-border);
 font-size:0.75rem;font-weight:700;color:var(--vibeui-dashboard-054-accent);text-decoration:none;
 }
-[data-vibeui-block="dashboard-054"] [data-part="more"]:hover{background:var(--vibeui-dashboard-054-bg)}
+[data-vibeui-block="dashboard-054"] [data-part="more"]:hover{background:var(--vibeui-dashboard-054-inset)}
 [data-vibeui-block="dashboard-054"] [data-part="tip"]{
 margin:0;font-size:0.6875rem;line-height:1.5;color:var(--vibeui-dashboard-054-muted);
 }
@@ -232,6 +246,28 @@ function highlight(text: string, needle: string) {
 }
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Страница общего поиска: поле запроса, чипы типов со счётчиками и список
  * результатов с ярлыком типа и подсвеченным совпадением. Один файл, ноль
  * зависимостей, клиентского JS нет.
@@ -246,11 +282,22 @@ export function Dashboard054({
   moreLabel = "Показать все 38 результатов",
   tipLabel = "Уточните запрос операторами",
   accent,
+  background = "",
+  searchLabel = "Поиск по приложению",
+  clearLabel = "Очистить запрос",
+  operators = ["тип:договор", "клиент:«лес»", "после:01.03.2026"],
+  tipNote = "Операторы можно сочетать, порядок не важен.",
   className,
   style,
 }: Dashboard054Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-054-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-054-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -265,7 +312,7 @@ export function Dashboard054({
         data-vibeui-block="dashboard-054"
         className={className}
         style={palette}
-        aria-label="Поиск по приложению"
+        aria-label={searchLabel}
       >
         <div data-part="shell">
           <div data-part="field">
@@ -279,11 +326,7 @@ export function Dashboard054({
               defaultValue={query}
               placeholder={placeholder}
             />
-            <button
-              type="button"
-              data-part="clear"
-              aria-label="Очистить запрос"
-            >
+            <button type="button" data-part="clear" aria-label={clearLabel}>
               ×
             </button>
           </div>
@@ -327,9 +370,16 @@ export function Dashboard054({
           </ul>
 
           <p data-part="tip">
-            {tipLabel}: <code>тип:договор</code>,{" "}
-            <code>клиент:&quot;лес&quot;</code>, <code>после:01.03.2026</code>.
-            Операторы можно сочетать, порядок не важен.
+            {tipLabel}
+            {": "}
+            {operators.map((operator, index) => (
+              <span key={operator}>
+                {index > 0 ? ", " : null}
+                <code>{operator}</code>
+              </span>
+            ))}
+            {". "}
+            {tipNote}
           </p>
         </div>
       </search>

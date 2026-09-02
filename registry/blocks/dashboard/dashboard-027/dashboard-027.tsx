@@ -23,6 +23,14 @@ export type Dashboard027Props = {
   events?: Dashboard027Event[]
   progress?: number
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Заголовки разделов: facts, progress, activity. */
+  sectionsText?: Record<string, string>
+  /** Шаблон строки ответственного: {name}. */
+  leadText?: string
+  /** Шаблон подписи стопки участников: {list}. */
+  teamAriaText?: string
   className?: string
   style?: CSSProperties
 }
@@ -37,13 +45,16 @@ export type Dashboard027Props = {
 // объявлена progressbar и подписана числом — процент без цифры не сравнить.
 const STYLES = `
 :where([data-vibeui-block="dashboard-027"]){
---vibeui-dashboard-027-bg:oklch(1 0 0);
---vibeui-dashboard-027-panel:oklch(0.985 0.003 265);
---vibeui-dashboard-027-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-027-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-027-border:oklch(0.91 0.006 265);
---vibeui-dashboard-027-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-027-ok:oklch(0.53 0.14 152);
+--vibeui-dashboard-027-bg:transparent;
+/* Просвет между аватарами: подложка бывает прозрачной, и вырезать стопку
+   собственным фоном тогда нечем. */
+--vibeui-dashboard-027-cut:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-dashboard-027-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.012 265));
+--vibeui-dashboard-027-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-027-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-027-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.011 265));
+--vibeui-dashboard-027-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-dashboard-027-ok:light-dark(oklch(0.53 0.14 152),oklch(0.76 0.14 152));
 --vibeui-dashboard-027-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -73,7 +84,7 @@ display:flex;margin:0 0 0 auto;padding:0;list-style:none;
 [data-vibeui-block="dashboard-027"] [data-part="team"] li{
 width:1.75rem;height:1.75rem;margin-left:-0.4375rem;border-radius:9999px;
 display:grid;place-items:center;font-size:0.625rem;font-weight:700;
-border:2px solid var(--vibeui-dashboard-027-bg);
+border:2px solid var(--vibeui-dashboard-027-cut);
 background:oklch(0.93 0.04 var(--vibeui-dashboard-027-hue));
 color:oklch(0.36 0.1 var(--vibeui-dashboard-027-hue));
 }
@@ -197,6 +208,34 @@ const DEFAULT_EVENTS: Dashboard027Event[] = [
 
 const DEFAULT_TEAM = ["Анна Реброва", "Илья Мохов", "Ким Сон", "Пётр Гай"]
 
+const DEFAULT_SECTIONS: Record<string, string> = {
+  facts: "Показатели",
+  progress: "Готовность к релизу",
+  activity: "Активность",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function hue(name: string) {
   let hash = 2166136261
 
@@ -232,11 +271,23 @@ export function Dashboard027({
   events = DEFAULT_EVENTS,
   progress = 68,
   accent,
+  background = "",
+  sectionsText = DEFAULT_SECTIONS,
+  leadText = "Ведёт {name}",
+  teamAriaText = "Команда: {list}",
   className,
   style,
 }: Dashboard027Props) {
+  const section = (key: string) => sectionsText[key] ?? DEFAULT_SECTIONS[key]
   const palette = {
     ...(accent ? { "--vibeui-dashboard-027-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-027-bg": background,
+          "--vibeui-dashboard-027-cut": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -258,7 +309,10 @@ export function Dashboard027({
           <div data-part="titlerow">
             <h2>{project}</h2>
             <span data-part="status">{status}</span>
-            <ul data-part="team" aria-label={`Команда: ${team.join(", ")}`}>
+            <ul
+              data-part="team"
+              aria-label={teamAriaText.replace("{list}", team.join(", "))}
+            >
               {shown.map((member) => (
                 <li
                   key={member}
@@ -295,7 +349,7 @@ export function Dashboard027({
 
         <div data-part="body">
           <div>
-            <h3>Показатели</h3>
+            <h3>{section("facts")}</h3>
             <ul data-part="facts">
               {facts.map((fact) => (
                 <li key={fact.label} data-part="fact">
@@ -305,9 +359,9 @@ export function Dashboard027({
               ))}
             </ul>
 
-            <h3>Готовность к релизу</h3>
+            <h3>{section("progress")}</h3>
             <p data-part="progressline">
-              <span>Ведёт {lead}</span>
+              <span>{leadText.replace("{name}", lead)}</span>
               <span data-part="pct">{progress} %</span>
             </p>
             <span
@@ -316,7 +370,7 @@ export function Dashboard027({
               aria-valuenow={progress}
               aria-valuemin={0}
               aria-valuemax={100}
-              aria-label="Готовность к релизу"
+              aria-label={section("progress")}
             >
               <span
                 data-part="fill"
@@ -330,7 +384,7 @@ export function Dashboard027({
           </div>
 
           <aside>
-            <h3>Активность</h3>
+            <h3>{section("activity")}</h3>
             <ul data-part="feed">
               {events.map((event) => (
                 <li key={`${event.time}-${event.what}`}>

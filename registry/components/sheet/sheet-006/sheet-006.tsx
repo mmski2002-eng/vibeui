@@ -13,20 +13,30 @@ export type Sheet006Props = Omit<
   consequences?: string[]
   confirmLabel?: string
   cancelLabel?: string
+  /** Опасный цвет: знак, кнопка подтверждения и маркеры списка. */
+  danger?: string
+  /** Подложка листа и кнопки открытия. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: подтверждение опасного действия на телефоне. Вопрос
 // приезжает снизу, потому что до центра экрана большой палец не достаёт.
 // Последствия перечислены списком, а не спрятаны в одну строку, фокус при
 // открытии стоит на отказе: опасная кнопка не должна срабатывать по Enter.
+//
+// Тема берётся из color-scheme окружения через light-dark(): лист темнеет
+// там, где тёмный контекст, и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="sheet-006"]){
---vibeui-sheet-006-bg:oklch(1 0 0);
---vibeui-sheet-006-fg:oklch(0.21 0.014 265);
---vibeui-sheet-006-muted:oklch(0.55 0.014 265);
---vibeui-sheet-006-border:oklch(0.91 0.006 265);
---vibeui-sheet-006-danger:oklch(0.55 0.2 25);
---vibeui-sheet-006-danger-soft:oklch(0.95 0.03 25);
+--vibeui-sheet-006-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-sheet-006-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-sheet-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-sheet-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-sheet-006-danger:light-dark(oklch(0.55 0.2 25),oklch(0.72 0.17 25));
+--vibeui-sheet-006-danger-soft:color-mix(in oklab,var(--vibeui-sheet-006-danger) 18%,transparent);
+--vibeui-sheet-006-on-danger:light-dark(oklch(0.99 0.01 25),oklch(0.18 0.04 25));
+--vibeui-sheet-006-shadow:light-dark(oklch(0.2 0.02 265 / 60%),oklch(0.02 0.01 265 / 75%));
+--vibeui-sheet-006-scrim:light-dark(oklch(0.17 0.02 265 / 55%),oklch(0.06 0.014 265 / 70%));
 --vibeui-sheet-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="sheet-006"]{
@@ -43,15 +53,15 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 position:fixed;inset:auto 0 0 0;margin:0;
 width:100%;max-width:100vw;max-height:85dvh;
 padding:0;border:0;border-radius:1.25rem 1.25rem 0 0;overflow:hidden;
-background:var(--vibeui-sheet-006-bg);color:inherit;
-box-shadow:0 -26px 60px -32px oklch(0.2 0.02 265 / 60%);
+background:var(--vibeui-sheet-006-bg);color:var(--vibeui-sheet-006-fg);
+box-shadow:0 -26px 60px -32px var(--vibeui-sheet-006-shadow);
 translate:0 100%;transition:translate .24s ease,overlay .24s allow-discrete,display .24s allow-discrete;
 }
 [data-vibeui-block="sheet-006"] dialog[open]{translate:0 0}
 @starting-style{
 [data-vibeui-block="sheet-006"] dialog[open]{translate:0 100%}
 }
-[data-vibeui-block="sheet-006"] dialog::backdrop{background:oklch(0.17 0.02 265 / 55%)}
+[data-vibeui-block="sheet-006"] dialog::backdrop{background:var(--vibeui-sheet-006-scrim)}
 [data-vibeui-block="sheet-006"] form{
 display:flex;flex-direction:column;align-items:center;gap:0.5rem;box-sizing:border-box;
 padding:0.5rem 1.125rem calc(1rem + env(safe-area-inset-bottom,0px));text-align:center;
@@ -95,7 +105,7 @@ border:1px solid var(--vibeui-sheet-006-border);background:transparent;color:inh
 font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="sheet-006"] [data-part="actions"] button[data-danger="true"]{
-border-color:transparent;background:var(--vibeui-sheet-006-danger);color:oklch(0.99 0.01 25);
+border-color:transparent;background:var(--vibeui-sheet-006-danger);color:var(--vibeui-sheet-006-on-danger);
 }
 [data-vibeui-block="sheet-006"] [data-part="actions"] button:focus-visible{outline:2px solid var(--vibeui-sheet-006-danger);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){
@@ -111,6 +121,28 @@ const DEFAULT_CONSEQUENCES = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Лист подтверждения на телефоне: последствия списком, фокус на отказе.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -121,12 +153,25 @@ export function Sheet006({
   consequences = DEFAULT_CONSEQUENCES,
   confirmLabel = "Удалить навсегда",
   cancelLabel = "Не удалять",
+  danger,
+  background = "",
   className,
   style,
   ...props
 }: Sheet006Props) {
   const sheet = useRef<HTMLDialogElement>(null)
   const heading = useId()
+
+  const palette = {
+    ...(danger ? { "--vibeui-sheet-006-danger": danger } : null),
+    ...(background
+      ? {
+          "--vibeui-sheet-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -137,7 +182,7 @@ export function Sheet006({
         {...props}
         data-vibeui-block="sheet-006"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <button
           type="button"

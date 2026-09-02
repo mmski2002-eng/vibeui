@@ -21,6 +21,12 @@ export type Input010Props = Omit<
   label?: string
   units?: Input010Unit[]
   defaultValue?: number
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  text?: Record<string, string>
+  /** Локаль для разделителей разрядов в примечании. */
+  locale?: string
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   onChange?: (value: number, unit: string) => void
   accent?: string
 }
@@ -33,21 +39,29 @@ export type Input010Props = Omit<
 // которые нативный select показать не умеет.
 const STYLES = `
 :where([data-vibeui-block="input-010"]){
---vibeui-input-010-surface:oklch(1 0 0);
---vibeui-input-010-shell:oklch(0.91 0.006 265);
---vibeui-input-010-fg:oklch(0.23 0.014 265);
---vibeui-input-010-muted:oklch(0.55 0.014 265);
---vibeui-input-010-field:oklch(0.985 0.002 265);
---vibeui-input-010-border:oklch(0.88 0.008 265);
---vibeui-input-010-accent:oklch(0.53 0.15 165);
+--vibeui-input-010-surface:transparent;
+/* Список висит над страницей, поэтому его подложка непрозрачна всегда
+   и не зависит от surface. */
+--vibeui-input-010-panel:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
+--vibeui-input-010-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-input-010-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-input-010-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-input-010-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-input-010-accent:light-dark(oklch(0.53 0.15 165),oklch(0.76 0.13 165));
 --vibeui-input-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-010"]{
 display:flex;flex-direction:column;gap:0.4375rem;
-width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:21rem;box-sizing:border-box;
+font-family:var(--vibeui-input-010-font);color:var(--vibeui-input-010-fg);
+}
+/* Подложка появляется только вместе с пропом background: без него поле
+   лежит прямо на фоне страницы. */
+[data-vibeui-block="input-010"][data-surface="on"]{
+padding:0.875rem;
 background:var(--vibeui-input-010-surface);
 border:1px solid var(--vibeui-input-010-shell);border-radius:0.875rem;
-font-family:var(--vibeui-input-010-font);color:var(--vibeui-input-010-fg);
 }
 [data-vibeui-block="input-010"] *{box-sizing:border-box}
 [data-vibeui-block="input-010"] label{font-size:0.8125rem;font-weight:600}
@@ -94,7 +108,7 @@ transition:transform .16s ease;
 [data-vibeui-block="input-010"] [data-part="list"]{
 position:absolute;z-index:2;top:calc(100% + 0.375rem);right:0;min-width:11rem;
 margin:0;padding:0.25rem;display:flex;flex-direction:column;
-background:var(--vibeui-input-010-surface);
+background:var(--vibeui-input-010-panel);
 border:1px solid var(--vibeui-input-010-border);border-radius:0.75rem;
 box-shadow:0 12px 28px -12px color-mix(in oklab,var(--vibeui-input-010-fg) 40%,transparent);
 }
@@ -127,6 +141,34 @@ const UNITS: Input010Unit[] = [
   { code: "сут", title: "сутки", factor: 86400 },
 ]
 
+const TEXT = {
+  unitLabel: "Единица измерения: {unit}",
+  listLabel: "Единицы",
+  note: "Это {seconds} секунд — столько ссылка останется рабочей.",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Число с выпадающим выбором единицы измерения в одной рамке.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -135,6 +177,9 @@ export function Input010({
   label = "Время жизни ссылки",
   units = UNITS,
   defaultValue = 30,
+  text,
+  locale = "ru-RU",
+  background = "",
   onChange,
   accent,
   className,
@@ -147,13 +192,22 @@ export function Input010({
   const [open, setOpen] = useState(false)
   const trigger = useRef<HTMLButtonElement | null>(null)
 
+  const copy = { ...TEXT, ...text }
+
   const palette = {
     ...(accent ? { "--vibeui-input-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-010-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
   const current = units.find((entry) => entry.code === unit) ?? units[0]
   const seconds = Math.round(value * (current?.factor ?? 1))
+  const [beforeNote, afterNote] = copy.note.split("{seconds}")
 
   const choose = (code: string) => {
     setUnit(code)
@@ -178,6 +232,7 @@ export function Input010({
       <div
         {...props}
         data-vibeui-block="input-010"
+        data-surface={background ? "on" : undefined}
         className={className}
         style={palette}
       >
@@ -208,7 +263,7 @@ export function Input010({
             data-part="unit"
             aria-haspopup="listbox"
             aria-expanded={open}
-            aria-label={`Единица измерения: ${current?.title ?? ""}`}
+            aria-label={copy.unitLabel.replace("{unit}", current?.title ?? "")}
             onClick={() => setOpen((was) => !was)}
           >
             {current?.code}
@@ -230,7 +285,7 @@ export function Input010({
             <div
               data-part="list"
               role="listbox"
-              aria-label="Единицы"
+              aria-label={copy.listLabel}
               onKeyDown={onListKeyDown}
             >
               {units.map((entry) => (
@@ -249,8 +304,9 @@ export function Input010({
           ) : null}
         </div>
         <p data-part="note" id={`${id}-note`} aria-live="polite">
-          Это <b>{seconds.toLocaleString("ru-RU")}</b> секунд — столько ссылка
-          останется рабочей.
+          {beforeNote}
+          <b>{seconds.toLocaleString(locale)}</b>
+          {afterNote}
         </p>
       </div>
     </>

@@ -24,13 +24,14 @@
           "usage": "<Cta001\n  title=\"Соберите первую страницу сегодня\"\n  primaryAction={{ label: \"Начать бесплатно\", href: \"/signup\" }}\n  note=\"Без карты. 14 дней полного доступа.\"\n/>",
           "summary": "Финальная секция призыва: тёмный фон, свет из-за горизонта, надзаголовок-плашка, крупный заголовок, объяснение, одна кнопка и текстовая ссылка рядом. Под кнопками — мелкая строка, снимающая возражение перед кликом. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
-            "локальную палитру --vibeui-cta-001-* — секция намеренно тёмная и не следует теме страницы",
+            "локальную палитру --vibeui-cta-001-* — секция остаётся тёмной в обеих ветках light-dark(): контраст с остальной страницей и есть дизайн блока, поэтому подложка здесь не делается прозрачной",
             "одну главную кнопку: второе действие остаётся ссылкой, иначе выбор раздваивается ровно там, где его быть не должно",
             "строку note под кнопками: она снимает возражение в момент решения, а не в разделе с условиями",
             "свечение отдельным слоем с pointer-events:none — фоновая заливка сожрала бы контраст текста",
             "кегль заголовка в cqi от собственной ширины блока: медиазапросы дадут мобильный размер в узкой колонке",
             "ограничение ширины заголовка и описания в ch — строка длиннее не читается",
-            "блок <style> внутри компонента — в нём вся палитра, свечение и раскладка"
+            "блок <style> внутри компонента — в нём вся палитра, свечение и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "тексты eyebrow, title, description и note",
@@ -39,6 +40,7 @@
             "внешние отступы через className: секция занимает всю ширину родителя"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Секция ставится в конце страницы. Две таких на одной странице обесценивают друг друга.",
             "Не превращайте note в мелкий шрифт с условиями: это одна короткая фраза, а не сноска.",
             "Не убирайте описание совсем — заголовок без объяснения работает только там, где продукт уже понятен.",
@@ -51,13 +53,14 @@
             "ai": {
               "summary": "A closing call-to-action section: a dark ground, light rising from behind the horizon, an eyebrow pill, a large heading, an explanation, one button and a text link beside it. A small line under the buttons removes the last objection before the click. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
-                "the local --vibeui-cta-001-* palette — the section is deliberately dark and does not follow the page theme",
+                "the local --vibeui-cta-001-* palette — the section stays dark in both light-dark() branches: the contrast with the rest of the page is the design of this block, so the background is not made transparent here",
                 "the single primary button: the second action stays a link, otherwise the choice splits exactly where it must not",
                 "the note line under the buttons: it answers the objection at the moment of decision rather than in a terms page",
                 "the glow as its own layer with pointer-events:none — a background fill would eat the text contrast",
                 "the heading size in cqi against the block's own width: media queries give a mobile size inside a narrow column",
                 "the ch-based width limits on heading and description — a longer line stops being read",
-                "the <style> block inside the component — it holds the palette, the glow and the layout"
+                "the <style> block inside the component — it holds the palette, the glow and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the eyebrow, title, description and note copy",
@@ -66,6 +69,7 @@
                 "outer spacing through className: the section spans its parent's width"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This belongs at the end of a page. Two of them on one page devalue each other.",
                 "Do not turn the note into fine print: it is one short phrase, not a footnote.",
                 "Do not drop the description entirely — a heading alone works only where the product is already understood.",
@@ -73,9 +77,61 @@
               ],
               "usage": "<Cta001\n  title=\"Build your first page today\"\n  primaryAction={{ label: \"Start free\", href: \"/signup\" }}\n  note=\"No card. 14 days of full access.\"\n/>"
             },
-            "title": "Horizon CTA"
+            "title": "Horizon CTA",
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Build your first page today"
+              },
+              "note": {
+                "label": "Line under the buttons",
+                "default": "No card. 14 days of full access."
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "5 of 5 March slots still open",
+                "title": "Build your first page today",
+                "description": "Pick the blocks, hand the link to your AI agent and get a page that looks exactly like the preview.",
+                "primaryAction": {
+                  "label": "Start free",
+                  "href": "#start"
+                },
+                "secondaryAction": {
+                  "label": "See examples",
+                  "href": "#cases"
+                },
+                "note": "No card. 14 days of full access."
+              }
+            }
           }
-        }
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Соберите первую страницу сегодня",
+            "maxLength": 48
+          },
+          {
+            "prop": "note",
+            "label": "Строка под кнопками",
+            "type": "text",
+            "default": "Без карты. 14 дней полного доступа.",
+            "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["accent"]
       }
     },
     {
@@ -111,7 +167,9 @@
             "ограничение ширины заголовка и текста в ch: строка во всю ширину экрана не дочитывается",
             "колонку кнопок на узкой раскладке — две кнопки в ряд на телефоне становятся двумя узкими полосками",
             "свечение радиальным градиентом внутри карточки, а не заливкой фона: заливка съест контраст текста",
-            "блок <style> внутри компонента — в нём палитра, карточка и раскладка"
+            "блок <style> внутри компонента — в нём палитра, карточка и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "eyebrow, title и description — надзаголовок, заголовок и объяснение",
@@ -119,9 +177,11 @@
             "secondaryLabel и secondaryHref — второй вход, оставьте его контурным",
             "массив proof — короткие подтверждения под кнопками",
             "акцент через проп accent — цвет плашки, кнопки, точек и фокуса",
-            "внешние отступы через className: секция занимает всю ширину родителя"
+            "внешние отступы через className: секция занимает всю ширину родителя",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Два действия оправданы, только если оба настоящие: «Купить» и «Посмотреть демо». Пара «Начать» и «Начать сейчас» вредит.",
             "Больше трёх пунктов в строке подтверждений переносятся и превращаются в список — держите три.",
             "Не увеличивайте max-width заголовка: 18ch подобраны так, чтобы заголовок ломался в двух местах, а не в одном.",
@@ -142,6 +202,18 @@
             "type": "text",
             "default": "Начать бесплатно",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -157,7 +229,9 @@
                 "the heading and text width limits in ch: a line spanning the whole screen does not get finished",
                 "the button column on the narrow layout — two side-by-side buttons on a phone become two thin strips",
                 "the glow as a radial gradient inside the card rather than a background fill: a fill eats the text contrast",
-                "the <style> block inside the component — it holds the palette, the card and the layout"
+                "the <style> block inside the component — it holds the palette, the card and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "eyebrow, title and description — the eyebrow, the heading and the explanation",
@@ -165,9 +239,11 @@
                 "secondaryLabel and secondaryHref — the second entry point, keep it outlined",
                 "the proof array — the short proofs under the buttons",
                 "the accent through the accent prop — it colours the pill, the button, the dots and focus",
-                "outer spacing through className: the section fills its parent's width"
+                "outer spacing through className: the section fills its parent's width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Two actions are justified only when both are real: \"Buy\" and \"See a demo\". A pair like \"Start\" and \"Start now\" hurts.",
                 "More than three proofs wrap and turn into a list — keep it at three.",
                 "Do not raise the heading max-width: 18ch is chosen so the heading breaks in two places rather than one.",
@@ -183,11 +259,32 @@
               "primaryLabel": {
                 "label": "Primary button",
                 "default": "Start free"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Centered Dual CTA"
+            "title": "Centered Dual CTA",
+            "preview": {
+              "props": {
+                "eyebrow": "Ready to start",
+                "title": "Ship your first page this week",
+                "description": "Take the ready-made sections, assemble a page from them and hand it to your team — no three-week briefs, no markup written from scratch.",
+                "primaryLabel": "Start free",
+                "secondaryLabel": "See examples",
+                "proof": [
+                  "First layout in one evening",
+                  "Cancel in one click",
+                  "Support answers within an hour"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -223,7 +320,9 @@
             "строку согласия рядом с кнопкой, а не ссылкой в подвале: согласие дают здесь",
             "строку про частоту писем — «два письма в месяц» снимает главное возражение против подписки",
             "кольцо фокуса у поля: форма — единственное интерактивное место секции",
-            "блок <style> внутри компонента — в нём палитра, форма и раскладка"
+            "блок <style> внутри компонента — в нём палитра, форма и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title и description — заголовок и объяснение, о чём письма",
@@ -231,9 +330,12 @@
             "submitLabel — подпись кнопки",
             "consent — текст согласия под формой",
             "frequency и subscribers — частота писем и число читателей",
-            "акцент через проп accent — цвет кнопки, кольца фокуса и рамки поля"
+            "акцент через проп accent — цвет кнопки, кольца фокуса и рамки поля",
+            "emailLabel — видимая подпись поля почты",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Форма уходит на #subscribe: подставьте адрес своего обработчика и имя поля.",
             "Не заменяйте видимую подпись на placeholder ради красоты — это самая частая ошибка в таких блоках.",
             "Блок не показывает состояние «спасибо, проверьте почту»: сделайте отдельную страницу или добавьте своё состояние.",
@@ -254,6 +356,25 @@
             "type": "text",
             "default": "Два письма в месяц",
             "maxLength": 28
+          },
+          {
+            "prop": "emailLabel",
+            "label": "Подпись поля",
+            "type": "text",
+            "default": "Электронная почта",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -269,7 +390,9 @@
                 "the consent line next to the button rather than a footer link: consent is given here",
                 "the frequency line — \"two letters a month\" removes the main objection to subscribing",
                 "the focus ring on the field: the form is the only interactive place in the section",
-                "the <style> block inside the component — it holds the palette, the form and the layout"
+                "the <style> block inside the component — it holds the palette, the form and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title and description — the heading and the explanation of what the letters are about",
@@ -277,9 +400,12 @@
                 "submitLabel — the button label",
                 "consent — the consent text under the form",
                 "frequency and subscribers — how often letters arrive and how many readers there are",
-                "the accent through the accent prop — it colours the button, the focus ring and the field border"
+                "the accent through the accent prop — it colours the button, the focus ring and the field border",
+                "emailLabel — the visible label of the email field",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The form posts to #subscribe: point it at your own handler and field name.",
                 "Do not replace the visible label with a placeholder for looks — it is the most common mistake in blocks like this.",
                 "The block shows no \"thanks, check your inbox\" state: use a separate page or add your own state.",
@@ -295,11 +421,34 @@
               "frequency": {
                 "label": "Frequency",
                 "default": "Two letters a month"
+              },
+              "emailLabel": {
+                "label": "Field label",
+                "default": "Email address"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Newsletter CTA"
+            "title": "Newsletter CTA",
+            "preview": {
+              "props": {
+                "title": "A letter about how interfaces get made",
+                "description": "Every other week we take one screen apart: what was decided, what was thrown out and why. No industry news, no ten trends of the year.",
+                "emailLabel": "Email address",
+                "placeholder": "you@example.com",
+                "submitLabel": "Subscribe",
+                "consent": "By clicking Subscribe you agree to the data processing policy. Unsubscribe with a single link in any letter.",
+                "frequency": "Two letters a month",
+                "subscribers": "6,400 readers"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -328,14 +477,15 @@
           "usage": "<Cta004\n  title=\"Перенесите сайт без остановки продаж\"\n  actionLabel=\"Обсудить переезд\"\n  stat=\"11 дней\"\n  statCaption=\"средний срок переезда магазина\"\n/>",
           "summary": "Секция призыва на цветной плите: надзаголовок, крупный заголовок, объяснение, стеклянная плашка с цифрой-доказательством, белая кнопка и текстовая ссылка рядом. Узор нарисован повторяющимися градиентами и погашен маской, чтобы не мешать тексту. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
-            "локальную палитру --vibeui-cta-004-* — плита намеренно не следует теме страницы",
+            "локальную палитру --vibeui-cta-004-* — плита остаётся цветной в обеих ветках light-dark(): сплошная заливка и есть дизайн блока, поэтому подложка здесь не делается прозрачной",
             "узор отдельным слоем с pointer-events:none: в фоне секции он перекрыл бы ссылки",
             "маску узора: без неё сетка идёт под текстом и мешает читать",
             "градиент вместо сплошной заливки — одноцветная плита во всю ширину выглядит как ошибка стиля",
             "белую кнопку на цветном фоне: акцентная кнопка на акцентной плите исчезает",
             "стеклянную плашку с цифрой на полупрозрачном фоне с backdrop-filter — она держит доказательство рядом с обещанием",
             "кегль заголовка в cqi от собственной ширины блока и ограничение строки в ch",
-            "блок <style> внутри компонента — в нём палитра, узор и раскладка"
+            "блок <style> внутри компонента — в нём палитра, узор и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "kicker, title и description — надзаголовок, заголовок и объяснение",
@@ -346,6 +496,7 @@
             "внешние отступы через className: плита занимает всю ширину родителя"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Цвет плиты берётся из accent: очень светлый акцент сделает белый текст нечитаемым, проверяйте контраст.",
             "Плита с overflow:hidden — вложенные всплывающие элементы обрежутся, выносите их наружу.",
             "Цифра должна быть проверяемой: «11 дней» работает, «в 10 раз быстрее» вызывает вопросы.",
@@ -366,6 +517,12 @@
             "type": "text",
             "default": "Перенесите сайт на новый движок без остановки продаж",
             "maxLength": 64
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -374,14 +531,15 @@
             "ai": {
               "summary": "A CTA section on a colour slab: a kicker, a large heading, an explanation, a glass panel with a proof number, a white button and a text link beside it. The pattern is drawn with repeating gradients and faded by a mask so it never fights the text. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
-                "the local --vibeui-cta-004-* palette — the slab deliberately ignores the page theme",
+                "the local --vibeui-cta-004-* palette — the slab stays coloured in both light-dark() branches: the solid fill is the design of this block, so the background is not made transparent here",
                 "the pattern as its own layer with pointer-events:none: in the section background it would cover the links",
                 "the mask over the pattern: without it the grid runs under the text and makes it hard to read",
                 "the gradient instead of a flat fill — a single-colour full-width slab looks like a styling mistake",
                 "the white button on the coloured background: an accent button on an accent slab disappears",
                 "the glass panel with the number on a translucent background with backdrop-filter — it keeps the proof next to the promise",
                 "the heading size in cqi from the block's own width and the line limit in ch",
-                "the <style> block inside the component — it holds the palette, the pattern and the layout"
+                "the <style> block inside the component — it holds the palette, the pattern and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "kicker, title and description — the kicker, the heading and the explanation",
@@ -392,6 +550,7 @@
                 "outer spacing through className: the slab fills its parent's width"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The slab colour comes from accent: a very light accent makes the white text unreadable, check the contrast.",
                 "The slab uses overflow:hidden — nested popups get clipped, move them outside.",
                 "The number has to be verifiable: \"11 days\" works, \"10x faster\" invites questions.",
@@ -407,11 +566,26 @@
               "title": {
                 "label": "Heading",
                 "default": "Move your site to a new engine without pausing sales"
+              },
+              "accent": {
+                "label": "Accent"
               }
             },
-            "title": "Color Slab CTA"
+            "title": "Color Slab CTA",
+            "preview": {
+              "props": {
+                "kicker": "Migration in one sprint",
+                "title": "Move your site to a new engine without pausing sales",
+                "description": "We take over the markup, the content and the redirects while you keep selling. The switch happens overnight and a rollback is ready at every step.",
+                "actionLabel": "Discuss the move",
+                "linkLabel": "How it works",
+                "stat": "11 days",
+                "statCaption": "average migration time for a shop with 3,000 products"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent"]
       }
     },
     {
@@ -447,7 +621,9 @@
             "три пункта преимуществ, а не пять: в призыве читают ровно столько",
             "приметку рядом с кнопкой, а не под секцией — география и условия нужны в момент решения",
             "container-запрос вместо медиазапроса: в узкой колонке блок обязан складываться сам",
-            "блок <style> внутри компонента — в нём палитра, место под картинку и раскладка"
+            "блок <style> внутри компонента — в нём палитра, место под картинку и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "eyebrow, title и description — надзаголовок, заголовок и объяснение",
@@ -455,9 +631,11 @@
             "actionLabel, actionHref и noteLabel — кнопка и приметка рядом с ней",
             "imageSrc и imageAlt — адрес и описание изображения",
             "акцент через проп accent — цвет надзаголовка, кнопки, маркеров и фокуса",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "imageAlt обязателен, если картинка несёт смысл: пустой alt уместен только у декоративного изображения.",
             "Заглушка помечена aria-hidden и не заменяет фотографию: перед запуском подставьте настоящую.",
             "Соотношение сторон меняется на широкой раскладке с 4:3 на 5:4 — учтите это при кадрировании.",
@@ -478,6 +656,18 @@
             "type": "text",
             "default": "Работаем по Москве и области",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -493,7 +683,9 @@
                 "three benefit bullets rather than five: that is how many people read inside a CTA",
                 "the note next to the button rather than below the section — coverage and conditions are needed at the moment of decision",
                 "the container query instead of a media query: in a narrow column the block has to fold on its own",
-                "the <style> block inside the component — it holds the palette, the media slot and the layout"
+                "the <style> block inside the component — it holds the palette, the media slot and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "eyebrow, title and description — the eyebrow, the heading and the explanation",
@@ -501,9 +693,11 @@
                 "actionLabel, actionHref and noteLabel — the button and the note beside it",
                 "imageSrc and imageAlt — the image address and its description",
                 "the accent through the accent prop — it colours the eyebrow, the button, the markers and focus",
-                "outer spacing through className"
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "imageAlt is required when the picture carries meaning: an empty alt only fits a decorative image.",
                 "The placeholder is aria-hidden and does not replace a photo: put a real one in before launch.",
                 "The aspect ratio changes from 4:3 to 5:4 on the wide layout — take that into account when cropping.",
@@ -519,11 +713,33 @@
               "noteLabel": {
                 "label": "Side note",
                 "default": "We work across the city and the region"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Split Media CTA"
+            "title": "Split Media CTA",
+            "preview": {
+              "props": {
+                "eyebrow": "Kitchen renovation",
+                "title": "We measure tomorrow, we start on Monday",
+                "description": "We show the estimate before the work begins and do not change it along the way. If the schedule slips through our fault, we pay a penalty for every day.",
+                "bullets": [
+                  "Measurement and estimate on the day you call",
+                  "Materials from stock, no waiting for delivery",
+                  "Three-year warranty on the installation"
+                ],
+                "actionLabel": "Book a surveyor",
+                "noteLabel": "We work across the city and the region",
+                "imageAlt": "A finished kitchen after the renovation"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -559,7 +775,9 @@
             "срок прямо на печати: «гарантия» без числа дней ничего не обещает",
             "ссылку на полные условия рядом с кнопкой: она снимает подозрение, что условия спрятаны",
             "смену стороны разделителя между колонками на узкой и широкой раскладке",
-            "блок <style> внутри компонента — в нём палитра, печать и раскладка"
+            "блок <style> внутри компонента — в нём палитра, печать и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "badge — надпись на печати, держите её в три-четыре слова",
@@ -567,9 +785,11 @@
             "массив terms — условия и пояснения к ним",
             "actionLabel, actionHref, secondaryLabel и secondaryHref — кнопка и ссылка на условия",
             "smallPrint — абзац мелкого шрифта",
-            "акцент через проп accent — цвет печати, кнопки и фокуса"
+            "акцент через проп accent — цвет печати, кнопки и фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не обещайте в блоке того, чего нет в договоре: этот текст цитируют в спорах.",
             "Больше четырёх слов на печати не помещаются в круг — сокращайте.",
             "Больше четырёх условий превращают список в договор: остальное уводите на отдельную страницу.",
@@ -590,6 +810,18 @@
             "type": "text",
             "default": "Попробуйте спокойно: деньги вернём без объяснений",
             "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -605,7 +837,9 @@
                 "the period written on the seal: \"guarantee\" without a number of days promises nothing",
                 "the link to the full terms next to the button: it removes the suspicion that the terms are hidden",
                 "the divider between the columns switching sides between the narrow and wide layouts",
-                "the <style> block inside the component — it holds the palette, the seal and the layout"
+                "the <style> block inside the component — it holds the palette, the seal and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "badge — the text on the seal, keep it to three or four words",
@@ -613,9 +847,11 @@
                 "the terms array — the conditions and their explanations",
                 "actionLabel, actionHref, secondaryLabel and secondaryHref — the button and the terms link",
                 "smallPrint — the small-print paragraph",
-                "the accent through the accent prop — it colours the seal, the button and focus"
+                "the accent through the accent prop — it colours the seal, the button and focus",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not promise anything the contract does not: this text gets quoted in disputes.",
                 "More than four words do not fit inside the seal — shorten them.",
                 "More than four terms turn the list into a contract: move the rest to a separate page.",
@@ -631,11 +867,42 @@
               "title": {
                 "label": "Heading",
                 "default": "Try it calmly: we refund without questions"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Guarantee CTA"
+            "title": "Guarantee CTA",
+            "preview": {
+              "props": {
+                "badge": "60-day guarantee",
+                "title": "Try it calmly: we refund without questions",
+                "description": "We do not hold clients with a contract. If in two months the service has not replaced your spreadsheet and your chat threads, we return the payment in full.",
+                "actionLabel": "Subscribe",
+                "secondaryLabel": "Read the terms",
+                "terms": [
+                  {
+                    "term": "Money back for 60 days",
+                    "detail": "Write to support — we return the full amount without asking why."
+                  },
+                  {
+                    "term": "Unused days carry over",
+                    "detail": "If you paused the work, the remaining time is kept for a year."
+                  },
+                  {
+                    "term": "Price fixed for a year",
+                    "detail": "Your rate does not change until the paid period ends, even if the price has gone up."
+                  }
+                ],
+                "smallPrint": "The refund is issued to the original payment method within ten working days. The guarantee covers the first paid period and does not apply to a repeat subscription after a refund. The cost of connected third-party services is not returned."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

@@ -13,6 +13,16 @@ export type Select026Props = Omit<
   maxOption?: number
   defaultValue?: number
   lowStockThreshold?: number
+  /** Подпись при нулевом остатке: компонент несёт русскую. */
+  outOfStockText?: string
+  /** Подпись при малом остатке, {count} — число штук. */
+  lowStockText?: string
+  /** Подпись при обычном остатке, {count} — число штук. */
+  inStockText?: string
+  /** Заглушка в списке, когда выбирать нечего. */
+  emptyOptionText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,15 +32,15 @@ export type Select026Props = Omit<
 // он близок к нулю, чтобы решение "успею ли я" принималось до оформления.
 const STYLES = `
 :where([data-vibeui-block="select-026"]){
---vibeui-select-026-surface:oklch(1 0 0);
---vibeui-select-026-surface-border:oklch(0.91 0.006 265);
---vibeui-select-026-fg:oklch(0.22 0.014 265);
---vibeui-select-026-muted:oklch(0.55 0.014 265);
---vibeui-select-026-field:oklch(0.985 0.002 265);
---vibeui-select-026-border:oklch(0.87 0.008 265);
---vibeui-select-026-accent:oklch(0.55 0.19 262);
---vibeui-select-026-warn:oklch(0.6 0.19 45);
---vibeui-select-026-danger:oklch(0.55 0.21 25);
+--vibeui-select-026-surface:transparent;
+--vibeui-select-026-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-select-026-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-select-026-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-026-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-select-026-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.012 265));
+--vibeui-select-026-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
+--vibeui-select-026-warn:light-dark(oklch(0.6 0.19 45),oklch(0.79 0.15 62));
+--vibeui-select-026-danger:light-dark(oklch(0.55 0.21 25),oklch(0.72 0.17 25));
 --vibeui-select-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="select-026"]{
@@ -77,6 +87,28 @@ transform:rotate(45deg);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Select количества, ограниченный остатком на складе: вариантов выше
  * остатка нет в списке, а подпись сообщает, сколько штук осталось, и
  * меняет тон при малом остатке. Один файл, ноль зависимостей.
@@ -88,6 +120,11 @@ export function Select026({
   maxOption = 10,
   defaultValue = 1,
   lowStockThreshold = 3,
+  outOfStockText = "Нет в наличии",
+  lowStockText = "Осталось всего {count} шт.",
+  inStockText = "В наличии: {count} шт.",
+  emptyOptionText = "—",
+  background = "",
   accent,
   id,
   className,
@@ -114,13 +151,20 @@ export function Select026({
 
   const hint =
     available === 0
-      ? "Нет в наличии"
-      : available <= lowStockThreshold
-        ? `Осталось всего ${available} шт.`
-        : `В наличии: ${available} шт.`
+      ? outOfStockText
+      : (available <= lowStockThreshold ? lowStockText : inStockText).replace(
+          "{count}",
+          String(available),
+        )
 
   const palette = {
     ...(accent ? { "--vibeui-select-026-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-select-026-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -147,7 +191,7 @@ export function Select026({
             onChange={(event) => setQuantity(Number(event.target.value))}
           >
             {options.length === 0 ? (
-              <option value="">—</option>
+              <option value="">{emptyOptionText}</option>
             ) : (
               options.map((count) => (
                 <option key={count} value={count}>

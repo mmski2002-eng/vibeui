@@ -14,10 +14,17 @@ export type Combobox005Props = Omit<
   label?: string
   placeholder?: string
   options?: string[]
+  /** Подпись строки создания. {query} — то, что набрано в поле. */
   createLabel?: string
   newBadge?: string
+  /** Подпись выбранного под списком. {value} — выбранное значение. */
+  selectedText?: string
+  /** Подпись под списком, пока ничего не выбрано. */
+  emptyText?: string
   defaultValue?: string
   onSelect?: (value: string, created: boolean) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,13 +34,13 @@ export type Combobox005Props = Omit<
 // и Enter, а не отдельной кнопкой мимо клавиатуры.
 const STYLES = `
 :where([data-vibeui-block="combobox-005"]){
---vibeui-combobox-005-bg:oklch(1 0 0);
---vibeui-combobox-005-fg:oklch(0.22 0.02 150);
---vibeui-combobox-005-muted:oklch(0.52 0.02 150);
---vibeui-combobox-005-border:oklch(0.9 0.01 150);
---vibeui-combobox-005-field:oklch(0.985 0.005 150);
---vibeui-combobox-005-active:oklch(0.95 0.04 150);
---vibeui-combobox-005-accent:oklch(0.5 0.13 150);
+--vibeui-combobox-005-bg:transparent;
+--vibeui-combobox-005-fg:light-dark(oklch(0.22 0.02 150),oklch(0.94 0.008 150));
+--vibeui-combobox-005-muted:light-dark(oklch(0.52 0.02 150),oklch(0.7 0.016 150));
+--vibeui-combobox-005-border:light-dark(oklch(0.9 0.01 150),oklch(0.37 0.016 150));
+--vibeui-combobox-005-field:light-dark(oklch(0.985 0.005 150),oklch(0.3 0.014 150));
+--vibeui-combobox-005-active:light-dark(oklch(0.95 0.04 150),oklch(0.36 0.045 150));
+--vibeui-combobox-005-accent:light-dark(oklch(0.5 0.13 150),oklch(0.78 0.14 150));
 --vibeui-combobox-005-radius:0.625rem;
 --vibeui-combobox-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -93,6 +100,28 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая плашка иначе досталась бы тексту
+ * тёмной ветки, потому что light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox с созданием значения: последняя строка списка заводит новую
  * метку прямо из запроса и сразу её выбирает.
  */
@@ -100,10 +129,13 @@ export function Combobox005({
   label = "Метка задачи",
   placeholder = "Найти или создать",
   options = DEFAULT_OPTIONS,
-  createLabel = "Создать",
+  createLabel = "Создать «{query}»",
   newBadge = "новая",
+  selectedText = "Выбрано: {value}",
+  emptyText = "Ничего не выбрано",
   defaultValue = "",
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -132,6 +164,12 @@ export function Combobox005({
   const rows = canCreate ? [...matches, needle] : matches
   const palette = {
     ...(accent ? { "--vibeui-combobox-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -236,7 +274,7 @@ export function Combobox005({
                     <span data-part="plus" aria-hidden="true">
                       +
                     </span>
-                    {createLabel} «{option}»
+                    {createLabel.replace("{query}", option)}
                   </>
                 ) : (
                   <>
@@ -251,7 +289,7 @@ export function Combobox005({
           })}
         </ul>
         <p data-part="hint" aria-live="polite">
-          {value ? `Выбрано: ${value}` : "Ничего не выбрано"}
+          {value ? selectedText.replace("{value}", value) : emptyText}
         </p>
       </div>
     </>

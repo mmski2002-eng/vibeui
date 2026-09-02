@@ -21,6 +21,8 @@ export type Dropdown010Props = Omit<
   menuWidth?: number
   items?: Dropdown010Item[]
   accent?: string
+  /** Подложка панели и меню. Пусто — собственный фон по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: пункт из двух строк — название и пояснение под ним. Меню
@@ -28,14 +30,18 @@ export type Dropdown010Props = Omit<
 // одинаково важно, пока не сказано, для чего каждая. Ширина меню задаётся
 // переменной, потому что пояснение в две строки на 12rem превращается в кашу.
 // Пояснение связано с пунктом через aria-describedby, а не просто лежит рядом.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте панель светлее фона страницы, а её граница светлее панели.
 const STYLES = `
 :where([data-vibeui-block="dropdown-010"]){
---vibeui-dropdown-010-bg:oklch(1 0 0);
---vibeui-dropdown-010-fg:oklch(0.24 0.014 265);
---vibeui-dropdown-010-muted:oklch(0.55 0.014 265);
---vibeui-dropdown-010-border:oklch(0.9 0.006 265);
---vibeui-dropdown-010-hover:oklch(0.96 0.004 265);
---vibeui-dropdown-010-accent:oklch(0.55 0.16 190);
+--vibeui-dropdown-010-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-dropdown-010-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-dropdown-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dropdown-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-dropdown-010-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
+--vibeui-dropdown-010-accent:light-dark(oklch(0.55 0.16 190),oklch(0.74 0.13 190));
+--vibeui-dropdown-010-on-accent:light-dark(oklch(0.99 0 0),oklch(0.19 0.03 190));
 --vibeui-dropdown-010-width:18rem;
 --vibeui-dropdown-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -50,7 +56,7 @@ appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;gap:0.4375rem;
 height:2.125rem;padding:0 0.875rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-dropdown-010-accent);color:oklch(0.99 0 0);
+background:var(--vibeui-dropdown-010-accent);color:var(--vibeui-dropdown-010-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 anchor-name:--vibeui-dropdown-010-anchor;
 transition:filter .16s ease;
@@ -126,6 +132,28 @@ const DEFAULT_ITEMS: Dropdown010Item[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function stepFocus(menu: HTMLElement | null, delta: number) {
   if (!menu) {
     return
@@ -152,6 +180,7 @@ export function Dropdown010({
   menuWidth = 18,
   items = DEFAULT_ITEMS,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -162,6 +191,12 @@ export function Dropdown010({
   const palette = {
     "--vibeui-dropdown-010-width": `${menuWidth}rem`,
     ...(accent ? { "--vibeui-dropdown-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dropdown-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -15,7 +15,17 @@ export type Otp003Props = Omit<
   label?: string
   length?: number
   seconds?: number
+  /** Подпись клетки для screen reader: {index} — номер, {total} — всего. */
+  digitLabel?: string
+  /** Строка ожидания: {time} — остаток в формате м:сс. */
+  waitText?: string
+  /** Строка после отсчёта, когда повтор уже доступен. */
+  readyText?: string
+  /** Подпись кнопки повторной отправки. */
+  resendText?: string
   onChange?: (code: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,19 +36,19 @@ export type Otp003Props = Omit<
 // вкладку сворачивают, таймеры в фоне тормозят, и счёт по тикам врёт.
 const STYLES = `
 :where([data-vibeui-block="otp-003"]){
---vibeui-otp-003-surface:oklch(1 0 0);
---vibeui-otp-003-shell:oklch(0.91 0.006 265);
---vibeui-otp-003-fg:oklch(0.21 0.014 265);
---vibeui-otp-003-muted:oklch(0.56 0.014 265);
---vibeui-otp-003-field:oklch(0.98 0.002 265);
---vibeui-otp-003-border:oklch(0.87 0.008 265);
---vibeui-otp-003-accent:oklch(0.5 0.16 240);
+--vibeui-otp-003-bg:transparent;
+--vibeui-otp-003-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-otp-003-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-otp-003-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-otp-003-field:light-dark(oklch(0.98 0.002 265),oklch(0.26 0.014 265));
+--vibeui-otp-003-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-otp-003-accent:light-dark(oklch(0.5 0.16 240),oklch(0.74 0.14 240));
 --vibeui-otp-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="otp-003"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
-background:var(--vibeui-otp-003-surface);
+background:var(--vibeui-otp-003-bg);
 border:1px solid var(--vibeui-otp-003-shell);border-radius:0.875rem;
 font-family:var(--vibeui-otp-003-font);color:var(--vibeui-otp-003-fg);
 }
@@ -100,6 +110,28 @@ function clock(total: number) {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Код подтверждения с таймером повторной отправки и полосой остатка времени.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -107,7 +139,12 @@ export function Otp003({
   label = "Код из письма",
   length = 6,
   seconds = 45,
+  digitLabel = "Цифра {index} из {total}",
+  waitText = "Новый код можно запросить через {time}",
+  readyText = "Код не пришёл? Запросите новый.",
+  resendText = "Выслать снова",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -135,8 +172,19 @@ export function Otp003({
 
   const palette = {
     ...(accent ? { "--vibeui-otp-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-otp-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const digitName = (index: number) =>
+    digitLabel
+      .replace("{index}", String(index + 1))
+      .replace("{total}", String(size))
 
   const push = (next: string[]) => {
     setCode(next)
@@ -198,7 +246,7 @@ export function Otp003({
               maxLength={1}
               placeholder=" "
               value={digit}
-              aria-label={`Цифра ${index + 1} из ${size}`}
+              aria-label={digitName(index)}
               onChange={(event) => type(index, event.target.value)}
               onPaste={paste}
               onKeyDown={(event) => onKeyDown(event, index)}
@@ -213,9 +261,7 @@ export function Otp003({
         </div>
         <div data-part="foot">
           <span data-part="left" aria-live="polite">
-            {left > 0
-              ? `Новый код можно запросить через ${clock(left)}`
-              : "Код не пришёл? Запросите новый."}
+            {left > 0 ? waitText.replace("{time}", clock(left)) : readyText}
           </span>
           <button
             type="button"
@@ -228,7 +274,7 @@ export function Otp003({
               boxes.current[0]?.focus()
             }}
           >
-            Выслать снова
+            {resendText}
           </button>
         </div>
       </div>

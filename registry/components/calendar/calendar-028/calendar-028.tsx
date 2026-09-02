@@ -15,6 +15,15 @@ export type Calendar028Props = Omit<
   openTo?: number
   busy?: Calendar028Busy[]
   locale?: string
+  /**
+   * Подписи: компонент несёт русские, проект подставляет свои.
+   * {time}, {who}, {count} и {unit} подставляются при сборке строки.
+   */
+  text?: Record<string, string>
+  /** Три формы склонения слова «час»: 1 / 2 / 5. */
+  hourForms?: [string, string, string]
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   onBook?: (from: number, to: number) => void
   accent?: string
 }
@@ -25,15 +34,16 @@ export type Calendar028Props = Omit<
 // а попытка перепрыгнуть через чужую бронь ловится отдельным сообщением.
 const STYLES = `
 :where([data-vibeui-block="calendar-028"]){
---vibeui-calendar-028-bg:oklch(1 0 0);
---vibeui-calendar-028-fg:oklch(0.23 0.014 200);
---vibeui-calendar-028-muted:oklch(0.57 0.014 200);
---vibeui-calendar-028-border:oklch(0.91 0.008 200);
---vibeui-calendar-028-soft:oklch(0.97 0.006 200);
---vibeui-calendar-028-busy:oklch(0.94 0.02 25);
---vibeui-calendar-028-busyfg:oklch(0.48 0.1 25);
---vibeui-calendar-028-accent:oklch(0.5 0.11 200);
---vibeui-calendar-028-accentsoft:oklch(0.93 0.05 200);
+--vibeui-calendar-028-bg:transparent;
+--vibeui-calendar-028-fg:light-dark(oklch(0.23 0.014 200),oklch(0.94 0.005 200));
+--vibeui-calendar-028-muted:light-dark(oklch(0.57 0.014 200),oklch(0.68 0.012 200));
+--vibeui-calendar-028-border:light-dark(oklch(0.91 0.008 200),oklch(0.34 0.014 200));
+--vibeui-calendar-028-soft:light-dark(oklch(0.97 0.006 200),oklch(0.27 0.01 200));
+--vibeui-calendar-028-busy:light-dark(oklch(0.94 0.02 25),oklch(0.36 0.05 25));
+--vibeui-calendar-028-busyfg:light-dark(oklch(0.48 0.1 25),oklch(0.86 0.08 25));
+--vibeui-calendar-028-accent:light-dark(oklch(0.5 0.11 200),oklch(0.73 0.11 200));
+--vibeui-calendar-028-accentsoft:light-dark(oklch(0.93 0.05 200),oklch(0.32 0.05 200));
+--vibeui-calendar-028-onaccent:light-dark(oklch(0.99 0 0),oklch(0.17 0.02 200));
 --vibeui-calendar-028-radius:0.7rem;
 --vibeui-calendar-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -98,7 +108,7 @@ margin:0;font-size:0.8125rem;color:var(--vibeui-calendar-028-muted);
 [data-vibeui-block="calendar-028"] [data-part="book"]{
 appearance:none;cursor:pointer;font:inherit;flex:none;
 padding:0.45rem 0.85rem;border:0;border-radius:0.55rem;
-background:var(--vibeui-calendar-028-accent);color:var(--vibeui-calendar-028-bg);
+background:var(--vibeui-calendar-028-accent);color:var(--vibeui-calendar-028-onaccent);
 font-size:0.8125rem;font-weight:600;
 transition:opacity .16s ease;
 }
@@ -114,6 +124,24 @@ const BUSY: Calendar028Busy[] = [
   { from: 13, to: 15, who: "Демо для заказчика" },
   { from: 18, to: 19, who: "Ретро" },
 ]
+
+const TEXT: Record<string, string> = {
+  busyAria: "{time} занято: {who}",
+  freeAria: "{time} свободно",
+  free: "свободно",
+  overlap: "В интервале есть чужая бронь",
+  chosenTail: ", {count} {unit}",
+  started: "Начало {time}: выберите последний час",
+  empty: "Выберите первый свободный час",
+  book: "Забронировать",
+}
+
+/** Подстановка {placeholder} в шаблон подписи. */
+function fill(template: string, values: Record<string, string>) {
+  return template.replace(/\{(\w+)\}/g, (whole, key: string) =>
+    key in values ? values[key] : whole,
+  )
+}
 
 function clock(hour: number) {
   return `${String(hour).padStart(2, "0")}:00`
@@ -131,6 +159,28 @@ function pluralize(count: number, forms: [string, string, string]) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Доступность переговорки по часам: интервал набирается двумя нажатиями.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -141,6 +191,9 @@ export function Calendar028({
   openTo = 20,
   busy = BUSY,
   locale = "ru-RU",
+  text = TEXT,
+  hourForms = ["час", "часа", "часов"],
+  background = "",
   onBook,
   accent,
   className,
@@ -171,7 +224,7 @@ export function Calendar028({
 
     for (let step = start; step <= hour; step += 1) {
       if (owner(step)) {
-        setError("В интервале есть чужая бронь")
+        setError(text.overlap ?? TEXT.overlap)
 
         return
       }
@@ -195,6 +248,12 @@ export function Calendar028({
 
   const palette = {
     ...(accent ? { "--vibeui-calendar-028-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-028-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -226,13 +285,20 @@ export function Calendar028({
                   disabled={Boolean(taken)}
                   aria-label={
                     taken
-                      ? `${clock(hour)} занято: ${taken}`
-                      : `${clock(hour)} свободно`
+                      ? fill(text.busyAria ?? TEXT.busyAria, {
+                          time: clock(hour),
+                          who: taken,
+                        })
+                      : fill(text.freeAria ?? TEXT.freeAria, {
+                          time: clock(hour),
+                        })
                   }
                   onClick={() => pick(hour)}
                 >
                   <span data-part="clock">{clock(hour)}</span>
-                  <span data-part="who">{taken || "свободно"}</span>
+                  <span data-part="who">
+                    {taken || (text.free ?? TEXT.free)}
+                  </span>
                 </button>
               </li>
             )
@@ -247,12 +313,15 @@ export function Calendar028({
                 <b>
                   {clock(start ?? 0)}—{clock(end ?? 0)}
                 </b>
-                , {length} {pluralize(length, ["час", "часа", "часов"])}
+                {fill(text.chosenTail ?? TEXT.chosenTail, {
+                  count: String(length),
+                  unit: pluralize(length, hourForms),
+                })}
               </>
             ) : start !== null ? (
-              <>Начало {clock(start)}: выберите последний час</>
+              fill(text.started ?? TEXT.started, { time: clock(start) })
             ) : (
-              "Выберите первый свободный час"
+              (text.empty ?? TEXT.empty)
             )}
           </p>
           <button
@@ -265,7 +334,7 @@ export function Calendar028({
               setError("")
             }}
           >
-            Забронировать
+            {text.book ?? TEXT.book}
           </button>
         </div>
       </section>

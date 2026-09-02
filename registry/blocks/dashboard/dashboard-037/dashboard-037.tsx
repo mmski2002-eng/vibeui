@@ -28,6 +28,20 @@ export type Dashboard037Props = {
   assignLabel?: string
   laterLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подписи счётчиков: waiting, overdue. */
+  countsText?: Record<string, string>
+  /** Подписи приоритетов по ключу заявки. */
+  priorityText?: Record<string, string>
+  /** Шаблон подсказки приоритета: {priority}. */
+  priorityTitle?: string
+  /** Заголовок панели назначения. */
+  panelTitle?: string
+  /** Текст, когда заявка не выбрана. */
+  pickHint?: string
+  /** Пояснение к полосам загрузки. */
+  loadHint?: string
   className?: string
   style?: CSSProperties
 }
@@ -43,15 +57,18 @@ export type Dashboard037Props = {
 // исполнителя нарисована полосой, чтобы назначение не уходило вслепую.
 const STYLES = `
 :where([data-vibeui-block="dashboard-037"]){
---vibeui-dashboard-037-bg:oklch(0.985 0.003 265);
---vibeui-dashboard-037-card:oklch(1 0 0);
---vibeui-dashboard-037-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-037-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-037-border:oklch(0.91 0.006 265);
---vibeui-dashboard-037-accent:oklch(0.54 0.16 250);
---vibeui-dashboard-037-soft:oklch(0.96 0.02 250);
---vibeui-dashboard-037-hot:oklch(0.58 0.19 25);
---vibeui-dashboard-037-warm:oklch(0.68 0.15 68);
+--vibeui-dashboard-037-bg:transparent;
+--vibeui-dashboard-037-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+/* Жёлоб полосы загрузки: подложка блока прозрачна, и рисовать его ею нечем. */
+--vibeui-dashboard-037-track:light-dark(oklch(0.96 0.004 265),oklch(0.21 0.012 265));
+--vibeui-dashboard-037-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-037-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-037-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-dashboard-037-accent:light-dark(oklch(0.54 0.16 250),oklch(0.74 0.15 250));
+--vibeui-dashboard-037-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 250));
+--vibeui-dashboard-037-soft:light-dark(oklch(0.96 0.02 250),oklch(0.32 0.05 250));
+--vibeui-dashboard-037-hot:light-dark(oklch(0.58 0.19 25),oklch(0.74 0.16 25));
+--vibeui-dashboard-037-warm:light-dark(oklch(0.68 0.15 68),oklch(0.8 0.13 68));
 --vibeui-dashboard-037-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -154,7 +171,7 @@ font-size:0.625rem;color:var(--vibeui-dashboard-037-muted);font-variant-numeric:
 }
 [data-vibeui-block="dashboard-037"] [data-part="bar"]{
 display:block;height:0.25rem;margin-top:0.1875rem;border-radius:9999px;
-background:var(--vibeui-dashboard-037-bg);
+background:var(--vibeui-dashboard-037-track);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-037-border);overflow:hidden;
 }
 [data-vibeui-block="dashboard-037"] [data-part="fill"]{
@@ -164,7 +181,7 @@ display:block;height:100%;border-radius:9999px;background:var(--vibeui-dashboard
 [data-vibeui-block="dashboard-037"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;font:inherit;flex:1 1 8rem;
 font-size:0.8125rem;font-weight:700;padding:0.5625rem 0.875rem;border-radius:0.625rem;
-background:var(--vibeui-dashboard-037-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-037-accent);color:var(--vibeui-dashboard-037-on-accent);
 }
 [data-vibeui-block="dashboard-037"] [data-part="later"]{
 appearance:none;cursor:pointer;font:inherit;
@@ -221,6 +238,39 @@ const DEFAULT_WORKERS: Dashboard037Worker[] = [
   { name: "Пётр Хромов", role: "Техподдержка", load: 20, free: "2 из 10" },
 ]
 
+const DEFAULT_COUNTS: Record<string, string> = {
+  waiting: "ждут ответа",
+  overdue: "просрочено",
+}
+
+const DEFAULT_PRIORITIES: Record<string, string> = {
+  Срочно: "Срочно",
+  Обычно: "Обычно",
+  Низкий: "Низкий",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Экран заявок: очередь с приоритетом и сроком ответа слева, назначение
  * исполнителя справа. Один файл, ноль зависимостей, клиентского JS нет.
@@ -236,11 +286,24 @@ export function Dashboard037({
   assignLabel = "Назначить и открыть",
   laterLabel = "Отложить",
   accent,
+  background = "",
+  countsText = DEFAULT_COUNTS,
+  priorityText = DEFAULT_PRIORITIES,
+  priorityTitle = "Приоритет: {priority}",
+  panelTitle = "Назначить исполнителя",
+  pickHint = "Выберите заявку в очереди.",
+  loadHint = "Загрузка считается по открытым заявкам за сегодня.",
   className,
   style,
 }: Dashboard037Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-037-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-037-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -262,10 +325,10 @@ export function Dashboard037({
             <h2>{title}</h2>
             <p data-part="counts">
               <span>
-                ждут ответа <b>{waiting}</b>
+                {countsText.waiting ?? DEFAULT_COUNTS.waiting} <b>{waiting}</b>
               </span>
               <span data-late="">
-                просрочено <b>{overdue}</b>
+                {countsText.overdue ?? DEFAULT_COUNTS.overdue} <b>{overdue}</b>
               </span>
             </p>
           </div>
@@ -289,9 +352,12 @@ export function Dashboard037({
                     <span
                       data-part="prio"
                       data-level={request.priority}
-                      title={`Приоритет: ${request.priority}`}
+                      title={priorityTitle.replace(
+                        "{priority}",
+                        priorityText[request.priority] ?? request.priority,
+                      )}
                     >
-                      {request.priority}
+                      {priorityText[request.priority] ?? request.priority}
                     </span>
                     {request.subject}
                   </span>
@@ -308,12 +374,10 @@ export function Dashboard037({
           </fieldset>
 
           <div data-part="panel">
-            <h3>Назначить исполнителя</h3>
+            <h3>{panelTitle}</h3>
             <p data-part="hint">
-              {current
-                ? `${current.code} · ${current.subject}`
-                : "Выберите заявку в очереди."}{" "}
-              Загрузка считается по открытым заявкам за сегодня.
+              {current ? `${current.code} · ${current.subject}` : pickHint}{" "}
+              {loadHint}
             </p>
 
             {workers.map((worker) => (

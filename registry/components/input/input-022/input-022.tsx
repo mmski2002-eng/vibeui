@@ -14,6 +14,12 @@ export type Input022Props = Omit<
   defaultValue?: number
   defaultUnit?: "a" | "b"
   onChange?: (value: number, unit: string) => void
+  /** Подпись группы кнопок для скринридера. */
+  unitsLabel?: string
+  /** Строка пересчёта; {amount} заменяется значением во второй единице. */
+  convertText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,13 +31,14 @@ export type Input022Props = Omit<
 // двух кнопок, и значение конвертируется по заданному множителю.
 const STYLES = `
 :where([data-vibeui-block="input-022"]){
---vibeui-input-022-surface:oklch(1 0 0);
---vibeui-input-022-shell:oklch(0.91 0.006 265);
---vibeui-input-022-fg:oklch(0.23 0.014 265);
---vibeui-input-022-muted:oklch(0.55 0.014 265);
---vibeui-input-022-field:oklch(0.985 0.002 265);
---vibeui-input-022-border:oklch(0.88 0.008 265);
---vibeui-input-022-accent:oklch(0.55 0.16 40);
+--vibeui-input-022-surface:transparent;
+--vibeui-input-022-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-input-022-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-022-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-input-022-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.011 265));
+--vibeui-input-022-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.013 265));
+--vibeui-input-022-accent:light-dark(oklch(0.55 0.16 40),oklch(0.74 0.15 40));
+--vibeui-input-022-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 40));
 --vibeui-input-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-022"]{
@@ -75,7 +82,7 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="input-022"] [data-part="unit"][data-active="1"]{
-background:var(--vibeui-input-022-accent);color:oklch(1 0 0);
+background:var(--vibeui-input-022-accent);color:var(--vibeui-input-022-on-accent);
 }
 [data-vibeui-block="input-022"] [data-part="unit"]:hover:not([data-active="1"]){
 background:color-mix(in oklab,var(--vibeui-input-022-fg) 8%,transparent);
@@ -97,6 +104,28 @@ function round(value: number) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Число с переключателем единиц из двух кнопок: значение пересчитывается
  * при смене единицы, а не остаётся прежним. Один файл, ноль зависимостей.
  */
@@ -108,6 +137,9 @@ export function Input022({
   defaultValue = 72,
   defaultUnit = "a",
   onChange,
+  unitsLabel = "Единица измерения",
+  convertText = "Это ≈ {amount}.",
+  background = "",
   accent,
   className,
   style,
@@ -119,12 +151,19 @@ export function Input022({
 
   const palette = {
     ...(accent ? { "--vibeui-input-022-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-022-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
   const currentLabel = unit === "a" ? unitA : unitB
   const otherLabel = unit === "a" ? unitB : unitA
   const other = round(unit === "a" ? value * factor : value / factor)
+  const [convertBefore, convertAfter] = convertText.split("{amount}")
 
   const switchTo = (next: "a" | "b") => {
     if (next === unit) return
@@ -160,7 +199,7 @@ export function Input022({
               onChange?.(next, currentLabel)
             }}
           />
-          <span data-part="units" role="group" aria-label="Единица измерения">
+          <span data-part="units" role="group" aria-label={unitsLabel}>
             <button
               type="button"
               data-part="unit"
@@ -182,11 +221,11 @@ export function Input022({
           </span>
         </div>
         <p data-part="note" id={`${id}-note`} aria-live="polite">
-          Это ≈{" "}
+          {convertBefore}
           <b>
             {other} {otherLabel}
           </b>
-          .
+          {convertAfter}
         </p>
       </div>
     </>

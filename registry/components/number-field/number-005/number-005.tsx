@@ -10,6 +10,16 @@ export type Number005Props = Omit<
   label?: string
   defaultValue?: number
   defaultUnit?: "кг" | "фунты"
+  /** Подписи кнопок переключателя: компонент несёт русские. */
+  unitText?: Record<string, string>
+  /** Названия единиц в строке эквивалента. */
+  mirrorUnitText?: Record<string, string>
+  /** Строка эквивалента. Подстановка: {value}. */
+  mirrorText?: string
+  /** Подпись группы кнопок для скринридера. */
+  unitsLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,19 +28,24 @@ export type Number005Props = Omit<
 // молча испортить данные, поэтому 70 кг становятся 154.3 фунта. Внутри
 // компонент всегда держит килограммы: одна база и одно место округления
 // избавляют от накопления ошибки при щелчках туда-обратно.
+//
+// Тема берётся из color-scheme окружения через light-dark(): поле темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="number-005"]){
---vibeui-number-005-surface:oklch(1 0 0);
---vibeui-number-005-field:oklch(1 0 0);
---vibeui-number-005-shell:oklch(0.9 0.006 265);
---vibeui-number-005-fg:oklch(0.23 0.014 265);
---vibeui-number-005-muted:oklch(0.55 0.014 265);
---vibeui-number-005-border:oklch(0.88 0.008 265);
---vibeui-number-005-switch:oklch(0.96 0.004 265);
---vibeui-number-005-accent:oklch(0.5 0.14 195);
+--vibeui-number-005-surface:transparent;
+--vibeui-number-005-chip:light-dark(oklch(1 0 0),oklch(0.32 0.013 265));
+--vibeui-number-005-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-number-005-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-number-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-number-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-number-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-number-005-switch:light-dark(oklch(0.96 0.004 265),oklch(0.22 0.01 265));
+--vibeui-number-005-accent:light-dark(oklch(0.5 0.14 195),oklch(0.72 0.12 195));
+--vibeui-number-005-ring:light-dark(oklch(0.5 0.14 195 / 20%),oklch(0.72 0.12 195 / 30%));
 --vibeui-number-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="number-005"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:18rem;box-sizing:border-box;padding:0.875rem;
@@ -47,7 +62,7 @@ background:var(--vibeui-number-005-field);
 }
 [data-vibeui-block="number-005"] [data-part="row"]:focus-within{
 border-color:var(--vibeui-number-005-accent);
-box-shadow:0 0 0 2px oklch(0.5 0.14 195 / 20%);
+box-shadow:0 0 0 2px var(--vibeui-number-005-ring);
 }
 [data-vibeui-block="number-005"] input{
 flex:1 1 auto;min-width:0;width:100%;
@@ -71,7 +86,7 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 transition:background-color .14s ease,color .14s ease;
 }
 [data-vibeui-block="number-005"] button[aria-pressed="true"]{
-background:var(--vibeui-number-005-surface);color:var(--vibeui-number-005-fg);
+background:var(--vibeui-number-005-chip);color:var(--vibeui-number-005-fg);
 box-shadow:0 1px 2px oklch(0.2 0.02 265 / 14%);
 }
 [data-vibeui-block="number-005"] button:focus-visible{outline:2px solid var(--vibeui-number-005-accent);outline-offset:2px}
@@ -86,8 +101,33 @@ font-variant-numeric:tabular-nums;
 
 const POUNDS_IN_KILOGRAM = 2.2046226218
 
+const UNIT_TEXT: Record<string, string> = { кг: "кг", фунты: "lb" }
+const MIRROR_UNIT_TEXT: Record<string, string> = { кг: "кг", фунты: "фунта" }
+
 function round(value: number) {
   return Math.round(value * 10) / 10
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -98,6 +138,11 @@ export function Number005({
   label = "Вес посылки",
   defaultValue = 12.5,
   defaultUnit = "кг",
+  unitText = UNIT_TEXT,
+  mirrorUnitText = MIRROR_UNIT_TEXT,
+  mirrorText = "Это же значение: {value}",
+  unitsLabel = "Единица измерения",
+  background = "",
   accent,
   className,
   style,
@@ -113,11 +158,18 @@ export function Number005({
   const shown = unit === "кг" ? kilograms : kilograms * POUNDS_IN_KILOGRAM
   const mirror =
     unit === "кг"
-      ? `${round(kilograms * POUNDS_IN_KILOGRAM)} фунта`
-      : `${round(kilograms)} кг`
+      ? `${round(kilograms * POUNDS_IN_KILOGRAM)} ${mirrorUnitText["фунты"] ?? MIRROR_UNIT_TEXT["фунты"]}`
+      : `${round(kilograms)} ${mirrorUnitText["кг"] ?? MIRROR_UNIT_TEXT["кг"]}`
+  const [mirrorBefore, mirrorAfter] = mirrorText.split("{value}")
 
   const palette = {
     ...(accent ? { "--vibeui-number-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-number-005-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -148,7 +200,7 @@ export function Number005({
               setKilograms(unit === "кг" ? next : next / POUNDS_IN_KILOGRAM)
             }}
           />
-          <div data-part="units" role="group" aria-label="Единица измерения">
+          <div data-part="units" role="group" aria-label={unitsLabel}>
             {(["кг", "фунты"] as const).map((option) => (
               <button
                 key={option}
@@ -156,13 +208,15 @@ export function Number005({
                 aria-pressed={unit === option}
                 onClick={() => setUnit(option)}
               >
-                {option === "кг" ? "кг" : "lb"}
+                {unitText[option] ?? UNIT_TEXT[option]}
               </button>
             ))}
           </div>
         </div>
         <p id={`${id}-mirror`} data-part="mirror" aria-live="polite">
-          Это же значение: <b>{mirror}</b>
+          {mirrorBefore}
+          <b>{mirror}</b>
+          {mirrorAfter}
         </p>
       </div>
     </>

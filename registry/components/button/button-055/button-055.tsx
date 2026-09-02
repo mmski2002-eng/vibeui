@@ -13,6 +13,10 @@ export type Button055Props = Omit<
   /** Подпись в заблокированном состоянии: она объясняет, что делать. */
   lockedLabel?: string
   onConfirm?: () => void
+  /** Цвет взведённого состояния. */
+  danger?: string
+  /** Поверхность кнопки в покое. Пусто — своя, из палитры. */
+  background?: string
 }
 
 // Идея компонента: предохранитель на клавише. Опасное действие остаётся
@@ -22,10 +26,10 @@ export type Button055Props = Omit<
 // оставила бы кнопку взведённой.
 const STYLES = `
 :where([data-vibeui-block="button-055"]){
---vibeui-button-055-locked:oklch(0.93 0.004 265);
---vibeui-button-055-locked-fg:oklch(0.52 0.014 265);
---vibeui-button-055-border:oklch(0.86 0.006 265);
---vibeui-button-055-danger:oklch(0.55 0.2 25);
+--vibeui-button-055-locked:light-dark(oklch(0.93 0.004 265),oklch(0.27 0.012 265));
+--vibeui-button-055-locked-fg:light-dark(oklch(0.52 0.014 265),oklch(0.73 0.012 265));
+--vibeui-button-055-border:light-dark(oklch(0.86 0.006 265),oklch(0.43 0.014 265));
+--vibeui-button-055-danger:light-dark(oklch(0.55 0.2 25),oklch(0.63 0.19 25));
 --vibeui-button-055-fg:oklch(0.99 0.02 25);
 --vibeui-button-055-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-button-055-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
@@ -75,6 +79,29 @@ const FLAG = {
 } as const
 
 /**
+ * Ветка темы для заданной поверхности. Без неё светлая заливка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Опасное действие с предохранителем: доступно, только пока держат клавишу.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -83,12 +110,25 @@ export function Button055({
   modifier = "Alt",
   lockedLabel = "Удерживайте, чтобы стереть",
   onConfirm,
+  danger,
+  background = "",
   type = "button",
   className,
   style,
   ...props
 }: Button055Props) {
   const [armed, setArmed] = useState(false)
+
+  const palette = {
+    ...(danger ? { "--vibeui-button-055-danger": danger } : null),
+    ...(background
+      ? {
+          "--vibeui-button-055-locked": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   useEffect(() => {
     const flag = FLAG[modifier]
@@ -117,7 +157,7 @@ export function Button055({
         data-vibeui-block="button-055"
         data-armed={String(armed)}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
         aria-disabled={!armed}
         onClick={(event) => {
           if (!armed) {

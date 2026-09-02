@@ -22,6 +22,22 @@ export type Dashboard084Props = {
   days?: Dashboard084Day[]
   onCallNow?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Заголовки колонок сетки: компонент несёт русские. */
+  weekdays?: string[]
+  /** Подпись перед именем текущего дежурного. */
+  nowLabel?: string
+  /** Уточнение о текущей смене рядом с телефоном. */
+  shiftNote?: string
+  /** Подпись кнопки звонка. */
+  callLabel?: string
+  /** Что написано в клетке без дежурного. */
+  offLabel?: string
+  /** Пометка ночной смены в клетке. */
+  nightLabel?: string
+  /** Пояснения к легенде помимо списка людей. */
+  legendNotes?: string[]
   className?: string
   style?: CSSProperties
 }
@@ -36,15 +52,21 @@ export type Dashboard084Props = {
 // стабильной. Ночная смена помечена не только тоном, но и полосой у нижнего
 // края клетки: цвета в календаре быстро сливаются. Обмен смены подписан прямо
 // в клетке — договорённость, которой нет в календаре, не существует.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-084"]){
---vibeui-dashboard-084-bg:oklch(0.985 0.003 260);
---vibeui-dashboard-084-card:oklch(1 0 0);
---vibeui-dashboard-084-fg:oklch(0.21 0.014 260);
---vibeui-dashboard-084-muted:oklch(0.54 0.014 260);
---vibeui-dashboard-084-border:oklch(0.91 0.006 260);
---vibeui-dashboard-084-accent:oklch(0.52 0.15 260);
---vibeui-dashboard-084-soft:oklch(0.965 0.02 260);
+--vibeui-dashboard-084-bg:transparent;
+/* Клетка календаря и выходной день: подложка самого блока прозрачна. */
+--vibeui-dashboard-084-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 260));
+--vibeui-dashboard-084-inset:light-dark(oklch(0.985 0.003 260),oklch(0.22 0.012 260));
+--vibeui-dashboard-084-fg:light-dark(oklch(0.21 0.014 260),oklch(0.94 0.005 260));
+--vibeui-dashboard-084-muted:light-dark(oklch(0.54 0.014 260),oklch(0.72 0.012 260));
+--vibeui-dashboard-084-border:light-dark(oklch(0.91 0.006 260),oklch(0.36 0.012 260));
+--vibeui-dashboard-084-accent:light-dark(oklch(0.52 0.15 260),oklch(0.74 0.14 260));
+--vibeui-dashboard-084-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 260));
+--vibeui-dashboard-084-soft:light-dark(oklch(0.965 0.02 260),oklch(0.3 0.035 260));
 --vibeui-dashboard-084-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -64,14 +86,14 @@ border:1px solid var(--vibeui-dashboard-084-border);border-radius:1rem;padding:1
 display:flex;flex-wrap:wrap;align-items:center;gap:0.375rem 0.75rem;
 padding:0.6875rem 0.8125rem;border-radius:0.875rem;font-size:0.8125rem;
 background:var(--vibeui-dashboard-084-soft);
-border:1px solid color-mix(in oklab,var(--vibeui-dashboard-084-accent) 25%,white);
+border:1px solid color-mix(in oklab,var(--vibeui-dashboard-084-accent) 25%,light-dark(white,black));
 }
 [data-vibeui-block="dashboard-084"] [data-part="now"] b{font-size:0.9375rem;font-weight:750}
 [data-vibeui-block="dashboard-084"] [data-part="now"] span{color:var(--vibeui-dashboard-084-muted);font-size:0.75rem}
 [data-vibeui-block="dashboard-084"] [data-part="call"]{
 margin-left:auto;appearance:none;border:0;cursor:pointer;font:inherit;
 font-size:0.75rem;font-weight:700;padding:0.375rem 0.8125rem;border-radius:0.5rem;
-background:var(--vibeui-dashboard-084-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-084-accent);color:var(--vibeui-dashboard-084-on-accent);
 }
 [data-vibeui-block="dashboard-084"] [data-part="grid"]{
 display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0.25rem;
@@ -88,15 +110,15 @@ background:var(--vibeui-dashboard-084-card);border:1px solid var(--vibeui-dashbo
 [data-vibeui-block="dashboard-084"] [data-part="cell"][data-today="true"]{
 border-color:var(--vibeui-dashboard-084-fg);border-width:2px;
 }
-[data-vibeui-block="dashboard-084"] [data-part="cell"][data-kind="off"]{background:var(--vibeui-dashboard-084-bg)}
+[data-vibeui-block="dashboard-084"] [data-part="cell"][data-kind="off"]{background:var(--vibeui-dashboard-084-inset)}
 [data-vibeui-block="dashboard-084"] [data-part="date"]{font-size:0.6875rem;font-weight:750;font-variant-numeric:tabular-nums}
 [data-vibeui-block="dashboard-084"] [data-part="who"]{
 font-size:0.625rem;font-weight:700;line-height:1.25;overflow-wrap:anywhere;
 }
 [data-vibeui-block="dashboard-084"] [data-part="chip"]{
 display:inline-block;padding:0.0625rem 0.25rem;border-radius:0.25rem;
-background:color-mix(in oklab,var(--vibeui-dashboard-084-hue) 16%,white);
-color:color-mix(in oklab,var(--vibeui-dashboard-084-hue) 82%,black);
+background:color-mix(in oklab,var(--vibeui-dashboard-084-hue) 16%,light-dark(white,black));
+color:color-mix(in oklab,var(--vibeui-dashboard-084-hue) 82%,light-dark(black,white));
 }
 /* Ночная смена: полоса у нижнего края, а не только другой оттенок. */
 [data-vibeui-block="dashboard-084"] [data-part="cell"][data-kind="night"]::after{
@@ -128,6 +150,8 @@ const DEFAULT_PEOPLE: Dashboard084Person[] = [
 ]
 
 const WEEKDAYS = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"]
+
+const LEGEND_NOTES = ["полоса снизу — ночная смена", "жирная рамка — сегодня"]
 
 const DEFAULT_DAYS: Dashboard084Day[] = [
   { date: 9, weekday: "пн", person: "Павел", kind: "day" },
@@ -163,6 +187,28 @@ function hue(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Экран календаря дежурств: текущая смена вынесена в шапку с телефоном, сетка
  * дней раскрашена по хешу имени, ночные смены помечены полосой, обмен смены
  * подписан в клетке. Один файл, ноль зависимостей, клиентского JS нет.
@@ -174,11 +220,25 @@ export function Dashboard084({
   days = DEFAULT_DAYS,
   onCallNow = "Егор",
   accent,
+  background = "",
+  weekdays = WEEKDAYS,
+  nowLabel = "Сейчас дежурит",
+  shiftNote = "ночная смена, до 10:00 завтра",
+  callLabel = "Позвонить дежурному",
+  offLabel = "без дежурного",
+  nightLabel = "ночь",
+  legendNotes = LEGEND_NOTES,
   className,
   style,
 }: Dashboard084Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-084-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-084-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -202,17 +262,17 @@ export function Dashboard084({
           </div>
 
           <div data-part="now">
-            <span>Сейчас дежурит</span>
+            <span>{nowLabel}</span>
             <b>{current?.name ?? onCallNow}</b>
             <span>{current?.phone}</span>
-            <span>ночная смена, до 10:00 завтра</span>
+            <span>{shiftNote}</span>
             <button type="button" data-part="call">
-              Позвонить дежурному
+              {callLabel}
             </button>
           </div>
 
           <div data-part="grid">
-            {WEEKDAYS.map((weekday) => (
+            {weekdays.map((weekday) => (
               <div key={weekday} data-part="wd">
                 {weekday}
               </div>
@@ -232,13 +292,13 @@ export function Dashboard084({
                 <span data-part="date">{day.date}</span>
                 <span data-part="who">
                   {day.kind === "off" ? (
-                    <span>без дежурного</span>
+                    <span>{offLabel}</span>
                   ) : (
                     <span data-part="chip">{day.person}</span>
                   )}
                 </span>
                 {day.kind === "night" ? (
-                  <span data-part="swap">ночь</span>
+                  <span data-part="swap">{nightLabel}</span>
                 ) : null}
                 {day.swap ? <span data-part="swap">{day.swap}</span> : null}
               </div>
@@ -256,8 +316,9 @@ export function Dashboard084({
                 {person.name}
               </li>
             ))}
-            <li>полоса снизу — ночная смена</li>
-            <li>жирная рамка — сегодня</li>
+            {legendNotes.map((note) => (
+              <li key={note}>{note}</li>
+            ))}
           </ul>
         </div>
       </section>

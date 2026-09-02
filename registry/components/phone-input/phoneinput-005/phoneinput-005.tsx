@@ -7,7 +7,11 @@ export type Phoneinput005Props = Omit<
 > & {
   label?: string
   example?: string
+  /** Подпись перед образцом. */
+  exampleLabel?: string
   note?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -16,15 +20,18 @@ export type Phoneinput005Props = Omit<
 // помеченный <samp>: это образец, а не введённое значение. Так номер из
 // буфера с любыми скобками и дефисами вставляется без борьбы с полем,
 // а человек всё равно видит, какой вид мы ждём.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="phoneinput-005"]){
---vibeui-phoneinput-005-surface:oklch(1 0 0);
---vibeui-phoneinput-005-surface-border:oklch(0.91 0.006 265);
---vibeui-phoneinput-005-fg:oklch(0.24 0.016 265);
---vibeui-phoneinput-005-muted:oklch(0.54 0.014 265);
---vibeui-phoneinput-005-sample-bg:oklch(0.96 0.004 265);
---vibeui-phoneinput-005-field-border:oklch(0.85 0.01 265);
---vibeui-phoneinput-005-accent:oklch(0.55 0.2 262);
+--vibeui-phoneinput-005-surface:transparent;
+--vibeui-phoneinput-005-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-phoneinput-005-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-phoneinput-005-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-phoneinput-005-sample-bg:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.01 265));
+--vibeui-phoneinput-005-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-phoneinput-005-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
 --vibeui-phoneinput-005-radius:0.625rem;
 --vibeui-phoneinput-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-phoneinput-005-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
@@ -74,13 +81,38 @@ color:var(--vibeui-phoneinput-005-muted);
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Телефон с показанным образцом формата вместо жёсткой маски: поле
  * принимает любой вид записи. Один файл, ноль зависимостей.
  */
 export function Phoneinput005({
   label = "Телефон для связи",
   example = "+7 999 123-45-67",
+  exampleLabel = "Например:",
   note = "Скобки, дефисы и пробелы можно оставить — приведём к одному виду при отправке.",
+  background = "",
   accent,
   className,
   style,
@@ -91,6 +123,12 @@ export function Phoneinput005({
   const noteId = `${id}-note`
   const palette = {
     ...(accent ? { "--vibeui-phoneinput-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-phoneinput-005-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -116,7 +154,7 @@ export function Phoneinput005({
           aria-describedby={`${formatId} ${noteId}`}
         />
         <p data-part="format" id={formatId}>
-          Например: <samp>{example}</samp>
+          {exampleLabel} <samp>{example}</samp>
         </p>
         <p data-part="note" id={noteId}>
           {note}

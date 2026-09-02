@@ -21,6 +21,8 @@ export type Select014Props = Omit<
   name?: string
   people?: Select014Person[]
   defaultValue?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -31,14 +33,14 @@ export type Select014Props = Omit<
 // и цветной кружок внутри option нативного select.
 const STYLES = `
 :where([data-vibeui-block="select-014"]){
---vibeui-select-014-surface:oklch(1 0 0);
---vibeui-select-014-surface-border:oklch(0.91 0.006 265);
---vibeui-select-014-fg:oklch(0.23 0.016 265);
---vibeui-select-014-muted:oklch(0.55 0.014 265);
---vibeui-select-014-border:oklch(0.87 0.008 265);
---vibeui-select-014-accent:oklch(0.55 0.19 262);
---vibeui-select-014-tint:oklch(0.55 0.19 262 / 12%);
---vibeui-select-014-panel:oklch(1 0 0);
+--vibeui-select-014-surface:transparent;
+--vibeui-select-014-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-select-014-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-014-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-014-border:light-dark(oklch(0.87 0.008 265),oklch(0.4 0.012 265));
+--vibeui-select-014-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
+--vibeui-select-014-tint:light-dark(oklch(0.55 0.19 262 / 12%),oklch(0.73 0.17 262 / 20%));
+--vibeui-select-014-panel:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
 --vibeui-select-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="select-014"]{
@@ -144,6 +146,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Select исполнителя: аватар с инициалами и подпись роли у каждого
  * варианта и в самом триггере. Один файл, ноль зависимостей, собственная
  * палитра, клавиатура и listbox — свои.
@@ -153,6 +177,7 @@ export function Select014({
   name,
   people = DEFAULT_PEOPLE,
   defaultValue = people[0]?.value,
+  background = "",
   accent,
   id,
   className,
@@ -229,6 +254,12 @@ export function Select014({
 
   const palette = {
     ...(accent ? { "--vibeui-select-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-select-014-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

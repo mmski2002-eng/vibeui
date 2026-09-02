@@ -16,7 +16,7 @@
           "target": "@components/vibeui/file-001.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-001-*. Клиентский: \"use client\". Зона — <label> со скрытым input type=\"file\", поэтому выбор доступен без мыши. Обработчики dragover и drop отменяют стандартное поведение браузера, состояние наведения выносится в data-over. Список выбранного показывает имена и размеры.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-001-*. Клиентский: \"use client\". Зона — <label> со скрытым input type=\"file\", поэтому выбор доступен без мыши. Обработчики dragover и drop отменяют стандартное поведение браузера, состояние наведения выносится в data-over. Список выбранного показывает имена и размеры. Тема берётся из color-scheme окружения через light-dark(): подложки у зоны по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
         "tags": ["input", "file", "upload", "drag-and-drop"],
         "preview": {
@@ -32,15 +32,20 @@
             "отмену стандартного поведения на dragover — без неё браузер откроет файл",
             "подсветку зоны при наведении файла: иначе непонятно, отпускать ли",
             "список выбранного: без него неясно, что именно улетело",
-            "подпись с форматами и размером рядом, а не в тексте ошибки"
+            "подпись с форматами и размером рядом, а не в тексте ошибки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "label и hint",
             "accept — какие форматы принимаете",
             "обработчик onChange",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "sizeText — строка размера файла, {size} подставляет число килобайт",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент только выбирает файлы: загрузка, прогресс и ошибки — задача вызывающего кода.",
             "accept — подсказка диалогу, а не защита: проверяйте тип и размер на сервере.",
             "Ограничение размера в подписи ничего не проверяет — это текст.",
@@ -63,8 +68,21 @@
             "maxLength": 60
           },
           {
+            "prop": "sizeText",
+            "label": "Размер",
+            "type": "text",
+            "default": "{size} КБ",
+            "maxLength": 20
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -80,15 +98,20 @@
                 "preventing the default on dragover — otherwise the browser opens the file",
                 "highlighting the zone while a file hovers: otherwise it is unclear whether to drop",
                 "the list of picked files: without it nothing says what went through",
-                "the formats and size limit beside the zone, not inside an error message"
+                "the formats and size limit beside the zone, not inside an error message",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "label and hint",
                 "accept — the formats you take",
                 "the onChange handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "sizeText — the file size line, {size} takes the number of kilobytes",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component only picks files: upload, progress and errors belong to the caller.",
                 "accept is a dialog hint, not protection: validate type and size on the server.",
                 "The size limit in the copy validates nothing — it is text.",
@@ -105,13 +128,28 @@
                 "label": "Requirements",
                 "default": "PNG, JPG or PDF up to 10 MB. Several at once is fine"
               },
+              "sizeText": {
+                "label": "Size",
+                "default": "{size} KB"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "File Dropzone"
+            "title": "File Dropzone",
+            "preview": {
+              "props": {
+                "label": "Drop files here",
+                "hint": "PNG, JPG or PDF up to 10 MB. Several at once is fine",
+                "sizeText": "{size} KB"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -129,7 +167,7 @@
           "target": "@components/vibeui/file-002.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-002-*. Клиентский: \"use client\". Зона — не label, а фокусируемый элемент с role=\"button\" и tabIndex 0: Enter и пробел открывают тот же системный диалог, что и клик по скрытому input, а обработчик onPaste принимает файлы из буфера. Наведение файла выносится в data-over, стандартное поведение dragover отменяется. Все три способа перечислены внутри зоны текстом.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-002-*. Клиентский: \"use client\". Зона — не label, а фокусируемый элемент с role=\"button\" и tabIndex 0: Enter и пробел открывают тот же системный диалог, что и клик по скрытому input, а обработчик onPaste принимает файлы из буфера. Наведение файла выносится в data-over, стандартное поведение dragover отменяется. Все три способа перечислены внутри зоны текстом. Тема берётся из color-scheme окружения через light-dark(): подложки у панели по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
         "tags": ["file", "upload", "paste", "keyboard"],
         "preview": {
@@ -146,16 +184,22 @@
             "отмену стандартного поведения на dragover — без неё браузер просто откроет файл вместо загрузки",
             "перечень трёх способов прямо в зоне: невидимая возможность не существует",
             "подсветку зоны при наведении файла — иначе непонятно, можно ли отпускать",
-            "блок <style> внутри компонента — в нём вся палитра, состояния зоны и оформление клавиш"
+            "блок <style> внутри компонента — в нём вся палитра, состояния зоны и оформление клавиш",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label внутри зоны",
             "accept — какие форматы принимает системный диалог",
             "обработчик onChange: он получает список имён",
             "акцент через проп accent — цвет рамки и подсветки",
-            "подписи клавиш в перечне способов"
+            "подписи клавиш в перечне способов",
+            "wayText и viaText — словари подписей: способы в зоне и пометка, как файл попал в список",
+            "zoneLabel — доступное имя зоны, и clipboardName — имя для файла из буфера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "У файла из буфера часто нет имени — компонент подставляет «Из буфера обмена», и это стоит учитывать на сервере.",
             "Компонент только собирает файлы: загрузка, прогресс и повтор — задача вызывающего кода.",
             "accept фильтрует диалог, но не мешает перетащить что угодно: тип проверяйте на сервере.",
@@ -182,6 +226,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -196,16 +246,22 @@
                 "cancelling the default dragover behaviour — without it the browser just opens the file instead of uploading it",
                 "listing all three ways inside the zone: an invisible affordance does not exist",
                 "the highlight while a file hovers — otherwise it is unclear whether it can be dropped",
-                "the <style> block inside the component — it holds the palette, the zone states and the key styling"
+                "the <style> block inside the component — it holds the palette, the zone states and the key styling",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy inside the zone",
                 "accept — which formats the system dialog offers",
                 "the onChange handler: it receives the list of names",
                 "the accent through the accent prop — it colours the border and the highlight",
-                "the key captions in the list of ways"
+                "the key captions in the list of ways",
+                "wayText and viaText — the caption dictionaries: the ways listed in the zone and the note on how a file arrived",
+                "zoneLabel — the accessible name of the zone, and clipboardName — the name given to a pasted file",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A pasted file often has no name — the component falls back to \"From the clipboard\", and the server should expect that.",
                 "The component only collects files: uploading, progress and retries belong to the caller.",
                 "accept filters the dialog but does not stop a drag of anything else: check the type on the server.",
@@ -224,11 +280,32 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Paste Or Drop"
+            "title": "Paste Or Drop",
+            "preview": {
+              "props": {
+                "label": "Drop files here or paste from the clipboard",
+                "zoneLabel": "Add files: drop them, press Enter or paste from the clipboard",
+                "wayText": {
+                  "drag": "drop",
+                  "pick": "choose",
+                  "paste": "paste"
+                },
+                "viaText": {
+                  "drop": "dropped",
+                  "pick": "chosen",
+                  "paste": "pasted"
+                },
+                "clipboardName": "From the clipboard"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -246,7 +323,7 @@
           "target": "@components/vibeui/file-003.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-003-*. Клиентский: \"use client\" ради отмены. Прогресс — нативный <progress> с aria-label по имени файла, поэтому доля и подпись достаются вспомогательным технологиям без ручной разметки. Строки со стопроцентным прогрессом получают data-done: полоска зеленеет, а кнопка меняет подпись с «Отменить» на «Убрать». Значения прогресса приходят пропом items — компонент их не считает.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-003-*. Клиентский: \"use client\" ради отмены. Прогресс — нативный <progress> с aria-label по имени файла, поэтому доля и подпись достаются вспомогательным технологиям без ручной разметки. Строки со стопроцентным прогрессом получают data-done: полоска зеленеет, а кнопка меняет подпись с «Отменить» на «Убрать». Значения прогресса приходят пропом items — компонент их не считает. Тема берётся из color-scheme окружения через light-dark(): подложки у панели по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
         "tags": ["file", "upload", "progress", "cancel"],
         "preview": {
@@ -263,16 +340,22 @@
             "отмену на каждой строке: без неё прогресс превращается в наблюдение за чужой работой",
             "имя файла в подписи кнопки, а не номер строки — «отменить второй» ничего не значит на слух",
             "разные подписи для «Отменить» и «Убрать»: прерывание загрузки и удаление готового файла — разные действия",
-            "блок <style> внутри компонента — в нём вся палитра, раскладка строки и оформление полоски"
+            "блок <style> внутри компонента — в нём вся палитра, раскладка строки и оформление полоски",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок title над списком",
             "массив items: имена, размеры и значения прогресса приходят снаружи",
             "обработчик onCancel — в нём прерывают запрос и убирают файл из очереди",
             "акцент через проп accent — цвет полоски прогресса",
-            "текст пустого состояния"
+            "текст пустого состояния",
+            "подписи progressLabel, cancelLabel и removeLabel — {name} подставляет имя файла",
+            "doneText и emptyText — подпись завершённой строки и текст пустой очереди",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент ничего не загружает и не считает прогресс: значения приходят пропом, обновляет их вызывающий код.",
             "Отмена в компоненте только убирает строку — настоящий запрос надо прервать в onCancel, иначе файл продолжит грузиться.",
             "Не показывайте прогресс в процентах, если сервер не сообщает размер: полоска без данных врёт убедительнее, чем её отсутствие.",
@@ -292,6 +375,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -306,16 +395,22 @@
                 "a cancel button on every row: without it progress is just watching someone else work",
                 "the file name in the button label rather than the row number — \"cancel the second one\" means nothing aloud",
                 "separate \"Cancel\" and \"Remove\" captions: aborting an upload and deleting a finished file are different actions",
-                "the <style> block inside the component — it holds the palette, the row layout and the bar styling"
+                "the <style> block inside the component — it holds the palette, the row layout and the bar styling",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the title above the list",
                 "the items array: names, sizes and progress values come from outside",
                 "the onCancel handler — abort the request and drop the file from the queue there",
                 "the accent through the accent prop — it colours the progress bar",
-                "the empty-state wording"
+                "the empty-state wording",
+                "the progressLabel, cancelLabel and removeLabel captions — {name} takes the file name",
+                "doneText and emptyText — the finished-row caption and the empty-queue copy",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component uploads nothing and computes no progress: the values arrive as a prop and the caller updates them.",
                 "Cancelling here only removes the row — abort the actual request inside onCancel, or the file keeps uploading.",
                 "Do not show percentages when the server does not report the size: a bar with no data lies more convincingly than no bar at all.",
@@ -330,11 +425,45 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Upload Queue"
+            "title": "Upload Queue",
+            "preview": {
+              "props": {
+                "title": "Uploading 3 files",
+                "items": [
+                  {
+                    "id": "1",
+                    "name": "brand-guide.pdf",
+                    "size": "4.2 MB",
+                    "progress": 100
+                  },
+                  {
+                    "id": "2",
+                    "name": "hero-desktop@2x.png",
+                    "size": "8.7 MB",
+                    "progress": 64
+                  },
+                  {
+                    "id": "3",
+                    "name": "screencast-onboarding.mp4",
+                    "size": "128 MB",
+                    "progress": 18
+                  }
+                ],
+                "emptyText": "The queue is empty — every upload was cancelled.",
+                "doneText": "uploaded",
+                "progressLabel": "Uploading {name}",
+                "cancelLabel": "Cancel {name}",
+                "removeLabel": "Remove {name}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -352,7 +481,7 @@
           "target": "@components/vibeui/file-004.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-004-*. Клиентский: \"use client\". Превью строится из выбранного файла через URL.createObjectURL, поэтому на сервер до отправки формы ничего не летит; прошлая ссылка освобождается в useEffect через URL.revokeObjectURL, иначе вкладка копит изображения в памяти. Плитка — это <label> со скрытым input type=\"file\": и место выбора, и место показа совпадают.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-004-*. Клиентский: \"use client\". Превью строится из выбранного файла через URL.createObjectURL, поэтому на сервер до отправки формы ничего не летит; прошлая ссылка освобождается в useEffect через URL.revokeObjectURL, иначе вкладка копит изображения в памяти. Плитка — это <label> со скрытым input type=\"file\": и место выбора, и место показа совпадают. Тема берётся из color-scheme окружения через light-dark(): подложки у поля по умолчанию нет, оно лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
         "tags": ["file", "image", "preview", "upload"],
         "preview": {
@@ -369,16 +498,21 @@
             "плитку-<label> со скрытым input: выбор доступен с клавиатуры и с телефона, а не только мышью",
             "object-fit:cover у превью и постоянную пропорцию плитки: иначе раскладка прыгает от каждого нового файла",
             "alt с именем файла у превью — «изображение» вслух не помогает выбрать правильное",
-            "блок <style> внутри компонента — в нём вся палитра, плитка и её два состояния"
+            "блок <style> внутри компонента — в нём вся палитра, плитка и её два состояния",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты label и hint под кнопкой выбора",
             "accept — какие форматы принимает диалог",
             "обработчик onChange: он получает имя файла или null после очистки",
             "акцент через проп accent",
-            "пропорцию плитки под ваш формат кадра"
+            "пропорцию плитки под ваш формат кадра",
+            "подписи pickText, emptyText и removeText, а также previewAlt — {name} подставляет имя файла",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Превью показывает исходный файл целиком: обрезку и сжатие делает сервер или отдельный компонент.",
             "Тяжёлый файл рисуется в превью как есть — на медленном устройстве это заметно, поэтому размер стоит ограничить.",
             "createObjectURL недоступен на сервере: компонент обязан оставаться клиентским.",
@@ -408,8 +542,21 @@
             "maxLength": 60
           },
           {
+            "prop": "pickText",
+            "label": "Кнопка выбора",
+            "type": "text",
+            "default": "Выбрать изображение",
+            "maxLength": 30
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -426,16 +573,21 @@
                 "the <label> tile with a hidden input: picking works from the keyboard and on a phone, not only with a mouse",
                 "object-fit:cover on the preview and a fixed tile ratio: otherwise the layout jumps with every new file",
                 "the alt naming the file — a bare \"image\" aloud does not help pick the right one",
-                "the <style> block inside the component — it holds the palette, the tile and its two states"
+                "the <style> block inside the component — it holds the palette, the tile and its two states",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the hint under the pick caption",
                 "accept — which formats the dialog offers",
                 "the onChange handler: it receives the file name, or null after clearing",
                 "the accent through the accent prop",
-                "the tile ratio to match your image format"
+                "the tile ratio to match your image format",
+                "the pickText, emptyText and removeText captions plus previewAlt — {name} takes the file name",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The preview shows the original file in full: cropping and compression belong to the server or to a separate component.",
                 "A heavy file is drawn as-is — noticeable on a slow device, so cap the size.",
                 "createObjectURL does not exist on the server: the component has to stay a client one.",
@@ -456,13 +608,31 @@
                 "label": "Formats",
                 "default": "image/png,image/jpeg,image/webp"
               },
+              "pickText": {
+                "label": "Pick caption",
+                "default": "Choose an image"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Image Preview"
+            "title": "Image Preview",
+            "preview": {
+              "props": {
+                "label": "Article cover",
+                "hint": "JPG or PNG, ideally 1200 × 750",
+                "pickText": "Choose an image",
+                "emptyText": "No file chosen",
+                "removeText": "Remove",
+                "previewAlt": "Preview of {name}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -480,7 +650,7 @@
           "target": "@components/vibeui/file-005.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-005-*. Клиентский: \"use client\". Круглая рамка — <label> со скрытым input type=\"file\" и overflow:hidden, поэтому обрезка видна сразу. Масштаб живёт в переменной --vibeui-file-005-zoom и применяется через transform:scale, а не через размеры — картинка не перерисовывается. Ползунок — нативный input[type=range], поэтому стрелки с клавиатуры и объявление значения достаются даром. Прошлая ссылка освобождается через revokeObjectURL.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-005-*. Клиентский: \"use client\". Круглая рамка — <label> со скрытым input type=\"file\" и overflow:hidden, поэтому обрезка видна сразу. Масштаб живёт в переменной --vibeui-file-005-zoom и применяется через transform:scale, а не через размеры — картинка не перерисовывается. Ползунок — нативный input[type=range], поэтому стрелки с клавиатуры и объявление значения достаются даром. Прошлая ссылка освобождается через revokeObjectURL. Тема берётся из color-scheme окружения через light-dark(): подложки у карточки по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
         "tags": ["file", "avatar", "crop", "image"],
         "preview": {
@@ -497,16 +667,22 @@
             "нативный input[type=range] для масштаба: стрелки с клавиатуры и объявление значения достаются даром",
             "выключенный ползунок, пока файла нет — двигать нечего, и это видно",
             "инициалы вместо пустого круга до выбора: пустая рамка читается как сломанная картинка",
-            "освобождение прошлой ссылки через revokeObjectURL"
+            "освобождение прошлой ссылки через revokeObjectURL",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "тёмную вуаль с белой подписью поверх рамки: она лежит на фотографии, а не на теме страницы, и потому одноцветна намеренно"
           ],
           "adapt": [
             "текст label и инициалы initials до выбора файла",
             "zoom — стартовый масштаб превью",
             "обработчик onChange: он получает имя выбранного файла",
             "акцент через проп accent — цвет ползунка и кольца фокуса",
-            "диаметр рамки и пояснение рядом с ней"
+            "диаметр рамки и пояснение рядом с ней",
+            "тексты note, changeText и photoAlt, а также zoomText — {value} подставляет масштаб в процентах",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент показывает обрезку, но не вырезает файл: настоящий кроп делает сервер по значению масштаба.",
             "Значение масштаба надо передать на сервер вместе с файлом, иначе кадр вернётся к исходному.",
             "Сдвиг кадра мышью не поддержан намеренно: он требует перетаскивания, а масштаб закрывает большую часть случаев.",
@@ -541,6 +717,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -555,16 +737,22 @@
                 "the native input[type=range] for the scale: arrow keys and value announcement come for free",
                 "the disabled slider while there is no file — there is nothing to move, and it shows",
                 "initials instead of an empty circle before the pick: an empty frame reads as a broken image",
-                "releasing the previous URL with revokeObjectURL"
+                "releasing the previous URL with revokeObjectURL",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the dark veil with white caption over the frame: it sits on the photograph, not on the page theme, so staying single-toned there is deliberate"
               ],
               "adapt": [
                 "the label copy and the initials shown before a file is picked",
                 "zoom — the starting scale of the preview",
                 "the onChange handler: it receives the chosen file name",
                 "the accent through the accent prop — it colours the slider and the focus ring",
-                "the frame diameter and the explanation beside it"
+                "the frame diameter and the explanation beside it",
+                "the note, changeText and photoAlt copy plus zoomText — {value} takes the scale in per cent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component shows the crop but does not cut the file: the real crop happens on the server from the scale value.",
                 "Send the scale to the server along with the file, otherwise the shot reverts to the original framing.",
                 "Panning with the mouse is deliberately absent: it needs dragging, while zoom covers most cases.",
@@ -586,11 +774,25 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Avatar Crop"
+            "title": "Avatar Crop",
+            "preview": {
+              "props": {
+                "label": "Profile photo",
+                "initials": "AK",
+                "note": "The square is cropped to a circle — that is how the photo appears in comments.",
+                "changeText": "change",
+                "zoomText": "Zoom · {value}%",
+                "photoAlt": "Chosen profile photo"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["zoom", "accent", "background"]
       }
     },
     {
@@ -608,7 +810,7 @@
           "target": "@components/vibeui/file-006.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-006-*. Клиентский: \"use client\" ради проверки. Расширение берётся из имени, размер — из file.size; нарушенное правило подсвечивается в списке через data-broken, а корень получает data-rejected. Сообщение об отказе стоит в role=\"alert\" и называет и правило, и предел. Атрибут accept собирается из списка formats и только фильтрует диалог, ничего не гарантируя.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-006-*. Клиентский: \"use client\" ради проверки. Расширение берётся из имени, размер — из file.size; нарушенное правило подсвечивается в списке через data-broken, а корень получает data-rejected. Сообщение об отказе стоит в role=\"alert\" и называет и правило, и предел. Атрибут accept собирается из списка formats и только фильтрует диалог, ничего не гарантируя. Тема берётся из color-scheme окружения через light-dark(): подложки у поля по умолчанию нет, оно лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
         "tags": ["file", "validation", "limit", "upload"],
         "preview": {
@@ -625,16 +827,21 @@
             "сообщение с пределом вместо «неверный файл»: без числа непонятно, что делать со второй попытки",
             "role=\"alert\" у отказа: отказ приходит без действия пользователя и обязан быть объявлен",
             "проверку размера в мегабайтах на клиенте — она экономит отправку заведомо лишнего файла",
-            "блок <style> внутри компонента — в нём вся палитра, список правил и оформление отказа"
+            "блок <style> внутри компонента — в нём вся палитра, список правил и оформление отказа",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и подписи кнопки выбора",
             "массив formats — какие расширения принимаете",
             "maxSizeMb — предел размера в мегабайтах",
             "обработчик onChange: он получает имя принятого файла или null",
-            "акцент через проп accent — цвет принятого состояния"
+            "акцент через проп accent — цвет принятого состояния",
+            "словарь text — все подписи поля; {formats} подставляет список расширений, {max} — предел в мегабайтах",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Проверка на клиенте — удобство, а не защита: расширение подделывается переименованием, поэтому тип и размер проверяет сервер.",
             "Расширение — не то же самое, что тип содержимого. Для строгой проверки читайте сигнатуру файла на сервере.",
             "Не прячьте правила после первой удачной загрузки: при замене файла они нужны снова.",
@@ -662,6 +869,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -676,16 +889,21 @@
                 "the message carrying the limit instead of \"invalid file\": without the number the second attempt is a guess",
                 "role=\"alert\" on the rejection: it arrives without user action and has to be announced",
                 "the megabyte check on the client — it saves sending a file that is obviously too big",
-                "the <style> block inside the component — it holds the palette, the rule list and the rejection styling"
+                "the <style> block inside the component — it holds the palette, the rule list and the rejection styling",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the pick button caption",
                 "the formats array — which extensions you accept",
                 "maxSizeMb — the size limit in megabytes",
                 "the onChange handler: it receives the accepted file name, or null",
-                "the accent through the accent prop — it colours the accepted state"
+                "the accent through the accent prop — it colours the accepted state",
+                "the text dictionary — every caption of the field; {formats} takes the extension list and {max} the megabyte limit",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A client check is convenience, not protection: an extension is faked by renaming, so type and size are verified on the server.",
                 "An extension is not the content type. For a strict check, read the file signature server-side.",
                 "Do not hide the rules after the first successful upload: replacing the file needs them again.",
@@ -703,11 +921,31 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Guarded Upload"
+            "title": "Guarded Upload",
+            "preview": {
+              "props": {
+                "label": "Resume",
+                "text": {
+                  "badge": "FILE",
+                  "pick": "Choose a file",
+                  "replace": "Replace the file",
+                  "summary": "{formats} · up to {max} MB",
+                  "formatRule": "Format: {formats}",
+                  "sizeRule": "Size: no more than {max} MB",
+                  "formatReject": "We do not take that format. {formats} will do — re-save it and try again.",
+                  "sizeReject": "The file is heavier than {max} MB. Compress it or pick a lighter version.",
+                  "accepted": "File accepted — the rules are met."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["maxSizeMb", "accent", "background"]
       }
     },
     {
@@ -725,7 +963,7 @@
           "target": "@components/vibeui/file-007.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-007-*. Серверный: раскрытие держит нативный <details>, состояния нет и гидрации тоже. Общая доля показана нативным <progress> с max по числу файлов и aria-label вида «Загружено N из M», процент посчитан из тех же чисел. Список файлов лежит внутри <details> и не занимает места, пока не нужен.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-007-*. Серверный: раскрытие держит нативный <details>, состояния нет и гидрации тоже. Общая доля показана нативным <progress> с max по числу файлов и aria-label вида «Загружено N из M», процент посчитан из тех же чисел. Список файлов лежит внутри <details> и не занимает места, пока не нужен. Состояния файлов хранятся ключами done, active и queued, а видимые подписи приходят словарём stateText. Тема берётся из color-scheme окружения через light-dark(): подложки у сводки по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
         "tags": ["file", "upload", "progress", "batch"],
         "preview": {
@@ -742,16 +980,23 @@
             "подробности внутри <details>: список нужен изредка, а место занимает всегда",
             "процент, посчитанный из тех же done и total, что стоят в счётчике: два разных числа рядом читаются как ошибка",
             "строку «готово N из M» словами рядом с процентом — доля без чисел не даёт оценить, сколько осталось",
-            "блок <style> внутри компонента — в нём вся палитра, полоска и стрелка раскрытия"
+            "блок <style> внутри компонента — в нём вся палитра, полоска и стрелка раскрытия",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "ключи состояний done, active и queued в данных: подпись переводится словарём stateText, а селектор data-state остаётся неизменным"
           ],
           "adapt": [
             "заголовок title над полоской",
             "done и total — сколько файлов готово и сколько всего",
             "массив entries с именами и состояниями файлов",
             "акцент через проп accent — цвет полоски",
-            "текст под полоской"
+            "текст под полоской",
+            "словарь stateText — подписи состояний done, active и queued",
+            "шаблоны progressLabel и countText — {done} и {total} подставляют числа, detailsText задаёт подпись списка",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент ничего не загружает: числа приходят пропами, обновляет их вызывающий код.",
             "Готовность считается по файлам, а не по байтам: пять маленьких файлов и один огромный дадут неверную оценку времени.",
             "Для отмены отдельных файлов нужен список со своими кнопками — здесь список только показывает состояние.",
@@ -787,6 +1032,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -801,16 +1052,23 @@
                 "the detail inside <details>: the list is needed occasionally but takes room always",
                 "the percentage computed from the same done and total as the counter: two different numbers side by side read as a bug",
                 "the \"done N of M\" line beside the percentage — a share with no counts gives no sense of what is left",
-                "the <style> block inside the component — it holds the palette, the bar and the disclosure arrow"
+                "the <style> block inside the component — it holds the palette, the bar and the disclosure arrow",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the done, active and queued state keys in the data: the caption is translated through stateText while the data-state selector stays put"
               ],
               "adapt": [
                 "the title above the bar",
                 "done and total — how many files are finished and how many there are",
                 "the entries array of file names and states",
                 "the accent through the accent prop — it colours the bar",
-                "the line under the bar"
+                "the line under the bar",
+                "the stateText dictionary — the captions for the done, active and queued states",
+                "the progressLabel and countText templates — {done} and {total} take the numbers, detailsText names the list",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component uploads nothing: the numbers arrive as props and the caller updates them.",
                 "Readiness is counted in files, not bytes: five small files and one huge one give a misleading estimate.",
                 "Cancelling individual files needs a list with its own buttons — here the list only reports state.",
@@ -831,11 +1089,50 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Batch Progress"
+            "title": "Batch Progress",
+            "preview": {
+              "props": {
+                "title": "Gallery upload",
+                "entries": [
+                  {
+                    "name": "01-cover.jpg",
+                    "state": "done"
+                  },
+                  {
+                    "name": "02-spread.jpg",
+                    "state": "done"
+                  },
+                  {
+                    "name": "03-details.jpg",
+                    "state": "done"
+                  },
+                  {
+                    "name": "04-packaging.jpg",
+                    "state": "active"
+                  },
+                  {
+                    "name": "05-macro.jpg",
+                    "state": "queued"
+                  }
+                ],
+                "stateText": {
+                  "done": "ready",
+                  "active": "uploading",
+                  "queued": "queued"
+                },
+                "progressLabel": "Uploaded {done} of {total} files",
+                "countText": "Done {done} of {total}. You can close this tab.",
+                "detailsText": "Per-file detail"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["done", "total", "accent", "background"]
       }
     },
     {
@@ -853,7 +1150,7 @@
           "target": "@components/vibeui/file-008.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-008-*. Клиентский: \"use client\" ради хранения прошлого имени. Кнопка замены — <label> со скрытым input type=\"file\", поэтому выбор доступен с клавиатуры. После замены прошлое имя сохраняется в состоянии и показывается строкой с role=\"status\" и кнопкой возврата; строка исчезает, как только возврат нажат. Значок файла нарисован бордюрами и псевдоэлементами.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-008-*. Клиентский: \"use client\" ради хранения прошлого имени. Кнопка замены — <label> со скрытым input type=\"file\", поэтому выбор доступен с клавиатуры. После замены прошлое имя сохраняется в состоянии и показывается строкой с role=\"status\" и кнопкой возврата; строка исчезает, как только возврат нажат. Значок файла нарисован бордюрами и псевдоэлементами. Тема берётся из color-scheme окружения через light-dark(): подложки у карточки по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
         "tags": ["file", "replace", "undo", "upload"],
         "preview": {
@@ -870,16 +1167,21 @@
             "кнопку замены как <label> со скрытым input: выбор файла должен работать и с клавиатуры",
             "role=\"status\" у строки возврата: она появляется от действия пользователя и обязана быть объявлена",
             "пометку «ещё не сохранена» у новой версии — до сохранения замена обратима, и это надо сказать",
-            "блок <style> внутри компонента — в нём вся палитра, карточка и значок файла"
+            "блок <style> внутри компонента — в нём вся палитра, карточка и значок файла",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label над карточкой",
             "имя current и строку meta с размером и датой",
             "обработчик onChange: он получает имя файла и при возврате — прежнее",
             "акцент через проп accent — цвет кнопки возврата",
-            "подписи кнопок замены и возврата"
+            "подписи кнопок замены и возврата",
+            "подписи replaceText, undoText, stagedText и hint, а также wasText — {name} подставляет прежнее имя",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Возврат работает только до сохранения формы: после отправки прежний файл возвращает сервер, а не компонент.",
             "Компонент не удаляет старый файл — решение об удалении принимает сервер после сохранения.",
             "Если версий больше двух, нужен список версий: одно прошлое имя закрывает только последнюю замену.",
@@ -913,6 +1215,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -927,16 +1235,21 @@
                 "the replace control as a <label> with a hidden input: picking a file must work from the keyboard too",
                 "role=\"status\" on the undo line: it appears from a user action and has to be announced",
                 "the \"not saved yet\" marker on the new version — until saving, the replace is reversible and that should be said",
-                "the <style> block inside the component — it holds the palette, the card and the file glyph"
+                "the <style> block inside the component — it holds the palette, the card and the file glyph",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label above the card",
                 "the current file name and the meta line with size and date",
                 "the onChange handler: it receives the new name, and the old one on undo",
                 "the accent through the accent prop — it colours the undo button",
-                "the replace and undo button captions"
+                "the replace and undo button captions",
+                "the replaceText, undoText, stagedText and hint captions plus wasText — {name} takes the previous name",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Undo only works before the form is saved: after submit the server, not the component, restores the previous file.",
                 "The component deletes nothing — dropping the old file is the server's decision after saving.",
                 "With more than two versions you need a version list: one previous name covers only the last replace.",
@@ -959,11 +1272,27 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Replace File"
+            "title": "Replace File",
+            "preview": {
+              "props": {
+                "label": "Terms of service",
+                "current": "terms-2025-v4.pdf",
+                "meta": "PDF · 1.8 MB · uploaded 12 March",
+                "replaceText": "Replace",
+                "undoText": "Undo",
+                "wasText": "Was: {name}",
+                "stagedText": "New version, not saved yet",
+                "hint": "Replacing does not delete the previous version — it stays in the document history."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -981,7 +1310,7 @@
           "target": "@components/vibeui/file-009.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-009-*. Серверный: вкладки собраны на двух радиокнопках внутри подписей, а показ панели решает :has на корне по атрибуту data-choice — идентификаторов в стилях нет, поэтому компонент переносится без единой правки. Радиокнопки скрыты визуально, но остаются фокусируемыми, кольцо фокуса рисуется на подписи через :has(input:focus-visible).",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-009-*. Серверный: вкладки собраны на двух радиокнопках внутри подписей, а показ панели решает :has на корне по атрибуту data-choice — идентификаторов в стилях нет, поэтому компонент переносится без единой правки. Радиокнопки скрыты визуально, но остаются фокусируемыми, кольцо фокуса рисуется на подписи через :has(input:focus-visible). Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку. Активная вкладка и поле адреса красятся отдельным токеном --vibeui-file-009-raise, поэтому прозрачная подложка не съедает поднятую плитку.",
       "meta": {
         "tags": ["file", "link", "tabs", "upload"],
         "preview": {
@@ -998,16 +1327,22 @@
             "видимые, но скрытые от глаз радиокнопки: display:none забрал бы у них фокус и клавиатуру",
             "кольцо фокуса на подписи через :has(input:focus-visible) — иначе с клавиатуры не видно, какая вкладка выбрана",
             "role=\"radiogroup\" с подписью у ряда вкладок: это выбор одного из двух, а не две независимые кнопки",
-            "блок <style> внутри компонента — в нём вся палитра, вкладки и обе панели"
+            "блок <style> внутри компонента — в нём вся палитра, вкладки и обе панели",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "отдельный токен raise у активной вкладки и поля адреса: без него прозрачная подложка стёрла бы поднятую плитку"
           ],
           "adapt": [
             "заголовок title и подписи вкладок fileTab и linkTab",
             "проп name: из него собираются имена полей формы обоих источников",
             "акцент через проп accent — цвет активной вкладки и фокуса",
             "содержимое панелей: зона выбора файла и поле адреса",
-            "пояснение под полем ссылки"
+            "пояснение под полем ссылки",
+            "подписи groupLabel, pickText, fileNote, linkLabel, linkPlaceholder и linkNote",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "На сервер уходят оба поля формы, но заполнено будет одно: разбирайте источник по выбранной радиокнопке.",
             "Ссылку стоит скачивать на свою сторону сразу: чужой адрес умирает молча, и товар остаётся без картинки.",
             "Селектор :has нужен для переключения панелей — в очень старых браузерах будут видны обе.",
@@ -1041,6 +1376,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1055,16 +1396,22 @@
                 "radios hidden from sight but not removed: display:none would take away focus and keyboard access",
                 "the focus ring on the label through :has(input:focus-visible) — otherwise the keyboard user cannot see the active tab",
                 "role=\"radiogroup\" with a label on the tab row: this is a choice of one out of two, not two independent buttons",
-                "the <style> block inside the component — it holds the palette, the tabs and both panels"
+                "the <style> block inside the component — it holds the palette, the tabs and both panels",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the separate raise token on the active tab and the address field: without it the transparent surface would erase the lifted tile"
               ],
               "adapt": [
                 "the title and the fileTab and linkTab captions",
                 "the name prop: both source field names are built from it",
                 "the accent through the accent prop — it colours the active tab and focus",
                 "the panel contents: the file zone and the address field",
-                "the explanation under the link field"
+                "the explanation under the link field",
+                "the groupLabel, pickText, fileNote, linkLabel, linkPlaceholder and linkNote captions",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Both form fields are submitted but only one is filled: resolve the source from the checked radio.",
                 "Download the linked file to your own storage right away: someone else's URL dies silently and the product loses its image.",
                 "The :has selector drives the panel switch — very old browsers will show both panels.",
@@ -1087,11 +1434,28 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "File Or Link"
+            "title": "File Or Link",
+            "preview": {
+              "props": {
+                "title": "Product image",
+                "fileTab": "From computer",
+                "linkTab": "By link",
+                "groupLabel": "Where the file comes from",
+                "pickText": "Choose a file",
+                "fileNote": "PNG or JPG up to 10 MB",
+                "linkLabel": "Image link",
+                "linkPlaceholder": "https://example.com/photo.jpg",
+                "linkNote": "We download the image once — if the link dies later, the product keeps its photo."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1109,7 +1473,7 @@
           "target": "@components/vibeui/file-010.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-010-*. Клиентский: \"use client\" ради повтора. Состояние строки выносится в data-status на корне: по нему рисуются крест, кольцо ожидания или галочка. Повтор переводит строку в состояние ожидания, а useEffect по таймеру доводит её до успеха — в настоящем проекте на месте таймера запрос. Текст состояния стоит в role=\"status\", поэтому значок никогда не работает один.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-010-*. Клиентский: \"use client\" ради повтора. Состояние строки выносится в data-status на корне: по нему рисуются крест, кольцо ожидания или галочка. Повтор переводит строку в состояние ожидания, а useEffect по таймеру доводит её до успеха — в настоящем проекте на месте таймера запрос. Текст состояния стоит в role=\"status\", поэтому значок никогда не работает один. Тема берётся из color-scheme окружения через light-dark(): подложки у строки по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
         "tags": ["file", "upload", "error", "retry"],
         "preview": {
@@ -1126,16 +1490,22 @@
             "три состояния со своими значками: отказ, ожидание и успех различаются формой, а не только цветом",
             "текст состояния в role=\"status\": значок сам по себе не читается вслух",
             "имя файла в подписи кнопки повтора — в списке из нескольких строк «повторить» ничего не значит",
-            "блок <style> внутри компонента — в нём вся палитра, значки и анимация ожидания"
+            "блок <style> внутри компонента — в нём вся палитра, значки и анимация ожидания",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя fileName и текст причины reason",
             "подпись кнопки повтора retryLabel",
             "обработчик onRetry: в нём запускают настоящую повторную отправку",
             "акцент через проп accent — цвет кольца ожидания",
-            "тексты состояний ожидания и успеха"
+            "тексты состояний ожидания и успеха",
+            "словарь statusText — подписи состояний retrying и done, и hint под строкой",
+            "retryAriaLabel — доступное имя кнопки; {label} подставляет подпись, {name} — имя файла",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Успех через полторы секунды — демонстрация. В настоящем проекте состояние меняет ответ сервера, а таймер убирается.",
             "Повторяйте только временные отказы: на «файл слишком большой» повтор бесполезен, там нужен выбор другого файла.",
             "Не повторяйте бесконечно сами: несколько неудач подряд означают, что нужен другой путь, а не ещё одна попытка.",
@@ -1169,6 +1539,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1183,16 +1559,22 @@
                 "three states with their own glyphs: failed, waiting and done differ in shape, not only in colour",
                 "the state text in role=\"status\": a glyph alone is not read aloud",
                 "the file name in the retry button label — in a list of rows a bare \"retry\" means nothing",
-                "the <style> block inside the component — it holds the palette, the glyphs and the waiting animation"
+                "the <style> block inside the component — it holds the palette, the glyphs and the waiting animation",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the fileName and the reason text",
                 "the retryLabel button caption",
                 "the onRetry handler: kick off the real re-upload there",
                 "the accent through the accent prop — it colours the waiting ring",
-                "the waiting and success wording"
+                "the waiting and success wording",
+                "the statusText dictionary — the retrying and done captions, plus hint under the row",
+                "retryAriaLabel — the accessible button name; {label} takes the caption and {name} the file name",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Success after a second and a half is a demo. In a real project the server response drives the state and the timer goes away.",
                 "Retry only transient failures: \"file too large\" will not improve on the second try, it needs a different file.",
                 "Do not retry endlessly on your own: several failures in a row mean a different path is needed, not one more attempt.",
@@ -1215,11 +1597,29 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Retry Upload"
+            "title": "Retry Upload",
+            "preview": {
+              "props": {
+                "fileName": "pitch-deck.key",
+                "reason": "Connection dropped at 82% — the file arrived partly",
+                "retryLabel": "Retry",
+                "statusText": {
+                  "failed": "",
+                  "retrying": "Sending again…",
+                  "done": "Uploaded on the second try"
+                },
+                "retryAriaLabel": "{label}: {name}",
+                "hint": "The file is still selected — a retry does not send you hunting for it again."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

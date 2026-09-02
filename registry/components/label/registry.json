@@ -16,7 +16,7 @@
           "target": "@components/vibeui/label-001.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-001-*. Серверный: из хуков только useId, состояния нет. Звёздочка помечена aria-hidden, а её смысл несёт визуально скрытый текст «, обязательное поле» — иначе скринридер произносит «звёздочка» и оставляет гадать. Строка-объяснение связана с полем через aria-describedby, поэтому читается сразу после имени поля, а не теряется. Поле получает нативный required: валидация браузера остаётся рабочей. Блок несёт собственную светлую подложку с рамкой — тёмный текст подписи обязан читаться на тёмной карточке каталога.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-001-*. Серверный: из хуков только useId, состояния нет. Звёздочка помечена aria-hidden, а её смысл несёт визуально скрытый текст «, обязательное поле» — иначе скринридер произносит «звёздочка» и оставляет гадать. Строка-объяснение связана с полем через aria-describedby, поэтому читается сразу после имени поля, а не теряется. Поле получает нативный required: валидация браузера остаётся рабочей. Палитра построена на light-dark(): блок следует color-scheme окружения и по умолчанию не выкладывает под себя плашку — подложка появляется только пропом background, и тогда же выставляется color-scheme под её светлоту.",
       "meta": {
         "tags": ["label", "form", "required", "a11y"],
         "preview": {
@@ -32,15 +32,19 @@
             "aria-hidden на самой звёздочке — иначе смысл дублируется дважды и мешает слушать",
             "связь пояснения с полем через aria-describedby: иначе строка видна глазами, но не читается вслух",
             "нативный атрибут required на поле — на нём держится проверка браузера без скрипта",
-            "собственную светлую подложку блока: без неё тёмная подпись пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя поля через label и пояснение через hint",
             "текст-заглушку через placeholder",
+            "расшифровку звёздочки для озвучки через requiredText",
             "цвет фокуса и акцента через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "ширину блока через max-width в палитре"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Звёздочка работает, только когда обязательных полей меньшинство: если обязательны почти все, помечайте наоборот необязательные.",
             "Пояснение стоит НАД полем намеренно: на телефоне клавиатура закрывает низ экрана и текст под полем не виден.",
             "Тип поля здесь email; под другой тип меняйте и autoComplete, иначе автозаполнение подставит не то.",
@@ -61,6 +65,18 @@
             "type": "text",
             "default": "Пришлём на неё счёт и доступ в кабинет.",
             "maxLength": 90
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -74,15 +90,19 @@
                 "aria-hidden on the asterisk itself — otherwise the meaning is announced twice and gets in the way",
                 "the aria-describedby link between the hint and the field: otherwise the line is visible but never spoken",
                 "the native required attribute on the input — browser validation rests on it, with no script",
-                "the block's own light surface: without it the dark label disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field name through label and the explanation through hint",
                 "the placeholder text through placeholder",
+                "the spoken expansion of the asterisk through requiredText",
                 "the focus and accent color through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the block width through max-width in the palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "An asterisk only works while required fields are the minority: if almost everything is required, mark the optional ones instead.",
                 "The hint sits ABOVE the field on purpose: on a phone the keyboard covers the bottom of the screen and text under the field is invisible.",
                 "The input type here is email; for another type change autoComplete as well, or autofill will paste the wrong value.",
@@ -98,11 +118,26 @@
               "hint": {
                 "label": "Hint",
                 "default": "We send the invoice and your account access there."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Required Mark"
+            "title": "Required Mark",
+            "preview": {
+              "props": {
+                "label": "Work email",
+                "hint": "We send the invoice and your account access there.",
+                "placeholder": "name@company.com",
+                "requiredText": ", required field"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -120,7 +155,7 @@
           "target": "@components/vibeui/label-002.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-002-*. Серверный: из хуков только useId. Подсказка — нативный элемент с атрибутом popover=\"auto\", кнопка открывает его через popoverTarget: браузер сам даёт закрытие по Esc и по клику мимо, обработчиков нет. Позиция подсказки берётся из CSS anchor positioning под @supports (anchor-name: --a) с position-try-fallbacks; там, где anchor не поддержан, браузер ставит popover по центру экрана — некрасиво, но текст доступен. Кнопка — обычный <button> с aria-label, поэтому попадает в порядок обхода и открывается с клавиатуры.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-002-*. Серверный: из хуков только useId. Подсказка — нативный элемент с атрибутом popover=\"auto\", кнопка открывает его через popoverTarget: браузер сам даёт закрытие по Esc и по клику мимо, обработчиков нет. Позиция подсказки берётся из CSS anchor positioning под @supports (anchor-name: --a) с position-try-fallbacks; там, где anchor не поддержан, браузер ставит popover по центру экрана — некрасиво, но текст доступен. Кнопка — обычный <button> с aria-label, поэтому попадает в порядок обхода и открывается с клавиатуры. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
         "tags": ["label", "popover", "hint", "no-js"],
         "preview": {
@@ -136,15 +171,18 @@
             "кнопку как <button type=\"button\">: <span> с обработчиком выпадает из обхода с клавиатуры",
             "aria-label на кнопке — знак «?» сам по себе не называет, о чём подсказка",
             "обёртку anchor-позиционирования в @supports: без неё в старых браузерах правило ломает раскладку целиком",
-            "собственную светлую подложку блока: без неё тёмная подпись пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя поля через label, текст кнопки для озвучки через question и содержимое подсказки через answer",
             "цвет акцента и фокуса через accent",
-            "тёмный фон подсказки через переменные --vibeui-label-002-tip-*",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "фон подсказки через переменные --vibeui-label-002-tip-*",
             "сторону появления подсказки через position-area"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Popover рисуется в верхнем слое: overflow:hidden у родителя его не обрежет, но и не подвинет.",
             "Там, где CSS anchor positioning не поддержан, подсказка встаёт по центру экрана — это осознанный запасной вариант, а не баг.",
             "Подсказка открывается по клику, а не по наведению: hover недоступен с телефона и с клавиатуры.",
@@ -165,6 +203,25 @@
             "type": "text",
             "default": "Четыре цифры из шапки договора, строка «Подразделение». Если договора под рукой нет, код подскажет ваш менеджер.",
             "maxLength": 200
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Код подразделения",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -178,15 +235,18 @@
                 "the trigger as a <button type=\"button\">: a <span> with a handler drops out of keyboard order",
                 "the aria-label on the button — a bare \"?\" never says what the hint is about",
                 "the @supports wrapper around anchor positioning: without it older browsers break the whole layout",
-                "the block's own light surface: without it the dark label disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field name through label, the spoken button text through question and the hint body through answer",
                 "the accent and focus color through accent",
-                "the dark hint background through the --vibeui-label-002-tip-* variables",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the hint background through the --vibeui-label-002-tip-* variables",
                 "the side the hint appears on through position-area"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A popover is painted in the top layer: a parent's overflow:hidden will not clip it, but will not move it either.",
                 "Where CSS anchor positioning is unsupported the hint lands in the middle of the screen — that is the deliberate fallback, not a bug.",
                 "The hint opens on click rather than hover: hover is unreachable from a phone and from the keyboard.",
@@ -202,11 +262,29 @@
               "answer": {
                 "label": "Hint",
                 "default": "Four digits from the contract header, the «Unit» line. If the contract is not at hand, your manager knows the code."
+              },
+              "label": {
+                "label": "Label",
+                "default": "Unit code"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Hint Popover"
+            "title": "Hint Popover",
+            "preview": {
+              "props": {
+                "label": "Unit code",
+                "question": "Where to find the unit code",
+                "answer": "Four digits from the contract header, the «Unit» line. If the contract is not at hand, your manager knows the code."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -224,7 +302,7 @@
           "target": "@components/vibeui/label-003.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-003-*. Серверный: из хуков только useId. Строка подписи — flex с justify-content:space-between и align-items:baseline: пометка прижата к правому краю, но сидит на одной базовой линии с подписью, хотя кегль у неё меньше. Пометка сделана обычным текстом в пилюле, а не иконкой и не цветом: признак «необязательно» обязан читаться и вслух, и в чёрно-белой печати. Поле — textarea с resize:vertical, чтобы длинный комментарий можно было раскрыть, не ломая ширину формы.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-003-*. Серверный: из хуков только useId. Строка подписи — flex с justify-content:space-between и align-items:baseline: пометка прижата к правому краю, но сидит на одной базовой линии с подписью, хотя кегль у неё меньше. Пометка сделана обычным текстом в пилюле, а не иконкой и не цветом: признак «необязательно» обязан читаться и вслух, и в чёрно-белой печати. Поле — textarea с resize:vertical, чтобы длинный комментарий можно было раскрыть, не ломая ширину формы. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
         "tags": ["label", "optional", "form", "layout"],
         "preview": {
@@ -240,15 +318,18 @@
             "пометку словом, а не иконкой или одним цветом — признак обязан читаться вслух и без цвета",
             "приглушённый контраст пометки: одинаковый вес с подписью превращает форму в кашу",
             "resize:vertical у поля — горизонтальное растягивание ломает ширину формы",
-            "собственную светлую подложку блока: без неё тёмная подпись пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя поля через label, слово пометки через optionalText и заглушку через placeholder",
             "цвет фокуса через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "фон пилюли через переменную --vibeui-label-003-tag-bg",
             "высоту поля через rows и min-height"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Мешать в одной форме звёздочки и пометки «необязательно» нельзя: человек перестаёт понимать умолчание.",
             "Пометка не влияет на валидацию — снимайте required с поля отдельно, иначе форма врёт.",
             "На очень узкой ширине подпись и пометка сходятся вплотную: держите подпись короткой или дайте строке перенос.",
@@ -269,6 +350,18 @@
             "type": "text",
             "default": "необязательно",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -282,15 +375,18 @@
                 "the tag as a word rather than an icon or a color alone — the state must survive being read aloud and printed in grey",
                 "the muted contrast of the tag: equal weight with the label turns the form into mush",
                 "resize:vertical on the field — horizontal resizing breaks the form width",
-                "the block's own light surface: without it the dark label disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field name through label, the tag wording through optionalText and the stub text through placeholder",
                 "the focus color through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the pill background through the --vibeui-label-003-tag-bg variable",
                 "the field height through rows and min-height"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Never mix asterisks and \"optional\" tags in one form: people stop knowing what the default is.",
                 "The tag does not drive validation — drop required from the field separately, or the form lies.",
                 "At very narrow widths the label and the tag close in on each other: keep the label short or let the row wrap.",
@@ -306,11 +402,25 @@
               "optionalText": {
                 "label": "Tag",
                 "default": "optional"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Optional Tag"
+            "title": "Optional Tag",
+            "preview": {
+              "props": {
+                "label": "Note for the courier",
+                "optionalText": "optional",
+                "placeholder": "For example: call an hour before delivery"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -328,7 +438,7 @@
           "target": "@components/vibeui/label-004.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-004-*. Серверный: из хуков только useId. Корень объявлен container-type:inline-size, но сама раскладка лежит на внутренней оболочке [data-part=\"shell\"] — правило внутри @container не действует на сам контейнер, поэтому переключать grid на корне бессмысленно. Раскладка — grid-template-areas: в один столбец подпись/поле/пояснение идут стопкой, от 28rem собственной ширины подпись становится левой колонкой шириной --vibeui-label-004-label-width, а пояснение остаётся под полем во второй колонке. Подпись получает padding-top, чтобы сидеть на первой строке текста внутри поля, а не на его верхней рамке.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-004-*. Серверный: из хуков только useId. Корень объявлен container-type:inline-size, но сама раскладка лежит на внутренней оболочке [data-part=\"shell\"] — правило внутри @container не действует на сам контейнер, поэтому переключать grid на корне бессмысленно. Раскладка — grid-template-areas: в один столбец подпись/поле/пояснение идут стопкой, от 28rem собственной ширины подпись становится левой колонкой шириной --vibeui-label-004-label-width, а пояснение остаётся под полем во второй колонке. Подпись получает padding-top, чтобы сидеть на первой строке текста внутри поля, а не на его верхней рамке. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
         "tags": ["label", "form", "container-query", "desktop"],
         "preview": {
@@ -344,15 +454,18 @@
             "container-type:inline-size на корне — без него запрос ширины не сработает вовсе",
             "padding-top у подписи в двухколоночном режиме: без него подпись сидит выше текста в поле",
             "переход в одну колонку на узкой ширине — боковая подпись на телефоне съедает половину строки",
-            "собственную светлую подложку блока: без неё тёмная подпись пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя поля через label и пояснение через hint",
             "ширину колонки подписи через labelWidth в rem",
             "цвет фокуса через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "порог переключения в @container и максимальную ширину строки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ширину колонки задавайте по самой длинной подписи формы, иначе строки разъедутся между собой.",
             "Правая выключка подписи хорошо читается только при узкой колонке: на широкой между подписью и полем образуется провал.",
             "Порог 28rem считается от ширины блока, а не окна: в узкой панели настроек подпись честно уйдёт наверх.",
@@ -374,6 +487,18 @@
             "default": 9,
             "min": 6,
             "max": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -387,15 +512,18 @@
                 "container-type:inline-size on the root — without it the width query does not fire at all",
                 "the padding-top on the label in two-column mode: without it the label sits above the text inside the field",
                 "the fallback to a single column at narrow widths — a side label eats half the line on a phone",
-                "the block's own light surface: without it the dark label disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field name through label and the explanation through hint",
                 "the label column width through labelWidth in rem",
                 "the focus color through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the @container breakpoint and the maximum row width"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Size the column by the longest label in the form, or rows will drift apart from each other.",
                 "Right-aligned labels read well only in a narrow column: a wide one opens a gap between label and field.",
                 "The 28rem threshold measures the block, not the window: in a narrow settings panel the label honestly moves on top.",
@@ -411,11 +539,24 @@
               "labelWidth": {
                 "label": "Label column, rem",
                 "default": 9
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Side Label"
+            "title": "Side Label",
+            "preview": {
+              "props": {
+                "label": "Company name",
+                "hint": "Exactly as written in your registration details, without quotes."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["labelWidth", "accent", "background"]
       }
     },
     {
@@ -433,7 +574,7 @@
           "target": "@components/vibeui/label-005.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-005-*. Серверный: из хуков только useId, состояние держат нативные радиокнопки одного name. Заголовок группы — <legend>, а не <label>: <label> подписывает одно поле, а вопрос относится ко всем вариантам, и озвучка повторяет legend перед каждым. У legend снята его особая раскладка внутри рамки приёмом float:left;width:100%; плата за это — обтекание, поэтому пояснение и оболочка вариантов получают clear:both. Отметка варианта подсвечивает всю строку через :has(input:checked), обводка фокуса ставится на строку через :has(input:focus-visible) — цель нажатия видна целиком.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-005-*. Серверный: из хуков только useId, состояние держат нативные радиокнопки одного name. Заголовок группы — <legend>, а не <label>: <label> подписывает одно поле, а вопрос относится ко всем вариантам, и озвучка повторяет legend перед каждым. У legend снята его особая раскладка внутри рамки приёмом float:left;width:100%; плата за это — обтекание, поэтому пояснение и оболочка вариантов получают clear:both. Отметка варианта подсвечивает всю строку через :has(input:checked), обводка фокуса ставится на строку через :has(input:focus-visible) — цель нажатия видна целиком. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
         "tags": ["label", "fieldset", "legend", "radio"],
         "preview": {
@@ -449,15 +590,18 @@
             "clear:both у пояснения и оболочки: legend с float:left заставляет следующих детей обтекать заголовок",
             "общий name у радиокнопок — без него они перестают быть одной группой и выбираются все сразу",
             "обводку фокуса на строке через :has(): подсвеченный кружок не показывает реальную цель нажатия",
-            "собственную светлую подложку блока: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "вопрос группы через legend, пояснение через hint и список вариантов через options",
             "цвет выбранного варианта через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "скругление строк через переменную --vibeui-label-005-radius",
             "количество вариантов: раскладка вертикальная и держит любое число"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Первый вариант отмечен по умолчанию: если выбор обязан быть осознанным, снимите defaultChecked и добавьте required.",
             "Больше пяти-шести вариантов лучше отдать в select — вертикальный список перестаёт помещаться на экран.",
             "Пояснение связано с fieldset через aria-describedby: перенос его внутрь строки варианта сломает эту связь.",
@@ -478,6 +622,18 @@
             "type": "text",
             "default": "Способ можно поменять до того, как курьер выехал.",
             "maxLength": 90
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -491,15 +647,18 @@
                 "clear:both on the hint and the shell: a floated legend makes the following children wrap around it",
                 "the shared name on the radios — without it they stop being one group and all get selected",
                 "the focus ring on the row through :has(): a highlighted circle misstates the real tap target",
-                "the block's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group question through legend, the explanation through hint and the choices through options",
                 "the selected-state color through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the row rounding through the --vibeui-label-005-radius variable",
                 "the number of options: the layout is vertical and takes any count"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The first option is pre-selected: if the choice has to be deliberate, drop defaultChecked and add required.",
                 "More than five or six options belong in a select — a vertical list stops fitting the screen.",
                 "The hint is tied to the fieldset through aria-describedby: moving it inside an option row breaks that link.",
@@ -515,11 +674,29 @@
               "hint": {
                 "label": "Hint",
                 "default": "You can change this until the courier leaves."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Group Legend"
+            "title": "Group Legend",
+            "preview": {
+              "props": {
+                "legend": "How should we deliver",
+                "hint": "You can change this until the courier leaves.",
+                "options": [
+                  "Courier to the door",
+                  "Pickup point",
+                  "Postal service"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -537,7 +714,7 @@
           "target": "@components/vibeui/label-006.tsx"
         }
       ],
-      "docs": "Клиентский компонент: значение поля держит useState, из него считается остаток. Один файл, без зависимостей, палитра в локальных переменных --vibeui-label-006-*. Счётчик стоит в строке подписи, а не под полем: лимит виден раньше, чем человек начал печатать. Состояние счётчика выражено атрибутом data-state (ok/near/over), цвета висят на нём — отдельных классов нет. Жёсткого maxLength у поля нет намеренно: вставленный из буфера текст не обрезается молча, вместо этого поле получает aria-invalid, а счётчик краснеет. Цифры набраны табличными (font-variant-numeric:tabular-nums), поэтому правый край не дёргается при вводе. Живое сообщение включается только у границы: озвучивать каждый символ — шум, из-за которого выключают экранного диктора.",
+      "docs": "Клиентский компонент: значение поля держит useState, из него считается остаток. Один файл, без зависимостей, палитра в локальных переменных --vibeui-label-006-*. Счётчик стоит в строке подписи, а не под полем: лимит виден раньше, чем человек начал печатать. Состояние счётчика выражено атрибутом data-state (ok/near/over), цвета висят на нём — отдельных классов нет. Жёсткого maxLength у поля нет намеренно: вставленный из буфера текст не обрезается молча, вместо этого поле получает aria-invalid, а счётчик краснеет. Цифры набраны табличными (font-variant-numeric:tabular-nums), поэтому правый край не дёргается при вводе. Живое сообщение включается только у границы: озвучивать каждый символ — шум, из-за которого выключают экранного диктора. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
         "tags": ["label", "counter", "textarea", "limit"],
         "preview": {
@@ -553,15 +730,19 @@
             "табличные цифры у счётчика — пропорциональные дёргают правый край на каждом символе",
             "три состояния через data-state вместо цветовых классов: логика и раскраска остаются в одном месте",
             "живое сообщение только у границы — озвучка каждого символа заставляет выключить диктора",
-            "собственную светлую подложку блока: без неё тёмная подпись пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя поля через label, порог через limit и начальный текст через defaultValue",
+            "живые сообщения через overText и nearText — {count} подставит число",
             "цвет фокуса через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "цвета предупреждения и перебора через переменные --vibeui-label-006-warn и --vibeui-label-006-over",
             "порог «почти предел» в 20 символов внутри компонента"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Счётчик считает символы строки JavaScript: эмодзи из суррогатной пары дадут двойку, для точного счёта нужен Intl.Segmenter.",
             "Компонент управляет полем сам: снаружи подставляйте значение через defaultValue, а не через value.",
             "aria-invalid при переборе — сигнал форме: не забудьте запретить отправку, иначе сервер получит длинный текст.",
@@ -583,6 +764,18 @@
             "default": 140,
             "min": 40,
             "max": 400
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -596,15 +789,19 @@
                 "tabular figures on the counter — proportional ones jerk the right edge on every character",
                 "the three states through data-state instead of color classes: logic and paint stay in one place",
                 "the live message only near the limit — announcing every character makes people turn the screen reader off",
-                "the block's own light surface: without it the dark label disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field name through label, the threshold through limit and the starting text through defaultValue",
+                "the live messages through overText and nearText — {count} takes the number",
                 "the focus color through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the warning and overflow colors through the --vibeui-label-006-warn and --vibeui-label-006-over variables",
                 "the \"almost at the limit\" threshold of 20 characters inside the component"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The counter counts JavaScript string units: a surrogate-pair emoji counts as two, and exact counting needs Intl.Segmenter.",
                 "The component owns the field: feed it from outside through defaultValue, not value.",
                 "aria-invalid on overflow is a signal to the form: remember to block submission, or the server gets the long text.",
@@ -620,11 +817,26 @@
               "limit": {
                 "label": "Character limit",
                 "default": 140
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Counter Label"
+            "title": "Counter Label",
+            "preview": {
+              "props": {
+                "label": "Short description",
+                "defaultValue": "A pottery studio in the town centre: handmade tableware and weekend classes.",
+                "overText": "{count} characters over",
+                "nearText": "{count} characters left"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["limit", "accent", "background"]
       }
     },
     {
@@ -642,7 +854,7 @@
           "target": "@components/vibeui/label-007.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-007-*. Серверный: из хуков только useId. Единственный источник состояния — aria-invalid у поля: подпись краснеет правилом :has(input[aria-invalid=\"true\"]), рамка и обводка фокуса — селектором по тому же атрибуту. Отдельного класса «error» нет, поэтому состояния не разъезжаются. Сообщение стоит между подписью и полем: на телефоне клавиатура закрывает низ экрана, и текст под полем не виден. К цвету добавлен нарисованный рамкой значок — цвет не должен быть единственным признаком ошибки. Сообщение связано с полем через aria-describedby.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-007-*. Серверный: из хуков только useId. Единственный источник состояния — aria-invalid у поля: подпись краснеет правилом :has(input[aria-invalid=\"true\"]), рамка и обводка фокуса — селектором по тому же атрибуту. Отдельного класса «error» нет, поэтому состояния не разъезжаются. Сообщение стоит между подписью и полем: на телефоне клавиатура закрывает низ экрана, и текст под полем не виден. К цвету добавлен нарисованный рамкой значок — цвет не должен быть единственным признаком ошибки. Сообщение связано с полем через aria-describedby. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
         "tags": ["label", "error", "validation", "a11y"],
         "preview": {
@@ -658,15 +870,18 @@
             "связь сообщения и поля через aria-describedby — иначе ошибку видно, но не слышно",
             "значок рядом с текстом: один цвет не различают люди с дальтонизмом и чёрно-белая печать",
             "положение сообщения над полем — на телефоне клавиатура закрывает всё, что ниже поля",
-            "собственную светлую подложку блока: без неё тёмная подпись пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя поля через label, текст ошибки через error и введённое значение через defaultValue",
             "цвет обычного фокуса через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "цвета ошибки через переменные --vibeui-label-007-error и --vibeui-label-007-error-soft",
             "тип поля и автозаполнение под свой сценарий"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ошибка отрисована сразу: если она появляется после отправки, добавьте role=\"alert\" на сообщение, иначе диктор промолчит.",
             "Текст ошибки обязан говорить, что исправить, а не «неверное значение» — иначе человек застревает.",
             "Снимая aria-invalid, уберите и aria-describedby с сообщением, иначе поле продолжит ссылаться на пустоту.",
@@ -687,6 +902,18 @@
             "type": "text",
             "default": "Такой почты не существует: проверьте, что после @ стоит домен.",
             "maxLength": 120
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -700,15 +927,18 @@
                 "the aria-describedby link between message and field — otherwise the error is seen but never heard",
                 "the icon next to the text: color alone fails color-blind readers and greyscale printing",
                 "the message above the field — on a phone the keyboard covers everything below the input",
-                "the block's own light surface: without it the dark label disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field name through label, the message through error and the typed value through defaultValue",
                 "the normal focus color through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the error colors through the --vibeui-label-007-error and --vibeui-label-007-error-soft variables",
                 "the input type and autofill hint for your own case"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The error is rendered up front: if it appears after submission, add role=\"alert\" to the message or the screen reader stays silent.",
                 "The message has to say what to fix rather than \"invalid value\", or people get stuck.",
                 "When you drop aria-invalid, drop aria-describedby too, or the field keeps pointing at nothing.",
@@ -724,11 +954,25 @@
               "error": {
                 "label": "Error text",
                 "default": "No such address: check that a domain follows the @."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Error Label"
+            "title": "Error Label",
+            "preview": {
+              "props": {
+                "label": "Billing email",
+                "error": "No such address: check that a domain follows the @.",
+                "defaultValue": "accounting@company"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -746,7 +990,7 @@
           "target": "@components/vibeui/label-008.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-008-*. Серверный: из хуков только useId, состояния нет. Ключевое решение — readOnly плюс aria-disabled вместо настоящего disabled: disabled выбрасывает поле из порядка обхода, и человек с клавиатуры до причины не доберётся, а readonly оставляет фокус и позволяет прочитать привязанный через aria-describedby текст. Замок нарисован средствами CSS: корпус — фон элемента, дужка — рамка псевдоэлемента, иконочный пакет ради одного значка не нужен. Рядом с причиной стоит ссылка, снимающая запрет, — без неё интерфейс превращается в тупик.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-008-*. Серверный: из хуков только useId, состояния нет. Ключевое решение — readOnly плюс aria-disabled вместо настоящего disabled: disabled выбрасывает поле из порядка обхода, и человек с клавиатуры до причины не доберётся, а readonly оставляет фокус и позволяет прочитать привязанный через aria-describedby текст. Замок нарисован средствами CSS: корпус — фон элемента, дужка — рамка псевдоэлемента, иконочный пакет ради одного значка не нужен. Рядом с причиной стоит ссылка, снимающая запрет, — без неё интерфейс превращается в тупик. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
         "tags": ["label", "disabled", "readonly", "a11y"],
         "preview": {
@@ -762,15 +1006,18 @@
             "связь причины и поля через aria-describedby — иначе объяснение видно только глазами",
             "видимую обводку фокуса: закрытое поле всё ещё получает фокус и обязано это показывать",
             "ссылку-выход рядом с причиной: запрет без способа его снять — тупик",
-            "собственную светлую подложку блока: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя поля через label, объяснение через reason, подпись ссылки через actionText и адрес через actionHref",
             "цвет фокуса и ссылки через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "фон закрытого поля через переменную --vibeui-label-008-locked-bg",
             "значение внутри поля через defaultValue"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "readonly-поле уходит в отправку формы, disabled — нет: если значение отправлять не надо, уберите ему name.",
             "Причина обязана называть условие и срок, а не «недоступно»: иначе человек уходит писать в поддержку.",
             "Приглушённый текст всё равно должен проходить по контрасту: не опускайте его ниже 4.5:1 к подложке.",
@@ -791,6 +1038,25 @@
             "type": "text",
             "default": "Оплатить сейчас",
             "maxLength": 30
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Значение поля",
+            "type": "text",
+            "default": "Команда, 12 мест",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -804,15 +1070,18 @@
                 "the aria-describedby link between the reason and the field — otherwise the explanation is visible only to the eye",
                 "the visible focus ring: a locked field still receives focus and has to show it",
                 "the way-out link next to the reason: a lock with no way to lift it is a dead end",
-                "the block's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field name through label, the explanation through reason, the link caption through actionText and its address through actionHref",
                 "the focus and link color through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the locked field background through the --vibeui-label-008-locked-bg variable",
                 "the value inside the field through defaultValue"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A readonly field is submitted with the form while a disabled one is not: drop its name if the value should not be sent.",
                 "The reason has to name the condition and the date rather than say \"unavailable\", or people go and write to support.",
                 "Muted text still has to pass contrast: do not push it below 4.5:1 against the surface.",
@@ -828,11 +1097,30 @@
               "actionText": {
                 "label": "Way out",
                 "default": "Pay now"
+              },
+              "defaultValue": {
+                "label": "Field value",
+                "default": "Team, 12 seats"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Locked Reason"
+            "title": "Locked Reason",
+            "preview": {
+              "props": {
+                "label": "Plan",
+                "reason": "The plan can only change after the current period is paid — it closes on 30 September.",
+                "actionText": "Pay now",
+                "defaultValue": "Team, 12 seats"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -850,7 +1138,7 @@
           "target": "@components/vibeui/label-009.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-009-*. Серверный: из хуков только useId, состояния нет. Вместо звёздочки с расшифровкой для скринридера здесь читаемый бейдж «Обязательно», вложенный прямо в <label> — он звучит вместе с именем поля без отдельного skip-текста и aria-hidden. Пояснение стоит под полем и связано с ним через aria-describedby. Поле получает нативный required, валидация браузера остаётся рабочей. Блок несёт собственную светлую подложку с рамкой — тёмный текст подписи обязан читаться на тёмной карточке каталога.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-009-*. Серверный: из хуков только useId, состояния нет. Вместо звёздочки с расшифровкой для скринридера здесь читаемый бейдж «Обязательно», вложенный прямо в <label> — он звучит вместе с именем поля без отдельного skip-текста и aria-hidden. Пояснение стоит под полем и связано с ним через aria-describedby. Поле получает нативный required, валидация браузера остаётся рабочей. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
         "tags": ["label", "form", "required", "a11y"],
         "preview": {
@@ -865,15 +1153,18 @@
             "бейдж внутри <label>, а не рядом с ним: иначе он выпадает из чтения имени поля скринридером",
             "связь пояснения с полем через aria-describedby: иначе текст виден глазами, но не читается вслух",
             "нативный атрибут required на поле — на нём держится проверка браузера без скрипта",
-            "собственную светлую подложку блока: без неё тёмная подпись пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя поля через label, текст бейджа через badge и пояснение через hint",
             "текст-заглушку через placeholder",
             "цвет фокуса и акцента через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "цвет и подложку бейджа через переменные --vibeui-label-009-required и --vibeui-label-009-required-soft"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Бейдж работает, только когда обязательных полей меньшинство: если обязательны почти все, помечайте наоборот необязательные.",
             "Тип поля здесь tel; под другой тип меняйте и autoComplete, иначе автозаполнение подставит не то.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -900,6 +1191,18 @@
             "type": "text",
             "default": "Позвоним, если у курьера не получится дозвониться на резервный номер.",
             "maxLength": 90
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -912,15 +1215,18 @@
                 "the badge inside <label> rather than next to it: otherwise it falls out of the screen reader's reading of the field name",
                 "the aria-describedby link between the hint and the field: otherwise the text is visible but never spoken",
                 "the native required attribute on the input — browser validation rests on it, with no script",
-                "the block's own light surface: without it the dark label disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field name through label, the badge text through badge and the explanation through hint",
                 "the placeholder text through placeholder",
                 "the focus and accent color through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the badge color and background through the --vibeui-label-009-required and --vibeui-label-009-required-soft variables"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The badge only works while required fields are the minority: if almost everything is required, mark the optional ones instead.",
                 "The input type here is tel; for another type change autoComplete as well, or autofill will paste the wrong value.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -939,11 +1245,26 @@
               "hint": {
                 "label": "Hint",
                 "default": "We'll call it if the courier can't reach the backup number."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Required Badge"
+            "title": "Required Badge",
+            "preview": {
+              "props": {
+                "label": "Contact phone",
+                "badge": "Required",
+                "hint": "We'll call it if the courier can't reach the backup number.",
+                "placeholder": "+1 555 010 0199"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -961,7 +1282,7 @@
           "target": "@components/vibeui/label-010.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-010-*. Серверный: из хуков только useId, состояния нет — раскрытие держит нативный <details>. Кнопка-триггер — обычный <summary> с убранным системным маркером и своим шевроном на transform:rotate; aria-expanded браузер выставляет сам. Ответ связан с полем через aria-describedby независимо от состояния open. В отличие от всплывающей подсказки, длинный ответ раздвигает форму вниз, а не перекрывает соседние поля.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-010-*. Серверный: из хуков только useId, состояния нет — раскрытие держит нативный <details>. Кнопка-триггер — обычный <summary> с убранным системным маркером и своим шевроном на transform:rotate; aria-expanded браузер выставляет сам. Ответ связан с полем через aria-describedby независимо от состояния open. В отличие от всплывающей подсказки, длинный ответ раздвигает форму вниз, а не перекрывает соседние поля. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
         "tags": ["label", "form", "disclosure", "a11y"],
         "preview": {
@@ -976,15 +1297,18 @@
             "нативный <details>/<summary> вместо кастомного попапа: aria-expanded и клавиатурное управление браузер ведёт сам",
             "aria-describedby на поле, указывающий на ответ, независимо от того, открыт он или закрыт",
             "скрытый системный маркер списка у <summary> — его подменяет собственный шеврон",
-            "собственную светлую подложку блока: без неё тёмная подпись пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя поля через label, текст кнопки-триггера через toggleText и ответ через answer",
             "текст-заглушку через placeholder",
             "цвет фокуса и акцента через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "фон раскрытого блока ответа через переменную --vibeui-label-010-answer-bg"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ответ остаётся в DOM всегда: пока <details> закрыт, aria-describedby ссылается на скрытый узел — это ожидаемо для прогрессивного раскрытия.",
             "Раскрытие не анимировано намеренно: анимация высоты требует либо JS, либо interpolate-size, а раскрытие «в потоке» и без анимации уже избавляет от наслоения попапа.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -1011,6 +1335,18 @@
             "type": "text",
             "default": "Трёхбуквенный код по ISO 4217 (например, RUB или USD) — по нему платёжный шлюз определяет валюту счёта и не путает суммы при конвертации.",
             "maxLength": 220
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1023,15 +1359,18 @@
                 "the native <details>/<summary> instead of a custom popover: the browser drives aria-expanded and keyboard control on its own",
                 "aria-describedby on the field pointing at the answer regardless of whether it is open or closed",
                 "the hidden system list marker on <summary> — a custom chevron replaces it",
-                "the block's own light surface: without it the dark label disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field name through label, the toggle text through toggleText and the answer through answer",
                 "the placeholder text through placeholder",
                 "the focus and accent color through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the expanded answer's background through the --vibeui-label-010-answer-bg variable"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The answer stays in the DOM at all times: while <details> is closed, aria-describedby points at a hidden node — expected for progressive disclosure.",
                 "The expand is deliberately not animated: animating height needs either JS or interpolate-size, and unfolding in-flow without animation already avoids popover layering.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1050,11 +1389,26 @@
               "answer": {
                 "label": "Answer",
                 "default": "A three-letter ISO 4217 code (e.g. RUB or USD) — the payment gateway reads it to set the invoice currency and avoid conversion mistakes."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Inline Disclosure"
+            "title": "Inline Disclosure",
+            "preview": {
+              "props": {
+                "label": "Currency export code",
+                "toggleText": "Why we need this",
+                "answer": "A three-letter ISO 4217 code (e.g. RUB or USD) — the payment gateway reads it to set the invoice currency and avoid conversion mistakes.",
+                "placeholder": "USD"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1072,7 +1426,7 @@
           "target": "@components/vibeui/label-011.tsx"
         }
       ],
-      "docs": "Клиентский компонент: список выбранных значений держит useState, из него считается счётчик. Один файл, без зависимостей, палитра в локальных переменных --vibeui-label-011-*. У группы чекбоксов нет единственного поля, которое подписывает <label>, поэтому счётчик встроен в <legend> — общую подпись группы, а не в подпись одного из полей. <legend> получает раскладку через приём проекта (float:left;width:100%), а строка «текст + счётчик» внутри неё — обычный flex на вложенном <span>, без ограничений браузеров на flex-легенду. Отдельный визуально скрытый параграф с aria-live дублирует итог для скринридера, чтобы не пришлось переслушивать весь список чекбоксов после каждого клика.",
+      "docs": "Клиентский компонент: список выбранных значений держит useState, из него считается счётчик. Один файл, без зависимостей, палитра в локальных переменных --vibeui-label-011-*. У группы чекбоксов нет единственного поля, которое подписывает <label>, поэтому счётчик встроен в <legend> — общую подпись группы, а не в подпись одного из полей. <legend> получает раскладку через приём проекта (float:left;width:100%), а строка «текст + счётчик» внутри неё — обычный flex на вложенном <span>, без ограничений браузеров на flex-легенду. Отдельный визуально скрытый параграф с aria-live дублирует итог для скринридера, чтобы не пришлось переслушивать весь список чекбоксов после каждого клика. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
         "tags": ["label", "form", "checkbox", "counter", "a11y"],
         "preview": {
@@ -1087,14 +1441,18 @@
             "счётчик внутри <legend>, а не над или под группой: он относится ко всей группе, а не к одному чекбоксу",
             "приём float:left;width:100% на самом <legend> и flex только на вложенном <span> — flex прямо на <legend> ведёт себя непредсказуемо в части браузеров",
             "визуально скрытый параграф с aria-live: без него смену счётчика узнают только зрячие",
-            "собственную светлую подложку блока: без неё тёмная подпись пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок группы через legend, список вариантов через options и стартовый выбор через defaultValue",
+            "тексты счётчика через countText и liveText — {checked} и {total} подставят числа",
             "цвет фокуса и акцента через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "ширину блока через max-width в палитре"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент управляет состоянием сам: снаружи подставляйте стартовый выбор через defaultValue, а не пытайтесь передать value.",
             "options и defaultValue сверяются по строковому значению — при повторяющихся текстах вариантов замените на массив объектов с id, если такое понадобится.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -1110,23 +1468,87 @@
                 "the counter inside <legend> rather than above or below the group: it describes the whole group, not one checkbox",
                 "the float:left;width:100% technique on <legend> itself with flex only on the nested <span> — flex directly on <legend> behaves inconsistently across browsers",
                 "the visually hidden aria-live paragraph: without it only sighted users notice the counter change",
-                "the block's own light surface: without it the dark label disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group heading through legend, the option list through options and the starting selection through defaultValue",
+                "the counter wording through countText and liveText — {checked} and {total} take the numbers",
                 "the focus and accent color through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the block width through max-width in the palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component owns its state: feed it a starting selection from outside through defaultValue, not by trying to pass value.",
                 "options and defaultValue are matched by string value — for repeating option text switch to an array of objects with an id if you need that.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Label011\n  legend=\"Notification channels\"\n  options={[\"Email\", \"SMS\", \"In-app push\", \"Telegram bot\", \"Phone call\"]}\n  defaultValue={[\"Email\", \"SMS\", \"In-app push\"]}\n/>"
             },
-            "title": "Checked Count"
+            "title": "Checked Count",
+            "controls": {
+              "legend": {
+                "label": "Group heading",
+                "default": "Notification channels"
+              },
+              "countText": {
+                "label": "Counter",
+                "default": "{checked} of {total} selected"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "preview": {
+              "props": {
+                "legend": "Notification channels",
+                "options": [
+                  "Email",
+                  "SMS",
+                  "In-app push",
+                  "Telegram bot",
+                  "Phone call"
+                ],
+                "defaultValue": ["Email", "SMS", "In-app push"],
+                "countText": "{checked} of {total} selected",
+                "liveText": "{checked} of {total} selected"
+              }
+            }
           }
-        }
+        },
+        "controls": [
+          {
+            "prop": "legend",
+            "label": "Заголовок группы",
+            "type": "text",
+            "default": "Каналы уведомлений",
+            "maxLength": 40
+          },
+          {
+            "prop": "countText",
+            "label": "Счётчик",
+            "type": "text",
+            "default": "{checked} из {total} выбрано",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1144,7 +1566,7 @@
           "target": "@components/vibeui/label-012.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-012-*. Серверный: из хуков только useId, состояния нет. Пометка «необязательно» — не отдельный элемент с фоном и рамкой, а приглушённый текст внутри того же <label>, что и имя поля: подпись читается и звучит одной фразой, а не подписью плюс наклеенным ярлыком. Приглушение только цветом var(--vibeui-label-012-muted) и обычным начертанием на фоне полужирного имени поля.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-012-*. Серверный: из хуков только useId, состояния нет. Пометка «необязательно» — не отдельный элемент с фоном и рамкой, а приглушённый текст внутри того же <label>, что и имя поля: подпись читается и звучит одной фразой, а не подписью плюс наклеенным ярлыком. Приглушение только цветом var(--vibeui-label-012-muted) и обычным начертанием на фоне полужирного имени поля. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
         "tags": ["label", "form", "optional", "a11y"],
         "preview": {
@@ -1158,15 +1580,18 @@
             "локальную палитру --vibeui-label-012-* и не подменять её токенами вашей темы",
             "пометку внутри <label>, а не рядом отдельным элементом: она обязана звучать в одной фразе с именем поля",
             "приглушение только цветом и начертанием, без фона и рамки — иначе это снова бейдж, а не тихая часть фразы",
-            "собственную светлую подложку блока: без неё тёмная подпись пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя поля через label и текст пометки через optionalText",
             "текст-заглушку через placeholder",
             "цвет фокуса и акцента через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "ширину блока через max-width в палитре"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пометка работает, только когда необязательных полей меньшинство: если необязательны почти все, помечайте наоборот обязательные.",
             "Скобки вокруг optionalText — часть визуального языка компонента: убирая их, проверьте, что фраза не читается как продолжение имени поля.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -1186,6 +1611,18 @@
             "type": "text",
             "default": "необязательно",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1197,15 +1634,18 @@
                 "the local --vibeui-label-012-* palette — do not swap it for your theme tokens",
                 "the note inside <label> rather than as a separate nearby element: it has to be read as one phrase with the field name",
                 "muting through color and weight only, with no background or border — otherwise it turns back into a badge instead of a quiet part of the phrase",
-                "the block's own light surface: without it the dark label disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field name through label and the note text through optionalText",
                 "the placeholder text through placeholder",
                 "the focus and accent color through accent",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the block width through max-width in the palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The note only works while optional fields are the minority: if almost everything is optional, mark the required ones instead.",
                 "The parentheses around optionalText are part of the component's visual language: if you remove them, check the phrase doesn't read as a continuation of the field name.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1220,11 +1660,25 @@
               "optionalText": {
                 "label": "Note text",
                 "default": "optional"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Optional Note"
+            "title": "Optional Note",
+            "preview": {
+              "props": {
+                "label": "Company name",
+                "optionalText": "optional",
+                "placeholder": "Acme LLC"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1257,14 +1711,17 @@
             "fieldset+legend вместо двух независимых <label>: ошибка относится к группе, а не к одному полю",
             "одно сообщение об ошибке вместо копии под каждым полем — иначе непонятно, какое поле именно неверно",
             "aria-describedby и на <fieldset>, и на каждом поле группы: ошибка звучит независимо от того, где фокус",
-            "собственную светлую подложку блока: без неё тёмная подпись пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок группы через legend, текст ошибки через error и подписи полей через firstLabel и secondLabel",
             "цвет фокуса и акцента через accent",
-            "ширину блока через max-width в палитре"
+            "ширину блока через max-width в палитре",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Оба поля показаны с aria-invalid=\"true\" и подсветкой рамки постоянно: в реальной форме переключайте это состояние по факту валидации, а не всегда.",
             "Компонент неконтролируемый: значения полей не хранятся в состоянии — читайте их через FormData при отправке формы.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -1284,6 +1741,32 @@
             "type": "text",
             "default": "Пароли не совпадают: проверьте оба поля.",
             "maxLength": 90
+          },
+          {
+            "prop": "firstLabel",
+            "label": "Подпись первого поля",
+            "type": "text",
+            "default": "Пароль",
+            "maxLength": 40
+          },
+          {
+            "prop": "secondLabel",
+            "label": "Подпись второго поля",
+            "type": "text",
+            "default": "Повторите пароль",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1296,19 +1779,22 @@
                 "fieldset+legend instead of two independent <label> elements: the error belongs to the group, not to one field",
                 "a single error message instead of a copy under each field — otherwise it's unclear which field is actually wrong",
                 "aria-describedby on both the <fieldset> and each field in the group: the error is announced regardless of which one has focus",
-                "the block's own light surface: without it the dark label disappears on a dark background"
+                "light-dark() in the palette: the component must follow the surrounding color-scheme instead of carrying its own dark theme",
+                "the transparent surface by default — the component sits on the page background instead of laying down a plate of its own"
               ],
               "adapt": [
                 "the group heading through legend, the error text through error and the field labels through firstLabel and secondLabel",
                 "the focus and accent color through accent",
-                "the block width through max-width in the palette"
+                "the block width through max-width in the palette",
+                "background — the component surface; empty means \"no surface\", matching the page color"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken along with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Both fields show aria-invalid=\"true\" and the border highlight permanently here: in a real form, toggle that state based on actual validation, not always.",
                 "The component is uncontrolled: field values are not held in state — read them through FormData on submit.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
-              "usage": "<Label013\n  legend=\"New password\"\n  error=\"Passwords don't match: check both fields.\"\n  firstLabel=\"Password\"\n  secondLabel=\"Confirm password\"\n/>"
+              "usage": "<Label013\n  legend=\"New password\"\n  error=\"Passwords don’t match: check both fields.\"\n  firstLabel=\"Password\"\n  secondLabel=\"Confirm password\"\n/>"
             },
             "controls": {
               "legend": {
@@ -1317,12 +1803,35 @@
               },
               "error": {
                 "label": "Error text",
-                "default": "Passwords don't match: check both fields."
+                "default": "Passwords don’t match: check both fields."
+              },
+              "firstLabel": {
+                "label": "First field label",
+                "default": "Password"
+              },
+              "secondLabel": {
+                "label": "Second field label",
+                "default": "Confirm password"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Group Error"
+            "title": "Group Error",
+            "preview": {
+              "props": {
+                "legend": "New password",
+                "error": "Passwords don’t match: check both fields.",
+                "firstLabel": "Password",
+                "secondLabel": "Confirm password"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

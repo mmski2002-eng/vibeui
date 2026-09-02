@@ -10,6 +10,12 @@ export type Label006Props = Omit<
   label?: string
   limit?: number
   defaultValue?: string
+  /** Живое сообщение о переборе. {count} — на сколько символов перебор. */
+  overText?: string
+  /** Живое сообщение у границы. {count} — сколько символов осталось. */
+  nearText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,14 +26,14 @@ export type Label006Props = Omit<
 // помечает поле неверным, а решает человек.
 const STYLES = `
 :where([data-vibeui-block="label-006"]){
---vibeui-label-006-surface:oklch(1 0 0);
---vibeui-label-006-surface-border:oklch(0.91 0.006 265);
---vibeui-label-006-fg:oklch(0.24 0.016 265);
---vibeui-label-006-muted:oklch(0.54 0.014 265);
---vibeui-label-006-field-border:oklch(0.85 0.01 265);
---vibeui-label-006-accent:oklch(0.55 0.2 262);
---vibeui-label-006-warn:oklch(0.62 0.15 65);
---vibeui-label-006-over:oklch(0.55 0.2 25);
+--vibeui-label-006-surface:transparent;
+--vibeui-label-006-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-label-006-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-label-006-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-label-006-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-label-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-label-006-warn:light-dark(oklch(0.62 0.15 65),oklch(0.79 0.13 65));
+--vibeui-label-006-over:light-dark(oklch(0.55 0.2 25),oklch(0.72 0.16 25));
 --vibeui-label-006-radius:0.625rem;
 --vibeui-label-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -78,6 +84,28 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-label-006-over) 22%,transpa
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подпись со счётчиком символов справа: лимит виден заранее, перебор
  * подсвечивается и не обрезает вставленный текст. Один файл, ноль
  * зависимостей.
@@ -86,6 +114,9 @@ export function Label006({
   label = "Короткое описание",
   limit = 140,
   defaultValue = "Мастерская керамики в центре города: посуда ручной работы и занятия по выходным.",
+  overText = "Перебор на {count} символов",
+  nearText = "Осталось {count} символов",
+  background = "",
   accent,
   className,
   style,
@@ -98,6 +129,12 @@ export function Label006({
   const state = left < 0 ? "over" : left <= 20 ? "near" : "ok"
   const palette = {
     ...(accent ? { "--vibeui-label-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-label-006-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -131,9 +168,9 @@ export function Label006({
             символ — это шум, из-за которого выключают озвучку целиком. */}
         <p data-part="live" aria-live="polite">
           {state === "over"
-            ? `Перебор на ${-left} символов`
+            ? overText.replace("{count}", String(-left))
             : state === "near"
-              ? `Осталось ${left} символов`
+              ? nearText.replace("{count}", String(left))
               : ""}
         </p>
       </div>

@@ -31,16 +31,21 @@
             "vector-effect:non-scaling-stroke и preserveAspectRatio=\"none\" — иначе при растяжении линия становится неровной",
             "aria-label у svg со значением и изменением",
             "inline-flex у корня: показатель обязан вставать в строку, а не разрывать её",
-            "блок <style> внутри компонента — в нём вся палитра и геометрия"
+            "блок <style> внутри компонента — в нём вся палитра и геометрия",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "values — ряд значений для кривой",
             "label и value — подпись и текущее значение; value это строка, поэтому формат остаётся за вами",
             "delta и unit — изменение за период и его единица",
             "акцент через проп accent, если нужен один цвет вместо зелёного и красного",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "ariaTemplate — подпись для скринридера: {label}, {value}, {delta} и {unit} подставляются"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "У кривой нет осей и подписей: это намеренно. Спарклайн показывает форму, а не значения точек.",
             "Не используйте его как единственный график на дашборде — за формой не видно масштаба.",
             "value — строка, а не число: форматирование остаётся за вызывающим кодом, компонент не угадывает разряды и валюту.",
@@ -76,6 +81,18 @@
             "type": "text",
             "default": "%",
             "maxLength": 6
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -91,16 +108,21 @@
                 "vector-effect:non-scaling-stroke and preserveAspectRatio=\"none\" — otherwise stretching makes the stroke uneven",
                 "the aria-label on the svg carrying the value and the change",
                 "inline-flex on the root: the metric has to sit in a line rather than break it",
-                "the <style> block inside the component — it holds the palette and the geometry"
+                "the <style> block inside the component — it holds the palette and the geometry",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "values — the series behind the curve",
                 "label and value — the caption and the current figure; value is a string, so the format stays yours",
                 "delta and unit — the change over the period and its unit",
                 "the accent through the accent prop when one colour is wanted instead of green and red",
-                "outer spacing through className"
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour",
+                "ariaTemplate — the screen-reader caption: {label}, {value}, {delta} and {unit} are substituted"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The curve has no axes or labels, deliberately. A sparkline shows shape, not point values.",
                 "Do not make it the only chart on a dashboard — shape hides scale.",
                 "value is a string rather than a number: formatting belongs to the caller, the component does not guess digit grouping or currency.",
@@ -123,11 +145,26 @@
               "unit": {
                 "label": "Unit",
                 "default": "%"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Metric Sparkline"
+            "title": "Metric Sparkline",
+            "preview": {
+              "props": {
+                "label": "Installs this month",
+                "value": "1,284",
+                "unit": "%",
+                "ariaTemplate": "{label}: {value}, change {delta}{unit}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["delta", "accent", "background"]
       }
     },
     {
@@ -162,16 +199,22 @@
             "вывод цвета из знака delta через data-trend на строке: цвет, заданный отдельно от значения, рано или поздно соврёт",
             "порог «без изменений» в полпроцента: колебание в 0,1 % не должно окрашиваться как рост",
             "vector-effect: non-scaling-stroke и preserveAspectRatio=\"none\" — иначе в узкой колонке кривая становится ниткой",
-            "табличные цифры в колонках значения и изменения: числа обязаны стоять ровным столбцом"
+            "табличные цифры в колонках значения и изменения: числа обязаны стоять ровным столбцом",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив rows: подпись, значение, delta и ряд values для кривой",
             "caption — заголовок таблицы",
             "period — пояснение периода под заголовком",
             "акцент через проп accent — цвет роста, если зелёный не подходит бренду",
-            "набор колонок и их порядок"
+            "набор колонок и их порядок",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "headings — заголовки колонок словарём: metric, value, trend, change",
+            "note — пояснение под заголовком; {period} подставляется"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "value — строка, а не число: форматирование остаётся за вызывающим кодом, компонент не угадывает разряды и валюту.",
             "У кривой нет осей: она показывает форму, а точные числа берут из соседних колонок.",
             "Меньше двух значений в values дают точку вместо линии — такие строки лучше отфильтровать.",
@@ -198,6 +241,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -212,16 +261,22 @@
                 "deriving the colour from the sign of delta through data-trend on the row: a colour set independently of the value eventually lies",
                 "the half-percent flat threshold: a 0.1 % wobble must not be coloured as growth",
                 "vector-effect: non-scaling-stroke and preserveAspectRatio=\"none\" — otherwise the curve becomes a thread in a narrow column",
-                "tabular numerals in the value and change columns: the numbers must line up in a column"
+                "tabular numerals in the value and change columns: the numbers must line up in a column",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the rows array: label, value, delta and the values series behind the curve",
                 "caption — the table heading",
                 "period — the period note under the heading",
                 "the accent through the accent prop — the growth colour when green does not suit the brand",
-                "the set of columns and their order"
+                "the set of columns and their order",
+                "background — the component background; empty means no background, taking the page colour",
+                "headings — the column headings as a dictionary: metric, value, trend, change",
+                "note — the line under the heading; {period} is substituted"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "value is a string rather than a number: formatting belongs to the caller, the component does not guess digit grouping or currency.",
                 "The curve has no axes: it shows shape, and the exact numbers come from the neighbouring columns.",
                 "Fewer than two entries in values render a dot instead of a line — filter such rows out.",
@@ -240,11 +295,54 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Metric Table"
+            "title": "Metric Table",
+            "preview": {
+              "props": {
+                "caption": "Key metrics",
+                "period": "over the last 7 days",
+                "note": "Trend {period}, change against the previous period",
+                "headings": {
+                  "metric": "Metric",
+                  "value": "Value",
+                  "trend": "Trend",
+                  "change": "Change"
+                },
+                "rows": [
+                  {
+                    "label": "Visits",
+                    "value": "48,210",
+                    "delta": 8.4,
+                    "values": [31, 34, 33, 38, 41, 44, 48]
+                  },
+                  {
+                    "label": "Sign-ups",
+                    "value": "1,284",
+                    "delta": 12.1,
+                    "values": [8, 9, 11, 10, 12, 12, 14]
+                  },
+                  {
+                    "label": "Bounce rate",
+                    "value": "37.2%",
+                    "delta": -3.6,
+                    "values": [44, 43, 41, 42, 39, 38, 37]
+                  },
+                  {
+                    "label": "Average order",
+                    "value": "$32.40",
+                    "delta": 0.2,
+                    "values": [29, 30, 29, 30, 29, 30, 29]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

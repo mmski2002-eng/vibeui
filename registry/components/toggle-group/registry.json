@@ -32,15 +32,19 @@
             "roving tabindex: девять кнопок подряд в табе — это девять лишних остановок",
             "выбор по Enter и пробелу, а не по переходу стрелкой: иначе состояние меняется вслепую",
             "role=\"group\" с именем: без имени группа звучит как набор случайных кнопок",
-            "собственную светлую подложку панели: тёмный текст обязан нести свой фон"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя группы через label",
             "начальное значение через defaultValue",
             "текст образца через text",
+            "подписи кнопок через optionText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "цвет выбранной кнопки через accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Если значение должно уехать на сервер вместе с формой — берите radio, а не эту группу.",
             "Иконки декоративные: имя кнопке даёт aria-label, и без него значок безымянный.",
             "Список вариантов зашит в файл: добавляя пятый, проверьте ширину на телефоне.",
@@ -61,6 +65,18 @@
             "type": "text",
             "default": "Выравнивание текста",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -74,15 +90,19 @@
                 "the roving tabindex: nine buttons in the tab order are nine extra stops",
                 "selection on Enter and Space rather than on arrow movement: otherwise state changes blindly",
                 "role=\"group\" with a name: unnamed, the group sounds like random buttons",
-                "the panel's own light surface: dark text must bring its own background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group name through label",
                 "the initial value through defaultValue",
                 "the sample copy through text",
+                "the button labels through optionText",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the selected colour through accent"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "If the value must be submitted with a form, use radios instead of this group.",
                 "The icons are decorative: the name comes from aria-label, without it the icon is nameless.",
                 "The option list is baked into the file: adding a fifth one, check the width on a phone.",
@@ -97,11 +117,30 @@
               "label": {
                 "label": "Group name",
                 "default": "Text alignment"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Align Group"
+            "title": "Align Group",
+            "preview": {
+              "props": {
+                "label": "Text alignment",
+                "text": "A toggle group differs from a chain of buttons in that a button here declares a state rather than firing an action.",
+                "optionText": {
+                  "left": "Align left",
+                  "center": "Align centre",
+                  "right": "Align right",
+                  "justify": "Justify"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -135,18 +174,23 @@
             "счётчик выбранного: при трёх кнопках он лишний, при десяти — единственная опора",
             "мгновенное применение к образцу — группа управляет видом, а не заполняет форму",
             "видимую обводку фокуса на каждой кнопке",
-            "собственную светлую подложку панели: тёмный текст обязан нести свой фон"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя группы через label",
             "начальный набор через defaultValue",
             "текст образца через text",
+            "подписи кнопок через optionText и строку счётчика через countText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "цвет нажатых кнопок через accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "onChange отдаёт массив идентификаторов, а не строку: порядок в нём — порядок нажатий.",
             "Для взаимоисключающих вариантов возьмите группу с одиночным выбором, здесь их нет.",
             "Три одновременных начертания читаются плохо — это дело редактора, а не компонента.",
+            "В countText обязаны остаться подстановки {selected} и {total}: без них счётчик перестанет считать.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -164,6 +208,18 @@
             "type": "text",
             "default": "Множественный выбор: жирный, курсив и подчёркивание включаются независимо друг от друга.",
             "maxLength": 140
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -177,18 +233,23 @@
                 "the counter of selected items: pointless with three buttons, essential with ten",
                 "the instant effect on the sample — the group drives the view, it does not fill a form",
                 "the visible focus ring on every button",
-                "the panel's own light surface: dark text must bring its own background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group name through label",
                 "the initial set through defaultValue",
                 "the sample copy through text",
+                "the button labels through optionText and the counter string through countText",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the pressed colour through accent"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "onChange returns an array of ids, not a string: their order is the order of presses.",
                 "For mutually exclusive options use a single-select group; there is none here.",
                 "Three type styles at once read badly — that is the editor's problem, not the component's.",
+                "countText must keep the {selected} and {total} placeholders: without them the counter stops counting.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Togglegroup002\n  label=\"Text style\"\n  defaultValue={[\"bold\"]}\n  onChange={(value) => console.log(value)}\n/>"
@@ -201,11 +262,30 @@
               "text": {
                 "label": "Sample",
                 "default": "Multiple selection: bold, italic and underline switch on independently of each other."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Format Group"
+            "title": "Format Group",
+            "preview": {
+              "props": {
+                "label": "Text style",
+                "text": "Multiple selection: bold, italic and underline switch on independently of each other.",
+                "countText": "Selected: {selected} of {total}",
+                "optionText": {
+                  "bold": "Bold",
+                  "italic": "Italic",
+                  "underline": "Underline"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -239,15 +319,19 @@
             "неизменную разметку списка: пересборка теряет прокрутку и фокус",
             "aria-pressed как объявление состояния вида, а не как подсветку активной кнопки",
             "role=\"group\" с именем — иначе три кнопки звучат как случайные",
-            "собственную светлую подложку панели: тёмный текст обязан нести свой фон"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя группы через label",
             "начальный вид через defaultValue",
-            "содержимое списка через items",
+            "заголовок через heading и содержимое списка через items",
+            "подписи кнопок через viewText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "цвет выбранной кнопки через accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Виды описаны CSS-правилами по data-view: добавляя четвёртый, добавьте и набор правил.",
             "В компактном виде подписи обрезаются многоточием — это осознанная плата за плотность.",
             "Состояние живёт в памяти вкладки: чтобы вид пережил перезагрузку, храните его снаружи.",
@@ -268,6 +352,25 @@
             "type": "text",
             "default": "Вид списка",
             "maxLength": 24
+          },
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Документы",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -281,15 +384,19 @@
                 "the unchanged list markup: rebuilding it loses scroll position and focus",
                 "aria-pressed as a declaration of the view state, not as a highlight of the active button",
                 "role=\"group\" with a name — otherwise the three buttons sound random",
-                "the panel's own light surface: dark text must bring its own background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group name through label",
                 "the initial view through defaultValue",
-                "the list contents through items",
+                "the heading through heading and the list contents through items",
+                "the button labels through viewText",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the selected colour through accent"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Views are described by CSS rules keyed on data-view: adding a fourth one means adding its rules.",
                 "In the compact view captions are truncated with an ellipsis — that is the price of density.",
                 "The state lives in the tab's memory: to survive a reload, keep it outside the component.",
@@ -304,11 +411,39 @@
               "label": {
                 "label": "Group name",
                 "default": "List view"
+              },
+              "heading": {
+                "label": "Heading",
+                "default": "Documents"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "List View Group"
+            "title": "List View Group",
+            "preview": {
+              "props": {
+                "label": "List view",
+                "heading": "Documents",
+                "items": [
+                  "Design brief",
+                  "Print estimate",
+                  "Contractor agreement",
+                  "Quarterly report"
+                ],
+                "viewText": {
+                  "list": "List",
+                  "grid": "Grid",
+                  "compact": "Compact"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -342,18 +477,24 @@
             "aria-pressed на кружках — это состояние выбора, а не запуск действия",
             "разный вид у тумблеров и у кнопки «Только будни»: действие не должно выглядеть состоянием",
             "строку итога с числом и перечнем — по семи кружкам выбор быстро не считывается",
-            "собственную светлую подложку панели: тёмный текст обязан нести свой фон"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя группы через label",
             "пояснение под группой через hint",
             "начальный набор дней через defaultValue",
+            "подписи дней через dayShortText и dayLongText, кнопку пресета через presetText",
+            "строки итога через summaryText, emptyText и формы слова в dayWordText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "цвет отмеченных будней через accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пустой выбор разрешён и честно объявлен строкой: если он недопустим, добавьте проверку снаружи.",
             "Идентификаторы дней — латиницей (mon…sun), подписи русские: не путайте их местами.",
             "Кнопка «Только будни» перезаписывает выбор целиком, а не добавляет к нему.",
+            "В summaryText обязаны остаться подстановки {count}, {word} и {days}; правило выбора формы русское, сами слова приходят в dayWordText.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -371,6 +512,25 @@
             "type": "text",
             "default": "Курьер приезжает только в отмеченные дни.",
             "maxLength": 60
+          },
+          {
+            "prop": "presetText",
+            "label": "Пресет",
+            "type": "text",
+            "default": "Только будни",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -384,18 +544,24 @@
                 "aria-pressed on the circles — this is selection state, not an action trigger",
                 "the different look of the toggles and the \"Weekdays only\" button: an action must not look like a state",
                 "the summary line with a count and a list — seven circles are not read at a glance",
-                "the panel's own light surface: dark text must bring its own background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group name through label",
                 "the note under the group through hint",
                 "the initial set of days through defaultValue",
+                "the day captions through dayShortText and dayLongText, the preset button through presetText",
+                "the summary strings through summaryText, emptyText and the word forms in dayWordText",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the colour of selected weekdays through accent"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "An empty selection is allowed and stated honestly: if it is invalid, validate outside.",
                 "Day ids are latin (mon…sun) while captions are localised: do not mix them up.",
                 "The \"Weekdays only\" button overwrites the whole selection rather than adding to it.",
+                "summaryText must keep the {count}, {word} and {days} placeholders; the plural rule is Russian while the words themselves come from dayWordText.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Togglegroup004\n  label=\"Delivery days\"\n  hint=\"The courier comes only on the selected days.\"\n  defaultValue={[\"mon\", \"wed\", \"fri\"]}\n/>"
@@ -408,11 +574,54 @@
               "hint": {
                 "label": "Note",
                 "default": "The courier comes only on the selected days."
+              },
+              "presetText": {
+                "label": "Preset",
+                "default": "Weekdays only"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Weekday Filter"
+            "title": "Weekday Filter",
+            "preview": {
+              "props": {
+                "label": "Delivery days",
+                "hint": "The courier comes only on the selected days.",
+                "presetText": "Weekdays only",
+                "summaryText": "{count} {word}: {days}.",
+                "emptyText": "No day selected — there will be no delivery.",
+                "dayWordText": {
+                  "one": "day",
+                  "few": "days",
+                  "many": "days"
+                },
+                "dayShortText": {
+                  "mon": "Mo",
+                  "tue": "Tu",
+                  "wed": "We",
+                  "thu": "Th",
+                  "fri": "Fr",
+                  "sat": "Sa",
+                  "sun": "Su"
+                },
+                "dayLongText": {
+                  "mon": "Monday",
+                  "tue": "Tuesday",
+                  "wed": "Wednesday",
+                  "thu": "Thursday",
+                  "fri": "Friday",
+                  "sat": "Saturday",
+                  "sun": "Sunday"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -446,18 +655,23 @@
             "закончившиеся размеры в ряду — убранный размер читается как несуществующий",
             "два признака недоступности: приглушение и перечёркивание, а не только цвет",
             "aria-pressed на выбранном размере — это состояние, а не нажатая кнопка действия",
-            "собственную светлую подложку панели: тёмный текст обязан нести свой фон"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя группы через label",
             "выбранный размер через defaultValue",
             "перечень и наличие через sizes",
+            "строки через currentText, soldOutText, refusedText и noteText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "цвет выбранного размера через accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "aria-disabled не отключает нажатие — обработчик обязан сам отказать, как здесь.",
             "Значение не уходит в форму: для отправки продублируйте его скрытым полем.",
-            "Имя недоступного размера содержит слово «закончился»: не убирайте его, оно и есть объяснение.",
+            "В soldOutText обязано остаться слово об отсутствии: имя недоступной кнопки и есть объяснение.",
+            "Подстановка {size} должна остаться в currentText, soldOutText и refusedText — иначе строка перестанет называть размер.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -475,6 +689,18 @@
             "type": "text",
             "default": "Размер",
             "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -488,18 +714,23 @@
                 "sold-out sizes kept in the row — a removed size reads as a size that never existed",
                 "two cues for unavailability: dimming and a strike-through, not colour alone",
                 "aria-pressed on the chosen size — this is a state, not a pressed action button",
-                "the panel's own light surface: dark text must bring its own background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group name through label",
                 "the selected size through defaultValue",
                 "the list and stock through sizes",
+                "the copy through currentText, soldOutText, refusedText and noteText",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the selected colour through accent"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "aria-disabled does not block clicks — the handler must refuse them itself, as it does here.",
                 "The value is not submitted with a form: mirror it into a hidden field if you need that.",
-                "The unavailable size's name carries the words \"sold out\": that phrase is the explanation.",
+                "soldOutText must keep the words about being out of stock: the unavailable button's name is the explanation.",
+                "The {size} placeholder must stay in currentText, soldOutText and refusedText — without it the line stops naming the size.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Togglegroup005\n  label=\"Size\"\n  defaultValue=\"M\"\n  sizes={[{ id: \"S\" }, { id: \"M\" }, { id: \"L\", available: false }]}\n/>"
@@ -511,11 +742,27 @@
               "label": {
                 "label": "Group name",
                 "default": "Size"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Size Picker"
+            "title": "Size Picker",
+            "preview": {
+              "props": {
+                "label": "Size",
+                "currentText": "Selected: {size}",
+                "soldOutText": "{size}, sold out",
+                "refusedText": "Size {size} is out of stock. We will write when it is back.",
+                "noteText": "Struck-through sizes are out of stock."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -549,18 +796,23 @@
             "вложенную обводку вместо толстой рамки — иначе карточки дёргаются при выборе",
             "галочку в квадрате как второй признак выбора помимо цвета",
             "строку итога, которая честно объявляет пустой выбор",
-            "собственную светлую подложку панели: тёмный текст обязан нести свой фон"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя группы через label",
             "текст про пустой выбор через emptyNote",
             "начальный набор каналов через defaultValue",
+            "названия и пояснения каналов через channelNameText и channelAboutText, итог через countText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "цвет выбранных карточек через accent"
           ],
           "notes": [
-            "Каналы зашиты в файл: их описания — часть смысла, не заменяйте их одним словом.",
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Идентификаторы каналов зашиты в файл: их описания — часть смысла, не заменяйте их одним словом.",
             "Пустой выбор возможен и объявлен строкой: если он недопустим, проверяйте снаружи.",
             "Карточки перестраиваются от ширины панели, а не от ширины окна — в узкой колонке это одна колонка.",
+            "В countText обязаны остаться подстановки {selected} и {total}: без них итог перестанет считать.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -578,6 +830,18 @@
             "type": "text",
             "default": "Ни один канал не выбран — уведомления не придут.",
             "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -591,18 +855,23 @@
                 "the inset ring instead of a thicker border — otherwise the cards jump on selection",
                 "the tick in the square as a second cue for selection beyond colour",
                 "the summary line that states an empty selection honestly",
-                "the panel's own light surface: dark text must bring its own background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group name through label",
                 "the empty-selection copy through emptyNote",
                 "the initial set of channels through defaultValue",
+                "the channel names and notes through channelNameText and channelAboutText, the summary through countText",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the selected card colour through accent"
               ],
               "notes": [
-                "The channels are baked into the file: their descriptions carry meaning, do not shrink them to one word.",
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The channel ids are baked into the file: their descriptions carry meaning, do not shrink them to one word.",
                 "An empty selection is possible and stated in the summary: validate outside if it is invalid.",
                 "Cards reflow by the panel's width, not the window's — inside a narrow column that means one column.",
+                "countText must keep the {selected} and {total} placeholders: without them the summary stops counting.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Togglegroup006\n  label=\"Where to send notifications\"\n  emptyNote=\"No channel selected — nothing will be sent.\"\n  defaultValue={[\"push\", \"email\"]}\n/>"
@@ -615,11 +884,37 @@
               "emptyNote": {
                 "label": "Empty selection copy",
                 "default": "No channel selected — nothing will be sent."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Channel Group"
+            "title": "Channel Group",
+            "preview": {
+              "props": {
+                "label": "Where to send notifications",
+                "emptyNote": "No channel selected — nothing will be sent.",
+                "countText": "Channels selected: {selected} of {total}.",
+                "channelNameText": {
+                  "push": "Push",
+                  "email": "Email",
+                  "sms": "SMS",
+                  "telegram": "Telegram"
+                },
+                "channelAboutText": {
+                  "push": "Reach the phone even when the app is closed",
+                  "email": "One digest letter a day",
+                  "sms": "Urgent only: charges and account sign-ins",
+                  "telegram": "Direct messages from the bot"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -650,18 +945,24 @@
             "role=\"separator\" у разделителей, а не просто нарисованную полоску",
             "имена у каждой группы: без них непонятно, где выбор складывается, а где исключает",
             "aria-pressed на каждой кнопке — это состояния, а не действия панели",
-            "видимую обводку фокуса: панель значков без неё непроходима с клавиатуры"
+            "видимую обводку фокуса: панель значков без неё непроходима с клавиатуры",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя панели через label",
             "начальное выравнивание через defaultAlign",
             "начальный набор начертаний через defaultMarks",
+            "имена групп и кнопок через sectionText и itemText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "цвет нажатых кнопок через accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Панель узкая по смыслу: список инструментов зашит в файл, растить его бесконечно нельзя.",
             "onChange отдаёт объект { align, marks } — одиночный и множественный выбор вместе.",
             "Toolbar не заворачивает фокус на другую строку: при переносе панели пересмотрите навигацию.",
+            "Кнопки безымянны на вид: подпись даёт itemText через aria-label, пустая строка оставит значок без имени.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -679,6 +980,18 @@
             "type": "text",
             "default": "Форматирование",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -692,18 +1005,24 @@
                 "role=\"separator\" on the dividers rather than a merely drawn line",
                 "a name on every group: without them it is unclear where selection stacks and where it excludes",
                 "aria-pressed on every button — these are states, not toolbar actions",
-                "the visible focus ring: an icon panel without it cannot be crossed from the keyboard"
+                "the visible focus ring: an icon panel without it cannot be crossed from the keyboard",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the toolbar name through label",
                 "the initial alignment through defaultAlign",
                 "the initial type styles through defaultMarks",
+                "the group and button names through sectionText and itemText",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the pressed colour through accent"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The toolbar is deliberately narrow: the tool list is baked into the file and must not grow endlessly.",
                 "onChange returns an object { align, marks } — single and multiple selection together.",
                 "The toolbar does not wrap focus onto a second row: revisit navigation if the panel wraps.",
+                "The buttons carry no visible caption: itemText supplies the aria-label, and an empty string leaves the icon nameless.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Togglegroup007\n  label=\"Formatting\"\n  defaultAlign=\"left\"\n  defaultMarks={[\"bold\"]}\n/>"
@@ -715,11 +1034,38 @@
               "label": {
                 "label": "Toolbar name",
                 "default": "Formatting"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Format Toolbar"
+            "title": "Format Toolbar",
+            "preview": {
+              "props": {
+                "label": "Formatting",
+                "sectionText": {
+                  "marks": "Type style",
+                  "align": "Alignment",
+                  "blocks": "Blocks"
+                },
+                "itemText": {
+                  "bold": "Bold",
+                  "italic": "Italic",
+                  "strike": "Strikethrough",
+                  "left": "Align left",
+                  "center": "Align centre",
+                  "right": "Align right",
+                  "list": "Bulleted list",
+                  "quote": "Quote"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultAlign", "accent", "background"]
       }
     },
     {
@@ -753,18 +1099,23 @@
             "объяснение отказа текстом — без него нажатие выглядит как поломка",
             "замок как видимый признак: смещение при отказе отключается по prefers-reduced-motion",
             "таблицу, собранную из выбранных колонок: она показывает смысл выбора",
-            "собственную светлую подложку панели: тёмный текст обязан нести свой фон"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя группы через label",
             "текст отказа через minMessage",
             "начальный набор колонок через defaultValue",
+            "заголовки и содержимое таблицы через columnText и cellText, итог через countText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "цвет нажатых кнопок через accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Минимум зашит как «хотя бы одна»: для другого порога придётся править условие в коде.",
             "aria-disabled не блокирует нажатие — отказ выдаёт обработчик, и это правильно.",
             "Сообщение живёт в строке role=\"status\" и озвучивается при каждом отказе.",
+            "В countText обязаны остаться подстановки {selected} и {total}: без них итог перестанет считать.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -782,6 +1133,18 @@
             "type": "text",
             "default": "Хотя бы одна колонка должна остаться видимой.",
             "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -795,18 +1158,23 @@
                 "the refusal spelled out in text — without it the press looks like a bug",
                 "the lock as a visible cue: the nudge on refusal is switched off by prefers-reduced-motion",
                 "the table assembled from the selected columns: it shows what the choice means",
-                "the panel's own light surface: dark text must bring its own background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group name through label",
                 "the refusal copy through minMessage",
                 "the initial set of columns through defaultValue",
+                "the table headings and cells through columnText and cellText, the summary through countText",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the pressed colour through accent"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The minimum is hard-coded as \"at least one\": another threshold means editing the condition.",
                 "aria-disabled does not block the click — the handler refuses it, and that is correct.",
                 "The message lives in a role=\"status\" line and is announced on every refusal.",
+                "countText must keep the {selected} and {total} placeholders: without them the summary stops counting.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Togglegroup008\n  label=\"Table columns\"\n  minMessage=\"At least one column must stay visible.\"\n  defaultValue={[\"name\", \"status\", \"sum\"]}\n/>"
@@ -819,11 +1187,37 @@
               "minMessage": {
                 "label": "Refusal copy",
                 "default": "At least one column must stay visible."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Required Group"
+            "title": "Required Group",
+            "preview": {
+              "props": {
+                "label": "Table columns",
+                "minMessage": "At least one column must stay visible.",
+                "countText": "Columns shown: {selected} of {total}.",
+                "columnText": {
+                  "name": "Client",
+                  "status": "Status",
+                  "date": "Date",
+                  "sum": "Amount"
+                },
+                "cellText": {
+                  "name": "Sphere Ltd",
+                  "status": "Paid",
+                  "date": "14 Mar",
+                  "sum": "£48,200"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -856,18 +1250,24 @@
             "разные JSX-ветки для каждого вида: таблица обязана остаться table с th, а не div'ами под table",
             "aria-controls на общий регион вывода — иначе связь кнопок с содержимым существует только в дизайне",
             "@container для сетки: раскладка карточек обязана отвечать на ширину панели, а не окна",
-            "role=\"group\" с именем — иначе три кнопки звучат как случайные"
+            "role=\"group\" с именем — иначе три кнопки звучат как случайные",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя группы через label",
             "начальный вид через defaultValue",
-            "данные документов через items",
+            "заголовок через heading и данные документов через items",
+            "подписи кнопок через viewText и заголовки колонок через columnText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "цвет выбранной кнопки через accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Три вида зашиты в файл: добавляя четвёртый, добавьте и JSX-ветку, и правило @container.",
             "Состояние живёт в памяти вкладки: чтобы вид пережил перезагрузку, храните его снаружи.",
             "Таблица получает горизонтальный скролл на узкой панели — это осознанная плата за плотность колонок.",
+            "columnText ключуется по name, size и updated — теми же именами, что у полей items.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -885,6 +1285,25 @@
             "type": "text",
             "default": "Вид списка",
             "maxLength": 24
+          },
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Документы",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -897,18 +1316,24 @@
                 "separate JSX branches per view: the table must stay a table with th, not divs pretending to be one",
                 "aria-controls on the shared output region — otherwise the link between buttons and content exists only in the design",
                 "the @container rule for the grid: card layout must answer the panel's width, not the window's",
-                "role=\"group\" with a name — otherwise the three buttons sound random"
+                "role=\"group\" with a name — otherwise the three buttons sound random",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group name through label",
                 "the initial view through defaultValue",
-                "the document data through items",
+                "the heading through heading and the document data through items",
+                "the button captions through viewText and the table headings through columnText",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the selected colour through accent"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The three views are baked into the file: adding a fourth means adding both a JSX branch and an @container rule.",
                 "The state lives in the tab's memory: to survive a reload, keep it outside the component.",
                 "The table gets horizontal scroll on a narrow panel — that is the deliberate price of column density.",
+                "columnText is keyed by name, size and updated — the same names as the fields of items.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Togglegroup009\n  label=\"List view\"\n  defaultValue=\"grid\"\n  onChange={(value) => console.log(value)}\n/>"
@@ -920,11 +1345,64 @@
               "label": {
                 "label": "Group name",
                 "default": "List view"
+              },
+              "heading": {
+                "label": "Heading",
+                "default": "Documents"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Data View Switcher"
+            "title": "Data View Switcher",
+            "preview": {
+              "props": {
+                "label": "List view",
+                "heading": "Documents",
+                "viewText": {
+                  "grid": "Grid",
+                  "list": "List",
+                  "table": "Table"
+                },
+                "columnText": {
+                  "name": "Name",
+                  "size": "Size",
+                  "updated": "Modified"
+                },
+                "items": [
+                  {
+                    "id": "1",
+                    "name": "Design brief.pdf",
+                    "size": "1.2 MB",
+                    "updated": "14 Mar"
+                  },
+                  {
+                    "id": "2",
+                    "name": "Print estimate.xlsx",
+                    "size": "48 KB",
+                    "updated": "12 Mar"
+                  },
+                  {
+                    "id": "3",
+                    "name": "Contractor agreement.docx",
+                    "size": "220 KB",
+                    "updated": "09 Mar"
+                  },
+                  {
+                    "id": "4",
+                    "name": "Quarterly report.pdf",
+                    "size": "3.4 MB",
+                    "updated": "01 Mar"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -957,18 +1435,23 @@
             "вложенность тегов в превью, а не data-атрибуты на корне — разметка образца обязана совпадать с реальным форматированием",
             "независимое aria-pressed у каждой кнопки: одиночный выбор здесь был бы враньём",
             "счётчик активных меток рядом с группой",
-            "собственную светлую подложку панели: тёмный текст обязан нести свой фон"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя группы через label",
             "начальный набор меток через defaultValue",
             "текст образца через text",
+            "имена кнопок через markText и счётчик через countText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "цвет нажатых кнопок через accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "onChange отдаёт массив идентификаторов, а не строку: порядок в нём — порядок нажатий, а не порядок вложенности.",
             "Порядок вложенности тегов фиксирован в файле (bold → italic → strike → code), не в порядке выбора пользователем.",
             "Четыре одновременные метки читаются плохо — это дело редактора, а не компонента.",
+            "В countText обязаны остаться подстановки {selected} и {total}: без них счётчик перестанет считать.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -986,6 +1469,18 @@
             "type": "text",
             "default": "Отметки складываются одна в другую и применяются к образцу сразу.",
             "maxLength": 140
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -998,18 +1493,23 @@
                 "tag nesting in the preview, not root data attributes — the sample markup must match real formatting",
                 "independent aria-pressed on every button: single selection here would be a lie",
                 "the counter of active marks next to the group",
-                "the panel's own light surface: dark text must bring its own background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group name through label",
                 "the initial set of marks through defaultValue",
                 "the sample copy through text",
+                "the button names through markText and the counter through countText",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the pressed colour through accent"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "onChange returns an array of ids, not a string: their order is press order, not nesting order.",
                 "The nesting order of tags is fixed in the file (bold → italic → strike → code), not the order the user picked them.",
                 "Four marks at once read badly — that is the editor's problem, not the component's.",
+                "countText must keep the {selected} and {total} placeholders: without them the counter stops counting.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Togglegroup010\n  label=\"Formatting\"\n  defaultValue={[\"bold\", \"code\"]}\n  onChange={(value) => console.log(value)}\n/>"
@@ -1022,11 +1522,31 @@
               "text": {
                 "label": "Sample",
                 "default": "Marks stack inside one another and apply to the sample at once."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Inline Format Group"
+            "title": "Inline Format Group",
+            "preview": {
+              "props": {
+                "label": "Formatting",
+                "text": "Marks stack inside one another and apply to the sample at once.",
+                "countText": "Active: {selected} of {total}",
+                "markText": {
+                  "bold": "Bold",
+                  "italic": "Italic",
+                  "strike": "Strikethrough",
+                  "code": "Monospace"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1059,15 +1579,20 @@
             "aria-pressed на каждой кнопке: это группа состояний, а не сцепка действий",
             "roving tabindex: четыре кнопки подряд в табе — лишние остановки",
             "align-items на сцене, а не позиционирование карточки вручную — иначе «растянуть» перестанет работать",
-            "role=\"group\" с именем: без него группа звучит как набор случайных кнопок"
+            "role=\"group\" с именем: без него группа звучит как набор случайных кнопок",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя группы через label",
             "начальное выравнивание через defaultValue",
+            "имена кнопок через optionText и подпись карточки через chipText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "цвет выбранной кнопки через accent"
           ],
           "notes": [
-            "Иконки декоративные: имя кнопке даёт aria-label, и без него значок безымянный.",
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Иконки декоративные: имя кнопке даёт optionText через aria-label, и без него значок безымянный.",
             "Список вариантов зашит в файл: четыре состояния — минимум для вертикального выравнивания.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
@@ -1086,6 +1611,25 @@
             "type": "text",
             "default": "Вертикальное выравнивание",
             "maxLength": 32
+          },
+          {
+            "prop": "chipText",
+            "label": "Подпись карточки",
+            "type": "text",
+            "default": "Карточка",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1098,15 +1642,20 @@
                 "aria-pressed on every button: this is a group of states, not a chain of actions",
                 "the roving tabindex: four buttons in the tab order are extra stops",
                 "align-items on the stage rather than manually positioning the card — otherwise stretch stops working",
-                "role=\"group\" with a name: without it the group sounds like a set of random buttons"
+                "role=\"group\" with a name: without it the group sounds like a set of random buttons",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group name through label",
                 "the initial alignment through defaultValue",
+                "the button names through optionText and the card caption through chipText",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the selected colour through accent"
               ],
               "notes": [
-                "The icons are decorative: the name comes from aria-label, without it the icon is nameless.",
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The icons are decorative: optionText supplies the aria-label, and without it the icon is nameless.",
                 "The option list is baked into the file: four states are the minimum for vertical alignment.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
@@ -1119,11 +1668,34 @@
               "label": {
                 "label": "Group name",
                 "default": "Vertical alignment"
+              },
+              "chipText": {
+                "label": "Card caption",
+                "default": "Card"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Vertical Align Group"
+            "title": "Vertical Align Group",
+            "preview": {
+              "props": {
+                "label": "Vertical alignment",
+                "chipText": "Card",
+                "optionText": {
+                  "top": "Align top",
+                  "middle": "Align middle",
+                  "bottom": "Align bottom",
+                  "stretch": "Stretch"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1156,16 +1728,22 @@
             "aria-pressed на каждой кнопке периода — это состояние выбора, а не запуск действия",
             "aria-hidden на самом графике и текстовую сводку рядом — столбцы не несут смысла без подписи",
             "разное число точек на разных периодах: не растягивайте один набор данных на все периоды",
-            "role=\"group\" с именем — иначе кнопки периодов звучат как случайные"
+            "role=\"group\" с именем — иначе кнопки периодов звучат как случайные",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя группы через label",
             "начальный период через defaultValue",
+            "подписи кнопок через periodText, подписи оси через tickText, сводку через summaryText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "цвет столбцов через accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Наборы точек зашиты в файл: для реального графика подключайте свои данные по периоду.",
             "Высота столбца — инлайновый стиль: это тот самый динамический случай, который нельзя выразить классом.",
+            "Идентификаторы точек латиницей (mon…sat, w1…w4, q1…q4), подписи приходят в tickText — не путайте их местами.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -1183,6 +1761,18 @@
             "type": "text",
             "default": "Период графика",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1195,16 +1785,22 @@
                 "aria-pressed on every period button — this is selection state, not an action trigger",
                 "aria-hidden on the chart itself plus the text summary beside it — bars carry no meaning without a caption",
                 "the different point counts per period: do not stretch one dataset across every period",
-                "role=\"group\" with a name — otherwise the period buttons sound random"
+                "role=\"group\" with a name — otherwise the period buttons sound random",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group name through label",
                 "the initial period through defaultValue",
+                "the button captions through periodText, the axis labels through tickText, the summary through summaryText",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the bar colour through accent"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The point sets are baked into the file: wire in your own per-period data for a real chart.",
                 "The bar height is an inline style: this is exactly the dynamic case a class cannot express.",
+                "Point ids are latin (mon…sat, w1…w4, q1…q4) while the captions come from tickText: do not mix them up.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Togglegroup012\n  label=\"Chart period\"\n  defaultValue=\"month\"\n  onChange={(value) => console.log(value)}\n/>"
@@ -1216,11 +1812,46 @@
               "label": {
                 "label": "Group name",
                 "default": "Chart period"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Period Switcher"
+            "title": "Period Switcher",
+            "preview": {
+              "props": {
+                "label": "Chart period",
+                "summaryText": "Period: {period}, points on the chart: {count}.",
+                "periodText": {
+                  "day": "Day",
+                  "week": "Week",
+                  "month": "Month",
+                  "year": "Year"
+                },
+                "tickText": {
+                  "mon": "Mo",
+                  "tue": "Tu",
+                  "wed": "We",
+                  "thu": "Th",
+                  "fri": "Fr",
+                  "sat": "Sa",
+                  "w1": "W1",
+                  "w2": "W2",
+                  "w3": "W3",
+                  "w4": "W4",
+                  "q1": "Q1",
+                  "q2": "Q2",
+                  "q3": "Q3",
+                  "q4": "Q4"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1253,15 +1884,19 @@
             "aria-pressed на каждой кнопке: состояние выбора, а не сцепка действий",
             "roving tabindex по вертикали: три кнопки подряд в табе — лишние остановки",
             "заголовок и пояснение внутри одной кнопки — это не карточка с отдельным именем и текстом снаружи",
-            "role=\"group\" с именем — иначе список звучит как набор случайных кнопок"
+            "role=\"group\" с именем — иначе список звучит как набор случайных кнопок",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя группы через label",
             "начальный вариант через defaultValue",
             "перечень вариантов через options",
-            "цвет выбранного варианта через accent"
+            "цвет выбранного варианта через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Список вариантов передаётся через options: у каждого пункта обязательны title и about.",
             "Индикатор-точка декоративный: имя кнопке несёт заголовок внутри неё, а не точка.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -1274,6 +1909,18 @@
             "type": "select",
             "default": "courier",
             "options": ["courier", "pickup", "post"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           },
           {
             "prop": "label",
@@ -1293,15 +1940,19 @@
                 "aria-pressed on every button: selection state, not a chain of actions",
                 "the vertical roving tabindex: three buttons in the tab order are extra stops",
                 "the title and note inside one button — this is not a card with a name and text placed outside it",
-                "role=\"group\" with a name — otherwise the list sounds like a set of random buttons"
+                "role=\"group\" with a name — otherwise the list sounds like a set of random buttons",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group name through label",
                 "the initial option through defaultValue",
                 "the option list through options",
-                "the selected colour through accent"
+                "the selected colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The option list is passed through options: every entry requires a title and an about.",
                 "The dot indicator is decorative: the button's name comes from its own title, not the dot.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1315,11 +1966,40 @@
               "label": {
                 "label": "Group name",
                 "default": "Delivery method"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Delivery Method Group"
+            "title": "Delivery Method Group",
+            "preview": {
+              "props": {
+                "label": "Delivery method",
+                "options": [
+                  {
+                    "id": "courier",
+                    "title": "Courier",
+                    "about": "Tomorrow by 6 pm, £4"
+                  },
+                  {
+                    "id": "pickup",
+                    "title": "Pickup point",
+                    "about": "Today from the point on the map, free"
+                  },
+                  {
+                    "id": "post",
+                    "title": "Post",
+                    "about": "3–5 days, £3"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1353,15 +2033,22 @@
             "подсказку по фокусу наравне с подсказкой по наведению — клавиатурный пользователь должен видеть то же самое",
             "закрытие подсказки по Escape без сдвига фокуса",
             "roving tabindex на значках: четыре кнопки подряд в табе — лишние остановки",
-            "видимую обводку фокуса на каждой кнопке"
+            "видимую обводку фокуса на каждой кнопке",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя группы через label",
             "начальный приоритет через defaultValue",
-            "цвет выбранной кнопки через accent"
+            "подписи приоритетов через optionText",
+            "строку статуса через currentText — {label} подставляет подпись выбранного",
+            "цвет выбранной кнопки через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Текст подсказки — то же значение, что и aria-label кнопки: не разводите их в разные стороны.",
+            "Подписи приоритетов лежат в optionText, а не в разметке: aria-label кнопки и текст подсказки берут одно и то же значение.",
             "Список приоритетов зашит в файл: добавляя пятый, проверьте, что подсказки не перекрывают друг друга.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
@@ -1373,6 +2060,18 @@
             "type": "select",
             "default": "medium",
             "options": ["low", "medium", "high", "urgent"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           },
           {
             "prop": "label",
@@ -1393,15 +2092,22 @@
                 "the focus tooltip on par with the hover tooltip — a keyboard user must see the same thing",
                 "closing the tooltip on Escape without moving focus",
                 "the roving tabindex on the icons: four buttons in the tab order are extra stops",
-                "the visible focus ring on every button"
+                "the visible focus ring on every button",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group name through label",
                 "the initial priority through defaultValue",
-                "the selected colour through accent"
+                "the priority captions through optionText",
+                "the status line through currentText — {label} inserts the selected caption",
+                "the selected colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The tooltip text is the same value as the button's aria-label: do not let them drift apart.",
+                "The priority captions live in optionText rather than in the markup: the button's aria-label and the tooltip text take the same value.",
                 "The priority list is baked into the file: adding a fifth one, check that tooltips do not overlap.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
@@ -1414,11 +2120,30 @@
               "label": {
                 "label": "Group name",
                 "default": "Priority"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Priority Tooltip Group"
+            "title": "Priority Tooltip Group",
+            "preview": {
+              "props": {
+                "label": "Priority",
+                "optionText": {
+                  "low": "Low",
+                  "medium": "Medium",
+                  "high": "High",
+                  "urgent": "Urgent"
+                },
+                "currentText": "Priority selected: {label}."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1451,15 +2176,21 @@
             "счётчик, посчитанный от того же списка, что выводится под группой, а не захардкоженное число",
             "aria-label вида «Активные, 12» вместо раздельного чтения подписи и бейджа",
             "aria-controls на список задач — связь фильтра с результатом не должна существовать только в дизайне",
-            "пустое состояние списка отдельной фразой, а не молчаливым пробелом"
+            "пустое состояние списка отдельной фразой, а не молчаливым пробелом",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя группы через label",
             "начальный фильтр через defaultValue",
             "список задач через tasks",
-            "цвет выбранного сегмента через accent"
+            "подписи фильтров через filterText и подписи статусов через statusText",
+            "фразу пустого состояния через emptyText",
+            "цвет выбранного сегмента через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Статусы задач зашиты как active/done/overdue: подключая реальные данные, сохраните эти три значения или замените фильтры вместе с ними.",
             "Счётчик в разметке продублирован: видимый текст — для глаза, aria-label на кнопке — для скринридера.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -1472,6 +2203,18 @@
             "type": "select",
             "default": "all",
             "options": ["all", "active", "done", "overdue"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           },
           {
             "prop": "label",
@@ -1491,15 +2234,21 @@
                 "the count computed from the same list rendered below the group, never a hard-coded number",
                 "an aria-label like \"Active, 12\" instead of the caption and badge being read separately",
                 "aria-controls on the task list — the link between the filter and its result must not exist only in the design",
-                "the empty list state as its own sentence, not a silent blank"
+                "the empty list state as its own sentence, not a silent blank",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group name through label",
                 "the initial filter through defaultValue",
                 "the task list through tasks",
-                "the selected segment colour through accent"
+                "the filter captions through filterText and the status captions through statusText",
+                "the empty-state sentence through emptyText",
+                "the selected segment colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Task statuses are baked in as active/done/overdue: wiring real data in, keep these three values or swap the filters together with them.",
                 "The count is duplicated in the markup: the visible text is for the eye, the button's aria-label is for the screen reader.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1513,11 +2262,67 @@
               "label": {
                 "label": "Group name",
                 "default": "Tasks"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Task Filter Group"
+            "title": "Task Filter Group",
+            "preview": {
+              "props": {
+                "label": "Tasks",
+                "filterText": {
+                  "all": "All",
+                  "active": "Active",
+                  "done": "Done",
+                  "overdue": "Overdue"
+                },
+                "statusText": {
+                  "active": "in progress",
+                  "done": "done",
+                  "overdue": "overdue"
+                },
+                "emptyText": "Nothing in this category yet.",
+                "tasks": [
+                  {
+                    "id": "1",
+                    "name": "Draft the estimate",
+                    "status": "active"
+                  },
+                  {
+                    "id": "2",
+                    "name": "Sign off the layout",
+                    "status": "done"
+                  },
+                  {
+                    "id": "3",
+                    "name": "Renew the domain",
+                    "status": "overdue"
+                  },
+                  {
+                    "id": "4",
+                    "name": "Write the report",
+                    "status": "active"
+                  },
+                  {
+                    "id": "5",
+                    "name": "Send the contract",
+                    "status": "done"
+                  },
+                  {
+                    "id": "6",
+                    "name": "Pay for hosting",
+                    "status": "active"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1550,14 +2355,20 @@
             "деселект повторным кликом по нажатой кнопке — обычная toggle-группа так не умеет",
             "disabled на кнопке «Сбросить», когда выбор уже пуст: это действие, а не состояние",
             "строку статуса, которая честно называет пустой выбор, а не молчит",
-            "aria-pressed на каждой кнопке — состояние выбора, а не сцепка действий"
+            "aria-pressed на каждой кнопке — состояние выбора, а не сцепка действий",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя группы через label",
             "начальное значение через defaultValue (включая null)",
-            "цвет выбранной кнопки через accent"
+            "подписи кнопок через optionText и подпись сброса через resetText",
+            "строки статуса через selectedText и emptyText — {label} подставляет подпись нажатой кнопки",
+            "цвет выбранной кнопки через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "onChange отдаёт string | null: null — это не ошибка, а законное состояние «ничего не выбрано».",
             "Кнопка «Сбросить» — единственный элемент в файле с настоящим disabled, а не aria-disabled.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -1570,6 +2381,18 @@
             "type": "select",
             "default": "new",
             "options": ["new", "progress", "done"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           },
           {
             "prop": "label",
@@ -1589,14 +2412,20 @@
                 "deselecting via a second click on the pressed button — an ordinary toggle group cannot do this",
                 "disabled on the Reset button once the selection is already empty: this is an action, not a state",
                 "the status line that honestly names an empty selection instead of staying silent",
-                "aria-pressed on every button — selection state, not a chain of actions"
+                "aria-pressed on every button — selection state, not a chain of actions",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group name through label",
                 "the initial value through defaultValue (including null)",
-                "the selected colour through accent"
+                "the button captions through optionText and the reset caption through resetText",
+                "the status lines through selectedText and emptyText — {label} inserts the pressed button's caption",
+                "the selected colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "onChange returns string | null: null is not an error, it is the legitimate \"nothing selected\" state.",
                 "The Reset button is the only element in the file with a real disabled instead of aria-disabled.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1610,11 +2439,31 @@
               "label": {
                 "label": "Group name",
                 "default": "Quick filter"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Clearable Filter Group"
+            "title": "Clearable Filter Group",
+            "preview": {
+              "props": {
+                "label": "Quick filter",
+                "optionText": {
+                  "new": "New",
+                  "progress": "In progress",
+                  "done": "Done"
+                },
+                "resetText": "Reset",
+                "selectedText": "Showing records with status “{label}”.",
+                "emptyText": "No filter selected — showing every record."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     }
   ]

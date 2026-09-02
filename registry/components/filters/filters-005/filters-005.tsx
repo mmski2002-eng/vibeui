@@ -8,6 +8,10 @@ export type Filters005Props = Omit<
   presets?: string[]
   customLabel?: string
   name?: string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,16 +22,17 @@ export type Filters005Props = Omit<
 // компонент серверный, и пустые поля дат не уезжают в форму без надобности.
 const STYLES = `
 :where([data-vibeui-block="filters-005"]){
---vibeui-filters-005-surface:oklch(1 0 0);
---vibeui-filters-005-fill:oklch(0.975 0.004 265);
---vibeui-filters-005-fg:oklch(0.23 0.014 265);
---vibeui-filters-005-muted:oklch(0.55 0.014 265);
---vibeui-filters-005-border:oklch(0.89 0.008 265);
---vibeui-filters-005-shell:oklch(0.91 0.006 265);
---vibeui-filters-005-accent:oklch(0.52 0.19 290);
+--vibeui-filters-005-surface:transparent;
+--vibeui-filters-005-field:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-filters-005-fill:light-dark(oklch(0.975 0.004 265),oklch(0.3 0.012 265));
+--vibeui-filters-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-filters-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-filters-005-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.014 265));
+--vibeui-filters-005-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-filters-005-accent:light-dark(oklch(0.52 0.19 290),oklch(0.75 0.15 290));
 --vibeui-filters-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: фильтр показывают поверх любого фона. */
+/* Подложки по умолчанию нет: фильтр ложится на фон страницы. */
 [data-vibeui-block="filters-005"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:19rem;box-sizing:border-box;padding:0.875rem;
@@ -51,14 +56,14 @@ transition:background-color .16s ease;
 }
 [data-vibeui-block="filters-005"] label:hover{background:var(--vibeui-filters-005-fill)}
 [data-vibeui-block="filters-005"] label:has(input:checked){
-background:color-mix(in oklab,var(--vibeui-filters-005-accent) 9%,oklch(1 0 0));
+background:color-mix(in oklab,var(--vibeui-filters-005-accent) 9%,var(--vibeui-filters-005-fill));
 font-weight:650;
 }
 [data-vibeui-block="filters-005"] label:has(input:focus-visible){outline:2px solid var(--vibeui-filters-005-accent);outline-offset:1px}
 [data-vibeui-block="filters-005"] input[type="radio"]{
 appearance:none;flex:none;margin:0;cursor:pointer;position:relative;
 width:0.9375rem;height:0.9375rem;border-radius:9999px;
-border:1.5px solid var(--vibeui-filters-005-border);background:oklch(1 0 0);
+border:1.5px solid var(--vibeui-filters-005-border);background:var(--vibeui-filters-005-field);
 transition:border-color .16s ease;
 }
 [data-vibeui-block="filters-005"] input[type="radio"]:checked{border-color:var(--vibeui-filters-005-accent);border-width:5px}
@@ -73,7 +78,7 @@ font-size:0.625rem;font-weight:650;color:var(--vibeui-filters-005-muted);
 }
 [data-vibeui-block="filters-005"] input[type="date"]{
 width:100%;min-width:0;height:2.125rem;padding:0 0.5rem;
-background:var(--vibeui-filters-005-surface);color:inherit;
+background:var(--vibeui-filters-005-field);color:inherit;
 border:1px solid var(--vibeui-filters-005-border);border-radius:0.5rem;
 font:inherit;font-size:0.75rem;
 }
@@ -90,6 +95,37 @@ font-size:0.6875rem;line-height:1.4;color:var(--vibeui-filters-005-muted);
 
 const DEFAULT_PRESETS = ["Сегодня", "За 7 дней", "За 30 дней", "Этот квартал"]
 
+/** Русский словарь по умолчанию: установленный файл не меняет язык проекта. */
+const DEFAULT_LABELS: Record<string, string> = {
+  from: "Начало",
+  to: "Конец",
+  fromField: "Начало периода",
+  toField: "Конец периода",
+  note: "Период считается по вашему часовому поясу, границы включаются целиком.",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Фильтр по датам: пресеты периодов и пара дат под «своим периодом» на :has.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -99,6 +135,8 @@ export function Filters005({
   presets = DEFAULT_PRESETS,
   customLabel = "Свой период",
   name = "period",
+  labels = DEFAULT_LABELS,
+  background = "",
   accent,
   className,
   style,
@@ -106,6 +144,12 @@ export function Filters005({
 }: Filters005Props) {
   const palette = {
     ...(accent ? { "--vibeui-filters-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-filters-005-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -147,27 +191,25 @@ export function Filters005({
 
           <div data-part="custom">
             <span data-part="cell">
-              <span>Начало</span>
+              <span>{labels.from ?? DEFAULT_LABELS.from}</span>
               <input
                 type="date"
                 name={`${name}-from`}
-                aria-label="Начало периода"
+                aria-label={labels.fromField ?? DEFAULT_LABELS.fromField}
               />
             </span>
             <span data-part="cell">
-              <span>Конец</span>
+              <span>{labels.to ?? DEFAULT_LABELS.to}</span>
               <input
                 type="date"
                 name={`${name}-to`}
-                aria-label="Конец периода"
+                aria-label={labels.toField ?? DEFAULT_LABELS.toField}
               />
             </span>
           </div>
         </fieldset>
 
-        <p data-part="note">
-          Период считается по вашему часовому поясу, границы включаются целиком.
-        </p>
+        <p data-part="note">{labels.note ?? DEFAULT_LABELS.note}</p>
       </div>
     </>
   )

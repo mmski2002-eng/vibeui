@@ -17,6 +17,7 @@ export type Commerce063Props = {
   total?: number
   currency?: string
   cards?: Commerce063Card[]
+  totalLabel?: string
   firstLabel?: string
   restLabel?: string
   stepLabel?: string
@@ -26,6 +27,8 @@ export type Commerce063Props = {
   errorText?: string
   note?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -39,13 +42,15 @@ export type Commerce063Props = {
 // набрать точную сумму, и оба способа обязаны быть.
 const STYLES = `
 :where([data-vibeui-block="commerce-063"]){
---vibeui-commerce-063-bg:oklch(1 0 0);
---vibeui-commerce-063-fg:oklch(0.21 0.014 275);
---vibeui-commerce-063-muted:oklch(0.53 0.016 275);
---vibeui-commerce-063-border:oklch(0.9 0.008 275);
---vibeui-commerce-063-soft:oklch(0.972 0.006 275);
---vibeui-commerce-063-accent:oklch(0.5 0.17 285);
---vibeui-commerce-063-warn:oklch(0.55 0.16 25);
+--vibeui-commerce-063-bg:transparent;
+--vibeui-commerce-063-surface:light-dark(oklch(1 0 0),oklch(0.22 0.014 275));
+--vibeui-commerce-063-fg:light-dark(oklch(0.21 0.014 275),oklch(0.94 0.007 275));
+--vibeui-commerce-063-muted:light-dark(oklch(0.53 0.016 275),oklch(0.73 0.013 275));
+--vibeui-commerce-063-border:light-dark(oklch(0.9 0.008 275),oklch(0.38 0.016 275));
+--vibeui-commerce-063-soft:light-dark(oklch(0.972 0.006 275),oklch(0.28 0.016 275));
+--vibeui-commerce-063-accent:light-dark(oklch(0.5 0.17 285),oklch(0.75 0.15 285));
+--vibeui-commerce-063-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.05 285));
+--vibeui-commerce-063-warn:light-dark(oklch(0.55 0.16 25),oklch(0.75 0.15 25));
 --vibeui-commerce-063-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -79,7 +84,7 @@ background:linear-gradient(140deg,oklch(0.9 0.07 var(--vibeui-commerce-063-hue,2
 [data-vibeui-block="commerce-063"] [data-part="entry"]{display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;margin-top:0.375rem}
 [data-vibeui-block="commerce-063"] input[type="number"]{
 width:8rem;height:2.5rem;padding:0 0.75rem;border-radius:0.625rem;
-border:1px solid var(--vibeui-commerce-063-border);background:var(--vibeui-commerce-063-bg);
+border:1px solid var(--vibeui-commerce-063-border);background:var(--vibeui-commerce-063-surface);
 font:inherit;font-size:0.9375rem;color:inherit;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="commerce-063"] [data-part="quick"]{
@@ -99,7 +104,7 @@ font-size:0.8125rem;line-height:1.45;
 }
 [data-vibeui-block="commerce-063"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;width:100%;height:2.875rem;margin-top:1rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-063-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-063-accent);color:var(--vibeui-commerce-063-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-063"] [data-part="go"]:disabled{cursor:not-allowed;opacity:0.5}
 [data-vibeui-block="commerce-063"] [data-part="note"]{margin:0.875rem 0 0;font-size:0.75rem;line-height:1.5;color:var(--vibeui-commerce-063-muted)}
@@ -119,6 +124,28 @@ function money(value: number, currency: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Оплата двумя картами: сумма второй считается как остаток, поэтому
  * недоплата невозможна. Один файл, ноль зависимостей, палитра своя.
  */
@@ -128,6 +155,7 @@ export function Commerce063({
   total = 62580,
   currency = "₽",
   cards = DEFAULT_CARDS,
+  totalLabel = "К оплате по заказу",
   firstLabel = "Списать с первой карты",
   restLabel = "Остаток со второй карты",
   stepLabel = "Точная сумма",
@@ -137,6 +165,7 @@ export function Commerce063({
   errorText = "Сумма первой карты больше заказа: остаток не может быть отрицательным.",
   note = "Банк проведёт две отдельные операции, и в выписке они появятся двумя строками. Возврат тоже придёт двумя частями — на ту карту, с которой списали.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce063Props) {
@@ -146,6 +175,15 @@ export function Commerce063({
 
   const palette = {
     ...(accent ? { "--vibeui-commerce-063-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-063-bg": background,
+          // Поле точной суммы не должно просвечивать: ему нужна непрозрачная
+          // подложка, а она задана тем же цветом.
+          "--vibeui-commerce-063-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -168,7 +206,7 @@ export function Commerce063({
           <p data-part="lead">{lead}</p>
 
           <p data-part="total">
-            <span>К оплате по заказу</span>
+            <span>{totalLabel}</span>
             <span data-part="sum">{money(total, currency)}</span>
           </p>
 

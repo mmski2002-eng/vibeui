@@ -30,16 +30,20 @@
             "кольцо фокуса box-shadow вокруг рамки и смену цвета подписи на акцент: по ним видно активное поле",
             "связку состояния ошибки: data-invalid на корне, aria-invalid у input и role=\"alert\" у примечания",
             "переход подписи через transform, а не через изменение шрифта и позиции, и правило prefers-reduced-motion",
-            "блок <style> внутри компонента — в нём вся палитра, размеры и поведение подписи"
+            "блок <style> внутри компонента — в нём вся палитра, размеры и поведение подписи",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты label и hint, а также сообщение error",
             "акцент через проп accent — цвет фокуса и активной подписи",
             "size: md для форм в потоке, lg для одиночного поля на экране",
             "любые нативные пропсы input: type, name, value, onChange, required, autoComplete, disabled, pattern",
-            "внешние отступы и ширину через className — по умолчанию поле занимает всю ширину родителя"
+            "внешние отступы и ширину через className — по умолчанию поле занимает всю ширину родителя",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не заменяйте label на placeholder. Placeholder здесь занят: это пробел, на котором держится вся механика.",
             "Не оборачивайте компонент в собственный <label>: он уже внутри, вложенные label ломают клик по подписи.",
             "id нужен, чтобы подсказка связалась с полем через aria-describedby. Без него поле работает, но screen reader подсказку не прочитает.",
@@ -86,6 +90,12 @@
             "label": "Выключено",
             "type": "boolean",
             "default": false
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -100,16 +110,20 @@
                 "the box-shadow focus ring around the border and the label turning accent-coloured: together they mark the active field",
                 "the error wiring: data-invalid on the root, aria-invalid on the input and role=\"alert\" on the note",
                 "the label transition through transform rather than by changing font size and position, and the prefers-reduced-motion rule",
-                "the <style> block inside the component — it holds the palette, the sizes and the label behaviour"
+                "the <style> block inside the component — it holds the palette, the sizes and the label behaviour",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label and hint copy, and the error message",
                 "the accent through the accent prop — it colours the focus ring and the active label",
                 "size: md for fields in a form, lg for a single field owning the screen",
                 "any native input props: type, name, value, onChange, required, autoComplete, disabled, pattern",
-                "outer spacing and width through className — by default the field fills its parent"
+                "outer spacing and width through className — by default the field fills its parent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not replace the label with a placeholder. The placeholder is taken: it is the space the whole mechanism rests on.",
                 "Do not wrap the component in your own <label> — there is one inside, and nested labels break clicking the caption.",
                 "id is what links the hint to the field through aria-describedby. Without it the field still works, but a screen reader will not announce the hint.",
@@ -138,14 +152,24 @@
               },
               "disabled": {
                 "label": "Disabled"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Floating Label Input"
+            "title": "Floating Label Input",
+            "preview": {
+              "props": {
+                "label": "Work email",
+                "hint": "We never publish it or pass it on."
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["size", "disabled", "accent", "background"]
       }
     },
     {
@@ -177,16 +201,20 @@
             "разделители между фиксированной частью и полем (border-right у начала, border-left у конца) и их светлую подложку — по ним видно, что эту часть не редактируют",
             "overflow:hidden у группы: он обрезает подложку приставки по радиусу рамки",
             "user-select:none у фиксированных частей — их не выделяют и не копируют вместе со значением",
-            "блок <style> внутри компонента — в нём вся палитра, геометрия и поведение фокуса"
+            "блок <style> внутри компонента — в нём вся палитра, геометрия и поведение фокуса",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "содержимое prefix и suffix — это ReactNode, туда же можно положить свою иконку",
             "текст label и placeholder",
             "акцент через проп accent — цвет рамки и кольца при фокусе",
             "любые нативные пропсы input: type, name, value, onChange, inputMode, required, disabled",
-            "ширину и внешние отступы через className — по умолчанию группа занимает всю ширину родителя"
+            "ширину и внешние отступы через className — по умолчанию группа занимает всю ширину родителя",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не кладите в prefix и suffix кнопки. Это неинтерактивные части рамки; кнопке рядом с полем нужен собственный компонент.",
             "Не дублируйте приставку в placeholder: пользователь увидит vibeui.ru дважды.",
             "id связывает подпись с полем. Без него клик по подписи не наводит фокус.",
@@ -233,6 +261,12 @@
             "label": "Выключено",
             "type": "boolean",
             "default": false
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -247,16 +281,20 @@
                 "the dividers between the fixed parts and the field (border-right at the start, border-left at the end) and their tinted background — they are what marks those parts as not editable",
                 "overflow:hidden on the group: it clips the fixed part's background to the border radius",
                 "user-select:none on the fixed parts — they are not meant to be selected or copied along with the value",
-                "the <style> block inside the component — it holds the palette, the geometry and the focus behaviour"
+                "the <style> block inside the component — it holds the palette, the geometry and the focus behaviour",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the prefix and suffix content — both are ReactNode, so your own icon fits there too",
                 "the label and placeholder copy",
                 "the accent through the accent prop — it colours the border and ring on focus",
                 "any native input props: type, name, value, onChange, inputMode, required, disabled",
-                "width and outer spacing through className — by default the group fills its parent"
+                "width and outer spacing through className — by default the group fills its parent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not put buttons in prefix or suffix. Those are non-interactive parts of the border; a button next to a field needs its own component.",
                 "Do not repeat the prefix in the placeholder — the user would read vibeui.ru twice.",
                 "id is what links the label to the field. Without it, clicking the label does not focus the input.",
@@ -286,14 +324,25 @@
               },
               "disabled": {
                 "label": "Disabled"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Input Group"
+            "title": "Input Group",
+            "preview": {
+              "props": {
+                "label": "Page address",
+                "prefix": "vibeui.ru/",
+                "placeholder": "portfolio"
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["disabled", "accent", "background"]
       }
     },
     {
@@ -324,15 +373,20 @@
             "подпись к оценке — полоска без слов не говорит, что исправить",
             "aria-pressed на кнопке показа и aria-describedby у поля",
             "три ступени вместо пяти: больше человек всё равно не различает",
-            "autocomplete=\"new-password\", чтобы браузер не подставлял старый"
+            "autocomplete=\"new-password\", чтобы браузер не подставлял старый",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "label и placeholder",
             "hint — своя подсказка вместо оценки",
             "правила оценки под свою политику паролей",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "levelText и text — вердикты оценки и подписи кнопки показа; по умолчанию русские",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Оценка приблизительная: настоящую проверку по словарям делает сервер.",
             "Не запрещайте вставку из буфера: это ломает менеджеры паролей и не добавляет безопасности.",
             "Требования к паролю показывайте заранее, а не после первой ошибки.",
@@ -359,6 +413,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -372,15 +432,20 @@
                 "the worded strength line — a meter alone does not say what to fix",
                 "aria-pressed on the reveal button and aria-describedby on the field",
                 "three steps rather than five: people cannot tell more apart",
-                "autocomplete=\"new-password\" so the browser does not fill the old one"
+                "autocomplete=\"new-password\" so the browser does not fill the old one",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "label and placeholder",
                 "hint — your own line instead of the strength read-out",
                 "the scoring rules for your password policy",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "levelText and text — the verdict wording and the show button captions; Russian by default",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The score is approximate: real dictionary checks belong on the server.",
                 "Never block pasting: it breaks password managers and adds no safety.",
                 "Show the requirements upfront, not after the first rejection.",
@@ -399,11 +464,33 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Password Field"
+            "title": "Password Field",
+            "preview": {
+              "props": {
+                "label": "Password",
+                "placeholder": "At least eight characters",
+                "levelText": [
+                  "Empty",
+                  "Weak: add length",
+                  "Fair: add digits or symbols",
+                  "Good password"
+                ],
+                "text": {
+                  "show": "Show",
+                  "hide": "Hide",
+                  "showLabel": "Show password",
+                  "hideLabel": "Hide password"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -434,15 +521,21 @@
             "возврат фокуса в поле после очистки",
             "aria-label у кнопки очистки — «×» вслух бесполезен",
             "скрытие штатного крестика Safari, чтобы не было двух кнопок",
-            "role=\"status\" у строки состояния под полем"
+            "role=\"status\" у строки состояния под полем",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "label, placeholder и shortcut",
             "обработчик onChange",
             "текст строки состояния",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "text — подпись кнопки очистки и строка состояния; {query} подставляет запрос",
+            "defaultValue — запрос, с которым поле открывается",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Подсказка клавиши — обещание: повесьте обработчик на неё в вызывающем коде.",
             "Поиск не запускается сам: дебаунс и запрос делает вызывающий код, образец есть в autocomplete-005.",
             "На телефоне подсказку клавиши лучше скрыть: клавиатуры там нет.",
@@ -469,6 +562,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -482,15 +581,21 @@
                 "returning focus to the field after clearing",
                 "the aria-label on the clear button — a bare × is useless aloud",
                 "hiding Safari's native cancel button so there are not two",
-                "role=\"status\" on the line beneath the field"
+                "role=\"status\" on the line beneath the field",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "label, placeholder and shortcut",
                 "the onChange handler",
                 "the status line wording",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "text — the clear button caption and the status line; {query} takes the query",
+                "defaultValue — the query the field opens with",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The shortcut hint is a promise: wire the key handler in the caller.",
                 "Searching does not start itself: debounce and requests belong to the caller — see autocomplete-005.",
                 "Hide the shortcut hint on phones: there is no keyboard there.",
@@ -509,11 +614,28 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Search Field"
+            "title": "Search Field",
+            "preview": {
+              "props": {
+                "label": "Search the catalog",
+                "placeholder": "Name or category",
+                "shortcut": "/",
+                "defaultValue": "button",
+                "text": {
+                  "clear": "Clear the search",
+                  "idle": "Start typing a query",
+                  "searching": "Searching: {query}"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -544,15 +666,20 @@
             "код страны вне поля ввода — его не стирают случайно",
             "inputMode=\"tel\": на телефоне это цифровая клавиатура",
             "табличные цифры, чтобы номер не дёргался при вводе",
-            "отдачу чистых цифр в onChange, а не отформатированной строки"
+            "отдачу чистых цифр в onChange, а не отформатированной строки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "prefix — код страны",
             "формат маски под свою страну",
             "label и hint",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "placeholder и defaultValue — образец маски и начальные цифры номера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Маска рассчитана на десять цифр: для других стран формат придётся заменить.",
             "Не подставляйте код страны в значение: сервер обычно ждёт полный номер, соберите его при отправке.",
             "Валидацию номера делает сервер: длина в маске ничего не гарантирует.",
@@ -580,6 +707,18 @@
             "type": "text",
             "default": "Пришлём код подтверждения в СМС",
             "maxLength": 50
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -593,15 +732,20 @@
                 "the country code outside the input — it must not be deleted by accident",
                 "inputMode=\"tel\": that is the numeric keypad on a phone",
                 "tabular figures so the number does not jitter while typing",
-                "emitting raw digits in onChange rather than the formatted string"
+                "emitting raw digits in onChange rather than the formatted string",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "prefix — the country code",
                 "the mask format for your country",
                 "label and hint",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "placeholder and defaultValue — the mask sample and the digits the field opens with",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The mask assumes ten digits: other countries need a different format.",
                 "Do not fold the country code into the value: assemble the full number on submit.",
                 "Validation belongs on the server: mask length guarantees nothing.",
@@ -621,11 +765,26 @@
               "hint": {
                 "label": "Hint",
                 "default": "We will text you a confirmation code"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Phone Field"
+            "title": "Phone Field",
+            "preview": {
+              "props": {
+                "label": "Phone",
+                "prefix": "+44",
+                "hint": "We will text you a confirmation code",
+                "placeholder": "(999) 000-00-00"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -656,15 +815,21 @@
             "подсказку об опечатке кнопкой, а не текстом — прочитанное исправление всё равно набирают руками",
             "расстояние Дамерау — Левенштейна вместо обычного: перестановка букв в «gmial» должна считаться одной правкой",
             "type=\"email\" и inputMode=\"email\": на телефоне это клавиатура с собакой и точкой",
-            "aria-invalid и aria-describedby: сообщение о формате читается вместе со значением"
+            "aria-invalid и aria-describedby: сообщение о формате читается вместе со значением",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и стартовое значение defaultValue",
             "список частых доменов domains — под свою аудиторию",
             "формулировки подсказки и сообщения об ошибке",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "text — примечания поля и подсказка об опечатке; {address} подставляет исправленный адрес",
+            "placeholder — образец адреса в пустом поле",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Клиентская проверка ничего не гарантирует: адрес всё равно подтверждается письмом.",
             "Не подставляйте исправление автоматически — редкий домен, похожий на частый, тогда молча потеряется.",
             "Список domains держите коротким: длинный перебор расстояний считается на каждый ввод.",
@@ -691,6 +856,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -704,15 +875,21 @@
                 "offering the fix as a button, not as text — a fix you only read still has to be retyped",
                 "Damerau–Levenshtein instead of plain Levenshtein: swapping two letters in \"gmial\" must count as one edit",
                 "type=\"email\" and inputMode=\"email\": that is the keyboard with @ and a dot on phones",
-                "aria-invalid and aria-describedby: the shape message is read together with the value"
+                "aria-invalid and aria-describedby: the shape message is read together with the value",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the starting defaultValue",
                 "the domains list — the common domains of your audience",
                 "the wording of the hint and the error",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "text — the field notes and the typo suggestion; {address} takes the corrected address",
+                "placeholder — the sample address in an empty field",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A client check guarantees nothing: the address is still confirmed by email.",
                 "Do not apply the fix automatically — a rare domain that resembles a common one would be lost silently.",
                 "Keep domains short: every keystroke walks the whole list computing distances.",
@@ -731,11 +908,27 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Email Typo Guard"
+            "title": "Email Typo Guard",
+            "preview": {
+              "props": {
+                "label": "Work email",
+                "defaultValue": "anna.orlova@gmial.com",
+                "placeholder": "name@company.com",
+                "text": {
+                  "bad": "The address is incomplete: it needs a name, an @ and a domain.",
+                  "calm": "We check the format and the domain once you leave the field.",
+                  "suggest": "Did you mean {address}"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -766,15 +959,21 @@
             "разбор регулярным выражением вместо new URL(): конструктор бросает исключение на промежуточных состояниях набора",
             "показ разобранного адреса — это зеркало значения, а не подсказка",
             "отдачу полного адреса со схемой в onChange: сервер редко принимает голый домен",
-            "type=\"url\" и spellCheck={false}: адрес не подчёркивается как опечатка"
+            "type=\"url\" и spellCheck={false}: адрес не подчёркивается как опечатка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и стартовое значение",
             "проп scheme — https или http",
             "формулировку сообщения под полем",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "text — примечания поля; {scheme} подставляет выбранную схему",
+            "placeholder — образец адреса в пустом поле",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Существование сайта поле не проверяет — это работа сервера.",
             "Не переписывайте значение при каждом вводе: курсор будет прыгать.",
             "Проверка «в домене есть точка» слабая: localhost и IP она отвергнет, поправьте под свой случай.",
@@ -795,6 +994,18 @@
             "type": "select",
             "default": "https",
             "options": ["https", "http"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -808,15 +1019,21 @@
                 "parsing with a regular expression instead of new URL(): the constructor throws on half-typed input",
                 "the parsed address readout — it mirrors the value, it is not a hint",
                 "emitting the full address with the scheme in onChange: servers rarely accept a bare host",
-                "type=\"url\" and spellCheck={false}: an address must not be underlined as a typo"
+                "type=\"url\" and spellCheck={false}: an address must not be underlined as a typo",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the starting value",
                 "the scheme prop — https or http",
                 "the wording of the message under the field",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "text — the field notes; {scheme} takes the chosen scheme",
+                "placeholder — the sample address in an empty field",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The field does not check that the site exists — that is the server's job.",
                 "Do not rewrite the value on every keystroke: the caret will jump.",
                 "The \"host contains a dot\" rule is weak: it rejects localhost and IPs, adjust it for your case.",
@@ -831,11 +1048,29 @@
               },
               "scheme": {
                 "label": "Scheme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Scheme Autofill"
+            "title": "Scheme Autofill",
+            "preview": {
+              "props": {
+                "label": "Website",
+                "defaultValue": "vibeui.ru/components",
+                "placeholder": "example.com/page",
+                "text": {
+                  "bad": "The domain has no dot — check the address.",
+                  "calm": "We add the {scheme}:// scheme ourselves, you do not have to type it."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["scheme", "accent", "background"]
       }
     },
     {
@@ -866,15 +1101,20 @@
             "проверку Луна на полном номере — она ловит опечатку в одной цифре до похода на сервер",
             "название платёжной системы словом, а не логотипом: чужие логотипы нельзя раздавать вместе с кодом",
             "autoComplete cc-number, cc-exp и cc-csc: без них браузер не подставит сохранённую карту",
-            "табличные цифры и разрядку: номер сверяют глазами с пластиком"
+            "табличные цифры и разрядку: номер сверяют глазами с пластиком",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и стартовое значение defaultValue",
             "набор определяемых платёжных систем",
             "подписи полей срока и кода",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "text и brandText — подписи срока и кода, примечания и названия платёжных систем",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент ничего не хранит и никуда не отправляет: данные карты должен забирать платёжный шлюз.",
             "Не логируйте значение onChange — это номер карты.",
             "Маска рассчитана на шестнадцать цифр: у Amex их пятнадцать и группы другие.",
@@ -895,6 +1135,18 @@
             "type": "text",
             "default": "4276380000000000",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -908,15 +1160,20 @@
                 "the Luhn check on a full number — it catches a single wrong digit before the request",
                 "naming the scheme in words rather than a logo: third-party logos cannot ship with the code",
                 "the cc-number, cc-exp and cc-csc autoComplete values: without them saved cards are not offered",
-                "tabular figures and letter spacing: the number is compared against the plastic by eye"
+                "tabular figures and letter spacing: the number is compared against the plastic by eye",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the starting defaultValue",
                 "the set of detected card schemes",
                 "the captions of the expiry and code fields",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "text and brandText — the expiry and code captions, the notes and the payment scheme names",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component stores and sends nothing: card data belongs to the payment gateway.",
                 "Do not log the onChange value — it is a card number.",
                 "The mask assumes sixteen digits: Amex has fifteen and groups them differently.",
@@ -932,11 +1189,38 @@
               "defaultValue": {
                 "label": "Number",
                 "default": "4276380000000000"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Card Mask"
+            "title": "Card Mask",
+            "preview": {
+              "props": {
+                "label": "Card number",
+                "defaultValue": "4276380000000000",
+                "text": {
+                  "expiry": "Expiry",
+                  "code": "CVC",
+                  "expiryPlaceholder": "MM / YY",
+                  "ok": "The number passed the checksum.",
+                  "bad": "The number does not add up — check the digits.",
+                  "calm": "Card data is not stored: the field only collects it for the payment gateway."
+                },
+                "brandText": {
+                  "visa": "Visa",
+                  "mastercard": "Mastercard",
+                  "mir": "Mir",
+                  "amex": "Amex"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -967,15 +1251,20 @@
             "чтение платформы через useSyncExternalStore с серверным снимком: иначе разметка сервера и клиента разойдётся",
             "снятие слушателя в useEffect: без этого каждое монтирование добавляет ещё один",
             "тег <kbd> для клавиш — он и значит «нажми», и читается вслух правильно",
-            "возврат фокуса в поле после очистки: иначе фокус повисает на исчезнувшей кнопке"
+            "возврат фокуса в поле после очистки: иначе фокус повисает на исчезнувшей кнопке",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст placeholder",
             "клавишу в пропе shortcut",
             "формулировку подсказки под полем",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "text — подпись очистки и строка помощи; {key} и {esc} подставляют клавиши",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Глобальный обработчик перехватывает сочетание на всей странице — не вешайте два таких поля сразу.",
             "Ctrl+K в некоторых браузерах занят: проверьте выбранную клавишу.",
             "Escape сначала очищает поле и только на пустом снимает фокус — это два разных шага.",
@@ -996,6 +1285,18 @@
             "type": "text",
             "default": "K",
             "maxLength": 3
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1009,15 +1310,20 @@
                 "reading the platform through useSyncExternalStore with a server snapshot: otherwise server and client markup disagree",
                 "removing the listener in useEffect: without it every mount adds another one",
                 "the <kbd> tag for keys — it means \"press this\" and is announced correctly",
-                "returning focus to the field after clearing: otherwise focus is stranded on a button that vanished"
+                "returning focus to the field after clearing: otherwise focus is stranded on a button that vanished",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the placeholder copy",
                 "the key in the shortcut prop",
                 "the wording of the hint under the field",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "text — the clear caption and the help line; {key} and {esc} take the keys",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The global handler captures the shortcut page-wide — do not mount two of these at once.",
                 "Ctrl+K is taken in some browsers: check the key you pick.",
                 "Escape clears the field first and only blurs on an empty one — those are two separate steps.",
@@ -1033,11 +1339,29 @@
               "shortcut": {
                 "label": "Key",
                 "default": "K"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Shortcut Search"
+            "title": "Shortcut Search",
+            "preview": {
+              "props": {
+                "placeholder": "Search components",
+                "shortcut": "K",
+                "text": {
+                  "clear": "Clear the query",
+                  "escape": "Esc",
+                  "hint": "Press {key} from anywhere, {esc} to clear."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1068,15 +1392,20 @@
             "закрытие списка по Escape и по уходу фокуса из рамки — иначе он остаётся висеть",
             "возврат фокуса на кнопку после выбора: иначе фокус теряется вместе со списком",
             "неизменность числа при смене единицы: человек ввёл «30» и имел в виду «30»",
-            "строку пересчёта: без неё выбор единицы ни с чем не связан"
+            "строку пересчёта: без неё выбор единицы ни с чем не связан",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и стартовое число defaultValue",
             "массив units — свои единицы и множители",
             "формулировку строки пересчёта",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "text и locale — подписи списка и примечание; {seconds} подставляет пересчёт, locale задаёт разделители разрядов",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пересчёт в базовые единицы делайте на сервере: клиентское значение — только для показа.",
             "Список units держите коротким: он открывается на всю ширину рамки и длинный перебор читать неудобно.",
             "Стрелки вверх-вниз внутри списка не реализованы: если это критично, добавьте их поверх текущей разметки.",
@@ -1098,6 +1427,18 @@
             "default": 30,
             "min": 1,
             "max": 999
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1111,15 +1452,20 @@
                 "closing the list on Escape and on focus leaving the frame — otherwise it stays hanging",
                 "returning focus to the button after a choice: otherwise focus disappears with the list",
                 "keeping the number unchanged when the unit changes: the user typed \"30\" and meant \"30\"",
-                "the conversion line: without it choosing a unit connects to nothing"
+                "the conversion line: without it choosing a unit connects to nothing",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the starting defaultValue",
                 "the units array — your own units and factors",
                 "the wording of the conversion line",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "text and locale — the list captions and the note; {seconds} takes the converted value, locale sets the digit grouping",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Convert to base units on the server: the client value is for display only.",
                 "Keep units short: the list spans the frame width and a long one is hard to scan.",
                 "Arrow-key movement inside the list is not implemented: add it on top of this markup if you need it.",
@@ -1134,11 +1480,46 @@
               },
               "defaultValue": {
                 "label": "Value"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Unit Dropdown"
+            "title": "Unit Dropdown",
+            "preview": {
+              "props": {
+                "label": "Link lifetime",
+                "locale": "en-GB",
+                "units": [
+                  {
+                    "code": "min",
+                    "title": "minutes",
+                    "factor": 60
+                  },
+                  {
+                    "code": "h",
+                    "title": "hours",
+                    "factor": 3600
+                  },
+                  {
+                    "code": "d",
+                    "title": "days",
+                    "factor": 86400
+                  }
+                ],
+                "text": {
+                  "unitLabel": "Unit: {unit}",
+                  "listLabel": "Units",
+                  "note": "That is {seconds} seconds — how long the link stays alive."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1169,15 +1550,21 @@
             "список требований рядом со шкалой — полоска без подписи не говорит, что исправить",
             "число сегментов, равное числу правил: сегмент = требование, а не абстрактный процент",
             "autoComplete=\"new-password\": иначе браузер подставит старый пароль",
-            "кнопку показа с aria-pressed: состояние «видно/скрыто» должно читаться вслух"
+            "кнопку показа с aria-pressed: состояние «видно/скрыто» должно читаться вслух",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и набор правил",
             "порог minLength",
             "слова оценки и цвета тонов",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "ruleText, strengthText и text — формулировки требований, слова надёжности и подписи; в первом требовании {min} подставляет minLength",
+            "defaultValue — пароль, с которым поле открывается",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Набор правил здесь демонстрационный: реальные требования задаёт ваша политика паролей.",
             "Не запрещайте вставку в поле — она нужна менеджерам паролей.",
             "Оценка по правилам не измеряет энтропию: длинная фраза может быть надёжнее «Aa1!».",
@@ -1199,6 +1586,18 @@
             "default": 10,
             "min": 6,
             "max": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1212,15 +1611,21 @@
                 "the rules list beside the meter — an unlabelled bar never says what to fix",
                 "one segment per rule: a segment is a requirement, not an abstract percentage",
                 "autoComplete=\"new-password\": otherwise the browser fills the old one",
-                "the reveal button with aria-pressed: the shown/hidden state has to be announced"
+                "the reveal button with aria-pressed: the shown/hidden state has to be announced",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the set of rules",
                 "the minLength threshold",
                 "the verdict wording and the tone colours",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "ruleText, strengthText and text — the rule wording, the strength words and the captions; {min} in the first rule takes minLength",
+                "defaultValue — the password the field opens with",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The rule set here is a demonstration: your password policy defines the real one.",
                 "Do not block pasting — password managers need it.",
                 "Rule counting does not measure entropy: a long phrase can beat \"Aa1!\".",
@@ -1235,11 +1640,44 @@
               },
               "minLength": {
                 "label": "Minimum length"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Password Rules"
+            "title": "Password Rules",
+            "preview": {
+              "props": {
+                "label": "Create a password",
+                "defaultValue": "vibeui2026",
+                "ruleText": [
+                  "at least {min} characters",
+                  "lower and upper case letters",
+                  "at least one digit",
+                  "a punctuation mark or symbol",
+                  "does not repeat the word “password”"
+                ],
+                "strengthText": [
+                  "far too weak",
+                  "weak",
+                  "fair",
+                  "good",
+                  "strong"
+                ],
+                "text": {
+                  "show": "Show",
+                  "hide": "Hide",
+                  "strength": "Strength",
+                  "empty": "empty"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["minLength", "accent", "background"]
       }
     },
     {
@@ -1270,15 +1708,21 @@
             "роли combobox и listbox вместе с aria-expanded: без них список для screen reader не существует",
             "Escape, который закрывает список и не стирает набранное — это два разных действия",
             "закрытие по уходу фокуса из обёртки, а не по клику мимо: клавиатурный уход тоже должен закрывать",
-            "подсветку совпадения тегом <mark>, а не цветом через span: смысл несёт тег"
+            "подсветку совпадения тегом <mark>, а не цветом через span: смысл несёт тег",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и массив history",
             "формулировку подсказки под полем",
             "правило фильтрации — например, поиск по началу строки",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "text — подписи списка, кнопки «забыть» и строки помощи; {value} подставляет значение",
+            "placeholder и defaultValue — подсказка в поле и начальный запрос",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "История здесь живёт в состоянии компонента: хранение и приватность — на вашей стороне.",
             "Не подставляйте первую подсказку автоматически: она перезапишет то, что человек уже набрал.",
             "Список из сотен строк надо ограничивать: разметка не виртуализирована.",
@@ -1298,6 +1742,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1311,15 +1761,21 @@
                 "the combobox and listbox roles together with aria-expanded: without them the list does not exist for screen readers",
                 "Escape closing the list without erasing the typed text — those are two different actions",
                 "closing on focus leaving the wrapper rather than on an outside click: a keyboard exit must close it too",
-                "highlighting the match with <mark> rather than a coloured span: the tag carries the meaning"
+                "highlighting the match with <mark> rather than a coloured span: the tag carries the meaning",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the history array",
                 "the wording of the hint under the field",
                 "the filtering rule — prefix matching, for instance",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "text — the list captions, the forget button and the help line; {value} takes the value",
+                "placeholder and defaultValue — the field hint and the query it opens with",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "History lives in component state here: storage and privacy are your side of the job.",
                 "Do not apply the first suggestion automatically: it would overwrite what the user already typed.",
                 "Cap lists of hundreds of rows: this markup is not virtualised.",
@@ -1334,11 +1790,33 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "History Suggest"
+            "title": "History Suggest",
+            "preview": {
+              "props": {
+                "label": "Delivery address",
+                "placeholder": "City, street, house",
+                "defaultValue": "Lon",
+                "history": [
+                  "London, Baker Street 12",
+                  "London, Oxford Street 90",
+                  "Manchester, Deansgate 28",
+                  "Leeds, Briggate 44"
+                ],
+                "text": {
+                  "listLabel": "From history",
+                  "forget": "Forget “{value}”",
+                  "note": "Arrows move through the suggestions, Enter fills in, the cross forgets a value."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1369,15 +1847,20 @@
             "форму как обёртку: Enter обязан применять код без обработчиков клавиш",
             "выключенную кнопку на пустом поле и на время проверки: двойная отправка купона портит корзину",
             "приведение к верхнему регистру в значении, а не только в CSS: иначе на сервер уедет другой текст",
-            "aria-live у сообщения: результат проверки должен объявляться, а не только краснеть"
+            "aria-live у сообщения: результат проверки должен объявляться, а не только краснеть",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и словарь codes",
             "формулировки сообщений об ошибке и об успехе",
             "обработчик onApply — вместо демонстрационной задержки поставьте запрос",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подписи интерфейса: placeholder, applyText, checkingText, removeText, appliedText и словарь noteText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Список кодов на клиенте — только для демонстрации состояний: настоящую проверку делает сервер.",
             "Не складывайте купоны молча: если их несколько, покажите это явно.",
             "Задержка в 700 мс изображает запрос — уберите её вместе с window.setTimeout.",
@@ -1393,8 +1876,21 @@
             "maxLength": 24
           },
           {
+            "prop": "placeholder",
+            "label": "Подсказка в поле",
+            "type": "text",
+            "default": "Например, VIBE10",
+            "maxLength": 32
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -1410,15 +1906,20 @@
                 "the form wrapper: Enter must apply the code without any key handlers",
                 "the button disabled on an empty field and while checking: a double submit corrupts the cart",
                 "uppercasing the value, not only the CSS: otherwise different text reaches the server",
-                "aria-live on the message: the result must be announced, not only turn red"
+                "aria-live on the message: the result must be announced, not only turn red",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the codes dictionary",
                 "the wording of the error and success messages",
                 "the onApply handler — replace the demo delay with a request",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the interface copy: placeholder, applyText, checkingText, removeText, appliedText and the noteText dictionary",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The client-side code list only demonstrates the states: real validation belongs on the server.",
                 "Do not stack coupons silently: if several can apply, say so.",
                 "The 700 ms delay imitates a request — remove it together with window.setTimeout.",
@@ -1431,13 +1932,36 @@
                 "label": "Label",
                 "default": "Promo code"
               },
+              "placeholder": {
+                "label": "Field hint",
+                "default": "For example, VIBE10"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Promo Code"
+            "title": "Promo Code",
+            "preview": {
+              "props": {
+                "label": "Promo code",
+                "placeholder": "For example, VIBE10",
+                "applyText": "Apply",
+                "checkingText": "Checking…",
+                "removeText": "Remove",
+                "appliedText": "{percent}% off is already in the order total",
+                "noteText": {
+                  "idle": "The code from the email or the receipt. Case does not matter.",
+                  "bad": "No such code, or it has already been used.",
+                  "done": "You can remove this code and enter another — they do not stack."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1468,15 +1992,20 @@
             "свободные варианты кнопками — «занято» без альтернативы заставляет придумывать заново",
             "нормализацию прямо в значении: человек должен видеть ровно то, что сохранится",
             "приставку @ вне поля: её не стирают и не дублируют случайно",
-            "три состояния значка (ожидание, занято, свободно) вместе с текстом: цвет один смысл не несёт"
+            "три состояния значка (ожидание, занято, свободно) вместе с текстом: цвет один смысл не несёт",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и массив taken",
             "правило нормализации — например, разрешить дефис",
             "правило, по которому собираются свободные варианты",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подсказку placeholder и словарь noteText: в taken и free подставляется {handle}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Занятость проверяет сервер: массив taken здесь только для демонстрации состояний.",
             "Не показывайте чужие имена целиком в ответе — это утечка списка пользователей.",
             "Имя всё равно надо перепроверить при отправке: между проверкой и сохранением его могут занять.",
@@ -1492,8 +2021,21 @@
             "maxLength": 30
           },
           {
+            "prop": "placeholder",
+            "label": "Подсказка в поле",
+            "type": "text",
+            "default": "anna_orlova",
+            "maxLength": 24
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -1509,15 +2051,20 @@
                 "the free alternatives as buttons — \"taken\" with no options forces the user to start over",
                 "normalising the value itself: people must see exactly what will be saved",
                 "the @ prefix outside the input: it must not be deleted or duplicated by accident",
-                "the three sign states (checking, taken, free) alongside the text: colour alone carries no meaning"
+                "the three sign states (checking, taken, free) alongside the text: colour alone carries no meaning",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the taken array",
                 "the normalisation rule — allowing hyphens, for instance",
                 "the rule that builds the free alternatives",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the placeholder and the noteText dictionary: taken and free interpolate {handle}",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Availability is a server question: the taken array only demonstrates the states here.",
                 "Do not echo other people's names in the response — that leaks your user list.",
                 "Re-check the name on submit anyway: it can be taken between the check and the save.",
@@ -1530,13 +2077,33 @@
                 "label": "Label",
                 "default": "Username"
               },
+              "placeholder": {
+                "label": "Field hint",
+                "default": "anna_orlova"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Handle Check"
+            "title": "Handle Check",
+            "preview": {
+              "props": {
+                "label": "Username",
+                "placeholder": "anna_orlova",
+                "noteText": {
+                  "idle": "Latin letters, digits, dot and underscore. Three characters or more.",
+                  "checking": "Checking whether the name is free…",
+                  "taken": "@{handle} is taken. Pick one of these instead:",
+                  "free": "@{handle} is free."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1567,15 +2134,21 @@
             "хранение только цифр: разделители — это отображение, а не значение",
             "неразрывный пробел между разрядами: обычный переносит строку посередине числа",
             "табличные цифры: сумма не должна дёргаться при наборе",
-            "отдачу числа в onChange, а не отформатированной строки"
+            "отдачу числа в onChange, а не отформатированной строки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и знак валюты suffix",
             "предел max и текст сообщения о превышении",
             "формат короткой записи — «тыс.» и «млн» под свой язык",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подписи overText, aboutText и limitText: {amount} и {suffix} подставляются",
+            "словарь shortText и decimalMark — сокращения разрядов под свой язык",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "requestAnimationFrame нужен, чтобы поставить курсор после отрисовки — не убирайте его.",
             "Копейки не поддержаны: для них понадобится второй разделитель и другая проверка.",
             "Лимит на клиенте ничего не гарантирует: проверяйте сумму на сервере.",
@@ -1604,6 +2177,18 @@
             "default": 300000,
             "min": 1000,
             "max": 10000000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1617,15 +2202,21 @@
                 "storing digits only: separators are presentation, not the value",
                 "the non-breaking space between groups: a plain one breaks the line inside the number",
                 "tabular figures: the amount must not jitter while typing",
-                "emitting a number in onChange rather than the formatted string"
+                "emitting a number in onChange rather than the formatted string",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the suffix currency sign",
                 "the max limit and the over-limit message",
                 "the short-form wording — \"k\" and \"M\" for your language",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the overText, aboutText and limitText copy: {amount} and {suffix} are interpolated",
+                "the shortText dictionary and decimalMark — the group abbreviations for your language",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "requestAnimationFrame is what places the caret after the render — do not remove it.",
                 "Decimals are not supported: they need a second separator and a different check.",
                 "A client-side limit guarantees nothing: validate the amount on the server.",
@@ -1644,11 +2235,32 @@
               },
               "max": {
                 "label": "Limit"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Live Thousands"
+            "title": "Live Thousands",
+            "preview": {
+              "props": {
+                "label": "Transfer amount",
+                "suffix": "$",
+                "overText": "Over the limit",
+                "aboutText": "≈ {amount} {suffix}",
+                "limitText": "limit {amount} {suffix}",
+                "shortText": {
+                  "million": "{value}M",
+                  "thousand": "{value}k"
+                },
+                "decimalMark": "."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1678,14 +2290,20 @@
             "генерацию через crypto.getRandomValues с запасным Math.random — по одному символу из каждого класса и перетасовку Фишера — Йетса, чтобы гарантированные символы не оседали в начале строки",
             "оценку в битах энтропии словами вместо закрашенной полоски — этот вид индикатора в каталоге уже занят (input-003, input-011)",
             "кнопку показа с aria-pressed: сгенерированный пароль тоже набирают и проверяют вслепую",
-            "autoComplete=\"new-password\": иначе браузер подставит старый пароль поверх сгенерированного"
+            "autoComplete=\"new-password\": иначе браузер подставит старый пароль поверх сгенерированного",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "label, placeholder и стартовую длину length",
             "набор символов в POOLS под свою политику паролей",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подписи кнопок: generateText, copyText, copiedText и словарь toggleText",
+            "bitsText и словарь verdictText — оценка словами на своём языке",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "navigator.clipboard требует безопасного контекста (https или localhost) — иначе кнопка копирования молча ничего не делает.",
             "Оценка в битах приблизительная: она не заменяет проверку по словарям на сервере.",
             "Не запрещайте вставку и ручной ввод — сгенерированный пароль можно и поправить.",
@@ -1701,6 +2319,13 @@
             "maxLength": 24
           },
           {
+            "prop": "placeholder",
+            "label": "Подсказка в поле",
+            "type": "text",
+            "default": "Сгенерируйте или введите свой",
+            "maxLength": 40
+          },
+          {
             "prop": "length",
             "label": "Длина генерации",
             "type": "number",
@@ -1711,6 +2336,12 @@
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -1725,14 +2356,20 @@
                 "generation through crypto.getRandomValues with a Math.random fallback — one character per class plus a Fisher–Yates shuffle so the guaranteed characters do not settle at the start of the string",
                 "the worded bits-of-entropy score instead of a filled meter — that kind of indicator is already taken in the catalog (input-003, input-011)",
                 "the reveal button with aria-pressed: a generated password is also typed and checked blind",
-                "autoComplete=\"new-password\" — otherwise the browser fills the old password over the generated one"
+                "autoComplete=\"new-password\" — otherwise the browser fills the old password over the generated one",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label and placeholder copy, and the starting length",
                 "the character sets in POOLS for your password policy",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the button copy: generateText, copyText, copiedText and the toggleText dictionary",
+                "bitsText and the verdictText dictionary — the worded score in your language",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "navigator.clipboard needs a secure context (https or localhost) — otherwise the copy button silently does nothing.",
                 "The bit score is approximate: it does not replace a server-side dictionary check.",
                 "Do not block pasting or manual edits — a generated password can still be tweaked by hand.",
@@ -1745,16 +2382,46 @@
                 "label": "Label",
                 "default": "Password"
               },
+              "placeholder": {
+                "label": "Field hint",
+                "default": "Generate one or type your own"
+              },
               "length": {
                 "label": "Generated length"
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Password Generator"
+            "title": "Password Generator",
+            "preview": {
+              "props": {
+                "label": "Password",
+                "placeholder": "Generate one or type your own",
+                "bitsText": "~{bits} bits",
+                "toggleText": {
+                  "show": "Show",
+                  "hide": "Hide",
+                  "showLabel": "Show password",
+                  "hideLabel": "Hide password"
+                },
+                "generateText": "Generate",
+                "copyText": "Copy",
+                "copiedText": "Copied",
+                "verdictText": {
+                  "idle": "Generate a password or type your own",
+                  "weak": "Weak — add length or symbols",
+                  "fair": "Fair — a little more length would help",
+                  "strong": "Strong password"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["length", "accent", "background"]
       }
     },
     {
@@ -1784,14 +2451,20 @@
             "честную паузу перед результатом: статус не переключается мгновенно вместе с набором",
             "замену значка лупы на кольцо загрузки в одном и том же месте разметки — смена места сбивает взгляд",
             "aria-live=\"polite\" и role=\"status\" на строке под полем: результат объявляется, а не только красится",
-            "отключение вращения кольца в prefers-reduced-motion при том, что текст статуса остаётся источником истины"
+            "отключение вращения кольца в prefers-reduced-motion при том, что текст статуса остаётся источником истины",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "label, placeholder",
             "обработчик onChange — вместо демонстрационного fakeCount подставьте реальный запрос и его результат",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "словарь statusText: в loading подставляется {query}, в found — {count}",
+            "clearLabel — подпись кнопки очистки для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "fakeCount — детерминированная заглушка для демонстрации состояний, не настоящий поиск.",
             "Задержка в 450 мс имитирует сеть — замените её реальным запросом и уберите вместе с fakeCount.",
             "Подсказка горячей клавиши здесь намеренно не показана: рабочий вариант — в input-009.",
@@ -1818,6 +2491,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1830,14 +2509,20 @@
                 "the honest pause before the result: the status does not flip instantly along with typing",
                 "swapping the magnifier for the loading ring in the same spot in the markup — moving it makes the eye hunt for it",
                 "aria-live=\"polite\" and role=\"status\" on the line under the field: the result is announced, not just recolored",
-                "disabling the ring's spin under prefers-reduced-motion while the status text stays the source of truth"
+                "disabling the ring's spin under prefers-reduced-motion while the status text stays the source of truth",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label and placeholder copy",
                 "the onChange handler — replace the demo fakeCount with a real request and its result",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the statusText dictionary: loading interpolates {query}, found interpolates {count}",
+                "clearLabel — the screen-reader name of the clear button",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "fakeCount is a deterministic stand-in for demonstrating the states, not a real search.",
                 "The 450 ms delay imitates the network — replace it with a real request and remove fakeCount with it.",
                 "The keyboard-shortcut hint is intentionally absent here: the working version lives in input-009.",
@@ -1856,11 +2541,28 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Async Search"
+            "title": "Async Search",
+            "preview": {
+              "props": {
+                "label": "Search orders",
+                "placeholder": "Order number or customer name",
+                "clearLabel": "Clear the search",
+                "statusText": {
+                  "idle": "Start typing a query",
+                  "loading": "Searching for “{query}”…",
+                  "found": "Results found: {count}",
+                  "empty": "Nothing found"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1890,14 +2592,20 @@
             "хранение значения без пробелов в верхнем регистре: группировка по четыре символа — это отображение, а не значение",
             "проверку по остатку от деления на 97, а не по Луну: у IBAN другой контрольный алгоритм (ISO 7064)",
             "определение страны по первым двум буквам словом, а не флагом — свои иконки флагов нельзя раздавать вместе с кодом",
-            "табличные цифры и разрядку: номер сверяют глазами с банковской выпиской"
+            "табличные цифры и разрядку: номер сверяют глазами с банковской выпиской",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и стартовое значение defaultValue",
             "словарь COUNTRIES под свою аудиторию",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "словарь countryText — названия стран по коду IBAN на своём языке",
+            "подписи copyText, copiedText, placeholder и словарь noteText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент ничего не хранит и никуда не отправляет: данные счёта должен забирать платёжный шлюз.",
             "Проверка по остатку от 97 рассчитана на буквенно-цифровой IBAN; для номеров без этого стандарта она не подходит.",
             "Не логируйте значение onChange — это номер банковского счёта.",
@@ -1924,6 +2632,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1936,14 +2650,20 @@
                 "storing the value without spaces in uppercase: the group-of-four spacing is presentation, not the value",
                 "the mod-97 checksum rather than Luhn: IBAN uses a different check algorithm (ISO 7064)",
                 "naming the country in words from the first two letters rather than a flag — flag icons cannot ship with the code",
-                "tabular figures and letter spacing: the number is compared against a bank statement by eye"
+                "tabular figures and letter spacing: the number is compared against a bank statement by eye",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the starting defaultValue",
                 "the COUNTRIES dictionary for your audience",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the countryText dictionary — country names by IBAN code in your language",
+                "the copyText, copiedText and placeholder copy and the noteText dictionary",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component stores and sends nothing: account data belongs to the payment gateway.",
                 "The mod-97 check assumes an alphanumeric IBAN; it does not apply to account numbers outside that standard.",
                 "Do not log the onChange value — it is a bank account number.",
@@ -1962,11 +2682,39 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "IBAN Field"
+            "title": "IBAN Field",
+            "preview": {
+              "props": {
+                "label": "IBAN account number",
+                "copyText": "Copy",
+                "copiedText": "Copied",
+                "countryText": {
+                  "GB": "United Kingdom",
+                  "DE": "Germany",
+                  "FR": "France",
+                  "ES": "Spain",
+                  "IT": "Italy",
+                  "NL": "Netherlands",
+                  "PL": "Poland",
+                  "EE": "Estonia",
+                  "CH": "Switzerland",
+                  "AE": "UAE"
+                },
+                "noteText": {
+                  "idle": "Nothing is stored here: the field only collects the number for the payment gateway.",
+                  "ok": "The number passes the checksum.",
+                  "bad": "The number does not add up — check the characters."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1996,14 +2744,19 @@
             "вывод счётчика, полоски и цвета из одной длины значения — иначе они разойдутся при первой правке",
             "мягкий предел как предупреждение, а не запрет: печатать не прерывают на softLimit",
             "жёсткий предел через maxLength у самого input — это гарантия, а не только визуальная подсказка",
-            "role=\"status\" и aria-live=\"polite\" на подписи под полем: предупреждение объявляется, а не только красится"
+            "role=\"status\" и aria-live=\"polite\" на подписи под полем: предупреждение объявляется, а не только красится",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "label, placeholder и стартовое значение defaultValue",
             "softLimit и hardLimit под свою форму",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "countText и словарь noteText: в soft подставляются {soft} и {over}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Оба предела считаются в символах, а не в байтах — для многобайтовых алфавитов это не то же самое, что лимит на сервере.",
             "Не приравнивайте softLimit к hardLimit: тогда предупреждение появляется и тут же обрывает ввод в одной точке.",
             "Серверная проверка длины всё равно нужна — клиентский hardLimit можно обойти вне браузера.",
@@ -2053,6 +2806,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2065,14 +2824,19 @@
                 "deriving the counter, the fill bar and the color from the same value length — otherwise they drift apart on the first edit",
                 "the soft limit as a warning, not a block: typing is not interrupted at softLimit",
                 "the hard limit through maxLength on the input itself — a guarantee, not just a visual hint",
-                "role=\"status\" and aria-live=\"polite\" on the line under the field: the warning is announced, not just recolored"
+                "role=\"status\" and aria-live=\"polite\" on the line under the field: the warning is announced, not just recolored",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label and placeholder copy, and the starting defaultValue",
                 "softLimit and hardLimit for your form",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "countText and the noteText dictionary: soft interpolates {soft} and {over}",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Both limits count characters, not bytes — for multi-byte alphabets that is not the same as a server-side limit.",
                 "Do not set softLimit equal to hardLimit: the warning would appear and cut typing off at the same point.",
                 "Server-side length validation is still required — the client hardLimit can be bypassed outside the browser.",
@@ -2101,11 +2865,26 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Soft Limit Field"
+            "title": "Soft Limit Field",
+            "preview": {
+              "props": {
+                "label": "Listing title",
+                "placeholder": "What is this listing about",
+                "noteText": {
+                  "ok": "Short and to the point — just right.",
+                  "soft": "The soft limit of {soft} is exceeded by {over} — shorter would read better.",
+                  "max": "Character limit reached."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["softLimit", "hardLimit", "accent", "background"]
       }
     },
     {
@@ -2135,15 +2914,20 @@
             "хранение ответа вместе со слагом, к которому он относится, и паузу перед запросом: иначе на экране окажется ответ про другое значение",
             "превью полной ссылки под полем — оно зеркалит значение, а не подсказка",
             "приставку prefix вне поля, помеченную aria-hidden: полный адрес читается через aria-describedby у примечания",
-            "бейдж состояния рядом с подписью, а не только цвет рамки — цвет один смысл не несёт"
+            "бейдж состояния рядом с подписью, а не только цвет рамки — цвет один смысл не несёт",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и приставку prefix — свой домен или путь",
             "стартовое значение defaultValue",
             "массив taken — список уже занятых адресов",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "словари badgeText и noteText и подсказку placeholder",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Занятость проверяет сервер: массив taken здесь только для демонстрации состояний.",
             "Слаг всё равно надо перепроверить при отправке: между проверкой и сохранением его могут занять.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -2176,6 +2960,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2188,15 +2978,20 @@
                 "storing the answer together with the slug it describes, plus the pause before the request: otherwise the screen shows an answer about a different value",
                 "the full-link preview below the field — it mirrors the value, it is not a hint",
                 "the prefix outside the input, marked aria-hidden: the full address is read through aria-describedby on the note",
-                "the status badge next to the label, not only the border colour — colour alone carries no meaning"
+                "the status badge next to the label, not only the border colour — colour alone carries no meaning",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the prefix — your own domain or path",
                 "the starting defaultValue",
                 "the taken array — the list of addresses already in use",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the badgeText and noteText dictionaries and the placeholder",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Availability is a server question: the taken array only demonstrates the states here.",
                 "Re-check the slug on submit anyway: it can be taken between the check and the save.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -2218,11 +3013,33 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Workspace Slug Check"
+            "title": "Workspace Slug Check",
+            "preview": {
+              "props": {
+                "label": "Team address",
+                "prefix": "vibeui.ru/team/",
+                "badgeText": {
+                  "idle": "—",
+                  "checking": "Checking",
+                  "taken": "Taken",
+                  "free": "Free"
+                },
+                "noteText": {
+                  "idle": "Three characters minimum: latin letters, digits, hyphen.",
+                  "checking": "Checking whether the address is free…",
+                  "taken": "This address is taken — pick another one.",
+                  "free": "The address is free, you can save it."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2252,15 +3069,20 @@
             "хранение канонического текста без дефисов: дефисы — это отображение, а не значение",
             "три отдельных состояния: применённый код — не поле ввода, его нельзя редактировать",
             "форму как обёртку: Enter обязан применять код без обработчиков клавиш",
-            "выключенную кнопку на пустом поле и на время проверки: двойная отправка ключа портит корзину"
+            "выключенную кнопку на пустом поле и на время проверки: двойная отправка ключа портит корзину",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и словарь codes",
             "формулировки сообщений об ошибке и об успехе",
             "обработчик onApply — вместо демонстрационной задержки поставьте запрос",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подписи интерфейса: placeholder, applyText, checkingText, removeText, appliedText и словарь noteText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Словарь кодов на клиенте — только для демонстрации состояний: настоящую проверку делает сервер.",
             "Маска рассчитана на двенадцать символов в трёх группах: другой длины ключ потребует поправить group() и normalize().",
             "Не складывайте купоны молча: если их несколько, покажите это явно.",
@@ -2276,8 +3098,21 @@
             "maxLength": 24
           },
           {
+            "prop": "placeholder",
+            "label": "Подсказка в поле",
+            "type": "text",
+            "default": "VIBE-2026-SALE",
+            "maxLength": 24
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -2292,15 +3127,20 @@
                 "storing the canonical text without hyphens: the hyphens are presentation, not the value",
                 "the three separate states: an applied code is not an input, it cannot be edited",
                 "the form wrapper: Enter must apply the code without any key handlers",
-                "the button disabled on an empty field and while checking: a double submit corrupts the cart"
+                "the button disabled on an empty field and while checking: a double submit corrupts the cart",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the codes dictionary",
                 "the wording of the error and success messages",
                 "the onApply handler — replace the demo delay with a request",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the interface copy: placeholder, applyText, checkingText, removeText, appliedText and the noteText dictionary",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The client-side codes dictionary only demonstrates the states: real validation belongs on the server.",
                 "The mask assumes twelve characters in three groups: a different length needs group() and normalize() adjusted.",
                 "Do not stack coupons silently: if several can apply, say so.",
@@ -2313,13 +3153,35 @@
                 "label": "Label",
                 "default": "Coupon code"
               },
+              "placeholder": {
+                "label": "Field hint",
+                "default": "VIBE-2026-SALE"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Coupon Key Mask"
+            "title": "Coupon Key Mask",
+            "preview": {
+              "props": {
+                "label": "Coupon code",
+                "applyText": "Apply",
+                "checkingText": "Checking…",
+                "removeText": "Remove",
+                "appliedText": "{percent}% off is already in the order total",
+                "noteText": {
+                  "idle": "Twelve characters; the hyphens appear on their own. Case does not matter.",
+                  "bad": "No such key, or it has already been used.",
+                  "done": "You can remove this code and enter another — they do not stack."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2349,15 +3211,21 @@
             "пересчёт числа при смене единицы: килограмм и фунт — одна и та же величина, а не два независимых поля",
             "переключатель из двух кнопок вместо списка: для бинарного выбора список — лишний клик",
             "строку пересчёта под полем — без неё вторая единица ни с чем не связана",
-            "aria-pressed на обеих кнопках и общий role=\"group\" с aria-label"
+            "aria-pressed на обеих кнопках и общий role=\"group\" с aria-label",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и подписи unitA, unitB",
             "множитель factor и стартовые defaultValue, defaultUnit",
             "формулировку строки пересчёта",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "convertText — строка пересчёта, {amount} заменяется значением во второй единице",
+            "unitsLabel — подпись группы кнопок для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Множитель здесь для веса кг↔фунты: для роста возьмите factor для см↔дюймов.",
             "Округление до одной десятой копится при частом переключении — это ожидаемо для отображения, не для точных расчётов.",
             "Финальную единицу и значение проверяйте на сервере: клиентская конвертация только для показа.",
@@ -2399,6 +3267,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2411,15 +3285,21 @@
                 "converting the number when the unit changes: a kilogram and a pound are the same quantity, not two independent fields",
                 "the two-button toggle instead of a dropdown: a list is one extra click for a binary choice",
                 "the conversion line below the field — without it the second unit connects to nothing",
-                "aria-pressed on both buttons and the shared role=\"group\" with aria-label"
+                "aria-pressed on both buttons and the shared role=\"group\" with aria-label",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the unitA/unitB captions",
                 "the factor and the starting defaultValue, defaultUnit",
                 "the wording of the conversion line",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "convertText — the conversion line, {amount} is replaced by the value in the other unit",
+                "unitsLabel — the screen-reader name of the button group",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The factor here is for kg↔lb weight: for height use a cm↔inch factor instead.",
                 "Rounding to one decimal drifts with frequent switching — expected for display, not for exact calculations.",
                 "Validate the final unit and value on the server: the client-side conversion is for display only.",
@@ -2445,11 +3325,24 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Weight Unit Toggle"
+            "title": "Weight Unit Toggle",
+            "preview": {
+              "props": {
+                "label": "Weight",
+                "unitA": "kg",
+                "unitB": "lb",
+                "unitsLabel": "Unit of measure",
+                "convertText": "That is ≈ {amount}."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -2479,15 +3372,21 @@
             "чтение localStorage ленивым инициализатором useState за веткой typeof window, а не в эффекте: setState внутри эффекта на каждый монтаж — лишний повторный рендер",
             "запись в историю по Enter, а не по каждому символу: история должна хранить отправленное, а не черновик",
             "открытие списка только по стрелке вниз, без фильтрации по набранному тексту — это не автоподсказка, а список последних значений",
-            "кнопку полной очистки истории вместо удаления по одной записи"
+            "кнопку полной очистки истории вместо удаления по одной записи",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "непрозрачный токен --vibeui-input-023-pop у раскрывающегося списка: он лежит поверх содержимого страницы и прозрачным быть не может"
           ],
           "adapt": [
             "текст label, placeholder и defaultValue",
             "storageKey — свой ключ, если на странице несколько таких полей",
             "предел истории и формулировку примечания",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подписи listLabel, clearText и noteText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "localStorage привязан к браузеру и домену: на другом устройстве истории не будет.",
             "Try/catch вокруг обращений к localStorage обязателен: приватный режим и запрет доступа бросают исключение.",
             "Список не виртуализирован и ограничен восемью записями — для большего лимита учтите высоту раскрывающегося списка.",
@@ -2514,6 +3413,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2526,15 +3431,21 @@
                 "reading localStorage in a useState lazy initializer behind a typeof window check, not inside an effect: setState in an effect on every mount is an extra render",
                 "saving to history on Enter rather than every keystroke: history should hold what was submitted, not a draft",
                 "opening the list only with the down arrow, with no filtering by the typed text — this is a recent-values list, not an autosuggest",
-                "the single clear-all button instead of removing entries one by one"
+                "the single clear-all button instead of removing entries one by one",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the opaque --vibeui-input-023-pop token on the dropdown: it floats over page content and cannot be transparent"
               ],
               "adapt": [
                 "the label, placeholder and defaultValue copy",
                 "storageKey — use your own when several such fields live on one page",
                 "the history cap and the note wording",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the listLabel, clearText and noteText copy",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "localStorage is tied to the browser and domain: there is no history on another device.",
                 "The try/catch around localStorage access is required: private browsing and denied permissions throw.",
                 "The list is not virtualised and caps at eight entries — raise the limit and account for the dropdown's height.",
@@ -2553,11 +3464,24 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Submitted Value History"
+            "title": "Submitted Value History",
+            "preview": {
+              "props": {
+                "label": "Email subject",
+                "placeholder": "What is this about",
+                "listLabel": "Recent values",
+                "clearText": "Clear history",
+                "noteText": "Down arrow shows recent values; Enter saves and fills in the selected one."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2586,14 +3510,19 @@
             "локальную палитру --vibeui-input-024-* и не подменять её токенами вашей темы",
             "невидимый двойник текста под полем — именно он даёт подсказке буквальное совпадение по ширине с введённым, а не примерное позиционирование",
             "перехват Tab через preventDefault только при наличии подсказки — иначе клавиатурная навигация по форме сломается для всех остальных полей",
-            "текстовую подсказку в примечании под полем (aria-live) — визуальный хвост сам по себе недоступен скринридеру"
+            "текстовую подсказку в примечании под полем (aria-live) — визуальный хвост сам по себе недоступен скринридеру",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и стартовое значение defaultValue",
             "список domains — свои популярные домены вместо общих почтовых сервисов",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подписи placeholder, idleText и hintText: {key} — клавиша, {value} — итоговый адрес",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Домены сортируются по порядку в массиве: первое совпадение по началу строки становится подсказкой.",
             "Подсказка не валидирует адрес — это ускорение набора, а не проверка существования почты.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -2619,6 +3548,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2630,14 +3565,19 @@
                 "the local --vibeui-input-024-* palette — do not swap it for your theme tokens",
                 "the invisible text twin under the field — it is what gives the hint a literal width match with the typed text, not approximate positioning",
                 "intercepting Tab with preventDefault only when a hint exists — otherwise keyboard navigation breaks for every other field on the form",
-                "the text hint in the note below the field (aria-live) — the visual tail alone is not reachable by a screen reader"
+                "the text hint in the note below the field (aria-live) — the visual tail alone is not reachable by a screen reader",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the starting defaultValue",
                 "the domains array — your own popular domains instead of generic mail providers",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the placeholder, idleText and hintText copy: {key} is the key, {value} the completed address",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Domains are matched in array order: the first prefix match becomes the suggestion.",
                 "The hint does not validate the address — it speeds up typing, it does not check that the mailbox exists.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -2655,11 +3595,23 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Domain Tab Complete"
+            "title": "Domain Tab Complete",
+            "preview": {
+              "props": {
+                "label": "Email",
+                "placeholder": "you@gmail.com",
+                "idleText": "Start typing the domain after @ — we will finish it for you.",
+                "hintText": "{key} — complete to {value}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2688,14 +3640,19 @@
             "локальную палитру --vibeui-input-025-* и не подменять её токенами вашей темы",
             "формулу контрольной суммы для обеих длин целиком — веса для 10 и 12 цифр разные, смешивать их нельзя",
             "проверку на каждый введённый символ, а не только по blur — ошибка в ИНН должна быть видна до отправки формы",
-            "бейдж типа рядом с подписью вместе со значком в рамке — один цвет рамки не объясняет, что именно не сошлось"
+            "бейдж типа рядом с подписью вместе со значком в рамке — один цвет рамки не объясняет, что именно не сошлось",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и стартовое значение defaultValue",
             "плейсхолдер и формулировки в примечании под полем",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подписи бейджа через badgeText и тексты примечания через noteText — компонент несёт русские по умолчанию",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Контрольная сумма проверяет только формат числа, а не то, что ИНН реально существует и принадлежит контрагенту — для этого нужен отдельный запрос к ФНС.",
             "Формула воспроизведена по открытому стандарту ФНС и не требует внешних библиотек.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -2721,6 +3678,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2732,14 +3695,19 @@
                 "the local --vibeui-input-025-* palette — do not swap it for your theme tokens",
                 "the full checksum formula for both lengths — the weights for 10 and 12 digits differ and must not be mixed",
                 "checking on every keystroke rather than only on blur — an invalid tax ID should be visible before the form is submitted",
-                "the type badge next to the label together with the icon in the frame — border colour alone does not explain what failed"
+                "the type badge next to the label together with the icon in the frame — border colour alone does not explain what failed",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the starting defaultValue",
                 "the placeholder and the note wording below the field",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the badge labels through badgeText and the note copy through noteText — the component ships Russian defaults",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The checksum only validates the number's format, not that this tax ID actually exists and belongs to the counterparty — that needs a separate lookup against the tax service.",
                 "The formula follows the tax service's published standard and needs no external library.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -2757,11 +3725,31 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "INN Checksum"
+            "title": "INN Checksum",
+            "preview": {
+              "props": {
+                "label": "Tax ID (INN)",
+                "badgeText": {
+                  "empty": "Tax ID",
+                  "partial": "Typing",
+                  "org": "Company",
+                  "person": "Individual / sole trader"
+                },
+                "noteText": {
+                  "idle": "10 digits for a company, 12 for an individual or sole trader.",
+                  "valid": "The checksum matches.",
+                  "invalid": "The checksum does not match — check the digits."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2790,14 +3778,19 @@
             "локальную палитру --vibeui-input-026-* и не подменять её токенами вашей темы",
             "округление snap() на каждый onChange — атрибут step у native input не работает при ручном наборе с клавиатуры, только для стрелок браузера",
             "перенос через полночь в snap() (модуль 1440 минут) — иначе округление времени рядом с 00:00 даёт отрицательное значение",
-            "чипы как отдельный ряд под полем, а не внутри рамки — это быстрый выбор, а не часть значения поля"
+            "чипы как отдельный ряд под полем, а не внутри рамки — это быстрый выбор, а не часть значения поля",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и стартовое значение defaultValue",
             "массив quick — свои частые значения времени",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подпись списка частых значений quickLabel и текст примечания noteText — компонент несёт русские по умолчанию",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Шаг зашит константой STEP_MINUTES = 15 в исходнике — для другого шага поменяйте её и текст примечания вместе.",
             "Native time picker браузера может выглядеть по-разному на iOS, Android и десктопе — это не контролируется компонентом.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -2823,6 +3816,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2834,14 +3833,19 @@
                 "the local --vibeui-input-026-* palette — do not swap it for your theme tokens",
                 "the snap() rounding on every onChange — the native input's step attribute only affects the browser's arrows, not manual keyboard entry",
                 "the midnight wraparound in snap() (modulo 1440 minutes) — otherwise rounding times near 00:00 yields a negative value",
-                "the chips as a separate row below the field, not inside the frame — they are a shortcut, not part of the field's own value"
+                "the chips as a separate row below the field, not inside the frame — they are a shortcut, not part of the field's own value",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the starting defaultValue",
                 "the quick array — your own common time values",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the quick-list label through quickLabel and the note copy through noteText — the component ships Russian defaults",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The step is hardcoded as STEP_MINUTES = 15 in the source — change it together with the note text for a different step.",
                 "The browser's native time picker looks different on iOS, Android and desktop — the component does not control that.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -2859,11 +3863,22 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Quarter Hour Time"
+            "title": "Quarter Hour Time",
+            "preview": {
+              "props": {
+                "label": "Visit time",
+                "quickLabel": "Common times",
+                "noteText": "The step is 15 minutes; typed values round to the nearest one."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2892,14 +3907,19 @@
             "локальную палитру --vibeui-input-027-* и не подменять её токенами вашей темы",
             "клетчатый CSS-узор превью как состояние «нет цвета» — не путать его с невалидным значением, у которого своя рамка красного цвета",
             "разворачивание трёхзначного hex в шестизначный через expand() перед тем, как отдавать его в onChange и превью",
-            "решётку вне поля отдельным span с aria-hidden — вводимое значение остаётся чистым hex без символов"
+            "решётку вне поля отдельным span с aria-hidden — вводимое значение остаётся чистым hex без символов",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и стартовое значение defaultValue",
             "плейсхолдер внутри поля",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "тексты примечания через noteText: в ключе ready подставляется {color} — получившийся цвет",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "onChange вызывается только при полном валидном hex (3 или 6 знаков) — на промежуточном вводе он не срабатывает.",
             "Компонент не проверяет контрастность цвета — это отдельная задача интерфейса, который его использует.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -2925,6 +3945,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2936,14 +3962,19 @@
                 "the local --vibeui-input-027-* palette — do not swap it for your theme tokens",
                 "the checkered CSS preview pattern as the 'no color' state — do not confuse it with an invalid value, which has its own red border",
                 "expanding a three-digit hex to six digits through expand() before handing it to onChange and the preview",
-                "the hash sign outside the field as a separate aria-hidden span — the typed value stays a clean hex with no symbols"
+                "the hash sign outside the field as a separate aria-hidden span — the typed value stays a clean hex with no symbols",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label copy and the starting defaultValue",
                 "the placeholder inside the field",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the note copy through noteText: the ready key interpolates {color}, the resulting colour",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "onChange fires only for a complete valid hex (3 or 6 digits) — it does not fire on partial input.",
                 "The component does not check color contrast — that is a separate concern for the interface using it.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -2961,11 +3992,25 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Hex Swatch Field"
+            "title": "Hex Swatch Field",
+            "preview": {
+              "props": {
+                "label": "Accent color",
+                "noteText": {
+                  "empty": "Three or six hexadecimal characters, no hash needed.",
+                  "invalid": "Exactly three or six characters from 0–9 and A–F.",
+                  "ready": "Resulting colour — {color}."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2994,14 +4039,18 @@
             "локальную палитру --vibeui-input-028-* и не подменять её токенами вашей темы",
             "видимый текст причины под полем вместо title или placeholder — то и другое недоступно с клавиатуры и на мобильных",
             "связку input и текста причины через aria-describedby — иначе скринридер объявит только «нередактируемое поле» без объяснения",
-            "пунктирную рамку и приглушённый цвет текста как визуальный сигнал блокировки — цвет текста один не читается как «нельзя менять»"
+            "пунктирную рамку и приглушённый цвет текста как визуальный сигнал блокировки — цвет текста один не читается как «нельзя менять»",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label, defaultValue и reason под конкретную причину блокировки",
             "actionLabel и колбэк onRequestChange — своё действие в обход блокировки или отсутствие кнопки вовсе",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Кнопка действия не снимает блокировку сама — она лишь вызывает переданный колбэк, логика обхода остаётся снаружи компонента.",
             "readOnly — не disabled: значение всё ещё попадает в форму при отправке и доступно для копирования.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -3034,6 +4083,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -3045,14 +4100,18 @@
                 "the local --vibeui-input-028-* palette — do not swap it for your theme tokens",
                 "the visible reason text below the field instead of a title or placeholder — neither is reachable by keyboard or on mobile",
                 "linking the input and the reason text with aria-describedby — otherwise a screen reader only announces 'read-only field' with no explanation",
-                "the dashed border and muted text color as a lock signal — text color alone does not read as 'cannot be changed'"
+                "the dashed border and muted text color as a lock signal — text color alone does not read as 'cannot be changed'",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label, defaultValue and reason copy for your specific lock reason",
                 "actionLabel and the onRequestChange callback — your own workaround action, or no button at all",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The action button does not lift the lock itself — it only calls the passed callback, the workaround logic stays outside the component.",
                 "readOnly is not disabled: the value still submits with the form and can be copied.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -3074,11 +4133,23 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Locked Field Reason"
+            "title": "Locked Field Reason",
+            "preview": {
+              "props": {
+                "label": "Email",
+                "defaultValue": "owner@acme.com",
+                "reason": "Confirmed at sign-up — only support can change it.",
+                "actionLabel": "Contact support"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -3107,17 +4178,23 @@
             "локальную палитру --vibeui-input-029-* и не подменять её токенами вашей темы",
             "проверку поддержки API в useEffect после монтирования, а не в теле рендера — иначе первый рендер сервера и клиента разойдётся",
             "дописывание распознанного текста к текущему значению через пробел, а не замену поля — голос и клавиатура должны работать вперемешку",
-            "остановку recognition.current?.stop() в cleanup эффекта — незакрытая сессия распознавания продолжает слушать микрофон после ухода со страницы"
+            "остановку recognition.current?.stop() в cleanup эффекта — незакрытая сессия распознавания продолжает слушать микрофон после ухода со страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и placeholder",
             "стартовое значение defaultValue",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подписи кнопки микрофона через micLabel и тексты примечания через noteText — компонент несёт русские по умолчанию",
+            "язык распознавания через проп lang — по умолчанию ru-RU",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Web Speech API есть не во всех браузерах (стабильно — в Chrome и производных), в неподдерживающих кнопка недоступна и это объяснено текстом.",
             "Запись требует разрешения на микрофон от пользователя — браузер спросит его при первом запуске.",
-            "Распознавание идёт на русском (lang=\"ru-RU\") — для другого языка поменяйте это значение в исходнике.",
+            "Распознавание идёт на русском по умолчанию (lang=\"ru-RU\") — для другого языка передайте проп lang.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -3141,6 +4218,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -3152,17 +4235,23 @@
                 "the local --vibeui-input-029-* palette — do not swap it for your theme tokens",
                 "checking API support in a useEffect after mount, not during render — otherwise the server and client first render would diverge",
                 "appending recognized text to the current value with a space, not replacing the field — voice and keyboard should mix freely",
-                "stopping recognition.current?.stop() in the effect cleanup — an unclosed recognition session keeps listening to the microphone after leaving the page"
+                "stopping recognition.current?.stop() in the effect cleanup — an unclosed recognition session keeps listening to the microphone after leaving the page",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label and placeholder copy",
                 "the starting defaultValue",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the microphone button labels through micLabel and the note copy through noteText — the component ships Russian defaults",
+                "the recognition language through the lang prop — ru-RU by default",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The Web Speech API is not available in every browser (stable in Chrome and its derivatives) — the button is disabled with an explanation where it is missing.",
                 "Recording needs the user's microphone permission — the browser asks for it on first use.",
-                "Recognition runs in Russian (lang=\"ru-RU\") — change that value in the source for another language.",
+                "Recognition runs in Russian by default (lang=\"ru-RU\") — pass the lang prop for another language.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Input029\n  label=\"Order comment\"\n  onChange={(value) => setComment(value)}\n/>"
@@ -3178,11 +4267,32 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Voice Dictation Field"
+            "title": "Voice Dictation Field",
+            "preview": {
+              "props": {
+                "label": "Comment",
+                "placeholder": "Type or turn on the microphone",
+                "lang": "en-US",
+                "micLabel": {
+                  "unsupported": "Voice input is not supported by this browser",
+                  "recording": "Stop recording",
+                  "idle": "Start voice input"
+                },
+                "noteText": {
+                  "unsupported": "Voice input is not supported by this browser.",
+                  "recording": "Recording — speak, the recognized text will be appended.",
+                  "idle": "Tap the microphone and dictate."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -3211,14 +4321,19 @@
             "локальную палитру --vibeui-input-030-* и не подменять её токенами вашей темы",
             "фильтрацию по подстроке от двух символов, а не с первого — на одном символе список слишком длинный и бесполезный",
             "подсветку совпадения функцией highlight() — она объясняет, почему вариант попал в список, а не просто показывает его целиком",
-            "предел в пять вариантов (slice(0, 5)) — список не виртуализирован и не должен вырастать бесконечно"
+            "предел в пять вариантов (slice(0, 5)) — список не виртуализирован и не должен вырастать бесконечно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label и placeholder",
             "массив addresses — свой набор адресов или результат геокодера вместо статического списка",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подпись списка подсказок listLabel и текст примечания noteText — компонент несёт русские по умолчанию",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Список статичен и предназначен для демонстрации — в реальном проекте addresses обычно приходит из API геокодирования по мере набора.",
             "Фильтрация происходит на клиенте: для больших справочников адресов лучше переносить поиск на сервер.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -3244,6 +4359,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -3255,14 +4376,19 @@
                 "the local --vibeui-input-030-* palette — do not swap it for your theme tokens",
                 "substring filtering starting from two characters, not one — a single character produces too long and useless a list",
                 "the highlight() match styling — it explains why an option is in the list rather than just showing it in full",
-                "the five-option cap (slice(0, 5)) — the list is not virtualized and must not grow without bound"
+                "the five-option cap (slice(0, 5)) — the list is not virtualized and must not grow without bound",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label and placeholder copy",
                 "the addresses array — your own set, or a geocoder's live results instead of a static list",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the suggestion-list label through listLabel and the note copy through noteText — the component ships Russian defaults",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The list is static and meant for demonstration — in a real project addresses usually comes from a geocoding API as the user types.",
                 "Filtering happens on the client: for large address catalogs, move the search to the server instead.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -3280,11 +4406,33 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Address Suggest Below"
+            "title": "Address Suggest Below",
+            "preview": {
+              "props": {
+                "label": "Delivery address",
+                "placeholder": "Start typing a city or street",
+                "listLabel": "Matching addresses",
+                "noteText": "From two characters — suggestions appear below as you type.",
+                "addresses": [
+                  "1 Camden High Street, London",
+                  "12 Camden Road, London",
+                  "90 Kensington Park Road, London",
+                  "28 Princes Street, Edinburgh",
+                  "15 Market Street, Manchester",
+                  "5 Baldwin Street, Bristol",
+                  "51 Deansgate, Manchester",
+                  "22 Broad Street, Birmingham"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -3313,14 +4461,19 @@
             "локальную палитру --vibeui-input-031-* и не подменять её токенами вашей темы",
             "состояние touched — ошибка не должна вспыхивать от одного клика в поле и обратно, только после реальной попытки заполнить и уйти",
             "скрытый span с текстом «обязательное поле» рядом со звёздочкой — сама звёздочка помечена aria-hidden и без него не читается скринридером",
-            "role=\"alert\" на тексте ошибки и aria-describedby, указывающий на него только когда ошибка показана — не константный id в никуда"
+            "role=\"alert\" на тексте ошибки и aria-describedby, указывающий на него только когда ошибка показана — не константный id в никуда",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст label, placeholder и errorText под свою формулировку",
             "стартовое значение defaultValue",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "скрытый текст requiredText рядом со звёздочкой — компонент несёт русский по умолчанию",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Проверка внутри компонента — только «не пусто»; для email, телефона и другой предметной валидации оборачивайте компонент своей логикой.",
             "required на native input дублирует поведение для форм, которые полагаются на встроенную HTML-валидацию.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -3353,6 +4506,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -3364,14 +4523,19 @@
                 "the local --vibeui-input-031-* palette — do not swap it for your theme tokens",
                 "the touched state — the error must not flash from a single click into the field and back out, only after a real attempt to fill it in and leave",
                 "the hidden span reading 'required field' next to the asterisk — the asterisk itself is aria-hidden and unreadable by a screen reader without it",
-                "role=\"alert\" on the error text plus aria-describedby pointing to it only while the error shows — not a constant id pointing at nothing"
+                "role=\"alert\" on the error text plus aria-describedby pointing to it only while the error shows — not a constant id pointing at nothing",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label, placeholder and errorText copy for your own wording",
                 "the starting defaultValue",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the hidden requiredText next to the asterisk — the component ships a Russian default",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The built-in check is only 'not empty' — wrap the component with your own logic for email, phone or other domain validation.",
                 "required on the native input duplicates behaviour for forms that rely on built-in HTML validation.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -3393,11 +4557,23 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Required Field Error"
+            "title": "Required Field Error",
+            "preview": {
+              "props": {
+                "label": "Recipient name",
+                "placeholder": "How should we address you",
+                "errorText": "This field is required.",
+                "requiredText": ", required field"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

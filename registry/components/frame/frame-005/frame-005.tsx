@@ -6,6 +6,8 @@ export type Frame005Props = Omit<
 > & {
   title?: string
   tone?: "silver" | "graphite"
+  /** Пусто — экран прозрачный, сквозь него виден фон страницы. */
+  background?: string
   children?: ReactNode
 }
 
@@ -16,13 +18,13 @@ export type Frame005Props = Omit<
 // заметно более плоский силуэт и читается как телевизор.
 const STYLES = `
 :where([data-vibeui-block="frame-005"]){
---vibeui-frame-005-body:oklch(0.9 0.005 265);
---vibeui-frame-005-edge:oklch(0.76 0.008 265);
---vibeui-frame-005-base:oklch(0.85 0.006 265);
---vibeui-frame-005-screen:oklch(1 0 0);
---vibeui-frame-005-fg:oklch(0.23 0.014 265);
---vibeui-frame-005-muted:oklch(0.56 0.014 265);
---vibeui-frame-005-soft:oklch(0.96 0.004 265);
+--vibeui-frame-005-body:light-dark(oklch(0.9 0.005 265),oklch(0.72 0.006 265));
+--vibeui-frame-005-edge:light-dark(oklch(0.76 0.008 265),oklch(0.6 0.009 265));
+--vibeui-frame-005-base:light-dark(oklch(0.85 0.006 265),oklch(0.66 0.007 265));
+--vibeui-frame-005-screen:transparent;
+--vibeui-frame-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.005 265));
+--vibeui-frame-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-frame-005-soft:light-dark(oklch(0.96 0.004 265),oklch(0.33 0.008 265));
 --vibeui-frame-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="frame-005"]{
@@ -79,17 +81,50 @@ margin-top:0.625rem;font-size:0.75rem;color:var(--vibeui-frame-005-muted);text-a
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Рамка ноутбука: крышка с экраном 16 / 10 и трапеция основания на clip-path.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Frame005({
   title = "Панель проекта",
   tone = "silver",
+  background = "",
   children,
   className,
   style,
   ...props
 }: Frame005Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-frame-005-screen": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-frame-005" precedence="medium">
@@ -100,7 +135,7 @@ export function Frame005({
         data-vibeui-block="frame-005"
         data-tone={tone}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="lid">
           <span data-part="cam" aria-hidden="true" />

@@ -21,9 +21,13 @@ export type Commerce062Props = {
   searchCta?: string
   legend?: string
   points?: Commerce062Point[]
+  /** Подписи строки фактов: price, eta. */
+  factLabels?: Record<string, string>
   cta?: string
   note?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -37,12 +41,14 @@ export type Commerce062Props = {
 // единственный способ выбрать пункт.
 const STYLES = `
 :where([data-vibeui-block="commerce-062"]){
---vibeui-commerce-062-bg:oklch(1 0 0);
---vibeui-commerce-062-fg:oklch(0.21 0.012 165);
---vibeui-commerce-062-muted:oklch(0.52 0.014 165);
---vibeui-commerce-062-border:oklch(0.9 0.008 165);
---vibeui-commerce-062-soft:oklch(0.972 0.006 165);
---vibeui-commerce-062-accent:oklch(0.46 0.11 165);
+--vibeui-commerce-062-bg:transparent;
+--vibeui-commerce-062-surface:light-dark(oklch(1 0 0),oklch(0.22 0.012 165));
+--vibeui-commerce-062-fg:light-dark(oklch(0.21 0.012 165),oklch(0.94 0.006 165));
+--vibeui-commerce-062-muted:light-dark(oklch(0.52 0.014 165),oklch(0.73 0.012 165));
+--vibeui-commerce-062-border:light-dark(oklch(0.9 0.008 165),oklch(0.38 0.014 165));
+--vibeui-commerce-062-soft:light-dark(oklch(0.972 0.006 165),oklch(0.28 0.014 165));
+--vibeui-commerce-062-accent:light-dark(oklch(0.46 0.11 165),oklch(0.77 0.12 165));
+--vibeui-commerce-062-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.03 165));
 --vibeui-commerce-062-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -58,7 +64,7 @@ color:var(--vibeui-commerce-062-fg);font-family:var(--vibeui-commerce-062-sans);
 [data-vibeui-block="commerce-062"] [data-part="search"]{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.25rem}
 [data-vibeui-block="commerce-062"] [data-part="search"] input{
 flex:1 1 14rem;height:2.625rem;padding:0 0.875rem;border-radius:0.75rem;
-border:1px solid var(--vibeui-commerce-062-border);background:var(--vibeui-commerce-062-bg);
+border:1px solid var(--vibeui-commerce-062-border);background:var(--vibeui-commerce-062-surface);
 font:inherit;font-size:0.875rem;color:inherit;
 }
 [data-vibeui-block="commerce-062"] [data-part="find"]{
@@ -97,12 +103,12 @@ font-size:0.8125rem;font-weight:700;font-variant-numeric:tabular-nums;color:var(
 [data-vibeui-block="commerce-062"] [data-part="perks"]{display:flex;flex-wrap:wrap;gap:0.3125rem;margin-top:0.5rem;list-style:none;padding:0}
 [data-vibeui-block="commerce-062"] [data-part="perk"]{
 display:inline-flex;align-items:center;height:1.5rem;padding:0 0.5rem;border-radius:0.5rem;
-background:var(--vibeui-commerce-062-bg);border:1px solid var(--vibeui-commerce-062-border);font-size:0.6875rem;font-weight:650;
+background:var(--vibeui-commerce-062-surface);border:1px solid var(--vibeui-commerce-062-border);font-size:0.6875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-062"] [data-part="limit"]{display:block;margin-top:0.4375rem;font-size:0.6875rem;line-height:1.4;color:var(--vibeui-commerce-062-muted)}
 [data-vibeui-block="commerce-062"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;margin-top:1.25rem;height:2.875rem;padding:0 1.75rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-062-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-062-accent);color:var(--vibeui-commerce-062-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-062"] [data-part="note"]{margin:0.875rem 0 0;max-width:54ch;font-size:0.75rem;line-height:1.5;color:var(--vibeui-commerce-062-muted)}
 @container (min-width: 44rem){
@@ -110,6 +116,33 @@ background:var(--vibeui-commerce-062-accent);color:oklch(0.99 0 0);font:inherit;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-062"] *{animation:none!important;transition:none!important}}
 `
+
+const FACT_LABEL: Record<string, string> = {
+  price: "Доставка",
+  eta: "Будет",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_POINTS: Commerce062Point[] = [
   {
@@ -159,14 +192,25 @@ export function Commerce062({
   searchCta = "Найти рядом",
   legend = "Пункт выдачи",
   points = DEFAULT_POINTS,
+  factLabels = FACT_LABEL,
   cta = "Продолжить к оплате",
   note = "Заказ можно забрать после SMS о поступлении. Если не успеваете за срок хранения — продлите его в личном кабинете один раз бесплатно.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce062Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-062-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-062-bg": background,
+          // Поле поиска и чипы возможностей не должны просвечивать: им нужна
+          // непрозрачная подложка, а она задана тем же цветом.
+          "--vibeui-commerce-062-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -224,10 +268,12 @@ export function Commerce062({
                     <span data-part="facts">
                       <span>{point.hours}</span>
                       <span>
-                        Доставка <strong>{point.price}</strong>
+                        {factLabels.price ?? FACT_LABEL.price}{" "}
+                        <strong>{point.price}</strong>
                       </span>
                       <span>
-                        Будет <strong>{point.eta}</strong>
+                        {factLabels.eta ?? FACT_LABEL.eta}{" "}
+                        <strong>{point.eta}</strong>
                       </span>
                     </span>
                     <span data-part="perks">

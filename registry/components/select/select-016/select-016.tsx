@@ -21,6 +21,10 @@ export type Select016Props = Omit<
   name?: string
   zones?: Select016Zone[]
   defaultValue?: string
+  /** Локаль форматирования часов: компонент несёт русскую, проект ставит свою. */
+  locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -30,14 +34,14 @@ export type Select016Props = Omit<
 // с нужным timeZone — без даты рождения библиотек часовых поясов.
 const STYLES = `
 :where([data-vibeui-block="select-016"]){
---vibeui-select-016-surface:oklch(1 0 0);
---vibeui-select-016-surface-border:oklch(0.91 0.006 265);
---vibeui-select-016-fg:oklch(0.23 0.016 265);
---vibeui-select-016-muted:oklch(0.55 0.014 265);
---vibeui-select-016-border:oklch(0.87 0.008 265);
---vibeui-select-016-accent:oklch(0.55 0.19 262);
---vibeui-select-016-tint:oklch(0.55 0.19 262 / 12%);
---vibeui-select-016-panel:oklch(1 0 0);
+--vibeui-select-016-surface:transparent;
+--vibeui-select-016-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-select-016-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-016-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-016-border:light-dark(oklch(0.87 0.008 265),oklch(0.4 0.012 265));
+--vibeui-select-016-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
+--vibeui-select-016-tint:light-dark(oklch(0.55 0.19 262 / 12%),oklch(0.73 0.17 262 / 20%));
+--vibeui-select-016-panel:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
 --vibeui-select-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-select-016-mono:ui-monospace,"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
 }
@@ -111,9 +115,9 @@ const DEFAULT_ZONES: Select016Zone[] = [
   { value: "sydney", label: "Сидней", timeZone: "Australia/Sydney" },
 ]
 
-function formatTime(now: Date, timeZone: string) {
+function formatTime(now: Date, timeZone: string, locale: string) {
   try {
-    return new Intl.DateTimeFormat("ru-RU", {
+    return new Intl.DateTimeFormat(locale, {
       timeZone,
       hour: "2-digit",
       minute: "2-digit",
@@ -122,6 +126,28 @@ function formatTime(now: Date, timeZone: string) {
   } catch {
     return "--:--"
   }
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -134,6 +160,8 @@ export function Select016({
   name,
   zones = DEFAULT_ZONES,
   defaultValue = zones[0]?.value,
+  locale = "ru-RU",
+  background = "",
   accent,
   id,
   className,
@@ -225,6 +253,12 @@ export function Select016({
 
   const palette = {
     ...(accent ? { "--vibeui-select-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-select-016-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -259,7 +293,7 @@ export function Select016({
           >
             <span>{current.label}</span>
             <span data-part="clock">
-              {now ? formatTime(now, current.timeZone) : "--:--"}
+              {now ? formatTime(now, current.timeZone, locale) : "--:--"}
             </span>
             <span data-part="chevron" aria-hidden="true" />
           </button>
@@ -290,7 +324,7 @@ export function Select016({
                 >
                   <span data-part="city">{zone.label}</span>
                   <span data-part="clock">
-                    {now ? formatTime(now, zone.timeZone) : "--:--"}
+                    {now ? formatTime(now, zone.timeZone, locale) : "--:--"}
                   </span>
                 </li>
               ))}

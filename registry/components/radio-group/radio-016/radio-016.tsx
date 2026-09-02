@@ -25,6 +25,12 @@ export type Radio016Props = Omit<
   name?: string
   defaultValue?: string
   recommendedLabel?: string
+  /** Подпись угловой ячейки над списком возможностей. */
+  cornerLabel?: string
+  /** Подписи ячеек сравнения для скринридера: ключи included и excluded. */
+  valueText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -34,16 +40,19 @@ export type Radio016Props = Omit<
 // списком, поэтому колонки совпадают без subgrid и без ручной верстки строк.
 // Число колонок зависит от количества планов, а не выражается классом —
 // поэтому ширина колонок передаётся инлайн-стилем на сам грид-контейнер.
+//
+// Тема берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="radio-016"]){
---vibeui-radio-016-bg:oklch(1 0 0);
---vibeui-radio-016-fg:oklch(0.22 0.014 265);
---vibeui-radio-016-muted:oklch(0.55 0.014 265);
---vibeui-radio-016-border:oklch(0.9 0.006 265);
---vibeui-radio-016-ring:oklch(0.74 0.012 265);
---vibeui-radio-016-accent:oklch(0.55 0.18 290);
---vibeui-radio-016-tint:oklch(0.55 0.18 290 / 7%);
---vibeui-radio-016-dash:oklch(0.78 0.006 265);
+--vibeui-radio-016-bg:transparent;
+--vibeui-radio-016-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-016-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-radio-016-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-radio-016-ring:light-dark(oklch(0.74 0.012 265),oklch(0.5 0.014 265));
+--vibeui-radio-016-accent:light-dark(oklch(0.55 0.18 290),oklch(0.76 0.15 290));
+--vibeui-radio-016-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 290));
+--vibeui-radio-016-tint:light-dark(oklch(0.55 0.18 290 / 7%),oklch(0.76 0.15 290 / 16%));
+--vibeui-radio-016-dash:light-dark(oklch(0.78 0.006 265),oklch(0.48 0.01 265));
 --vibeui-radio-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="radio-016"]{
@@ -88,16 +97,18 @@ justify-content:center;border-top:1px solid var(--vibeui-radio-016-border);
 [data-vibeui-block="radio-016"] input{
 appearance:none;-webkit-appearance:none;margin:0;cursor:pointer;
 width:0.9375rem;height:0.9375rem;border-radius:9999px;
-border:1.5px solid var(--vibeui-radio-016-ring);background:var(--vibeui-radio-016-bg);
+border:1.5px solid var(--vibeui-radio-016-ring);background:transparent;
 }
+/* Точка — градиент, а не внутренняя тень: тени пришлось бы закрашивать
+   зазор цветом подложки, а подложки у компонента по умолчанию нет. */
 [data-vibeui-block="radio-016"] input:checked{
 border-color:var(--vibeui-radio-016-accent);
-box-shadow:inset 0 0 0 0.1875rem var(--vibeui-radio-016-bg),inset 0 0 0 1rem var(--vibeui-radio-016-accent);
+background:radial-gradient(circle at 50% 50%,var(--vibeui-radio-016-accent) 0 0.1875rem,transparent 0.1875rem);
 }
 [data-vibeui-block="radio-016"] [data-part="badge"]{
 position:absolute;top:0.375rem;right:0.25rem;
 padding:0.0625rem 0.375rem;border-radius:9999px;
-background:var(--vibeui-radio-016-accent);color:oklch(1 0 0);
+background:var(--vibeui-radio-016-accent);color:var(--vibeui-radio-016-on-accent);
 font-size:0.5625rem;font-weight:700;letter-spacing:0.02em;
 }
 [data-vibeui-block="radio-016"] [data-part="plan-name"]{font-weight:650;padding-right:3.25rem}
@@ -121,12 +132,39 @@ const DEFAULT_PLANS: Radio016Plan[] = [
   },
 ]
 
+const DEFAULT_VALUE_TEXT: Record<string, string> = {
+  included: "Включено",
+  excluded: "Не включено",
+}
+
 const DEFAULT_FEATURES: Radio016Feature[] = [
   { label: "До 5 проектов", values: [true, true] },
   { label: "Совместная работа", values: [false, true] },
   { label: "Экспорт в PDF", values: [false, true] },
   { label: "Приоритетная поддержка", values: [false, true] },
 ]
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Выбор варианта таблицей сравнения: рекомендованный план и общие строки
@@ -139,6 +177,9 @@ export function Radio016({
   name = "vibeui-radio-016",
   defaultValue = "pro",
   recommendedLabel = "Советуем",
+  cornerLabel = "Что входит",
+  valueText = DEFAULT_VALUE_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -146,6 +187,12 @@ export function Radio016({
 }: Radio016Props) {
   const palette = {
     ...(accent ? { "--vibeui-radio-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-radio-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -167,7 +214,7 @@ export function Radio016({
         <legend>{legend}</legend>
         <div data-part="grid" style={gridStyle}>
           <div data-part="cell" data-role="corner">
-            Что входит
+            {cornerLabel}
           </div>
           {plans.map((plan) => (
             <label key={plan.value} data-part="cell" data-role="plan">
@@ -201,11 +248,21 @@ export function Radio016({
                   data-role="value"
                 >
                   {included ? (
-                    <span data-part="yes" aria-label="Включено">
+                    <span
+                      data-part="yes"
+                      aria-label={
+                        valueText.included ?? DEFAULT_VALUE_TEXT.included
+                      }
+                    >
                       ✓
                     </span>
                   ) : (
-                    <span data-part="no" aria-label="Не включено">
+                    <span
+                      data-part="no"
+                      aria-label={
+                        valueText.excluded ?? DEFAULT_VALUE_TEXT.excluded
+                      }
+                    >
                       –
                     </span>
                   )}

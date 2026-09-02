@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { Fragment, useState } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
 
 export type Calendar030Props = Omit<
   ComponentPropsWithoutRef<"section">,
@@ -12,6 +12,15 @@ export type Calendar030Props = Omit<
   defaultFrom?: string
   defaultTo?: string
   locale?: string
+  /**
+   * Подписи: компонент несёт русские, проект подставляет свои.
+   * {max}, {count} и {unit} подставляются при сборке строки.
+   */
+  text?: Record<string, string>
+  /** Три формы склонения слова «день»: 1 / 2 / 5. */
+  dayForms?: [string, string, string]
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   onChange?: (from: string, to: string) => void
   accent?: string
 }
@@ -22,14 +31,15 @@ export type Calendar030Props = Omit<
 // сколько дней ещё осталось в лимите.
 const STYLES = `
 :where([data-vibeui-block="calendar-030"]){
---vibeui-calendar-030-bg:oklch(1 0 0);
---vibeui-calendar-030-fg:oklch(0.23 0.014 165);
---vibeui-calendar-030-muted:oklch(0.57 0.014 165);
---vibeui-calendar-030-faint:oklch(0.82 0.01 165);
---vibeui-calendar-030-border:oklch(0.91 0.008 165);
---vibeui-calendar-030-soft:oklch(0.97 0.008 165);
---vibeui-calendar-030-accent:oklch(0.48 0.11 165);
---vibeui-calendar-030-accentsoft:oklch(0.94 0.05 165);
+--vibeui-calendar-030-bg:transparent;
+--vibeui-calendar-030-fg:light-dark(oklch(0.23 0.014 165),oklch(0.94 0.005 165));
+--vibeui-calendar-030-muted:light-dark(oklch(0.57 0.014 165),oklch(0.68 0.012 165));
+--vibeui-calendar-030-faint:light-dark(oklch(0.82 0.01 165),oklch(0.43 0.012 165));
+--vibeui-calendar-030-border:light-dark(oklch(0.91 0.008 165),oklch(0.34 0.014 165));
+--vibeui-calendar-030-soft:light-dark(oklch(0.97 0.008 165),oklch(0.27 0.012 165));
+--vibeui-calendar-030-accent:light-dark(oklch(0.48 0.11 165),oklch(0.72 0.12 165));
+--vibeui-calendar-030-accentsoft:light-dark(oklch(0.94 0.05 165),oklch(0.31 0.05 165));
+--vibeui-calendar-030-onaccent:light-dark(oklch(0.99 0 0),oklch(0.17 0.02 165));
 --vibeui-calendar-030-radius:0.75rem;
 --vibeui-calendar-030-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -75,7 +85,7 @@ cursor:not-allowed;background:transparent;color:var(--vibeui-calendar-030-faint)
 background:var(--vibeui-calendar-030-accentsoft);
 }
 [data-vibeui-block="calendar-030"] [data-part="day"][data-edge="true"]{
-background:var(--vibeui-calendar-030-accent);color:var(--vibeui-calendar-030-bg);font-weight:700;
+background:var(--vibeui-calendar-030-accent);color:var(--vibeui-calendar-030-onaccent);font-weight:700;
 }
 [data-vibeui-block="calendar-030"] [data-part="foot"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
@@ -111,6 +121,30 @@ transition:width .2s ease;
 
 const DAY = 86400000
 
+const TEXT: Record<string, string> = {
+  rule: "Не больше {max} {unit} подряд",
+  empty: "Выберите первый день",
+  picking: "Начало выбрано, осталось до {count} {unit}",
+  chosen: "Выбрано {count} из {max} {unit}",
+  reset: "Сбросить",
+}
+
+/**
+ * Подстановка {placeholder} в шаблон подписи. Значением может быть узел,
+ * поэтому числа остаются в <b>, а порядок слов задаёт перевод.
+ */
+function fill(template: string, values: Record<string, ReactNode>) {
+  return template.split(/(\{\w+\})/).map((piece, index) => {
+    const key = /^\{(\w+)\}$/.exec(piece)?.[1]
+
+    return (
+      <Fragment key={index}>
+        {key && key in values ? values[key] : piece}
+      </Fragment>
+    )
+  })
+}
+
 function stamp(date: Date) {
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1).padStart(2, "0")
@@ -131,6 +165,28 @@ function pluralize(count: number, forms: [string, string, string]) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Диапазон с потолком в N дней: лишние дни гаснут сразу после первой даты.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -140,6 +196,9 @@ export function Calendar030({
   defaultFrom = "2026-04-06",
   defaultTo = "2026-04-12",
   locale = "ru-RU",
+  text = TEXT,
+  dayForms = ["дня", "дней", "дней"],
+  background = "",
   onChange,
   accent,
   className,
@@ -205,6 +264,12 @@ export function Calendar030({
       Math.round((length / maxDays) * 100),
     ),
     ...(accent ? { "--vibeui-calendar-030-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-030-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -222,8 +287,10 @@ export function Calendar030({
         <header>
           <h3 data-part="title">{heading}</h3>
           <p data-part="rule">
-            Не больше {maxDays} {pluralize(maxDays, ["дня", "дней", "дней"])}{" "}
-            подряд
+            {fill(text.rule ?? TEXT.rule, {
+              max: maxDays,
+              unit: pluralize(maxDays, dayForms),
+            })}
           </p>
         </header>
         <div data-part="grid">
@@ -258,19 +325,18 @@ export function Calendar030({
         </div>
         <div data-part="foot">
           <p data-part="count" aria-live="polite">
-            {length === 0 ? (
-              "Выберите первый день"
-            ) : picking ? (
-              <>
-                Начало выбрано, осталось до <b>{maxDays - 1}</b>{" "}
-                {pluralize(maxDays - 1, ["дня", "дней", "дней"])}
-              </>
-            ) : (
-              <>
-                Выбрано <b>{length}</b> из <b>{maxDays}</b>{" "}
-                {pluralize(maxDays, ["дня", "дней", "дней"])}
-              </>
-            )}
+            {length === 0
+              ? (text.empty ?? TEXT.empty)
+              : picking
+                ? fill(text.picking ?? TEXT.picking, {
+                    count: <b>{maxDays - 1}</b>,
+                    unit: pluralize(maxDays - 1, dayForms),
+                  })
+                : fill(text.chosen ?? TEXT.chosen, {
+                    count: <b>{length}</b>,
+                    max: <b>{maxDays}</b>,
+                    unit: pluralize(maxDays, dayForms),
+                  })}
           </p>
           <button
             type="button"
@@ -281,7 +347,7 @@ export function Calendar030({
               onChange?.("", "")
             }}
           >
-            Сбросить
+            {text.reset ?? TEXT.reset}
           </button>
         </div>
       </section>

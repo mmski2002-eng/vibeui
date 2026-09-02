@@ -6,6 +6,8 @@ export type Separator002Props = Omit<
 > & {
   label?: string
   align?: "start" | "center" | "end"
+  /** Цвет линии и рамки пилюли. Пусто — цвет из палитры компонента. */
+  line?: string
 }
 
 // Идея компонента: подпись разделителя в «пилюле», которая сама несёт фон.
@@ -13,11 +15,14 @@ export type Separator002Props = Omit<
 // картинке: подпись оказывается в прямоугольнике чужого цвета. Пилюля со
 // своей заливкой и рамкой работает на любой подложке. Положение подписи
 // задаётся числом колонок сетки, а не отступами — линии всегда сходятся.
+//
+// Заливка пилюли объявлена через light-dark(): в тёмном окружении она
+// темнее фона страницы, а текст в ней светлый.
 const STYLES = `
 :where([data-vibeui-block="separator-002"]){
---vibeui-separator-002-line:oklch(0.88 0.006 265);
---vibeui-separator-002-pill:oklch(0.98 0.002 265);
---vibeui-separator-002-fg:oklch(0.35 0.014 265);
+--vibeui-separator-002-line:light-dark(oklch(0.88 0.006 265),oklch(0.37 0.012 265));
+--vibeui-separator-002-pill:light-dark(oklch(0.98 0.002 265),oklch(0.26 0.012 265));
+--vibeui-separator-002-fg:light-dark(oklch(0.35 0.014 265),oklch(0.9 0.008 265));
 --vibeui-separator-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="separator-002"]{
@@ -51,10 +56,16 @@ white-space:nowrap;
 export function Separator002({
   label = "или",
   align = "center",
+  line = "",
   className,
   style,
   ...props
 }: Separator002Props) {
+  const palette = {
+    ...(line ? { "--vibeui-separator-002-line": line } : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-separator-002" precedence="medium">
@@ -67,7 +78,7 @@ export function Separator002({
         role="separator"
         aria-label={label}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         {align === "start" ? null : <span data-part="line" />}
         <span data-part="pill">{label}</span>

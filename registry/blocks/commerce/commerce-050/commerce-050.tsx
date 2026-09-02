@@ -17,7 +17,11 @@ export type Commerce050Props = {
   loading?: string
   cta?: string
   footerHint?: string
+  /** Счётчик: ключи shown («Показано») и of («из»). */
+  counterText?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,12 +35,13 @@ export type Commerce050Props = {
 // объявляется в aria-live — иначе прирост списка не слышен.
 const STYLES = `
 :where([data-vibeui-block="commerce-050"]){
---vibeui-commerce-050-bg:oklch(1 0 0);
---vibeui-commerce-050-fg:oklch(0.21 0.012 265);
---vibeui-commerce-050-muted:oklch(0.55 0.014 265);
---vibeui-commerce-050-border:oklch(0.91 0.006 265);
---vibeui-commerce-050-soft:oklch(0.965 0.004 265);
---vibeui-commerce-050-accent:oklch(0.52 0.16 285);
+--vibeui-commerce-050-bg:transparent;
+--vibeui-commerce-050-fg:light-dark(oklch(0.21 0.012 265),oklch(0.93 0.006 265));
+--vibeui-commerce-050-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-commerce-050-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-050-soft:light-dark(oklch(0.965 0.004 265),oklch(0.28 0.009 265));
+--vibeui-commerce-050-shine:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-050-accent:light-dark(oklch(0.52 0.16 285),oklch(0.75 0.15 285));
 --vibeui-commerce-050-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -69,7 +74,7 @@ background:linear-gradient(155deg,oklch(0.94 0.05 var(--vibeui-commerce-050-hue,
 [data-vibeui-block="commerce-050"] [data-part="ghostline"][data-short]{width:55%}
 [data-vibeui-block="commerce-050"] [data-part="ghostcover"],
 [data-vibeui-block="commerce-050"] [data-part="ghostline"]{
-background:linear-gradient(100deg,var(--vibeui-commerce-050-soft) 30%,oklch(0.92 0.006 265) 50%,var(--vibeui-commerce-050-soft) 70%);
+background:linear-gradient(100deg,var(--vibeui-commerce-050-soft) 30%,var(--vibeui-commerce-050-shine) 50%,var(--vibeui-commerce-050-soft) 70%);
 background-size:220% 100%;
 animation:vibeui-commerce-050-sweep 1.4s linear infinite;
 }
@@ -154,6 +159,33 @@ const DEFAULT_CARDS: Commerce050Card[] = [
   },
 ]
 
+const DEFAULT_COUNTER: Record<string, string> = {
+  shown: "Показано",
+  of: "из",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Каталог с бесконечной прокруткой: ряд скелетонов, счётчик в aria-live и
  * кнопка-выход. Один файл, ноль зависимостей, собственная палитра.
@@ -167,12 +199,20 @@ export function Commerce050({
   loading = "Подгружаем следующие товары…",
   cta = "Показать ещё 24 товара",
   footerHint = "Кнопка нужна не для красоты: без неё до подвала сайта нельзя добраться ни с клавиатуры, ни прокруткой — список догружается бесконечно.",
+  counterText = DEFAULT_COUNTER,
   accent,
+  background = "",
   className,
   style,
 }: Commerce050Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-050-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-050-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
   const ghosts = Array.from({ length: Math.max(0, skeletons) }, (_, i) => i)
@@ -192,7 +232,9 @@ export function Commerce050({
           <div data-part="top">
             <h2>{title}</h2>
             <p data-part="counter" aria-live="polite">
-              Показано <strong>{shown}</strong> из <strong>{total}</strong>
+              {counterText.shown ?? DEFAULT_COUNTER.shown}{" "}
+              <strong>{shown}</strong> {counterText.of ?? DEFAULT_COUNTER.of}{" "}
+              <strong>{total}</strong>
             </p>
           </div>
 

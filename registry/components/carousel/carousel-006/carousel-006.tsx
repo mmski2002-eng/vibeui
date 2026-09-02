@@ -16,12 +16,22 @@ export type Carousel006Props = Omit<
   /** Секунд на один кадр. */
   seconds?: number
   label?: string
+  /** Роль секции для скринридера. */
+  roleText?: string
+  /** Шаблон подписи под заголовком: {index}, {total}. */
+  hintText?: string
+  /** Подписи половин кадра: компонент несёт русские, проект подставляет свои. */
+  navText?: Record<string, string>
 }
 
 // Идея компонента: истории с полосками прогресса. Полоски показывают, сколько
 // кадров всего и где мы сейчас, а пауза по наведению и по фокусу — то, чего
 // не хватает почти всем таким лентам: без неё прочитать текст невозможно.
 // При prefers-reduced-motion автопереход выключается совсем.
+//
+// Палитра намеренно одноцветная: кадр всегда цветной градиент, а текст на нём
+// всегда светлый. Тёмной ветки у неё быть не может — картинка одинакова
+// в любой теме страницы, и это дизайн-решение, а не недосмотр.
 const STYLES = `
 :where([data-vibeui-block="carousel-006"]){
 --vibeui-carousel-006-fg:oklch(0.99 0.003 265);
@@ -70,6 +80,18 @@ const DEFAULT_STORIES: Carousel006Story[] = [
   { title: "Установка одной командой", hue: 30 },
 ]
 
+const NAV_LABEL: Record<string, string> = {
+  prev: "Предыдущий кадр",
+  next: "Следующий кадр",
+}
+
+/** Подстановка чисел в подпись: перевод остаётся одной строкой. */
+function fill(template: string, values: Record<string, string | number>) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
 /**
  * Истории с полосками прогресса и паузой по наведению и фокусу.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -78,6 +100,9 @@ export function Carousel006({
   stories = DEFAULT_STORIES,
   seconds = 6,
   label = "Истории",
+  roleText = "карусель",
+  hintText = "{index} из {total} · наведите, чтобы остановить",
+  navText = NAV_LABEL,
   className,
   style,
   ...props
@@ -120,7 +145,7 @@ export function Carousel006({
       <section
         {...props}
         data-vibeui-block="carousel-006"
-        aria-roledescription="карусель"
+        aria-roledescription={roleText}
         aria-label={label}
         className={className}
         style={palette}
@@ -156,17 +181,17 @@ export function Carousel006({
         </ul>
         <h3 data-part="title">{stories[index]?.title}</h3>
         <p data-part="hint">
-          {index + 1} из {stories.length} · наведите, чтобы остановить
+          {fill(hintText, { index: index + 1, total: stories.length })}
         </p>
         <div data-part="taps">
           <button
             type="button"
-            aria-label="Предыдущий кадр"
+            aria-label={navText.prev ?? NAV_LABEL.prev}
             onClick={() => go(-1)}
           />
           <button
             type="button"
-            aria-label="Следующий кадр"
+            aria-label={navText.next ?? NAV_LABEL.next}
             onClick={() => go(1)}
           />
         </div>

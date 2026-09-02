@@ -12,7 +12,18 @@ export type Solutions030Props = {
   routeNumber?: string
   hint?: string
   operations?: Solutions030Operation[]
+  /** Подписи плиток сводки: operations, time, grades. */
+  summaryText?: Record<string, string>
+  /** Подписи полей операции: equipment, norm, grade. */
+  fieldText?: Record<string, string>
+  /** Длительность. {minutes} — число минут. */
+  minutesText?: string
+  /** Нарастающий итог. {minutes} — число минут. */
+  cumulativeText?: string
+  footNote?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -28,12 +39,13 @@ export type Solutions030Props = {
 // сразу видно, какие шаги требуют более квалифицированного исполнителя.
 const STYLES = `
 :where([data-vibeui-block="solutions-030"]){
---vibeui-solutions-030-bg:oklch(1 0 0);
---vibeui-solutions-030-panel:oklch(0.977 0.004 255);
---vibeui-solutions-030-fg:oklch(0.21 0.014 265);
---vibeui-solutions-030-muted:oklch(0.54 0.014 265);
---vibeui-solutions-030-border:oklch(0.9 0.006 265);
---vibeui-solutions-030-accent:oklch(0.52 0.16 255);
+--vibeui-solutions-030-bg:transparent;
+--vibeui-solutions-030-panel:light-dark(oklch(0.977 0.004 255),oklch(0.27 0.011 265));
+--vibeui-solutions-030-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-030-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-030-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-030-accent:light-dark(oklch(0.52 0.16 255),oklch(0.74 0.14 255));
+--vibeui-solutions-030-badge-fg:light-dark(oklch(1 0 0),oklch(0.19 0.014 265));
 --vibeui-solutions-030-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-030-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -72,7 +84,8 @@ position:relative;display:grid;grid-template-columns:2rem 1fr;gap:0 0.875rem;pad
 [data-vibeui-block="solutions-030"] [data-part="step"]:last-child{padding-bottom:0}
 [data-vibeui-block="solutions-030"] [data-part="badge"]{
 grid-row:1 / span 2;width:2rem;height:2rem;border-radius:9999px;
-display:grid;place-items:center;background:var(--vibeui-solutions-030-accent);color:oklch(1 0 0);
+display:grid;place-items:center;background:var(--vibeui-solutions-030-accent);
+color:var(--vibeui-solutions-030-badge-fg);
 font-size:0.75rem;font-weight:700;font-variant-numeric:tabular-nums;position:relative;z-index:1;
 }
 [data-vibeui-block="solutions-030"] [data-part="step"]:not(:last-child)::before{
@@ -159,6 +172,40 @@ const DEFAULT_OPERATIONS: Solutions030Operation[] = [
   },
 ]
 
+const SUMMARY_LABEL: Record<string, string> = {
+  operations: "операций в маршруте",
+  time: "суммарное нормо-время",
+  grades: "разрядов задействовано",
+}
+
+const FIELD_LABEL: Record<string, string> = {
+  equipment: "Оборудование",
+  norm: "Норма времени",
+  grade: "Разряд",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Технологическая карта: маршрут операций лентой, накопленное время — как
  * нарастающий итог по норме времени каждой операции.
@@ -169,15 +216,31 @@ export function Solutions030({
   routeNumber = "ТК-0842 · вал приводной ВП-12",
   hint = "7 операций · маршрут утверждён технологом",
   operations = DEFAULT_OPERATIONS,
+  summaryText = SUMMARY_LABEL,
+  fieldText = FIELD_LABEL,
+  minutesText = "{minutes} мин",
+  cumulativeText = "нарастающим итогом: {minutes} мин",
+  footNote = "Нарастающий итог справа от каждой операции — сумма норм времени всех предыдущих шагов маршрута, включая текущий.",
   accent,
+  background = "",
   className,
   style,
 }: Solutions030Props) {
   const totalMinutes = operations.reduce((sum, op) => sum + op.normMinutes, 0)
   const grades = new Set(operations.map((op) => op.grade))
+  const summary = (key: string) => summaryText[key] ?? SUMMARY_LABEL[key]
+  const field = (key: string) => fieldText[key] ?? FIELD_LABEL[key]
+  const minutes = (value: number) =>
+    minutesText.replace("{minutes}", String(value))
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-030-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-030-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -203,15 +266,15 @@ export function Solutions030({
         <div data-part="summary">
           <p data-part="tile">
             <b>{operations.length}</b>
-            <span>операций в маршруте</span>
+            <span>{summary("operations")}</span>
           </p>
           <p data-part="tile">
-            <b>{totalMinutes} мин</b>
-            <span>суммарное нормо-время</span>
+            <b>{minutes(totalMinutes)}</b>
+            <span>{summary("time")}</span>
           </p>
           <p data-part="tile">
             <b>{grades.size}</b>
-            <span>разрядов задействовано</span>
+            <span>{summary("grades")}</span>
           </p>
         </div>
 
@@ -230,20 +293,20 @@ export function Solutions030({
                   <div data-part="op-head">
                     <p data-part="op-name">{op.name}</p>
                     <span data-part="cumulative">
-                      нарастающим итогом: {cumulative} мин
+                      {cumulativeText.replace("{minutes}", String(cumulative))}
                     </span>
                   </div>
                   <dl data-part="meta">
                     <div>
-                      <dt>Оборудование</dt>
+                      <dt>{field("equipment")}</dt>
                       <dd>{op.equipment}</dd>
                     </div>
                     <div>
-                      <dt>Норма времени</dt>
-                      <dd>{op.normMinutes} мин</dd>
+                      <dt>{field("norm")}</dt>
+                      <dd>{minutes(op.normMinutes)}</dd>
                     </div>
                     <div>
-                      <dt>Разряд</dt>
+                      <dt>{field("grade")}</dt>
                       <dd>
                         <span data-part="grade">{op.grade}</span>
                       </dd>
@@ -255,10 +318,7 @@ export function Solutions030({
           })}
         </ol>
 
-        <p data-part="foot">
-          Нарастающий итог справа от каждой операции — сумма норм времени всех
-          предыдущих шагов маршрута, включая текущий.
-        </p>
+        <p data-part="foot">{footNote}</p>
       </section>
     </>
   )

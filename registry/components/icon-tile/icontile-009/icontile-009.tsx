@@ -22,17 +22,19 @@ const STYLES = `
 --vibeui-icontile-009-hue:262;
 --vibeui-icontile-009-chroma:0.05;
 --vibeui-icontile-009-shadow-alpha:0.32;
+--vibeui-icontile-009-fill:light-dark(oklch(0.94 var(--vibeui-icontile-009-chroma) var(--vibeui-icontile-009-hue)),oklch(0.33 calc(var(--vibeui-icontile-009-chroma) * 1.6) var(--vibeui-icontile-009-hue)));
+--vibeui-icontile-009-mark:light-dark(oklch(0.44 calc(var(--vibeui-icontile-009-chroma) * 4) var(--vibeui-icontile-009-hue)),oklch(0.88 calc(var(--vibeui-icontile-009-chroma) * 2.2) var(--vibeui-icontile-009-hue)));
 }
 [data-vibeui-block="icontile-009"]{
 display:inline-flex;align-items:center;justify-content:center;flex:none;
 box-sizing:border-box;
 width:var(--vibeui-icontile-009-size);height:var(--vibeui-icontile-009-size);
 border-radius:calc(var(--vibeui-icontile-009-size) * 0.44);
-background:oklch(0.94 var(--vibeui-icontile-009-chroma) var(--vibeui-icontile-009-hue));
-color:oklch(0.44 calc(var(--vibeui-icontile-009-chroma) * 4) var(--vibeui-icontile-009-hue));
+background:var(--vibeui-icontile-009-fill);
+color:var(--vibeui-icontile-009-mark);
 box-shadow:
-0 calc(var(--vibeui-icontile-009-size) * 0.3) calc(var(--vibeui-icontile-009-size) * 0.55) calc(var(--vibeui-icontile-009-size) * -0.28) oklch(0.5 calc(var(--vibeui-icontile-009-chroma) * 4) var(--vibeui-icontile-009-hue) / var(--vibeui-icontile-009-shadow-alpha)),
-0 calc(var(--vibeui-icontile-009-size) * 0.06) calc(var(--vibeui-icontile-009-size) * 0.12) calc(var(--vibeui-icontile-009-size) * -0.05) oklch(0.5 calc(var(--vibeui-icontile-009-chroma) * 4) var(--vibeui-icontile-009-hue) / 0.22);
+0 calc(var(--vibeui-icontile-009-size) * 0.3) calc(var(--vibeui-icontile-009-size) * 0.55) calc(var(--vibeui-icontile-009-size) * -0.28) light-dark(oklch(0.5 calc(var(--vibeui-icontile-009-chroma) * 4) var(--vibeui-icontile-009-hue) / var(--vibeui-icontile-009-shadow-alpha)),oklch(0.18 calc(var(--vibeui-icontile-009-chroma) * 5) var(--vibeui-icontile-009-hue) / calc(var(--vibeui-icontile-009-shadow-alpha) * 1.9))),
+0 calc(var(--vibeui-icontile-009-size) * 0.06) calc(var(--vibeui-icontile-009-size) * 0.12) calc(var(--vibeui-icontile-009-size) * -0.05) light-dark(oklch(0.5 calc(var(--vibeui-icontile-009-chroma) * 4) var(--vibeui-icontile-009-hue) / 0.22),oklch(0.15 calc(var(--vibeui-icontile-009-chroma) * 5) var(--vibeui-icontile-009-hue) / 0.5));
 }
 [data-vibeui-block="icontile-009"] svg{width:46%;height:46%}
 [data-vibeui-block="icontile-009"][data-size="sm"]{--vibeui-icontile-009-size:2.25rem}

@@ -13,13 +13,16 @@ export type Card008Props = Omit<
 // прозрачная, потому что не содержит данных: сплошная карточка в ряду с
 // настоящими читается как ещё один элемент. Это кнопка, а не div с onClick —
 // клавиатура и объявление роли достаются даром.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте пунктир светлее фона, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="card-008"]){
---vibeui-card-008-fg:oklch(0.42 0.014 265);
---vibeui-card-008-muted:oklch(0.58 0.014 265);
---vibeui-card-008-border:oklch(0.86 0.008 265);
---vibeui-card-008-hover:oklch(0.97 0.003 265);
---vibeui-card-008-accent:oklch(0.55 0.17 265);
+--vibeui-card-008-fg:light-dark(oklch(0.42 0.014 265),oklch(0.86 0.008 265));
+--vibeui-card-008-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-card-008-border:light-dark(oklch(0.86 0.008 265),oklch(0.43 0.014 265));
+--vibeui-card-008-hover:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.008 265));
+--vibeui-card-008-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-card-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="card-008"]{

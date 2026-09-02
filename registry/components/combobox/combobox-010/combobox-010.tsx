@@ -19,6 +19,8 @@ export type Combobox010Props = Omit<
   hintText?: string
   submitLabel?: string
   onSubmitValue?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -29,15 +31,17 @@ export type Combobox010Props = Omit<
 // скринридер узнаёт о нём без перевода фокуса.
 const STYLES = `
 :where([data-vibeui-block="combobox-010"]){
---vibeui-combobox-010-bg:oklch(1 0 0);
---vibeui-combobox-010-fg:oklch(0.22 0.014 265);
---vibeui-combobox-010-muted:oklch(0.55 0.014 265);
---vibeui-combobox-010-border:oklch(0.9 0.006 265);
---vibeui-combobox-010-field:oklch(0.985 0.002 265);
---vibeui-combobox-010-active:oklch(0.95 0.02 265);
---vibeui-combobox-010-accent:oklch(0.52 0.15 265);
---vibeui-combobox-010-danger:oklch(0.55 0.2 25);
---vibeui-combobox-010-dangerbg:oklch(0.96 0.03 25);
+--vibeui-combobox-010-bg:transparent;
+--vibeui-combobox-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-combobox-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-combobox-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-combobox-010-field:light-dark(oklch(0.985 0.002 265),oklch(0.3 0.012 265));
+--vibeui-combobox-010-active:light-dark(oklch(0.95 0.02 265),oklch(0.36 0.028 265));
+--vibeui-combobox-010-accent:light-dark(oklch(0.52 0.15 265),oklch(0.72 0.14 265));
+--vibeui-combobox-010-onaccent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-combobox-010-danger:light-dark(oklch(0.55 0.2 25),oklch(0.72 0.18 25));
+--vibeui-combobox-010-dangerbg:light-dark(oklch(0.96 0.03 25),oklch(0.32 0.06 25));
+--vibeui-combobox-010-ondanger:light-dark(oklch(1 0 0),oklch(0.2 0.04 25));
 --vibeui-combobox-010-radius:0.625rem;
 --vibeui-combobox-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -84,12 +88,12 @@ font-size:0.75rem;font-weight:600;color:var(--vibeui-combobox-010-danger);
 [data-vibeui-block="combobox-010"] [data-part="error"]::before{
 content:"!";display:inline-flex;align-items:center;justify-content:center;flex:none;
 width:1rem;height:1rem;border-radius:999px;font-size:0.7rem;
-background:var(--vibeui-combobox-010-danger);color:oklch(1 0 0);
+background:var(--vibeui-combobox-010-danger);color:var(--vibeui-combobox-010-ondanger);
 }
 [data-vibeui-block="combobox-010"] [data-part="submit"]{
 appearance:none;border:0;cursor:pointer;align-self:flex-start;
 height:2.25rem;padding:0 1rem;border-radius:var(--vibeui-combobox-010-radius);
-background:var(--vibeui-combobox-010-accent);color:oklch(1 0 0);
+background:var(--vibeui-combobox-010-accent);color:var(--vibeui-combobox-010-onaccent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 transition:filter .16s ease;
 }
@@ -107,6 +111,28 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая плашка иначе досталась бы тексту
+ * тёмной ветки, потому что light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox с обязательным выбором: ошибка показывается после отправки,
  * связана с полем через aria-describedby и снимается выбором значения.
  */
@@ -118,6 +144,7 @@ export function Combobox010({
   hintText = "Свой вариант вписать нельзя",
   submitLabel = "Оформить",
   onSubmitValue,
+  background = "",
   accent,
   className,
   style,
@@ -139,6 +166,12 @@ export function Combobox010({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

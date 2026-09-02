@@ -7,6 +7,18 @@ export type Buttongroup008Props = Omit<
   page?: number
   total?: number
   label?: string
+  /** Подпись кнопки «назад». Компонент несёт русскую, проект подставляет свою. */
+  prevText?: string
+  /** Подпись кнопки «вперёд». */
+  nextText?: string
+  /** Имя кнопки «назад» для скринридера. */
+  prevLabel?: string
+  /** Имя кнопки «вперёд» для скринридера. */
+  nextLabel?: string
+  /** Позиция вслух: {page} и {total} подставляются числами. */
+  positionText?: string
+  /** Пусто — подложки нет, пагинатор лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,12 +30,15 @@ export type Buttongroup008Props = Omit<
 // вслух звучит как «три дробь двенадцать» и смысла не несёт.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-008"]){
---vibeui-buttongroup-008-surface:oklch(1 0 0);
---vibeui-buttongroup-008-fg:oklch(0.26 0.016 265);
---vibeui-buttongroup-008-muted:oklch(0.56 0.014 265);
---vibeui-buttongroup-008-border:oklch(0.88 0.008 265);
---vibeui-buttongroup-008-hover:oklch(0.96 0.004 265);
---vibeui-buttongroup-008-accent:oklch(0.55 0.17 265);
+--vibeui-buttongroup-008-surface:transparent;
+--vibeui-buttongroup-008-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-buttongroup-008-faint:light-dark(oklch(0.8 0.008 265),oklch(0.5 0.012 265));
+--vibeui-buttongroup-008-border:light-dark(oklch(0.88 0.008 265),oklch(0.37 0.012 265));
+--vibeui-buttongroup-008-hover:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.012 265));
+--vibeui-buttongroup-008-off:light-dark(oklch(0.98 0.003 265),oklch(0.26 0.01 265));
+--vibeui-buttongroup-008-off-fg:light-dark(oklch(0.75 0.01 265),oklch(0.48 0.012 265));
+--vibeui-buttongroup-008-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-buttongroup-008-radius:0.625rem;
 --vibeui-buttongroup-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -62,8 +77,8 @@ z-index:2;
 outline:2px solid var(--vibeui-buttongroup-008-accent);outline-offset:1px;
 }
 [data-vibeui-block="buttongroup-008"] button:disabled{
-cursor:not-allowed;color:oklch(0.75 0.01 265);
-background:oklch(0.98 0.003 265);
+cursor:not-allowed;color:var(--vibeui-buttongroup-008-off-fg);
+background:var(--vibeui-buttongroup-008-off);
 }
 /* Ширина счётчика фиксирована, цифры табличные: иначе группа дёргается
    на каждом переходе через десяток. */
@@ -73,7 +88,7 @@ color:var(--vibeui-buttongroup-008-muted);
 font-variant-numeric:tabular-nums;letter-spacing:0.01em;
 }
 [data-vibeui-block="buttongroup-008"] [data-part="now"]{color:var(--vibeui-buttongroup-008-fg)}
-[data-vibeui-block="buttongroup-008"] [data-part="slash"]{margin:0 0.3125rem;color:oklch(0.8 0.008 265)}
+[data-vibeui-block="buttongroup-008"] [data-part="slash"]{margin:0 0.3125rem;color:var(--vibeui-buttongroup-008-faint)}
 [data-vibeui-block="buttongroup-008"] [data-part="arrow"]{
 width:0.4375rem;height:0.4375rem;
 border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;
@@ -88,6 +103,29 @@ clip-path:inset(50%);white-space:nowrap;
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Пагинатор-группа: назад, счётчик страниц, вперёд.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -95,15 +133,30 @@ export function Buttongroup008({
   page = 3,
   total = 12,
   label = "Постраничная навигация",
+  prevText = "Назад",
+  nextText = "Вперёд",
+  prevLabel = "Предыдущая страница",
+  nextLabel = "Следующая страница",
+  positionText = "Страница {page} из {total}",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Buttongroup008Props) {
   const current = Math.min(Math.max(page, 1), Math.max(total, 1))
+  const spoken = positionText
+    .replace("{page}", String(current))
+    .replace("{total}", String(total))
 
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-008-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -123,15 +176,13 @@ export function Buttongroup008({
           type="button"
           data-part="prev"
           disabled={current <= 1}
-          aria-label="Предыдущая страница"
+          aria-label={prevLabel}
         >
           <span data-part="arrow" aria-hidden="true" />
-          Назад
+          {prevText}
         </button>
         <span data-part="count">
-          <span data-part="spoken">
-            Страница {current} из {total}
-          </span>
+          <span data-part="spoken">{spoken}</span>
           <span aria-hidden="true">
             <span data-part="now">{current}</span>
             <span data-part="slash">/</span>
@@ -142,9 +193,9 @@ export function Buttongroup008({
           type="button"
           data-part="next"
           disabled={current >= total}
-          aria-label="Следующая страница"
+          aria-label={nextLabel}
         >
-          Вперёд
+          {nextText}
           <span data-part="arrow" aria-hidden="true" />
         </button>
       </nav>

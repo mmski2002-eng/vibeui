@@ -14,6 +14,16 @@ export type Carousel014Props = Omit<
   label?: string
   /** Основа идентификаторов слайдов: два блока на одной странице не должны совпасть. */
   idPrefix?: string
+  /** Роль блока для скринридера: компонент несёт русскую, проект подставит свою. */
+  roleDescription?: string
+  /** Шаблон подписи левой стрелки: {title} — заголовок соседнего слайда. */
+  prevLabel?: string
+  /** Шаблон подписи правой стрелки: {title} — заголовок соседнего слайда. */
+  nextLabel?: string
+  /** Подсказка под лентой. Пусто — подсказки нет. */
+  hint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: карусель без единой строки JS, но со стрелками. Пара
@@ -21,13 +31,16 @@ export type Carousel014Props = Omit<
 // «предыдущий» и «следующий» известны заранее, без знания текущей позиции.
 // Прокрутку и остановку держит scroll-snap: палец, колесо, Tab и клавиши
 // работают сами, а компонент остаётся серверным.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="carousel-014"]){
---vibeui-carousel-014-bg:oklch(1 0 0);
---vibeui-carousel-014-fg:oklch(0.22 0.014 265);
---vibeui-carousel-014-muted:oklch(0.58 0.014 265);
---vibeui-carousel-014-border:oklch(0.91 0.006 265);
---vibeui-carousel-014-accent:oklch(0.55 0.17 265);
+--vibeui-carousel-014-bg:transparent;
+--vibeui-carousel-014-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-014-muted:light-dark(oklch(0.58 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-014-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-carousel-014-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-carousel-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="carousel-014"]{
@@ -100,6 +113,28 @@ const DEFAULT_CARDS: Carousel014Card[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё на светлой плашке достался бы
+ * текст тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Карусель на scroll-snap без JS: стрелки — якорные ссылки внутри слайдов.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -107,10 +142,25 @@ export function Carousel014({
   cards = DEFAULT_CARDS,
   label = "Принципы",
   idPrefix = "vibeui-carousel-014",
+  roleDescription = "карусель",
+  prevLabel = "Предыдущий слайд: {title}",
+  nextLabel = "Следующий слайд: {title}",
+  hint = "Листается пальцем, колесом и стрелками внутри кадра — без JavaScript.",
+  background = "",
   className,
   style,
   ...props
 }: Carousel014Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-carousel-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-carousel-014" precedence="medium">
@@ -119,10 +169,10 @@ export function Carousel014({
       <section
         {...props}
         data-vibeui-block="carousel-014"
-        aria-roledescription="карусель"
+        aria-roledescription={roleDescription}
         aria-label={label}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <ul data-part="track">
           {cards.map((card, index) => {
@@ -143,7 +193,7 @@ export function Carousel014({
                   data-part="arrow"
                   data-way="prev"
                   href={`#${idPrefix}-${((index - 1 + cards.length) % cards.length) + 1}`}
-                  aria-label={`Предыдущий слайд: ${previous.title}`}
+                  aria-label={prevLabel.replace("{title}", previous.title)}
                 >
                   ‹
                 </a>
@@ -153,7 +203,7 @@ export function Carousel014({
                   data-part="arrow"
                   data-way="next"
                   href={`#${idPrefix}-${((index + 1) % cards.length) + 1}`}
-                  aria-label={`Следующий слайд: ${next.title}`}
+                  aria-label={nextLabel.replace("{title}", next.title)}
                 >
                   ›
                 </a>
@@ -161,9 +211,7 @@ export function Carousel014({
             )
           })}
         </ul>
-        <p data-part="hint">
-          Листается пальцем, колесом и стрелками внутри кадра — без JavaScript.
-        </p>
+        {hint ? <p data-part="hint">{hint}</p> : null}
       </section>
     </>
   )

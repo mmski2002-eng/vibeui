@@ -18,7 +18,23 @@ export type Commerce024Props = {
   items?: Commerce024Item[]
   cta?: string
   empty?: string
+  /** Шаблон счётчика, {count} — сколько товаров в списке. */
+  countText?: string
+  /** Шаблон строки отмены, {title} — название товара. */
+  removedText?: string
+  /** Подпись кнопки возврата товара в список. */
+  undoCta?: string
+  /** Шаблон подписи кнопки-сердца, {title} — название товара. */
+  removeText?: string
+  /** Подписи наличия по ключам in, low и out. */
+  stockText?: Record<string, string>
+  /** Подпись кнопки у товара, которого нет в наличии. */
+  outCta?: string
   accent?: string
+  /** Цвет сердца. */
+  love?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,14 +48,15 @@ export type Commerce024Props = {
 // Кнопка «в корзину» выключается там, где товара нет, но карточка остаётся.
 const STYLES = `
 :where([data-vibeui-block="commerce-024"]){
---vibeui-commerce-024-bg:oklch(1 0 0);
---vibeui-commerce-024-fg:oklch(0.21 0.014 265);
---vibeui-commerce-024-muted:oklch(0.55 0.014 265);
---vibeui-commerce-024-border:oklch(0.91 0.006 265);
---vibeui-commerce-024-soft:oklch(0.975 0.004 265);
---vibeui-commerce-024-accent:oklch(0.55 0.2 262);
---vibeui-commerce-024-love:oklch(0.6 0.2 15);
---vibeui-commerce-024-ok:oklch(0.55 0.14 152);
+--vibeui-commerce-024-bg:transparent;
+--vibeui-commerce-024-paper:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-commerce-024-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-024-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-024-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-commerce-024-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.01 265));
+--vibeui-commerce-024-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
+--vibeui-commerce-024-love:light-dark(oklch(0.6 0.2 15),oklch(0.68 0.19 15));
+--vibeui-commerce-024-ok:light-dark(oklch(0.55 0.14 152),oklch(0.75 0.14 152));
 --vibeui-commerce-024-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -86,7 +103,7 @@ margin:0;font-size:0.6875rem;font-weight:700;color:var(--vibeui-commerce-024-ok)
 [data-vibeui-block="commerce-024"] [data-part="stock"]{margin:0;font-size:0.6875rem;color:var(--vibeui-commerce-024-muted)}
 [data-vibeui-block="commerce-024"] [data-part="add"]{
 margin-top:auto;appearance:none;border:0;cursor:pointer;height:2.25rem;border-radius:0.625rem;
-background:var(--vibeui-commerce-024-fg);color:var(--vibeui-commerce-024-bg);font:inherit;font-size:0.8125rem;font-weight:650;
+background:var(--vibeui-commerce-024-fg);color:var(--vibeui-commerce-024-paper);font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="commerce-024"] [data-part="add"]:disabled{
 background:var(--vibeui-commerce-024-soft);color:var(--vibeui-commerce-024-muted);cursor:not-allowed;
@@ -138,10 +155,32 @@ const DEFAULT_ITEMS: Commerce024Item[] = [
   },
 ]
 
-const STOCK: Record<Commerce024Item["stock"], string> = {
+const STOCK: Record<string, string> = {
   in: "В наличии, доставим завтра",
   low: "Осталось меньше трёх штук",
   out: "Нет в наличии — сообщим, когда вернётся",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -153,7 +192,15 @@ export function Commerce024({
   items = DEFAULT_ITEMS,
   cta = "В корзину",
   empty = "Здесь пусто. Нажмите сердце на карточке товара — сообщим, когда он подешевеет.",
+  countText = "{count} товара",
+  removedText = "«{title}» убран из избранного",
+  undoCta = "Вернуть",
+  removeText = "Убрать «{title}» из избранного",
+  stockText = STOCK,
+  outCta = "Нет в наличии",
   accent,
+  love,
+  background = "",
   className,
   style,
 }: Commerce024Props) {
@@ -167,6 +214,14 @@ export function Commerce024({
 
   const palette = {
     ...(accent ? { "--vibeui-commerce-024-accent": accent } : null),
+    ...(love ? { "--vibeui-commerce-024-love": love } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-024-bg": background,
+          "--vibeui-commerce-024-paper": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -184,12 +239,14 @@ export function Commerce024({
         <div data-part="shell">
           <div data-part="top">
             <h2>{title}</h2>
-            <span data-part="count">{list.length} товара</span>
+            <span data-part="count">
+              {countText.replace("{count}", String(list.length))}
+            </span>
           </div>
 
           {removed ? (
             <p data-part="undo" aria-live="polite">
-              «{removed.title}» убран из избранного
+              {removedText.replace("{title}", removed.title)}
               <button
                 type="button"
                 data-part="back"
@@ -198,7 +255,7 @@ export function Commerce024({
                   setRemoved(null)
                 }}
               >
-                Вернуть
+                {undoCta}
               </button>
             </p>
           ) : null}
@@ -220,7 +277,7 @@ export function Commerce024({
                   <button
                     type="button"
                     data-part="heart"
-                    aria-label={`Убрать «${item.title}» из избранного`}
+                    aria-label={removeText.replace("{title}", item.title)}
                     onClick={() => drop(item)}
                   >
                     ♥
@@ -233,13 +290,15 @@ export function Commerce024({
                       {item.old ? <s data-part="was">{item.old}</s> : null}
                     </p>
                     {item.drop ? <p data-part="drop">{item.drop}</p> : null}
-                    <p data-part="stock">{STOCK[item.stock]}</p>
+                    <p data-part="stock">
+                      {stockText[item.stock] ?? STOCK[item.stock]}
+                    </p>
                     <button
                       type="button"
                       data-part="add"
                       disabled={item.stock === "out"}
                     >
-                      {item.stock === "out" ? "Нет в наличии" : cta}
+                      {item.stock === "out" ? outCta : cta}
                     </button>
                   </div>
                 </li>

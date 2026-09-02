@@ -12,6 +12,10 @@ export type Scrollarea006Props = Omit<
   /** Индекс активного элемента: к нему область встаёт при первом показе. */
   activeIndex?: number
   height?: string
+  /** Подпись кнопки возврата к активному элементу. */
+  revealLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: при первом показе область сама встаёт на активный элемент.
@@ -19,14 +23,18 @@ export type Scrollarea006Props = Omit<
 // scrollIntoView: тот прокручивает и всех предков, и страница уезжает вместе
 // с областью. Кнопка «К текущему» возвращает вид на место после ручной
 // прокрутки, поэтому активный элемент не теряется в длинном списке.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="scrollarea-006"]){
---vibeui-scrollarea-006-bg:oklch(1 0 0);
---vibeui-scrollarea-006-fg:oklch(0.24 0.014 265);
---vibeui-scrollarea-006-muted:oklch(0.55 0.014 265);
---vibeui-scrollarea-006-border:oklch(0.9 0.006 265);
---vibeui-scrollarea-006-accent:oklch(0.55 0.19 265);
---vibeui-scrollarea-006-soft:oklch(0.95 0.03 265);
+--vibeui-scrollarea-006-bg:transparent;
+--vibeui-scrollarea-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-scrollarea-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-scrollarea-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.33 0.012 265));
+--vibeui-scrollarea-006-accent:light-dark(oklch(0.55 0.19 265),oklch(0.74 0.16 265));
+--vibeui-scrollarea-006-soft:light-dark(oklch(0.95 0.03 265),oklch(0.29 0.05 265));
+--vibeui-scrollarea-006-hover:light-dark(oklch(0.97 0.003 265),oklch(0.28 0.011 265));
 --vibeui-scrollarea-006-height:12rem;
 --vibeui-scrollarea-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -51,7 +59,7 @@ background:var(--vibeui-scrollarea-006-bg);color:var(--vibeui-scrollarea-006-fg)
 font:inherit;font-size:0.6875rem;font-weight:600;
 transition:background-color .14s ease;
 }
-[data-vibeui-block="scrollarea-006"] button:hover{background:oklch(0.97 0.003 265)}
+[data-vibeui-block="scrollarea-006"] button:hover{background:var(--vibeui-scrollarea-006-hover)}
 [data-vibeui-block="scrollarea-006"] button:focus-visible{
 outline:2px solid var(--vibeui-scrollarea-006-accent);outline-offset:2px;
 }
@@ -94,6 +102,28 @@ const DEFAULT_ITEMS = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Область, которая при показе сама встаёт на активный элемент.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -102,6 +132,8 @@ export function Scrollarea006({
   items = DEFAULT_ITEMS,
   activeIndex = 5,
   height = "12rem",
+  revealLabel = "К текущему",
+  background = "",
   className,
   style,
   ...props
@@ -133,6 +165,12 @@ export function Scrollarea006({
   const index = Math.min(Math.max(0, activeIndex), items.length - 1)
   const palette = {
     "--vibeui-scrollarea-006-height": height,
+    ...(background
+      ? {
+          "--vibeui-scrollarea-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -150,7 +188,7 @@ export function Scrollarea006({
         <div data-part="head">
           <span>{title}</span>
           <button type="button" onClick={() => reveal(true)}>
-            К текущему
+            {revealLabel}
           </button>
         </div>
         <div

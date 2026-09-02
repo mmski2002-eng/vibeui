@@ -20,6 +20,7 @@ const STYLES = `
 --vibeui-icontile-002-hue:262;
 --vibeui-icontile-002-size:2.75rem;
 --vibeui-icontile-002-radius:0.875rem;
+--vibeui-icontile-002-edge:light-dark(oklch(1 0 0 / 24%),oklch(1 0 0 / 38%));
 --vibeui-icontile-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Оба края градиента считаются от одного угла: пару нельзя рассогласовать. */
@@ -31,7 +32,7 @@ border-radius:var(--vibeui-icontile-002-radius);
 background:linear-gradient(145deg,
 oklch(0.72 0.17 var(--vibeui-icontile-002-hue)) 0%,
 oklch(0.5 0.19 calc(var(--vibeui-icontile-002-hue) + 32)) 100%);
-box-shadow:inset 0 0 0 1px oklch(1 0 0 / 28%);
+box-shadow:inset 0 0 0 1px var(--vibeui-icontile-002-edge);
 color:oklch(0.99 0.01 var(--vibeui-icontile-002-hue));
 font-family:var(--vibeui-icontile-002-font);
 font-size:calc(var(--vibeui-icontile-002-size) * 0.42);

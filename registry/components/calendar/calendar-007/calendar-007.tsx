@@ -10,6 +10,13 @@ export type Calendar007Props = Omit<
   load?: number[]
   locale?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  /** Подписи шкалы: компонент несёт русские, проект подставляет свои. */
+  lowLabel?: string
+  highLabel?: string
+  /** Подпись клетки. {day} и {load} подставляются числами. */
+  dayLabel?: string
 }
 
 // Идея компонента: месяц как карта загрузки. Насыщенность клетки показывает
@@ -18,11 +25,13 @@ export type Calendar007Props = Omit<
 // шкала — глаз всё равно различает не больше.
 const STYLES = `
 :where([data-vibeui-block="calendar-007"]){
---vibeui-calendar-007-bg:oklch(1 0 0);
---vibeui-calendar-007-fg:oklch(0.24 0.014 265);
---vibeui-calendar-007-muted:oklch(0.6 0.014 265);
---vibeui-calendar-007-border:oklch(0.91 0.006 265);
---vibeui-calendar-007-accent:oklch(0.55 0.17 265);
+--vibeui-calendar-007-bg:transparent;
+--vibeui-calendar-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-calendar-007-muted:light-dark(oklch(0.6 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-calendar-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-calendar-007-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.19 0.03 265));
+--vibeui-calendar-007-empty:light-dark(oklch(0.97 0.003 265),oklch(0.28 0.012 265));
 --vibeui-calendar-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="calendar-007"]{
@@ -41,10 +50,10 @@ color:var(--vibeui-calendar-007-fg);font-family:var(--vibeui-calendar-007-font);
 height:2rem;padding:0;border-radius:0.375rem;text-align:center;
 font-size:0.75rem;font-variant-numeric:tabular-nums;
 /* Пять ступеней вместо непрерывной шкалы: больше глаз не различает. */
-background:color-mix(in oklab,var(--vibeui-calendar-007-accent) calc(var(--vibeui-calendar-007-step,0) * 22%),oklch(0.97 0.003 265));
+background:color-mix(in oklab,var(--vibeui-calendar-007-accent) calc(var(--vibeui-calendar-007-step,0) * 22%),var(--vibeui-calendar-007-empty));
 }
 [data-vibeui-block="calendar-007"] td[data-step="3"],
-[data-vibeui-block="calendar-007"] td[data-step="4"]{color:oklch(0.99 0.01 265)}
+[data-vibeui-block="calendar-007"] td[data-step="4"]{color:var(--vibeui-calendar-007-on-accent)}
 [data-vibeui-block="calendar-007"] td[data-empty="true"]{background:transparent}
 [data-vibeui-block="calendar-007"] [data-part="legend"]{
 display:flex;align-items:center;gap:0.375rem;font-size:0.75rem;color:var(--vibeui-calendar-007-muted);
@@ -52,7 +61,7 @@ display:flex;align-items:center;gap:0.375rem;font-size:0.75rem;color:var(--vibeu
 [data-vibeui-block="calendar-007"] [data-part="scale"]{display:flex;gap:0.125rem}
 [data-vibeui-block="calendar-007"] [data-part="scale"] i{
 width:0.875rem;height:0.6875rem;border-radius:0.1875rem;
-background:color-mix(in oklab,var(--vibeui-calendar-007-accent) calc(var(--vibeui-calendar-007-step,0) * 22%),oklch(0.97 0.003 265));
+background:color-mix(in oklab,var(--vibeui-calendar-007-accent) calc(var(--vibeui-calendar-007-step,0) * 22%),var(--vibeui-calendar-007-empty));
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-007"] *{animation:none!important;transition:none!important}}
 `
@@ -69,6 +78,28 @@ const DEFAULT_LOAD = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Месяц как карта загрузки: ступени насыщенности и числа внутри клеток.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -78,6 +109,10 @@ export function Calendar007({
   load = DEFAULT_LOAD,
   locale = "ru-RU",
   accent,
+  background = "",
+  lowLabel = "Свободно",
+  highLabel = "Занято",
+  dayLabel = "{day} число, загрузка {load}%",
   className,
   style,
   ...props
@@ -97,6 +132,12 @@ export function Calendar007({
 
   const palette = {
     ...(accent ? { "--vibeui-calendar-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -141,7 +182,12 @@ export function Calendar007({
                       aria-label={
                         outside
                           ? undefined
-                          : `${date.getDate()} число, загрузка ${Math.round(value * 100)}%`
+                          : dayLabel
+                              .replace("{day}", String(date.getDate()))
+                              .replace(
+                                "{load}",
+                                String(Math.round(value * 100)),
+                              )
                       }
                     >
                       {outside ? "" : date.getDate()}
@@ -153,7 +199,7 @@ export function Calendar007({
           </tbody>
         </table>
         <p data-part="legend">
-          Свободно
+          {lowLabel}
           <span data-part="scale" aria-hidden="true">
             {[0, 1, 2, 3, 4].map((step) => (
               <i
@@ -162,7 +208,7 @@ export function Calendar007({
               />
             ))}
           </span>
-          Занято
+          {highLabel}
         </p>
       </div>
     </>

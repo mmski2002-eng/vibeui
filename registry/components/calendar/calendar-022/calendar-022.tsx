@@ -1,7 +1,7 @@
 "use client"
 
-import { useMemo, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { Fragment, useMemo, useState } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
 
 export type Calendar022Props = Omit<
   ComponentPropsWithoutRef<"fieldset">,
@@ -11,9 +11,23 @@ export type Calendar022Props = Omit<
   /** Индексы рабочих дней, где 0 — понедельник. */
   defaultDays?: number[]
   hoursPerDay?: number
+  /** Подписи кнопок-пресетов: fiveDay, sixDay, clear. */
+  presetText?: Record<string, string>
+  /** Формы счётчика дней по категориям Intl.PluralRules. {count} подставляется. */
+  daysText?: Record<string, string>
+  /** Формы счётчика часов по категориям Intl.PluralRules. {count} подставляется. */
+  hoursText?: Record<string, string>
+  /** Часы одного дня. {count} подставляется. */
+  perDayText?: string
+  /** Строка итога. {days}, {perDay} и {total} подставляются. */
+  totalText?: string
+  /** Строка пустого графика. */
+  emptyText?: string
   locale?: string
   onChange?: (days: number[]) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: расписание работы задают не датами, а днями недели —
@@ -22,13 +36,14 @@ export type Calendar022Props = Omit<
 // сразу видит, во что превращается его набор галочек.
 const STYLES = `
 :where([data-vibeui-block="calendar-022"]){
---vibeui-calendar-022-bg:oklch(1 0 0);
---vibeui-calendar-022-fg:oklch(0.24 0.014 160);
---vibeui-calendar-022-muted:oklch(0.55 0.014 160);
---vibeui-calendar-022-border:oklch(0.9 0.008 160);
---vibeui-calendar-022-soft:oklch(0.97 0.008 160);
---vibeui-calendar-022-accent:oklch(0.5 0.11 160);
---vibeui-calendar-022-accentsoft:oklch(0.95 0.04 160);
+--vibeui-calendar-022-bg:transparent;
+--vibeui-calendar-022-fg:light-dark(oklch(0.24 0.014 160),oklch(0.93 0.008 160));
+--vibeui-calendar-022-muted:light-dark(oklch(0.55 0.014 160),oklch(0.68 0.014 160));
+--vibeui-calendar-022-border:light-dark(oklch(0.9 0.008 160),oklch(0.35 0.014 160));
+--vibeui-calendar-022-soft:light-dark(oklch(0.97 0.008 160),oklch(0.29 0.012 160));
+--vibeui-calendar-022-accent:light-dark(oklch(0.5 0.11 160),oklch(0.72 0.11 160));
+--vibeui-calendar-022-accentsoft:light-dark(oklch(0.95 0.04 160),oklch(0.34 0.045 160));
+--vibeui-calendar-022-on-accent:light-dark(oklch(0.99 0.005 160),oklch(0.2 0.03 160));
 --vibeui-calendar-022-radius:0.75rem;
 --vibeui-calendar-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -65,10 +80,10 @@ outline:2px solid var(--vibeui-calendar-022-accent);outline-offset:2px;
 }
 [data-vibeui-block="calendar-022"] [data-part="day"][aria-pressed="true"]{
 background:var(--vibeui-calendar-022-accent);border-color:transparent;
-color:var(--vibeui-calendar-022-bg);
+color:var(--vibeui-calendar-022-on-accent);
 }
 [data-vibeui-block="calendar-022"] [data-part="day"][data-weekend="true"][aria-pressed="false"]{
-background:var(--vibeui-calendar-022-bg);border-style:dashed;
+background:transparent;border-style:dashed;
 }
 [data-vibeui-block="calendar-022"] [data-part="mark"]{font-size:0.9rem;line-height:1.1;font-weight:700}
 [data-vibeui-block="calendar-022"] [data-part="presets"]{
@@ -102,15 +117,59 @@ color:var(--vibeui-calendar-022-fg);font-variant-numeric:tabular-nums;
 const WORKWEEK = [0, 1, 2, 3, 4]
 const SIXDAY = [0, 1, 2, 3, 4, 5]
 
-function pluralize(count: number, forms: [string, string, string]) {
-  const tens = count % 100
-  const ones = count % 10
+const DEFAULT_PRESET_TEXT: Record<string, string> = {
+  fiveDay: "Пятидневка",
+  sixDay: "Шестидневка",
+  clear: "Снять всё",
+}
 
-  if (tens > 10 && tens < 20) return forms[2]
-  if (ones === 1) return forms[0]
-  if (ones > 1 && ones < 5) return forms[1]
+const DEFAULT_DAYS_TEXT: Record<string, string> = {
+  one: "{count} день",
+  few: "{count} дня",
+  many: "{count} дней",
+  other: "{count} дней",
+}
 
-  return forms[2]
+const DEFAULT_HOURS_TEXT: Record<string, string> = {
+  one: "{count} час",
+  few: "{count} часа",
+  many: "{count} часов",
+  other: "{count} часов",
+}
+
+/** Число в подписи остаётся жирным, поэтому оно рисуется отдельным узлом. */
+function countNode(template: string, count: number): ReactNode {
+  const [before, after = ""] = template.split("{count}")
+
+  return (
+    <>
+      {before}
+      <b>{count}</b>
+      {after}
+    </>
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -121,9 +180,16 @@ export function Calendar022({
   label = "Рабочие дни",
   defaultDays = WORKWEEK,
   hoursPerDay = 8,
+  presetText = DEFAULT_PRESET_TEXT,
+  daysText = DEFAULT_DAYS_TEXT,
+  hoursText = DEFAULT_HOURS_TEXT,
+  perDayText = "{count} ч",
+  totalText = "{days} × {perDay} = {total} в неделю",
+  emptyText = "Рабочих дней нет — график пустой",
   locale = "ru-RU",
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -157,8 +223,33 @@ export function Calendar022({
 
   const total = days.length * hoursPerDay
 
+  // Формы счётчиков выбираются по правилам самого языка, а не по русским:
+  // словари приходят пропсами, а категорию называет Intl.
+  const plural = new Intl.PluralRules(locale)
+  const form = (
+    dictionary: Record<string, string>,
+    fallback: Record<string, string>,
+    count: number,
+  ) => dictionary[plural.select(count)] ?? dictionary.other ?? fallback.other
+
+  const presets = { ...DEFAULT_PRESET_TEXT, ...presetText }
+  const totalPieces: Record<string, ReactNode> = {
+    "{days}": countNode(
+      form(daysText, DEFAULT_DAYS_TEXT, days.length),
+      days.length,
+    ),
+    "{perDay}": countNode(perDayText, hoursPerDay),
+    "{total}": countNode(form(hoursText, DEFAULT_HOURS_TEXT, total), total),
+  }
+
   const palette = {
     ...(accent ? { "--vibeui-calendar-022-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-022-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -197,30 +288,27 @@ export function Calendar022({
             data-part="preset"
             onClick={() => apply(WORKWEEK)}
           >
-            Пятидневка
+            {presets.fiveDay}
           </button>
           <button
             type="button"
             data-part="preset"
             onClick={() => apply(SIXDAY)}
           >
-            Шестидневка
+            {presets.sixDay}
           </button>
           <button type="button" data-part="preset" onClick={() => apply([])}>
-            Снять всё
+            {presets.clear}
           </button>
         </div>
         <p data-part="total" aria-live="polite">
-          {days.length === 0 ? (
-            "Рабочих дней нет — график пустой"
-          ) : (
-            <>
-              <b>{days.length}</b>{" "}
-              {pluralize(days.length, ["день", "дня", "дней"])} ×{" "}
-              <b>{hoursPerDay}</b> ч = <b>{total}</b>{" "}
-              {pluralize(total, ["час", "часа", "часов"])} в неделю
-            </>
-          )}
+          {days.length === 0
+            ? emptyText
+            : totalText
+                .split(/(\{days\}|\{perDay\}|\{total\})/)
+                .map((piece, index) => (
+                  <Fragment key={index}>{totalPieces[piece] ?? piece}</Fragment>
+                ))}
         </p>
       </fieldset>
     </>

@@ -29,7 +29,12 @@ export type Commerce074Props = {
   cta?: string
   rules?: string[]
   rulesTitle?: string
+  cardKicker?: string
+  cardAmount?: string
+  cardValid?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -43,12 +48,14 @@ export type Commerce074Props = {
 // :has(), поэтому не нужен ни JS, ни второй экран.
 const STYLES = `
 :where([data-vibeui-block="commerce-074"]){
---vibeui-commerce-074-bg:oklch(1 0 0);
---vibeui-commerce-074-fg:oklch(0.2 0.014 15);
---vibeui-commerce-074-muted:oklch(0.53 0.016 15);
---vibeui-commerce-074-border:oklch(0.9 0.01 15);
---vibeui-commerce-074-soft:oklch(0.975 0.008 25);
---vibeui-commerce-074-accent:oklch(0.52 0.16 10);
+--vibeui-commerce-074-bg:transparent;
+--vibeui-commerce-074-surface:light-dark(oklch(1 0 0),oklch(0.22 0.016 15));
+--vibeui-commerce-074-fg:light-dark(oklch(0.2 0.014 15),oklch(0.94 0.008 15));
+--vibeui-commerce-074-muted:light-dark(oklch(0.53 0.016 15),oklch(0.73 0.014 15));
+--vibeui-commerce-074-border:light-dark(oklch(0.9 0.01 15),oklch(0.38 0.018 15));
+--vibeui-commerce-074-soft:light-dark(oklch(0.975 0.008 25),oklch(0.27 0.02 25));
+--vibeui-commerce-074-accent:light-dark(oklch(0.52 0.16 10),oklch(0.78 0.15 10));
+--vibeui-commerce-074-onaccent:light-dark(oklch(0.99 0 0),oklch(0.2 0.05 10));
 --vibeui-commerce-074-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -98,7 +105,7 @@ background:linear-gradient(140deg,oklch(0.9 0.08 var(--vibeui-commerce-074-hue,1
 [data-vibeui-block="commerce-074"] input[type="date"],
 [data-vibeui-block="commerce-074"] textarea{
 padding:0.5rem 0.75rem;border-radius:0.625rem;border:1px solid var(--vibeui-commerce-074-border);
-background:var(--vibeui-commerce-074-bg);font:inherit;font-size:0.875rem;color:inherit;
+background:var(--vibeui-commerce-074-surface);font:inherit;font-size:0.875rem;color:inherit;
 }
 [data-vibeui-block="commerce-074"] input[type="email"],
 [data-vibeui-block="commerce-074"] input[type="date"]{height:2.5rem;padding-top:0;padding-bottom:0}
@@ -123,7 +130,7 @@ background:linear-gradient(140deg,oklch(0.58 0.15 10),oklch(0.42 0.12 340));
 [data-vibeui-block="commerce-074"] li::before{content:"—";flex:none;color:var(--vibeui-commerce-074-accent)}
 [data-vibeui-block="commerce-074"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;width:100%;height:2.875rem;margin-top:1rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-074-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-074-accent);color:var(--vibeui-commerce-074-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 @container (min-width: 34rem){
 [data-vibeui-block="commerce-074"] [data-part="values"]{grid-template-columns:repeat(4,minmax(0,1fr))}
@@ -135,6 +142,28 @@ background:var(--vibeui-commerce-074-accent);color:oklch(0.99 0 0);font:inherit;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-074"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_VALUES: Commerce074Value[] = [
   { value: "3000", amount: "3 000 ₽", hint: "на кружку и зерно" },
@@ -177,12 +206,25 @@ export function Commerce074({
   cta = "Купить сертификат",
   rulesTitle = "Что важно знать",
   rules = DEFAULT_RULES,
+  cardKicker = "Подарочный сертификат",
+  cardAmount = "5 000 ₽",
+  cardValid = "Действует до 11 марта 2025 года",
   accent,
+  background = "",
   className,
   style,
 }: Commerce074Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-074-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-074-bg": background,
+          // Поля ввода не должны просвечивать: им нужна непрозрачная
+          // подложка, и это тот же цвет.
+          "--vibeui-commerce-074-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -294,9 +336,9 @@ export function Commerce074({
 
           <aside data-part="panel">
             <div data-part="card">
-              <span data-part="cardtop">Подарочный сертификат</span>
-              <p data-part="cardsum">5 000 ₽</p>
-              <p data-part="cardfoot">Действует до 11 марта 2025 года</p>
+              <span data-part="cardtop">{cardKicker}</span>
+              <p data-part="cardsum">{cardAmount}</p>
+              <p data-part="cardfoot">{cardValid}</p>
             </div>
             <h3>{rulesTitle}</h3>
             <ul>

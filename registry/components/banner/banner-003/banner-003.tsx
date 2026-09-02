@@ -10,18 +10,27 @@ export type Banner003Props = Omit<
   /** Отказ равен согласию по весу: тёмный «Принять» против серой ссылки — тёмный паттерн. */
   rejectLabel?: string
   settingsLabel?: string
+  accent?: string
+  /** Подложка карточки. Пусто — остаётся собственная. */
+  background?: string
 }
 
 // Идея компонента: согласие на cookie, где отказ — такая же кнопка, как и
 // согласие. Обе одного размера и одного веса, разница только в заливке;
 // «Настроить» стоит третьим и не притворяется отказом.
+//
+// Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не
+// инверсия светлой, граница в ней светлее подложки, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="banner-003"]){
---vibeui-banner-003-bg:oklch(1 0 0);
---vibeui-banner-003-fg:oklch(0.23 0.012 265);
---vibeui-banner-003-muted:oklch(0.52 0.012 265);
---vibeui-banner-003-border:oklch(0.89 0.006 265);
---vibeui-banner-003-accent:oklch(0.28 0.02 265);
+--vibeui-banner-003-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-banner-003-fg:light-dark(oklch(0.23 0.012 265),oklch(0.94 0.005 265));
+--vibeui-banner-003-muted:light-dark(oklch(0.52 0.012 265),oklch(0.71 0.01 265));
+--vibeui-banner-003-border:light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265));
+--vibeui-banner-003-accent:light-dark(oklch(0.28 0.02 265),oklch(0.9 0.008 265));
+--vibeui-banner-003-on-accent:light-dark(oklch(0.98 0.002 265),oklch(0.21 0.014 265));
+--vibeui-banner-003-hover:light-dark(oklch(0.95 0.004 265),oklch(0.31 0.014 265));
+--vibeui-banner-003-shadow:light-dark(oklch(0.2 0.02 265 / 55%),oklch(0 0 0 / 62%));
 --vibeui-banner-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -34,7 +43,7 @@ display:flex;flex-direction:column;gap:0.875rem;
 box-sizing:border-box;padding:1.125rem 1.25rem;
 border:1px solid var(--vibeui-banner-003-border);border-radius:1rem;
 background:var(--vibeui-banner-003-bg);
-box-shadow:0 22px 48px -30px oklch(0.2 0.02 265 / 55%);
+box-shadow:0 22px 48px -30px var(--vibeui-banner-003-shadow);
 }
 [data-vibeui-block="banner-003"] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;line-height:1.3}
 [data-vibeui-block="banner-003"] [data-part="text"]{margin:0;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-banner-003-muted);max-width:38rem}
@@ -49,13 +58,13 @@ transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="banner-003"] [data-part="accept"]{
 border:1px solid var(--vibeui-banner-003-accent);
-background:var(--vibeui-banner-003-accent);color:oklch(0.98 0.002 265);
+background:var(--vibeui-banner-003-accent);color:var(--vibeui-banner-003-on-accent);
 }
 [data-vibeui-block="banner-003"] [data-part="reject"]{
 border:1px solid var(--vibeui-banner-003-accent);
 background:transparent;color:var(--vibeui-banner-003-accent);
 }
-[data-vibeui-block="banner-003"] [data-part="reject"]:hover{background:oklch(0.95 0.004 265)}
+[data-vibeui-block="banner-003"] [data-part="reject"]:hover{background:var(--vibeui-banner-003-hover)}
 [data-vibeui-block="banner-003"] [data-part="settings"]{
 appearance:none;cursor:pointer;border:0;background:transparent;
 margin-left:auto;padding:0.25rem 0.375rem;border-radius:0.375rem;
@@ -75,6 +84,28 @@ text-decoration:underline;text-underline-offset:0.2em;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Согласие на cookie, где отказ равен согласию по весу кнопки.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -84,10 +115,23 @@ export function Banner003({
   acceptLabel = "Принять все",
   rejectLabel = "Только необходимые",
   settingsLabel = "Настроить",
+  accent,
+  background = "",
   className,
   style,
   ...props
 }: Banner003Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-banner-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-banner-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-banner-003" precedence="medium">
@@ -98,7 +142,7 @@ export function Banner003({
         data-vibeui-block="banner-003"
         aria-label={title}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="shell">
           <h2 data-part="title">{title}</h2>

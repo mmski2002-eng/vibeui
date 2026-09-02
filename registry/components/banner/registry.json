@@ -27,13 +27,14 @@
           "usage": "<Banner001\n  tag=\"Новое\"\n  message=\"Каталог пополнился компонентами форм.\"\n  actionLabel=\"Посмотреть\"\n  actionHref=\"/components\"\n  onDismiss={hideBanner}\n/>",
           "summary": "Тёмная полоса объявления во всю ширину страницы: метка вроде «Новое», текст, ссылка-действие и крестик. Подсветка слева нарисована градиентом. На узкой ширине текст переносится на свою строку, а не сжимается в столбик. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
-            "локальную палитру --vibeui-banner-001-* — полоса намеренно тёмная и не следует теме страницы",
+            "локальную палитру --vibeui-banner-001-* и не подменять её токенами вашей темы: полоса тёмная по замыслу, в тёмной ветке она лишь светлеет, чтобы не слиться с фоном",
             "спокойный тон: объявление не должно выглядеть как ошибка, для ошибок есть alert",
             "@container-запрос с переносом текста на свою строку: без него на узком экране слова сжимаются в колонку по одному",
             "появление крестика только при переданном onDismiss — крестик, который ничего не делает, хуже его отсутствия",
             "role=\"region\" с подписью: полосу должно быть можно найти и пропустить с клавиатуры",
             "подчёркивание ссылки на наведении через border-bottom, а не text-decoration: так линия не прыгает",
-            "блок <style> внутри компонента — в нём вся палитра, градиент и раскладка"
+            "блок <style> внутри компонента — в нём вся палитра, градиент и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "tag — короткая метка слева: «Новое», «Бета», дата",
@@ -41,13 +42,17 @@
             "actionLabel и actionHref — подпись и адрес действия",
             "onDismiss — обработчик закрытия; без него крестика не будет",
             "акцент через проп accent — цвет метки, ссылки и подсветки",
-            "положение через className: sticky сверху делает вызывающий код"
+            "положение через className: sticky сверху делает вызывающий код",
+            "background — подложка полосы; пусто оставляет собственную тёмную",
+            "подписи для скринридера через dismissLabel и regionLabel"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Полоса не запоминает закрытие. Флаг «уже видел» хранит вызывающий код, иначе объявление вернётся на следующей странице.",
             "Не держите на экране две полосы одновременно: вторую перестают замечать.",
             "Не размещайте в полосе важное сообщение о состоянии системы: её закрывают не читая. Для этого есть alert в потоке.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "Подложка полосы рассчитана на тёмный цвет: текст на ней светлый в обеих ветках темы, светлый background сделает его нечитаемым."
           ]
         },
         "controls": [
@@ -77,6 +82,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -85,13 +96,14 @@
             "ai": {
               "summary": "A dark full-width announcement bar: a tag such as \"New\", a message, a link action and a close button. The glow on the left is a gradient. In a narrow column the message moves to its own line instead of collapsing word by word. Zero dependencies, one file, its own palette.",
               "preserve": [
-                "the local --vibeui-banner-001-* palette — the bar is deliberately dark and does not follow the page theme",
+                "the local --vibeui-banner-001-* palette — do not swap it for your theme tokens: the bar is dark by design and only lightens in the dark branch so it does not merge with the page",
                 "the calm tone: an announcement must not look like an error, errors have the alert component",
                 "the @container query that moves the message to its own line: without it a narrow screen squeezes the words into a column",
                 "showing the close button only when onDismiss is provided — a cross that does nothing is worse than no cross",
                 "role=\"region\" with a label: the bar has to be findable and skippable from the keyboard",
                 "underlining the link on hover through border-bottom rather than text-decoration: that keeps the line from jumping",
-                "the <style> block inside the component — it holds the palette, the gradient and the layout"
+                "the <style> block inside the component — it holds the palette, the gradient and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "tag — the short label on the left: \"New\", \"Beta\", a date",
@@ -99,13 +111,17 @@
                 "actionLabel and actionHref — the action's label and destination",
                 "onDismiss — the close handler; without it there is no close button",
                 "the accent through the accent prop — it colours the tag, the link and the glow",
-                "placement through className: sticking it to the top is the caller's job"
+                "placement through className: sticking it to the top is the caller's job",
+                "background — the bar surface; empty keeps its own dark one",
+                "the screen-reader labels through dismissLabel and regionLabel"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The bar does not remember being dismissed. The \"already seen\" flag belongs to the calling code, otherwise the announcement returns on the next page.",
                 "Do not keep two bars on screen at once: the second one stops being noticed.",
                 "Do not put an important system status message here — people dismiss the bar without reading. Use an inline alert.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "The bar surface expects a dark colour: the text on it is light in both theme branches, so a light background makes it unreadable."
               ],
               "usage": "<Banner001\n  tag=\"New\"\n  message=\"The catalog now has form components.\"\n  actionLabel=\"Take a look\"\n  actionHref=\"/components\"\n  onDismiss={hideBanner}\n/>"
             },
@@ -124,11 +140,24 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Announcement Banner"
+            "title": "Announcement Banner",
+            "preview": {
+              "props": {
+                "tag": "New",
+                "message": "The catalog now has form components — fields, selects and switches.",
+                "actionLabel": "Take a look",
+                "dismissLabel": "Dismiss announcement",
+                "regionLabel": "Announcement"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -162,15 +191,18 @@
             "правило @container на внутреннем shell — контейнерный запрос не применяется к самому контейнеру",
             "role=\"status\" с aria-live=\"polite\": обновление не должно перебивать текущее чтение",
             "номер версии рядом с текстом — без него полоса выглядит рекламой",
-            "собственную светлую подложку полосы: без неё тёмный текст пропадает на тёмном фоне"
+            "собственную подложку полосы: она следует теме через light-dark(), но остаётся плашкой — без неё текст теряется на произвольном фоне",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "текст через message и номер через version",
             "подпись кнопки через actionLabel",
             "ширину полосы через max-width на корне",
-            "акцент через переменную --vibeui-banner-002-accent"
+            "акцент через проп accent — точка, кнопка и обводка фокуса",
+            "background — подложка полосы; пусто оставляет собственную"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не перезагружает страницу сам: onReload вызывает вызывающий код.",
             "Полоса не решает, когда появиться — сравнение версий делает приложение.",
             "На узкой ширине кнопка растягивается на всю строку: проверьте текст, длинная подпись переносится.",
@@ -191,6 +223,18 @@
             "type": "text",
             "default": "Перезагрузить",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -204,15 +248,18 @@
                 "the @container rule on the inner shell — a container query never applies to the container itself",
                 "role=\"status\" with aria-live=\"polite\": an update must not interrupt current reading",
                 "the version number next to the copy — without it the bar looks like marketing",
-                "the bar's own light surface: without it the dark text disappears on a dark background"
+                "the bar's own surface: it follows the theme through light-dark() but stays a panel — without it the copy gets lost on an arbitrary background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the copy through message and the number through version",
                 "the button caption through actionLabel",
                 "the bar width through max-width on the root",
-                "the accent through the --vibeui-banner-002-accent variable"
+                "the accent through the accent prop — the dot, the button and the focus ring",
+                "background — the bar surface; empty keeps its own"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not reload the page: onReload is called by the caller.",
                 "The bar does not decide when to appear — the app compares the versions.",
                 "At narrow widths the button spans the row: check the caption, a long one wraps.",
@@ -228,11 +275,25 @@
               "actionLabel": {
                 "label": "Action",
                 "default": "Reload"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Update Banner"
+            "title": "Update Banner",
+            "preview": {
+              "props": {
+                "message": "A new version of the app is out. Reload the page to get the fixes.",
+                "version": "2.8.0",
+                "actionLabel": "Reload"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -266,15 +327,18 @@
             "порядок «принять, отказаться, настроить»: настройки не должны стоять на месте отказа",
             "честный текст про то, что без необязательных файлов сайт работает так же",
             "растяжение обеих кнопок на узкой ширине — иначе на телефоне отказ окажется мельче",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "собственную подложку карточки: она следует теме через light-dark(), но остаётся плашкой — без неё текст теряется на произвольном фоне",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "заголовок через title и объяснение через text",
             "подписи через acceptLabel, rejectLabel и settingsLabel",
             "ширину карточки через max-width на корне",
-            "акцент через переменную --vibeui-banner-003-accent"
+            "акцент через проп accent — заливка кнопок и обводка фокуса",
+            "background — подложка карточки; пусто оставляет собственную"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент ничего не сохраняет: решение пользователя записывает вызывающий код.",
             "Пустая строка в settingsLabel убирает третью кнопку, две первые остаются равными.",
             "Юридический текст в объяснение не влезет — ведите его отдельной страницей и ссылкой.",
@@ -295,6 +359,25 @@
             "type": "text",
             "default": "Только необходимые",
             "maxLength": 24
+          },
+          {
+            "prop": "settingsLabel",
+            "label": "Настройки",
+            "type": "text",
+            "default": "Настроить",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -308,15 +391,18 @@
                 "the order «accept, reject, settings»: settings must not stand where refusal belongs",
                 "the honest line saying the site works the same without the optional files",
                 "both buttons spanning the row at narrow widths — otherwise refusal ends up smaller on a phone",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "the card's own surface: it follows the theme through light-dark() but stays a panel — without it the copy gets lost on an arbitrary background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the heading through title and the explanation through text",
                 "the captions through acceptLabel, rejectLabel and settingsLabel",
                 "the card width through max-width on the root",
-                "the accent through the --vibeui-banner-003-accent variable"
+                "the accent through the accent prop — the button fill and the focus ring",
+                "background — the card surface; empty keeps its own"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component stores nothing: the caller records the user's decision.",
                 "An empty settingsLabel removes the third button and leaves the first two equal.",
                 "Legal text will not fit in the explanation — keep it on its own page behind a link.",
@@ -332,11 +418,31 @@
               "rejectLabel": {
                 "label": "Reject",
                 "default": "Essential only"
+              },
+              "settingsLabel": {
+                "label": "Settings",
+                "default": "Customise"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Consent Banner"
+            "title": "Consent Banner",
+            "preview": {
+              "props": {
+                "title": "Cookies and analytics",
+                "text": "The files needed to run the site are already in place. The rest only count visits; without them the site works exactly the same.",
+                "acceptLabel": "Accept all",
+                "rejectLabel": "Essential only",
+                "settingsLabel": "Customise"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -370,15 +476,19 @@
             "имя окружения в доступной подписи — на скриншоте видно, а вслух иначе не прочитается",
             "объяснение последствий рядом с меткой: «тестовый режим» сам по себе ничего не говорит",
             "правило @container на внутреннем shell — контейнерный запрос не применяется к самому контейнеру",
-            "собственную светлую подложку полосы: без неё тёмный текст пропадает на тёмном фоне"
+            "собственную подложку полосы: она следует теме через light-dark(), но остаётся плашкой — без неё текст теряется на произвольном фоне",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "метку через label и объяснение через note",
             "имя окружения через environment",
             "шаг штриховки в правиле tape",
-            "цвет полос через переменную --vibeui-banner-004-stripe"
+            "цвет косых полос ленты через проп stripe",
+            "background — подложка полосы; пусто оставляет собственную",
+            "доступное имя через labelTemplate: подставляются {label} и {environment}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Полоса не определяет окружение сама: имя приходит из переменных сборки.",
             "На узкой ширине штриховка и метка окружения скрываются — не кладите в них уникальные сведения.",
             "Жёлтый в этой палитре намеренно спокойный: красная полоса на каждом экране перестаёт работать через день.",
@@ -399,6 +509,25 @@
             "type": "text",
             "default": "staging",
             "maxLength": 16
+          },
+          {
+            "prop": "note",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Платежи не проходят, письма никому не уходят. Данные обнуляются каждую ночь.",
+            "maxLength": 120
+          },
+          {
+            "prop": "stripe",
+            "label": "Штриховка",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -412,15 +541,19 @@
                 "the environment name in the accessible label — visible in a screenshot, otherwise never spoken",
                 "the consequences next to the label: \"test mode\" on its own says nothing",
                 "the @container rule on the inner shell — a container query never applies to the container itself",
-                "the bar's own light surface: without it the dark text disappears on a dark background"
+                "the bar's own surface: it follows the theme through light-dark() but stays a panel — without it the copy gets lost on an arbitrary background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the label through label and the explanation through note",
                 "the environment name through environment",
                 "the hatching pitch in the tape rule",
-                "the stripe colour through the --vibeui-banner-004-stripe variable"
+                "the diagonal stripe colour through the stripe prop",
+                "background — the bar surface; empty keeps its own",
+                "the accessible name through labelTemplate: {label} and {environment} are substituted"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The bar does not detect the environment: the name comes from build variables.",
                 "At narrow widths the hatching and the environment chip hide — do not put unique facts there.",
                 "The yellow here is deliberately calm: a red bar on every screen stops working within a day.",
@@ -436,11 +569,30 @@
               "environment": {
                 "label": "Environment",
                 "default": "staging"
+              },
+              "note": {
+                "label": "Note",
+                "default": "Payments do not go through and no emails are sent. The data is wiped every night."
+              },
+              "stripe": {
+                "label": "Hatching"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Staging Banner"
+            "title": "Staging Banner",
+            "preview": {
+              "props": {
+                "label": "Test mode",
+                "note": "Payments do not go through and no emails are sent. The data is wiped every night.",
+                "environment": "staging",
+                "labelTemplate": "{label}: {environment}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["stripe", "background"]
       }
     },
     {
@@ -474,18 +626,23 @@
             "переключение тона по доле, а не отдельные наборы правил на каждое состояние",
             "role=\"progressbar\" с aria-valuenow — доля должна читаться вслух",
             "табличные цифры у счётчика: иначе числа прыгают при каждом обновлении",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "собственную подложку карточки: она следует теме через light-dark(), но остаётся плашкой — без неё текст теряется на произвольном фоне",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "числа через used и limit, единицу измерения через unit",
             "название тарифа через planLabel",
             "подпись кнопки через actionLabel",
-            "спокойный тон через переменную --vibeui-banner-005-tone"
+            "спокойный тон через проп tone — состояния tight и over переключаются сами",
+            "background — подложка карточки; пусто оставляет собственную",
+            "тексты через counterTemplate, progressTemplate и noteText",
+            "формат чисел через locale"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Доля зажимается сотней: перерасход показывается полной полосой и отдельным текстом.",
             "Границы состояний заданы в коде: 90 процентов и исчерпание — меняйте их вместе с текстом.",
-            "Числа форматируются русской локалью: для другой локали передайте уже отформатированные строки.",
+            "Числа форматируются локалью из пропа locale; по умолчанию русской.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -505,6 +662,18 @@
             "default": 10000,
             "min": 1,
             "max": 20000
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -518,18 +687,23 @@
                 "switching the tone by ratio rather than writing a rule set per state",
                 "role=\"progressbar\" with aria-valuenow — the ratio has to be announced",
                 "tabular figures on the counter: otherwise the numbers jump on every update",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "the card's own surface: it follows the theme through light-dark() but stays a panel — without it the copy gets lost on an arbitrary background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the figures through used and limit, the unit through unit",
                 "the plan name through planLabel",
                 "the button caption through actionLabel",
-                "the calm tone through the --vibeui-banner-005-tone variable"
+                "the calm tone through the tone prop — the tight and over states switch themselves",
+                "background — the card surface; empty keeps its own",
+                "the copy through counterTemplate, progressTemplate and noteText",
+                "the number format through locale"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The ratio is capped at a hundred: overuse shows as a full bar plus separate copy.",
                 "The thresholds live in the code: 90 percent and exhaustion — change them together with the wording.",
-                "Numbers are formatted with the Russian locale: for another locale pass pre-formatted strings.",
+                "Numbers are formatted with the locale prop; Russian by default.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Banner005\n  used={9200}\n  limit={10000}\n  unit=\"requests\"\n  actionLabel=\"Upgrade plan\"\n/>"
@@ -540,11 +714,35 @@
               },
               "limit": {
                 "label": "Limit"
+              },
+              "tone": {
+                "label": "Tone"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Quota Banner"
+            "title": "Quota Banner",
+            "preview": {
+              "props": {
+                "used": 9200,
+                "limit": 10000,
+                "unit": "requests",
+                "planLabel": "Starter plan",
+                "actionLabel": "Upgrade plan",
+                "counterTemplate": "of {limit} {unit}",
+                "progressTemplate": "{percent} percent of the limit used",
+                "noteText": {
+                  "calm": "The limit resets on the first. Until then the remainder does not carry over.",
+                  "tight": "The limit resets on the first. Until then the remainder does not carry over.",
+                  "over": "The limit is used up: new requests are rejected until the next period begins."
+                },
+                "locale": "en-US"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["used", "limit", "tone", "background"]
       }
     },
     {
@@ -577,20 +775,24 @@
             "вторую строку с последствиями: «нет сети» без неё оставляет человека в панике за свой текст",
             "форму индикатора: оборванный сигнал должен читаться и без цвета",
             "role=\"status\" с aria-live=\"polite\" — потеря сети объявляется, но не перебивает ввод",
-            "тёмную подложку: полоса обязана отличаться от обычных сообщений интерфейса",
-            "правило @container на внутреннем shell — контейнерный запрос не применяется к самому контейнеру"
+            "тёмную подложку: полоса обязана отличаться от обычных сообщений интерфейса, в тёмной теме она лишь светлеет, чтобы не слиться с фоном",
+            "правило @container на внутреннем shell — контейнерный запрос не применяется к самому контейнеру",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "первую строку через message и вторую через detail",
             "подпись действия через retryLabel",
-            "цвет индикатора через переменную --vibeui-banner-006-tone",
-            "ширину полосы через max-width на корне"
+            "цвет индикатора через проп tone",
+            "ширину полосы через max-width на корне",
+            "background — подложка полосы; пусто оставляет собственную тёмную"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не следит за сетью: показывать и прятать полосу решает приложение.",
             "Обещание «сохраняется в браузере» должно быть правдой — иначе текст лучше переписать.",
             "Кнопка только вызывает onRetry: повторный запрос делает вызывающий код.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "Подложка полосы рассчитана на тёмный цвет: текст на ней светлый в обеих ветках темы, светлый background сделает его нечитаемым."
           ]
         },
         "controls": [
@@ -607,6 +809,25 @@
             "type": "text",
             "default": "Проверить сеть",
             "maxLength": 20
+          },
+          {
+            "prop": "detail",
+            "label": "Последствия",
+            "type": "text",
+            "default": "Изменения сохраняются в браузере и уйдут сами, как только сеть вернётся.",
+            "maxLength": 120
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -619,20 +840,24 @@
                 "the second line about consequences: \"no connection\" alone leaves people fearing for their text",
                 "the shape of the indicator: a broken signal must read without colour",
                 "role=\"status\" with aria-live=\"polite\" — losing the network is announced but does not interrupt typing",
-                "the dark surface: the bar has to look different from ordinary interface messages",
-                "the @container rule on the inner shell — a container query never applies to the container itself"
+                "the dark surface: the bar has to look different from ordinary interface messages, and in a dark theme it only lightens so it does not merge with the page",
+                "the @container rule on the inner shell — a container query never applies to the container itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the first line through message and the second through detail",
                 "the action caption through retryLabel",
-                "the indicator colour through the --vibeui-banner-006-tone variable",
-                "the bar width through max-width on the root"
+                "the indicator colour through the tone prop",
+                "the bar width through max-width on the root",
+                "background — the bar surface; empty keeps its own dark one"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not watch the network: the app decides when to show and hide the bar.",
                 "The promise \"saved in the browser\" must be true — otherwise rewrite the copy.",
                 "The button only calls onRetry: the retry request is the caller's job.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "The bar surface expects a dark colour: the text on it is light in both theme branches, so a light background makes it unreadable."
               ],
               "usage": "<Banner006\n  message=\"No connection to the server\"\n  detail=\"Changes are kept in the browser.\"\n  retryLabel=\"Check network\"\n/>"
             },
@@ -644,11 +869,29 @@
               "retryLabel": {
                 "label": "Retry",
                 "default": "Check network"
+              },
+              "detail": {
+                "label": "Consequences",
+                "default": "Changes are kept in the browser and will be sent as soon as the network is back."
+              },
+              "tone": {
+                "label": "Tone"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Offline Banner"
+            "title": "Offline Banner",
+            "preview": {
+              "props": {
+                "message": "No connection to the server",
+                "detail": "Changes are kept in the browser and will be sent as soon as the network is back.",
+                "retryLabel": "Check network"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["tone", "background"]
       }
     },
     {
@@ -682,15 +925,19 @@
             "вынесенное окно недоступности: время здесь важнее заголовка",
             "доступное имя полосы с датой и границами окна — оно звучит вместо чтения абзаца",
             "перечисление того, что перестанет работать: «возможны перебои» никому не помогает",
-            "собственную светлую подложку полосы: без неё тёмный текст пропадает на тёмном фоне"
+            "собственную подложку полосы: она следует теме через light-dark(), но остаётся плашкой — без неё текст теряется на произвольном фоне",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "заголовок через title и подробности через note",
             "дату через date, границы окна через from и to",
             "машиночитаемое значение через datetime",
-            "акцент через переменную --vibeui-banner-007-accent"
+            "акцент через проп accent — выделение внутри пояснения",
+            "background — подложка полосы; пусто оставляет собственную",
+            "доступное имя через labelTemplate: подставляются {title}, {date}, {from} и {to}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Часовой пояс компонент не подставляет: указывайте его прямо в date или note.",
             "Значение datetime должно совпадать с показанным временем, иначе разметка врёт.",
             "Полоса не исчезает после окончания работ — снимать её должно приложение.",
@@ -711,6 +958,25 @@
             "type": "text",
             "default": "04:30",
             "maxLength": 8
+          },
+          {
+            "prop": "date",
+            "label": "Дата",
+            "type": "text",
+            "default": "14 сентября",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -724,15 +990,19 @@
                 "the outage window pulled out on its own: here the time matters more than the heading",
                 "the accessible name carrying the date and the window — it is spoken instead of the paragraph",
                 "listing what will stop working: \"there may be disruptions\" helps nobody",
-                "the bar's own light surface: without it the dark text disappears on a dark background"
+                "the bar's own surface: it follows the theme through light-dark() but stays a panel — without it the copy gets lost on an arbitrary background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the heading through title and the detail through note",
                 "the date through date and the window through from and to",
                 "the machine-readable value through datetime",
-                "the accent through the --vibeui-banner-007-accent variable"
+                "the accent through the accent prop — the emphasis inside the detail line",
+                "background — the bar surface; empty keeps its own",
+                "the accessible name through labelTemplate: {title}, {date}, {from} and {to} are substituted"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not add a time zone: state it inside date or note.",
                 "The datetime value must match the displayed time, otherwise the markup lies.",
                 "The bar does not disappear when the work ends — the app has to remove it.",
@@ -748,11 +1018,33 @@
               "to": {
                 "label": "To",
                 "default": "04:30"
+              },
+              "date": {
+                "label": "Date",
+                "default": "14 September"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Maintenance Notice"
+            "title": "Maintenance Notice",
+            "preview": {
+              "props": {
+                "title": "Scheduled database maintenance",
+                "date": "14 September",
+                "from": "02:00",
+                "to": "04:30",
+                "datetime": "2026-09-14T02:00",
+                "note": "The catalog stays readable. Publishing and file uploads will not work.",
+                "labelTemplate": "{title}: {date}, from {from} to {to}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -786,19 +1078,24 @@
             "связку label и чекбокса по id: без неё крестик перестаёт закрывать полосу",
             "правило :has(:checked) на корне — это и есть механизм закрытия без JS",
             "моноширинный промокод на пунктирной рамке: его переписывают глазами, а не копируют",
-            "уникальный id при двух полосах на странице — иначе они закроются вместе"
+            "уникальный id при двух полосах на странице — иначе они закроются вместе",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "текст через message и промокод через code",
-            "подпись кнопки через actionLabel и адрес ссылки",
+            "подпись кнопки через actionLabel и адрес через actionHref",
             "идентификатор чекбокса через id",
-            "градиент через переменные --vibeui-banner-008-from и --vibeui-banner-008-to"
+            "начало градиента через проп accent",
+            "background — подложка полосы целиком; пусто оставляет собственный градиент",
+            "подпись закрытия через dismissLabel"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Закрытие не запоминается между заходами: чтобы полоса не возвращалась, состояние придётся хранить самому.",
             "Селектор :has() поддерживается современными браузерами; в старых полоса просто не закроется.",
             "Крестик помечен aria-hidden — доступное имя несёт сам чекбокс, иначе действие прозвучит дважды.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "Текст на полосе светлый в обеих ветках темы: собственный background должен быть тёмным, иначе подпись станет нечитаемой."
           ]
         },
         "controls": [
@@ -815,6 +1112,25 @@
             "type": "text",
             "default": "Забрать скидку",
             "maxLength": 20
+          },
+          {
+            "prop": "message",
+            "label": "Текст",
+            "type": "text",
+            "default": "Годовая подписка на 30% дешевле до конца недели.",
+            "maxLength": 120
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -828,19 +1144,24 @@
                 "the label-to-checkbox link by id: without it the close control stops working",
                 "the :has(:checked) rule on the root — that is the JS-free dismissal mechanism",
                 "the monospaced code on a dashed border: people retype it by eye rather than copy it",
-                "a unique id when two bars share a page — otherwise they close together"
+                "a unique id when two bars share a page — otherwise they close together",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the copy through message and the coupon through code",
-                "the button caption through actionLabel and the link target",
+                "the button caption through actionLabel and the destination through actionHref",
                 "the checkbox identifier through id",
-                "the gradient through --vibeui-banner-008-from and --vibeui-banner-008-to"
+                "the start of the gradient through the accent prop",
+                "background — the whole bar surface; empty keeps its own gradient",
+                "the dismiss label through dismissLabel"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Dismissal is not remembered between visits: to keep the bar away you have to store that yourself.",
                 "The :has() selector works in current browsers; in old ones the bar simply will not close.",
                 "The close label is aria-hidden — the checkbox carries the accessible name, otherwise the action is announced twice.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "The copy on the bar is light in both theme branches: a custom background has to be dark, otherwise the text becomes unreadable."
               ],
               "usage": "<Banner008\n  message=\"Annual plans are 30% off.\"\n  code=\"AUTUMN30\"\n  actionLabel=\"Get the discount\"\n/>"
             },
@@ -852,11 +1173,31 @@
               "actionLabel": {
                 "label": "Action",
                 "default": "Get the discount"
+              },
+              "message": {
+                "label": "Message",
+                "default": "Annual plans are 30% off until the end of the week."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Promo Banner"
+            "title": "Promo Banner",
+            "preview": {
+              "props": {
+                "message": "Annual plans are 30% off until the end of the week.",
+                "code": "AUTUMN30",
+                "actionLabel": "Get the discount",
+                "actionHref": "#pricing",
+                "dismissLabel": "Dismiss the promo bar"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

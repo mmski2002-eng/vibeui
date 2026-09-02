@@ -15,8 +15,16 @@ export type Ai001Props = {
   messages?: Ai001Message[]
   suggestions?: string[]
   placeholder?: string
+  /** Подпись автора реплики: компонент несёт русские, проект подставляет свои. */
+  roleText?: Record<string, string>
+  /** Название ленты для скринридера. */
+  logLabel?: string
+  sendText?: string
+  hint?: string
   onSend?: (text: string) => void
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,14 +38,16 @@ export type Ai001Props = {
 // потолка в несколько строк: сначала растягивается, потом прокручивается.
 const STYLES = `
 :where([data-vibeui-block="ai-001"]){
---vibeui-ai-001-bg:oklch(1 0 0);
---vibeui-ai-001-fg:oklch(0.22 0.014 265);
---vibeui-ai-001-muted:oklch(0.55 0.014 265);
---vibeui-ai-001-border:oklch(0.91 0.006 265);
---vibeui-ai-001-user:oklch(0.55 0.2 262);
+--vibeui-ai-001-bg:transparent;
+--vibeui-ai-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-ai-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-ai-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-ai-001-user:light-dark(oklch(0.55 0.2 262),oklch(0.56 0.18 262));
 --vibeui-ai-001-user-fg:oklch(1 0 0);
---vibeui-ai-001-bubble:oklch(0.97 0.003 265);
---vibeui-ai-001-accent:oklch(0.55 0.2 262);
+--vibeui-ai-001-bubble:light-dark(oklch(0.97 0.003 265),oklch(0.29 0.011 265));
+--vibeui-ai-001-field:light-dark(oklch(1 0 0),oklch(0.25 0.01 265));
+--vibeui-ai-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
+--vibeui-ai-001-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
 --vibeui-ai-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -56,7 +66,7 @@ border-bottom:1px solid var(--vibeui-ai-001-border);
 [data-vibeui-block="ai-001"] [data-part="mark"]{
 display:inline-flex;align-items:center;justify-content:center;flex:none;
 width:1.75rem;height:1.75rem;border-radius:0.625rem;
-background:var(--vibeui-ai-001-accent);color:oklch(1 0 0);
+background:var(--vibeui-ai-001-accent);color:var(--vibeui-ai-001-on-accent);
 font-size:0.75rem;font-weight:700;
 }
 [data-vibeui-block="ai-001"] h2{margin:0;font-size:0.875rem;font-weight:650}
@@ -101,7 +111,7 @@ padding:0.625rem 0.875rem;border-top:1px solid var(--vibeui-ai-001-border);
 flex:1 1 auto;min-width:0;resize:none;
 min-height:2.25rem;max-height:6rem;padding:0.5rem 0.75rem;
 border:1px solid var(--vibeui-ai-001-border);border-radius:0.75rem;
-background:var(--vibeui-ai-001-bg);color:inherit;
+background:var(--vibeui-ai-001-field);color:inherit;
 font:inherit;font-size:0.8125rem;line-height:1.4;
 field-sizing:content;
 }
@@ -109,7 +119,7 @@ field-sizing:content;
 [data-vibeui-block="ai-001"] [data-part="send"]{
 appearance:none;cursor:pointer;flex:none;
 height:2.25rem;padding:0 0.875rem;border:0;border-radius:0.75rem;
-background:var(--vibeui-ai-001-accent);color:oklch(1 0 0);
+background:var(--vibeui-ai-001-accent);color:var(--vibeui-ai-001-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="ai-001"] [data-part="send"]:disabled{opacity:.5;cursor:default}
@@ -149,6 +159,33 @@ const DEFAULT_SUGGESTIONS = [
   "Объяснить установку",
 ]
 
+const DEFAULT_ROLE_TEXT: Record<string, string> = {
+  user: "Вы",
+  assistant: "Ассистент",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Окно чата с ассистентом: лента, подсказки и поле с Enter на отправку.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -159,8 +196,13 @@ export function Ai001({
   messages = DEFAULT_MESSAGES,
   suggestions = DEFAULT_SUGGESTIONS,
   placeholder = "Опишите, что нужно собрать",
+  roleText = DEFAULT_ROLE_TEXT,
+  logLabel = "Переписка",
+  sendText = "Отправить",
+  hint = "Enter отправляет, Shift + Enter переносит строку.",
   onSend,
   accent,
+  background = "",
   className,
   style,
 }: Ai001Props) {
@@ -182,6 +224,12 @@ export function Ai001({
 
   const palette = {
     ...(accent ? { "--vibeui-ai-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-ai-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -210,7 +258,7 @@ export function Ai001({
           data-part="log"
           role="log"
           aria-live="polite"
-          aria-label="Переписка"
+          aria-label={logLabel}
         >
           {messages.map((message) => (
             <div
@@ -222,8 +270,8 @@ export function Ai001({
                 {message.text}
                 {message.time ? (
                   <span data-part="time">
-                    {message.role === "user" ? "Вы" : "Ассистент"} ·{" "}
-                    {message.time}
+                    {roleText[message.role] ?? DEFAULT_ROLE_TEXT[message.role]}{" "}
+                    · {message.time}
                   </span>
                 ) : null}
               </p>
@@ -259,12 +307,10 @@ export function Ai001({
             disabled={draft.trim() === ""}
             onClick={send}
           >
-            Отправить
+            {sendText}
           </button>
         </div>
-        <p data-part="hint">
-          Enter отправляет, Shift + Enter переносит строку.
-        </p>
+        <p data-part="hint">{hint}</p>
       </section>
     </>
   )

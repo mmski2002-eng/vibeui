@@ -14,6 +14,18 @@ export type Combobox013Props = Omit<
   sections?: Combobox013Section[]
   defaultValue?: string
   onSelect?: (value: string, section: string) => void
+  /** Заголовок левой колонки для скринридера. */
+  sectionsLabel?: string
+  /** Заголовок правой колонки, когда идёт поиск. */
+  matchesLabel?: string
+  /** Строка на месте пустого списка совпадений. */
+  emptyText?: string
+  /** Подпись строки итога перед выбранным значением. */
+  summaryLabel?: string
+  /** Что стоит в итоге, пока ничего не выбрано. */
+  emptyValueText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,14 +36,15 @@ export type Combobox013Props = Omit<
 // совпадений с подписью раздела у каждой строки.
 const STYLES = `
 :where([data-vibeui-block="combobox-013"]){
---vibeui-combobox-013-bg:oklch(1 0 0);
---vibeui-combobox-013-fg:oklch(0.22 0.014 250);
---vibeui-combobox-013-muted:oklch(0.55 0.014 250);
---vibeui-combobox-013-border:oklch(0.9 0.008 250);
---vibeui-combobox-013-field:oklch(0.985 0.004 250);
---vibeui-combobox-013-soft:oklch(0.96 0.008 250);
---vibeui-combobox-013-accent:oklch(0.5 0.13 250);
---vibeui-combobox-013-accentsoft:oklch(0.94 0.04 250);
+--vibeui-combobox-013-bg:transparent;
+--vibeui-combobox-013-fg:light-dark(oklch(0.22 0.014 250),oklch(0.94 0.006 250));
+--vibeui-combobox-013-muted:light-dark(oklch(0.55 0.014 250),oklch(0.7 0.012 250));
+--vibeui-combobox-013-border:light-dark(oklch(0.9 0.008 250),oklch(0.35 0.012 250));
+--vibeui-combobox-013-field:light-dark(oklch(0.985 0.004 250),oklch(0.27 0.012 250));
+--vibeui-combobox-013-soft:light-dark(oklch(0.96 0.008 250),oklch(0.31 0.014 250));
+--vibeui-combobox-013-accent:light-dark(oklch(0.5 0.13 250),oklch(0.72 0.13 250));
+--vibeui-combobox-013-accentsoft:light-dark(oklch(0.94 0.04 250),oklch(0.36 0.06 250));
+--vibeui-combobox-013-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.02 250));
 --vibeui-combobox-013-radius:0.625rem;
 --vibeui-combobox-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -89,7 +102,7 @@ outline:2px solid var(--vibeui-combobox-013-accent);outline-offset:-2px;
 background:var(--vibeui-combobox-013-accentsoft);font-weight:600;
 }
 [data-vibeui-block="combobox-013"] [data-part="value"][aria-selected="true"]{
-background:var(--vibeui-combobox-013-accent);color:var(--vibeui-combobox-013-bg);font-weight:600;
+background:var(--vibeui-combobox-013-accent);color:var(--vibeui-combobox-013-onaccent);font-weight:600;
 }
 [data-vibeui-block="combobox-013"] [data-part="count"]{
 flex:none;font-size:0.7rem;color:var(--vibeui-combobox-013-muted);font-variant-numeric:tabular-nums;
@@ -135,6 +148,28 @@ const CATALOG: Combobox013Section[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор по иерархии «раздел → значение» с двумя колонками и сквозным поиском.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -144,6 +179,12 @@ export function Combobox013({
   sections = CATALOG,
   defaultValue = "Акт сверки",
   onSelect,
+  sectionsLabel = "Разделы",
+  matchesLabel = "Совпадения",
+  emptyText = "Ничего не нашлось",
+  summaryLabel = "Выбрано",
+  emptyValueText = "ничего",
+  background = "",
   accent,
   className,
   style,
@@ -184,6 +225,12 @@ export function Combobox013({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -212,7 +259,7 @@ export function Combobox013({
           onChange={(event) => setQuery(event.target.value)}
         />
         <div data-part="panes">
-          <ul data-part="sections" aria-label="Разделы" hidden={searching}>
+          <ul data-part="sections" aria-label={sectionsLabel} hidden={searching}>
             {sections.map((entry) => (
               <li key={entry.title}>
                 <button
@@ -230,12 +277,12 @@ export function Combobox013({
           <ul
             id={`${id}-values`}
             role="listbox"
-            aria-label={searching ? "Совпадения" : section}
+            aria-label={searching ? matchesLabel : section}
             data-part="values"
           >
             {matches.length === 0 ? (
               <li role="none">
-                <p data-part="empty">Ничего не нашлось</p>
+                <p data-part="empty">{emptyText}</p>
               </li>
             ) : (
               matches.map((match) => (
@@ -258,7 +305,7 @@ export function Combobox013({
           </ul>
         </div>
         <p data-part="foot" aria-live="polite">
-          Выбрано: <b>{value || "ничего"}</b>
+          {summaryLabel}: <b>{value || emptyValueText}</b>
           {value ? ` · ${section}` : ""}
         </p>
       </div>

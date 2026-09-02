@@ -17,7 +17,25 @@ export type Commerce022Props = {
   extra?: { value: string; label: string; hint: string }[]
   cta?: string
   secure?: string
+  /** Скрытая подпись выбора способа оплаты. */
+  payLabel?: string
+  /** Шаблон срока действия карты, {date} — месяц и год. */
+  expiresText?: string
+  /** Пометка карты, срок которой скоро выйдет. */
+  expiringText?: string
+  /** Шаблон подписи поля CVC, {last4} — последние цифры карты. */
+  cvcText?: string
+  /** Подпись и пояснение варианта новой карты. */
+  newCardLabel?: string
+  newCardHint?: string
+  /** Подписи полей новой карты. */
+  panLabel?: string
+  expLabel?: string
+  /** Подпись галочки запоминания карты. */
+  rememberText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,13 +50,15 @@ export type Commerce022Props = {
 // появляются на :has(), поэтому блок остаётся серверным.
 const STYLES = `
 :where([data-vibeui-block="commerce-022"]){
---vibeui-commerce-022-bg:oklch(1 0 0);
---vibeui-commerce-022-fg:oklch(0.21 0.014 265);
---vibeui-commerce-022-muted:oklch(0.55 0.014 265);
---vibeui-commerce-022-border:oklch(0.91 0.006 265);
---vibeui-commerce-022-soft:oklch(0.975 0.004 265);
---vibeui-commerce-022-accent:oklch(0.55 0.2 262);
---vibeui-commerce-022-warn:oklch(0.62 0.16 45);
+--vibeui-commerce-022-bg:transparent;
+--vibeui-commerce-022-paper:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-commerce-022-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-022-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-022-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-commerce-022-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.01 265));
+--vibeui-commerce-022-accent:light-dark(oklch(0.55 0.2 262),oklch(0.7 0.17 262));
+--vibeui-commerce-022-on-accent:light-dark(oklch(1 0 0),oklch(0.16 0.02 265));
+--vibeui-commerce-022-warn:light-dark(oklch(0.62 0.16 45),oklch(0.79 0.14 45));
 --vibeui-commerce-022-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -82,7 +102,7 @@ color:var(--vibeui-commerce-022-warn);font-size:0.625rem;font-weight:700;
 }
 [data-vibeui-block="commerce-022"] [data-part="cvc"]{
 width:4.5rem;font:inherit;font-size:0.8125rem;height:2.25rem;text-align:center;letter-spacing:0.2em;
-border:1px solid var(--vibeui-commerce-022-border);border-radius:0.5rem;background:var(--vibeui-commerce-022-bg);color:inherit;
+border:1px solid var(--vibeui-commerce-022-border);border-radius:0.5rem;background:var(--vibeui-commerce-022-paper);color:inherit;
 }
 [data-vibeui-block="commerce-022"] input:focus-visible{outline:2px solid var(--vibeui-commerce-022-accent);outline-offset:1px}
 /* Поля новой карты появляются только под её вариантом. */
@@ -94,12 +114,12 @@ border:1px solid var(--vibeui-commerce-022-border);border-radius:0.5rem;backgrou
 [data-vibeui-block="commerce-022"] label[data-part="field"]{display:flex;flex-direction:column;gap:0.25rem;font-size:0.6875rem;color:var(--vibeui-commerce-022-muted)}
 [data-vibeui-block="commerce-022"] label[data-part="field"] input{
 font:inherit;font-size:0.8125rem;height:2.375rem;padding:0 0.625rem;color:var(--vibeui-commerce-022-fg);
-border:1px solid var(--vibeui-commerce-022-border);border-radius:0.625rem;background:var(--vibeui-commerce-022-bg);
+border:1px solid var(--vibeui-commerce-022-border);border-radius:0.625rem;background:var(--vibeui-commerce-022-paper);
 }
 [data-vibeui-block="commerce-022"] [data-part="remember"]{display:flex;align-items:center;gap:0.5rem;margin-top:0.75rem;font-size:0.75rem;cursor:pointer}
 [data-vibeui-block="commerce-022"] [data-part="pay"]{
 width:100%;margin-top:0.875rem;appearance:none;border:0;cursor:pointer;height:2.75rem;border-radius:0.75rem;
-background:var(--vibeui-commerce-022-accent);color:oklch(1 0 0);font:inherit;font-size:0.9375rem;font-weight:650;
+background:var(--vibeui-commerce-022-accent);color:var(--vibeui-commerce-022-on-accent);font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="commerce-022"] [data-part="pay"]:focus-visible{outline:2px solid var(--vibeui-commerce-022-accent);outline-offset:2px}
 [data-vibeui-block="commerce-022"] [data-part="secure"]{
@@ -138,6 +158,28 @@ const DEFAULT_EXTRA = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Оплата сохранёнными картами: банк и четыре цифры, новая карта — вариант списка.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -148,12 +190,29 @@ export function Commerce022({
   extra = DEFAULT_EXTRA,
   cta = "Оплатить",
   secure = "Данные карты уходят в банк напрямую, магазин их не хранит. Списание пройдёт после подтверждения в приложении банка.",
+  payLabel = "Чем платите",
+  expiresText = "до {date}",
+  expiringText = "скоро истекает",
+  cvcText = "CVC карты {last4}",
+  newCardLabel = "Новая карта",
+  newCardHint = "Спишем 1 ₽ и сразу вернём для проверки",
+  panLabel = "Номер карты",
+  expLabel = "Срок",
+  rememberText = "Запомнить карту для следующих заказов",
   accent,
+  background = "",
   className,
   style,
 }: Commerce022Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-022-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-022-bg": background,
+          "--vibeui-commerce-022-paper": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -175,7 +234,7 @@ export function Commerce022({
           </div>
 
           <fieldset data-part="list">
-            <legend data-part="vh">Чем платите</legend>
+            <legend data-part="vh">{payLabel}</legend>
 
             {cards.map((card, index) => (
               <div
@@ -200,10 +259,11 @@ export function Commerce022({
                   <span>
                     <span data-part="num">•••• {card.last4}</span>
                     <span data-part="sub">
-                      {card.bank ? `${card.bank} · ` : ""}до {card.expires}
+                      {card.bank ? `${card.bank} · ` : ""}
+                      {expiresText.replace("{date}", card.expires)}
                     </span>
                     {card.expiring ? (
-                      <span data-part="soon">скоро истекает</span>
+                      <span data-part="soon">{expiringText}</span>
                     ) : null}
                   </span>
                 </label>
@@ -212,7 +272,7 @@ export function Commerce022({
                   type="text"
                   inputMode="numeric"
                   maxLength={3}
-                  aria-label={`CVC карты ${card.last4}`}
+                  aria-label={cvcText.replace("{last4}", card.last4)}
                   placeholder="CVC"
                 />
               </div>
@@ -242,21 +302,19 @@ export function Commerce022({
                 +
               </span>
               <span>
-                <span data-part="num">Новая карта</span>
-                <span data-part="sub">
-                  Спишем 1 ₽ и сразу вернём для проверки
-                </span>
+                <span data-part="num">{newCardLabel}</span>
+                <span data-part="sub">{newCardHint}</span>
               </span>
               <span />
             </label>
 
             <div data-part="fresh">
               <label data-part="field" htmlFor="commerce-022-pan">
-                Номер карты
+                {panLabel}
                 <input id="commerce-022-pan" type="text" inputMode="numeric" />
               </label>
               <label data-part="field" htmlFor="commerce-022-exp">
-                Срок
+                {expLabel}
                 <input id="commerce-022-exp" type="text" inputMode="numeric" />
               </label>
               <label data-part="field" htmlFor="commerce-022-code">
@@ -268,7 +326,7 @@ export function Commerce022({
 
           <label data-part="remember">
             <input type="checkbox" defaultChecked />
-            Запомнить карту для следующих заказов
+            {rememberText}
           </label>
 
           <button type="button" data-part="pay">

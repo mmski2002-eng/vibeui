@@ -15,6 +15,8 @@ export type Radio004Props = Omit<
   options?: Radio004Option[]
   name?: string
   defaultValue?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,15 +24,17 @@ export type Radio004Props = Omit<
 // системы, одной подписи мало — под каждым пунктом стоит объяснение, а
 // справа короткая метка вроде «по умолчанию». Карточек нет: список разделён
 // линиями, выбранная строка помечена цветной полосой слева.
+//
+// Тема берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="radio-004"]){
---vibeui-radio-004-bg:oklch(1 0 0);
---vibeui-radio-004-fg:oklch(0.22 0.014 265);
---vibeui-radio-004-muted:oklch(0.55 0.014 265);
---vibeui-radio-004-border:oklch(0.91 0.006 265);
---vibeui-radio-004-ring:oklch(0.74 0.012 265);
---vibeui-radio-004-accent:oklch(0.55 0.16 155);
---vibeui-radio-004-tint:oklch(0.55 0.16 155 / 6%);
+--vibeui-radio-004-bg:transparent;
+--vibeui-radio-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-radio-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-radio-004-ring:light-dark(oklch(0.74 0.012 265),oklch(0.53 0.014 265));
+--vibeui-radio-004-accent:light-dark(oklch(0.55 0.16 155),oklch(0.76 0.15 155));
+--vibeui-radio-004-tint:light-dark(oklch(0.55 0.16 155 / 6%),oklch(0.76 0.15 155 / 14%));
 --vibeui-radio-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="radio-004"]{
@@ -68,11 +72,13 @@ width:0.1875rem;border-radius:9999px;background:transparent;
 appearance:none;-webkit-appearance:none;flex:none;margin:0.125rem 0 0;cursor:pointer;
 width:1.0625rem;height:1.0625rem;border-radius:9999px;
 border:1.5px solid var(--vibeui-radio-004-ring);
-background:var(--vibeui-radio-004-bg);
+background:transparent;
 }
+/* Точка нарисована фоном самого кружка: внутренней тенью зазор пришлось бы
+   закрашивать цветом подложки, а подложки у компонента по умолчанию нет. */
 [data-vibeui-block="radio-004"] input:checked{
 border-color:var(--vibeui-radio-004-accent);
-box-shadow:inset 0 0 0 0.1875rem var(--vibeui-radio-004-bg),inset 0 0 0 1rem var(--vibeui-radio-004-accent);
+background:radial-gradient(circle at 50% 50%,var(--vibeui-radio-004-accent) 0 0.25rem,transparent 0.25rem);
 }
 [data-vibeui-block="radio-004"] input:focus-visible{outline:2px solid var(--vibeui-radio-004-accent);outline-offset:2px}
 [data-vibeui-block="radio-004"] [data-part="text"]{display:flex;flex-direction:column;gap:0.1875rem;flex:1 1 auto;min-width:0}
@@ -112,6 +118,28 @@ const DEFAULT_OPTIONS: Radio004Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Радиогруппа с объяснением под каждым вариантом и полосой у выбранного.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -120,6 +148,7 @@ export function Radio004({
   options = DEFAULT_OPTIONS,
   name = "vibeui-radio-004",
   defaultValue = "link",
+  background = "",
   accent,
   className,
   style,
@@ -127,6 +156,12 @@ export function Radio004({
 }: Radio004Props) {
   const palette = {
     ...(accent ? { "--vibeui-radio-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-radio-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

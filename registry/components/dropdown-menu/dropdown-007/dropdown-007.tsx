@@ -14,7 +14,19 @@ export type Dropdown007Props = Omit<
   trigger?: string
   dangerLabel?: string
   items?: string[]
+  /** Подпись слева от кнопки: над каким объектом меню. */
+  caption?: string
+  /** Имя опасной зоны для скринридера. */
+  zoneLabel?: string
+  /** Вопрос второго шага. */
+  confirmQuestion?: string
+  /** Подпись подтверждения. */
+  confirmLabel?: string
+  /** Подпись отмены. */
+  cancelLabel?: string
   accent?: string
+  /** Подложка панели и меню. Пусто — собственный фон по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: необратимое действие вынесено из общего списка в отдельную
@@ -22,15 +34,18 @@ export type Dropdown007Props = Omit<
 // Красный текст рядом с «дублировать» ловит промах мышью; отдельная зона и
 // второй шаг («точно удалить?») превращают промах в безобидное нажатие.
 // Подтверждение живёт в том же меню: диалог поверх меню — ещё один слой.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте панель светлее фона страницы, а её граница светлее панели.
 const STYLES = `
 :where([data-vibeui-block="dropdown-007"]){
---vibeui-dropdown-007-bg:oklch(1 0 0);
---vibeui-dropdown-007-fg:oklch(0.24 0.014 265);
---vibeui-dropdown-007-muted:oklch(0.56 0.014 265);
---vibeui-dropdown-007-border:oklch(0.9 0.006 265);
---vibeui-dropdown-007-hover:oklch(0.96 0.004 265);
---vibeui-dropdown-007-accent:oklch(0.55 0.17 265);
---vibeui-dropdown-007-danger:oklch(0.55 0.2 27);
+--vibeui-dropdown-007-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-dropdown-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-dropdown-007-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dropdown-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-dropdown-007-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
+--vibeui-dropdown-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-dropdown-007-danger:light-dark(oklch(0.55 0.2 27),oklch(0.68 0.18 27));
 --vibeui-dropdown-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="dropdown-007"]{
@@ -122,6 +137,28 @@ font:inherit;font-size:0.75rem;font-weight:600;
 
 const DEFAULT_ITEMS = ["Открыть", "Переименовать", "Дублировать", "В архив"]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function stepFocus(menu: HTMLElement | null, delta: number) {
   if (!menu) {
     return
@@ -147,7 +184,13 @@ export function Dropdown007({
   trigger = "Ещё",
   dangerLabel = "Удалить проект",
   items = DEFAULT_ITEMS,
+  caption = "Лендинг «Весна»",
+  zoneLabel = "Необратимое действие",
+  confirmQuestion = "Удалить без возможности вернуть?",
+  confirmLabel = "Да, удалить",
+  cancelLabel = "Отмена",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -158,6 +201,12 @@ export function Dropdown007({
 
   const palette = {
     ...(accent ? { "--vibeui-dropdown-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dropdown-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -172,7 +221,7 @@ export function Dropdown007({
         className={className}
         style={palette}
       >
-        <span data-part="caption">Лендинг «Весна»</span>
+        <span data-part="caption">{caption}</span>
         <button
           type="button"
           data-part="trigger"
@@ -229,10 +278,10 @@ export function Dropdown007({
               {item}
             </button>
           ))}
-          <div data-part="zone" role="group" aria-label="Необратимое действие">
+          <div data-part="zone" role="group" aria-label={zoneLabel}>
             {asking ? (
               <div data-part="ask">
-                <span id={`${id}-ask`}>Удалить без возможности вернуть?</span>
+                <span id={`${id}-ask`}>{confirmQuestion}</span>
                 <div data-part="row">
                   <button
                     type="button"
@@ -243,14 +292,14 @@ export function Dropdown007({
                       menu.current?.hidePopover()
                     }}
                   >
-                    Да, удалить
+                    {confirmLabel}
                   </button>
                   <button
                     type="button"
                     data-part="cancel"
                     onClick={() => setAsking(false)}
                   >
-                    Отмена
+                    {cancelLabel}
                   </button>
                 </div>
               </div>

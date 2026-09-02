@@ -18,6 +18,26 @@ export type Datagrid012Props = Omit<
   rows?: Datagrid012Row[]
   caption?: string
   rowCount?: number
+  /** Заголовок панели над таблицей. */
+  heading?: string
+  /** Статус во время загрузки. */
+  loadingText?: string
+  /** Статус после загрузки. {count} — число строк. */
+  readyText?: string
+  /** Подпись кнопки, показывающей данные. */
+  showDataLabel?: string
+  /** Подпись кнопки, показывающей скелетон. */
+  showLoadingLabel?: string
+  /** Названия колонок: campaign, channel, leads, cost. */
+  columnText?: Record<string, string>
+  /** Подпись итоговой строки. */
+  totalLabel?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Знак валюты в расходах. */
+  currency?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,16 +46,20 @@ export type Datagrid012Props = Omit<
 // разной длины — ровные одинаковые прямоугольники читаются как поломка
 // вёрстки. Область помечена aria-busy, а рядом лежит текстовый статус:
 // анимация ничего не сообщает скринридеру.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-012"]){
---vibeui-datagrid-012-bg:oklch(1 0 0);
---vibeui-datagrid-012-fg:oklch(0.23 0.014 145);
---vibeui-datagrid-012-muted:oklch(0.55 0.014 145);
---vibeui-datagrid-012-border:oklch(0.92 0.006 145);
---vibeui-datagrid-012-head:oklch(0.975 0.003 145);
---vibeui-datagrid-012-bone:oklch(0.93 0.006 145);
---vibeui-datagrid-012-shine:oklch(0.975 0.004 145);
---vibeui-datagrid-012-accent:oklch(0.5 0.13 150);
+--vibeui-datagrid-012-bg:transparent;
+--vibeui-datagrid-012-fg:light-dark(oklch(0.23 0.014 145),oklch(0.93 0.006 145));
+--vibeui-datagrid-012-muted:light-dark(oklch(0.55 0.014 145),oklch(0.68 0.012 145));
+--vibeui-datagrid-012-border:light-dark(oklch(0.92 0.006 145),oklch(0.34 0.012 145));
+--vibeui-datagrid-012-head:light-dark(oklch(0.975 0.003 145),oklch(0.27 0.012 145));
+--vibeui-datagrid-012-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 145));
+--vibeui-datagrid-012-bone:light-dark(oklch(0.93 0.006 145),oklch(0.32 0.012 145));
+--vibeui-datagrid-012-shine:light-dark(oklch(0.975 0.004 145),oklch(0.4 0.014 145));
+--vibeui-datagrid-012-accent:light-dark(oklch(0.5 0.13 150),oklch(0.76 0.12 150));
 --vibeui-datagrid-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-012"]{
@@ -58,7 +82,7 @@ margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-012-muted);
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:550;
 padding:0.375rem 0.75rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-012-border);
-background:var(--vibeui-datagrid-012-bg);color:var(--vibeui-datagrid-012-fg);
+background:var(--vibeui-datagrid-012-field);color:var(--vibeui-datagrid-012-fg);
 }
 [data-vibeui-block="datagrid-012"] [data-part="bar"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-012-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-012"] [data-part="scroll"]{overflow-x:auto}
@@ -145,6 +169,35 @@ const DEFAULT_ROWS: Datagrid012Row[] = [
 
 const BONES = [78, 52, 46, 38]
 
+const COLUMN_LABEL: Record<string, string> = {
+  campaign: "Кампания",
+  channel: "Канал",
+  leads: "Лиды",
+  cost: "Расход",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Сетка со скелетоном загрузки строк: полоски повторяют раскладку колонок,
  * область помечена aria-busy. Один файл, ноль зависимостей.
@@ -153,6 +206,16 @@ export function Datagrid012({
   rows = DEFAULT_ROWS,
   caption = "Кампании за март",
   rowCount = 6,
+  heading = "Кампании",
+  loadingText = "Загружаем строки…",
+  readyText = "Готово, строк: {count}",
+  showDataLabel = "Показать данные",
+  showLoadingLabel = "Показать загрузку",
+  columnText = COLUMN_LABEL,
+  totalLabel = "Всего лидов",
+  scrollLabel = "Таблица кампаний, прокручивается вбок",
+  currency = "₽",
+  background = "",
   accent,
   className,
   style,
@@ -162,9 +225,18 @@ export function Datagrid012({
 
   const leads = rows.reduce((sum, row) => sum + row.leads, 0)
   const cost = rows.reduce((sum, row) => sum + row.cost, 0)
+  const money = (value: number) =>
+    `${value.toLocaleString("ru-RU")} ${currency}`
+  const label = (column: string) => columnText[column] ?? COLUMN_LABEL[column]
 
   const palette = {
     ...(accent ? { "--vibeui-datagrid-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -181,19 +253,21 @@ export function Datagrid012({
       >
         <div data-part="bar">
           <div data-part="bar-text">
-            <h3 data-part="title">Кампании</h3>
+            <h3 data-part="title">{heading}</h3>
             <p data-part="status" role="status">
-              {loading ? "Загружаем строки…" : `Готово, строк: ${rows.length}`}
+              {loading
+                ? loadingText
+                : readyText.replace("{count}", String(rows.length))}
             </p>
           </div>
           <button type="button" onClick={() => setLoading(!loading)}>
-            {loading ? "Показать данные" : "Показать загрузку"}
+            {loading ? showDataLabel : showLoadingLabel}
           </button>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица кампаний, прокручивается вбок"
+          aria-label={scrollLabel}
           aria-busy={loading}
           tabIndex={0}
         >
@@ -201,13 +275,13 @@ export function Datagrid012({
             <caption>{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Кампания</th>
-                <th scope="col">Канал</th>
+                <th scope="col">{label("campaign")}</th>
+                <th scope="col">{label("channel")}</th>
                 <th scope="col" data-align="end">
-                  Лиды
+                  {label("leads")}
                 </th>
                 <th scope="col" data-align="end">
-                  Расход
+                  {label("cost")}
                 </th>
               </tr>
             </thead>
@@ -237,19 +311,15 @@ export function Datagrid012({
                       <th scope="row">{row.campaign}</th>
                       <td data-part="muted">{row.channel}</td>
                       <td data-align="end">{row.leads}</td>
-                      <td data-align="end">
-                        {row.cost.toLocaleString("ru-RU")} ₽
-                      </td>
+                      <td data-align="end">{money(row.cost)}</td>
                     </tr>
                   ))}
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan={2}>Всего лидов</td>
+                <td colSpan={2}>{totalLabel}</td>
                 <td data-align="end">{loading ? "—" : leads}</td>
-                <td data-align="end">
-                  {loading ? "—" : `${cost.toLocaleString("ru-RU")} ₽`}
-                </td>
+                <td data-align="end">{loading ? "—" : money(cost)}</td>
               </tr>
             </tfoot>
           </table>

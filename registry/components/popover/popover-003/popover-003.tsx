@@ -12,6 +12,10 @@ export type Popover003Props = Omit<
   confirmLabel?: string
   cancelLabel?: string
   onConfirm?: () => void
+  /** Тон опасности: заливка подтверждения и обводка фокуса. */
+  danger?: string
+  /** Подложка панели и кнопки. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: подтверждение у самой кнопки, а не модальным окном на весь
@@ -19,11 +23,14 @@ export type Popover003Props = Omit<
 // отмена стоит первой, потому что случайный Enter не должен удалять данные.
 const STYLES = `
 :where([data-vibeui-block="popover-003"]){
---vibeui-popover-003-bg:oklch(1 0 0);
---vibeui-popover-003-fg:oklch(0.23 0.014 265);
---vibeui-popover-003-muted:oklch(0.53 0.014 265);
---vibeui-popover-003-border:oklch(0.89 0.006 265);
---vibeui-popover-003-danger:oklch(0.55 0.2 25);
+--vibeui-popover-003-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-popover-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-popover-003-muted:light-dark(oklch(0.53 0.014 265),oklch(0.71 0.012 265));
+--vibeui-popover-003-border:light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265));
+--vibeui-popover-003-hover:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.014 265));
+--vibeui-popover-003-danger:light-dark(oklch(0.55 0.2 25),oklch(0.72 0.17 25));
+--vibeui-popover-003-on-danger:light-dark(oklch(0.99 0.01 25),oklch(0.18 0.03 25));
+--vibeui-popover-003-shadow:light-dark(oklch(0.2 0.02 265 / 60%),oklch(0.02 0.01 265 / 72%));
 --vibeui-popover-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="popover-003"]{
@@ -39,7 +46,7 @@ background:var(--vibeui-popover-003-bg);color:var(--vibeui-popover-003-danger);
 font:inherit;font-size:0.8125rem;font-weight:650;
 anchor-name:--vibeui-popover-003-anchor;
 }
-[data-vibeui-block="popover-003"] [data-part="trigger"]:hover{background:color-mix(in oklab,var(--vibeui-popover-003-danger) 8%,white)}
+[data-vibeui-block="popover-003"] [data-part="trigger"]:hover{background:color-mix(in oklab,var(--vibeui-popover-003-danger) 10%,var(--vibeui-popover-003-bg))}
 [data-vibeui-block="popover-003"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-popover-003-danger);outline-offset:2px}
 /* Раскладка панели только в :popover-open: display в обычном правиле
    перебил бы браузерный display:none и панель висела бы открытой. */
@@ -48,7 +55,7 @@ position:fixed;margin:0;padding:0.875rem;
 width:min(17.5rem,100vw - 2rem);box-sizing:border-box;
 border:1px solid var(--vibeui-popover-003-border);border-radius:0.875rem;
 background:var(--vibeui-popover-003-bg);color:inherit;
-box-shadow:0 24px 50px -30px oklch(0.2 0.02 265 / 60%);
+box-shadow:0 24px 50px -30px var(--vibeui-popover-003-shadow);
 position-anchor:--vibeui-popover-003-anchor;
 top:anchor(bottom);left:anchor(center);translate:-50% 0;margin-top:0.5rem;
 }
@@ -68,14 +75,36 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 [data-vibeui-block="popover-003"] [data-part="cancel"]{
 border:1px solid var(--vibeui-popover-003-border);background:transparent;color:var(--vibeui-popover-003-fg);
 }
-[data-vibeui-block="popover-003"] [data-part="cancel"]:hover{background:oklch(0.96 0.004 265)}
+[data-vibeui-block="popover-003"] [data-part="cancel"]:hover{background:var(--vibeui-popover-003-hover)}
 [data-vibeui-block="popover-003"] [data-part="confirm"]{
-border:0;background:var(--vibeui-popover-003-danger);color:oklch(0.99 0.01 25);
+border:0;background:var(--vibeui-popover-003-danger);color:var(--vibeui-popover-003-on-danger);
 }
 [data-vibeui-block="popover-003"] [data-part="cancel"]:focus-visible,
 [data-vibeui-block="popover-003"] [data-part="confirm"]:focus-visible{outline:2px solid var(--vibeui-popover-003-danger);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-003"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Поповер подтверждения у кнопки: последствие названо, отмена стоит первой.
@@ -88,11 +117,23 @@ export function Popover003({
   confirmLabel = "Удалить",
   cancelLabel = "Отмена",
   onConfirm,
+  danger,
+  background = "",
   className,
   style,
   ...props
 }: Popover003Props) {
   const id = useId().replace(/:/g, "")
+  const palette = {
+    ...(danger ? { "--vibeui-popover-003-danger": danger } : null),
+    ...(background
+      ? {
+          "--vibeui-popover-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -103,7 +144,7 @@ export function Popover003({
         {...props}
         data-vibeui-block="popover-003"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <button type="button" data-part="trigger" popoverTarget={`${id}-panel`}>
           {label}

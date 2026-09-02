@@ -3,11 +3,15 @@ import type { CSSProperties } from "react"
 export type Cta003Props = {
   title?: string
   description?: string
+  /** Видимая подпись поля почты. */
+  emailLabel?: string
   placeholder?: string
   submitLabel?: string
   consent?: string
   frequency?: string
   subscribers?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -17,15 +21,18 @@ export type Cta003Props = {
 // гидратации и не требует состояния, поэтому блок остаётся серверным.
 // Подпись поля видимая, а не placeholder-заглушка: подпись внутри поля
 // исчезает ровно тогда, когда она нужнее всего — при заполнении.
+//
+// Тема приходит из color-scheme окружения через light-dark(): подложки у
+// секции по умолчанию нет, поле и линейки темнеют вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="cta-003"]){
---vibeui-cta-003-bg:oklch(0.97 0.012 96);
---vibeui-cta-003-ink:oklch(0.24 0.03 70);
---vibeui-cta-003-muted:oklch(0.5 0.025 70);
---vibeui-cta-003-border:oklch(0.87 0.02 90);
---vibeui-cta-003-field:oklch(1 0 0);
---vibeui-cta-003-accent:oklch(0.48 0.13 42);
---vibeui-cta-003-accent-fg:oklch(0.99 0 0);
+--vibeui-cta-003-bg:transparent;
+--vibeui-cta-003-ink:light-dark(oklch(0.24 0.03 70),oklch(0.94 0.012 80));
+--vibeui-cta-003-muted:light-dark(oklch(0.5 0.025 70),oklch(0.74 0.018 80));
+--vibeui-cta-003-border:light-dark(oklch(0.87 0.02 90),oklch(0.37 0.018 80));
+--vibeui-cta-003-field:light-dark(oklch(1 0 0),oklch(0.25 0.014 80));
+--vibeui-cta-003-accent:light-dark(oklch(0.48 0.13 42),oklch(0.76 0.13 55));
+--vibeui-cta-003-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.2 0.045 55));
 --vibeui-cta-003-serif:ui-serif,Georgia,"Times New Roman",serif;
 --vibeui-cta-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -93,21 +100,51 @@ color:var(--vibeui-cta-003-muted);font-size:0.8125rem;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="cta-003"] *{animation:none!important;transition:none!important}}
 `
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Призыв с формой почты: настоящая форма с видимой подписью поля. */
 export function Cta003({
   title = "Письмо о том, как делают интерфейсы",
   description = "Раз в две недели присылаем разбор одного экрана: что решили, что выкинули и почему. Без новостей отрасли и без «10 трендов года».",
+  emailLabel = "Электронная почта",
   placeholder = "you@example.com",
   submitLabel = "Подписаться",
   consent = "Нажимая «Подписаться», вы соглашаетесь с политикой обработки данных. Отписка — одной ссылкой в любом письме.",
   frequency = "Два письма в месяц",
   subscribers = "6 400 читателей",
+  background = "",
   accent,
   className,
   style,
 }: Cta003Props) {
   const palette = {
     ...(accent ? { "--vibeui-cta-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cta-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -126,7 +163,7 @@ export function Cta003({
           <p data-part="text">{description}</p>
           <form data-part="form" action="#subscribe" method="post">
             <label data-part="label" htmlFor="vibeui-cta-003-email">
-              Электронная почта
+              {emailLabel}
             </label>
             <div data-part="row">
               <input

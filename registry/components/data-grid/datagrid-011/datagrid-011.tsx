@@ -18,6 +18,28 @@ export type Datagrid011Props = Omit<
   rows?: Datagrid011Row[]
   caption?: string
   emptyTitle?: string
+  /** Заголовок панели над таблицей. */
+  heading?: string
+  /** Подписи фильтров по их идентификатору. */
+  filterText?: Record<string, string>
+  /** Подпись фишки. {filter} — название фильтра. */
+  removeFilterLabel?: string
+  /** Подпись кнопки сброса в панели. */
+  resetAllLabel?: string
+  /** Названия колонок: request, city, status, score. */
+  columnText?: Record<string, string>
+  /** Подписи статусов: ключ — значение из строки. */
+  statusText?: Record<string, string>
+  /** Объяснение пустого результата. {filters} — список фильтров. */
+  emptyText?: string
+  /** Подпись главной кнопки пустого состояния. */
+  emptyResetLabel?: string
+  /** Подпись второй кнопки пустого состояния. */
+  emptyCreateLabel?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,15 +48,20 @@ export type Datagrid011Props = Omit<
 // называет причину — какие именно фильтры стоят, — а рядом даёт выход:
 // снять один фильтр или сбросить все. Шапка таблицы остаётся на месте,
 // поэтому не создаётся впечатление, что таблица пропала.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-011"]){
---vibeui-datagrid-011-bg:oklch(1 0 0);
---vibeui-datagrid-011-fg:oklch(0.23 0.014 210);
---vibeui-datagrid-011-muted:oklch(0.55 0.014 210);
---vibeui-datagrid-011-border:oklch(0.92 0.006 210);
---vibeui-datagrid-011-head:oklch(0.975 0.003 210);
---vibeui-datagrid-011-accent:oklch(0.52 0.13 210);
---vibeui-datagrid-011-accent-soft:oklch(0.52 0.13 210 / 10%);
+--vibeui-datagrid-011-bg:transparent;
+--vibeui-datagrid-011-fg:light-dark(oklch(0.23 0.014 210),oklch(0.93 0.006 210));
+--vibeui-datagrid-011-muted:light-dark(oklch(0.55 0.014 210),oklch(0.68 0.012 210));
+--vibeui-datagrid-011-border:light-dark(oklch(0.92 0.006 210),oklch(0.34 0.012 210));
+--vibeui-datagrid-011-head:light-dark(oklch(0.975 0.003 210),oklch(0.27 0.012 210));
+--vibeui-datagrid-011-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 210));
+--vibeui-datagrid-011-accent:light-dark(oklch(0.52 0.13 210),oklch(0.78 0.12 210));
+--vibeui-datagrid-011-accent-soft:light-dark(oklch(0.52 0.13 210 / 10%),oklch(0.78 0.12 210 / 18%));
+--vibeui-datagrid-011-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.02 210));
 --vibeui-datagrid-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-011"]{
@@ -65,7 +92,7 @@ margin-inline-start:auto;
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
 padding:0.3125rem 0.625rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-011-border);
-background:var(--vibeui-datagrid-011-bg);color:var(--vibeui-datagrid-011-fg);
+background:var(--vibeui-datagrid-011-field);color:var(--vibeui-datagrid-011-fg);
 }
 [data-vibeui-block="datagrid-011"] [data-part="reset"]:disabled{opacity:.45;cursor:not-allowed}
 [data-vibeui-block="datagrid-011"] [data-part="reset"]:focus-visible{outline:2px solid var(--vibeui-datagrid-011-accent);outline-offset:2px}
@@ -110,10 +137,10 @@ color:var(--vibeui-datagrid-011-muted);
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:550;
 padding:0.375rem 0.75rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-011-border);
-background:var(--vibeui-datagrid-011-bg);color:var(--vibeui-datagrid-011-fg);
+background:var(--vibeui-datagrid-011-field);color:var(--vibeui-datagrid-011-fg);
 }
 [data-vibeui-block="datagrid-011"] [data-part="empty-actions"] button[data-tone="primary"]{
-border-color:transparent;background:var(--vibeui-datagrid-011-accent);color:oklch(1 0 0);
+border-color:transparent;background:var(--vibeui-datagrid-011-accent);color:var(--vibeui-datagrid-011-on-accent);
 }
 [data-vibeui-block="datagrid-011"] [data-part="empty-actions"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-011-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-011"] *{animation:none!important;transition:none!important}}
@@ -166,17 +193,53 @@ const DEFAULT_ROWS: Datagrid011Row[] = [
 
 const FILTERS: {
   id: string
-  label: string
   test: (row: Datagrid011Row) => boolean
 }[] = [
-  {
-    id: "status",
-    label: "Статус: архив",
-    test: (row) => row.status === "Архив",
-  },
-  { id: "city", label: "Город: Сочи", test: (row) => row.city === "Сочи" },
-  { id: "score", label: "Оценка от 90", test: (row) => row.score >= 90 },
+  { id: "status", test: (row) => row.status === "Архив" },
+  { id: "city", test: (row) => row.city === "Сочи" },
+  { id: "score", test: (row) => row.score >= 90 },
 ]
+
+const FILTER_LABEL: Record<string, string> = {
+  status: "Статус: архив",
+  city: "Город: Сочи",
+  score: "Оценка от 90",
+}
+
+const COLUMN_LABEL: Record<string, string> = {
+  request: "Заявка",
+  city: "Город",
+  status: "Статус",
+  score: "Оценка",
+}
+
+const STATUS_LABEL: Record<string, string> = {
+  Новая: "Новая",
+  "В работе": "В работе",
+  Архив: "Архив",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Сетка с пустым состоянием: когда фильтры сошлись в ноль, тело таблицы
@@ -186,6 +249,17 @@ export function Datagrid011({
   rows = DEFAULT_ROWS,
   caption = "Заявки сервисной службы",
   emptyTitle = "Ни одной заявки не подошло",
+  heading = "Заявки",
+  filterText = FILTER_LABEL,
+  removeFilterLabel = "Снять фильтр «{filter}»",
+  resetAllLabel = "Сбросить всё",
+  columnText = COLUMN_LABEL,
+  statusText = STATUS_LABEL,
+  emptyText = "Одновременно стоят фильтры: {filters}. Снимите один из них или сбросьте все — данные никуда не делись.",
+  emptyResetLabel = "Сбросить фильтры",
+  emptyCreateLabel = "Создать заявку",
+  scrollLabel = "Таблица заявок, прокручивается вбок",
+  background = "",
   accent,
   className,
   style,
@@ -196,8 +270,17 @@ export function Datagrid011({
   const applied = FILTERS.filter((one) => active.includes(one.id))
   const visible = rows.filter((row) => applied.every((one) => one.test(row)))
 
+  const filterLabel = (id: string) => filterText[id] ?? FILTER_LABEL[id]
+  const label = (column: string) => columnText[column] ?? COLUMN_LABEL[column]
+
   const palette = {
     ...(accent ? { "--vibeui-datagrid-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -213,20 +296,23 @@ export function Datagrid011({
         style={palette}
       >
         <div data-part="bar">
-          <h3 data-part="title">Заявки</h3>
+          <h3 data-part="title">{heading}</h3>
           {applied.map((one) => (
             <button
               key={one.id}
               type="button"
               data-part="chip"
-              aria-label={`Снять фильтр «${one.label}»`}
+              aria-label={removeFilterLabel.replace(
+                "{filter}",
+                filterLabel(one.id),
+              )}
               onClick={() =>
                 setActive((current) =>
                   current.filter((value) => value !== one.id),
                 )
               }
             >
-              {one.label}
+              {filterLabel(one.id)}
               <span aria-hidden="true">×</span>
             </button>
           ))}
@@ -236,24 +322,24 @@ export function Datagrid011({
             disabled={applied.length === 0}
             onClick={() => setActive([])}
           >
-            Сбросить всё
+            {resetAllLabel}
           </button>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица заявок, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
             <caption>{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Заявка</th>
-                <th scope="col">Город</th>
-                <th scope="col">Статус</th>
+                <th scope="col">{label("request")}</th>
+                <th scope="col">{label("city")}</th>
+                <th scope="col">{label("status")}</th>
                 <th scope="col" data-align="end">
-                  Оценка
+                  {label("score")}
                 </th>
               </tr>
             </thead>
@@ -262,7 +348,9 @@ export function Datagrid011({
                 <tr key={row.id}>
                   <th scope="row">{row.request}</th>
                   <td data-part="muted">{row.city}</td>
-                  <td data-part="muted">{row.status}</td>
+                  <td data-part="muted">
+                    {statusText[row.status] ?? STATUS_LABEL[row.status]}
+                  </td>
                   <td data-align="end">{row.score}</td>
                 </tr>
               ))}
@@ -273,9 +361,10 @@ export function Datagrid011({
                       <span data-part="glyph" aria-hidden="true" />
                       <p data-part="empty-title">{emptyTitle}</p>
                       <p data-part="empty-text">
-                        Одновременно стоят фильтры:{" "}
-                        {applied.map((one) => one.label).join(", ")}. Снимите
-                        один из них или сбросьте все — данные никуда не делись.
+                        {emptyText.replace(
+                          "{filters}",
+                          applied.map((one) => filterLabel(one.id)).join(", "),
+                        )}
                       </p>
                       <div data-part="empty-actions">
                         <button
@@ -283,9 +372,9 @@ export function Datagrid011({
                           data-tone="primary"
                           onClick={() => setActive([])}
                         >
-                          Сбросить фильтры
+                          {emptyResetLabel}
                         </button>
-                        <button type="button">Создать заявку</button>
+                        <button type="button">{emptyCreateLabel}</button>
                       </div>
                     </div>
                   </td>

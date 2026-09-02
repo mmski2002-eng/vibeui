@@ -16,7 +16,19 @@ export type Solutions014Props = {
   hint?: string
   suppliers?: Solutions014Supplier[]
   scoreLabel?: string
+  /** Счётчик в шапке, {count} — сколько поставщиков в списке. */
+  countText?: string
+  /** Подписи состояний: ключи active, paused, new. */
+  statusText?: Record<string, string>
+  /** Подписи метрик: ключи onTime, defects, orders. */
+  metricText?: Record<string, string>
+  /** Подпись шкалы для скринридера, {score} и {label} — оценка и её единица. */
+  ratingLabelText?: string
+  /** Локаль для форматирования дробных чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,13 +43,13 @@ export type Solutions014Props = {
 // поставщиком нельзя оформить заказ, и это должно быть видно до клика.
 const STYLES = `
 :where([data-vibeui-block="solutions-014"]){
---vibeui-solutions-014-bg:oklch(1 0 0);
---vibeui-solutions-014-panel:oklch(0.975 0.004 120);
---vibeui-solutions-014-fg:oklch(0.22 0.014 150);
---vibeui-solutions-014-muted:oklch(0.53 0.012 150);
---vibeui-solutions-014-border:oklch(0.9 0.006 150);
---vibeui-solutions-014-accent:oklch(0.55 0.14 150);
---vibeui-solutions-014-weak:oklch(0.66 0.16 55);
+--vibeui-solutions-014-bg:transparent;
+--vibeui-solutions-014-panel:light-dark(oklch(0.975 0.004 120),oklch(0.26 0.01 150));
+--vibeui-solutions-014-fg:light-dark(oklch(0.22 0.014 150),oklch(0.94 0.005 150));
+--vibeui-solutions-014-muted:light-dark(oklch(0.53 0.012 150),oklch(0.7 0.01 150));
+--vibeui-solutions-014-border:light-dark(oklch(0.9 0.006 150),oklch(0.36 0.01 150));
+--vibeui-solutions-014-accent:light-dark(oklch(0.55 0.14 150),oklch(0.75 0.14 150));
+--vibeui-solutions-014-weak:light-dark(oklch(0.66 0.16 55),oklch(0.8 0.14 55));
 --vibeui-solutions-014-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -162,11 +174,39 @@ const DEFAULT_SUPPLIERS: Solutions014Supplier[] = [
   },
 ]
 
-const STATUS_LABEL = {
+const DEFAULT_STATUS_TEXT: Record<string, string> = {
   active: "работаем",
   paused: "на паузе",
   new: "новый",
-} as const
+}
+
+const DEFAULT_METRIC_TEXT: Record<string, string> = {
+  onTime: "В срок",
+  defects: "Брак",
+  orders: "Заказов",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Поставщики с рейтингом: пять сегментов плюс цифра и три метрики под ней.
@@ -177,12 +217,24 @@ export function Solutions014({
   hint = "Оценка складывается из срока, брака и объёма заказов",
   suppliers = DEFAULT_SUPPLIERS,
   scoreLabel = "из 5",
+  countText = "{count} в реестре",
+  statusText = DEFAULT_STATUS_TEXT,
+  metricText = DEFAULT_METRIC_TEXT,
+  ratingLabelText = "Рейтинг {score} {label}",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions014Props) {
   const palette = {
     ...(accent ? { "--vibeui-solutions-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -202,7 +254,9 @@ export function Solutions014({
             <h2>{title}</h2>
             <p data-part="hint">{hint}</p>
           </div>
-          <p data-part="hint">{suppliers.length} в реестре</p>
+          <p data-part="hint">
+            {countText.replace("{count}", String(suppliers.length))}
+          </p>
         </header>
 
         <ul>
@@ -213,13 +267,14 @@ export function Solutions014({
                   <span data-part="name">{supplier.name}</span>
                   <span data-part="city">{supplier.city}</span>
                   <span data-part="tag">
-                    {STATUS_LABEL[supplier.status ?? "active"]}
+                    {statusText[supplier.status ?? "active"] ??
+                      DEFAULT_STATUS_TEXT[supplier.status ?? "active"]}
                   </span>
                 </div>
 
                 <div data-part="rating">
                   <span data-part="score">
-                    {supplier.score.toLocaleString("ru-RU", {
+                    {supplier.score.toLocaleString(locale, {
                       minimumFractionDigits: 1,
                     })}
                     <span data-part="of"> {scoreLabel}</span>
@@ -227,7 +282,9 @@ export function Solutions014({
                   <span
                     data-part="bars"
                     role="img"
-                    aria-label={`Рейтинг ${supplier.score} ${scoreLabel}`}
+                    aria-label={ratingLabelText
+                      .replace("{score}", String(supplier.score))
+                      .replace("{label}", scoreLabel)}
                   >
                     {[0, 1, 2, 3, 4].map((index) => (
                       <span
@@ -247,20 +304,20 @@ export function Solutions014({
 
               <dl>
                 <div data-weak={supplier.onTime < 85 ? "true" : "false"}>
-                  <dt>В срок</dt>
+                  <dt>{metricText.onTime ?? DEFAULT_METRIC_TEXT.onTime}</dt>
                   <dd>{supplier.onTime}%</dd>
                 </div>
                 <div data-weak={supplier.defects > 3 ? "true" : "false"}>
-                  <dt>Брак</dt>
+                  <dt>{metricText.defects ?? DEFAULT_METRIC_TEXT.defects}</dt>
                   <dd>
-                    {supplier.defects.toLocaleString("ru-RU", {
+                    {supplier.defects.toLocaleString(locale, {
                       minimumFractionDigits: 1,
                     })}
                     %
                   </dd>
                 </div>
                 <div data-weak="false">
-                  <dt>Заказов</dt>
+                  <dt>{metricText.orders ?? DEFAULT_METRIC_TEXT.orders}</dt>
                   <dd>{supplier.orders}</dd>
                 </div>
               </dl>

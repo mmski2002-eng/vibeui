@@ -9,12 +9,21 @@ export type Popover007Item = {
 
 export type Popover007Props = Omit<
   ComponentPropsWithoutRef<"div">,
-  "children"
+  "children" | "title"
 > & {
   /** Число на значке. 0 убирает значок целиком. */
   count?: number
   items?: Popover007Item[]
   footerLabel?: string
+  /** Заголовок панели и подпись кнопки без непрочитанных. */
+  title?: string
+  /** Строка о непрочитанных. {count} подставляется. */
+  unreadText?: string
+  /** Доступная подпись кнопки со счётчиком. {count} подставляется. */
+  unreadHint?: string
+  accent?: string
+  /** Подложка панели и кнопки. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: колокольчик со счётчиком и списком внутри. Непрочитанное
@@ -22,12 +31,14 @@ export type Popover007Props = Omit<
 // ссылками, поэтому по нему ходят стрелками и Tab, а не мышью по div'ам.
 const STYLES = `
 :where([data-vibeui-block="popover-007"]){
---vibeui-popover-007-bg:oklch(1 0 0);
---vibeui-popover-007-fg:oklch(0.23 0.014 265);
---vibeui-popover-007-muted:oklch(0.54 0.014 265);
---vibeui-popover-007-border:oklch(0.9 0.006 265);
---vibeui-popover-007-hover:oklch(0.965 0.004 265);
---vibeui-popover-007-accent:oklch(0.58 0.19 25);
+--vibeui-popover-007-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-popover-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-popover-007-muted:light-dark(oklch(0.54 0.014 265),oklch(0.71 0.012 265));
+--vibeui-popover-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-popover-007-hover:light-dark(oklch(0.965 0.004 265),oklch(0.27 0.014 265));
+--vibeui-popover-007-accent:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.17 25));
+--vibeui-popover-007-on-accent:light-dark(oklch(0.99 0.01 25),oklch(0.18 0.03 25));
+--vibeui-popover-007-shadow:light-dark(oklch(0.2 0.02 265 / 62%),oklch(0.02 0.01 265 / 74%));
 --vibeui-popover-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="popover-007"]{
@@ -50,7 +61,7 @@ position:absolute;top:-0.3125rem;right:-0.3125rem;
 display:flex;align-items:center;justify-content:center;
 min-width:1.125rem;height:1.125rem;padding:0 0.25rem;box-sizing:border-box;
 border-radius:9999px;border:2px solid var(--vibeui-popover-007-bg);
-background:var(--vibeui-popover-007-accent);color:oklch(0.99 0.01 25);
+background:var(--vibeui-popover-007-accent);color:var(--vibeui-popover-007-on-accent);
 font-size:0.625rem;font-weight:750;line-height:1;font-variant-numeric:tabular-nums;
 }
 /* Раскладка панели только в :popover-open, иначе display перебьёт
@@ -60,7 +71,7 @@ position:fixed;margin:0;padding:0;
 width:min(20rem,100vw - 2rem);box-sizing:border-box;overflow:hidden;
 border:1px solid var(--vibeui-popover-007-border);border-radius:1rem;
 background:var(--vibeui-popover-007-bg);color:inherit;
-box-shadow:0 26px 54px -30px oklch(0.2 0.02 265 / 62%);
+box-shadow:0 26px 54px -30px var(--vibeui-popover-007-shadow);
 position-anchor:--vibeui-popover-007-anchor;
 top:anchor(bottom);right:anchor(right);margin-top:0.5rem;
 }
@@ -120,6 +131,28 @@ const DEFAULT_ITEMS: Popover007Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поповер уведомлений: значок со счётчиком и список со ссылками внутри.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -127,11 +160,26 @@ export function Popover007({
   count = 2,
   items = DEFAULT_ITEMS,
   footerLabel = "Все уведомления",
+  title = "Уведомления",
+  unreadText = "{count} новых",
+  unreadHint = "Уведомления, непрочитанных: {count}",
+  accent,
+  background = "",
   className,
   style,
   ...props
 }: Popover007Props) {
   const id = useId().replace(/:/g, "")
+  const palette = {
+    ...(accent ? { "--vibeui-popover-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-popover-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -142,14 +190,14 @@ export function Popover007({
         {...props}
         data-vibeui-block="popover-007"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <button
           type="button"
           data-part="trigger"
           popoverTarget={`${id}-panel`}
           aria-label={
-            count > 0 ? `Уведомления, непрочитанных: ${count}` : "Уведомления"
+            count > 0 ? unreadHint.replace("{count}", String(count)) : title
           }
         >
           <span aria-hidden="true">🔔</span>
@@ -163,11 +211,13 @@ export function Popover007({
           data-part="panel"
           id={`${id}-panel`}
           popover="auto"
-          aria-label="Уведомления"
+          aria-label={title}
         >
           <div data-part="head">
-            <p data-part="heading">Уведомления</p>
-            <span data-part="unreadCount">{count} новых</span>
+            <p data-part="heading">{title}</p>
+            <span data-part="unreadCount">
+              {unreadText.replace("{count}", String(count))}
+            </span>
           </div>
           <ul data-part="list">
             {items.map((item) => (

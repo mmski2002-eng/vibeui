@@ -16,7 +16,7 @@
           "target": "@components/vibeui/gantt-001.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-gantt-001-*. Серверный: хуков нет. Полоса задачи занимает колонки грида от начала до конца, поэтому пересчёт длительности в проценты не нужен. Колонка названий липкая, состояние различается заливкой и стилем рамки, сроки продублированы текстом.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-gantt-001-*. Серверный: хуков нет. Полоса задачи занимает колонки грида от начала до конца, поэтому пересчёт длительности в проценты не нужен. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы, а проп background включает её вместе с подложкой липкой колонки. Колонка названий липкая, состояние различается заливкой и стилем рамки, сроки продублированы текстом.",
       "meta": {
         "tags": ["gantt", "plan", "grid", "timeline"],
         "preview": {
@@ -28,19 +28,25 @@
           "summary": "План работ: задачи строками, недели колонками, полоса занимает свой интервал, состояние различается заливкой и рамкой. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-gantt-001-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "полосу на колонках грида: пересчёт длительности в проценты не нужен",
             "липкую колонку названий — план читают по строкам, а не по датам",
             "заливку вместе со стилем рамки: одного цвета мало на печати и при дальтонизме",
             "сроки текстом внутри полосы, а не только её длиной",
-            "горизонтальную прокрутку вместо сжатия недель"
+            "горизонтальную прокрутку вместо сжатия недель",
+            "подложку липкой колонки заодно с фоном компонента: прозрачная колонка названий пропустит под себя полосы при прокрутке"
           ],
           "adapt": [
             "массив tasks и подписи weeks",
             "title — заголовок плана",
-            "акцент через проп accent",
+            "rangeText — шаблон срока внутри полосы: {from} и {to} подставляют подписи недель",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "акцент через проп accent — цвет рамки и заливки полосы",
             "ширину колонки названий"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Зависимости между задачами не рисуются: стрелки требуют своей раскладки.",
             "Единица — неделя: для дней увеличьте число колонок, а не дробите полосу.",
             "Перетаскивание сроков отсутствует — это показ плана, а не редактор.",
@@ -60,6 +66,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -69,19 +81,25 @@
               "summary": "A work plan: tasks as rows, weeks as columns, each bar spanning its interval, state carried by fill and border style. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-gantt-001-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
                 "bars placed on grid columns: no duration-to-percentage math is needed",
                 "the sticky name column — a plan is read by rows, not by dates",
                 "fill together with border style: colour alone dies in print and for colour blindness",
                 "the dates as text inside the bar, not only its length",
-                "horizontal scrolling instead of squeezing the weeks"
+                "horizontal scrolling instead of squeezing the weeks",
+                "the sticky column fill riding along with the component background: a transparent name column lets the bars show through while scrolling"
               ],
               "adapt": [
                 "the tasks array and the week labels",
                 "title — the plan heading",
-                "the accent through the accent prop",
+                "rangeText — the date template inside a bar: {from} and {to} take the week labels",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the accent through the accent prop — it colours the bar border and fill",
                 "the name column width"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Dependencies between tasks are not drawn: arrows need their own layout pass.",
                 "The unit is a week: for days add columns rather than splitting a bar.",
                 "There is no drag to reschedule — this displays a plan, it does not edit one.",
@@ -96,11 +114,59 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Gantt Plan"
+            "title": "Gantt Plan",
+            "preview": {
+              "props": {
+                "weeks": ["W1", "W2", "W3", "W4", "W5", "W6"],
+                "rangeText": "{from} — {to}",
+                "tasks": [
+                  {
+                    "title": "Category spec",
+                    "start": 1,
+                    "span": 1,
+                    "tone": "done",
+                    "owner": "Anna"
+                  },
+                  {
+                    "title": "Form components",
+                    "start": 1,
+                    "span": 3,
+                    "tone": "done",
+                    "owner": "Ilya"
+                  },
+                  {
+                    "title": "Catalog blocks",
+                    "start": 3,
+                    "span": 2,
+                    "tone": "work",
+                    "owner": "Kim"
+                  },
+                  {
+                    "title": "Data tables",
+                    "start": 4,
+                    "span": 2,
+                    "tone": "work",
+                    "owner": "Peter"
+                  },
+                  {
+                    "title": "Page templates",
+                    "start": 5,
+                    "span": 2,
+                    "tone": "plan",
+                    "owner": "unassigned"
+                  }
+                ],
+                "title": "Work plan"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -118,7 +184,7 @@
           "target": "@components/vibeui/gantt-002.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-gantt-002-*. Серверный: хуков нет. Ширина дня и высота строки заданы числами в коде (DAY_WIDTH, ROW_HEIGHT), полосы позиционируются абсолютно, а связи рисуются одним inline-SVG поверх полотна теми же числами — рассинхрона между стрелкой и прямоугольником быть не может. Колонка названий липкая и несёт подпись «после: X», прокрутка вбок вынесена в контейнер с tabindex=0, точные даты продублированы таблицей в <details>.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-gantt-002-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, проп background включает её вместе с подложкой липкой колонки. Все подписи — пропсы: hintText, afterText, startText, daysText, tableText и columnText. Ширина дня и высота строки заданы числами в коде (DAY_WIDTH, ROW_HEIGHT), полосы позиционируются абсолютно, а связи рисуются одним inline-SVG поверх полотна теми же числами — рассинхрона между стрелкой и прямоугольником быть не может. Колонка названий липкая и несёт подпись «после: X», прокрутка вбок вынесена в контейнер с tabindex=0, точные даты продублированы таблицей в <details>.",
       "meta": {
         "tags": ["gantt", "dependencies", "svg", "timeline"],
         "preview": {
@@ -134,15 +200,20 @@
             "контейнер прокрутки с overflow-x и tabindex=0 — план шире экрана почти всегда, и листать его надо и с клавиатуры",
             "таблицу точных дат в <details>: по стрелкам и полосам даты не прочитать, а скринридеру нужен текст",
             "липкую колонку названий с подписью «после: X» — связь обязана быть читаемой без разглядывания линий",
-            "собственную светлую подложку карточки: тёмный текст на тёмной витрине пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подложку липкой колонки заодно с фоном компонента: прозрачная колонка названий пропустит под себя полосы при прокрутке"
           ],
           "adapt": [
             "массив tasks вместе со связями after",
             "начало плана через startDate",
             "заголовок через heading",
+            "подписи: hintText, scrollText, afterText, startText, daysText, tableText и columnText — в шаблонах {heading}, {title} и {days} подставляются значения",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через accent и цвет линий связи в палитре"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Связь одна на задачу: для нескольких предшественников поле after придётся сделать массивом.",
             "Задача обязана лежать в массиве после своего предшественника — порядок строк задаёт вертикаль стрелок.",
             "id маркера стрелки один на страницу: при двух экземплярах он совпадёт, но рисует одинаково.",
@@ -162,6 +233,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -175,15 +252,20 @@
                 "the scroll container with overflow-x and tabindex=0 — a plan is wider than the screen almost always, and it has to be scrollable from the keyboard",
                 "the exact-dates table in <details>: dates cannot be read off arrows and bars, and a screen reader needs text",
                 "the sticky name column with its «after: X» line — a dependency must be readable without tracing lines",
-                "the card's own light surface: dark text disappears on a dark showcase background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the sticky column fill riding along with the component background: a transparent name column lets the bars show through while scrolling"
               ],
               "adapt": [
                 "the tasks array together with its after links",
                 "the plan start through startDate",
                 "the caption through heading",
+                "the labels: hintText, scrollText, afterText, startText, daysText, tableText and columnText — the {heading}, {title} and {days} placeholders take the values",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the accent through accent and the link colour in the palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "One link per task: several predecessors would need after to become an array.",
                 "A task must sit after its predecessor in the array — row order defines the vertical run of the arrows.",
                 "The arrow marker id is global to the page: two instances share it, but they draw identically.",
@@ -198,11 +280,77 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Dependency Arrows"
+            "title": "Dependency Arrows",
+            "preview": {
+              "props": {
+                "hintText": "an arrow means «no earlier than this finishes»",
+                "scrollText": "{heading}: chart, scrolls sideways",
+                "afterText": "after: {title}",
+                "startText": "plan start",
+                "daysText": "{days} d",
+                "tableText": "The same dates as a table",
+                "columnText": {
+                  "task": "Task",
+                  "start": "Start",
+                  "end": "End",
+                  "after": "After"
+                },
+                "tasks": [
+                  {
+                    "id": "spec",
+                    "title": "Specification",
+                    "start": 0,
+                    "days": 3,
+                    "tone": "done"
+                  },
+                  {
+                    "id": "api",
+                    "title": "Data schema",
+                    "start": 3,
+                    "days": 4,
+                    "after": "spec"
+                  },
+                  {
+                    "id": "ui",
+                    "title": "Screens",
+                    "start": 3,
+                    "days": 5,
+                    "after": "spec"
+                  },
+                  {
+                    "id": "sync",
+                    "title": "Synchronisation",
+                    "start": 7,
+                    "days": 3,
+                    "after": "api"
+                  },
+                  {
+                    "id": "qa",
+                    "title": "Testing",
+                    "start": 10,
+                    "days": 3,
+                    "after": "sync",
+                    "tone": "risk"
+                  },
+                  {
+                    "id": "ship",
+                    "title": "Release",
+                    "start": 13,
+                    "days": 2,
+                    "after": "qa"
+                  }
+                ],
+                "heading": "Plan with dependencies"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -220,7 +368,7 @@
           "target": "@components/vibeui/gantt-003.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-gantt-003-*. Серверный: хуков нет. Строки — размеченный union: задача рисуется полосой на колонках грида, веха — ромбом (rotate 45deg) в своей колонке с подписью даты. Выходные подсвечены в шапке и в клетках, колонка названий липкая, прокрутка вбок вынесена в контейнер с tabindex=0. Точные даты продублированы таблицей в <details>, состояние различается цветом и стилем рамки одновременно.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-gantt-003-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, проп background включает её вместе с подложкой липкой колонки. Все подписи — пропсы: hintText, taskText, daysText, tableText, columnText и kindText. Строки — размеченный union: задача рисуется полосой на колонках грида, веха — ромбом (rotate 45deg) в своей колонке с подписью даты. Выходные подсвечены в шапке и в клетках, колонка названий липкая, прокрутка вбок вынесена в контейнер с tabindex=0. Точные даты продублированы таблицей в <details>, состояние различается цветом и стилем рамки одновременно.",
       "meta": {
         "tags": ["gantt", "milestone", "timeline", "plan"],
         "preview": {
@@ -236,15 +384,20 @@
             "подпись даты рядом с ромбом — точку на сетке без числа читают неверно",
             "контейнер прокрутки с overflow-x и tabindex=0: сетка дней шире экрана почти всегда",
             "таблицу точных дат в <details>: диаграмма без текстовой альтернативы недоступна скринридеру",
-            "собственную светлую подложку карточки: тёмный текст на тёмной витрине пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подложку липкой колонки заодно с фоном компонента: прозрачная колонка названий пропустит под себя полосы при прокрутке"
           ],
           "adapt": [
             "массив rows: задачи и вехи в одном списке",
             "начало плана через startDate",
             "заголовок через heading",
+            "подписи: hintText, scrollText, taskText, daysText, tableText, columnText и kindText — в шаблонах {heading}, {date} и {days} подставляются значения",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через accent, ширину дня и ширину колонки названий"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Единица сетки — день: на квартал колонок станет слишком много, для него нужен сжатый вид.",
             "Подпись вехи занимает место справа от ромба и на последних днях может упереться в край.",
             "Связей между строками нет: тут показываются сроки, а не логика зависимостей.",
@@ -264,6 +417,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -277,15 +436,20 @@
                 "the date label next to the diamond — a point on a grid without a number is misread",
                 "the scroll container with overflow-x and tabindex=0: a day grid is wider than the screen almost always",
                 "the exact-dates table in <details>: a chart without a text alternative is unavailable to a screen reader",
-                "the card's own light surface: dark text disappears on a dark showcase background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the sticky column fill riding along with the component background: a transparent name column lets the bars show through while scrolling"
               ],
               "adapt": [
                 "the rows array: tasks and milestones in one list",
                 "the plan start through startDate",
                 "the caption through heading",
+                "the labels: hintText, scrollText, taskText, daysText, tableText, columnText and kindText — the {heading}, {date} and {days} placeholders take the values",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the accent through accent, the day width and the name column width"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The grid unit is a day: a quarter produces far too many columns and needs a compressed view.",
                 "A milestone label takes space to the right of the diamond and can hit the edge on the last days.",
                 "There are no links between rows: this shows dates, not dependency logic.",
@@ -300,11 +464,80 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Milestone Diamonds"
+            "title": "Milestone Diamonds",
+            "preview": {
+              "props": {
+                "hintText": "a diamond is a milestone, a bar is work",
+                "scrollText": "{heading}: chart, scrolls sideways",
+                "taskText": "{date} · {days} d",
+                "daysText": "{days} d",
+                "tableText": "The same dates as a table",
+                "columnText": {
+                  "row": "Row",
+                  "kind": "Type",
+                  "start": "Start",
+                  "end": "End"
+                },
+                "kindText": {
+                  "task": "work",
+                  "milestone": "milestone"
+                },
+                "rows": [
+                  {
+                    "kind": "task",
+                    "title": "Research",
+                    "start": 0,
+                    "days": 4,
+                    "tone": "done"
+                  },
+                  {
+                    "kind": "milestone",
+                    "title": "Requirements signed off",
+                    "start": 4,
+                    "tone": "done"
+                  },
+                  {
+                    "kind": "task",
+                    "title": "Prototype",
+                    "start": 4,
+                    "days": 5
+                  },
+                  {
+                    "kind": "task",
+                    "title": "Copy and data",
+                    "start": 6,
+                    "days": 4
+                  },
+                  {
+                    "kind": "milestone",
+                    "title": "Internal demo",
+                    "start": 10
+                  },
+                  {
+                    "kind": "task",
+                    "title": "Fixes after the demo",
+                    "start": 10,
+                    "days": 3,
+                    "tone": "risk"
+                  },
+                  {
+                    "kind": "milestone",
+                    "title": "Handover to the client",
+                    "start": 14,
+                    "tone": "risk"
+                  }
+                ],
+                "heading": "Stages and milestones"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -322,7 +555,7 @@
           "target": "@components/vibeui/gantt-004.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-gantt-004-*. Серверный: хуков нет. Полоса лежит на колонках грида (недели), внутри неё абсолютная заливка шириной calc(var(--vibeui-gantt-004-progress) * 1%) и засечка ожидаемой доли, посчитанной из currentWeek. Отставание больше десяти пунктов переключает заливку на штриховку — цвет дублируется рисунком. Текущая неделя подсвечена в шапке и в клетках, таблица в <details> повторяет план, факт и ожидание числами.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-gantt-004-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, проп background включает её вместе с подложкой липкой колонки. Все подписи — пропсы: hintText, barText, rangeText, tableText и columnText. Полоса лежит на колонках грида (недели), внутри неё абсолютная заливка шириной calc(var(--vibeui-gantt-004-progress) * 1%) и засечка ожидаемой доли, посчитанной из currentWeek. Отставание больше десяти пунктов переключает заливку на штриховку — цвет дублируется рисунком. Текущая неделя подсвечена в шапке и в клетках, таблица в <details> повторяет план, факт и ожидание числами.",
       "meta": {
         "tags": ["gantt", "progress", "status", "plan"],
         "preview": {
@@ -334,19 +567,25 @@
           "summary": "План с готовностью внутри полосы: заливка — факт, засечка — ожидание на сегодня, отставание видно разрывом. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-gantt-004-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "засечку ожидаемой доли: без неё «сделано 40%» не отвечает на вопрос, успеваем ли",
             "процент числом внутри полосы — по длине заливки 55% от 70% не отличить",
             "штриховку отстающей заливки: одного красного цвета мало на печати и при дальтонизме",
             "контейнер прокрутки с overflow-x и tabindex=0: недель обычно больше, чем влезает в экран",
-            "таблицу в <details> с фактом и ожиданием: диаграмме нужна текстовая альтернатива"
+            "таблицу в <details> с фактом и ожиданием: диаграмме нужна текстовая альтернатива",
+            "подложку липкой колонки заодно с фоном компонента: прозрачная колонка названий пропустит под себя полосы при прокрутке"
           ],
           "adapt": [
             "массив tasks вместе с полем progress",
             "подписи колонок через weeks",
             "текущую неделю через currentWeek",
+            "подписи: hintText, scrollText, barText, rangeText, tableText и columnText — в шаблонах {done}, {heading}, {title}, {progress}, {target}, {from} и {to} подставляются значения",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "заголовок через heading и акцент через accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ожидание считается линейно по неделям: для неравномерных задач подставьте свою формулу.",
             "Порог отставания зашит в десять пунктов — это соглашение, а не универсальная норма.",
             "Полоса короче трёх недель обрезает подпись процента: следите за минимальной шириной колонки.",
@@ -367,7 +606,19 @@
             "type": "number",
             "default": 4,
             "min": 1,
-            "max": 12
+            "max": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -377,19 +628,25 @@
               "summary": "A plan with progress inside the bar: the fill is the fact, the notch is today's expectation, and the delay shows as the gap. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-gantt-004-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
                 "the expectation notch: without it «40% done» does not answer whether you are on time",
                 "the percentage as a number inside the bar — 55% and 70% are indistinguishable by fill length",
                 "the hatching on a lagging fill: red alone dies in print and for colour blindness",
                 "the scroll container with overflow-x and tabindex=0: there are usually more weeks than fit the screen",
-                "the <details> table with fact and expectation: a chart needs a text alternative"
+                "the <details> table with fact and expectation: a chart needs a text alternative",
+                "the sticky column fill riding along with the component background: a transparent name column lets the bars show through while scrolling"
               ],
               "adapt": [
                 "the tasks array together with its progress field",
                 "the column captions through weeks",
                 "the current week through currentWeek",
+                "the labels: hintText, scrollText, barText, rangeText, tableText and columnText — the {done}, {heading}, {title}, {progress}, {target}, {from} and {to} placeholders take the values",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the caption through heading and the accent through accent"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The expectation is linear across weeks: substitute your own formula for uneven tasks.",
                 "The lag threshold is hard-coded at ten points — a convention, not a universal norm.",
                 "A bar shorter than three weeks clips the percentage label: watch the minimum column width.",
@@ -404,11 +661,71 @@
               },
               "currentWeek": {
                 "label": "Current week"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Progress Inside"
+            "title": "Progress Inside",
+            "preview": {
+              "props": {
+                "hintText": "on plan {done}% · dashed — expected today",
+                "scrollText": "{heading}: chart, scrolls sideways",
+                "barText": "{title}: {progress}% done, {target}% expected",
+                "rangeText": "{from} — {to}",
+                "tableText": "Progress as a table",
+                "columnText": {
+                  "task": "Task",
+                  "weeks": "Weeks",
+                  "done": "Done",
+                  "expected": "Expected"
+                },
+                "tasks": [
+                  {
+                    "title": "Catalog shell",
+                    "start": 1,
+                    "weeks": 2,
+                    "progress": 100,
+                    "owner": "Anna"
+                  },
+                  {
+                    "title": "Block cards",
+                    "start": 2,
+                    "weeks": 3,
+                    "progress": 80,
+                    "owner": "Ilya"
+                  },
+                  {
+                    "title": "Data import",
+                    "start": 3,
+                    "weeks": 3,
+                    "progress": 35,
+                    "owner": "Kim"
+                  },
+                  {
+                    "title": "Export for the agent",
+                    "start": 5,
+                    "weeks": 2,
+                    "progress": 10,
+                    "owner": "Peter"
+                  },
+                  {
+                    "title": "Documentation",
+                    "start": 6,
+                    "weeks": 3,
+                    "progress": 0,
+                    "owner": "unassigned"
+                  }
+                ],
+                "heading": "Delivery progress"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["currentWeek", "accent", "background"]
       }
     },
     {
@@ -426,7 +743,7 @@
           "target": "@components/vibeui/gantt-005.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-gantt-005-*. Серверный: хуков нет. Список исполнителей выводится из данных, строки перемешиваются с заголовками групп: заголовок занимает grid-column 1 / -1 и остаётся липким по левому краю вместе с колонкой названий. В заголовке — инициалы, число задач и сумма недель; перегруз отмечается отдельным начертанием. Прокрутка вбок вынесена в контейнер с tabindex=0, точные сроки продублированы таблицей в <details>.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-gantt-005-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, проп background включает её вместе с подложкой липкой колонки. Все подписи — пропсы: hintText, loadText, rangeText, tableText и columnText. Список исполнителей выводится из данных, строки перемешиваются с заголовками групп: заголовок занимает grid-column 1 / -1 и остаётся липким по левому краю вместе с колонкой названий. В заголовке — инициалы, число задач и сумма недель; перегруз отмечается отдельным начертанием. Прокрутка вбок вынесена в контейнер с tabindex=0, точные сроки продублированы таблицей в <details>.",
       "meta": {
         "tags": ["gantt", "team", "grouping", "workload"],
         "preview": {
@@ -438,19 +755,25 @@
           "summary": "План по исполнителям: задачи сгруппированы, у группы заголовок со сводкой загрузки. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-gantt-005-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "заголовок группы во всю ширину сетки: он про человека, а не про дату",
             "сводку загрузки в заголовке — ради неё группировка и делается",
             "липкость колонки названий и заголовков групп при прокрутке вбок",
             "контейнер прокрутки с overflow-x и tabindex=0: недель обычно больше, чем влезает в экран",
-            "таблицу точных сроков в <details>: диаграмме нужна текстовая альтернатива"
+            "таблицу точных сроков в <details>: диаграмме нужна текстовая альтернатива",
+            "подложку липкой колонки заодно с фоном компонента: прозрачная колонка названий пропустит под себя полосы при прокрутке"
           ],
           "adapt": [
             "массив tasks вместе с полем owner",
             "подписи колонок через weeks",
             "заголовок через heading",
+            "подписи: hintText, scrollText, loadText, rangeText, tableText и columnText — в шаблонах {people}, {tasks}, {heading}, {count}, {load}, {from} и {to} подставляются значения",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через accent и порог перегруза в коде"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Порядок групп берётся из порядка задач: сортировку по загрузке нужно делать до передачи данных.",
             "Порог перегруза зашит в шесть недель — поменяйте его под свою норму.",
             "Одновременные задачи одного человека видны только соседними строками, суммарной полосы загрузки нет.",
@@ -470,6 +793,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -479,19 +808,25 @@
               "summary": "A plan by owner: tasks are grouped and each group header carries a workload summary. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-gantt-005-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
                 "the group header spanning the full grid width: it is about a person, not a date",
                 "the workload summary in the header — it is the reason the grouping exists",
                 "the stickiness of the name column and the group headers while scrolling sideways",
                 "the scroll container with overflow-x and tabindex=0: there are usually more weeks than fit the screen",
-                "the exact-dates table in <details>: a chart needs a text alternative"
+                "the exact-dates table in <details>: a chart needs a text alternative",
+                "the sticky column fill riding along with the component background: a transparent name column lets the bars show through while scrolling"
               ],
               "adapt": [
                 "the tasks array together with its owner field",
                 "the column captions through weeks",
                 "the caption through heading",
+                "the labels: hintText, scrollText, loadText, rangeText, tableText and columnText — the {people}, {tasks}, {heading}, {count}, {load}, {from} and {to} placeholders take the values",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the accent through accent and the overload threshold in the code"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Group order follows task order: sort by workload before passing the data in.",
                 "The overload threshold is hard-coded at six weeks — change it to match your norm.",
                 "One person's simultaneous tasks only show as neighbouring rows; there is no combined load bar.",
@@ -506,11 +841,84 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Owner Swimlanes"
+            "title": "Owner Swimlanes",
+            "preview": {
+              "props": {
+                "hintText": "{people} people, {tasks} tasks",
+                "scrollText": "{heading}: chart, scrolls sideways",
+                "loadText": "{count} tasks · {load} weeks",
+                "rangeText": "{from}–{to}",
+                "tableText": "The same dates as a table",
+                "columnText": {
+                  "owner": "Owner",
+                  "task": "Task",
+                  "start": "Start",
+                  "end": "End"
+                },
+                "tasks": [
+                  {
+                    "title": "Catalog shell",
+                    "owner": "Anya Kim",
+                    "start": 1,
+                    "weeks": 2,
+                    "tone": "done"
+                  },
+                  {
+                    "title": "Filters",
+                    "owner": "Anya Kim",
+                    "start": 3,
+                    "weeks": 2
+                  },
+                  {
+                    "title": "Data schema",
+                    "owner": "Ilya Ro",
+                    "start": 1,
+                    "weeks": 3,
+                    "tone": "done"
+                  },
+                  {
+                    "title": "Registry import",
+                    "owner": "Ilya Ro",
+                    "start": 3,
+                    "weeks": 3
+                  },
+                  {
+                    "title": "Export for the agent",
+                    "owner": "Ilya Ro",
+                    "start": 5,
+                    "weeks": 2,
+                    "tone": "risk"
+                  },
+                  {
+                    "title": "Block page",
+                    "owner": "Vera Noy",
+                    "start": 2,
+                    "weeks": 3
+                  },
+                  {
+                    "title": "Mobile layout",
+                    "owner": "Vera Noy",
+                    "start": 6,
+                    "weeks": 2
+                  },
+                  {
+                    "title": "Build tests",
+                    "owner": "Peter Gai",
+                    "start": 4,
+                    "weeks": 4
+                  }
+                ],
+                "heading": "Plan by owner"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -528,7 +936,7 @@
           "target": "@components/vibeui/gantt-006.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-gantt-006-*. Серверный: хуков нет. Задачи заданы в днях, а размер колонки задаёт проп unit: при week колонка равна семи дням, начало берётся через Math.floor, конец через Math.ceil, то есть полоса округляется наружу. Строка ростом в одну строку текста, так что квартал помещается по вертикали. Прокрутка вбок вынесена в контейнер с tabindex=0, точные даты продублированы таблицей в <details>, состояние различается и цветом, и штриховкой.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-gantt-006-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, проп background включает её вместе с подложкой липкой колонки. Все подписи — пропсы: hintText, weekText, barText, daysText, toneText, tableText и columnText. Задачи заданы в днях, а размер колонки задаёт проп unit: при week колонка равна семи дням, начало берётся через Math.floor, конец через Math.ceil, то есть полоса округляется наружу. Строка ростом в одну строку текста, так что квартал помещается по вертикали. Прокрутка вбок вынесена в контейнер с tabindex=0, точные даты продублированы таблицей в <details>, состояние различается и цветом, и штриховкой.",
       "meta": {
         "tags": ["gantt", "quarter", "compact", "timeline"],
         "preview": {
@@ -540,19 +948,25 @@
           "summary": "Сжатый план: дневные данные на недельной сетке, полоса округляется наружу, точные даты остаются в таблице. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-gantt-006-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "округление наружу: срок в сжатом виде можно преувеличить, но нельзя занизить",
             "подпись о том, что вид сжат — молчаливое округление читатель принимает за точные даты",
             "таблицу точных дат в <details>: она и есть источник правды для сжатой картинки",
             "контейнер прокрутки с overflow-x и tabindex=0: квартал шире экрана даже по неделям",
-            "штриховку риска вместе с цветом: одного оттенка мало на печати и при дальтонизме"
+            "штриховку риска вместе с цветом: одного оттенка мало на печати и при дальтонизме",
+            "отдельный токен --vibeui-gantt-006-onaccent для текста на залитой полосе: подложка прозрачная, и цветом фона надпись больше не выбить"
           ],
           "adapt": [
             "массив tasks в днях и начало через startDate",
             "масштаб сетки через unit",
             "заголовок через heading",
+            "подписи: hintText, scrollText, weekText, barText, daysText, toneText, tableText и columnText — в шаблонах {heading}, {number}, {title}, {from}, {to} и {days} подставляются значения",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через accent и ширину колонки в палитре"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Недели считаются от startDate, а не по календарю ISO: первая колонка начинается в день старта плана.",
             "Задача короче недели всё равно занимает целую колонку — это плата за сжатие.",
             "В режиме day колонка узкая, и подпись длительности внутри полосы обрезается.",
@@ -573,6 +987,18 @@
             "type": "text",
             "default": "Квартал по неделям",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -582,19 +1008,25 @@
               "summary": "A compressed plan: daily data on a weekly grid, bars rounded outwards, exact dates kept in the table. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-gantt-006-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
                 "the outward rounding: a compressed view may overstate a deadline but must never understate it",
                 "the caption saying the view is compressed — silent rounding is read as exact dates",
                 "the exact-dates table in <details>: it is the source of truth behind the compressed picture",
                 "the scroll container with overflow-x and tabindex=0: a quarter is wider than the screen even by weeks",
-                "the risk hatching together with colour: one hue alone dies in print and for colour blindness"
+                "the risk hatching together with colour: one hue alone dies in print and for colour blindness",
+                "the separate --vibeui-gantt-006-onaccent token for text on a filled bar: the surface is transparent, so the label can no longer be knocked out with the background colour"
               ],
               "adapt": [
                 "the tasks array in days and the start through startDate",
                 "the grid scale through unit",
                 "the caption through heading",
+                "the labels: hintText, scrollText, weekText, barText, daysText, toneText, tableText and columnText — the {heading}, {number}, {title}, {from}, {to} and {days} placeholders take the values",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the accent through accent and the column width in the palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Weeks are counted from startDate rather than by the ISO calendar: the first column begins on the plan's start day.",
                 "A task shorter than a week still occupies a whole column — that is the price of compression.",
                 "In day mode the column is narrow and the duration label inside a bar gets clipped.",
@@ -609,11 +1041,94 @@
               "heading": {
                 "label": "Heading",
                 "default": "Quarter by weeks"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Week Rollup"
+            "title": "Week Rollup",
+            "preview": {
+              "props": {
+                "hintText": {
+                  "week": "bars are rounded outwards to whole weeks",
+                  "day": "one column is one day"
+                },
+                "scrollText": "{heading}: chart, scrolls sideways",
+                "weekText": "w{number}",
+                "barText": "{title}: {from} — {to}",
+                "daysText": "{days} d",
+                "toneText": {
+                  "work": "in progress",
+                  "risk": "at risk",
+                  "done": "done"
+                },
+                "tableText": "Exact dates as a table",
+                "columnText": {
+                  "task": "Task",
+                  "start": "Start",
+                  "end": "End",
+                  "days": "Days"
+                },
+                "tasks": [
+                  {
+                    "title": "Research",
+                    "start": 0,
+                    "days": 9,
+                    "tone": "done"
+                  },
+                  {
+                    "title": "Prototype",
+                    "start": 6,
+                    "days": 12,
+                    "tone": "done"
+                  },
+                  {
+                    "title": "Data schema",
+                    "start": 12,
+                    "days": 10
+                  },
+                  {
+                    "title": "Catalog",
+                    "start": 16,
+                    "days": 15
+                  },
+                  {
+                    "title": "Block pages",
+                    "start": 24,
+                    "days": 13
+                  },
+                  {
+                    "title": "Export for the agent",
+                    "start": 30,
+                    "days": 11,
+                    "tone": "risk"
+                  },
+                  {
+                    "title": "Load tests",
+                    "start": 38,
+                    "days": 8,
+                    "tone": "risk"
+                  },
+                  {
+                    "title": "Documentation",
+                    "start": 42,
+                    "days": 12
+                  },
+                  {
+                    "title": "Release",
+                    "start": 52,
+                    "days": 4
+                  }
+                ],
+                "heading": "Quarter by week"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["unit", "accent", "background"]
       }
     },
     {
@@ -631,7 +1146,7 @@
           "target": "@components/vibeui/gantt-007.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-gantt-007-*. Серверный: хуков нет. Функция schedule() делает прямой проход по связям after (ранние сроки) и обратный (поздние сроки), запас считается их разностью, нулевой запас означает критическую задачу. Раскладка идёт не по колонкам грида, а в процентах от длины проекта на flex-дорожках, поэтому масштаб не зависит от числа дней. Прокрутка вбок в контейнере с tabindex=0, сроки и запас продублированы таблицей в <details>.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-gantt-007-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, включает её проп background. Все подписи — пропсы: hintText, tagText, daysText, criticalText, tableText и columnText. Функция schedule() делает прямой проход по связям after (ранние сроки) и обратный (поздние сроки), запас считается их разностью, нулевой запас означает критическую задачу. Раскладка идёт не по колонкам грида, а в процентах от длины проекта на flex-дорожках, поэтому масштаб не зависит от числа дней. Прокрутка вбок в контейнере с tabindex=0, сроки и запас продублированы таблицей в <details>.",
       "meta": {
         "tags": ["gantt", "critical-path", "slack", "schedule"],
         "preview": {
@@ -643,19 +1158,25 @@
           "summary": "Критический путь считается из связей при рендере: ранние и поздние сроки, запас, выделение начертанием. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-gantt-007-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "выделение начертанием, а не только цветом: заливка, рамка и жирный текст переживают печать и дальтонизм",
             "метку «КП» текстом — по одному оттенку критичность не назвать",
             "пунктирный хвост запаса: он отвечает на вопрос, насколько задачу можно сдвинуть",
             "контейнер прокрутки с overflow-x и tabindex=0: длинный план шире экрана",
-            "таблицу сроков и запаса в <details>: диаграмме нужна текстовая альтернатива"
+            "таблицу сроков и запаса в <details>: диаграмме нужна текстовая альтернатива",
+            "отдельный токен --vibeui-gantt-007-onaccent для метки и внутреннего просвета критической полосы: подложка прозрачная, и цветом фона их больше не выбить"
           ],
           "adapt": [
             "массив tasks вместе со связями after",
             "начало плана через startDate",
             "заголовок через heading",
+            "подписи: hintText, scrollText, tagText, daysText, criticalText, tableText и columnText — в шаблонах {total}, {critical}, {count}, {heading} и {days} подставляются значения",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через accent и цвет некритических полос"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Массив обязан быть топологически упорядочен: задача идёт после всех своих предшественников.",
             "Циклы в связях не проверяются — данные с петлёй дадут бессмысленные сроки.",
             "Считаются календарные дни подряд: выходные и загрузка людей не учитываются.",
@@ -675,6 +1196,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -684,19 +1211,25 @@
               "summary": "The critical path is computed from the links at render time: early and late dates, slack, and emphasis by weight. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-gantt-007-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
                 "the emphasis by weight rather than colour alone: fill, border and bold text survive print and colour blindness",
                 "the «CP» tag as text — criticality cannot be stated by a hue",
                 "the dashed slack tail: it answers how far a task may slip",
                 "the scroll container with overflow-x and tabindex=0: a long plan is wider than the screen",
-                "the dates and slack table in <details>: a chart needs a text alternative"
+                "the dates and slack table in <details>: a chart needs a text alternative",
+                "the separate --vibeui-gantt-007-onaccent token for the tag and the inner gap of a critical bar: the surface is transparent, so the background colour can no longer knock them out"
               ],
               "adapt": [
                 "the tasks array together with its after links",
                 "the plan start through startDate",
                 "the caption through heading",
+                "the labels: hintText, scrollText, tagText, daysText, criticalText, tableText and columnText — the {total}, {critical}, {count}, {heading} and {days} placeholders take the values",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the accent through accent and the colour of non-critical bars"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The array has to be topologically ordered: a task comes after all of its predecessors.",
                 "Cycles in the links are not checked — looped data yields meaningless dates.",
                 "Plain consecutive calendar days are used: weekends and people's load are ignored.",
@@ -711,11 +1244,81 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Critical Path"
+            "title": "Critical Path",
+            "preview": {
+              "props": {
+                "hintText": "{total} days, {critical} of {count} with no slack",
+                "scrollText": "{heading}: chart, scrolls sideways",
+                "tagText": "CP",
+                "daysText": "{days} d",
+                "criticalText": " (critical)",
+                "tableText": "Dates and slack as a table",
+                "columnText": {
+                  "task": "Task",
+                  "start": "Start",
+                  "end": "End",
+                  "slack": "Slack, d"
+                },
+                "tasks": [
+                  {
+                    "id": "brief",
+                    "title": "Brief",
+                    "days": 2
+                  },
+                  {
+                    "id": "research",
+                    "title": "Research",
+                    "days": 5,
+                    "after": ["brief"]
+                  },
+                  {
+                    "id": "content",
+                    "title": "Copy",
+                    "days": 4,
+                    "after": ["brief"]
+                  },
+                  {
+                    "id": "design",
+                    "title": "Layouts",
+                    "days": 6,
+                    "after": ["research"]
+                  },
+                  {
+                    "id": "build",
+                    "title": "Build",
+                    "days": 7,
+                    "after": ["design", "content"]
+                  },
+                  {
+                    "id": "photo",
+                    "title": "Photo shoot",
+                    "days": 3,
+                    "after": ["brief"]
+                  },
+                  {
+                    "id": "qa",
+                    "title": "Review",
+                    "days": 3,
+                    "after": ["build", "photo"]
+                  },
+                  {
+                    "id": "launch",
+                    "title": "Launch",
+                    "days": 1,
+                    "after": ["qa"]
+                  }
+                ],
+                "heading": "Critical path"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

@@ -20,6 +20,10 @@ export type Command001Props = Omit<
   commands?: Command001Command[]
   placeholder?: string
   triggerLabel?: string
+  /** Ответ на пустой поиск: компонент несёт русский, проект подставляет свой. */
+  emptyText?: string
+  /** Подложка кнопки и модалки. Пусто — цвет по умолчанию из палитры. */
+  background?: string
   accent?: string
 }
 
@@ -27,14 +31,18 @@ export type Command001Props = Omit<
 // фокуса, закрытие по Escape и фон — три вещи, которые в своей реализации
 // приходится чинить дольше всего. Стрелки двигают подсветку по отфильтрованному
 // списку, поэтому индекс хранится по строке, а не по позиции в исходном массиве.
+//
+// Тема берётся из color-scheme окружения через light-dark(): у модалки светлоты
+// границ и подсветки свои в каждой ветке, а не зеркальные.
 const STYLES = `
 :where([data-vibeui-block="command-001"]){
---vibeui-command-001-bg:oklch(1 0 0);
---vibeui-command-001-fg:oklch(0.24 0.014 265);
---vibeui-command-001-muted:oklch(0.58 0.014 265);
---vibeui-command-001-border:oklch(0.9 0.006 265);
---vibeui-command-001-active:oklch(0.55 0.02 265 / 10%);
---vibeui-command-001-accent:oklch(0.55 0.2 262);
+--vibeui-command-001-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-command-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-command-001-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-command-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-command-001-active:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.86 0.03 265 / 14%));
+--vibeui-command-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-command-001-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.04 0.015 265 / 72%));
 --vibeui-command-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="command-001"] [data-part="open"]{
@@ -55,9 +63,11 @@ padding:0 0.3125rem;font:inherit;font-size:0.6875rem;
 width:min(28rem,calc(100vw - 2rem));padding:0;margin:12vh auto auto;
 background:var(--vibeui-command-001-bg);color:var(--vibeui-command-001-fg);
 border:1px solid var(--vibeui-command-001-border);border-radius:0.875rem;
-box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 55%);
+box-shadow:0 24px 60px -24px var(--vibeui-command-001-shadow);
 font-family:var(--vibeui-command-001-font);
 }
+/* Затемнение живёт в top layer и до переменных корня не всегда дотягивается,
+   поэтому цвет записан прямо: полупрозрачный скрим уместен в обеих темах. */
 [data-vibeui-block="command-001"] dialog::backdrop{background:oklch(0.2 0.02 265 / 45%)}
 [data-vibeui-block="command-001"] [data-part="search"]{
 width:100%;box-sizing:border-box;height:2.875rem;padding:0 0.875rem;
@@ -97,6 +107,28 @@ const DEFAULT_COMMANDS: Command001Command[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Командная палитра в нативном <dialog>: фокус, Escape и фон от браузера.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -104,6 +136,8 @@ export function Command001({
   commands = DEFAULT_COMMANDS,
   placeholder = "Команда или переход…",
   triggerLabel = "Поиск команды",
+  emptyText = "Ничего не нашлось. Проверьте формулировку.",
+  background = "",
   accent,
   className,
   style,
@@ -139,6 +173,12 @@ export function Command001({
 
   const palette = {
     ...(accent ? { "--vibeui-command-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-command-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -179,9 +219,7 @@ export function Command001({
               }}
             />
             {found.length === 0 ? (
-              <p data-part="empty">
-                Ничего не нашлось. Проверьте формулировку.
-              </p>
+              <p data-part="empty">{emptyText}</p>
             ) : (
               <ul data-part="list">
                 {Object.entries(groups).map(([group, rows]) => (

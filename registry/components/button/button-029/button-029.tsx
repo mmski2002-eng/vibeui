@@ -8,6 +8,8 @@ export type Button029Props = Omit<
   secondaryLabel?: string
   /** Мелкая строка под кнопками: согласие, условия, срок ответа. */
   note?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,12 +21,12 @@ export type Button029Props = Omit<
 // container query, поэтому в узкой колонке десктопа раскладка тоже мобильная.
 const STYLES = `
 :where([data-vibeui-block="button-029"]){
---vibeui-button-029-bg:oklch(1 0 0);
---vibeui-button-029-fg:oklch(0.26 0.016 265);
---vibeui-button-029-muted:oklch(0.55 0.014 265);
---vibeui-button-029-border:oklch(0.9 0.006 265);
---vibeui-button-029-accent:oklch(0.55 0.17 265);
---vibeui-button-029-accent-fg:oklch(0.99 0.01 265);
+--vibeui-button-029-bg:transparent;
+--vibeui-button-029-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-button-029-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-button-029-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-button-029-accent:light-dark(oklch(0.55 0.17 265),oklch(0.6 0.18 265));
+--vibeui-button-029-accent-fg:light-dark(oklch(0.99 0.01 265),oklch(0.98 0.012 265));
 --vibeui-button-029-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -71,6 +73,28 @@ color:var(--vibeui-button-029-muted);font-size:0.75rem;line-height:1.4;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Концовка формы: основная кнопка во всю ширину и отмена под ней.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -78,6 +102,7 @@ export function Button029({
   label = "Отправить заявку",
   secondaryLabel = "Сохранить черновик",
   note = "Отвечаем в течение одного рабочего дня",
+  background = "",
   accent,
   className,
   style,
@@ -85,6 +110,12 @@ export function Button029({
 }: Button029Props) {
   const palette = {
     ...(accent ? { "--vibeui-button-029-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-029-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

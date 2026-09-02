@@ -13,6 +13,8 @@ export type Buttongroup013Props = Omit<
   defaultValue?: string
   label?: string
   name?: string
+  /** Пусто — подложки нет, сегменты лежат прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,12 +26,12 @@ export type Buttongroup013Props = Omit<
 // поднимается z-index — иначе обводку срезает соседняя рамка.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-013"]){
---vibeui-buttongroup-013-surface:oklch(1 0 0);
---vibeui-buttongroup-013-fg:oklch(0.26 0.016 265);
---vibeui-buttongroup-013-muted:oklch(0.56 0.014 265);
---vibeui-buttongroup-013-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-013-on:oklch(0.965 0.03 265);
---vibeui-buttongroup-013-accent:oklch(0.53 0.17 265);
+--vibeui-buttongroup-013-surface:transparent;
+--vibeui-buttongroup-013-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-013-muted:light-dark(oklch(0.56 0.014 265),oklch(0.69 0.012 265));
+--vibeui-buttongroup-013-border:light-dark(oklch(0.89 0.008 265),oklch(0.37 0.012 265));
+--vibeui-buttongroup-013-on:light-dark(oklch(0.965 0.03 265),oklch(0.31 0.045 265));
+--vibeui-buttongroup-013-accent:light-dark(oklch(0.53 0.17 265),oklch(0.74 0.14 265));
 --vibeui-buttongroup-013-radius:0.75rem;
 --vibeui-buttongroup-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -101,6 +103,28 @@ const DEFAULT_OPTIONS: Buttongroup013Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сегменты со значком над подписью: узнавание значком, точность подписью.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -109,6 +133,7 @@ export function Buttongroup013({
   defaultValue = "grid",
   label = "Представление данных",
   name = "buttongroup-013",
+  background = "",
   accent,
   className,
   style,
@@ -116,6 +141,12 @@ export function Buttongroup013({
 }: Buttongroup013Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-013-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

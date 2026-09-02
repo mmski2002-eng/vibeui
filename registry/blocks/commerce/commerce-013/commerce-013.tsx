@@ -16,7 +16,17 @@ export type Commerce013Props = {
   tabs?: string[]
   orders?: Commerce013Order[]
   empty?: string
+  /** Скрытая подпись группы фильтра. */
+  filterLabel?: string
+  /** Шаблон номера заказа, {id} — номер. */
+  orderText?: string
+  /** Шаблон даты заказа, {date} — дата. */
+  dateText?: string
+  /** Шаблон ссылки на детали, {id} — номер заказа. */
+  detailsText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,15 +40,16 @@ export type Commerce013Props = {
 // стопку миниатюр с числом остатка: список остаётся списком, а не витриной.
 const STYLES = `
 :where([data-vibeui-block="commerce-013"]){
---vibeui-commerce-013-bg:oklch(1 0 0);
---vibeui-commerce-013-fg:oklch(0.21 0.014 265);
---vibeui-commerce-013-muted:oklch(0.55 0.014 265);
---vibeui-commerce-013-border:oklch(0.91 0.006 265);
---vibeui-commerce-013-soft:oklch(0.975 0.004 265);
---vibeui-commerce-013-accent:oklch(0.55 0.2 262);
---vibeui-commerce-013-ok:oklch(0.58 0.14 152);
---vibeui-commerce-013-warn:oklch(0.7 0.15 75);
---vibeui-commerce-013-off:oklch(0.62 0.02 265);
+--vibeui-commerce-013-bg:transparent;
+--vibeui-commerce-013-paper:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-commerce-013-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-013-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-013-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-commerce-013-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.01 265));
+--vibeui-commerce-013-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
+--vibeui-commerce-013-ok:light-dark(oklch(0.58 0.14 152),oklch(0.75 0.14 152));
+--vibeui-commerce-013-warn:light-dark(oklch(0.7 0.15 75),oklch(0.81 0.14 75));
+--vibeui-commerce-013-off:light-dark(oklch(0.62 0.02 265),oklch(0.62 0.02 265));
 --vibeui-commerce-013-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -58,7 +69,7 @@ border:1px solid var(--vibeui-commerce-013-border);color:var(--vibeui-commerce-0
 }
 [data-vibeui-block="commerce-013"] [data-part="tab"] input{position:absolute;width:1px;height:1px;opacity:0;margin:0}
 [data-vibeui-block="commerce-013"] [data-part="tab"]:has(input:checked){
-background:var(--vibeui-commerce-013-fg);border-color:var(--vibeui-commerce-013-fg);color:var(--vibeui-commerce-013-bg);
+background:var(--vibeui-commerce-013-fg);border-color:var(--vibeui-commerce-013-fg);color:var(--vibeui-commerce-013-paper);
 }
 [data-vibeui-block="commerce-013"] [data-part="tab"]:has(input:focus-visible){outline:2px solid var(--vibeui-commerce-013-accent);outline-offset:2px}
 [data-vibeui-block="commerce-013"] ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.625rem}
@@ -84,21 +95,21 @@ display:inline-flex;align-items:center;gap:0.375rem;font-size:0.6875rem;font-wei
 [data-vibeui-block="commerce-013"] [data-part="stack"]{display:flex;align-items:center;gap:0.25rem}
 [data-vibeui-block="commerce-013"] [data-part="thumb"]{
 width:2.25rem;height:2.25rem;border-radius:0.5rem;flex:none;
-border:2px solid var(--vibeui-commerce-013-bg);margin-left:-0.5rem;
+border:2px solid var(--vibeui-commerce-013-paper);margin-left:-0.5rem;
 background:linear-gradient(145deg,oklch(0.94 0.05 var(--vibeui-commerce-013-hue,262)),oklch(0.86 0.09 var(--vibeui-commerce-013-hue,262)));
 }
 [data-vibeui-block="commerce-013"] [data-part="thumb"]:first-child{margin-left:0}
 [data-vibeui-block="commerce-013"] [data-part="rest"]{
 display:flex;align-items:center;justify-content:center;
 width:2.25rem;height:2.25rem;border-radius:0.5rem;margin-left:-0.5rem;flex:none;
-border:2px solid var(--vibeui-commerce-013-bg);background:var(--vibeui-commerce-013-soft);
+border:2px solid var(--vibeui-commerce-013-paper);background:var(--vibeui-commerce-013-soft);
 font-size:0.6875rem;font-weight:700;color:var(--vibeui-commerce-013-muted);
 }
 [data-vibeui-block="commerce-013"] [data-part="names"]{margin:0.375rem 0 0;font-size:0.75rem;color:var(--vibeui-commerce-013-muted);line-height:1.4}
 [data-vibeui-block="commerce-013"] [data-part="sum"]{display:block;font-size:1rem;font-weight:700;font-variant-numeric:tabular-nums;margin-bottom:0.5rem}
 [data-vibeui-block="commerce-013"] [data-part="do"]{
 appearance:none;cursor:pointer;height:2.25rem;padding:0 0.875rem;border-radius:0.625rem;
-border:1px solid var(--vibeui-commerce-013-fg);background:var(--vibeui-commerce-013-bg);
+border:1px solid var(--vibeui-commerce-013-fg);background:var(--vibeui-commerce-013-paper);
 color:var(--vibeui-commerce-013-fg);font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="commerce-013"] [data-part="do"]:focus-visible{outline:2px solid var(--vibeui-commerce-013-accent);outline-offset:2px}
@@ -145,6 +156,28 @@ const DEFAULT_ORDERS: Commerce013Order[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Список заказов покупателя: у каждой строки одно действие по её состоянию.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -153,12 +186,24 @@ export function Commerce013({
   tabs = ["Все", "В пути", "Доставленные", "Отменённые"],
   orders = DEFAULT_ORDERS,
   empty = "Заказов в этом разделе нет.",
+  filterLabel = "Показывать",
+  orderText = "Заказ № {id}",
+  dateText = "от {date}",
+  detailsText = "Детали заказа № {id}",
   accent,
+  background = "",
   className,
   style,
 }: Commerce013Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-013-bg": background,
+          "--vibeui-commerce-013-paper": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -177,7 +222,7 @@ export function Commerce013({
           <h2>{title}</h2>
 
           <fieldset data-part="tabs">
-            <legend data-part="vh">Показывать</legend>
+            <legend data-part="vh">{filterLabel}</legend>
             {tabs.map((tab, index) => (
               <label key={tab} data-part="tab">
                 <input
@@ -198,8 +243,12 @@ export function Commerce013({
                 <li key={order.id} data-part="order">
                   <div>
                     <div data-part="head">
-                      <span data-part="num">Заказ № {order.id}</span>
-                      <span data-part="date">от {order.date}</span>
+                      <span data-part="num">
+                        {orderText.replace("{id}", order.id)}
+                      </span>
+                      <span data-part="date">
+                        {dateText.replace("{date}", order.date)}
+                      </span>
                       <span data-part="status" data-status={order.status}>
                         <i aria-hidden="true" />
                         {order.statusLabel}
@@ -231,7 +280,7 @@ export function Commerce013({
                       {order.action}
                     </button>
                     <button type="button" data-part="open">
-                      Детали заказа № {order.id}
+                      {detailsText.replace("{id}", order.id)}
                     </button>
                   </div>
                 </li>

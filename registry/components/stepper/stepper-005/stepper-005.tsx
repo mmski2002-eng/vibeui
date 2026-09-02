@@ -9,7 +9,13 @@ export type Stepper005Props = Omit<
   current?: number
   /** Готовность текущего шага в процентах: заполняет соединитель перед ним. */
   progress?: number
+  /** Подпись под текущим шагом. {value} — проценты готовности. */
+  progressText?: string
+  /** Подпись под пройденным шагом. */
+  doneText?: string
   label?: string
+  /** Пусто — подложки нет, лента лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,15 +24,19 @@ export type Stepper005Props = Omit<
 // не закончен. Долю несёт unitless-переменная, ширина считается через
 // calc(100% * var(...)), поэтому проценты не приходится складывать с
 // процентами. Число продублировано текстом: полоска сама по себе неозвучиваема.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="stepper-005"]){
---vibeui-stepper-005-bg:oklch(1 0 0);
---vibeui-stepper-005-fg:oklch(0.24 0.016 265);
---vibeui-stepper-005-muted:oklch(0.56 0.014 265);
---vibeui-stepper-005-border:oklch(0.92 0.006 265);
---vibeui-stepper-005-line:oklch(0.9 0.006 265);
---vibeui-stepper-005-accent:oklch(0.55 0.2 262);
---vibeui-stepper-005-accent-fg:oklch(1 0 0);
+--vibeui-stepper-005-bg:transparent;
+--vibeui-stepper-005-surface:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-stepper-005-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-stepper-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-stepper-005-border:light-dark(oklch(0.92 0.006 265),oklch(0.32 0.012 265));
+--vibeui-stepper-005-line:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-stepper-005-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-stepper-005-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
 --vibeui-stepper-005-size:1.75rem;
 --vibeui-stepper-005-fill:0;
 --vibeui-stepper-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -64,7 +74,7 @@ position:relative;z-index:1;
 display:flex;align-items:center;justify-content:center;
 width:var(--vibeui-stepper-005-size);height:var(--vibeui-stepper-005-size);
 border-radius:9999px;border:2px solid var(--vibeui-stepper-005-line);
-background:var(--vibeui-stepper-005-bg);color:var(--vibeui-stepper-005-muted);
+background:var(--vibeui-stepper-005-surface);color:var(--vibeui-stepper-005-muted);
 font-size:0.75rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="stepper-005"] li[data-state="done"] [data-part="mark"]{
@@ -95,6 +105,28 @@ font-size:0.6875rem;color:var(--vibeui-stepper-005-muted);
 const DEFAULT_STEPS = ["Загрузка", "Проверка", "Обработка", "Отчёт"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Шаги, где соединитель перед текущим залит на долю готовности.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -102,7 +134,10 @@ export function Stepper005({
   steps = DEFAULT_STEPS,
   current = 2,
   progress = 45,
+  progressText = "{value}% готово",
+  doneText = "Готово",
   label = "Импорт каталога",
+  background = "",
   accent,
   className,
   style,
@@ -110,6 +145,13 @@ export function Stepper005({
 }: Stepper005Props) {
   const palette = {
     ...(accent ? { "--vibeui-stepper-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-stepper-005-bg": background,
+          "--vibeui-stepper-005-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -155,10 +197,12 @@ export function Stepper005({
                   </span>
                   <span data-part="label">{step}</span>
                   {state === "current" ? (
-                    <span data-part="percent">{clamped}% готово</span>
+                    <span data-part="percent">
+                      {progressText.replace("{value}", String(clamped))}
+                    </span>
                   ) : null}
                   {state === "done" ? (
-                    <span data-part="done-word">Готово</span>
+                    <span data-part="done-word">{doneText}</span>
                   ) : null}
                 </li>
               )

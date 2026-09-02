@@ -9,6 +9,10 @@ export type Rating001Props = Omit<
   max?: number
   defaultValue?: number
   hints?: string[]
+  /** Подпись звезды для скринридера. {value} — номер, {max} — размер шкалы. */
+  starLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -16,14 +20,17 @@ export type Rating001Props = Omit<
 // выбор, клавиатура и отправка формы работают сами. Звёзды идут в разметке в
 // обратном порядке и разворачиваются flex-direction: только так соседний
 // селектор ~ закрашивает все звёзды левее наведённой без единой строки кода.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="rating-001"]){
---vibeui-rating-001-bg:oklch(1 0 0);
---vibeui-rating-001-fg:oklch(0.24 0.014 265);
---vibeui-rating-001-muted:oklch(0.58 0.014 265);
---vibeui-rating-001-border:oklch(0.9 0.006 265);
---vibeui-rating-001-empty:oklch(0.88 0.008 265);
---vibeui-rating-001-accent:oklch(0.72 0.16 75);
+--vibeui-rating-001-bg:transparent;
+--vibeui-rating-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-rating-001-muted:light-dark(oklch(0.58 0.014 265),oklch(0.7 0.012 265));
+--vibeui-rating-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-rating-001-empty:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-rating-001-accent:light-dark(oklch(0.72 0.16 75),oklch(0.82 0.15 78));
 --vibeui-rating-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="rating-001"]{
@@ -70,6 +77,28 @@ padding:0 0.0625rem;border-radius:0.25rem;
 const DEFAULT_HINTS = ["Плохо", "Так себе", "Нормально", "Хорошо", "Отлично"]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Оценка звёздами на радиокнопках: выбор и клавиатура без JS.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -79,6 +108,8 @@ export function Rating001({
   max = 5,
   defaultValue = 4,
   hints = DEFAULT_HINTS,
+  starLabel = "{value} из {max}",
+  background = "",
   accent,
   className,
   style,
@@ -88,6 +119,12 @@ export function Rating001({
 
   const palette = {
     ...(accent ? { "--vibeui-rating-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-rating-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -105,7 +142,12 @@ export function Rating001({
         <legend>{legend}</legend>
         <div data-part="stars">
           {stars.map((value) => (
-            <label key={value} aria-label={`${value} из ${max}`}>
+            <label
+              key={value}
+              aria-label={starLabel
+                .replace("{value}", String(value))
+                .replace("{max}", String(max))}
+            >
               <input
                 type="radio"
                 name={name}

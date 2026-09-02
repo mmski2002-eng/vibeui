@@ -15,6 +15,10 @@ export type Scrollspy002Props = Omit<
 > & {
   sections?: Scrollspy002Section[]
   title?: string
+  /** Подпись области чтения для скринридера. */
+  bodyLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,13 +28,17 @@ export type Scrollspy002Props = Omit<
 // подсветка цветом текста теряется, а залитый кружок виден издалека.
 // Слежение — IntersectionObserver: обработчик scroll на каждый пиксель
 // заставил бы браузер считать раскладку в самый неподходящий момент.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="scrollspy-002"]){
---vibeui-scrollspy-002-bg:oklch(1 0 0);
---vibeui-scrollspy-002-fg:oklch(0.23 0.014 265);
---vibeui-scrollspy-002-muted:oklch(0.56 0.014 265);
---vibeui-scrollspy-002-border:oklch(0.91 0.006 265);
---vibeui-scrollspy-002-accent:oklch(0.55 0.19 262);
+--vibeui-scrollspy-002-bg:transparent;
+--vibeui-scrollspy-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-scrollspy-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.69 0.012 265));
+--vibeui-scrollspy-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-scrollspy-002-accent:light-dark(oklch(0.55 0.19 262),oklch(0.74 0.16 262));
+--vibeui-scrollspy-002-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
 --vibeui-scrollspy-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="scrollspy-002"]{
@@ -68,7 +76,7 @@ color:var(--vibeui-scrollspy-002-fg);border-color:var(--vibeui-scrollspy-002-acc
 font-weight:600;
 }
 [data-vibeui-block="scrollspy-002"] [data-part="link"][aria-current="true"] [data-part="num"]{
-background:var(--vibeui-scrollspy-002-accent);color:oklch(1 0 0);
+background:var(--vibeui-scrollspy-002-accent);color:var(--vibeui-scrollspy-002-on-accent);
 }
 [data-vibeui-block="scrollspy-002"] [data-part="link"]:focus-visible{outline:2px solid var(--vibeui-scrollspy-002-accent);outline-offset:2px}
 [data-vibeui-block="scrollspy-002"] [data-part="body"]{
@@ -111,12 +119,36 @@ const DEFAULT_SECTIONS: Scrollspy002Section[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Оглавление статьи в строку: активный пункт помечен залитым номером.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Scrollspy002({
   sections = DEFAULT_SECTIONS,
   title = "Содержание",
+  bodyLabel = "Текст статьи",
+  background = "",
   accent,
   className,
   style,
@@ -151,6 +183,12 @@ export function Scrollspy002({
 
   const palette = {
     ...(accent ? { "--vibeui-scrollspy-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-scrollspy-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -192,7 +230,7 @@ export function Scrollspy002({
           ref={body}
           tabIndex={0}
           role="group"
-          aria-label="Текст статьи"
+          aria-label={bodyLabel}
         >
           {sections.map((section) => (
             <section key={section.id} id={section.id} data-part="section">

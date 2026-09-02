@@ -18,6 +18,17 @@ export type Resizable008Props = Omit<
   max?: number
   step?: number
   onChange?: (size: number) => void
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  codeLabel?: string
+  code?: string
+  previewLabel?: string
+  previewTitle?: string
+  previewText?: string
+  buttonText?: string
+  /** Строка состояния; {size} заменяется на текущий процент. */
+  statusText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,13 +39,14 @@ export type Resizable008Props = Omit<
 // пересчёта в пикселях.
 const STYLES = `
 :where([data-vibeui-block="resizable-008"]){
---vibeui-resizable-008-bg:oklch(1 0 0);
---vibeui-resizable-008-fg:oklch(0.22 0.014 265);
---vibeui-resizable-008-muted:oklch(0.55 0.014 265);
---vibeui-resizable-008-border:oklch(0.9 0.006 265);
---vibeui-resizable-008-surface:oklch(0.975 0.004 265);
---vibeui-resizable-008-code:oklch(0.26 0.02 265);
---vibeui-resizable-008-accent:oklch(0.6 0.17 230);
+--vibeui-resizable-008-bg:transparent;
+--vibeui-resizable-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-resizable-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-resizable-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-resizable-008-surface:light-dark(oklch(0.975 0.004 265),oklch(0.29 0.011 265));
+--vibeui-resizable-008-code:light-dark(oklch(0.26 0.02 265),oklch(0.17 0.014 265));
+--vibeui-resizable-008-accent:light-dark(oklch(0.52 0.16 230),oklch(0.74 0.14 230));
+--vibeui-resizable-008-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 230));
 --vibeui-resizable-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-resizable-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
@@ -65,7 +77,7 @@ padding:0.875rem;display:flex;flex-direction:column;gap:0.5rem;
 [data-vibeui-block="resizable-008"] [data-part="preview"] p{margin:0;font-size:0.75rem;line-height:1.5;color:var(--vibeui-resizable-008-muted)}
 [data-vibeui-block="resizable-008"] [data-part="button"]{
 align-self:flex-start;padding:0.375rem 0.75rem;border-radius:0.5rem;
-background:var(--vibeui-resizable-008-accent);color:oklch(1 0 0);
+background:var(--vibeui-resizable-008-accent);color:var(--vibeui-resizable-008-on-accent);
 font-size:0.75rem;font-weight:650;
 }
 /* Полоса шире своей видимой линии: цель нажатия — 0.75rem, линия внутри тонкая. */
@@ -99,6 +111,28 @@ const CODE = `function Price({ value }) {
 }`
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Панель кода и превью с перетаскиваемой вертикальной границей.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -109,6 +143,14 @@ export function Resizable008({
   max = 75,
   step = 4,
   onChange,
+  codeLabel = "Код",
+  code = CODE,
+  previewLabel = "Превью",
+  previewTitle = "Карточка товара",
+  previewText = "Превью обновляется вместе с кодом слева.",
+  buttonText = "Купить",
+  statusText = "Код занимает {size}% ширины.",
+  background = "",
   accent,
   className,
   style,
@@ -121,6 +163,12 @@ export function Resizable008({
 
   const palette = {
     ...(accent ? { "--vibeui-resizable-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-resizable-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -164,9 +212,9 @@ export function Resizable008({
             data-role="fixed"
             id={codeId}
             style={{ width: `${size}%` }}
-            aria-label="Код"
+            aria-label={codeLabel}
           >
-            <pre data-part="code">{CODE}</pre>
+            <pre data-part="code">{code}</pre>
           </section>
           <div
             data-part="split"
@@ -203,16 +251,16 @@ export function Resizable008({
             }}
             onPointerCancel={() => setDragging(false)}
           />
-          <section data-part="pane" data-role="rest" aria-label="Превью">
+          <section data-part="pane" data-role="rest" aria-label={previewLabel}>
             <div data-part="preview">
-              <h3>Карточка товара</h3>
-              <p>Превью обновляется вместе с кодом слева.</p>
-              <span data-part="button">Купить</span>
+              <h3>{previewTitle}</h3>
+              <p>{previewText}</p>
+              <span data-part="button">{buttonText}</span>
             </div>
           </section>
         </div>
         <p data-part="status" role="status">
-          Код занимает {Math.round(size)}% ширины.
+          {statusText.replace("{size}", String(Math.round(size)))}
         </p>
       </div>
     </>

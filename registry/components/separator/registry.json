@@ -32,15 +32,17 @@
             "role=\"separator\" с aria-orientation",
             "вертикальный вариант, который тянется по высоте соседей, а не задаёт её",
             "капитель у подписи: она служебная и не должна спорить с текстом вокруг",
-            "толщину в один пиксель — разделитель отделяет, а не рисует рамку"
+            "толщину в один пиксель — разделитель отделяет, а не рисует рамку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "label — подпись или её отсутствие",
             "orientation — horizontal или vertical",
-            "цвет линии",
+            "line — цвет линии; пусто оставляет цвет из палитры компонента",
             "величину отступов вокруг"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Разделитель без подписи не нуждается в имени: aria-label добавляется только когда текст есть.",
             "Вертикальному варианту нужна высота от родителя: в блоке без высоты он схлопнется.",
             "Не используйте разделитель вместо отступа: если группы и так разделены, линия лишняя.",
@@ -61,6 +63,12 @@
             "type": "select",
             "default": "horizontal",
             "options": ["horizontal", "vertical"]
+          },
+          {
+            "prop": "line",
+            "label": "Цвет линии",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -74,15 +82,17 @@
                 "role=\"separator\" with aria-orientation",
                 "the vertical variant stretching to its neighbours rather than setting their height",
                 "the small caps label: it is auxiliary and must not compete with the surrounding text",
-                "the one-pixel thickness — a separator divides, it does not draw a frame"
+                "the one-pixel thickness — a separator divides, it does not draw a frame",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "label — the caption or none",
                 "orientation — horizontal or vertical",
-                "the line colour",
+                "line — the rule colour; empty keeps the component's own palette",
                 "the surrounding spacing"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "An unlabelled separator needs no name: aria-label is added only when there is text.",
                 "The vertical variant needs height from its parent: in a height-less block it collapses.",
                 "Do not use a separator instead of spacing: if the groups already read apart, the line is noise.",
@@ -97,11 +107,20 @@
               },
               "orientation": {
                 "label": "Orientation"
+              },
+              "line": {
+                "label": "Rule colour"
               }
             },
-            "title": "Labelled Separator"
+            "title": "Labelled Separator",
+            "preview": {
+              "props": {
+                "label": "or"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["orientation", "line"]
       }
     },
     {
@@ -135,15 +154,17 @@
             "колонки сетки вместо отступов — линии обязаны упираться в подпись при любом выравнивании",
             "role=separator с aria-label: без них подпись читается как обычный текст между блоками",
             "верхний регистр и разрядку подписи: они отличают служебную метку от заголовка",
-            "тонкую рамку пилюли — на светлом фоне заливка без рамки не отделяется от линии"
+            "тонкую рамку пилюли — на светлом фоне заливка без рамки не отделяется от линии",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "текст подписи и её длину",
             "положение подписи через align: start, center или end",
-            "цвет линии через переменную --vibeui-separator-002-line",
+            "line — цвет линии и рамки пилюли; пусто оставляет цвет из палитры",
             "ширину разделителя через max-width"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пустой label оставит пилюлю пустой — в этом случае берите обычный разделитель.",
             "Подпись не переносится: длинный текст лучше сократить, чем растягивать пилюлю.",
             "role=separator без aria-orientation считается горизонтальным — так и задумано.",
@@ -164,6 +185,12 @@
             "type": "select",
             "default": "center",
             "options": ["start", "center", "end"]
+          },
+          {
+            "prop": "line",
+            "label": "Цвет линии",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -177,15 +204,17 @@
                 "the grid columns instead of margins — the lines must meet the caption at any alignment",
                 "role=separator with aria-label: without them the caption reads as ordinary text between blocks",
                 "the uppercase and tracking of the caption: they mark it as a utility label, not a heading",
-                "the thin pill border — on a light background the fill alone does not separate from the line"
+                "the thin pill border — on a light background the fill alone does not separate from the line",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the caption text and its length",
                 "the caption position through align: start, center or end",
-                "the line colour through the --vibeui-separator-002-line variable",
+                "line — the colour of the rules and the pill border; empty keeps the component's own palette",
                 "the divider width through max-width"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "An empty label leaves an empty pill — use a plain divider in that case.",
                 "The caption does not wrap: shorten long text rather than stretching the pill.",
                 "role=separator without aria-orientation counts as horizontal — that is intended here.",
@@ -201,11 +230,20 @@
               "align": {
                 "label": "Position",
                 "default": "center"
+              },
+              "line": {
+                "label": "Rule colour"
               }
             },
-            "title": "Pill Label Divider"
+            "title": "Pill Label Divider",
+            "preview": {
+              "props": {
+                "label": "or"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["align", "line"]
       }
     },
     {
@@ -223,7 +261,7 @@
           "target": "@components/vibeui/separator-003.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Ряд выровнен align-items:stretch, из-за чего разделитель шириной в один пиксель сам вытягивается до высоты самого высокого блока — задавать ему height вручную не нужно и вредно. Режим text ограничивает линию высотой строки значения: так делают в шапках, где полная линия выглядит как граница таблицы. Каждый разделитель помечен role=separator с aria-orientation=vertical, поэтому граница между показателями слышна. Промежуток вынесен в проп gap и подставляется переменной в пикселях. Подложка светлая: цифры и подписи тёмные.",
+      "docs": "Серверный компонент, хуков нет. Ряд выровнен align-items:stretch, из-за чего разделитель шириной в один пиксель сам вытягивается до высоты самого высокого блока — задавать ему height вручную не нужно и вредно. Режим text ограничивает линию высотой строки значения: так делают в шапках, где полная линия выглядит как граница таблицы. Каждый разделитель помечен role=separator с aria-orientation=vertical, поэтому граница между показателями слышна. Промежуток вынесен в проп gap и подставляется переменной в пикселях. Подложки по умолчанию нет: палитра объявлена через light-dark(), поэтому строка следует теме окружения, а плашку под себя кладёт только заданный проп background.",
       "meta": {
         "tags": ["separator", "vertical", "stats", "row"],
         "ai": {
@@ -236,15 +274,18 @@
             "отсутствие фиксированной высоты у линии — заданная вручную, она разойдётся с соседями",
             "role=separator с вертикальной ориентацией: иначе граница между цифрами не слышна",
             "моноширинные цифры значений: обычные дают разную ширину и колонка дёргается",
-            "собственную светлую подложку: цифры и подписи тёмные и на тёмном фоне пропадают"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "промежуток между блоками через gap в пикселях",
             "высоту линии через dividerHeight: text или full",
             "состав показателей через items",
-            "цвет линии через переменную --vibeui-separator-003-line"
+            "цвет линии через переменную --vibeui-separator-003-line",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ряд не переносится: четыре и больше показателей на телефоне уедут за край.",
             "Промежуток задан в пикселях, а не в rem: он не масштабируется с кеглем.",
             "Подписи помечены nowrap — длинное слово растянет строку, а не перенесётся.",
@@ -266,6 +307,12 @@
             "type": "select",
             "default": "full",
             "options": ["text", "full"]
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -279,15 +326,18 @@
                 "the absence of a fixed height on the rule — set by hand it drifts away from the neighbours",
                 "role=separator with vertical orientation: otherwise the boundary between numbers is inaudible",
                 "the tabular figures in the values: proportional ones vary in width and make the column jitter",
-                "the component's own light surface: numbers and captions are dark and vanish on a dark background"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the spacing between blocks through gap in pixels",
                 "the rule height through dividerHeight: text or full",
                 "the stat set through items",
-                "the rule colour through the --vibeui-separator-003-line variable"
+                "the rule colour through the --vibeui-separator-003-line variable",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The row does not wrap: four or more stats run off the edge on a phone.",
                 "The gap is in pixels, not rem: it does not scale with the type size.",
                 "Captions are nowrap — a long word stretches the row instead of wrapping.",
@@ -303,11 +353,33 @@
               "dividerHeight": {
                 "label": "Rule height",
                 "default": "full"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Vertical Stat Rules"
+            "title": "Vertical Stat Rules",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "value": "128",
+                    "caption": "components"
+                  },
+                  {
+                    "value": "24",
+                    "caption": "categories"
+                  },
+                  {
+                    "value": "0",
+                    "caption": "dependencies"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["dividerHeight", "gap", "background"]
       }
     },
     {
@@ -325,7 +397,7 @@
           "target": "@components/vibeui/separator-004.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. border-style:dashed рисует штрих, длина которого зависит от браузера и от толщины границы, — одинакового пунктира в двух местах макета так не добиться. Здесь линия набрана repeating-linear-gradient, где длина штриха и промежуток вынесены в переменные --vibeui-separator-004-dash и --vibeui-separator-004-gap и подставляются из пропов в пикселях. Разделитель набран тегом hr со снятой рамкой, поэтому граница видна и скринридеру. Компонент показан в контексте двух строк раздела и несёт свою светлую подложку: подписи тёмные.",
+      "docs": "Серверный компонент, хуков нет. border-style:dashed рисует штрих, длина которого зависит от браузера и от толщины границы, — одинакового пунктира в двух местах макета так не добиться. Здесь линия набрана repeating-linear-gradient, где длина штриха и промежуток вынесены в переменные --vibeui-separator-004-dash и --vibeui-separator-004-gap и подставляются из пропов в пикселях. Разделитель набран тегом hr со снятой рамкой, поэтому граница видна и скринридеру. Компонент показан в контексте двух строк раздела; подложки по умолчанию нет, палитра объявлена через light-dark() и следует теме окружения. Все подписи вынесены в пропы: above, below, doneText и шаблон dashText, где {dash} и {gap} подставляются числами.",
       "meta": {
         "tags": ["separator", "dashed", "gradient", "divider"],
         "preview": {
@@ -341,15 +413,18 @@
             "тег hr со снятой рамкой — это семантическая граница, а не декоративный div",
             "равные длину штриха и промежуток по умолчанию: неравные читаются как ошибка отрисовки",
             "толщину линии в один пиксель, иначе пунктир превращается в ряд плашек",
-            "собственную светлую подложку: подписи разделов тёмные и на тёмном фоне пропадают"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "длину штриха через dash в пикселях",
             "промежуток между штрихами через gap в пикселях",
-            "подписи разделов через above и below",
-            "цвет линии через переменную --vibeui-separator-004-line"
+            "подписи через above, below, doneText и шаблон dashText с {dash} и {gap}",
+            "цвет линии через переменную --vibeui-separator-004-line",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пунктир не подгоняется под ширину: последний штрих может обрезаться на любой ширине.",
             "Вертикальный пунктир требует смены угла градиента с 90deg на 180deg.",
             "Значения в пикселях не масштабируются с кеглем: на крупном тексте пунктир будет мелким.",
@@ -372,6 +447,12 @@
             "default": 6,
             "min": 2,
             "max": 16
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -385,15 +466,18 @@
                 "the hr tag with its border removed — this is a semantic boundary, not a decorative div",
                 "the equal default dash and gap: unequal values read as a rendering glitch",
                 "the one-pixel line thickness, otherwise the dash turns into a row of slabs",
-                "the component's own light surface: the section captions are dark and vanish on a dark background"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the dash length through dash in pixels",
                 "the space between dashes through gap in pixels",
-                "the section captions through above and below",
-                "the line colour through the --vibeui-separator-004-line variable"
+                "the captions through above, below, doneText and the dashText template with {dash} and {gap}",
+                "the line colour through the --vibeui-separator-004-line variable",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The dash pattern is not fitted to the width: the last dash may be cut at any width.",
                 "A vertical dash needs the gradient angle changed from 90deg to 180deg.",
                 "Pixel values do not scale with the type size: the dash looks tiny next to large text.",
@@ -409,11 +493,23 @@
               "gap": {
                 "label": "Gap",
                 "default": 6
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Dashed Rule Divider"
+            "title": "Dashed Rule Divider",
+            "preview": {
+              "props": {
+                "above": "Personal data",
+                "below": "Payment",
+                "doneText": "filled",
+                "dashText": "dash {dash} / {gap}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["dash", "gap", "background"]
       }
     },
     {
@@ -431,7 +527,7 @@
           "target": "@components/vibeui/separator-005.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Сетка из трёх колонок (1fr auto 1fr) держит кружок ровно по центру при любой ширине. Кружок несёт собственную заливку и рамку: без заливки линия проходит сквозь знак, а вырезать её маской пришлось бы под каждый фон отдельно. Знак декоративен и помечен aria-hidden — «✦» вслух ничего не сообщает; смысл границы несёт role=separator с aria-label. Тон переключается атрибутом data-tone и меняет три переменные разом. Кружок светлый с тёмным знаком, поэтому отдельная подложка компоненту не нужна.",
+      "docs": "Серверный компонент, хуков нет. Сетка из трёх колонок (1fr auto 1fr) держит кружок ровно по центру при любой ширине. Кружок несёт собственную заливку и рамку: без заливки линия проходит сквозь знак, а вырезать её маской пришлось бы под каждый фон отдельно. Знак декоративен и помечен aria-hidden — «✦» вслух ничего не сообщает; смысл границы несёт role=separator с aria-label. Тон переключается атрибутом data-tone и меняет три переменные разом. Заливка кружка объявлена через light-dark(): в тёмном окружении он темнеет вместе с фоном, поэтому отдельная подложка компоненту не нужна.",
       "meta": {
         "tags": ["separator", "icon", "divider", "ornament"],
         "preview": {
@@ -447,15 +543,18 @@
             "сетку 1fr auto 1fr — отступами кружок не удержать по центру при смене ширины",
             "aria-hidden на знаке: «✦» вслух ничего не сообщает и мешает чтению",
             "role=separator с aria-label: граница обязана быть названа, а не только нарисована",
-            "светлую заливку кружка с тёмным знаком: она читается на любом фоне каталога"
+            "плотную заливку кружка: знак не должен тонуть в линии ни в светлой теме, ни в тёмной",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "знак в кружке через glyph",
             "тон через tone: neutral или accent",
             "название границы через label",
-            "ширину разделителя через max-width"
+            "ширину разделителя через max-width",
+            "line — цвет линий и рамки кружка; пусто оставляет цвет из палитры"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Знак — символ, а не svg: для иконочного набора подставьте свой элемент внутрь кружка.",
             "Кружок фиксированного размера: очень крупный знак придётся уменьшать кеглем.",
             "Тон accent меняет и цвет линий — это намеренно, иначе кружок выглядит наклейкой.",
@@ -476,6 +575,12 @@
             "type": "select",
             "default": "neutral",
             "options": ["neutral", "accent"]
+          },
+          {
+            "prop": "line",
+            "label": "Цвет линии",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -489,15 +594,18 @@
                 "the 1fr auto 1fr grid — margins cannot keep the disc centred as the width changes",
                 "aria-hidden on the glyph: \"✦\" says nothing aloud and only clutters the reading",
                 "role=separator with aria-label: a boundary must be named, not merely drawn",
-                "the light disc fill with a dark glyph: it stays readable on any catalog background"
+                "the solid disc fill: the glyph must not sink into the line in either the light or the dark theme",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the glyph in the disc through glyph",
                 "the tone through tone: neutral or accent",
                 "the boundary name through label",
-                "the divider width through max-width"
+                "the divider width through max-width",
+                "line — the colour of the rules and the disc border; empty keeps the component's own palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The glyph is a character, not an svg: drop your own element into the disc for an icon set.",
                 "The disc has a fixed size: a very large glyph has to be scaled down by font size.",
                 "The accent tone also changes the line colour — deliberately, otherwise the disc looks like a sticker.",
@@ -513,11 +621,20 @@
               "tone": {
                 "label": "Tone",
                 "default": "neutral"
+              },
+              "line": {
+                "label": "Rule colour"
               }
             },
-            "title": "Icon Center Divider"
+            "title": "Icon Center Divider",
+            "preview": {
+              "props": {
+                "label": "End of section"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["tone", "line"]
       }
     },
     {
@@ -535,7 +652,7 @@
           "target": "@components/vibeui/separator-006.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Шкала отступов объявлена как кратные переменной --vibeui-separator-006-step, а ступени xs…xl переключаются атрибутом data-space — правится шкала одним числом, а не пятью значениями. Отступ живёт на самом разделителе, а не на соседних блоках: так соседи ничего не знают друг о друге и не схлопывают margin. Втяжка включается булевым пропом inset и задаётся отдельной переменной, чтобы линия отходила от краёв списка, как в системных таблицах. Подложка светлая: строки списка набраны тёмным.",
+      "docs": "Серверный компонент, хуков нет. Шкала отступов объявлена как кратные переменной --vibeui-separator-006-step, а ступени xs…xl переключаются атрибутом data-space — правится шкала одним числом, а не пятью значениями. Отступ живёт на самом разделителе, а не на соседних блоках: так соседи ничего не знают друг о друге и не схлопывают margin. Втяжка включается булевым пропом inset и задаётся отдельной переменной, чтобы линия отходила от краёв списка, как в системных таблицах. Подложки по умолчанию нет: палитра объявлена через light-dark(), список следует теме окружения, а плашку под себя кладёт только заданный проп background. Строки списка вынесены в проп rows.",
       "meta": {
         "tags": ["separator", "spacing", "scale", "rhythm"],
         "preview": {
@@ -551,15 +668,19 @@
             "отступ на самом разделителе — на соседних блоках он схлопывается и становится непредсказуемым",
             "тег hr со снятой рамкой: это семантическая граница, а не декоративная линия",
             "втяжку отдельной переменной, чтобы её можно было отключить, не трогая вертикальные отступы",
-            "собственную светлую подложку: строки списка тёмные и на тёмном фоне пропадают"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "ступень отступов через space: xs, sm, md, lg или xl",
             "втяжку линии через inset",
             "шаг шкалы через переменную --vibeui-separator-006-step",
-            "цвет линии через переменную --vibeui-separator-006-line"
+            "цвет линии через переменную --vibeui-separator-006-line",
+            "состав строк списка через rows",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ступень xl рассчитана на разделы, а не на строки списка: в плотном списке она разрывает связь.",
             "Втяжка в 1rem подобрана под паддинг карточки — при другом паддинге её надо пересчитать.",
             "Шкала не отвечает за отступы соседних блоков: их ритм задаётся снаружи.",
@@ -579,6 +700,12 @@
             "label": "Втяжка",
             "type": "boolean",
             "default": false
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -592,15 +719,19 @@
                 "the spacing on the divider itself — on neighbouring blocks it collapses and turns unpredictable",
                 "the hr tag with its border removed: this is a semantic boundary, not a decorative line",
                 "the inset as its own variable so it can be turned off without touching vertical spacing",
-                "the component's own light surface: the list rows are dark and vanish on a dark background"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the spacing step through space: xs, sm, md, lg or xl",
                 "the line inset through inset",
                 "the scale unit through the --vibeui-separator-006-step variable",
-                "the line colour through the --vibeui-separator-006-line variable"
+                "the line colour through the --vibeui-separator-006-line variable",
+                "the list rows through rows",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The xl step is meant for sections, not list rows: in a dense list it severs the connection.",
                 "The 1rem inset is tuned to the card padding — recalculate it for a different padding.",
                 "The scale does not govern the spacing of neighbouring blocks: their rhythm comes from outside.",
@@ -616,11 +747,33 @@
               "inset": {
                 "label": "Inset",
                 "default": false
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Scaled Space Divider"
+            "title": "Scaled Space Divider",
+            "preview": {
+              "props": {
+                "rows": [
+                  {
+                    "title": "Profile",
+                    "hint": "changed yesterday"
+                  },
+                  {
+                    "title": "Notifications",
+                    "hint": "on"
+                  },
+                  {
+                    "title": "Data export",
+                    "hint": "ready"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["space", "inset", "background"]
       }
     }
   ]

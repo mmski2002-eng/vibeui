@@ -17,8 +17,23 @@ export type Solutions049Props = {
   title?: string
   date?: string
   shifts?: Solutions049Shift[]
+  /** Строка о незакрытых сменах. {count} — их число. */
+  openShiftsText?: string
+  /** Подписи плиток: revenue, receipts, avgCheck, gap. */
+  statsText?: Record<string, string>
+  /** Заголовки колонок: shift, time, cash, card, receipts, avgCheck, returns, gap. */
+  columnText?: Record<string, string>
+  /** Подписи расхождения: open, match, over, short. */
+  gapText?: Record<string, string>
+  /** Знаки в кружке расхождения: те же ключи, что и в gapText. */
+  gapLetter?: Record<string, string>
+  foot?: string
   currency?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -33,15 +48,15 @@ export type Solutions049Props = {
 // считается из выручки и числа чеков, а не задаётся отдельно.
 const STYLES = `
 :where([data-vibeui-block="solutions-049"]){
---vibeui-solutions-049-bg:oklch(1 0 0);
---vibeui-solutions-049-panel:oklch(0.977 0.004 250);
---vibeui-solutions-049-fg:oklch(0.21 0.014 265);
---vibeui-solutions-049-muted:oklch(0.55 0.014 265);
---vibeui-solutions-049-border:oklch(0.9 0.006 265);
---vibeui-solutions-049-accent:oklch(0.5 0.17 265);
---vibeui-solutions-049-over:oklch(0.6 0.15 152);
---vibeui-solutions-049-short:oklch(0.58 0.2 25);
---vibeui-solutions-049-open:oklch(0.6 0.13 255);
+--vibeui-solutions-049-bg:transparent;
+--vibeui-solutions-049-panel:light-dark(oklch(0.977 0.004 250),oklch(0.27 0.011 265));
+--vibeui-solutions-049-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-049-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-049-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-049-accent:light-dark(oklch(0.5 0.17 265),oklch(0.72 0.15 265));
+--vibeui-solutions-049-over:light-dark(oklch(0.6 0.15 152),oklch(0.74 0.14 152));
+--vibeui-solutions-049-short:light-dark(oklch(0.58 0.2 25),oklch(0.73 0.17 25));
+--vibeui-solutions-049-open:light-dark(oklch(0.6 0.13 255),oklch(0.75 0.12 255));
 --vibeui-solutions-049-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-049-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -197,9 +212,26 @@ const DEFAULT_SHIFTS: Solutions049Shift[] = [
   },
 ]
 
-function money(value: number, currency: string) {
-  const sign = value < 0 ? "−" : value > 0 ? "+" : ""
-  return `${sign}${Math.abs(Math.round(value)).toLocaleString("ru-RU")} ${currency}`
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 function gapStatus(
@@ -212,12 +244,37 @@ function gapStatus(
   return gap > 0 ? "over" : "short"
 }
 
-const GAP_LABEL = {
-  open: { letter: "…", label: "смена открыта" },
-  match: { letter: "=", label: "сходится" },
-  over: { letter: "+", label: "излишек" },
-  short: { letter: "−", label: "недостача" },
-} as const
+const GAP_LABEL: Record<string, string> = {
+  open: "смена открыта",
+  match: "сходится",
+  over: "излишек",
+  short: "недостача",
+}
+
+const GAP_LETTER: Record<string, string> = {
+  open: "…",
+  match: "=",
+  over: "+",
+  short: "−",
+}
+
+const STATS_LABEL: Record<string, string> = {
+  revenue: "выручка за день",
+  receipts: "чеков пробито",
+  avgCheck: "средний чек",
+  gap: "расхождение по закрытым сменам",
+}
+
+const COLUMN_LABEL: Record<string, string> = {
+  shift: "Смена",
+  time: "Время",
+  cash: "Наличные",
+  card: "Карта",
+  receipts: "Чеков",
+  avgCheck: "Ср. чек",
+  returns: "Возвраты",
+  gap: "Расхождение",
+}
 
 /**
  * Кассовые смены: расхождение по кассе считается как «посчитано минус
@@ -228,11 +285,25 @@ export function Solutions049({
   title = "Кассовые смены",
   date = "Четверг, 14 марта 2024",
   shifts = DEFAULT_SHIFTS,
+  openShiftsText = "{count} смена ещё открыта",
+  statsText = STATS_LABEL,
+  columnText = COLUMN_LABEL,
+  gapText = GAP_LABEL,
+  gapLetter = GAP_LETTER,
+  foot = "Ожидаемая наличность считается как разменный фонд плюс наличная выручка минус возвраты; расхождение — разница с фактическим пересчётом.",
   currency = "₽",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions049Props) {
+  const money = (value: number) => {
+    const sign = value < 0 ? "−" : value > 0 ? "+" : ""
+    return `${sign}${Math.abs(Math.round(value)).toLocaleString(locale)} ${currency}`
+  }
+  const stat = (key: string) => statsText[key] ?? STATS_LABEL[key]
+  const column = (key: string) => columnText[key] ?? COLUMN_LABEL[key]
   const revenue = shifts.reduce(
     (sum, shift) => sum + shift.cashSales + shift.cardSales,
     0,
@@ -252,6 +323,12 @@ export function Solutions049({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-049-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-049-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -272,27 +349,29 @@ export function Solutions049({
             <p data-part="sub">{date}</p>
           </div>
           <p data-part="sub">
-            {shifts.filter((shift) => shift.closed === null).length} смена ещё
-            открыта
+            {openShiftsText.replace(
+              "{count}",
+              String(shifts.filter((shift) => shift.closed === null).length),
+            )}
           </p>
         </header>
 
         <div data-part="summary">
           <p data-part="tile">
-            <b>{money(revenue, currency)}</b>
-            <span>выручка за день</span>
+            <b>{money(revenue)}</b>
+            <span>{stat("revenue")}</span>
           </p>
           <p data-part="tile">
             <b>{totalReceipts}</b>
-            <span>чеков пробито</span>
+            <span>{stat("receipts")}</span>
           </p>
           <p data-part="tile">
-            <b>{money(avgCheck, currency)}</b>
-            <span>средний чек</span>
+            <b>{money(avgCheck)}</b>
+            <span>{stat("avgCheck")}</span>
           </p>
           <p data-part="tile" data-tile="gap" data-favor={gapFavor}>
-            <b>{money(totalGap, currency)}</b>
-            <span>расхождение по закрытым сменам</span>
+            <b>{money(totalGap)}</b>
+            <span>{stat("gap")}</span>
           </p>
         </div>
 
@@ -300,24 +379,24 @@ export function Solutions049({
           <table>
             <thead>
               <tr>
-                <th scope="col">Смена</th>
-                <th scope="col">Время</th>
+                <th scope="col">{column("shift")}</th>
+                <th scope="col">{column("time")}</th>
                 <th scope="col" data-align="end">
-                  Наличные
+                  {column("cash")}
                 </th>
                 <th scope="col" data-align="end">
-                  Карта
+                  {column("card")}
                 </th>
                 <th scope="col" data-align="end">
-                  Чеков
+                  {column("receipts")}
                 </th>
                 <th scope="col" data-align="end">
-                  Ср. чек
+                  {column("avgCheck")}
                 </th>
                 <th scope="col" data-align="end">
-                  Возвраты
+                  {column("returns")}
                 </th>
-                <th scope="col">Расхождение</th>
+                <th scope="col">{column("gap")}</th>
               </tr>
             </thead>
             <tbody>
@@ -343,19 +422,19 @@ export function Solutions049({
                     <td>
                       {shift.opened}–{shift.closed ?? "…"}
                     </td>
-                    <td data-align="end">{money(shift.cashSales, currency)}</td>
-                    <td data-align="end">{money(shift.cardSales, currency)}</td>
+                    <td data-align="end">{money(shift.cashSales)}</td>
+                    <td data-align="end">{money(shift.cardSales)}</td>
                     <td data-align="end">{shift.receipts}</td>
-                    <td data-align="end">{money(shiftAvg, currency)}</td>
-                    <td data-align="end">{money(shift.returns, currency)}</td>
+                    <td data-align="end">{money(shiftAvg)}</td>
+                    <td data-align="end">{money(shift.returns)}</td>
                     <td>
                       <span data-part="gap">
                         <span data-part="letter" aria-hidden="true">
-                          {GAP_LABEL[status].letter}
+                          {gapLetter[status] ?? GAP_LETTER[status]}
                         </span>
                         {status === "open"
-                          ? GAP_LABEL[status].label
-                          : `${GAP_LABEL[status].label}${gap !== 0 ? ` ${money(gap, currency)}` : ""}`}
+                          ? (gapText[status] ?? GAP_LABEL[status])
+                          : `${gapText[status] ?? GAP_LABEL[status]}${gap !== 0 ? ` ${money(gap)}` : ""}`}
                       </span>
                     </td>
                   </tr>
@@ -365,11 +444,7 @@ export function Solutions049({
           </table>
         </div>
 
-        <p data-part="foot">
-          Ожидаемая наличность считается как разменный фонд плюс наличная
-          выручка минус возвраты; расхождение — разница с фактическим
-          пересчётом.
-        </p>
+        <p data-part="foot">{foot}</p>
       </section>
     </>
   )

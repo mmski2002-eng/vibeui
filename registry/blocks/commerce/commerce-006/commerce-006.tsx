@@ -17,7 +17,13 @@ export type Commerce006Props = {
   spread?: number[]
   reviews?: Commerce006Review[]
   cta?: string
+  /** Подписи блока: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
+  /** Локаль форматирования средней оценки. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,16 +36,20 @@ export type Commerce006Props = {
 // процентами: заданные отдельно, они перестают сходиться с суммой. Пометка
 // «покупка подтверждена» стоит у автора, потому что доверие к отзыву решается
 // до чтения текста, а оценка продублирована числом рядом со звёздами.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="commerce-006"]){
---vibeui-commerce-006-bg:oklch(1 0 0);
---vibeui-commerce-006-fg:oklch(0.22 0.014 265);
---vibeui-commerce-006-muted:oklch(0.55 0.014 265);
---vibeui-commerce-006-border:oklch(0.91 0.006 265);
---vibeui-commerce-006-track:oklch(0.94 0.005 265);
---vibeui-commerce-006-star:oklch(0.72 0.16 75);
---vibeui-commerce-006-ok:oklch(0.58 0.14 152);
---vibeui-commerce-006-accent:oklch(0.55 0.2 262);
+--vibeui-commerce-006-bg:transparent;
+--vibeui-commerce-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-commerce-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-006-track:light-dark(oklch(0.94 0.005 265),oklch(0.32 0.01 265));
+--vibeui-commerce-006-star:light-dark(oklch(0.72 0.16 75),oklch(0.82 0.15 75));
+--vibeui-commerce-006-ok:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
+--vibeui-commerce-006-on-ok:light-dark(oklch(1 0 0),oklch(0.19 0.02 152));
+--vibeui-commerce-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
 --vibeui-commerce-006-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -98,7 +108,7 @@ font-size:0.6875rem;color:var(--vibeui-commerce-006-ok);font-weight:600;
 [data-vibeui-block="commerce-006"] [data-part="check"]{
 display:inline-flex;align-items:center;justify-content:center;
 width:0.875rem;height:0.875rem;border-radius:9999px;
-background:var(--vibeui-commerce-006-ok);color:oklch(1 0 0);font-size:0.5625rem;line-height:1;
+background:var(--vibeui-commerce-006-ok);color:var(--vibeui-commerce-006-on-ok);font-size:0.5625rem;line-height:1;
 }
 [data-vibeui-block="commerce-006"] [data-part="date"]{margin-left:auto;font-size:0.6875rem;color:var(--vibeui-commerce-006-muted)}
 [data-vibeui-block="commerce-006"] [data-part="line"]{
@@ -136,8 +146,38 @@ const DEFAULT_REVIEWS: Commerce006Review[] = [
   },
 ]
 
+/** Русские подписи по умолчанию: установленный файл не меняет язык сам. */
+const LABELS: Record<string, string> = {
+  ratings: "{count} оценок",
+  verified: "покупка подтверждена",
+  outOf: "{rating} из 5",
+  useful: "Отзыв помог {count} покупателям",
+}
+
 function stars(rating: number) {
   return "★★★★★".slice(0, Math.round(rating)).padEnd(5, "☆")
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -151,15 +191,25 @@ export function Commerce006({
   spread = DEFAULT_SPREAD,
   reviews = DEFAULT_REVIEWS,
   cta = "Написать отзыв",
+  labels = LABELS,
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Commerce006Props) {
   // Доли считаются из массива: заданные отдельно, они перестают сходиться.
   const count = total ?? spread.reduce((sum, value) => sum + value, 0)
+  const text = { ...LABELS, ...labels }
 
   const palette = {
     ...(accent ? { "--vibeui-commerce-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -178,13 +228,13 @@ export function Commerce006({
         <div data-part="layout">
           <aside data-part="score">
             <p data-part="big">
-              {average.toLocaleString("ru-RU", { minimumFractionDigits: 1 })}
+              {average.toLocaleString(locale, { minimumFractionDigits: 1 })}
             </p>
             <p data-part="total">
               <span data-part="stars" aria-hidden="true">
                 {stars(average)}
               </span>{" "}
-              {count} оценок
+              {text.ratings.replace("{count}", String(count))}
             </p>
             {spread.map((value, index) => {
               const score = spread.length - index
@@ -222,7 +272,7 @@ export function Commerce006({
                       <span data-part="check" aria-hidden="true">
                         ✓
                       </span>
-                      покупка подтверждена
+                      {text.verified}
                     </span>
                   ) : null}
                   <span data-part="date">{review.date}</span>
@@ -231,13 +281,13 @@ export function Commerce006({
                   <span data-part="stars" aria-hidden="true">
                     {stars(review.rating)}
                   </span>
-                  {review.rating} из 5
+                  {text.outOf.replace("{rating}", String(review.rating))}
                 </p>
                 {review.title ? <h3>{review.title}</h3> : null}
                 <p data-part="text">{review.text}</p>
                 {review.useful ? (
                   <p data-part="useful">
-                    Отзыв помог {review.useful} покупателям
+                    {text.useful.replace("{count}", String(review.useful))}
                   </p>
                 ) : null}
               </li>

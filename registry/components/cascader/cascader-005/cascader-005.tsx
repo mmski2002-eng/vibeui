@@ -12,6 +12,16 @@ export type Cascader005Props = {
   rootLabel?: string
   submitLabel?: string
   tree?: Cascader005Node[]
+  /** aria-подпись навигации по крошкам. */
+  trailText?: string
+  /** Приписка на плитке с ветками: {count}. */
+  branchText?: string
+  /** Приписка на плитке-листе. */
+  leafText?: string
+  /** Чем подписан пустой выбор. */
+  emptyText?: string
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -24,12 +34,13 @@ export type Cascader005Props = {
 // путь целиком: категория «Куртки» без ветки над ней ничего не значит.
 const STYLES = `
 :where([data-vibeui-block="cascader-005"]){
---vibeui-cascader-005-bg:oklch(1 0 0);
---vibeui-cascader-005-tile:oklch(0.975 0.004 90);
---vibeui-cascader-005-fg:oklch(0.24 0.014 90);
---vibeui-cascader-005-muted:oklch(0.55 0.012 90);
---vibeui-cascader-005-border:oklch(0.9 0.008 90);
---vibeui-cascader-005-accent:oklch(0.56 0.16 45);
+--vibeui-cascader-005-bg:transparent;
+--vibeui-cascader-005-tile:light-dark(oklch(0.975 0.004 90),oklch(0.27 0.012 90));
+--vibeui-cascader-005-fg:light-dark(oklch(0.24 0.014 90),oklch(0.94 0.006 90));
+--vibeui-cascader-005-muted:light-dark(oklch(0.55 0.012 90),oklch(0.71 0.011 90));
+--vibeui-cascader-005-border:light-dark(oklch(0.9 0.008 90),oklch(0.38 0.012 90));
+--vibeui-cascader-005-accent:light-dark(oklch(0.56 0.16 45),oklch(0.74 0.14 45));
+--vibeui-cascader-005-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 45));
 --vibeui-cascader-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="cascader-005"]{
@@ -97,7 +108,7 @@ font-size:0.6875rem;color:var(--vibeui-cascader-005-muted);
 [data-vibeui-block="cascader-005"] [data-part="submit"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
 width:100%;padding:0.5625rem 0.75rem;border:0;border-radius:0.75rem;
-background:var(--vibeui-cascader-005-accent);color:oklch(1 0 0);
+background:var(--vibeui-cascader-005-accent);color:var(--vibeui-cascader-005-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:600;cursor:pointer;
 transition:opacity .14s ease;
 }
@@ -158,6 +169,28 @@ const DEFAULT_TREE: Cascader005Node[] = [
   { label: "Уход" },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function nodesAt(tree: Cascader005Node[], path: string[]) {
   let nodes = tree
 
@@ -182,11 +215,18 @@ export function Cascader005({
   rootLabel = "Все товары",
   submitLabel = "Выбрать категорию",
   tree = DEFAULT_TREE,
+  trailText = "Текущий путь по каталогу",
+  branchText = "{count} подкатегорий",
+  leafText = "конечная категория",
+  emptyText = "ничего не выбрано",
+  background = "",
   accent,
   className,
   style,
 }: Cascader005Props) {
-  const [path, setPath] = useState<string[]>(["Одежда"])
+  const [path, setPath] = useState<string[]>(() =>
+    tree[0]?.children?.length ? [tree[0].label] : [],
+  )
   const [leaf, setLeaf] = useState<string | null>(null)
   const nodes = nodesAt(tree, path)
   const trail = [rootLabel, ...path]
@@ -194,6 +234,12 @@ export function Cascader005({
 
   const palette = {
     ...(accent ? { "--vibeui-cascader-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cascader-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -207,7 +253,7 @@ export function Cascader005({
         className={className}
         style={palette}
       >
-        <nav aria-label="Текущий путь по каталогу">
+        <nav aria-label={trailText}>
           <ol data-part="crumbs">
             {trail.map((step, index) => (
               <li
@@ -253,8 +299,11 @@ export function Cascader005({
                 <span data-part="tile-name">{node.label}</span>
                 <span data-part="tile-meta">
                   {node.children?.length
-                    ? `${node.children.length} подкатегорий`
-                    : "конечная категория"}
+                    ? branchText.replace(
+                        "{count}",
+                        String(node.children.length),
+                      )
+                    : leafText}
                 </span>
               </button>
             </li>
@@ -263,7 +312,7 @@ export function Cascader005({
         <button data-part="submit" type="button" disabled={chosen.length === 0}>
           <span>{submitLabel}</span>
           <em aria-live="polite">
-            {chosen.length ? chosen.join(" › ") : "ничего не выбрано"}
+            {chosen.length ? chosen.join(" › ") : emptyText}
           </em>
         </button>
       </div>

@@ -32,15 +32,21 @@
             "имя условия в подписи кнопки удаления, а не номер строки",
             "aria-live у счётчика найденного: он меняется от действий пользователя",
             "внятное пустое состояние вместо голого списка без строк",
-            "нативные select и input — клавиатура и мобильный выбор достаются даром"
+            "нативные select и input — клавиатура и мобильный выбор достаются даром",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подписи в пропсе labels: русский словарь — умолчание, а не зашитый в разметку текст"
           ],
           "adapt": [
             "списки fields и operators",
             "стартовые rules и текст found",
             "акцент через проп accent",
-            "ширину блока"
+            "ширину блока",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи через labels: заголовок, связки, пустое состояние, кнопки и aria-подписи"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Отбор не выполняется: компонент собирает условия, запрос делает вызывающий код.",
             "Тип значения не проверяется — для дат и чисел подставьте свои поля ввода.",
             "Группировка условий скобками не поддерживается: для неё нужен свой разбор дерева.",
@@ -60,6 +66,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -73,15 +85,21 @@
                 "naming the condition in the remove button rather than its row number",
                 "aria-live on the result counter: it changes from the user's own actions",
                 "a real empty state instead of a bare list with no rows",
-                "native selects and inputs — keyboard and mobile pickers come free"
+                "native selects and inputs — keyboard and mobile pickers come free",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the labels prop: the Russian dictionary is a default, not text welded into the markup"
               ],
               "adapt": [
                 "the fields and operators lists",
                 "the initial rules and the found text",
                 "the accent through the accent prop",
-                "the block width"
+                "the block width",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the wording through labels: heading, joins, empty state, buttons and aria labels"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "No filtering happens: the component builds conditions, the caller runs the query.",
                 "Value types are unchecked — swap in your own inputs for dates and numbers.",
                 "Bracketed grouping is unsupported: it needs your own expression tree.",
@@ -96,11 +114,54 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Filter Builder"
+            "title": "Filter Builder",
+            "preview": {
+              "props": {
+                "fields": ["Category", "Author", "Installs", "Updated"],
+                "operators": [
+                  "is",
+                  "is not",
+                  "contains",
+                  "greater than",
+                  "less than"
+                ],
+                "rules": [
+                  {
+                    "id": "1",
+                    "field": "Category",
+                    "operator": "is",
+                    "value": "Forms"
+                  },
+                  {
+                    "id": "2",
+                    "field": "Installs",
+                    "operator": "greater than",
+                    "value": "100"
+                  }
+                ],
+                "found": "42 of 255 found",
+                "labels": {
+                  "title": "Filter conditions",
+                  "join": "where",
+                  "joinNext": "and",
+                  "empty": "No conditions — every record is shown. Add the first one.",
+                  "add": "Add condition",
+                  "clear": "Clear",
+                  "field": "Condition {index} field",
+                  "operator": "Condition {index} operator",
+                  "value": "Condition {index} value",
+                  "remove": "Remove condition: {rule}"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -135,16 +196,22 @@
             "aria-live=\"polite\" у счётчика найденного: он меняется от действий пользователя, а не от перехода по странице",
             "отдельную кнопку сброса на расстоянии от фишек — рядом с ними её нажимают по инерции",
             "внятное пустое состояние вместо исчезающей строки: пропавший блок читается как поломка",
-            "блок <style> внутри компонента — в нём вся палитра, фишки и оформление сброса"
+            "блок <style> внутри компонента — в нём вся палитра, фишки и оформление сброса",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подписи в пропсе labels: русский словарь — умолчание, а не зашитый в разметку текст"
           ],
           "adapt": [
             "массив chips: группы, значения и их порядок",
             "текст счётчика total над строкой",
             "подпись кнопки сброса resetLabel",
             "обработчик onChange: он получает оставшийся набор условий",
-            "акцент через проп accent — цвет наведения на крестик и цвет сброса"
+            "акцент через проп accent — цвет наведения на крестик и цвет сброса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи через labels: заголовок, пустое состояние и aria-подпись крестика"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не фильтрует данные: он показывает набор условий, а выдачу пересобирает вызывающий код в onChange.",
             "Порог появления сброса — две фишки. На одном условии кнопка дублирует крестик и мешает.",
             "Длинные значения лучше сокращать заранее: строка фишек рассчитана на короткие подписи.",
@@ -171,6 +238,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -185,16 +258,22 @@
                 "aria-live=\"polite\" on the counter: it changes from the user's own actions, not from a page change",
                 "the reset button kept at a distance from the chips — placed next to them it gets pressed by momentum",
                 "a real empty state instead of a vanishing row: a disappearing block reads as a breakage",
-                "the <style> block inside the component — it holds the palette, the chips and the reset styling"
+                "the <style> block inside the component — it holds the palette, the chips and the reset styling",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the labels prop: the Russian dictionary is a default, not text welded into the markup"
               ],
               "adapt": [
                 "the chips array: groups, values and their order",
                 "the total counter text above the row",
                 "the resetLabel button caption",
                 "the onChange handler: it receives the remaining set of conditions",
-                "the accent through the accent prop — it colours the hovered cross and the reset"
+                "the accent through the accent prop — it colours the hovered cross and the reset",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the wording through labels: heading, empty state and the cross aria label"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component filters nothing: it shows the set of conditions while the caller rebuilds the results in onChange.",
                 "The reset appears from two chips. On a single condition it duplicates the cross and only gets in the way.",
                 "Shorten long values upstream: the chip row is sized for short captions.",
@@ -213,11 +292,48 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Active Chips"
+            "title": "Active Chips",
+            "preview": {
+              "props": {
+                "chips": [
+                  {
+                    "id": "1",
+                    "group": "Category",
+                    "value": "Forms"
+                  },
+                  {
+                    "id": "2",
+                    "group": "Price",
+                    "value": "under £50"
+                  },
+                  {
+                    "id": "3",
+                    "group": "Licence",
+                    "value": "MIT"
+                  },
+                  {
+                    "id": "4",
+                    "group": "Updated",
+                    "value": "past month"
+                  }
+                ],
+                "total": "128 components found",
+                "resetLabel": "Reset all",
+                "labels": {
+                  "title": "Active filters",
+                  "empty": "No filters — the whole catalogue is shown.",
+                  "remove": "Remove filter {group}: {value}"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -252,16 +368,20 @@
             "disabled у значений с нулём: нажатие, которое ничего не даёт, хуже отсутствия нажатия",
             "<fieldset> с <legend> у каждой группы, даже когда заголовок уже стоит в <summary>: без них набор чекбоксов не читается как группа",
             "нативные чекбоксы с appearance:none — состояние, клавиатура и участие в форме остаются настоящими",
-            "блок <style> внутри компонента — в нём вся палитра, галочка и стрелка раскрытия"
+            "блок <style> внутри компонента — в нём вся палитра, галочка и стрелка раскрытия",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок панели title и массив groups со значениями и счётчиками",
             "какие группы открыты по умолчанию через атрибут open у <details>",
             "акцент через проп accent — цвет отмеченного чекбокса",
             "ширину колонки через className",
-            "порядок значений внутри группы"
+            "порядок значений внутри группы",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Счётчики считает сервер: показывать в них число до применения фильтра честно только тогда, когда оно учитывает уже включённые условия.",
             "Компонент не фильтрует данные — он собирает состояние формы, а выдачу пересобирает вызывающий код.",
             "Больше семи значений в группе стоит прятать под «показать ещё» или дополнять поиском по значениям.",
@@ -281,6 +401,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -295,16 +421,20 @@
                 "disabled on zero-count values: a click that changes nothing is worse than no click at all",
                 "the <fieldset> and <legend> on every group, even with the heading already in the <summary>: without them a stack of checkboxes does not read as a group",
                 "native checkboxes with appearance:none — state, keyboard and form participation stay real",
-                "the <style> block inside the component — it holds the palette, the tick and the disclosure arrow"
+                "the <style> block inside the component — it holds the palette, the tick and the disclosure arrow",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the panel title and the groups array of values and counts",
                 "which groups start open through the open attribute on <details>",
                 "the accent through the accent prop — it colours a checked box",
                 "the column width through className",
-                "the order of values inside a group"
+                "the order of values inside a group",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The counts come from the server: showing a number before applying the filter is only honest when it accounts for the conditions already on.",
                 "The component does not filter data — it collects form state while the caller rebuilds the results.",
                 "More than seven values in a group deserve a \"show more\" or a value search.",
@@ -319,11 +449,63 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Facet Sidebar"
+            "title": "Facet Sidebar",
+            "preview": {
+              "props": {
+                "title": "Filters",
+                "groups": [
+                  {
+                    "title": "Category",
+                    "options": [
+                      {
+                        "value": "Forms",
+                        "count": 128,
+                        "checked": true
+                      },
+                      {
+                        "value": "Navigation",
+                        "count": 64
+                      },
+                      {
+                        "value": "Tables",
+                        "count": 41
+                      },
+                      {
+                        "value": "Charts",
+                        "count": 0,
+                        "disabled": true
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Licence",
+                    "options": [
+                      {
+                        "value": "MIT",
+                        "count": 190,
+                        "checked": true
+                      },
+                      {
+                        "value": "Apache 2.0",
+                        "count": 34
+                      },
+                      {
+                        "value": "Commercial",
+                        "count": 9
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -358,16 +540,22 @@
             "aria-pressed у пресетов: это переключатели состояния, а не обычные кнопки",
             "aria-label с названием фильтра у каждого поля — «от» и «до» без контекста не читаются",
             "табличные цифры в полях: иначе число дёргается при вводе",
-            "блок <style> внутри компонента — в нём вся палитра, пресеты и оформление пары полей"
+            "блок <style> внутри компонента — в нём вся палитра, пресеты и оформление пары полей",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подписи в пропсе labels: русский словарь — умолчание, а не зашитый в разметку текст"
           ],
           "adapt": [
             "заголовок title и единицу unit в подписях",
             "массив presets — свои частые диапазоны",
             "обработчик onChange: он получает объект с полями from и to",
             "акцент через проп accent — цвет активного пресета и кольца фокуса",
-            "текст сводки под полями"
+            "текст сводки под полями",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи через labels: «от» и «до», подсказки полей, шаблон сводки с {from}, {to} и {unit}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пустое поле означает «без границы»: не подставляйте туда ноль, иначе бесплатные товары исчезнут из выдачи.",
             "Значения приходят строками — приводите их к числу перед запросом.",
             "Для приблизительного отбора с наглядным распределением лучше подходит парный ползунок.",
@@ -394,6 +582,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -408,16 +602,22 @@
                 "aria-pressed on the presets: they are state toggles, not ordinary buttons",
                 "an aria-label naming the filter on each field — bare \"from\" and \"to\" do not read",
                 "tabular figures in the fields: otherwise the number jitters while typing",
-                "the <style> block inside the component — it holds the palette, the presets and the field pair"
+                "the <style> block inside the component — it holds the palette, the presets and the field pair",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the labels prop: the Russian dictionary is a default, not text welded into the markup"
               ],
               "adapt": [
                 "the title and the unit shown in the labels",
                 "the presets array — your own common ranges",
                 "the onChange handler: it receives an object with from and to",
                 "the accent through the accent prop — it colours the active preset and the focus ring",
-                "the summary wording under the fields"
+                "the summary wording under the fields",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the wording through labels: \"from\" and \"to\", the field placeholders, the summary template with {from}, {to} and {unit}"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "An empty field means \"no bound\": do not substitute zero, or free items drop out of the results.",
                 "The values arrive as strings — convert them to numbers before querying.",
                 "For rough selection with a visible distribution, a dual slider serves better.",
@@ -436,11 +636,53 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Number Range"
+            "title": "Number Range",
+            "preview": {
+              "props": {
+                "title": "Price",
+                "unit": "£",
+                "presets": [
+                  {
+                    "label": "under 10",
+                    "from": "",
+                    "to": "10"
+                  },
+                  {
+                    "label": "10 — 50",
+                    "from": "10",
+                    "to": "50"
+                  },
+                  {
+                    "label": "50 — 200",
+                    "from": "50",
+                    "to": "200"
+                  },
+                  {
+                    "label": "over 200",
+                    "from": "200",
+                    "to": ""
+                  }
+                ],
+                "labels": {
+                  "from": "from",
+                  "to": "to",
+                  "fromPlaceholder": "0",
+                  "toPlaceholder": "any",
+                  "fromField": "{title}: lower bound, {unit}",
+                  "toField": "{title}: upper bound, {unit}",
+                  "summary": "Selected: {from} — {to} {unit}",
+                  "empty": "No bounds set — any price."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -475,16 +717,22 @@
             "радиокнопки, а не чекбоксы: период выбирают один, и разметка обязана это говорить",
             "<fieldset> с <legend>: список периодов — это группа, а не набор независимых строк",
             "aria-label у полей даты: «начало» и «конец» без названия периода не читаются",
-            "блок <style> внутри компонента — в нём вся палитра, радиокнопки и правило раскрытия"
+            "блок <style> внутри компонента — в нём вся палитра, радиокнопки и правило раскрытия",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подписи в пропсе labels: русский словарь — умолчание, а не зашитый в разметку текст"
           ],
           "adapt": [
             "заголовок title и массив presets со своими периодами",
             "подпись пункта customLabel для своего периода",
             "проп name: из него собираются имена полей формы",
             "акцент через проп accent — цвет отмеченного пункта",
-            "пояснение под списком"
+            "пояснение под списком",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи через labels: «начало» и «конец», их aria-подписи и примечание под списком"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пресеты — это подписи, а не даты: границы периода считает сервер, иначе часовой пояс клиента исказит отчёт.",
             "Проверку «начало не позже конца» делает вызывающий код: у нативных полей даты её нет.",
             "Селектор :has нужен для раскрытия — в очень старых браузерах пара дат будет видна всегда.",
@@ -511,6 +759,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -525,16 +779,22 @@
                 "radio buttons rather than checkboxes: one period is chosen, and the markup has to say so",
                 "the <fieldset> with a <legend>: the list of periods is a group, not a set of independent rows",
                 "aria-labels on the date fields: bare \"start\" and \"end\" do not read without the period name",
-                "the <style> block inside the component — it holds the palette, the radios and the unfolding rule"
+                "the <style> block inside the component — it holds the palette, the radios and the unfolding rule",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the labels prop: the Russian dictionary is a default, not text welded into the markup"
               ],
               "adapt": [
                 "the title and the presets array of your own periods",
                 "the customLabel caption for the custom range option",
                 "the name prop: the form field names are built from it",
                 "the accent through the accent prop — it colours the chosen option",
-                "the explanation under the list"
+                "the explanation under the list",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the wording through labels: \"start\" and \"end\", their aria labels and the note under the list"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Presets are captions, not dates: the server computes the bounds, otherwise the client time zone skews the report.",
                 "The \"start not after end\" check belongs to the caller: native date fields do not do it.",
                 "The :has selector drives the unfolding — in very old browsers the date pair is always visible.",
@@ -553,11 +813,34 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Date Presets"
+            "title": "Date Presets",
+            "preview": {
+              "props": {
+                "title": "Period",
+                "presets": [
+                  "Today",
+                  "Last 7 days",
+                  "Last 30 days",
+                  "This quarter"
+                ],
+                "customLabel": "Custom range",
+                "labels": {
+                  "from": "Start",
+                  "to": "End",
+                  "fromField": "Start of period",
+                  "toField": "End of period",
+                  "note": "The period is counted in your time zone, both bounds included."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -592,16 +875,22 @@
             "поиск, который сужает список значений, а не выдачу: это два разных поиска, и путать их нельзя",
             "счётчик «показано N из M» с role=\"status\": он меняется от ввода и обязан быть объявлен",
             "внятное пустое состояние с подсказкой проверить написание вместо пустого места",
-            "блок <style> внутри компонента — в нём вся палитра, лупа и прокрутка списка"
+            "блок <style> внутри компонента — в нём вся палитра, лупа и прокрутка списка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подписи в пропсе labels: русский словарь — умолчание, а не зашитый в разметку текст"
           ],
           "adapt": [
             "заголовок title и текст placeholder в поле поиска",
             "массив values — свои значения фильтра",
             "обработчик onChange: он получает список отмеченных значений",
             "акцент через проп accent — цвет отмеченного чекбокса",
-            "высоту прокручиваемого списка"
+            "высоту прокручиваемого списка",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "стартовые отметки через defaultChecked и подписи через labels: aria-подпись поиска, пустое состояние и шаблон счётчика"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Поиск идёт по подстроке без учёта регистра и не знает про склонения: для полноценного поиска нужен сервер.",
             "Список прокручивается внутри себя. Если значений тысячи, добавьте виртуализацию или подгрузку — иначе разметка станет тяжёлой.",
             "Отмеченные значения хранятся в состоянии компонента: для формы прокиньте их наружу через onChange.",
@@ -628,6 +917,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -642,16 +937,22 @@
                 "a search that narrows the value list rather than the results: those are two different searches and must not be confused",
                 "the \"showing N of M\" counter with role=\"status\": it changes as you type and has to be announced",
                 "a real empty state suggesting a spelling check instead of blank space",
-                "the <style> block inside the component — it holds the palette, the magnifier and the list scrolling"
+                "the <style> block inside the component — it holds the palette, the magnifier and the list scrolling",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the labels prop: the Russian dictionary is a default, not text welded into the markup"
               ],
               "adapt": [
                 "the title and the placeholder text in the search field",
                 "the values array — your own filter values",
                 "the onChange handler: it receives the list of checked values",
                 "the accent through the accent prop — it colours a checked box",
-                "the height of the scrolling list"
+                "the height of the scrolling list",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the initial ticks through defaultChecked and the wording through labels: the search aria label, the empty state and the counter template"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The search is a case-insensitive substring match and knows nothing about word forms: real search belongs on the server.",
                 "The list scrolls inside itself. With thousands of values add virtualisation or lazy loading, or the markup gets heavy.",
                 "Checked values live in component state: lift them out through onChange for a form.",
@@ -670,11 +971,41 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Value Search"
+            "title": "Value Search",
+            "preview": {
+              "props": {
+                "title": "City",
+                "placeholder": "Find a city",
+                "values": [
+                  "London",
+                  "Manchester",
+                  "Birmingham",
+                  "Leeds",
+                  "Bristol",
+                  "Newcastle",
+                  "Sheffield",
+                  "Liverpool",
+                  "Nottingham",
+                  "Edinburgh",
+                  "Glasgow",
+                  "Cardiff"
+                ],
+                "defaultChecked": ["Bristol"],
+                "labels": {
+                  "search": "{title}: search the values",
+                  "empty": "Nothing found. Check the spelling.",
+                  "count": "Showing {shown} of {total} · {checked} selected"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -709,16 +1040,22 @@
             "кнопку во всю строку: мишень в одно слово неудобна и мышью, и пальцем",
             "метку общего вида: его правка меняет экран всей команде, и это надо сказать до нажатия",
             "точку-индикатор рядом с именем как второй, нецветовой признак выбранного вида",
-            "блок <style> внутри компонента — в нём вся палитра, строки видов и кнопка сохранения"
+            "блок <style> внутри компонента — в нём вся палитра, строки видов и кнопка сохранения",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подписи в пропсе labels: русский словарь — умолчание, а не зашитый в разметку текст"
           ],
           "adapt": [
             "заголовок title над списком",
             "массив views: имена, расшифровки и метки общих наборов",
             "подпись кнопки сохранения saveLabel",
             "обработчик onChange: он получает идентификатор выбранного вида",
-            "акцент через проп accent — цвет активного вида"
+            "акцент через проп accent — цвет активного вида",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи через labels: метка «общий» и имя с расшифровкой у только что сохранённого вида"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сохранение в компоненте только добавляет строку: настоящее сохранение на сервере делает вызывающий код.",
             "Переименование и удаление видов не входят в компонент — для них нужно отдельное меню строки.",
             "Общий вид стоит защищать подтверждением при правке: пользователь редко понимает, что меняет чужой экран.",
@@ -745,6 +1082,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -759,16 +1102,22 @@
                 "the full-width button: a one-word target is awkward with a mouse and worse with a finger",
                 "the shared marker: editing such a view changes the whole team's screen, and that must be said before the click",
                 "the indicator dot beside the name as a second, non-colour cue for the chosen view",
-                "the <style> block inside the component — it holds the palette, the view rows and the save button"
+                "the <style> block inside the component — it holds the palette, the view rows and the save button",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the labels prop: the Russian dictionary is a default, not text welded into the markup"
               ],
               "adapt": [
                 "the title above the list",
                 "the views array: names, condition summaries and shared markers",
                 "the saveLabel button caption",
                 "the onChange handler: it receives the id of the chosen view",
-                "the accent through the accent prop — it colours the active view"
+                "the accent through the accent prop — it colours the active view",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the wording through labels: the \"shared\" marker and the name and summary of a freshly saved view"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Saving here only appends a row: the real save on the server belongs to the caller.",
                 "Renaming and deleting views are out of scope — they need a per-row menu.",
                 "A shared view deserves a confirmation on edit: people rarely realise they are changing someone else's screen.",
@@ -787,11 +1136,45 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Saved Views"
+            "title": "Saved Views",
+            "preview": {
+              "props": {
+                "title": "Saved views",
+                "saveLabel": "Save current selection",
+                "views": [
+                  {
+                    "id": "week",
+                    "name": "Mine this week",
+                    "summary": "Author: me · Updated: last 7 days"
+                  },
+                  {
+                    "id": "review",
+                    "name": "Awaiting review",
+                    "summary": "Status: in review · Priority: high",
+                    "shared": true
+                  },
+                  {
+                    "id": "free",
+                    "name": "Free templates",
+                    "summary": "Price: 0 · Licence: MIT",
+                    "shared": true
+                  }
+                ],
+                "labels": {
+                  "shared": "shared",
+                  "newName": "New view {index}",
+                  "newSummary": "The current selection"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -826,16 +1209,22 @@
             "container-type:inline-size на корне и правила @container на внутреннем [data-part=\"shell\"]: контейнерный запрос не действует на сам контейнер, и правило для корня внутри него молча не сработает",
             "число найденного прямо на кнопке применения: «Применить» не говорит, во что обойдётся нажатие",
             "aria-label у счётчика активных условий — голое число вслух ничего не значит",
-            "блок <style> внутри компонента — в нём вся палитра, свёртка и обе раскладки"
+            "блок <style> внутри компонента — в нём вся палитра, свёртка и обе раскладки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подписи в пропсе labels: русский словарь — умолчание, а не зашитый в разметку текст"
           ],
           "adapt": [
             "заголовок title и число активных условий active",
             "текст found — сколько записей найдено",
-            "состав групп внутри: вместо двух списков любые свои поля",
+            "состав групп внутри: массив groups с подписью, значениями и выбранным по умолчанию",
             "акцент через проп accent — цвет счётчика и кнопки применения",
-            "порог @container, на котором группы встают в ряд"
+            "порог @container, на котором группы встают в ряд",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи через labels: aria-подпись счётчика, «сбросить» и шаблон кнопки применения с {found}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Число active компонент не считает: его передаёт вызывающий код вместе с самими условиями.",
             "Панель не закрывается сама после применения — если это нужно, управляйте атрибутом open снаружи.",
             "На широком экране свёрнутые фильтры лишние: там панель обычно раскрыта постоянно или вынесена в колонку.",
@@ -870,6 +1259,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -884,16 +1279,22 @@
                 "container-type:inline-size on the root and the @container rules on the inner [data-part=\"shell\"]: a container query does not apply to its own container, and a rule targeting the root inside it silently does nothing",
                 "the result count printed on the apply button: \"Apply\" does not say what the press will cost",
                 "the aria-label on the active count — a bare number means nothing aloud",
-                "the <style> block inside the component — it holds the palette, the disclosure and both layouts"
+                "the <style> block inside the component — it holds the palette, the disclosure and both layouts",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the labels prop: the Russian dictionary is a default, not text welded into the markup"
               ],
               "adapt": [
                 "the title and the active condition count",
                 "the found text — how many records match",
-                "the groups inside: any fields of your own instead of the two pickers",
+                "the groups inside: the groups array of caption, options and the default value",
                 "the accent through the accent prop — it colours the badge and the apply button",
-                "the @container threshold at which the groups line up"
+                "the @container threshold at which the groups line up",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the wording through labels: the badge aria label, \"clear\" and the apply button template with {found}"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not compute active: the caller passes it along with the conditions themselves.",
                 "The panel does not close itself after applying — drive the open attribute from outside if you need that.",
                 "On a wide screen folded filters are pointless: there the panel usually stays open or moves into a column.",
@@ -915,11 +1316,40 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Compact Sheet"
+            "title": "Compact Sheet",
+            "preview": {
+              "props": {
+                "title": "Filters",
+                "found": "128 of 412",
+                "groups": [
+                  {
+                    "key": "category",
+                    "label": "Category",
+                    "options": ["All", "Forms", "Navigation", "Tables"],
+                    "defaultValue": "Forms"
+                  },
+                  {
+                    "key": "sort",
+                    "label": "Sorting",
+                    "options": ["Newest first", "Most popular", "By name"],
+                    "defaultValue": "Newest first"
+                  }
+                ],
+                "labels": {
+                  "badge": "active conditions: {count}",
+                  "clear": "Clear",
+                  "apply": "Show {found}"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["active", "accent", "background"]
       }
     },
     {
@@ -954,16 +1384,22 @@
             "предсказание из тех же счётчиков, что стоят у значений — кнопка не имеет права обещать то, чего не видно в списке",
             "выключенную кнопку, пока черновик совпадает с применённым: нажимать нечего",
             "строку состояния с role=\"status\": расхождение черновика и выдачи обязано быть объявлено, а не только подсвечено",
-            "блок <style> внутри компонента — в нём вся палитра, чекбоксы и состояние кнопки"
+            "блок <style> внутри компонента — в нём вся палитра, чекбоксы и состояние кнопки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подписи в пропсе labels: русский словарь — умолчание, а не зашитый в разметку текст"
           ],
           "adapt": [
             "заголовок title и массив options со значениями и счётчиками",
             "baseCount — сколько записей без фильтров",
             "обработчик onApply: он получает список применённых значений",
             "акцент через проп accent — цвет отмеченного чекбокса и кнопки",
-            "тексты строки состояния"
+            "тексты строки состояния",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи через labels: строка состояния и шаблон кнопки с {count}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Предсказанное число складывается из счётчиков и потому верно только для условий, объединённых «или»: для пересечения его считает сервер.",
             "Отложенное применение оправдано на тяжёлой выдаче. На коротком списке мгновенный отбор удобнее — кнопка там лишний шаг.",
             "Черновик не сохраняется между переходами: при уходе со страницы он теряется, и об этом стоит предупредить.",
@@ -991,6 +1427,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1005,16 +1447,22 @@
                 "the prediction taken from the same counts shown beside the values — the button must not promise what the list does not show",
                 "the disabled button while the draft matches the applied set: there is nothing to press",
                 "the state line with role=\"status\": the gap between draft and results has to be announced, not only highlighted",
-                "the <style> block inside the component — it holds the palette, the checkboxes and the button state"
+                "the <style> block inside the component — it holds the palette, the checkboxes and the button state",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the labels prop: the Russian dictionary is a default, not text welded into the markup"
               ],
               "adapt": [
                 "the title and the options array of values and counts",
                 "baseCount — how many records there are with no filters",
                 "the onApply handler: it receives the list of applied values",
                 "the accent through the accent prop — it colours a checked box and the button",
-                "the state line wording"
+                "the state line wording",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the wording through labels: the state line and the button template with {count}"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The predicted number is a sum of counts and is therefore only right for conditions joined by \"or\": for an intersection the server computes it.",
                 "Deferred application earns its keep on heavy results. On a short list instant filtering is better — the button is an extra step there.",
                 "The draft does not survive navigation: it is lost when leaving the page, and that is worth warning about.",
@@ -1032,11 +1480,43 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Deferred Apply"
+            "title": "Deferred Apply",
+            "preview": {
+              "props": {
+                "title": "Order status",
+                "options": [
+                  {
+                    "value": "Paid",
+                    "count": 184
+                  },
+                  {
+                    "value": "Packing",
+                    "count": 76
+                  },
+                  {
+                    "value": "In transit",
+                    "count": 51
+                  },
+                  {
+                    "value": "Returned",
+                    "count": 12
+                  }
+                ],
+                "labels": {
+                  "dirty": "Draft changed — the selection is not applied yet.",
+                  "applied": "Conditions applied: {count}",
+                  "apply": "Show {count}"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1070,16 +1550,22 @@
             "счётчик выбранного в role=\"status\": он меняется от каждого нажатия",
             "видимый фокус на фишках через :focus-visible — клавиатурный выбор должен быть заметен",
             "порог появления кнопки сброса от одной фишки: тут это единственный способ снять выбор",
-            "блок <style> внутри компонента — в нём вся палитра и оформление фишек"
+            "блок <style> внутри компонента — в нём вся палитра и оформление фишек",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подписи в пропсе labels: русский словарь — умолчание, а не зашитый в разметку текст"
           ],
           "adapt": [
             "заголовок title и массив groups с категориями и значениями",
             "стартовый выбор через defaultSelected",
             "подпись кнопки сброса resetLabel",
             "обработчик onChange: он получает список выбранных значений",
-            "акцент через проп accent — цвет отмеченной фишки"
+            "акцент через проп accent — цвет отмеченной фишки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи через labels: пустой счётчик и шаблон «выбрано» с {count}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Отбор не выполняется: компонент только собирает выбранные значения, запрос делает вызывающий код.",
             "Значения из разных групп комбинируются через «и» или «или» по решению вызывающего кода — компонент об этом не знает.",
             "Длинные подписи стоит сокращать заранее — сетка фишек рассчитана на короткие слова.",
@@ -1106,6 +1592,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1119,16 +1611,22 @@
                 "the selection counter with role=\"status\": it changes on every click",
                 "the visible focus on chips through :focus-visible — keyboard selection has to be visible",
                 "the reset button appearing from a single chip: here it is the only way to clear a selection",
-                "the <style> block inside the component — it holds the palette and the chip styling"
+                "the <style> block inside the component — it holds the palette and the chip styling",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the labels prop: the Russian dictionary is a default, not text welded into the markup"
               ],
               "adapt": [
                 "the title and the groups array of categories and values",
                 "the initial selection through defaultSelected",
                 "the resetLabel button caption",
                 "the onChange handler: it receives the list of selected values",
-                "the accent through the accent prop — it colours a pressed chip"
+                "the accent through the accent prop — it colours a pressed chip",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the wording through labels: the empty counter and the \"selected\" template with {count}"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "No filtering happens: the component only collects the selected values, the caller runs the query.",
                 "Values from different groups are combined by \"and\" or \"or\" at the caller's discretion — the component does not know either way.",
                 "Shorten long captions upstream — the chip grid is sized for short words.",
@@ -1147,11 +1645,35 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Chip Toggles"
+            "title": "Chip Toggles",
+            "preview": {
+              "props": {
+                "title": "Filters",
+                "resetLabel": "Reset all",
+                "groups": [
+                  {
+                    "title": "Category",
+                    "options": ["Forms", "Tables", "Navigation", "Cards"]
+                  },
+                  {
+                    "title": "Licence",
+                    "options": ["MIT", "Commercial"]
+                  }
+                ],
+                "labels": {
+                  "empty": "Nothing selected",
+                  "selected": "Selected: {count}"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1185,15 +1707,21 @@
             "aria-pressed на пресетах: кнопка обязана сообщать, что диапазон уже подставлен",
             "перестановку границ по onBlur вместо сообщения об ошибке — человек уже увидел, что перепутал «с» и «по»",
             "aria-label с названием периода у каждого поля — «с» и «по» без контекста не читаются",
-            "role=\"status\" у сводки — диапазон меняется от каждого действия пользователя"
+            "role=\"status\" у сводки — диапазон меняется от каждого действия пользователя",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подписи в пропсе labels: русский словарь — умолчание, а не зашитый в разметку текст"
           ],
           "adapt": [
             "заголовок title",
             "массив presets — подписи и число дней от текущей даты",
             "обработчик onChange: он получает объект с полями from и to",
-            "акцент через проп accent — цвет активного пресета и рамки поля"
+            "акцент через проп accent — цвет активного пресета и рамки поля",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи через labels: «с» и «по», их aria-подписи и шаблон сводки с {from} и {to}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пресеты считают дни от даты в браузере пользователя — при разных часовых поясах серверу лучше проверить границы самому.",
             "Компонент не фильтрует данные: он только формирует диапазон, запрос делает вызывающий код.",
             "Поля используют нативный <input type=\"date\">: формат ввода зависит от локали браузера.",
@@ -1213,6 +1741,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1226,15 +1760,21 @@
                 "aria-pressed on the presets: a button has to say the range is already applied",
                 "swapping the bounds on blur instead of raising an error — the user already sees the \"from\"/\"to\" mix-up",
                 "an aria-label naming the period on each field — bare \"from\" and \"to\" do not read without it",
-                "role=\"status\" on the summary — the range changes with every action the user takes"
+                "role=\"status\" on the summary — the range changes with every action the user takes",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the labels prop: the Russian dictionary is a default, not text welded into the markup"
               ],
               "adapt": [
                 "the title",
                 "the presets array — captions and the number of days back from today",
                 "the onChange handler: it receives an object with from and to",
-                "the accent through the accent prop — it colours the active preset and the field ring"
+                "the accent through the accent prop — it colours the active preset and the field ring",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the wording through labels: \"from\" and \"to\", their aria labels and the summary template with {from} and {to}"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Presets count days from the date in the user's browser — across time zones the server should re-check the bounds itself.",
                 "The component filters nothing: it only builds the range, the caller runs the query.",
                 "The fields use the native <input type=\"date\">: the entry format follows the browser locale.",
@@ -1249,11 +1789,42 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Date Field Range"
+            "title": "Date Field Range",
+            "preview": {
+              "props": {
+                "title": "Period",
+                "presets": [
+                  {
+                    "label": "Week",
+                    "days": 7
+                  },
+                  {
+                    "label": "Month",
+                    "days": 30
+                  },
+                  {
+                    "label": "Quarter",
+                    "days": 90
+                  }
+                ],
+                "labels": {
+                  "from": "From",
+                  "to": "To",
+                  "fromField": "{title}: start of range",
+                  "toField": "{title}: end of range",
+                  "summary": "Range: {from} — {to}",
+                  "empty": "No range set — pick a preset or the dates."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1287,16 +1858,22 @@
             "fieldset с legend вокруг списка наборов — группа радиокнопок обязана объявляться, а не только визуально группироваться",
             "выключенную кнопку применения, пока черновик совпадает с уже применённым набором: нажимать нечего",
             "расшифровку условий под именем набора — через неделю по одному названию не вспомнить, что внутри",
-            "отдельную кнопку удаления в строке — она не должна быть побочным эффектом выбора радиокнопки"
+            "отдельную кнопку удаления в строке — она не должна быть побочным эффектом выбора радиокнопки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подписи в пропсе labels: русский словарь — умолчание, а не зашитый в разметку текст"
           ],
           "adapt": [
             "заголовок title и массив presets: имена и расшифровки условий",
             "стартовый применённый набор через defaultAppliedId",
             "подпись кнопки применения applyLabel",
             "обработчик onApply: он получает идентификатор применённого набора",
-            "акцент через проп accent — цвет отмеченной радиокнопки и кнопки применения"
+            "акцент через проп accent — цвет отмеченной радиокнопки и кнопки применения",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи через labels: пустое состояние и aria-подпись удаления с {name}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не сохраняет новый набор условий: у него нет формы создания, только выбор из готовых.",
             "Удаление применённого набора не откатывает уже применённый отбор — это решает вызывающий код.",
             "Список не сохраняется между перезагрузками страницы: постоянное хранение делает вызывающий код.",
@@ -1323,6 +1900,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1336,16 +1919,22 @@
                 "the fieldset with a legend around the preset list — a group of radio buttons has to be announced, not only grouped visually",
                 "the disabled apply button while the draft matches the already applied preset: there is nothing to press",
                 "the conditions spelled out under the preset name — a week later the name alone will not recall what is inside",
-                "the separate delete button on each row — it must not be a side effect of picking the radio"
+                "the separate delete button on each row — it must not be a side effect of picking the radio",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the labels prop: the Russian dictionary is a default, not text welded into the markup"
               ],
               "adapt": [
                 "the title and the presets array of names and condition summaries",
                 "the initial applied preset through defaultAppliedId",
                 "the applyLabel button caption",
                 "the onApply handler: it receives the id of the applied preset",
-                "the accent through the accent prop — it colours the checked radio and the apply button"
+                "the accent through the accent prop — it colours the checked radio and the apply button",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the wording through labels: the empty state and the delete aria label with {name}"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not save a new preset: there is no creation form, only a choice among the ones given.",
                 "Deleting the applied preset does not roll back the already applied selection — that is up to the caller.",
                 "The list is not persisted across reloads: durable storage belongs to the caller.",
@@ -1364,11 +1953,42 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Query Presets"
+            "title": "Query Presets",
+            "preview": {
+              "props": {
+                "title": "Saved presets",
+                "applyLabel": "Apply",
+                "presets": [
+                  {
+                    "id": "my-week",
+                    "name": "Mine this week",
+                    "summary": "Author: me · last 7 days · any status"
+                  },
+                  {
+                    "id": "open-bugs",
+                    "name": "Open bugs",
+                    "summary": "Type: bug · status: open"
+                  },
+                  {
+                    "id": "urgent",
+                    "name": "Urgent",
+                    "summary": "Priority: high · unassigned"
+                  }
+                ],
+                "labels": {
+                  "empty": "No saved presets yet.",
+                  "remove": "Delete the \"{name}\" preset"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

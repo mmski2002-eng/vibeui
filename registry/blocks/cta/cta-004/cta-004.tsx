@@ -19,13 +19,17 @@ export type Cta004Props = {
 // узор, иначе она читается как ошибка заливки: сетка нарисована двумя
 // повторяющимися градиентами и погашена к краям через mask-image, поэтому
 // текст остаётся на спокойном месте, а края плиты не выглядят обрезанными.
+//
+// Плита остаётся цветной в любой теме — в этом её смысл. Но на тёмной
+// странице заливка уходит глубже, а кнопка перестаёт быть чисто белой,
+// иначе блок бьёт по глазам ярче всего остального на экране.
 const STYLES = `
 :where([data-vibeui-block="cta-004"]){
---vibeui-cta-004-accent:oklch(0.52 0.2 268);
---vibeui-cta-004-ink:oklch(0.99 0.01 268);
---vibeui-cta-004-muted:oklch(0.9 0.04 268);
---vibeui-cta-004-button:oklch(1 0 0);
---vibeui-cta-004-button-fg:oklch(0.28 0.14 268);
+--vibeui-cta-004-accent:light-dark(oklch(0.52 0.2 268),oklch(0.45 0.18 268));
+--vibeui-cta-004-ink:light-dark(oklch(0.99 0.01 268),oklch(0.96 0.012 268));
+--vibeui-cta-004-muted:light-dark(oklch(0.9 0.04 268),oklch(0.85 0.04 268));
+--vibeui-cta-004-button:light-dark(oklch(1 0 0),oklch(0.93 0.02 268));
+--vibeui-cta-004-button-fg:light-dark(oklch(0.28 0.14 268),oklch(0.24 0.12 268));
 --vibeui-cta-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

@@ -25,7 +25,14 @@ export type Eventcalendar005Props = Omit<
   sources?: Eventcalendar005Source[]
   events?: Eventcalendar005Event[]
   heading?: string
+  /** Подпись легенды над чипами источников. */
+  legendText?: string
+  /** Имя списка для читалки. {heading} — заголовок. */
+  listLabel?: string
   locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  accent?: string
 }
 
 // Идея компонента: календарь из нескольких источников — это в первую очередь
@@ -35,13 +42,13 @@ export type Eventcalendar005Props = Omit<
 // целиком на CSS, поэтому компонент остаётся серверным и без состояния.
 const STYLES = `
 :where([data-vibeui-block="eventcalendar-005"]){
---vibeui-eventcalendar-005-bg:oklch(1 0 0);
---vibeui-eventcalendar-005-fg:oklch(0.23 0.014 265);
---vibeui-eventcalendar-005-muted:oklch(0.6 0.014 265);
---vibeui-eventcalendar-005-border:oklch(0.91 0.006 265);
---vibeui-eventcalendar-005-line:oklch(0.95 0.004 265);
---vibeui-eventcalendar-005-accent:oklch(0.55 0.16 262);
---vibeui-eventcalendar-005-mark:oklch(0.55 0.16 262);
+--vibeui-eventcalendar-005-bg:transparent;
+--vibeui-eventcalendar-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-eventcalendar-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-eventcalendar-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-eventcalendar-005-line:light-dark(oklch(0.95 0.004 265),oklch(0.31 0.01 265));
+--vibeui-eventcalendar-005-accent:light-dark(oklch(0.55 0.16 262),oklch(0.74 0.15 262));
+--vibeui-eventcalendar-005-mark:light-dark(oklch(0.55 0.16 262),oklch(0.74 0.15 262));
 --vibeui-eventcalendar-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="eventcalendar-005"]{
@@ -173,6 +180,28 @@ const DEFAULT_EVENTS: Eventcalendar005Event[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Календарь нескольких источников: источник различается цветом и формой
  * метки, показ переключается чекбоксами через :has(). Ноль зависимостей.
  */
@@ -182,7 +211,11 @@ export function Eventcalendar005({
   sources = DEFAULT_SOURCES,
   events = DEFAULT_EVENTS,
   heading = "Все календари",
+  legendText = "Источники: цвет плюс форма метки",
+  listLabel = "{heading}: события списком",
   locale = "ru-RU",
+  background = "",
+  accent,
   className,
   style,
   ...props
@@ -213,6 +246,17 @@ export function Eventcalendar005({
     ),
   )
 
+  const palette = {
+    ...(accent ? { "--vibeui-eventcalendar-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-eventcalendar-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-eventcalendar-005" precedence="medium">
@@ -223,12 +267,12 @@ export function Eventcalendar005({
         data-vibeui-block="eventcalendar-005"
         aria-label={heading}
         className={className}
-        style={style}
+        style={palette}
       >
         <h3 data-part="heading">{heading}</h3>
 
         <fieldset data-part="legend">
-          <legend>Источники: цвет плюс форма метки</legend>
+          <legend>{legendText}</legend>
           {sources.map((source, index) => (
             <label
               key={source.label}
@@ -286,7 +330,7 @@ export function Eventcalendar005({
           data-part="list"
           tabIndex={0}
           role="group"
-          aria-label={`${heading}: события списком`}
+          aria-label={listLabel.replace("{heading}", heading)}
         >
           {sorted.map((event) => (
             <li

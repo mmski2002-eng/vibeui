@@ -18,7 +18,25 @@ export type Solutions020Props = {
   activeFilter?: string
   listings?: Solutions020Listing[]
   currency?: string
+  /** Подпись группы фильтров. */
+  filterLegend?: string
+  /** Метки статуса: ключи new, reserved, deal. */
+  statusText?: Record<string, string>
+  /** Цена за метр: {value} и {currency}. */
+  perMeterText?: string
+  /** Подпись студии в характеристиках. */
+  studioLabel?: string
+  /** Комнатность, {rooms} — число комнат. */
+  roomsText?: string
+  /** Площадь, {area} — число квадратных метров. */
+  areaText?: string
+  /** Этаж, {floor} — строка вида «4 из 9». */
+  floorText?: string
+  /** Локаль для разрядов в цене. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,13 +52,13 @@ export type Solutions020Props = {
 // без картинок честнее подборки с заглушками.
 const STYLES = `
 :where([data-vibeui-block="solutions-020"]){
---vibeui-solutions-020-bg:oklch(1 0 0);
---vibeui-solutions-020-panel:oklch(0.975 0.005 85);
---vibeui-solutions-020-fg:oklch(0.22 0.014 85);
---vibeui-solutions-020-muted:oklch(0.53 0.012 85);
---vibeui-solutions-020-border:oklch(0.9 0.006 85);
---vibeui-solutions-020-accent:oklch(0.52 0.13 45);
---vibeui-solutions-020-mark:oklch(0.58 0.14 150);
+--vibeui-solutions-020-bg:transparent;
+--vibeui-solutions-020-panel:light-dark(oklch(0.975 0.005 85),oklch(0.27 0.012 85));
+--vibeui-solutions-020-fg:light-dark(oklch(0.22 0.014 85),oklch(0.94 0.005 85));
+--vibeui-solutions-020-muted:light-dark(oklch(0.53 0.012 85),oklch(0.7 0.012 85));
+--vibeui-solutions-020-border:light-dark(oklch(0.9 0.006 85),oklch(0.36 0.012 85));
+--vibeui-solutions-020-accent:light-dark(oklch(0.52 0.13 45),oklch(0.68 0.13 45));
+--vibeui-solutions-020-mark:light-dark(oklch(0.58 0.14 150),oklch(0.66 0.13 150));
 --vibeui-solutions-020-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -197,11 +215,33 @@ const DEFAULT_LISTINGS: Solutions020Listing[] = [
   },
 ]
 
-const STATUS_LABEL = {
+const DEFAULT_STATUS_TEXT: Record<string, string> = {
   new: "новое",
   reserved: "бронь",
   deal: "сделка",
-} as const
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Подборка объектов: фильтр на радиокнопках и :has(), цена за метр считается.
@@ -214,12 +254,27 @@ export function Solutions020({
   activeFilter = "Все",
   listings = DEFAULT_LISTINGS,
   currency = "₽",
+  filterLegend = "Комнатность",
+  statusText = DEFAULT_STATUS_TEXT,
+  perMeterText = "{value} {currency} за м²",
+  studioLabel = "студия",
+  roomsText = "{rooms}-комн.",
+  areaText = "{area} м²",
+  floorText = "этаж {floor}",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions020Props) {
   const palette = {
     ...(accent ? { "--vibeui-solutions-020-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-020-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -240,7 +295,7 @@ export function Solutions020({
         </header>
 
         <fieldset>
-          <legend>Комнатность</legend>
+          <legend>{filterLegend}</legend>
           {filters.map((filter) => (
             <label data-part="chip" key={filter}>
               <input
@@ -263,24 +318,35 @@ export function Solutions020({
 
               <div data-part="body">
                 {listing.status ? (
-                  <span data-part="tag">{STATUS_LABEL[listing.status]}</span>
+                  <span data-part="tag">
+                    {statusText[listing.status] ??
+                      DEFAULT_STATUS_TEXT[listing.status]}
+                  </span>
                 ) : null}
                 <p data-part="name">{listing.title}</p>
                 <p data-part="price">
-                  {listing.price.toLocaleString("ru-RU")} {currency}
+                  {listing.price.toLocaleString(locale)} {currency}
                   <span data-part="permeter">
-                    {Math.round(listing.price / listing.area).toLocaleString(
-                      "ru-RU",
-                    )}{" "}
-                    {currency} за м²
+                    {perMeterText
+                      .replace(
+                        "{value}",
+                        Math.round(listing.price / listing.area).toLocaleString(
+                          locale,
+                        ),
+                      )
+                      .replace("{currency}", currency)}
                   </span>
                 </p>
                 <p data-part="specs">
                   <span>
-                    {listing.rooms === 0 ? "студия" : `${listing.rooms}-комн.`}
+                    {listing.rooms === 0
+                      ? studioLabel
+                      : roomsText.replace("{rooms}", String(listing.rooms))}
                   </span>
-                  <span>{listing.area} м²</span>
-                  <span>этаж {listing.floor}</span>
+                  <span>
+                    {areaText.replace("{area}", String(listing.area))}
+                  </span>
+                  <span>{floorText.replace("{floor}", listing.floor)}</span>
                 </p>
               </div>
             </li>

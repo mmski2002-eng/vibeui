@@ -7,23 +7,30 @@ export type Codeblock009Props = Omit<
   path?: string
   status?: string
   code?: string
+  /** Подпись пути для скринридера: {path} — сам путь. */
+  pathLabel?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
 }
 
-// Идея компонента: светлый блок кода, у которого шапка — это путь к файлу.
+// Идея компонента: блок кода, у которого шапка — это путь к файлу.
 // Путь разложен на сегменты: каталоги приглушены, имя файла выделено, а
 // расширение вынесено в отдельный значок, поэтому файл узнаётся с одного
 // взгляда даже в длинном пути.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, а область кода отделена от шапки полупрозрачной накладкой.
 const STYLES = `
 :where([data-vibeui-block="codeblock-009"]){
---vibeui-codeblock-009-bg:oklch(1 0 0);
---vibeui-codeblock-009-code-bg:oklch(0.975 0.003 265);
---vibeui-codeblock-009-fg:oklch(0.26 0.016 265);
---vibeui-codeblock-009-muted:oklch(0.56 0.014 265);
---vibeui-codeblock-009-border:oklch(0.9 0.006 265);
---vibeui-codeblock-009-badge-bg:oklch(0.93 0.04 250);
---vibeui-codeblock-009-badge-fg:oklch(0.42 0.13 255);
---vibeui-codeblock-009-status-bg:oklch(0.94 0.05 85);
---vibeui-codeblock-009-status-fg:oklch(0.45 0.11 70);
+--vibeui-codeblock-009-bg:transparent;
+--vibeui-codeblock-009-code-bg:light-dark(oklch(0 0 0 / 3%),oklch(1 0 0 / 4%));
+--vibeui-codeblock-009-fg:light-dark(oklch(0.26 0.016 265),oklch(0.93 0.008 265));
+--vibeui-codeblock-009-muted:light-dark(oklch(0.56 0.014 265),oklch(0.67 0.014 265));
+--vibeui-codeblock-009-border:light-dark(oklch(0.9 0.006 265),oklch(1 0 0 / 14%));
+--vibeui-codeblock-009-badge-bg:light-dark(oklch(0.93 0.04 250),oklch(0.45 0.09 250 / 48%));
+--vibeui-codeblock-009-badge-fg:light-dark(oklch(0.42 0.13 255),oklch(0.86 0.09 255));
+--vibeui-codeblock-009-status-bg:light-dark(oklch(0.94 0.05 85),oklch(0.47 0.08 80 / 48%));
+--vibeui-codeblock-009-status-fg:light-dark(oklch(0.45 0.11 70),oklch(0.87 0.09 85));
 --vibeui-codeblock-009-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -78,11 +85,35 @@ const CODE = `export const metadata = {
   description: "Компоненты для вайбкодинга",
 }`
 
-/** Светлый блок кода с шапкой: путь к файлу, расширение и статус. */
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/** Блок кода с шапкой: путь к файлу, расширение и статус. */
 export function Codeblock009({
   path = "app/(site)/layout.tsx",
   status = "изменён",
   code = CODE,
+  pathLabel = "Путь к файлу: {path}",
+  background = "",
   className,
   style,
   ...props
@@ -90,6 +121,15 @@ export function Codeblock009({
   const segments = path.split("/").filter(Boolean)
   const file = segments[segments.length - 1] ?? path
   const extension = file.includes(".") ? file.split(".").pop() : "txt"
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -100,11 +140,11 @@ export function Codeblock009({
         {...props}
         data-vibeui-block="codeblock-009"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <figcaption>
           <span data-part="badge">{extension}</span>
-          <ol data-part="crumbs" aria-label={`Путь к файлу: ${path}`}>
+          <ol data-part="crumbs" aria-label={pathLabel.replace("{path}", path)}>
             {segments.map((segment, index) => (
               <li key={index}>{segment}</li>
             ))}

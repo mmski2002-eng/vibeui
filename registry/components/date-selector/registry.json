@@ -25,20 +25,23 @@
           "summary": "Поле даты: подпись, нативный календарь и пояснение о доступных днях. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-date-001-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "нативный input[type=date]: локаль, клавиатура и системный выбор на телефоне достаются даром",
             "min и max: недоступные даты отсекает браузер, а не проверка после отправки",
             "aria-describedby между полем и пояснением",
             "иконку календаря — её перекрашивают, но не прячут",
-            "формат значения ГГГГ-ММ-ДД: показ зависит от системы, а значение — нет"
+            "формат значения ГГГГ-ММ-ДД: показ зависит от системы, а значение — нет",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "label, hint и name",
             "defaultValue, min и max",
             "акцент через проп accent",
-            "ширину поля"
+            "ширину поля",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Оформление календаря браузеру не задать: если нужен свой вид, берите calendar-001.",
             "Границы поля не заменяют проверку на сервере — их легко обойти.",
             "Пояснение говорит о доступных днях, а не о формате: формат пользователь не набирает.",
@@ -59,6 +62,18 @@
             "type": "text",
             "default": "Доступны даты до конца сентября.",
             "maxLength": 44
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -68,20 +83,23 @@
               "summary": "A date field: a label, the native calendar and a note about the available days. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-date-001-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the native input[type=date]: locale, keyboard and the phone picker come free",
                 "min and max: the browser rejects unavailable dates instead of a post-submit check",
                 "the aria-describedby link between field and note",
                 "the calendar icon — recolour it, do not hide it",
-                "the YYYY-MM-DD value format: display follows the system, the value does not"
+                "the YYYY-MM-DD value format: display follows the system, the value does not",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "label, hint and name",
                 "defaultValue, min and max",
                 "the accent through the accent prop",
-                "the field width"
+                "the field width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The browser calendar cannot be styled: for a custom look use calendar-001.",
                 "Field bounds do not replace server validation — they are trivial to bypass.",
                 "The note is about available days, not the format: the user never types the format.",
@@ -97,11 +115,24 @@
               "hint": {
                 "label": "Note",
                 "default": "Dates through the end of September."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Date Field"
+            "title": "Date Field",
+            "preview": {
+              "props": {
+                "label": "Travel date",
+                "hint": "Dates through the end of September."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -128,12 +159,13 @@
           "summary": "Поле даты и отдельная кнопка, открывающая системный календарь через showPicker с откатом на фокус. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-date-002-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "проверку на существование showPicker: без неё в старом браузере кнопка молча ничего не делает",
             "откат на фокус поля: даже без системного календаря дата вводится с клавиатуры",
             "скрытие родного индикатора: две кнопки календаря подряд заставляют выбирать между одинаковым",
             "размер кнопки не меньше 2.75rem — по родной иконке невозможно попасть пальцем",
-            "aria-label на кнопке: внутри неё только иконка"
+            "aria-label на кнопке: внутри неё только иконка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "label — подпись поля",
@@ -141,9 +173,12 @@
             "min, max и defaultValue — границы и стартовая дата",
             "иконку внутри кнопки",
             "name — имя поля в форме",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "openLabel — подпись кнопки календаря для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "showPicker обязан вызываться из обработчика жеста: браузер отклонит вызов из эффекта или таймера.",
             "Формат хранения всегда ГГГГ-ММ-ДД, а показ зависит от локали системы — не парсите видимую строку.",
             "min и max ограничивают и календарь, и ручной ввод, но не отменяют серверную проверку.",
@@ -164,6 +199,25 @@
             "type": "text",
             "default": "2026-09-15",
             "maxLength": 10
+          },
+          {
+            "prop": "openLabel",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Открыть календарь",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -173,12 +227,13 @@
               "summary": "A date field plus a separate button that opens the system calendar through showPicker, falling back to focus. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-date-002-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the showPicker existence check: without it the button silently does nothing in an older browser",
                 "the fallback to focusing the field: the date is still typeable without a system calendar",
                 "hiding the native indicator: two calendar buttons in a row force a choice between identical things",
                 "a button no smaller than 2.75rem — the native icon cannot be hit with a finger",
-                "the aria-label on the button: it contains an icon only"
+                "the aria-label on the button: it contains an icon only",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "label — the field caption",
@@ -186,9 +241,12 @@
                 "min, max and defaultValue — the bounds and the starting date",
                 "the icon inside the button",
                 "name — the form field name",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "openLabel — the calendar button label for screen readers",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "showPicker must be called from a gesture handler: a call from an effect or a timer is rejected.",
                 "The stored format is always YYYY-MM-DD while the display follows the system locale — never parse the visible string.",
                 "min and max constrain both the calendar and typing, but they do not replace server-side validation.",
@@ -204,11 +262,29 @@
               "defaultValue": {
                 "label": "Date",
                 "default": "2026-09-15"
+              },
+              "openLabel": {
+                "label": "Button label",
+                "default": "Open calendar"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Calendar Button"
+            "title": "Calendar Button",
+            "preview": {
+              "props": {
+                "label": "Visit date",
+                "hint": "The button opens the system calendar; the field takes keyboard input.",
+                "openLabel": "Open calendar"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -235,21 +311,25 @@
           "summary": "Пара полей «заезд — выезд»: второе поле не пускает раньше первого, конец подтягивается автоматически, число ночей считается сразу. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-date-003-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поля показывают поверх любого фона",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "min второго поля по первому: перевёрнутый диапазон лучше не разрешать, чем ловить проверкой",
             "автоперенос конца при сдвиге начала: заставлять перевыбирать обе даты из-за одной правки — грубо",
             "clear:both у ряда полей: legend с float:left иначе заставляет поля обтекать себя",
             "подсчёт ночей: диапазон дат всё равно мысленно переводят в длительность",
-            "aria-live на строке длительности: число меняется без перезагрузки"
+            "aria-live на строке длительности: число меняется без перезагрузки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "legend — заголовок пары полей",
             "defaultFrom и defaultTo — стартовый диапазон",
             "min — самая ранняя доступная дата",
-            "подписи «Заезд» и «Выезд» под свой сценарий",
-            "акцент через проп accent"
+            "fromLabel, toLabel и durationLabel — подписи полей и итога",
+            "акцент через проп accent",
+            "nightsText — склонения ночей с подстановкой {count}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сравнение строк работает только для формата ГГГГ-ММ-ДД: другой формат нужно парсить.",
             "Максимальной длины диапазона нет — ограничьте её снаружи, если бронь длиннее месяца запрещена.",
             "Ночи считаются по разнице дат без учёта часовых поясов: для суточных диапазонов этого достаточно.",
@@ -270,6 +350,25 @@
             "type": "text",
             "default": "2026-09-14",
             "maxLength": 10
+          },
+          {
+            "prop": "durationLabel",
+            "label": "Подпись итога",
+            "type": "text",
+            "default": "Длительность",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -279,21 +378,25 @@
               "summary": "A check-in / check-out pair: the second field refuses anything earlier than the first, the end auto-shifts, and the night count updates instantly. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-date-003-* palette — do not swap it for your theme tokens",
-                "its own light surface: the fields get shown over any background",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the second field's min taken from the first: better to make a reversed range impossible than to catch it later",
                 "auto-shifting the end when the start moves past it: forcing a re-pick of both dates over one edit is rude",
                 "clear:both on the field row: a legend with float:left otherwise makes the fields wrap around it",
                 "the night count: a date range gets mentally converted into a duration anyway",
-                "aria-live on the duration line: the number changes without a reload"
+                "aria-live on the duration line: the number changes without a reload",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "legend — the heading over the pair",
                 "defaultFrom and defaultTo — the starting range",
                 "min — the earliest date available",
-                "the \"check-in\" and \"check-out\" captions for your scenario",
-                "the accent through the accent prop"
+                "fromLabel, toLabel and durationLabel — the field and total captions",
+                "the accent through the accent prop",
+                "nightsText — the night plural forms with a {count} placeholder",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "String comparison only works for the YYYY-MM-DD format: any other format needs parsing.",
                 "There is no maximum range length — cap it outside if bookings longer than a month are forbidden.",
                 "Nights are counted from the date difference with no timezone maths, which is enough for whole days.",
@@ -309,11 +412,35 @@
               "defaultFrom": {
                 "label": "Check-in",
                 "default": "2026-09-14"
+              },
+              "durationLabel": {
+                "label": "Total caption",
+                "default": "Length of stay"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Range Two Fields"
+            "title": "Range Two Fields",
+            "preview": {
+              "props": {
+                "legend": "Stay dates",
+                "fromLabel": "Check-in",
+                "toLabel": "Check-out",
+                "durationLabel": "Length of stay",
+                "nightsText": {
+                  "one": "{count} night",
+                  "few": "{count} nights",
+                  "many": "{count} nights"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -340,21 +467,25 @@
           "summary": "Дата и время как два родных поля в одной рамке с подписью часового пояса. Серверный, ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-date-004-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "разделение на два поля: datetime-local на телефоне открывает два экрана подряд, а его маска на десктопе сбивает прицел",
             "общую рамку и focus-within на ней: два поля обязаны читаться как одно значение",
             "подпись часового пояса: договорённость «в 19:00» без пояса срывается регулярно",
             "серверную природу компонента — состояние тут не нужно, значения забирает форма",
-            "отдельные подписи над полями: без них непонятно, где дата, а где время"
+            "отдельные подписи над полями: без них непонятно, где дата, а где время",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "label — заголовок над рамкой",
             "defaultDate и defaultTime — стартовые значения",
             "timezone — строка с поясом",
             "name — префикс имён полей в форме",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "dateLabel и timeLabel — подписи над полями",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Форма отправит два поля: собирать из них одну метку времени нужно на сервере.",
             "Пояс здесь только подписан, а не применён: приводите время к UTC при сохранении.",
             "Время без шага принимает любую минуту — задайте step, если нужна сетка.",
@@ -375,6 +506,18 @@
             "type": "text",
             "default": "Время московское, UTC+3",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -384,21 +527,25 @@
               "summary": "A date and a time as two native fields inside one frame with a timezone caption. Server component, zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-date-004-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the split into two fields: datetime-local opens two screens in a row on a phone, and its desktop mask is easy to mis-aim",
                 "the shared frame with focus-within on it: two fields have to read as one value",
                 "the timezone caption: an \"at 19:00\" agreement without a zone breaks regularly",
                 "the server nature of the component — no state is needed, the form collects both values",
-                "the separate captions above the fields: without them the date and the time are indistinguishable"
+                "the separate captions above the fields: without them the date and the time are indistinguishable",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "label — the heading above the frame",
                 "defaultDate and defaultTime — the starting values",
                 "timezone — the zone line",
                 "name — the prefix for the form field names",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "dateLabel and timeLabel — the captions above the fields",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The form submits two fields: assemble the timestamp on the server.",
                 "The zone is captioned, not applied: normalise to UTC when saving.",
                 "The time field accepts any minute without a step — set step if you need a grid.",
@@ -414,11 +561,26 @@
               "timezone": {
                 "label": "Timezone",
                 "default": "Moscow time, UTC+3"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Date Time Pair"
+            "title": "Date Time Pair",
+            "preview": {
+              "props": {
+                "label": "Meeting start",
+                "dateLabel": "Date",
+                "timeLabel": "Time",
+                "timezone": "Moscow time, UTC+3"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -445,21 +607,25 @@
           "summary": "Поле даты с относительными пресетами и подписью дня недели: кнопки считают дату по системным часам в момент нажатия. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-date-005-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "вычисление «сегодня» в обработчике, а не при отрисовке: иначе сервер и клиент разойдутся в гидратации",
             "разбор даты по частям вместо Date.parse: строка ГГГГ-ММ-ДД трактуется как UTC и в минусовых поясах съезжает на день",
             "снятие отметки с пресета при ручном вводе: иначе кнопка врёт, что дата пришла от неё",
             "aria-pressed на кнопках: это состояние выбора, а не разовое нажатие",
-            "подпись дня недели: «16 сентября» само по себе не говорит, что это среда"
+            "подпись дня недели: «16 сентября» само по себе не говорит, что это среда",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "label — подпись поля",
             "defaultValue — стартовая дата",
             "presets — набор относительных кнопок и их сдвиг в днях",
-            "локаль в вызове toLocaleDateString",
-            "акцент через проп accent"
+            "locale — локаль для названия дня недели",
+            "акцент через проп accent",
+            "weekdayText и unknownDayText — строка под полем с подстановкой {day}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пресеты считаются от часов устройства: для серверной «сегодня» передайте базу пропом.",
             "Отрицательный сдвиг тоже работает — так делается кнопка «вчера».",
             "Границы min и max не заданы: добавьте их, если прошлые даты недопустимы.",
@@ -480,6 +646,25 @@
             "type": "text",
             "default": "2026-09-16",
             "maxLength": 10
+          },
+          {
+            "prop": "locale",
+            "label": "Локаль",
+            "type": "select",
+            "default": "ru-RU",
+            "options": ["ru-RU", "en-US", "de-DE"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -489,21 +674,25 @@
               "summary": "A date field with relative presets and a weekday caption: the buttons read the system clock at click time. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-date-005-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "computing \"today\" inside the handler rather than during render: otherwise server and client disagree at hydration",
                 "parsing the date by parts instead of Date.parse: a YYYY-MM-DD string is treated as UTC and slips a day in negative offsets",
                 "clearing the preset mark on manual input: otherwise the button claims a date it did not set",
                 "aria-pressed on the buttons: this is a selection state, not a one-off press",
-                "the weekday caption: \"16 September\" alone does not say it is a Wednesday"
+                "the weekday caption: \"16 September\" alone does not say it is a Wednesday",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "label — the field caption",
                 "defaultValue — the starting date",
                 "presets — the set of relative buttons and their day offsets",
-                "the locale passed to toLocaleDateString",
-                "the accent through the accent prop"
+                "locale — the locale used for the weekday name",
+                "the accent through the accent prop",
+                "weekdayText and unknownDayText — the line under the field with a {day} placeholder",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Presets follow the device clock: pass a base date as a prop if \"today\" must come from the server.",
                 "A negative offset works too — that is how a \"yesterday\" button is made.",
                 "No min or max is set: add them when past dates are not allowed.",
@@ -519,11 +708,43 @@
               "defaultValue": {
                 "label": "Date",
                 "default": "2026-09-16"
+              },
+              "locale": {
+                "label": "Locale"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Relative Presets"
+            "title": "Relative Presets",
+            "preview": {
+              "props": {
+                "label": "Delivery date",
+                "locale": "en-US",
+                "weekdayText": "That is a {day}",
+                "unknownDayText": "unknown day",
+                "presets": [
+                  {
+                    "text": "Today",
+                    "days": 0
+                  },
+                  {
+                    "text": "Tomorrow",
+                    "days": 1
+                  },
+                  {
+                    "text": "In a week",
+                    "days": 7
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["locale", "background"]
       }
     },
     {
@@ -550,21 +771,24 @@
           "summary": "Поле срока с тремя состояниями: просрочено, скоро истекает, есть запас. Сравнение с сегодняшним днём делается после монтирования. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-date-006-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "чтение сегодняшнего дня через useSyncExternalStore с пустым серверным снимком: при отрисовке сервер и клиент дают разные даты и гидратация ломается",
             "нейтральное состояние до первого клиентского снимка: мигнуть ложной тревогой хуже, чем показать её на кадр позже",
             "data-state с одной переменной акцента: иначе цвет придётся править в пяти правилах",
             "aria-live на строке статуса: предупреждение появляется без перезагрузки",
-            "полосу слева вместо иконки: цвет читается боковым зрением быстрее значка"
+            "полосу слева вместо иконки: цвет читается боковым зрением быстрее значка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "label — подпись поля",
             "defaultValue — стартовый срок",
             "soonInDays — за сколько дней срок считается близким",
-            "формулировки трёх состояний",
-            "акцент через проп accent"
+            "statusText и daysText — формулировки состояний с подстановками {days} и {count}",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сравнение идёт по локальной полуночи устройства: для строгих сроков считайте на сервере.",
             "Компонент предупреждает, но не запрещает: прошедший срок остаётся выбираемым намеренно.",
             "accent перебивает цвет состояния — задавайте его, только если светофор не нужен.",
@@ -586,6 +810,18 @@
             "default": 3,
             "min": 1,
             "max": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -595,21 +831,24 @@
               "summary": "A deadline field with three states: overdue, due soon, time left. The comparison with today happens after mount. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-date-006-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "reading today through useSyncExternalStore with an empty server snapshot: computing it during render makes server and client disagree at hydration",
                 "the neutral state before the first client snapshot: flashing a false alarm is worse than showing it one frame later",
                 "data-state driving a single accent variable: otherwise the colour has to be patched in five rules",
                 "aria-live on the status line: the warning appears without a reload",
-                "the left stripe instead of an icon: colour reads faster in peripheral vision than a glyph"
+                "the left stripe instead of an icon: colour reads faster in peripheral vision than a glyph",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "label — the field caption",
                 "defaultValue — the starting deadline",
                 "soonInDays — how many days ahead counts as due soon",
-                "the wording of the three states",
-                "the accent through the accent prop"
+                "statusText and daysText — the state wording with the {days} and {count} placeholders",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The comparison uses the device's local midnight: compute on the server for strict deadlines.",
                 "The component warns but does not forbid: a past date stays selectable on purpose.",
                 "accent overrides the state colour — set it only when the traffic light is unwanted.",
@@ -623,12 +862,36 @@
                 "default": "Due date"
               },
               "soonInDays": {
-                "label": "\"Soon\" threshold"
+                "label": "Soon threshold"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Deadline Warning"
+            "title": "Deadline Warning",
+            "preview": {
+              "props": {
+                "label": "Due date",
+                "statusText": {
+                  "idle": "The deadline is compared with today after load.",
+                  "past": "The deadline passed {days} ago.",
+                  "today": "The deadline is today.",
+                  "ahead": "{days} left.",
+                  "overdue": "Overdue."
+                },
+                "daysText": {
+                  "one": "{count} day",
+                  "few": "{count} days",
+                  "many": "{count} days"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["soonInDays", "background"]
       }
     },
     {
@@ -655,21 +918,25 @@
           "summary": "Дата тремя селектами — день, месяц, год — с автоматическим числом дней в месяце и високосным февралём. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-date-007-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "пересчёт числа дней по месяцу и году: иначе в списке появится 31 февраля",
             "приведение дня к последнему существующему вместо обнуления: терять выбор из-за смены месяца обидно",
             "порядок и разную ширину полей: день короче месяца, год длиннее дня — это подсказка о содержимом",
             "clear:both у ряда: legend с float:left иначе заставляет селекты обтекать себя",
-            "родные select: они дают поиск по первой букве и колесо выбора на телефоне"
+            "родные select: они дают поиск по первой букве и колесо выбора на телефоне",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "legend — заголовок группы",
             "defaultValue — стартовая дата в формате ГГГГ-ММ-ДД",
             "fromYear и toYear — границы списка лет",
-            "названия месяцев под свой язык",
-            "акцент через проп accent"
+            "months — названия месяцев, dayLabel, monthLabel и yearLabel — подписи селектов",
+            "акцент через проп accent",
+            "chosenText — строка итога с подстановкой {date}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Года идут по убыванию: для дат рождения так ближе нужный год, для будущих дат порядок стоит развернуть.",
             "Значение наружу не собирается: соберите ГГГГ-ММ-ДД из трёх чисел перед отправкой.",
             "Месяцы подписаны в родительном падеже под строку «12 апреля» — для заголовков нужен именительный.",
@@ -691,6 +958,26 @@
             "default": 1940,
             "min": 1900,
             "max": 2000
+          },
+          {
+            "prop": "toYear",
+            "label": "Последний год",
+            "type": "number",
+            "default": 2010,
+            "min": 2000,
+            "max": 2030
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -700,21 +987,25 @@
               "summary": "A date as three selects — day, month, year — with the day count following the month and leap Februaries handled automatically. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-date-007-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "recomputing the day count from the month and year: otherwise February the 31st shows up in the list",
                 "clamping the day to the last existing one instead of zeroing it: losing a pick over a month change is annoying",
                 "the order and the differing widths: day shorter than month, year longer than day — that is a hint about the content",
                 "clear:both on the row: a legend with float:left otherwise makes the selects wrap around it",
-                "the native selects: they give first-letter search and a wheel picker on phones"
+                "the native selects: they give first-letter search and a wheel picker on phones",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "legend — the group heading",
                 "defaultValue — the starting date in YYYY-MM-DD",
                 "fromYear and toYear — the bounds of the year list",
-                "the month names for your language",
-                "the accent through the accent prop"
+                "months — the month names, and dayLabel, monthLabel and yearLabel — the select captions",
+                "the accent through the accent prop",
+                "chosenText — the summary line with a {date} placeholder",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Years run descending: that is closer for birth dates, but future dates want the order reversed.",
                 "The value is not assembled outwards: build YYYY-MM-DD from the three numbers before submitting.",
                 "Month names are in the Russian genitive to fit \"12 апреля\" — headings need the nominative instead.",
@@ -729,11 +1020,44 @@
               },
               "fromYear": {
                 "label": "First year"
+              },
+              "toYear": {
+                "label": "Last year"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Three Selects"
+            "title": "Three Selects",
+            "preview": {
+              "props": {
+                "legend": "Date of birth",
+                "dayLabel": "Day",
+                "monthLabel": "Month",
+                "yearLabel": "Year",
+                "chosenText": "Selected: {date}",
+                "months": [
+                  "January",
+                  "February",
+                  "March",
+                  "April",
+                  "May",
+                  "June",
+                  "July",
+                  "August",
+                  "September",
+                  "October",
+                  "November",
+                  "December"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -760,21 +1084,25 @@
           "summary": "Поле времени с сеткой в четверть часа: кнопки сдвигают по шагу и выравнивают, ручной ввод округляется по уходу из поля. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-date-008-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "перевод времени в минуты от полуночи: сдвиг и выравнивание становятся арифметикой вместо разбора строк",
             "округление по blur, а не на каждое нажатие: иначе поле прыгает прямо во время набора",
             "выравнивание по сетке при сдвиге: от 14:07 кнопка обязана давать 14:15, а не 14:22",
             "выключение кнопок на границах приёма вместо молчаливого упора",
-            "aria-label с величиной шага: «−15» без единицы скринридер прочитает как число"
+            "aria-label с величиной шага: «−15» без единицы скринридер прочитает как число",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "label — подпись поля",
             "defaultValue — стартовое время",
             "stepMinutes — размер сетки, полчаса работает так же",
             "openAt и closeAt — границы приёма",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "earlierLabel, laterLabel, stepText и hoursText — подписи кнопок и строки под полем с подстановками {minutes}, {open} и {close}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Атрибут step задан в секундах: 15 минут — это 900, иначе браузер ругается на значение вне сетки.",
             "Границы не переходят через полночь: ночную смену придётся считать двумя интервалами.",
             "Компонент не знает о занятых слотах: отсеивайте их снаружи перед отправкой.",
@@ -796,6 +1124,18 @@
             "default": 15,
             "min": 5,
             "max": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -805,21 +1145,25 @@
               "summary": "A time field on a quarter-hour grid: buttons shift and snap, manual input rounds on blur. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-date-008-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "converting time to minutes past midnight: shifting and snapping become arithmetic instead of string surgery",
                 "snapping on blur rather than on every keystroke: otherwise the field jumps while you are still typing",
                 "snapping on shift: from 14:07 the button has to give 14:15, not 14:22",
                 "disabling the buttons at the opening bounds instead of silently bumping into them",
-                "the aria-label carrying the step size: \"−15\" alone reads as a bare number"
+                "the aria-label carrying the step size: \"−15\" alone reads as a bare number",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "label — the field caption",
                 "defaultValue — the starting time",
                 "stepMinutes — the grid size, half an hour works the same",
                 "openAt and closeAt — the opening bounds",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "earlierLabel, laterLabel, stepText and hoursText — the button labels and the line under the field, with the {minutes}, {open} and {close} placeholders",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The step attribute is in seconds: 15 minutes is 900, otherwise the browser rejects off-grid values.",
                 "The bounds do not cross midnight: a night shift needs two intervals.",
                 "The component knows nothing about taken slots: filter them out before submitting.",
@@ -834,11 +1178,27 @@
               },
               "stepMinutes": {
                 "label": "Step, min"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Quarter Hour Slots"
+            "title": "Quarter Hour Slots",
+            "preview": {
+              "props": {
+                "label": "Appointment time",
+                "earlierLabel": "{minutes} minutes earlier",
+                "laterLabel": "{minutes} minutes later",
+                "stepText": "Step {minutes} min",
+                "hoursText": "open from {open} to {close}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["stepMinutes", "background"]
       }
     }
   ]

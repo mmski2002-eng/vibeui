@@ -16,6 +16,14 @@ export type Carousel015Props = Omit<
 > & {
   slides?: Carousel015Slide[]
   label?: string
+  /** Роль блока для скринридера: компонент несёт русскую, проект подставит свою. */
+  roleDescription?: string
+  /** Подпись левой кнопки. */
+  prevLabel?: string
+  /** Подпись правой кнопки. */
+  nextLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,13 +33,17 @@ export type Carousel015Props = Omit<
 // зарезервировано по самой длинной: без этого блок прыгает на каждом
 // переключении. Разметка — figure/figcaption, то есть подпись остаётся
 // подписью и для скринридера, и для поисковика.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="carousel-015"]){
---vibeui-carousel-015-bg:oklch(1 0 0);
---vibeui-carousel-015-fg:oklch(0.22 0.014 265);
---vibeui-carousel-015-muted:oklch(0.56 0.014 265);
---vibeui-carousel-015-border:oklch(0.91 0.006 265);
---vibeui-carousel-015-accent:oklch(0.52 0.16 200);
+--vibeui-carousel-015-bg:transparent;
+--vibeui-carousel-015-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-015-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-015-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-carousel-015-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
+--vibeui-carousel-015-accent:light-dark(oklch(0.52 0.16 200),oklch(0.76 0.13 200));
 --vibeui-carousel-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="carousel-015"]{
@@ -67,7 +79,7 @@ width:2rem;height:2rem;padding:0;
 border:1px solid var(--vibeui-carousel-015-border);border-radius:0.5rem;
 background:var(--vibeui-carousel-015-bg);color:var(--vibeui-carousel-015-fg);
 }
-[data-vibeui-block="carousel-015"] [data-part="bar"] button:hover{background:oklch(0.96 0.004 265)}
+[data-vibeui-block="carousel-015"] [data-part="bar"] button:hover{background:var(--vibeui-carousel-015-hover)}
 [data-vibeui-block="carousel-015"] [data-part="bar"] button:focus-visible{outline:2px solid var(--vibeui-carousel-015-accent);outline-offset:2px}
 [data-vibeui-block="carousel-015"] [data-part="bar"] svg{width:0.875rem;height:0.875rem;display:block}
 [data-vibeui-block="carousel-015"] [data-part="ticks"]{display:flex;gap:0.25rem;margin:0 auto;padding:0;list-style:none}
@@ -108,12 +120,38 @@ const DEFAULT_SLIDES: Carousel015Slide[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё на светлой плашке достался бы
+ * текст тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Карусель с подписями под кадром: figure/figcaption и зарезервированная высота.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Carousel015({
   slides = DEFAULT_SLIDES,
   label = "Репортаж",
+  roleDescription = "карусель",
+  prevLabel = "Предыдущий кадр",
+  nextLabel = "Следующий кадр",
+  background = "",
   accent,
   className,
   style,
@@ -129,6 +167,12 @@ export function Carousel015({
   const palette = {
     "--vibeui-carousel-015-hue": slide.hue ?? 250,
     ...(accent ? { "--vibeui-carousel-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-carousel-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -140,7 +184,7 @@ export function Carousel015({
       <section
         {...props}
         data-vibeui-block="carousel-015"
-        aria-roledescription="карусель"
+        aria-roledescription={roleDescription}
         aria-label={label}
         className={className}
         style={palette}
@@ -160,7 +204,7 @@ export function Carousel015({
         <div data-part="bar">
           <button
             type="button"
-            aria-label="Предыдущий кадр"
+            aria-label={prevLabel}
             onClick={() => go(-1)}
           >
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
@@ -183,7 +227,7 @@ export function Carousel015({
           </ul>
           <button
             type="button"
-            aria-label="Следующий кадр"
+            aria-label={nextLabel}
             onClick={() => go(1)}
           >
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">

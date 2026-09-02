@@ -7,6 +7,12 @@ export type Pagination008Props = {
   total?: number
   defaultPage?: number
   label?: string
+  /** Строка указателя. {page} и {total} подставляются. */
+  nowText?: string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labelText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -18,14 +24,15 @@ export type Pagination008Props = {
 // показывает подсказку рядом с полем и связывает её через aria-describedby.
 const STYLES = `
 :where([data-vibeui-block="pagination-008"]){
---vibeui-pagination-008-bg:oklch(1 0 0);
---vibeui-pagination-008-fg:oklch(0.24 0.014 265);
---vibeui-pagination-008-muted:oklch(0.55 0.014 265);
---vibeui-pagination-008-border:oklch(0.91 0.006 265);
---vibeui-pagination-008-field:oklch(0.97 0.003 265);
---vibeui-pagination-008-hover:oklch(0.55 0.02 265 / 8%);
---vibeui-pagination-008-bad:oklch(0.58 0.19 26);
---vibeui-pagination-008-accent:oklch(0.55 0.2 262);
+--vibeui-pagination-008-bg:transparent;
+--vibeui-pagination-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-pagination-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-pagination-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.012 265));
+--vibeui-pagination-008-field:light-dark(oklch(0.97 0.003 265),oklch(0.29 0.009 265));
+--vibeui-pagination-008-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.82 0.02 265 / 14%));
+--vibeui-pagination-008-bad:light-dark(oklch(0.58 0.19 26),oklch(0.72 0.16 26));
+--vibeui-pagination-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-pagination-008-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
 --vibeui-pagination-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="pagination-008"]{
@@ -68,7 +75,7 @@ font:inherit;font-size:0.8125rem;font-variant-numeric:tabular-nums;
 [data-vibeui-block="pagination-008"] [data-part="go"]{
 appearance:none;cursor:pointer;height:2rem;padding:0 0.875rem;box-sizing:border-box;
 border:0;border-radius:0.5rem;
-background:var(--vibeui-pagination-008-accent);color:oklch(1 0 0);
+background:var(--vibeui-pagination-008-accent);color:var(--vibeui-pagination-008-accent-fg);
 font:inherit;font-size:0.8125rem;font-weight:600;
 }
 [data-vibeui-block="pagination-008"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-pagination-008-accent);outline-offset:2px}
@@ -82,6 +89,39 @@ font-variant-numeric:tabular-nums;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="pagination-008"] *{animation:none!important;transition:none!important}}
 `
 
+const LABEL: Record<string, string> = {
+  nav: "Навигация по страницам",
+  prev: "← Назад",
+  next: "Вперёд →",
+  go: "Перейти",
+  error: "Введите номер от 1 до {total}",
+  hint: "Всего страниц: {total}",
+}
+
+const NOW_TEXT = "Страница {page} из {total}"
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Пагинация с полем перехода к произвольному номеру страницы.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -90,6 +130,9 @@ export function Pagination008({
   total = 148,
   defaultPage = 37,
   label = "Перейти к странице",
+  nowText = NOW_TEXT,
+  labelText = LABEL,
+  background = "",
   accent,
   className,
   style,
@@ -100,6 +143,12 @@ export function Pagination008({
 
   const palette = {
     ...(accent ? { "--vibeui-pagination-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pagination-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -125,7 +174,7 @@ export function Pagination008({
       </style>
       <nav
         data-vibeui-block="pagination-008"
-        aria-label="Навигация по страницам"
+        aria-label={labelText.nav ?? LABEL.nav}
         className={className}
         style={palette}
       >
@@ -136,10 +185,20 @@ export function Pagination008({
             disabled={page === 1}
             onClick={() => setPage(Math.max(page - 1, 1))}
           >
-            ← Назад
+            {labelText.prev ?? LABEL.prev}
           </button>
           <p data-part="now" aria-current="page">
-            Страница <b>{page}</b> из {total}
+            {nowText
+              .split(/({page}|{total})/)
+              .map((part, index) =>
+                part === "{page}" ? (
+                  <b key={index}>{page}</b>
+                ) : part === "{total}" ? (
+                  String(total)
+                ) : (
+                  part
+                ),
+              )}
           </p>
           <button
             type="button"
@@ -147,7 +206,7 @@ export function Pagination008({
             disabled={page === total}
             onClick={() => setPage(Math.min(page + 1, total))}
           >
-            Вперёд →
+            {labelText.next ?? LABEL.next}
           </button>
         </div>
         <form data-part="form" onSubmit={onSubmit}>
@@ -170,7 +229,7 @@ export function Pagination008({
             }}
           />
           <button type="submit" data-part="go">
-            Перейти
+            {labelText.go ?? LABEL.go}
           </button>
         </form>
         <p
@@ -178,7 +237,10 @@ export function Pagination008({
           data-part={bad ? "error" : "hint"}
           role={bad ? "alert" : undefined}
         >
-          {bad ? `Введите номер от 1 до ${total}` : `Всего страниц: ${total}`}
+          {(bad
+            ? (labelText.error ?? LABEL.error)
+            : (labelText.hint ?? LABEL.hint)
+          ).replace("{total}", String(total))}
         </p>
       </nav>
     </>

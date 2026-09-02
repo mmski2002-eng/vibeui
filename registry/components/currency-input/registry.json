@@ -29,17 +29,22 @@
             "цифровую клавиатуру через inputMode",
             "выравнивание по правому краю и табличные цифры — так сравнивают суммы",
             "быстрые значения рядом: чаще всего вводят одно из нескольких круглых",
-            "знак валюты вне поля ввода, чтобы его не стирали"
+            "знак валюты вне поля ввода, чтобы его не стирали",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "currency — знак валюты",
             "presets — частые суммы",
             "label и hint",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "locale — локаль разрядов; ru-RU по умолчанию"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Копейки не поддержаны: для них нужен разделитель и другая логика разбора.",
-            "Локаль форматирования зашита в ru-RU: смените её вместе с валютой.",
+            "Локаль форматирования задаётся пропом locale: меняйте её вместе с валютой.",
             "Минимальную сумму проверяет форма: подпись под полем ничего не гарантирует.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
@@ -65,6 +70,18 @@
             "type": "text",
             "default": "Минимум 100 ₽, зачислится в течение минуты",
             "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -78,17 +95,22 @@
                 "the numeric keypad through inputMode",
                 "right alignment and tabular figures — that is how amounts get compared",
                 "the quick amounts beside the field: people usually pick a round number",
-                "the currency sign outside the input so it cannot be deleted"
+                "the currency sign outside the input so it cannot be deleted",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "currency — the sign",
                 "presets — the common amounts",
                 "label and hint",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "locale — the grouping locale; ru-RU by default"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Decimals are unsupported: they need a separator and different parsing.",
-                "The formatting locale is hardcoded to ru-RU: change it with the currency.",
+                "The formatting locale is set by the locale prop: change it together with the currency.",
                 "The minimum is enforced by the form: the hint guarantees nothing.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
@@ -106,11 +128,27 @@
               "hint": {
                 "label": "Hint",
                 "default": "Minimum $5, credited within a minute"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Amount Field"
+            "title": "Amount Field",
+            "preview": {
+              "props": {
+                "label": "Top-up amount",
+                "currency": "$",
+                "hint": "Minimum $5, credited within a minute",
+                "presets": [10, 25, 50, 100],
+                "locale": "en-US"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -137,7 +175,8 @@
           "summary": "Поле суммы со встроенным выбором валюты: знак слева и подпись под полем следуют за выбранным кодом. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-currency-002-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "валюту внутри рамки поля: отдельный контрол сверху читается как второй вопрос",
             "нативный select: он даёт поиск по первой букве и системное колесо на телефоне даром",
             "знак слева от числа: «€ 1 200» читается одной строкой, а знак справа отрывается",
@@ -148,10 +187,13 @@
             "label — подпись поля",
             "currencies — список валют, их знаки и склонения",
             "defaultValue и defaultCurrency — стартовые сумма и валюта",
-            "текст подписи под полем",
-            "акцент через проп accent"
+            "hint — подпись под полем; {currency} подставляется склонением валюты",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "currencyLabel — подпись списка валют для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сумма при смене валюты не пересчитывается намеренно: это ввод счёта, а не конвертер.",
             "Знаки валют разной ширины — поле не должно от этого прыгать, поэтому у знака фиксированный отступ.",
             "Наружу отдавайте пару «сумма и код», иначе принимающая сторона не знает валюту.",
@@ -172,6 +214,25 @@
             "type": "select",
             "default": "EUR",
             "options": ["RUB", "USD", "EUR", "CNY"]
+          },
+          {
+            "prop": "hint",
+            "label": "Подпись под полем",
+            "type": "text",
+            "default": "Счёт будет выставлен в {currency}",
+            "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -181,7 +242,8 @@
               "summary": "An amount field with a built-in currency picker: the leading sign and the caption follow the selected code. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-currency-002-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the currency inside the field frame: a separate control above reads as a second question",
                 "the native select: it hands over first-letter search and a phone wheel picker for free",
                 "the sign to the left of the number: \"€ 1,200\" reads as one line while a trailing sign detaches",
@@ -192,10 +254,13 @@
                 "label — the field caption",
                 "currencies — the currency list, their signs and word forms",
                 "defaultValue and defaultCurrency — the starting amount and currency",
-                "the caption text under the field",
-                "the accent through the accent prop"
+                "hint — the caption under the field; {currency} is replaced with the currency word form",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "currencyLabel — the accessible name of the currency list"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The amount is deliberately not converted on a currency change: this is invoice entry, not a converter.",
                 "Currency signs differ in width — the field must not jump, hence the fixed padding on the sign.",
                 "Emit the amount and the code together, or the receiving side cannot tell the currency.",
@@ -210,11 +275,51 @@
               },
               "defaultCurrency": {
                 "label": "Currency"
+              },
+              "hint": {
+                "label": "Caption under the field",
+                "default": "Invoice will be issued in {currency}"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Currency Select"
+            "title": "Currency Select",
+            "preview": {
+              "props": {
+                "label": "Invoice amount",
+                "currencyLabel": "Invoice currency",
+                "hint": "Invoice will be issued in {currency}",
+                "currencies": [
+                  {
+                    "code": "RUB",
+                    "sign": "₽",
+                    "text": "rubles"
+                  },
+                  {
+                    "code": "USD",
+                    "sign": "$",
+                    "text": "dollars"
+                  },
+                  {
+                    "code": "EUR",
+                    "sign": "€",
+                    "text": "euros"
+                  },
+                  {
+                    "code": "CNY",
+                    "sign": "¥",
+                    "text": "yuan"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultCurrency", "accent", "background"]
       }
     },
     {
@@ -241,7 +346,8 @@
           "summary": "Поле суммы с вводом справа налево: копейки и разделители разрядов встают сами, значение хранится целым числом копеек. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-currency-003-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "хранение в целых копейках: дробная арифметика в деньгах рано или поздно даёт копейку расхождения",
             "ввод справа налево: без разделителя, который надо ставить руками, промахнуться некуда",
             "выборку только цифр из строки: иначе пользователь сотрёт пробел-разделитель и сломает формат",
@@ -253,9 +359,13 @@
             "currency — знак валюты",
             "defaultValue — стартовая сумма в рублях",
             "hint — пояснение под полем",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "centsText — подпись копеек; {cents} подставляется остатком",
+            "locale — локаль разрядов; ru-RU по умолчанию"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Тип поля именно text: у number нельзя показать собственный формат с пробелами.",
             "Наружу отдавайте копейки: деление на сто перед отправкой возвращает ту же дробную беду.",
             "Ввод ограничен одиннадцатью цифрами — этого хватает до сотен миллионов рублей.",
@@ -276,6 +386,25 @@
             "type": "text",
             "default": "₽",
             "maxLength": 4
+          },
+          {
+            "prop": "hint",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Точку вводить не нужно — копейки встают сами",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -285,7 +414,8 @@
               "summary": "An amount field typed right to left: cents and thousand separators appear on their own, the value is kept as whole cents. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-currency-003-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "storing whole cents: floating-point money eventually drifts by a cent",
                 "the right-to-left entry: with no separator to place by hand there is nothing to mis-aim",
                 "extracting digits only from the string: otherwise a user deletes the separator and breaks the format",
@@ -297,9 +427,13 @@
                 "currency — the currency sign",
                 "defaultValue — the starting amount in whole units",
                 "hint — the explanation under the field",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "centsText — the cents caption; {cents} is replaced with the remainder",
+                "locale — the grouping locale; ru-RU by default"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The input type is text on purpose: a number input cannot show a custom spaced format.",
                 "Emit cents outwards: dividing by a hundred before sending brings the float problem back.",
                 "Input is capped at eleven digits, which covers hundreds of millions.",
@@ -314,12 +448,32 @@
               },
               "currency": {
                 "label": "Currency sign",
-                "default": "₽"
+                "default": "$"
+              },
+              "hint": {
+                "label": "Explanation",
+                "default": "No decimal point needed — the cents fall into place"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Cash Register Input"
+            "title": "Cash Register Input",
+            "preview": {
+              "props": {
+                "label": "Receipt total",
+                "currency": "$",
+                "hint": "No decimal point needed — the cents fall into place",
+                "centsText": "{cents} cents",
+                "locale": "en-US"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -346,7 +500,8 @@
           "summary": "Конвертер из двух связанных полей: править можно любое, база одна, курс подписан со временем обновления. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-currency-004-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: конвертер показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "правку в обе стороны: тот, кто знает нужную сумму в валюте зачисления, иначе подбирает её делением в уме",
             "единую базу в валюте отправления: два независимых состояния разойдутся после пары правок",
             "одно место округления: округление на каждом переходе уводит сумму при правках туда-обратно",
@@ -359,9 +514,13 @@
             "from и to — коды валют",
             "defaultValue — стартовая сумма",
             "updatedAt — строка о времени обновления курса",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "linkText и amountLabel — подпись между полями и подписи полей для скринридера",
+            "locale — локаль разрядов; ru-RU по умолчанию"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Курс задаётся как множитель из первой валюты во вторую: обратный курс компонент считает сам.",
             "Комиссии здесь нет: для перевода с комиссией нужен отдельный расчёт итога.",
             "Округление до сотых достаточно для валют с копейками, но не для криптовалют.",
@@ -383,6 +542,25 @@
             "default": 50000,
             "min": 0,
             "max": 1000000
+          },
+          {
+            "prop": "linkText",
+            "label": "Подпись связи",
+            "type": "text",
+            "default": "по курсу",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -392,7 +570,8 @@
               "summary": "A converter of two linked fields: edit either one, one source of truth, and the rate is captioned with its update time. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-currency-004-* palette — do not swap it for your theme tokens",
-                "its own light surface: the converter gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "editing in both directions: someone who knows the target amount otherwise divides in their head",
                 "the single base in the source currency: two independent states drift apart after a couple of edits",
                 "the single rounding point: rounding on every hop walks the amount away during back-and-forth edits",
@@ -405,9 +584,13 @@
                 "from and to — the currency codes",
                 "defaultValue — the starting amount",
                 "updatedAt — the line about the rate update time",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "linkText and amountLabel — the caption between the fields and the accessible names of the fields",
+                "locale — the grouping locale; ru-RU by default"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The rate is a multiplier from the first currency to the second: the inverse is computed for you.",
                 "There is no fee here: a transfer with a fee needs a separate total.",
                 "Rounding to hundredths suits currencies with cents but not crypto.",
@@ -422,11 +605,31 @@
               },
               "defaultValue": {
                 "label": "Amount"
+              },
+              "linkText": {
+                "label": "Link caption",
+                "default": "at the rate of"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Rate Converter"
+            "title": "Rate Converter",
+            "preview": {
+              "props": {
+                "label": "Transfer abroad",
+                "linkText": "at the rate of",
+                "amountLabel": "Amount in {code}",
+                "updatedAt": "rate as of 12:40, updated every 15 minutes",
+                "locale": "en-US"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -453,7 +656,8 @@
           "summary": "Поле бюджета с потолком: полоса расхода, три состояния и понятный остаток вместо молчаливого max. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-currency-005-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "полосу остатка: доля израсходованного читается площадью быстрее, чем разностью чисел",
             "предупреждение на подходе к лимиту, а не только после него: узнать о потолке в момент превышения поздно",
             "разрешённый ввод сверх лимита с пометкой aria-invalid: сумму часто набирают до повышения лимита",
@@ -466,9 +670,13 @@
             "defaultValue — стартовая сумма",
             "currency — знак валюты",
             "порог предупреждения в 85 процентов",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "limitText и noteText — подпись потолка и пояснения по состояниям ok, near и over",
+            "locale — локаль разрядов; ru-RU по умолчанию"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не блокирует отправку: проверьте превышение снаружи перед submit.",
             "Полоса ограничена сотней процентов, иначе при превышении она вылезает за рамку.",
             "Порог «на подходе» зашит в код: вынесите его в проп, если он должен настраиваться.",
@@ -490,6 +698,26 @@
             "default": 100000,
             "min": 1000,
             "max": 10000000
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Сумма",
+            "type": "number",
+            "default": 68000,
+            "min": 0,
+            "max": 10000000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -499,7 +727,8 @@
               "summary": "A budget field with a ceiling: a spend bar, three states and a readable remainder instead of a silent max. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-currency-005-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the remainder bar: a spent share reads faster as an area than as a subtraction",
                 "the warning on approach, not only after the fact: learning about a ceiling while crossing it is too late",
                 "allowing input above the limit while flagging aria-invalid: the amount is often typed before the limit is raised",
@@ -512,9 +741,13 @@
                 "defaultValue — the starting amount",
                 "currency — the currency sign",
                 "the 85 percent warning threshold",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "limitText and noteText — the ceiling caption and the explanations for the ok, near and over states",
+                "locale — the grouping locale; ru-RU by default"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not block submission: check the overrun on your side before submit.",
                 "The bar is capped at a hundred percent, otherwise an overrun escapes the frame.",
                 "The \"approaching\" threshold is hard-coded: lift it into a prop if it needs configuring.",
@@ -529,11 +762,34 @@
               },
               "limit": {
                 "label": "Ceiling"
+              },
+              "defaultValue": {
+                "label": "Amount"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Budget Limit"
+            "title": "Budget Limit",
+            "preview": {
+              "props": {
+                "label": "Campaign budget",
+                "currency": "$",
+                "limitText": "cap {limit} {currency}",
+                "noteText": {
+                  "ok": "{amount} {currency} left of the monthly limit.",
+                  "near": "{amount} {currency} left of the monthly limit.",
+                  "over": "Over by {amount} {currency} — lower the amount or raise the limit."
+                },
+                "locale": "en-US"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -560,7 +816,8 @@
           "summary": "Поле перевода с расчётом комиссии и итога к списанию по правилу «процент, но не меньше минимума». Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-currency-006-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: чек показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "показ итога до подтверждения: узнать о комиссии на последнем экране — повод отменить перевод",
             "правило «процент, но не меньше минимума»: на маленьких суммах работает минимум, и это надо считать",
             "разделение на три строки: сумма получателю, комиссия и списание — разные числа, и их путают",
@@ -573,9 +830,13 @@
             "minFee — минимальная комиссия",
             "defaultValue — стартовая сумма",
             "currency — знак валюты",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "checkText — подписи строк чека receiver, fee, total и rule",
+            "locale — локаль разрядов; ru-RU по умолчанию"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Комиссия считается сверху суммы: если она берётся изнутри, формулу надо перевернуть.",
             "Копейки не округляются до целых — добавьте округление, если банк округляет комиссию.",
             "При нулевой сумме комиссия обнуляется намеренно: минимум на пустом поле пугает.",
@@ -597,6 +858,26 @@
             "default": 1.5,
             "min": 0,
             "max": 10
+          },
+          {
+            "prop": "minFee",
+            "label": "Минимум комиссии",
+            "type": "number",
+            "default": 50,
+            "min": 0,
+            "max": 1000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -606,7 +887,8 @@
               "summary": "A transfer field computing the fee and the total debit under a \"percent, but no less than a minimum\" rule. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-currency-006-* palette — do not swap it for your theme tokens",
-                "its own light surface: the receipt gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "showing the total before confirmation: learning about a fee on the last screen is a reason to cancel",
                 "the \"percent, but no less than a minimum\" rule: small transfers are billed by the minimum and that has to be computed",
                 "the split into three lines: what the recipient gets, the fee and the debit are different numbers people confuse",
@@ -619,9 +901,13 @@
                 "minFee — the minimum fee",
                 "defaultValue — the starting amount",
                 "currency — the currency sign",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "checkText — the receipt line captions receiver, fee, total and rule",
+                "locale — the grouping locale; ru-RU by default"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The fee is added on top of the amount: flip the formula if it is taken out of it instead.",
                 "Cents are not rounded to whole units — add rounding if your bank rounds the fee.",
                 "At a zero amount the fee is zeroed on purpose: a minimum fee on an empty field is alarming.",
@@ -636,11 +922,34 @@
               },
               "percent": {
                 "label": "Fee, %"
+              },
+              "minFee": {
+                "label": "Minimum fee"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Transfer Fee"
+            "title": "Transfer Fee",
+            "preview": {
+              "props": {
+                "label": "Transfer amount",
+                "currency": "$",
+                "checkText": {
+                  "receiver": "Recipient gets",
+                  "fee": "Fee {percent}%",
+                  "total": "Debited from the card",
+                  "rule": "Fee {percent}%, but no less than {min} {currency}"
+                },
+                "locale": "en-US"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["percent", "accent", "background"]
       }
     },
     {
@@ -667,7 +976,8 @@
           "summary": "Фильтр цены «от» и «до»: границы необязательны, перепутанный порядок меняется местами, итог формулируется словами. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-currency-007-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: фильтр показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "обмен значений вместо ошибки: перепутанные поля — это опечатка, а не намерение",
             "необязательность обеих границ: «до 5000» — самый частый фильтр, и нижнюю границу выдумывать не за что",
             "хранение строками: числовое состояние превращает пустое поле в ноль и меняет смысл фильтра",
@@ -678,10 +988,13 @@
             "legend — заголовок фильтра",
             "defaultFrom и defaultTo — стартовые границы",
             "currency — знак валюты",
-            "формулировки итоговой строки",
-            "акцент через проп accent"
+            "filterText — подписи «от» и «до», названия полей и формулировки итоговой строки",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "locale — локаль разрядов; ru-RU по умолчанию"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пустая строка и ноль — разные состояния: не приводите значения к числу раньше отправки.",
             "Знак бесконечности в placeholder — намёк на необязательность верхней границы, а не значение.",
             "Компонент не знает о доступном диапазоне цен: подставьте свои min и max, если он ограничен.",
@@ -697,11 +1010,30 @@
             "maxLength": 24
           },
           {
+            "prop": "defaultFrom",
+            "label": "Нижняя граница",
+            "type": "text",
+            "default": "3000",
+            "maxLength": 12
+          },
+          {
             "prop": "defaultTo",
             "label": "Верхняя граница",
             "type": "text",
             "default": "12000",
             "maxLength": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -711,7 +1043,8 @@
               "summary": "A price filter with from and to bounds: both optional, a reversed order swaps, and the result is spelled out in words. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-currency-007-* palette — do not swap it for your theme tokens",
-                "its own light surface: the filter gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "swapping the values instead of raising an error: reversed fields are a typo, not an intent",
                 "both bounds staying optional: \"under 5000\" is the most common filter and a lower bound would be invented",
                 "storing strings: numeric state turns an empty field into zero and changes what the filter means",
@@ -722,10 +1055,13 @@
                 "legend — the filter heading",
                 "defaultFrom and defaultTo — the starting bounds",
                 "currency — the currency sign",
-                "the wording of the summary line",
-                "the accent through the accent prop"
+                "filterText — the from and to prefixes, the field names and the wording of the summary line",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "locale — the grouping locale; ru-RU by default"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "An empty string and a zero are different states: do not coerce to numbers before submitting.",
                 "The infinity sign in the placeholder hints that the upper bound is optional; it is not a value.",
                 "The component knows nothing about the available price range: pass your own min and max when it is bounded.",
@@ -738,14 +1074,43 @@
                 "label": "Heading",
                 "default": "Price"
               },
+              "defaultFrom": {
+                "label": "Lower bound",
+                "default": "3000"
+              },
               "defaultTo": {
                 "label": "Upper bound",
                 "default": "12000"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Price From To"
+            "title": "Price From To",
+            "preview": {
+              "props": {
+                "legend": "Price",
+                "currency": "$",
+                "filterText": {
+                  "fromPrefix": "from",
+                  "toPrefix": "to",
+                  "fromLabel": "Price from, {currency}",
+                  "toLabel": "Price to, {currency}",
+                  "caption": "Filter:",
+                  "any": "Any price",
+                  "onlyFrom": "From {from} {currency}",
+                  "onlyTo": "Up to {to} {currency}",
+                  "both": "From {from} to {to} {currency}"
+                },
+                "locale": "en-US"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

@@ -18,6 +18,18 @@ export type Resizable007Props = Omit<
   max?: number
   step?: number
   onChange?: (ratio: number) => void
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  firstTitle?: string
+  firstText?: string
+  secondTitle?: string
+  secondText?: string
+  /** Строка состояния; {left} и {right} заменяются на доли пропорции. */
+  statusText?: string
+  /** aria-valuetext разделителя; {left} и {right} — доли пропорции. */
+  valueText?: string
+  equalText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,12 +39,13 @@ export type Resizable007Props = Omit<
 // при первом рендере на сервере.
 const STYLES = `
 :where([data-vibeui-block="resizable-007"]){
---vibeui-resizable-007-bg:oklch(1 0 0);
---vibeui-resizable-007-fg:oklch(0.22 0.014 265);
---vibeui-resizable-007-muted:oklch(0.55 0.014 265);
---vibeui-resizable-007-border:oklch(0.9 0.006 265);
---vibeui-resizable-007-surface:oklch(0.975 0.004 265);
---vibeui-resizable-007-accent:oklch(0.54 0.17 300);
+--vibeui-resizable-007-bg:transparent;
+--vibeui-resizable-007-pane:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-resizable-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-resizable-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-resizable-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-resizable-007-surface:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.011 265));
+--vibeui-resizable-007-accent:light-dark(oklch(0.54 0.17 300),oklch(0.76 0.15 300));
 --vibeui-resizable-007-left:1;
 --vibeui-resizable-007-right:1;
 --vibeui-resizable-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -53,7 +66,7 @@ grid-template-columns:calc(var(--vibeui-resizable-007-left) * 1fr) 0.75rem calc(
 border:1px solid var(--vibeui-resizable-007-border);border-radius:0.75rem;overflow:hidden;
 }
 [data-vibeui-block="resizable-007"] [data-part="pane"]{
-min-width:0;padding:0.75rem;overflow:auto;background:var(--vibeui-resizable-007-bg);
+min-width:0;padding:0.75rem;overflow:auto;background:var(--vibeui-resizable-007-pane);
 }
 [data-vibeui-block="resizable-007"] [data-part="pane"][data-role="second"]{background:var(--vibeui-resizable-007-surface)}
 [data-vibeui-block="resizable-007"] h3{margin:0 0 0.375rem;font-size:0.8125rem;font-weight:650}
@@ -91,6 +104,28 @@ outline:2px solid var(--vibeui-resizable-007-accent);outline-offset:2px;border-r
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Две панели, которые держат пропорцию: доли заданы в fr, поэтому при смене
  * ширины контейнера отношение не меняется. Один файл, ноль зависимостей.
  */
@@ -101,6 +136,14 @@ export function Resizable007({
   max = 80,
   step = 4,
   onChange,
+  firstTitle = "Черновик",
+  firstText = "Доли заданы в fr: при сужении окна обе панели уменьшаются вместе и отношение сохраняется.",
+  secondTitle = "Просмотр",
+  secondText = "Пиксельная ширина сюда не записывается, поэтому раскладка переживает поворот телефона без обработчика resize.",
+  statusText = "Пропорция {left} : {right}",
+  valueText = "{left} к {right}",
+  equalText = "Поровну",
+  background = "",
   accent,
   className,
   style,
@@ -115,6 +158,12 @@ export function Resizable007({
     "--vibeui-resizable-007-left": String(Math.round(ratio)),
     "--vibeui-resizable-007-right": String(100 - Math.round(ratio)),
     ...(accent ? { "--vibeui-resizable-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-resizable-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -156,12 +205,9 @@ export function Resizable007({
         style={palette}
       >
         <div data-part="frame" ref={frame}>
-          <section data-part="pane" id={paneId} aria-label="Черновик">
-            <h3>Черновик</h3>
-            <p>
-              Доли заданы в fr: при сужении окна обе панели уменьшаются вместе и
-              отношение сохраняется.
-            </p>
+          <section data-part="pane" id={paneId} aria-label={firstTitle}>
+            <h3>{firstTitle}</h3>
+            <p>{firstText}</p>
           </section>
           <div
             data-part="split"
@@ -173,7 +219,9 @@ export function Resizable007({
             aria-valuenow={Math.round(ratio)}
             aria-valuemin={min}
             aria-valuemax={max}
-            aria-valuetext={`${left} к ${right}`}
+            aria-valuetext={valueText
+              .replace("{left}", String(left))
+              .replace("{right}", String(right))}
             data-dragging={dragging}
             onKeyDown={onKeyDown}
             onPointerDown={(event) => {
@@ -199,20 +247,19 @@ export function Resizable007({
             }}
             onPointerCancel={() => setDragging(false)}
           />
-          <section data-part="pane" data-role="second" aria-label="Просмотр">
-            <h3>Просмотр</h3>
-            <p>
-              Пиксельная ширина сюда не записывается, поэтому раскладка
-              переживает поворот телефона без обработчика resize.
-            </p>
+          <section data-part="pane" data-role="second" aria-label={secondTitle}>
+            <h3>{secondTitle}</h3>
+            <p>{secondText}</p>
           </section>
         </div>
         <div data-part="foot">
           <p data-part="status" role="status">
-            Пропорция {left} : {right}
+            {statusText
+              .replace("{left}", String(left))
+              .replace("{right}", String(right))}
           </p>
           <button type="button" onClick={() => apply(50)}>
-            Поровну
+            {equalText}
           </button>
         </div>
       </div>

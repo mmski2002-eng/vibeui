@@ -25,6 +25,8 @@ export type Commerce073Props = {
   emptyText?: string
   privacy?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -38,13 +40,14 @@ export type Commerce073Props = {
 // стереть её должно быть так же легко, как накопить.
 const STYLES = `
 :where([data-vibeui-block="commerce-073"]){
---vibeui-commerce-073-bg:oklch(1 0 0);
---vibeui-commerce-073-fg:oklch(0.21 0.012 240);
---vibeui-commerce-073-muted:oklch(0.53 0.014 240);
---vibeui-commerce-073-border:oklch(0.9 0.006 240);
---vibeui-commerce-073-soft:oklch(0.972 0.004 240);
---vibeui-commerce-073-accent:oklch(0.48 0.13 240);
---vibeui-commerce-073-gone:oklch(0.55 0.15 30);
+--vibeui-commerce-073-bg:transparent;
+--vibeui-commerce-073-surface:light-dark(oklch(1 0 0),oklch(0.22 0.012 240));
+--vibeui-commerce-073-fg:light-dark(oklch(0.21 0.012 240),oklch(0.94 0.006 240));
+--vibeui-commerce-073-muted:light-dark(oklch(0.53 0.014 240),oklch(0.73 0.012 240));
+--vibeui-commerce-073-border:light-dark(oklch(0.9 0.006 240),oklch(0.38 0.014 240));
+--vibeui-commerce-073-soft:light-dark(oklch(0.972 0.004 240),oklch(0.27 0.014 240));
+--vibeui-commerce-073-accent:light-dark(oklch(0.48 0.13 240),oklch(0.76 0.13 240));
+--vibeui-commerce-073-gone:light-dark(oklch(0.55 0.15 30),oklch(0.78 0.14 30));
 --vibeui-commerce-073-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -59,7 +62,7 @@ color:var(--vibeui-commerce-073-fg);font-family:var(--vibeui-commerce-073-sans);
 [data-vibeui-block="commerce-073"] [data-part="lead"]{margin:0.25rem 0 0;max-width:52ch;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-commerce-073-muted)}
 [data-vibeui-block="commerce-073"] [data-part="clear"]{
 appearance:none;cursor:pointer;height:2.125rem;padding:0 0.875rem;border-radius:0.625rem;
-border:1px solid var(--vibeui-commerce-073-border);background:var(--vibeui-commerce-073-bg);
+border:1px solid var(--vibeui-commerce-073-border);background:var(--vibeui-commerce-073-surface);
 color:inherit;font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="commerce-073"] [data-part="clear"]:focus-visible,
@@ -103,6 +106,28 @@ font:inherit;font-size:1rem;line-height:1;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-073"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_GROUPS: Commerce073Group[] = [
   {
@@ -179,11 +204,21 @@ export function Commerce073({
   emptyText = "Здесь появятся товары, которые вы открывали.",
   privacy = "История просмотров не передаётся продавцам и не влияет на цену. Она нужна двум вещам: этому списку и подборке «вам может подойти».",
   accent,
+  background = "",
   className,
   style,
 }: Commerce073Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-073-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-073-bg": background,
+          // Кнопка очистки не должна просвечивать: ей нужна непрозрачная
+          // подложка, и это тот же цвет.
+          "--vibeui-commerce-073-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -19,6 +19,24 @@ export type Datagrid013Props = Omit<
   rows?: Datagrid013Row[]
   caption?: string
   menuLabel?: string
+  /** Заголовок панели над таблицей. */
+  heading?: string
+  /** Счётчик показанных колонок. {shown} и {total} — числа. */
+  countTemplate?: string
+  /** Заголовок группы флажков в меню. */
+  legendText?: string
+  /** Названия колонок по ключу: компонент несёт русские. */
+  columnText?: Record<string, string>
+  /** Заголовок колонки артикула. */
+  skuText?: string
+  /** Подпись кнопки «показать все колонки». */
+  resetText?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Знак валюты в колонке цены. */
+  currency?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,15 +45,20 @@ export type Datagrid013Props = Omit<
 // в fieldset с legend: скринридер объявляет и группу, и каждое имя колонки.
 // Последнюю видимую колонку выключить нельзя — таблица без колонок теряет
 // смысл, поэтому её чекбокс блокируется, а не просто игнорируется.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-013"]){
---vibeui-datagrid-013-bg:oklch(1 0 0);
---vibeui-datagrid-013-fg:oklch(0.23 0.014 285);
---vibeui-datagrid-013-muted:oklch(0.55 0.014 285);
---vibeui-datagrid-013-border:oklch(0.92 0.006 285);
---vibeui-datagrid-013-head:oklch(0.975 0.003 285);
---vibeui-datagrid-013-accent:oklch(0.52 0.16 275);
---vibeui-datagrid-013-shadow:oklch(0.23 0.014 285 / 14%);
+--vibeui-datagrid-013-bg:transparent;
+--vibeui-datagrid-013-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-013-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-013-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
+--vibeui-datagrid-013-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
+--vibeui-datagrid-013-panel:light-dark(oklch(1 0 0),oklch(0.24 0.014 285));
+--vibeui-datagrid-013-accent:light-dark(oklch(0.52 0.16 275),oklch(0.76 0.14 275));
+--vibeui-datagrid-013-low:light-dark(oklch(0.55 0.17 28),oklch(0.76 0.15 28));
+--vibeui-datagrid-013-shadow:light-dark(oklch(0.23 0.014 285 / 14%),oklch(0 0 0 / 50%));
 --vibeui-datagrid-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-013"]{
@@ -57,7 +80,7 @@ appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:550;
 display:inline-flex;align-items:center;gap:0.375rem;
 padding:0.375rem 0.6875rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-013-border);
-background:var(--vibeui-datagrid-013-bg);color:var(--vibeui-datagrid-013-fg);
+background:transparent;color:var(--vibeui-datagrid-013-fg);
 }
 [data-vibeui-block="datagrid-013"] [data-part="trigger"][aria-expanded="true"]{
 border-color:var(--vibeui-datagrid-013-accent);color:var(--vibeui-datagrid-013-accent);
@@ -68,7 +91,7 @@ border-color:var(--vibeui-datagrid-013-accent);color:var(--vibeui-datagrid-013-a
 position:absolute;inset-inline-end:0;inset-block-start:calc(100% + 0.375rem);z-index:5;
 min-width:12rem;margin:0;padding:0.625rem 0.75rem 0.5rem;
 border:1px solid var(--vibeui-datagrid-013-border);border-radius:0.75rem;
-background:var(--vibeui-datagrid-013-bg);box-shadow:0 12px 28px var(--vibeui-datagrid-013-shadow);
+background:var(--vibeui-datagrid-013-panel);box-shadow:0 12px 28px var(--vibeui-datagrid-013-shadow);
 }
 [data-vibeui-block="datagrid-013"] [data-part="menu"] legend{
 padding:0;font-size:0.6875rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;
@@ -100,19 +123,27 @@ border-top:1px solid var(--vibeui-datagrid-013-border);
 [data-vibeui-block="datagrid-013"] thead th{background:var(--vibeui-datagrid-013-head);font-weight:600}
 [data-vibeui-block="datagrid-013"] [data-align="end"]{text-align:right;font-variant-numeric:tabular-nums}
 [data-vibeui-block="datagrid-013"] [data-part="sku"]{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:0.75rem;font-weight:500}
-[data-vibeui-block="datagrid-013"] [data-low="true"]{color:oklch(0.55 0.17 28);font-weight:600}
+[data-vibeui-block="datagrid-013"] [data-low="true"]{color:var(--vibeui-datagrid-013-low);font-weight:600}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-013"] *{animation:none!important;transition:none!important}}
 `
 
 type ColumnKey = "product" | "vendor" | "stock" | "price" | "updated"
 
-const COLUMNS: { key: ColumnKey; label: string; numeric: boolean }[] = [
-  { key: "product", label: "Товар", numeric: false },
-  { key: "vendor", label: "Поставщик", numeric: false },
-  { key: "stock", label: "Остаток", numeric: true },
-  { key: "price", label: "Цена", numeric: true },
-  { key: "updated", label: "Обновлено", numeric: false },
+const COLUMNS: { key: ColumnKey; numeric: boolean }[] = [
+  { key: "product", numeric: false },
+  { key: "vendor", numeric: false },
+  { key: "stock", numeric: true },
+  { key: "price", numeric: true },
+  { key: "updated", numeric: false },
 ]
+
+const COLUMN_TEXT: Record<string, string> = {
+  product: "Товар",
+  vendor: "Поставщик",
+  stock: "Остаток",
+  price: "Цена",
+  updated: "Обновлено",
+}
 
 const DEFAULT_ROWS: Datagrid013Row[] = [
   {
@@ -157,9 +188,9 @@ const DEFAULT_ROWS: Datagrid013Row[] = [
   },
 ]
 
-function cellValue(row: Datagrid013Row, key: ColumnKey) {
+function cellValue(row: Datagrid013Row, key: ColumnKey, currency: string) {
   if (key === "price") {
-    return `${row.price.toLocaleString("ru-RU")} ₽`
+    return `${row.price.toLocaleString("ru-RU")} ${currency}`
   }
 
   if (key === "stock") {
@@ -170,6 +201,28 @@ function cellValue(row: Datagrid013Row, key: ColumnKey) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сетка с меню видимости колонок: читатель сам собирает набор столбцов,
  * последняя видимая колонка защищена от выключения. Один файл, ноль зависимостей.
  */
@@ -177,6 +230,15 @@ export function Datagrid013({
   rows = DEFAULT_ROWS,
   caption = "Набор колонок настраивается в меню «Колонки»",
   menuLabel = "Колонки",
+  heading = "Складские остатки",
+  countTemplate = "Показано колонок: {shown} из {total}",
+  legendText = "Видимость колонок",
+  columnText = COLUMN_TEXT,
+  skuText = "Артикул",
+  resetText = "Показать все колонки",
+  scrollLabel = "Таблица остатков, прокручивается вбок",
+  currency = "₽",
+  background = "",
   accent,
   className,
   style,
@@ -190,6 +252,12 @@ export function Datagrid013({
 
   const palette = {
     ...(accent ? { "--vibeui-datagrid-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -210,9 +278,11 @@ export function Datagrid013({
         }}
       >
         <div data-part="bar">
-          <h3 data-part="title">Складские остатки</h3>
+          <h3 data-part="title">{heading}</h3>
           <p data-part="count" aria-live="polite">
-            Показано колонок: {visible.length} из {COLUMNS.length}
+            {countTemplate
+              .replace("{shown}", String(visible.length))
+              .replace("{total}", String(COLUMNS.length))}
           </p>
           <div data-part="menu-wrap">
             <button
@@ -225,7 +295,7 @@ export function Datagrid013({
             </button>
             {open ? (
               <fieldset data-part="menu">
-                <legend>Видимость колонок</legend>
+                <legend>{legendText}</legend>
                 {COLUMNS.map((column) => {
                   const shown = !hidden.includes(column.key)
 
@@ -243,7 +313,7 @@ export function Datagrid013({
                           )
                         }
                       />
-                      {column.label}
+                      {columnText[column.key] ?? COLUMN_TEXT[column.key]}
                     </label>
                   )
                 })}
@@ -252,7 +322,7 @@ export function Datagrid013({
                   data-part="reset"
                   onClick={() => setHidden([])}
                 >
-                  Показать все колонки
+                  {resetText}
                 </button>
               </fieldset>
             ) : null}
@@ -261,21 +331,21 @@ export function Datagrid013({
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица остатков, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
             <caption>{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Артикул</th>
+                <th scope="col">{skuText}</th>
                 {visible.map((column) => (
                   <th
                     key={column.key}
                     scope="col"
                     data-align={column.numeric ? "end" : undefined}
                   >
-                    {column.label}
+                    {columnText[column.key] ?? COLUMN_TEXT[column.key]}
                   </th>
                 ))}
               </tr>
@@ -296,7 +366,7 @@ export function Datagrid013({
                           : undefined
                       }
                     >
-                      {cellValue(row, column.key)}
+                      {cellValue(row, column.key, currency)}
                     </td>
                   ))}
                 </tr>

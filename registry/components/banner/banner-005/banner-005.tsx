@@ -10,19 +10,36 @@ export type Banner005Props = Omit<
   unit?: string
   planLabel?: string
   actionLabel?: string
+  /** Хвост счётчика: «{limit}» и «{unit}» подставляются. */
+  counterTemplate?: string
+  /** Подпись полосы для скринридера: «{percent}» подставляется. */
+  progressTemplate?: string
+  /** Пояснение под полосой по состоянию: calm, tight, over. */
+  noteText?: Record<string, string>
+  /** Локаль форматирования чисел. */
+  locale?: string
+  /** Тон полосы в спокойном состоянии: tight и over переключаются сами. */
+  tone?: string
+  /** Подложка карточки. Пусто — остаётся собственная. */
+  background?: string
 }
 
 // Идея компонента: полоса тарифного лимита, которая показывает цифру, а не
 // пугает словами. Заполнение считается из двух чисел, и цвет переключается
 // сам: до 90 процентов — спокойный, дальше — предупреждающий.
+//
+// Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не
+// инверсия светлой, дорожка и граница в ней светлее подложки.
 const STYLES = `
 :where([data-vibeui-block="banner-005"]){
---vibeui-banner-005-bg:oklch(1 0 0);
---vibeui-banner-005-fg:oklch(0.24 0.014 265);
---vibeui-banner-005-muted:oklch(0.54 0.014 265);
---vibeui-banner-005-border:oklch(0.9 0.006 265);
---vibeui-banner-005-track:oklch(0.93 0.006 265);
---vibeui-banner-005-tone:oklch(0.6 0.15 250);
+--vibeui-banner-005-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-banner-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-banner-005-muted:light-dark(oklch(0.54 0.014 265),oklch(0.72 0.01 265));
+--vibeui-banner-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-banner-005-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
+--vibeui-banner-005-calm:light-dark(oklch(0.6 0.15 250),oklch(0.72 0.14 250));
+--vibeui-banner-005-tone:var(--vibeui-banner-005-calm);
+--vibeui-banner-005-on-tone:light-dark(oklch(0.99 0.01 265),oklch(0.2 0.02 265));
 --vibeui-banner-005-ratio:0;
 --vibeui-banner-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -31,8 +48,8 @@ container-type:inline-size;
 width:100%;box-sizing:border-box;
 font-family:var(--vibeui-banner-005-font);color:var(--vibeui-banner-005-fg);
 }
-[data-vibeui-block="banner-005"][data-state="tight"]{--vibeui-banner-005-tone:oklch(0.62 0.18 45)}
-[data-vibeui-block="banner-005"][data-state="over"]{--vibeui-banner-005-tone:oklch(0.58 0.2 25)}
+[data-vibeui-block="banner-005"][data-state="tight"]{--vibeui-banner-005-tone:light-dark(oklch(0.62 0.18 45),oklch(0.76 0.16 55))}
+[data-vibeui-block="banner-005"][data-state="over"]{--vibeui-banner-005-tone:light-dark(oklch(0.58 0.2 25),oklch(0.71 0.18 25))}
 [data-vibeui-block="banner-005"] [data-part="shell"]{
 display:grid;grid-template-columns:1fr auto;gap:0.5rem 1rem;align-items:center;
 box-sizing:border-box;padding:0.9375rem 1.125rem;
@@ -65,7 +82,7 @@ grid-column:1 / -1;margin:0;font-size:0.8125rem;line-height:1.45;color:var(--vib
 [data-vibeui-block="banner-005"] [data-part="action"]{
 appearance:none;cursor:pointer;border:0;
 height:2.125rem;padding:0 0.9375rem;border-radius:0.625rem;
-background:var(--vibeui-banner-005-tone);color:oklch(0.99 0.01 265);
+background:var(--vibeui-banner-005-tone);color:var(--vibeui-banner-005-on-tone);
 font:inherit;font-size:0.8125rem;font-weight:650;white-space:nowrap;
 transition:filter .16s ease;
 }
@@ -78,6 +95,43 @@ transition:filter .16s ease;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="banner-005"] *{animation:none!important;transition:none!important}}
 `
 
+/** Пояснение под полосой: русские строки по умолчанию, проект ставит свои. */
+const NOTE_TEXT: Record<string, string> = {
+  calm: "Лимит обновится первого числа. До этого момента остаток не переносится.",
+  tight:
+    "Лимит обновится первого числа. До этого момента остаток не переносится.",
+  over: "Лимит исчерпан: новые запросы отклоняются до начала следующего периода.",
+}
+
+function fill(template: string, values: Record<string, string>): string {
+  return template.replace(
+    /\{(\w+)\}/g,
+    (placeholder, key: string) => values[key] ?? placeholder,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Полоса тарифного лимита: заполнение из двух чисел и кнопка апгрейда.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -88,6 +142,12 @@ export function Banner005({
   unit = "запросов",
   planLabel = "Тариф «Старт»",
   actionLabel = "Повысить тариф",
+  counterTemplate = "из {limit} {unit}",
+  progressTemplate = "Израсходовано {percent} процентов лимита",
+  noteText = NOTE_TEXT,
+  locale = "ru-RU",
+  tone,
+  background = "",
   className,
   style,
   ...props
@@ -97,6 +157,13 @@ export function Banner005({
   const state = used >= safeLimit ? "over" : ratio >= 90 ? "tight" : "calm"
   const palette = {
     "--vibeui-banner-005-ratio": ratio,
+    ...(tone ? { "--vibeui-banner-005-calm": tone } : null),
+    ...(background
+      ? {
+          "--vibeui-banner-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -118,9 +185,12 @@ export function Banner005({
           <div data-part="head">
             <span data-part="plan">{planLabel}</span>
             <span data-part="counter">
-              {used.toLocaleString("ru-RU")}{" "}
+              {used.toLocaleString(locale)}{" "}
               <span>
-                из {limit.toLocaleString("ru-RU")} {unit}
+                {fill(counterTemplate, {
+                  limit: limit.toLocaleString(locale),
+                  unit,
+                })}
               </span>
             </span>
           </div>
@@ -133,15 +203,11 @@ export function Banner005({
             aria-valuenow={ratio}
             aria-valuemin={0}
             aria-valuemax={100}
-            aria-label={`Израсходовано ${ratio} процентов лимита`}
+            aria-label={fill(progressTemplate, { percent: String(ratio) })}
           >
             <span data-part="fill" />
           </div>
-          <p data-part="note">
-            {state === "over"
-              ? "Лимит исчерпан: новые запросы отклоняются до начала следующего периода."
-              : "Лимит обновится первого числа. До этого момента остаток не переносится."}
-          </p>
+          <p data-part="note">{noteText[state] ?? NOTE_TEXT[state]}</p>
         </div>
       </div>
     </>

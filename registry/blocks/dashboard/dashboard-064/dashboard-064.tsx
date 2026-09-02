@@ -14,6 +14,24 @@ export type Dashboard064Props = {
   inputLabel?: string
   applyLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Строка о выборке: {count} выделяется жирным. */
+  scopeText?: string
+  /** Заголовок поля с тегами. */
+  tagsTitle?: string
+  /** Заголовок списка частых тегов. */
+  suggestionsTitle?: string
+  /** Подписи состояний тега; в all доступен {count}. */
+  stateText?: Record<Dashboard064Tag["state"], string>
+  /** Строки предпросмотра: add, addHint, remove, removeHint, keep, keepHint, none. */
+  previewText?: Record<string, string>
+  /** Подпись кнопки состояния тега: {name}. */
+  toggleAriaText?: string
+  /** Подпись поля ввода для скринридера. */
+  inputAriaLabel?: string
+  /** Сноска под кнопкой. */
+  noteText?: string
   className?: string
   style?: CSSProperties
 }
@@ -29,16 +47,27 @@ export type Dashboard064Props = {
 // она отличает рабочий тег от чьей-то опечатки.
 const STYLES = `
 :where([data-vibeui-block="dashboard-064"]){
---vibeui-dashboard-064-bg:oklch(0.985 0.003 320);
---vibeui-dashboard-064-card:oklch(1 0 0);
---vibeui-dashboard-064-fg:oklch(0.21 0.014 320);
---vibeui-dashboard-064-muted:oklch(0.55 0.014 320);
---vibeui-dashboard-064-border:oklch(0.91 0.006 320);
---vibeui-dashboard-064-accent:oklch(0.52 0.16 320);
---vibeui-dashboard-064-soft:oklch(0.965 0.02 320);
---vibeui-dashboard-064-add:oklch(0.55 0.13 155);
---vibeui-dashboard-064-remove:oklch(0.57 0.19 25);
---vibeui-dashboard-064-partial:oklch(0.68 0.15 72);
+--vibeui-dashboard-064-bg:transparent;
+/* Поле, чипы и предпросмотр: подложка блока прозрачна. */
+--vibeui-dashboard-064-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 320));
+--vibeui-dashboard-064-inset:light-dark(oklch(0.985 0.003 320),oklch(0.22 0.012 320));
+--vibeui-dashboard-064-fg:light-dark(oklch(0.21 0.014 320),oklch(0.94 0.005 320));
+--vibeui-dashboard-064-muted:light-dark(oklch(0.55 0.014 320),oklch(0.72 0.012 320));
+--vibeui-dashboard-064-border:light-dark(oklch(0.91 0.006 320),oklch(0.36 0.012 320));
+--vibeui-dashboard-064-accent:light-dark(oklch(0.52 0.16 320),oklch(0.75 0.14 320));
+--vibeui-dashboard-064-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.04 320));
+--vibeui-dashboard-064-soft:light-dark(oklch(0.965 0.02 320),oklch(0.29 0.035 320));
+--vibeui-dashboard-064-accent-line:light-dark(oklch(0.84 0.05 320),oklch(0.5 0.08 320));
+--vibeui-dashboard-064-add:light-dark(oklch(0.55 0.13 155),oklch(0.74 0.14 155));
+--vibeui-dashboard-064-add-soft:light-dark(oklch(0.955 0.03 155),oklch(0.3 0.05 155));
+--vibeui-dashboard-064-add-line:light-dark(oklch(0.82 0.08 155),oklch(0.49 0.09 155));
+--vibeui-dashboard-064-add-ink:light-dark(oklch(0.42 0.11 155),oklch(0.83 0.12 155));
+--vibeui-dashboard-064-remove:light-dark(oklch(0.57 0.19 25),oklch(0.75 0.17 25));
+--vibeui-dashboard-064-remove-soft:light-dark(oklch(0.96 0.025 25),oklch(0.3 0.06 25));
+--vibeui-dashboard-064-remove-line:light-dark(oklch(0.83 0.09 25),oklch(0.49 0.11 25));
+--vibeui-dashboard-064-partial:light-dark(oklch(0.68 0.15 72),oklch(0.81 0.14 72));
+--vibeui-dashboard-064-partial-line:light-dark(oklch(0.82 0.1 72),oklch(0.56 0.11 72));
+--vibeui-dashboard-064-partial-ink:light-dark(oklch(0.5 0.11 72),oklch(0.85 0.12 72));
 --vibeui-dashboard-064-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -63,31 +92,31 @@ padding:0.5rem;border-radius:0.75rem;
 background:var(--vibeui-dashboard-064-card);border:1px solid var(--vibeui-dashboard-064-border);
 }
 [data-vibeui-block="dashboard-064"] [data-part="field"]:focus-within{
-border-color:color-mix(in oklab,var(--vibeui-dashboard-064-accent) 50%,white);
+border-color:var(--vibeui-dashboard-064-accent-line);
 }
 [data-vibeui-block="dashboard-064"] [data-part="chip"]{
 display:inline-flex;align-items:center;gap:0.375rem;font-size:0.75rem;font-weight:700;
 padding:0.25rem 0.5rem;border-radius:0.5rem;white-space:nowrap;
-background:var(--vibeui-dashboard-064-bg);border:1px solid var(--vibeui-dashboard-064-border);
+background:var(--vibeui-dashboard-064-inset);border:1px solid var(--vibeui-dashboard-064-border);
 }
 [data-vibeui-block="dashboard-064"] [data-part="chip"] em{
 font-style:normal;font-size:0.625rem;font-weight:650;color:var(--vibeui-dashboard-064-muted);
 }
 [data-vibeui-block="dashboard-064"] [data-state="add"]{
-background:color-mix(in oklab,var(--vibeui-dashboard-064-add) 12%,white);
-border-color:color-mix(in oklab,var(--vibeui-dashboard-064-add) 40%,white);
+background:var(--vibeui-dashboard-064-add-soft);
+border-color:var(--vibeui-dashboard-064-add-line);
 }
-[data-vibeui-block="dashboard-064"] [data-state="add"] em{color:color-mix(in oklab,var(--vibeui-dashboard-064-add) 75%,black)}
+[data-vibeui-block="dashboard-064"] [data-state="add"] em{color:var(--vibeui-dashboard-064-add-ink)}
 [data-vibeui-block="dashboard-064"] [data-state="remove"]{
-background:color-mix(in oklab,var(--vibeui-dashboard-064-remove) 10%,white);
-border-color:color-mix(in oklab,var(--vibeui-dashboard-064-remove) 38%,white);
+background:var(--vibeui-dashboard-064-remove-soft);
+border-color:var(--vibeui-dashboard-064-remove-line);
 text-decoration:line-through;
 }
 [data-vibeui-block="dashboard-064"] [data-state="remove"] em{color:var(--vibeui-dashboard-064-remove);text-decoration:none}
 [data-vibeui-block="dashboard-064"] [data-state="some"]{
-border-style:dashed;border-color:color-mix(in oklab,var(--vibeui-dashboard-064-partial) 55%,white);
+border-style:dashed;border-color:var(--vibeui-dashboard-064-partial-line);
 }
-[data-vibeui-block="dashboard-064"] [data-state="some"] em{color:color-mix(in oklab,var(--vibeui-dashboard-064-partial) 75%,black)}
+[data-vibeui-block="dashboard-064"] [data-state="some"] em{color:var(--vibeui-dashboard-064-partial-ink)}
 [data-vibeui-block="dashboard-064"] [data-part="chip"] button{
 appearance:none;border:0;background:transparent;cursor:pointer;font:inherit;
 line-height:1;font-size:0.875rem;padding:0;color:inherit;
@@ -105,7 +134,7 @@ color:inherit;border:1px solid var(--vibeui-dashboard-064-border);
 [data-vibeui-block="dashboard-064"] [data-part="preview"]{
 display:grid;grid-template-columns:1fr;gap:0.5rem;padding:0.8125rem;border-radius:0.875rem;
 background:var(--vibeui-dashboard-064-soft);
-border:1px solid color-mix(in oklab,var(--vibeui-dashboard-064-accent) 22%,white);
+border:1px solid var(--vibeui-dashboard-064-accent-line);
 }
 [data-vibeui-block="dashboard-064"] [data-part="line"]{margin:0;font-size:0.8125rem;display:flex;flex-wrap:wrap;gap:0.3125rem;align-items:baseline}
 [data-vibeui-block="dashboard-064"] [data-part="line"] strong{font-weight:750}
@@ -114,7 +143,7 @@ border:1px solid color-mix(in oklab,var(--vibeui-dashboard-064-accent) 22%,white
 [data-vibeui-block="dashboard-064"] [data-part="apply"]{
 appearance:none;border:0;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:700;
 padding:0.5rem 1rem;border-radius:0.625rem;
-background:var(--vibeui-dashboard-064-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-064-accent);color:var(--vibeui-dashboard-064-on-accent);
 }
 [data-vibeui-block="dashboard-064"] [data-part="note"]{margin:0;font-size:0.6875rem;color:var(--vibeui-dashboard-064-muted);max-width:60ch}
 [data-vibeui-block="dashboard-064"] :is(a,button,input):focus-visible{
@@ -143,10 +172,42 @@ const DEFAULT_SUGGESTIONS = [
 ]
 
 const STATE_LABELS: Record<Dashboard064Tag["state"], string> = {
-  all: "у всех 42",
+  all: "у всех {count}",
   some: "у части",
   add: "будет добавлен",
   remove: "будет снят",
+}
+
+const PREVIEW_TEXT: Record<string, string> = {
+  add: "Добавим:",
+  addHint: "тем записям, где тега ещё нет",
+  remove: "Снимем:",
+  removeHint: "у всех выбранных записей",
+  keep: "Не тронем:",
+  keepHint: "останутся там, где стояли",
+  none: "ничего",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -162,13 +223,31 @@ export function Dashboard064({
   inputLabel = "Добавить тег и нажать Enter",
   applyLabel = "Применить к 42 заявкам",
   accent,
+  background = "",
+  scopeText = "Выбрано {count} записей. Теги, стоящие не у всех, помечены пунктиром — их состояние не меняется, пока вы не решите явно.",
+  tagsTitle = "Теги выборки",
+  suggestionsTitle = "Частые теги",
+  stateText = STATE_LABELS,
+  previewText = PREVIEW_TEXT,
+  toggleAriaText = "Изменить состояние тега «{name}»",
+  inputAriaLabel = "Новый тег",
+  noteText = "Снятие тега не удаляет сам тег из справочника: он останется доступен другим записям и фильтрам.",
   className,
   style,
 }: Dashboard064Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-064-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-064-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const [scopeBefore, scopeAfter] = scopeText.split("{count}")
+  const preview = { ...PREVIEW_TEXT, ...previewText }
 
   const adding = tags.filter((tag) => tag.state === "add")
   const removing = tags.filter((tag) => tag.state === "remove")
@@ -189,22 +268,27 @@ export function Dashboard064({
           <div>
             <h2>{title}</h2>
             <p data-part="scope">
-              Выбрано <b>{selectedCount}</b> записей. Теги, стоящие не у всех,
-              помечены пунктиром — их состояние не меняется, пока вы не решите
-              явно.
+              {scopeBefore}
+              <b>{selectedCount}</b>
+              {scopeAfter}
             </p>
           </div>
 
           <div>
-            <h3>Теги выборки</h3>
+            <h3>{tagsTitle}</h3>
             <div data-part="field">
               {tags.map((tag) => (
                 <span key={tag.name} data-part="chip" data-state={tag.state}>
                   {tag.name}
-                  <em>{STATE_LABELS[tag.state]}</em>
+                  <em>
+                    {(stateText[tag.state] ?? STATE_LABELS[tag.state]).replace(
+                      "{count}",
+                      String(selectedCount),
+                    )}
+                  </em>
                   <button
                     type="button"
-                    aria-label={`Изменить состояние тега «${tag.name}»`}
+                    aria-label={toggleAriaText.replace("{name}", tag.name)}
                   >
                     ×
                   </button>
@@ -213,13 +297,13 @@ export function Dashboard064({
               <input
                 type="text"
                 placeholder={inputLabel}
-                aria-label="Новый тег"
+                aria-label={inputAriaLabel}
               />
             </div>
           </div>
 
           <div>
-            <h3>Частые теги</h3>
+            <h3>{suggestionsTitle}</h3>
             <div data-part="suggest">
               {suggestions.map((name) => (
                 <button key={name} type="button">
@@ -231,25 +315,25 @@ export function Dashboard064({
 
           <div data-part="preview">
             <p data-part="line">
-              <strong>Добавим:</strong>
+              <strong>{preview.add}</strong>
               {adding.length > 0
                 ? adding.map((tag) => tag.name).join(", ")
-                : "ничего"}
-              <span>тем записям, где тега ещё нет</span>
+                : preview.none}
+              <span>{preview.addHint}</span>
             </p>
             <p data-part="line">
-              <strong>Снимем:</strong>
+              <strong>{preview.remove}</strong>
               {removing.length > 0
                 ? removing.map((tag) => tag.name).join(", ")
-                : "ничего"}
-              <span>у всех выбранных записей</span>
+                : preview.none}
+              <span>{preview.removeHint}</span>
             </p>
             <p data-part="line">
-              <strong>Не тронем:</strong>
+              <strong>{preview.keep}</strong>
               {partial.length > 0
                 ? partial.map((tag) => tag.name).join(", ")
-                : "ничего"}
-              <span>останутся там, где стояли</span>
+                : preview.none}
+              <span>{preview.keepHint}</span>
             </p>
           </div>
 
@@ -257,10 +341,7 @@ export function Dashboard064({
             <button type="button" data-part="apply">
               {applyLabel}
             </button>
-            <p data-part="note">
-              Снятие тега не удаляет сам тег из справочника: он останется
-              доступен другим записям и фильтрам.
-            </p>
+            <p data-part="note">{noteText}</p>
           </div>
         </div>
       </section>

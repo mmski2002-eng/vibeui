@@ -13,6 +13,8 @@ export type Switch005Props = Omit<
   question?: string
   confirmText?: string
   cancelText?: string
+  /** Пусто — подложки нет, карточка держится рамкой на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,15 +24,16 @@ export type Switch005Props = Omit<
 // Обратное действие — безопасное — срабатывает мгновенно, без вопросов.
 const STYLES = `
 :where([data-vibeui-block="switch-005"]){
---vibeui-switch-005-bg:oklch(1 0 0);
---vibeui-switch-005-fg:oklch(0.22 0.014 265);
---vibeui-switch-005-muted:oklch(0.54 0.014 265);
---vibeui-switch-005-border:oklch(0.91 0.006 265);
---vibeui-switch-005-track:oklch(0.88 0.008 265);
---vibeui-switch-005-thumb:oklch(1 0 0);
---vibeui-switch-005-accent:oklch(0.55 0.16 155);
---vibeui-switch-005-danger:oklch(0.55 0.2 25);
---vibeui-switch-005-danger-tint:oklch(0.55 0.2 25 / 8%);
+--vibeui-switch-005-bg:transparent;
+--vibeui-switch-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-switch-005-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-switch-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-switch-005-track:light-dark(oklch(0.88 0.008 265),oklch(0.43 0.014 265));
+--vibeui-switch-005-thumb:light-dark(oklch(1 0 0),oklch(0.93 0.004 265));
+--vibeui-switch-005-accent:light-dark(oklch(0.55 0.16 155),oklch(0.72 0.15 155));
+--vibeui-switch-005-danger:light-dark(oklch(0.55 0.2 25),oklch(0.68 0.18 25));
+--vibeui-switch-005-danger-tint:light-dark(oklch(0.55 0.2 25 / 8%),oklch(0.68 0.18 25 / 16%));
+--vibeui-switch-005-danger-ink:light-dark(oklch(1 0 0),oklch(0.18 0.04 25));
 --vibeui-switch-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="switch-005"]{
@@ -80,7 +83,7 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 transition:filter .16s ease;
 }
 [data-vibeui-block="switch-005"] [data-part="danger"]{
-border:0;background:var(--vibeui-switch-005-danger);color:oklch(1 0 0);
+border:0;background:var(--vibeui-switch-005-danger);color:var(--vibeui-switch-005-danger-ink);
 }
 [data-vibeui-block="switch-005"] [data-part="cancel"]{
 border:1px solid var(--vibeui-switch-005-border);
@@ -92,6 +95,28 @@ background:var(--vibeui-switch-005-bg);color:inherit;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Опасный переключатель: выключение спрашивает подтверждение, включение — нет.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -101,6 +126,7 @@ export function Switch005({
   question = "Выключить защиту? Любой участник команды сможет удалить проект целиком.",
   confirmText = "Выключить",
   cancelText = "Оставить",
+  background = "",
   accent,
   className,
   style,
@@ -112,6 +138,12 @@ export function Switch005({
 
   const palette = {
     ...(accent ? { "--vibeui-switch-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-switch-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

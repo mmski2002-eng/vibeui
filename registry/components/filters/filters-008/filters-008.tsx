@@ -1,5 +1,12 @@
 import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
+export type Filters008Group = {
+  key: string
+  label: string
+  options: string[]
+  defaultValue?: string
+}
+
 export type Filters008Props = Omit<
   ComponentPropsWithoutRef<"div">,
   "children"
@@ -8,6 +15,11 @@ export type Filters008Props = Omit<
   active?: number
   found?: string
   name?: string
+  groups?: Filters008Group[]
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,17 +30,18 @@ export type Filters008Props = Omit<
 // встают в ряд: раскладка считается container query, а не по вьюпорту.
 const STYLES = `
 :where([data-vibeui-block="filters-008"]){
---vibeui-filters-008-surface:oklch(1 0 0);
---vibeui-filters-008-fill:oklch(0.975 0.004 265);
---vibeui-filters-008-fg:oklch(0.23 0.014 265);
---vibeui-filters-008-muted:oklch(0.55 0.014 265);
---vibeui-filters-008-border:oklch(0.89 0.008 265);
---vibeui-filters-008-shell:oklch(0.91 0.006 265);
---vibeui-filters-008-accent:oklch(0.52 0.19 305);
+--vibeui-filters-008-surface:transparent;
+--vibeui-filters-008-fill:light-dark(oklch(0.975 0.004 265),oklch(0.29 0.012 265));
+--vibeui-filters-008-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-filters-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-filters-008-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.014 265));
+--vibeui-filters-008-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-filters-008-accent:light-dark(oklch(0.52 0.19 305),oklch(0.76 0.15 305));
+--vibeui-filters-008-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 305));
 --vibeui-filters-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
-/* Своя светлая подложка: свёртку показывают поверх любого фона. */
+/* Подложки по умолчанию нет: свёртка ложится на фон страницы. */
 [data-vibeui-block="filters-008"]{
 display:block;width:100%;max-width:30rem;box-sizing:border-box;padding:0.75rem;
 background:var(--vibeui-filters-008-surface);
@@ -56,7 +69,7 @@ background:var(--vibeui-filters-008-fg);
 [data-vibeui-block="filters-008"] [data-part="bars"]::after{bottom:0.125rem;width:60%}
 [data-vibeui-block="filters-008"] [data-part="badge"]{
 flex:none;min-width:1.25rem;padding:0.0625rem 0.375rem;border-radius:9999px;
-background:var(--vibeui-filters-008-accent);color:oklch(1 0 0);
+background:var(--vibeui-filters-008-accent);color:var(--vibeui-filters-008-on-accent);
 font-size:0.6875rem;font-weight:700;text-align:center;
 font-variant-numeric:tabular-nums;
 }
@@ -106,7 +119,7 @@ transform:rotate(45deg);
 appearance:none;cursor:pointer;flex:1;
 height:2.25rem;border-radius:0.5rem;font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="filters-008"] [data-part="apply"]{border:0;background:var(--vibeui-filters-008-accent);color:oklch(1 0 0)}
+[data-vibeui-block="filters-008"] [data-part="apply"]{border:0;background:var(--vibeui-filters-008-accent);color:var(--vibeui-filters-008-on-accent)}
 [data-vibeui-block="filters-008"] [data-part="clear"]{
 flex:none;padding:0 0.875rem;
 border:1px solid var(--vibeui-filters-008-border);background:none;color:inherit;
@@ -121,6 +134,67 @@ border:1px solid var(--vibeui-filters-008-border);background:none;color:inherit;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="filters-008"] *{animation:none!important;transition:none!important}}
 `
 
+const DEFAULT_GROUPS: Filters008Group[] = [
+  {
+    key: "category",
+    label: "Категория",
+    options: ["Все", "Формы", "Навигация", "Таблицы"],
+    defaultValue: "Формы",
+  },
+  {
+    key: "sort",
+    label: "Сортировка",
+    options: ["Сначала новые", "По популярности", "По названию"],
+    defaultValue: "Сначала новые",
+  },
+]
+
+/** Русский словарь по умолчанию: установленный файл не меняет язык проекта. */
+const DEFAULT_LABELS: Record<string, string> = {
+  badge: "активных условий: {count}",
+  clear: "Сбросить",
+  apply: "Показать {found}",
+}
+
+function label(
+  labels: Record<string, string>,
+  key: string,
+  values?: Record<string, string>,
+): string {
+  const template = labels[key] ?? DEFAULT_LABELS[key] ?? ""
+
+  if (!values) {
+    return template
+  }
+
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, name: string) => values[name] ?? match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Компактные фильтры в свёртке: счётчик активных виден в закрытом виде.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -130,6 +204,9 @@ export function Filters008({
   active = 3,
   found = "128 из 412",
   name = "catalog",
+  groups = DEFAULT_GROUPS,
+  labels = DEFAULT_LABELS,
+  background = "",
   accent,
   className,
   style,
@@ -137,6 +214,12 @@ export function Filters008({
 }: Filters008Props) {
   const palette = {
     ...(accent ? { "--vibeui-filters-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-filters-008-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -158,7 +241,7 @@ export function Filters008({
             {active > 0 ? (
               <span
                 data-part="badge"
-                aria-label={`активных условий: ${active}`}
+                aria-label={label(labels, "badge", { count: String(active) })}
               >
                 {active}
               </span>
@@ -169,35 +252,29 @@ export function Filters008({
 
           <div data-part="shell">
             <div data-part="groups">
-              <label data-part="group">
-                <span>Категория</span>
-                <span data-part="pick">
-                  <select name={`${name}-category`} defaultValue="Формы">
-                    <option>Все</option>
-                    <option>Формы</option>
-                    <option>Навигация</option>
-                    <option>Таблицы</option>
-                  </select>
-                </span>
-              </label>
-              <label data-part="group">
-                <span>Сортировка</span>
-                <span data-part="pick">
-                  <select name={`${name}-sort`} defaultValue="Сначала новые">
-                    <option>Сначала новые</option>
-                    <option>По популярности</option>
-                    <option>По названию</option>
-                  </select>
-                </span>
-              </label>
+              {groups.map((group) => (
+                <label key={group.key} data-part="group">
+                  <span>{group.label}</span>
+                  <span data-part="pick">
+                    <select
+                      name={`${name}-${group.key}`}
+                      defaultValue={group.defaultValue ?? group.options[0]}
+                    >
+                      {group.options.map((option) => (
+                        <option key={option}>{option}</option>
+                      ))}
+                    </select>
+                  </span>
+                </label>
+              ))}
             </div>
 
             <div data-part="actions">
               <button type="button" data-part="clear">
-                Сбросить
+                {label(labels, "clear")}
               </button>
               <button type="button" data-part="apply">
-                Показать {found}
+                {label(labels, "apply", { found })}
               </button>
             </div>
           </div>

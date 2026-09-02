@@ -32,15 +32,20 @@
             "Enter на отправку и Shift+Enter на перенос — иначе в поле нельзя написать абзац",
             "потолок высоты поля: растущий абзац иначе выталкивает кнопку за экран",
             "подпись автора у реплики: сторона и цвет не читаются вслух",
-            "выключенную кнопку отправки на пустом поле"
+            "выключенную кнопку отправки на пустом поле",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив messages и подсказки",
             "title, status и placeholder",
+            "подписи roleText, logLabel, sendText и hint — блок несёт русские по умолчанию",
             "обработчик onSend",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Лента не прокручивается к последней реплике сама: добавьте прокрутку при добавлении сообщения.",
             "Ожидание ответа блок не показывает — состояние «печатает» добавьте своим сообщением.",
             "Разметку в ответе блок не разбирает: текст выводится как есть, без markdown.",
@@ -61,6 +66,25 @@
             "type": "text",
             "default": "Отвечает обычно за пару секунд",
             "maxLength": 40
+          },
+          {
+            "prop": "sendText",
+            "label": "Кнопка отправки",
+            "type": "text",
+            "default": "Отправить",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -74,15 +98,20 @@
                 "Enter to send and Shift+Enter to break — otherwise no paragraph can be written",
                 "the composer's height ceiling: a growing paragraph would push the button off screen",
                 "the author caption on a message: side and colour are not read aloud",
-                "the disabled send button on an empty field"
+                "the disabled send button on an empty field",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the messages array and the suggestions",
                 "title, status and placeholder",
+                "the roleText, logLabel, sendText and hint captions — the block ships Russian defaults",
                 "the onSend handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The feed does not auto-scroll to the newest message: scroll it when appending.",
                 "There is no built-in typing indicator — add it as a message of your own.",
                 "Markup in replies is not parsed: the text renders as-is, without markdown.",
@@ -98,11 +127,63 @@
               "status": {
                 "label": "Status",
                 "default": "Usually replies in seconds"
+              },
+              "sendText": {
+                "label": "Send button",
+                "default": "Send"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Assistant Chat"
+            "title": "Assistant Chat",
+            "preview": {
+              "props": {
+                "title": "Catalog assistant",
+                "status": "Usually replies in seconds",
+                "placeholder": "Describe what you need built",
+                "logLabel": "Conversation",
+                "sendText": "Send",
+                "hint": "Enter sends, Shift + Enter breaks the line.",
+                "roleText": {
+                  "user": "You",
+                  "assistant": "Assistant"
+                },
+                "suggestions": [
+                  "Build a landing page",
+                  "Show similar blocks",
+                  "Explain the install"
+                ],
+                "messages": [
+                  {
+                    "role": "user",
+                    "text": "I need a pricing page: three plans, an annual discount and an FAQ at the bottom.",
+                    "time": "10:41"
+                  },
+                  {
+                    "role": "assistant",
+                    "text": "I'll take pricing-001 for the plans and faq-001 for the questions. The annual discount becomes a toggle above the cards, so both prices stay visible.",
+                    "time": "10:41"
+                  },
+                  {
+                    "role": "user",
+                    "text": "Go ahead. Purple accent, please.",
+                    "time": "10:42"
+                  },
+                  {
+                    "role": "assistant",
+                    "text": "Done: both blocks took the accent through the accent prop, no project theme change needed.",
+                    "time": "10:42"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -136,19 +217,25 @@
             "счётчик только у предела — постоянный отвлекает, а внезапная стена пугает",
             "aria-live у счётчика: предел должен быть услышан",
             "файлы над полем: их проверяют глазами перед отправкой",
-            ":focus-within на рамке — фокус в поле обводит весь блок ввода"
+            ":focus-within на рамке — фокус в поле обводит весь блок ввода",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "presets, models и attachments",
             "title, hint и placeholder",
             "limit — предел длины",
-            "акцент через проп accent"
+            "подписи modelLabel, counterText и sendText, а также стартовый defaultText — блок несёт русские по умолчанию",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пресет заменяет начало запроса: если нужно дописывать к тексту, поменяйте обработчик.",
             "Файлы только показываются: загрузку и удаление добавляет вызывающий код.",
             "maxLength обрезает вставку молча — предупредите пользователя, если это важно.",
-            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом.",
+            "counterText — шаблон: {left} подставляется числом оставшихся символов."
           ]
         },
         "controls": [
@@ -160,12 +247,31 @@
             "maxLength": 28
           },
           {
+            "prop": "sendText",
+            "label": "Кнопка отправки",
+            "type": "text",
+            "default": "Отправить",
+            "maxLength": 20
+          },
+          {
             "prop": "limit",
             "label": "Предел",
             "type": "number",
             "default": 600,
             "min": 100,
             "max": 2000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -179,19 +285,25 @@
                 "the counter only near the limit — a permanent one distracts, a sudden wall alarms",
                 "aria-live on the counter: the limit has to be heard",
                 "the attachments above the field: they get checked before sending",
-                ":focus-within on the frame — focus in the field rings the whole input block"
+                ":focus-within on the frame — focus in the field rings the whole input block",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "presets, models and attachments",
                 "title, hint and placeholder",
                 "limit — the length cap",
-                "the accent through the accent prop"
+                "the modelLabel, counterText and sendText captions plus the starting defaultText — the block ships Russian defaults",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A preset replaces the start of the prompt: change the handler to append instead.",
                 "Attachments are display-only: uploading and removing belong to the caller.",
                 "maxLength truncates a paste silently — warn the user if that matters.",
-                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file.",
+                "counterText is a template: {left} is replaced with the number of characters left."
               ],
               "usage": "<Ai002 title=\"Prompt\" models={[\"Fast\", \"Precise\"]} limit={600} />"
             },
@@ -200,13 +312,52 @@
                 "label": "Heading",
                 "default": "Prompt the assistant"
               },
+              "sendText": {
+                "label": "Send button",
+                "default": "Send"
+              },
               "limit": {
                 "label": "Limit"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Prompt Composer"
+            "title": "Prompt Composer",
+            "preview": {
+              "props": {
+                "title": "Prompt the assistant",
+                "hint": "Describe the task in words: which blocks you need and what must stay.",
+                "placeholder": "For example: a studio landing page — hero, three benefits, pricing and a contact form",
+                "defaultText": "A design studio landing page: a hero with one action, three benefits and pricing.",
+                "modelLabel": "Model",
+                "counterText": "{left} left",
+                "sendText": "Send",
+                "models": ["Fast model", "Precise model", "Draft model"],
+                "presets": [
+                  "Build a landing page",
+                  "Rewrite the copy",
+                  "Pick blocks",
+                  "Explain the code"
+                ],
+                "attachments": [
+                  {
+                    "name": "brief.pdf",
+                    "size": "240 KB"
+                  },
+                  {
+                    "name": "palette.png",
+                    "size": "88 KB"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["limit", "accent", "background"]
       }
     },
     {
@@ -240,19 +391,24 @@
             "линию левым бордюром шага — отдельный столбик торчит за последней точкой",
             "журнал в details: раскрытие держит браузер, лента остаётся читаемой",
             "нейтральную кнопку остановки рядом с подтверждением",
-            "моноширинный журнал с переносом длинных строк"
+            "моноширинный журнал с переносом длинных строк",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив steps и их состояния",
             "goal и title",
-            "подписи кнопок",
-            "акцент через проп accent"
+            "подписи кнопок и detailsLabel — блок несёт русские по умолчанию",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Блок только показывает ход: обновление шагов приходит из вызывающего кода.",
             "Текущий шаг должен быть один: два кольца читаются как ошибка данных.",
             "Остановку нельзя прятать за подтверждением — она нужна в момент сомнения.",
-            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом.",
+            "Значок шага затирает линию собой: подложку под ним задаёт тот же проп background, поэтому на нестандартном фоне его стоит передать."
           ]
         },
         "controls": [
@@ -264,8 +420,28 @@
             "maxLength": 28
           },
           {
+            "prop": "approveLabel",
+            "label": "Кнопка подтверждения",
+            "type": "text",
+            "default": "Продолжить",
+            "maxLength": 20
+          },
+          {
+            "prop": "stopLabel",
+            "label": "Кнопка остановки",
+            "type": "text",
+            "default": "Остановить",
+            "maxLength": 20
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -281,19 +457,24 @@
                 "the line as the step's left border — a separate column overshoots the last dot",
                 "the log inside details: the browser holds it open and the feed stays readable",
                 "the neutral stop button beside the approve action",
-                "the monospaced log wrapping long lines"
+                "the monospaced log wrapping long lines",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the steps array and their states",
                 "goal and title",
-                "the button labels",
-                "the accent through the accent prop"
+                "the button labels and detailsLabel — the block ships Russian defaults",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The block only displays progress: step updates come from the caller.",
                 "There should be one running step: two rings read as broken data.",
                 "Stop must not hide behind a confirmation — it is needed at the moment of doubt.",
-                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file.",
+                "The step badge masks the line with its own fill: the same background prop sets that mask, so pass it when the block sits on a non-standard surface."
               ],
               "usage": "<Ai003 goal=\"Build a landing page\" steps={[{ title: \"Parsed the task\", state: \"done\" }]} />"
             },
@@ -302,13 +483,64 @@
                 "label": "Heading",
                 "default": "Agent run"
               },
+              "approveLabel": {
+                "label": "Approve button",
+                "default": "Continue"
+              },
+              "stopLabel": {
+                "label": "Stop button",
+                "default": "Stop"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Agent Run"
+            "title": "Agent Run",
+            "preview": {
+              "props": {
+                "title": "Agent run",
+                "goal": "Build the studio landing page from catalog blocks and fill in the brief's copy.",
+                "approveLabel": "Continue",
+                "stopLabel": "Stop",
+                "detailsLabel": "Details",
+                "steps": [
+                  {
+                    "title": "Parsed the task",
+                    "detail": "Studio landing page: hero, benefits, pricing, contact form.",
+                    "state": "done",
+                    "meta": "2 s"
+                  },
+                  {
+                    "title": "Picked catalog blocks",
+                    "detail": "hero-002, features-001, pricing-001 and cta-001 — all dependency-free.",
+                    "state": "done",
+                    "meta": "4 s",
+                    "log": [
+                      "GET /r/hero-002.json  200",
+                      "GET /r/features-001.json  200",
+                      "GET /r/pricing-001.json  200"
+                    ]
+                  },
+                  {
+                    "title": "Installing the blocks",
+                    "detail": "Copying files into components/vibeui and checking the build.",
+                    "state": "running",
+                    "meta": "running"
+                  },
+                  {
+                    "title": "Will wire copy and accent",
+                    "detail": "Fills in content from the brief and one accent colour across the blocks.",
+                    "state": "waiting"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -342,19 +574,25 @@
             "закреплённый контекст на виду — иначе человек спорит с ответом, не понимая его источника",
             ":focus-within у панели действий: по одному :hover она недоступна с клавиатуры",
             "Enter на отправку и Shift+Enter на перенос строки",
-            "потолок высоты поля: растущий абзац иначе выталкивает кнопку за экран"
+            "потолок высоты поля: растущий абзац иначе выталкивает кнопку за экран",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив entries и подписи дней",
             "title и contextTitle над списком контекста",
             "обработчик onSend и placeholder",
-            "акцент через проп accent"
+            "подписи roleText, toolText, logLabel и sendText — блок несёт русские по умолчанию",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Лента не прокручивается к последней реплике сама: добавьте прокрутку при добавлении записи.",
             "Дни группируются сравнением с предыдущей записью — массив должен быть отсортирован по времени.",
             "Кнопки над репликой ничего не делают: обработчики вешает вызывающий код.",
-            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом.",
+            "toolText — три ключа в фиксированном порядке: retry, copy, task. Лишние ключи не рисуются."
           ]
         },
         "controls": [
@@ -371,6 +609,25 @@
             "type": "text",
             "default": "Контекст задачи",
             "maxLength": 24
+          },
+          {
+            "prop": "sendText",
+            "label": "Кнопка отправки",
+            "type": "text",
+            "default": "Отправить",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -384,19 +641,25 @@
                 "the pinned context in sight — otherwise people argue with an answer without knowing its source",
                 ":focus-within on the action bar: :hover alone leaves it unreachable by keyboard",
                 "Enter to send and Shift+Enter to break the line",
-                "the composer's height ceiling: a growing paragraph would push the button off screen"
+                "the composer's height ceiling: a growing paragraph would push the button off screen",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the entries array and the day captions",
                 "title and contextTitle above the context list",
                 "the onSend handler and the placeholder",
-                "the accent through the accent prop"
+                "the roleText, toolText, logLabel and sendText captions — the block ships Russian defaults",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The thread does not auto-scroll to the newest entry: scroll it when appending.",
                 "Days are grouped by comparing with the previous entry — the array must be sorted by time.",
                 "The buttons above a reply do nothing: the caller wires the handlers.",
-                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file.",
+                "toolText holds three keys in a fixed order: retry, copy, task. Extra keys are not rendered."
               ],
               "usage": "<Ai004 title=\"Project thread\" contextItems={[\"Studio brief\"]} onSend={handleSend} />"
             },
@@ -408,11 +671,71 @@
               "contextTitle": {
                 "label": "Context heading",
                 "default": "Task context"
+              },
+              "sendText": {
+                "label": "Send button",
+                "default": "Send"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Chat Workspace"
+            "title": "Chat Workspace",
+            "preview": {
+              "props": {
+                "title": "Project thread",
+                "contextTitle": "Task context",
+                "placeholder": "Refine the task or ask for a rewrite",
+                "logLabel": "Conversation",
+                "sendText": "Send",
+                "roleText": {
+                  "user": "You",
+                  "assistant": "Assistant"
+                },
+                "toolText": {
+                  "retry": "Retry",
+                  "copy": "Copy",
+                  "task": "To task"
+                },
+                "contextItems": [
+                  "Studio brief, 2 pages",
+                  "Brand guide: accent #5B5BD6",
+                  "VibeUI block catalog"
+                ],
+                "entries": [
+                  {
+                    "day": "Yesterday",
+                    "role": "user",
+                    "text": "Draft the landing page structure for an interior design studio.",
+                    "time": "17:04"
+                  },
+                  {
+                    "day": "Yesterday",
+                    "role": "assistant",
+                    "text": "I suggest five screens: a hero with a project photo, services, a work gallery, supervision pricing and a contact form. The gallery comes from commerce, the rest from the marketing blocks.",
+                    "time": "17:04"
+                  },
+                  {
+                    "day": "Today",
+                    "role": "user",
+                    "text": "Drop the gallery and put client testimonials there instead.",
+                    "time": "09:12"
+                  },
+                  {
+                    "day": "Today",
+                    "role": "assistant",
+                    "text": "Swapped in testimonials-001 with three cards naming the project. The screen order is unchanged and the contact form stays last.",
+                    "time": "09:12"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -446,19 +769,25 @@
             "aria-label у сноски — голая цифра ничего не значит на слух",
             "scroll-margin-top у карточек: без него якорь прилипает к кромке окна",
             "нумерацию сносок и источников из одного набора — расхождение обесценивает весь блок",
-            "предупреждение под ответом: сборка по трём страницам не равна проверенному факту"
+            "предупреждение под ответом: сборка по трём страницам не равна проверенному факту",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив paragraphs и разметку сносок в тексте",
             "массив sources: заголовок, домен, цитату и ссылку",
             "title, question и sourcesTitle над списком",
-            "акцент через проп accent"
+            "подписи disclaimer и sourceLabel — блок несёт русские по умолчанию",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сноска ищется по шаблону [1] в тексте: другой формат нумерации нужно менять и в разборе, и в данных.",
             "Идентификаторы якорей фиксированы — два таких блока на одной странице дадут дублирующиеся id.",
             "Цитаты не обрезаются: слишком длинная растянет карточку, режьте на стороне данных.",
-            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом.",
+            "sourceLabel — шаблон подписи сноски: {index} подставляется номером источника."
           ]
         },
         "controls": [
@@ -475,6 +804,18 @@
             "type": "text",
             "default": "Источники",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -488,19 +829,25 @@
                 "the aria-label on a footnote — a bare digit means nothing when read aloud",
                 "scroll-margin-top on the cards: without it the anchor sticks to the window edge",
                 "one shared numbering for footnotes and sources — a mismatch voids the whole block",
-                "the disclaimer under the answer: assembled from three pages is not a verified fact"
+                "the disclaimer under the answer: assembled from three pages is not a verified fact",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the paragraphs array and the footnote markers in the text",
                 "the sources array: title, domain, quote and link",
                 "title, question and sourcesTitle above the list",
-                "the accent through the accent prop"
+                "the disclaimer and sourceLabel captions — the block ships Russian defaults",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Footnotes are matched as [1] in the text: another numbering format needs changes in both the parser and the data.",
                 "Anchor ids are fixed — two of these blocks on one page produce duplicate ids.",
                 "Quotes are not truncated: a long one stretches the card, trim it in the data.",
-                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file.",
+                "sourceLabel is the footnote caption template: {index} is replaced with the source number."
               ],
               "usage": "<Ai005 question=\"How do container queries differ from media queries?\" sources={[{ index: 1, title: \"MDN\", site: \"developer.mozilla.org\", quote: \"…\" }]} />"
             },
@@ -512,11 +859,51 @@
               "sourcesTitle": {
                 "label": "List heading",
                 "default": "Sources"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Sourced Answer"
+            "title": "Sourced Answer",
+            "preview": {
+              "props": {
+                "title": "Answer with sources",
+                "question": "How do container queries differ from media queries?",
+                "sourcesTitle": "Sources",
+                "sourceLabel": "Source {index}",
+                "disclaimer": "This answer was assembled from three pages. Check the quotes before publishing.",
+                "paragraphs": [
+                  "Container queries measure the layout against the parent's width rather than the viewport, so the same block looks different in a narrow catalog column and on a wide page without a single media query[1].",
+                  "Browser support has been complete since 2023, and a production polyfill is no longer needed[2]. The container must declare container-type: inline-size, otherwise the query silently does nothing[3]."
+                ],
+                "sources": [
+                  {
+                    "index": 1,
+                    "title": "CSS Container Queries — MDN",
+                    "site": "developer.mozilla.org",
+                    "quote": "Container queries let you apply styles based on the size of the nearest container ancestor."
+                  },
+                  {
+                    "index": 2,
+                    "title": "Container queries — Baseline 2023",
+                    "site": "web.dev",
+                    "quote": "The feature is available in every major browser and joined Baseline in February 2023."
+                  },
+                  {
+                    "index": 3,
+                    "title": "CSS Containment Module Level 3 specification",
+                    "site": "w3.org",
+                    "quote": "An element becomes a query container only after declaring container-type with the value inline-size or size."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -550,15 +937,19 @@
             "проявление словами, а не буквами: на каждом символе строка дёргается",
             "aria-hidden у каретки: скринридер должен читать текст, а не «палочку»",
             "aria-live=\"polite\" у абзаца — ответ объявляется, но не перебивает",
-            "кнопку остановки: поток надо уметь прервать, не дожидаясь конца"
+            "кнопку остановки: поток надо уметь прервать, не дожидаясь конца",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "text — сам ответ",
             "speed — задержку между словами",
-            "title, status и stopLabel",
-            "акцент через проп accent"
+            "title, status, stopLabel и hint — блок несёт русские по умолчанию",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Анимация проигрывается один раз при монтировании: повтор нужно вызывать сменой ключа элемента.",
             "На длинном тексте общая задержка растёт линейно — при 500 словах и speed 55 хвост появится через полминуты.",
             "Блок не получает поток от модели: он показывает уже готовый текст как печатающийся.",
@@ -574,12 +965,38 @@
             "maxLength": 28
           },
           {
+            "prop": "status",
+            "label": "Состояние",
+            "type": "text",
+            "default": "Поток открыт",
+            "maxLength": 24
+          },
+          {
+            "prop": "stopLabel",
+            "label": "Кнопка остановки",
+            "type": "text",
+            "default": "Остановить поток",
+            "maxLength": 24
+          },
+          {
             "prop": "speed",
             "label": "Задержка слова, мс",
             "type": "number",
             "default": 55,
             "min": 10,
             "max": 200
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -593,15 +1010,19 @@
                 "revealing by words, not letters: per-character the line jitters",
                 "aria-hidden on the caret: a screen reader should read the text, not a bar",
                 "aria-live=\"polite\" on the paragraph — the answer is announced without interrupting",
-                "the stop button: a stream has to be interruptible before it ends"
+                "the stop button: a stream has to be interruptible before it ends",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "text — the answer itself",
                 "speed — the delay between words",
-                "title, status and stopLabel",
-                "the accent through the accent prop"
+                "title, status, stopLabel and hint — the block ships Russian defaults",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The animation plays once on mount: replay it by changing the element key.",
                 "On long text the total delay grows linearly — 500 words at speed 55 means half a minute to the tail.",
                 "The block does not consume a model stream: it renders ready text as if it were typing.",
@@ -614,13 +1035,37 @@
                 "label": "Heading",
                 "default": "Assistant is typing"
               },
+              "status": {
+                "label": "Status",
+                "default": "Stream open"
+              },
+              "stopLabel": {
+                "label": "Stop button",
+                "default": "Stop the stream"
+              },
               "speed": {
                 "label": "Word delay, ms"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Streaming Reply"
+            "title": "Streaming Reply",
+            "preview": {
+              "props": {
+                "title": "Assistant is typing",
+                "status": "Stream open",
+                "stopLabel": "Stop the stream",
+                "hint": "The caret and the word cascade switch off under prefers-reduced-motion: the text appears at once.",
+                "text": "Here is the structure: a hero with one promise, three benefit blocks, pricing with an annual discount and a contact form at the bottom. Every block is dependency-free, so the project builds without installing packages."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["speed", "accent", "background"]
       }
     },
     {
@@ -654,15 +1099,19 @@
             "role=\"tab\" с aria-selected — цвет активной вкладки не читается вслух",
             "aria-live у списка: смена рубрики иначе проходит незамеченной",
             "полный текст запроса на карточке — название рубрики не объясняет, что подставится",
-            "пустое состояние: рубрика без заготовок не должна выглядеть поломкой"
+            "пустое состояние: рубрика без заготовок не должна выглядеть поломкой",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массивы groups и prompts",
             "title и description над вкладками",
-            "actionLabel на карточке и emptyLabel",
-            "обработчик onPick и акцент через проп accent"
+            "actionLabel на карточке, emptyLabel и tabsLabel — блок несёт русские по умолчанию",
+            "обработчик onPick и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Вкладки не переключаются стрелками: для полного паттерна tablist добавьте обработчик клавиш.",
             "Рубрика берётся из поля group у промпта — значение должно совпадать со строкой в groups буквально.",
             "Первая рубрика выбирается при монтировании: смена массива groups активную вкладку не сбрасывает.",
@@ -683,6 +1132,18 @@
             "type": "text",
             "default": "Подставить в поле",
             "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -696,15 +1157,19 @@
                 "role=\"tab\" with aria-selected — the active tab colour is not read aloud",
                 "aria-live on the list: otherwise switching topics passes unnoticed",
                 "the full prompt text on the card — a topic name does not say what will be inserted",
-                "the empty state: a topic with no presets must not look broken"
+                "the empty state: a topic with no presets must not look broken",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the groups and prompts arrays",
                 "title and description above the tabs",
-                "actionLabel on the card and emptyLabel",
-                "the onPick handler and the accent through the accent prop"
+                "actionLabel on the card, emptyLabel and tabsLabel — the block ships Russian defaults",
+                "the onPick handler and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Tabs do not respond to arrow keys: add a key handler for the full tablist pattern.",
                 "The topic comes from a prompt's group field — it must match a groups string exactly.",
                 "The first topic is selected on mount: changing the groups array does not reset it.",
@@ -720,11 +1185,72 @@
               "actionLabel": {
                 "label": "Action caption",
                 "default": "Insert into the field"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Prompt Library"
+            "title": "Prompt Library",
+            "preview": {
+              "props": {
+                "title": "Prompt presets",
+                "description": "Ready wordings instead of an empty field: pick a topic and drop the prompt in whole.",
+                "actionLabel": "Insert into the field",
+                "emptyLabel": "No presets in this topic yet.",
+                "tabsLabel": "Preset topics",
+                "groups": ["Site", "Copy", "Code", "Analytics"],
+                "prompts": [
+                  {
+                    "group": "Site",
+                    "title": "Landing page from the catalog",
+                    "body": "Assemble a one-pager for a studio: hero, three benefits, pricing and a contact form. Use dependency-free blocks only.",
+                    "badge": "Popular"
+                  },
+                  {
+                    "group": "Site",
+                    "title": "Rethink the structure",
+                    "body": "Look at the current page and propose another screen order aimed at getting a request submitted."
+                  },
+                  {
+                    "group": "Copy",
+                    "title": "A headline without filler",
+                    "body": "Rewrite the headline so it carries one promise and no adjectives like «innovative».",
+                    "badge": "Popular"
+                  },
+                  {
+                    "group": "Copy",
+                    "title": "Expand the description",
+                    "body": "Turn the product card's one-liner into a 40-word paragraph, keeping the facts and adding none."
+                  },
+                  {
+                    "group": "Code",
+                    "title": "Explain the diff",
+                    "body": "Walk through this diff step by step: what changed, why, and which spots deserve a manual check."
+                  },
+                  {
+                    "group": "Code",
+                    "title": "Regression test",
+                    "body": "Write a test that would fail before the fix and passes after it. No mocks where they can be avoided."
+                  },
+                  {
+                    "group": "Analytics",
+                    "title": "Weekly summary",
+                    "body": "Pull the three numbers that moved most from the export and explain each in one sentence."
+                  },
+                  {
+                    "group": "Analytics",
+                    "title": "Check the hypothesis",
+                    "body": "Judge whether the data supports the conclusion and name what is missing to make it reliable."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -758,19 +1284,25 @@
             "<label> вокруг колонки — попасть в ответ можно кликом в любое место карточки",
             "разбор по пунктам: без него выбор делается по длине ответа",
             "время и расход у каждого варианта — «лучше» часто значит «дороже»",
-            "одну радиогруппу с общим name, иначе можно выбрать оба ответа"
+            "одну радиогруппу с общим name, иначе можно выбрать оба ответа",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив variants: тексты, разборы, время и расход",
             "question над колонками и title",
             "chooseLabel, footnote и name радиогруппы",
-            "акцент через проп accent"
+            "подписи legend и statText — блок несёт русские по умолчанию",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Блок ждёт ровно два варианта: третья колонка в тип не влезет и сетку сломает.",
             "Выбор никуда не отправляется: обработчик submit добавляет вызывающий код.",
             "Значение name должно быть уникальным на странице, иначе две пары ответов свяжутся в одну группу.",
-            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом.",
+            "statText — два ключа-шаблона, latency и cost: {value} подставляется значением варианта."
           ]
         },
         "controls": [
@@ -787,6 +1319,18 @@
             "type": "text",
             "default": "Сохранить выбор",
             "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -800,19 +1344,25 @@
                 "the <label> around the column — the answer is clickable anywhere in the card",
                 "the bullet breakdown: without it the pick is made by answer length",
                 "latency and cost per variant — «better» often means «pricier»",
-                "one radio group with a shared name, or both answers can be selected"
+                "one radio group with a shared name, or both answers can be selected",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the variants array: texts, breakdowns, latency and cost",
                 "question above the columns and title",
                 "chooseLabel, footnote and the radio group name",
-                "the accent through the accent prop"
+                "the legend and statText captions — the block ships Russian defaults",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The block expects exactly two variants: a third column does not fit the type or the grid.",
                 "The choice is not submitted anywhere: the caller adds the submit handler.",
                 "The name value must be unique on the page, or two answer pairs merge into one group.",
-                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file.",
+                "statText holds two template keys, latency and cost: {value} is replaced with the variant's value."
               ],
               "usage": "<Ai008 question=\"Which block should I use?\" name=\"answer-vote\" chooseLabel=\"Save the choice\" />"
             },
@@ -824,11 +1374,59 @@
               "chooseLabel": {
                 "label": "Button caption",
                 "default": "Save the choice"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Answer Compare"
+            "title": "Answer Compare",
+            "preview": {
+              "props": {
+                "title": "Which answer is better?",
+                "question": "Which block should I use for a pricing page with three plans and an annual discount?",
+                "chooseLabel": "Save the choice",
+                "footnote": "The choice joins the training set without the text of your prompt.",
+                "legend": "Answers to the same prompt",
+                "statText": {
+                  "latency": "Latency: {value}",
+                  "cost": "Spend: {value}"
+                },
+                "variants": [
+                  {
+                    "id": "a",
+                    "label": "Option A",
+                    "model": "Fast model",
+                    "answer": "Take pricing-001: three plans, an annual discount toggle and a VAT footnote. The block is dependency-free and installs with one command.",
+                    "facts": [
+                      "Names a specific catalog block",
+                      "Mentions how to install it",
+                      "Does not explain why this block"
+                    ],
+                    "latency": "1.2 s",
+                    "cost": "410 tokens"
+                  },
+                  {
+                    "id": "b",
+                    "label": "Option B",
+                    "model": "Precise model",
+                    "answer": "For three plans with an annual discount, pricing-001 fits: the period toggle sits above the cards, so both prices are visible at once and nobody has to leave the page. Past four plans, pricing-003 with its comparison table is the better choice.",
+                    "facts": [
+                      "Explains why the block fits",
+                      "Offers a fallback as the plan count grows",
+                      "Longer answer, slower to read"
+                    ],
+                    "latency": "3.8 s",
+                    "cost": "980 tokens"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -862,15 +1460,20 @@
             "аргументы в <dl>: пара «имя — значение» читается вслух целиком",
             "результат рядом с аргументами — их сравнивают глазами, а не по вкладкам",
             "перенос длинных строк в <pre>: горизонтальная прокрутка прячет хвост ответа",
-            "сырой ответ в <details> — он нужен редко, но целиком"
+            "сырой ответ в <details> — он нужен редко, но целиком",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "tool, intent и duration",
             "массив args и текст result",
             "state — состояние вызова",
-            "rawTitle, raw и акцент через проп accent"
+            "подписи argsTitle, resultTitle, rawTitle и stateText — блок несёт русские по умолчанию",
+            "raw и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Значения аргументов не экранируются как JSON: форматируйте их до передачи в блок.",
             "Длинный результат не сворачивается — обрежьте его на стороне данных или положите в details.",
             "Состояние running не анимировано намеренно: мигающий значок в логе вызовов отвлекает.",
@@ -886,11 +1489,30 @@
             "maxLength": 32
           },
           {
+            "prop": "argsTitle",
+            "label": "Заголовок аргументов",
+            "type": "text",
+            "default": "Аргументы",
+            "maxLength": 24
+          },
+          {
             "prop": "state",
             "label": "Состояние",
             "type": "select",
             "default": "ok",
             "options": ["ok", "running", "failed"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -904,15 +1526,20 @@
                 "the arguments in a <dl>: a name–value pair is read aloud as one unit",
                 "the result beside the arguments — they are compared by eye, not across tabs",
                 "long-line wrapping in <pre>: horizontal scrolling hides the tail of the response",
-                "the raw response inside <details> — rarely needed, but needed whole"
+                "the raw response inside <details> — rarely needed, but needed whole",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "tool, intent and duration",
                 "the args array and the result text",
                 "state — the call state",
-                "rawTitle, raw and the accent through the accent prop"
+                "the argsTitle, resultTitle, rawTitle and stateText captions — the block ships Russian defaults",
+                "raw and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Argument values are not JSON-escaped: format them before passing them in.",
                 "A long result is not collapsed — trim it in the data or move it into the details.",
                 "The running state is deliberately not animated: a blinking badge in a call log distracts.",
@@ -925,13 +1552,57 @@
                 "label": "Tool",
                 "default": "catalog.search"
               },
+              "argsTitle": {
+                "label": "Arguments heading",
+                "default": "Arguments"
+              },
               "state": {
                 "label": "State"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Tool Call"
+            "title": "Tool Call",
+            "preview": {
+              "props": {
+                "title": "Tool call",
+                "tool": "catalog.search",
+                "intent": "The assistant searched for pricing blocks without external dependencies to offer them in the answer.",
+                "duration": "418 ms",
+                "resultTitle": "Result",
+                "rawTitle": "Raw response",
+                "argsTitle": "Arguments",
+                "stateText": {
+                  "ok": "Succeeded",
+                  "running": "Running",
+                  "failed": "Call failed"
+                },
+                "args": [
+                  {
+                    "name": "category",
+                    "value": "\"pricing\"",
+                    "note": "Catalog section"
+                  },
+                  {
+                    "name": "limit",
+                    "value": "3",
+                    "note": "How many blocks to return"
+                  },
+                  {
+                    "name": "withDependencies",
+                    "value": "false",
+                    "note": "Self-contained blocks only"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["state", "accent", "background"]
       }
     },
     {
@@ -965,19 +1636,24 @@
             "role=\"progressbar\" с aria-valuenow — доля не должна читаться только глазами",
             "точку-маркер у заголовка колонки: тон колонки иначе передаётся одним цветом",
             "зачёркивание только в колонке готового — в остальных оно врёт про состояние",
-            "счётчик задач у каждой колонки: объём работы виден до чтения карточек"
+            "счётчик задач у каждой колонки: объём работы виден до чтения карточек",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив columns и задачи внутри них",
             "goal и title над доской",
-            "progressLabel у полосы прогресса",
-            "акцент через проп accent"
+            "progressLabel и шаблон progressText у полосы прогресса — блок несёт русские по умолчанию",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Готовым считается столбец с tone \"done\" — без него прогресс всегда будет нулевым.",
             "Порядок колонок берётся из массива: доска не сортирует их сама.",
             "Названия инструментов не проверяются — это просто подпись, а не ссылка на вызов.",
-            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом.",
+            "progressText — шаблон: {done}, {total} и {percent} подставляются числами."
           ]
         },
         "controls": [
@@ -994,6 +1670,18 @@
             "type": "text",
             "default": "Выполнено задач",
             "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1007,19 +1695,24 @@
                 "role=\"progressbar\" with aria-valuenow — the share must not be visual only",
                 "the dot marker on a column heading: otherwise the tone is carried by colour alone",
                 "the strike-through only in the done column — elsewhere it lies about the state",
-                "the task counter per column: the workload is visible before reading the cards"
+                "the task counter per column: the workload is visible before reading the cards",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the columns array and the tasks inside them",
                 "goal and title above the board",
-                "progressLabel on the progress bar",
-                "the accent through the accent prop"
+                "progressLabel and the progressText template on the progress bar — the block ships Russian defaults",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Done is the column with tone \"done\" — without it progress is always zero.",
                 "Column order comes from the array: the board does not sort them.",
                 "Tool names are not validated — they are a caption, not a link to a call.",
-                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file.",
+                "progressText is a template: {done}, {total} and {percent} are replaced with numbers."
               ],
               "usage": "<Ai010 goal=\"Build a landing page\" columns={[{ key: \"done\", label: \"Done\", tone: \"done\", tasks: [] }]} />"
             },
@@ -1031,11 +1724,77 @@
               "progressLabel": {
                 "label": "Progress caption",
                 "default": "Tasks completed"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Agent Plan Board"
+            "title": "Agent Plan Board",
+            "preview": {
+              "props": {
+                "title": "Agent plan",
+                "goal": "Assemble the studio landing page from catalog blocks, fill in the copy and run the build.",
+                "progressLabel": "Tasks completed",
+                "progressText": "{done} of {total} · {percent}%",
+                "columns": [
+                  {
+                    "key": "queue",
+                    "label": "Queued",
+                    "tone": "queue",
+                    "tasks": [
+                      {
+                        "title": "Build the contact form",
+                        "detail": "contact-001 with a request topic and a consent checkbox.",
+                        "tool": "catalog.install"
+                      },
+                      {
+                        "title": "Run the build",
+                        "detail": "Check types and the linter before showing the result.",
+                        "tool": "shell.run"
+                      }
+                    ]
+                  },
+                  {
+                    "key": "active",
+                    "label": "In progress",
+                    "tone": "active",
+                    "tasks": [
+                      {
+                        "title": "Fill in the brief's copy",
+                        "detail": "Headings and captions for the hero and the benefits block.",
+                        "tool": "file.edit"
+                      }
+                    ]
+                  },
+                  {
+                    "key": "done",
+                    "label": "Done",
+                    "tone": "done",
+                    "tasks": [
+                      {
+                        "title": "Parsed the brief",
+                        "detail": "Pulled out the page goal and the three required screens."
+                      },
+                      {
+                        "title": "Picked the blocks",
+                        "detail": "hero-002, features-001, pricing-001 — all dependency-free.",
+                        "tool": "catalog.search"
+                      },
+                      {
+                        "title": "Created the branch",
+                        "tool": "git.branch"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1069,22 +1828,34 @@
             "<output> с атрибутом for — значение объявляется браузером без aria-live",
             "видимую радиокнопку в чипе режима: display:none выбивает группу из клавиатуры",
             "шаг ползунка температуры в 0,1 — более мелкий шаг ничего не меняет в ответе",
-            "кнопку возврата к значениям по умолчанию: из настроек надо уметь выбраться"
+            "кнопку возврата к значениям по умолчанию: из настроек надо уметь выбраться",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "temperature и maxTokens — стартовые значения",
             "массив modes и подписи режимов",
             "title, description, applyLabel и resetLabel",
-            "акцент через проп accent"
+            "подписи temperatureLabel, lengthLabel, modeLabel, lengthText, temperatureText и lengthEffectText — блок несёт русские по умолчанию",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Значения живут в состоянии блока: чтобы получить их наружу, добавьте обработчик и поднимите состояние.",
-            "Тексты следствий зашиты в двух функциях — под свои диапазоны их придётся переписать.",
+            "Тексты следствий лежат в temperatureText и lengthEffectText по ключам low, mid и high; сами границы диапазонов зашиты в блоке.",
             "Идентификаторы полей фиксированы: два таких блока на странице дадут дублирующиеся id.",
             "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
           ]
         },
         "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Настройки ответа",
+            "maxLength": 28
+          },
           {
             "prop": "temperature",
             "label": "Температура",
@@ -1100,6 +1871,18 @@
             "default": 900,
             "min": 200,
             "max": 2000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1113,33 +1896,73 @@
                 "<output> with the for attribute — the value is announced by the browser without aria-live",
                 "the visible radio inside a mode chip: display:none drops the group out of keyboard reach",
                 "the 0.1 step on temperature — a finer step changes nothing in the answer",
-                "the reset button: settings need a way back"
+                "the reset button: settings need a way back",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "temperature and maxTokens — the starting values",
                 "the modes array and their captions",
                 "title, description, applyLabel and resetLabel",
-                "the accent through the accent prop"
+                "the temperatureLabel, lengthLabel, modeLabel, lengthText, temperatureText and lengthEffectText captions — the block ships Russian defaults",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Values live in the block's state: lift the state and add a handler to read them outside.",
-                "The consequence texts are hard-coded in two functions — rewrite them for your ranges.",
+                "The consequence texts live in temperatureText and lengthEffectText under the keys low, mid and high; the range thresholds themselves are hard-coded.",
                 "Field ids are fixed: two of these blocks on one page produce duplicate ids.",
                 "Do not lift the CSS variables into globals.css: the block has to stay a single file."
               ],
               "usage": "<Ai011 temperature={0.7} maxTokens={900} modes={[\"Precise\", \"Free\"]} />"
             },
             "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Answer settings"
+              },
               "temperature": {
                 "label": "Temperature"
               },
               "maxTokens": {
                 "label": "Answer length"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Model Settings"
+            "title": "Model Settings",
+            "preview": {
+              "props": {
+                "title": "Answer settings",
+                "description": "Every slider is labelled with its consequence, not just a number: you see what changes in the reply.",
+                "applyLabel": "Apply",
+                "resetLabel": "Reset to defaults",
+                "temperatureLabel": "Temperature",
+                "lengthLabel": "Answer length",
+                "modeLabel": "Mode",
+                "lengthText": "{value} tokens",
+                "decimalSeparator": ".",
+                "modes": ["Precise", "Balanced", "Free"],
+                "temperatureText": {
+                  "low": "Almost always the same answer. Good for facts and code.",
+                  "mid": "The wording shifts, the substance holds. The everyday mode for copy.",
+                  "high": "Noticeable spread: two runs give different answers. For ideas and options."
+                },
+                "lengthEffectText": {
+                  "low": "A short answer: a couple of paragraphs, no room for a long list.",
+                  "mid": "A medium answer: a few paragraphs with a list.",
+                  "high": "A long answer: a full breakdown. Slower to wait for and pricier to run."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1173,19 +1996,25 @@
             "различие «прочитан» и «проиндексирован» — до индексации модель файл не видит",
             "подпись состояния словами: цвет полоски сам по себе ничего не объясняет",
             "строку файла с ошибкой на месте — исчезнувший файл оставляет ответ необъяснимо неполным",
-            "бюджет окна контекста внизу: без него непонятно, сколько ещё можно добавить"
+            "бюджет окна контекста внизу: без него непонятно, сколько ещё можно добавить",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив files и их состояния",
             "budgetUsed — долю занятого окна",
             "title, description, dropLabel и dropHint",
-            "accept — типы файлов и акцент через проп accent"
+            "подписи budgetLabel и fileProgressLabel — блок несёт русские по умолчанию",
+            "accept — типы файлов и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Загрузку, отмену и удаление файла реализует вызывающий код: блок только показывает список.",
             "Значение accept — подсказка диалогу, а не проверка: тип файла всё равно проверяйте на сервере.",
             "Прогресс не анимируется сам: обновляйте поле progress по мере чтения.",
-            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом.",
+            "fileProgressLabel — шаблон подписи полосы: {name} подставляется именем файла."
           ]
         },
         "controls": [
@@ -1197,12 +2026,31 @@
             "maxLength": 28
           },
           {
+            "prop": "budgetLabel",
+            "label": "Подпись бюджета",
+            "type": "text",
+            "default": "Занято в окне контекста",
+            "maxLength": 28
+          },
+          {
             "prop": "budgetUsed",
             "label": "Занято окна, %",
             "type": "number",
             "default": 46,
             "min": 0,
             "max": 100
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1216,19 +2064,25 @@
                 "the difference between read and indexed — the model cannot see a file until it is indexed",
                 "the state spelled out in words: a coloured bar explains nothing on its own",
                 "the failed file kept in the list — a vanished file leaves the answer inexplicably incomplete",
-                "the context budget at the bottom: without it there is no telling how much more fits"
+                "the context budget at the bottom: without it there is no telling how much more fits",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the files array and their states",
                 "budgetUsed — the share of the window in use",
                 "title, description, dropLabel and dropHint",
-                "accept — the file types, and the accent through the accent prop"
+                "the budgetLabel and fileProgressLabel captions — the block ships Russian defaults",
+                "accept — the file types, and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Uploading, cancelling and removing files belong to the caller: the block only renders the list.",
                 "The accept value is a hint for the dialog, not a check: validate the type on the server anyway.",
                 "Progress does not animate itself: update the progress field as reading advances.",
-                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file.",
+                "fileProgressLabel is the bar's caption template: {name} is replaced with the file name."
               ],
               "usage": "<Ai012 files={[{ name: \"brief.pdf\", size: \"1.2 MB\", progress: 100, state: \"indexed\" }]} budgetUsed={46} />"
             },
@@ -1237,13 +2091,68 @@
                 "label": "Heading",
                 "default": "Context for the assistant"
               },
+              "budgetLabel": {
+                "label": "Budget caption",
+                "default": "Context window in use"
+              },
               "budgetUsed": {
                 "label": "Window used, %"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Context Upload"
+            "title": "Context Upload",
+            "preview": {
+              "props": {
+                "title": "Context for the assistant",
+                "description": "A file joins the answers only after indexing: until then it is listed, but the model cannot see it.",
+                "dropLabel": "Drop files here or click to choose",
+                "dropHint": "PDF, Markdown, CSV and plain text. Up to 25 MB per file.",
+                "budgetLabel": "Context window in use",
+                "fileProgressLabel": "Processing {name}",
+                "files": [
+                  {
+                    "name": "brief-studio.pdf",
+                    "size": "1.2 MB",
+                    "kind": "pdf",
+                    "progress": 100,
+                    "state": "indexed",
+                    "note": "Indexed, 14 chunks. The model can see this file."
+                  },
+                  {
+                    "name": "brand-guide.md",
+                    "size": "38 KB",
+                    "kind": "md",
+                    "progress": 100,
+                    "state": "indexed",
+                    "note": "Indexed, 6 chunks."
+                  },
+                  {
+                    "name": "analytics-2024.csv",
+                    "size": "6.4 MB",
+                    "kind": "csv",
+                    "progress": 62,
+                    "state": "reading",
+                    "note": "Reading: 62%. The file stays out of answers until indexing ends."
+                  },
+                  {
+                    "name": "photos.zip",
+                    "size": "48 MB",
+                    "kind": "zip",
+                    "progress": 100,
+                    "state": "failed",
+                    "note": "Archives cannot be read. Unpack it and add the files separately."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["budgetUsed", "accent", "background"]
       }
     },
     {
@@ -1277,15 +2186,19 @@
             "чекбоксы у причин, а не радио — у плохого ответа обычно несколько бед сразу",
             "поле комментария вместе с причинами: список никогда не покрывает всё",
             "оцениваемый ответ рядом с формой — иначе оценивают по памяти",
-            "строку о том, что уходит с оценкой: без неё честную обратную связь не оставляют"
+            "строку о том, что уходит с оценкой: без неё честную обратную связь не оставляют",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив reasons и текст answer",
-            "title, question и privacyNote",
+            "title, question, privacyNote, а также легенды voteLegend и reasonsLegend",
             "upLabel, downLabel, commentLabel и submitLabel",
-            "name радиогруппы и акцент через проп accent"
+            "name радиогруппы и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Раскрытие держится на :has() — в браузере без его поддержки подробности останутся скрытыми.",
             "Форма ничего не отправляет: обработчик submit добавляет вызывающий код.",
             "Идентификатор поля комментария фиксирован: два блока на странице дадут дублирующиеся id.",
@@ -1306,6 +2219,18 @@
             "type": "text",
             "default": "Не помог",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1319,15 +2244,19 @@
                 "checkboxes for the reasons, not radios — a bad answer usually fails in several ways",
                 "the comment field alongside the reasons: a list never covers everything",
                 "the rated answer next to the form — otherwise it is judged from memory",
-                "the line about what the rating carries: without it honest feedback does not come"
+                "the line about what the rating carries: without it honest feedback does not come",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the reasons array and the answer text",
-                "title, question and privacyNote",
+                "title, question, privacyNote and the voteLegend and reasonsLegend legends",
                 "upLabel, downLabel, commentLabel and submitLabel",
-                "the radio group name and the accent through the accent prop"
+                "the radio group name and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The reveal relies on :has() — in a browser without it the details stay hidden.",
                 "The form submits nothing: the caller adds the submit handler.",
                 "The comment field id is fixed: two blocks on one page produce duplicate ids.",
@@ -1343,11 +2272,41 @@
               "downLabel": {
                 "label": "Negative rating",
                 "default": "Not helpful"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Answer Feedback"
+            "title": "Answer Feedback",
+            "preview": {
+              "props": {
+                "title": "Rate the answer",
+                "question": "Question: which block should I use for a pricing page?",
+                "answer": "For three plans with an annual discount take pricing-001: the period switch sits above the cards, so both prices are visible at once. The block installs with one command and pulls no dependencies.",
+                "voteLegend": "Was this answer useful?",
+                "upLabel": "Helped",
+                "downLabel": "Not helpful",
+                "reasons": [
+                  "Off topic",
+                  "Made-up facts",
+                  "Too long",
+                  "Not enough detail",
+                  "Poor writing",
+                  "Breaks the rules"
+                ],
+                "reasonsLegend": "What exactly went wrong",
+                "commentLabel": "What went wrong",
+                "commentPlaceholder": "In a sentence or two: what the answer was missing",
+                "submitLabel": "Send rating",
+                "privacyNote": "The rating travels with this answer. The prompt text and files are not sent."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1381,15 +2340,20 @@
             "доли как колонки грида — абсолютные куски разъезжаются на округлении",
             "объяснение у каждой доли: «переписка 68 400» само по себе ничего не значит",
             "tabular-nums в числах, иначе колонка значений прыгает при обновлении",
-            "предупреждение о молчаливом выпадении старых сообщений — это происходит без спроса"
+            "предупреждение о молчаливом выпадении старых сообщений — это происходит без спроса",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив segments и их подписи",
             "limit — размер окна контекста",
-            "title, model и текст warning",
-            "trimLabel, newChatLabel и акцент через проп accent"
+            "title, model, warningTitle и текст warning",
+            "totalTemplate и barLabelTemplate — строки с подстановками {limit} и {percent}",
+            "trimLabel, newChatLabel и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Свободный остаток — это доля с tone \"free\": без неё полоса окажется заполненной целиком.",
             "Сумма долей не проверяется: если она больше limit, колонки вылезут за полосу.",
             "Числа форматируются локалью ru-RU — для другой локали правьте функцию форматирования.",
@@ -1411,6 +2375,18 @@
             "default": 128000,
             "min": 4000,
             "max": 1000000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1424,15 +2400,20 @@
                 "the shares as grid columns — absolute pieces drift on rounding",
                 "the explanation per share: «conversation 68,400» means nothing by itself",
                 "tabular-nums on the numbers, or the value column jumps on every update",
-                "the warning about old messages dropping silently — it happens without asking"
+                "the warning about old messages dropping silently — it happens without asking",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the segments array and their captions",
                 "limit — the size of the context window",
-                "title, model and the warning text",
-                "trimLabel, newChatLabel and the accent through the accent prop"
+                "title, model, warningTitle and the warning text",
+                "totalTemplate and barLabelTemplate — strings with the {limit} and {percent} placeholders",
+                "trimLabel, newChatLabel and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The free remainder is the share with tone \"free\": without it the bar reads as completely full.",
                 "The sum of shares is not validated: above limit the columns overflow the bar.",
                 "Numbers are formatted with the ru-RU locale — change the formatter for another locale.",
@@ -1447,11 +2428,56 @@
               },
               "limit": {
                 "label": "Window size"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Token Budget"
+            "title": "Token Budget",
+            "preview": {
+              "props": {
+                "title": "Context window",
+                "model": "128,000 tokens",
+                "segments": [
+                  {
+                    "tone": "system",
+                    "label": "System prompt",
+                    "tokens": 1800,
+                    "hint": "Project rules and answer format. Not trimmable."
+                  },
+                  {
+                    "tone": "context",
+                    "label": "Context files",
+                    "tokens": 34200,
+                    "hint": "Brief, guide and export. Extra files can be switched off."
+                  },
+                  {
+                    "tone": "chat",
+                    "label": "Conversation",
+                    "tokens": 68400,
+                    "hint": "Forty turns. The oldest messages collapse first."
+                  },
+                  {
+                    "tone": "free",
+                    "label": "Free",
+                    "tokens": 23600,
+                    "hint": "Enough for about eight long answers."
+                  }
+                ],
+                "totalTemplate": "of {limit} · {percent}%",
+                "barLabelTemplate": "{percent} percent of the context window used",
+                "warningTitle": "Heads up.",
+                "warning": "Less than a fifth of the window is free. Once the room runs out, the oldest messages drop from the conversation silently.",
+                "trimLabel": "Collapse old messages",
+                "newChatLabel": "Start a new conversation"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1485,15 +2511,19 @@
             "aria-current у активной записи — цвет подложки не читается вслух",
             "группы как <section> с заголовком: по ним можно прыгать заголовками",
             "обрезку превью двумя строками, иначе колонка превращается в ленту текста",
-            "пустое состояние с подсказкой — «ничего не найдено» без совета бесполезно"
+            "пустое состояние с подсказкой — «ничего не найдено» без совета бесполезно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив threads и названия групп",
             "activeId — открытый диалог",
-            "title, newLabel и searchPlaceholder",
-            "emptyLabel и акцент через проп accent"
+            "title, newLabel, pinLabel и searchPlaceholder",
+            "emptyLabel и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Порядок групп берётся из порядка записей в массиве: блок не сортирует их по дате.",
             "Поиск регистронезависимый, но без учёта морфологии — «диалоги» не найдут «диалог».",
             "Выбор диалога ничего не делает: обработчик вешает вызывающий код.",
@@ -1514,6 +2544,18 @@
             "type": "text",
             "default": "t2",
             "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1527,15 +2569,19 @@
                 "aria-current on the active row — a background tint is not read aloud",
                 "the groups as <section> with a heading: they can be jumped between by headings",
                 "clamping the preview to two lines, or the column turns into a wall of text",
-                "the empty state with a hint — «nothing found» without advice is useless"
+                "the empty state with a hint — «nothing found» without advice is useless",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the threads array and the group names",
                 "activeId — the open thread",
-                "title, newLabel and searchPlaceholder",
-                "emptyLabel and the accent through the accent prop"
+                "title, newLabel, pinLabel and searchPlaceholder",
+                "emptyLabel and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Group order follows the order of entries in the array: the block does not sort by date.",
                 "Search is case-insensitive but not morphological — a plural query misses the singular.",
                 "Selecting a thread does nothing: the caller wires the handler.",
@@ -1551,11 +2597,71 @@
               "activeId": {
                 "label": "Active thread",
                 "default": "t2"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Chat History"
+            "title": "Chat History",
+            "preview": {
+              "props": {
+                "title": "History",
+                "newLabel": "New",
+                "searchPlaceholder": "Find a conversation",
+                "activeId": "t2",
+                "emptyLabel": "Nothing found. Try a word from the question itself.",
+                "pinLabel": "pinned",
+                "threads": [
+                  {
+                    "id": "t1",
+                    "title": "Interior studio landing page",
+                    "preview": "Build a one-pager: hero, services, testimonials and a request form.",
+                    "group": "Pinned",
+                    "time": "Mon",
+                    "pinned": true,
+                    "messages": 24
+                  },
+                  {
+                    "id": "t2",
+                    "title": "Pricing page",
+                    "preview": "Three plans, an annual discount switch, FAQ at the bottom.",
+                    "group": "Today",
+                    "time": "11:20",
+                    "messages": 8
+                  },
+                  {
+                    "id": "t3",
+                    "title": "Copy for the benefits block",
+                    "preview": "Rewrite the three points without adjectives like «innovative».",
+                    "group": "Today",
+                    "time": "09:04",
+                    "messages": 12
+                  },
+                  {
+                    "id": "t4",
+                    "title": "Review of the forms diff",
+                    "preview": "Explain what changed in the validation and what to check by hand.",
+                    "group": "This week",
+                    "time": "Wed",
+                    "messages": 31
+                  },
+                  {
+                    "id": "t5",
+                    "title": "Traffic summary",
+                    "preview": "The three numbers that moved most, and why each of them did.",
+                    "group": "This week",
+                    "time": "Tue",
+                    "messages": 6
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1589,15 +2695,20 @@
             "видимую кнопку отклонения рядом с подтверждением — спрятанный отказ делает подтверждение формальностью",
             "список последствий до кнопок: соглашаются с правкой, а не с кнопкой «продолжить»",
             "адрес правки на виду — без файла и блока непонятно, где это произойдёт",
-            "чекбокс «не спрашивать снова» последним: до опасной настройки надо дочитать"
+            "чекбокс «не спрашивать снова» последним: до опасной настройки надо дочитать",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив diff и список effects",
             "title, intent и target",
+            "effectsTitle и diffTitle — заголовки двух колонок",
             "confirmLabel, editLabel и rejectLabel",
-            "rememberLabel и акцент через проп accent"
+            "rememberLabel и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Диф не разбирается из patch-формата: строки со знаками передаёт вызывающий код.",
             "Кнопки ничего не делают: обработчики решения вешает вызывающий код.",
             "Отступы внутри строк дифа сохраняются как есть — приводите их к одному виду заранее.",
@@ -1618,6 +2729,18 @@
             "type": "text",
             "default": "app/page.tsx · hero-002",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1631,15 +2754,20 @@
                 "the visible reject button next to approve — a hidden refusal makes approval a formality",
                 "the consequence list before the buttons: people agree to an edit, not to a «continue» button",
                 "the edit target in sight — without a file and block it is unclear where this lands",
-                "the «do not ask again» checkbox last: a dangerous setting has to be read down to"
+                "the «do not ask again» checkbox last: a dangerous setting has to be read down to",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the diff array and the effects list",
                 "title, intent and target",
+                "effectsTitle and diffTitle — the headings of the two columns",
                 "confirmLabel, editLabel and rejectLabel",
-                "rememberLabel and the accent through the accent prop"
+                "rememberLabel and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The diff is not parsed from patch format: the caller passes the signed lines.",
                 "The buttons do nothing: the caller wires the decision handlers.",
                 "Indentation inside diff lines is kept as-is — normalise it before passing it in.",
@@ -1655,11 +2783,62 @@
               "target": {
                 "label": "Edit target",
                 "default": "app/page.tsx · hero-002"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Action Approval"
+            "title": "Action Approval",
+            "preview": {
+              "props": {
+                "title": "The assistant suggests rewriting the heading",
+                "intent": "The current heading does not name the service and does not answer «what do you do». I suggest replacing it and the subheading with the concrete wording from the brief.",
+                "target": "app/page.tsx · hero-002",
+                "effectsTitle": "What will happen",
+                "effects": [
+                  "Rewrites the heading and subheading in hero-002",
+                  "Touches one file, the other screens stay as they are",
+                  "The edit is reversible: the old text stays in the branch history"
+                ],
+                "diffTitle": "The edit",
+                "diff": [
+                  {
+                    "kind": "keep",
+                    "text": "<h1 data-part=\"title\">"
+                  },
+                  {
+                    "kind": "remove",
+                    "text": "  Innovative solutions for your business"
+                  },
+                  {
+                    "kind": "add",
+                    "text": "  A house design in four weeks"
+                  },
+                  {
+                    "kind": "keep",
+                    "text": "</h1>"
+                  },
+                  {
+                    "kind": "remove",
+                    "text": "  A complex approach and individual service"
+                  },
+                  {
+                    "kind": "add",
+                    "text": "  Layout, budget and oversight — from one team"
+                  }
+                ],
+                "confirmLabel": "Apply the edit",
+                "editLabel": "Change the text",
+                "rejectLabel": "Reject",
+                "rememberLabel": "Stop asking about copy edits"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1693,15 +2872,19 @@
             "сохранённый черновик рядом с повтором — потерянный абзац обиднее самой ошибки",
             "шаги выхода: «что-то пошло не так» — это тупик, а не сообщение",
             "код ошибки с user-select:all — именно его спросят в поддержке",
-            "технические подробности в <details>: они нужны одному из двадцати"
+            "технические подробности в <details>: они нужны одному из двадцати",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
-            "title, explanation и массив steps",
+            "title, explanation, stepsTitle и массив steps",
             "code и attempt в шапке",
             "draft, draftLabel и текст details",
-            "retryLabel, switchLabel и акцент через проп accent"
+            "retryLabel, switchLabel и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Повтор запроса реализует вызывающий код: кнопка ничего не делает сама.",
             "role=\"alert\" объявляет содержимое при появлении — не монтируйте блок заранее скрытым.",
             "Черновик выводится как есть, без обрезки: длинный запрос растянет блок.",
@@ -1722,6 +2905,18 @@
             "type": "text",
             "default": "503 · req_8c41d9",
             "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1735,15 +2930,19 @@
                 "the saved draft next to retry — a lost paragraph stings more than the failure",
                 "the recovery steps: «something went wrong» is a dead end, not a message",
                 "the error code with user-select:all — this is what support will ask for",
-                "the technical details inside <details>: one in twenty people needs them"
+                "the technical details inside <details>: one in twenty people needs them",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
-                "title, explanation and the steps array",
+                "title, explanation, stepsTitle and the steps array",
                 "code and attempt in the header",
                 "draft, draftLabel and the details text",
-                "retryLabel, switchLabel and the accent through the accent prop"
+                "retryLabel, switchLabel and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Retrying is the caller's job: the button does nothing by itself.",
                 "role=\"alert\" announces the content when it appears — do not mount the block hidden in advance.",
                 "The draft renders as-is without truncation: a long prompt stretches the block.",
@@ -1759,11 +2958,37 @@
               "code": {
                 "label": "Error code",
                 "default": "503 · req_8c41d9"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Model Error"
+            "title": "Model Error",
+            "preview": {
+              "props": {
+                "title": "The model did not answer",
+                "explanation": "The request went out, but the model service returned a failure and never started answering. No tokens were charged for this attempt, and your draft is kept in full.",
+                "code": "503 · req_8c41d9",
+                "attempt": "Attempt 2 of 3 · 14:07",
+                "stepsTitle": "What you can do",
+                "steps": [
+                  "Retry the request: the failure is usually a one-off and clears on the first try.",
+                  "If it repeats — switch to the fast model, it is answering right now.",
+                  "If that does not help — give support the error code and the time from this screen."
+                ],
+                "retryLabel": "Retry the request",
+                "switchLabel": "Switch model",
+                "detailsLabel": "Technical details",
+                "draftLabel": "Your prompt is saved",
+                "draft": "Build a pricing page: three plans, an annual discount switch and a questions block at the bottom."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1797,15 +3022,19 @@
             "тег <mark>, а не покрашенный span — это семантика выделения, её понимает поиск по странице",
             "box-decoration-break:clone: без него подсветка рвётся на переносе строки",
             "<cite> в подписи — источник связан с текстом разметкой, а не только визуально",
-            "адрес фрагмента: страница и пункт превращают цитату в проверяемую ссылку"
+            "адрес фрагмента: страница и пункт превращают цитату в проверяемую ссылку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "quote, before и after — сам фрагмент и его окружение",
-            "source и location в шапке",
+            "source, location и updated в шапке",
             "claim, claimTitle и confidence",
-            "openLabel, copyLabel и акцент через проп accent"
+            "openLabel, copyLabel и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Подсвечивается ровно то, что пришло в quote: искать фрагмент внутри длинного текста блок не умеет.",
             "Кнопки ничего не делают: открытие документа и копирование реализует вызывающий код.",
             "Очень длинная цитата не сворачивается — режьте её на стороне данных.",
@@ -1826,6 +3055,18 @@
             "type": "text",
             "default": "с. 7, п. 5.2",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1839,15 +3080,19 @@
                 "the <mark> tag rather than a tinted span — it is highlight semantics and page search understands it",
                 "box-decoration-break:clone: without it the highlight breaks across lines",
                 "<cite> in the caption — the source is tied to the text in markup, not only visually",
-                "the fragment address: a page and clause turn the quote into a checkable reference"
+                "the fragment address: a page and clause turn the quote into a checkable reference",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "quote, before and after — the fragment and its surroundings",
-                "source and location in the header",
+                "source, location and updated in the header",
                 "claim, claimTitle and confidence",
-                "openLabel, copyLabel and the accent through the accent prop"
+                "openLabel, copyLabel and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Exactly what arrives in quote is highlighted: the block cannot find a fragment inside a long text.",
                 "The buttons do nothing: opening the document and copying belong to the caller.",
                 "A very long quote is not collapsed — trim it in the data.",
@@ -1863,11 +3108,34 @@
               "location": {
                 "label": "Place in the document",
                 "default": "p. 7, cl. 5.2"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Document Citation"
+            "title": "Document Citation",
+            "preview": {
+              "props": {
+                "title": "Grounding of the answer",
+                "source": "Development contract, revision 4",
+                "location": "p. 7, cl. 5.2",
+                "updated": "Updated 12 March",
+                "before": "The parties agree the scope of work in an annex to the contract.",
+                "quote": "The contractor hands over the source code within ten working days from the date the acceptance certificate is signed, and from that moment the exclusive right passes to the client in full.",
+                "after": "The handover is recorded in a separate act listing the repositories.",
+                "claim": "The answer states that the rights to the code pass after the certificate is signed rather than after payment, and rests on exactly this clause. The handover period is ten working days.",
+                "claimTitle": "How it is used in the answer",
+                "confidence": "Direct quote, not paraphrased",
+                "openLabel": "Open the document at p. 7",
+                "copyLabel": "Copy the quote"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1901,15 +3169,19 @@
             "порядок разметки — примеры до поля, иначе клавиатурный обход идёт задом наперёд",
             "честный список ограничений: узнать о них из неудачного ответа дороже",
             ":focus-within на рамке поля — фокус внутри обводит весь блок ввода",
-            "aria-label у поля: подсказка внутри исчезает при первом же символе"
+            "aria-label у поля: подсказка внутри исчезает при первом же символе",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив examples и их рубрики",
-            "greeting и lede над примерами",
+            "greeting, markLabel и lede над примерами",
             "массив limits и limitsTitle",
-            "placeholder, sendLabel и акцент через проп accent"
+            "placeholder, sendLabel и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Нажатие примера ничего не подставляет: обработчик вешает вызывающий код.",
             "Форма не перехватывает отправку — без обработчика submit страница перезагрузится.",
             "Четыре примера — предел читаемости: с восемью экран снова превращается в список возможностей.",
@@ -1930,6 +3202,18 @@
             "type": "text",
             "default": "Спросить",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1943,15 +3227,19 @@
                 "the markup order — examples before the field, or keyboard order runs backwards",
                 "the honest list of limits: learning them from a failed answer costs more",
                 ":focus-within on the field frame — focus inside rings the whole input block",
-                "the aria-label on the field: the placeholder disappears at the first character"
+                "the aria-label on the field: the placeholder disappears at the first character",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the examples array and their categories",
-                "greeting and lede above the examples",
+                "greeting, markLabel and the lede above the examples",
                 "the limits array and limitsTitle",
-                "placeholder, sendLabel and the accent through the accent prop"
+                "placeholder, sendLabel and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Clicking an example inserts nothing: the caller wires the handler.",
                 "The form does not intercept submission — without a submit handler the page reloads.",
                 "Four examples is the readable limit: at eight the screen becomes a feature list again.",
@@ -1967,11 +3255,51 @@
               "sendLabel": {
                 "label": "Button caption",
                 "default": "Ask"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Empty Chat"
+            "title": "Empty Chat",
+            "preview": {
+              "props": {
+                "greeting": "Where do we start?",
+                "markLabel": "AI",
+                "lede": "Press a ready-made prompt or write your own. The assistant answers from the block catalogue and from the files you add.",
+                "examples": [
+                  {
+                    "kind": "Build",
+                    "text": "Build a studio landing page: promise, three benefits, pricing and a request form."
+                  },
+                  {
+                    "kind": "Rewrite",
+                    "text": "Rewrite the heading so it carries one promise and not a single «innovative»."
+                  },
+                  {
+                    "kind": "Explain",
+                    "text": "Explain how pricing-001 and pricing-003 differ and when to take the second one."
+                  },
+                  {
+                    "kind": "Check",
+                    "text": "Check the page for accessibility: focus, contrast and heading order."
+                  }
+                ],
+                "placeholder": "Describe the task in your own words",
+                "sendLabel": "Ask",
+                "limitsTitle": "What the assistant cannot do",
+                "limits": [
+                  "Knows nothing after its training cut-off — attach fresh data as a file",
+                  "Does not open links itself, paste the content into the prompt",
+                  "Keeps no conversation between sessions, save what matters yourself"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

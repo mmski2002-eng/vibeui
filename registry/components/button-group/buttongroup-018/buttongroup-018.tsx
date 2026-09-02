@@ -15,7 +15,11 @@ export type Buttongroup018Props = Omit<
   options?: Buttongroup018Option[]
   defaultValue?: string
   label?: string
+  /** Строка под группой: {value} заменяется подписью текущей позиции. */
+  stateText?: string
   onChange?: (id: string) => void
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,12 +31,13 @@ export type Buttongroup018Props = Omit<
 // отличие от toolbar), tabIndex=0 стоит только на выбранной кнопке.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-018"]){
---vibeui-buttongroup-018-surface:oklch(1 0 0);
---vibeui-buttongroup-018-track:oklch(0.955 0.004 265);
---vibeui-buttongroup-018-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-018-muted:oklch(0.56 0.014 265);
---vibeui-buttongroup-018-border:oklch(0.9 0.006 265);
---vibeui-buttongroup-018-accent:oklch(0.53 0.16 265);
+--vibeui-buttongroup-018-surface:transparent;
+--vibeui-buttongroup-018-thumb:light-dark(oklch(1 0 0),oklch(0.38 0.013 265));
+--vibeui-buttongroup-018-track:light-dark(oklch(0.955 0.004 265),oklch(0.26 0.01 265));
+--vibeui-buttongroup-018-fg:light-dark(oklch(0.25 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-018-muted:light-dark(oklch(0.56 0.014 265),oklch(0.69 0.012 265));
+--vibeui-buttongroup-018-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-buttongroup-018-accent:light-dark(oklch(0.53 0.16 265),oklch(0.76 0.13 265));
 --vibeui-buttongroup-018-radius:0.5rem;
 --vibeui-buttongroup-018-index:1;
 --vibeui-buttongroup-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -59,7 +64,7 @@ background:var(--vibeui-buttongroup-018-track);
 position:absolute;top:0.1875rem;bottom:0.1875rem;left:0.1875rem;
 width:calc((100% - 0.375rem) / 3);
 border-radius:var(--vibeui-buttongroup-018-radius);
-background:var(--vibeui-buttongroup-018-surface);
+background:var(--vibeui-buttongroup-018-thumb);
 box-shadow:0 1px 2px oklch(0.2 0.02 265 / 18%);
 transform:translateX(calc(var(--vibeui-buttongroup-018-index) * 100%));
 transition:transform .2s cubic-bezier(.2,.7,.3,1);
@@ -94,6 +99,28 @@ const DEFAULT_OPTIONS: Buttongroup018Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Трёхпозиционный переключатель на паттерне radiogroup со стрелками.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -101,7 +128,9 @@ export function Buttongroup018({
   options = DEFAULT_OPTIONS,
   defaultValue = "inherit",
   label = "Уведомления о сборке",
+  stateText = "Сейчас: {value}",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -121,9 +150,17 @@ export function Buttongroup018({
     buttons?.[position]?.focus()
   }
 
+  const [statePrefix, stateSuffix] = stateText.split("{value}")
+
   const palette = {
     "--vibeui-buttongroup-018-index": index,
     ...(accent ? { "--vibeui-buttongroup-018-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-018-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -178,7 +215,9 @@ export function Buttongroup018({
           ))}
         </div>
         <p data-part="state">
-          Сейчас: <b>{options[index]?.label.toLowerCase()}</b>
+          {statePrefix}
+          <b>{options[index]?.label.toLowerCase()}</b>
+          {stateSuffix}
         </p>
       </div>
     </>

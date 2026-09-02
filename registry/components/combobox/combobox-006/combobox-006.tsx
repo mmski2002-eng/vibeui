@@ -17,8 +17,14 @@ export type Combobox006Props = Omit<
   defaultRecent?: string[]
   recentLabel?: string
   allLabel?: string
+  /** Подпись кнопки, стирающей блок недавних. */
+  clearLabel?: string
+  /** Текст, когда фильтр не нашёл ни одной строки. */
+  emptyLabel?: string
   recentLimit?: number
   onSelect?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,13 +33,13 @@ export type Combobox006Props = Omit<
 // чтобы одна и та же строка не встречалась дважды и не ломала счёт стрелками.
 const STYLES = `
 :where([data-vibeui-block="combobox-006"]){
---vibeui-combobox-006-bg:oklch(1 0 0);
---vibeui-combobox-006-fg:oklch(0.24 0.02 70);
---vibeui-combobox-006-muted:oklch(0.55 0.02 70);
---vibeui-combobox-006-border:oklch(0.9 0.012 70);
---vibeui-combobox-006-field:oklch(0.985 0.006 70);
---vibeui-combobox-006-active:oklch(0.95 0.045 70);
---vibeui-combobox-006-accent:oklch(0.58 0.14 60);
+--vibeui-combobox-006-bg:transparent;
+--vibeui-combobox-006-fg:light-dark(oklch(0.24 0.02 70),oklch(0.94 0.008 70));
+--vibeui-combobox-006-muted:light-dark(oklch(0.55 0.02 70),oklch(0.71 0.016 70));
+--vibeui-combobox-006-border:light-dark(oklch(0.9 0.012 70),oklch(0.38 0.016 70));
+--vibeui-combobox-006-field:light-dark(oklch(0.985 0.006 70),oklch(0.3 0.014 70));
+--vibeui-combobox-006-active:light-dark(oklch(0.95 0.045 70),oklch(0.37 0.045 70));
+--vibeui-combobox-006-accent:light-dark(oklch(0.58 0.14 60),oklch(0.8 0.13 65));
 --vibeui-combobox-006-radius:0.625rem;
 --vibeui-combobox-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -110,6 +116,28 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая плашка иначе досталась бы тексту
+ * тёмной ветки, потому что light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox с недавними значениями: последние выборы поднимаются наверх
  * отдельным блоком, который можно очистить.
  */
@@ -120,8 +148,11 @@ export function Combobox006({
   defaultRecent = ["Казань", "Москва"],
   recentLabel = "Недавние",
   allLabel = "Все города",
+  clearLabel = "очистить",
+  emptyLabel = "Ничего не нашлось",
   recentLimit = 3,
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -148,6 +179,12 @@ export function Combobox006({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -258,7 +295,7 @@ export function Combobox006({
                   setActive(0)
                 }}
               >
-                очистить
+                {clearLabel}
               </button>
             </li>
           ) : null}
@@ -273,7 +310,7 @@ export function Combobox006({
           )}
           {flat.length === 0 ? (
             <li data-part="empty" role="presentation">
-              Ничего не нашлось
+              {emptyLabel}
             </li>
           ) : null}
         </ul>

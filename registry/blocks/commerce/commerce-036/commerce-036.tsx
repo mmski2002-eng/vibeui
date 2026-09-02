@@ -21,7 +21,22 @@ export type Commerce036Props = {
   nextDate?: string
   rules?: string[]
   cta?: string
+  /** Подписи столбцов календаря, начиная с weekStart. */
+  weekdays?: string[]
+  /** Подпись группы периодичности. */
+  periodsLegend?: string
+  /** Скрытая подпись таблицы: {month} подставляет месяц. */
+  calendarCaption?: string
+  /** Подпись дня доставки: {day} и {month} подставляют дату. */
+  dayLabel?: string
+  /** Подписи под календарём. */
+  dropsLegend?: string
+  firstLegend?: string
+  /** Подпись колонки условий для скринридера. */
+  rulesLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -36,17 +51,23 @@ export type Commerce036Props = {
 // а не как набор чисел.
 const STYLES = `
 :where([data-vibeui-block="commerce-036"]){
---vibeui-commerce-036-bg:oklch(1 0 0);
---vibeui-commerce-036-fg:oklch(0.21 0.014 265);
---vibeui-commerce-036-muted:oklch(0.55 0.014 265);
---vibeui-commerce-036-border:oklch(0.91 0.006 265);
---vibeui-commerce-036-soft:oklch(0.975 0.004 265);
---vibeui-commerce-036-accent:oklch(0.5 0.15 190);
+--vibeui-commerce-036-bg:transparent;
+--vibeui-commerce-036-radius:0;
+--vibeui-commerce-036-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-036-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-036-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-commerce-036-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-commerce-036-card:light-dark(oklch(1 0 0),oklch(0.22 0.01 265));
+--vibeui-commerce-036-accent:light-dark(oklch(0.5 0.15 190),oklch(0.76 0.13 190));
+--vibeui-commerce-036-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 190));
+--vibeui-commerce-036-save:light-dark(oklch(0.5 0.13 150),oklch(0.78 0.14 150));
+--vibeui-commerce-036-past:light-dark(oklch(0.75 0.01 265),oklch(0.45 0.012 265));
 --vibeui-commerce-036-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 [data-vibeui-block="commerce-036"]{
 box-sizing:border-box;background:var(--vibeui-commerce-036-bg);
+border-radius:var(--vibeui-commerce-036-radius);
 color:var(--vibeui-commerce-036-fg);font-family:var(--vibeui-commerce-036-sans);
 }
 [data-vibeui-block="commerce-036"] *{box-sizing:border-box}
@@ -79,7 +100,7 @@ border-color:var(--vibeui-commerce-036-accent);box-shadow:inset 0 0 0 1px var(--
 }
 [data-vibeui-block="commerce-036"] [data-part="period"] input:focus-visible + [data-part="face"]{outline:2px solid var(--vibeui-commerce-036-accent);outline-offset:2px}
 [data-vibeui-block="commerce-036"] [data-part="face"] b{display:block;font-size:0.875rem;font-weight:650}
-[data-vibeui-block="commerce-036"] [data-part="face"] span{display:block;margin-top:0.125rem;font-size:0.75rem;color:oklch(0.5 0.13 150);font-weight:600}
+[data-vibeui-block="commerce-036"] [data-part="face"] span{display:block;margin-top:0.125rem;font-size:0.75rem;color:var(--vibeui-commerce-036-save);font-weight:600}
 [data-vibeui-block="commerce-036"] [data-part="cal"]{
 margin-top:1rem;border:1px solid var(--vibeui-commerce-036-border);border-radius:1.125rem;padding:0.875rem;
 }
@@ -97,13 +118,13 @@ font-size:0.8125rem;font-variant-numeric:tabular-nums;
 }
 /* Дата доставки помечена и формой, и подписью: цвет один состояние не называет. */
 [data-vibeui-block="commerce-036"] [data-part="day"][data-drop="yes"]{
-background:var(--vibeui-commerce-036-accent);color:oklch(1 0 0);font-weight:700;
+background:var(--vibeui-commerce-036-accent);color:var(--vibeui-commerce-036-on-accent);font-weight:700;
 }
 [data-vibeui-block="commerce-036"] [data-part="day"][data-drop="first"]{
-background:var(--vibeui-commerce-036-accent);color:oklch(1 0 0);font-weight:700;
-box-shadow:0 0 0 2px var(--vibeui-commerce-036-bg),0 0 0 4px var(--vibeui-commerce-036-accent);
+background:var(--vibeui-commerce-036-accent);color:var(--vibeui-commerce-036-on-accent);font-weight:700;
+box-shadow:0 0 0 2px var(--vibeui-commerce-036-card),0 0 0 4px var(--vibeui-commerce-036-accent);
 }
-[data-vibeui-block="commerce-036"] [data-part="day"][data-past="yes"]{color:oklch(0.75 0.01 265)}
+[data-vibeui-block="commerce-036"] [data-part="day"][data-past="yes"]{color:var(--vibeui-commerce-036-past)}
 [data-vibeui-block="commerce-036"] [data-part="legend"]{
 margin:0.625rem 0 0;display:flex;flex-wrap:wrap;gap:0.75rem;font-size:0.6875rem;color:var(--vibeui-commerce-036-muted);
 }
@@ -130,7 +151,7 @@ background:var(--vibeui-commerce-036-accent);
 }
 [data-vibeui-block="commerce-036"] [data-part="cta"]{
 margin-top:0.875rem;width:100%;appearance:none;border:0;cursor:pointer;height:2.875rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-036-accent);color:oklch(1 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-036-accent);color:var(--vibeui-commerce-036-on-accent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-036"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-commerce-036-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-036"] *{animation:none!important;transition:none!important}}
@@ -157,6 +178,28 @@ const DEFAULT_RULES = [
 const WEEKDAYS = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подписка на регулярную доставку: периодичность сразу отмечена на календаре месяца.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -174,12 +217,28 @@ export function Commerce036({
   nextDate = "7 марта, четверг",
   rules = DEFAULT_RULES,
   cta = "Оформить подписку",
+  weekdays = WEEKDAYS,
+  periodsLegend = "Как часто привозить",
+  calendarCaption = "Календарь доставок на {month}: отмеченные дни — даты доставки",
+  dayLabel = "{day} {month}, доставка",
+  dropsLegend = "дни доставки",
+  firstLegend = "Первая доставка обведена рамкой",
+  rulesLabel = "Условия подписки",
   accent,
+  background = "",
   className,
   style,
 }: Commerce036Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-036-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-036-bg": background,
+          "--vibeui-commerce-036-card": background,
+          "--vibeui-commerce-036-radius": "1.25rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -224,7 +283,7 @@ export function Commerce036({
           <div data-part="grid">
             <div>
               <fieldset>
-                <legend>Как часто привозить</legend>
+                <legend>{periodsLegend}</legend>
                 <div data-part="periods">
                   {periods.map((item) => (
                     <label data-part="period" key={item.value}>
@@ -247,12 +306,11 @@ export function Commerce036({
                 <p data-part="month">{monthLabel}</p>
                 <table>
                   <caption hidden>
-                    Календарь доставок на {monthLabel}: отмеченные дни — даты
-                    доставки
+                    {calendarCaption.replace("{month}", monthLabel)}
                   </caption>
                   <thead>
                     <tr>
-                      {WEEKDAYS.map((day) => (
+                      {weekdays.map((day) => (
                         <th scope="col" key={day}>
                           {day}
                         </th>
@@ -277,7 +335,9 @@ export function Commerce036({
                                 data-past={day < firstDay ? "yes" : "no"}
                                 aria-label={
                                   drops.has(day)
-                                    ? `${day} ${monthLabel}, доставка`
+                                    ? dayLabel
+                                        .replace("{day}", String(day))
+                                        .replace("{month}", monthLabel)
                                     : undefined
                                 }
                               >
@@ -293,14 +353,14 @@ export function Commerce036({
                 <p data-part="legend">
                   <span>
                     <span data-part="dot" aria-hidden="true" />
-                    дни доставки
+                    {dropsLegend}
                   </span>
-                  <span>Первая доставка обведена рамкой</span>
+                  <span>{firstLegend}</span>
                 </p>
               </div>
             </div>
 
-            <aside aria-label="Условия подписки">
+            <aside aria-label={rulesLabel}>
               <h3>{nextLabel}</h3>
               <p data-part="next">{nextDate}</p>
               <ul>

@@ -20,8 +20,17 @@ export type Solutions015Props = {
   day?: string
   routes?: Solutions015Route[]
   onTimeLabel?: string
+  /** Подпись опоздания, {minutes} — сколько минут. */
   lateLabel?: string
+  /** Счётчик в шапке, {count} — сколько машин опаздывает. */
+  lateCountText?: string
+  /** Время возвращения, {eta} — час прибытия на склад. */
+  etaText?: string
+  /** Подпись маршрута для скринридера, {code} и {driver}. */
+  routeLabelText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -37,13 +46,13 @@ export type Solutions015Props = {
 // остановки нельзя, подписи времени слипаются.
 const STYLES = `
 :where([data-vibeui-block="solutions-015"]){
---vibeui-solutions-015-bg:oklch(1 0 0);
---vibeui-solutions-015-panel:oklch(0.975 0.004 250);
---vibeui-solutions-015-fg:oklch(0.21 0.014 260);
---vibeui-solutions-015-muted:oklch(0.54 0.014 260);
---vibeui-solutions-015-border:oklch(0.9 0.006 260);
---vibeui-solutions-015-accent:oklch(0.53 0.16 250);
---vibeui-solutions-015-late:oklch(0.6 0.18 35);
+--vibeui-solutions-015-bg:transparent;
+--vibeui-solutions-015-panel:light-dark(oklch(0.975 0.004 250),oklch(0.26 0.012 260));
+--vibeui-solutions-015-fg:light-dark(oklch(0.21 0.014 260),oklch(0.94 0.005 260));
+--vibeui-solutions-015-muted:light-dark(oklch(0.54 0.014 260),oklch(0.7 0.012 260));
+--vibeui-solutions-015-border:light-dark(oklch(0.9 0.006 260),oklch(0.36 0.012 260));
+--vibeui-solutions-015-accent:light-dark(oklch(0.53 0.16 250),oklch(0.73 0.15 250));
+--vibeui-solutions-015-late:light-dark(oklch(0.6 0.18 35),oklch(0.76 0.15 35));
 --vibeui-solutions-015-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-015-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -172,6 +181,28 @@ const DEFAULT_ROUTES: Solutions015Route[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Маршруты доставки: остановки лентой, положение машины — точкой на линии.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -180,13 +211,23 @@ export function Solutions015({
   day = "Четверг, 14 марта · 3 машины в рейсе",
   routes = DEFAULT_ROUTES,
   onTimeLabel = "идёт по графику",
-  lateLabel = "опаздывает на",
+  lateLabel = "опаздывает на {minutes} мин",
+  lateCountText = "Опаздывают: {count}",
+  etaText = "возвращение {eta}",
+  routeLabelText = "Маршрут {code}, водитель {driver}",
   accent,
+  background = "",
   className,
   style,
 }: Solutions015Props) {
   const palette = {
     ...(accent ? { "--vibeui-solutions-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -207,7 +248,10 @@ export function Solutions015({
             <p data-part="day">{day}</p>
           </div>
           <p data-part="day">
-            Опаздывают: {routes.filter((route) => route.delayMinutes).length}
+            {lateCountText.replace(
+              "{count}",
+              String(routes.filter((route) => route.delayMinutes).length),
+            )}
           </p>
         </header>
 
@@ -217,7 +261,9 @@ export function Solutions015({
               key={route.code}
               data-part="route"
               data-late={route.delayMinutes ? "true" : "false"}
-              aria-label={`Маршрут ${route.code}, водитель ${route.driver}`}
+              aria-label={routeLabelText
+                .replace("{code}", route.code)
+                .replace("{driver}", route.driver)}
             >
               <div data-part="meta">
                 <div>
@@ -227,10 +273,13 @@ export function Solutions015({
                   <span data-part="truck">{route.truck}</span>
                 </div>
                 <p data-part="eta">
-                  возвращение {route.eta}
+                  {etaText.replace("{eta}", route.eta)}
                   {route.delayMinutes ? (
                     <span data-part="delay">
-                      {lateLabel} {route.delayMinutes} мин
+                      {lateLabel.replace(
+                        "{minutes}",
+                        String(route.delayMinutes),
+                      )}
                     </span>
                   ) : (
                     <span data-part="ontime">{onTimeLabel}</span>

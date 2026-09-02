@@ -6,7 +6,11 @@ export type Buttongroup023Props = Omit<
 > & {
   defaultValue?: string
   label?: string
+  /** Подписи вариантов: компонент несёт русские, проект подставляет свои. */
+  alignmentText?: Record<string, string>
   name?: string
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,11 +23,12 @@ export type Buttongroup023Props = Omit<
 // по странице, в отличие от aria-label.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-023"]){
---vibeui-buttongroup-023-surface:oklch(1 0 0);
---vibeui-buttongroup-023-fg:oklch(0.24 0.016 265);
---vibeui-buttongroup-023-muted:oklch(0.6 0.014 265);
---vibeui-buttongroup-023-border:oklch(0.9 0.006 265);
---vibeui-buttongroup-023-accent:oklch(0.5 0.17 300);
+--vibeui-buttongroup-023-surface:transparent;
+--vibeui-buttongroup-023-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-023-muted:light-dark(oklch(0.6 0.014 265),oklch(0.68 0.012 265));
+--vibeui-buttongroup-023-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-buttongroup-023-hover:light-dark(oklch(0.97 0.004 265),oklch(0.31 0.012 265));
+--vibeui-buttongroup-023-accent:light-dark(oklch(0.5 0.17 300),oklch(0.78 0.14 300));
 --vibeui-buttongroup-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="buttongroup-023"]{
@@ -65,7 +70,7 @@ transform:scaleX(0);transform-origin:center;
 transition:transform .18s cubic-bezier(.2,.7,.3,1);
 }
 [data-vibeui-block="buttongroup-023"] [data-part="segment"]:hover{
-color:var(--vibeui-buttongroup-023-fg);background:oklch(0.97 0.004 265);
+color:var(--vibeui-buttongroup-023-fg);background:var(--vibeui-buttongroup-023-hover);
 }
 [data-vibeui-block="buttongroup-023"] [data-part="segment"]:has(input:checked){
 color:var(--vibeui-buttongroup-023-accent);
@@ -78,11 +83,40 @@ outline:2px solid var(--vibeui-buttongroup-023-accent);outline-offset:-2px;
 `
 
 const ALIGNMENTS = [
-  { id: "start", label: "По левому краю", path: "M4 6h16M4 12h10M4 18h13" },
-  { id: "center", label: "По центру", path: "M4 6h16M7 12h10M6 18h12" },
-  { id: "end", label: "По правому краю", path: "M4 6h16M10 12h10M7 18h13" },
-  { id: "justify", label: "По ширине", path: "M4 6h16M4 12h16M4 18h16" },
+  { id: "start", path: "M4 6h16M4 12h10M4 18h13" },
+  { id: "center", path: "M4 6h16M7 12h10M6 18h12" },
+  { id: "end", path: "M4 6h16M10 12h10M7 18h13" },
+  { id: "justify", path: "M4 6h16M4 12h16M4 18h16" },
 ]
+
+const ALIGNMENT_LABEL: Record<string, string> = {
+  start: "По левому краю",
+  center: "По центру",
+  end: "По правому краю",
+  justify: "По ширине",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Выравнивание текста с подчёркивающей полосой вместо заливки.
@@ -91,7 +125,9 @@ const ALIGNMENTS = [
 export function Buttongroup023({
   defaultValue = "start",
   label = "Выравнивание абзаца",
+  alignmentText = ALIGNMENT_LABEL,
   name = "buttongroup-023",
+  background = "",
   accent,
   className,
   style,
@@ -99,6 +135,12 @@ export function Buttongroup023({
 }: Buttongroup023Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-023-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-023-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -126,7 +168,9 @@ export function Buttongroup023({
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d={alignment.path} />
               </svg>
-              <span data-part="name">{alignment.label}</span>
+              <span data-part="name">
+                {alignmentText[alignment.id] ?? ALIGNMENT_LABEL[alignment.id]}
+              </span>
             </label>
           ))}
         </div>

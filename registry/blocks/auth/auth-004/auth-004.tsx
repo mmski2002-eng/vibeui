@@ -10,6 +10,12 @@ export type Auth004Props = {
   submit?: string
   resend?: string
   help?: string
+  /** Адрес, на который ушёл код. */
+  email?: string
+  /** Подпись клетки; {index} и {total} подставляются числами. */
+  digitLabel?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -23,13 +29,17 @@ export type Auth004Props = {
 // полям сам. Backspace на пустой клетке возвращает к предыдущей, иначе
 // исправить опечатку можно только мышью. Каждому полю задан inputMode numeric
 // и autoComplete one-time-code: телефон подставит код из СМС сам.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="auth-004"]){
---vibeui-auth-004-bg:oklch(1 0 0);
---vibeui-auth-004-fg:oklch(0.22 0.014 265);
---vibeui-auth-004-muted:oklch(0.55 0.014 265);
---vibeui-auth-004-border:oklch(0.88 0.008 265);
---vibeui-auth-004-accent:oklch(0.55 0.2 262);
+--vibeui-auth-004-bg:transparent;
+--vibeui-auth-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-auth-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.013 265));
+--vibeui-auth-004-border:light-dark(oklch(0.88 0.008 265),oklch(0.36 0.012 265));
+--vibeui-auth-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-auth-004-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
 --vibeui-auth-004-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-auth-004-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;
@@ -65,7 +75,7 @@ border-color:var(--vibeui-auth-004-accent);
 [data-vibeui-block="auth-004"] [data-part="submit"]{
 width:100%;appearance:none;cursor:pointer;height:2.625rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-004-accent);color:oklch(1 0 0);
+background:var(--vibeui-auth-004-accent);color:var(--vibeui-auth-004-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="auth-004"] [data-part="submit"]:disabled{opacity:.5;cursor:default}
@@ -82,6 +92,28 @@ margin:0.75rem 0 0;font-size:0.6875rem;line-height:1.45;color:var(--vibeui-auth-
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подтверждение кодом: вставка целиком раскладывается по клеткам.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -92,13 +124,19 @@ export function Auth004({
   submit = "Подтвердить",
   resend = "Отправить код заново",
   help = "Письмо приходит за минуту. Проверьте папку со спамом, если его нет.",
+  email = "anna@vibeui.ru",
+  digitLabel = "Цифра {index} из {total}",
+  background = "",
   accent,
   className,
   style,
 }: Auth004Props) {
   const [digits, setDigits] = useState<string[]>(Array(length).fill(""))
   const cells = useRef<(HTMLInputElement | null)[]>([])
-  const filled = digits.every((digit) => digit !== "")
+  // Клетки считаются от length, а не от состояния: смена длины кода не
+  // должна ждать пересоздания компонента.
+  const values = Array.from({ length }, (_, index) => digits[index] ?? "")
+  const filled = values.every((digit) => digit !== "")
 
   const put = (index: number, value: string) => {
     const digit = value.replace(/\D/g, "").slice(-1)
@@ -136,6 +174,12 @@ export function Auth004({
 
   const palette = {
     ...(accent ? { "--vibeui-auth-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -152,11 +196,11 @@ export function Auth004({
       >
         <h2>{title}</h2>
         <p data-part="lead">
-          {lead} <span data-part="mail">anna@vibeui.ru</span>
+          {lead} <span data-part="mail">{email}</span>
         </p>
 
         <div data-part="cells">
-          {digits.map((digit, index) => (
+          {values.map((digit, index) => (
             <input
               key={index}
               ref={(node) => {
@@ -167,7 +211,9 @@ export function Auth004({
               autoComplete="one-time-code"
               maxLength={1}
               value={digit}
-              aria-label={`Цифра ${index + 1} из ${length}`}
+              aria-label={digitLabel
+                .replace("{index}", String(index + 1))
+                .replace("{total}", String(length))}
               onChange={(event) => put(index, event.target.value)}
               onKeyDown={(event) => onKeyDown(index, event)}
               onPaste={onPaste}

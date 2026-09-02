@@ -8,6 +8,16 @@ export type Pagination014Props = {
   total?: number
   siblings?: number
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  /** Подпись всего блока: компонент несёт русскую, проект подставляет свою. */
+  navLabel?: string
+  prevLabel?: string
+  nextLabel?: string
+  /** Подпись номера страницы, {page} — сам номер. */
+  pageLabel?: string
+  /** Подпись счётчика в узком контейнере: {page} и {total}. */
+  compactLabel?: string
   className?: string
   style?: CSSProperties
 }
@@ -20,12 +30,13 @@ export type Pagination014Props = {
 // в колонке сжимается так же, как окно браузера.
 const STYLES = `
 :where([data-vibeui-block="pagination-014"]){
---vibeui-pagination-014-bg:oklch(1 0 0);
---vibeui-pagination-014-fg:oklch(0.24 0.014 265);
---vibeui-pagination-014-muted:oklch(0.55 0.014 265);
---vibeui-pagination-014-border:oklch(0.91 0.006 265);
---vibeui-pagination-014-hover:oklch(0.55 0.02 265 / 8%);
---vibeui-pagination-014-accent:oklch(0.55 0.2 262);
+--vibeui-pagination-014-bg:transparent;
+--vibeui-pagination-014-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-pagination-014-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-pagination-014-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-pagination-014-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.86 0.02 265 / 14%));
+--vibeui-pagination-014-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-pagination-014-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
 --vibeui-pagination-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -57,7 +68,7 @@ font:inherit;font-size:0.8125rem;color:inherit;font-variant-numeric:tabular-nums
 [data-vibeui-block="pagination-014"] [data-part="cell"]:hover:not(:disabled){background:var(--vibeui-pagination-014-hover)}
 [data-vibeui-block="pagination-014"] [data-part="cell"]:focus-visible{outline:2px solid var(--vibeui-pagination-014-accent);outline-offset:1px}
 [data-vibeui-block="pagination-014"] [data-part="cell"][aria-current="page"]{
-background:var(--vibeui-pagination-014-accent);color:oklch(1 0 0);font-weight:650;
+background:var(--vibeui-pagination-014-accent);color:var(--vibeui-pagination-014-on-accent);font-weight:650;
 }
 [data-vibeui-block="pagination-014"] [data-part="gap"]{color:var(--vibeui-pagination-014-muted)}
 [data-vibeui-block="pagination-014"] [data-part="compact"]{
@@ -72,6 +83,28 @@ font-variant-numeric:tabular-nums;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="pagination-014"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /** Окно номеров вокруг текущей страницы с краями и разрывами. */
 function windowOf(page: number, total: number, siblings: number) {
@@ -107,6 +140,12 @@ export function Pagination014({
   total = 48,
   siblings = 1,
   accent,
+  background = "",
+  navLabel = "Страницы",
+  prevLabel = "Предыдущая страница",
+  nextLabel = "Следующая страница",
+  pageLabel = "Страница {page}",
+  compactLabel = "{page} / {total}",
   className,
   style,
 }: Pagination014Props) {
@@ -114,10 +153,19 @@ export function Pagination014({
 
   const palette = {
     ...(accent ? { "--vibeui-pagination-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pagination-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
   const cells = windowOf(page, total, siblings)
+  // Номер в счётчике остаётся жирным, поэтому подпись режется по {page},
+  // а не подставляется целиком.
+  const compactParts = compactLabel.split("{page}")
 
   return (
     <>
@@ -126,7 +174,7 @@ export function Pagination014({
       </style>
       <nav
         data-vibeui-block="pagination-014"
-        aria-label="Страницы"
+        aria-label={navLabel}
         className={className}
         style={palette}
       >
@@ -134,7 +182,7 @@ export function Pagination014({
           type="button"
           data-part="step"
           disabled={page === 1}
-          aria-label="Предыдущая страница"
+          aria-label={prevLabel}
           onClick={() => setPage(Math.max(page - 1, 1))}
         >
           ←
@@ -151,7 +199,7 @@ export function Pagination014({
                 type="button"
                 data-part="cell"
                 aria-current={cell === page ? "page" : undefined}
-                aria-label={`Страница ${cell}`}
+                aria-label={pageLabel.replace("{page}", String(cell))}
                 onClick={() => setPage(cell)}
               >
                 {cell}
@@ -160,13 +208,15 @@ export function Pagination014({
           )}
         </span>
         <span data-part="compact" aria-current="page">
-          <b>{page}</b> / {total}
+          {compactParts[0] ?? ""}
+          <b>{page}</b>
+          {(compactParts[1] ?? "").replace("{total}", String(total))}
         </span>
         <button
           type="button"
           data-part="step"
           disabled={page === total}
-          aria-label="Следующая страница"
+          aria-label={nextLabel}
           onClick={() => setPage(Math.min(page + 1, total))}
         >
           →

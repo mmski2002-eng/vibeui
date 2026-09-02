@@ -18,6 +18,8 @@ export type Table001Props = Omit<
   caption?: string
   /** Плотный режим: строки ниже, шрифт мельче. */
   dense?: boolean
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,15 +27,18 @@ export type Table001Props = Omit<
 // про числа. Прокрутка живёт в обёртке, шапка липнет к верху при вертикальной
 // прокрутке, а числовые колонки идут вправо с моноширинными цифрами, чтобы
 // разряды стояли под разрядами.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-001"]){
---vibeui-table-001-fg:oklch(0.24 0.016 265);
---vibeui-table-001-muted:oklch(0.54 0.014 265);
---vibeui-table-001-bg:oklch(1 0 0);
---vibeui-table-001-head:oklch(0.975 0.003 265);
---vibeui-table-001-border:oklch(0.91 0.006 265);
---vibeui-table-001-hover:oklch(0.55 0.02 265 / 5%);
---vibeui-table-001-accent:oklch(0.55 0.2 262);
+--vibeui-table-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.93 0.006 265));
+--vibeui-table-001-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-table-001-bg:transparent;
+--vibeui-table-001-head:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.012 265));
+--vibeui-table-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-table-001-hover:light-dark(oklch(0.55 0.02 265 / 5%),oklch(0.85 0.02 265 / 9%));
+--vibeui-table-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
 --vibeui-table-001-radius:0.75rem;
 --vibeui-table-001-pad:0.6875rem;
 --vibeui-table-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -100,6 +105,28 @@ const DEFAULT_ROWS: Table001Row[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Таблица данных: липкая шапка, прокрутка в обёртке, числа по разрядам.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -108,13 +135,22 @@ export function Table001({
   rows = DEFAULT_ROWS,
   caption = "Страницы сайта за март",
   dense = false,
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Table001Props) {
+  // Липкая шапка обязана быть непрозрачной, поэтому подложка фона таблицы
+  // задаётся и ей тоже: иначе строки просвечивают сквозь заголовки.
   const palette = {
     ...(accent ? { "--vibeui-table-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-table-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

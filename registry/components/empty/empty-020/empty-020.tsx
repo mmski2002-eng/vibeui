@@ -9,7 +9,11 @@ export type Empty020Props = {
   placeholder?: string
   submitLabel?: string
   confirmText?: string
+  /** Подпись поля почты: видна только скринридеру. */
+  fieldLabel?: string
   onSubscribe?: (email: string) => void
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -21,11 +25,12 @@ export type Empty020Props = {
 // что запрос принят, — повторно нажимать кнопку незачем.
 const STYLES = `
 :where([data-vibeui-block="empty-020"]){
---vibeui-empty-020-bg:oklch(1 0 0);
---vibeui-empty-020-fg:oklch(0.21 0.014 265);
---vibeui-empty-020-muted:oklch(0.55 0.014 265);
---vibeui-empty-020-border:oklch(0.91 0.006 265);
---vibeui-empty-020-accent:oklch(0.55 0.17 265);
+--vibeui-empty-020-bg:transparent;
+--vibeui-empty-020-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-empty-020-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-empty-020-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-empty-020-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-empty-020-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.02 265));
 --vibeui-empty-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -57,7 +62,7 @@ position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);whit
 }
 [data-vibeui-block="empty-020"] [data-part="field"]{
 flex:1;min-width:0;height:2.625rem;padding:0 0.875rem;border-radius:0.75rem;
-border:1px solid var(--vibeui-empty-020-border);background:var(--vibeui-empty-020-bg);
+border:1px solid var(--vibeui-empty-020-border);background:transparent;
 color:var(--vibeui-empty-020-fg);font:inherit;font-size:0.875rem;
 }
 [data-vibeui-block="empty-020"] [data-part="field"]:focus-visible{
@@ -66,7 +71,7 @@ outline:2px solid var(--vibeui-empty-020-accent);outline-offset:1px;
 [data-vibeui-block="empty-020"] [data-part="submit"]{
 appearance:none;border:0;cursor:pointer;flex:none;
 height:2.625rem;padding:0 1.125rem;border-radius:0.75rem;
-background:var(--vibeui-empty-020-accent);color:oklch(0.99 0.01 265);
+background:var(--vibeui-empty-020-accent);color:var(--vibeui-empty-020-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="empty-020"] [data-part="submit"]:focus-visible{
@@ -89,6 +94,29 @@ flex:none;width:1.125rem;height:1.125rem;color:var(--vibeui-empty-020-accent);
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Раздел в разработке: обещание срока, форма подписки на уведомление и
  * подтверждение после отправки. Один файл, клиентский компонент на
  * useState, без внешних зависимостей.
@@ -100,7 +128,9 @@ export function Empty020({
   placeholder = "you@example.com",
   submitLabel = "Уведомить меня",
   confirmText = "Готово, напишем на почту, когда раздел откроется",
+  fieldLabel = "Электронная почта",
   onSubscribe,
+  background = "",
   accent,
   className,
   style,
@@ -109,6 +139,12 @@ export function Empty020({
   const [submitted, setSubmitted] = useState(false)
   const palette = {
     ...(accent ? { "--vibeui-empty-020-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-empty-020-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -166,7 +202,7 @@ export function Empty020({
         ) : (
           <form data-part="form" onSubmit={handleSubmit}>
             <label data-part="field-label" htmlFor="empty-020-email">
-              Электронная почта
+              {fieldLabel}
             </label>
             <input
               id="empty-020-email"

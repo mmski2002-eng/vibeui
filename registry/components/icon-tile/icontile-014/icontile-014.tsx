@@ -9,6 +9,12 @@ export type Icontile014Props = Omit<
   max?: number
   disabled?: boolean
   tone?: "neutral" | "accent" | "success" | "warning" | "danger"
+  /** Строка состояния под подписью: компонент несёт русскую, проект — свою. */
+  stateText?: Record<string, string>
+  /** Подпись бейджа для скринридера. {count} подставляется числом. */
+  countLabel?: string
+  /** Пусто — подложки нет, плитка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: бейдж-уведомление и состояние «выключено» не могут стоять
@@ -17,17 +23,22 @@ export type Icontile014Props = Omit<
 // перечёркнутым знаком колокольчика, а под подписью появляется отдельная
 // текстовая строка состояния: одного обесцвечивания недостаточно, состояние
 // обязано читаться и в чёрно-белом режиме.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
+// граница светлее фона, а не темнее, и плитка не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="icontile-014"]){
 container-type:inline-size;
 --vibeui-icontile-014-hue:262;
 --vibeui-icontile-014-chroma:0.05;
 --vibeui-icontile-014-size:2.75rem;
---vibeui-icontile-014-fg:oklch(0.26 0.014 265);
---vibeui-icontile-014-muted:oklch(0.52 0.014 265);
---vibeui-icontile-014-border:oklch(0.9 0.006 265);
---vibeui-icontile-014-surface:oklch(1 0 0);
---vibeui-icontile-014-badge:oklch(0.58 0.21 25);
+--vibeui-icontile-014-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.006 265));
+--vibeui-icontile-014-muted:light-dark(oklch(0.52 0.014 265),oklch(0.71 0.012 265));
+--vibeui-icontile-014-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265));
+--vibeui-icontile-014-badge:light-dark(oklch(0.58 0.21 25),oklch(0.66 0.19 25));
+--vibeui-icontile-014-ring:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-icontile-014-off:light-dark(oklch(0.5 0.02 265),oklch(0.74 0.016 265));
+--vibeui-icontile-014-surface:transparent;
 --vibeui-icontile-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="icontile-014"]{
@@ -50,11 +61,12 @@ position:absolute;top:-0.3125rem;right:-0.3125rem;
 display:grid;place-items:center;min-width:1.125rem;height:1.125rem;
 padding:0 0.25rem;border-radius:999px;
 background:var(--vibeui-icontile-014-badge);
-box-shadow:0 0 0 2px var(--vibeui-icontile-014-surface);
+box-shadow:0 0 0 2px var(--vibeui-icontile-014-ring);
 font-size:0.6875rem;font-weight:700;line-height:1;color:oklch(0.99 0 0);
 }
 [data-vibeui-block="icontile-014"] [data-part="off"]{
-position:absolute;inset:0;width:100%;height:100%;color:oklch(0.5 0.02 265);
+position:absolute;inset:0;width:100%;height:100%;
+color:var(--vibeui-icontile-014-off);
 }
 [data-vibeui-block="icontile-014"] [data-part="text"]{
 display:flex;flex-direction:column;gap:0.125rem;min-width:0;flex:1 1 auto;
@@ -73,12 +85,20 @@ display:block;margin:0;font-size:0.8125rem;color:var(--vibeui-icontile-014-muted
 [data-vibeui-block="icontile-014"][data-tone="danger"]{--vibeui-icontile-014-hue:25}
 [data-vibeui-block="icontile-014"][data-disabled="true"]{opacity:0.6}
 [data-vibeui-block="icontile-014"][data-disabled="true"] [data-part="tile"]{
-background:oklch(0.93 0.008 265);color:oklch(0.6 0.008 265);
+background:light-dark(oklch(0.93 0.008 265),oklch(0.33 0.008 265));
+color:light-dark(oklch(0.6 0.008 265),oklch(0.72 0.008 265));
 }
 @container (max-width: 200px){
 [data-vibeui-block="icontile-014"] [data-part="state"]{display:none}
 }
 `
+
+const STATE_TEXT: Record<string, string> = {
+  on: "Уведомления включены",
+  off: "Уведомления выключены",
+}
+
+const COUNT_LABEL = "{count} новых уведомлений"
 
 function BellIcon() {
   return (
@@ -114,6 +134,29 @@ function OffIcon() {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Плитка уведомлений с бейджем-счётчиком и честным состоянием «выключено»:
  * при disabled бейдж прячется, а колокольчик перечёркивается.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -124,12 +167,25 @@ export function Icontile014({
   max = 99,
   disabled = false,
   tone = "accent",
+  stateText = STATE_TEXT,
+  countLabel = COUNT_LABEL,
+  background = "",
   className,
   style,
   ...props
 }: Icontile014Props) {
   const clamped = Math.max(0, count)
   const display = clamped > max ? `${max}+` : String(clamped)
+  const stateKey = disabled ? "off" : "on"
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-icontile-014-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -143,13 +199,16 @@ export function Icontile014({
         data-disabled={disabled ? "true" : undefined}
         aria-disabled={disabled || undefined}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="tile">
           <BellIcon />
           {disabled && <OffIcon />}
           {!disabled && clamped > 0 && (
-            <span data-part="badge" aria-label={`${display} новых уведомлений`}>
+            <span
+              data-part="badge"
+              aria-label={countLabel.replace("{count}", display)}
+            >
               {display}
             </span>
           )}
@@ -157,7 +216,7 @@ export function Icontile014({
         <span data-part="text">
           <span data-part="label">{label}</span>
           <span data-part="state">
-            {disabled ? "Уведомления выключены" : "Уведомления включены"}
+            {stateText[stateKey] ?? STATE_TEXT[stateKey]}
           </span>
         </span>
       </div>

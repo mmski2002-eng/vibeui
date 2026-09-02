@@ -5,7 +5,15 @@ export type Button057Props = ComponentPropsWithoutRef<"button"> & {
   count?: number
   /** Динамика за период: столбики рисуются из этих значений. */
   trend?: number[]
+  /** Сокращения разрядов: компонент несёт русские, проект подставляет свои. */
+  unitText?: Record<string, string>
+  /** Подсказка с полным числом. {count} подставляется отформатированным. */
+  titleText?: string
+  /** Локаль форматирования числа: разделители разрядов и дробной части. */
+  locale?: string
   accent?: string
+  /** Поверхность кнопки. Пусто — своя, из палитры. */
+  background?: string
 }
 
 // Идея компонента: кнопка-показатель. Она открывает подробную статистику,
@@ -14,11 +22,11 @@ export type Button057Props = ComponentPropsWithoutRef<"button"> & {
 // миллионах. Полное число остаётся в title и aria-label: сокращение врёт.
 const STYLES = `
 :where([data-vibeui-block="button-057"]){
---vibeui-button-057-surface:oklch(1 0 0);
---vibeui-button-057-border:oklch(0.9 0.006 265);
---vibeui-button-057-fg:oklch(0.25 0.02 265);
---vibeui-button-057-muted:oklch(0.57 0.014 265);
---vibeui-button-057-accent:oklch(0.55 0.16 210);
+--vibeui-button-057-surface:light-dark(oklch(1 0 0),oklch(0.24 0.014 265));
+--vibeui-button-057-border:light-dark(oklch(0.9 0.006 265),oklch(0.41 0.014 265));
+--vibeui-button-057-fg:light-dark(oklch(0.25 0.02 265),oklch(0.94 0.008 265));
+--vibeui-button-057-muted:light-dark(oklch(0.57 0.014 265),oklch(0.72 0.012 265));
+--vibeui-button-057-accent:light-dark(oklch(0.55 0.16 210),oklch(0.76 0.13 210));
 --vibeui-button-057-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-057"]{
@@ -68,16 +76,59 @@ transition:background-color .16s ease;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="button-057"] *{animation:none!important;transition:none!important}}
 `
 
-function compact(value: number) {
+const UNIT_TEXT: Record<string, string> = {
+  thousand: "тыс.",
+  million: "млн",
+}
+
+// Разделитель дробной части приходит из локали, а не зашит запятой: иначе
+// английская витрина показала бы «12,4K».
+function compact(
+  value: number,
+  locale: string,
+  unitText: Record<string, string>,
+) {
+  const fraction = (part: number) =>
+    part.toLocaleString(locale, {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    })
+
   if (value >= 1_000_000)
     return {
-      text: (value / 1_000_000).toFixed(1).replace(".", ","),
-      unit: "млн",
+      text: fraction(value / 1_000_000),
+      unit: unitText.million ?? UNIT_TEXT.million,
     }
   if (value >= 1000)
-    return { text: (value / 1000).toFixed(1).replace(".", ","), unit: "тыс." }
+    return {
+      text: fraction(value / 1000),
+      unit: unitText.thousand ?? UNIT_TEXT.thousand,
+    }
 
-  return { text: String(value), unit: "" }
+  return { text: value.toLocaleString(locale), unit: "" }
+}
+
+/**
+ * Ветка темы для заданной поверхности. Без неё светлая заливка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -87,18 +138,29 @@ function compact(value: number) {
 export function Button057({
   count = 12400,
   trend = [3, 5, 4, 7, 6, 9, 8, 12],
+  unitText = UNIT_TEXT,
+  titleText = "{count} просмотров",
+  locale = "ru-RU",
   accent,
+  background = "",
   type = "button",
   className,
   style,
   children = "Просмотры",
   ...props
 }: Button057Props) {
-  const short = compact(count)
+  const short = compact(count, locale, unitText)
   const peak = Math.max(1, ...trend)
+  const full = count.toLocaleString(locale)
 
   const palette = {
     ...(accent ? { "--vibeui-button-057-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-057-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -113,8 +175,8 @@ export function Button057({
         data-vibeui-block="button-057"
         className={className}
         style={palette}
-        title={`${count.toLocaleString("ru-RU")} просмотров`}
-        aria-label={`${children}: ${count.toLocaleString("ru-RU")}`}
+        title={titleText.replace("{count}", full)}
+        aria-label={`${children}: ${full}`}
       >
         <span data-part="eye" aria-hidden="true" />
         <span data-part="count" aria-hidden="true">

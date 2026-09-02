@@ -12,6 +12,13 @@ export type Tree004Node = {
 export type Tree004Props = {
   nodes?: Tree004Node[]
   label?: string
+  /** Строка о выбранном узле; {name} — его имя. */
+  selectedText?: string
+  /** Подсказка, пока ничего не выбрано. */
+  hintText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  accent?: string
   className?: string
   style?: CSSProperties
 }
@@ -21,15 +28,19 @@ export type Tree004Props = {
 // отдельным плоским списком видимых узлов: по нему считаются стрелки, Home и
 // End. Выбор и фокус разведены: стрелки только переносят фокус, выбирает
 // Enter или пробел, поэтому дерево не «выбирает» всё, над чем пробежали.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="tree-004"]){
---vibeui-tree-004-bg:oklch(1 0 0);
---vibeui-tree-004-fg:oklch(0.24 0.014 265);
---vibeui-tree-004-muted:oklch(0.56 0.014 265);
---vibeui-tree-004-border:oklch(0.9 0.006 265);
---vibeui-tree-004-hover:oklch(0.97 0.004 265);
---vibeui-tree-004-selected:oklch(0.94 0.04 265);
---vibeui-tree-004-accent:oklch(0.53 0.19 265);
+--vibeui-tree-004-bg:transparent;
+--vibeui-tree-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-tree-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.67 0.012 265));
+--vibeui-tree-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-tree-004-hover:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.01 265));
+--vibeui-tree-004-selected:light-dark(oklch(0.94 0.04 265),oklch(0.34 0.06 265));
+--vibeui-tree-004-panel:light-dark(oklch(0.97 0.004 265),oklch(0.28 0.01 265));
+--vibeui-tree-004-accent:light-dark(oklch(0.53 0.19 265),oklch(0.75 0.16 265));
 --vibeui-tree-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="tree-004"]{
@@ -73,7 +84,7 @@ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 [data-vibeui-block="tree-004"] [data-part="status"]{
 margin:0;padding:0.375rem 0.5rem;border-radius:0.5rem;
-background:oklch(0.97 0.004 265);
+background:var(--vibeui-tree-004-panel);
 font-size:0.6875rem;color:var(--vibeui-tree-004-muted);
 overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
@@ -155,12 +166,38 @@ function collectOpen(
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Дерево с выбором узла и полной клавиатурой: стрелки, Home и End.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tree004({
   nodes = DEFAULT_NODES,
   label = "Направления",
+  selectedText = "Выбрано: {name}",
+  hintText = "Стрелки — переход, Enter или пробел — выбор",
+  background = "",
+  accent,
   className,
   style,
 }: Tree004Props) {
@@ -316,21 +353,34 @@ export function Tree004({
   }
 
   const chosen = order.find((entry) => entry.id === selected)
+  const [beforeName, afterName = ""] = selectedText.split("{name}")
+  const palette = {
+    ...(accent ? { "--vibeui-tree-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tree-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
       <style href="vibeui-tree-004" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="tree-004" className={className} style={style}>
+      <div data-vibeui-block="tree-004" className={className} style={palette}>
         {renderLevel(nodes, 1, "", label)}
         <p data-part="status">
           {chosen ? (
             <>
-              Выбрано: <strong>{chosen.name}</strong>
+              {beforeName}
+              <strong>{chosen.name}</strong>
+              {afterName}
             </>
           ) : (
-            "Стрелки — переход, Enter или пробел — выбор"
+            hintText
           )}
         </p>
       </div>

@@ -15,6 +15,8 @@ export type Radio012Props = Omit<
   options?: Radio012Option[]
   name?: string
   defaultValue?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,13 +24,16 @@ export type Radio012Props = Omit<
 // цвет как фон — значение приходит из данных и не выражается классом,
 // поэтому это тот самый случай, когда инлайн-стиль оправдан. Кольцо вокруг
 // выбранного образца рисуется двойной тенью: зазор цвета фона и акцент.
+//
+// Тема берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="radio-012"]){
---vibeui-radio-012-bg:oklch(1 0 0);
---vibeui-radio-012-fg:oklch(0.22 0.014 265);
---vibeui-radio-012-muted:oklch(0.55 0.014 265);
---vibeui-radio-012-border:oklch(0.9 0.006 265);
---vibeui-radio-012-accent:oklch(0.5 0.03 265);
+--vibeui-radio-012-bg:transparent;
+--vibeui-radio-012-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-012-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-radio-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-radio-012-accent:light-dark(oklch(0.5 0.03 265),oklch(0.8 0.02 265));
+--vibeui-radio-012-edge:light-dark(oklch(0 0 0 / 10%),oklch(1 0 0 / 18%));
 --vibeui-radio-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="radio-012"]{
@@ -60,13 +65,14 @@ clip-path:inset(50%);overflow:hidden;white-space:nowrap;
 }
 [data-vibeui-block="radio-012"] [data-part="swatch"]{
 width:2.5rem;height:2.5rem;border-radius:9999px;
-box-shadow:inset 0 0 0 1px oklch(0 0 0 / 10%);
+box-shadow:inset 0 0 0 1px var(--vibeui-radio-012-edge);
 transition:box-shadow .16s ease;
 }
-/* Кольцо у выбранного образца: первая тень — зазор цвета фона карточки,
-   вторая — акцент. Проверка своего цвета через :has() значения не нужна. */
+/* Кольцо у выбранного образца: первая тень — зазор цвета подложки (по
+   умолчанию прозрачной, то есть цвета страницы), вторая — акцент.
+   Проверка своего цвета через :has() значения не нужна. */
 [data-vibeui-block="radio-012"] [data-part="option"]:has(input:checked) [data-part="swatch"]{
-box-shadow:inset 0 0 0 1px oklch(0 0 0 / 10%),0 0 0 2px var(--vibeui-radio-012-bg),0 0 0 4px var(--vibeui-radio-012-accent);
+box-shadow:inset 0 0 0 1px var(--vibeui-radio-012-edge),0 0 0 2px var(--vibeui-radio-012-bg),0 0 0 4px var(--vibeui-radio-012-accent);
 }
 [data-vibeui-block="radio-012"] [data-part="name"]{
 font-size:0.6875rem;color:var(--vibeui-radio-012-muted);text-align:center;
@@ -83,6 +89,28 @@ const DEFAULT_OPTIONS: Radio012Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор цвета образцами: кольцо на выбранном, значение цвета — инлайн-стиль.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -91,6 +119,7 @@ export function Radio012({
   options = DEFAULT_OPTIONS,
   name = "vibeui-radio-012",
   defaultValue = "blue",
+  background = "",
   accent,
   className,
   style,
@@ -98,6 +127,12 @@ export function Radio012({
 }: Radio012Props) {
   const palette = {
     ...(accent ? { "--vibeui-radio-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-radio-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

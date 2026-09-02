@@ -14,6 +14,14 @@ export type Dashboard011Props = {
   backLabel?: string
   nextLabel?: string
   doneLabel?: string
+  /** Поля панели шага: подпись и значение по умолчанию. */
+  fields?: { label: string; value: string }[]
+  /** Счётчик шагов: {current} и {total} — числа. */
+  countText?: string
+  /** Подпись полосы продвижения для скринридера. */
+  progressText?: string
+  /** Пусто — подложки нет, мастер ложится на фон страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -27,16 +35,22 @@ export type Dashboard011Props = {
 // шага, и она не прячется — исчезающая кнопка ломает привычку. На последнем
 // шаге кнопка меняет подпись на завершающее действие, а не остаётся «Далее»:
 // человек должен знать, что следующий клик закончит мастер.
+//
+// Тема берётся из color-scheme окружения через light-dark(): собственной
+// подложки у мастера нет, панель шага держит свою поверхность.
 const STYLES = `
 :where([data-vibeui-block="dashboard-011"]){
---vibeui-dashboard-011-bg:oklch(1 0 0);
---vibeui-dashboard-011-panel:oklch(0.985 0.002 265);
---vibeui-dashboard-011-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-011-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-011-border:oklch(0.91 0.006 265);
---vibeui-dashboard-011-track:oklch(0.93 0.005 265);
---vibeui-dashboard-011-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-011-done:oklch(0.58 0.14 152);
+--vibeui-dashboard-011-bg:transparent;
+--vibeui-dashboard-011-field:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-dashboard-011-panel:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-dashboard-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-dashboard-011-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-011-border:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.012 265));
+--vibeui-dashboard-011-track:light-dark(oklch(0.93 0.005 265),oklch(0.34 0.01 265));
+--vibeui-dashboard-011-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-dashboard-011-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
+--vibeui-dashboard-011-done:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
+--vibeui-dashboard-011-on-done:light-dark(oklch(1 0 0),oklch(0.2 0.04 152));
 --vibeui-dashboard-011-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -65,7 +79,7 @@ font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="dashboard-011"] [data-state="done"]{color:var(--vibeui-dashboard-011-fg)}
 [data-vibeui-block="dashboard-011"] [data-state="done"] [data-part="mark"]{
-background:var(--vibeui-dashboard-011-done);color:oklch(1 0 0);box-shadow:none;
+background:var(--vibeui-dashboard-011-done);color:var(--vibeui-dashboard-011-on-done);box-shadow:none;
 }
 [data-vibeui-block="dashboard-011"] [data-state="current"]{color:var(--vibeui-dashboard-011-fg);font-weight:650}
 [data-vibeui-block="dashboard-011"] [data-state="current"] [data-part="mark"]{box-shadow:inset 0 0 0 3px var(--vibeui-dashboard-011-accent)}
@@ -92,7 +106,7 @@ border:1px solid var(--vibeui-dashboard-011-border);
 [data-vibeui-block="dashboard-011"] input{
 height:2.25rem;padding:0 0.625rem;
 border:1px solid var(--vibeui-dashboard-011-border);border-radius:0.5rem;
-background:var(--vibeui-dashboard-011-bg);color:inherit;font:inherit;font-size:0.8125rem;font-weight:400;
+background:var(--vibeui-dashboard-011-field);color:inherit;font:inherit;font-size:0.8125rem;font-weight:400;
 }
 [data-vibeui-block="dashboard-011"] input:focus-visible{outline:2px solid var(--vibeui-dashboard-011-accent);outline-offset:1px}
 [data-vibeui-block="dashboard-011"] [data-part="actions"]{display:flex;align-items:center;gap:0.5rem}
@@ -103,7 +117,7 @@ margin-right:auto;font-size:0.75rem;color:var(--vibeui-dashboard-011-muted);font
 appearance:none;cursor:pointer;height:2.25rem;padding:0 0.875rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="dashboard-011"] [data-part="next"]{border:0;background:var(--vibeui-dashboard-011-accent);color:oklch(1 0 0)}
+[data-vibeui-block="dashboard-011"] [data-part="next"]{border:0;background:var(--vibeui-dashboard-011-accent);color:var(--vibeui-dashboard-011-on-accent)}
 /* «Назад» не исчезает, а гаснет: пропадающая кнопка ломает привычку. */
 [data-vibeui-block="dashboard-011"] [data-part="back"]{
 border:1px solid var(--vibeui-dashboard-011-border);background:none;color:inherit;
@@ -128,6 +142,33 @@ const DEFAULT_STEPS: Dashboard011Step[] = [
   },
 ]
 
+const DEFAULT_FIELDS = [
+  { label: "Название", value: "Каталог VibeUI" },
+  { label: "Адрес", value: "vibeui-catalog" },
+]
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Мастер из нескольких шагов: виден весь путь, кнопка меняет подпись на конце.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -138,6 +179,10 @@ export function Dashboard011({
   backLabel = "Назад",
   nextLabel = "Далее",
   doneLabel = "Создать проект",
+  fields = DEFAULT_FIELDS,
+  countText = "Шаг {current} из {total}",
+  progressText = "Продвижение по шагам",
+  background = "",
   accent,
   className,
   style,
@@ -149,6 +194,12 @@ export function Dashboard011({
   const palette = {
     "--vibeui-dashboard-011-progress": progress,
     ...(accent ? { "--vibeui-dashboard-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -188,7 +239,7 @@ export function Dashboard011({
           aria-valuenow={index + 1}
           aria-valuemin={1}
           aria-valuemax={steps.length}
-          aria-label="Продвижение по шагам"
+          aria-label={progressText}
         >
           <span data-part="fill" />
         </div>
@@ -197,20 +248,20 @@ export function Dashboard011({
           <h3>{steps[index].title}</h3>
           <p data-part="hint">{steps[index].hint}</p>
           <div data-part="fields">
-            <label>
-              Название
-              <input type="text" defaultValue="Каталог VibeUI" />
-            </label>
-            <label>
-              Адрес
-              <input type="text" defaultValue="vibeui-catalog" />
-            </label>
+            {fields.map((field) => (
+              <label key={field.label}>
+                {field.label}
+                <input type="text" defaultValue={field.value} />
+              </label>
+            ))}
           </div>
         </div>
 
         <div data-part="actions">
           <span data-part="count">
-            Шаг {index + 1} из {steps.length}
+            {countText
+              .replace("{current}", String(index + 1))
+              .replace("{total}", String(steps.length))}
           </span>
           <button
             type="button"

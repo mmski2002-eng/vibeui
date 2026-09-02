@@ -12,6 +12,14 @@ export type Codeblock019Props = {
   idPrefix?: string
   lines?: string[]
   outline?: Codeblock019Mark[]
+  /** Счётчик строк в шапке, {count} — их число. */
+  countText?: string
+  /** Подпись оглавления для скринридера. */
+  outlineLabel?: string
+  /** Подпись области кода для скринридера, {path} — путь к файлу. */
+  codeLabel?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -19,16 +27,20 @@ export type Codeblock019Props = {
 // Идея компонента: длинный файл, по которому можно ходить. Слева оглавление
 // объявлений, справа прокручиваемый листинг; переходы — обычные якоря, поэтому
 // работают без JS, а строка-цель подсвечивается через :target.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, подсветка строки-цели подобрана отдельно для светлой и тёмной ветки.
 const STYLES = `
 :where([data-vibeui-block="codeblock-019"]){
---vibeui-codeblock-019-bg:oklch(0.19 0.018 240);
---vibeui-codeblock-019-side:oklch(0.23 0.02 240);
---vibeui-codeblock-019-fg:oklch(0.93 0.008 240);
---vibeui-codeblock-019-muted:oklch(0.66 0.016 240);
---vibeui-codeblock-019-gutter:oklch(0.5 0.02 240);
---vibeui-codeblock-019-border:oklch(1 0 0 / 12%);
---vibeui-codeblock-019-accent:oklch(0.82 0.13 200);
---vibeui-codeblock-019-target:oklch(0.6 0.12 200 / 22%);
+--vibeui-codeblock-019-bg:transparent;
+--vibeui-codeblock-019-side:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
+--vibeui-codeblock-019-hover:light-dark(oklch(0 0 0 / 6%),oklch(1 0 0 / 8%));
+--vibeui-codeblock-019-fg:light-dark(oklch(0.26 0.018 240),oklch(0.93 0.008 240));
+--vibeui-codeblock-019-muted:light-dark(oklch(0.5 0.018 240),oklch(0.66 0.016 240));
+--vibeui-codeblock-019-gutter:light-dark(oklch(0.63 0.02 240),oklch(0.5 0.02 240));
+--vibeui-codeblock-019-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
+--vibeui-codeblock-019-accent:light-dark(oklch(0.5 0.13 200),oklch(0.82 0.13 200));
+--vibeui-codeblock-019-target:light-dark(oklch(0.7 0.12 200 / 24%),oklch(0.6 0.12 200 / 22%));
 --vibeui-codeblock-019-height:14rem;
 --vibeui-codeblock-019-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -68,7 +80,7 @@ font-family:var(--vibeui-codeblock-019-mono);font-size:0.75rem;
 transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="codeblock-019"] a:hover{
-background:oklch(1 0 0 / 8%);color:var(--vibeui-codeblock-019-fg);
+background:var(--vibeui-codeblock-019-hover);color:var(--vibeui-codeblock-019-fg);
 }
 [data-vibeui-block="codeblock-019"] a:focus-visible{
 outline:2px solid var(--vibeui-codeblock-019-accent);outline-offset:2px;
@@ -149,6 +161,28 @@ const OUTLINE: Codeblock019Mark[] = [
   { line: 15, name: "CART_LIMIT", kind: "const" },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Длинный листинг с оглавлением объявлений и переходом по якорям. */
 export function Codeblock019({
   path = "app/actions.ts",
@@ -156,11 +190,21 @@ export function Codeblock019({
   idPrefix = "codeblock-019",
   lines = LINES,
   outline = OUTLINE,
+  countText = "{count} строк",
+  outlineLabel = "Оглавление листинга",
+  codeLabel = "Код файла {path}",
+  background = "",
   className,
   style,
 }: Codeblock019Props) {
   const palette = {
     "--vibeui-codeblock-019-height": `${maxHeight}rem`,
+    ...(background
+      ? {
+          "--vibeui-codeblock-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -176,10 +220,10 @@ export function Codeblock019({
       >
         <figcaption data-part="head">
           <span>{path}</span>
-          <span>{lines.length} строк</span>
+          <span>{countText.replace("{count}", String(lines.length))}</span>
         </figcaption>
         <div data-part="shell">
-          <nav aria-label="Оглавление листинга">
+          <nav aria-label={outlineLabel}>
             <ol>
               {outline.map((mark) => (
                 <li key={mark.name}>
@@ -196,7 +240,7 @@ export function Codeblock019({
             data-part="scroller"
             tabIndex={0}
             role="region"
-            aria-label={`Код файла ${path}`}
+            aria-label={codeLabel.replace("{path}", path)}
           >
             <pre>
               <code>

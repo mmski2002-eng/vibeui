@@ -8,6 +8,20 @@ export type File009Props = Omit<
   fileTab?: string
   linkTab?: string
   name?: string
+  /** Доступное имя ряда вкладок. */
+  groupLabel?: string
+  /** Подпись в зоне выбора файла. */
+  pickText?: string
+  /** Требования под подписью выбора. */
+  fileNote?: string
+  /** Доступное имя поля адреса. */
+  linkLabel?: string
+  /** Placeholder поля адреса. */
+  linkPlaceholder?: string
+  /** Пояснение под полем адреса. */
+  linkNote?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -16,18 +30,24 @@ export type File009Props = Omit<
 // потом его загрузить, бессмысленно. Переключатель источников собран на двух
 // радиокнопках внутри подписей: панель показывается селектором :has, поэтому
 // вкладки работают без состояния и компонент остаётся серверным.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.
+// Активная вкладка и поле адреса красятся отдельным токеном raise, поэтому
+// прозрачная подложка не съедает «поднятую» плитку.
 const STYLES = `
 :where([data-vibeui-block="file-009"]){
---vibeui-file-009-surface:oklch(1 0 0);
---vibeui-file-009-tile:oklch(0.965 0.005 265);
---vibeui-file-009-fg:oklch(0.23 0.014 265);
---vibeui-file-009-muted:oklch(0.55 0.014 265);
---vibeui-file-009-border:oklch(0.88 0.008 265);
---vibeui-file-009-shell:oklch(0.91 0.006 265);
---vibeui-file-009-accent:oklch(0.52 0.17 255);
+--vibeui-file-009-surface:transparent;
+--vibeui-file-009-raise:light-dark(oklch(1 0 0),oklch(0.34 0.014 265));
+--vibeui-file-009-tile:light-dark(oklch(0.965 0.005 265),oklch(0.26 0.012 265));
+--vibeui-file-009-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-file-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-file-009-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-file-009-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-file-009-accent:light-dark(oklch(0.52 0.17 255),oklch(0.74 0.16 255));
 --vibeui-file-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: блок показывают поверх любого фона. */
+/* Панель без собственной заливки: рамка очерчивает блок на любом фоне. */
 [data-vibeui-block="file-009"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -52,8 +72,8 @@ transition:background-color .16s ease,color .16s ease;
 position:absolute;width:1px;height:1px;margin:0;opacity:0;pointer-events:none;
 }
 [data-vibeui-block="file-009"] [data-part="tab"]:has(input:checked){
-background:var(--vibeui-file-009-surface);color:var(--vibeui-file-009-fg);
-box-shadow:0 1px 2px oklch(0 0 0 / 8%);
+background:var(--vibeui-file-009-raise);color:var(--vibeui-file-009-fg);
+box-shadow:0 1px 2px light-dark(oklch(0 0 0 / 8%),oklch(0 0 0 / 35%));
 }
 [data-vibeui-block="file-009"] [data-part="tab"]:has(input:focus-visible){
 outline:2px solid var(--vibeui-file-009-accent);outline-offset:2px;
@@ -87,7 +107,7 @@ border-top:1.5px solid var(--vibeui-file-009-muted);
 [data-vibeui-block="file-009"] [data-part="strong"]{font-size:0.8125rem;font-weight:650}
 [data-vibeui-block="file-009"] input[type="url"]{
 width:100%;height:2.375rem;padding:0 0.75rem;
-background:var(--vibeui-file-009-surface);color:inherit;
+background:var(--vibeui-file-009-raise);color:inherit;
 border:1px solid var(--vibeui-file-009-border);border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;
 }
@@ -103,6 +123,28 @@ margin:0;font-size:0.6875rem;line-height:1.4;color:var(--vibeui-file-009-muted);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Вложение из двух источников: файл с диска или ссылка, переключение на :has.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -111,6 +153,13 @@ export function File009({
   fileTab = "С компьютера",
   linkTab = "По ссылке",
   name = "source",
+  groupLabel = "Откуда взять файл",
+  pickText = "Выбрать файл",
+  fileNote = "PNG или JPG до 10 МБ",
+  linkLabel = "Ссылка на изображение",
+  linkPlaceholder = "https://example.com/photo.jpg",
+  linkNote = "Скачаем картинку к себе один раз — если ссылка потом умрёт, товар не потеряет фото.",
+  background = "",
   accent,
   className,
   style,
@@ -118,6 +167,12 @@ export function File009({
 }: File009Props) {
   const palette = {
     ...(accent ? { "--vibeui-file-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-file-009-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -134,7 +189,7 @@ export function File009({
       >
         <span data-part="title">{title}</span>
 
-        <div data-part="tabs" role="radiogroup" aria-label="Откуда взять файл">
+        <div data-part="tabs" role="radiogroup" aria-label={groupLabel}>
           <label data-part="tab">
             <input type="radio" name={name} data-choice="file" defaultChecked />
             {fileTab}
@@ -148,8 +203,8 @@ export function File009({
         <div data-panel="file">
           <label data-part="drop">
             <span data-part="plate" aria-hidden="true" />
-            <span data-part="strong">Выбрать файл</span>
-            <span data-part="note">PNG или JPG до 10 МБ</span>
+            <span data-part="strong">{pickText}</span>
+            <span data-part="note">{fileNote}</span>
             <input type="file" name={`${name}-file`} accept="image/*" />
           </label>
         </div>
@@ -158,13 +213,10 @@ export function File009({
           <input
             type="url"
             name={`${name}-url`}
-            placeholder="https://example.com/photo.jpg"
-            aria-label="Ссылка на изображение"
+            placeholder={linkPlaceholder}
+            aria-label={linkLabel}
           />
-          <p data-part="note">
-            Скачаем картинку к себе один раз — если ссылка потом умрёт, товар не
-            потеряет фото.
-          </p>
+          <p data-part="note">{linkNote}</p>
         </div>
       </div>
     </>

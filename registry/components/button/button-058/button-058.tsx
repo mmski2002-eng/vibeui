@@ -14,6 +14,8 @@ export type Button058Props = Omit<
   showLabel?: string
   hideLabel?: string
   accent?: string
+  /** Поверхность поля. Пусто — своя, из палитры. */
+  background?: string
 }
 
 // Идея компонента: кнопка «показать пароль» живёт внутри поля. Состояние
@@ -22,11 +24,11 @@ export type Button058Props = Omit<
 // каретка и введённый текст на месте. autoComplete остаётся current-password.
 const STYLES = `
 :where([data-vibeui-block="button-058"]){
---vibeui-button-058-surface:oklch(1 0 0);
---vibeui-button-058-border:oklch(0.88 0.006 265);
---vibeui-button-058-fg:oklch(0.24 0.02 265);
---vibeui-button-058-muted:oklch(0.56 0.014 265);
---vibeui-button-058-accent:oklch(0.53 0.16 265);
+--vibeui-button-058-surface:light-dark(oklch(1 0 0),oklch(0.24 0.014 265));
+--vibeui-button-058-border:light-dark(oklch(0.88 0.006 265),oklch(0.42 0.014 265));
+--vibeui-button-058-fg:light-dark(oklch(0.24 0.02 265),oklch(0.94 0.008 265));
+--vibeui-button-058-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-button-058-accent:light-dark(oklch(0.53 0.16 265),oklch(0.75 0.13 265));
 --vibeui-button-058-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-058"]{
@@ -85,6 +87,29 @@ box-shadow:0 -2px 0 0 var(--vibeui-button-058-surface);
 `
 
 /**
+ * Ветка темы для заданной поверхности. Без неё светлая заливка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поле пароля с кнопкой «показать»: состояние объявлено через aria-pressed.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -95,6 +120,7 @@ export function Button058({
   showLabel = "Показать пароль",
   hideLabel = "Скрыть пароль",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -103,6 +129,12 @@ export function Button058({
 
   const palette = {
     ...(accent ? { "--vibeui-button-058-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-058-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

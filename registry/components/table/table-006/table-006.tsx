@@ -15,6 +15,12 @@ export type Table006Props = Omit<
 > & {
   rows?: Table006Row[]
   caption?: string
+  /** Заголовки колонок: компонент несёт русские, проект подставляет свои. */
+  columnText?: Record<string, string>
+  /** Подпись флажка строки; {order} подставляет номер счёта. */
+  toggleText?: string
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,15 +28,18 @@ export type Table006Props = Omit<
 // держит чекбокс внутри строки, а строка деталей показывается селектором :has()
 // по нему. Детали лежат в отдельном <tr> с colspan, а не внутри ячейки: только
 // так они занимают всю ширину таблицы и не ломают колонки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-006"]){
---vibeui-table-006-bg:oklch(1 0 0);
---vibeui-table-006-fg:oklch(0.24 0.014 265);
---vibeui-table-006-muted:oklch(0.56 0.014 265);
---vibeui-table-006-border:oklch(0.92 0.006 265);
---vibeui-table-006-head:oklch(0.975 0.003 265);
---vibeui-table-006-open:oklch(0.975 0.003 265);
---vibeui-table-006-accent:oklch(0.55 0.2 262);
+--vibeui-table-006-bg:transparent;
+--vibeui-table-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-006-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-table-006-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
+--vibeui-table-006-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-006-open:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
 --vibeui-table-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="table-006"]{
@@ -106,6 +115,35 @@ const DEFAULT_ROWS: Table006Row[] = [
   },
 ]
 
+const COLUMN_TEXT: Record<string, string> = {
+  details: "Детали",
+  order: "Счёт",
+  customer: "Заказчик",
+  sum: "Сумма",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Таблица с раскрывающимися подробностями строки: без JS, на :has().
  * Один файл, ноль зависимостей, собственная палитра.
@@ -113,6 +151,9 @@ const DEFAULT_ROWS: Table006Row[] = [
 export function Table006({
   rows = DEFAULT_ROWS,
   caption = "Счета за март",
+  columnText = COLUMN_TEXT,
+  toggleText = "Подробности счёта {order}",
+  background = "",
   accent,
   className,
   style,
@@ -120,6 +161,12 @@ export function Table006({
 }: Table006Props) {
   const palette = {
     ...(accent ? { "--vibeui-table-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-table-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -139,12 +186,14 @@ export function Table006({
           <thead>
             <tr>
               <th scope="col" data-part="toggle">
-                <span data-part="sr">Детали</span>
+                <span data-part="sr">
+                  {columnText.details ?? COLUMN_TEXT.details}
+                </span>
               </th>
-              <th scope="col">Счёт</th>
-              <th scope="col">Заказчик</th>
+              <th scope="col">{columnText.order ?? COLUMN_TEXT.order}</th>
+              <th scope="col">{columnText.customer ?? COLUMN_TEXT.customer}</th>
               <th scope="col" data-align="end">
-                Сумма
+                {columnText.sum ?? COLUMN_TEXT.sum}
               </th>
             </tr>
           </thead>
@@ -156,7 +205,7 @@ export function Table006({
                     <label>
                       <input
                         type="checkbox"
-                        aria-label={`Подробности счёта ${row.order}`}
+                        aria-label={toggleText.replace("{order}", row.order)}
                       />
                       <span data-part="chevron" aria-hidden="true" />
                     </label>

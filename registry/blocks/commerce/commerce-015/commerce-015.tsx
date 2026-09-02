@@ -13,11 +13,34 @@ export type Commerce015Review = {
   verified?: boolean
 }
 
+export type Commerce015Filter = {
+  id: string
+  label: string
+}
+
 export type Commerce015Props = {
   title?: string
   reviews?: Commerce015Review[]
   empty?: string
+  /** Кнопки фильтра: id решает правило отбора, label — подпись. */
+  filters?: Commerce015Filter[]
+  /** Шаблон «сколько всего отзывов», {count} — число. */
+  reviewsText?: string
+  /** Подпись группы кнопок фильтра для скринридера. */
+  filterLabel?: string
+  /** Шаблон счётчика выборки: {shown} и {total}. */
+  countText?: string
+  /** Шаблон оценки отзыва: {rating} и {max}. */
+  ratingText?: string
+  /** Пометка подтверждённой покупки. */
+  verifiedText?: string
+  /** Шаблон подписи к фото отзыва, {count} — их число. */
+  photosText?: string
   accent?: string
+  /** Цвет звёзд оценки. */
+  star?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,13 +54,14 @@ export type Commerce015Props = {
 // N из M» держит связь между выборкой и целым.
 const STYLES = `
 :where([data-vibeui-block="commerce-015"]){
---vibeui-commerce-015-bg:oklch(1 0 0);
---vibeui-commerce-015-fg:oklch(0.21 0.014 265);
---vibeui-commerce-015-muted:oklch(0.55 0.014 265);
---vibeui-commerce-015-border:oklch(0.91 0.006 265);
---vibeui-commerce-015-soft:oklch(0.975 0.004 265);
---vibeui-commerce-015-accent:oklch(0.55 0.2 262);
---vibeui-commerce-015-star:oklch(0.72 0.16 75);
+--vibeui-commerce-015-bg:transparent;
+--vibeui-commerce-015-paper:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-commerce-015-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-015-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-015-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-commerce-015-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.01 265));
+--vibeui-commerce-015-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
+--vibeui-commerce-015-star:light-dark(oklch(0.72 0.16 75),oklch(0.82 0.15 75));
 --vibeui-commerce-015-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -60,12 +84,12 @@ font-variant-numeric:tabular-nums;
 /* Число в подписи фильтра: пустой результат перестаёт выглядеть поломкой. */
 [data-vibeui-block="commerce-015"] [data-part="filter"]{
 appearance:none;cursor:pointer;padding:0.3125rem 0.75rem;border-radius:9999px;
-border:1px solid var(--vibeui-commerce-015-border);background:var(--vibeui-commerce-015-bg);
+border:1px solid var(--vibeui-commerce-015-border);background:var(--vibeui-commerce-015-paper);
 color:var(--vibeui-commerce-015-muted);font:inherit;font-size:0.75rem;font-weight:600;
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="commerce-015"] [data-part="filter"][aria-pressed="true"]{
-background:var(--vibeui-commerce-015-fg);border-color:var(--vibeui-commerce-015-fg);color:var(--vibeui-commerce-015-bg);
+background:var(--vibeui-commerce-015-fg);border-color:var(--vibeui-commerce-015-fg);color:var(--vibeui-commerce-015-paper);
 }
 [data-vibeui-block="commerce-015"] [data-part="filter"]:disabled{opacity:.45;cursor:not-allowed}
 [data-vibeui-block="commerce-015"] [data-part="filter"]:focus-visible{outline:2px solid var(--vibeui-commerce-015-accent);outline-offset:2px}
@@ -76,7 +100,7 @@ background:var(--vibeui-commerce-015-fg);border-color:var(--vibeui-commerce-015-
 }
 [data-vibeui-block="commerce-015"] [data-part="review"]{
 padding:0.75rem;border-radius:0.875rem;border:1px solid var(--vibeui-commerce-015-border);
-background:var(--vibeui-commerce-015-bg);
+background:var(--vibeui-commerce-015-paper);
 }
 [data-vibeui-block="commerce-015"] [data-part="head"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.375rem 0.5rem;margin-bottom:0.25rem}
 [data-vibeui-block="commerce-015"] [data-part="face"]{
@@ -143,7 +167,7 @@ const DEFAULT_REVIEWS: Commerce015Review[] = [
   },
 ]
 
-const FILTERS = [
+const DEFAULT_FILTERS: Commerce015Filter[] = [
   { id: "all", label: "Все" },
   { id: "5", label: "5 звёзд" },
   { id: "4", label: "4 звезды" },
@@ -163,6 +187,28 @@ function keeps(review: Commerce015Review, filter: string) {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Отзывы с фильтром, который показывает число совпадений до нажатия.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -170,7 +216,16 @@ export function Commerce015({
   title = "Отзывы покупателей",
   reviews = DEFAULT_REVIEWS,
   empty = "По этому фильтру отзывов пока нет — снимите его, чтобы увидеть остальные.",
+  filters = DEFAULT_FILTERS,
+  reviewsText = "{count} отзывов",
+  filterLabel = "Фильтр отзывов",
+  countText = "Показано {shown} из {total}",
+  ratingText = "{rating} из {max}",
+  verifiedText = "покупка подтверждена",
+  photosText = "Фото: {count}",
   accent,
+  star,
+  background = "",
   className,
   style,
 }: Commerce015Props) {
@@ -183,6 +238,14 @@ export function Commerce015({
 
   const palette = {
     ...(accent ? { "--vibeui-commerce-015-accent": accent } : null),
+    ...(star ? { "--vibeui-commerce-015-star": star } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-015-bg": background,
+          "--vibeui-commerce-015-paper": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -205,12 +268,12 @@ export function Commerce015({
               <span data-part="stars" aria-hidden="true">
                 {stars(Math.round(average))}
               </span>
-              {reviews.length} отзывов
+              {reviewsText.replace("{count}", String(reviews.length))}
             </span>
           </div>
 
-          <div data-part="filters" role="group" aria-label="Фильтр отзывов">
-            {FILTERS.map((entry) => {
+          <div data-part="filters" role="group" aria-label={filterLabel}>
+            {filters.map((entry) => {
               const size = reviews.filter((review) =>
                 keeps(review, entry.id),
               ).length
@@ -231,7 +294,9 @@ export function Commerce015({
           </div>
 
           <p data-part="count" aria-live="polite">
-            Показано {shown.length} из {reviews.length}
+            {countText
+              .replace("{shown}", String(shown.length))
+              .replace("{total}", String(reviews.length))}
           </p>
 
           {shown.length === 0 ? (
@@ -251,14 +316,22 @@ export function Commerce015({
                     <span data-part="stars" aria-hidden="true">
                       {stars(review.rating)}
                     </span>
-                    {review.rating} из 5
+                    {ratingText
+                      .replace("{rating}", String(review.rating))
+                      .replace("{max}", "5")}
                     {review.verified ? (
-                      <span data-part="mark">· покупка подтверждена</span>
+                      <span data-part="mark">· {verifiedText}</span>
                     ) : null}
                   </p>
                   <p data-part="text">{review.text}</p>
                   {review.photos ? (
-                    <p data-part="photos" aria-label={`Фото: ${review.photos}`}>
+                    <p
+                      data-part="photos"
+                      aria-label={photosText.replace(
+                        "{count}",
+                        String(review.photos),
+                      )}
+                    >
                       {Array.from({ length: review.photos }).map((_, index) => (
                         <span
                           key={index}

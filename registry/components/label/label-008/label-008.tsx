@@ -3,12 +3,16 @@ import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
 export type Label008Props = Omit<
   ComponentPropsWithoutRef<"div">,
-  "children"
+  "children" | "defaultValue"
 > & {
   label?: string
   reason?: string
   actionText?: string
   actionHref?: string
+  /** Значение внутри закрытого поля. */
+  defaultValue?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,13 +23,13 @@ export type Label008Props = Omit<
 // тупик.
 const STYLES = `
 :where([data-vibeui-block="label-008"]){
---vibeui-label-008-surface:oklch(1 0 0);
---vibeui-label-008-surface-border:oklch(0.91 0.006 265);
---vibeui-label-008-fg:oklch(0.24 0.016 265);
---vibeui-label-008-muted:oklch(0.54 0.014 265);
---vibeui-label-008-locked-bg:oklch(0.97 0.003 265);
---vibeui-label-008-locked-border:oklch(0.89 0.008 265);
---vibeui-label-008-accent:oklch(0.55 0.2 262);
+--vibeui-label-008-surface:transparent;
+--vibeui-label-008-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-label-008-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-label-008-muted:light-dark(oklch(0.54 0.014 265),oklch(0.71 0.012 265));
+--vibeui-label-008-locked-bg:light-dark(oklch(0.97 0.003 265),oklch(0.28 0.01 265));
+--vibeui-label-008-locked-border:light-dark(oklch(0.89 0.008 265),oklch(0.37 0.012 265));
+--vibeui-label-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-label-008-radius:0.625rem;
 --vibeui-label-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -84,6 +88,28 @@ border-radius:0.25rem;
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подпись выключенного поля с причиной и выходом: поле readonly, а не
  * disabled, поэтому остаётся доступным с клавиатуры. Один файл, ноль
  * зависимостей.
@@ -93,6 +119,8 @@ export function Label008({
   reason = "Тариф меняется только после оплаты текущего периода — он закрывается 30 сентября.",
   actionText = "Оплатить сейчас",
   actionHref = "#",
+  defaultValue = "Команда, 12 мест",
+  background = "",
   accent,
   className,
   style,
@@ -102,6 +130,12 @@ export function Label008({
   const reasonId = `${id}-reason`
   const palette = {
     ...(accent ? { "--vibeui-label-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-label-008-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -124,7 +158,7 @@ export function Label008({
           id={id}
           type="text"
           name="plan"
-          defaultValue="Команда, 12 мест"
+          defaultValue={defaultValue}
           readOnly
           aria-disabled="true"
           aria-describedby={reasonId}

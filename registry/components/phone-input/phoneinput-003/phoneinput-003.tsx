@@ -10,6 +10,13 @@ export type Phoneinput003Props = Omit<
   label?: string
   code?: string
   expected?: number
+  placeholder?: string
+  /** Шаблон строки о наборе: {typed}, {expected} и {code}. */
+  progressText?: string
+  /** Шаблон строки о готовности: {expected} и {code}. */
+  doneText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,16 +25,19 @@ export type Phoneinput003Props = Omit<
 // стоит ряд точек: по одной на ожидаемую цифру. Набранные гаснут в
 // заливку, и «не хватает одной» видно раньше, чем форма отправлена.
 // Считаются именно цифры, а не символы: разделители не в счёт.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="phoneinput-003"]){
---vibeui-phoneinput-003-surface:oklch(1 0 0);
---vibeui-phoneinput-003-surface-border:oklch(0.91 0.006 265);
---vibeui-phoneinput-003-fg:oklch(0.24 0.016 265);
---vibeui-phoneinput-003-muted:oklch(0.54 0.014 265);
---vibeui-phoneinput-003-field-border:oklch(0.85 0.01 265);
---vibeui-phoneinput-003-track:oklch(0.9 0.006 265);
---vibeui-phoneinput-003-accent:oklch(0.55 0.2 262);
---vibeui-phoneinput-003-done:oklch(0.55 0.15 155);
+--vibeui-phoneinput-003-surface:transparent;
+--vibeui-phoneinput-003-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-phoneinput-003-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-phoneinput-003-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-phoneinput-003-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-phoneinput-003-track:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.01 265));
+--vibeui-phoneinput-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-phoneinput-003-done:light-dark(oklch(0.55 0.15 155),oklch(0.74 0.14 155));
 --vibeui-phoneinput-003-radius:0.625rem;
 --vibeui-phoneinput-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -93,6 +103,29 @@ color:var(--vibeui-phoneinput-003-done);
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Телефон с проверкой длины: ряд точек показывает, сколько цифр из
  * ожидаемых уже набрано. Один файл, ноль зависимостей.
  */
@@ -100,6 +133,10 @@ export function Phoneinput003({
   label = "Мобильный телефон",
   code = "+7",
   expected = 10,
+  placeholder = "номер без кода страны",
+  progressText = "{typed} из {expected} цифр после {code}",
+  doneText = "Готово: {expected} цифр после {code}",
+  background = "",
   accent,
   className,
   style,
@@ -113,8 +150,18 @@ export function Phoneinput003({
   const state = done ? "done" : "typing"
   const palette = {
     ...(accent ? { "--vibeui-phoneinput-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-phoneinput-003-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+  const status = (done ? doneText : progressText)
+    .replace("{typed}", String(digits))
+    .replace("{expected}", String(expected))
+    .replace("{code}", code)
 
   return (
     <>
@@ -138,7 +185,7 @@ export function Phoneinput003({
             type="tel"
             inputMode="tel"
             autoComplete="tel-national"
-            placeholder="номер без кода страны"
+            placeholder={placeholder}
             value={value}
             aria-describedby={statusId}
             aria-invalid={value !== "" && !done ? true : undefined}
@@ -160,9 +207,7 @@ export function Phoneinput003({
           id={statusId}
           aria-live="polite"
         >
-          {done
-            ? `Готово: ${expected} цифр после ${code}`
-            : `${digits} из ${expected} цифр после ${code}`}
+          {status}
         </p>
       </div>
     </>

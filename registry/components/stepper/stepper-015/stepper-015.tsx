@@ -14,12 +14,18 @@ export type Stepper015Props = Omit<
   /** Номер текущего шага, считая с нуля. */
   current?: number
   review?: Stepper015ReviewItem[]
+  /** Заголовок карточки сверки. */
+  panelTitle?: string
+  /** Текст до последнего шага: {step} — название последнего шага. */
+  pendingText?: string
   editLabel?: string
   backLabel?: string
   backHref?: string
   confirmLabel?: string
   confirmHref?: string
   label?: string
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,16 +33,21 @@ export type Stepper015Props = Omit<
 // введённого со ссылками на редактирование каждого пункта и явным путём
 // назад. Панель проверки рисуется только на последнем шаге; до него — просто
 // лента с состояниями, без лишнего текста.
+//
+// Тема берётся из color-scheme окружения через light-dark(). Кружки шагов и
+// кнопка «Назад» держат непрозрачный surface: под кружками проходит линия
+// ленты, и прозрачный фон дал бы ей просвечивать насквозь.
 const STYLES = `
 :where([data-vibeui-block="stepper-015"]){
---vibeui-stepper-015-bg:oklch(1 0 0);
---vibeui-stepper-015-fg:oklch(0.24 0.016 265);
---vibeui-stepper-015-muted:oklch(0.56 0.014 265);
---vibeui-stepper-015-border:oklch(0.92 0.006 265);
---vibeui-stepper-015-line:oklch(0.9 0.006 265);
---vibeui-stepper-015-accent:oklch(0.55 0.2 262);
---vibeui-stepper-015-accent-fg:oklch(1 0 0);
---vibeui-stepper-015-panel:oklch(0.97 0.006 265);
+--vibeui-stepper-015-bg:transparent;
+--vibeui-stepper-015-surface:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-stepper-015-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-stepper-015-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.013 265));
+--vibeui-stepper-015-border:light-dark(oklch(0.92 0.006 265),oklch(0.35 0.012 265));
+--vibeui-stepper-015-line:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-stepper-015-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-stepper-015-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-stepper-015-panel:light-dark(oklch(0.97 0.006 265),oklch(0.26 0.012 265));
 --vibeui-stepper-015-size:1.75rem;
 --vibeui-stepper-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -66,7 +77,7 @@ position:relative;z-index:1;
 display:flex;align-items:center;justify-content:center;
 width:var(--vibeui-stepper-015-size);height:var(--vibeui-stepper-015-size);
 border-radius:9999px;border:2px solid var(--vibeui-stepper-015-line);
-background:var(--vibeui-stepper-015-bg);color:var(--vibeui-stepper-015-muted);
+background:var(--vibeui-stepper-015-surface);color:var(--vibeui-stepper-015-muted);
 font-size:0.6875rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="stepper-015"] li[data-state="done"] [data-part="mark"]{
@@ -114,7 +125,7 @@ display:flex;justify-content:space-between;gap:0.75rem;margin:0.875rem 0 0;
 display:inline-flex;align-items:center;
 padding:0.5rem 0.875rem;border-radius:0.625rem;
 border:1px solid var(--vibeui-stepper-015-border);
-background:var(--vibeui-stepper-015-bg);
+background:var(--vibeui-stepper-015-surface);
 color:var(--vibeui-stepper-015-fg);font-size:0.8125rem;font-weight:600;
 text-decoration:none;
 }
@@ -142,6 +153,30 @@ const DEFAULT_REVIEW: Stepper015ReviewItem[] = [
   { label: "Способ оплаты", value: "Карта •• 4412", href: "#step-2" },
 ]
 
+const PENDING_TEXT = "Проверка появится на последнем шаге — «{step}»."
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Шаги с подтверждением на последнем этапе и возвратом назад.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -150,12 +185,15 @@ export function Stepper015({
   steps = DEFAULT_STEPS,
   current = 3,
   review = DEFAULT_REVIEW,
+  panelTitle = "Проверьте перед подтверждением",
+  pendingText = PENDING_TEXT,
   editLabel = "Изменить",
   backLabel = "Назад",
   backHref = "#step-2",
   confirmLabel = "Подтвердить",
   confirmHref = "#confirm",
   label = "Оформление заказа",
+  background = "",
   accent,
   className,
   style,
@@ -163,6 +201,12 @@ export function Stepper015({
 }: Stepper015Props) {
   const palette = {
     ...(accent ? { "--vibeui-stepper-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-stepper-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -207,7 +251,7 @@ export function Stepper015({
           </ol>
           {isFinal ? (
             <div data-part="panel">
-              <p data-part="panel-title">Проверьте перед подтверждением</p>
+              <p data-part="panel-title">{panelTitle}</p>
               <ol data-part="review">
                 {review.map((item) => (
                   <li key={item.label}>
@@ -236,8 +280,7 @@ export function Stepper015({
             </div>
           ) : (
             <p data-part="pending">
-              Проверка появится на последнем шаге — «{steps[steps.length - 1]}
-              ».
+              {pendingText.replace("{step}", steps[steps.length - 1])}
             </p>
           )}
         </div>

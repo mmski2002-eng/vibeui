@@ -11,6 +11,10 @@ export type Collapsible004Props = Omit<
 > & {
   title?: string
   lines?: Collapsible004Line[]
+  /** Счётчик строк. {count} — число строк лога. */
+  linesText?: string
+  /** Счётчик ошибок. {count} — число строк с уровнем error. */
+  errorsText?: string
   accent?: string
 }
 
@@ -95,6 +99,8 @@ const DEFAULT_LINES: Collapsible004Line[] = [
 export function Collapsible004({
   title = "Вывод сборки",
   lines = DEFAULT_LINES,
+  linesText = "{count} строк",
+  errorsText = "{count} ошибки",
   accent,
   className,
   style,
@@ -122,8 +128,10 @@ export function Collapsible004({
           <span data-part="mark" aria-hidden="true" />
           {title}
           <span data-part="count">
-            <span>{lines.length} строк</span>
-            {failed > 0 ? <b>{failed} ошибки</b> : null}
+            <span>{linesText.replace("{count}", String(lines.length))}</span>
+            {failed > 0 ? (
+              <b>{errorsText.replace("{count}", String(failed))}</b>
+            ) : null}
           </span>
         </summary>
         <ol data-part="log">

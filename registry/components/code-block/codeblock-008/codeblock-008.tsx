@@ -5,6 +5,8 @@ export type Codeblock008Props = {
   label?: string
   code?: string
   wrapByDefault?: boolean
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -12,15 +14,19 @@ export type Codeblock008Props = {
 // Идея компонента: переключатель переноса длинных строк без единой строки JS.
 // Состояние держит скрытый чекбокс, а :has() переводит код между
 // white-space:pre и pre-wrap — переключение живёт и до гидратации.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, шапка и дорожка переключателя — полупрозрачные накладки.
 const STYLES = `
 :where([data-vibeui-block="codeblock-008"]){
---vibeui-codeblock-008-bg:oklch(0.2 0.026 250);
---vibeui-codeblock-008-head:oklch(0.24 0.03 250);
---vibeui-codeblock-008-fg:oklch(0.93 0.008 250);
---vibeui-codeblock-008-muted:oklch(0.68 0.018 250);
---vibeui-codeblock-008-border:oklch(1 0 0 / 13%);
---vibeui-codeblock-008-accent:oklch(0.75 0.14 250);
---vibeui-codeblock-008-knob:oklch(0.98 0.005 250);
+--vibeui-codeblock-008-bg:transparent;
+--vibeui-codeblock-008-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
+--vibeui-codeblock-008-track:light-dark(oklch(0 0 0 / 22%),oklch(1 0 0 / 16%));
+--vibeui-codeblock-008-fg:light-dark(oklch(0.27 0.02 250),oklch(0.93 0.008 250));
+--vibeui-codeblock-008-muted:light-dark(oklch(0.5 0.02 250),oklch(0.68 0.018 250));
+--vibeui-codeblock-008-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 13%));
+--vibeui-codeblock-008-accent:light-dark(oklch(0.52 0.16 250),oklch(0.75 0.14 250));
+--vibeui-codeblock-008-knob:light-dark(oklch(0.99 0.002 250),oklch(0.98 0.005 250));
 --vibeui-codeblock-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -50,7 +56,7 @@ border:0;clip-path:inset(50%);overflow:hidden;white-space:nowrap;
 }
 [data-vibeui-block="codeblock-008"] [data-part="track"]{
 position:relative;flex:none;width:1.875rem;height:1.0625rem;border-radius:999px;
-background:oklch(1 0 0 / 16%);
+background:var(--vibeui-codeblock-008-track);
 transition:background-color .18s ease;
 }
 [data-vibeui-block="codeblock-008"] [data-part="track"]::after{
@@ -80,15 +86,48 @@ white-space:pre-wrap;overflow-wrap:anywhere;
 const CODE = `const url = new URL("https://api.vibeui.ru/v1/registry/items?category=codeblock&limit=50&fields=name,title,tags")
 const response = await fetch(url, { headers: { accept: "application/json" } })`
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Блок кода с переключателем переноса длинных строк, без JS. */
 export function Codeblock008({
   title = "lib/registry.ts",
   label = "Переносить строки",
   code = CODE,
   wrapByDefault = false,
+  background = "",
   className,
   style,
 }: Codeblock008Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-codeblock-008" precedence="medium">
@@ -97,7 +136,7 @@ export function Codeblock008({
       <figure
         data-vibeui-block="codeblock-008"
         className={className}
-        style={style}
+        style={palette}
       >
         <figcaption>
           <span data-part="name">{title}</span>

@@ -10,21 +10,34 @@ export type Chart021Props = Omit<
   hours?: number[]
   matrix?: number[][]
   unit?: string
+  /** Подпись под картой: {unit} и {max}. */
+  unitLabel?: string
+  /** Края шкалы насыщенности: ключи less и more. */
+  scaleText?: Record<string, string>
+  /** Заголовок первого столбца скрытой таблицы. */
+  rowHeader?: string
+  /** Час в шапке скрытой таблицы: {hour}. */
+  hourLabel?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: тепловая карта «день недели × время суток». Насыщенность
 // клетки считается через color-mix от доли максимума, поэтому шкала остаётся
 // одной переменной акцента. Клетки — сетка, а не таблица с рамками: сетке
 // не нужны отступы, и карта не рассыпается на узкой ширине.
+//
+// Тема берётся из color-scheme окружения через light-dark(): карта темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="chart-021"]){
---vibeui-chart-021-bg:oklch(1 0 0);
---vibeui-chart-021-fg:oklch(0.22 0.014 265);
---vibeui-chart-021-muted:oklch(0.55 0.014 265);
---vibeui-chart-021-border:oklch(0.91 0.006 265);
---vibeui-chart-021-empty:oklch(0.96 0.003 265);
---vibeui-chart-021-accent:oklch(0.52 0.16 245);
+--vibeui-chart-021-bg:transparent;
+--vibeui-chart-021-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-021-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-021-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-chart-021-empty:light-dark(oklch(0.96 0.003 265),oklch(0.27 0.008 265));
+--vibeui-chart-021-accent:light-dark(oklch(0.52 0.16 245),oklch(0.68 0.15 245));
 --vibeui-chart-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="chart-021"]{
@@ -80,6 +93,42 @@ const DEFAULT_MATRIX = [
   [4, 2, 1, 2, 7, 12, 18, 21, 23, 25, 20, 9],
 ]
 
+const SCALE_TEXT: Record<string, string> = {
+  less: "реже",
+  more: "чаще",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+function fillTemplate(
+  template: string,
+  values: Record<string, string | number>,
+) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
 /**
  * Тепловая карта активности «день недели × время суток».
  * Один файл, ноль зависимостей, собственная палитра.
@@ -90,7 +139,12 @@ export function Chart021({
   hours = DEFAULT_HOURS,
   matrix = DEFAULT_MATRIX,
   unit = "сессий в двухчасовом интервале",
+  unitLabel = "Единица измерения: {unit}. Максимум клетки — {max}.",
+  scaleText = SCALE_TEXT,
+  rowHeader = "День",
+  hourLabel = "{hour}:00",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -99,6 +153,12 @@ export function Chart021({
 
   const palette = {
     ...(accent ? { "--vibeui-chart-021-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-chart-021-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     "--vibeui-chart-021-cols": String(hours.length),
     ...style,
   } as CSSProperties
@@ -144,7 +204,7 @@ export function Chart021({
           ))}
         </ul>
         <p data-part="scale">
-          реже
+          {scaleText.less ?? SCALE_TEXT.less}
           {[0.05, 0.3, 0.55, 0.8, 1].map((level) => (
             <span
               key={level}
@@ -155,21 +215,19 @@ export function Chart021({
               }
             />
           ))}
-          чаще
+          {scaleText.more ?? SCALE_TEXT.more}
         </p>
-        <p data-part="unit">
-          Единица измерения: {unit}. Максимум клетки — {max}.
-        </p>
+        <p data-part="unit">{fillTemplate(unitLabel, { unit, max })}</p>
         <table data-part="data">
           <caption>
             {title}, {unit}
           </caption>
           <thead>
             <tr>
-              <th scope="col">День</th>
+              <th scope="col">{rowHeader}</th>
               {hours.map((hour) => (
                 <th key={hour} scope="col">
-                  {hour}:00
+                  {fillTemplate(hourLabel, { hour })}
                 </th>
               ))}
             </tr>

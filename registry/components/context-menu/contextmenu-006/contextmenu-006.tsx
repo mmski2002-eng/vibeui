@@ -9,12 +9,29 @@ export type Contextmenu006Row = {
   sum: string
 }
 
+export type Contextmenu006Action = {
+  label: string
+  keys?: string
+}
+
 export type Contextmenu006Props = Omit<
   ComponentPropsWithoutRef<"section">,
   "children"
 > & {
   caption?: string
+  /** Хвост подписи с подсказкой о вызове меню. */
+  captionHint?: string
   rows?: Contextmenu006Row[]
+  /** Заголовки колонок: компонент несёт русские, проект подставляет свои. */
+  columnText?: Record<"name" | "status" | "sum", string>
+  actions?: Contextmenu006Action[]
+  deleteLabel?: string
+  /** Имя открытого меню; {row} — имя строки. */
+  menuLabel?: string
+  /** Имя меню, когда строка ещё не выбрана. */
+  menuTitle?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,13 +42,15 @@ export type Contextmenu006Props = Omit<
 // координатах меню встаёт по краю самой строки, а не в углу экрана.
 const STYLES = `
 :where([data-vibeui-block="contextmenu-006"]){
---vibeui-contextmenu-006-bg:oklch(1 0 0);
---vibeui-contextmenu-006-fg:oklch(0.24 0.014 265);
---vibeui-contextmenu-006-muted:oklch(0.55 0.014 265);
---vibeui-contextmenu-006-border:oklch(0.9 0.006 265);
---vibeui-contextmenu-006-hover:oklch(0.97 0.003 265);
---vibeui-contextmenu-006-accent:oklch(0.55 0.18 250);
---vibeui-contextmenu-006-danger:oklch(0.56 0.19 25);
+--vibeui-contextmenu-006-bg:transparent;
+--vibeui-contextmenu-006-surface:light-dark(oklch(1 0 0),oklch(0.24 0.013 265));
+--vibeui-contextmenu-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-contextmenu-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-contextmenu-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-contextmenu-006-hover:light-dark(oklch(0.97 0.003 265),oklch(0.31 0.014 265));
+--vibeui-contextmenu-006-accent:light-dark(oklch(0.55 0.18 250),oklch(0.75 0.14 250));
+--vibeui-contextmenu-006-danger:light-dark(oklch(0.56 0.19 25),oklch(0.73 0.16 25));
+--vibeui-contextmenu-006-shadow:light-dark(oklch(0.2 0.03 265 / 50%),oklch(0 0 0 / 72%));
 --vibeui-contextmenu-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-contextmenu-006-x:50%;
 --vibeui-contextmenu-006-y:50%;
@@ -75,9 +94,9 @@ font-size:0.6875rem;color:var(--vibeui-contextmenu-006-muted);
 position:fixed;margin:0;padding:0.3125rem;
 top:var(--vibeui-contextmenu-006-y);left:var(--vibeui-contextmenu-006-x);
 min-width:13rem;box-sizing:border-box;
-background:var(--vibeui-contextmenu-006-bg);color:var(--vibeui-contextmenu-006-fg);
+background:var(--vibeui-contextmenu-006-surface);color:var(--vibeui-contextmenu-006-fg);
 border:1px solid var(--vibeui-contextmenu-006-border);border-radius:0.75rem;
-box-shadow:0 18px 40px -20px oklch(0.2 0.03 265 / 50%);
+box-shadow:0 18px 40px -20px var(--vibeui-contextmenu-006-shadow);
 font-family:var(--vibeui-contextmenu-006-font);
 }
 [data-vibeui-block="contextmenu-006"] [data-part="head"]{
@@ -110,11 +129,39 @@ const DEFAULT_ROWS: Contextmenu006Row[] = [
   { name: "Студия «Круг»", status: "Черновик", sum: "31 200 ₽" },
 ]
 
-const ACTIONS = [
+const DEFAULT_ACTIONS: Contextmenu006Action[] = [
   { label: "Открыть карточку", keys: "↵" },
   { label: "Скопировать ссылку", keys: "⌘L" },
   { label: "Дублировать строку", keys: "⌘D" },
 ]
+
+const DEFAULT_COLUMN_TEXT: Record<"name" | "status" | "sum", string> = {
+  name: "Клиент",
+  status: "Статус",
+  sum: "Сумма",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Контекстное меню строки таблицы: подсветка цели и вызов с клавиатуры.
@@ -122,7 +169,14 @@ const ACTIONS = [
  */
 export function Contextmenu006({
   caption = "Счета за март",
+  captionHint = "правый клик по строке или Shift+F10",
   rows = DEFAULT_ROWS,
+  columnText = DEFAULT_COLUMN_TEXT,
+  actions = DEFAULT_ACTIONS,
+  deleteLabel = "Удалить строку",
+  menuLabel = "Строка: {row}",
+  menuTitle = "Строка",
+  background = "",
   accent,
   className,
   style,
@@ -159,6 +213,12 @@ export function Contextmenu006({
 
   const palette = {
     ...(accent ? { "--vibeui-contextmenu-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-contextmenu-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...(spot
       ? {
           "--vibeui-contextmenu-006-x": spot.x,
@@ -181,12 +241,14 @@ export function Contextmenu006({
         style={palette}
       >
         <table>
-          <caption>{caption} · правый клик по строке или Shift+F10</caption>
+          <caption>
+            {caption} · {captionHint}
+          </caption>
           <thead>
             <tr>
-              <th scope="col">Клиент</th>
-              <th scope="col">Статус</th>
-              <th scope="col">Сумма</th>
+              <th scope="col">{columnText.name}</th>
+              <th scope="col">{columnText.status}</th>
+              <th scope="col">{columnText.sum}</th>
             </tr>
           </thead>
           <tbody>
@@ -211,7 +273,7 @@ export function Contextmenu006({
           data-part="menu"
           popover="auto"
           role="menu"
-          aria-label={target ? `Строка: ${target}` : "Строка"}
+          aria-label={target ? menuLabel.replace("{row}", target) : menuTitle}
           onToggle={() => {
             if (!menu.current?.matches(":popover-open")) {
               setTarget(null)
@@ -239,7 +301,7 @@ export function Contextmenu006({
           }}
         >
           <div data-part="head">{target}</div>
-          {ACTIONS.map((action) => (
+          {actions.map((action) => (
             <button
               key={action.label}
               type="button"
@@ -259,7 +321,7 @@ export function Contextmenu006({
             data-danger="true"
             onClick={() => menu.current?.hidePopover()}
           >
-            Удалить строку
+            {deleteLabel}
             <span data-part="keys">⌫</span>
           </button>
         </div>

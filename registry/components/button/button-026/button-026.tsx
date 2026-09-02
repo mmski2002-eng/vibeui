@@ -9,6 +9,8 @@ export type Button026Props = Omit<
   fileName?: string
   /** Размер строкой — его считает сервер, а не кнопка. */
   size?: string
+  /** Пусто — подложки нет, кнопка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,12 +21,12 @@ export type Button026Props = Omit<
 // паре решают, качать ли сейчас или с вайфая.
 const STYLES = `
 :where([data-vibeui-block="button-026"]){
---vibeui-button-026-bg:oklch(1 0 0);
---vibeui-button-026-fg:oklch(0.26 0.016 265);
---vibeui-button-026-muted:oklch(0.55 0.014 265);
---vibeui-button-026-border:oklch(0.9 0.006 265);
---vibeui-button-026-accent:oklch(0.55 0.17 265);
---vibeui-button-026-badge:oklch(0.55 0.19 25);
+--vibeui-button-026-bg:transparent;
+--vibeui-button-026-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-button-026-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-button-026-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-button-026-accent:light-dark(oklch(0.55 0.17 265),oklch(0.7 0.15 265));
+--vibeui-button-026-badge:light-dark(oklch(0.55 0.19 25),oklch(0.72 0.16 25));
 --vibeui-button-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-026"]{
@@ -45,9 +47,9 @@ background:color-mix(in oklab,var(--vibeui-button-026-badge) 12%,transparent);
 color:var(--vibeui-button-026-badge);
 font-size:0.625rem;font-weight:750;letter-spacing:0.04em;
 }
-[data-vibeui-block="button-026"][data-format="zip"]{--vibeui-button-026-badge:oklch(0.6 0.14 75)}
-[data-vibeui-block="button-026"][data-format="csv"]{--vibeui-button-026-badge:oklch(0.52 0.14 152)}
-[data-vibeui-block="button-026"][data-format="png"]{--vibeui-button-026-badge:oklch(0.55 0.15 300)}
+[data-vibeui-block="button-026"][data-format="zip"]{--vibeui-button-026-badge:light-dark(oklch(0.6 0.14 75),oklch(0.78 0.13 75))}
+[data-vibeui-block="button-026"][data-format="csv"]{--vibeui-button-026-badge:light-dark(oklch(0.52 0.14 152),oklch(0.74 0.13 152))}
+[data-vibeui-block="button-026"][data-format="png"]{--vibeui-button-026-badge:light-dark(oklch(0.55 0.15 300),oklch(0.74 0.14 300))}
 [data-vibeui-block="button-026"] [data-part="text"]{display:flex;flex-direction:column;gap:0.1875rem;min-width:0}
 [data-vibeui-block="button-026"] [data-part="title"]{
 font-size:0.875rem;font-weight:650;line-height:1.2;
@@ -82,6 +84,28 @@ function formatOf(fileName: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Ссылка-кнопка скачивания: формат, имя и вес файла видны до клика.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -89,6 +113,7 @@ export function Button026({
   label = "Отчёт за март",
   fileName = "vibeui-report-march.pdf",
   size = "2,4 МБ",
+  background = "",
   accent,
   href = "#",
   className,
@@ -99,6 +124,12 @@ export function Button026({
 
   const palette = {
     ...(accent ? { "--vibeui-button-026-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-026-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

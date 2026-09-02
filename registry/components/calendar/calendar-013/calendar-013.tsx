@@ -11,9 +11,17 @@ export type Calendar013Props = Omit<
   today?: string
   defaultValue?: string
   reason?: string
+  /** Подпись закрытого дня для скринридера. {date} и {reason} подставляются. */
+  unavailableText?: string
+  /** Строка отказа под сеткой. {date} и {reason} подставляются. */
+  deniedText?: string
+  /** Строка выбранной даты под сеткой. {date} подставляется. */
+  selectedText?: string
   locale?: string
   onChange?: (iso: string) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: закрытая дата отвечает, а не молчит. Прошедшие дни
@@ -21,13 +29,15 @@ export type Calendar013Props = Omit<
 // вместо пустого клика показывают подписанную причину отказа.
 const STYLES = `
 :where([data-vibeui-block="calendar-013"]){
---vibeui-calendar-013-bg:oklch(1 0 0);
---vibeui-calendar-013-fg:oklch(0.24 0.014 265);
---vibeui-calendar-013-muted:oklch(0.62 0.014 265);
---vibeui-calendar-013-border:oklch(0.91 0.006 265);
---vibeui-calendar-013-hover:oklch(0.96 0.004 265);
---vibeui-calendar-013-accent:oklch(0.53 0.15 165);
---vibeui-calendar-013-locked:oklch(0.55 0.16 25);
+--vibeui-calendar-013-bg:transparent;
+--vibeui-calendar-013-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-calendar-013-muted:light-dark(oklch(0.62 0.014 265),oklch(0.67 0.013 265));
+--vibeui-calendar-013-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-calendar-013-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-calendar-013-note:light-dark(oklch(0.97 0.005 265),oklch(0.28 0.011 265));
+--vibeui-calendar-013-accent:light-dark(oklch(0.53 0.15 165),oklch(0.76 0.13 165));
+--vibeui-calendar-013-on-accent:light-dark(oklch(0.99 0.01 165),oklch(0.2 0.04 165));
+--vibeui-calendar-013-locked:light-dark(oklch(0.55 0.16 25),oklch(0.74 0.14 25));
 --vibeui-calendar-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="calendar-013"]{
@@ -67,20 +77,20 @@ text-decoration:line-through;text-decoration-color:var(--vibeui-calendar-013-loc
 [data-vibeui-block="calendar-013"] td button[aria-disabled="true"]:hover{background:transparent}
 [data-vibeui-block="calendar-013"] td button[data-today="true"]{box-shadow:inset 0 0 0 1px var(--vibeui-calendar-013-accent);font-weight:650}
 [data-vibeui-block="calendar-013"] td button[aria-pressed="true"]{
-background:var(--vibeui-calendar-013-accent);color:oklch(0.99 0.01 165);font-weight:650;
+background:var(--vibeui-calendar-013-accent);color:var(--vibeui-calendar-013-on-accent);font-weight:650;
 }
 [data-vibeui-block="calendar-013"] [data-part="status"]{
 display:flex;align-items:flex-start;gap:0.4375rem;min-height:2.25rem;
 padding:0.4375rem 0.5rem;border-radius:0.5rem;
 font-size:0.75rem;line-height:1.35;
-background:oklch(0.97 0.005 265);color:var(--vibeui-calendar-013-muted);
+background:var(--vibeui-calendar-013-note);color:var(--vibeui-calendar-013-muted);
 }
 [data-vibeui-block="calendar-013"] [data-part="status"][data-tone="locked"]{
-background:color-mix(in oklab,var(--vibeui-calendar-013-locked) 10%,oklch(1 0 0));
+background:color-mix(in oklab,var(--vibeui-calendar-013-locked) 12%,var(--vibeui-calendar-013-note));
 color:var(--vibeui-calendar-013-locked);
 }
 [data-vibeui-block="calendar-013"] [data-part="status"][data-tone="ok"]{
-background:color-mix(in oklab,var(--vibeui-calendar-013-accent) 10%,oklch(1 0 0));
+background:color-mix(in oklab,var(--vibeui-calendar-013-accent) 12%,var(--vibeui-calendar-013-note));
 color:var(--vibeui-calendar-013-accent);
 }
 [data-vibeui-block="calendar-013"] [data-part="mark"]{
@@ -105,6 +115,32 @@ function parse(value: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+function fill(template: string, values: Record<string, string>) {
+  return template.replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match)
+}
+
+/**
  * Месяц с закрытым прошлым: недоступный день объясняет отказ подписью.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -112,9 +148,13 @@ export function Calendar013({
   today = "2026-03-14",
   defaultValue = "2026-03-18",
   reason = "Запись закрывается за сутки: прошедшие дни выбрать нельзя",
+  unavailableText = "{date} — недоступно. {reason}",
+  deniedText = "{date} — {reason}",
+  selectedText = "Выбрано: {date}",
   locale = "ru-RU",
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -139,6 +179,12 @@ export function Calendar013({
 
   const palette = {
     ...(accent ? { "--vibeui-calendar-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -190,7 +236,10 @@ export function Calendar013({
                         aria-pressed={!locked && value === selected}
                         aria-label={
                           locked
-                            ? `${long.format(date)} — недоступно. ${reason}`
+                            ? fill(unavailableText, {
+                                date: long.format(date),
+                                reason,
+                              })
                             : long.format(date)
                         }
                         data-outside={date.getMonth() !== first.getMonth()}
@@ -215,8 +264,8 @@ export function Calendar013({
           <span data-part="mark" aria-hidden="true" />
           <span>
             {denied
-              ? `${denied} — ${reason}`
-              : `Выбрано: ${long.format(parse(selected))}`}
+              ? fill(deniedText, { date: denied, reason })
+              : fill(selectedText, { date: long.format(parse(selected)) })}
           </span>
         </p>
       </div>

@@ -13,6 +13,8 @@ export type Switch011Props = Omit<
   question?: string
   confirmText?: string
   cancelText?: string
+  /** Пусто — подложки нет, карточка держится рамкой на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,13 +25,17 @@ export type Switch011Props = Omit<
 // безопасно и срабатывает мгновенно, без вопросов.
 const STYLES = `
 :where([data-vibeui-block="switch-011"]){
---vibeui-switch-011-bg:oklch(1 0 0);
---vibeui-switch-011-fg:oklch(0.22 0.014 265);
---vibeui-switch-011-muted:oklch(0.54 0.014 265);
---vibeui-switch-011-border:oklch(0.91 0.006 265);
---vibeui-switch-011-track:oklch(0.88 0.008 265);
---vibeui-switch-011-thumb:oklch(1 0 0);
---vibeui-switch-011-accent:oklch(0.55 0.2 25);
+--vibeui-switch-011-bg:transparent;
+/* Диалог поверх страницы обязан быть непрозрачным: у него своя заливка,
+   не связанная с подложкой самой строки. */
+--vibeui-switch-011-panel:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-switch-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-switch-011-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-switch-011-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-switch-011-track:light-dark(oklch(0.88 0.008 265),oklch(0.43 0.014 265));
+--vibeui-switch-011-thumb:light-dark(oklch(1 0 0),oklch(0.93 0.004 265));
+--vibeui-switch-011-accent:light-dark(oklch(0.55 0.2 25),oklch(0.68 0.18 25));
+--vibeui-switch-011-accent-ink:light-dark(oklch(1 0 0),oklch(0.18 0.04 25));
 --vibeui-switch-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="switch-011"]{
@@ -65,7 +71,7 @@ transition:transform .18s cubic-bezier(.32,.72,0,1);
 [data-vibeui-block="switch-011"] [data-part="dialog"]{
 box-sizing:border-box;width:min(22rem,calc(100vw - 2rem));
 padding:1.125rem;border:1px solid var(--vibeui-switch-011-border);border-radius:0.875rem;
-background:var(--vibeui-switch-011-bg);color:var(--vibeui-switch-011-fg);
+background:var(--vibeui-switch-011-panel);color:var(--vibeui-switch-011-fg);
 font-family:var(--vibeui-switch-011-font);
 box-shadow:0 20px 44px oklch(0.2 0.02 265 / 22%);
 }
@@ -85,16 +91,38 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 transition:filter .16s ease;
 }
 [data-vibeui-block="switch-011"] [data-part="confirm"]{
-border:0;background:var(--vibeui-switch-011-accent);color:oklch(1 0 0);
+border:0;background:var(--vibeui-switch-011-accent);color:var(--vibeui-switch-011-accent-ink);
 }
 [data-vibeui-block="switch-011"] [data-part="cancel"]{
 border:1px solid var(--vibeui-switch-011-border);
-background:var(--vibeui-switch-011-bg);color:inherit;
+background:var(--vibeui-switch-011-panel);color:inherit;
 }
 [data-vibeui-block="switch-011"] button:hover{filter:brightness(.96)}
 [data-vibeui-block="switch-011"] button:focus-visible{outline:2px solid var(--vibeui-switch-011-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="switch-011"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Переключатель опасного включения: подтверждение спрашивается в нативном
@@ -107,6 +135,7 @@ export function Switch011({
   question = "Открыть доступ по ссылке? Проект смогут увидеть все, у кого она окажется.",
   confirmText = "Открыть доступ",
   cancelText = "Отмена",
+  background = "",
   accent,
   className,
   style,
@@ -118,6 +147,12 @@ export function Switch011({
 
   const palette = {
     ...(accent ? { "--vibeui-switch-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-switch-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

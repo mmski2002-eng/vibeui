@@ -17,7 +17,11 @@ export type Commerce009Props = {
   totals?: { label: string; value: string; strong?: boolean }[]
   cta?: string
   guarantees?: string[]
+  /** Подписи блока: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -29,14 +33,19 @@ export type Commerce009Props = {
 // сохраняет его и не мешает считать итог. Количество здесь не кнопки, а
 // нативный select: на длинном списке он короче и не требует клиентского
 // состояния, поэтому блок остаётся серверным.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="commerce-009"]){
---vibeui-commerce-009-bg:oklch(1 0 0);
---vibeui-commerce-009-fg:oklch(0.22 0.014 265);
---vibeui-commerce-009-muted:oklch(0.55 0.014 265);
---vibeui-commerce-009-border:oklch(0.91 0.006 265);
---vibeui-commerce-009-soft:oklch(0.97 0.004 265);
---vibeui-commerce-009-accent:oklch(0.55 0.2 262);
+--vibeui-commerce-009-bg:transparent;
+--vibeui-commerce-009-field:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-commerce-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-commerce-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-009-soft:light-dark(oklch(0.97 0.004 265),oklch(0.28 0.01 265));
+--vibeui-commerce-009-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-commerce-009-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
 --vibeui-commerce-009-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -61,7 +70,7 @@ padding:0.625rem;border-radius:0.875rem;border:1px solid var(--vibeui-commerce-0
 }
 [data-vibeui-block="commerce-009"] [data-part="shot"]{
 width:3.5rem;height:3.5rem;border-radius:0.625rem;
-background:linear-gradient(145deg,oklch(0.94 0.05 var(--vibeui-commerce-009-hue,262)),oklch(0.87 0.09 var(--vibeui-commerce-009-hue,262)));
+background:linear-gradient(145deg,light-dark(oklch(0.94 0.05 var(--vibeui-commerce-009-hue,262)),oklch(0.43 0.06 var(--vibeui-commerce-009-hue,262))),light-dark(oklch(0.87 0.09 var(--vibeui-commerce-009-hue,262)),oklch(0.33 0.07 var(--vibeui-commerce-009-hue,262))));
 }
 [data-vibeui-block="commerce-009"] [data-part="head"]{display:flex;flex-wrap:wrap;gap:0.25rem 0.75rem;align-items:baseline}
 [data-vibeui-block="commerce-009"] [data-part="name"]{margin:0;font-size:0.8125rem;font-weight:650;line-height:1.3}
@@ -72,7 +81,7 @@ background:linear-gradient(145deg,oklch(0.94 0.05 var(--vibeui-commerce-009-hue,
 [data-vibeui-block="commerce-009"] select{
 appearance:none;font:inherit;font-size:0.75rem;color:inherit;height:1.875rem;
 padding:0 1.5rem 0 0.5rem;border-radius:0.5rem;
-border:1px solid var(--vibeui-commerce-009-border);background:var(--vibeui-commerce-009-bg);
+border:1px solid var(--vibeui-commerce-009-border);background:var(--vibeui-commerce-009-field);
 background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
 background-position:calc(100% - 0.75rem) 55%,calc(100% - 0.5rem) 55%;
 background-size:0.25rem 0.25rem,0.25rem 0.25rem;background-repeat:no-repeat;
@@ -96,7 +105,7 @@ position:sticky;top:1rem;
 [data-vibeui-block="commerce-009"] [data-strong="true"]{font-size:1.0625rem;font-weight:700;color:var(--vibeui-commerce-009-fg)}
 [data-vibeui-block="commerce-009"] [data-part="pay"]{
 width:100%;appearance:none;border:0;cursor:pointer;height:2.625rem;border-radius:0.75rem;
-background:var(--vibeui-commerce-009-accent);color:oklch(1 0 0);font:inherit;font-size:0.875rem;font-weight:650;
+background:var(--vibeui-commerce-009-accent);color:var(--vibeui-commerce-009-on-accent);font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-009"] [data-part="pay"]:focus-visible{outline:2px solid var(--vibeui-commerce-009-accent);outline-offset:2px}
 [data-vibeui-block="commerce-009"] [data-part="guarantees"]{
@@ -151,6 +160,38 @@ const DEFAULT_GUARANTEES = [
   "Сборка и подъём на этаж по желанию",
 ]
 
+/** Русские подписи по умолчанию: установленный файл не меняет язык сам. */
+const LABELS: Record<string, string> = {
+  count: "Кол-во",
+  shelve: "Отложить «{title}»",
+  restore: "Вернуть «{title}»",
+  remove: "Убрать «{title}»",
+  later: "Отложено",
+  summary: "Итог заказа",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Корзина с полкой «отложено»: итог отдельной колонкой, количество — select.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -162,12 +203,22 @@ export function Commerce009({
   totals = DEFAULT_TOTALS,
   cta = "Перейти к оформлению",
   guarantees = DEFAULT_GUARANTEES,
+  labels = LABELS,
   accent,
+  background = "",
   className,
   style,
 }: Commerce009Props) {
+  const text = { ...LABELS, ...labels }
+
   const palette = {
     ...(accent ? { "--vibeui-commerce-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -192,7 +243,7 @@ export function Commerce009({
                 htmlFor={`commerce-009-count-${line.id}`}
                 data-part="option"
               >
-                Кол-во
+                {text.count}
               </label>
               <select
                 id={`commerce-009-count-${line.id}`}
@@ -206,10 +257,13 @@ export function Commerce009({
             </>
           )}
           <button type="button" data-part="link">
-            {shelved ? `Вернуть «${line.title}»` : `Отложить «${line.title}»`}
+            {(shelved ? text.restore : text.shelve).replace(
+              "{title}",
+              line.title,
+            )}
           </button>
           <button type="button" data-part="link">
-            Убрать «{line.title}»
+            {text.remove.replace("{title}", line.title)}
           </button>
         </div>
       </div>
@@ -236,13 +290,15 @@ export function Commerce009({
 
             {later.length > 0 ? (
               <div data-part="later">
-                <h3>Отложено · {later.length}</h3>
+                <h3>
+                  {text.later} · {later.length}
+                </h3>
                 <ul>{later.map((line) => row(line, true))}</ul>
               </div>
             ) : null}
           </div>
 
-          <aside data-part="total" aria-label="Итог заказа">
+          <aside data-part="total" aria-label={text.summary}>
             <dl>
               {totals.map((entry) => (
                 <div key={entry.label} data-part="pair">

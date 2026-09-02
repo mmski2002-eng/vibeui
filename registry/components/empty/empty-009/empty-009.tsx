@@ -6,22 +6,33 @@ export type Empty009Props = Omit<
 > & {
   title?: string
   text?: string
+  /** Подпись у пульсирующей точки: что происходит прямо сейчас. */
+  statusLabel?: string
   updatedAt?: string
   retryLabel?: string
   onRetry?: () => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  /** Цвет ожидания: перечёркивание, метка и пульс. */
+  wait?: string
 }
 
 // Идея компонента: офлайн-состояние, которое не выглядит поломкой приложения.
 // Пульсирующая точка показывает, что попытки продолжаются сами, строка с
 // временем последнего обновления говорит, насколько устарели данные на
 // экране, а кнопка нужна тем, кто не хочет ждать очередной попытки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="empty-009"]){
---vibeui-empty-009-bg:oklch(0.99 0.002 265);
---vibeui-empty-009-fg:oklch(0.21 0.014 265);
---vibeui-empty-009-muted:oklch(0.55 0.014 265);
---vibeui-empty-009-border:oklch(0.91 0.006 265);
---vibeui-empty-009-wait:oklch(0.62 0.15 65);
+--vibeui-empty-009-bg:transparent;
+--vibeui-empty-009-fg:light-dark(oklch(0.21 0.014 265),oklch(0.95 0.005 265));
+--vibeui-empty-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-empty-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-empty-009-button:light-dark(oklch(1 0 0),oklch(0.28 0.011 265));
+--vibeui-empty-009-button-hover:light-dark(oklch(0.97 0.003 265),oklch(0.33 0.012 265));
+--vibeui-empty-009-wait:light-dark(oklch(0.62 0.15 65),oklch(0.78 0.14 65));
 --vibeui-empty-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="empty-009"]{
@@ -68,10 +79,10 @@ animation:vibeui-empty-009-pulse 1.6s ease-in-out infinite;
 appearance:none;cursor:pointer;margin-top:0.5rem;
 height:2.5rem;padding:0 1.125rem;border-radius:0.75rem;
 border:1px solid var(--vibeui-empty-009-border);
-background:oklch(1 0 0);color:var(--vibeui-empty-009-fg);
+background:var(--vibeui-empty-009-button);color:var(--vibeui-empty-009-fg);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
-[data-vibeui-block="empty-009"] [data-part="action"]:hover{background:oklch(0.97 0.003 265)}
+[data-vibeui-block="empty-009"] [data-part="action"]:hover{background:var(--vibeui-empty-009-button-hover)}
 [data-vibeui-block="empty-009"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-empty-009-wait);outline-offset:2px}
 [data-vibeui-block="empty-009"] [data-part="stamp"]{
 margin:0.375rem 0 0;font-size:0.6875rem;color:var(--vibeui-empty-009-muted);
@@ -80,19 +91,55 @@ margin:0.375rem 0 0;font-size:0.6875rem;color:var(--vibeui-empty-009-muted);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Офлайн-состояние: видимое ожидание, возраст данных и повтор вручную.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Empty009({
   title = "Нет соединения",
   text = "Список откроется сам, как только связь вернётся. Ничего из введённого не потеряно.",
+  statusLabel = "Пробуем переподключиться",
   updatedAt = "Данные на экране от 14:08",
   retryLabel = "Попробовать сейчас",
   onRetry,
+  background = "",
+  wait,
   className,
   style,
   ...props
 }: Empty009Props) {
+  const palette = {
+    ...(wait ? { "--vibeui-empty-009-wait": wait } : null),
+    ...(background
+      ? {
+          "--vibeui-empty-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-empty-009" precedence="medium">
@@ -104,13 +151,13 @@ export function Empty009({
         role="status"
         aria-live="polite"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="mark" aria-hidden="true" />
         <h3 data-part="title">{title}</h3>
         <p data-part="status">
           <span data-part="pulse" aria-hidden="true" />
-          Пробуем переподключиться
+          {statusLabel}
         </p>
         <p data-part="text">{text}</p>
         <button type="button" data-part="action" onClick={onRetry}>

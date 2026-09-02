@@ -18,6 +18,8 @@ export type Footer001Props = {
   legal?: string
   /** Ссылки в нижней строке: политика, оферта. */
   legalLinks?: Footer001Link[]
+  /** Пусто — подложки нет, подвал лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -29,16 +31,19 @@ export type Footer001Props = {
 // считается от ширины блока, а не окна, поэтому миниатюра каталога показывает
 // настоящую раскладку.
 //
-// Идея блока: подвал светлый, а не тёмная плита в конце страницы. Тёмный
+// Идея блока: подвал лёгкий, а не тёмная плита в конце страницы. Тёмный
 // подвал спорит с финальной секцией призыва — вместе они дают два тяжёлых
 // пятна подряд, и взгляд теряет главное действие.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подвал темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="footer-001"]){
---vibeui-footer-001-bg:oklch(0.985 0.003 265);
---vibeui-footer-001-ink:oklch(0.24 0.014 265);
---vibeui-footer-001-muted:oklch(0.52 0.014 265);
---vibeui-footer-001-border:oklch(0.91 0.006 265);
---vibeui-footer-001-accent:oklch(0.52 0.19 265);
+--vibeui-footer-001-bg:transparent;
+--vibeui-footer-001-ink:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-footer-001-muted:light-dark(oklch(0.52 0.014 265),oklch(0.69 0.012 265));
+--vibeui-footer-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-footer-001-accent:light-dark(oklch(0.52 0.19 265),oklch(0.74 0.15 265));
 --vibeui-footer-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -130,6 +135,28 @@ const DEFAULT_LEGAL_LINKS: Footer001Link[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подвал сайта: колонки ссылок, подпись бренда и нижняя строка.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -139,12 +166,19 @@ export function Footer001({
   columns = DEFAULT_COLUMNS,
   legal = "© 2026 Студия «Полёт»",
   legalLinks = DEFAULT_LEGAL_LINKS,
+  background = "",
   accent,
   className,
   style,
 }: Footer001Props) {
   const palette = {
     ...(accent ? { "--vibeui-footer-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-footer-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

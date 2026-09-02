@@ -17,7 +17,17 @@ export type Solutions013Props = {
   outboundTitle?: string
   inbound?: Solutions013Doc[]
   outbound?: Solutions013Doc[]
+  /** Счётчик в шапке, {count} — сколько документов в работе. */
+  docsCountText?: string
+  /** Счётчик потока, {count} — сколько документов в колонке. */
+  flowCountText?: string
+  /** Готовность строкой, {done} и {total} — позиции. */
+  ratioText?: string
+  /** Подпись полосы для скринридера, {code} — номер документа. */
+  progressLabelText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,14 +42,16 @@ export type Solutions013Props = {
 // склада — не «какой документ», а «куда идти».
 const STYLES = `
 :where([data-vibeui-block="solutions-013"]){
---vibeui-solutions-013-bg:oklch(1 0 0);
---vibeui-solutions-013-panel:oklch(0.975 0.004 235);
---vibeui-solutions-013-fg:oklch(0.21 0.014 250);
---vibeui-solutions-013-muted:oklch(0.54 0.014 250);
---vibeui-solutions-013-border:oklch(0.9 0.006 250);
---vibeui-solutions-013-in:oklch(0.55 0.15 200);
---vibeui-solutions-013-out:oklch(0.6 0.16 60);
---vibeui-solutions-013-accent:oklch(0.5 0.17 265);
+--vibeui-solutions-013-bg:transparent;
+--vibeui-solutions-013-panel:light-dark(oklch(0.975 0.004 235),oklch(0.26 0.012 250));
+--vibeui-solutions-013-chip:light-dark(oklch(1 0 0),oklch(0.21 0.012 250));
+--vibeui-solutions-013-fg:light-dark(oklch(0.21 0.014 250),oklch(0.94 0.005 250));
+--vibeui-solutions-013-muted:light-dark(oklch(0.54 0.014 250),oklch(0.7 0.012 250));
+--vibeui-solutions-013-border:light-dark(oklch(0.9 0.006 250),oklch(0.36 0.012 250));
+--vibeui-solutions-013-in:light-dark(oklch(0.55 0.15 200),oklch(0.74 0.13 200));
+--vibeui-solutions-013-out:light-dark(oklch(0.6 0.16 60),oklch(0.78 0.14 60));
+--vibeui-solutions-013-on-flow:light-dark(oklch(1 0 0),oklch(0.2 0.012 250));
+--vibeui-solutions-013-accent:light-dark(oklch(0.5 0.17 265),oklch(0.72 0.16 265));
 --vibeui-solutions-013-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-013-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -67,7 +79,7 @@ font-size:0.75rem;font-weight:700;letter-spacing:0.03em;text-transform:uppercase
 }
 [data-vibeui-block="solutions-013"] [data-part="arrow"]{
 width:1.25rem;height:1.25rem;border-radius:0.375rem;display:grid;place-items:center;
-font-size:0.75rem;line-height:1;color:oklch(1 0 0);background:var(--vibeui-solutions-013-in);
+font-size:0.75rem;line-height:1;color:var(--vibeui-solutions-013-on-flow);background:var(--vibeui-solutions-013-in);
 }
 [data-vibeui-block="solutions-013"] [data-flow="out"] [data-part="arrow"]{background:var(--vibeui-solutions-013-out)}
 [data-vibeui-block="solutions-013"] [data-part="count"]{
@@ -96,7 +108,7 @@ display:block;margin-top:0.125rem;font-size:0.875rem;font-weight:650;line-height
 /* Ворота у каждой строки: задача склада — «куда идти», а не «какой документ». */
 [data-vibeui-block="solutions-013"] [data-part="gate"]{
 display:inline-block;margin-top:0.25rem;padding:0.0625rem 0.4375rem;border-radius:0.375rem;
-background:var(--vibeui-solutions-013-bg);border:1px solid var(--vibeui-solutions-013-border);
+background:var(--vibeui-solutions-013-chip);border:1px solid var(--vibeui-solutions-013-border);
 font-size:0.6875rem;font-weight:650;
 }
 [data-vibeui-block="solutions-013"] [data-part="note"]{
@@ -178,6 +190,28 @@ const DEFAULT_OUTBOUND: Solutions013Doc[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Смена склада: приёмка и отгрузка двумя потоками, готовность — дробью.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -188,12 +222,23 @@ export function Solutions013({
   outboundTitle = "Отгрузка",
   inbound = DEFAULT_INBOUND,
   outbound = DEFAULT_OUTBOUND,
+  docsCountText = "Документов в работе: {count}",
+  flowCountText = "{count} документа",
+  ratioText = "{done} из {total} поз.",
+  progressLabelText = "{code}: обработано позиций",
   accent,
+  background = "",
   className,
   style,
 }: Solutions013Props) {
   const palette = {
     ...(accent ? { "--vibeui-solutions-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -219,7 +264,10 @@ export function Solutions013({
             <p data-part="day">{day}</p>
           </div>
           <p data-part="day">
-            Документов в работе: {inbound.length + outbound.length}
+            {docsCountText.replace(
+              "{count}",
+              String(inbound.length + outbound.length),
+            )}
           </p>
         </header>
 
@@ -231,7 +279,9 @@ export function Solutions013({
                   {flow.sign}
                 </span>
                 {flow.title}
-                <span data-part="count">{flow.docs.length} документа</span>
+                <span data-part="count">
+                  {flowCountText.replace("{count}", String(flow.docs.length))}
+                </span>
               </h3>
 
               <ul>
@@ -260,7 +310,10 @@ export function Solutions013({
                           aria-valuenow={doc.done}
                           aria-valuemin={0}
                           aria-valuemax={doc.total}
-                          aria-label={`${doc.code}: обработано позиций`}
+                          aria-label={progressLabelText.replace(
+                            "{code}",
+                            doc.code,
+                          )}
                         >
                           <span
                             data-part="fill"
@@ -268,7 +321,9 @@ export function Solutions013({
                           />
                         </span>
                         <span data-part="ratio">
-                          {doc.done} из {doc.total} поз.
+                          {ratioText
+                            .replace("{done}", String(doc.done))
+                            .replace("{total}", String(doc.total))}
                         </span>
                       </p>
                     </li>

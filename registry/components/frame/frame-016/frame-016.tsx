@@ -7,6 +7,8 @@ export type Frame016Props = Omit<
   time?: string
   subtitle?: string
   caption?: string
+  /** Цвет корпуса часов. Пусто — металлик из палитры компонента. */
+  caseColor?: string
   children?: ReactNode
 }
 
@@ -19,13 +21,14 @@ export type Frame016Props = Omit<
 // в тёмной подложке каталога, как и у телефона в frame-004.
 const STYLES = `
 :where([data-vibeui-block="frame-016"]){
---vibeui-frame-016-case:oklch(0.88 0.006 265);
---vibeui-frame-016-case-edge:oklch(0.74 0.008 265);
---vibeui-frame-016-strap:oklch(0.8 0.006 265);
+--vibeui-frame-016-case:light-dark(oklch(0.88 0.006 265),oklch(0.52 0.008 265));
+--vibeui-frame-016-case-edge:light-dark(oklch(0.74 0.008 265),oklch(0.63 0.01 265));
+--vibeui-frame-016-strap:light-dark(oklch(0.8 0.006 265),oklch(0.43 0.008 265));
 --vibeui-frame-016-screen:oklch(0.18 0.014 265);
 --vibeui-frame-016-fg:oklch(0.97 0.004 95);
 --vibeui-frame-016-muted:color-mix(in oklab,oklch(0.97 0.004 95) 60%,transparent);
---vibeui-frame-016-caption:oklch(0.55 0.014 265);
+--vibeui-frame-016-caption:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-frame-016-shadow:light-dark(oklch(0.2 0.02 265 / 0.22),oklch(0 0 0 / 0.5));
 --vibeui-frame-016-size:11rem;
 --vibeui-frame-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -62,7 +65,7 @@ width:100%;height:100%;padding:0.5rem;
 background:var(--vibeui-frame-016-case);
 border:1px solid var(--vibeui-frame-016-case-edge);
 border-radius:9999px;
-box-shadow:0 0.75rem 1.5rem oklch(0.2 0.02 265 / 0.22);
+box-shadow:0 0.75rem 1.5rem var(--vibeui-frame-016-shadow);
 }
 [data-vibeui-block="frame-016"] [data-part="crown"]{
 position:absolute;top:38%;right:-0.3rem;
@@ -105,11 +108,17 @@ export function Frame016({
   time = "9:41",
   subtitle = "6 482 шага",
   caption = "Кадр умных часов с круглым экраном",
+  caseColor,
   children,
   className,
   style,
   ...props
 }: Frame016Props) {
+  const palette = {
+    ...(caseColor ? { "--vibeui-frame-016-case": caseColor } : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-frame-016" precedence="medium">
@@ -119,7 +128,7 @@ export function Frame016({
         {...props}
         data-vibeui-block="frame-016"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="stage">
           <div data-part="device">

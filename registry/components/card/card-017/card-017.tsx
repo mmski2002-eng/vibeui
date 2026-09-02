@@ -13,6 +13,10 @@ export type Card017Props = Omit<
   rating?: number
   /** Ссылка на источник отзыва: сторонняя площадка, письмо, интервью. */
   source?: string
+  /** Подпись оценки для скринридера: {rating} — сколько звёзд, {max} — из скольких. */
+  ratingTemplate?: string
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,12 +27,13 @@ export type Card017Props = Omit<
 // на слух не существует.
 const STYLES = `
 :where([data-vibeui-block="card-017"]){
---vibeui-card-017-bg:oklch(0.99 0.004 90);
---vibeui-card-017-fg:oklch(0.23 0.016 265);
---vibeui-card-017-muted:oklch(0.55 0.013 265);
---vibeui-card-017-border:oklch(0.91 0.007 90);
---vibeui-card-017-accent:oklch(0.62 0.14 55);
---vibeui-card-017-star:oklch(0.74 0.15 78);
+--vibeui-card-017-bg:transparent;
+--vibeui-card-017-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.006 265));
+--vibeui-card-017-muted:light-dark(oklch(0.55 0.013 265),oklch(0.71 0.012 265));
+--vibeui-card-017-border:light-dark(oklch(0.91 0.007 90),oklch(0.37 0.011 90));
+--vibeui-card-017-accent:light-dark(oklch(0.62 0.14 55),oklch(0.78 0.12 55));
+--vibeui-card-017-star:light-dark(oklch(0.74 0.15 78),oklch(0.82 0.14 78));
+--vibeui-card-017-track:light-dark(oklch(0.93 0.005 90),oklch(0.35 0.008 90));
 --vibeui-card-017-hue:60;
 --vibeui-card-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -52,7 +57,7 @@ display:flex;align-items:center;gap:0.1875rem;position:relative;
 }
 [data-vibeui-block="card-017"] [data-part="star"]{
 width:0.875rem;height:0.875rem;
-background:color-mix(in oklab,var(--vibeui-card-017-star) 25%,oklch(0.93 0.005 90));
+background:color-mix(in oklab,var(--vibeui-card-017-star) 25%,var(--vibeui-card-017-track));
 clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
 }
 [data-vibeui-block="card-017"] [data-part="star"][data-on="true"]{background:var(--vibeui-card-017-star)}
@@ -107,6 +112,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Карточка отзыва: цитата в blockquote, автор в figcaption, оценка
  * звёздами с числом. Один файл, ноль зависимостей.
  */
@@ -116,6 +143,8 @@ export function Card017({
   role = "Продакт, «Ранняя птица»",
   rating = 5,
   source = "Отзыв на площадке",
+  ratingTemplate = "Оценка {rating} из {max}",
+  background = "",
   accent,
   className,
   style,
@@ -126,6 +155,12 @@ export function Card017({
   const palette = {
     "--vibeui-card-017-hue": hue(author),
     ...(accent ? { "--vibeui-card-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-card-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -142,7 +177,11 @@ export function Card017({
       >
         {stars > 0 ? (
           <p data-part="stars">
-            <span data-part="sr">Оценка {stars} из 5</span>
+            <span data-part="sr">
+              {ratingTemplate
+                .replace("{rating}", String(stars))
+                .replace("{max}", "5")}
+            </span>
             {[1, 2, 3, 4, 5].map((position) => (
               <span
                 key={position}

@@ -21,6 +21,19 @@ export type Resizable009Props = Omit<
   maxList?: number
   step?: number
   onChange?: (sizes: [number, number]) => void
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  foldersTitle?: string
+  foldersItems?: string[]
+  listTitle?: string
+  listItems?: string[]
+  readerTitle?: string
+  readerText?: string
+  /** Строка состояния; {folders} и {list} заменяются на ширины колонок. */
+  statusText?: string
+  /** aria-valuetext разделителей; {size} заменяется на ширину колонки. */
+  valueText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -31,12 +44,13 @@ export type Resizable009Props = Omit<
 // остаток, поэтому сумма всегда сходится.
 const STYLES = `
 :where([data-vibeui-block="resizable-009"]){
---vibeui-resizable-009-bg:oklch(1 0 0);
---vibeui-resizable-009-fg:oklch(0.22 0.014 265);
---vibeui-resizable-009-muted:oklch(0.55 0.014 265);
---vibeui-resizable-009-border:oklch(0.9 0.006 265);
---vibeui-resizable-009-surface:oklch(0.975 0.004 265);
---vibeui-resizable-009-accent:oklch(0.62 0.14 165);
+--vibeui-resizable-009-bg:transparent;
+--vibeui-resizable-009-pane:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-resizable-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-resizable-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-resizable-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-resizable-009-surface:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.011 265));
+--vibeui-resizable-009-accent:light-dark(oklch(0.55 0.13 165),oklch(0.77 0.13 165));
 --vibeui-resizable-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="resizable-009"]{
@@ -51,10 +65,10 @@ font-family:var(--vibeui-resizable-009-font);
 display:flex;align-items:stretch;height:11rem;
 border:1px solid var(--vibeui-resizable-009-border);border-radius:0.75rem;overflow:hidden;
 }
-[data-vibeui-block="resizable-009"] [data-part="pane"]{min-width:0;padding:0.625rem;overflow:auto}
+[data-vibeui-block="resizable-009"] [data-part="pane"]{min-width:0;padding:0.625rem;overflow:auto;background:var(--vibeui-resizable-009-pane)}
 [data-vibeui-block="resizable-009"] [data-part="pane"][data-role="fixed"]{flex:none}
 [data-vibeui-block="resizable-009"] [data-part="pane"][data-role="fixed"]:first-child{background:var(--vibeui-resizable-009-surface)}
-[data-vibeui-block="resizable-009"] [data-part="pane"][data-role="rest"]{flex:1;background:var(--vibeui-resizable-009-bg)}
+[data-vibeui-block="resizable-009"] [data-part="pane"][data-role="rest"]{flex:1;background:var(--vibeui-resizable-009-pane)}
 [data-vibeui-block="resizable-009"] h3{
 margin:0 0 0.3125rem;font-size:0.6875rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
 color:var(--vibeui-resizable-009-muted);
@@ -86,6 +100,28 @@ margin:0;font-size:0.75rem;color:var(--vibeui-resizable-009-muted);font-variant-
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Три колонки почтового клиента и два независимых разделителя в пикселях,
  * у каждого свои пределы. Один файл, ноль зависимостей.
  */
@@ -99,6 +135,20 @@ export function Resizable009({
   maxList = 300,
   step = 12,
   onChange,
+  foldersTitle = "Папки",
+  foldersItems = ["Входящие", "Отправленные", "Черновики", "Спам"],
+  listTitle = "Письма",
+  listItems = [
+    "Анна · Правки макета",
+    "Игорь · Счёт № 118",
+    "Отдел кадров · Отпуск",
+    "Марина · Договор",
+  ],
+  readerTitle = "Письмо",
+  readerText = "Правая колонка размер не хранит и забирает остаток ширины рамки — сумма трёх колонок не может разойтись.",
+  statusText = "Папки — {folders} px · Письма — {list} px · остаток — чтение.",
+  valueText = "{size} пикселей",
+  background = "",
   accent,
   className,
   style,
@@ -114,6 +164,12 @@ export function Resizable009({
 
   const palette = {
     ...(accent ? { "--vibeui-resizable-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-resizable-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -180,14 +236,13 @@ export function Resizable009({
             data-role="fixed"
             id={foldersId}
             style={{ width: `${folders}px` }}
-            aria-label="Папки"
+            aria-label={foldersTitle}
           >
-            <h3>Папки</h3>
+            <h3>{foldersTitle}</h3>
             <ul>
-              <li>Входящие</li>
-              <li>Отправленные</li>
-              <li>Черновики</li>
-              <li>Спам</li>
+              {foldersItems.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
             </ul>
           </section>
           <div
@@ -195,12 +250,12 @@ export function Resizable009({
             role="separator"
             tabIndex={0}
             aria-orientation="vertical"
-            aria-label={`${label} «Папки»`}
+            aria-label={`${label} «${foldersTitle}»`}
             aria-controls={foldersId}
             aria-valuenow={folders}
             aria-valuemin={minFolders}
             aria-valuemax={maxFolders}
-            aria-valuetext={`${folders} пикселей`}
+            aria-valuetext={valueText.replace("{size}", String(folders))}
             data-dragging={dragging === 0}
             onKeyDown={onKeyDownFolders}
             onPointerDown={(event) => {
@@ -231,14 +286,13 @@ export function Resizable009({
             data-role="fixed"
             id={listId}
             style={{ width: `${list}px` }}
-            aria-label="Письма"
+            aria-label={listTitle}
           >
-            <h3>Письма</h3>
+            <h3>{listTitle}</h3>
             <ul>
-              <li>Анна · Правки макета</li>
-              <li>Игорь · Счёт № 118</li>
-              <li>Отдел кадров · Отпуск</li>
-              <li>Марина · Договор</li>
+              {listItems.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
             </ul>
           </section>
           <div
@@ -246,12 +300,12 @@ export function Resizable009({
             role="separator"
             tabIndex={0}
             aria-orientation="vertical"
-            aria-label={`${label} «Письма»`}
+            aria-label={`${label} «${listTitle}»`}
             aria-controls={listId}
             aria-valuenow={list}
             aria-valuemin={minList}
             aria-valuemax={maxList}
-            aria-valuetext={`${list} пикселей`}
+            aria-valuetext={valueText.replace("{size}", String(list))}
             data-dragging={dragging === 1}
             onKeyDown={onKeyDownList}
             onPointerDown={(event) => {
@@ -277,16 +331,15 @@ export function Resizable009({
             }}
             onPointerCancel={() => setDragging(-1)}
           />
-          <section data-part="pane" data-role="rest" aria-label="Письмо">
-            <h3>Письмо</h3>
-            <p>
-              Правая колонка размер не хранит и забирает остаток ширины рамки —
-              сумма трёх колонок не может разойтись.
-            </p>
+          <section data-part="pane" data-role="rest" aria-label={readerTitle}>
+            <h3>{readerTitle}</h3>
+            <p>{readerText}</p>
           </section>
         </div>
         <p data-part="status" role="status">
-          Папки — {folders} px · Письма — {list} px · остаток — чтение.
+          {statusText
+            .replace("{folders}", String(folders))
+            .replace("{list}", String(list))}
         </p>
       </div>
     </>

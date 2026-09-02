@@ -15,6 +15,8 @@ export type Buttongroup047Props = Omit<
   defaultValue?: string[]
   label?: string
   name?: string
+  /** Пусто — заливки нет, чипы ложатся на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,11 +29,13 @@ export type Buttongroup047Props = Omit<
 // по строкам, поэтому список расширений можно расширять без переделки.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-047"]){
---vibeui-buttongroup-047-surface:oklch(1 0 0);
---vibeui-buttongroup-047-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-047-muted:oklch(0.57 0.014 265);
---vibeui-buttongroup-047-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-047-accent:oklch(0.42 0.03 265);
+--vibeui-buttongroup-047-surface:transparent;
+--vibeui-buttongroup-047-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-047-muted:light-dark(oklch(0.57 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-047-border:light-dark(oklch(0.89 0.008 265),oklch(0.41 0.012 265));
+--vibeui-buttongroup-047-line:light-dark(oklch(0.8 0.01 265),oklch(0.56 0.014 265));
+--vibeui-buttongroup-047-on:light-dark(oklch(0.97 0.004 265),oklch(0.32 0.012 265));
+--vibeui-buttongroup-047-accent:light-dark(oklch(0.42 0.03 265),oklch(0.82 0.03 265));
 --vibeui-buttongroup-047-hue:265;
 --vibeui-buttongroup-047-radius:0.5rem;
 --vibeui-buttongroup-047-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -74,11 +78,11 @@ color:oklch(0.42 0.15 var(--vibeui-buttongroup-047-hue));
 font-size:0.625rem;font-weight:800;letter-spacing:0.04em;
 }
 [data-vibeui-block="buttongroup-047"] [data-part="chip"]:hover{
-border-color:oklch(0.8 0.01 265);color:var(--vibeui-buttongroup-047-fg);
+border-color:var(--vibeui-buttongroup-047-line);color:var(--vibeui-buttongroup-047-fg);
 }
 [data-vibeui-block="buttongroup-047"] [data-part="chip"]:has(input:checked){
 border-color:var(--vibeui-buttongroup-047-accent);
-background:oklch(0.97 0.004 265);
+background:var(--vibeui-buttongroup-047-on);
 color:var(--vibeui-buttongroup-047-fg);
 box-shadow:inset 0 0 0 1px var(--vibeui-buttongroup-047-accent);
 }
@@ -97,6 +101,28 @@ const DEFAULT_KINDS: Buttongroup047Kind[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Фильтр по типу файла: вместо значка — расширение текстом на цветной плашке.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -105,6 +131,7 @@ export function Buttongroup047({
   defaultValue = ["pdf", "img"],
   label = "Тип файла",
   name = "buttongroup-047",
+  background = "",
   accent,
   className,
   style,
@@ -112,6 +139,12 @@ export function Buttongroup047({
 }: Buttongroup047Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-047-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-047-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

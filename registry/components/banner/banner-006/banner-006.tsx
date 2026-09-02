@@ -9,17 +9,25 @@ export type Banner006Props = Omit<
   detail?: string
   retryLabel?: string
   onRetry?: () => void
+  /** Цвет индикатора сигнала. */
+  tone?: string
+  /** Подложка полосы. Пусто — остаётся собственная тёмная. */
+  background?: string
 }
 
 // Идея компонента: полоса «нет сети», которая объясняет последствия. Не просто
 // «офлайн», а что будет с набранным текстом. Индикатор слева — три затухающие
 // чёрточки, они читаются как оборванный сигнал даже без цвета.
+//
+// Тёмная подложка — это дизайн, а не тема: полоса обязана отличаться от
+// обычных сообщений. Но на тёмной странице 0.25 сливается с фоном, поэтому в
+// тёмной ветке light-dark() подложка светлее — цвет следует окружению.
 const STYLES = `
 :where([data-vibeui-block="banner-006"]){
---vibeui-banner-006-bg:oklch(0.25 0.012 265);
---vibeui-banner-006-fg:oklch(0.96 0.002 265);
---vibeui-banner-006-muted:oklch(0.75 0.008 265);
---vibeui-banner-006-tone:oklch(0.78 0.13 75);
+--vibeui-banner-006-bg:light-dark(oklch(0.25 0.012 265),oklch(0.31 0.014 265));
+--vibeui-banner-006-fg:light-dark(oklch(0.96 0.002 265),oklch(0.95 0.004 265));
+--vibeui-banner-006-muted:light-dark(oklch(0.75 0.008 265),oklch(0.73 0.01 265));
+--vibeui-banner-006-tone:light-dark(oklch(0.78 0.13 75),oklch(0.82 0.12 75));
 --vibeui-banner-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -73,10 +81,18 @@ export function Banner006({
   detail = "Изменения сохраняются в браузере и уйдут сами, как только сеть вернётся.",
   retryLabel = "Проверить сеть",
   onRetry,
+  tone,
+  background = "",
   className,
   style,
   ...props
 }: Banner006Props) {
+  const palette = {
+    ...(tone ? { "--vibeui-banner-006-tone": tone } : null),
+    ...(background ? { "--vibeui-banner-006-bg": background } : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-banner-006" precedence="medium">
@@ -88,7 +104,7 @@ export function Banner006({
         role="status"
         aria-live="polite"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="shell">
           <span data-part="signal" aria-hidden="true">

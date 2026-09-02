@@ -16,7 +16,7 @@ export type Button014Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="button-014"]){
 --vibeui-button-014-size:3.25rem;
---vibeui-button-014-accent:oklch(0.55 0.17 265);
+--vibeui-button-014-accent:light-dark(oklch(0.55 0.17 265),oklch(0.63 0.18 265));
 --vibeui-button-014-fg:oklch(0.99 0.01 265);
 --vibeui-button-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

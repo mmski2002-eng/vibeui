@@ -14,6 +14,12 @@ export type Slider004Props = Omit<
   defaultFrom?: number
   defaultTo?: number
   unit?: string
+  /** Подпись нижней ручки для скринридера. */
+  fromText?: string
+  /** Подпись верхней ручки для скринридера. */
+  toText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,14 +28,18 @@ export type Slider004Props = Omit<
 // теряют клавиатуру и касания. Здесь оба input'а прозрачны, дорожка одна,
 // закрашен только промежуток между ручками, а значения не могут
 // перепрыгнуть друг друга: каждое ограничивает соседа при вводе.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="slider-004"]){
---vibeui-slider-004-bg:oklch(1 0 0);
---vibeui-slider-004-fg:oklch(0.22 0.014 265);
---vibeui-slider-004-muted:oklch(0.55 0.014 265);
---vibeui-slider-004-border:oklch(0.9 0.006 265);
---vibeui-slider-004-track:oklch(0.92 0.006 265);
---vibeui-slider-004-accent:oklch(0.55 0.19 262);
+--vibeui-slider-004-bg:transparent;
+--vibeui-slider-004-surface:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
+--vibeui-slider-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-slider-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-slider-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-slider-004-track:light-dark(oklch(0.92 0.006 265),oklch(0.42 0.012 265));
+--vibeui-slider-004-accent:light-dark(oklch(0.55 0.19 262),oklch(0.72 0.16 262));
 --vibeui-slider-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-004-from:20%;
 --vibeui-slider-004-to:70%;
@@ -70,13 +80,13 @@ pointer-events:none;
 [data-vibeui-block="slider-004"] input::-webkit-slider-thumb{
 appearance:none;pointer-events:auto;cursor:pointer;
 width:1.125rem;height:1.125rem;margin-top:0.1875rem;border-radius:9999px;
-background:var(--vibeui-slider-004-bg);border:3px solid var(--vibeui-slider-004-accent);
+background:var(--vibeui-slider-004-surface);border:3px solid var(--vibeui-slider-004-accent);
 box-shadow:0 1px 4px oklch(0.2 0.02 265 / 28%);
 }
 [data-vibeui-block="slider-004"] input::-moz-range-thumb{
 pointer-events:auto;cursor:pointer;box-sizing:border-box;
 width:1.125rem;height:1.125rem;border-radius:9999px;
-background:var(--vibeui-slider-004-bg);border:3px solid var(--vibeui-slider-004-accent);
+background:var(--vibeui-slider-004-surface);border:3px solid var(--vibeui-slider-004-accent);
 }
 [data-vibeui-block="slider-004"] input:focus-visible{outline:2px solid var(--vibeui-slider-004-accent);outline-offset:2px;border-radius:0.75rem}
 [data-vibeui-block="slider-004"] [data-part="scale"]{
@@ -85,6 +95,28 @@ font-size:0.6875rem;color:var(--vibeui-slider-004-muted);font-variant-numeric:ta
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="slider-004"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Двойной ползунок диапазона: два нативных range на одной дорожке.
@@ -98,6 +130,9 @@ export function Slider004({
   defaultFrom = 4000,
   defaultTo = 14000,
   unit = " ₽",
+  fromText = "от",
+  toText = "до",
+  background = "",
   accent,
   className,
   style,
@@ -112,6 +147,12 @@ export function Slider004({
     "--vibeui-slider-004-from": percent(from),
     "--vibeui-slider-004-to": percent(to),
     ...(accent ? { "--vibeui-slider-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-slider-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -143,7 +184,7 @@ export function Slider004({
             max={max}
             step={step}
             value={from}
-            aria-label={`${label}: от`}
+            aria-label={`${label}: ${fromText}`}
             onChange={(event) =>
               setFrom(Math.min(Number(event.target.value), to - step))
             }
@@ -155,7 +196,7 @@ export function Slider004({
             max={max}
             step={step}
             value={to}
-            aria-label={`${label}: до`}
+            aria-label={`${label}: ${toText}`}
             onChange={(event) =>
               setTo(Math.max(Number(event.target.value), from + step))
             }

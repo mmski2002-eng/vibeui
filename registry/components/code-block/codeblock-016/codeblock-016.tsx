@@ -1,9 +1,20 @@
 import type { CSSProperties } from "react"
 
+export type Codeblock016Sample = {
+  language: string
+  short: string
+  lines: { text: string; kind?: string }[][]
+}
+
 export type Codeblock016Props = {
   title?: string
-  defaultLanguage?: "TypeScript" | "JavaScript" | "Python"
+  defaultLanguage?: string
+  samples?: Codeblock016Sample[]
   group?: string
+  /** Подпись переключателя языков для скринридера. */
+  switchLabel?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -11,20 +22,24 @@ export type Codeblock016Props = {
 // Идея компонента: один и тот же пример на трёх языках. Переключатель —
 // сегментированный, с бегунком, который едет за отмеченной радиокнопкой;
 // сам бегунок двигает CSS через :has(), состояния в JS нет.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, подсветка синтаксиса подобрана отдельно для светлой и тёмной ветки.
 const STYLES = `
 :where([data-vibeui-block="codeblock-016"]){
---vibeui-codeblock-016-bg:oklch(0.2 0.014 285);
---vibeui-codeblock-016-head:oklch(0.25 0.018 285);
---vibeui-codeblock-016-fg:oklch(0.94 0.006 285);
---vibeui-codeblock-016-muted:oklch(0.68 0.014 285);
---vibeui-codeblock-016-border:oklch(1 0 0 / 12%);
---vibeui-codeblock-016-thumb:oklch(0.42 0.09 285);
---vibeui-codeblock-016-accent:oklch(0.84 0.13 285);
---vibeui-codeblock-016-keyword:oklch(0.8 0.13 320);
---vibeui-codeblock-016-string:oklch(0.83 0.12 145);
---vibeui-codeblock-016-comment:oklch(0.61 0.02 285);
---vibeui-codeblock-016-number:oklch(0.85 0.12 72);
---vibeui-codeblock-016-type:oklch(0.83 0.11 230);
+--vibeui-codeblock-016-bg:transparent;
+--vibeui-codeblock-016-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
+--vibeui-codeblock-016-fg:light-dark(oklch(0.26 0.016 285),oklch(0.94 0.006 285));
+--vibeui-codeblock-016-muted:light-dark(oklch(0.5 0.018 285),oklch(0.68 0.014 285));
+--vibeui-codeblock-016-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
+--vibeui-codeblock-016-track:light-dark(oklch(0 0 0 / 8%),oklch(0 0 0 / 30%));
+--vibeui-codeblock-016-thumb:light-dark(oklch(0.87 0.05 285),oklch(0.42 0.09 285));
+--vibeui-codeblock-016-accent:light-dark(oklch(0.52 0.16 285),oklch(0.84 0.13 285));
+--vibeui-codeblock-016-keyword:light-dark(oklch(0.5 0.19 320),oklch(0.8 0.13 320));
+--vibeui-codeblock-016-string:light-dark(oklch(0.45 0.14 145),oklch(0.83 0.12 145));
+--vibeui-codeblock-016-comment:light-dark(oklch(0.58 0.02 285),oklch(0.61 0.02 285));
+--vibeui-codeblock-016-number:light-dark(oklch(0.52 0.14 72),oklch(0.85 0.12 72));
+--vibeui-codeblock-016-type:light-dark(oklch(0.5 0.14 230),oklch(0.83 0.11 230));
 --vibeui-codeblock-016-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -46,7 +61,7 @@ font-size:0.75rem;color:var(--vibeui-codeblock-016-muted);
 }
 [data-vibeui-block="codeblock-016"] [data-part="switch"]{
 position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-padding:0.1875rem;border-radius:999px;background:oklch(0 0 0 / 30%);
+padding:0.1875rem;border-radius:999px;background:var(--vibeui-codeblock-016-track);
 }
 /* Бегунок едет за отмеченной кнопкой: подсветка не перерисовывается,
    а переезжает, поэтому переключение читается как одно движение. */
@@ -91,13 +106,7 @@ font-size:0.8125rem;line-height:1.65;white-space:pre;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="codeblock-016"] *{animation:none!important;transition:none!important}}
 `
 
-type Sample = {
-  language: Codeblock016Props["defaultLanguage"]
-  short: string
-  lines: { text: string; kind?: string }[][]
-}
-
-const SAMPLES: Sample[] = [
+const SAMPLES: Codeblock016Sample[] = [
   {
     language: "TypeScript",
     short: "TS",
@@ -168,18 +177,52 @@ const SAMPLES: Sample[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Один пример на трёх языках, переключение сегментированным бегунком. */
 export function Codeblock016({
   title = "Запрос к API",
   defaultLanguage = "TypeScript",
+  samples = SAMPLES,
   group = "vibeui-codeblock-016",
+  switchLabel = "Язык примера",
+  background = "",
   className,
   style,
 }: Codeblock016Props) {
-  const active = SAMPLES.findIndex(
+  const active = samples.findIndex(
     (sample) => sample.language === defaultLanguage,
   )
   const checked = active < 0 ? 0 : active
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -189,13 +232,13 @@ export function Codeblock016({
       <figure
         data-vibeui-block="codeblock-016"
         className={className}
-        style={style}
+        style={palette}
       >
         <figcaption data-part="head">
           <span data-part="title">{title}</span>
-          <div data-part="switch" role="group" aria-label="Язык примера">
+          <div data-part="switch" role="group" aria-label={switchLabel}>
             <span data-part="thumb" aria-hidden="true" />
-            {SAMPLES.map((sample, index) => (
+            {samples.map((sample, index) => (
               <label key={sample.language}>
                 <input
                   type="radio"
@@ -208,7 +251,7 @@ export function Codeblock016({
             ))}
           </div>
         </figcaption>
-        {SAMPLES.map((sample, index) => (
+        {samples.map((sample, index) => (
           <pre
             key={sample.language}
             data-index={index}

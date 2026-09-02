@@ -5,12 +5,20 @@ import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
 export type Textarea006Props = Omit<
   ComponentPropsWithoutRef<"div">,
-  "children" | "onChange"
+  "children" | "onChange" | "defaultValue"
 > & {
   label?: string
   placeholder?: string
   /** Пауза без набора, после которой черновик уходит на сервер. */
   delay?: number
+  /** Текст, с которого поле начинает жизнь. */
+  defaultValue?: string
+  /** Счётчик символов: {count} подставляется числом. */
+  countText?: string
+  /** Подписи фаз: idle, dirty, saved. В saved {time} — время сохранения. */
+  statusText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,15 +27,18 @@ export type Textarea006Props = Omit<
 // по паузе в наборе. Пауза обязательна: сохранять на каждое нажатие значит
 // слать запрос на каждую букву. Строка статуса показывает не «идёт запрос»,
 // а понятное «черновик сохранён» и время — это то, что человек хочет знать.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="textarea-006"]){
---vibeui-textarea-006-bg:oklch(1 0 0);
---vibeui-textarea-006-fg:oklch(0.22 0.014 265);
---vibeui-textarea-006-muted:oklch(0.55 0.014 265);
---vibeui-textarea-006-border:oklch(0.9 0.006 265);
---vibeui-textarea-006-field:oklch(0.985 0.002 265);
---vibeui-textarea-006-accent:oklch(0.55 0.17 265);
---vibeui-textarea-006-ok:oklch(0.52 0.14 155);
+--vibeui-textarea-006-bg:transparent;
+--vibeui-textarea-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-textarea-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-textarea-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-textarea-006-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-textarea-006-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-textarea-006-ok:light-dark(oklch(0.52 0.14 155),oklch(0.74 0.14 155));
 --vibeui-textarea-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="textarea-006"]{
@@ -79,11 +90,39 @@ font-size:0.75rem;color:var(--vibeui-textarea-006-muted);font-variant-numeric:ta
 const START =
   "Пока это черновик: набросок ответа, который никто, кроме вас, не видит."
 
+const STATUS_TEXT: Record<string, string> = {
+  idle: "Сохраняется автоматически",
+  dirty: "Есть несохранённые правки…",
+  saved: "Черновик сохранён в {time}",
+}
+
 // Своё «чч:мм»: toLocaleTimeString на сервере и в браузере может дать
 // разный формат и развалить гидрацию.
 function clock(date: Date) {
   const pad = (part: number) => String(part).padStart(2, "0")
   return `${pad(date.getHours())}:${pad(date.getMinutes())}`
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -94,13 +133,17 @@ export function Textarea006({
   label = "Черновик ответа",
   placeholder = "Начните печатать — черновик сохранится сам",
   delay = 1200,
+  defaultValue = START,
+  countText = "{count} симв.",
+  statusText = STATUS_TEXT,
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Textarea006Props) {
   const id = useId()
-  const [value, setValue] = useState(START)
+  const [value, setValue] = useState(defaultValue)
   const [state, setState] = useState<"idle" | "dirty" | "saved">("idle")
   const [savedAt, setSavedAt] = useState("")
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
@@ -109,6 +152,12 @@ export function Textarea006({
 
   const palette = {
     ...(accent ? { "--vibeui-textarea-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-textarea-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -126,7 +175,9 @@ export function Textarea006({
       >
         <div data-part="head">
           <label htmlFor={id}>{label}</label>
-          <span data-part="count">{value.length} симв.</span>
+          <span data-part="count">
+            {countText.replace("{count}", String(value.length))}
+          </span>
         </div>
         <textarea
           id={id}
@@ -145,9 +196,7 @@ export function Textarea006({
         />
         <p data-part="status" id={`${id}-status`} role="status">
           <span data-part="dot" aria-hidden="true" />
-          {state === "dirty" ? "Есть несохранённые правки…" : null}
-          {state === "saved" ? `Черновик сохранён в ${savedAt}` : null}
-          {state === "idle" ? "Сохраняется автоматически" : null}
+          {(statusText[state] ?? STATUS_TEXT[state]).replace("{time}", savedAt)}
         </p>
       </div>
     </>

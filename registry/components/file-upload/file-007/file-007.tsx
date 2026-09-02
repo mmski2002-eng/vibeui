@@ -1,8 +1,10 @@
 import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
+export type File007State = "done" | "active" | "queued"
+
 export type File007Entry = {
   name: string
-  state: "готов" | "идёт" | "в очереди"
+  state: File007State
 }
 
 export type File007Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
@@ -10,6 +12,16 @@ export type File007Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
   done?: number
   total?: number
   entries?: File007Entry[]
+  /** Подписи состояний: done, active, queued. */
+  stateText?: Record<string, string>
+  /** Подпись полоски: {done} и {total} подставляют числа. */
+  progressLabel?: string
+  /** Строка под полоской: {done} и {total} подставляют числа. */
+  countText?: string
+  /** Подпись раскрывающегося списка. */
+  detailsText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,19 +30,22 @@ export type File007Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
 // каждого файла. Общая доля стоит наверху нативным <progress>, а подробности
 // спрятаны в <details>: список открывается без единой строчки JS, поэтому
 // компонент остаётся серверным и ничего не гидрирует.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у сводки
+// по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="file-007"]){
---vibeui-file-007-surface:oklch(1 0 0);
---vibeui-file-007-fg:oklch(0.23 0.014 265);
---vibeui-file-007-muted:oklch(0.55 0.014 265);
---vibeui-file-007-border:oklch(0.89 0.008 265);
---vibeui-file-007-shell:oklch(0.91 0.006 265);
---vibeui-file-007-track:oklch(0.93 0.006 265);
---vibeui-file-007-accent:oklch(0.54 0.17 268);
---vibeui-file-007-ok:oklch(0.52 0.13 155);
+--vibeui-file-007-surface:transparent;
+--vibeui-file-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-file-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-file-007-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.014 265));
+--vibeui-file-007-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-file-007-track:light-dark(oklch(0.93 0.006 265),oklch(0.32 0.012 265));
+--vibeui-file-007-accent:light-dark(oklch(0.54 0.17 268),oklch(0.74 0.16 268));
+--vibeui-file-007-ok:light-dark(oklch(0.52 0.13 155),oklch(0.76 0.14 155));
 --vibeui-file-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: сводку показывают поверх любого фона. */
+/* Панель без собственной заливки: рамка очерчивает сводку на любом фоне. */
 [data-vibeui-block="file-007"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:23rem;box-sizing:border-box;padding:0.875rem;
@@ -87,17 +102,45 @@ font-size:0.75rem;
 min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 [data-vibeui-block="file-007"] [data-part="state"]{flex:none;color:var(--vibeui-file-007-muted);font-size:0.6875rem}
-[data-vibeui-block="file-007"] li[data-state="готов"] [data-part="state"]{color:var(--vibeui-file-007-ok);font-weight:650}
+[data-vibeui-block="file-007"] li[data-state="done"] [data-part="state"]{color:var(--vibeui-file-007-ok);font-weight:650}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="file-007"] *{animation:none!important;transition:none!important}}
 `
 
 const DEFAULT_ENTRIES: File007Entry[] = [
-  { name: "01-обложка.jpg", state: "готов" },
-  { name: "02-разворот.jpg", state: "готов" },
-  { name: "03-детали.jpg", state: "готов" },
-  { name: "04-упаковка.jpg", state: "идёт" },
-  { name: "05-макро.jpg", state: "в очереди" },
+  { name: "01-обложка.jpg", state: "done" },
+  { name: "02-разворот.jpg", state: "done" },
+  { name: "03-детали.jpg", state: "done" },
+  { name: "04-упаковка.jpg", state: "active" },
+  { name: "05-макро.jpg", state: "queued" },
 ]
+
+const STATE_TEXT: Record<string, string> = {
+  done: "готов",
+  active: "идёт",
+  queued: "в очереди",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Множественная загрузка одной общей полоской и списком в <details>.
@@ -108,15 +151,28 @@ export function File007({
   done = 3,
   total = 5,
   entries = DEFAULT_ENTRIES,
+  stateText = STATE_TEXT,
+  progressLabel = "Загружено {done} из {total} файлов",
+  countText = "Готово {done} из {total}. Вкладку можно не держать открытой.",
+  detailsText = "Подробности по файлам",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: File007Props) {
   const share = total > 0 ? Math.round((done / total) * 100) : 0
+  const fill = (template: string) =>
+    template.replace("{done}", String(done)).replace("{total}", String(total))
 
   const palette = {
     ...(accent ? { "--vibeui-file-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-file-007-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -135,21 +191,17 @@ export function File007({
           <h3>{title}</h3>
           <span data-part="share">{share}%</span>
         </div>
-        <progress
-          max={total}
-          value={done}
-          aria-label={`Загружено ${done} из ${total} файлов`}
-        />
-        <p data-part="count">
-          Готово {done} из {total}. Вкладку можно не держать открытой.
-        </p>
+        <progress max={total} value={done} aria-label={fill(progressLabel)} />
+        <p data-part="count">{fill(countText)}</p>
         <details>
-          <summary>Подробности по файлам</summary>
+          <summary>{detailsText}</summary>
           <ul>
             {entries.map((entry) => (
               <li key={entry.name} data-state={entry.state}>
                 <span>{entry.name}</span>
-                <span data-part="state">{entry.state}</span>
+                <span data-part="state">
+                  {stateText[entry.state] ?? STATE_TEXT[entry.state]}
+                </span>
               </li>
             ))}
           </ul>

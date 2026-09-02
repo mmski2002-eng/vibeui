@@ -34,7 +34,9 @@
             "ширину заполнения через переменную --vibeui-progress-001-value, а не через строку в style",
             "tabular-nums у значения: без них проценты дёргают подпись при каждом обновлении",
             "правило prefers-reduced-motion, которое останавливает бегущий отрезок",
-            "блок <style> внутри компонента — в нём вся палитра, размеры и анимация"
+            "блок <style> внутри компонента — в нём вся палитра, размеры и анимация",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "value — число 0–100 или null, если длительность неизвестна",
@@ -42,9 +44,12 @@
             "hint — правая подпись, если проценты неуместны: «3 из 8», «12 МБ»",
             "size: md отдельно на экране, sm внутри строки списка",
             "акцент через проп accent — цвет заполнения",
-            "ширину и внешние отступы через className"
+            "ширину и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "runningText — подпись состояния «длительность неизвестна»"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не используйте компонент как ползунок: это индикатор, у него нет ввода.",
             "Не анимируйте значение вручную таймером ради красоты — прогресс должен отражать настоящее состояние.",
             "Если операция длится дольше десяти секунд, добавьте рядом текст о том, что происходит: одной полосы мало.",
@@ -79,6 +84,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -94,7 +105,9 @@
                 "driving the fill width through the --vibeui-progress-001-value variable rather than a string in style",
                 "tabular-nums on the value: without them the percentage jitters the label on every update",
                 "the prefers-reduced-motion rule that stops the travelling segment",
-                "the <style> block inside the component — it holds the palette, the sizes and the animation"
+                "the <style> block inside the component — it holds the palette, the sizes and the animation",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "value — a number from 0 to 100, or null when the duration is unknown",
@@ -102,9 +115,12 @@
                 "hint — the right-hand caption when a percentage is wrong: \"3 of 8\", \"12 MB\"",
                 "size: md on its own, sm inside a list row",
                 "the accent through the accent prop — it colours the fill",
-                "width and outer spacing through className"
+                "width and outer spacing through className",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "runningText — the caption shown while the duration is unknown"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not use this as a slider: it is an indicator with no input.",
                 "Do not animate the value on a timer for looks — progress has to reflect the real state.",
                 "If the operation runs longer than ten seconds, add text about what is happening: a bar alone is not enough.",
@@ -125,11 +141,21 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Labelled Progress"
+            "title": "Labelled Progress",
+            "preview": {
+              "props": {
+                "label": "Building the project",
+                "runningText": "running"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["size", "accent", "background"]
       }
     },
     {
@@ -160,15 +186,19 @@
             "шкалу aria-valuemin/valuemax в этапах, а не в процентах — иначе озвучка разойдётся с картинкой",
             "aria-valuetext с именем текущего этапа: «три из пяти» само по себе не говорит, что происходит",
             "равные доли flex у сегментов и подписей: разные доли разведут колонки",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "список этапов через steps и их число",
             "текущий этап через current",
             "заголовок через label",
-            "цвет заливки через accent"
+            "акцент через проп accent — цвет заливки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "stageText — озвучка этапа: {step} — имя, {current} — номер, {total} — сколько всего"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "current — индекс с нуля: значение, равное длине steps, зажимается до последнего этапа.",
             "Длинные подписи обрезаются многоточием: под них рассчитывайте не больше двенадцати символов.",
             "Больше семи этапов превращают сегменты в неразличимые полоски — сворачивайте их в группы.",
@@ -190,6 +220,18 @@
             "type": "text",
             "default": "Пайплайн релиза",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -203,15 +245,19 @@
                 "the aria-valuemin/valuemax scale in stages, not percent — otherwise speech drifts from the picture",
                 "the aria-valuetext naming the current stage: \"three of five\" alone does not say what is happening",
                 "the equal flex shares on segments and captions: different shares pull the columns apart",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the stage list through steps and their count",
                 "the current stage through current",
                 "the heading through label",
-                "the fill colour through accent"
+                "the accent through the accent prop — it colours the fill",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "stageText — how a stage is announced: {step} is the name, {current} the number, {total} the count"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "current is a zero-based index: a value equal to steps.length is clamped to the last stage.",
                 "Long captions are ellipsized — plan for about twelve characters each.",
                 "More than seven stages turn the segments into indistinguishable slivers; group them instead.",
@@ -226,11 +272,25 @@
               "label": {
                 "label": "Heading",
                 "default": "Release pipeline"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Segmented Steps Bar"
+            "title": "Segmented Steps Bar",
+            "preview": {
+              "props": {
+                "label": "Release pipeline",
+                "steps": ["Queued", "Build", "Tests", "Review", "Deploy"],
+                "stageText": "{step}: stage {current} of {total}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["current", "accent", "background"]
       }
     },
     {
@@ -261,15 +321,19 @@
             "число поверх кольца, а не внутри маскированного слоя — иначе маска вырежет и цифры",
             "поворот засечки на target × 3.6deg: любая другая формула разойдётся с дугой",
             "моноширинные цифры: при обычных подпись дёргается на каждом обновлении",
-            "собственную светлую подложку: число и подписи тёмные и на тёмном фоне исчезнут"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "факт через value и цель через target",
             "заголовок через label и подпись под числом через unit",
             "диаметр и толщину кольца через переменные размера",
-            "цвет дуги через переменную акцента"
+            "акцент через проп accent — цвет дуги",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "goalText и valueText — подпись цели под кольцом и озвучка шкалы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "value и target зажимаются в 0–100: показать перевыполнение сверх ста процентов кольцо не может.",
             "Шаг делений задан в repeating-conic-gradient: менять его надо в двух местах — в CSS и в подписи.",
             "На диаметре меньше 5rem деления сливаются в серую кайму, уберите слой ticks.",
@@ -292,6 +356,32 @@
             "default": 85,
             "min": 0,
             "max": 100
+          },
+          {
+            "prop": "label",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "План квартала",
+            "maxLength": 40
+          },
+          {
+            "prop": "unit",
+            "label": "Подпись под числом",
+            "type": "text",
+            "default": "выполнено",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -305,15 +395,19 @@
                 "the number above the ring rather than inside the masked layer — the mask would cut the digits too",
                 "the notch rotation of target × 3.6deg: any other formula drifts away from the arc",
                 "the tabular figures: proportional ones make the caption jitter on every update",
-                "the component's own light surface: the number and captions are dark and vanish on a dark ground"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the fact through value and the plan through target",
                 "the heading through label and the caption under the number through unit",
                 "the ring diameter and thickness through the size variables",
-                "the arc colour through the accent variable"
+                "the accent through the accent prop — it colours the arc",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "goalText and valueText — the goal caption under the ring and the spoken value"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "value and target are clamped to 0–100: the ring cannot show more than one hundred percent.",
                 "The tick step lives in repeating-conic-gradient: changing it means editing CSS and the caption both.",
                 "Below a 5rem diameter the ticks merge into a grey rim — drop the ticks layer there.",
@@ -327,11 +421,34 @@
               },
               "target": {
                 "label": "Goal"
+              },
+              "label": {
+                "label": "Heading",
+                "default": "Quarter plan"
+              },
+              "unit": {
+                "label": "Caption under the number",
+                "default": "complete"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Ticked Goal Ring"
+            "title": "Ticked Goal Ring",
+            "preview": {
+              "props": {
+                "label": "Quarter plan",
+                "unit": "complete",
+                "goalText": "Goal {target}%",
+                "valueText": "{value} percent against a {target} percent goal"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["value", "target", "accent", "background"]
       }
     },
     {
@@ -362,15 +479,19 @@
             "aria-valuetext с остатком времени: голая доля не отвечает на вопрос «сколько ждать»",
             "моноширинные цифры в строке показателей — иначе она дрожит на каждом обновлении",
             "обрезку длинного имени многоточием с полным именем в title",
-            "собственную светлую подложку строки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя файла через fileName",
             "переданный объём через loaded и полный через total",
             "скорость через speed — из неё же считается остаток",
-            "цвет заливки через переменную акцента"
+            "акцент через проп accent — цвет заливки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "units и text — приставки объёма и подписи строки показателей"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "speed равная нулю даёт бесконечный остаток: компонент показывает «почти готово», а не «Infinity».",
             "Форматирование объёма идёт в двоичных приставках: 1 МБ здесь 1048576 байт, а не миллион.",
             "Отмену загрузки компонент не рисует: кнопку ставьте рядом, чтобы не спорить за ширину строки.",
@@ -392,6 +513,18 @@
             "default": 1048576,
             "min": 0,
             "max": 10485760
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -405,15 +538,19 @@
                 "the aria-valuetext carrying the time left: a bare ratio does not answer \"how long\"",
                 "the tabular figures in the stats row — otherwise it jitters on every update",
                 "the ellipsized long file name with the full name in title",
-                "the row's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the file name through fileName",
                 "the transferred size through loaded and the full size through total",
                 "the throughput through speed — the time left is derived from it",
-                "the fill colour through the accent variable"
+                "the accent through the accent prop — it colours the fill",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "units and text — the size prefixes and the captions of the stats row"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A speed of zero yields an infinite remainder: the component prints \"almost done\", not \"Infinity\".",
                 "Sizes use binary prefixes: 1 MB here is 1048576 bytes, not a million.",
                 "The component draws no cancel control: put the button beside it so it does not fight for row width.",
@@ -428,11 +565,32 @@
               },
               "speed": {
                 "label": "Speed, bytes/s"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Upload Speed Row"
+            "title": "Upload Speed Row",
+            "preview": {
+              "props": {
+                "units": ["B", "KB", "MB", "GB"],
+                "text": {
+                  "almostDone": "almost done",
+                  "secondsLeft": "{seconds}s left",
+                  "minutesLeft": "{minutes} min left",
+                  "size": "{loaded} of {total}",
+                  "speed": "{speed}/s",
+                  "loading": "Uploading {name}",
+                  "value": "{percent} percent, {left}"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -463,15 +621,19 @@
             "отдельный role=\"progressbar\" на каждой дорожке — одна общая роль скроет разбивку от скринридера",
             "цветную метку рядом с именем: она связывает строку с её дорожкой без легенды",
             "моноширинные числа: иначе колонка значений пляшет при обновлении",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "состав и значения строк через rows",
             "полную ёмкость через capacity",
             "единицу измерения через unit",
-            "формулу оттенка в функции hue, если нужна фирменная палитра"
+            "формулу оттенка в функции hue, если нужна фирменная палитра",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "text — подписи «занято» и «свободно» и озвучка строк"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "capacity равная нулю переводит шкалу на сумму строк: свободное место тогда всегда ноль.",
             "Строк больше восьми превращают карточку в частокол — сворачивайте хвост в «Прочее».",
             "Хеш имени иногда сводит две соседние категории к близким оттенкам: проверяйте реальный список.",
@@ -493,6 +655,12 @@
             "type": "text",
             "default": "ГБ",
             "maxLength": 8
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -506,15 +674,19 @@
                 "a separate progressbar role on every track — one shared role hides the breakdown from screen readers",
                 "the colour chip next to the name: it ties a row to its track without a legend",
                 "the tabular numbers: otherwise the value column dances on updates",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the row set and the values through rows",
                 "the full quota through capacity",
                 "the measurement unit through unit",
-                "the hue formula inside the hue function if you need brand colours"
+                "the hue formula inside the hue function if you need brand colours",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "text — the used and free captions and the spoken row values"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A capacity of zero switches the scale to the row sum, and free space is then always zero.",
                 "More than eight rows turn the card into a picket fence — fold the tail into \"Other\".",
                 "The name hash occasionally maps two neighbouring categories to close hues: check your real list.",
@@ -529,11 +701,43 @@
               "unit": {
                 "label": "Unit",
                 "default": "GB"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Category Usage Bars"
+            "title": "Category Usage Bars",
+            "preview": {
+              "props": {
+                "rows": [
+                  {
+                    "label": "Video",
+                    "value": 148
+                  },
+                  {
+                    "label": "Photos",
+                    "value": 96
+                  },
+                  {
+                    "label": "Documents",
+                    "value": 34
+                  },
+                  {
+                    "label": "App cache",
+                    "value": 21
+                  }
+                ],
+                "unit": "GB",
+                "text": {
+                  "used": "{used} {unit} used",
+                  "free": "{free} {unit} free",
+                  "value": "{name}: {value} {unit} of {total} {unit}"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -564,15 +768,19 @@
             "штриховку при превышении — цвет один не читается при дальтонизме и в монохроме",
             "role=\"status\" на предупреждении и скрытие через hidden, а не удаление узла: иначе объявление не прозвучит",
             "aria-valuetext, называющий и расход, и порог одной фразой",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текущий расход через value и порог через threshold",
             "верх шкалы через limit",
             "заголовок через label",
-            "цвета спокойного и тревожного состояния через переменные палитры"
+            "акцент через проп accent — цвет спокойной заливки; тревожный цвет — через переменную alarm",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "text — подписи шкалы и текст предупреждения"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Порог считается в единицах шкалы, а не в процентах: при смене limit его положение пересчитывается само.",
             "Значение выше limit упирается в конец дорожки — сама шкала о перерасходе уже не расскажет, о нём говорит текст.",
             "Текст предупреждения жёстко про запросы: под другую метрику его надо переписать вместе с единицей.",
@@ -595,6 +803,25 @@
             "default": 100,
             "min": 1,
             "max": 140
+          },
+          {
+            "prop": "label",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Расход API-квоты",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -608,15 +835,19 @@
                 "the hatching on overflow — colour alone fails for colour blindness and in monochrome",
                 "the role=\"status\" on the warning and hiding it with hidden rather than removing the node, or the announcement never fires",
                 "the aria-valuetext that names both the usage and the threshold in one phrase",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the current usage through value and the limit line through threshold",
                 "the top of the scale through limit",
                 "the heading through label",
-                "the calm and alarm colours through the palette variables"
+                "the accent through the accent prop — it colours the calm fill; the alarm colour stays in the alarm variable",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "text — the scale captions and the warning copy"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The threshold is expressed in scale units, not percent: changing limit repositions it automatically.",
                 "A value above limit pins to the end of the track — the scale itself stops reporting the overshoot, the text does.",
                 "The warning copy is written about API requests: rewrite it together with the unit for another metric.",
@@ -630,11 +861,33 @@
               },
               "threshold": {
                 "label": "Threshold"
+              },
+              "label": {
+                "label": "Heading",
+                "default": "API quota usage"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Threshold Alert Bar"
+            "title": "Threshold Alert Bar",
+            "preview": {
+              "props": {
+                "label": "API quota usage",
+                "text": {
+                  "amount": "{value} / {threshold}k requests",
+                  "mark": "threshold {threshold}",
+                  "value": "{value} thousand requests against a {threshold} thousand threshold",
+                  "alert": "The threshold is exceeded by {excess}k requests. Further calls are billed above the plan."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["value", "accent", "background"]
       }
     },
     {
@@ -665,18 +918,22 @@
             "aria-valuetext про неизвестную длительность — иначе роль progressbar звучит как пустая",
             "анимацию background-position, а не изменение ширины: ширина заставляет браузер пересчитывать раскладку",
             "счётчик сделанной работы: это единственное честное число в блоке",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок через label",
             "число сделанного через processed и его единицу через unit",
             "строку времени через elapsed",
-            "цвет штриховки через переменную акцента"
+            "акцент через проп accent — цвет штриховки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "text и locale — подписи блока и формат счётчика"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Как только доля становится известна, этот блок надо менять на определённую полосу, а не дорисовывать ему проценты.",
             "Быстрая штриховка утомляет: период меньше 0.7 с читается как мерцание.",
-            "processed форматируется локалью ru-RU — под другой язык поменяйте и её.",
+            "processed форматируется локалью из пропа locale: по умолчанию ru-RU.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -695,6 +952,32 @@
             "default": 12480,
             "min": 0,
             "max": 1000000
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "документов",
+            "maxLength": 24
+          },
+          {
+            "prop": "elapsed",
+            "label": "Время",
+            "type": "text",
+            "default": "идёт 3 мин",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -708,18 +991,22 @@
                 "the aria-valuetext about the unknown duration — otherwise the progressbar role sounds empty",
                 "the background-position animation rather than a width change: width forces layout on every frame",
                 "the counter of finished work: it is the only honest number in the block",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the heading through label",
                 "the amount done through processed and its unit through unit",
                 "the elapsed line through elapsed",
-                "the hatching colour through the accent variable"
+                "the accent through the accent prop — it colours the hatching",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "text and locale — the block captions and the counter format"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Once the ratio becomes known, swap this block for a determinate bar instead of bolting percentages onto it.",
                 "Fast hatching is tiring: a period under 0.7s reads as flicker.",
-                "processed is formatted with the ru-RU locale — change it along with the language.",
+                "processed is formatted with the locale from the locale prop, ru-RU by default.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Progress007\n  label=\"Indexing the archive\"\n  processed={12480}\n  unit=\"documents\"\n  elapsed=\"running 3 min\"\n/>"
@@ -731,11 +1018,38 @@
               },
               "processed": {
                 "label": "Processed"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": "documents"
+              },
+              "elapsed": {
+                "label": "Elapsed",
+                "default": "running 3 min"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Barber Pole Task"
+            "title": "Barber Pole Task",
+            "preview": {
+              "props": {
+                "label": "Indexing the archive",
+                "unit": "documents",
+                "elapsed": "running 3 min",
+                "locale": "en-US",
+                "text": {
+                  "processed": "processed {count} {unit}",
+                  "unknown": "Duration unknown"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -766,15 +1080,19 @@
             "формулу index / (total − 1): при делении на total заливка не доходит до последней вехи",
             "кольцо цвета подложки у вехи — без него линия просвечивает сквозь точку",
             "aria-valuetext, повторяющий подпись словами: «3 из 5» ничего не говорит о содержании шага",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "список шагов через steps",
             "текущий шаг через current",
             "заголовок процесса через title",
-            "цвет заливки и вех через переменную акцента"
+            "акцент через проп accent — цвет заливки и вех",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "text — строка шага, подпись «дальше» и озвучка дорожки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Один шаг в steps даёт заливку на всю дорожку: это осознанное поведение, а не деление на ноль.",
             "Имена шагов не обрезаются: слишком длинное перенесётся на вторую строку и сдвинет вехи вниз.",
             "Подписи под вехами компонент не рисует специально — их место занимает крупная строка.",
@@ -796,6 +1114,18 @@
             "type": "text",
             "default": "Импорт справочника",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -809,15 +1139,19 @@
                 "the index / (total − 1) formula: dividing by total leaves the fill short of the last milestone",
                 "the surface-coloured ring around each milestone — without it the line shows through the dot",
                 "the aria-valuetext repeating the caption in words: \"3 of 5\" says nothing about the step itself",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the step list through steps",
                 "the current step through current",
                 "the process heading through title",
-                "the fill and milestone colour through the accent variable"
+                "the accent through the accent prop — it colours the fill and the milestones",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "text — the step line, the next-step caption and the spoken track value"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A single step in steps fills the whole track: that is deliberate, not a division by zero.",
                 "Step names are not truncated: a very long one wraps to a second line and pushes the milestones down.",
                 "The component deliberately draws no captions under the milestones — the large line takes that role.",
@@ -832,11 +1166,36 @@
               "title": {
                 "label": "Heading",
                 "default": "Catalogue import"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Named Step Progress"
+            "title": "Named Step Progress",
+            "preview": {
+              "props": {
+                "title": "Catalogue import",
+                "steps": [
+                  "Upload file",
+                  "Parse columns",
+                  "Validate data",
+                  "Map fields",
+                  "Import"
+                ],
+                "text": {
+                  "eyebrow": "{title} · step {current} of {total}",
+                  "value": "Step {current} of {total}: {name}",
+                  "next": "Next: {name}",
+                  "last": "This is the last step"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["current", "accent", "background"]
       }
     },
     {
@@ -867,15 +1226,18 @@
             "aria-hidden на числе в пузырьке — иначе скринридер прочитает значение дважды",
             "запас сверху у дорожки: пузырёк живёт в этом отступе и без него накроет заголовок",
             "моноширинные цифры в пузырьке: иначе он дёргается по ширине при каждом обновлении",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "долю через value",
             "заголовок через label",
             "пояснение под полосой через caption",
-            "цвет заливки и пузырька через переменную акцента"
+            "акцент через проп accent — цвет заливки и пузырька",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пузырёк перекрывает соседей по вертикали: не ставьте два таких блока вплотную друг к другу.",
             "На ширине меньше 12rem пузырёк почти всегда упирается в clamp и перестаёт показывать позицию.",
             "value зажимается в 0–100: значения сверх ста показывать этот вариант не умеет.",
@@ -897,6 +1259,25 @@
             "type": "text",
             "default": "Осталось добавить телефон и фотографию",
             "maxLength": 60
+          },
+          {
+            "prop": "label",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Профиль заполнен",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -910,15 +1291,18 @@
                 "the aria-hidden on the bubble number — otherwise the value is read out twice",
                 "the top padding on the rail: the bubble lives in that gap and would cover the heading without it",
                 "the tabular figures in the bubble: otherwise its width jumps on every update",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the ratio through value",
                 "the heading through label",
                 "the explanation under the bar through caption",
-                "the fill and bubble colour through the accent variable"
+                "the accent through the accent prop — it colours the fill and the bubble",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The bubble overlaps vertical neighbours: do not stack two of these blocks tightly.",
                 "Below 12rem wide the bubble almost always hits the clamp and stops indicating position.",
                 "value is clamped to 0–100: this variant cannot display anything above a hundred.",
@@ -933,11 +1317,28 @@
               "caption": {
                 "label": "Explanation",
                 "default": "Add a phone number and a photo"
+              },
+              "label": {
+                "label": "Heading",
+                "default": "Profile completeness"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Travelling Value Bubble"
+            "title": "Travelling Value Bubble",
+            "preview": {
+              "props": {
+                "label": "Profile completeness",
+                "caption": "Add a phone number and a photo"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["value", "accent", "background"]
       }
     }
   ]

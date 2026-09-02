@@ -12,22 +12,32 @@ export type Chart023Props = Omit<
   title?: string
   stages?: Chart023Stage[]
   unit?: string
+  /** Подпись под воронкой: {unit}. */
+  unitLabel?: string
+  /** Шапка скрытой таблицы: ключи stage, count и conversion. */
+  tableText?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: воронка одной сплошной фигурой, а не стопкой раздельных
 // трапеций. Полосы стыкуются без зазора, поэтому сужение читается как один
 // конус, а не набор ступеней. Подписи вынесены наружу на выносных линиях —
 // внутри узкой нижней полосы текст всё равно не помещается.
+//
+// Тема берётся из color-scheme окружения через light-dark(): воронка темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="chart-023"]){
---vibeui-chart-023-bg:oklch(1 0 0);
---vibeui-chart-023-fg:oklch(0.22 0.014 265);
---vibeui-chart-023-muted:oklch(0.55 0.014 265);
---vibeui-chart-023-border:oklch(0.91 0.006 265);
---vibeui-chart-023-lead:oklch(0.82 0.008 265);
---vibeui-chart-023-accent:oklch(0.52 0.18 275);
---vibeui-chart-023-drop:oklch(0.58 0.16 25);
+--vibeui-chart-023-bg:transparent;
+--vibeui-chart-023-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-023-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-023-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-chart-023-lead:light-dark(oklch(0.82 0.008 265),oklch(0.44 0.012 265));
+--vibeui-chart-023-blend:light-dark(oklch(1 0 0),oklch(0.19 0.012 265));
+--vibeui-chart-023-accent:light-dark(oklch(0.52 0.18 275),oklch(0.64 0.17 275));
+--vibeui-chart-023-drop:light-dark(oklch(0.58 0.16 25),oklch(0.74 0.15 25));
 --vibeui-chart-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="chart-023"]{
@@ -40,7 +50,7 @@ color:var(--vibeui-chart-023-fg);font-family:var(--vibeui-chart-023-font);
 [data-vibeui-block="chart-023"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
 [data-vibeui-block="chart-023"] svg{display:block;width:100%;height:auto}
 [data-vibeui-block="chart-023"] [data-part="band"]{
-fill:color-mix(in oklab,var(--vibeui-chart-023-accent) var(--vibeui-chart-023-mix,70%),var(--vibeui-chart-023-bg));
+fill:color-mix(in oklab,var(--vibeui-chart-023-accent) var(--vibeui-chart-023-mix,70%),var(--vibeui-chart-023-blend));
 }
 [data-vibeui-block="chart-023"] [data-part="lead"]{stroke:var(--vibeui-chart-023-lead);stroke-width:1}
 [data-vibeui-block="chart-023"] [data-part="name"]{
@@ -73,6 +83,43 @@ const CX = 104
 const MAX_HALF = 76
 const MIN_SHARE = 0.1
 
+const TABLE_TEXT: Record<string, string> = {
+  stage: "Этап",
+  count: "Количество",
+  conversion: "Переход от предыдущего",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+function fillTemplate(
+  template: string,
+  values: Record<string, string | number>,
+) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
 /**
  * Воронка одной сплошной сужающейся фигурой с выносными подписями.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -81,7 +128,10 @@ export function Chart023({
   title = "Воронка продаж",
   stages = DEFAULT_STAGES,
   unit = "сделок за месяц",
+  unitLabel = "Единица измерения: {unit}. Проценты у подписи — потеря относительно предыдущего этапа.",
+  tableText = TABLE_TEXT,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -105,6 +155,13 @@ export function Chart023({
 
   const palette = {
     ...(accent ? { "--vibeui-chart-023-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-chart-023-bg": background,
+          "--vibeui-chart-023-blend": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -158,19 +215,18 @@ export function Chart023({
             )
           })}
         </svg>
-        <p data-part="unit">
-          Единица измерения: {unit}. Проценты у подписи — потеря относительно
-          предыдущего этапа.
-        </p>
+        <p data-part="unit">{fillTemplate(unitLabel, { unit })}</p>
         <table data-part="data">
           <caption>
             {title}, {unit}
           </caption>
           <thead>
             <tr>
-              <th scope="col">Этап</th>
-              <th scope="col">Количество</th>
-              <th scope="col">Переход от предыдущего</th>
+              <th scope="col">{tableText.stage ?? TABLE_TEXT.stage}</th>
+              <th scope="col">{tableText.count ?? TABLE_TEXT.count}</th>
+              <th scope="col">
+                {tableText.conversion ?? TABLE_TEXT.conversion}
+              </th>
             </tr>
           </thead>
           <tbody>

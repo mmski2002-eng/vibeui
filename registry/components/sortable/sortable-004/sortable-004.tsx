@@ -12,6 +12,17 @@ export type Sortable004Props = Omit<
   source?: string[]
   target?: string[]
   onChange?: (lists: { source: string[]; target: string[] }) => void
+  /** Надпись в пустой панели. */
+  emptyText?: string
+  /** Подпись кнопки: {item} — строка, {from} и {to} — панели. */
+  sendLabel?: string
+  /**
+   * Реплика живой области: {item}, {to}, {sourceTitle}, {sourceCount},
+   * {targetTitle}, {targetCount}.
+   */
+  movedLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,12 +35,13 @@ export type Sortable004Props = Omit<
 // Результат и остатки объявляются в живой области.
 const STYLES = `
 :where([data-vibeui-block="sortable-004"]){
---vibeui-sortable-004-bg:oklch(1 0 0);
---vibeui-sortable-004-panel:oklch(0.985 0.002 265);
---vibeui-sortable-004-fg:oklch(0.24 0.014 265);
---vibeui-sortable-004-muted:oklch(0.56 0.014 265);
---vibeui-sortable-004-border:oklch(0.9 0.006 265);
---vibeui-sortable-004-accent:oklch(0.55 0.2 262);
+--vibeui-sortable-004-bg:transparent;
+--vibeui-sortable-004-panel:light-dark(oklch(0.985 0.002 265),oklch(0.245 0.01 265));
+--vibeui-sortable-004-row:light-dark(oklch(1 0 0),oklch(0.3 0.012 265));
+--vibeui-sortable-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-sortable-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-sortable-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-sortable-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
 --vibeui-sortable-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="sortable-004"]{
@@ -62,7 +74,7 @@ color:var(--vibeui-sortable-004-muted);font-size:0.6875rem;font-variant-numeric:
 [data-vibeui-block="sortable-004"] li{
 display:flex;align-items:center;gap:0.375rem;cursor:grab;
 padding:0.3125rem 0.3125rem 0.3125rem 0.5rem;border-radius:0.5rem;
-background:var(--vibeui-sortable-004-bg);
+background:var(--vibeui-sortable-004-row);
 border:1px solid var(--vibeui-sortable-004-border);
 font-size:0.75rem;line-height:1.3;
 }
@@ -89,6 +101,28 @@ clip-path:inset(50%);white-space:nowrap;border:0;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="sortable-004"] *{animation:none!important;transition:none!important}}
 `
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 const DEFAULT_SOURCE = [
   "Артикул",
   "Поставщик",
@@ -108,6 +142,10 @@ export function Sortable004({
   source = DEFAULT_SOURCE,
   target = DEFAULT_TARGET,
   onChange,
+  emptyText = "Пусто. Перетащите поле сюда или нажмите стрелку в соседнем списке.",
+  sendLabel = "Перенести «{item}» из «{from}» в «{to}»",
+  movedLabel = "«{item}» перенесено в «{to}». {sourceTitle}: {sourceCount}, {targetTitle}: {targetCount}.",
+  background = "",
   accent,
   className,
   style,
@@ -141,7 +179,13 @@ export function Sortable004({
     setRight(nextRight)
     onChange?.({ source: nextLeft, target: nextRight })
     setAnnouncement(
-      `«${row}» перенесено в «${to === "left" ? sourceTitle : targetTitle}». ${sourceTitle}: ${nextLeft.length}, ${targetTitle}: ${nextRight.length}.`,
+      movedLabel
+        .replace("{item}", row)
+        .replace("{to}", to === "left" ? sourceTitle : targetTitle)
+        .replace("{sourceTitle}", sourceTitle)
+        .replace("{sourceCount}", String(nextLeft.length))
+        .replace("{targetTitle}", targetTitle)
+        .replace("{targetCount}", String(nextRight.length)),
     )
   }
 
@@ -154,6 +198,12 @@ export function Sortable004({
 
   const palette = {
     ...(accent ? { "--vibeui-sortable-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-sortable-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -191,10 +241,7 @@ export function Sortable004({
               <span data-part="count">{panel.rows.length}</span>
             </p>
             {panel.rows.length === 0 ? (
-              <p data-part="empty">
-                Пусто. Перетащите поле сюда или нажмите стрелку в соседнем
-                списке.
-              </p>
+              <p data-part="empty">{emptyText}</p>
             ) : (
               <ul>
                 {panel.rows.map((row) => (
@@ -212,7 +259,13 @@ export function Sortable004({
                     <button
                       type="button"
                       data-part="send"
-                      aria-label={`Перенести «${row}» из «${panel.title}» в «${panel.side === "left" ? targetTitle : sourceTitle}»`}
+                      aria-label={sendLabel
+                        .replace("{item}", row)
+                        .replace("{from}", panel.title)
+                        .replace(
+                          "{to}",
+                          panel.side === "left" ? targetTitle : sourceTitle,
+                        )}
                       onClick={() =>
                         send(row, panel.side === "left" ? "right" : "left")
                       }

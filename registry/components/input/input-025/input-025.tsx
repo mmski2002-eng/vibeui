@@ -9,7 +9,14 @@ export type Input025Props = Omit<
 > & {
   label?: string
   defaultValue?: string
+  placeholder?: string
+  /** Бейдж типа: ключи empty, partial, org, person. Русский — по умолчанию. */
+  badgeText?: Record<string, string>
+  /** Примечание под полем: ключи idle, valid, invalid. */
+  noteText?: Record<string, string>
   onChange?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,16 +28,16 @@ export type Input025Props = Omit<
 // введённый символ — ошибку видно сразу, не дожидаясь потери фокуса.
 const STYLES = `
 :where([data-vibeui-block="input-025"]){
---vibeui-input-025-surface:oklch(1 0 0);
---vibeui-input-025-shell:oklch(0.91 0.006 265);
---vibeui-input-025-fg:oklch(0.22 0.014 265);
---vibeui-input-025-muted:oklch(0.55 0.014 265);
---vibeui-input-025-field:oklch(0.985 0.002 265);
---vibeui-input-025-border:oklch(0.88 0.008 265);
---vibeui-input-025-chip:oklch(0.95 0.005 265);
---vibeui-input-025-accent:oklch(0.5 0.14 230);
---vibeui-input-025-bad:oklch(0.55 0.2 25);
---vibeui-input-025-ok:oklch(0.5 0.13 155);
+--vibeui-input-025-surface:transparent;
+--vibeui-input-025-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-input-025-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-025-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.014 265));
+--vibeui-input-025-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-input-025-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-input-025-chip:light-dark(oklch(0.95 0.005 265),oklch(0.3 0.012 265));
+--vibeui-input-025-accent:light-dark(oklch(0.5 0.14 230),oklch(0.72 0.13 230));
+--vibeui-input-025-bad:light-dark(oklch(0.55 0.2 25),oklch(0.72 0.16 25));
+--vibeui-input-025-ok:light-dark(oklch(0.5 0.13 155),oklch(0.74 0.14 155));
 --vibeui-input-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-025"]{
@@ -115,6 +122,35 @@ const BADGE: Record<string, string> = {
   person: "Физлицо / ИП",
 }
 
+const NOTE: Record<string, string> = {
+  idle: "10 цифр для организации, 12 — для физлица или ИП.",
+  valid: "Контрольная сумма сходится.",
+  invalid: "Контрольная сумма не сходится — проверьте цифры.",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Поле ИНН с проверкой контрольной суммы по формуле ФНС: тип (10 или 12
  * цифр) определяется по длине, ошибка видна на каждом введённом символе.
@@ -123,7 +159,11 @@ const BADGE: Record<string, string> = {
 export function Input025({
   label = "ИНН",
   defaultValue = "",
+  placeholder = "7707083893",
+  badgeText = BADGE,
+  noteText = NOTE,
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -134,6 +174,12 @@ export function Input025({
 
   const palette = {
     ...(accent ? { "--vibeui-input-025-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-025-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -163,7 +209,9 @@ export function Input025({
       >
         <div data-part="head">
           <label htmlFor={id}>{label}</label>
-          <span data-part="badge">{BADGE[badgeKey]}</span>
+          <span data-part="badge">
+            {badgeText[badgeKey] ?? BADGE[badgeKey]}
+          </span>
         </div>
         <div data-part="frame">
           <input
@@ -171,7 +219,7 @@ export function Input025({
             type="text"
             inputMode="numeric"
             autoComplete="off"
-            placeholder="7707083893"
+            placeholder={placeholder}
             value={value}
             aria-invalid={state === "invalid"}
             aria-describedby={`${id}-note`}
@@ -211,11 +259,7 @@ export function Input025({
           ) : null}
         </div>
         <p data-part="note" id={`${id}-note`} aria-live="polite">
-          {state === "idle"
-            ? "10 цифр для организации, 12 — для физлица или ИП."
-            : state === "valid"
-              ? "Контрольная сумма сходится."
-              : "Контрольная сумма не сходится — проверьте цифры."}
+          {noteText[state] ?? NOTE[state]}
         </p>
       </div>
     </>

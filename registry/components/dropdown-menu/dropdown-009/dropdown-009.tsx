@@ -15,7 +15,17 @@ export type Dropdown009Props = Omit<
   value?: string
   fields?: string[]
   onChange?: (state: { field: string; desc: boolean }) => void
+  /** Заголовок радиогруппы полей. */
+  fieldsLabel?: string
+  /** Заголовок радиогруппы направления. */
+  orderLabel?: string
+  /** Направление в кнопке: ключи asc и desc. */
+  directionText?: Record<string, string>
+  /** Направление пунктами меню: ключи asc и desc. */
+  orderText?: Record<string, string>
   accent?: string
+  /** Подложка панели и меню. Пусто — собственный фон по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: кнопка сортировки, которая сама показывает выбранное поле и
@@ -23,14 +33,17 @@ export type Dropdown009Props = Omit<
 // списка; кнопка с одним словом «Сортировка» заставляет открывать меню, чтобы
 // вспомнить, что в нём выбрано. Направление вынесено отдельной парой пунктов:
 // «сначала новые» и «сначала старые» — это одно поле, а не два.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте панель светлее фона страницы, а её граница светлее панели.
 const STYLES = `
 :where([data-vibeui-block="dropdown-009"]){
---vibeui-dropdown-009-bg:oklch(1 0 0);
---vibeui-dropdown-009-fg:oklch(0.24 0.014 265);
---vibeui-dropdown-009-muted:oklch(0.56 0.014 265);
---vibeui-dropdown-009-border:oklch(0.9 0.006 265);
---vibeui-dropdown-009-hover:oklch(0.96 0.004 265);
---vibeui-dropdown-009-accent:oklch(0.58 0.17 40);
+--vibeui-dropdown-009-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-dropdown-009-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-dropdown-009-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dropdown-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-dropdown-009-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
+--vibeui-dropdown-009-accent:light-dark(oklch(0.58 0.17 40),oklch(0.76 0.14 40));
 --vibeui-dropdown-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="dropdown-009"]{
@@ -107,6 +120,30 @@ height:1px;margin:0.3125rem 0.25rem;background:var(--vibeui-dropdown-009-border)
 `
 
 const DEFAULT_FIELDS = ["Дата изменения", "Название", "Размер", "Автор"]
+const DEFAULT_DIRECTION = { asc: "по возрастанию", desc: "по убыванию" }
+const DEFAULT_ORDER = { asc: "По возрастанию", desc: "По убыванию" }
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 function stepFocus(menu: HTMLElement | null, delta: number) {
   if (!menu) {
@@ -134,7 +171,12 @@ export function Dropdown009({
   value = "Дата изменения",
   fields = DEFAULT_FIELDS,
   onChange,
+  fieldsLabel = "Поле",
+  orderLabel = "Порядок",
+  directionText = DEFAULT_DIRECTION,
+  orderText = DEFAULT_ORDER,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -153,6 +195,12 @@ export function Dropdown009({
 
   const palette = {
     ...(accent ? { "--vibeui-dropdown-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dropdown-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -208,7 +256,11 @@ export function Dropdown009({
               strokeLinejoin="round"
             />
           </svg>
-          <span data-part="key">{desc ? "по убыванию" : "по возрастанию"}</span>
+          <span data-part="key">
+            {desc
+              ? (directionText.desc ?? DEFAULT_DIRECTION.desc)
+              : (directionText.asc ?? DEFAULT_DIRECTION.asc)}
+          </span>
         </button>
         <div
           id={`${id}-menu`}
@@ -228,7 +280,7 @@ export function Dropdown009({
           }}
         >
           <div data-part="title" id={`${id}-fields`}>
-            Поле
+            {fieldsLabel}
           </div>
           <div role="group" aria-labelledby={`${id}-fields`}>
             {fields.map((entry) => (
@@ -263,7 +315,7 @@ export function Dropdown009({
           </div>
           <div data-part="rule" role="separator" />
           <div data-part="title" id={`${id}-dir`}>
-            Порядок
+            {orderLabel}
           </div>
           <div role="group" aria-labelledby={`${id}-dir`}>
             <button
@@ -273,7 +325,7 @@ export function Dropdown009({
               data-part="item"
               onClick={() => apply({ desc: false })}
             >
-              По возрастанию
+              {orderText.asc ?? DEFAULT_ORDER.asc}
             </button>
             <button
               type="button"
@@ -282,7 +334,7 @@ export function Dropdown009({
               data-part="item"
               onClick={() => apply({ desc: true })}
             >
-              По убыванию
+              {orderText.desc ?? DEFAULT_ORDER.desc}
             </button>
           </div>
         </div>

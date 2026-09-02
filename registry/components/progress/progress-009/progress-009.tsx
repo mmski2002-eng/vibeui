@@ -7,6 +7,9 @@ export type Progress009Props = Omit<
   value?: number
   label?: string
   caption?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  accent?: string
 }
 
 // Идея компонента: число стоит не в углу, а над концом заливки — глазу не
@@ -15,12 +18,14 @@ export type Progress009Props = Omit<
 // процентов он не вылезает за границу карточки.
 const STYLES = `
 :where([data-vibeui-block="progress-009"]){
---vibeui-progress-009-bg:oklch(1 0 0);
---vibeui-progress-009-fg:oklch(0.24 0.016 265);
---vibeui-progress-009-muted:oklch(0.56 0.014 265);
---vibeui-progress-009-border:oklch(0.9 0.006 265);
---vibeui-progress-009-track:oklch(0.93 0.005 265);
---vibeui-progress-009-accent:oklch(0.52 0.2 292);
+--vibeui-progress-009-bg:transparent;
+--vibeui-progress-009-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-progress-009-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-progress-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-progress-009-track:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.011 265));
+--vibeui-progress-009-accent:light-dark(oklch(0.52 0.2 292),oklch(0.7 0.17 292));
+--vibeui-progress-009-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0.03 292));
+--vibeui-progress-009-fade:light-dark(oklch(1 0 0),oklch(0.24 0.02 292));
 --vibeui-progress-009-value:0;
 --vibeui-progress-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -43,7 +48,7 @@ position:absolute;top:0;
 left:clamp(1.5rem,calc(var(--vibeui-progress-009-value) * 1%),calc(100% - 1.5rem));
 transform:translateX(-50%);
 padding:0.1875rem 0.4375rem;border-radius:0.375rem;
-background:var(--vibeui-progress-009-accent);color:oklch(1 0 0);
+background:var(--vibeui-progress-009-accent);color:var(--vibeui-progress-009-on-accent);
 font-size:0.75rem;font-weight:700;line-height:1.2;
 font-variant-numeric:tabular-nums;white-space:nowrap;
 transition:left .3s cubic-bezier(.32,.72,0,1);
@@ -61,7 +66,7 @@ background:var(--vibeui-progress-009-track);
 [data-vibeui-block="progress-009"] [data-part="bar"]{
 height:100%;border-radius:inherit;
 width:calc(var(--vibeui-progress-009-value) * 1%);
-background:linear-gradient(90deg,color-mix(in oklch,var(--vibeui-progress-009-accent) 60%,oklch(1 0 0)),var(--vibeui-progress-009-accent));
+background:linear-gradient(90deg,color-mix(in oklch,var(--vibeui-progress-009-accent) 60%,var(--vibeui-progress-009-fade)),var(--vibeui-progress-009-accent));
 transition:width .3s cubic-bezier(.32,.72,0,1);
 }
 [data-vibeui-block="progress-009"] [data-part="caption"]{
@@ -73,6 +78,28 @@ margin:0;font-size:0.75rem;color:var(--vibeui-progress-009-muted);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Полоса, у которой число едет над концом заливки.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -80,6 +107,8 @@ export function Progress009({
   value = 68,
   label = "Профиль заполнен",
   caption = "Осталось добавить телефон и фотографию",
+  background = "",
+  accent,
   className,
   style,
   ...props
@@ -87,6 +116,14 @@ export function Progress009({
   const percent = Math.min(100, Math.max(0, value))
   const palette = {
     "--vibeui-progress-009-value": percent,
+    ...(accent ? { "--vibeui-progress-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-progress-009-bg": background,
+          "--vibeui-progress-009-fade": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

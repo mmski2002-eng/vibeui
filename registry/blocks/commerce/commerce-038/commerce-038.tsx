@@ -18,13 +18,22 @@ export type Commerce038Props = {
   title?: string
   lead?: string
   term?: string
+  /** Подпись под сроком гарантии. */
+  termNote?: string
   cards?: Commerce038Card[]
   tableTitle?: string
   cases?: Commerce038Case[]
+  /** Заголовки колонок таблицы: ключи case, covered и outcome. */
+  columnText?: Record<string, string>
+  /** Подписи покрытия: ключи yes и no. */
+  coverText?: Record<string, string>
+  stepsTitle?: string
   steps?: string[]
   cta?: string
   secondary?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -37,14 +46,15 @@ export type Commerce038Props = {
 // зелёная и красная заливка неразличимы при дальтонизме и в печати.
 const STYLES = `
 :where([data-vibeui-block="commerce-038"]){
---vibeui-commerce-038-bg:oklch(1 0 0);
---vibeui-commerce-038-fg:oklch(0.21 0.014 265);
---vibeui-commerce-038-muted:oklch(0.55 0.014 265);
---vibeui-commerce-038-border:oklch(0.91 0.006 265);
---vibeui-commerce-038-soft:oklch(0.975 0.004 265);
---vibeui-commerce-038-accent:oklch(0.45 0.12 235);
---vibeui-commerce-038-yes:oklch(0.52 0.13 150);
---vibeui-commerce-038-no:oklch(0.55 0.15 35);
+--vibeui-commerce-038-bg:transparent;
+--vibeui-commerce-038-fg:light-dark(oklch(0.21 0.014 265),oklch(0.93 0.006 265));
+--vibeui-commerce-038-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-commerce-038-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-038-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.009 265));
+--vibeui-commerce-038-accent:light-dark(oklch(0.45 0.12 235),oklch(0.72 0.12 235));
+--vibeui-commerce-038-onaccent:light-dark(oklch(1 0 0),oklch(0.18 0.03 250));
+--vibeui-commerce-038-yes:light-dark(oklch(0.52 0.13 150),oklch(0.76 0.14 155));
+--vibeui-commerce-038-no:light-dark(oklch(0.55 0.15 35),oklch(0.75 0.14 35));
 --vibeui-commerce-038-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -116,12 +126,12 @@ border-radius:0.875rem;background:var(--vibeui-commerce-038-soft);font-size:0.81
 [data-vibeui-block="commerce-038"] ol li::before{
 content:counter(step);position:absolute;left:0.75rem;top:0.75rem;
 width:1.375rem;height:1.375rem;border-radius:9999px;display:grid;place-items:center;
-background:var(--vibeui-commerce-038-accent);color:oklch(1 0 0);font-size:0.6875rem;font-weight:700;
+background:var(--vibeui-commerce-038-accent);color:var(--vibeui-commerce-038-onaccent);font-size:0.6875rem;font-weight:700;
 }
 [data-vibeui-block="commerce-038"] [data-part="actions"]{margin-top:1rem;display:flex;flex-wrap:wrap;gap:0.5rem}
 [data-vibeui-block="commerce-038"] [data-part="cta"]{
 appearance:none;border:0;cursor:pointer;height:2.75rem;padding:0 1.5rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-038-accent);color:oklch(1 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-038-accent);color:var(--vibeui-commerce-038-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-038"] [data-part="alt"]{
 appearance:none;cursor:pointer;height:2.75rem;padding:0 1.25rem;border-radius:0.875rem;
@@ -199,6 +209,39 @@ const DEFAULT_STEPS = [
   "Следите за ремонтом по номеру заявки, сообщение о готовности придёт на почту.",
 ]
 
+const DEFAULT_COLUMNS: Record<string, string> = {
+  case: "Случай",
+  covered: "По гарантии",
+  outcome: "Что будет",
+}
+
+const DEFAULT_COVER: Record<string, string> = {
+  yes: "Покрывается",
+  no: "Не покрывается",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Гарантия и сервис: покрытые и непокрытые случаи стоят в одной таблице.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -207,18 +250,29 @@ export function Commerce038({
   title = "Гарантия и сервис",
   lead = "Гарантия начинается с даты покупки и не требует чека: заказ уже привязан к вашему телефону. Регистрировать товар отдельно не нужно.",
   term = "2 года",
+  termNote = "гарантия производителя",
   cards = DEFAULT_CARDS,
   tableTitle = "Что покрывает гарантия, а что нет",
   cases = DEFAULT_CASES,
+  columnText = DEFAULT_COLUMNS,
+  coverText = DEFAULT_COVER,
+  stepsTitle = "Как сдать товар в ремонт",
   steps = DEFAULT_STEPS,
   cta = "Оставить заявку в сервис",
   secondary = "Скачать условия гарантии",
   accent,
+  background = "",
   className,
   style,
 }: Commerce038Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-038-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-038-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -241,7 +295,7 @@ export function Commerce038({
             </div>
             <p data-part="term">
               <b>{term}</b>
-              <span>гарантия производителя</span>
+              <span>{termNote}</span>
             </p>
           </div>
 
@@ -260,9 +314,15 @@ export function Commerce038({
             <table>
               <thead>
                 <tr>
-                  <th scope="col">Случай</th>
-                  <th scope="col">По гарантии</th>
-                  <th scope="col">Что будет</th>
+                  <th scope="col">
+                    {columnText.case ?? DEFAULT_COLUMNS.case}
+                  </th>
+                  <th scope="col">
+                    {columnText.covered ?? DEFAULT_COLUMNS.covered}
+                  </th>
+                  <th scope="col">
+                    {columnText.outcome ?? DEFAULT_COLUMNS.outcome}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -275,7 +335,9 @@ export function Commerce038({
                         data-yes={item.covered ? "yes" : "no"}
                       >
                         <i aria-hidden="true">{item.covered ? "✓" : "×"}</i>
-                        {item.covered ? "Покрывается" : "Не покрывается"}
+                        {item.covered
+                          ? (coverText.yes ?? DEFAULT_COVER.yes)
+                          : (coverText.no ?? DEFAULT_COVER.no)}
                       </span>
                     </td>
                     <td>{item.note}</td>
@@ -285,7 +347,7 @@ export function Commerce038({
             </table>
           </div>
 
-          <h3>Как сдать товар в ремонт</h3>
+          <h3>{stepsTitle}</h3>
           <ol>
             {steps.map((step) => (
               <li key={step}>{step}</li>

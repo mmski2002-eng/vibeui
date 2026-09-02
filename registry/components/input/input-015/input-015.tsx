@@ -11,6 +11,18 @@ export type Input015Props = Omit<
   suffix?: string
   max?: number
   onChange?: (amount: number) => void
+  /** Строка при превышении лимита. */
+  overText?: string
+  /** Короткая запись суммы; {amount} и {suffix} подставляются. */
+  aboutText?: string
+  /** Напоминание о лимите; {amount} и {suffix} подставляются. */
+  limitText?: string
+  /** Сокращения разрядов: ключи million и thousand, {value} подставляется. */
+  shortText?: Record<string, string>
+  /** Десятичный знак в короткой записи. */
+  decimalMark?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,14 +33,14 @@ export type Input015Props = Omit<
 // чтобы «1 200 000» и «120 000» не путались краем глаза.
 const STYLES = `
 :where([data-vibeui-block="input-015"]){
---vibeui-input-015-surface:oklch(1 0 0);
---vibeui-input-015-shell:oklch(0.91 0.006 265);
---vibeui-input-015-fg:oklch(0.21 0.014 265);
---vibeui-input-015-muted:oklch(0.55 0.014 265);
---vibeui-input-015-field:oklch(0.985 0.002 265);
---vibeui-input-015-border:oklch(0.88 0.008 265);
---vibeui-input-015-accent:oklch(0.5 0.15 150);
---vibeui-input-015-bad:oklch(0.55 0.2 25);
+--vibeui-input-015-surface:transparent;
+--vibeui-input-015-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-input-015-fg:light-dark(oklch(0.21 0.014 265),oklch(0.95 0.005 265));
+--vibeui-input-015-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-input-015-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.011 265));
+--vibeui-input-015-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.013 265));
+--vibeui-input-015-accent:light-dark(oklch(0.5 0.15 150),oklch(0.76 0.14 150));
+--vibeui-input-015-bad:light-dark(oklch(0.55 0.2 25),oklch(0.73 0.16 25));
 --vibeui-input-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-015"]{
@@ -79,11 +91,52 @@ function group(digits: string) {
   return digits.replace(/\B(?=(\d{3})+(?!\d))/g, THIN)
 }
 
-function short(amount: number) {
-  if (amount >= 1_000_000)
-    return `${(amount / 1_000_000).toFixed(1).replace(".", ",")} млн`
-  if (amount >= 1_000) return `${Math.round(amount / 1000)} тыс.`
+const SHORT: Record<string, string> = {
+  million: "{value} млн",
+  thousand: "{value} тыс.",
+}
+
+function short(
+  amount: number,
+  shortText: Record<string, string>,
+  decimalMark: string,
+) {
+  if (amount >= 1_000_000) {
+    const value = (amount / 1_000_000).toFixed(1).replace(".", decimalMark)
+
+    return (shortText.million ?? SHORT.million).replace("{value}", value)
+  }
+
+  if (amount >= 1_000) {
+    return (shortText.thousand ?? SHORT.thousand).replace(
+      "{value}",
+      String(Math.round(amount / 1000)),
+    )
+  }
+
   return String(amount)
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -95,6 +148,12 @@ export function Input015({
   suffix = "₽",
   max = 300000,
   onChange,
+  overText = "Больше лимита",
+  aboutText = "≈ {amount} {suffix}",
+  limitText = `лимит {amount}${THIN}{suffix}`,
+  shortText = SHORT,
+  decimalMark = ",",
+  background = "",
   accent,
   className,
   style,
@@ -106,6 +165,12 @@ export function Input015({
 
   const palette = {
     ...(accent ? { "--vibeui-input-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-015-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -175,12 +240,16 @@ export function Input015({
           aria-live="polite"
         >
           <span data-part="words">
-            {over ? "Больше лимита" : `≈ ${short(amount)} ${suffix}`}
+            {over
+              ? overText
+              : aboutText
+                  .replace("{amount}", short(amount, shortText, decimalMark))
+                  .replace("{suffix}", suffix)}
           </span>
           <span>
-            лимит {group(String(max))}
-            {THIN}
-            {suffix}
+            {limitText
+              .replace("{amount}", group(String(max)))
+              .replace("{suffix}", suffix)}
           </span>
         </p>
       </div>

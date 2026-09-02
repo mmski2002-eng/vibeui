@@ -7,6 +7,8 @@ export type Card021Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
   rows?: number
   /** Кружок аватара слева у каждой строки. */
   avatar?: boolean
+  /** Пусто — подложки нет, заглушка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,10 +19,10 @@ export type Card021Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
 // фигуры остаются ровной заливкой: пульсация — частая причина недомогания.
 const STYLES = `
 :where([data-vibeui-block="card-021"]){
---vibeui-card-021-bg:oklch(1 0 0);
---vibeui-card-021-border:oklch(0.91 0.006 265);
---vibeui-card-021-bone:oklch(0.93 0.005 265);
---vibeui-card-021-shine:oklch(0.97 0.003 265);
+--vibeui-card-021-bg:transparent;
+--vibeui-card-021-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-card-021-bone:light-dark(oklch(0.93 0.005 265),oklch(0.33 0.01 265));
+--vibeui-card-021-shine:light-dark(oklch(0.97 0.003 265),oklch(0.41 0.011 265));
 --vibeui-card-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="card-021"]{
@@ -75,6 +77,28 @@ overflow:hidden;clip-path:inset(50%);white-space:nowrap;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы фигурам
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Заглушка ленты: строки с аватаром, именем и двумя строками текста.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -82,6 +106,7 @@ export function Card021({
   label = "Загружаются комментарии",
   rows = 3,
   avatar = true,
+  background = "",
   accent,
   className,
   style,
@@ -91,6 +116,12 @@ export function Card021({
 
   const palette = {
     ...(accent ? { "--vibeui-card-021-bone": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-card-021-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -14,7 +14,13 @@ export type Togglegroup007Props = Omit<
   label?: string
   defaultAlign?: string
   defaultMarks?: string[]
+  /** Имена групп панели по идентификатору. */
+  sectionText?: Record<string, string>
+  /** Имена кнопок по идентификатору. */
+  itemText?: Record<string, string>
   onChange?: (value: { align: string; marks: string[] }) => void
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,14 +28,18 @@ export type Togglegroup007Props = Omit<
 // настоящими separator'ами. Слева множественный выбор начертаний, справа
 // одиночный выбор выравнивания — разное поведение внутри одной панели, поэтому
 // каждая группа несёт своё имя, а фокус ходит по всей панели стрелками.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте панель темнеет, а границы становятся светлее фона.
 const STYLES = `
 :where([data-vibeui-block="togglegroup-007"]){
---vibeui-togglegroup-007-bg:oklch(1 0 0);
---vibeui-togglegroup-007-fg:oklch(0.22 0.014 265);
---vibeui-togglegroup-007-muted:oklch(0.55 0.014 265);
---vibeui-togglegroup-007-border:oklch(0.9 0.006 265);
---vibeui-togglegroup-007-surface:oklch(0.975 0.004 265);
---vibeui-togglegroup-007-accent:oklch(0.54 0.17 255);
+--vibeui-togglegroup-007-bg:transparent;
+--vibeui-togglegroup-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-togglegroup-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-togglegroup-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-togglegroup-007-surface:light-dark(oklch(0.975 0.004 265),oklch(0.28 0.01 265));
+--vibeui-togglegroup-007-shadow:light-dark(oklch(0.2 0.02 265 / 8%),oklch(0 0 0 / 35%));
+--vibeui-togglegroup-007-accent:light-dark(oklch(0.54 0.17 255),oklch(0.76 0.14 255));
 --vibeui-togglegroup-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="togglegroup-007"]{
@@ -38,7 +48,7 @@ max-width:100%;padding:0.3125rem;
 border:1px solid var(--vibeui-togglegroup-007-border);border-radius:0.75rem;
 background:var(--vibeui-togglegroup-007-bg);color:var(--vibeui-togglegroup-007-fg);
 font-family:var(--vibeui-togglegroup-007-font);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 8%);
+box-shadow:0 1px 2px var(--vibeui-togglegroup-007-shadow);
 }
 [data-vibeui-block="togglegroup-007"] *{box-sizing:border-box}
 [data-vibeui-block="togglegroup-007"] [data-part="set"]{display:inline-flex;gap:0.125rem}
@@ -55,7 +65,7 @@ transition:background-color .15s ease,color .15s ease;
 outline:2px solid var(--vibeui-togglegroup-007-accent);outline-offset:1px;
 }
 [data-vibeui-block="togglegroup-007"] button[aria-pressed="true"]{
-background:color-mix(in oklab,var(--vibeui-togglegroup-007-accent) 12%,white);
+background:color-mix(in oklab,var(--vibeui-togglegroup-007-accent) 12%,var(--vibeui-togglegroup-007-surface));
 color:var(--vibeui-togglegroup-007-accent);
 }
 /* Разделитель объявлен ролью, а не просто нарисован: панель из девяти
@@ -69,70 +79,99 @@ background:var(--vibeui-togglegroup-007-border);
 
 type Section = {
   id: string
-  label: string
   mode: "multi" | "single"
-  items: { id: string; label: string; d: string }[]
+  items: { id: string; d: string }[]
 }
 
 const SECTIONS: Section[] = [
   {
     id: "marks",
-    label: "Начертание",
     mode: "multi",
     items: [
       {
         id: "bold",
-        label: "Полужирный",
         d: "M5.4 3h4a2.6 2.6 0 0 1 0 5.2h-4zm0 5.2h4.6a2.8 2.8 0 0 1 0 5.6H5.4z",
       },
       {
         id: "italic",
-        label: "Курсив",
         d: "M11.4 3.2H7.6M8.8 12.8H5M9.8 3.2 7 12.8",
       },
       {
         id: "strike",
-        label: "Зачёркнутый",
         d: "M3.2 8h9.6M11 4.6C10.4 3.6 9.3 3 8 3 6.3 3 5 3.9 5 5.3 5 6.4 5.8 7 7 7.5M5 11.4c.6 1 1.7 1.6 3 1.6 1.7 0 3-.9 3-2.3",
       },
     ],
   },
   {
     id: "align",
-    label: "Выравнивание",
     mode: "single",
     items: [
-      { id: "left", label: "По левому краю", d: "M2.5 4h11M2.5 8h7M2.5 12h11" },
-      { id: "center", label: "По центру", d: "M2.5 4h11M4.5 8h7M2.5 12h11" },
+      { id: "left", d: "M2.5 4h11M2.5 8h7M2.5 12h11" },
+      { id: "center", d: "M2.5 4h11M4.5 8h7M2.5 12h11" },
       {
         id: "right",
-        label: "По правому краю",
         d: "M2.5 4h11M6.5 8h7M2.5 12h11",
       },
     ],
   },
   {
     id: "blocks",
-    label: "Блоки",
     mode: "multi",
     items: [
       {
         id: "list",
-        label: "Маркированный список",
         d: "M6 4h7.5M6 8h7.5M6 12h7.5M3 4h.01M3 8h.01M3 12h.01",
       },
       {
         id: "quote",
-        label: "Цитата",
         d: "M3.5 12V8.5C3.5 5.8 4.9 4.3 7 4M9 12V8.5C9 5.8 10.4 4.3 12.5 4",
       },
     ],
   },
 ]
 
+const SECTION_TEXT: Record<string, string> = {
+  marks: "Начертание",
+  align: "Выравнивание",
+  blocks: "Блоки",
+}
+
+const ITEM_TEXT: Record<string, string> = {
+  bold: "Полужирный",
+  italic: "Курсив",
+  strike: "Зачёркнутый",
+  left: "По левому краю",
+  center: "По центру",
+  right: "По правому краю",
+  list: "Маркированный список",
+  quote: "Цитата",
+}
+
 const FLAT = SECTIONS.flatMap((section) =>
   section.items.map((item) => ({ section, item })),
 )
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Панель форматирования с разделителями: множественный и одиночный выбор
@@ -142,7 +181,10 @@ export function Togglegroup007({
   label = "Форматирование",
   defaultAlign = "left",
   defaultMarks = ["bold"],
+  sectionText = SECTION_TEXT,
+  itemText = ITEM_TEXT,
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -155,6 +197,12 @@ export function Togglegroup007({
 
   const palette = {
     ...(accent ? { "--vibeui-togglegroup-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-togglegroup-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -223,7 +271,11 @@ export function Togglegroup007({
                 aria-orientation="vertical"
               />
             ) : null}
-            <span data-part="set" role="group" aria-label={section.label}>
+            <span
+              data-part="set"
+              role="group"
+              aria-label={sectionText[section.id] ?? SECTION_TEXT[section.id]}
+            >
               {section.items.map((item) => {
                 const index = FLAT.findIndex(
                   (entry) => entry.item.id === item.id,
@@ -241,8 +293,8 @@ export function Togglegroup007({
                     }}
                     type="button"
                     aria-pressed={pressed}
-                    aria-label={item.label}
-                    title={item.label}
+                    aria-label={itemText[item.id] ?? ITEM_TEXT[item.id]}
+                    title={itemText[item.id] ?? ITEM_TEXT[item.id]}
                     tabIndex={index === active ? 0 : -1}
                     onKeyDown={(event) => onKeyDown(event, index)}
                     onFocus={() => setActive(index)}

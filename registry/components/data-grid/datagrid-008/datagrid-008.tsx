@@ -19,6 +19,20 @@ export type Datagrid008Props = Omit<
   rows?: Datagrid008Row[]
   caption?: string
   single?: boolean
+  /** Заголовок шапки над таблицей. */
+  heading?: string
+  /** Пояснение о режиме: ключи single и multiple. */
+  hintText?: Record<string, string>
+  /** Названия колонок: shipment, route, status, eta. */
+  columnText?: Record<string, string>
+  /** Подпись кнопки раскрытия. {row} — имя партии. */
+  detailsLabel?: string
+  /** Подписи кнопок в панели подробностей. */
+  actionLabels?: string[]
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,15 +42,19 @@ export type Datagrid008Props = Omit<
 // поэтому связь «кнопка → панель» есть и без зрения. Режим single держит
 // открытой одну строку: иначе таблица на десяти раскрытых записях
 // перестаёт быть таблицей.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-008"]){
---vibeui-datagrid-008-bg:oklch(1 0 0);
---vibeui-datagrid-008-fg:oklch(0.23 0.014 230);
---vibeui-datagrid-008-muted:oklch(0.55 0.014 230);
---vibeui-datagrid-008-border:oklch(0.92 0.006 230);
---vibeui-datagrid-008-head:oklch(0.975 0.003 230);
---vibeui-datagrid-008-panel:oklch(0.98 0.006 230);
---vibeui-datagrid-008-accent:oklch(0.52 0.15 235);
+--vibeui-datagrid-008-bg:transparent;
+--vibeui-datagrid-008-fg:light-dark(oklch(0.23 0.014 230),oklch(0.93 0.006 230));
+--vibeui-datagrid-008-muted:light-dark(oklch(0.55 0.014 230),oklch(0.68 0.012 230));
+--vibeui-datagrid-008-border:light-dark(oklch(0.92 0.006 230),oklch(0.34 0.012 230));
+--vibeui-datagrid-008-head:light-dark(oklch(0.975 0.003 230),oklch(0.27 0.012 230));
+--vibeui-datagrid-008-panel:light-dark(oklch(0.98 0.006 230),oklch(0.25 0.014 230));
+--vibeui-datagrid-008-field:light-dark(oklch(1 0 0),oklch(0.21 0.012 230));
+--vibeui-datagrid-008-accent:light-dark(oklch(0.52 0.15 235),oklch(0.76 0.13 235));
 --vibeui-datagrid-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-008"]{
@@ -102,7 +120,7 @@ display:flex;gap:0.375rem;margin-inline-start:auto;
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
 padding:0.3125rem 0.625rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-008-border);
-background:var(--vibeui-datagrid-008-bg);color:var(--vibeui-datagrid-008-fg);
+background:var(--vibeui-datagrid-008-field);color:var(--vibeui-datagrid-008-fg);
 }
 [data-vibeui-block="datagrid-008"] [data-part="detail-actions"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-008-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-008"] [data-part="route"]{color:var(--vibeui-datagrid-008-muted)}
@@ -152,6 +170,42 @@ const DEFAULT_ROWS: Datagrid008Row[] = [
   },
 ]
 
+const COLUMN_LABEL: Record<string, string> = {
+  shipment: "Партия",
+  route: "Маршрут",
+  status: "Статус",
+  eta: "Прибытие",
+}
+
+const HINT_LABEL: Record<string, string> = {
+  single: "Открыта одна строка",
+  multiple: "Можно раскрыть несколько",
+}
+
+const ACTION_LABELS = ["Документы", "Трек"]
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Сетка с раскрывающейся строкой-деталями: панель занимает всю ширину под
  * своей строкой, связь объявлена через aria-controls. Один файл.
@@ -160,6 +214,13 @@ export function Datagrid008({
   rows = DEFAULT_ROWS,
   caption = "Нажмите на стрелку, чтобы раскрыть подробности партии",
   single = true,
+  heading = "Отгрузки",
+  hintText = HINT_LABEL,
+  columnText = COLUMN_LABEL,
+  detailsLabel = "Подробности: {row}",
+  actionLabels = ACTION_LABELS,
+  scrollLabel = "Таблица отгрузок, прокручивается вбок",
+  background = "",
   accent,
   className,
   style,
@@ -174,8 +235,16 @@ export function Datagrid008({
       return single ? [id] : [...current, id]
     })
 
+  const label = (column: string) => columnText[column] ?? COLUMN_LABEL[column]
+
   const palette = {
     ...(accent ? { "--vibeui-datagrid-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -191,15 +260,17 @@ export function Datagrid008({
         style={palette}
       >
         <div data-part="head">
-          <h3 data-part="title">Отгрузки</h3>
+          <h3 data-part="title">{heading}</h3>
           <p data-part="hint">
-            {single ? "Открыта одна строка" : "Можно раскрыть несколько"}
+            {single
+              ? (hintText.single ?? HINT_LABEL.single)
+              : (hintText.multiple ?? HINT_LABEL.multiple)}
           </p>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица отгрузок, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
@@ -209,11 +280,11 @@ export function Datagrid008({
                 <th scope="col" data-part="pick">
                   <span aria-hidden="true">·</span>
                 </th>
-                <th scope="col">Партия</th>
-                <th scope="col">Маршрут</th>
-                <th scope="col">Статус</th>
+                <th scope="col">{label("shipment")}</th>
+                <th scope="col">{label("route")}</th>
+                <th scope="col">{label("status")}</th>
                 <th scope="col" data-align="end">
-                  Прибытие
+                  {label("eta")}
                 </th>
               </tr>
             </thead>
@@ -231,7 +302,10 @@ export function Datagrid008({
                           data-part="toggle"
                           aria-expanded={expanded}
                           aria-controls={panel}
-                          aria-label={`Подробности: ${row.shipment}`}
+                          aria-label={detailsLabel.replace(
+                            "{row}",
+                            row.shipment,
+                          )}
                           onClick={() => toggle(row.id)}
                         >
                           <span data-part="caret" aria-hidden="true">
@@ -257,8 +331,11 @@ export function Datagrid008({
                               ))}
                             </dl>
                             <div data-part="detail-actions">
-                              <button type="button">Документы</button>
-                              <button type="button">Трек</button>
+                              {actionLabels.map((action) => (
+                                <button key={action} type="button">
+                                  {action}
+                                </button>
+                              ))}
                             </div>
                           </div>
                         </td>

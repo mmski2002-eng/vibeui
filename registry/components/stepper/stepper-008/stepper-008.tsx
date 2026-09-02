@@ -14,7 +14,15 @@ export type Stepper008Props = Omit<
   current?: number
   /** Подпись метки у необязательного шага. */
   optionalLabel?: string
+  /** Строка счётчика сверху. {count} — место для выделенного счёта. */
+  counterText?: string
+  /** Сам счёт внутри выделения. {done} — пройдено, {total} — всего. */
+  countText?: string
+  /** Подписи состояний: компонент несёт русские, проект подставляет свои. */
+  stateText?: Record<string, string>
   label?: string
+  /** Пусто — подложки нет, список лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,15 +30,19 @@ export type Stepper008Props = Omit<
 // как человек в них зайдёт. Необязательный шаг помечен словом и пунктирным
 // кружком, а счётчик сверху считает только обязательные — иначе прогресс
 // врёт: «2 из 6» пугает, когда четыре шага можно пропустить.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="stepper-008"]){
---vibeui-stepper-008-bg:oklch(1 0 0);
---vibeui-stepper-008-fg:oklch(0.24 0.016 265);
---vibeui-stepper-008-muted:oklch(0.56 0.014 265);
---vibeui-stepper-008-border:oklch(0.92 0.006 265);
---vibeui-stepper-008-line:oklch(0.9 0.006 265);
---vibeui-stepper-008-accent:oklch(0.55 0.2 262);
---vibeui-stepper-008-accent-fg:oklch(1 0 0);
+--vibeui-stepper-008-bg:transparent;
+--vibeui-stepper-008-surface:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-stepper-008-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-stepper-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-stepper-008-border:light-dark(oklch(0.92 0.006 265),oklch(0.32 0.012 265));
+--vibeui-stepper-008-line:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-stepper-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-stepper-008-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
 --vibeui-stepper-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="stepper-008"]{
@@ -55,7 +67,7 @@ display:flex;flex-wrap:wrap;gap:0.375rem;margin:0;padding:0;list-style:none;
 display:flex;align-items:center;gap:0.5rem;
 padding:0.4375rem 0.6875rem;border-radius:9999px;
 border:1px solid var(--vibeui-stepper-008-border);
-background:var(--vibeui-stepper-008-bg);
+background:var(--vibeui-stepper-008-surface);
 }
 [data-vibeui-block="stepper-008"] li[data-optional="true"]{border-style:dashed}
 [data-vibeui-block="stepper-008"] li[data-state="current"]{
@@ -101,6 +113,34 @@ const DEFAULT_STEPS: Stepper008Step[] = [
   { title: "Публикация" },
 ]
 
+const STATE_TEXT: Record<string, string> = {
+  done: " — шаг пройден",
+  current: " — текущий шаг",
+  todo: " — впереди",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Шаги, среди которых есть необязательные: они помечены словом и пунктиром.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -109,7 +149,11 @@ export function Stepper008({
   steps = DEFAULT_STEPS,
   current = 2,
   optionalLabel = "Необязательно",
+  counterText = "Обязательных пройдено {count}. Остальное можно пропустить и вернуться позже.",
+  countText = "{done} из {total}",
+  stateText = STATE_TEXT,
   label = "Настройка рабочего пространства",
+  background = "",
   accent,
   className,
   style,
@@ -117,6 +161,13 @@ export function Stepper008({
 }: Stepper008Props) {
   const palette = {
     ...(accent ? { "--vibeui-stepper-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-stepper-008-bg": background,
+          "--vibeui-stepper-008-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -124,6 +175,7 @@ export function Stepper008({
   const requiredDone = steps.filter(
     (step, index) => !step.optional && index < current,
   )
+  const [counterBefore, counterAfter] = counterText.split("{count}")
 
   return (
     <>
@@ -139,11 +191,13 @@ export function Stepper008({
       >
         <div data-part="shell">
           <p data-part="counter">
-            Обязательных пройдено{" "}
+            {counterBefore}
             <b>
-              {requiredDone.length} из {required.length}
+              {countText
+                .replace("{done}", String(requiredDone.length))
+                .replace("{total}", String(required.length))}
             </b>
-            . Остальное можно пропустить и вернуться позже.
+            {counterAfter}
           </p>
           <ol>
             {steps.map((step, index) => {
@@ -169,11 +223,7 @@ export function Stepper008({
                     <span data-part="tag">{optionalLabel}</span>
                   ) : null}
                   <span data-part="sr">
-                    {state === "done"
-                      ? " — шаг пройден"
-                      : state === "current"
-                        ? " — текущий шаг"
-                        : " — впереди"}
+                    {stateText[state] ?? STATE_TEXT[state]}
                   </span>
                 </li>
               )

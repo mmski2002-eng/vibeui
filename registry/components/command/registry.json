@@ -29,15 +29,19 @@
             "порядок стрелок по видимому списку, а не по исходному массиву",
             "одинаковый фон для подсветки стрелками и наведения: две разные путают",
             "группы над строками — по ним палитру и сканируют",
-            "внятный пустой ответ вместо молчания при отсутствии совпадений"
+            "внятный пустой ответ вместо молчания при отсутствии совпадений",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массив commands и группы",
             "placeholder и triggerLabel",
-            "акцент через проп accent",
+            "emptyText — ответ на пустой поиск",
+            "акцент через проп accent — цвет обводки фокуса",
+            "background — подложка кнопки и модалки; пусто оставляет цвет из палитры",
             "ширину модалки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Глобальное сочетание ⌘K компонент не вешает: подсказка на кнопке, обработчик — за вами.",
             "Поиск идёт по подстроке названия: нечёткий поиск и синонимы добавляются в фильтре снаружи.",
             "Enter по подсвеченной строке не срабатывает: строки открываются кликом, добавьте обработчик под свою модель.",
@@ -58,6 +62,25 @@
             "type": "text",
             "default": "Команда или переход…",
             "maxLength": 32
+          },
+          {
+            "prop": "emptyText",
+            "label": "Пустой ответ",
+            "type": "text",
+            "default": "Ничего не нашлось. Проверьте формулировку.",
+            "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -71,15 +94,19 @@
                 "arrow order following the visible list rather than the source array",
                 "the same background for arrow highlight and hover: two different ones confuse",
                 "the groups above the rows — that is how a palette gets scanned",
-                "a clear empty answer instead of silence when nothing matches"
+                "a clear empty answer instead of silence when nothing matches",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the commands array and their groups",
                 "placeholder and triggerLabel",
-                "the accent through the accent prop",
+                "emptyText — the answer to an empty search",
+                "the accent through the accent prop — it colours the focus ring",
+                "background — the surface of the trigger and the dialog; empty keeps the palette colour",
                 "the dialog width"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not bind the global ⌘K: the hint is on the button, the handler is yours.",
                 "Search is a substring match on the label: fuzzy search and synonyms belong in your own filter.",
                 "Enter on the highlighted row does nothing: rows open on click, add a handler for your model.",
@@ -95,11 +122,63 @@
               "placeholder": {
                 "label": "Placeholder",
                 "default": "Command or page…"
+              },
+              "emptyText": {
+                "label": "Empty answer",
+                "default": "Nothing found. Try rewording."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Command Palette"
+            "title": "Command Palette",
+            "preview": {
+              "props": {
+                "commands": [
+                  {
+                    "label": "New component",
+                    "group": "Actions",
+                    "keys": "⌘N"
+                  },
+                  {
+                    "label": "Build registry",
+                    "group": "Actions"
+                  },
+                  {
+                    "label": "Open catalog",
+                    "group": "Navigate",
+                    "keys": "G C"
+                  },
+                  {
+                    "label": "Open blocks",
+                    "group": "Navigate",
+                    "keys": "G B"
+                  },
+                  {
+                    "label": "Project settings",
+                    "group": "Navigate"
+                  },
+                  {
+                    "label": "Toggle theme",
+                    "group": "View",
+                    "keys": "⌘⇧L"
+                  },
+                  {
+                    "label": "Show grid",
+                    "group": "View"
+                  }
+                ],
+                "triggerLabel": "Search commands",
+                "placeholder": "Command or jump to…",
+                "emptyText": "Nothing found. Try different wording."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -133,19 +212,24 @@
             "порядок стрелок по видимому списку, а не по исходному массиву — после группировки он другой",
             "одинаковый фон для подсветки стрелками и наведения: две разные читаются как две позиции",
             "aria-selected только у активной строки: это признак подсветки, а не выбранности",
-            "внятный пустой ответ вместо молчания при отсутствии совпадений"
+            "внятный пустой ответ вместо молчания при отсутствии совпадений",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массив commands и названия групп",
             "подсказку поля через проп placeholder",
             "имя палитры через проп label",
+            "emptyText, hintText и doneText — тексты пустого ответа, подсказки по клавишам и строки о запуске",
+            "background — подложка панели; пусто оставляет цвет из палитры",
             "акцент через проп accent и ширину панели"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Глобальное сочетание ⌘K компонент не вешает: панель встроена в страницу, обработчик за вами.",
             "Ловушки фокуса здесь нет намеренно — панель не модальная; для модалки берите нативный dialog.",
             "Поиск идёт по подстроке названия: нечёткий поиск и синонимы добавляются в вашем фильтре.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "В doneText подставляется название команды на месте {command}: без плейсхолдера строка покажется как есть."
           ]
         },
         "controls": [
@@ -162,6 +246,32 @@
             "type": "text",
             "default": "Командная палитра",
             "maxLength": 32
+          },
+          {
+            "prop": "emptyText",
+            "label": "Пустой ответ",
+            "type": "text",
+            "default": "Ничего не нашлось. Попробуйте другое слово.",
+            "maxLength": 48
+          },
+          {
+            "prop": "hintText",
+            "label": "Строка клавиш",
+            "type": "text",
+            "default": "↑↓ выбор · Enter запуск · Esc сброс",
+            "maxLength": 44
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -175,19 +285,24 @@
                 "arrow order following the visible list rather than the source array — grouping changes it",
                 "the same background for arrow highlight and hover: two different ones read as two positions",
                 "aria-selected only on the active row: it marks the highlight, not a chosen value",
-                "a clear empty answer instead of silence when nothing matches"
+                "a clear empty answer instead of silence when nothing matches",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the commands array and the group names",
                 "the field hint through the placeholder prop",
                 "the palette name through the label prop",
+                "emptyText, hintText and doneText — the empty answer, the key hint line and the launched-command line",
+                "background — the panel surface; empty keeps the palette colour",
                 "the accent through the accent prop and the panel width"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not bind the global ⌘K: the panel is inline, the handler is yours.",
                 "There is deliberately no focus trap — the panel is not modal; use a native dialog for that.",
                 "Search is a substring match on the label: fuzzy search and synonyms belong in your own filter.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "doneText puts the command name where {command} stands: without the placeholder the string shows as written."
               ],
               "usage": "<Command002 commands={[{ label: \"New component\", group: \"Actions\", keys: \"⌘N\" }]} />"
             },
@@ -199,11 +314,66 @@
               "label": {
                 "label": "Palette name",
                 "default": "Command palette"
+              },
+              "emptyText": {
+                "label": "Empty answer",
+                "default": "Nothing found. Try another word."
+              },
+              "hintText": {
+                "label": "Key hints",
+                "default": "↑↓ move · Enter run · Esc clear"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Inline Palette"
+            "title": "Inline Palette",
+            "preview": {
+              "props": {
+                "commands": [
+                  {
+                    "label": "New component",
+                    "group": "Actions",
+                    "keys": "⌘N"
+                  },
+                  {
+                    "label": "Rebuild registry",
+                    "group": "Actions",
+                    "keys": "⌘R"
+                  },
+                  {
+                    "label": "Open catalog",
+                    "group": "Navigate",
+                    "keys": "G C"
+                  },
+                  {
+                    "label": "Open settings",
+                    "group": "Navigate",
+                    "keys": "G S"
+                  },
+                  {
+                    "label": "Switch theme",
+                    "group": "View",
+                    "keys": "⌘⇧L"
+                  },
+                  {
+                    "label": "Show grid",
+                    "group": "View"
+                  }
+                ],
+                "doneText": "Done: {command}",
+                "placeholder": "Command or destination…",
+                "label": "Command palette",
+                "emptyText": "No matches. Try another word.",
+                "hintText": "↑↓ move · Enter run · Esc dismiss"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -237,19 +407,25 @@
             "смену заголовка вместе с режимом — иначе непонятно, почему строк стало меньше",
             "обрезку истории: без ограничения она превращается во второй полный список",
             "связку role=combobox и aria-activedescendant: фокус остаётся в поле",
-            "разные значки у истории и результатов поиска: режим виден строкой, а не только шапкой"
+            "разные значки у истории и результатов поиска: режим виден строкой, а не только шапкой",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массивы commands и recent",
             "подсказку поля через проп placeholder",
-            "глубину истории и текст кнопки очистки",
+            "глубину истории и текст кнопки очистки через clearLabel",
+            "recentText, foundText, emptyText и emptyHistoryText — заголовки режимов и ответы на пустой список",
+            "label и listLabel — имена палитры и списка для скринридера",
+            "background — подложка панели; пусто оставляет цвет из палитры",
             "акцент через проп accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "История живёт только в состоянии компонента: сохранение между сессиями добавляется снаружи.",
             "Enter запускает подсвеченную строку и очищает запрос — свяжите run со своей моделью команд.",
             "Кнопка очистки появляется только в режиме истории: в результатах поиска ей нечего чистить.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "В foundText число найденных строк подставляется на месте {count}: без плейсхолдера заголовок покажется как есть."
           ]
         },
         "controls": [
@@ -261,8 +437,28 @@
             "maxLength": 32
           },
           {
+            "prop": "recentText",
+            "label": "Заголовок истории",
+            "type": "text",
+            "default": "Недавние",
+            "maxLength": 24
+          },
+          {
+            "prop": "clearLabel",
+            "label": "Кнопка очистки",
+            "type": "text",
+            "default": "очистить",
+            "maxLength": 16
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -278,19 +474,25 @@
                 "the section heading changing with the mode — otherwise the shorter list looks broken",
                 "the history cap: unbounded, it becomes a second full list",
                 "the role=combobox plus aria-activedescendant pairing: focus stays in the field",
-                "the different glyphs for history and search results: the mode shows per row, not only in the header"
+                "the different glyphs for history and search results: the mode shows per row, not only in the header",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the commands and recent arrays",
                 "the field hint through the placeholder prop",
-                "the history depth and the clear button wording",
+                "the history depth and the clear button wording through clearLabel",
+                "recentText, foundText, emptyText and emptyHistoryText — the mode headings and the empty answers",
+                "label and listLabel — the palette and list names for screen readers",
+                "background — the panel surface; empty keeps the palette colour",
                 "the accent through the accent prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "History lives in component state only: persisting it between sessions is added from outside.",
                 "Enter runs the highlighted row and clears the query — wire run to your own command model.",
                 "The clear button appears only in history mode: there is nothing to clear in search results.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "foundText puts the number of matches where {count} stands: without the placeholder the heading shows as written."
               ],
               "usage": "<Command003 commands={[\"New component\"]} recent={[\"Rebuild registry\"]} />"
             },
@@ -299,13 +501,51 @@
                 "label": "Placeholder",
                 "default": "What do you need?"
               },
+              "recentText": {
+                "label": "History heading",
+                "default": "Recent"
+              },
+              "clearLabel": {
+                "label": "Clear button",
+                "default": "clear"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Recent Commands"
+            "title": "Recent Commands",
+            "preview": {
+              "props": {
+                "commands": [
+                  "New component",
+                  "Rebuild registry",
+                  "Validate metadata",
+                  "Open catalog",
+                  "Open project settings",
+                  "Switch theme",
+                  "Copy the agent instruction"
+                ],
+                "recent": [
+                  "Rebuild registry",
+                  "Copy the agent instruction",
+                  "New component"
+                ],
+                "label": "Command palette",
+                "listLabel": "Commands",
+                "foundText": "Found: {count}",
+                "emptyHistoryText": "History is empty — start typing a command name.",
+                "emptyText": "No matches. Try another word.",
+                "placeholder": "What do you need?",
+                "recentText": "Recent",
+                "clearLabel": "clear"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -339,19 +579,25 @@
             "выход по Backspace на пустом запросе — привычный жест, снимающий необходимость целиться в крестик",
             "сброс запроса при входе на уровень: старый фильтр к подкомандам не относится",
             "признак вложенности у строк со стрелкой: без него Enter ведёт себя непредсказуемо",
-            "связку role=combobox и aria-activedescendant: фокус остаётся в поле"
+            "связку role=combobox и aria-activedescendant: фокус остаётся в поле",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массив commands и вложенные children",
-            "подсказку поля через проп placeholder",
-            "текст подвала с подсказкой клавиш",
+            "подсказки поля через пропы placeholder и childPlaceholder",
+            "текст подвала через hintText, childHintText и doneText",
+            "emptyText — ответ, когда в списке ничего не осталось",
+            "label, listLabel и backLabel — подписи для скринридера",
+            "background — подложка панели; пусто оставляет цвет из палитры",
             "акцент через проп accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Уровней ровно два: для более глубокого дерева храните путь массивом, а не одним родителем.",
             "Escape сначала чистит запрос и только потом выходит на уровень выше — это разные шаги отмены.",
             "Выполнение команды здесь только показывается в подвале: подключите свой обработчик в choose.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "В doneText название выполненной команды подставляется на месте {command}: без плейсхолдера строка покажется как есть."
           ]
         },
         "controls": [
@@ -363,8 +609,28 @@
             "maxLength": 32
           },
           {
+            "prop": "childPlaceholder",
+            "label": "Подсказка уровня",
+            "type": "text",
+            "default": "Подкоманда…",
+            "maxLength": 32
+          },
+          {
+            "prop": "hintText",
+            "label": "Строка клавиш",
+            "type": "text",
+            "default": "Enter — открыть подкоманды · Esc — сброс",
+            "maxLength": 48
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -380,19 +646,25 @@
                 "stepping back with Backspace on an empty query — the familiar gesture that saves aiming at a close button",
                 "clearing the query when drilling in: the old filter does not apply to subcommands",
                 "the chevron marking rows that nest: without it Enter behaves unpredictably",
-                "the role=combobox plus aria-activedescendant pairing: focus stays in the field"
+                "the role=combobox plus aria-activedescendant pairing: focus stays in the field",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the commands array and its nested children",
-                "the field hint through the placeholder prop",
-                "the footer text with the key hints",
+                "the field hints through the placeholder and childPlaceholder props",
+                "the footer text through hintText, childHintText and doneText",
+                "emptyText — the answer when nothing is left in the list",
+                "label, listLabel and backLabel — the screen-reader wording",
+                "background — the panel surface; empty keeps the palette colour",
                 "the accent through the accent prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There are exactly two levels: for a deeper tree keep the path as an array instead of one parent.",
                 "Escape clears the query first and only then steps back — those are two distinct undo steps.",
                 "Running a command only prints into the footer here: hook your own handler into choose.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "doneText puts the executed command name where {command} stands: without the placeholder the string shows as written."
               ],
               "usage": "<Command004 commands={[{ label: \"Change theme\", children: [\"Light\", \"Dark\"] }]} />"
             },
@@ -401,13 +673,58 @@
                 "label": "Placeholder",
                 "default": "Command…"
               },
+              "childPlaceholder": {
+                "label": "Level placeholder",
+                "default": "Subcommand…"
+              },
+              "hintText": {
+                "label": "Key hints",
+                "default": "Enter — open subcommands · Esc — clear"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Nested Commands"
+            "title": "Nested Commands",
+            "preview": {
+              "props": {
+                "commands": [
+                  {
+                    "label": "Change theme",
+                    "children": ["Light", "Dark", "Match system"]
+                  },
+                  {
+                    "label": "Create",
+                    "children": ["Component", "Block", "Category"]
+                  },
+                  {
+                    "label": "Export registry",
+                    "children": ["JSON for shadcn", "Source archive"]
+                  },
+                  {
+                    "label": "Rebuild indexes"
+                  },
+                  {
+                    "label": "Open documentation"
+                  }
+                ],
+                "label": "Command palette",
+                "listLabel": "Commands",
+                "backLabel": "Back to the command list",
+                "emptyText": "Nothing here. Clear the query or step back.",
+                "childHintText": "Backspace — back · Enter — run",
+                "doneText": "Done: {command}",
+                "placeholder": "Command…",
+                "childPlaceholder": "Subcommand…",
+                "hintText": "Enter — open subcommands · Esc — dismiss"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -441,19 +758,27 @@
             "группировку, вычисляемую из данных, а не заданную руками: новый тип сам заведёт группу",
             "вторую строку с путём — по ней различают одноимённые файлы",
             "поиск и по названию, и по пути: путь часто помнят лучше имени",
-            "связку role=combobox и aria-activedescendant: фокус остаётся в поле"
+            "связку role=combobox и aria-activedescendant: фокус остаётся в поле",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "ключ kind как машинное значение: видимую подпись даёт kindText, иначе цвета значков перестанут находиться по data-kind"
           ],
           "adapt": [
             "массив items и набор типов",
             "подсказку поля через проп placeholder",
+            "kindText — видимые подписи типов при неизменных ключах",
+            "groupText и footText — заголовок группы и строка подвала",
+            "emptyText, label и listLabel — ответ на пустой поиск и подписи для скринридера",
             "цвета значков для новых типов",
+            "background — подложка панели; пусто оставляет цвет из палитры",
             "акцент через проп accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ранжирования нет: результаты идут в порядке массива, сортировку по релевантности добавляйте снаружи.",
             "Цвета значков заданы для четырёх типов; для пятого добавьте своё правило, иначе он возьмёт цвет по умолчанию.",
             "Enter здесь не переходит к результату: строки выбираются кликом, обработчик за вами.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "В groupText подставляются {kind} и {count}, в footText — {found} и {total}: без плейсхолдеров строки покажутся как есть."
           ]
         },
         "controls": [
@@ -469,6 +794,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -482,19 +813,27 @@
                 "grouping computed from the data rather than hand-written: a new type creates its own group",
                 "the secondary path line — it is how identically named files are told apart",
                 "searching both the label and the path: paths are often remembered better than names",
-                "the role=combobox plus aria-activedescendant pairing: focus stays in the field"
+                "the role=combobox plus aria-activedescendant pairing: focus stays in the field",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "kind as a machine key: the visible wording comes from kindText, otherwise the badge colours stop matching data-kind"
               ],
               "adapt": [
                 "the items array and the set of types",
                 "the field hint through the placeholder prop",
+                "kindText — the visible type wording while the keys stay put",
+                "groupText and footText — the group heading and the footer line",
+                "emptyText, label and listLabel — the empty answer and the screen-reader wording",
                 "the badge colours for new types",
+                "background — the panel surface; empty keeps the palette colour",
                 "the accent through the accent prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is no ranking: results follow array order, add relevance sorting outside.",
                 "Badge colours are defined for four types; a fifth needs its own rule or it falls back to the default.",
                 "Enter does not navigate here: rows are picked by click, the handler is yours.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "groupText takes {kind} and {count}, footText takes {found} and {total}: without the placeholders the strings show as written."
               ],
               "usage": "<Command005 items={[{ label: \"registry.json\", kind: \"Файл\", detail: \"registry/components/navigation/\" }]} />"
             },
@@ -505,11 +844,66 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Project Search"
+            "title": "Project Search",
+            "preview": {
+              "props": {
+                "kindText": {
+                  "Файл": "File",
+                  "Символ": "Symbol",
+                  "Настройка": "Setting",
+                  "Документ": "Document"
+                },
+                "items": [
+                  {
+                    "label": "registry.json",
+                    "kind": "Файл",
+                    "detail": "registry/components/navigation/"
+                  },
+                  {
+                    "label": "command-001.tsx",
+                    "kind": "Файл",
+                    "detail": "registry/components/navigation/command-001/"
+                  },
+                  {
+                    "label": "validateSource",
+                    "kind": "Символ",
+                    "detail": "scripts/validate-meta.mjs:218"
+                  },
+                  {
+                    "label": "pascalCase",
+                    "kind": "Символ",
+                    "detail": "scripts/new-item.mjs:41"
+                  },
+                  {
+                    "label": "Preview theme",
+                    "kind": "Настройка",
+                    "detail": "Catalog → Preview"
+                  },
+                  {
+                    "label": "Warning threshold",
+                    "kind": "Настройка",
+                    "detail": "Build → Checks"
+                  },
+                  {
+                    "label": "Build pipeline",
+                    "kind": "Документ",
+                    "detail": "docs/PIPELINE.md"
+                  }
+                ],
+                "label": "Project search",
+                "listLabel": "Results",
+                "emptyText": "Nothing matches that query.",
+                "footText": "Found {found} of {total}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -543,19 +937,25 @@
             "отдельный <kbd> на каждую клавишу — это семантика, а не украшение",
             "поиск по клавишам наравне с названием: сочетание помнят чаще, чем имя команды",
             "aria-label у группы клавиш: иначе скринридер прочитает набор символов",
-            "усиление рамки kbd у подсвеченной строки — подсветка не должна теряться на клавишах"
+            "усиление рамки kbd у подсвеченной строки — подсветка не должна теряться на клавишах",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массив commands и сами сочетания",
             "подсказку поля через проп placeholder",
             "оформление kbd под свою типографику",
+            "emptyText — ответ, когда сочетание не нашлось",
+            "label, listLabel и keysLabel — подписи для скринридера",
+            "background — подложка панели; пусто оставляет цвет из палитры",
             "акцент через проп accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сами сочетания компонент не вешает: это справочник, обработчики клавиш остаются за вами.",
             "Символы модификаторов подставляются как есть — для Windows подставьте Ctrl и Alt снаружи.",
             "Enter по строке ничего не запускает: добавьте обработчик под свою модель команд.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "В keysLabel клавиши подставляются через пробел на месте {keys}: без плейсхолдера скринридер услышит только подпись."
           ]
         },
         "controls": [
@@ -567,8 +967,21 @@
             "maxLength": 32
           },
           {
+            "prop": "emptyText",
+            "label": "Пустой ответ",
+            "type": "text",
+            "default": "Такого сочетания нет — попробуйте другое.",
+            "maxLength": 48
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -584,19 +997,25 @@
                 "a separate <kbd> per key — that is semantics, not decoration",
                 "searching keys alongside labels: the combination is remembered more often than the name",
                 "the aria-label on the key group: otherwise a screen reader reads a pile of symbols",
-                "the stronger kbd border on the highlighted row — the highlight must not vanish over the keys"
+                "the stronger kbd border on the highlighted row — the highlight must not vanish over the keys",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the commands array and the combinations themselves",
                 "the field hint through the placeholder prop",
                 "the kbd styling to match your typography",
+                "emptyText — the answer when no combination matches",
+                "label, listLabel and keysLabel — the screen-reader wording",
+                "background — the panel surface; empty keeps the palette colour",
                 "the accent through the accent prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not bind the shortcuts: this is a reference, the key handlers stay yours.",
                 "Modifier glyphs render as given — substitute Ctrl and Alt for Windows from outside.",
                 "Enter on a row runs nothing: add a handler for your own command model.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "keysLabel puts the space-separated keys where {keys} stands: without the placeholder a screen reader hears the caption alone."
               ],
               "usage": "<Command006 commands={[{ label: \"Open palette\", keys: [\"⌘\", \"K\"] }]} />"
             },
@@ -605,13 +1024,58 @@
                 "label": "Placeholder",
                 "default": "Command or shortcut…"
               },
+              "emptyText": {
+                "label": "Empty answer",
+                "default": "No such shortcut — try another."
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Shortcut Cheatsheet"
+            "title": "Shortcut Cheatsheet",
+            "preview": {
+              "props": {
+                "commands": [
+                  {
+                    "label": "Open palette",
+                    "keys": ["⌘", "K"]
+                  },
+                  {
+                    "label": "Save file",
+                    "keys": ["⌘", "S"]
+                  },
+                  {
+                    "label": "Go to catalog",
+                    "keys": ["G", "C"]
+                  },
+                  {
+                    "label": "Go to blocks",
+                    "keys": ["G", "B"]
+                  },
+                  {
+                    "label": "Toggle sidebar",
+                    "keys": ["⌘", "B"]
+                  },
+                  {
+                    "label": "Undo",
+                    "keys": ["⌘", "Z"]
+                  },
+                  {
+                    "label": "Rebuild registry",
+                    "keys": ["⌘", "⇧", "R"]
+                  }
+                ],
+                "label": "Keyboard shortcuts",
+                "listLabel": "Commands",
+                "keysLabel": "Shortcut: {keys}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -645,19 +1109,25 @@
             "чип режима у поля: без него смена списка выглядит случайной",
             "разбор режима по первому символу — так синтаксис остаётся предсказуемым",
             "моноширинный шрифт префиксов: их набирают посимвольно",
-            "связку role=combobox и aria-activedescendant: фокус остаётся в поле"
+            "связку role=combobox и aria-activedescendant: фокус остаётся в поле",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массив entries и набор префиксов",
             "подсказку поля через проп placeholder",
-            "тексты легенды синтаксиса",
+            "тексты легенды синтаксиса через проп hints",
+            "emptyText и leadText — строки над легендой",
+            "label и listLabel — подписи для скринридера",
+            "background — подложка панели; пусто оставляет цвет из палитры",
             "акцент через проп accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Режимов ровно три: для нового префикса добавьте его и в разбор, и в легенду, иначе список останется пустым.",
             "Запрос без префикса намеренно ничего не ищет — так синтаксис объясняется сам собой.",
             "Enter по строке ничего не выполняет: подключите свой обработчик под каждый режим.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "Символы префиксов в hints должны совпадать с mode у entries: легенда ничего не проверяет и покажет любой набор."
           ]
         },
         "controls": [
@@ -669,8 +1139,21 @@
             "maxLength": 32
           },
           {
+            "prop": "leadText",
+            "label": "Строка легенды",
+            "type": "text",
+            "default": "Начните с префикса:",
+            "maxLength": 40
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -686,19 +1169,25 @@
                 "the mode chip at the field: without it the list swap looks random",
                 "parsing the mode from the first character — that keeps the syntax predictable",
                 "the monospaced prefixes: they are typed character by character",
-                "the role=combobox plus aria-activedescendant pairing: focus stays in the field"
+                "the role=combobox plus aria-activedescendant pairing: focus stays in the field",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the entries array and the set of prefixes",
                 "the field hint through the placeholder prop",
-                "the wording of the syntax legend",
+                "the wording of the syntax legend through the hints prop",
+                "emptyText and leadText — the lines above the legend",
+                "label and listLabel — the screen-reader wording",
+                "background — the panel surface; empty keeps the palette colour",
                 "the accent through the accent prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There are exactly three modes: a new prefix must be added to both the parser and the legend, or the list stays empty.",
                 "A query with no prefix deliberately searches nothing — that is what teaches the syntax.",
                 "Enter on a row runs nothing: wire your own handler per mode.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "The prefix glyphs in hints must match the mode values on entries: the legend validates nothing and will display whatever it is given."
               ],
               "usage": "<Command007 entries={[{ label: \"Rebuild registry\", mode: \">\" }]} />"
             },
@@ -707,13 +1196,76 @@
                 "label": "Placeholder",
                 "default": "Type > @ or #"
               },
+              "leadText": {
+                "label": "Legend line",
+                "default": "Start with a prefix:"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Syntax Hints"
+            "title": "Syntax Hints",
+            "preview": {
+              "props": {
+                "entries": [
+                  {
+                    "label": "Rebuild registry",
+                    "mode": ">"
+                  },
+                  {
+                    "label": "Validate metadata",
+                    "mode": ">"
+                  },
+                  {
+                    "label": "Clear preview cache",
+                    "mode": ">"
+                  },
+                  {
+                    "label": "validateSource",
+                    "mode": "@"
+                  },
+                  {
+                    "label": "buildIndexes",
+                    "mode": "@"
+                  },
+                  {
+                    "label": "pascalCase",
+                    "mode": "@"
+                  },
+                  {
+                    "label": "Line 128",
+                    "mode": "#"
+                  },
+                  {
+                    "label": "Line 214",
+                    "mode": "#"
+                  }
+                ],
+                "hints": [
+                  {
+                    "sigil": ">",
+                    "text": "application commands"
+                  },
+                  {
+                    "sigil": "@",
+                    "text": "symbols in the open file"
+                  },
+                  {
+                    "sigil": "#",
+                    "text": "jump to a line"
+                  }
+                ],
+                "emptyText": "Nothing found. Check the prefix:",
+                "label": "Command palette with syntax",
+                "listLabel": "Results"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -747,19 +1299,25 @@
             "урезание каталога слева — конец пути информативнее его начала",
             "тег <mark> для совпадения: выделение обязано нести смысл, а не только цвет",
             "моноширинный шрифт строк: пути сравнивают посимвольно",
-            "полный путь в подвале — обрезанный каталог иначе не проверить"
+            "полный путь в подвале — обрезанный каталог иначе не проверить",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массив paths",
             "подсказку поля через проп placeholder",
             "цвет подсветки совпадения",
+            "chipText — подпись чипа режима у поля",
+            "emptyText, label и listLabel — ответ на пустой поиск и подписи для скринридера",
+            "background — подложка панели; пусто оставляет цвет из палитры",
             "акцент через проп accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Поиск идёт по подстроке всего пути: нечёткий поиск по инициалам добавляется в вашем фильтре.",
             "Подсвечивается только первое совпадение в имени файла — для нескольких вхождений разбейте строку сами.",
             "direction:rtl переворачивает пунктуацию в конце строки: для путей это незаметно, для обычного текста — нет.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "Подсветка mark в тёмной ветке намеренно темнее светлой: текст в ней наследует цвет строки и на светлом янтаре пропал бы."
           ]
         },
         "controls": [
@@ -771,8 +1329,21 @@
             "maxLength": 24
           },
           {
+            "prop": "chipText",
+            "label": "Чип режима",
+            "type": "text",
+            "default": "файл",
+            "maxLength": 12
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -788,19 +1359,25 @@
                 "truncating the directory from the left — the end of a path beats its beginning",
                 "the <mark> tag for the match: a highlight must carry meaning, not only colour",
                 "the monospaced rows: paths get compared character by character",
-                "the full path in the footer — otherwise a truncated directory cannot be verified"
+                "the full path in the footer — otherwise a truncated directory cannot be verified",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the paths array",
                 "the field hint through the placeholder prop",
                 "the match highlight colour",
+                "chipText — the mode chip beside the field",
+                "emptyText, label and listLabel — the empty answer and the screen-reader wording",
+                "background — the panel surface; empty keeps the palette colour",
                 "the accent through the accent prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Search is a substring match over the whole path: fuzzy initials matching belongs in your own filter.",
                 "Only the first match inside the file name is highlighted — split the string yourself for multiple hits.",
                 "direction:rtl flips trailing punctuation: harmless for paths, not for ordinary prose.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "The mark highlight is deliberately darker in the dark branch: its text inherits the row colour and would vanish on a light amber."
               ],
               "usage": "<Command008 paths={[\"app/globals.css\", \"docs/PIPELINE.md\"]} />"
             },
@@ -809,13 +1386,30 @@
                 "label": "Placeholder",
                 "default": "File name…"
               },
+              "chipText": {
+                "label": "Mode chip",
+                "default": "file"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Go To File"
+            "title": "Go To File",
+            "preview": {
+              "props": {
+                "label": "Go to file",
+                "listLabel": "Files",
+                "emptyText": "No such file in the project index.",
+                "placeholder": "File name…",
+                "chipText": "file"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -849,19 +1443,25 @@
             "aria-labelledby диалога на строку объекта — иначе палитра объявляется без контекста",
             "отделение опасного действия линией и отступом: промах стрелкой стоит слишком дорого",
             "цвет опасного действия и в подсветке: одна лишь строка красным теряется при выделении",
-            "связку role=combobox и aria-activedescendant: фокус остаётся в поле"
+            "связку role=combobox и aria-activedescendant: фокус остаётся в поле",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "имя объекта через проп target",
             "тип объекта через проп targetKind",
             "массив actions и метки tone",
+            "подсказку поля через проп placeholder",
+            "fieldLabel, listLabel и emptyText — подписи для скринридера и ответ на пустой поиск",
+            "background — подложка панели; пусто оставляет цвет из палитры",
             "акцент через проп accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Подтверждения удаления здесь нет: опасное действие только помечено, диалог подтверждения добавляйте снаружи.",
             "Enter по строке ничего не выполняет: подключите свой обработчик действий.",
             "Длинное имя объекта урезается многоточием — полное значение стоит дублировать в title.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "Свой accent задавайте вместе с --vibeui-command-009-on-accent: текст на плашке типа считается не автоматически."
           ]
         },
         "controls": [
@@ -878,6 +1478,25 @@
             "type": "text",
             "default": "Слой",
             "maxLength": 16
+          },
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Действие…",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -891,19 +1510,25 @@
                 "the dialog's aria-labelledby pointing at the object row — otherwise the palette announces itself without context",
                 "setting the destructive action apart with a rule and spacing: an arrow-key slip is too expensive",
                 "the destructive colour in the highlight too: a red row alone disappears once selected",
-                "the role=combobox plus aria-activedescendant pairing: focus stays in the field"
+                "the role=combobox plus aria-activedescendant pairing: focus stays in the field",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the object name through the target prop",
                 "the object type through the targetKind prop",
                 "the actions array and its tone flags",
+                "the field hint through the placeholder prop",
+                "fieldLabel, listLabel and emptyText — the screen-reader wording and the empty answer",
+                "background — the panel surface; empty keeps the palette colour",
                 "the accent through the accent prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is no delete confirmation here: the destructive action is only marked, add the dialog outside.",
                 "Enter on a row runs nothing: hook up your own action handler.",
                 "A long object name truncates with an ellipsis — mirror the full value into a title attribute.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "Set --vibeui-command-009-on-accent alongside your own accent: the text on the type badge is not computed for you."
               ],
               "usage": "<Command009 target=\"Hero background\" targetKind=\"Layer\" actions={[{ label: \"Delete layer\", tone: \"danger\" }]} />"
             },
@@ -915,11 +1540,52 @@
               "targetKind": {
                 "label": "Object type",
                 "default": "Layer"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Action…"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Selection Actions"
+            "title": "Selection Actions",
+            "preview": {
+              "props": {
+                "actions": [
+                  {
+                    "label": "Rename",
+                    "keys": "F2"
+                  },
+                  {
+                    "label": "Duplicate",
+                    "keys": "⌘D"
+                  },
+                  {
+                    "label": "Snap to grid"
+                  },
+                  {
+                    "label": "Export as SVG"
+                  },
+                  {
+                    "label": "Delete layer",
+                    "keys": "⌫",
+                    "tone": "danger"
+                  }
+                ],
+                "fieldLabel": "Action on “{target}”",
+                "listLabel": "Actions",
+                "emptyText": "No such action for this object.",
+                "targetKind": "Layer",
+                "placeholder": "Action…"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -953,19 +1619,25 @@
             "равную высоту скелетона и строки — иначе список прыгнет в момент ответа",
             "aria-busy у поля и role=status у подвала: загрузка должна озвучиваться, а не только рисоваться",
             "блокировку стрелок во время загрузки: подсветка не должна указывать на исчезающие строки",
-            "правило prefers-reduced-motion — бесконечный бегунок особенно навязчив"
+            "правило prefers-reduced-motion — бесконечный бегунок особенно навязчив",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массив items",
             "задержку ответа через проп delay",
             "подсказку поля через проп placeholder",
+            "loadingText, countText и emptyText — строки подвала и ответ на пустой список",
+            "label и listLabel — подписи для скринридера",
+            "background — подложка панели; пусто оставляет цвет из палитры",
             "число скелетонов и акцент через проп accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Таймер здесь изображает запрос: замените его своим fetch и не забудьте отменять устаревшие ответы.",
             "Скелетоны помечены aria-hidden: озвучивать их бессмысленно, статус читается из подвала.",
             "При delay равном нулю мигание всё равно возможно — для быстрых ответов лучше показывать загрузку с задержкой.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "В countText число строк подставляется на месте {count}: без плейсхолдера подвал покажет строку как есть."
           ]
         },
         "controls": [
@@ -983,6 +1655,25 @@
             "type": "text",
             "default": "Поиск на сервере…",
             "maxLength": 32
+          },
+          {
+            "prop": "emptyText",
+            "label": "Пустой ответ",
+            "type": "text",
+            "default": "Ничего не найдено. Уточните запрос.",
+            "maxLength": 44
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -996,19 +1687,25 @@
                 "matching skeleton and row heights — otherwise the list jumps when the answer lands",
                 "aria-busy on the field and role=status in the footer: loading must be announced, not merely drawn",
                 "disabling the arrows while loading: the highlight must not point at rows about to vanish",
-                "the prefers-reduced-motion rule — an endless progress bar is especially intrusive"
+                "the prefers-reduced-motion rule — an endless progress bar is especially intrusive",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the items array",
                 "the response latency through the delay prop",
                 "the field hint through the placeholder prop",
+                "loadingText, countText and emptyText — the footer lines and the empty answer",
+                "label and listLabel — the screen-reader wording",
+                "background — the panel surface; empty keeps the palette colour",
                 "the number of skeletons and the accent through the accent prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The timer stands in for a request: replace it with your fetch and cancel stale answers.",
                 "The skeletons are aria-hidden: announcing them is pointless, the footer carries the status.",
                 "Even with delay set to zero a flash is possible — show the loading state after a short grace period.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "countText puts the row count where {count} stands: without the placeholder the footer shows the string as written."
               ],
               "usage": "<Command010 items={[\"Open the component catalog\"]} delay={600} />"
             },
@@ -1019,11 +1716,37 @@
               "placeholder": {
                 "label": "Placeholder",
                 "default": "Searching the server…"
+              },
+              "emptyText": {
+                "label": "Empty answer",
+                "default": "Nothing found. Refine the query."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Loading Results"
+            "title": "Loading Results",
+            "preview": {
+              "props": {
+                "items": [
+                  "Open the component catalog",
+                  "Open the block registry",
+                  "Open the build log",
+                  "Open preview settings",
+                  "Open the pipeline documentation"
+                ],
+                "label": "Command search",
+                "listLabel": "Results",
+                "loadingText": "Searching the server…",
+                "countText": "Results: {count}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

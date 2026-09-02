@@ -13,6 +13,22 @@ export type Combobox017Props = Omit<
   defaultFavourites?: string[]
   defaultValue?: string
   onSelect?: (value: string) => void
+  /** Подпись звезды у закреплённого варианта; {item} — название. */
+  unpinText?: string
+  /** Подпись звезды у незакреплённого варианта; {item} — название. */
+  pinText?: string
+  /** Заголовок группы закреплённых. */
+  pinnedCaption?: string
+  /** Заголовок группы остальных вариантов. */
+  restCaption?: string
+  /** Строка на месте пустого списка. */
+  emptyText?: string
+  /** Подпись строки итога перед выбранным значением. */
+  footLabel?: string
+  /** Что стоит в итоге, пока ничего не выбрано. */
+  emptyValueText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,15 +39,15 @@ export type Combobox017Props = Omit<
 // не должно выбирать значение.
 const STYLES = `
 :where([data-vibeui-block="combobox-017"]){
---vibeui-combobox-017-bg:oklch(1 0 0);
---vibeui-combobox-017-fg:oklch(0.22 0.014 60);
---vibeui-combobox-017-muted:oklch(0.55 0.014 60);
---vibeui-combobox-017-border:oklch(0.9 0.008 60);
---vibeui-combobox-017-field:oklch(0.985 0.004 60);
---vibeui-combobox-017-soft:oklch(0.96 0.008 60);
---vibeui-combobox-017-accent:oklch(0.55 0.13 60);
---vibeui-combobox-017-accentsoft:oklch(0.94 0.05 60);
---vibeui-combobox-017-star:oklch(0.72 0.16 75);
+--vibeui-combobox-017-bg:transparent;
+--vibeui-combobox-017-fg:light-dark(oklch(0.22 0.014 60),oklch(0.94 0.006 60));
+--vibeui-combobox-017-muted:light-dark(oklch(0.55 0.014 60),oklch(0.7 0.012 60));
+--vibeui-combobox-017-border:light-dark(oklch(0.9 0.008 60),oklch(0.35 0.012 60));
+--vibeui-combobox-017-field:light-dark(oklch(0.985 0.004 60),oklch(0.27 0.012 60));
+--vibeui-combobox-017-soft:light-dark(oklch(0.96 0.008 60),oklch(0.31 0.014 60));
+--vibeui-combobox-017-accent:light-dark(oklch(0.55 0.13 60),oklch(0.76 0.12 60));
+--vibeui-combobox-017-accentsoft:light-dark(oklch(0.94 0.05 60),oklch(0.36 0.05 60));
+--vibeui-combobox-017-star:light-dark(oklch(0.72 0.16 75),oklch(0.82 0.16 75));
 --vibeui-combobox-017-radius:0.625rem;
 --vibeui-combobox-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -123,6 +139,28 @@ const ACCOUNTS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор с закреплёнными избранными: звёздочка поднимает вариант наверх.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -133,6 +171,14 @@ export function Combobox017({
   defaultFavourites = ["Расчётный счёт · Т-Банк", "Эквайринг · сайт"],
   defaultValue = "Расчётный счёт · Т-Банк",
   onSelect,
+  unpinText = "Убрать «{item}» из избранного",
+  pinText = "Добавить «{item}» в избранное",
+  pinnedCaption = "Избранное",
+  restCaption = "Все счета",
+  emptyText = "Счёт не найден",
+  footLabel = "Списываем со счёта",
+  emptyValueText = "не выбран",
+  background = "",
   accent,
   className,
   style,
@@ -162,6 +208,12 @@ export function Combobox017({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -187,8 +239,8 @@ export function Combobox017({
           aria-pressed={favourites.includes(option)}
           aria-label={
             favourites.includes(option)
-              ? `Убрать «${option}» из избранного`
-              : `Добавить «${option}» в избранное`
+              ? unpinText.replace("{item}", option)
+              : pinText.replace("{item}", option)
           }
           onClick={() => star(option)}
         >
@@ -230,24 +282,24 @@ export function Combobox017({
         >
           {pinned.length > 0 ? (
             <li role="none" data-part="pinned">
-              <span data-part="caption">Избранное</span>
+              <span data-part="caption">{pinnedCaption}</span>
               <ul role="none">{pinned.map(render)}</ul>
             </li>
           ) : null}
           {rest.length > 0 ? (
             <li role="none">
-              <span data-part="caption">Все счета</span>
+              <span data-part="caption">{restCaption}</span>
               <ul role="none">{rest.map(render)}</ul>
             </li>
           ) : null}
           {matches.length === 0 ? (
             <li role="none">
-              <p data-part="empty">Счёт не найден</p>
+              <p data-part="empty">{emptyText}</p>
             </li>
           ) : null}
         </ul>
         <p data-part="foot" aria-live="polite">
-          Списываем со счёта: <b>{value || "не выбран"}</b>
+          {footLabel}: <b>{value || emptyValueText}</b>
         </p>
       </div>
     </>

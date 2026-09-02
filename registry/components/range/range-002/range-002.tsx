@@ -15,6 +15,14 @@ export type Range002Props = Omit<
   defaultTo?: number
   histogram?: number[]
   unit?: string
+  /** Подписи ручек для скринридера: компонент несёт русские. */
+  boundText?: Record<string, string>
+  /** Счётчик под шкалой; {count} — число подходящих вариантов. */
+  matchesText?: string
+  /** Локаль форматирования чисел на шкале и в заголовке. */
+  locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,19 +32,24 @@ export type Range002Props = Omit<
 // отрезка приглушены, поэтому видно и то, что отсекли. Гистограмма считается
 // снаружи и приходит массивом: рисовать её по случайным числам нельзя — она
 // обязана соответствовать выдаче.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// фильтра по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="range-002"]){
---vibeui-range-002-surface:oklch(1 0 0);
---vibeui-range-002-shell:oklch(0.9 0.006 265);
---vibeui-range-002-fg:oklch(0.23 0.014 265);
---vibeui-range-002-muted:oklch(0.55 0.014 265);
---vibeui-range-002-track:oklch(0.93 0.006 265);
---vibeui-range-002-accent:oklch(0.55 0.19 275);
+--vibeui-range-002-surface:transparent;
+--vibeui-range-002-knob:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-range-002-shell:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.011 265));
+--vibeui-range-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-range-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-range-002-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
+--vibeui-range-002-accent:light-dark(oklch(0.55 0.19 275),oklch(0.74 0.15 275));
+--vibeui-range-002-shadow:light-dark(oklch(0.2 0.02 265 / 25%),oklch(0 0 0 / 45%));
 --vibeui-range-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-range-002-from:0%;
 --vibeui-range-002-to:100%;
 }
-/* Своя светлая подложка: фильтр показывают поверх любого фона. */
+/* Подложки по умолчанию нет: фильтр ложится на фон страницы, плашку включает проп background. */
 [data-vibeui-block="range-002"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
@@ -78,13 +91,13 @@ appearance:none;background:none;pointer-events:none;
 [data-vibeui-block="range-002"] input::-webkit-slider-thumb{
 appearance:none;pointer-events:auto;cursor:pointer;margin-top:-0.3125rem;
 width:1rem;height:1rem;border-radius:9999px;
-background:var(--vibeui-range-002-surface);border:2px solid var(--vibeui-range-002-accent);
-box-shadow:0 1px 3px oklch(0.2 0.02 265 / 25%);
+background:var(--vibeui-range-002-knob);border:2px solid var(--vibeui-range-002-accent);
+box-shadow:0 1px 3px var(--vibeui-range-002-shadow);
 }
 [data-vibeui-block="range-002"] input::-moz-range-thumb{
 pointer-events:auto;cursor:pointer;box-sizing:border-box;
 width:1rem;height:1rem;border-radius:9999px;
-background:var(--vibeui-range-002-surface);border:2px solid var(--vibeui-range-002-accent);
+background:var(--vibeui-range-002-knob);border:2px solid var(--vibeui-range-002-accent);
 }
 [data-vibeui-block="range-002"] input:focus-visible{outline:2px solid var(--vibeui-range-002-accent);outline-offset:4px;border-radius:0.5rem}
 [data-vibeui-block="range-002"] [data-part="foot"]{
@@ -97,6 +110,31 @@ font-size:0.6875rem;color:var(--vibeui-range-002-muted);font-variant-numeric:tab
 const DEFAULT_HISTOGRAM = [
   4, 9, 17, 28, 41, 55, 62, 58, 47, 39, 30, 24, 18, 12, 7, 3,
 ]
+
+const BOUND_TEXT: Record<string, string> = { from: "от", to: "до" }
+const MATCHES_TEXT = "Подходит вариантов: {count}"
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Диапазон цены с гистограммой предложений: вне отрезка столбики приглушены.
@@ -111,6 +149,10 @@ export function Range002({
   defaultTo = 11000,
   histogram = DEFAULT_HISTOGRAM,
   unit = "₽",
+  boundText = BOUND_TEXT,
+  matchesText = MATCHES_TEXT,
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -131,6 +173,12 @@ export function Range002({
     "--vibeui-range-002-from": percent(from),
     "--vibeui-range-002-to": percent(to),
     ...(accent ? { "--vibeui-range-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-range-002-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -148,7 +196,7 @@ export function Range002({
         <p data-part="head">
           {label}
           <span data-part="value">
-            {from.toLocaleString("ru-RU")} — {to.toLocaleString("ru-RU")} {unit}
+            {from.toLocaleString(locale)} — {to.toLocaleString(locale)} {unit}
           </span>
         </p>
         <div data-part="chart" aria-hidden="true">
@@ -172,7 +220,7 @@ export function Range002({
             max={max}
             step={step}
             value={from}
-            aria-label={`${label}: от`}
+            aria-label={`${label}: ${boundText.from ?? BOUND_TEXT.from}`}
             onChange={(event) =>
               setFrom(Math.min(Number(event.target.value), to - step))
             }
@@ -183,7 +231,7 @@ export function Range002({
             max={max}
             step={step}
             value={to}
-            aria-label={`${label}: до`}
+            aria-label={`${label}: ${boundText.to ?? BOUND_TEXT.to}`}
             onChange={(event) =>
               setTo(Math.max(Number(event.target.value), from + step))
             }
@@ -191,11 +239,11 @@ export function Range002({
         </div>
         <p data-part="foot" aria-live="polite">
           <span>
-            {min.toLocaleString("ru-RU")} {unit}
+            {min.toLocaleString(locale)} {unit}
           </span>
-          <span>Подходит вариантов: {inside}</span>
+          <span>{matchesText.replace("{count}", String(inside))}</span>
           <span>
-            {max.toLocaleString("ru-RU")} {unit}
+            {max.toLocaleString(locale)} {unit}
           </span>
         </p>
       </div>

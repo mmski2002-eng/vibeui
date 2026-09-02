@@ -13,20 +13,26 @@ export type Alert019Props = Omit<
   /** Подпись сбоку: срок, ответственный, номер заявки. */
   meta?: string
   accent?: string
+  /** Пусто — подложки нет, инструкция лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: алерт с инструкцией. Обычное сообщение говорит, что не так;
 // это — что сделать, поэтому шаги пронумерованы и стоят отдельным столбиком.
 // Нумерация не декоративная: по ней спрашивают «я застрял на втором», и
 // поддержке не приходится выяснять, о каком месте речь.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-019"]){
---vibeui-alert-019-fg:oklch(0.22 0.014 265);
---vibeui-alert-019-muted:oklch(0.5 0.014 265);
---vibeui-alert-019-bg:oklch(1 0 0);
---vibeui-alert-019-panel:oklch(0.975 0.004 265);
---vibeui-alert-019-border:oklch(0.9 0.006 265);
---vibeui-alert-019-accent:oklch(0.55 0.2 262);
+--vibeui-alert-019-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.006 265));
+--vibeui-alert-019-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-019-bg:transparent;
+--vibeui-alert-019-panel:light-dark(oklch(0.975 0.004 265),oklch(0.28 0.01 265));
+--vibeui-alert-019-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-019-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-alert-019-accent-fg:light-dark(oklch(1 0 0),oklch(0.18 0.01 265));
 --vibeui-alert-019-radius:0.875rem;
 --vibeui-alert-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -72,7 +78,7 @@ font-size:0.6875rem;font-weight:650;color:var(--vibeui-alert-019-accent);
 align-self:flex-start;
 display:inline-flex;align-items:center;height:2rem;padding:0 0.9375rem;
 border-radius:0.5rem;text-decoration:none;
-background:var(--vibeui-alert-019-accent);color:oklch(1 0 0);
+background:var(--vibeui-alert-019-accent);color:var(--vibeui-alert-019-accent-fg);
 font-size:0.8125rem;font-weight:600;
 transition:filter .16s ease;
 }
@@ -91,6 +97,28 @@ const DEFAULT_STEPS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Алерт с инструкцией: пронумерованные шаги вместо абзаца.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -102,12 +130,19 @@ export function Alert019({
   actionHref = "#",
   meta = "обычно 10–30 минут",
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Alert019Props) {
   const palette = {
     ...(accent ? { "--vibeui-alert-019-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-alert-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

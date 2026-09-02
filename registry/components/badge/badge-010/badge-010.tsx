@@ -8,6 +8,14 @@ export type Badge010Props = Omit<
   level?: 1 | 2 | 3 | 4
   label?: string
   total?: number
+  /** Подписи уровней: компонент несёт русские, проект подставляет свои. */
+  levelText?: Record<number, string>
+  /** Подпись неизвестного уровня. `{level}` подставляется номером. */
+  levelFallback?: string
+  /** Подпись для скринридера. `{label}`, `{filled}` и `{total}` подставляются. */
+  ariaText?: string
+  /** Пусто — плашка держит собственный нейтральный фон. */
+  background?: string
 }
 
 // Идея компонента: приоритет штрихами, а не цветом. Три залитых полоски из
@@ -16,11 +24,11 @@ export type Badge010Props = Omit<
 // словом: полоски уточняют степень, а не заменяют название.
 const STYLES = `
 :where([data-vibeui-block="badge-010"]){
---vibeui-badge-010-bg:oklch(0.96 0.004 265);
---vibeui-badge-010-fg:oklch(0.32 0.014 265);
---vibeui-badge-010-border:oklch(0.89 0.006 265);
---vibeui-badge-010-track:oklch(0.87 0.008 265);
---vibeui-badge-010-mark:oklch(0.45 0.014 265);
+--vibeui-badge-010-bg:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.009 265));
+--vibeui-badge-010-fg:light-dark(oklch(0.32 0.014 265),oklch(0.93 0.006 265));
+--vibeui-badge-010-border:light-dark(oklch(0.89 0.006 265),oklch(0.39 0.011 265));
+--vibeui-badge-010-track:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.011 265));
+--vibeui-badge-010-mark:light-dark(oklch(0.45 0.014 265),oklch(0.82 0.01 265));
 --vibeui-badge-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="badge-010"]{
@@ -31,9 +39,9 @@ background:var(--vibeui-badge-010-bg);color:var(--vibeui-badge-010-fg);
 font-family:var(--vibeui-badge-010-font);font-size:0.75rem;font-weight:600;
 line-height:1;white-space:nowrap;vertical-align:middle;
 }
-[data-vibeui-block="badge-010"][data-level="1"]{--vibeui-badge-010-mark:oklch(0.55 0.19 25)}
-[data-vibeui-block="badge-010"][data-level="2"]{--vibeui-badge-010-mark:oklch(0.62 0.16 55)}
-[data-vibeui-block="badge-010"][data-level="3"]{--vibeui-badge-010-mark:oklch(0.6 0.1 230)}
+[data-vibeui-block="badge-010"][data-level="1"]{--vibeui-badge-010-mark:light-dark(oklch(0.55 0.19 25),oklch(0.7 0.19 25))}
+[data-vibeui-block="badge-010"][data-level="2"]{--vibeui-badge-010-mark:light-dark(oklch(0.62 0.16 55),oklch(0.76 0.15 55))}
+[data-vibeui-block="badge-010"][data-level="3"]{--vibeui-badge-010-mark:light-dark(oklch(0.6 0.1 230),oklch(0.74 0.1 230))}
 /* Полоски: степень видно формой, цвет только усиливает. */
 [data-vibeui-block="badge-010"] [data-part="bars"]{display:inline-flex;align-items:flex-end;gap:0.125rem;flex:none}
 [data-vibeui-block="badge-010"] [data-part="bar"]{
@@ -55,6 +63,28 @@ const LEVEL_TEXT: Record<number, string> = {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Приоритет штрихами: степень читается формой, а не цветом.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -62,13 +92,27 @@ export function Badge010({
   level = 1,
   label,
   total = 4,
+  levelText = LEVEL_TEXT,
+  levelFallback = "Уровень {level}",
+  ariaText = "Приоритет: {label}, {filled} из {total}",
+  background = "",
   className,
   style,
   ...props
 }: Badge010Props) {
   // Первый уровень — самый высокий, поэтому полосок у него больше всех.
   const filled = total - level + 1
-  const text = label ?? LEVEL_TEXT[level] ?? `Уровень ${level}`
+  const text =
+    label ?? levelText[level] ?? levelFallback.replace("{level}", String(level))
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-badge-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -80,8 +124,11 @@ export function Badge010({
         data-vibeui-block="badge-010"
         data-level={level}
         className={className}
-        style={style as CSSProperties}
-        aria-label={`Приоритет: ${text}, ${filled} из ${total}`}
+        style={palette}
+        aria-label={ariaText
+          .replace("{label}", text)
+          .replace("{filled}", String(filled))
+          .replace("{total}", String(total))}
       >
         <span data-part="bars" aria-hidden="true">
           {Array.from({ length: total }, (_, index) => (

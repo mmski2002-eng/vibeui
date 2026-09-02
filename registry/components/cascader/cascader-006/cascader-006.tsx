@@ -12,6 +12,12 @@ export type Cascader006Props = {
   label?: string
   placeholder?: string
   tree?: Cascader006Node[]
+  /** Запрос, с которым панель открывается. */
+  defaultQuery?: string
+  /** Что показать, когда ничего не нашлось. */
+  emptyText?: string
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -24,12 +30,12 @@ export type Cascader006Props = {
 // Пустой запрос показывает верхний уровень: пустая панель выглядит поломкой.
 const STYLES = `
 :where([data-vibeui-block="cascader-006"]){
---vibeui-cascader-006-bg:oklch(1 0 0);
---vibeui-cascader-006-field:oklch(0.975 0.003 265);
---vibeui-cascader-006-fg:oklch(0.23 0.014 265);
---vibeui-cascader-006-muted:oklch(0.55 0.012 265);
---vibeui-cascader-006-border:oklch(0.9 0.006 265);
---vibeui-cascader-006-accent:oklch(0.55 0.19 150);
+--vibeui-cascader-006-bg:transparent;
+--vibeui-cascader-006-field:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.012 265));
+--vibeui-cascader-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-cascader-006-muted:light-dark(oklch(0.55 0.012 265),oklch(0.71 0.011 265));
+--vibeui-cascader-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.011 265));
+--vibeui-cascader-006-accent:light-dark(oklch(0.55 0.19 150),oklch(0.76 0.16 150));
 --vibeui-cascader-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="cascader-006"]{
@@ -147,6 +153,28 @@ const DEFAULT_TREE: Cascader006Node[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 type Hit = { label: string; path: string[] }
 
 function flatten(nodes: Cascader006Node[], trail: string[] = []): Hit[] {
@@ -179,12 +207,15 @@ export function Cascader006({
   label = "Раздел настроек",
   placeholder = "Искать по всем уровням",
   tree = DEFAULT_TREE,
+  defaultQuery = "общие",
+  emptyText = "Ничего не найдено. Попробуйте название родительского раздела — поиск смотрит и на путь тоже.",
+  background = "",
   accent,
   className,
   style,
 }: Cascader006Props) {
   const id = useId()
-  const [query, setQuery] = useState("общие")
+  const [query, setQuery] = useState(defaultQuery)
   const [chosen, setChosen] = useState<string | null>(null)
   const all = useMemo(() => flatten(tree), [tree])
   const trimmed = query.trim()
@@ -200,6 +231,12 @@ export function Cascader006({
 
   const palette = {
     ...(accent ? { "--vibeui-cascader-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cascader-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -260,10 +297,7 @@ export function Cascader006({
             })}
           </ul>
         ) : (
-          <p data-part="empty">
-            Ничего не найдено. Попробуйте название родительского раздела — поиск
-            смотрит и на путь тоже.
-          </p>
+          <p data-part="empty">{emptyText}</p>
         )}
       </div>
     </>

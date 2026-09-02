@@ -13,12 +13,16 @@ export type Commerce041Props = {
   lead?: string
   parts?: Commerce041Part[]
   apart?: string
+  /** Подписи двух сумм: ключи apart и together. */
+  sumText?: Record<string, string>
   together?: string
   save?: string
   reason?: string
   cta?: string
   secondary?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,12 +36,14 @@ export type Commerce041Props = {
 // псевдоэлементом и скрыты от скринридера, чтобы список читался как список.
 const STYLES = `
 :where([data-vibeui-block="commerce-041"]){
---vibeui-commerce-041-bg:oklch(1 0 0);
---vibeui-commerce-041-fg:oklch(0.21 0.014 265);
---vibeui-commerce-041-muted:oklch(0.55 0.014 265);
---vibeui-commerce-041-border:oklch(0.91 0.006 265);
---vibeui-commerce-041-soft:oklch(0.975 0.004 265);
---vibeui-commerce-041-accent:oklch(0.5 0.15 145);
+--vibeui-commerce-041-bg:transparent;
+--vibeui-commerce-041-fg:light-dark(oklch(0.21 0.014 265),oklch(0.93 0.006 265));
+--vibeui-commerce-041-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-commerce-041-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-041-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.009 265));
+--vibeui-commerce-041-accent:light-dark(oklch(0.5 0.15 145),oklch(0.74 0.14 150));
+--vibeui-commerce-041-onaccent:light-dark(oklch(1 0 0),oklch(0.18 0.03 150));
+--vibeui-commerce-041-onfg:light-dark(oklch(1 0 0),oklch(0.18 0.01 265));
 --vibeui-commerce-041-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -66,7 +72,7 @@ padding:0.75rem;display:flex;gap:0.75rem;align-items:center;
 [data-vibeui-block="commerce-041"] [data-part="part"] + [data-part="part"]::before{
 content:"+";position:absolute;left:50%;top:-1.375rem;transform:translateX(-50%);
 width:1.5rem;height:1.5rem;border-radius:9999px;display:grid;place-items:center;
-background:var(--vibeui-commerce-041-fg);color:oklch(1 0 0);font-size:0.875rem;font-weight:800;line-height:1;
+background:var(--vibeui-commerce-041-fg);color:var(--vibeui-commerce-041-onfg);font-size:0.875rem;font-weight:800;line-height:1;
 }
 @container (min-width: 42rem){
 [data-vibeui-block="commerce-041"] [data-part="part"] + [data-part="part"]::before{left:-1.5rem;top:50%;transform:translate(-50%,-50%)}
@@ -102,12 +108,12 @@ border:1px solid var(--vibeui-commerce-041-border);display:grid;gap:0.875rem;
 [data-vibeui-block="commerce-041"] [data-part="togetherLabel"]{grid-column:1;grid-row:2;align-self:center}
 [data-vibeui-block="commerce-041"] [data-part="save"]{
 display:inline-block;margin-top:0.375rem;padding:0.25rem 0.625rem;border-radius:9999px;
-background:var(--vibeui-commerce-041-accent);color:oklch(1 0 0);font-size:0.75rem;font-weight:700;
+background:var(--vibeui-commerce-041-accent);color:var(--vibeui-commerce-041-onaccent);font-size:0.75rem;font-weight:700;
 }
 [data-vibeui-block="commerce-041"] [data-part="buttons"]{display:grid;gap:0.5rem;min-width:14rem}
 [data-vibeui-block="commerce-041"] [data-part="cta"]{
 appearance:none;border:0;cursor:pointer;height:2.875rem;padding:0 1.25rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-041-accent);color:oklch(1 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-041-accent);color:var(--vibeui-commerce-041-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-041"] [data-part="alt"]{
 appearance:none;cursor:pointer;height:2.5rem;padding:0 1.25rem;border-radius:0.875rem;
@@ -146,6 +152,33 @@ const DEFAULT_PARTS: Commerce041Part[] = [
   },
 ]
 
+const DEFAULT_SUMS: Record<string, string> = {
+  apart: "По отдельности",
+  together: "Набором",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Набор товаров комплектом: цепочка «плюс» и выгода, доказанная двумя суммами.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -155,17 +188,25 @@ export function Commerce041({
   lead = "Три вещи, которые собраны друг под друга: цоколь совпадает, шнур диммера дотягивается до розетки, а яркость не мигает на минимуме.",
   parts = DEFAULT_PARTS,
   apart = "19 490 ₽",
+  sumText = DEFAULT_SUMS,
   together = "16 900 ₽",
   save = "Экономия 2 590 ₽",
   reason = "Набор можно разобрать: любой товар из него продаётся отдельно по своей цене. Скидка действует, только когда все три позиции в корзине.",
   cta = "Взять набором",
   secondary = "Добавить только торшер",
   accent,
+  background = "",
   className,
   style,
 }: Commerce041Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-041-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-041-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -210,9 +251,11 @@ export function Commerce041({
           <div data-part="deal">
             <div>
               <dl>
-                <dt>По отдельности</dt>
+                <dt>{sumText.apart ?? DEFAULT_SUMS.apart}</dt>
                 <dd data-part="apart">{apart}</dd>
-                <dt data-part="togetherLabel">Набором</dt>
+                <dt data-part="togetherLabel">
+                  {sumText.together ?? DEFAULT_SUMS.together}
+                </dt>
                 <dd data-part="together">{together}</dd>
               </dl>
               <p>

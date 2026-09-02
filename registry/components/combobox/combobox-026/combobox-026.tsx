@@ -18,7 +18,15 @@ export type Combobox026Props = Omit<
   minChars?: number
   emptyLabel?: string
   defaultValue?: string
+  /** Подпись спиннера для скринридера. */
+  loadingLabel?: string
+  /** Подсказка при пустом поле. {count} — сколько символов нужно всего. */
+  minCharsText?: string
+  /** Подсказка при коротком запросе. {count} — сколько символов осталось. */
+  remainingText?: string
   onSelect?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,15 +35,18 @@ export type Combobox026Props = Omit<
 // впустую. Как только длины хватает, включается настоящий debounce на
 // таймере: спиннер живёт внутри поля, а не отдельным блоком, и результат
 // не мигает при каждой нажатой букве.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
+// граница светлее фона, а поле — темнее списка, это не инверсия светлой.
 const STYLES = `
 :where([data-vibeui-block="combobox-026"]){
---vibeui-combobox-026-bg:oklch(1 0 0);
---vibeui-combobox-026-fg:oklch(0.22 0.02 355);
---vibeui-combobox-026-muted:oklch(0.53 0.02 355);
---vibeui-combobox-026-border:oklch(0.9 0.01 355);
---vibeui-combobox-026-field:oklch(0.985 0.004 355);
---vibeui-combobox-026-active:oklch(0.95 0.035 355);
---vibeui-combobox-026-accent:oklch(0.52 0.17 355);
+--vibeui-combobox-026-bg:transparent;
+--vibeui-combobox-026-fg:light-dark(oklch(0.22 0.02 355),oklch(0.94 0.01 355));
+--vibeui-combobox-026-muted:light-dark(oklch(0.53 0.02 355),oklch(0.71 0.016 355));
+--vibeui-combobox-026-border:light-dark(oklch(0.9 0.01 355),oklch(0.36 0.016 355));
+--vibeui-combobox-026-field:light-dark(oklch(0.985 0.004 355),oklch(0.27 0.014 355));
+--vibeui-combobox-026-active:light-dark(oklch(0.95 0.035 355),oklch(0.34 0.045 355));
+--vibeui-combobox-026-accent:light-dark(oklch(0.52 0.17 355),oklch(0.75 0.15 355));
 --vibeui-combobox-026-radius:0.625rem;
 --vibeui-combobox-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -97,6 +108,28 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox с реальным debounce: короткий запрос не запускает поиск, долгий —
  * ждёт паузу в наборе, спиннер живёт внутри поля.
  */
@@ -108,7 +141,11 @@ export function Combobox026({
   minChars = 2,
   emptyLabel = "Ничего не нашлось",
   defaultValue = "",
+  loadingLabel = "Идёт поиск",
+  minCharsText = "Введите минимум {count} символа для поиска",
+  remainingText = "Ещё {count} симв. до начала поиска",
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -140,6 +177,12 @@ export function Combobox026({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-026-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-026-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -208,13 +251,16 @@ export function Combobox026({
             onKeyDown={onKeyDown}
           />
           {loading ? (
-            <span data-part="spinner" role="status" aria-label="Идёт поиск" />
+            <span data-part="spinner" role="status" aria-label={loadingLabel} />
           ) : null}
         </div>
         <p data-part="note" aria-live="polite" hidden={ready}>
           {needle.length === 0
-            ? `Введите минимум ${minChars} символа для поиска`
-            : `Ещё ${minChars - needle.length} симв. до начала поиска`}
+            ? minCharsText.replace("{count}", String(minChars))
+            : remainingText.replace(
+                "{count}",
+                String(minChars - needle.length),
+              )}
         </p>
         <ul
           ref={listRef}

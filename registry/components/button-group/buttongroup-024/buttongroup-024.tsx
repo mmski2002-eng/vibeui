@@ -14,6 +14,8 @@ export type Buttongroup024Props = Omit<
   defaultValue?: string[]
   label?: string
   name?: string
+  /** Пусто — подложки нет, тумблеры лежат прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,12 +28,12 @@ export type Buttongroup024Props = Omit<
 // clip-path, потому что одна буква ничего не скажет скринридеру.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-024"]){
---vibeui-buttongroup-024-surface:oklch(1 0 0);
---vibeui-buttongroup-024-fg:oklch(0.24 0.016 265);
---vibeui-buttongroup-024-muted:oklch(0.55 0.014 265);
---vibeui-buttongroup-024-border:oklch(0.88 0.008 265);
---vibeui-buttongroup-024-accent:oklch(0.28 0.03 265);
---vibeui-buttongroup-024-on-accent:oklch(0.99 0.002 265);
+--vibeui-buttongroup-024-surface:transparent;
+--vibeui-buttongroup-024-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-024-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-buttongroup-024-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-buttongroup-024-accent:light-dark(oklch(0.28 0.03 265),oklch(0.89 0.02 265));
+--vibeui-buttongroup-024-on-accent:light-dark(oklch(0.99 0.002 265),oklch(0.2 0.02 265));
 --vibeui-buttongroup-024-radius:0.5rem;
 --vibeui-buttongroup-024-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -103,6 +105,28 @@ const DEFAULT_STYLES: Buttongroup024Style[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Начертания текста множественным выбором на checkbox: буква и есть образец.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -111,6 +135,7 @@ export function Buttongroup024({
   defaultValue = ["bold"],
   label = "Начертание",
   name = "buttongroup-024",
+  background = "",
   accent,
   className,
   style,
@@ -118,6 +143,12 @@ export function Buttongroup024({
 }: Buttongroup024Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-024-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-024-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

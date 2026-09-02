@@ -6,6 +6,8 @@ export type Button053Props = ComponentPropsWithoutRef<"button"> & {
   /** Подсказка сочетания рядом с подписью. */
   hint?: string
   accent?: string
+  /** Поверхность кнопки. Пусто — своя, из палитры. */
+  background?: string
 }
 
 // Идея компонента: кнопка печати, которая исчезает с распечатки. Обычная
@@ -14,11 +16,11 @@ export type Button053Props = ComponentPropsWithoutRef<"button"> & {
 // снаружи. Клик зовёт window.print(), никакого своего диалога.
 const STYLES = `
 :where([data-vibeui-block="button-053"]){
---vibeui-button-053-surface:oklch(1 0 0);
---vibeui-button-053-border:oklch(0.88 0.006 265);
---vibeui-button-053-fg:oklch(0.26 0.02 265);
---vibeui-button-053-muted:oklch(0.58 0.014 265);
---vibeui-button-053-accent:oklch(0.5 0.13 245);
+--vibeui-button-053-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
+--vibeui-button-053-border:light-dark(oklch(0.88 0.006 265),oklch(0.41 0.014 265));
+--vibeui-button-053-fg:light-dark(oklch(0.26 0.02 265),oklch(0.93 0.008 265));
+--vibeui-button-053-muted:light-dark(oklch(0.58 0.014 265),oklch(0.72 0.012 265));
+--vibeui-button-053-accent:light-dark(oklch(0.5 0.13 245),oklch(0.74 0.12 245));
 --vibeui-button-053-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-button-053-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
@@ -64,12 +66,36 @@ background:color-mix(in oklab,var(--vibeui-button-053-accent) 8%,transparent);
 `
 
 /**
+ * Ветка темы для заданной поверхности. Без неё светлая заливка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кнопка печати: зовёт системный диалог и прячется от самой распечатки.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Button053({
   hint = "Ctrl + P",
   accent,
+  background = "",
   type = "button",
   className,
   style,
@@ -79,6 +105,12 @@ export function Button053({
 }: Button053Props) {
   const palette = {
     ...(accent ? { "--vibeui-button-053-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-053-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

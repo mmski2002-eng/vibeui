@@ -18,6 +18,24 @@ export type Command004Props = Omit<
 > & {
   commands?: Command004Command[]
   placeholder?: string
+  /** Подсказка поля на втором уровне. */
+  childPlaceholder?: string
+  /** Имя палитры для скринридера. */
+  label?: string
+  /** Имя списка строк для скринридера. */
+  listLabel?: string
+  /** Подпись кнопки возврата на первый уровень. */
+  backLabel?: string
+  /** Ответ, когда в списке ничего не осталось. */
+  emptyText?: string
+  /** Подсказка клавиш на первом уровне. */
+  hintText?: string
+  /** Подсказка клавиш на втором уровне. */
+  childHintText?: string
+  /** Строка после запуска команды; {command} — её название. */
+  doneText?: string
+  /** Подложка панели. Пусто — цвет по умолчанию из палитры. */
+  background?: string
   accent?: string
 }
 
@@ -27,20 +45,24 @@ export type Command004Props = Omit<
 // появляется чип-хлебная крошка, запрос сбрасывается, список сменяется
 // подкомандами. Backspace на пустом запросе выходит обратно — это привычный
 // жест, и он снимает необходимость целиться в крестик.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
+// граница светлее подложки, а акцент поднят по светлоте, чтобы читаться.
 const STYLES = `
 :where([data-vibeui-block="command-004"]){
---vibeui-command-004-bg:oklch(1 0 0);
---vibeui-command-004-fg:oklch(0.23 0.014 265);
---vibeui-command-004-muted:oklch(0.57 0.014 265);
---vibeui-command-004-border:oklch(0.9 0.006 265);
---vibeui-command-004-accent:oklch(0.55 0.2 300);
+--vibeui-command-004-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-command-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-command-004-muted:light-dark(oklch(0.57 0.014 265),oklch(0.68 0.012 265));
+--vibeui-command-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-command-004-accent:light-dark(oklch(0.55 0.2 300),oklch(0.76 0.14 300));
+--vibeui-command-004-shadow:light-dark(oklch(0.2 0.03 265 / 60%),oklch(0.04 0.015 265 / 70%));
 --vibeui-command-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="command-004"]{
 display:block;box-sizing:border-box;width:100%;max-width:24rem;overflow:hidden;
 background:var(--vibeui-command-004-bg);color:var(--vibeui-command-004-fg);
 border:1px solid var(--vibeui-command-004-border);border-radius:0.875rem;
-box-shadow:0 18px 40px -28px oklch(0.2 0.03 265 / 60%);
+box-shadow:0 18px 40px -28px var(--vibeui-command-004-shadow);
 font-family:var(--vibeui-command-004-font);
 }
 [data-vibeui-block="command-004"] [data-part="field"]{
@@ -108,12 +130,43 @@ const DEFAULT_COMMANDS: Command004Command[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Двухуровневая палитра: Enter входит в подкоманды, Backspace на пустом
  * запросе возвращает назад. Один файл, ноль зависимостей.
  */
 export function Command004({
   commands = DEFAULT_COMMANDS,
   placeholder = "Команда…",
+  childPlaceholder = "Подкоманда…",
+  label = "Командная палитра",
+  listLabel = "Команды",
+  backLabel = "Назад к списку команд",
+  emptyText = "Здесь ничего нет. Сотрите запрос или вернитесь назад.",
+  hintText = "Enter — открыть подкоманды · Esc — сброс",
+  childHintText = "Backspace — назад · Enter — выполнить",
+  doneText = "Выполнено: {command}",
+  background = "",
   accent,
   className,
   style,
@@ -190,6 +243,12 @@ export function Command004({
 
   const paletteStyle = {
     ...(accent ? { "--vibeui-command-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-command-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -204,17 +263,13 @@ export function Command004({
         className={className}
         style={paletteStyle}
         role="dialog"
-        aria-label="Командная палитра"
+        aria-label={label}
       >
         <div data-part="field">
           {parent ? (
             <span data-part="crumb">
               {parent.label}
-              <button
-                type="button"
-                aria-label="Назад к списку команд"
-                onClick={back}
-              >
+              <button type="button" aria-label={backLabel} onClick={back}>
                 ✕
               </button>
             </span>
@@ -228,8 +283,10 @@ export function Command004({
             aria-activedescendant={
               current ? `${rowId}-${rows.indexOf(current)}` : undefined
             }
-            aria-label={parent ? `${parent.label}: подкоманда` : placeholder}
-            placeholder={parent ? "Подкоманда…" : placeholder}
+            aria-label={
+              parent ? `${parent.label}: ${childPlaceholder}` : placeholder
+            }
+            placeholder={parent ? childPlaceholder : placeholder}
             value={query}
             onChange={(event) => {
               setQuery(event.target.value)
@@ -239,11 +296,14 @@ export function Command004({
           />
         </div>
         {rows.length === 0 ? (
-          <p data-part="empty">
-            Здесь ничего нет. Сотрите запрос или вернитесь назад.
-          </p>
+          <p data-part="empty">{emptyText}</p>
         ) : (
-          <ul id={listId} data-part="list" role="listbox" aria-label="Команды">
+          <ul
+            id={listId}
+            data-part="list"
+            role="listbox"
+            aria-label={listLabel}
+          >
             {rows.map((command, index) => (
               <li
                 key={command.label}
@@ -265,10 +325,10 @@ export function Command004({
         )}
         <p data-part="foot" role="status">
           {done
-            ? `Выполнено: ${done}`
+            ? doneText.replace("{command}", done)
             : parent
-              ? "Backspace — назад · Enter — выполнить"
-              : "Enter — открыть подкоманды · Esc — сброс"}
+              ? childHintText
+              : hintText}
         </p>
       </div>
     </>

@@ -7,6 +7,8 @@ export type Badge023Props = Omit<
   children?: string
   width?: number
   truncate?: "end" | "middle"
+  /** Пусто — плашка держит собственный нейтральный фон. */
+  background?: string
 }
 
 // Идея компонента: плашка для текста, длину которого никто не гарантирует —
@@ -17,9 +19,9 @@ export type Badge023Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="badge-023"]){
 --vibeui-badge-023-width:16ch;
---vibeui-badge-023-bg:oklch(0.96 0.005 265);
---vibeui-badge-023-fg:oklch(0.32 0.014 265);
---vibeui-badge-023-border:oklch(0.89 0.006 265);
+--vibeui-badge-023-bg:light-dark(oklch(0.96 0.005 265),oklch(0.26 0.009 265));
+--vibeui-badge-023-fg:light-dark(oklch(0.32 0.014 265),oklch(0.91 0.007 265));
+--vibeui-badge-023-border:light-dark(oklch(0.89 0.006 265),oklch(0.4 0.011 265));
 --vibeui-badge-023-font:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
 }
 [data-vibeui-block="badge-023"]{
@@ -62,6 +64,28 @@ function shorten(text: string, width: number) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Плашка с усечением длинного текста: с конца или по середине.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -69,6 +93,7 @@ export function Badge023({
   children = "feature/registry-badge-overflow",
   width = 16,
   truncate = "middle",
+  background = "",
   className,
   style,
   ...props
@@ -79,6 +104,12 @@ export function Badge023({
 
   const palette = {
     "--vibeui-badge-023-width": `${limit}ch`,
+    ...(background
+      ? {
+          "--vibeui-badge-023-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -17,7 +17,17 @@ export type Commerce014Props = {
   refunds?: { value: string; label: string; hint: string }[]
   cta?: string
   policy?: string
+  /** Что стоит после срока: почему дату нельзя пропустить. */
+  deadlineNote?: string
+  /** Подписи разделов формы. */
+  itemsLabel?: string
+  reasonLabel?: string
+  refundLabel?: string
+  /** Подпись поля подробностей у причины «другое». */
+  detailsLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,13 +41,15 @@ export type Commerce014Props = {
 // возврата стоит вверху: если он истёк, вся остальная форма бессмысленна.
 const STYLES = `
 :where([data-vibeui-block="commerce-014"]){
---vibeui-commerce-014-bg:oklch(1 0 0);
---vibeui-commerce-014-fg:oklch(0.21 0.014 265);
---vibeui-commerce-014-muted:oklch(0.55 0.014 265);
---vibeui-commerce-014-border:oklch(0.91 0.006 265);
---vibeui-commerce-014-soft:oklch(0.975 0.004 265);
---vibeui-commerce-014-accent:oklch(0.55 0.2 262);
---vibeui-commerce-014-warn:oklch(0.62 0.16 45);
+--vibeui-commerce-014-bg:transparent;
+--vibeui-commerce-014-paper:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-commerce-014-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-014-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-014-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-commerce-014-soft:light-dark(oklch(0.975 0.004 265),oklch(0.26 0.01 265));
+--vibeui-commerce-014-accent:light-dark(oklch(0.55 0.2 262),oklch(0.68 0.17 262));
+--vibeui-commerce-014-on-accent:light-dark(oklch(1 0 0),oklch(0.16 0.02 265));
+--vibeui-commerce-014-warn:light-dark(oklch(0.62 0.16 45),oklch(0.78 0.14 45));
 --vibeui-commerce-014-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -89,12 +101,12 @@ border:1px solid transparent;font-size:0.8125rem;line-height:1.35;
 [data-vibeui-block="commerce-014"] [data-part="reasons"]:has(#commerce-014-other:checked) [data-part="why"]{display:block}
 [data-vibeui-block="commerce-014"] textarea{
 width:100%;min-height:4.5rem;resize:vertical;font:inherit;font-size:0.8125rem;color:inherit;padding:0.5rem 0.625rem;
-border:1px solid var(--vibeui-commerce-014-border);border-radius:0.625rem;background:var(--vibeui-commerce-014-bg);
+border:1px solid var(--vibeui-commerce-014-border);border-radius:0.625rem;background:var(--vibeui-commerce-014-paper);
 }
 [data-vibeui-block="commerce-014"] textarea:focus-visible{outline:2px solid var(--vibeui-commerce-014-accent);outline-offset:1px}
 [data-vibeui-block="commerce-014"] [data-part="send"]{
 width:100%;appearance:none;border:0;cursor:pointer;height:2.625rem;border-radius:0.75rem;
-background:var(--vibeui-commerce-014-accent);color:oklch(1 0 0);font:inherit;font-size:0.875rem;font-weight:650;
+background:var(--vibeui-commerce-014-accent);color:var(--vibeui-commerce-014-on-accent);font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-014"] [data-part="send"]:focus-visible{outline:2px solid var(--vibeui-commerce-014-accent);outline-offset:2px}
 [data-vibeui-block="commerce-014"] [data-part="policy"]{margin:0.625rem 0 0;font-size:0.6875rem;line-height:1.45;color:var(--vibeui-commerce-014-muted)}
@@ -140,6 +152,28 @@ const DEFAULT_REFUNDS = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Заявка на возврат: причина из списка, подробности — только у «другого».
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -152,12 +186,25 @@ export function Commerce014({
   refunds = DEFAULT_REFUNDS,
   cta = "Отправить заявку",
   policy = "Товар примем в исходной комплектации. Курьер заберёт бесплатно, если причина — брак или ошибка магазина.",
+  deadlineNote = "После этой даты заявку примет только поддержка.",
+  itemsLabel = "Что возвращаем",
+  reasonLabel = "Почему",
+  refundLabel = "Куда вернуть деньги",
+  detailsLabel = "Расскажите подробнее — так заявку решат без переписки",
   accent,
+  background = "",
   className,
   style,
 }: Commerce014Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-014-bg": background,
+          "--vibeui-commerce-014-paper": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -179,13 +226,13 @@ export function Commerce014({
           <p data-part="deadline">
             <span aria-hidden="true">⏳</span>
             <span>
-              <b>{deadline}</b>. После этой даты заявку примет только поддержка.
+              <b>{deadline}</b>. {deadlineNote}
             </span>
           </p>
 
           <form>
             <fieldset>
-              <legend>Что возвращаем</legend>
+              <legend>{itemsLabel}</legend>
               <div data-part="rows">
                 {items.map((item, index) => (
                   <label
@@ -217,7 +264,7 @@ export function Commerce014({
             </fieldset>
 
             <fieldset data-part="reasons">
-              <legend>Почему</legend>
+              <legend>{reasonLabel}</legend>
               <div>
                 {reasons.map((reason, index) => (
                   <label key={reason} data-part="pick">
@@ -238,14 +285,14 @@ export function Commerce014({
               </div>
               <div data-part="why">
                 <label htmlFor="commerce-014-text" data-part="hint">
-                  Расскажите подробнее — так заявку решат без переписки
+                  {detailsLabel}
                 </label>
                 <textarea id="commerce-014-text" />
               </div>
             </fieldset>
 
             <fieldset>
-              <legend>Куда вернуть деньги</legend>
+              <legend>{refundLabel}</legend>
               <div>
                 {refunds.map((refund, index) => (
                   <label key={refund.value} data-part="pick">

@@ -16,6 +16,8 @@ export type Radio014Props = Omit<
   methods?: Radio014Method[]
   name?: string
   defaultValue?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,17 +25,19 @@ export type Radio014Props = Omit<
 // фактах — чем платим и когда спишут. Логотип платёжной системы здесь не
 // нужен настоящий: короткий код в рамке — законная заглушка, а дата
 // списания стоит отдельной строкой под номером карты, а не в скобках.
+//
+// Тема берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="radio-014"]){
---vibeui-radio-014-bg:oklch(1 0 0);
---vibeui-radio-014-fg:oklch(0.22 0.014 265);
---vibeui-radio-014-muted:oklch(0.55 0.014 265);
---vibeui-radio-014-border:oklch(0.9 0.006 265);
---vibeui-radio-014-ring:oklch(0.74 0.012 265);
---vibeui-radio-014-accent:oklch(0.52 0.17 260);
---vibeui-radio-014-tint:oklch(0.52 0.17 260 / 7%);
---vibeui-radio-014-logo-bg:oklch(0.96 0.004 265);
---vibeui-radio-014-logo-fg:oklch(0.42 0.014 265);
+--vibeui-radio-014-bg:transparent;
+--vibeui-radio-014-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-014-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-radio-014-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-radio-014-ring:light-dark(oklch(0.74 0.012 265),oklch(0.5 0.014 265));
+--vibeui-radio-014-accent:light-dark(oklch(0.52 0.17 260),oklch(0.74 0.15 260));
+--vibeui-radio-014-tint:light-dark(oklch(0.52 0.17 260 / 7%),oklch(0.74 0.15 260 / 16%));
+--vibeui-radio-014-logo-bg:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-radio-014-logo-fg:light-dark(oklch(0.42 0.014 265),oklch(0.83 0.01 265));
 --vibeui-radio-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="radio-014"]{
@@ -68,11 +72,13 @@ cursor:not-allowed;opacity:.55;background:transparent;
 appearance:none;-webkit-appearance:none;flex:none;margin:0;cursor:inherit;
 width:1.0625rem;height:1.0625rem;border-radius:9999px;
 border:1.5px solid var(--vibeui-radio-014-ring);
-background:var(--vibeui-radio-014-bg);
+background:transparent;
 }
+/* Точка — градиент, а не внутренняя тень: тени пришлось бы закрашивать
+   зазор цветом подложки, а подложки у компонента по умолчанию нет. */
 [data-vibeui-block="radio-014"] input:checked{
 border-color:var(--vibeui-radio-014-accent);
-box-shadow:inset 0 0 0 0.1875rem var(--vibeui-radio-014-bg),inset 0 0 0 1rem var(--vibeui-radio-014-accent);
+background:radial-gradient(circle at 50% 50%,var(--vibeui-radio-014-accent) 0 0.21875rem,transparent 0.21875rem);
 }
 /* Логотип-заглушка: код платёжной системы в рамке, а не иконка бренда —
    так компонент не тянет ни один настоящий логотип как зависимость. */
@@ -118,6 +124,28 @@ const DEFAULT_METHODS: Radio014Method[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор способа оплаты: логотип-заглушка слева, срок списания под названием.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -126,6 +154,7 @@ export function Radio014({
   methods = DEFAULT_METHODS,
   name = "vibeui-radio-014",
   defaultValue = "visa",
+  background = "",
   accent,
   className,
   style,
@@ -133,6 +162,12 @@ export function Radio014({
 }: Radio014Props) {
   const palette = {
     ...(accent ? { "--vibeui-radio-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-radio-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

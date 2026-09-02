@@ -16,6 +16,14 @@ export type Card015Props = Omit<
   showDone?: boolean
   /** Подпись под чек-листом: срок, исполнитель, ветка. */
   meta?: string
+  /** Счётчик в шапке: {done} — выполнено, {total} — всего. */
+  countTemplate?: string
+  /** Подпись прогресса для скринридера: {done} и {total}. */
+  progressTemplate?: string
+  /** Что скринридер добавляет к пункту: ключи done и todo. */
+  statusText?: Record<string, string>
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,12 +33,14 @@ export type Card015Props = Omit<
 // SVG: иконочный шрифт ради одного знака ставить незачем.
 const STYLES = `
 :where([data-vibeui-block="card-015"]){
---vibeui-card-015-bg:oklch(1 0 0);
---vibeui-card-015-fg:oklch(0.22 0.015 265);
---vibeui-card-015-muted:oklch(0.56 0.013 265);
---vibeui-card-015-border:oklch(0.91 0.006 265);
---vibeui-card-015-track:oklch(0.93 0.005 265);
---vibeui-card-015-accent:oklch(0.56 0.15 152);
+--vibeui-card-015-bg:transparent;
+--vibeui-card-015-surface:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-card-015-tick:light-dark(oklch(1 0 0),oklch(0.2 0.02 265));
+--vibeui-card-015-fg:light-dark(oklch(0.22 0.015 265),oklch(0.94 0.006 265));
+--vibeui-card-015-muted:light-dark(oklch(0.56 0.013 265),oklch(0.71 0.012 265));
+--vibeui-card-015-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-card-015-track:light-dark(oklch(0.93 0.005 265),oklch(0.33 0.01 265));
+--vibeui-card-015-accent:light-dark(oklch(0.56 0.15 152),oklch(0.74 0.14 152));
 --vibeui-card-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="card-015"]{
@@ -73,8 +83,8 @@ overflow:hidden;clip-path:inset(50%);white-space:nowrap;
 [data-vibeui-block="card-015"] [data-part="box"]{
 display:flex;align-items:center;justify-content:center;flex:none;
 width:1rem;height:1rem;margin-top:0.0625rem;border-radius:0.3125rem;
-border:1.5px solid var(--vibeui-card-015-border);background:oklch(1 0 0);
-color:oklch(1 0 0);
+border:1.5px solid var(--vibeui-card-015-border);background:var(--vibeui-card-015-surface);
+color:var(--vibeui-card-015-tick);
 }
 [data-vibeui-block="card-015"] [data-part="row"][data-done="true"] [data-part="box"]{
 border-color:var(--vibeui-card-015-accent);background:var(--vibeui-card-015-accent);
@@ -100,6 +110,33 @@ const DEFAULT_ITEMS: Card015Item[] = [
   { text: "Выложить на витрину" },
 ]
 
+const STATUS_TEXT: Record<string, string> = {
+  done: " — выполнено",
+  todo: " — не выполнено",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Карточка задачи с видимым чек-листом и сегментным прогрессом.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -109,6 +146,10 @@ export function Card015({
   items = DEFAULT_ITEMS,
   showDone = true,
   meta = "Срок: до пятницы · Марк Ильин",
+  countTemplate = "{done} из {total}",
+  progressTemplate = "Выполнено {done} из {total} пунктов",
+  statusText = STATUS_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -116,9 +157,20 @@ export function Card015({
 }: Card015Props) {
   const done = items.filter((item) => item.done).length
   const visible = showDone ? items : items.filter((item) => !item.done)
+  const fill = (template: string) =>
+    template
+      .replace("{done}", String(done))
+      .replace("{total}", String(items.length))
 
   const palette = {
     ...(accent ? { "--vibeui-card-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-card-015-bg": background,
+          "--vibeui-card-015-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -135,9 +187,7 @@ export function Card015({
       >
         <div data-part="head">
           <h3 data-part="title">{title}</h3>
-          <span data-part="count">
-            {done} из {items.length}
-          </span>
+          <span data-part="count">{fill(countTemplate)}</span>
         </div>
         <div
           data-part="meter"
@@ -145,7 +195,7 @@ export function Card015({
           aria-valuenow={done}
           aria-valuemin={0}
           aria-valuemax={items.length}
-          aria-label={`Выполнено ${done} из ${items.length} пунктов`}
+          aria-label={fill(progressTemplate)}
         >
           {items.map((item, index) => (
             <span
@@ -173,7 +223,9 @@ export function Card015({
               <span data-part="text">
                 {item.text}
                 <span data-part="sr">
-                  {item.done ? " — выполнено" : " — не выполнено"}
+                  {item.done
+                    ? (statusText.done ?? STATUS_TEXT.done)
+                    : (statusText.todo ?? STATUS_TEXT.todo)}
                 </span>
               </span>
             </li>

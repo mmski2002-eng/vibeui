@@ -10,6 +10,12 @@ export type Label011Props = Omit<
   legend?: string
   options?: string[]
   defaultValue?: string[]
+  /** Счётчик в заголовке. {checked} — отмечено, {total} — всего. */
+  countText?: string
+  /** Живое сообщение для озвучки. {checked} и {total} — те же числа. */
+  liveText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,12 +26,12 @@ export type Label011Props = Omit<
 // приходилось искать глазами после каждого клика.
 const STYLES = `
 :where([data-vibeui-block="label-011"]){
---vibeui-label-011-surface:oklch(1 0 0);
---vibeui-label-011-surface-border:oklch(0.91 0.006 265);
---vibeui-label-011-fg:oklch(0.24 0.016 265);
---vibeui-label-011-muted:oklch(0.54 0.014 265);
---vibeui-label-011-item-border:oklch(0.88 0.008 265);
---vibeui-label-011-accent:oklch(0.55 0.2 262);
+--vibeui-label-011-surface:transparent;
+--vibeui-label-011-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-label-011-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-label-011-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-label-011-item-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-label-011-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-label-011-radius:0.625rem;
 --vibeui-label-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -88,6 +94,28 @@ border-color:var(--vibeui-label-011-accent);background:var(--vibeui-label-011-ac
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подпись группы чекбоксов со счётчиком выбранного в <legend>: «N из M
  * выбрано» пересчитывается на клик и дублируется в aria-live. Один файл,
  * ноль зависимостей.
@@ -96,6 +124,9 @@ export function Label011({
   legend = "Каналы уведомлений",
   options = ["Почта", "SMS", "Push в приложении", "Телеграм-бот", "Звонок"],
   defaultValue = ["Почта", "SMS", "Push в приложении"],
+  countText = "{checked} из {total} выбрано",
+  liveText = "Выбрано {checked} из {total}",
+  background = "",
   accent,
   className,
   style,
@@ -103,8 +134,18 @@ export function Label011({
 }: Label011Props) {
   const id = useId()
   const [checked, setChecked] = useState<string[]>(defaultValue)
+  const fill = (template: string) =>
+    template
+      .replace("{checked}", String(checked.length))
+      .replace("{total}", String(options.length))
   const palette = {
     ...(accent ? { "--vibeui-label-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-label-011-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -130,13 +171,11 @@ export function Label011({
         <legend>
           <span data-part="head">
             <span data-part="text">{legend}</span>
-            <span data-part="count">
-              {checked.length} из {options.length} выбрано
-            </span>
+            <span data-part="count">{fill(countText)}</span>
           </span>
         </legend>
         <p data-part="live" aria-live="polite">
-          Выбрано {checked.length} из {options.length}
+          {fill(liveText)}
         </p>
         <div data-part="shell">
           {options.map((option) => (

@@ -11,7 +11,11 @@ export type Alert011Props = Omit<
   /** Идентификатор обращения в поддержку. */
   reference?: string
   copyLabel?: string
+  /** Подпись свёрнутого блока: компонент несёт русскую. */
+  detailsLabel?: string
   onCopy?: () => void
+  /** Пусто — подложки нет, ошибка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: ошибка, с которой пойдут в поддержку. Человеческое
@@ -19,15 +23,18 @@ export type Alert011Props = Omit<
 // разработчику она нужна целиком, пользователю не нужна вовсе. Свёрнуто на
 // нативном details, поэтому раскрытие не требует состояния и работает
 // до гидратации.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-011"]){
---vibeui-alert-011-fg:oklch(0.24 0.016 265);
---vibeui-alert-011-muted:oklch(0.5 0.014 265);
---vibeui-alert-011-bg:oklch(1 0 0);
---vibeui-alert-011-code-bg:oklch(0.22 0.014 265);
---vibeui-alert-011-code-fg:oklch(0.93 0.006 265);
---vibeui-alert-011-border:oklch(0.9 0.006 265);
---vibeui-alert-011-danger:oklch(0.56 0.19 25);
+--vibeui-alert-011-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-alert-011-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-011-bg:transparent;
+--vibeui-alert-011-code-bg:light-dark(oklch(0.22 0.014 265),oklch(0.16 0.012 265));
+--vibeui-alert-011-code-fg:light-dark(oklch(0.93 0.006 265),oklch(0.87 0.008 265));
+--vibeui-alert-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-011-danger:light-dark(oklch(0.56 0.19 25),oklch(0.74 0.16 25));
 --vibeui-alert-011-radius:0.75rem;
 --vibeui-alert-011-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-alert-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -87,6 +94,28 @@ font:inherit;font-size:0.75rem;text-decoration:underline;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Ошибка с технической подробностью в свёрнутом блоке.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -96,11 +125,23 @@ export function Alert011({
   details = "Error: build failed at page /services\n  at renderPage (build.js:184:11)\n  at async publish (deploy.js:52:5)\ncode: E_BUILD_FAILED\nrequest: 8f2c-41ab-9d70",
   reference = "Обращение 8f2c-41ab",
   copyLabel = "Скопировать подробности",
+  detailsLabel = "Подробности",
   onCopy,
+  background = "",
   className,
   style,
   ...props
 }: Alert011Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-alert-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-alert-011" precedence="medium">
@@ -111,7 +152,7 @@ export function Alert011({
         data-vibeui-block="alert-011"
         role="alert"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="icon" aria-hidden="true">
           !
@@ -125,7 +166,7 @@ export function Alert011({
           {details ? (
             <details>
               <summary>
-                Подробности
+                {detailsLabel}
                 <span data-part="chevron" aria-hidden="true" />
               </summary>
               <pre>{details}</pre>

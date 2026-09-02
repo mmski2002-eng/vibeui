@@ -15,7 +15,13 @@ export type Input030Props = Omit<
   placeholder?: string
   defaultValue?: string
   addresses?: string[]
+  /** Подпись списка подсказок для скринридера. */
+  listLabel?: string
+  /** Примечание под полем. */
+  noteText?: string
   onChange?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,13 +32,14 @@ export type Input030Props = Omit<
 // видно, почему адрес попал в подсказки, а не только что попал.
 const STYLES = `
 :where([data-vibeui-block="input-030"]){
---vibeui-input-030-surface:oklch(1 0 0);
---vibeui-input-030-shell:oklch(0.91 0.006 265);
---vibeui-input-030-fg:oklch(0.23 0.014 265);
---vibeui-input-030-muted:oklch(0.56 0.014 265);
---vibeui-input-030-field:oklch(0.985 0.002 265);
---vibeui-input-030-border:oklch(0.88 0.008 265);
---vibeui-input-030-accent:oklch(0.55 0.15 145);
+--vibeui-input-030-surface:transparent;
+--vibeui-input-030-menu:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-input-030-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-input-030-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-030-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-input-030-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-input-030-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-input-030-accent:light-dark(oklch(0.55 0.15 145),oklch(0.74 0.14 145));
 --vibeui-input-030-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-030"]{
@@ -64,7 +71,7 @@ font:inherit;font-size:0.875rem;
 [data-vibeui-block="input-030"] [data-part="list"]{
 position:absolute;z-index:2;top:calc(100% + 0.375rem);left:0;right:0;
 margin:0;padding:0.25rem;display:flex;flex-direction:column;
-background:var(--vibeui-input-030-surface);
+background:var(--vibeui-input-030-menu);
 border:1px solid var(--vibeui-input-030-border);border-radius:0.75rem;
 box-shadow:0 14px 30px -14px color-mix(in oklab,var(--vibeui-input-030-fg) 45%,transparent);
 }
@@ -100,6 +107,29 @@ const ADDRESSES = [
   "г. Новосибирск, Красный проспект, д. 22",
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function highlight(text: string, query: string) {
   const at = text.toLowerCase().indexOf(query.toLowerCase())
   if (at < 0) return text
@@ -123,7 +153,10 @@ export function Input030({
   placeholder = "Начните вводить город или улицу",
   defaultValue = "",
   addresses = ADDRESSES,
+  listLabel = "Подходящие адреса",
+  noteText = "От двух символов — подсказки ниже по мере ввода.",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -136,6 +169,13 @@ export function Input030({
 
   const palette = {
     ...(accent ? { "--vibeui-input-030-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-030-surface": background,
+          "--vibeui-input-030-menu": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -221,7 +261,7 @@ export function Input030({
               data-part="list"
               id={`${id}-list`}
               role="listbox"
-              aria-label="Подходящие адреса"
+              aria-label={listLabel}
             >
               {matches.map((address, index) => (
                 <button
@@ -241,7 +281,7 @@ export function Input030({
           ) : null}
         </div>
         <p data-part="note" id={`${id}-note`}>
-          От двух символов — подсказки ниже по мере ввода.
+          {noteText}
         </p>
       </div>
     </>

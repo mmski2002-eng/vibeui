@@ -14,7 +14,11 @@ export type Alertdialog008Props = Omit<
   later?: string
   allow?: string
   deny?: string
+  /** Значок в шапке окна: одна печатная фигура. */
+  icon?: string
   accent?: string
+  /** Подложка окна и кнопки открытия. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: запрос разрешения. Системное окно браузера показывают
@@ -25,12 +29,15 @@ export type Alertdialog008Props = Omit<
 // запрещают навсегда, лишь бы окно исчезло.
 const STYLES = `
 :where([data-vibeui-block="alertdialog-008"]){
---vibeui-alertdialog-008-bg:oklch(1 0 0);
---vibeui-alertdialog-008-panel:oklch(0.97 0.003 265);
---vibeui-alertdialog-008-fg:oklch(0.22 0.014 265);
---vibeui-alertdialog-008-muted:oklch(0.55 0.014 265);
---vibeui-alertdialog-008-border:oklch(0.9 0.006 265);
---vibeui-alertdialog-008-accent:oklch(0.55 0.2 262);
+--vibeui-alertdialog-008-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-alertdialog-008-panel:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.01 265));
+--vibeui-alertdialog-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-alertdialog-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-alertdialog-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-alertdialog-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
+--vibeui-alertdialog-008-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0.03 262));
+--vibeui-alertdialog-008-mark-bg:light-dark(oklch(0.55 0.2 262 / 12%),oklch(0.72 0.18 262 / 18%));
+--vibeui-alertdialog-008-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.02 0.01 265 / 70%));
 --vibeui-alertdialog-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="alertdialog-008"]{
@@ -49,14 +56,14 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 margin:auto;width:min(23rem,calc(100vw - 2rem));padding:1.125rem;
 border:1px solid var(--vibeui-alertdialog-008-border);border-radius:0.875rem;
 background:var(--vibeui-alertdialog-008-bg);color:var(--vibeui-alertdialog-008-fg);
-box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 55%);
+box-shadow:0 24px 60px -24px var(--vibeui-alertdialog-008-shadow);
 font-family:var(--vibeui-alertdialog-008-font);
 }
-[data-vibeui-block="alertdialog-008"] dialog::backdrop{background:oklch(0.2 0.02 265 / 45%)}
+[data-vibeui-block="alertdialog-008"] dialog::backdrop{background:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.08 0.014 265 / 62%))}
 [data-vibeui-block="alertdialog-008"] [data-part="mark"]{
 display:flex;align-items:center;justify-content:center;
 width:2.5rem;height:2.5rem;margin-bottom:0.75rem;border-radius:0.75rem;
-background:oklch(0.55 0.2 262 / 12%);color:var(--vibeui-alertdialog-008-accent);
+background:var(--vibeui-alertdialog-008-mark-bg);color:var(--vibeui-alertdialog-008-accent);
 font-size:1.125rem;line-height:1;
 }
 [data-vibeui-block="alertdialog-008"] h2{margin:0 0 0.375rem;font-size:1rem;font-weight:700;line-height:1.3}
@@ -78,7 +85,7 @@ border-radius:9999px;background:var(--vibeui-alertdialog-008-accent);
 width:100%;appearance:none;cursor:pointer;height:2.375rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="alertdialog-008"] [data-part="allow"]{border:0;background:var(--vibeui-alertdialog-008-accent);color:oklch(1 0 0)}
+[data-vibeui-block="alertdialog-008"] [data-part="allow"]{border:0;background:var(--vibeui-alertdialog-008-accent);color:var(--vibeui-alertdialog-008-on-accent)}
 /* Отказ — полноценная кнопка: тяжёлый отказ приводит к запрету навсегда. */
 [data-vibeui-block="alertdialog-008"] [data-part="later"]{
 border:1px solid var(--vibeui-alertdialog-008-border);background:var(--vibeui-alertdialog-008-bg);color:inherit;
@@ -97,6 +104,28 @@ const DEFAULT_USES = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Запрос разрешения: объяснение до системного окна и лёгкий отказ.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -108,7 +137,9 @@ export function Alertdialog008({
   later = "Не сейчас",
   allow = "Разрешить",
   deny = "Никогда не спрашивать",
+  icon = "✽",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -117,6 +148,12 @@ export function Alertdialog008({
 
   const palette = {
     ...(accent ? { "--vibeui-alertdialog-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-alertdialog-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -141,7 +178,7 @@ export function Alertdialog008({
 
         <dialog ref={box} aria-labelledby="vibeui-alertdialog-008-title">
           <span data-part="mark" aria-hidden="true">
-            ✽
+            {icon}
           </span>
           <h2 id="vibeui-alertdialog-008-title">{title}</h2>
           <p data-part="reason">{reason}</p>

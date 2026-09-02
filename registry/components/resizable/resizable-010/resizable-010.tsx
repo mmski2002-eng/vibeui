@@ -18,6 +18,18 @@ export type Resizable010Props = Omit<
   max?: number
   step?: number
   onChange?: (ratio: number) => void
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  listLabel?: string
+  listTitle?: string
+  tasks?: string[]
+  detailsLabel?: string
+  detailsTitle?: string
+  detailsText?: string
+  /** Строка состояния; {size} заменяется на текущий процент. */
+  statusText?: string
+  equalText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,12 +39,13 @@ export type Resizable010Props = Omit<
 // пропорции сами — без обработчика resize и без пересчёта в пикселях.
 const STYLES = `
 :where([data-vibeui-block="resizable-010"]){
---vibeui-resizable-010-bg:oklch(1 0 0);
---vibeui-resizable-010-fg:oklch(0.22 0.014 265);
---vibeui-resizable-010-muted:oklch(0.55 0.014 265);
---vibeui-resizable-010-border:oklch(0.9 0.006 265);
---vibeui-resizable-010-surface:oklch(0.975 0.004 265);
---vibeui-resizable-010-accent:oklch(0.64 0.17 40);
+--vibeui-resizable-010-bg:transparent;
+--vibeui-resizable-010-pane:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-resizable-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-resizable-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-resizable-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-resizable-010-surface:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.011 265));
+--vibeui-resizable-010-accent:light-dark(oklch(0.58 0.16 40),oklch(0.78 0.15 40));
 --vibeui-resizable-010-top:1;
 --vibeui-resizable-010-bottom:1;
 --vibeui-resizable-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -51,7 +64,7 @@ display:grid;height:16rem;
 grid-template-rows:calc(var(--vibeui-resizable-010-top) * 1fr) 0.75rem calc(var(--vibeui-resizable-010-bottom) * 1fr);
 border:1px solid var(--vibeui-resizable-010-border);border-radius:0.75rem;overflow:hidden;
 }
-[data-vibeui-block="resizable-010"] [data-part="pane"]{min-height:0;padding:0.75rem;overflow:auto}
+[data-vibeui-block="resizable-010"] [data-part="pane"]{min-height:0;padding:0.75rem;overflow:auto;background:var(--vibeui-resizable-010-pane)}
 [data-vibeui-block="resizable-010"] [data-part="pane"][data-role="details"]{background:var(--vibeui-resizable-010-surface)}
 [data-vibeui-block="resizable-010"] h3{margin:0 0 0.375rem;font-size:0.8125rem;font-weight:650}
 [data-vibeui-block="resizable-010"] ul{list-style:none;margin:0;padding:0;display:grid;gap:0.3125rem}
@@ -60,8 +73,8 @@ font-size:0.75rem;line-height:1.3;padding:0.25rem 0.375rem;border-radius:0.375re
 white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 [data-vibeui-block="resizable-010"] li[data-active="true"]{
-background:color-mix(in oklab,var(--vibeui-resizable-010-accent) 12%,transparent);
-color:color-mix(in oklab,var(--vibeui-resizable-010-accent) 70%,black);
+background:color-mix(in oklab,var(--vibeui-resizable-010-accent) 14%,transparent);
+color:color-mix(in oklab,var(--vibeui-resizable-010-accent) 72%,light-dark(black,white));
 font-weight:650;
 }
 [data-vibeui-block="resizable-010"] p{margin:0;font-size:0.75rem;line-height:1.55;color:var(--vibeui-resizable-010-muted)}
@@ -106,6 +119,28 @@ const TASKS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Вертикальное разделение списка задач и подробностей: доля в fr, горизонтальный
  * разделитель со стрелками вверх-вниз. Один файл, ноль зависимостей.
  */
@@ -116,6 +151,15 @@ export function Resizable010({
   max = 80,
   step = 5,
   onChange,
+  listLabel = "Список задач",
+  listTitle = "Задачи",
+  tasks = TASKS,
+  detailsLabel = "Подробности",
+  detailsTitle = "Согласовать смету",
+  detailsText = "Срок — пятница, исполнитель — бухгалтерия. Подробности растут вниз вместе с высотой нижней доли.",
+  statusText = "Список — {size}% высоты.",
+  equalText = "Поровну",
+  background = "",
   accent,
   className,
   style,
@@ -130,6 +174,12 @@ export function Resizable010({
     "--vibeui-resizable-010-top": String(Math.round(ratio)),
     "--vibeui-resizable-010-bottom": String(100 - Math.round(ratio)),
     ...(accent ? { "--vibeui-resizable-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-resizable-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -168,10 +218,10 @@ export function Resizable010({
         style={palette}
       >
         <div data-part="frame" ref={frame}>
-          <section data-part="pane" id={listId} aria-label="Список задач">
-            <h3>Задачи</h3>
+          <section data-part="pane" id={listId} aria-label={listLabel}>
+            <h3>{listTitle}</h3>
             <ul>
-              {TASKS.map((task, index) => (
+              {tasks.map((task, index) => (
                 <li key={task} data-active={index === 1 || undefined}>
                   {task}
                 </li>
@@ -216,21 +266,18 @@ export function Resizable010({
           <section
             data-part="pane"
             data-role="details"
-            aria-label="Подробности"
+            aria-label={detailsLabel}
           >
-            <h3>Согласовать смету</h3>
-            <p>
-              Срок — пятница, исполнитель — бухгалтерия. Подробности растут вниз
-              вместе с высотой нижней доли.
-            </p>
+            <h3>{detailsTitle}</h3>
+            <p>{detailsText}</p>
           </section>
         </div>
         <div data-part="foot">
           <p data-part="status" role="status">
-            Список — {Math.round(ratio)}% высоты.
+            {statusText.replace("{size}", String(Math.round(ratio)))}
           </p>
           <button type="button" onClick={() => apply(50)}>
-            Поровну
+            {equalText}
           </button>
         </div>
       </div>

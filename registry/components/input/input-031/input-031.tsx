@@ -11,7 +11,11 @@ export type Input031Props = Omit<
   placeholder?: string
   defaultValue?: string
   errorText?: string
+  /** Скрытый текст у звёздочки: его читает скринридер вместо символа. */
+  requiredText?: string
   onChange?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,14 +27,14 @@ export type Input031Props = Omit<
 // иначе ошибка вспыхивает от одного клика в поле и обратно.
 const STYLES = `
 :where([data-vibeui-block="input-031"]){
---vibeui-input-031-surface:oklch(1 0 0);
---vibeui-input-031-shell:oklch(0.91 0.006 265);
---vibeui-input-031-fg:oklch(0.23 0.014 265);
---vibeui-input-031-muted:oklch(0.56 0.014 265);
---vibeui-input-031-field:oklch(0.985 0.002 265);
---vibeui-input-031-border:oklch(0.88 0.008 265);
---vibeui-input-031-accent:oklch(0.55 0.17 265);
---vibeui-input-031-bad:oklch(0.55 0.2 25);
+--vibeui-input-031-surface:transparent;
+--vibeui-input-031-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-input-031-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-031-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-input-031-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-input-031-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-input-031-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-input-031-bad:light-dark(oklch(0.55 0.2 25),oklch(0.74 0.16 25));
 --vibeui-input-031-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-031"]{
@@ -77,6 +81,29 @@ font-size:0.75rem;line-height:1.4;color:var(--vibeui-input-031-bad);font-weight:
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Обязательное поле со звёздочкой у подписи и текстом ошибки под ним:
  * ошибка появляется после потери фокуса пустым полем, не на каждый символ.
  * Один файл, ноль зависимостей.
@@ -86,7 +113,9 @@ export function Input031({
   placeholder = "Как к вам обращаться",
   defaultValue = "",
   errorText = "Это поле обязательно для заполнения.",
+  requiredText = ", обязательное поле",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -98,6 +127,12 @@ export function Input031({
 
   const palette = {
     ...(accent ? { "--vibeui-input-031-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-031-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -121,7 +156,7 @@ export function Input031({
           <span data-part="star" aria-hidden="true">
             *
           </span>
-          <span data-part="sr">, обязательное поле</span>
+          <span data-part="sr">{requiredText}</span>
         </div>
         <span data-part="frame">
           <input

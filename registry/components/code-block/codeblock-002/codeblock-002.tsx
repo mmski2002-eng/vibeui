@@ -12,20 +12,25 @@ export type Codeblock002Props = Omit<
   label?: string
   doneLabel?: string
   resetDelay?: number
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: кнопка копирования, которая честно показывает, сколько
 // ещё продержится подпись «Скопировано». Под подписью бежит полоса отката —
 // пользователь видит, что состояние временное, и не жмёт кнопку повторно.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, рамка и чип кнопки держатся полупрозрачными накладками.
 const STYLES = `
 :where([data-vibeui-block="codeblock-002"]){
---vibeui-codeblock-002-bg:oklch(0.19 0.008 265);
---vibeui-codeblock-002-fg:oklch(0.94 0.005 265);
---vibeui-codeblock-002-muted:oklch(0.67 0.012 265);
---vibeui-codeblock-002-border:oklch(1 0 0 / 13%);
---vibeui-codeblock-002-chip:oklch(1 0 0 / 9%);
---vibeui-codeblock-002-chip-hover:oklch(1 0 0 / 16%);
---vibeui-codeblock-002-ok:oklch(0.82 0.14 152);
+--vibeui-codeblock-002-bg:transparent;
+--vibeui-codeblock-002-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
+--vibeui-codeblock-002-muted:light-dark(oklch(0.52 0.016 265),oklch(0.67 0.012 265));
+--vibeui-codeblock-002-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 13%));
+--vibeui-codeblock-002-chip:light-dark(oklch(0 0 0 / 7%),oklch(1 0 0 / 9%));
+--vibeui-codeblock-002-chip-hover:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 16%));
+--vibeui-codeblock-002-ok:light-dark(oklch(0.52 0.14 152),oklch(0.82 0.14 152));
 --vibeui-codeblock-002-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -80,6 +85,28 @@ export default function Page() {
   return <Button size="lg">Продолжить</Button>
 }`
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Блок кода с кнопкой копирования и видимым откатом подписи. */
 export function Codeblock002({
   title = "app/page.tsx",
@@ -87,6 +114,7 @@ export function Codeblock002({
   label = "Копировать",
   doneLabel = "Скопировано",
   resetDelay = 2000,
+  background = "",
   className,
   style,
   ...props
@@ -115,6 +143,12 @@ export function Codeblock002({
 
   const palette = {
     "--vibeui-codeblock-002-delay": `${resetDelay}ms`,
+    ...(background
+      ? {
+          "--vibeui-codeblock-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

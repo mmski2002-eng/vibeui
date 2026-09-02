@@ -14,7 +14,11 @@ export type Commerce010Props = {
   total?: string
   cta?: string
   legal?: string
+  /** Подписи блока: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -26,14 +30,19 @@ export type Commerce010Props = {
 // выбрана оплата картой, и это сделано на :has(), а не на состоянии, поэтому
 // блок остаётся серверным. Итог прилипает к колонке: на одном длинном экране
 // сумму сверяют по дороге, а не в конце.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="commerce-010"]){
---vibeui-commerce-010-bg:oklch(1 0 0);
---vibeui-commerce-010-fg:oklch(0.21 0.014 265);
---vibeui-commerce-010-muted:oklch(0.55 0.014 265);
---vibeui-commerce-010-border:oklch(0.91 0.006 265);
---vibeui-commerce-010-soft:oklch(0.975 0.004 265);
---vibeui-commerce-010-accent:oklch(0.55 0.2 262);
+--vibeui-commerce-010-bg:transparent;
+--vibeui-commerce-010-field:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-commerce-010-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-commerce-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-010-soft:light-dark(oklch(0.975 0.004 265),oklch(0.28 0.01 265));
+--vibeui-commerce-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-commerce-010-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
 --vibeui-commerce-010-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -67,7 +76,7 @@ color:var(--vibeui-commerce-010-muted);
 [data-vibeui-block="commerce-010"] input[type="tel"],
 [data-vibeui-block="commerce-010"] input[type="email"]{
 font:inherit;font-size:0.8125rem;color:var(--vibeui-commerce-010-fg);height:2.375rem;padding:0 0.625rem;
-border:1px solid var(--vibeui-commerce-010-border);border-radius:0.625rem;background:var(--vibeui-commerce-010-bg);
+border:1px solid var(--vibeui-commerce-010-border);border-radius:0.625rem;background:var(--vibeui-commerce-010-field);
 }
 [data-vibeui-block="commerce-010"] input:focus-visible{outline:2px solid var(--vibeui-commerce-010-accent);outline-offset:1px}
 [data-vibeui-block="commerce-010"] [data-part="choices"]{display:flex;flex-direction:column;gap:0.5rem}
@@ -104,7 +113,7 @@ padding-top:0.625rem;border-top:1px solid var(--vibeui-commerce-010-border);marg
 [data-vibeui-block="commerce-010"] [data-part="grand"] b{font-size:1.25rem;font-variant-numeric:tabular-nums}
 [data-vibeui-block="commerce-010"] [data-part="pay"]{
 width:100%;appearance:none;border:0;cursor:pointer;height:2.75rem;border-radius:0.75rem;
-background:var(--vibeui-commerce-010-accent);color:oklch(1 0 0);font:inherit;font-size:0.9375rem;font-weight:650;
+background:var(--vibeui-commerce-010-accent);color:var(--vibeui-commerce-010-on-accent);font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="commerce-010"] [data-part="pay"]:focus-visible{outline:2px solid var(--vibeui-commerce-010-accent);outline-offset:2px}
 [data-vibeui-block="commerce-010"] [data-part="legal"]{margin:0.625rem 0 0;font-size:0.6875rem;line-height:1.45;color:var(--vibeui-commerce-010-muted)}
@@ -138,6 +147,50 @@ const DEFAULT_SUMMARY = [
   { label: "Скидка", value: "−2 685 ₽" },
 ]
 
+/** Русские подписи по умолчанию: установленный файл не меняет язык сам. */
+const LABELS: Record<string, string> = {
+  who: "Кому",
+  name: "Имя и фамилия",
+  phone: "Телефон",
+  mail: "Почта для чека",
+  where: "Куда",
+  address: "Адрес",
+  how: "Чем",
+  payCard: "Картой онлайн",
+  payCardHint: "Спишем сразу, чек придёт на почту",
+  payCardCost: "−1%",
+  payCash: "При получении",
+  payCashHint: "Наличными или картой курьеру",
+  payCashCost: "0 ₽",
+  pan: "Номер карты",
+  expiry: "Срок",
+  cvc: "CVC",
+  grand: "К оплате",
+  summary: "Итог заказа",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Оформление в один экран: контакты, доставка и оплата без шагов.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -149,12 +202,22 @@ export function Commerce010({
   total = "51 505 ₽",
   cta = "Оплатить",
   legal = "Нажимая «Оплатить», вы соглашаетесь с условиями продажи и политикой обработки данных.",
+  labels = LABELS,
   accent,
+  background = "",
   className,
   style,
 }: Commerce010Props) {
+  const text = { ...LABELS, ...labels }
+
   const palette = {
     ...(accent ? { "--vibeui-commerce-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -174,10 +237,10 @@ export function Commerce010({
             <h2>{title}</h2>
 
             <fieldset>
-              <legend>Кому</legend>
+              <legend>{text.who}</legend>
               <div data-part="fields">
                 <label data-part="field" htmlFor="commerce-010-name">
-                  Имя и фамилия
+                  {text.name}
                   <input
                     id="commerce-010-name"
                     type="text"
@@ -185,7 +248,7 @@ export function Commerce010({
                   />
                 </label>
                 <label data-part="field" htmlFor="commerce-010-phone">
-                  Телефон
+                  {text.phone}
                   <input
                     id="commerce-010-phone"
                     type="tel"
@@ -197,7 +260,7 @@ export function Commerce010({
                   htmlFor="commerce-010-mail"
                   data-wide="true"
                 >
-                  Почта для чека
+                  {text.mail}
                   <input
                     id="commerce-010-mail"
                     type="email"
@@ -208,7 +271,7 @@ export function Commerce010({
             </fieldset>
 
             <fieldset>
-              <legend>Куда</legend>
+              <legend>{text.where}</legend>
               <div data-part="choices">
                 {ways.map((way, index) => (
                   <label key={way.value} data-part="choice">
@@ -232,7 +295,7 @@ export function Commerce010({
                   htmlFor="commerce-010-address"
                   data-wide="true"
                 >
-                  Адрес
+                  {text.address}
                   <input
                     id="commerce-010-address"
                     type="text"
@@ -243,7 +306,7 @@ export function Commerce010({
             </fieldset>
 
             <fieldset data-part="paying">
-              <legend>Чем</legend>
+              <legend>{text.how}</legend>
               <div data-part="choices">
                 <label data-part="choice">
                   <input
@@ -253,25 +316,23 @@ export function Commerce010({
                     defaultChecked
                   />
                   <span data-part="name">
-                    Картой онлайн
-                    <span data-part="hint">
-                      Спишем сразу, чек придёт на почту
-                    </span>
+                    {text.payCard}
+                    <span data-part="hint">{text.payCardHint}</span>
                   </span>
-                  <span data-part="cost">−1%</span>
+                  <span data-part="cost">{text.payCardCost}</span>
                 </label>
                 <label data-part="choice">
                   <input type="radio" name="commerce-010-pay" />
                   <span data-part="name">
-                    При получении
-                    <span data-part="hint">Наличными или картой курьеру</span>
+                    {text.payCash}
+                    <span data-part="hint">{text.payCashHint}</span>
                   </span>
-                  <span data-part="cost">0 ₽</span>
+                  <span data-part="cost">{text.payCashCost}</span>
                 </label>
               </div>
               <div data-part="card">
                 <label data-part="field" htmlFor="commerce-010-pan">
-                  Номер карты
+                  {text.pan}
                   <input
                     id="commerce-010-pan"
                     type="text"
@@ -279,7 +340,7 @@ export function Commerce010({
                   />
                 </label>
                 <label data-part="field" htmlFor="commerce-010-exp">
-                  Срок
+                  {text.expiry}
                   <input
                     id="commerce-010-exp"
                     type="text"
@@ -287,7 +348,7 @@ export function Commerce010({
                   />
                 </label>
                 <label data-part="field" htmlFor="commerce-010-cvc">
-                  CVC
+                  {text.cvc}
                   <input
                     id="commerce-010-cvc"
                     type="text"
@@ -298,7 +359,7 @@ export function Commerce010({
             </fieldset>
           </form>
 
-          <aside data-part="total" aria-label="Итог заказа">
+          <aside data-part="total" aria-label={text.summary}>
             <dl>
               {summary.map((entry) => (
                 <div key={entry.label} data-part="pair">
@@ -308,7 +369,7 @@ export function Commerce010({
               ))}
             </dl>
             <p data-part="grand">
-              <span>К оплате</span>
+              <span>{text.grand}</span>
               <b>{total}</b>
             </p>
             <button type="submit" form="commerce-010-form" data-part="pay">

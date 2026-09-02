@@ -30,16 +30,19 @@
             "нейтральные фон и рамку во всех тонах",
             "inline-flex и vertical-align:middle — плашка обязана стоять в строке текста, не ломая её",
             "белое пространство: white-space:nowrap, иначе статус из двух слов переносится посреди плашки",
-            "блок <style> внутри компонента — в нём вся палитра и размеры"
+            "блок <style> внутри компонента — в нём вся палитра и размеры",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "текст статуса через children",
             "tone: neutral, success, warning, danger, info",
             "size: md в тексте и карточках, sm в плотной таблице",
             "dot: выключите точку, если плашка используется как ярлык, а не как статус",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "background — фон плашки; пусто оставляет собственный нейтральный фон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не кладите внутрь ссылку или кнопку: это подпись, а не элемент управления.",
             "Не полагайтесь на цвет точки как на единственный признак — текст обязателен, иначе статус не прочитают ни дальтоник, ни скринридер.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -72,6 +75,12 @@
             "label": "Точка",
             "type": "boolean",
             "default": true
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -86,16 +95,19 @@
                 "the neutral background and border across every tone",
                 "inline-flex and vertical-align:middle — the badge has to sit in a line of text without breaking it",
                 "white-space:nowrap, otherwise a two-word status wraps inside the pill",
-                "the <style> block inside the component — it holds the palette and the sizes"
+                "the <style> block inside the component — it holds the palette and the sizes",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the status text through children",
                 "tone: neutral, success, warning, danger, info",
                 "size: md in text and cards, sm in a dense table",
                 "dot: turn it off when the badge is a tag rather than a status",
-                "outer spacing through className"
+                "outer spacing through className",
+                "background — the badge fill; empty keeps its own neutral background"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not put a link or a button inside: this is a label, not a control.",
                 "Never rely on the dot colour alone — the text is required, or neither a colour-blind reader nor a screen reader gets the status.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -115,11 +127,20 @@
               },
               "dot": {
                 "label": "Dot"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Status Badge"
+            "title": "Status Badge",
+            "preview": {
+              "props": {
+                "children": "Published"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["tone", "size", "dot", "background"]
       }
     },
     {
@@ -150,7 +171,9 @@
             "сдержанность в применении: залитая плашка на каждой строке таблицы превращает её в светофор",
             "тон атрибутом data-tone, а не отдельным компонентом на каждый цвет",
             "высоту 1.5rem и мелкий кегль — плашка не должна спорить с текстом рядом",
-            "white-space: nowrap: перенос внутри плашки читается как две плашки"
+            "white-space: nowrap: перенос внутри плашки читается как две плашки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "заливку как часть дизайна: у плашки нет пропа background — фон выводится из тона, и подмена его произвольным цветом рассыпает пару «фон — текст»"
           ],
           "adapt": [
             "текст плашки",
@@ -159,6 +182,7 @@
             "оттенки под свою палитру статусов"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Для таблиц берите badge-001: там цвет несёт только точка, и двадцать строк остаются читаемыми.",
             "Новый тон — это две переменные в правиле data-tone, а не новый компонент.",
             "Плашка не кликается: фильтры на плашках — badge-011.",
@@ -199,7 +223,9 @@
                 "restraint in use: a solid badge on every table row turns it into a traffic light",
                 "the tone as a data-tone attribute rather than a component per colour",
                 "the 1.5rem height and small type — a badge must not compete with the text beside it",
-                "white-space: nowrap: a wrapped badge reads as two badges"
+                "white-space: nowrap: a wrapped badge reads as two badges",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the fill as part of the design: the badge has no background prop — the fill is derived from the tone, and an arbitrary colour breaks the fill/text pair"
               ],
               "adapt": [
                 "the badge text",
@@ -208,6 +234,7 @@
                 "the hues for your status palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "For tables use badge-001: there only the dot carries colour and twenty rows stay readable.",
                 "A new tone is two variables in a data-tone rule, not a new component.",
                 "The badge is not clickable: filter chips are badge-011.",
@@ -227,9 +254,15 @@
                 "label": "Size"
               }
             },
-            "title": "Solid Tone Badge"
+            "title": "Solid Tone Badge",
+            "preview": {
+              "props": {
+                "children": "Paid"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["tone", "size"]
       }
     },
     {
@@ -260,15 +293,18 @@
             "табличные цифры — иначе счётчик дёргается при каждом обновлении",
             "порог «99+»: точная тысяча разорвёт вёрстку и ничего не уточнит",
             "настоящее число в aria-label, а видимый текст под aria-hidden",
-            "приглушение нуля вместо его скрытия там, где место в раскладке уже занято"
+            "приглушение нуля вместо его скрытия там, где место в раскладке уже занято",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "value и max",
             "label — что именно считаем",
             "tone — neutral, accent или danger",
-            "размер через переменную высоты"
+            "размер через переменную высоты",
+            "background — фон счётчика; пусто оставляет фон выбранного тона"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ноль лучше не показывать вовсе, если место в раскладке не резервируется: пустой счётчик отвлекает.",
             "Порог задают под ширину места: в узкой шапке разумнее «9+», а не «99+».",
             "Компонент не позиционируется поверх иконки: для маркера в углу возьмите badge-004.",
@@ -298,6 +334,12 @@
             "type": "select",
             "default": "danger",
             "options": ["neutral", "accent", "danger"]
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -311,15 +353,18 @@
                 "tabular figures — otherwise the counter twitches on every update",
                 "the \"99+\" cap: an exact thousand breaks the layout and clarifies nothing",
                 "the real number in aria-label with the visible text under aria-hidden",
-                "dimming a zero rather than hiding it where the layout already reserves the space"
+                "dimming a zero rather than hiding it where the layout already reserves the space",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "value and max",
                 "label — what is being counted",
                 "tone — neutral, accent or danger",
-                "the size through the height variable"
+                "the size through the height variable",
+                "background — the counter fill; empty keeps the fill of the chosen tone"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Better to render nothing at zero unless the layout reserves the slot: an empty counter distracts.",
                 "Pick the cap for the space you have: a narrow header wants \"9+\", not \"99+\".",
                 "This does not position itself over an icon: for a corner marker use badge-004.",
@@ -336,11 +381,20 @@
               },
               "tone": {
                 "label": "Tone"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Count Badge"
+            "title": "Count Badge",
+            "preview": {
+              "props": {
+                "label": "unread"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["tone", "background"]
       }
     },
     {
@@ -371,15 +425,19 @@
             "скрытый текст с role=\"status\": точка вслух не читается",
             "обёртку вместо самостоятельной плашки — маркер обязан следовать за элементом",
             "--vibeui-badge-004-cut, совпадающий с фоном под элементом",
-            "положение угла атрибутом, а не отдельными компонентами"
+            "положение угла атрибутом, а не отдельными компонентами",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "детей: кнопку, иконку или аватар",
             "label — что именно случилось",
             "tone — accent, danger или success",
-            "placement — top-right или top-left"
+            "placement — top-right или top-left",
+            "show — показывать ли маркер",
+            "background — цвет подложки под элементом, которым точка вырезает под собой кружок; пусто берёт цвет страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Точка сообщает «что-то есть», но не сколько: для числа возьмите badge-003.",
             "Не вешайте маркер на элемент без действия: пользователь ищет, куда нажать.",
             "Демонстрационный колокольчик рисуется только когда детей не передали — в проекте передавайте свой элемент.",
@@ -407,6 +465,18 @@
             "type": "select",
             "default": "top-right",
             "options": ["top-right", "top-left"]
+          },
+          {
+            "prop": "show",
+            "label": "Маркер",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -420,15 +490,19 @@
                 "the hidden text with role=\"status\": a dot is not read aloud",
                 "the wrapper instead of a standalone badge — the marker must follow its element",
                 "--vibeui-badge-004-cut matching the background behind the element",
-                "the corner as an attribute rather than separate components"
+                "the corner as an attribute rather than separate components",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the children: a button, icon or avatar",
                 "label — what happened",
                 "tone — accent, danger or success",
-                "placement — top-right or top-left"
+                "placement — top-right or top-left",
+                "show — whether the marker is shown",
+                "background — the surface colour behind the element that the dot cuts itself out of; empty takes the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A dot says \"there is something\", not how much: for a number use badge-003.",
                 "Do not mark an element with no action: people look for somewhere to click.",
                 "The demo bell renders only when no children are passed — pass your own element in a project.",
@@ -446,11 +520,23 @@
               },
               "placement": {
                 "label": "Corner"
+              },
+              "show": {
+                "label": "Marker"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Marker Dot"
+            "title": "Marker Dot",
+            "preview": {
+              "props": {
+                "label": "unread notifications"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["tone", "placement", "show", "background"]
       }
     },
     {
@@ -481,15 +567,19 @@
             "крестик из двух полосок вместо символа × — типографский знак сидит неровно",
             "обратимость: снятый фильтр должен возвращаться, а не исчезать бесследно",
             "отдельную кнопку вместо клика по всей плашке — иначе нельзя выбрать текст",
-            "фокусное кольцо на крестике: он достижим с клавиатуры"
+            "фокусное кольцо на крестике: он достижим с клавиатуры",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "label — название фильтра",
             "обработчик onRemove",
             "size — sm или md",
-            "цвета под свою палитру"
+            "цвета под свою палитру",
+            "removeText и undoText — подписи кнопок снятия и возврата; «{label}» в них подставляется названием фильтра",
+            "background — фон чипа; пусто оставляет собственный нейтральный фон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент прячет себя сам только ради демонстрации: в проекте список фильтров держит вызывающий код, и onRemove должен убирать плашку из него.",
             "Ряд из снимаемых плашек полезно дополнять кнопкой «Сбросить всё»: снимать десять фильтров по одному утомительно.",
             "Не ставьте снятие фильтра на hover: случайное наведение не должно менять выборку.",
@@ -510,6 +600,12 @@
             "type": "select",
             "default": "md",
             "options": ["sm", "md"]
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -523,15 +619,19 @@
                 "the cross drawn from two bars instead of the × glyph — the typographic sign sits off-centre",
                 "reversibility: a removed filter should come back, not vanish",
                 "a separate button rather than a click on the whole chip — otherwise text cannot be selected",
-                "the focus ring on the cross: it is keyboard-reachable"
+                "the focus ring on the cross: it is keyboard-reachable",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "label — the filter name",
                 "the onRemove handler",
                 "size — sm or md",
-                "the colours for your palette"
+                "the colours for your palette",
+                "removeText and undoText — the remove and restore button wording; “{label}” inside them is replaced with the filter name",
+                "background — the chip fill; empty keeps its own neutral background"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component hides itself only for the demo: in a project the caller owns the filter list and onRemove should drop the chip from it.",
                 "A row of removable chips deserves a \"Clear all\" button: removing ten filters one by one is tiring.",
                 "Never remove a filter on hover: an accidental pass must not change the selection.",
@@ -546,11 +646,22 @@
               },
               "size": {
                 "label": "Size"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Removable Chip"
+            "title": "Removable Chip",
+            "preview": {
+              "props": {
+                "label": "London",
+                "removeText": "Remove filter “{label}”",
+                "undoText": "Restore “{label}”"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["size", "background"]
       }
     },
     {
@@ -581,15 +692,19 @@
             "подпись словом рядом со знаком — знак уточняет, но не заменяет название",
             "знаки на бордюрах и градиенте вместо иконочного пакета",
             "приглушение архивной стадии: она не должна спорить с живыми",
-            "стадию атрибутом data-stage, а не набором компонентов"
+            "стадию атрибутом data-stage, а не набором компонентов",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "stage — draft, review, live или archived",
             "label — своя подпись стадии",
             "цвета знаков под свою палитру",
-            "названия стадий в таблице"
+            "названия стадий в таблице",
+            "stageText — подписи стадий: компонент несёт русские, проект подставляет свои",
+            "background — фон плашки; пусто оставляет собственный нейтральный фон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Стадий четыре: пятая добавляется правилом data-stage и строкой в таблице подписей.",
             "Не используйте плашку как кнопку смены стадии: смена состояния требует явного действия и подтверждения.",
             "В плотных таблицах разумнее badge-001 с точкой: там знаки съедают ширину.",
@@ -610,6 +725,12 @@
             "type": "text",
             "default": "На проверке",
             "maxLength": 24
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -623,15 +744,19 @@
                 "the word next to the mark — the mark qualifies the name, it does not replace it",
                 "marks built from borders and a gradient instead of an icon package",
                 "the muted archived stage: it must not compete with live ones",
-                "the stage as a data-stage attribute rather than a set of components"
+                "the stage as a data-stage attribute rather than a set of components",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "stage — draft, review, live or archived",
                 "label — your own stage wording",
                 "the mark colours for your palette",
-                "the stage names in the table"
+                "the stage names in the table",
+                "stageText — the stage wording: the component ships Russian, your project passes its own",
+                "background — the badge fill; empty keeps its own neutral background"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Four stages ship: a fifth is a data-stage rule plus a line in the label table.",
                 "Do not use the badge as a stage switcher: changing state deserves an explicit action.",
                 "In dense tables badge-001 with a dot is wiser: marks eat width.",
@@ -646,11 +771,26 @@
               "label": {
                 "label": "Label",
                 "default": "In review"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Stage Badge"
+            "title": "Stage Badge",
+            "preview": {
+              "props": {
+                "label": "In review",
+                "stageText": {
+                  "draft": "Draft",
+                  "review": "In review",
+                  "live": "Published",
+                  "archived": "Archived"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["stage", "background"]
       }
     },
     {
@@ -681,15 +821,18 @@
             "знак и стрелку рядом с цветом — в чёрно-белом виде цвет исчезает",
             "табличные цифры: в столбце показателей значения обязаны стоять ровно",
             "отдельное состояние для нуля: стрелка вверх при нулевом изменении врёт",
-            "период мелким шрифтом рядом — «+12%» без периода бессмысленно"
+            "период мелким шрифтом рядом — «+12%» без периода бессмысленно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "value и unit",
             "goodDirection — up или down",
             "period — за какой срок",
-            "цвета хорошего и плохого под свою палитру"
+            "цвета хорошего и плохого под свою палитру",
+            "background — фон плашки; пусто оставляет фон, выведенный из направления"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Значение приходит готовым: компонент ничего не считает и не округляет.",
             "Для процентных пунктов замените unit на «п. п.» — путать их с процентами нельзя.",
             "Цвет не заменяет подпись: рядом с плашкой должно стоять название показателя.",
@@ -718,6 +861,12 @@
             "type": "text",
             "default": "за неделю",
             "maxLength": 24
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -731,15 +880,18 @@
                 "the sign and arrow alongside colour — colour vanishes in black and white",
                 "tabular figures: in a column of metrics the values must line up",
                 "a distinct zero state: an up arrow on no change is a lie",
-                "the period in small type — \"+12%\" without a period says nothing"
+                "the period in small type — \"+12%\" without a period says nothing",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "value and unit",
                 "goodDirection — up or down",
                 "period — over what span",
-                "the good and bad colours for your palette"
+                "the good and bad colours for your palette",
+                "background — the badge fill; empty keeps the fill derived from the direction"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The value arrives ready: the component computes and rounds nothing.",
                 "For percentage points change the unit to \"pp\" — they must not be confused with percentages.",
                 "Colour does not replace a label: the metric's name belongs next to the badge.",
@@ -757,11 +909,20 @@
               "period": {
                 "label": "Period",
                 "default": "this week"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Trend Badge"
+            "title": "Trend Badge",
+            "preview": {
+              "props": {
+                "period": "this week"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["goodDirection", "background"]
       }
     },
     {
@@ -792,15 +953,18 @@
             "канал словом: у беты и альфы разная цена ошибки, цветом их путают",
             "отсутствие подписи у стабильного канала — писать «stable» незачем",
             "разделительный бордюр между частями вместо двух отдельных плашек",
-            "мелкий кегль: версия — служебная деталь, а не заголовок"
+            "мелкий кегль: версия — служебная деталь, а не заголовок",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "version — строка номера",
             "channel — stable, beta или alpha",
             "цвета каналов под свою палитру",
-            "радиус и высоту под соседние элементы"
+            "радиус и высоту под соседние элементы",
+            "background — фон плашки; пусто оставляет собственный нейтральный фон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Номер версии не разбирается и не сравнивается: это просто строка.",
             "Рядом с бетой полезна ссылка на список изменений: сама плашка ничего не объясняет.",
             "Для канала «канареечный» добавьте правило data-channel и не забудьте про подпись.",
@@ -821,6 +985,12 @@
             "type": "select",
             "default": "beta",
             "options": ["stable", "beta", "alpha"]
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -834,15 +1004,18 @@
                 "the channel as a word: beta and alpha carry different risk, colour blurs them",
                 "no label on the stable channel — there is nothing to announce",
                 "the divider between the segments instead of two separate badges",
-                "the small type: a version is a detail, not a heading"
+                "the small type: a version is a detail, not a heading",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "version — the number string",
                 "channel — stable, beta or alpha",
                 "the channel colours for your palette",
-                "the radius and height to match neighbours"
+                "the radius and height to match neighbours",
+                "background — the badge fill; empty keeps its own neutral background"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The version is never parsed or compared: it is just a string.",
                 "A changelog link belongs next to a beta: the badge explains nothing on its own.",
                 "For a canary channel add a data-channel rule and remember the label.",
@@ -857,11 +1030,15 @@
               },
               "channel": {
                 "label": "Channel"
+              },
+              "background": {
+                "label": "Background"
               }
             },
             "title": "Version Badge"
           }
-        }
+        },
+        "cardControls": ["channel", "background"]
       }
     },
     {
@@ -892,15 +1069,18 @@
             "счётчик вместо всех меток подряд — у записи их бывает десять",
             "полный список в aria-label группы и aria-hidden на плашках",
             "обрезку длинной метки многоточием, а не сжатие шрифта",
-            "полный перечень скрытых в title счётчика"
+            "полный перечень скрытых в title счётчика",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массив items и число visible",
             "label — как называется группа",
             "цвета плашек под свою палитру",
-            "высоту и радиус"
+            "высоту и радиус",
+            "background — фон плашек; пусто оставляет собственный нейтральный фон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "title показывается только при наведении мышью: на телефоне скрытые метки надо раскрывать иначе.",
             "Число видимых подбирают под ширину колонки, а не наугад: две метки в узкой таблице лучше четырёх обрезанных.",
             "Для снимаемых меток возьмите badge-005, здесь ряд только показывает.",
@@ -922,6 +1102,12 @@
             "type": "text",
             "default": "Метки",
             "maxLength": 24
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -935,15 +1121,18 @@
                 "the counter instead of every tag — a record can carry ten",
                 "the full list in the group's aria-label with aria-hidden on the chips",
                 "truncating a long tag with an ellipsis rather than shrinking the type",
-                "the hidden tags listed in the counter's title"
+                "the hidden tags listed in the counter's title",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the items array and the visible count",
                 "label — the group's name",
                 "the chip colours for your palette",
-                "the height and radius"
+                "the height and radius",
+                "background — the chip fill; empty keeps its own neutral background"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "title only appears on mouse hover: on a phone the hidden tags need another way out.",
                 "Pick the visible count for the column width, not at random: two tags beat four truncated ones.",
                 "For removable tags use badge-005; this row only displays.",
@@ -958,11 +1147,28 @@
               "label": {
                 "label": "Group name",
                 "default": "Tags"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Tag Row"
+            "title": "Tag Row",
+            "preview": {
+              "props": {
+                "label": "Tags",
+                "items": [
+                  "design",
+                  "frontend",
+                  "catalog",
+                  "urgent",
+                  "release",
+                  "docs"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["visible", "background"]
       }
     },
     {
@@ -993,15 +1199,20 @@
             "подпись словом рядом — полоски уточняют степень, но не называют её",
             "правило «первый уровень — самый высокий»: обратный порядок сбивает читателя",
             "aria-label с уровнем и общим числом ступеней",
-            "растущую высоту полосок: одинаковые читаются как индикатор связи, а не приоритета"
+            "растущую высоту полосок: одинаковые читаются как индикатор связи, а не приоритета",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "level — от 1 до 4",
             "label — своя подпись уровня",
             "total — сколько ступеней всего",
-            "цвета уровней под свою палитру"
+            "цвета уровней под свою палитру",
+            "levelText — подписи уровней и levelFallback для неизвестного уровня; «{level}» подставляется номером",
+            "ariaText — подпись для скринридера; «{label}», «{filled}» и «{total}» подставляются значениями",
+            "background — фон плашки; пусто оставляет собственный нейтральный фон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше четырёх ступеней люди не различают: пять полосок читаются как четыре.",
             "Приоритет и статус — разные вещи: не заменяйте одним другое.",
             "Высоты полосок прописаны на четыре позиции; для большего числа добавьте правила nth-child.",
@@ -1031,6 +1242,12 @@
             "default": 4,
             "min": 2,
             "max": 4
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1044,15 +1261,20 @@
                 "the word next to them — bars qualify the level, they do not name it",
                 "the rule that level one is the highest: reversing it confuses readers",
                 "the aria-label carrying the level and the total number of steps",
-                "the rising bar heights: equal bars read as signal strength, not priority"
+                "the rising bar heights: equal bars read as signal strength, not priority",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "level — 1 to 4",
                 "label — your own wording",
                 "total — how many steps exist",
-                "the level colours for your palette"
+                "the level colours for your palette",
+                "levelText — the level wording and levelFallback for an unknown level; “{level}” is replaced with the number",
+                "ariaText — the screen-reader label; “{label}”, “{filled}” and “{total}” are filled in",
+                "background — the badge fill; empty keeps its own neutral background"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "People cannot tell more than four steps apart: five bars read as four.",
                 "Priority and status are different things: do not substitute one for the other.",
                 "Bar heights are written for four positions; add nth-child rules for more.",
@@ -1070,11 +1292,28 @@
               },
               "total": {
                 "label": "Steps"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Priority Badge"
+            "title": "Priority Badge",
+            "preview": {
+              "props": {
+                "label": "Critical",
+                "levelText": {
+                  "1": "Critical",
+                  "2": "High",
+                  "3": "Normal",
+                  "4": "Low"
+                },
+                "levelFallback": "Level {level}",
+                "ariaText": "Priority: {label}, {filled} of {total}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["level", "total", "background"]
       }
     },
     {
@@ -1108,15 +1347,18 @@
             "стилизацию выбранного через селектор [aria-pressed=\"true\"] — состояние и вид не разъезжаются",
             "галочку у выбранной плашки: один цвет не различают при дальтонизме",
             "высоту 1.75rem: в фильтр надо попадать пальцем",
-            "перенос ряда на вторую строку — фильтров бывает много"
+            "перенос ряда на вторую строку — фильтров бывает много",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массив options и стартовый defaultValue",
             "обработчик onChange",
             "акцент через проп accent",
-            "форму: скруглённый прямоугольник вместо пилюли"
+            "форму: скруглённый прямоугольник вместо пилюли",
+            "background — фон плашек; пусто оставляет собственный нейтральный фон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент держит выбор у себя: связывать его с запросом и адресом должен вызывающий код.",
             "Взаимоисключающие варианты — это не фильтр, а переключатель: для них нужны radio, а не aria-pressed.",
             "Значение «Все» логично сбрасывает остальные: это правило добавляется в onChange вызывающего кода.",
@@ -1127,6 +1369,12 @@
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -1142,15 +1390,18 @@
                 "styling the selected state through [aria-pressed=\"true\"] — state and appearance cannot drift apart",
                 "the tick on a selected chip: colour alone fails colour-blind readers",
                 "the 1.75rem height: a filter has to be thumb-sized",
-                "wrapping to a second line — there are often many filters"
+                "wrapping to a second line — there are often many filters",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the options array and the initial defaultValue",
                 "the onChange handler",
                 "the accent through the accent prop",
-                "the shape: a rounded rectangle instead of a pill"
+                "the shape: a rounded rectangle instead of a pill",
+                "background — the chip fill; empty keeps its own neutral background"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component owns the selection: wiring it to a query or the URL is the caller's job.",
                 "Mutually exclusive options are not filters but a switch: those need radios, not aria-pressed.",
                 "An \"All\" option should clear the others: add that rule in your onChange.",
@@ -1161,11 +1412,21 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Filter Chips"
+            "title": "Filter Chips",
+            "preview": {
+              "props": {
+                "options": ["All", "Open", "Mine", "Urgent", "Archived"],
+                "defaultValue": ["Open"]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1196,15 +1457,19 @@
             "role=\"status\" с aria-live: начало процесса должно быть слышно",
             "оценку оставшегося времени — без неё ожидание читается как зависание",
             "превращение кольца в точку при prefers-reduced-motion: состояние важнее анимации",
-            "кольцо на бордюрах вместо картинки или пакета со спиннерами"
+            "кольцо на бордюрах вместо картинки или пакета со спиннерами",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "label — что происходит",
             "hint — сколько осталось",
             "акцент кольца под свою палитру",
-            "высоту и радиус плашки"
+            "высоту и радиус плашки",
+            "accent — цвет бегущей дуги кольца",
+            "background — фон плашки; пусто оставляет собственный нейтральный фон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Оценку времени лучше не выдумывать: «осталось ~20 с» без реального расчёта раздражает сильнее молчания.",
             "Для процесса длиннее минуты нужна полоса прогресса, а не плашка.",
             "Когда процесс закончился, плашку надо заменить результатом, а не убирать молча.",
@@ -1225,6 +1490,18 @@
             "type": "text",
             "default": "осталось ~20 с",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1238,15 +1515,19 @@
                 "role=\"status\" with aria-live: the start of the work has to be heard",
                 "the time estimate — without it waiting reads as a freeze",
                 "turning the ring into a dot under prefers-reduced-motion: the state matters more than the motion",
-                "the ring built from borders instead of an image or a spinner package"
+                "the ring built from borders instead of an image or a spinner package",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "label — what is happening",
                 "hint — how much is left",
                 "the ring accent for your palette",
-                "the badge height and radius"
+                "the badge height and radius",
+                "accent — the colour of the moving arc of the ring",
+                "background — the badge fill; empty keeps its own neutral background"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not invent the estimate: \"~20 s left\" with no real calculation annoys more than silence.",
                 "Work longer than a minute wants a progress bar, not a badge.",
                 "When the work ends, replace the badge with the result rather than removing it silently.",
@@ -1262,11 +1543,24 @@
               "hint": {
                 "label": "Estimate",
                 "default": "~20 s left"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Working Badge"
+            "title": "Working Badge",
+            "preview": {
+              "props": {
+                "label": "Sending",
+                "hint": "~20 s left"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1297,15 +1591,17 @@
             "flex:none на иконке — иначе длинная подпись сплющит знак в овал",
             "оптический сдвиг margin-top у знака: без него иконка садится ниже текста",
             "aria-hidden на иконке: она повторяет подпись и в доступном имени лишняя",
-            "собственную светлую подложку плашки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "набор знаков в карте ICONS",
             "выбранный знак через icon",
             "тон через tone",
-            "подпись через children"
+            "подпись через children",
+            "background — фон плашки; пусто оставляет собственный нейтральный фон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Знаков в наборе четыре: пятый добавляется путём в ICONS, а не импортом библиотеки иконок.",
             "Иконка не заменяет подпись: плашка без текста перестаёт читаться без наведения.",
             "Тон меняет оттенок и насыщенность, но не светлоту: контраст держится, пока она остаётся 0.34.",
@@ -1321,11 +1617,24 @@
             "options": ["check", "clock", "alert", "spark"]
           },
           {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "positive",
+            "options": ["neutral", "positive", "warning", "accent"]
+          },
+          {
             "prop": "children",
             "label": "Подпись",
             "type": "text",
             "default": "Оплачено",
             "maxLength": 24
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1339,15 +1648,17 @@
                 "flex:none on the icon — otherwise a long caption squashes the mark into an oval",
                 "the optical margin-top on the mark: without it the icon sits below the text",
                 "aria-hidden on the icon: it repeats the caption and is noise in the accessible name",
-                "the badge's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the set of marks in the ICONS map",
                 "the chosen mark through icon",
                 "the tone through tone",
-                "the caption through children"
+                "the caption through children",
+                "background — the badge fill; empty keeps its own neutral background"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There are four marks in the set: a fifth one is a path in ICONS, not an icon library import.",
                 "The icon does not replace the caption: a badge without text stops being readable without a hover.",
                 "The tone changes hue and chroma but not lightness: contrast holds as long as it stays at 0.34.",
@@ -1362,11 +1673,23 @@
               "children": {
                 "label": "Caption",
                 "default": "Paid"
+              },
+              "tone": {
+                "label": "Tone"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Icon Badge"
+            "title": "Icon Badge",
+            "preview": {
+              "props": {
+                "children": "Paid"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["icon", "tone", "background"]
       }
     },
     {
@@ -1384,7 +1707,7 @@
           "target": "@components/vibeui/badge-014.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-014-*. Серверный: хуков нет. Всё оформление выводится из одного числа: проп hue кладётся в --vibeui-badge-014-hue инлайновым стилем, а рамка, текст и подложка собираются функцией oklch с этим оттенком — палитру не нужно вести таблицей. Подложка намеренно не прозрачная: на тёмной карточке каталога прозрачный фон оставил бы тёмный текст на тёмном. Флаг dashed переводит рамку в пунктир и приглушает тон, поэтому черновик отличается от финального формой линии, а не только цветом.",
+      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-014-*. Серверный: хуков нет. Всё оформление выводится из одного числа: проп hue кладётся в --vibeui-badge-014-hue инлайновым стилем, а рамка, текст и подложка собираются функцией oklch с этим оттенком — палитру не нужно вести таблицей. Подложка намеренно не прозрачная, но своя в каждой ветке light-dark(): контур обязан лежать на тоне, а не на случайном фоне страницы, и в тёмной теме она темнее рамки. Флаг dashed переводит рамку в пунктир и приглушает тон, поэтому черновик отличается от финального формой линии, а не только цветом.",
       "meta": {
         "tags": ["badge", "outline", "hue", "draft"],
         "ai": {
@@ -1393,7 +1716,7 @@
           "summary": "Плашка-контур, у которой вся палитра выводится из одного оттенка, а пунктирная рамка помечает предварительное состояние. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-badge-014-* и не подменять её токенами вашей темы",
-            "светлую подложку вместо прозрачной: иначе тёмный текст пропадает на тёмном фоне",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
             "вывод всех цветов из одного оттенка: разведённые вручную цвета расходятся при первой правке",
             "пунктир как признак черновика: он читается там, где цвет не различается",
             "толщину рамки 1.5px — на 1px контур теряется рядом с залитыми соседями",
@@ -1403,9 +1726,11 @@
             "оттенок через hue",
             "пунктирную рамку через dashed",
             "подпись через children",
-            "высоту и радиус плашки в правилах блока"
+            "высоту и радиус плашки в правилах блока",
+            "background — подложка плашки; пусто оставляет собственную того же оттенка"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "hue — это число градусов, а не цвет: значение приводится по модулю 360, «#4f46e5» сюда не подойдёт.",
             "Насыщенность фиксирована: очень бледные фирменные оттенки придётся править в самих правилах.",
             "Пунктир и цвет несут один и тот же смысл — не назначайте им разные состояния.",
@@ -1427,6 +1752,18 @@
             "type": "text",
             "default": "Опубликовано",
             "maxLength": 24
+          },
+          {
+            "prop": "dashed",
+            "label": "Пунктир",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1436,7 +1773,7 @@
               "summary": "An outline badge whose whole palette is derived from a single hue, with a dashed border marking a provisional state. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-badge-014-* palette — do not swap it for your theme tokens",
-                "the light surface instead of a transparent one: otherwise dark text disappears on a dark background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
                 "deriving every colour from one hue: hand-picked colours drift apart at the first edit",
                 "the dashed border as the draft marker: it reads where colour does not",
                 "the 1.5px border width — at 1px the outline is lost next to filled neighbours",
@@ -1446,9 +1783,11 @@
                 "the hue through hue",
                 "the dashed border through dashed",
                 "the caption through children",
-                "the badge height and radius in the block rules"
+                "the badge height and radius in the block rules",
+                "background — the badge surface; empty keeps its own one in the same hue"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "hue is a number of degrees, not a colour: it is taken modulo 360, and \"#4f46e5\" will not work here.",
                 "Chroma is fixed: very pale brand hues have to be edited in the rules themselves.",
                 "The dash and the colour carry the same meaning — do not assign them different states.",
@@ -1463,11 +1802,23 @@
               "children": {
                 "label": "Caption",
                 "default": "Published"
+              },
+              "dashed": {
+                "label": "Dashed"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Outline Badge"
+            "title": "Outline Badge",
+            "preview": {
+              "props": {
+                "children": "Published"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["hue", "dashed", "background"]
       }
     },
     {
@@ -1498,15 +1849,18 @@
             "множители в calc — они и есть пропорция, ради которой шкала существует",
             "табличные цифры у счётчика: иначе плашка дёргается при каждом изменении числа",
             "align-self:stretch у разделителя, чтобы линия шла на всю высоту при любом размере",
-            "собственную светлую подложку плашки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "размер через size",
             "число в хвосте через count",
             "подпись через children",
-            "сами шаги шкалы в правилах data-size"
+            "сами шаги шкалы в правилах data-size",
+            "accent — цвет точки слева",
+            "background — фон плашки; пусто оставляет собственный нейтральный фон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Размеров три: четвёртый добавляется строкой с новым --unit, а не отдельным набором правил.",
             "Кегль sm получается 0.75rem — ниже опускаться не стоит, текст перестаёт читаться.",
             "count при нуле не рисуется: плашка сжимается, и в таблице это заметно — задайте минимум, если нужна стабильная ширина.",
@@ -1528,6 +1882,25 @@
             "default": 8,
             "min": 0,
             "max": 999
+          },
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "В работе",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1541,15 +1914,18 @@
                 "the multipliers in calc — they are the proportion the scale exists for",
                 "tabular figures in the counter: otherwise the badge jitters on every change",
                 "align-self:stretch on the divider so the line spans the full height at any size",
-                "the badge's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the size through size",
                 "the trailing number through count",
                 "the caption through children",
-                "the steps of the scale in the data-size rules"
+                "the steps of the scale in the data-size rules",
+                "accent — the colour of the leading dot",
+                "background — the badge fill; empty keeps its own neutral background"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There are three sizes: a fourth is one line with a new --unit, not a separate set of rules.",
                 "The sm type size lands at 0.75rem — going lower makes the text unreadable.",
                 "count is not drawn at zero: the badge shrinks, which shows in a table — set a minimum if you need a stable width.",
@@ -1563,11 +1939,27 @@
               },
               "count": {
                 "label": "Counter"
+              },
+              "children": {
+                "label": "Caption",
+                "default": "In progress"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Size Scale"
+            "title": "Size Scale",
+            "preview": {
+              "props": {
+                "children": "In progress"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["size", "count", "accent", "background"]
       }
     },
     {
@@ -1598,15 +1990,19 @@
             "rel=noreferrer noopener у внешних ссылок — target=_blank без него отдаёт доступ к окну",
             "скрытую подпись про новую вкладку: стрелка для скринридера не существует",
             "видимую обводку фокуса: плашка-ссылка обходится с клавиатуры наравне с кнопками",
-            "разные знаки у внутренней и внешней ссылки: они обещают разное поведение"
+            "разные знаки у внутренней и внешней ссылки: они обещают разное поведение",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "адрес через href",
             "подпись про новую вкладку через hint",
             "текст ссылки через children",
-            "оттенок и фон в переменных блока"
+            "оттенок и фон в переменных блока",
+            "accent — цвет обводки фокуса и рамки под курсором",
+            "background — фон плашки; пусто оставляет собственный нейтральный фон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Внешним считается только адрес со схемой http или https: протокольные ссылки вида //example.com распознаны не будут.",
             "Сдвиг стрелки — подтверждение наведения, а не украшение: при отключённой анимации он честно пропадает.",
             "В Next.js оберните компонент в Link или передайте href от роутера — компонент сам ничего не знает про навигацию.",
@@ -1627,6 +2023,25 @@
             "type": "text",
             "default": "Список изменений",
             "maxLength": 30
+          },
+          {
+            "prop": "hint",
+            "label": "Подпись про вкладку",
+            "type": "text",
+            "default": "откроется в новой вкладке",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1640,15 +2055,19 @@
                 "rel=noreferrer noopener on external links — target=_blank without it hands over window access",
                 "the hidden note about the new tab: the arrow does not exist for a screen reader",
                 "the visible focus ring: a link badge is operated from the keyboard like any button",
-                "the different marks for internal and external links: they promise different behaviour"
+                "the different marks for internal and external links: they promise different behaviour",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the address through href",
                 "the new-tab note through hint",
                 "the link text through children",
-                "the hue and surface in the block variables"
+                "the hue and surface in the block variables",
+                "accent — the colour of the focus ring and the hover border",
+                "background — the badge fill; empty keeps its own neutral background"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Only http and https addresses count as external: protocol-relative links like //example.com are not detected.",
                 "The arrow shift is hover feedback, not decoration: with animation off it honestly disappears.",
                 "In Next.js wrap the component in Link or pass a router href — the component knows nothing about navigation.",
@@ -1664,11 +2083,28 @@
               "children": {
                 "label": "Caption",
                 "default": "Changelog"
+              },
+              "hint": {
+                "label": "New-tab note",
+                "default": "opens in a new tab"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Link Badge"
+            "title": "Link Badge",
+            "preview": {
+              "props": {
+                "children": "Changelog",
+                "hint": "opens in a new tab"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1699,15 +2135,17 @@
             "удаление колец в prefers-reduced-motion, а не просто animation:none — иначе кольцо застывает раскрытым",
             "задержку между волнами: одновременные кольца превращаются в мигание",
             "текстовую подпись рядом с точкой: одна пульсирующая точка не сообщает, что именно новое",
-            "собственную светлую подложку плашки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "тон через tone",
             "число колец через waves",
             "подпись через children",
-            "скорость волны в правиле animation"
+            "скорость волны в правиле animation",
+            "background — фон плашки; пусто оставляет собственный нейтральный фон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Колец максимум три: больше сливаются в шум и перестают читаться как один сигнал.",
             "Метка привлекает внимание постоянно — снимайте её, когда новость перестала быть новостью, иначе она обесценится.",
             "Волна выходит за габарит плашки только визуально: раскладку она не двигает, но при overflow:hidden у родителя обрежется.",
@@ -1729,6 +2167,19 @@
             "default": 2,
             "min": 0,
             "max": 3
+          },
+          {
+            "prop": "children",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Новое",
+            "maxLength": 16
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1742,15 +2193,17 @@
                 "removing the rings under prefers-reduced-motion rather than just animation:none — otherwise a ring freezes expanded",
                 "the delay between waves: simultaneous rings turn into blinking",
                 "the text caption next to the dot: one pulsing dot does not say what is new",
-                "the badge's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the tone through tone",
                 "the number of rings through waves",
                 "the caption through children",
-                "the ripple speed in the animation rule"
+                "the ripple speed in the animation rule",
+                "background — the badge fill; empty keeps its own neutral background"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Three rings is the maximum: more merge into noise and stop reading as one signal.",
                 "The badge draws attention permanently — remove it once the news is no longer news, or it devalues.",
                 "The ripple leaves the badge box only visually: it does not move layout, but a parent with overflow:hidden clips it.",
@@ -1764,11 +2217,24 @@
               },
               "waves": {
                 "label": "Rings"
+              },
+              "children": {
+                "label": "Caption",
+                "default": "New"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "New Pulse"
+            "title": "New Pulse",
+            "preview": {
+              "props": {
+                "children": "New"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["tone", "waves", "background"]
       }
     },
     {
@@ -1799,16 +2265,20 @@
             "обёртку inline-flex без отступов: любой padding сдвинет хост относительно соседей",
             "вылет через transform в процентах: в пикселях он ломается при другом размере плашки",
             "кольцо box-shadow цвета подложки: без него плашка сливается с краем хоста",
-            "скрытую подпись со значением: aria-hidden у плашки означает, что число нужно объявить отдельно"
+            "скрытую подпись со значением: aria-hidden у плашки означает, что число нужно объявить отдельно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "содержимое плашки через content",
             "угол через position",
             "подпись для скринридера через label",
-            "хост — любым элементом в children"
+            "хост — любым элементом в children",
+            "hostLabel — подпись демонстрационного хоста",
+            "background — заливка плашки; пусто оставляет собственный сигнальный цвет"
           ],
           "notes": [
-            "Кольцо нарисовано белым: на цветной подложке подставьте её цвет в --vibeui-badge-018-ring, иначе появится светлый ободок.",
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Кольцо повторяет фон страницы через light-dark(): на цветной подложке подставьте её цвет в --vibeui-badge-018-ring, иначе вокруг плашки появится ободок.",
             "Хост по умолчанию — заглушка-аватар: в бою всегда передавайте свой элемент в children.",
             "Плашка выходит за габарит обёртки — родитель с overflow:hidden срежет ей угол.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -1828,6 +2298,26 @@
             "type": "select",
             "default": "top-right",
             "options": ["top-right", "top-left", "bottom-right", "bottom-left"]
+          },
+          {
+            "prop": "label",
+            "label": "Подпись для скринридера",
+            "type": "text",
+            "default": "новых уведомления",
+            "maxLength": 32
+          },
+          {
+            "prop": "hostLabel",
+            "label": "Подпись хоста",
+            "type": "text",
+            "default": "ЕК",
+            "maxLength": 4
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1841,16 +2331,20 @@
                 "the padding-free inline-flex wrapper: any padding shifts the host against its neighbours",
                 "the overhang through a percentage transform: in pixels it breaks at another badge size",
                 "the surface-coloured box-shadow ring: without it the badge merges into the host edge",
-                "the hidden caption with the value: aria-hidden on the badge means the number must be announced separately"
+                "the hidden caption with the value: aria-hidden on the badge means the number must be announced separately",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the badge content through content",
                 "the corner through position",
                 "the screen-reader caption through label",
-                "the host — any element passed as children"
+                "the host — any element passed as children",
+                "hostLabel — the caption of the demo host",
+                "background — the badge fill; empty keeps its own signal colour"
               ],
               "notes": [
-                "The ring is drawn white: on a coloured surface pass its colour into --vibeui-badge-018-ring or a light halo appears.",
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The ring follows the page background through light-dark(): on a coloured surface pass its colour into --vibeui-badge-018-ring or a halo appears around the badge.",
                 "The default host is a placeholder avatar: in production always pass your own element as children.",
                 "The badge sticks out of the wrapper box — a parent with overflow:hidden will clip its corner.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1864,11 +2358,29 @@
               },
               "position": {
                 "label": "Corner"
+              },
+              "label": {
+                "label": "Screen-reader caption",
+                "default": "new notifications"
+              },
+              "hostLabel": {
+                "label": "Host caption",
+                "default": "MK"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Corner Slot"
+            "title": "Corner Slot",
+            "preview": {
+              "props": {
+                "label": "new notifications",
+                "hostLabel": "MK"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["position", "background"]
       }
     },
     {
@@ -1899,7 +2411,9 @@
             "карту LEVELS: она единственное место, где живёт порядок тарифов",
             "ромбы под aria-hidden — уровень уже назван подписью, дублировать его нечем",
             "контраст подписи на градиенте: светлый текст на золотом фоне не читается",
-            "прямоугольный радиус вместо пилюли: тариф не статус, и форма это подсказывает"
+            "прямоугольный радиус вместо пилюли: тариф не статус, и форма это подсказывает",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "тёмный градиент business в обеих темах: это материал старшего тарифа, а не тёмная тема компонента — светлеть вместе со страницей он не должен"
           ],
           "adapt": [
             "тариф через plan",
@@ -1908,9 +2422,10 @@
             "число уровней в карте LEVELS"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Подпись не выводится из плана автоматически: label задаётся отдельно, иначе локализация упирается в код.",
             "Планов три: четвёртый требует и записи в LEVELS, и правила data-plan, иначе метка останется нейтральной.",
-            "Тёмная заливка business рассчитана на светлую страницу — на тёмной подложке проверьте контраст рамки.",
+            "Тёмная заливка business одинакова в светлой и тёмной теме намеренно: это решение дизайна, а не забытая ветка палитры.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -1941,7 +2456,9 @@
                 "the LEVELS map: it is the only place where the plan order lives",
                 "the diamonds under aria-hidden — the tier is already named by the caption",
                 "the caption contrast on the gradient: light text on gold is unreadable",
-                "the rectangular radius instead of a pill: a plan is not a status, and the shape says so"
+                "the rectangular radius instead of a pill: a plan is not a status, and the shape says so",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the dark business gradient in both themes: it is the material of the top tier, not a dark theme of the component — it must not lighten with the page"
               ],
               "adapt": [
                 "the plan through plan",
@@ -1950,9 +2467,10 @@
                 "the number of tiers in the LEVELS map"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The caption is not derived from the plan: label is passed separately, otherwise localisation hits the code.",
                 "There are three plans: a fourth needs both a LEVELS entry and a data-plan rule, or the badge stays neutral.",
-                "The dark business fill assumes a light page — check the border contrast on a dark surface.",
+                "The dark business fill is identical in light and dark on purpose: it is a design decision, not a forgotten palette branch.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Badge019 plan=\"business\" label=\"Business\" />"
@@ -1966,9 +2484,15 @@
                 "default": "Pro"
               }
             },
-            "title": "Plan Badge"
+            "title": "Plan Badge",
+            "preview": {
+              "props": {
+                "label": "Pro"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["plan"]
       }
     },
     {
@@ -1986,7 +2510,7 @@
           "target": "@components/vibeui/badge-020.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-020-*. Серверный: хуков нет. Состояние выводится из числа дней и порога warnAt и попадает в data-state, который меняет только --hue и --chroma — четыре тона держатся на двух переменных. Главное здесь не цвет: для каждого состояния своя фраза, поэтому срок понятен в чёрно-белом списке и вслух в скринридере. Число склоняется функцией plural по русским правилам, включая исключение для 11–14. Часы — inline SVG под aria-hidden.",
+      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-020-*. Серверный: хуков нет. Состояние выводится из числа дней и порога warnAt и попадает в data-state, который меняет только --hue и --chroma — четыре тона держатся на двух переменных. Главное здесь не цвет: для каждого состояния своя фраза, поэтому срок понятен в чёрно-белом списке и вслух в скринридере. Число склоняется через Intl.PluralRules: правила языка берутся из locale, а формы слова — из пропа dayForms, поэтому «11 дней» верно и без зашитых в код исключений. Часы — inline SVG под aria-hidden.",
       "meta": {
         "tags": ["badge", "expiry", "deadline", "threshold"],
         "ai": {
@@ -1996,18 +2520,21 @@
           "preserve": [
             "локальную палитру --vibeui-badge-020-* и не подменять её токенами вашей темы",
             "смену формулировки, а не только тона: цвет теряется первым при печати и дальтонизме",
-            "функцию plural с исключением для 11–14: «11 дня» читается как опечатка и подрывает доверие к числу",
+            "склонение через Intl.PluralRules, а не через if по остатку: «11 дня» читается как опечатка и подрывает доверие к числу",
             "отдельное состояние «сегодня»: «истекает через 0 дней» бессмысленно",
             "табличные цифры — иначе плашка дёргается при пересчёте срока",
-            "собственную светлую подложку плашки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "число дней через days",
             "порог тревоги через warnAt",
-            "формулировки в теле компонента",
-            "оттенки состояний в правилах data-state"
+            "формулировки через stateText: в шаблон подставляется {days} — число со словом",
+            "оттенки состояний в правилах data-state",
+            "dayForms и locale — формы слова «день» и правила склонения",
+            "background — фон плашки; пусто оставляет собственный нейтральный фон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент принимает готовое число дней, а не дату: разницу считает вызывающий код, иначе сервер и клиент разойдутся в часовых поясах.",
             "Отрицательное значение — это просрочка: знак не теряется, из него берётся модуль для фразы.",
             "Порог один: если нужны «месяц», «неделя», «день», добавляйте состояния, а не растягивайте warnAt.",
@@ -2030,6 +2557,19 @@
             "default": 7,
             "min": 1,
             "max": 90
+          },
+          {
+            "prop": "locale",
+            "label": "Локаль",
+            "type": "text",
+            "default": "ru",
+            "maxLength": 8
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2040,18 +2580,21 @@
               "preserve": [
                 "the local --vibeui-badge-020-* palette — do not swap it for your theme tokens",
                 "the change of wording, not just of tone: colour is the first thing lost in print and colour blindness",
-                "the plural function with the 11–14 exception: \"11 дня\" reads as a typo and undermines trust in the number",
+                "pluralisation through Intl.PluralRules rather than a remainder if-chain: \"11 дня\" reads as a typo and undermines trust in the number",
                 "the separate \"today\" state: \"expires in 0 days\" is meaningless",
                 "tabular figures — otherwise the badge jitters as the term is recomputed",
-                "the badge's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the number of days through days",
                 "the warning threshold through warnAt",
-                "the wording in the component body",
-                "the state hues in the data-state rules"
+                "the wording through stateText: the {days} placeholder receives the number with its word",
+                "the state hues in the data-state rules",
+                "dayForms and locale — the forms of the word \"day\" and the pluralisation rules",
+                "background — the badge fill; empty keeps its own neutral background"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component takes a ready day count, not a date: the caller computes the difference, otherwise server and client disagree on time zones.",
                 "A negative value means overdue: the sign is not lost, its absolute value feeds the phrase.",
                 "There is one threshold: if you need \"a month\", \"a week\", \"a day\", add states instead of stretching warnAt.",
@@ -2065,11 +2608,34 @@
               },
               "warnAt": {
                 "label": "Warning threshold"
+              },
+              "locale": {
+                "label": "Locale",
+                "default": "en"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Expiry Badge"
+            "title": "Expiry Badge",
+            "preview": {
+              "props": {
+                "locale": "en",
+                "stateText": {
+                  "expired": "Overdue by {days}",
+                  "today": "Expires today",
+                  "soon": "Expires in {days}",
+                  "calm": "{days} left"
+                },
+                "dayForms": {
+                  "one": "day",
+                  "other": "days"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["days", "warnAt", "background"]
       }
     },
     {
@@ -2099,8 +2665,8 @@
             "разную форму окружений: на пересжатом скриншоте цвет уходит, силуэт остаётся",
             "отсутствие рамки у prod: clip-path срезает обводку вместе с углом и оставляет рваный край",
             "моноширинный верхний регистр: метка обязана читаться как техническая, а не как статус записи",
-            "самый заметный тон именно у prod — ошибиться окружением дороже всего",
-            "собственную подложку плашки: без неё метка теряется на любой карточке"
+            "самый заметный тон именно у prod, причём одинаковый в светлой и тёмной теме: ошибиться окружением дороже всего",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "окружение через env",
@@ -2109,6 +2675,7 @@
             "величину среза в clip-path у prod"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Подпись не выводится из env: label задаётся отдельно, чтобы «прод» и «prod» были вопросом текста, а не кода.",
             "Окружений три: четвёртому нужна собственная форма, иначе идея «форма = смысл» рассыпается.",
             "clip-path режет и фон, и тень: не вешайте на prod внешнюю тень — она обрежется по тому же контуру.",
@@ -2141,8 +2708,8 @@
                 "the different shapes per environment: in a recompressed screenshot colour goes, the silhouette stays",
                 "the missing border on prod: clip-path would cut the outline along with the corner and leave a ragged edge",
                 "the monospace upper case: the badge must read as technical, not as a record status",
-                "the loudest tone on prod — mistaking the environment costs the most",
-                "the badge's own surface: without it the label is lost on any card"
+                "the loudest tone on prod, identical in light and dark: mistaking the environment costs the most",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the environment through env",
@@ -2151,6 +2718,7 @@
                 "the bevel size in the prod clip-path"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The caption is not derived from env: label is passed separately so wording stays a text question, not a code one.",
                 "There are three environments: a fourth needs its own shape, or the \"shape equals meaning\" idea falls apart.",
                 "clip-path cuts both background and shadow: do not give prod an outer shadow, it is clipped by the same contour.",
@@ -2167,9 +2735,15 @@
                 "default": "prod"
               }
             },
-            "title": "Env Badge"
+            "title": "Env Badge",
+            "preview": {
+              "props": {
+                "label": "prod"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["env"]
       }
     },
     {
@@ -2187,7 +2761,7 @@
           "target": "@components/vibeui/badge-022.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-022-*. Серверный: хуков нет. Пилюля разделена на две зоны с общим overflow:hidden, граница между ними — левая рамка правой половины, поэтому разделитель не требует отдельного узла. Обе половины набраны табличными цифрами и имеют одинаковый минимум ширины: при пересчёте плашка не меняет габарит и не дёргает соседей. Порог применяется только к левому числу — «9+ из 48» осмысленно, а «9+ из 9+» нет. Когда новых ноль, левая половина гаснет, но остаётся: исчезающая зона меняла бы ширину. Числа помечены aria-hidden, вся плашка объявляется одной фразой через aria-label.",
+      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-022-*. Серверный: хуков нет. Пилюля разделена на две зоны с общим overflow:hidden, граница между ними — левая рамка правой половины, поэтому разделитель не требует отдельного узла. Обе половины набраны табличными цифрами и имеют одинаковый минимум ширины: при пересчёте плашка не меняет габарит и не дёргает соседей. Порог применяется только к левому числу — «9+ из 48» осмысленно, а «9+ из 9+» нет. Когда новых ноль, левая половина гаснет, но остаётся: исчезающая зона меняла бы ширину. Числа помечены aria-hidden, вся плашка объявляется одной фразой из шаблона labelText через aria-label.",
       "meta": {
         "tags": ["badge", "counter", "unread", "threshold"],
         "ai": {
@@ -2200,18 +2774,21 @@
             "порог только на левом числе — «9+ из 9+» не сообщает ничего",
             "погасшую, но не исчезнувшую левую половину при нуле: пропажа зоны меняет ширину плашки",
             "aria-label на всей плашке: два числа подряд в скринридере звучат как «12 48»",
-            "собственную светлую подложку плашки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "число новых через unread",
             "общее число через total",
             "порог через max",
-            "акцентный цвет в переменной accent"
+            "accent — цвет левой половины счётчика",
+            "labelText — доступное имя; {unread} и {total} подставляются числами",
+            "background — фон плашки; пусто оставляет собственный нейтральный фон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "total не может быть меньше unread: компонент подтягивает его вверх, а не показывает противоречие.",
             "Порог по умолчанию 9, а не 99: две зоны занимают место, и трёхзначное число разносит пилюлю.",
-            "Формулировка aria-label жёстко на русском — переведите её при локализации, иначе скринридер смешает языки.",
+            "Доступное имя собирается из labelText: при локализации подставьте свой шаблон, иначе скринридер смешает языки.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -2225,12 +2802,39 @@
             "max": 999
           },
           {
+            "prop": "total",
+            "label": "Всего",
+            "type": "number",
+            "default": 48,
+            "min": 0,
+            "max": 999
+          },
+          {
             "prop": "max",
             "label": "Порог",
             "type": "number",
             "default": 9,
             "min": 1,
             "max": 99
+          },
+          {
+            "prop": "labelText",
+            "label": "Доступное имя",
+            "type": "text",
+            "default": "{unread} новых из {total}",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2244,18 +2848,21 @@
                 "the threshold on the left number only — \"9+ of 9+\" says nothing",
                 "the dimmed but not removed left half at zero: dropping the zone changes the badge width",
                 "the aria-label on the whole badge: two bare numbers read as \"12 48\" in a screen reader",
-                "the badge's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the unread count through unread",
                 "the total through total",
                 "the threshold through max",
-                "the accent colour in the accent variable"
+                "accent — the colour of the left half of the counter",
+                "labelText — the accessible name; {unread} and {total} receive the numbers",
+                "background — the badge fill; empty keeps its own neutral background"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "total cannot be smaller than unread: the component raises it instead of showing a contradiction.",
                 "The default threshold is 9, not 99: two zones take space and a three-digit number blows the pill apart.",
-                "The aria-label wording is hard-coded in Russian — translate it when localising, or the screen reader mixes languages.",
+                "The accessible name is built from labelText: pass your own template when localising, or the screen reader mixes languages.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Badge022 unread={12} total={48} max={9} />"
@@ -2266,11 +2873,30 @@
               },
               "max": {
                 "label": "Threshold"
+              },
+              "total": {
+                "label": "Total"
+              },
+              "labelText": {
+                "label": "Accessible name",
+                "default": "{unread} new of {total}"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Split Counter"
+            "title": "Split Counter",
+            "preview": {
+              "props": {
+                "labelText": "{unread} new of {total}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["unread", "total", "max", "background"]
       }
     },
     {
@@ -2301,15 +2927,17 @@
             "многоточие на внутреннем узле, а не на flex-контейнере — иначе строка режется без знака",
             "обрезку по середине для имён с общим началом: «feature/very-long-…» неотличимо от десятка соседей",
             "моноширинный шрифт: он делает ширину в ch предсказуемой",
-            "собственную светлую подложку плашки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "ширину в знаках через width",
             "режим обрезки через truncate",
             "текст через children",
-            "радиус и высоту плашки в правилах блока"
+            "радиус и высоту плашки в правилах блока",
+            "background — фон плашки; пусто оставляет собственный нейтральный фон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "children типизирован строкой: обрезка по середине работает с текстом, а не с деревом узлов.",
             "Единица ch считается по ширине нуля — в пропорциональном шрифте реальная строка окажется шире, поэтому у режима middle оставлен запас в четыре знака.",
             "title не показывается на тачскрине: если текст критичен, дайте его и рядом с плашкой.",
@@ -2331,6 +2959,19 @@
             "type": "select",
             "default": "middle",
             "options": ["end", "middle"]
+          },
+          {
+            "prop": "children",
+            "label": "Текст",
+            "type": "text",
+            "default": "feature/registry-badge-overflow",
+            "maxLength": 48
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2344,15 +2985,17 @@
                 "the ellipsis on the inner node rather than the flex container — otherwise the string is cut with no mark",
                 "middle truncation for names with a shared prefix: \"feature/very-long-…\" is indistinguishable from a dozen neighbours",
                 "the monospace font: it makes a width in ch predictable",
-                "the badge's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the width in characters through width",
                 "the truncation mode through truncate",
                 "the text through children",
-                "the badge radius and height in the block rules"
+                "the badge radius and height in the block rules",
+                "background — the badge fill; empty keeps its own neutral background"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "children is typed as a string: middle truncation works on text, not on a node tree.",
                 "The ch unit measures the width of a zero — in a proportional font the real string is wider, which is why middle mode keeps four characters of slack.",
                 "title is not shown on touch screens: if the text is critical, repeat it next to the badge.",
@@ -2366,11 +3009,24 @@
               },
               "truncate": {
                 "label": "Truncation"
+              },
+              "children": {
+                "label": "Text",
+                "default": "feature/registry-badge-overflow"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Truncating Badge"
+            "title": "Truncating Badge",
+            "preview": {
+              "props": {
+                "children": "feature/registry-badge-overflow"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["truncate", "width", "background"]
       }
     },
     {
@@ -2404,15 +3060,19 @@
             "details как flex-контейнер — иначе раскрытый хвост уезжает блоком под кнопку",
             "снятый маркер треугольника: два указателя на одну и ту же кнопку сбивают с толку",
             "видимую обводку фокуса у summary: это единственный интерактивный узел группы",
-            "собственные светлые подложки плашек: без них тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "список через items",
             "число видимых плашек через visible",
             "название группы через label",
-            "форму плашек — радиус и высоту в правилах блока"
+            "форму плашек — радиус и высоту в правилах блока",
+            "moreLabel и lessText — подписи свёрнутого и раскрытого хвоста",
+            "accent — цвет кнопки хвоста",
+            "background — фон плашек; пусто оставляет собственный нейтральный"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Раскрытие не анимируется: высота details неизвестна заранее, а прыгающая анимация хуже мгновенного показа.",
             "Ключом в списке служит сам текст — одинаковые метки в items дадут предупреждение React.",
             "На узкой ширине группа переносится на вторую строку: если ряд обязан остаться одним, ограничьте visible.",
@@ -2434,6 +3094,32 @@
             "type": "text",
             "default": "Технологии",
             "maxLength": 24
+          },
+          {
+            "prop": "moreLabel",
+            "label": "Подпись хвоста",
+            "type": "text",
+            "default": "Ещё {count} из списка «{label}»",
+            "maxLength": 48
+          },
+          {
+            "prop": "lessText",
+            "label": "Свернуть",
+            "type": "text",
+            "default": "Свернуть",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2447,15 +3133,19 @@
                 "details as a flex container — otherwise the expanded tail drops below the button as a block",
                 "the removed triangle marker: two pointers to the same button are confusing",
                 "the visible focus ring on summary: it is the only interactive node in the group",
-                "the badges' own light surfaces: without them the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the list through items",
                 "the number of visible badges through visible",
                 "the group name through label",
-                "the badge shape — radius and height in the block rules"
+                "the badge shape — radius and height in the block rules",
+                "moreLabel and lessText — the captions of the collapsed and expanded tail",
+                "accent — the colour of the tail button",
+                "background — the badge fill; empty keeps its own neutral one"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Expansion is not animated: the details height is unknown in advance, and a jumping animation is worse than an instant reveal.",
                 "The text itself is used as the key — duplicate labels in items produce a React warning.",
                 "On a narrow width the group wraps onto a second line: if the row must stay single, cap visible.",
@@ -2470,11 +3160,33 @@
               "label": {
                 "label": "Group name",
                 "default": "Stack"
+              },
+              "moreLabel": {
+                "label": "Tail caption",
+                "default": "{count} more from “{label}”"
+              },
+              "lessText": {
+                "label": "Collapse caption",
+                "default": "Collapse"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Overflow Group"
+            "title": "Overflow Group",
+            "preview": {
+              "props": {
+                "label": "Stack",
+                "moreLabel": "{count} more from “{label}”",
+                "lessText": "Collapse"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["visible", "accent", "background"]
       }
     },
     {
@@ -2492,12 +3204,12 @@
           "target": "@components/vibeui/badge-025.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-025-*. Серверный: хуков нет. Две зоны в одной рамке с общим overflow:hidden: тёмный ключ и светлое значение, граница между ними — смена фона, а не линия. Ключ помечен user-select:none, значение — user-select:all, поэтому щелчок по хешу выделяет ровно хеш, и в буфер не уезжает слово «commit» вместе с ним. Значение набрано моноширинным шрифтом и обрезается многоточием, полное — в title. Обе зоны под aria-hidden, вся плашка объявляется одной фразой через aria-label.",
+      "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-025-*. Серверный: хуков нет. Две зоны в одной рамке с общим overflow:hidden: тёмный ключ и светлое значение, граница между ними — смена фона, а не линия. Ключ помечен user-select:none, значение — user-select:all, поэтому щелчок по хешу выделяет ровно хеш, и в буфер не уезжает слово «commit» вместе с ним. Значение набрано моноширинным шрифтом и обрезается многоточием, полное — в title. Обе зоны под aria-hidden, вся плашка объявляется одной фразой через aria-label. Палитра на light-dark(): в тёмном контексте зоны меняют светлоту, а рамка становится светлее фона. Тон ключа переопределяется пропом accent, заливка значения — background.",
       "meta": {
         "tags": ["badge", "key-value", "metadata", "copy"],
         "ai": {
           "export": "Badge025",
-          "usage": "<Badge025 label=\"commit\" value=\"a1f9c02\" />",
+          "usage": "<Badge025 label=\"commit\" value=\"a1f9c02\" accent=\"\" />",
           "summary": "Плашка «ключ: значение», где выделяется и копируется только значение, а подпись остаётся невыделяемой. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-badge-025-* и не подменять её токенами вашей темы",
@@ -2505,15 +3217,19 @@
             "user-select:all у значения — ради него плашка и существует, хеш не ведут мышью по символам",
             "моноширинный шрифт значения: идентификаторы сравнивают глазами, и «0» с «O» обязаны различаться",
             "контраст тёмного ключа и светлого значения: без смены фона граница зон исчезает",
-            "aria-label на всей плашке: «commit a1f9c02» без двоеточия звучит как два разных слова"
+            "aria-label на всей плашке: «commit a1f9c02» без двоеточия звучит как два разных слова",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "подпись через label",
             "значение через value",
+            "тон ключа и рамки через accent",
+            "background — фон зоны значения; пусто оставляет собственную светлую заливку",
             "цвета зон в переменных key-bg и value-bg",
             "радиус и высоту плашки в правилах блока"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "user-select:all выделяет узел целиком: часть значения мышью выбрать уже не получится — это осознанный обмен.",
             "Копирование остаётся ручным: кнопки с буфером обмена здесь нет, иначе компоненту понадобился бы клиентский JS.",
             "Длинное значение обрезается многоточием — полное лежит в title, но на тачскрине подсказки нет.",
@@ -2534,6 +3250,18 @@
             "type": "text",
             "default": "a1f9c02",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Тон ключа",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон значения",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2547,21 +3275,25 @@
                 "user-select:all on the value — the badge exists for it, nobody drags a mouse across a hash",
                 "the monospace value: identifiers are compared by eye, and \"0\" must differ from \"O\"",
                 "the contrast between the dark key and the light value: without the background change the zone boundary disappears",
-                "the aria-label on the whole badge: \"commit a1f9c02\" without a colon sounds like two unrelated words"
+                "the aria-label on the whole badge: \"commit a1f9c02\" without a colon sounds like two unrelated words",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the caption through label",
                 "the value through value",
+                "the key and border tone through accent",
+                "background — the fill of the value zone; empty keeps its own light fill",
                 "the zone colours in the key-bg and value-bg variables",
                 "the badge radius and height in the block rules"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "user-select:all selects the node as a whole: picking part of the value with the mouse is no longer possible — that is a deliberate trade.",
                 "Copying stays manual: there is no clipboard button here, otherwise the component would need client JS.",
                 "A long value is cut with an ellipsis — the full one lives in title, but touch screens have no tooltip.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
-              "usage": "<Badge025 label=\"commit\" value=\"a1f9c02\" />"
+              "usage": "<Badge025 label=\"commit\" value=\"a1f9c02\" accent=\"\" />"
             },
             "controls": {
               "label": {
@@ -2571,11 +3303,24 @@
               "value": {
                 "label": "Value",
                 "default": "a1f9c02"
+              },
+              "accent": {
+                "label": "Key tone"
+              },
+              "background": {
+                "label": "Value background"
               }
             },
-            "title": "Key Value Badge"
+            "title": "Key Value Badge",
+            "preview": {
+              "props": {
+                "label": "commit",
+                "value": "a1f9c02"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

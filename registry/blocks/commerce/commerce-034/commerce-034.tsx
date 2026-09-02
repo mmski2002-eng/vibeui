@@ -22,7 +22,18 @@ export type Commerce034Props = {
   schedule?: Commerce034Payment[]
   warning?: string
   cta?: string
+  /** Строка над планами: {amount} подставляет сумму заказа. */
+  sumText?: string
+  /** Подпись группы планов. */
+  plansLegend?: string
+  /** Подписи переплаты: {amount} подставляет её размер. */
+  overpayText?: string
+  noOverpayText?: string
+  /** Локаль форматирования сумм. */
+  numberLocale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -35,18 +46,23 @@ export type Commerce034Props = {
 // с датами: «4 платежа» без дат не даёт понять, когда снимут деньги.
 const STYLES = `
 :where([data-vibeui-block="commerce-034"]){
---vibeui-commerce-034-bg:oklch(1 0 0);
---vibeui-commerce-034-fg:oklch(0.21 0.014 265);
---vibeui-commerce-034-muted:oklch(0.55 0.014 265);
---vibeui-commerce-034-border:oklch(0.91 0.006 265);
---vibeui-commerce-034-soft:oklch(0.975 0.004 265);
---vibeui-commerce-034-accent:oklch(0.48 0.16 285);
---vibeui-commerce-034-warn:oklch(0.98 0.03 85);
+--vibeui-commerce-034-bg:transparent;
+--vibeui-commerce-034-radius:0;
+--vibeui-commerce-034-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-034-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-034-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-commerce-034-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-commerce-034-accent:light-dark(oklch(0.48 0.16 285),oklch(0.75 0.14 285));
+--vibeui-commerce-034-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 285));
+--vibeui-commerce-034-warn:light-dark(oklch(0.98 0.03 85),oklch(0.33 0.05 85));
+--vibeui-commerce-034-free:light-dark(oklch(0.5 0.13 150),oklch(0.78 0.14 150));
+--vibeui-commerce-034-cost:light-dark(oklch(0.55 0.15 40),oklch(0.79 0.13 45));
 --vibeui-commerce-034-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 [data-vibeui-block="commerce-034"]{
 box-sizing:border-box;background:var(--vibeui-commerce-034-bg);
+border-radius:var(--vibeui-commerce-034-radius);
 color:var(--vibeui-commerce-034-fg);font-family:var(--vibeui-commerce-034-sans);
 }
 [data-vibeui-block="commerce-034"] *{box-sizing:border-box}
@@ -83,8 +99,8 @@ display:block;margin:0.25rem 0 0.125rem;font-size:1.375rem;font-weight:750;lette
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="commerce-034"] [data-part="per"] small{font-size:0.75rem;font-weight:600;color:var(--vibeui-commerce-034-muted)}
-[data-vibeui-block="commerce-034"] [data-part="over"]{display:block;font-size:0.75rem;font-weight:650;color:oklch(0.5 0.13 150)}
-[data-vibeui-block="commerce-034"] [data-part="over"][data-cost="yes"]{color:oklch(0.55 0.15 40)}
+[data-vibeui-block="commerce-034"] [data-part="over"]{display:block;font-size:0.75rem;font-weight:650;color:var(--vibeui-commerce-034-free)}
+[data-vibeui-block="commerce-034"] [data-part="over"][data-cost="yes"]{color:var(--vibeui-commerce-034-cost)}
 [data-vibeui-block="commerce-034"] [data-part="note"]{display:block;margin-top:0.375rem;font-size:0.6875rem;line-height:1.45;color:var(--vibeui-commerce-034-muted)}
 [data-vibeui-block="commerce-034"] h3{
 margin:1.25rem 0 0.5rem;font-size:0.6875rem;font-weight:700;letter-spacing:0.07em;
@@ -101,7 +117,7 @@ justify-self:center;align-self:center;width:1.5rem;height:1.5rem;border-radius:9
 background:var(--vibeui-commerce-034-soft);font-size:0.6875rem;font-weight:700;color:var(--vibeui-commerce-034-muted);
 }
 [data-vibeui-block="commerce-034"] [data-part="row"]:first-child [data-part="num"]{
-background:var(--vibeui-commerce-034-accent);color:oklch(1 0 0);
+background:var(--vibeui-commerce-034-accent);color:var(--vibeui-commerce-034-on-accent);
 }
 [data-vibeui-block="commerce-034"] [data-part="when"]{margin:0;font-size:0.875rem;font-weight:600}
 [data-vibeui-block="commerce-034"] [data-part="hint"]{margin:0.0625rem 0 0;font-size:0.6875rem;color:var(--vibeui-commerce-034-muted)}
@@ -112,7 +128,7 @@ font-size:0.75rem;line-height:1.55;
 }
 [data-vibeui-block="commerce-034"] [data-part="cta"]{
 margin-top:1rem;width:100%;appearance:none;border:0;cursor:pointer;height:3rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-034-accent);color:oklch(1 0 0);font:inherit;font-size:1rem;font-weight:700;
+background:var(--vibeui-commerce-034-accent);color:var(--vibeui-commerce-034-on-accent);font:inherit;font-size:1rem;font-weight:700;
 }
 [data-vibeui-block="commerce-034"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-commerce-034-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-034"] *{animation:none!important;transition:none!important}}
@@ -149,8 +165,30 @@ const DEFAULT_SCHEDULE: Commerce034Payment[] = [
   { date: "16 апреля", note: "последний платёж" },
 ]
 
-function money(value: number, currency: string) {
-  return `${Math.round(value).toLocaleString("ru-RU")} ${currency}`
+function money(value: number, currency: string, locale: string) {
+  return `${Math.round(value).toLocaleString(locale)} ${currency}`
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -166,17 +204,32 @@ export function Commerce034({
   schedule = DEFAULT_SCHEDULE,
   warning = "Рассрочку оформляет банк-партнёр: он проверит данные и может отказать. Просрочка платежа попадает в кредитную историю, а товар при этом остаётся у вас.",
   cta = "Оформить рассрочку",
+  sumText = "Сумма заказа {amount} · выберите, как её разделить",
+  plansLegend = "Способ оплаты",
+  overpayText = "переплата {amount}",
+  noOverpayText = "без переплаты",
+  numberLocale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Commerce034Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-034-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-034-bg": background,
+          "--vibeui-commerce-034-radius": "1.25rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
   const chosen = plans[1] ?? plans[0]
   const part = chosen ? (amount * (1 + chosen.overpay)) / chosen.parts : amount
+  // Сумма в строке выделена жирным, поэтому шаблон разрезается по {amount}.
+  const [sumHead, sumTail] = sumText.split("{amount}")
 
   return (
     <>
@@ -192,12 +245,13 @@ export function Commerce034({
         <div data-part="shell">
           <h2>{title}</h2>
           <p data-part="sum">
-            Сумма заказа <b>{money(amount, currency)}</b> · выберите, как её
-            разделить
+            {sumHead}
+            <b>{money(amount, currency, numberLocale)}</b>
+            {sumTail ?? ""}
           </p>
 
           <fieldset>
-            <legend>Способ оплаты</legend>
+            <legend>{plansLegend}</legend>
             <div data-part="plans">
               {plans.map((plan) => {
                 const total = amount * (1 + plan.overpay)
@@ -213,7 +267,7 @@ export function Commerce034({
                     <span data-part="face">
                       <span data-part="label">{plan.label}</span>
                       <span data-part="per">
-                        {money(total / plan.parts, currency)}
+                        {money(total / plan.parts, currency, numberLocale)}
                         {plan.parts > 1 ? <small> × {plan.parts}</small> : null}
                       </span>
                       <span
@@ -221,8 +275,11 @@ export function Commerce034({
                         data-cost={plan.overpay > 0 ? "yes" : "no"}
                       >
                         {plan.overpay > 0
-                          ? `переплата ${money(total - amount, currency)}`
-                          : "без переплаты"}
+                          ? overpayText.replace(
+                              "{amount}",
+                              money(total - amount, currency, numberLocale),
+                            )
+                          : noOverpayText}
                       </span>
                       <span data-part="note">{plan.note}</span>
                     </span>
@@ -243,7 +300,7 @@ export function Commerce034({
                   <p data-part="when">{payment.date}</p>
                   {payment.note ? <p data-part="hint">{payment.note}</p> : null}
                 </span>
-                <p data-part="money">{money(part, currency)}</p>
+                <p data-part="money">{money(part, currency, numberLocale)}</p>
               </li>
             ))}
           </ol>

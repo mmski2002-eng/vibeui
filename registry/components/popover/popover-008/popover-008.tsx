@@ -11,6 +11,13 @@ export type Popover008Props = Omit<
   nestedLabel?: string
   /** Уровни доступа во вложенном поповере. */
   levels?: string[]
+  /** Подпись первого пункта первой панели. */
+  copyLabel?: string
+  /** Подпись второго пункта первой панели. */
+  inviteLabel?: string
+  accent?: string
+  /** Подложка панелей и кнопки. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: поповер внутри поповера. Кнопка второго уровня лежит внутри
@@ -18,12 +25,13 @@ export type Popover008Props = Omit<
 // родителя при открытии ребёнка; Escape закрывает их по одному, изнутри наружу.
 const STYLES = `
 :where([data-vibeui-block="popover-008"]){
---vibeui-popover-008-bg:oklch(1 0 0);
---vibeui-popover-008-fg:oklch(0.23 0.014 265);
---vibeui-popover-008-muted:oklch(0.54 0.014 265);
---vibeui-popover-008-border:oklch(0.9 0.006 265);
---vibeui-popover-008-hover:oklch(0.965 0.004 265);
---vibeui-popover-008-accent:oklch(0.55 0.16 275);
+--vibeui-popover-008-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-popover-008-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-popover-008-muted:light-dark(oklch(0.54 0.014 265),oklch(0.71 0.012 265));
+--vibeui-popover-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-popover-008-hover:light-dark(oklch(0.965 0.004 265),oklch(0.27 0.014 265));
+--vibeui-popover-008-accent:light-dark(oklch(0.55 0.16 275),oklch(0.74 0.14 275));
+--vibeui-popover-008-shadow:light-dark(oklch(0.2 0.02 265 / 60%),oklch(0.02 0.01 265 / 72%));
 --vibeui-popover-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="popover-008"]{
@@ -49,7 +57,7 @@ position:fixed;margin:0;padding:0.5rem;
 box-sizing:border-box;
 border:1px solid var(--vibeui-popover-008-border);border-radius:0.875rem;
 background:var(--vibeui-popover-008-bg);color:inherit;
-box-shadow:0 24px 52px -30px oklch(0.2 0.02 265 / 60%);
+box-shadow:0 24px 52px -30px var(--vibeui-popover-008-shadow);
 }
 [data-vibeui-block="popover-008"] [data-part="panel"]{
 width:min(16rem,100vw - 2rem);
@@ -93,6 +101,28 @@ flex:none;width:1.125rem;text-align:center;color:var(--vibeui-popover-008-muted)
 const DEFAULT_LEVELS = ["Только чтение", "Комментирование", "Редактирование"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поповер с вложенным вторым поповером: родитель не закрывается при открытии ребёнка.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -101,11 +131,25 @@ export function Popover008({
   title = "Доступ к документу",
   nestedLabel = "Уровень доступа",
   levels = DEFAULT_LEVELS,
+  copyLabel = "Скопировать ссылку",
+  inviteLabel = "Пригласить по почте",
+  accent,
+  background = "",
   className,
   style,
   ...props
 }: Popover008Props) {
   const id = useId().replace(/:/g, "")
+  const palette = {
+    ...(accent ? { "--vibeui-popover-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-popover-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -116,7 +160,7 @@ export function Popover008({
         {...props}
         data-vibeui-block="popover-008"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <button type="button" data-part="trigger" popoverTarget={`${id}-panel`}>
           <span aria-hidden="true">↗</span>
@@ -133,13 +177,13 @@ export function Popover008({
             <span data-part="mark" aria-hidden="true">
               ⧉
             </span>
-            Скопировать ссылку
+            {copyLabel}
           </button>
           <button type="button" data-part="row">
             <span data-part="mark" aria-hidden="true">
               ✉
             </span>
-            Пригласить по почте
+            {inviteLabel}
           </button>
           <button
             type="button"

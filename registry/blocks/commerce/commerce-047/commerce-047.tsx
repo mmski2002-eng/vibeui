@@ -26,6 +26,8 @@ export type Commerce047Props = {
   edits?: Commerce047Edit[]
   reasons?: Commerce047Reason[]
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -39,13 +41,14 @@ export type Commerce047Props = {
 // главный экран данными.
 const STYLES = `
 :where([data-vibeui-block="commerce-047"]){
---vibeui-commerce-047-bg:oklch(0.995 0.003 95);
---vibeui-commerce-047-card:oklch(1 0 0);
---vibeui-commerce-047-fg:oklch(0.22 0.02 60);
---vibeui-commerce-047-muted:oklch(0.54 0.02 60);
---vibeui-commerce-047-border:oklch(0.9 0.01 70);
---vibeui-commerce-047-soft:oklch(0.97 0.012 80);
---vibeui-commerce-047-accent:oklch(0.52 0.14 35);
+--vibeui-commerce-047-bg:transparent;
+--vibeui-commerce-047-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 70));
+--vibeui-commerce-047-fg:light-dark(oklch(0.22 0.02 60),oklch(0.93 0.008 70));
+--vibeui-commerce-047-muted:light-dark(oklch(0.54 0.02 60),oklch(0.72 0.014 70));
+--vibeui-commerce-047-border:light-dark(oklch(0.9 0.01 70),oklch(0.36 0.014 70));
+--vibeui-commerce-047-soft:light-dark(oklch(0.97 0.012 80),oklch(0.29 0.016 70));
+--vibeui-commerce-047-accent:light-dark(oklch(0.52 0.14 35),oklch(0.74 0.14 40));
+--vibeui-commerce-047-onaccent:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 40));
 --vibeui-commerce-047-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -62,7 +65,7 @@ padding:1.5rem 1.25rem;margin-bottom:1.25rem;
 }
 [data-vibeui-block="commerce-047"] [data-part="badge"]{
 display:inline-flex;align-items:center;gap:0.375rem;height:1.625rem;padding:0 0.625rem;
-border-radius:9999px;background:var(--vibeui-commerce-047-accent);color:oklch(0.99 0 0);
+border-radius:9999px;background:var(--vibeui-commerce-047-accent);color:var(--vibeui-commerce-047-onaccent);
 font-size:0.6875rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
 }
 [data-vibeui-block="commerce-047"] h2{margin:0.75rem 0 0.5rem;font-size:clamp(1.5rem,5cqi,2.5rem);line-height:1.08;letter-spacing:-0.025em;max-width:22ch}
@@ -70,7 +73,7 @@ font-size:0.6875rem;font-weight:700;letter-spacing:0.06em;text-transform:upperca
 [data-vibeui-block="commerce-047"] [data-part="row"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.625rem;margin-top:1.125rem}
 [data-vibeui-block="commerce-047"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;height:2.75rem;padding:0 1.375rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-047-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:650;
+background:var(--vibeui-commerce-047-accent);color:var(--vibeui-commerce-047-onaccent);font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="commerce-047"] [data-part="alt"]{
 appearance:none;cursor:pointer;height:2.75rem;padding:0 1.25rem;border-radius:0.875rem;
@@ -177,6 +180,28 @@ const DEFAULT_REASONS: Commerce047Reason[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Главная магазина с сезонными подборками: сезон объявлен сроком, а размер
  * плитки задаётся данными. Один файл, ноль зависимостей, собственная палитра.
  */
@@ -191,11 +216,18 @@ export function Commerce047({
   edits = DEFAULT_EDITS,
   reasons = DEFAULT_REASONS,
   accent,
+  background = "",
   className,
   style,
 }: Commerce047Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-047-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-047-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

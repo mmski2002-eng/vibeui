@@ -18,6 +18,13 @@ export type Commerce078Props = {
   toNext?: string
   progress?: number
   keepUntil?: string
+  pointsLabel?: string
+  spentLabel?: string
+  toNextLabel?: string
+  progressFrom?: string
+  /** Строка прогресса: {percent} — доля до следующего уровня. */
+  progressTemplate?: string
+  progressAria?: string
   levelsTitle?: string
   levels?: Commerce078Level[]
   currentLabel?: string
@@ -25,6 +32,8 @@ export type Commerce078Props = {
   rulesTitle?: string
   rules?: string[]
   accent?: string
+  /** Оттенок тёмной плиты. Светлой её сделать нельзя: текст рассчитан на тёмный фон. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -36,6 +45,11 @@ export type Commerce078Props = {
 // без неё «золотой статус» читается как навсегда, и его потеря выглядит
 // обманом. Уровни сравниваются колонками с одинаковым набором строк,
 // текущий помечен словом и рамкой, а не только фоном.
+//
+// Палитра намеренно одноцветная: тёмная плита с золотым акцентом — это и есть
+// вид клубной карты, и блок остаётся тёмным на светлой странице тоже. Поэтому
+// light-dark() здесь не применяется, а background меняет оттенок плиты, но не
+// делает её светлой.
 const STYLES = `
 :where([data-vibeui-block="commerce-078"]){
 --vibeui-commerce-078-bg:oklch(0.21 0.02 285);
@@ -163,6 +177,12 @@ export function Commerce078({
   toNext = "51 700 ₽",
   progress = 74,
   keepUntil = "Уровень сохраняется до 30 апреля 2025 года. Чтобы удержать его, за 12 месяцев нужно набрать 60 000 ₽ — сейчас у вас 148 300 ₽.",
+  pointsLabel = "Баллов на счету",
+  spentLabel = "Покупок за год",
+  toNextLabel = "До золота",
+  progressFrom = "Серебро",
+  progressTemplate = "{percent}% до золота",
+  progressAria = "Прогресс до следующего уровня",
   levelsTitle = "Что дают уровни",
   levels = DEFAULT_LEVELS,
   currentLabel = "Ваш уровень",
@@ -170,13 +190,16 @@ export function Commerce078({
   rulesTitle = "Правила начисления",
   rules = DEFAULT_RULES,
   accent,
+  background = "",
   className,
   style,
 }: Commerce078Props) {
   const clamped = Math.max(0, Math.min(100, progress))
+  const [percentBefore, percentAfter = ""] = progressTemplate.split("{percent}")
   const palette = {
     "--vibeui-commerce-078-done": `${clamped}%`,
     ...(accent ? { "--vibeui-commerce-078-accent": accent } : null),
+    ...(background ? { "--vibeui-commerce-078-bg": background } : null),
     ...style,
   } as CSSProperties
 
@@ -198,24 +221,26 @@ export function Commerce078({
 
           <div data-part="stats">
             <div data-part="stat">
-              <span data-part="slabel">Баллов на счету</span>
+              <span data-part="slabel">{pointsLabel}</span>
               <span data-part="svalue">{points}</span>
             </div>
             <div data-part="stat">
-              <span data-part="slabel">Покупок за год</span>
+              <span data-part="slabel">{spentLabel}</span>
               <span data-part="svalue">{spent}</span>
             </div>
             <div data-part="stat">
-              <span data-part="slabel">До золота</span>
+              <span data-part="slabel">{toNextLabel}</span>
               <span data-part="svalue">{toNext}</span>
             </div>
           </div>
 
           <div data-part="progress">
             <p data-part="ptop">
-              <span>Серебро</span>
+              <span>{progressFrom}</span>
               <span>
-                <strong>{clamped}%</strong> до золота
+                {percentBefore}
+                <strong>{clamped}</strong>
+                {percentAfter}
               </span>
             </p>
             <div
@@ -224,7 +249,7 @@ export function Commerce078({
               aria-valuenow={clamped}
               aria-valuemin={0}
               aria-valuemax={100}
-              aria-label="Прогресс до следующего уровня"
+              aria-label={progressAria}
             >
               <span data-part="fill" />
             </div>

@@ -18,7 +18,23 @@ export type Solutions031Props = {
   hint?: string
   batches?: Solutions031Batch[]
   causes?: Solutions031Cause[]
+  /** Подписи плиток сводки: checked, defects, rate. */
+  summaryText?: Record<string, string>
+  /** Заголовки колонок таблицы партий. */
+  columnText?: Record<string, string>
+  /** Слова решений: accept, rework, scrap. */
+  decisionText?: Record<string, string>
+  /** Скрытая подпись полосы брака. {number} — номер партии. */
+  rateLabel?: string
+  paretoHeading?: string
+  /** Скрытая подпись столбца Парето. {name}, {count} и {percent}. */
+  causeLabel?: string
+  /** Нарастающий итог под столбцом. {percent} — доля. */
+  cumulativeText?: string
+  footNote?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -35,15 +51,16 @@ export type Solutions031Props = {
 // перепутать при дальтонизме.
 const STYLES = `
 :where([data-vibeui-block="solutions-031"]){
---vibeui-solutions-031-bg:oklch(1 0 0);
---vibeui-solutions-031-panel:oklch(0.977 0.004 255);
---vibeui-solutions-031-fg:oklch(0.21 0.014 265);
---vibeui-solutions-031-muted:oklch(0.54 0.014 265);
---vibeui-solutions-031-border:oklch(0.9 0.006 265);
---vibeui-solutions-031-accent:oklch(0.5 0.15 250);
---vibeui-solutions-031-accept:oklch(0.55 0.14 152);
---vibeui-solutions-031-rework:oklch(0.64 0.15 75);
---vibeui-solutions-031-scrap:oklch(0.57 0.19 25);
+--vibeui-solutions-031-bg:transparent;
+--vibeui-solutions-031-panel:light-dark(oklch(0.977 0.004 255),oklch(0.27 0.011 265));
+--vibeui-solutions-031-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-031-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-031-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-031-accent:light-dark(oklch(0.5 0.15 250),oklch(0.73 0.13 250));
+--vibeui-solutions-031-accept:light-dark(oklch(0.55 0.14 152),oklch(0.71 0.14 152));
+--vibeui-solutions-031-rework:light-dark(oklch(0.64 0.15 75),oklch(0.79 0.14 75));
+--vibeui-solutions-031-scrap:light-dark(oklch(0.57 0.19 25),oklch(0.71 0.17 25));
+--vibeui-solutions-031-mark-fg:light-dark(oklch(1 0 0),oklch(0.19 0.014 265));
 --vibeui-solutions-031-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-031-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -113,7 +130,8 @@ display:inline-flex;align-items:center;gap:0.375rem;font-size:0.6875rem;font-wei
 }
 [data-vibeui-block="solutions-031"] [data-part="mark"]{
 width:0.875rem;height:0.875rem;flex:none;display:grid;place-items:center;
-border-radius:9999px;color:oklch(1 0 0);font-size:0.5625rem;font-weight:700;line-height:1;
+border-radius:9999px;color:var(--vibeui-solutions-031-mark-fg);
+font-size:0.5625rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="solutions-031"] [data-decision="accept"] [data-part="decision"]{color:var(--vibeui-solutions-031-accept)}
 [data-vibeui-block="solutions-031"] [data-decision="accept"] [data-part="mark"]{background:var(--vibeui-solutions-031-accept)}
@@ -207,16 +225,54 @@ const DEFAULT_CAUSES: Solutions031Cause[] = [
   { name: "Прочие причины", count: 4 },
 ]
 
-const DECISION_LABEL: Record<
-  Solutions031Batch["decision"],
-  { word: string; mark: string }
-> = {
-  accept: { word: "принять", mark: "✓" },
-  rework: { word: "доработать", mark: "~" },
-  scrap: { word: "списать", mark: "×" },
+const DECISION_LABEL: Record<string, string> = {
+  accept: "принять",
+  rework: "доработать",
+  scrap: "списать",
+}
+
+const DECISION_MARK: Record<Solutions031Batch["decision"], string> = {
+  accept: "✓",
+  rework: "~",
+  scrap: "×",
+}
+
+const SUMMARY_LABEL: Record<string, string> = {
+  checked: "единиц проверено",
+  defects: "единиц брака",
+  rate: "средняя доля брака",
+}
+
+const COLUMN_LABEL: Record<string, string> = {
+  batch: "Партия",
+  checked: "Проверено",
+  rate: "Доля брака",
+  decision: "Решение",
 }
 
 const formatPercent = (value: number) => `${Math.round(value * 10) / 10}%`
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Контроль качества: доля брака считается из партии, причины — диаграмма
@@ -228,7 +284,16 @@ export function Solutions031({
   hint = "Партии на входном контроле · участок литья и мехобработки",
   batches = DEFAULT_BATCHES,
   causes = DEFAULT_CAUSES,
+  summaryText = SUMMARY_LABEL,
+  columnText = COLUMN_LABEL,
+  decisionText = DECISION_LABEL,
+  rateLabel = "Доля брака в партии {number}",
+  paretoHeading = "Причины брака (Парето)",
+  causeLabel = "{name}: {count} случаев, нарастающим итогом {percent}",
+  cumulativeText = "нарастающим итогом: {percent}",
+  footNote = "Доля брака и накопленный процент причин пересчитаны из чисел партии и списка причин — сортировка Парето сама показывает главные причины.",
   accent,
+  background = "",
   className,
   style,
 }: Solutions031Props) {
@@ -240,8 +305,17 @@ export function Solutions031({
   const causeTotal = sortedCauses.reduce((sum, cause) => sum + cause.count, 0)
   const maxCauseCount = Math.max(1, ...sortedCauses.map((cause) => cause.count))
 
+  const column = (key: string) => columnText[key] ?? COLUMN_LABEL[key]
+  const summary = (key: string) => summaryText[key] ?? SUMMARY_LABEL[key]
+
   const palette = {
     ...(accent ? { "--vibeui-solutions-031-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-031-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -266,15 +340,15 @@ export function Solutions031({
         <div data-part="summary">
           <p data-part="tile">
             <b>{totalChecked}</b>
-            <span>единиц проверено</span>
+            <span>{summary("checked")}</span>
           </p>
           <p data-part="tile">
             <b>{totalDefects}</b>
-            <span>единиц брака</span>
+            <span>{summary("defects")}</span>
           </p>
           <p data-part="tile">
             <b>{formatPercent(avgDefectRate)}</b>
-            <span>средняя доля брака</span>
+            <span>{summary("rate")}</span>
           </p>
         </div>
 
@@ -283,12 +357,12 @@ export function Solutions031({
             <table>
               <thead>
                 <tr>
-                  <th scope="col">Партия</th>
+                  <th scope="col">{column("batch")}</th>
                   <th scope="col" data-align="end">
-                    Проверено
+                    {column("checked")}
                   </th>
-                  <th scope="col">Доля брака</th>
-                  <th scope="col">Решение</th>
+                  <th scope="col">{column("rate")}</th>
+                  <th scope="col">{column("decision")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -296,7 +370,9 @@ export function Solutions031({
                   const rate = batch.checkedQty
                     ? (batch.defectQty / batch.checkedQty) * 100
                     : 0
-                  const decision = DECISION_LABEL[batch.decision]
+                  const decisionWord =
+                    decisionText[batch.decision] ??
+                    DECISION_LABEL[batch.decision]
 
                   return (
                     <tr key={batch.number} data-decision={batch.decision}>
@@ -313,7 +389,10 @@ export function Solutions031({
                             aria-valuenow={Math.round(rate)}
                             aria-valuemin={0}
                             aria-valuemax={100}
-                            aria-label={`Доля брака в партии ${batch.number}`}
+                            aria-label={rateLabel.replace(
+                              "{number}",
+                              batch.number,
+                            )}
                           >
                             <span
                               data-part="fill"
@@ -330,9 +409,9 @@ export function Solutions031({
                       <td>
                         <span data-part="decision">
                           <span data-part="mark" aria-hidden="true">
-                            {decision.mark}
+                            {DECISION_MARK[batch.decision]}
                           </span>
-                          {decision.word}
+                          {decisionWord}
                         </span>
                       </td>
                     </tr>
@@ -343,7 +422,7 @@ export function Solutions031({
           </div>
 
           <div data-part="pareto">
-            <h3>Причины брака (Парето)</h3>
+            <h3>{paretoHeading}</h3>
             <ol data-part="causes">
               {sortedCauses.map((cause, index) => {
                 const barWidth = Math.round((cause.count / maxCauseCount) * 100)
@@ -360,7 +439,10 @@ export function Solutions031({
                     <span
                       data-part="bar-track"
                       role="img"
-                      aria-label={`${cause.name}: ${cause.count} случаев, нарастающим итогом ${formatPercent(cumulativeShare)}`}
+                      aria-label={causeLabel
+                        .replace("{name}", cause.name)
+                        .replace("{count}", String(cause.count))
+                        .replace("{percent}", formatPercent(cumulativeShare))}
                     >
                       <span
                         data-part="bar-fill"
@@ -371,7 +453,10 @@ export function Solutions031({
                     </span>
                     <span data-part="cause-count">{cause.count}</span>
                     <span data-part="cumulative">
-                      нарастающим итогом: {formatPercent(cumulativeShare)}
+                      {cumulativeText.replace(
+                        "{percent}",
+                        formatPercent(cumulativeShare),
+                      )}
                     </span>
                   </li>
                 )
@@ -380,10 +465,7 @@ export function Solutions031({
           </div>
         </div>
 
-        <p data-part="foot">
-          Доля брака и накопленный процент причин пересчитаны из чисел партии и
-          списка причин — сортировка Парето сама показывает главные причины.
-        </p>
+        <p data-part="foot">{footNote}</p>
       </section>
     </>
   )

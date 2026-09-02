@@ -11,20 +11,26 @@ export type Empty001Props = Omit<
   /** Второстепенная подсказка под кнопкой: горячая клавиша, ссылка на импорт. */
   hint?: ReactNode
   onAction?: () => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
 // Идея компонента: пустой экран объясняет, что делать, а не сообщает об
 // отсутствии данных. Поэтому главное здесь — действие, а рисунок собран из
 // трёх плиток на CSS: он намекает на будущий список, но не отвлекает.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="empty-001"]){
---vibeui-empty-001-fg:oklch(0.24 0.016 265);
---vibeui-empty-001-muted:oklch(0.52 0.014 265);
---vibeui-empty-001-bg:oklch(0.985 0.002 265);
---vibeui-empty-001-border:oklch(0.9 0.006 265);
---vibeui-empty-001-accent:oklch(0.55 0.2 262);
---vibeui-empty-001-accent-fg:oklch(1 0 0);
+--vibeui-empty-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-empty-001-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-empty-001-bg:transparent;
+--vibeui-empty-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-empty-001-tile:light-dark(oklch(1 0 0),oklch(0.28 0.011 265));
+--vibeui-empty-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-empty-001-accent-fg:light-dark(oklch(1 0 0),oklch(0.17 0.03 262));
 --vibeui-empty-001-radius:1rem;
 --vibeui-empty-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -45,7 +51,7 @@ position:relative;width:4.5rem;height:3rem;margin-bottom:0.75rem;
 [data-vibeui-block="empty-001"] [data-part="art"] span{
 position:absolute;left:0;right:0;height:0.875rem;border-radius:0.3125rem;
 border:1px solid var(--vibeui-empty-001-border);
-background:oklch(1 0 0);
+background:var(--vibeui-empty-001-tile);
 }
 [data-vibeui-block="empty-001"] [data-part="art"] span:nth-child(1){top:0;transform:rotate(-4deg) scale(0.9);opacity:.65}
 [data-vibeui-block="empty-001"] [data-part="art"] span:nth-child(2){top:1rem;transform:rotate(2deg) scale(0.96);opacity:.85}
@@ -76,6 +82,28 @@ transition:background-color .16s ease;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Пустое состояние, объясняющее следующий шаг.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -85,6 +113,7 @@ export function Empty001({
   actionLabel = "Создать проект",
   hint = "Или перетащите сюда папку с готовым сайтом",
   onAction,
+  background = "",
   accent,
   className,
   style,
@@ -92,6 +121,12 @@ export function Empty001({
 }: Empty001Props) {
   const palette = {
     ...(accent ? { "--vibeui-empty-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-empty-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

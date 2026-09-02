@@ -14,7 +14,17 @@ export type Solutions011Props = {
   categories?: Solutions011Category[]
   overLabel?: string
   leftLabel?: string
+  /** Подпись под общей суммой расходов. */
+  spentLabel?: string
+  /** Подпись лимита под полосой, {limit} — сумма лимита. */
+  limitText?: string
+  /** Подпись полосы для скринридера: {name}, {spent} и {limit}. */
+  barLabelText?: string
+  /** Локаль форматирования сумм. */
+  numberLocale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -29,13 +39,14 @@ export type Solutions011Props = {
 // общего бюджета — категории объясняют, куда ушло, итог отвечает «сколько ещё».
 const STYLES = `
 :where([data-vibeui-block="solutions-011"]){
---vibeui-solutions-011-bg:oklch(1 0 0);
---vibeui-solutions-011-panel:oklch(0.975 0.004 90);
---vibeui-solutions-011-fg:oklch(0.22 0.014 80);
---vibeui-solutions-011-muted:oklch(0.55 0.012 80);
---vibeui-solutions-011-border:oklch(0.9 0.006 80);
---vibeui-solutions-011-accent:oklch(0.58 0.13 165);
---vibeui-solutions-011-over:oklch(0.58 0.19 25);
+--vibeui-solutions-011-bg:transparent;
+--vibeui-solutions-011-panel:light-dark(oklch(0.975 0.004 90),oklch(0.27 0.008 90));
+--vibeui-solutions-011-fg:light-dark(oklch(0.22 0.014 80),oklch(0.94 0.005 80));
+--vibeui-solutions-011-muted:light-dark(oklch(0.55 0.012 80),oklch(0.7 0.01 80));
+--vibeui-solutions-011-border:light-dark(oklch(0.9 0.006 80),oklch(0.35 0.008 80));
+--vibeui-solutions-011-accent:light-dark(oklch(0.58 0.13 165),oklch(0.75 0.12 165));
+--vibeui-solutions-011-over:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.16 25));
+--vibeui-solutions-011-hatch:light-dark(oklch(1 0 0 / 30%),oklch(0.16 0.012 25 / 34%));
 --vibeui-solutions-011-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -93,7 +104,7 @@ display:block;height:100%;background:var(--vibeui-solutions-011-accent);
 [data-vibeui-block="solutions-011"] [data-part="excess"]{
 position:absolute;top:0;height:100%;
 background:var(--vibeui-solutions-011-over);
-background-image:repeating-linear-gradient(45deg,oklch(1 0 0 / 30%) 0 3px,transparent 3px 6px);
+background-image:repeating-linear-gradient(45deg,var(--vibeui-solutions-011-hatch) 0 3px,transparent 3px 6px);
 }
 [data-vibeui-block="solutions-011"] [data-part="mark"]{
 position:absolute;top:-0.125rem;bottom:-0.125rem;width:2px;border-radius:1px;
@@ -121,8 +132,30 @@ const DEFAULT_CATEGORIES: Solutions011Category[] = [
   { name: "Обучение", spent: 12000, limit: 40000, note: "два курса" },
 ]
 
-function money(value: number, currency: string) {
-  return `${value.toLocaleString("ru-RU")} ${currency}`
+function money(value: number, currency: string, locale: string) {
+  return `${value.toLocaleString(locale)} ${currency}`
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -136,7 +169,12 @@ export function Solutions011({
   categories = DEFAULT_CATEGORIES,
   overLabel = "перерасход",
   leftLabel = "остаток",
+  spentLabel = "потрачено",
+  limitText = "лимит {limit}",
+  barLabelText = "{name}: потрачено {spent} при лимите {limit}",
+  numberLocale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions011Props) {
@@ -147,6 +185,12 @@ export function Solutions011({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -168,13 +212,13 @@ export function Solutions011({
           </div>
           <p data-part="totals">
             <span data-part="figure">
-              <b>{money(spent, currency)}</b>
-              <span>потрачено</span>
+              <b>{money(spent, currency, numberLocale)}</b>
+              <span>{spentLabel}</span>
             </span>
             <span data-part="figure" data-over={over ? "true" : "false"}>
               <b>
                 {over ? "−" : ""}
-                {money(Math.abs(planned - spent), currency)}
+                {money(Math.abs(planned - spent), currency, numberLocale)}
               </b>
               <span>{over ? overLabel : leftLabel}</span>
             </span>
@@ -197,8 +241,8 @@ export function Solutions011({
                     ) : null}
                   </span>
                   <span data-part="value">
-                    <b>{money(item.spent, currency)}</b>{" "}
-                    <span>/ {money(item.limit, currency)}</span>
+                    <b>{money(item.spent, currency, numberLocale)}</b>{" "}
+                    <span>/ {money(item.limit, currency, numberLocale)}</span>
                   </span>
                 </p>
 
@@ -208,7 +252,16 @@ export function Solutions011({
                   aria-valuenow={item.spent}
                   aria-valuemin={0}
                   aria-valuemax={item.limit}
-                  aria-label={`${item.name}: потрачено ${money(item.spent, currency)} при лимите ${money(item.limit, currency)}`}
+                  aria-label={barLabelText
+                    .replace("{name}", item.name)
+                    .replace(
+                      "{spent}",
+                      money(item.spent, currency, numberLocale),
+                    )
+                    .replace(
+                      "{limit}",
+                      money(item.limit, currency, numberLocale),
+                    )}
                 >
                   <span
                     data-part="fill"
@@ -231,14 +284,20 @@ export function Solutions011({
                 </div>
 
                 <p data-part="under">
-                  <span>лимит {money(item.limit, currency)}</span>
+                  <span>
+                    {limitText.replace(
+                      "{limit}",
+                      money(item.limit, currency, numberLocale),
+                    )}
+                  </span>
                   {excess > 0 ? (
                     <b>
-                      {overLabel} {money(excess, currency)}
+                      {overLabel} {money(excess, currency, numberLocale)}
                     </b>
                   ) : (
                     <span>
-                      {leftLabel} {money(item.limit - item.spent, currency)}
+                      {leftLabel}{" "}
+                      {money(item.limit - item.spent, currency, numberLocale)}
                     </span>
                   )}
                 </p>

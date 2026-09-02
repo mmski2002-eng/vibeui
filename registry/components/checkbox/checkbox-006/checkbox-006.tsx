@@ -15,7 +15,19 @@ export type Checkbox006Props = Omit<
 > & {
   rows?: Checkbox006Row[]
   defaultValue?: string[]
+  /** Полоса действий. {count} — сколько строк выбрано на странице. */
+  selectedText?: string
+  /** Подпись кнопки, снимающей выбор. */
+  clearLabel?: string
+  /** Скрытая подпись заголовочного чекбокса. */
+  selectAllLabel?: string
+  /** Скрытая подпись чекбокса строки. {name} — название строки. */
+  selectRowText?: string
+  /** Заголовки колонок: название и правая колонка. */
+  columnText?: Record<"name" | "meta", string>
   onChange?: (value: string[]) => void
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,28 +35,34 @@ export type Checkbox006Props = Omit<
 // только когда что-то выбрано и говорит числом, сколько именно: «применить к
 // выбранным» без числа — самый частый способ удалить не то. Заголовочный
 // чекбокс отмечает страницу, а не всю базу, и об этом сказано словами.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="checkbox-006"]){
---vibeui-checkbox-006-bg:oklch(1 0 0);
---vibeui-checkbox-006-fg:oklch(0.22 0.014 265);
---vibeui-checkbox-006-muted:oklch(0.56 0.014 265);
---vibeui-checkbox-006-border:oklch(0.9 0.006 265);
---vibeui-checkbox-006-row:oklch(0.97 0.004 265);
---vibeui-checkbox-006-accent:oklch(0.55 0.17 265);
+--vibeui-checkbox-006-surface:transparent;
+--vibeui-checkbox-006-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-checkbox-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-checkbox-006-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-checkbox-006-row:light-dark(oklch(0.97 0.004 265),oklch(0.31 0.012 265));
+--vibeui-checkbox-006-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
+--vibeui-checkbox-006-mark:light-dark(oklch(0.99 0.01 265),oklch(0.2 0.014 265));
 --vibeui-checkbox-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="checkbox-006"]{
 display:flex;flex-direction:column;
 width:100%;max-width:22rem;box-sizing:border-box;overflow:hidden;
-background:var(--vibeui-checkbox-006-bg);
+background:var(--vibeui-checkbox-006-surface);
 border:1px solid var(--vibeui-checkbox-006-border);border-radius:0.875rem;
 font-family:var(--vibeui-checkbox-006-font);color:var(--vibeui-checkbox-006-fg);
 }
-/* Полоса действий появляется только с выбором и всегда называет число. */
+/* Полоса действий появляется только с выбором и всегда называет число.
+   Замес с фоном строк, а не с белым: иначе на тёмной теме полоса светится. */
 [data-vibeui-block="checkbox-006"] [data-part="bar"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
 padding:0.5rem 0.75rem;
-background:color-mix(in oklab,var(--vibeui-checkbox-006-accent) 10%,oklch(1 0 0));
+background:color-mix(in oklab,var(--vibeui-checkbox-006-accent) 14%,var(--vibeui-checkbox-006-bg));
 border-bottom:1px solid var(--vibeui-checkbox-006-border);
 font-size:0.8125rem;font-weight:600;
 }
@@ -72,13 +90,14 @@ background:var(--vibeui-checkbox-006-bg);
 [data-vibeui-block="checkbox-006"] input:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;
-border-right:2px solid oklch(0.99 0.01 265);border-bottom:2px solid oklch(0.99 0.01 265);
+border-right:2px solid var(--vibeui-checkbox-006-mark);
+border-bottom:2px solid var(--vibeui-checkbox-006-mark);
 transform:rotate(45deg);
 }
 [data-vibeui-block="checkbox-006"] input:indeterminate::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.5rem;height:2px;margin:-1px 0 0 -0.25rem;
-background:oklch(0.99 0.01 265);border-radius:9999px;
+background:var(--vibeui-checkbox-006-mark);border-radius:9999px;
 }
 [data-vibeui-block="checkbox-006"] input:focus-visible{outline:2px solid var(--vibeui-checkbox-006-accent);outline-offset:2px}
 [data-vibeui-block="checkbox-006"] [data-part="name"]{font-weight:600}
@@ -93,6 +112,33 @@ const DEFAULT_ROWS: Checkbox006Row[] = [
   { id: "4", name: "Счёт № 301", meta: "6 200 ₽" },
 ]
 
+const DEFAULT_COLUMNS: Record<"name" | "meta", string> = {
+  name: "Документ",
+  meta: "Сумма",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Выбор строк таблицы: полоса действий с числом выбранного.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -100,7 +146,13 @@ const DEFAULT_ROWS: Checkbox006Row[] = [
 export function Checkbox006({
   rows = DEFAULT_ROWS,
   defaultValue = [],
+  selectedText = "Выбрано на странице: {count}",
+  clearLabel = "Снять выбор",
+  selectAllLabel = "Выбрать все строки на странице",
+  selectRowText = "Выбрать {name}",
+  columnText = DEFAULT_COLUMNS,
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -118,6 +170,12 @@ export function Checkbox006({
 
   const palette = {
     ...(accent ? { "--vibeui-checkbox-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-checkbox-006-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -139,9 +197,9 @@ export function Checkbox006({
       >
         {value.length ? (
           <div data-part="bar" role="status">
-            <span>Выбрано на странице: {value.length}</span>
+            <span>{selectedText.replace("{count}", String(value.length))}</span>
             <button type="button" onClick={() => update([])}>
-              Снять выбор
+              {clearLabel}
             </button>
           </div>
         ) : null}
@@ -150,18 +208,20 @@ export function Checkbox006({
             ref={head}
             type="checkbox"
             checked={all}
-            aria-label="Выбрать все строки на странице"
+            aria-label={selectAllLabel}
             onChange={() => update(all ? [] : rows.map((row) => row.id))}
           />
-          <span>Документ</span>
-          <span data-part="meta">Сумма</span>
+          <span>{columnText.name ?? DEFAULT_COLUMNS.name}</span>
+          <span data-part="meta">
+            {columnText.meta ?? DEFAULT_COLUMNS.meta}
+          </span>
         </div>
         {rows.map((row) => (
           <label key={row.id} data-part="row">
             <input
               type="checkbox"
               checked={value.includes(row.id)}
-              aria-label={`Выбрать ${row.name}`}
+              aria-label={selectRowText.replace("{name}", row.name)}
               onChange={() =>
                 update(
                   value.includes(row.id)

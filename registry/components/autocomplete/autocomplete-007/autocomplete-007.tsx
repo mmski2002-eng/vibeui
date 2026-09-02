@@ -12,7 +12,11 @@ export type Autocomplete007Props = Omit<
   suggestions?: string[]
   defaultRecent?: string[]
   clearLabel?: string
+  /** Подписи панели: ключи recent, suggestions, notFound, history. */
+  panelText?: Record<string, string>
   onSelect?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,13 +26,14 @@ export type Autocomplete007Props = Omit<
 // место подсказкам: смешивать два разных списка в один — путать источник.
 const STYLES = `
 :where([data-vibeui-block="autocomplete-007"]){
---vibeui-autocomplete-007-bg:oklch(1 0 0);
---vibeui-autocomplete-007-fg:oklch(0.22 0.014 265);
---vibeui-autocomplete-007-muted:oklch(0.52 0.014 265);
---vibeui-autocomplete-007-border:oklch(0.9 0.006 265);
---vibeui-autocomplete-007-field:oklch(0.985 0.002 265);
---vibeui-autocomplete-007-active:oklch(0.95 0.02 265);
---vibeui-autocomplete-007-accent:oklch(0.55 0.17 265);
+--vibeui-autocomplete-007-bg:transparent;
+--vibeui-autocomplete-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-autocomplete-007-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-autocomplete-007-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-autocomplete-007-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
+--vibeui-autocomplete-007-active:light-dark(oklch(0.95 0.02 265),oklch(0.33 0.028 265));
+--vibeui-autocomplete-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-autocomplete-007-radius:0.625rem;
 --vibeui-autocomplete-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -56,7 +61,7 @@ outline:2px solid var(--vibeui-autocomplete-007-accent);outline-offset:1px;borde
 [data-vibeui-block="autocomplete-007"] [data-part="panel"]{
 border:1px solid var(--vibeui-autocomplete-007-border);
 border-radius:var(--vibeui-autocomplete-007-radius);
-background:var(--vibeui-autocomplete-007-bg);overflow:hidden;
+background:var(--vibeui-autocomplete-007-panel);overflow:hidden;
 }
 [data-vibeui-block="autocomplete-007"] [data-part="head"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
@@ -100,6 +105,35 @@ const DEFAULT_SUGGESTIONS = [
 
 const DEFAULT_RECENT = ["наушники", "рюкзак 30 л", "кофемолка"]
 
+const PANEL_TEXT = {
+  recent: "Недавние запросы",
+  suggestions: "Подсказки",
+  notFound: "Ничего не нашлось — попробуйте короче",
+  history: "История пуста: здесь появятся ваши запросы",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Поиск с недавними запросами: пустое поле показывает вчерашние.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -110,7 +144,9 @@ export function Autocomplete007({
   suggestions = DEFAULT_SUGGESTIONS,
   defaultRecent = DEFAULT_RECENT,
   clearLabel = "Очистить",
+  panelText = PANEL_TEXT,
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -128,11 +164,20 @@ export function Autocomplete007({
 
   const palette = {
     ...(accent ? { "--vibeui-autocomplete-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-autocomplete-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
   const showRecent = !query.trim() && recent.length > 0
   const rows = showRecent ? recent : matches
+  const head = showRecent
+    ? (panelText.recent ?? PANEL_TEXT.recent)
+    : (panelText.suggestions ?? PANEL_TEXT.suggestions)
 
   const pick = (value: string) => {
     setQuery(value)
@@ -166,7 +211,7 @@ export function Autocomplete007({
         />
         <div data-part="panel">
           <p data-part="head">
-            {showRecent ? "Недавние запросы" : "Подсказки"}
+            {head}
             {showRecent ? (
               <button
                 type="button"
@@ -181,7 +226,7 @@ export function Autocomplete007({
             <ul
               id={`${id}-list`}
               role="listbox"
-              aria-label={showRecent ? "Недавние запросы" : "Подсказки"}
+              aria-label={head}
               data-part="list"
             >
               {rows.map((row) => (
@@ -205,8 +250,8 @@ export function Autocomplete007({
           ) : (
             <p data-part="empty">
               {query.trim()
-                ? "Ничего не нашлось — попробуйте короче"
-                : "История пуста: здесь появятся ваши запросы"}
+                ? (panelText.notFound ?? PANEL_TEXT.notFound)
+                : (panelText.history ?? PANEL_TEXT.history)}
             </p>
           )}
         </div>

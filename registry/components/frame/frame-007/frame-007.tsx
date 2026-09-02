@@ -13,6 +13,9 @@ export type Frame007Props = Omit<
   title?: string
   prompt?: string
   lines?: Frame007Line[]
+  /** Подпись вывода для скринридера: компонент несёт русскую. */
+  outputLabel?: string
+  accent?: string
   children?: ReactNode
 }
 
@@ -100,11 +103,18 @@ export function Frame007({
   title = "zsh — vibeui",
   prompt = "❯",
   lines = DEFAULT_LINES,
+  outputLabel = "Вывод терминала",
+  accent,
   children,
   className,
   style,
   ...props
 }: Frame007Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-frame-007-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-frame-007" precedence="medium">
@@ -114,7 +124,7 @@ export function Frame007({
         {...props}
         data-vibeui-block="frame-007"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="shell">
           <div data-part="bar">
@@ -127,7 +137,7 @@ export function Frame007({
           </div>
           <div data-part="body">
             {children ?? (
-              <pre data-part="output" aria-label="Вывод терминала">
+              <pre data-part="output" aria-label={outputLabel}>
                 {lines.map((line, index) => (
                   <div
                     data-part="line"

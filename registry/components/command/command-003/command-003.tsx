@@ -14,6 +14,22 @@ export type Command003Props = Omit<
   commands?: string[]
   recent?: string[]
   placeholder?: string
+  /** Имя палитры для скринридера. */
+  label?: string
+  /** Имя списка строк для скринридера. */
+  listLabel?: string
+  /** Заголовок режима истории. */
+  recentText?: string
+  /** Заголовок режима поиска; {count} — число найденных строк. */
+  foundText?: string
+  /** Подпись кнопки очистки истории. */
+  clearLabel?: string
+  /** Ответ, когда история пуста. */
+  emptyHistoryText?: string
+  /** Ответ, когда поиск ничего не нашёл. */
+  emptyText?: string
+  /** Подложка панели. Пусто — цвет по умолчанию из палитры. */
+  background?: string
   accent?: string
 }
 
@@ -23,20 +39,24 @@ export type Command003Props = Omit<
 // последнее. Запуск команды поднимает её наверх недавних и обрезает историю,
 // поэтому список не растёт. Заголовок раздела меняется вместе с режимом —
 // иначе непонятно, почему строк стало меньше.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
+// граница светлее подложки, а акцент поднят по светлоте, чтобы читаться.
 const STYLES = `
 :where([data-vibeui-block="command-003"]){
---vibeui-command-003-bg:oklch(1 0 0);
---vibeui-command-003-fg:oklch(0.23 0.014 265);
---vibeui-command-003-muted:oklch(0.57 0.014 265);
---vibeui-command-003-border:oklch(0.9 0.006 265);
---vibeui-command-003-accent:oklch(0.58 0.16 200);
+--vibeui-command-003-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-command-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-command-003-muted:light-dark(oklch(0.57 0.014 265),oklch(0.68 0.012 265));
+--vibeui-command-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-command-003-accent:light-dark(oklch(0.58 0.16 200),oklch(0.78 0.12 200));
+--vibeui-command-003-shadow:light-dark(oklch(0.2 0.03 265 / 60%),oklch(0.04 0.015 265 / 70%));
 --vibeui-command-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="command-003"]{
 display:block;box-sizing:border-box;width:100%;max-width:23rem;overflow:hidden;
 background:var(--vibeui-command-003-bg);color:var(--vibeui-command-003-fg);
 border:1px solid var(--vibeui-command-003-border);border-radius:0.875rem;
-box-shadow:0 18px 40px -28px oklch(0.2 0.03 265 / 60%);
+box-shadow:0 18px 40px -28px var(--vibeui-command-003-shadow);
 font-family:var(--vibeui-command-003-font);
 }
 [data-vibeui-block="command-003"] input{
@@ -96,6 +116,28 @@ const DEFAULT_RECENT = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Палитра с недавними командами: пустой запрос показывает историю, ввод
  * переключает на поиск. Один файл, ноль зависимостей.
  */
@@ -103,6 +145,14 @@ export function Command003({
   commands = DEFAULT_COMMANDS,
   recent = DEFAULT_RECENT,
   placeholder = "Что нужно сделать?",
+  label = "Командная палитра",
+  listLabel = "Команды",
+  recentText = "Недавние",
+  foundText = "Найдено: {count}",
+  clearLabel = "очистить",
+  emptyHistoryText = "История пуста — начните вводить название команды.",
+  emptyText = "Совпадений нет. Попробуйте другое слово.",
+  background = "",
   accent,
   className,
   style,
@@ -153,6 +203,12 @@ export function Command003({
 
   const paletteStyle = {
     ...(accent ? { "--vibeui-command-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-command-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -167,7 +223,7 @@ export function Command003({
         className={className}
         style={paletteStyle}
         role="dialog"
-        aria-label="Командная палитра"
+        aria-label={label}
       >
         <input
           type="text"
@@ -188,25 +244,28 @@ export function Command003({
           onKeyDown={onKeyDown}
         />
         <p data-part="mode">
-          {browsing ? "Недавние" : `Найдено: ${rows.length}`}
+          {browsing
+            ? recentText
+            : foundText.replace("{count}", String(rows.length))}
           {browsing && history.length > 0 ? (
             <button
               type="button"
               data-part="clear"
               onClick={() => setHistory([])}
             >
-              очистить
+              {clearLabel}
             </button>
           ) : null}
         </p>
         {rows.length === 0 ? (
-          <p data-part="empty">
-            {browsing
-              ? "История пуста — начните вводить название команды."
-              : "Совпадений нет. Попробуйте другое слово."}
-          </p>
+          <p data-part="empty">{browsing ? emptyHistoryText : emptyText}</p>
         ) : (
-          <ul id={listId} data-part="list" role="listbox" aria-label="Команды">
+          <ul
+            id={listId}
+            data-part="list"
+            role="listbox"
+            aria-label={listLabel}
+          >
             {rows.map((command, index) => (
               <li
                 key={command}

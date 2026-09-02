@@ -15,6 +15,8 @@ export type Empty015Props = Omit<
   items?: Empty015Item[]
   retryLabel?: string
   onRetry?: () => void
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,12 +26,14 @@ export type Empty015Props = Omit<
 // было видно, что это не свежие данные, а последнее, что успело сохраниться.
 const STYLES = `
 :where([data-vibeui-block="empty-015"]){
---vibeui-empty-015-bg:oklch(1 0 0);
---vibeui-empty-015-fg:oklch(0.21 0.014 265);
---vibeui-empty-015-muted:oklch(0.55 0.014 265);
---vibeui-empty-015-border:oklch(0.91 0.006 265);
---vibeui-empty-015-banner:oklch(0.97 0.02 65);
---vibeui-empty-015-wait:oklch(0.6 0.16 65);
+--vibeui-empty-015-bg:transparent;
+--vibeui-empty-015-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-empty-015-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-empty-015-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-empty-015-banner:light-dark(oklch(0.97 0.02 65),oklch(0.3 0.04 65));
+--vibeui-empty-015-wait:light-dark(oklch(0.6 0.16 65),oklch(0.8 0.13 65));
+--vibeui-empty-015-row:light-dark(oklch(0.97 0.003 265),oklch(0.28 0.009 265));
+--vibeui-empty-015-control:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
 --vibeui-empty-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -60,10 +64,10 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-empty-015-muted);
 flex:none;appearance:none;cursor:pointer;
 height:2rem;padding:0 0.75rem;border-radius:0.625rem;
 border:1px solid var(--vibeui-empty-015-border);
-background:var(--vibeui-empty-015-bg);color:var(--vibeui-empty-015-fg);
+background:var(--vibeui-empty-015-control);color:var(--vibeui-empty-015-fg);
 font:inherit;font-size:0.75rem;font-weight:650;
 }
-[data-vibeui-block="empty-015"] [data-part="retry"]:hover{background:oklch(0.97 0.003 265)}
+[data-vibeui-block="empty-015"] [data-part="retry"]:hover{background:var(--vibeui-empty-015-row)}
 [data-vibeui-block="empty-015"] [data-part="retry"]:focus-visible{
 outline:2px solid var(--vibeui-empty-015-wait);outline-offset:2px;
 }
@@ -73,7 +77,7 @@ list-style:none;margin:0;padding:0.5rem;display:flex;flex-direction:column;gap:0
 [data-vibeui-block="empty-015"] [data-part="item"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
 padding:0.625rem 0.75rem;border-radius:0.625rem;
-background:oklch(0.97 0.003 265);
+background:var(--vibeui-empty-015-row);
 }
 [data-vibeui-block="empty-015"] [data-part="item-title"]{
 min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
@@ -98,6 +102,29 @@ const DEFAULT_ITEMS: Empty015Item[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Офлайн-баннер поверх сохранённых данных: список остаётся на экране,
  * каждая запись помечена временем кэша, повтор подключения — вручную.
  * Один файл, ноль внешних зависимостей.
@@ -108,6 +135,7 @@ export function Empty015({
   items = DEFAULT_ITEMS,
   retryLabel = "Обновить",
   onRetry,
+  background = "",
   accent,
   className,
   style,
@@ -115,6 +143,12 @@ export function Empty015({
 }: Empty015Props) {
   const palette = {
     ...(accent ? { "--vibeui-empty-015-wait": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-empty-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

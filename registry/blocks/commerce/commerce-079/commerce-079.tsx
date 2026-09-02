@@ -13,12 +13,16 @@ export type Commerce079Props = {
   product?: string
   price?: string
   oldPrice?: string
+  wasLabel?: string
   discount?: string
   minLabel?: string
   minPrice?: string
   minWhen?: string
   avgLabel?: string
   avgPrice?: string
+  avgWhen?: string
+  nowLabel?: string
+  nowWhen?: string
   chartTitle?: string
   points?: Commerce079Point[]
   verdict?: string
@@ -26,6 +30,8 @@ export type Commerce079Props = {
   watch?: string
   honesty?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -39,13 +45,16 @@ export type Commerce079Props = {
 // зависимость, а цифры всё равно продублированы текстом под графиком.
 const STYLES = `
 :where([data-vibeui-block="commerce-079"]){
---vibeui-commerce-079-bg:oklch(1 0 0);
---vibeui-commerce-079-fg:oklch(0.21 0.012 260);
---vibeui-commerce-079-muted:oklch(0.53 0.014 260);
---vibeui-commerce-079-border:oklch(0.9 0.006 260);
---vibeui-commerce-079-soft:oklch(0.972 0.004 260);
---vibeui-commerce-079-accent:oklch(0.48 0.14 260);
---vibeui-commerce-079-low:oklch(0.5 0.13 150);
+--vibeui-commerce-079-bg:transparent;
+--vibeui-commerce-079-surface:light-dark(oklch(1 0 0),oklch(0.22 0.012 260));
+--vibeui-commerce-079-fg:light-dark(oklch(0.21 0.012 260),oklch(0.94 0.006 260));
+--vibeui-commerce-079-muted:light-dark(oklch(0.53 0.014 260),oklch(0.73 0.012 260));
+--vibeui-commerce-079-border:light-dark(oklch(0.9 0.006 260),oklch(0.38 0.014 260));
+--vibeui-commerce-079-soft:light-dark(oklch(0.972 0.004 260),oklch(0.27 0.014 260));
+--vibeui-commerce-079-accent:light-dark(oklch(0.48 0.14 260),oklch(0.76 0.14 260));
+--vibeui-commerce-079-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.04 260));
+--vibeui-commerce-079-low:light-dark(oklch(0.5 0.13 150),oklch(0.77 0.13 150));
+--vibeui-commerce-079-onlow:light-dark(oklch(0.99 0 0),oklch(0.19 0.04 150));
 --vibeui-commerce-079-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -64,7 +73,7 @@ color:var(--vibeui-commerce-079-fg);font-family:var(--vibeui-commerce-079-sans);
 [data-vibeui-block="commerce-079"] [data-part="was"] s{text-decoration-thickness:1px}
 [data-vibeui-block="commerce-079"] [data-part="off"]{
 display:inline-flex;align-items:center;height:1.5rem;padding:0 0.5rem;border-radius:0.4375rem;
-background:var(--vibeui-commerce-079-low);color:oklch(0.99 0 0);font-size:0.75rem;font-weight:750;
+background:var(--vibeui-commerce-079-low);color:var(--vibeui-commerce-079-onlow);font-size:0.75rem;font-weight:750;
 }
 [data-vibeui-block="commerce-079"] [data-part="marks"]{
 display:grid;gap:0.5rem;grid-template-columns:repeat(2,minmax(0,1fr));margin:0.875rem 0;
@@ -101,11 +110,11 @@ font-size:0.8125rem;line-height:1.5;font-weight:650;
 [data-vibeui-block="commerce-079"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.875rem}
 [data-vibeui-block="commerce-079"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;height:2.75rem;padding:0 1.5rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-079-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-079-accent);color:var(--vibeui-commerce-079-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-079"] [data-part="alt"]{
 appearance:none;cursor:pointer;height:2.75rem;padding:0 1.125rem;border-radius:0.875rem;
-border:1px solid var(--vibeui-commerce-079-border);background:var(--vibeui-commerce-079-bg);
+border:1px solid var(--vibeui-commerce-079-border);background:var(--vibeui-commerce-079-surface);
 color:inherit;font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="commerce-079"] [data-part="go"]:focus-visible,
@@ -119,6 +128,28 @@ color:inherit;font:inherit;font-size:0.9375rem;font-weight:650;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-079"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_POINTS: Commerce079Point[] = [
   { id: "1", month: "окт", value: 42900, label: "42 900 ₽" },
@@ -138,12 +169,16 @@ export function Commerce079({
   product = "Стол «Отмель», 140×80",
   price = "41 400 ₽",
   oldPrice = "44 900 ₽",
+  wasLabel = "было",
   discount = "−8%",
   minLabel = "Минимум за 180 дней",
   minPrice = "39 900 ₽",
   minWhen = "14 января",
   avgLabel = "Средняя цена",
   avgPrice = "43 100 ₽",
+  avgWhen = "за 180 дней",
+  nowLabel = "Сейчас",
+  nowWhen = "с 4 марта",
   chartTitle = "Как менялась цена",
   points = DEFAULT_POINTS,
   verdict = "Сейчас на 1 700 ₽ дороже, чем в лучший день, но дешевле средней цены за полгода.",
@@ -151,11 +186,21 @@ export function Commerce079({
   watch = "Следить за ценой",
   honesty = "Мы показываем цену этого магазина, а не «рекомендованную производителем»: скидка считается от того, сколько товар действительно стоил, и от завышенной цены накануне акции её не посчитать.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce079Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-079-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-079-bg": background,
+          // Кнопка слежения не должна просвечивать: ей нужна непрозрачная
+          // подложка, и это тот же цвет.
+          "--vibeui-commerce-079-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -182,7 +227,7 @@ export function Commerce079({
             <div data-part="now">
               <p data-part="price">{price}</p>
               <span data-part="was">
-                было <s>{oldPrice}</s>
+                {wasLabel} <s>{oldPrice}</s>
               </span>
               <span data-part="off">{discount}</span>
             </div>
@@ -196,12 +241,12 @@ export function Commerce079({
               <div data-part="mark">
                 <span data-part="mlabel">{avgLabel}</span>
                 <span data-part="mvalue">{avgPrice}</span>
-                <span data-part="mwhen">за 180 дней</span>
+                <span data-part="mwhen">{avgWhen}</span>
               </div>
               <div data-part="mark">
-                <span data-part="mlabel">Сейчас</span>
+                <span data-part="mlabel">{nowLabel}</span>
                 <span data-part="mvalue">{price}</span>
-                <span data-part="mwhen">с 4 марта</span>
+                <span data-part="mwhen">{nowWhen}</span>
               </div>
             </div>
 

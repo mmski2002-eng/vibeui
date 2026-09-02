@@ -31,16 +31,20 @@
             "container-запрос вместо медиазапроса: в узкой колонке секция обязана становиться одноколоночной сама",
             "sticky у левой колонки только на широкой раскладке — в одной колонке залипший заголовок мешает",
             "ограничение ширины ответа в ch: строка во всю ширину экрана не читается",
-            "блок <style> внутри компонента — в нём вся палитра, раскладка и знак"
+            "блок <style> внутри компонента — в нём вся палитра, раскладка и знак",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items: вопросы и ответы",
             "тексты eyebrow, title, description",
             "contactLabel и contactHref — ссылка «остались вопросы»",
             "акцент через проп accent — цвет надзаголовка, знака и ссылки",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пять-семь вопросов — потолок. Длинный список означает, что продукт непонятен раньше, чем начинается FAQ.",
             "Вопросы формулируйте словами пользователя, а не отдела маркетинга: «сколько стоит», а не «тарифная политика».",
             "Первый раздел здесь не раскрыт намеренно: открытый по умолчанию ответ сдвигает остальные вопросы вниз.",
@@ -60,16 +64,20 @@
                 "the container query instead of a media query: in a narrow column the section has to fall back to one column on its own",
                 "sticky on the left column only in the wide layout — in one column a pinned heading is in the way",
                 "the ch-based width limit on answers: a full-screen line stops being read",
-                "the <style> block inside the component — it holds the palette, the layout and the sign"
+                "the <style> block inside the component — it holds the palette, the layout and the sign",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array: questions and answers",
                 "the eyebrow, title and description copy",
                 "contactLabel and contactHref — the \"still have questions\" link",
                 "the accent through the accent prop — it colours the eyebrow, the sign and the link",
-                "outer spacing through className"
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Five to seven questions is the ceiling. A long list means the product is unclear well before the FAQ starts.",
                 "Phrase questions the way users do, not the way marketing does: \"how much is it\", not \"pricing policy\".",
                 "No section starts open on purpose: a pre-opened answer pushes the other questions down.",
@@ -77,9 +85,73 @@
               ],
               "usage": "<Faq001\n  title=\"How this works, briefly\"\n  items={[{ question: \"What do I get?\", answer: \"One file in your project.\" }]}\n/>"
             },
-            "title": "Sticky FAQ"
+            "title": "Sticky FAQ",
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "How this works, briefly"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Questions",
+                "title": "How this works, briefly",
+                "description": "If the answer is not here, write to us — we reply within one working day.",
+                "contactLabel": "Ask your own question",
+                "items": [
+                  {
+                    "question": "What do I get after installing the block?",
+                    "answer": "One file in your project — the very same one you saw in the preview. No build step, no wrappers, no tie to our theme: the block carries its own palette and works in any React project."
+                  },
+                  {
+                    "question": "Does the agent really install this exact component?",
+                    "answer": "Yes. Copy for AI gives a link with the instruction: the component id, the install command and the list of what must not change. The agent downloads the file from the registry instead of recreating something similar from a description."
+                  },
+                  {
+                    "question": "What if I already have a design system?",
+                    "answer": "Override the block's local variables and it fits your theme without touching the rest of the project. Editing the file itself is unnecessary: colours, radii and accents all live in variables."
+                  },
+                  {
+                    "question": "Do I need extra libraries?",
+                    "answer": "Every block declares its dependencies in metadata, and most have none at all: just React. No icon library is needed — the signs are drawn in CSS."
+                  },
+                  {
+                    "question": "Can I use the blocks in commercial projects?",
+                    "answer": "Yes. Once installed the file belongs to your project: edit it, rename it and ship it with your site."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Коротко о том, как это работает",
+            "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -115,15 +187,19 @@
             "скрытие стандартного маркера вместе с собственной стрелкой — без своей стрелки непонятно, что карточка раскрывается",
             "видимое кольцо фокуса на summary: раскрытие обязано работать с клавиатуры",
             "container-запрос вместо медиазапроса: в узкой колонке секция обязана становиться одноколоночной сама",
-            "блок <style> внутри компонента — в нём палитра, колонки и карточки"
+            "блок <style> внутри компонента — в нём палитра, колонки и карточки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title и description — заголовок и вводный абзац",
             "массив items — вопросы и ответы; нумерация считается сама по порядку",
             "акцент через проп accent — цвет номеров, стрелки и фокуса",
-            "внешние отступы через className: секция занимает всю ширину родителя"
+            "внешние отступы через className: секция занимает всю ширину родителя",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Нечётное число вопросов делает колонки разной длины — это нормально, не подгоняйте текст ради ровного низа.",
             "Очень длинный ответ разбалансирует колонки: держите ответы в три-четыре строки, длинное уводите на отдельную страницу.",
             "Разделы независимы: несколько открытых ответов сразу — это осознанное решение для страницы вопросов.",
@@ -144,6 +220,18 @@
             "type": "text",
             "default": "Собрали то, о чём чаще всего спрашивают в чате поддержки.",
             "maxLength": 96
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -159,15 +247,19 @@
                 "hiding the default marker together with the custom arrow — without an arrow of your own nothing says the card opens",
                 "the visible focus ring on summary: opening has to work from the keyboard",
                 "the container query instead of a media query: in a narrow column the section has to become single-column on its own",
-                "the <style> block inside the component — it holds the palette, the columns and the cards"
+                "the <style> block inside the component — it holds the palette, the columns and the cards",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title and description — the heading and the intro paragraph",
                 "the items array — questions and answers; the numbering counts itself in order",
                 "the accent through the accent prop — it colours the numbers, the arrow and focus",
-                "outer spacing through className: the section fills its parent's width"
+                "outer spacing through className: the section fills its parent's width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "An odd number of questions leaves the columns uneven — that is fine, do not pad the text for a straight bottom edge.",
                 "A very long answer unbalances the columns: keep answers to three or four lines and move long ones to their own page.",
                 "The items are independent: several answers open at once is a deliberate choice for a questions page.",
@@ -183,11 +275,50 @@
               "description": {
                 "label": "Intro paragraph",
                 "default": "The things support gets asked about most often."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Two Column FAQ"
+            "title": "Two Column FAQ",
+            "preview": {
+              "props": {
+                "title": "Questions people ask before paying",
+                "description": "We collected what support gets asked about most often in chat. If your question is missing, write and we will add it.",
+                "items": [
+                  {
+                    "question": "How fast is the plan activated?",
+                    "answer": "Right after payment: access opens automatically, there is no manager to wait for."
+                  },
+                  {
+                    "question": "Can I move data over from another system?",
+                    "answer": "Yes. The import understands CSV and XLSX exports, and for large databases we migrate by hand at no cost."
+                  },
+                  {
+                    "question": "What happens when the paid period ends?",
+                    "answer": "The account switches to read-only. The data is kept for another year and can only be deleted by hand."
+                  },
+                  {
+                    "question": "Is there a limit on the number of employees?",
+                    "answer": "Five people on the starter plan; after that seats are bought one at a time, with no move to another plan."
+                  },
+                  {
+                    "question": "How does support work?",
+                    "answer": "You write in the chat from inside the app. We answer within fifteen minutes during business hours; at night, the next morning."
+                  },
+                  {
+                    "question": "Do you work with sole traders?",
+                    "answer": "Yes, the contract and the closing documents are generated automatically in your account."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -223,16 +354,21 @@
             "кольцо фокуса, перенесённое с радио на метку: иначе фокус на невидимом элементе не видно нигде",
             "defaultChecked у первой категории: без него секция открывается пустой",
             "нативные details внутри панели — они дают поиск по странице и работу до гидратации",
-            "блок <style> внутри компонента: в нём палитра, вкладки, панели и знак"
+            "блок <style> внутри компонента: в нём палитра, вкладки, панели и знак",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title и description — заголовок и вводный абзац",
             "массив groups — категории и вопросы внутри каждой",
             "id — если на странице две такие секции, у групп радио должны быть разные идентификаторы",
             "акцент через проп accent — цвет активной вкладки, знака и фокуса",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "tabLabelText — подпись радио-переключателя для скринридера; {label} подставляет название раздела",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Категорий поддерживается пять: правила :nth-of-type написаны до пятой, для шестой допишите ещё одну строку.",
             "Это не ARIA-tablist: скринридер объявит переключатель как группу радио. Так честнее, чем tablist без клавиатурной модели.",
             "Вкладки прокручиваются по горизонтали — длинные названия разделов лучше сокращать до одного слова.",
@@ -253,6 +389,18 @@
             "type": "text",
             "default": "vibeui-faq-003",
             "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -268,16 +416,21 @@
                 "the focus ring moved from the radio onto the label: otherwise focus on an invisible element is visible nowhere",
                 "defaultChecked on the first category: without it the section opens empty",
                 "the native details inside the panel — they give find-on-page and work before hydration",
-                "the <style> block inside the component: it holds the palette, the tabs, the panels and the sign"
+                "the <style> block inside the component: it holds the palette, the tabs, the panels and the sign",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title and description — the heading and the intro paragraph",
                 "the groups array — the categories and the questions inside each",
                 "id — two such sections on a page need different radio group ids",
                 "the accent through the accent prop — it colours the active tab, the sign and focus",
-                "outer spacing through className"
+                "outer spacing through className",
+                "tabLabelText — the screen-reader label of the radio switch; {label} is replaced with the section name",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Five categories are supported: the :nth-of-type rules go up to the fifth, add one more line for a sixth.",
                 "This is not an ARIA tablist: a screen reader announces a radio group. That is more honest than a tablist without the keyboard model.",
                 "The tabs scroll horizontally — long section names are better shortened to one word.",
@@ -293,11 +446,87 @@
               "id": {
                 "label": "Group id",
                 "default": "vibeui-faq-003"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Tabbed FAQ"
+            "title": "Tabbed FAQ",
+            "preview": {
+              "props": {
+                "title": "Questions by topic",
+                "description": "Pick a topic and we will show only its questions. Sections switch without a reload and respond to the keyboard arrows.",
+                "tabLabelText": "Question section: {label}",
+                "groups": [
+                  {
+                    "label": "Delivery",
+                    "items": [
+                      {
+                        "question": "When does a city order arrive?",
+                        "answer": "The next day if you order before 8 p.m. The courier calls an hour ahead and names the exact slot."
+                      },
+                      {
+                        "question": "Can I pick it up myself?",
+                        "answer": "Yes, the pickup point on Lenin Street is open every day from 10 a.m. to 9 p.m. and holds an order for seven days."
+                      },
+                      {
+                        "question": "Do you deliver to other regions?",
+                        "answer": "We ship by carrier. It takes two to six days and the cost is calculated at checkout."
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Payment",
+                    "items": [
+                      {
+                        "question": "Which payment methods are available?",
+                        "answer": "Card, instant bank transfer and an invoice for companies. Couriers take cash, but only on city deliveries."
+                      },
+                      {
+                        "question": "Is there an instalment plan?",
+                        "answer": "Yes, on orders above a hundred pounds — over three, six or ten months with no extra charge."
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Returns",
+                    "items": [
+                      {
+                        "question": "How many days do I have to return an item?",
+                        "answer": "Fourteen days from delivery, as long as the item is unused and its presentation is intact."
+                      },
+                      {
+                        "question": "Who pays for the return shipping?",
+                        "answer": "If the item is faulty, we do. If it simply did not suit you, the return shipping is on the buyer."
+                      },
+                      {
+                        "question": "When is the money refunded?",
+                        "answer": "Within ten working days after the item reaches the warehouse and passes inspection."
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Warranty",
+                    "items": [
+                      {
+                        "question": "What does the warranty cover?",
+                        "answer": "Manufacturing defects for one year. Physical damage and water marks are not covered."
+                      },
+                      {
+                        "question": "Do I need the receipt?",
+                        "answer": "No, every purchase is visible in your account by phone number — we find the receipt ourselves."
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -333,16 +562,20 @@
             "контраст гарнитур — засечная в заголовке и номерах, рубленая в вопросах: он отделяет разговорную часть от служебной",
             "поворот стрелки при раскрытии как единственный признак состояния",
             "видимое кольцо фокуса на summary: раскрытие обязано работать с клавиатуры",
-            "блок <style> внутри компонента — в нём палитра, типографика и раскладка"
+            "блок <style> внутри компонента — в нём палитра, типографика и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "eyebrow и title — надзаголовок и заголовок секции",
             "массив items — вопросы и ответы; нумерация считается сама",
             "name — имя группы аккордеона; на странице с двумя такими секциями оно обязано различаться",
             "акцент через проп accent — цвет надзаголовка, номеров, стрелки и фокуса",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Эксклюзивный аккордеон поддерживают не все старые браузеры: там ответы просто открываются независимо, ничего не ломается.",
             "Одновременное закрытие уместно не всегда: на странице частых вопросов удобнее независимые разделы, для этого возьмите другой блок.",
             "Если оставить name пустым, согласование пропадёт — атрибут обязан быть непустой строкой.",
@@ -363,6 +596,18 @@
             "type": "text",
             "default": "vibeui-faq-004",
             "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -378,16 +623,20 @@
                 "the typeface contrast — serif in the heading and numbers, sans in the questions: it separates the spoken part from the functional one",
                 "the arrow rotation on open as the only sign of state",
                 "the visible focus ring on summary: opening has to work from the keyboard",
-                "the <style> block inside the component — it holds the palette, the typography and the layout"
+                "the <style> block inside the component — it holds the palette, the typography and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "eyebrow and title — the eyebrow and the section heading",
                 "the items array — the questions and answers; the numbering counts itself",
                 "name — the accordion group name; on a page with two such sections it has to differ",
                 "the accent through the accent prop — it colours the eyebrow, the numbers, the arrow and focus",
-                "outer spacing through className"
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Older browsers do not support the exclusive accordion: there the answers simply open independently, nothing breaks.",
                 "Closing the previous answer is not always right: on a general FAQ page independent items are more convenient — take another block for that.",
                 "Leaving name empty removes the coordination — the attribute has to be a non-empty string.",
@@ -403,11 +652,46 @@
               "name": {
                 "label": "Group name",
                 "default": "vibeui-faq-004"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Exclusive Accordion FAQ"
+            "title": "Exclusive Accordion FAQ",
+            "preview": {
+              "props": {
+                "eyebrow": "How we work",
+                "title": "What clients ask before signing",
+                "items": [
+                  {
+                    "question": "Who owns the rights to the designs after handover?",
+                    "answer": "You do. Exclusive rights pass to the client the moment the acceptance act is signed; no separate licence is needed. The Figma source stays in your account, we simply lose access."
+                  },
+                  {
+                    "question": "What if I do not like the result?",
+                    "answer": "At the first stage we show three directions and continue with the chosen one only. If none of them fit, you pay for the stage and we part with no obligations."
+                  },
+                  {
+                    "question": "How many revisions are included in the price?",
+                    "answer": "Revisions are not counted one by one — they are counted in rounds. Every stage includes two rounds: comments are collected as a list and applied together, not one per email."
+                  },
+                  {
+                    "question": "Do you work with the client's own developers?",
+                    "answer": "Yes, that is the usual arrangement. We hand over the designs, a state specification and a component breakdown, then answer the team's questions in a shared chat until handover."
+                  },
+                  {
+                    "question": "How is the project deadline counted?",
+                    "answer": "From the first working day after the deposit. Days spent waiting for your feedback do not count: if approval took a week, the deadline moves by that week."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -443,7 +727,9 @@
             "useMemo вокруг фильтрации: список пересобирается только при изменении запроса",
             "aria-label у поля — видимой подписи нет, а placeholder исчезает при наборе",
             "текст пустого состояния с подсказкой, куда писать: пустой экран без выхода бесполезен",
-            "нативные details у найденных вопросов: раскрытие работает и на клавиатуре, и поиском по странице"
+            "нативные details у найденных вопросов: раскрытие работает и на клавиатуре, и поиском по странице",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title — заголовок секции",
@@ -451,9 +737,13 @@
             "emptyLabel — текст, когда ничего не нашлось",
             "массив items — вопросы, ответы и темы",
             "акцент через проп accent — цвет темы, стрелки, кольца фокуса",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "searchLabel — подпись поля поиска для скринридера",
+            "countText — строка счётчика; {found} и {total} подставляют числа",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Поиск подстрочный и без морфологии: «доставка» не найдёт «доставки». Для русского имеет смысл добавить свой нормализатор.",
             "Список не подсвечивает совпадения — подсветка внутри ответа мешает читать больше, чем помогает.",
             "На двадцати вопросах фильтрация мгновенная; на нескольких сотнях выносите поиск на сервер.",
@@ -474,6 +764,18 @@
             "type": "text",
             "default": "Например: когда привезут заказ",
             "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -489,7 +791,9 @@
                 "the useMemo around the filtering: the list is rebuilt only when the query changes",
                 "the aria-label on the field — there is no visible label and the placeholder disappears while typing",
                 "the empty-state text with a hint about where to write: an empty screen with no way out is useless",
-                "native details on the found questions: opening works from the keyboard and through find-on-page"
+                "native details on the found questions: opening works from the keyboard and through find-on-page",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title — the section heading",
@@ -497,9 +801,13 @@
                 "emptyLabel — the text shown when nothing matches",
                 "the items array — questions, answers and topics",
                 "the accent through the accent prop — it colours the topic, the arrow and the focus ring",
-                "outer spacing through className"
+                "outer spacing through className",
+                "searchLabel — the screen-reader label of the search field",
+                "countText — the counter line; {found} and {total} are replaced with the numbers",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The search is substring-based and has no stemming: \"delivery\" will not match \"deliveries\". Add your own normaliser if you need it.",
                 "The list does not highlight matches — highlighting inside an answer hurts reading more than it helps.",
                 "With twenty questions the filtering is instant; with several hundred move the search to the server.",
@@ -515,11 +823,64 @@
               "placeholder": {
                 "label": "Search hint",
                 "default": "For example: when will my order arrive"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Searchable FAQ"
+            "title": "Searchable FAQ",
+            "preview": {
+              "props": {
+                "title": "Find an answer in ten seconds",
+                "placeholder": "For example: when will my order arrive",
+                "emptyLabel": "Nothing matched. Try another word or write to support — we answer within an hour.",
+                "searchLabel": "Search the questions",
+                "countText": "Questions shown: {found} of {total}",
+                "items": [
+                  {
+                    "topic": "Delivery",
+                    "question": "When will my order arrive?",
+                    "answer": "Next day inside the city, two or three days outside it. The courier calls in the morning and names a two-hour slot."
+                  },
+                  {
+                    "topic": "Delivery",
+                    "question": "Can I change the address after ordering?",
+                    "answer": "Yes, until the order is handed to the courier. Write in the chat and we will change the address and the time at no extra cost."
+                  },
+                  {
+                    "topic": "Payment",
+                    "question": "Which payment methods do you accept?",
+                    "answer": "Cards, instant bank transfer and an invoice for companies. Paying on delivery is available for city orders only."
+                  },
+                  {
+                    "topic": "Payment",
+                    "question": "When is a pre-order charged?",
+                    "answer": "At the moment it ships from the warehouse, not when you place it. Until then the amount is only held on the card."
+                  },
+                  {
+                    "topic": "Returns",
+                    "question": "How do I return an item?",
+                    "answer": "File a request in your account and attach photos. A courier collects the parcel on a day that suits you, free of charge."
+                  },
+                  {
+                    "topic": "Account",
+                    "question": "How do I change the phone number in my profile?",
+                    "answer": "In the Profile section press Change phone number and confirm the new one with the code from the message."
+                  },
+                  {
+                    "topic": "Account",
+                    "question": "What if the confirmation code never arrives?",
+                    "answer": "Check whether your carrier blocks short numbers. If there is no code after two minutes, ask for a call instead of a message."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -555,7 +916,9 @@
             "карточку элементом <aside> с подписью — это отдельный блок помощи, а не часть списка вопросов",
             "нативные details: поиск по странице сам раскрывает найденный вопрос",
             "container-запрос вместо медиазапроса: в узком контейнере колонки обязаны складываться сами",
-            "блок <style> внутри компонента — в нём палитра, две колонки и карточка"
+            "блок <style> внутри компонента — в нём палитра, две колонки и карточка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title — заголовок списка вопросов",
@@ -563,9 +926,12 @@
             "helpTitle и helpText — заголовок и текст карточки помощи",
             "массив channels — каналы связи, их пояснения и адреса",
             "акцент через проп accent — цвет стрелок, рамки канала при наведении и фокуса",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "helpLabel — подпись карточки помощи для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не обещайте в пояснении канала того, чего не выдерживаете: «отвечаем за 15 минут» проверяют сразу.",
             "Больше трёх каналов превращают карточку в меню: лишнее уводите на страницу контактов.",
             "Sticky работает, только если у родителя нет overflow:hidden — проверьте обёртку страницы.",
@@ -586,6 +952,18 @@
             "type": "text",
             "default": "Частые вопросы о работе сервиса",
             "maxLength": 44
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -601,7 +979,9 @@
                 "the card as an <aside> with a label — it is a separate help block, not part of the question list",
                 "the native details: find-on-page opens the matching question by itself",
                 "the container query instead of a media query: in a narrow container the columns have to fold on their own",
-                "the <style> block inside the component — it holds the palette, the two columns and the card"
+                "the <style> block inside the component — it holds the palette, the two columns and the card",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title — the heading of the question list",
@@ -609,9 +989,12 @@
                 "helpTitle and helpText — the heading and text of the help card",
                 "the channels array — the contact channels, their explanations and addresses",
                 "the accent through the accent prop — it colours the arrows, the channel border on hover and focus",
-                "outer spacing through className"
+                "outer spacing through className",
+                "helpLabel — the screen-reader label of the help card",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not promise in a channel explanation what you cannot keep: \"we answer in 15 minutes\" gets tested immediately.",
                 "More than three channels turn the card into a menu: move the rest to a contacts page.",
                 "Sticky only works when no ancestor has overflow:hidden — check the page wrapper.",
@@ -627,11 +1010,65 @@
               "title": {
                 "label": "List heading",
                 "default": "Common questions about the service"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Ask Support FAQ"
+            "title": "Ask Support FAQ",
+            "preview": {
+              "props": {
+                "title": "Common questions about the service",
+                "helpTitle": "Didn't find an answer?",
+                "helpText": "Ask a real person. We do not pass questions around departments: whoever answers first sees it through.",
+                "helpLabel": "Contact support",
+                "items": [
+                  {
+                    "question": "Do I have to install anything on my computer?",
+                    "answer": "No, the service runs in the browser. There is an app for the phone, and it exists for notifications rather than for work."
+                  },
+                  {
+                    "question": "Who can see my files?",
+                    "answer": "Only the project members you added. Support staff have no access to the content without your explicit permission in a ticket."
+                  },
+                  {
+                    "question": "Can I work offline?",
+                    "answer": "Drafts are saved locally and sent to the server once the connection returns. Collaborative editing is not available offline."
+                  },
+                  {
+                    "question": "How do I export everything I have collected?",
+                    "answer": "The settings hold an archive export: files in their original formats and tables in CSV. It takes a few minutes and the link arrives by email."
+                  },
+                  {
+                    "question": "What happens when an employee leaves?",
+                    "answer": "The administrator revokes access, and everything they created stays in the project and passes to whoever you make the owner."
+                  }
+                ],
+                "channels": [
+                  {
+                    "label": "Message support",
+                    "detail": "We answer in 15 minutes during business hours",
+                    "href": "#support"
+                  },
+                  {
+                    "label": "Call us",
+                    "detail": "+44 20 7000 1122, weekdays from 9 a.m. to 7 p.m.",
+                    "href": "tel:+442070001122"
+                  },
+                  {
+                    "label": "Book a demo",
+                    "detail": "Half an hour with an engineer, shown on your own data",
+                    "href": "#demo"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

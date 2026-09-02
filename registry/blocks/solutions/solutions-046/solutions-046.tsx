@@ -16,7 +16,26 @@ export type Solutions046Props = {
   soonInDays?: number
   filings?: Solutions046Filing[]
   foot?: string
+  /** Подписи плиток: overdue, soon, toPay, forms. */
+  statsText?: Record<string, string>
+  /** Подпись плитки ближайших сроков. {days} — значение soonInDays. */
+  soonText?: string
+  /** Заголовки колонок: form, period, due, status, amount. */
+  columnText?: Record<string, string>
+  /** Подписи статусов: accepted, submitted, amended, overdue, pending. */
+  statusText?: Record<string, string>
+  /** Буквы в кружке статуса: те же ключи, что и в statusText. */
+  statusLetter?: Record<string, string>
+  /** Срок ещё не наступил. {days} — сколько дней осталось. */
+  dueInText?: string
+  /** Срок прошёл. {days} — на сколько дней просрочено. */
+  overdueText?: string
+  currency?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,16 +49,16 @@ export type Solutions046Props = {
 // обратный отсчёт. Статус несёт форму метки и подпись словом, не только цвет.
 const STYLES = `
 :where([data-vibeui-block="solutions-046"]){
---vibeui-solutions-046-bg:oklch(1 0 0);
---vibeui-solutions-046-panel:oklch(0.977 0.004 250);
---vibeui-solutions-046-fg:oklch(0.21 0.014 265);
---vibeui-solutions-046-muted:oklch(0.55 0.014 265);
---vibeui-solutions-046-border:oklch(0.9 0.006 265);
---vibeui-solutions-046-accent:oklch(0.5 0.16 265);
---vibeui-solutions-046-ok:oklch(0.55 0.14 152);
---vibeui-solutions-046-wait:oklch(0.6 0.14 255);
---vibeui-solutions-046-warn:oklch(0.65 0.15 75);
---vibeui-solutions-046-late:oklch(0.57 0.19 25);
+--vibeui-solutions-046-bg:transparent;
+--vibeui-solutions-046-panel:light-dark(oklch(0.977 0.004 250),oklch(0.27 0.011 265));
+--vibeui-solutions-046-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-046-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-046-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-046-accent:light-dark(oklch(0.5 0.16 265),oklch(0.72 0.14 265));
+--vibeui-solutions-046-ok:light-dark(oklch(0.55 0.14 152),oklch(0.72 0.14 152));
+--vibeui-solutions-046-wait:light-dark(oklch(0.6 0.14 255),oklch(0.75 0.13 255));
+--vibeui-solutions-046-warn:light-dark(oklch(0.65 0.15 75),oklch(0.79 0.14 75));
+--vibeui-solutions-046-late:light-dark(oklch(0.57 0.19 25),oklch(0.73 0.16 25));
 --vibeui-solutions-046-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-046-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -173,12 +192,56 @@ const DEFAULT_FILINGS: Solutions046Filing[] = [
 
 type StatusKey = "accepted" | "submitted" | "amended" | "overdue" | "pending"
 
-const STATUS_META: Record<StatusKey, { letter: string; label: string }> = {
-  accepted: { letter: "П", label: "принята" },
-  submitted: { letter: "С", label: "сдана, ждём приёма" },
-  amended: { letter: "У", label: "уточнёнка" },
-  overdue: { letter: "!", label: "просрочена" },
-  pending: { letter: "К", label: "к сдаче" },
+const STATUS_LABEL: Record<string, string> = {
+  accepted: "принята",
+  submitted: "сдана, ждём приёма",
+  amended: "уточнёнка",
+  overdue: "просрочена",
+  pending: "к сдаче",
+}
+
+const STATUS_LETTER: Record<string, string> = {
+  accepted: "П",
+  submitted: "С",
+  amended: "У",
+  overdue: "!",
+  pending: "К",
+}
+
+const STATS_LABEL: Record<string, string> = {
+  overdue: "просрочено",
+  toPay: "к уплате без принятых",
+  forms: "форм в календаре",
+}
+
+const COLUMN_LABEL: Record<string, string> = {
+  form: "Форма",
+  period: "Период",
+  due: "Срок сдачи",
+  status: "Статус",
+  amount: "К уплате",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 function statusOf(filing: Solutions046Filing): StatusKey {
@@ -200,10 +263,22 @@ export function Solutions046({
   soonInDays = 7,
   filings = DEFAULT_FILINGS,
   foot = "Уточнёнка перекрывает статус сдачи: пока по периоду идёт корректировка, остальные отметки не в счёт.",
+  statsText = STATS_LABEL,
+  soonText = "срок в ближайшие {days} дн.",
+  columnText = COLUMN_LABEL,
+  statusText = STATUS_LABEL,
+  statusLetter = STATUS_LETTER,
+  dueInText = "через {days} дн.",
+  overdueText = "просрочено на {days} дн.",
+  currency = "₽",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions046Props) {
+  const stat = (key: string) => statsText[key] ?? STATS_LABEL[key]
+  const column = (key: string) => columnText[key] ?? COLUMN_LABEL[key]
   const withStatus = filings.map((filing) => ({
     filing,
     status: statusOf(filing),
@@ -224,6 +299,12 @@ export function Solutions046({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-046-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-046-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -248,19 +329,21 @@ export function Solutions046({
         <div data-part="stats">
           <p data-part="tile" data-tile="late">
             <b>{overdue}</b>
-            <span>просрочено</span>
+            <span>{stat("overdue")}</span>
           </p>
           <p data-part="tile">
             <b>{dueSoon}</b>
-            <span>срок в ближайшие {soonInDays} дн.</span>
+            <span>{soonText.replace("{days}", String(soonInDays))}</span>
           </p>
           <p data-part="tile">
-            <b>{toPay.toLocaleString("ru-RU")} ₽</b>
-            <span>к уплате без принятых</span>
+            <b>
+              {toPay.toLocaleString(locale)} {currency}
+            </b>
+            <span>{stat("toPay")}</span>
           </p>
           <p data-part="tile">
             <b>{filings.length}</b>
-            <span>форм в календаре</span>
+            <span>{stat("forms")}</span>
           </p>
         </div>
 
@@ -268,12 +351,12 @@ export function Solutions046({
           <table>
             <thead>
               <tr>
-                <th scope="col">Форма</th>
-                <th scope="col">Период</th>
-                <th scope="col">Срок сдачи</th>
-                <th scope="col">Статус</th>
+                <th scope="col">{column("form")}</th>
+                <th scope="col">{column("period")}</th>
+                <th scope="col">{column("due")}</th>
+                <th scope="col">{column("status")}</th>
                 <th scope="col" data-align="end">
-                  К уплате
+                  {column("amount")}
                 </th>
               </tr>
             </thead>
@@ -288,16 +371,19 @@ export function Solutions046({
                   <td>
                     <span data-part="countdown">
                       {filing.dueInDays >= 0
-                        ? `через ${filing.dueInDays} дн.`
-                        : `просрочено на ${Math.abs(filing.dueInDays)} дн.`}
+                        ? dueInText.replace("{days}", String(filing.dueInDays))
+                        : overdueText.replace(
+                            "{days}",
+                            String(Math.abs(filing.dueInDays)),
+                          )}
                     </span>
                   </td>
                   <td>
                     <span data-part="status">
                       <span data-part="letter" aria-hidden="true">
-                        {STATUS_META[status].letter}
+                        {statusLetter[status] ?? STATUS_LETTER[status]}
                       </span>
-                      {STATUS_META[status].label}
+                      {statusText[status] ?? STATUS_LABEL[status]}
                     </span>
                   </td>
                   <td data-align="end">{filing.amount}</td>

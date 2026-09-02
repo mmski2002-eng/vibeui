@@ -9,6 +9,10 @@ export type Button030Props = Omit<
   count?: number
   /** С какого числа показывать «99+». */
   cap?: number
+  /** Шаблон имени для скринридера: {label} и {count} подставляются. */
+  unreadText?: string
+  /** Пусто — подложки нет, кнопка лежит прямо на фоне страницы. */
+  background?: string
   badge?: string
 }
 
@@ -18,12 +22,13 @@ export type Button030Props = Omit<
 // а большие числа схлопываются в «99+», чтобы кнопка не растягивалась.
 const STYLES = `
 :where([data-vibeui-block="button-030"]){
---vibeui-button-030-bg:oklch(1 0 0);
---vibeui-button-030-fg:oklch(0.32 0.016 265);
---vibeui-button-030-border:oklch(0.9 0.006 265);
---vibeui-button-030-accent:oklch(0.55 0.17 265);
---vibeui-button-030-badge:oklch(0.55 0.19 25);
---vibeui-button-030-badge-fg:oklch(0.99 0.01 25);
+--vibeui-button-030-bg:transparent;
+--vibeui-button-030-ring:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-button-030-fg:light-dark(oklch(0.32 0.016 265),oklch(0.9 0.008 265));
+--vibeui-button-030-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-button-030-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-button-030-badge:light-dark(oklch(0.55 0.19 25),oklch(0.68 0.17 25));
+--vibeui-button-030-badge-fg:light-dark(oklch(0.99 0.01 25),oklch(0.19 0.03 25));
 --vibeui-button-030-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-030"]{
@@ -49,14 +54,14 @@ border-radius:1px;background:currentColor;
 content:"";position:absolute;left:50%;bottom:-0.3125rem;width:0.3125rem;height:0.1875rem;
 margin-left:-0.15625rem;border-radius:0 0 0.15625rem 0.15625rem;background:currentColor;
 }
-/* Кольцо цвета подложки: цифра не липнет к краю значка. */
+/* Кольцо цвета страницы: цифра не липнет к краю значка. */
 [data-vibeui-block="button-030"] [data-part="badge"]{
 position:absolute;top:-0.3125rem;right:-0.3125rem;
 display:inline-flex;align-items:center;justify-content:center;
 min-width:1.125rem;height:1.125rem;padding:0 0.25rem;box-sizing:border-box;
 border-radius:9999px;
 background:var(--vibeui-button-030-badge);color:var(--vibeui-button-030-badge-fg);
-box-shadow:0 0 0 2px var(--vibeui-button-030-bg);
+box-shadow:0 0 0 2px var(--vibeui-button-030-ring);
 font-size:0.6875rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="button-030"] [data-part="halo"]{
@@ -76,6 +81,28 @@ animation:vibeui-button-030-halo 2.4s ease-out infinite;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Иконочная кнопка со счётчиком непрочитанного в углу.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -83,6 +110,8 @@ export function Button030({
   label = "Уведомления",
   count = 12,
   cap = 99,
+  unreadText = "{label}: {count} непрочитанных",
+  background = "",
   badge,
   type = "button",
   className,
@@ -93,6 +122,13 @@ export function Button030({
 
   const palette = {
     ...(badge ? { "--vibeui-button-030-badge": badge } : null),
+    ...(background
+      ? {
+          "--vibeui-button-030-bg": background,
+          "--vibeui-button-030-ring": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -107,7 +143,13 @@ export function Button030({
         data-vibeui-block="button-030"
         className={className}
         style={palette}
-        aria-label={count > 0 ? `${label}: ${count} непрочитанных` : label}
+        aria-label={
+          count > 0
+            ? unreadText
+                .replace("{label}", label)
+                .replace("{count}", String(count))
+            : label
+        }
       >
         <span data-part="bell" aria-hidden="true" />
         {count > 0 ? (

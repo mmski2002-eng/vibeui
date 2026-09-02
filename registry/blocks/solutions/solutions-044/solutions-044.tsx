@@ -15,7 +15,24 @@ export type Solutions044Props = {
   requiredSignatures?: number
   orders?: Solutions044Order[]
   foot?: string
+  /** Подписи плиток: ready, total, signed. */
+  statsText?: Record<string, string>
+  /** Плитка полностью подписанных. {ready} и {total} — числа поручений. */
+  readyOfText?: string
+  /** Заголовки колонок: recipient, requisites, priority, signatures, amount. */
+  columnText?: Record<string, string>
+  /** Статусы подписи: ready, waiting, none; {left} — сколько подписей ждём. */
+  statusText?: Record<string, string>
+  /** Скрытая подпись точек. {signed} и {required} — число подписей. */
+  signaturesLabel?: string
+  /** Подпись итоговой строки таблицы. */
+  totalRowText?: string
+  currency?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,14 +47,14 @@ export type Solutions044Props = {
 // отдельным пропом, который может разойтись со списком.
 const STYLES = `
 :where([data-vibeui-block="solutions-044"]){
---vibeui-solutions-044-bg:oklch(1 0 0);
---vibeui-solutions-044-panel:oklch(0.977 0.004 250);
---vibeui-solutions-044-fg:oklch(0.21 0.014 265);
---vibeui-solutions-044-muted:oklch(0.55 0.014 265);
---vibeui-solutions-044-border:oklch(0.9 0.006 265);
---vibeui-solutions-044-accent:oklch(0.5 0.16 265);
---vibeui-solutions-044-ready:oklch(0.55 0.14 152);
---vibeui-solutions-044-wait:oklch(0.65 0.15 75);
+--vibeui-solutions-044-bg:transparent;
+--vibeui-solutions-044-panel:light-dark(oklch(0.977 0.004 250),oklch(0.27 0.011 265));
+--vibeui-solutions-044-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-044-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-044-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-044-accent:light-dark(oklch(0.5 0.16 265),oklch(0.72 0.14 265));
+--vibeui-solutions-044-ready:light-dark(oklch(0.55 0.14 152),oklch(0.71 0.14 152));
+--vibeui-solutions-044-wait:light-dark(oklch(0.65 0.15 75),oklch(0.78 0.14 75));
 --vibeui-solutions-044-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-044-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -168,18 +185,52 @@ const DEFAULT_ORDERS: Solutions044Order[] = [
   },
 ]
 
-function money(amount: number): string {
-  return `${amount.toLocaleString("ru-RU")} ₽`
+const STATS_LABEL: Record<string, string> = {
+  ready: "готово к списанию",
+  total: "всего в реестре",
+  signed: "подписаны полностью",
 }
 
-function statusOf(
-  signed: number,
-  required: number,
-): { key: "ready" | "waiting" | "none"; label: string } {
-  if (signed >= required) return { key: "ready", label: "готово к отправке" }
-  if (signed > 0)
-    return { key: "waiting", label: `ждёт ${required - signed}-ю подпись` }
-  return { key: "none", label: "не подписано" }
+const COLUMN_LABEL: Record<string, string> = {
+  recipient: "Получатель",
+  requisites: "ИНН / счёт",
+  priority: "Очередь",
+  signatures: "Подписи",
+  amount: "Сумма",
+}
+
+const STATUS_LABEL: Record<string, string> = {
+  ready: "готово к отправке",
+  waiting: "ждёт {left}-ю подпись",
+  none: "не подписано",
+}
+
+function statusKeyOf(signed: number, required: number) {
+  if (signed >= required) return "ready" as const
+  if (signed > 0) return "waiting" as const
+  return "none" as const
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -193,10 +244,23 @@ export function Solutions044({
   requiredSignatures = 2,
   orders = DEFAULT_ORDERS,
   foot = "Поручение уходит в банк только после второй подписи — очередность определяет порядок списания при нехватке средств.",
+  statsText = STATS_LABEL,
+  readyOfText = "{ready} из {total}",
+  columnText = COLUMN_LABEL,
+  statusText = STATUS_LABEL,
+  signaturesLabel = "{signed} из {required} подписей",
+  totalRowText = "Итого к списанию",
+  currency = "₽",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions044Props) {
+  const money = (amount: number) =>
+    `${amount.toLocaleString(locale)} ${currency}`
+  const stat = (key: string) => statsText[key] ?? STATS_LABEL[key]
+  const column = (key: string) => columnText[key] ?? COLUMN_LABEL[key]
   const ready = orders.filter(
     (order) => order.signedBy.length >= requiredSignatures,
   )
@@ -205,6 +269,12 @@ export function Solutions044({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-044-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-044-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -229,17 +299,19 @@ export function Solutions044({
         <div data-part="stats">
           <p data-part="tile" data-tile="ready">
             <b>{money(readyTotal)}</b>
-            <span>готово к списанию</span>
+            <span>{stat("ready")}</span>
           </p>
           <p data-part="tile">
             <b>{money(registryTotal)}</b>
-            <span>всего в реестре</span>
+            <span>{stat("total")}</span>
           </p>
           <p data-part="tile">
             <b>
-              {ready.length} из {orders.length}
+              {readyOfText
+                .replace("{ready}", String(ready.length))
+                .replace("{total}", String(orders.length))}
             </b>
-            <span>подписаны полностью</span>
+            <span>{stat("signed")}</span>
           </p>
         </div>
 
@@ -247,22 +319,28 @@ export function Solutions044({
           <table>
             <thead>
               <tr>
-                <th scope="col">Получатель</th>
-                <th scope="col">ИНН / счёт</th>
-                <th scope="col">Очередь</th>
-                <th scope="col">Подписи</th>
+                <th scope="col">{column("recipient")}</th>
+                <th scope="col">{column("requisites")}</th>
+                <th scope="col">{column("priority")}</th>
+                <th scope="col">{column("signatures")}</th>
                 <th scope="col" data-align="end">
-                  Сумма
+                  {column("amount")}
                 </th>
               </tr>
             </thead>
             <tbody>
               {orders.map((order) => {
-                const status = statusOf(
+                const statusName = statusKeyOf(
                   order.signedBy.length,
                   requiredSignatures,
                 )
-                const statusKey = status.key === "none" ? "waiting" : status.key
+                const statusLabel = (
+                  statusText[statusName] ?? STATUS_LABEL[statusName]
+                ).replace(
+                  "{left}",
+                  String(requiredSignatures - order.signedBy.length),
+                )
+                const statusKey = statusName === "none" ? "waiting" : statusName
                 return (
                   <tr
                     key={`${order.recipient}-${order.account}`}
@@ -282,7 +360,9 @@ export function Solutions044({
                         <span
                           data-part="dots"
                           role="img"
-                          aria-label={`${order.signedBy.length} из ${requiredSignatures} подписей`}
+                          aria-label={signaturesLabel
+                            .replace("{signed}", String(order.signedBy.length))
+                            .replace("{required}", String(requiredSignatures))}
                         >
                           {Array.from(
                             { length: requiredSignatures },
@@ -302,7 +382,7 @@ export function Solutions044({
                             ),
                           )}
                         </span>
-                        <span data-part="status">{status.label}</span>
+                        <span data-part="status">{statusLabel}</span>
                       </span>
                     </td>
                     <td data-part="amount">{money(order.amount)}</td>
@@ -312,7 +392,7 @@ export function Solutions044({
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan={4}>Итого к списанию</td>
+                <td colSpan={4}>{totalRowText}</td>
                 <td data-part="amount">{money(readyTotal)}</td>
               </tr>
             </tfoot>

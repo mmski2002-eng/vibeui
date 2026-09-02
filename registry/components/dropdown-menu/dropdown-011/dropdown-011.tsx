@@ -15,7 +15,11 @@ export type Dropdown011Props = Omit<
   placeholder?: string
   options?: string[]
   onChange?: (value: string) => void
+  /** Строка на месте пустой выборки. */
+  emptyText?: string
   accent?: string
+  /** Подложка поля и меню. Пусто — собственный фон по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: широкая кнопка-поле, у которой меню повторяет её ширину, а
@@ -23,14 +27,17 @@ export type Dropdown011Props = Omit<
 // набирают три буквы; поиск включается сам, потому что фокус после открытия
 // уходит в поле. Ширину меню задаёт anchor-size(width) — она обязана совпасть
 // с кнопкой, иначе выпадающий список выглядит чужим элементом.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте поле светлее фона страницы, а его граница светлее поля.
 const STYLES = `
 :where([data-vibeui-block="dropdown-011"]){
---vibeui-dropdown-011-bg:oklch(1 0 0);
---vibeui-dropdown-011-fg:oklch(0.24 0.014 265);
---vibeui-dropdown-011-muted:oklch(0.56 0.014 265);
---vibeui-dropdown-011-border:oklch(0.9 0.006 265);
---vibeui-dropdown-011-hover:oklch(0.96 0.004 265);
---vibeui-dropdown-011-accent:oklch(0.55 0.19 265);
+--vibeui-dropdown-011-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-dropdown-011-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-dropdown-011-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dropdown-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-dropdown-011-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
+--vibeui-dropdown-011-accent:light-dark(oklch(0.55 0.19 265),oklch(0.75 0.15 265));
 --vibeui-dropdown-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="dropdown-011"]{
@@ -119,6 +126,28 @@ const DEFAULT_OPTIONS = [
   "Документация API",
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function stepFocus(list: HTMLElement | null, delta: number) {
   if (!list) {
     return
@@ -145,7 +174,9 @@ export function Dropdown011({
   placeholder = "Поиск по названию",
   options = DEFAULT_OPTIONS,
   onChange,
+  emptyText = "Ничего не найдено",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -162,6 +193,12 @@ export function Dropdown011({
 
   const palette = {
     ...(accent ? { "--vibeui-dropdown-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dropdown-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -225,7 +262,7 @@ export function Dropdown011({
           />
           <div data-part="list">
             {shown.length === 0 ? (
-              <p data-part="empty">Ничего не найдено</p>
+              <p data-part="empty">{emptyText}</p>
             ) : (
               shown.map((option) => (
                 <button

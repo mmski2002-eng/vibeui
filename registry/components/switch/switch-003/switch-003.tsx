@@ -13,6 +13,11 @@ export type Switch003Props = Omit<
 > & {
   legend?: string
   items?: Switch003Item[]
+  /** Статус включённой строки. Рисуется через CSS content, поэтому едет переменной. */
+  onText?: string
+  offText?: string
+  /** Пусто — подложки нет, раздел держится рамкой на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,14 +27,16 @@ export type Switch003Props = Omit<
 // потому что цвет бегунка сам по себе не говорит, что сейчас включено.
 const STYLES = `
 :where([data-vibeui-block="switch-003"]){
---vibeui-switch-003-bg:oklch(1 0 0);
---vibeui-switch-003-fg:oklch(0.22 0.014 265);
---vibeui-switch-003-muted:oklch(0.55 0.014 265);
---vibeui-switch-003-border:oklch(0.91 0.006 265);
---vibeui-switch-003-track:oklch(0.88 0.008 265);
---vibeui-switch-003-thumb:oklch(1 0 0);
---vibeui-switch-003-accent:oklch(0.55 0.19 262);
---vibeui-switch-003-hover:oklch(0.55 0.02 265 / 6%);
+--vibeui-switch-003-bg:transparent;
+--vibeui-switch-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-switch-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-switch-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-switch-003-track:light-dark(oklch(0.88 0.008 265),oklch(0.43 0.014 265));
+--vibeui-switch-003-thumb:light-dark(oklch(1 0 0),oklch(0.93 0.004 265));
+--vibeui-switch-003-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.16 262));
+--vibeui-switch-003-hover:light-dark(oklch(0.55 0.02 265 / 6%),oklch(0.88 0.02 265 / 10%));
+--vibeui-switch-003-on-text:"Вкл";
+--vibeui-switch-003-off-text:"Выкл";
 --vibeui-switch-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="switch-003"]{
@@ -64,10 +71,11 @@ flex:none;min-width:2.25rem;text-align:right;
 font-size:0.6875rem;font-weight:600;color:var(--vibeui-switch-003-muted);
 }
 /* Текстовый статус переключается на CSS: :has() смотрит на состояние
-   input'а в той же строке. */
-[data-vibeui-block="switch-003"] [data-part="state"]::after{content:"Выкл"}
+   input'а в той же строке. Сами слова живут в переменных, поэтому их
+   переопределяет проп, а не правка стилей. */
+[data-vibeui-block="switch-003"] [data-part="state"]::after{content:var(--vibeui-switch-003-off-text)}
 [data-vibeui-block="switch-003"] [data-part="row"]:has(input:checked) [data-part="state"]{color:var(--vibeui-switch-003-accent)}
-[data-vibeui-block="switch-003"] [data-part="row"]:has(input:checked) [data-part="state"]::after{content:"Вкл"}
+[data-vibeui-block="switch-003"] [data-part="row"]:has(input:checked) [data-part="state"]::after{content:var(--vibeui-switch-003-on-text)}
 [data-vibeui-block="switch-003"] [data-part="track"]{position:relative;display:flex;flex:none}
 [data-vibeui-block="switch-003"] input{
 appearance:none;-webkit-appearance:none;margin:0;
@@ -114,12 +122,37 @@ const DEFAULT_ITEMS: Switch003Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Раздел настроек: список строк с переключателями и текстовым статусом.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Switch003({
   legend = "Уведомления",
   items = DEFAULT_ITEMS,
+  onText = "Вкл",
+  offText = "Выкл",
+  background = "",
   accent,
   className,
   style,
@@ -127,6 +160,16 @@ export function Switch003({
 }: Switch003Props) {
   const palette = {
     ...(accent ? { "--vibeui-switch-003-accent": accent } : null),
+    // content принимает строку в кавычках, поэтому проп доезжает
+    // до CSS уже закавыченным.
+    "--vibeui-switch-003-on-text": `"${onText}"`,
+    "--vibeui-switch-003-off-text": `"${offText}"`,
+    ...(background
+      ? {
+          "--vibeui-switch-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

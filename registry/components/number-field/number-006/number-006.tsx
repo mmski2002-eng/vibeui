@@ -12,6 +12,16 @@ export type Number006Props = Omit<
   defaultValue?: number
   max?: number
   unit?: string
+  /** Подпись кнопки возврата к исходной сумме. */
+  resetText?: string
+  /** Подпись кнопки-дозы для скринридера. Подстановки: {step}, {unit}. */
+  addLabel?: string
+  /** Строка про верхнюю границу. Подстановки: {max}, {unit}. */
+  hintText?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,19 +30,23 @@ export type Number006Props = Omit<
 // быстрее, чем набор с клавиатуры, и не требуют угадывать готовый вариант.
 // Раз добавление накапливается, обязателен обратный ход: «сбросить» возвращает
 // исходное значение, иначе перебор чинят только выделением и стиранием.
+//
+// Тема берётся из color-scheme окружения через light-dark(): поле темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="number-006"]){
---vibeui-number-006-surface:oklch(1 0 0);
---vibeui-number-006-field:oklch(0.98 0.003 265);
---vibeui-number-006-shell:oklch(0.9 0.006 265);
---vibeui-number-006-fg:oklch(0.23 0.014 265);
---vibeui-number-006-muted:oklch(0.55 0.014 265);
---vibeui-number-006-border:oklch(0.88 0.008 265);
---vibeui-number-006-accent:oklch(0.56 0.18 45);
---vibeui-number-006-soft:oklch(0.56 0.18 45 / 10%);
+--vibeui-number-006-surface:transparent;
+--vibeui-number-006-chip:light-dark(oklch(1 0 0),oklch(0.3 0.012 265));
+--vibeui-number-006-field:light-dark(oklch(0.98 0.003 265),oklch(0.25 0.011 265));
+--vibeui-number-006-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-number-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-number-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-number-006-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-number-006-accent:light-dark(oklch(0.56 0.18 45),oklch(0.76 0.15 45));
+--vibeui-number-006-soft:light-dark(oklch(0.56 0.18 45 / 10%),oklch(0.76 0.15 45 / 18%));
 --vibeui-number-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="number-006"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:19rem;box-sizing:border-box;padding:0.875rem;
@@ -78,7 +92,7 @@ flex:none;font-size:0.875rem;font-weight:650;color:var(--vibeui-number-006-muted
 appearance:none;cursor:pointer;flex:1 1 auto;
 height:2rem;padding:0 0.75rem;
 border:1px solid var(--vibeui-number-006-border);border-radius:0.5rem;
-background:var(--vibeui-number-006-surface);color:inherit;
+background:var(--vibeui-number-006-chip);color:inherit;
 font:inherit;font-size:0.8125rem;font-weight:650;font-variant-numeric:tabular-nums;
 transition:background-color .14s ease,border-color .14s ease;
 }
@@ -96,6 +110,28 @@ margin:0;font-size:0.75rem;color:var(--vibeui-number-006-muted);font-variant-num
 const DEFAULT_STEPS = [10, 50, 100]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Число с кнопками-дозами: они прибавляют к значению, а не задают его.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -105,6 +141,11 @@ export function Number006({
   defaultValue = 250,
   max = 5000,
   unit = "₽",
+  resetText = "сбросить",
+  addLabel = "Прибавить {step} {unit}",
+  hintText = "Максимум {max} {unit} за одно пополнение",
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -115,6 +156,12 @@ export function Number006({
 
   const palette = {
     ...(accent ? { "--vibeui-number-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-number-006-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -137,7 +184,7 @@ export function Number006({
             disabled={value === defaultValue}
             onClick={() => setValue(defaultValue)}
           >
-            сбросить
+            {resetText}
           </button>
         </p>
         <div data-part="field">
@@ -167,7 +214,9 @@ export function Number006({
               key={step}
               type="button"
               disabled={value + step > max}
-              aria-label={`Прибавить ${step} ${unit}`}
+              aria-label={addLabel
+                .replace("{step}", String(step))
+                .replace("{unit}", unit)}
               onClick={() => setValue(Math.min(max, value + step))}
             >
               +{step}
@@ -175,7 +224,9 @@ export function Number006({
           ))}
         </div>
         <p id={`${id}-hint`} data-part="hint">
-          Максимум {max.toLocaleString("ru-RU")} {unit} за одно пополнение
+          {hintText
+            .replace("{max}", max.toLocaleString(locale))
+            .replace("{unit}", unit)}
         </p>
       </div>
     </>

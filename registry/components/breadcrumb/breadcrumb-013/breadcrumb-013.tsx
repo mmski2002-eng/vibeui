@@ -15,6 +15,12 @@ export type Breadcrumb013Props = Omit<
   current?: string
   siblings?: Breadcrumb013Sibling[]
   menuTitle?: string
+  /** Подсказка на кнопке уровня: компонент несёт русскую, проект — свою. */
+  triggerHint?: string
+  /** Подпись навигации: компонент несёт русскую, проект подставляет свою. */
+  navLabel?: string
+  /** Пусто — подложки нет, крошки лежат прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,25 +30,31 @@ export type Breadcrumb013Props = Omit<
 // от браузера. Позиция берётся из CSS anchor positioning там, где он есть,
 // а где нет — popover остаётся карточкой по центру экрана, и это рабочий
 // вид, а не поломка.
+//
+// Тема берётся из color-scheme окружения через light-dark(): крошки темнеют
+// вместе со страницей, собственная заливка остаётся только у меню — оно
+// висит верхним слоем и обязано быть непрозрачным.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-013"]){
---vibeui-breadcrumb-013-surface:oklch(1 0 0);
---vibeui-breadcrumb-013-surface-border:oklch(0.91 0.006 265);
---vibeui-breadcrumb-013-fg:oklch(0.26 0.016 265);
---vibeui-breadcrumb-013-muted:oklch(0.56 0.014 265);
---vibeui-breadcrumb-013-faint:oklch(0.66 0.012 265);
---vibeui-breadcrumb-013-border:oklch(0.9 0.006 265);
---vibeui-breadcrumb-013-hover:oklch(0.96 0.004 265);
---vibeui-breadcrumb-013-accent:oklch(0.55 0.17 265);
+--vibeui-breadcrumb-013-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.008 265));
+--vibeui-breadcrumb-013-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-breadcrumb-013-faint:light-dark(oklch(0.66 0.012 265),oklch(0.6 0.012 265));
+--vibeui-breadcrumb-013-sep:light-dark(oklch(0.78 0.01 265),oklch(0.5 0.012 265));
+--vibeui-breadcrumb-013-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.012 265));
+--vibeui-breadcrumb-013-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
+--vibeui-breadcrumb-013-menu:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-breadcrumb-013-shadow:light-dark(oklch(0.2 0.02 265 / 60%),oklch(0 0 0 / 70%));
+--vibeui-breadcrumb-013-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-breadcrumb-013-bg:transparent;
+--vibeui-breadcrumb-013-pad:0;
+--vibeui-breadcrumb-013-radius:0;
 --vibeui-breadcrumb-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Собственная светлая подложка: крошки — это тёмный текст, и на тёмной
-   карточке каталога он обязан читаться без правки темы проекта. */
 [data-vibeui-block="breadcrumb-013"]{
 box-sizing:border-box;width:100%;max-width:34rem;
-padding:0.5rem 0.75rem;
-background:var(--vibeui-breadcrumb-013-surface);
-border:1px solid var(--vibeui-breadcrumb-013-surface-border);border-radius:0.625rem;
+padding:var(--vibeui-breadcrumb-013-pad);
+background:var(--vibeui-breadcrumb-013-bg);
+border-radius:var(--vibeui-breadcrumb-013-radius);
 font-family:var(--vibeui-breadcrumb-013-font);font-size:0.8125rem;line-height:1.4;
 color:var(--vibeui-breadcrumb-013-muted);
 }
@@ -51,7 +63,7 @@ display:flex;flex-wrap:wrap;align-items:center;gap:0.4375rem;
 margin:0;padding:0;list-style:none;
 }
 [data-vibeui-block="breadcrumb-013"] li{display:inline-flex;align-items:center;gap:0.4375rem}
-[data-vibeui-block="breadcrumb-013"] li + li::before{content:"/";color:oklch(0.78 0.01 265)}
+[data-vibeui-block="breadcrumb-013"] li + li::before{content:"/";color:var(--vibeui-breadcrumb-013-sep)}
 [data-vibeui-block="breadcrumb-013"] a{color:inherit;text-decoration:none;border-radius:0.25rem}
 [data-vibeui-block="breadcrumb-013"] a:hover{color:var(--vibeui-breadcrumb-013-fg);text-decoration:underline;text-underline-offset:3px}
 [data-vibeui-block="breadcrumb-013"] a:focus-visible{outline:2px solid var(--vibeui-breadcrumb-013-accent);outline-offset:2px}
@@ -76,10 +88,10 @@ transform:rotate(45deg);
 [data-vibeui-block="breadcrumb-013"] [data-part="menu"]{
 box-sizing:border-box;width:min(17rem,calc(100vw - 2rem));
 padding:0.3125rem;border:1px solid var(--vibeui-breadcrumb-013-border);
-border-radius:0.625rem;background:var(--vibeui-breadcrumb-013-surface);
+border-radius:0.625rem;background:var(--vibeui-breadcrumb-013-menu);
 font-family:var(--vibeui-breadcrumb-013-font);font-size:0.8125rem;
 color:var(--vibeui-breadcrumb-013-muted);
-box-shadow:0 18px 40px -22px oklch(0.2 0.02 265 / 60%);
+box-shadow:0 18px 40px -22px var(--vibeui-breadcrumb-013-shadow);
 }
 [data-vibeui-block="breadcrumb-013"] [data-part="menu"]:not(:popover-open){display:none}
 [data-vibeui-block="breadcrumb-013"] [data-part="menu-title"]{
@@ -127,6 +139,29 @@ const DEFAULT_SIBLINGS: Breadcrumb013Sibling[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Последний уровень открывает popover-меню соседних страниц.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -135,6 +170,9 @@ export function Breadcrumb013({
   current = "Настройки",
   siblings = DEFAULT_SIBLINGS,
   menuTitle = "Соседние страницы",
+  triggerHint = "показать соседние страницы",
+  navLabel = "Хлебные крошки",
+  background = "",
   accent,
   className,
   style,
@@ -144,6 +182,14 @@ export function Breadcrumb013({
   const anchorName = `--vibeui-breadcrumb-013-${menuId.slice(-8)}`
   const palette = {
     ...(accent ? { "--vibeui-breadcrumb-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-breadcrumb-013-bg": background,
+          "--vibeui-breadcrumb-013-pad": "0.5rem 0.75rem",
+          "--vibeui-breadcrumb-013-radius": "0.625rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -155,7 +201,7 @@ export function Breadcrumb013({
       <nav
         {...props}
         data-vibeui-block="breadcrumb-013"
-        aria-label="Хлебные крошки"
+        aria-label={navLabel}
         className={className}
         style={palette}
       >
@@ -171,7 +217,7 @@ export function Breadcrumb013({
               data-part="trigger"
               popoverTarget={menuId}
               aria-current="page"
-              aria-label={`${current}: показать соседние страницы`}
+              aria-label={`${current}: ${triggerHint}`}
               style={{ anchorName } as CSSProperties}
             >
               {current}

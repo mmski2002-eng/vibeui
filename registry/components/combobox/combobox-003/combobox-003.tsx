@@ -17,7 +17,13 @@ export type Combobox003Props = Omit<
   defaultSelected?: string[]
   emptyLabel?: string
   maxSelected?: number
+  /** Счётчик выбранного. {count} — сколько отмечено, {max} — предел. */
+  counterText?: string
+  /** Подпись крестика на фишке. {option} — название фишки. */
+  removeLabel?: string
   onChange?: (values: string[]) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,14 +33,16 @@ export type Combobox003Props = Omit<
 // и снимать выбор там же, где ставил.
 const STYLES = `
 :where([data-vibeui-block="combobox-003"]){
---vibeui-combobox-003-bg:oklch(1 0 0);
---vibeui-combobox-003-fg:oklch(0.22 0.02 300);
---vibeui-combobox-003-muted:oklch(0.53 0.02 300);
---vibeui-combobox-003-border:oklch(0.9 0.01 300);
---vibeui-combobox-003-field:oklch(0.985 0.004 300);
---vibeui-combobox-003-active:oklch(0.95 0.03 300);
---vibeui-combobox-003-accent:oklch(0.53 0.19 300);
---vibeui-combobox-003-chip:oklch(0.95 0.04 300);
+--vibeui-combobox-003-bg:transparent;
+--vibeui-combobox-003-panel:light-dark(oklch(1 0 0),oklch(0.27 0.018 300));
+--vibeui-combobox-003-fg:light-dark(oklch(0.22 0.02 300),oklch(0.94 0.008 300));
+--vibeui-combobox-003-muted:light-dark(oklch(0.53 0.02 300),oklch(0.7 0.018 300));
+--vibeui-combobox-003-border:light-dark(oklch(0.9 0.01 300),oklch(0.38 0.018 300));
+--vibeui-combobox-003-field:light-dark(oklch(0.985 0.004 300),oklch(0.3 0.016 300));
+--vibeui-combobox-003-active:light-dark(oklch(0.95 0.03 300),oklch(0.36 0.04 300));
+--vibeui-combobox-003-accent:light-dark(oklch(0.53 0.19 300),oklch(0.75 0.16 300));
+--vibeui-combobox-003-onaccent:light-dark(oklch(1 0 0),oklch(0.2 0.03 300));
+--vibeui-combobox-003-chip:light-dark(oklch(0.95 0.04 300),oklch(0.37 0.05 300));
 --vibeui-combobox-003-radius:0.625rem;
 --vibeui-combobox-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -73,7 +81,7 @@ appearance:none;border:0;cursor:pointer;background:transparent;color:inherit;
 display:inline-flex;align-items:center;justify-content:center;
 width:1.1rem;height:1.1rem;border-radius:999px;font-size:0.85rem;line-height:1;
 }
-[data-vibeui-block="combobox-003"] [data-part="chipclose"]:hover{background:var(--vibeui-combobox-003-bg)}
+[data-vibeui-block="combobox-003"] [data-part="chipclose"]:hover{background:var(--vibeui-combobox-003-panel)}
 [data-vibeui-block="combobox-003"] [data-part="chipclose"]:focus-visible{outline:2px solid var(--vibeui-combobox-003-accent);outline-offset:1px}
 [data-vibeui-block="combobox-003"] input{
 flex:1 1 6rem;min-width:5rem;height:1.8rem;padding:0 0.25rem;
@@ -96,7 +104,7 @@ width:1rem;height:1rem;border-radius:0.3rem;font-size:0.7rem;line-height:1;
 border:1.5px solid var(--vibeui-combobox-003-border);
 }
 [data-vibeui-block="combobox-003"] [data-part="option"][aria-selected="true"] [data-part="box"]{
-background:var(--vibeui-combobox-003-accent);border-color:var(--vibeui-combobox-003-accent);color:oklch(1 0 0);
+background:var(--vibeui-combobox-003-accent);border-color:var(--vibeui-combobox-003-accent);color:var(--vibeui-combobox-003-onaccent);
 }
 [data-vibeui-block="combobox-003"] [data-part="empty"]{padding:0.5rem;font-size:0.8125rem;color:var(--vibeui-combobox-003-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="combobox-003"] *{animation:none!important;transition:none!important}}
@@ -114,6 +122,28 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая плашка иначе досталась бы тексту
+ * тёмной ветки, потому что light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox с множественным выбором фишками: выбранное остаётся в списке
  * с отметкой, Backspace в пустом поле снимает последнюю фишку.
  */
@@ -124,7 +154,10 @@ export function Combobox003({
   defaultSelected = ["Дизайн", "Фронтенд"],
   emptyLabel = "Ничего не нашлось",
   maxSelected = 5,
+  counterText = "{count} из {max}",
+  removeLabel = "Убрать {option}",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -144,6 +177,12 @@ export function Combobox003({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -200,7 +239,9 @@ export function Combobox003({
         <div data-part="head">
           <label htmlFor={`${id}-input`}>{label}</label>
           <span data-part="counter" aria-live="polite">
-            {selected.length} из {maxSelected}
+            {counterText
+              .replace("{count}", String(selected.length))
+              .replace("{max}", String(maxSelected))}
           </span>
         </div>
         <div data-part="field">
@@ -210,7 +251,7 @@ export function Combobox003({
               <button
                 type="button"
                 data-part="chipclose"
-                aria-label={`Убрать ${entry}`}
+                aria-label={removeLabel.replace("{option}", entry)}
                 onClick={() => toggle(entry)}
               >
                 ×

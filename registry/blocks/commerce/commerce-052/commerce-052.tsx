@@ -22,6 +22,8 @@ export type Commerce052Props = {
   secondary?: string
   note?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -35,12 +37,13 @@ export type Commerce052Props = {
 // тем, у кого звук выключен, и поисковым роботам.
 const STYLES = `
 :where([data-vibeui-block="commerce-052"]){
---vibeui-commerce-052-bg:oklch(1 0 0);
---vibeui-commerce-052-fg:oklch(0.2 0.014 275);
---vibeui-commerce-052-muted:oklch(0.53 0.014 275);
---vibeui-commerce-052-border:oklch(0.91 0.006 275);
---vibeui-commerce-052-soft:oklch(0.97 0.004 275);
---vibeui-commerce-052-accent:oklch(0.53 0.2 20);
+--vibeui-commerce-052-bg:transparent;
+--vibeui-commerce-052-fg:light-dark(oklch(0.2 0.014 275),oklch(0.93 0.006 275));
+--vibeui-commerce-052-muted:light-dark(oklch(0.53 0.014 275),oklch(0.72 0.012 275));
+--vibeui-commerce-052-border:light-dark(oklch(0.91 0.006 275),oklch(0.36 0.012 275));
+--vibeui-commerce-052-soft:light-dark(oklch(0.97 0.004 275),oklch(0.28 0.008 275));
+--vibeui-commerce-052-accent:light-dark(oklch(0.53 0.2 20),oklch(0.76 0.16 25));
+--vibeui-commerce-052-onaccent:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 25));
 --vibeui-commerce-052-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -82,7 +85,7 @@ font-variant-numeric:tabular-nums;
 [data-vibeui-block="commerce-052"] [data-part="buttons"]{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem}
 [data-vibeui-block="commerce-052"] [data-part="buy"]{
 appearance:none;border:0;cursor:pointer;height:2.75rem;padding:0 1.5rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-052-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-052-accent);color:var(--vibeui-commerce-052-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-052"] [data-part="alt"]{
 appearance:none;cursor:pointer;height:2.75rem;padding:0 1.25rem;border-radius:0.875rem;
@@ -124,6 +127,28 @@ const DEFAULT_CHAPTERS: Commerce052Chapter[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Страница товара с видеообзором: ручной запуск, главы с таймкодами и
  * расшифровка в details. Один файл, ноль зависимостей, палитра своя.
  */
@@ -143,11 +168,18 @@ export function Commerce052({
   secondary = "Сравнить с прошлой моделью",
   note = "Видео не запускается само: обзор весит 240 МБ, и на мобильном интернете это половина дневного пакета.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce052Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-052-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-052-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

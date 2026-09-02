@@ -21,7 +21,25 @@ export type Solutions045Props = {
   operations?: Solutions045Operation[]
   positions?: Solutions045Position[]
   foot?: string
+  /** Заголовки колонок: date, side, amount, dealRate, cbRate, deviation, rubles. */
+  columnText?: Record<string, string>
+  /** Направление сделки: buy, sell. */
+  sideText?: Record<string, string>
+  /** Заголовок блока позиций по валютам. */
+  positionsTitle?: string
+  /** Подпись лимита. {limit} — число лимита. */
+  limitText?: string
+  /** Подпись превышенного лимита. {limit} — число лимита. */
+  overLimitText?: string
+  /** Скрытая подпись полосы позиции. {currency} — код валюты. */
+  positionLabel?: string
+  /** Символ рублёвой суммы. */
+  currency?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -36,15 +54,15 @@ export type Solutions045Props = {
 // полосы относительно лимита, а не голые числа: превышение видно геометрией.
 const STYLES = `
 :where([data-vibeui-block="solutions-045"]){
---vibeui-solutions-045-bg:oklch(1 0 0);
---vibeui-solutions-045-panel:oklch(0.977 0.004 250);
---vibeui-solutions-045-fg:oklch(0.21 0.014 265);
---vibeui-solutions-045-muted:oklch(0.55 0.014 265);
---vibeui-solutions-045-border:oklch(0.9 0.006 265);
---vibeui-solutions-045-accent:oklch(0.5 0.16 265);
---vibeui-solutions-045-buy:oklch(0.55 0.14 152);
---vibeui-solutions-045-sell:oklch(0.56 0.17 25);
---vibeui-solutions-045-warn:oklch(0.65 0.15 75);
+--vibeui-solutions-045-bg:transparent;
+--vibeui-solutions-045-panel:light-dark(oklch(0.977 0.004 250),oklch(0.27 0.011 265));
+--vibeui-solutions-045-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-045-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-045-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-045-accent:light-dark(oklch(0.5 0.16 265),oklch(0.72 0.14 265));
+--vibeui-solutions-045-buy:light-dark(oklch(0.55 0.14 152),oklch(0.72 0.14 152));
+--vibeui-solutions-045-sell:light-dark(oklch(0.56 0.17 25),oklch(0.73 0.15 25));
+--vibeui-solutions-045-warn:light-dark(oklch(0.65 0.15 75),oklch(0.79 0.14 75));
 --vibeui-solutions-045-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-045-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -173,8 +191,41 @@ const CURRENCY_LABEL: Record<string, string> = {
   CNY: "¥",
 }
 
-function money(amount: number): string {
-  return `${Math.round(amount).toLocaleString("ru-RU")} ₽`
+const COLUMN_LABEL: Record<string, string> = {
+  date: "Дата",
+  side: "Операция",
+  amount: "Сумма в валюте",
+  dealRate: "Курс сделки",
+  cbRate: "Курс ЦБ",
+  deviation: "Отклонение",
+  rubles: "Сумма в рублях",
+}
+
+const SIDE_LABEL: Record<string, string> = {
+  buy: "покупка",
+  sell: "продажа",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -188,12 +239,31 @@ export function Solutions045({
   operations = DEFAULT_OPERATIONS,
   positions = DEFAULT_POSITIONS,
   foot = "Отклонение считается от курса ЦБ на дату сделки: выше рынка при покупке — переплата, ниже — экономия.",
+  columnText = COLUMN_LABEL,
+  sideText = SIDE_LABEL,
+  positionsTitle = "Позиции по валютам",
+  limitText = "лимит {limit}",
+  overLimitText = "превышен лимит {limit}",
+  positionLabel = "Позиция по {currency} относительно лимита",
+  currency = "₽",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions045Props) {
+  const column = (key: string) => columnText[key] ?? COLUMN_LABEL[key]
+  const money = (amount: number) =>
+    `${Math.round(amount).toLocaleString(locale)} ${currency}`
+
   const palette = {
     ...(accent ? { "--vibeui-solutions-045-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-045-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -219,22 +289,22 @@ export function Solutions045({
           <table>
             <thead>
               <tr>
-                <th scope="col">Дата</th>
-                <th scope="col">Операция</th>
+                <th scope="col">{column("date")}</th>
+                <th scope="col">{column("side")}</th>
                 <th scope="col" data-align="end">
-                  Сумма в валюте
+                  {column("amount")}
                 </th>
                 <th scope="col" data-align="end">
-                  Курс сделки
+                  {column("dealRate")}
                 </th>
                 <th scope="col" data-align="end">
-                  Курс ЦБ
+                  {column("cbRate")}
                 </th>
                 <th scope="col" data-align="end">
-                  Отклонение
+                  {column("deviation")}
                 </th>
                 <th scope="col" data-align="end">
-                  Сумма в рублях
+                  {column("rubles")}
                 </th>
               </tr>
             </thead>
@@ -252,13 +322,13 @@ export function Solutions045({
                     <td>{operation.date}</td>
                     <td>
                       <span data-part="side" data-side={operation.side}>
-                        {operation.side === "buy" ? "покупка" : "продажа"}{" "}
+                        {sideText[operation.side] ?? SIDE_LABEL[operation.side]}{" "}
                         {operation.currency}
                       </span>
                     </td>
                     <td data-align="end">
                       {CURRENCY_LABEL[operation.currency] ?? ""}
-                      {operation.amount.toLocaleString("ru-RU")}
+                      {operation.amount.toLocaleString(locale)}
                     </td>
                     <td data-part="rate">{operation.dealRate.toFixed(2)}</td>
                     <td data-part="rate">{operation.cbRate.toFixed(2)}</td>
@@ -282,7 +352,7 @@ export function Solutions045({
         </div>
 
         <div data-part="positions">
-          <p data-part="positions-title">Позиции по валютам</p>
+          <p data-part="positions-title">{positionsTitle}</p>
           {positions.map((position) => {
             const percent = Math.min(
               100,
@@ -295,14 +365,17 @@ export function Solutions045({
                   <span>{position.currency}</span>
                   <b>
                     {CURRENCY_LABEL[position.currency] ?? ""}
-                    {position.amount.toLocaleString("ru-RU")}
+                    {position.amount.toLocaleString(locale)}
                   </b>
                 </p>
                 <div
                   data-part="bar-track"
                   data-over={over ? "true" : "false"}
                   role="progressbar"
-                  aria-label={`Позиция по ${position.currency} относительно лимита`}
+                  aria-label={positionLabel.replace(
+                    "{currency}",
+                    position.currency,
+                  )}
                   aria-valuenow={position.amount}
                   aria-valuemin={0}
                   aria-valuemax={position.limit}
@@ -310,9 +383,10 @@ export function Solutions045({
                   <div data-part="bar-fill" style={{ width: `${percent}%` }} />
                 </div>
                 <p data-part="limit-note">
-                  {over
-                    ? `превышен лимит ${position.limit.toLocaleString("ru-RU")}`
-                    : `лимит ${position.limit.toLocaleString("ru-RU")}`}
+                  {(over ? overLimitText : limitText).replace(
+                    "{limit}",
+                    position.limit.toLocaleString(locale),
+                  )}
                 </p>
               </div>
             )

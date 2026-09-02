@@ -14,6 +14,14 @@ export type Datagrid003Props = Omit<
   weeks?: string[]
   caption?: string
   scrollHint?: string
+  /** Заголовок шапки над таблицей. */
+  heading?: string
+  /** Названия закреплённых колонок: region и owner. */
+  columnText?: Record<string, string>
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Подложка сетки. Липкие колонки требуют непрозрачного цвета. */
+  background?: string
   accent?: string
 }
 
@@ -22,15 +30,19 @@ export type Datagrid003Props = Omit<
 // Прокрутка живёт в собственном контейнере с tabindex и подписью, поэтому
 // она работает с клавиатуры, а не только колесом. Тень у закреплённых колонок
 // появляется по прокрутке через scroll-timeline там, где он поддержан.
+//
+// Тема берётся из color-scheme окружения через light-dark(). Подложка тут
+// непрозрачная намеренно: липкие колонки перекрывают уезжающие ячейки только
+// собственным фоном.
 const STYLES = `
 :where([data-vibeui-block="datagrid-003"]){
---vibeui-datagrid-003-bg:oklch(1 0 0);
---vibeui-datagrid-003-fg:oklch(0.23 0.014 250);
---vibeui-datagrid-003-muted:oklch(0.55 0.014 250);
---vibeui-datagrid-003-border:oklch(0.92 0.006 250);
---vibeui-datagrid-003-head:oklch(0.975 0.003 250);
---vibeui-datagrid-003-accent:oklch(0.52 0.14 200);
---vibeui-datagrid-003-shadow:oklch(0.23 0.014 250 / 18%);
+--vibeui-datagrid-003-bg:light-dark(oklch(1 0 0),oklch(0.2 0.012 250));
+--vibeui-datagrid-003-fg:light-dark(oklch(0.23 0.014 250),oklch(0.93 0.006 250));
+--vibeui-datagrid-003-muted:light-dark(oklch(0.55 0.014 250),oklch(0.68 0.012 250));
+--vibeui-datagrid-003-border:light-dark(oklch(0.92 0.006 250),oklch(0.34 0.012 250));
+--vibeui-datagrid-003-head:light-dark(oklch(0.975 0.003 250),oklch(0.27 0.012 250));
+--vibeui-datagrid-003-accent:light-dark(oklch(0.52 0.14 200),oklch(0.76 0.12 200));
+--vibeui-datagrid-003-shadow:light-dark(oklch(0.23 0.014 250 / 18%),oklch(0 0 0 / 45%));
 --vibeui-datagrid-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-003"]{
@@ -148,6 +160,33 @@ const DEFAULT_ROWS: Datagrid003Row[] = [
   },
 ]
 
+const COLUMN_LABEL: Record<string, string> = {
+  region: "Регион",
+  owner: "Менеджер",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Широкая сетка с закреплёнными крайними колонками: подпись строки слева,
  * действие справа, недели прокручиваются между ними. Серверный компонент.
@@ -157,6 +196,10 @@ export function Datagrid003({
   weeks = DEFAULT_WEEKS,
   caption = "Заказы по неделям, штук",
   scrollHint = "Прокрутите вбок: крайние колонки закреплены",
+  heading = "Поставки по регионам",
+  columnText = COLUMN_LABEL,
+  scrollLabel = "Таблица поставок по неделям, прокручивается вбок",
+  background = "",
   accent,
   className,
   style,
@@ -164,6 +207,12 @@ export function Datagrid003({
 }: Datagrid003Props) {
   const palette = {
     ...(accent ? { "--vibeui-datagrid-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -179,13 +228,13 @@ export function Datagrid003({
         style={palette}
       >
         <div data-part="head">
-          <h3 data-part="title">Поставки по регионам</h3>
+          <h3 data-part="title">{heading}</h3>
           <p data-part="hint">{scrollHint}</p>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица поставок по неделям, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
@@ -193,7 +242,7 @@ export function Datagrid003({
             <thead>
               <tr>
                 <th scope="col" data-part="lead">
-                  Регион
+                  {columnText.region ?? COLUMN_LABEL.region}
                 </th>
                 {weeks.map((week) => (
                   <th key={week} scope="col" data-align="end">
@@ -201,7 +250,7 @@ export function Datagrid003({
                   </th>
                 ))}
                 <th scope="col" data-part="trail">
-                  Менеджер
+                  {columnText.owner ?? COLUMN_LABEL.owner}
                 </th>
               </tr>
             </thead>

@@ -5,6 +5,13 @@ export type Commerce004Step = {
   state?: "done" | "current" | "next"
 }
 
+export type Commerce004Field = {
+  label: string
+  value: string
+  /** Поле на всю ширину сетки. */
+  wide?: boolean
+}
+
 export type Commerce004Props = {
   title?: string
   steps?: Commerce004Step[]
@@ -13,7 +20,12 @@ export type Commerce004Props = {
   total?: string
   cta?: string
   note?: string
+  fields?: Commerce004Field[]
+  /** Подписи блока: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -25,15 +37,22 @@ export type Commerce004Props = {
 // браузер. Итог показан рядом с формой и не уезжает вверх при заполнении:
 // на этом экране пользователь сверяет сумму чаще, чем читает поля. Кнопка
 // оплаты подписана суммой — «Оплатить» без числа заставляет прокручивать назад.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="commerce-004"]){
---vibeui-commerce-004-bg:oklch(1 0 0);
---vibeui-commerce-004-panel:oklch(0.985 0.002 265);
---vibeui-commerce-004-fg:oklch(0.22 0.014 265);
---vibeui-commerce-004-muted:oklch(0.55 0.014 265);
---vibeui-commerce-004-border:oklch(0.91 0.006 265);
---vibeui-commerce-004-accent:oklch(0.55 0.2 262);
---vibeui-commerce-004-done:oklch(0.58 0.14 152);
+--vibeui-commerce-004-bg:transparent;
+--vibeui-commerce-004-panel:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-commerce-004-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-commerce-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-commerce-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-commerce-004-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
+--vibeui-commerce-004-pick:light-dark(oklch(0.55 0.2 262 / 6%),oklch(0.72 0.17 262 / 16%));
+--vibeui-commerce-004-done:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
+--vibeui-commerce-004-on-done:light-dark(oklch(1 0 0),oklch(0.19 0.02 152));
 --vibeui-commerce-004-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -60,7 +79,7 @@ font-size:0.625rem;line-height:1;
 }
 [data-vibeui-block="commerce-004"] [data-state="done"]{color:var(--vibeui-commerce-004-fg)}
 [data-vibeui-block="commerce-004"] [data-state="done"] [data-part="mark"]{
-background:var(--vibeui-commerce-004-done);color:oklch(1 0 0);box-shadow:none;
+background:var(--vibeui-commerce-004-done);color:var(--vibeui-commerce-004-on-done);box-shadow:none;
 }
 [data-vibeui-block="commerce-004"] [data-state="current"]{color:var(--vibeui-commerce-004-fg);font-weight:650}
 [data-vibeui-block="commerce-004"] [data-state="current"] [data-part="mark"]{box-shadow:inset 0 0 0 3px var(--vibeui-commerce-004-accent)}
@@ -76,12 +95,12 @@ padding:0.625rem 0.75rem;margin-bottom:0.375rem;border-radius:0.625rem;
 border:1px solid var(--vibeui-commerce-004-border);
 }
 [data-vibeui-block="commerce-004"] [data-part="method"]:has(input:checked){
-border-color:var(--vibeui-commerce-004-accent);background:oklch(0.55 0.2 262 / 6%);
+border-color:var(--vibeui-commerce-004-accent);background:var(--vibeui-commerce-004-pick);
 }
 [data-vibeui-block="commerce-004"] input[type="radio"]{
 appearance:none;flex:none;margin:0.125rem 0 0;cursor:pointer;
 width:1.0625rem;height:1.0625rem;border-radius:9999px;
-border:1.5px solid var(--vibeui-commerce-004-muted);background:var(--vibeui-commerce-004-bg);
+border:1.5px solid var(--vibeui-commerce-004-muted);background:var(--vibeui-commerce-004-field);
 }
 [data-vibeui-block="commerce-004"] input[type="radio"]:checked{border-color:var(--vibeui-commerce-004-accent);border-width:5px}
 [data-vibeui-block="commerce-004"] input:focus-visible{outline:2px solid var(--vibeui-commerce-004-accent);outline-offset:2px}
@@ -96,7 +115,7 @@ border:1.5px solid var(--vibeui-commerce-004-muted);background:var(--vibeui-comm
 [data-vibeui-block="commerce-004"] input[type="text"]{
 height:2.25rem;padding:0 0.625rem;
 border:1px solid var(--vibeui-commerce-004-border);border-radius:0.5rem;
-background:var(--vibeui-commerce-004-bg);color:inherit;font:inherit;font-size:0.8125rem;font-weight:400;
+background:var(--vibeui-commerce-004-field);color:inherit;font:inherit;font-size:0.8125rem;font-weight:400;
 }
 [data-vibeui-block="commerce-004"] input[type="text"]:focus-visible{outline:2px solid var(--vibeui-commerce-004-accent);outline-offset:1px}
 /* Итог рядом с формой: на этом экране сумму сверяют чаще, чем читают поля. */
@@ -113,7 +132,7 @@ border:1px solid var(--vibeui-commerce-004-border);
 [data-vibeui-block="commerce-004"] [data-part="pay"]{
 width:100%;appearance:none;cursor:pointer;height:2.5rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-commerce-004-accent);color:oklch(1 0 0);
+background:var(--vibeui-commerce-004-accent);color:var(--vibeui-commerce-004-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-004"] [data-part="pay"]:focus-visible{outline:2px solid var(--vibeui-commerce-004-accent);outline-offset:2px}
@@ -151,6 +170,44 @@ const DEFAULT_SUMMARY = [
   { label: "Скидка по купону", value: "−1 000 ₽" },
 ]
 
+const DEFAULT_FIELDS: Commerce004Field[] = [
+  { label: "Город", value: "Москва" },
+  { label: "Улица и дом", value: "Тверская, 12" },
+  { label: "Квартира", value: "48" },
+  { label: "Телефон", value: "+7 999 123-45-67" },
+  { label: "Комментарий курьеру", value: "Код домофона 48В", wide: true },
+]
+
+/** Русские подписи по умолчанию: установленный файл не меняет язык сам. */
+const LABELS: Record<string, string> = {
+  delivery: "Способ доставки",
+  address: "Адрес",
+  grand: "К оплате",
+  summary: "Итог заказа",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Шаг оформления заказа: способ доставки радиогруппой, итог рядом с формой.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -163,12 +220,22 @@ export function Commerce004({
   total = "14 690 ₽",
   cta = "Перейти к оплате",
   note = "Нажимая кнопку, вы соглашаетесь с условиями продажи и политикой обработки данных.",
+  fields = DEFAULT_FIELDS,
+  labels = LABELS,
   accent,
+  background = "",
   className,
   style,
 }: Commerce004Props) {
+  const text = { ...LABELS, ...labels }
   const palette = {
     ...(accent ? { "--vibeui-commerce-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -204,7 +271,7 @@ export function Commerce004({
         <div data-part="layout">
           <form>
             <fieldset>
-              <legend>Способ доставки</legend>
+              <legend>{text.delivery}</legend>
               {methods.map((method, index) => (
                 <label key={method.value} data-part="method">
                   <input
@@ -222,33 +289,23 @@ export function Commerce004({
             </fieldset>
 
             <fieldset>
-              <legend>Адрес</legend>
+              <legend>{text.address}</legend>
               <div data-part="fields">
-                <label data-part="field">
-                  Город
-                  <input type="text" defaultValue="Москва" />
-                </label>
-                <label data-part="field">
-                  Улица и дом
-                  <input type="text" defaultValue="Тверская, 12" />
-                </label>
-                <label data-part="field">
-                  Квартира
-                  <input type="text" defaultValue="48" />
-                </label>
-                <label data-part="field">
-                  Телефон
-                  <input type="text" defaultValue="+7 999 123-45-67" />
-                </label>
-                <label data-part="field" data-wide="true">
-                  Комментарий курьеру
-                  <input type="text" defaultValue="Код домофона 48В" />
-                </label>
+                {fields.map((field) => (
+                  <label
+                    key={field.label}
+                    data-part="field"
+                    data-wide={field.wide ? "true" : undefined}
+                  >
+                    {field.label}
+                    <input type="text" defaultValue={field.value} />
+                  </label>
+                ))}
               </div>
             </fieldset>
           </form>
 
-          <aside data-part="summary" aria-label="Итог заказа">
+          <aside data-part="summary" aria-label={text.summary}>
             <dl>
               {summary.map((row) => (
                 <div key={row.label} data-part="row">
@@ -256,7 +313,7 @@ export function Commerce004({
                   <dd>{row.value}</dd>
                 </div>
               ))}
-              <dt data-part="grand">К оплате</dt>
+              <dt data-part="grand">{text.grand}</dt>
               <dd data-part="grand">{total}</dd>
             </dl>
             <button type="button" data-part="pay">

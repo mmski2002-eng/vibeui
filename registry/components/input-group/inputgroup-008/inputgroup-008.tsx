@@ -7,7 +7,13 @@ export type Inputgroup008Props = Omit<
   name?: string
   label?: string
   action?: string
+  /** Подсказки в полях: город и индекс. */
+  fieldText?: { city: string; zip: string }
+  /** Подпись поля индекса для чтения вслух. */
+  zipLabel?: string
   hint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,15 +23,19 @@ export type Inputgroup008Props = Omit<
 // сайдбара обязан сложиться так же, как на телефоне. При складывании
 // схлопнутая граница переезжает с левой стороны на верхнюю, а скругления —
 // с боков на верх и низ; иначе столбик распадается на три отдельные рамки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-008"]){
---vibeui-inputgroup-008-surface:oklch(1 0 0);
---vibeui-inputgroup-008-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-008-fg:oklch(0.23 0.014 265);
---vibeui-inputgroup-008-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-008-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-008-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-008-accent:oklch(0.5 0.16 25);
+--vibeui-inputgroup-008-surface:transparent;
+--vibeui-inputgroup-008-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-inputgroup-008-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-inputgroup-008-field:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.013 265));
+--vibeui-inputgroup-008-border:light-dark(oklch(0.86 0.008 265),oklch(0.44 0.013 265));
+--vibeui-inputgroup-008-accent:light-dark(oklch(0.5 0.16 25),oklch(0.72 0.15 25));
+--vibeui-inputgroup-008-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 25));
 --vibeui-inputgroup-008-radius:0.75rem;
 --vibeui-inputgroup-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -72,7 +82,7 @@ padding:0 0.875rem;background:var(--vibeui-inputgroup-008-field);
 appearance:none;cursor:pointer;
 background:var(--vibeui-inputgroup-008-accent);
 border-color:var(--vibeui-inputgroup-008-accent);
-color:oklch(1 0 0);font-weight:650;
+color:var(--vibeui-inputgroup-008-on-accent);font-weight:650;
 transition:filter .16s ease;
 }
 [data-vibeui-block="inputgroup-008"] button:hover{filter:brightness(1.08)}
@@ -99,6 +109,30 @@ border-radius:0 var(--vibeui-inputgroup-008-radius) var(--vibeui-inputgroup-008-
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="inputgroup-008"] *{animation:none!important;transition:none!important}}
 `
 
+const FIELD_TEXT = { city: "Город", zip: "Индекс" }
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Сцепка полной ширины: столбик на узком месте, строка на широком.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -107,7 +141,10 @@ export function Inputgroup008({
   name = "delivery",
   label = "Куда доставить",
   action = "Рассчитать",
+  fieldText = FIELD_TEXT,
+  zipLabel = "Почтовый индекс",
   hint = "Раскладка считается от ширины самого блока: в узкой колонке сцепка складывается так же, как на телефоне.",
+  background = "",
   accent,
   className,
   style,
@@ -115,6 +152,12 @@ export function Inputgroup008({
 }: Inputgroup008Props) {
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-008-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -138,7 +181,7 @@ export function Inputgroup008({
               name={`${name}-city`}
               type="text"
               autoComplete="address-level2"
-              placeholder="Город"
+              placeholder={fieldText.city}
               aria-describedby={`${name}-hint`}
             />
             <input
@@ -147,8 +190,8 @@ export function Inputgroup008({
               type="text"
               inputMode="numeric"
               autoComplete="postal-code"
-              placeholder="Индекс"
-              aria-label="Почтовый индекс"
+              placeholder={fieldText.zip}
+              aria-label={zipLabel}
             />
             <button type="submit">{action}</button>
           </div>

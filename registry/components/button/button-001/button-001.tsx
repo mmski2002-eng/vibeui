@@ -20,10 +20,14 @@ export type Button001Props = ComponentPropsWithoutRef<"button"> & {
 // Tailwind-классами: компонент не должен зависеть от версии Tailwind
 // в чужом проекте. Базовое правило имеет специфичность (0,1,0), поэтому
 // утилиты вроде mt-4 или w-full из className продолжают работать.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте акцент светлее, а подпись на нём — темнее, чтобы заливка
+// не выжигала строку.
 const STYLES = `
 :where([data-vibeui-block="button-001"]){
---vibeui-button-001-accent:oklch(0.62 0.187 264);
---vibeui-button-001-accent-fg:oklch(0.99 0.004 264);
+--vibeui-button-001-accent:light-dark(oklch(0.62 0.187 264),oklch(0.72 0.155 264));
+--vibeui-button-001-accent-fg:light-dark(oklch(0.99 0.004 264),oklch(0.21 0.045 264));
 --vibeui-button-001-soft-bg:color-mix(in oklab, var(--vibeui-button-001-accent) 14%, transparent);
 --vibeui-button-001-soft-bg-hover:color-mix(in oklab, var(--vibeui-button-001-accent) 22%, transparent);
 --vibeui-button-001-border:color-mix(in oklab, var(--vibeui-button-001-accent) 45%, transparent);
@@ -75,7 +79,7 @@ export function Button001({
   disabled,
   className,
   style,
-  children = "Get started",
+  children = "Начать",
   ...props
 }: Button001Props) {
   const palette = {

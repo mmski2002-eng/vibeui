@@ -16,7 +16,13 @@ export type Eventcalendar001Props = Omit<
   events?: Eventcalendar001Event[]
   visible?: number
   heading?: string
+  /** Счётчик в шапке. {count} — число событий месяца. */
+  countText?: string
+  /** Подпись сворачивания. {count} — число спрятанных событий. */
+  moreText?: string
   locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,14 +34,15 @@ export type Eventcalendar001Props = Omit<
 // событие обязано быть достижимо, иначе календарь врёт.
 const STYLES = `
 :where([data-vibeui-block="eventcalendar-001"]){
---vibeui-eventcalendar-001-bg:oklch(1 0 0);
---vibeui-eventcalendar-001-fg:oklch(0.24 0.014 265);
---vibeui-eventcalendar-001-muted:oklch(0.6 0.014 265);
---vibeui-eventcalendar-001-border:oklch(0.91 0.006 265);
---vibeui-eventcalendar-001-line:oklch(0.95 0.004 265);
---vibeui-eventcalendar-001-accent:oklch(0.55 0.16 262);
---vibeui-eventcalendar-001-personal:oklch(0.58 0.14 152);
---vibeui-eventcalendar-001-hold:oklch(0.6 0.02 265);
+--vibeui-eventcalendar-001-bg:transparent;
+--vibeui-eventcalendar-001-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
+--vibeui-eventcalendar-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-eventcalendar-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-eventcalendar-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-eventcalendar-001-line:light-dark(oklch(0.95 0.004 265),oklch(0.31 0.01 265));
+--vibeui-eventcalendar-001-accent:light-dark(oklch(0.55 0.16 262),oklch(0.74 0.15 262));
+--vibeui-eventcalendar-001-personal:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.13 152));
+--vibeui-eventcalendar-001-hold:light-dark(oklch(0.6 0.02 265),oklch(0.72 0.02 265));
 --vibeui-eventcalendar-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="eventcalendar-001"]{
@@ -124,7 +131,7 @@ outline:2px solid var(--vibeui-eventcalendar-001-accent);outline-offset:1px;
 position:absolute;left:0.25rem;right:0.25rem;top:100%;z-index:2;
 display:flex;flex-direction:column;gap:0.1875rem;
 margin:0.1875rem 0 0;padding:0.375rem;list-style:none;
-background:var(--vibeui-eventcalendar-001-bg);
+background:var(--vibeui-eventcalendar-001-panel);
 border:1px solid var(--vibeui-eventcalendar-001-border);border-radius:0.5rem;
 box-shadow:0 10px 24px oklch(0.24 0.014 265 / 14%);
 }
@@ -155,6 +162,28 @@ const DEFAULT_EVENTS: Eventcalendar001Event[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Месяц с событиями в клетках: лишние сворачиваются в «ещё N» и
  * раскрываются нативным <details>. Один файл, ноль зависимостей.
  */
@@ -163,7 +192,10 @@ export function Eventcalendar001({
   events = DEFAULT_EVENTS,
   visible = 2,
   heading,
+  countText = "{count} событий в месяце",
+  moreText = "ещё {count}",
   locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -204,6 +236,13 @@ export function Eventcalendar001({
 
   const palette = {
     ...(accent ? { "--vibeui-eventcalendar-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-eventcalendar-001-bg": background,
+          "--vibeui-eventcalendar-001-panel": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -221,7 +260,9 @@ export function Eventcalendar001({
       >
         <header data-part="head">
           <h3 data-part="heading">{heading ?? monthName}</h3>
-          <p data-part="count">{events.length} событий в месяце</p>
+          <p data-part="count">
+            {countText.replace("{count}", String(events.length))}
+          </p>
         </header>
 
         <div data-part="grid">
@@ -256,7 +297,9 @@ export function Eventcalendar001({
 
                 {hidden.length > 0 ? (
                   <details data-part="more">
-                    <summary>ещё {hidden.length}</summary>
+                    <summary>
+                      {moreText.replace("{count}", String(hidden.length))}
+                    </summary>
                     <ul data-part="overflow">
                       {hidden.map((event) => (
                         <li

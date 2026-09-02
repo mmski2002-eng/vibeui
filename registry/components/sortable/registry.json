@@ -16,7 +16,7 @@
           "target": "@components/vibeui/sortable-001.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-001-*. Клиентский: \"use client\" ради порядка. Перенос сделан на HTML5 drag and drop, поэтому библиотека не нужна; кнопки «выше» и «ниже» дают тот же результат с клавиатуры и называют текущую позицию строки вслух.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-001-*. Клиентский: \"use client\" ради порядка. Перенос сделан на HTML5 drag and drop, поэтому библиотека не нужна; кнопки «выше» и «ниже» дают тот же результат с клавиатуры и называют текущую позицию строки вслух. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.",
       "meta": {
         "tags": ["sortable", "drag", "list", "a11y"],
         "ai": {
@@ -29,15 +29,20 @@
             "позицию строки в подписи кнопки — «сейчас 3 из 5» слышно, а порядок нет",
             "линию места вставки вместо подсветки всей строки",
             "нативный drag and drop: библиотека здесь не нужна",
-            "нумерацию строк — после переноса она подтверждает результат"
+            "нумерацию строк — после переноса она подтверждает результат",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
-            "массив items и title",
+            "массив items, заголовок title и подсказку hint",
             "обработчик onChange",
-            "акцент через проп accent",
+            "подписи кнопок moveUpLabel и moveDownLabel — в них подставляются {item}, {position} и {total}",
+            "акцент через проп accent — цвет линии вставки и обводки фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "ширину блока"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Перетаскивание не работает на сенсорных экранах без своей эмуляции — кнопки закрывают этот случай.",
             "Порядок хранится внутри компонента: сохранение на сервере делает вызывающий код.",
             "Для сортировки между колонками берите kanban-001: тут один столбец.",
@@ -53,8 +58,21 @@
             "maxLength": 28
           },
           {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Перетащите строку или используйте кнопки со стрелками",
+            "maxLength": 64
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -70,15 +88,20 @@
                 "the position inside the button label — \"now 3 of 5\" is audible, order is not",
                 "the insertion line instead of highlighting the whole row",
                 "native HTML5 drag and drop: no library is needed here",
-                "the row numbering — after a move it confirms the result"
+                "the row numbering — after a move it confirms the result",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
-                "the items array and the title",
+                "the items array, the title and the hint",
                 "the onChange handler",
-                "the accent through the accent prop",
+                "the moveUpLabel and moveDownLabel button labels — they take {item}, {position} and {total}",
+                "the accent through the accent prop — it colours the insertion line and the focus ring",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the block width"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Dragging does not work on touch screens without emulation — the buttons cover that case.",
                 "Order lives inside the component: persisting it is the caller's job.",
                 "For moving between columns use kanban-001: this is a single column.",
@@ -91,13 +114,36 @@
                 "label": "Heading",
                 "default": "Section order"
               },
+              "hint": {
+                "label": "Hint",
+                "default": "Drag a row or use the arrow buttons"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Sortable List"
+            "title": "Sortable List",
+            "preview": {
+              "props": {
+                "title": "Section order",
+                "hint": "Drag a row or use the arrow buttons",
+                "items": [
+                  "Hero with one action",
+                  "Three benefits",
+                  "Pricing",
+                  "Testimonials",
+                  "Contact form"
+                ],
+                "moveUpLabel": "Move “{item}” up, now {position} of {total}",
+                "moveDownLabel": "Move “{item}” down, now {position} of {total}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -115,7 +161,7 @@
           "target": "@components/vibeui/sortable-002.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-002-*. Клиентский: \"use client\" ради порядка и режима переноса. Ручка — button с aria-pressed, обрабатывающая пробел, стрелки вверх и вниз и Escape; снимок порядка делается в момент захвата, поэтому отмена возвращает исходный вид. Мышиный путь — нативный HTML5 drag and drop с линией места вставки. Живая область role=status с aria-live=assertive называет позицию после каждого шага.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-002-*. Клиентский: \"use client\" ради порядка и режима переноса. Ручка — button с aria-pressed, обрабатывающая пробел, стрелки вверх и вниз и Escape; снимок порядка делается в момент захвата, поэтому отмена возвращает исходный вид. Мышиный путь — нативный HTML5 drag and drop с линией места вставки. Живая область role=status с aria-live=assertive называет позицию после каждого шага. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Все реплики живой области и подписи ручки — пропсы, русские значения лежат в компоненте как дефолты.",
       "meta": {
         "tags": ["sortable", "keyboard", "drag", "a11y"],
         "preview": {
@@ -131,19 +177,25 @@
             "снимок порядка при захвате: без него Escape нечего восстанавливать",
             "живую область с aria-live=assertive — при переносе вслепую важен каждый шаг",
             "поднятый вид строки тенью и сдвигом, а не одним цветом рамки",
-            "линию места вставки вместо подсветки всей строки при переносе мышью"
+            "линию места вставки вместо подсветки всей строки при переносе мышью",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
-            "массив items и title",
+            "массив items, заголовок title и подсказку hint",
             "обработчик onChange",
-            "акцент через проп accent и текст подсказки",
+            "подпись ручки gripLabel и реплики announcements — в них подставляются {item}, {position} и {total}",
+            "акцент через проп accent — цвет рамки поднятой строки, линии вставки и фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "ширину блока"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ключом строк служит их текст: одинаковые подписи в списке недопустимы.",
             "Потеря фокуса кладёт строку: это защита от зависшего режима переноса.",
             "Вариант с отдельными кнопками «выше» и «ниже» — sortable-001, здесь другой сценарий.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "Меняя announcements, сохраняйте {position} и {total}: без номера позиции перенос вслепую снова становится невозможным."
           ]
         },
         "controls": [
@@ -155,8 +207,21 @@
             "maxLength": 28
           },
           {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Мышью — за ручку. С клавиатуры: пробел берёт строку, стрелки несут, пробел кладёт, Escape отменяет.",
+            "maxLength": 120
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -172,19 +237,25 @@
                 "the order snapshot taken on pick-up: without it Escape has nothing to restore",
                 "the aria-live=assertive region — while moving blind every step matters",
                 "the lifted row look via shadow and offset, not the border colour alone",
-                "the insertion line instead of highlighting the whole row while dragging"
+                "the insertion line instead of highlighting the whole row while dragging",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
-                "the items array and the title",
+                "the items array, the title and the hint",
                 "the onChange handler",
-                "the accent through the accent prop and the hint text",
+                "the gripLabel and the announcements strings — they take {item}, {position} and {total}",
+                "the accent through the accent prop — it colours the held row border, the insertion line and the focus ring",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the block width"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The row key is its text: duplicate labels in the list are not allowed.",
                 "Losing focus drops the row: that guards against a stuck move mode.",
                 "For separate up and down buttons use sortable-001; this is a different scenario.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "When rewriting announcements keep {position} and {total}: without the position, moving blind becomes impossible again."
               ],
               "usage": "<Sortable002 items={[\"Cover\", \"Pricing\"]} onChange={save} />"
             },
@@ -193,13 +264,43 @@
                 "label": "Heading",
                 "default": "Section order"
               },
+              "hint": {
+                "label": "Hint",
+                "default": "With a mouse — by the grip. From the keyboard: space picks up, arrows carry, space drops, Escape cancels."
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Grip Keyboard Sort"
+            "title": "Grip Keyboard Sort",
+            "preview": {
+              "props": {
+                "title": "Section order",
+                "hint": "With a mouse — by the grip. From the keyboard: space picks up, arrows carry, space drops, Escape cancels.",
+                "items": [
+                  "Cover",
+                  "Property description",
+                  "Floor plans",
+                  "Location",
+                  "Purchase terms"
+                ],
+                "gripLabel": "Move “{item}”, position {position} of {total}",
+                "announcements": {
+                  "picked": "“{item}” picked up, position {position} of {total}. Up and down arrows carry the row.",
+                  "dropped": "“{item}” dropped at position {position} of {total}.",
+                  "moved": "“{item}” at position {position} of {total}.",
+                  "edge": "End of the list, “{item}” at position {position} of {total}.",
+                  "cancelled": "Move cancelled, “{item}” is back at position {position}.",
+                  "dragged": "“{item}” moved to position {position} of {total}."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -217,7 +318,7 @@
           "target": "@components/vibeui/sortable-003.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-003-*. Клиентский: \"use client\" ради порядка колонок. Ячейки тела рисуются по тому же массиву описаний колонок, что и заголовки, поэтому рассинхронизация невозможна. Заголовок остаётся тегом th со scope=\"col\": перетаскивание не повод превращать таблицу в набор div. Ручка внутри th — button со стрелками влево и вправо, мышиный путь — нативный drag с вертикальной линией места вставки, результат идёт в живую область role=status.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-003-*. Клиентский: \"use client\" ради порядка колонок. Ячейки тела рисуются по тому же массиву описаний колонок, что и заголовки, поэтому рассинхронизация невозможна. Заголовок остаётся тегом th со scope=\"col\": перетаскивание не повод превращать таблицу в набор div. Ручка внутри th — button со стрелками влево и вправо, мышиный путь — нативный drag с вертикальной линией места вставки, результат идёт в живую область role=status. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Подпись ручки и реплики живой области вынесены в пропсы, русские значения остаются дефолтами.",
       "meta": {
         "tags": ["sortable", "table", "columns", "a11y"],
         "preview": {
@@ -233,15 +334,21 @@
             "единый массив колонок для заголовка и тела — иначе данные разъедутся с подписями",
             "ручку тегом button со стрелками влево и вправо: drag недоступен с клавиатуры",
             "линию места вставки у края колонки вместо заливки всей ячейки",
-            "живую область role=status с новой позицией колонки"
+            "живую область role=status с новой позицией колонки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массивы columns и rows",
             "caption — подпись таблицы",
-            "обработчик onChange, акцент через проп accent",
+            "подпись ручки gripLabel и реплики announcements — в них подставляются {column}, {position} и {total}",
+            "обработчик onChange",
+            "акцент через проп accent — цвет линии вставки и обводки фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "ширину таблицы и выравнивание числовых колонок"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ключ колонки обязан совпадать с ключом поля в строках данных.",
             "Сортировки значений здесь нет: переставляется порядок колонок, а не порядок записей.",
             "Ключом строк служит артикул: он обязан быть уникальным.",
@@ -261,6 +368,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -274,15 +387,21 @@
                 "one shared column array for the header and the body — otherwise data drifts from labels",
                 "the grip as a button with left and right arrows: dragging is unavailable from a keyboard",
                 "the insertion line at the column edge instead of filling the whole cell",
-                "the role=status live region carrying the column's new position"
+                "the role=status live region carrying the column's new position",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the columns and rows arrays",
                 "caption — the table caption",
-                "the onChange handler and the accent through the accent prop",
+                "the gripLabel and the announcements strings — they take {column}, {position} and {total}",
+                "the onChange handler",
+                "the accent through the accent prop — it colours the insertion line and the focus ring",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the table width and the alignment of numeric columns"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A column key must match the field key inside the data rows.",
                 "There is no value sorting here: the column order changes, not the record order.",
                 "The row key is the code: it has to be unique.",
@@ -297,11 +416,65 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Sortable Table Columns"
+            "title": "Sortable Table Columns",
+            "preview": {
+              "props": {
+                "caption": "Column order changes by dragging or with arrows while a header is focused",
+                "columns": [
+                  {
+                    "key": "sku",
+                    "label": "Code"
+                  },
+                  {
+                    "key": "name",
+                    "label": "Name"
+                  },
+                  {
+                    "key": "stock",
+                    "label": "In stock",
+                    "numeric": true
+                  },
+                  {
+                    "key": "price",
+                    "label": "Price",
+                    "numeric": true
+                  }
+                ],
+                "rows": [
+                  {
+                    "sku": "AL-118",
+                    "name": "Power cable",
+                    "stock": "412",
+                    "price": "$9"
+                  },
+                  {
+                    "sku": "BR-204",
+                    "name": "Wall bracket",
+                    "stock": "38",
+                    "price": "$16"
+                  },
+                  {
+                    "sku": "CM-330",
+                    "name": "RS-485 module",
+                    "stock": "7",
+                    "price": "$49"
+                  }
+                ],
+                "gripLabel": "Move column “{column}”, now {position} of {total}",
+                "announcements": {
+                  "moved": "Column “{column}” at position {position} of {total}.",
+                  "edge": "Column “{column}” is already at the edge of the table."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -319,7 +492,7 @@
           "target": "@components/vibeui/sortable-004.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-004-*. Клиентский: \"use client\" ради состояния обоих списков. Панели описаны одним массивом и рисуются общей разметкой, поэтому обе стороны ведут себя одинаково. Минимальная высота панели задана явно, поэтому пустой список остаётся видимой целью для мыши. Кнопка со стрелкой у каждой строки называет обе стороны переноса, живая область role=status сообщает результат и остатки в обоих списках.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-004-*. Клиентский: \"use client\" ради состояния обоих списков. Панели описаны одним массивом и рисуются общей разметкой, поэтому обе стороны ведут себя одинаково. Минимальная высота панели задана явно, поэтому пустой список остаётся видимой целью для мыши. Кнопка со стрелкой у каждой строки называет обе стороны переноса, живая область role=status сообщает результат и остатки в обоих списках. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Надпись пустой панели, подпись кнопки и реплика живой области вынесены в пропсы, русские значения остаются дефолтами.",
       "meta": {
         "tags": ["sortable", "transfer", "dual-list", "a11y"],
         "preview": {
@@ -335,15 +508,21 @@
             "надпись в пустой панели вместо пустоты — она объясняет, что делать дальше",
             "кнопку со стрелкой у каждой строки: перетаскивание недоступно с клавиатуры",
             "подпись кнопки с обеими сторонами переноса — «→» без контекста ничего не говорит",
-            "живую область role=status с числом строк в обоих списках после переноса"
+            "живую область role=status с числом строк в обоих списках после переноса",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массивы source и target",
             "sourceTitle и targetTitle — заголовки панелей",
-            "обработчик onChange, акцент через проп accent",
+            "emptyText, sendLabel и movedLabel — подстановки {item}, {from}, {to}, {sourceTitle}, {sourceCount}, {targetTitle}, {targetCount}",
+            "обработчик onChange",
+            "акцент через проп accent — цвет рамки панели-приёмника и обводки фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "ширину блока и минимальную высоту панели"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Порядок внутри панели не меняется: строка добавляется в конец списка-приёмника.",
             "Ключом строк служит их текст: одинаковые подписи в двух панелях недопустимы.",
             "Состояние живёт внутри компонента: сохранение делает вызывающий код.",
@@ -364,6 +543,18 @@
             "type": "text",
             "default": "В отчёте",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -377,15 +568,21 @@
                 "the caption in an empty panel instead of blankness — it explains what to do next",
                 "the arrow button on every row: dragging is unavailable from a keyboard",
                 "the button label naming both sides of the transfer — a bare \"→\" says nothing",
-                "the role=status live region reporting the size of both lists after a transfer"
+                "the role=status live region reporting the size of both lists after a transfer",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the source and target arrays",
                 "sourceTitle and targetTitle — the panel headings",
-                "the onChange handler and the accent through the accent prop",
+                "emptyText, sendLabel and movedLabel — they take {item}, {from}, {to}, {sourceTitle}, {sourceCount}, {targetTitle} and {targetCount}",
+                "the onChange handler",
+                "the accent through the accent prop — it colours the drop target border and the focus ring",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the block width and the minimum panel height"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Order inside a panel does not change: a row is appended to the end of the receiving list.",
                 "The row key is its text: duplicate labels across the two panels are not allowed.",
                 "State lives inside the component: persisting it is the caller's job.",
@@ -401,11 +598,29 @@
               "targetTitle": {
                 "label": "Right panel",
                 "default": "In the report"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Two List Transfer"
+            "title": "Two List Transfer",
+            "preview": {
+              "props": {
+                "sourceTitle": "Available fields",
+                "targetTitle": "In the report",
+                "source": ["SKU", "Supplier", "Cost price", "Delivery date"],
+                "target": ["Name", "In stock"],
+                "emptyText": "Empty. Drag a field here or press the arrow in the other list.",
+                "sendLabel": "Move “{item}” from “{from}” to “{to}”",
+                "movedLabel": "“{item}” moved to “{to}”. {sourceTitle}: {sourceCount}, {targetTitle}: {targetCount}."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -423,7 +638,7 @@
           "target": "@components/vibeui/sortable-005.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-005-*. Клиентский: \"use client\" ради порядка плиток. Число колонок приходит пропом и подставляется и в grid-template-columns через переменную, и в шаг клавиатурного переноса, поэтому раскладка и клавиатура считают ряды одинаково. Плитка — button, поэтому фокус и стрелки работают без tabindex. Позиция называется рядом и колонкой, а не только номером; результат идёт в живую область role=status.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-005-*. Клиентский: \"use client\" ради порядка плиток. Число колонок приходит пропом и подставляется и в grid-template-columns через переменную, и в шаг клавиатурного переноса, поэтому раскладка и клавиатура считают ряды одинаково. Плитка — button, поэтому фокус и стрелки работают без tabindex. Позиция называется рядом и колонкой, а не только номером; результат идёт в живую область role=status. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Подсказка, подпись плитки и реплики живой области вынесены в пропсы, русские значения остаются дефолтами.",
       "meta": {
         "tags": ["sortable", "grid", "tiles", "keyboard"],
         "preview": {
@@ -439,15 +654,21 @@
             "плитку тегом button: фокус и стрелки не должны держаться на tabindex",
             "название ряда и колонки в озвучке: «шестая из восьми» в сетке не говорит ничего",
             "стрелки вверх и вниз с шагом в ряд — построчный перенос в сетке бесполезен",
-            "живую область role=status: перестановка обязана быть слышна"
+            "живую область role=status: перестановка обязана быть слышна",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
-            "массив tiles и title",
+            "массив tiles, заголовок title и подсказку hint",
             "columns — число колонок сетки",
-            "обработчик onChange, акцент через проп accent",
+            "spotLabel, tileLabel и announcements — подстановки {item}, {position}, {total}, {spot}, {row}, {column}",
+            "обработчик onChange",
+            "акцент через проп accent — цвет рамки фокуса и места вставки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "пропорцию плитки и ширину блока"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Число колонок фиксировано пропом: адаптивная сетка сломала бы клавиатурный шаг.",
             "Ключом плиток служит их текст: одинаковые подписи недопустимы.",
             "Последний неполный ряд короче остальных — стрелка вниз с краю упрётся в границу списка.",
@@ -469,6 +690,25 @@
             "type": "text",
             "default": "Плитки на главной",
             "maxLength": 28
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Мышью — перетаскиванием. С клавиатуры: стрелки влево и вправо двигают на позицию, вверх и вниз — на ряд.",
+            "maxLength": 128
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -482,15 +722,21 @@
                 "the tile as a button element: focus and arrows must not rest on tabindex",
                 "naming the row and the column in speech: \"sixth of eight\" says nothing in a grid",
                 "up and down arrows stepping a whole row — a one-by-one move is useless in a grid",
-                "the role=status live region: a reorder has to be audible"
+                "the role=status live region: a reorder has to be audible",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
-                "the tiles array and the title",
+                "the tiles array, the title and the hint",
                 "columns — the number of grid columns",
-                "the onChange handler and the accent through the accent prop",
+                "spotLabel, tileLabel and announcements — they take {item}, {position}, {total}, {spot}, {row} and {column}",
+                "the onChange handler",
+                "the accent through the accent prop — it colours the focus ring and the drop target",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the tile aspect ratio and the block width"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The column count is fixed by the prop: a responsive grid would break the keyboard step.",
                 "The tile key is its text: duplicate labels are not allowed.",
                 "The last row may be short — a down arrow near the edge simply hits the end of the list.",
@@ -505,11 +751,44 @@
               "title": {
                 "label": "Heading",
                 "default": "Home page tiles"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "With a mouse — by dragging. From the keyboard: left and right arrows move by one position, up and down by a row."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Reorderable Tile Grid"
+            "title": "Reorderable Tile Grid",
+            "preview": {
+              "props": {
+                "title": "Home page tiles",
+                "hint": "With a mouse — by dragging. From the keyboard: left and right arrows move by one position, up and down by a row.",
+                "tiles": [
+                  "Cover",
+                  "Gallery",
+                  "Reviews",
+                  "Pricing",
+                  "Questions",
+                  "Contacts",
+                  "Team",
+                  "Map"
+                ],
+                "spotLabel": "row {row}, column {column}",
+                "tileLabel": "{item}, position {position} of {total}, {spot}. Arrows move the tile.",
+                "announcements": {
+                  "moved": "“{item}” at position {position} of {total}: {spot}.",
+                  "edge": "“{item}” is already at the edge of the grid: {spot}."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["columns", "background"]
       }
     },
     {
@@ -527,7 +806,7 @@
           "target": "@components/vibeui/sortable-006.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-006-*. Клиентский: \"use client\" ради порядка. Закреплённая строка не входит в сортируемый массив: она отрисована отдельно, без ручки и кнопок, поэтому невозможных состояний просто не существует. Нумерация подвижных строк начинается с двойки, а попытка уйти выше первой позиции пишет причину в живую область role=status. Мышиный путь — нативный drag, клавиатурный — кнопки «выше» и «ниже».",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-006-*. Клиентский: \"use client\" ради порядка. Закреплённая строка не входит в сортируемый массив: она отрисована отдельно, без ручки и кнопок, поэтому невозможных состояний просто не существует. Нумерация подвижных строк начинается с двойки, а попытка уйти выше первой позиции пишет причину в живую область role=status. Мышиный путь — нативный drag, клавиатурный — кнопки «выше» и «ниже». Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Метка закрепления, подписи кнопок и реплики живой области вынесены в пропсы, русские значения остаются дефолтами.",
       "meta": {
         "tags": ["sortable", "pinned", "list", "a11y"],
         "preview": {
@@ -543,15 +822,21 @@
             "слово «закреплено» в разметке — значок без текста скринридер не читает",
             "объяснение отказа в живой области: молча проигнорированное нажатие выглядит поломкой",
             "нумерацию подвижных строк со второй позиции — она подтверждает, что первая занята",
-            "кнопки «выше» и «ниже»: перетаскивание недоступно с клавиатуры"
+            "кнопки «выше» и «ниже»: перетаскивание недоступно с клавиатуры",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
-            "массив items и title",
-            "pinned — текст закреплённой строки",
-            "обработчик onChange, акцент через проп accent",
-            "цвет закрепления и ширину блока"
+            "массив items и заголовок title",
+            "pinned — текст закреплённой строки, pinnedBadge — подпись метки",
+            "moveUpLabel, moveDownLabel и announcements — подстановки {item}, {position}, {total}, {pinned}",
+            "обработчик onChange",
+            "цвет закрепления через проп pin и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "ширину блока"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Закреплённая строка не входит в массив items и не приходит в onChange.",
             "Закрепление ровно одно и всегда первое: несколько закреплённых требуют другой модели.",
             "Ключом строк служит их текст: одинаковые подписи недопустимы.",
@@ -572,6 +857,31 @@
             "type": "text",
             "default": "Виджеты дашборда",
             "maxLength": 28
+          },
+          {
+            "prop": "pinnedBadge",
+            "label": "Метка закрепления",
+            "type": "text",
+            "default": "закреплено",
+            "maxLength": 16
+          },
+          {
+            "prop": "pin",
+            "label": "Цвет закрепления",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -585,15 +895,21 @@
                 "the word \"pinned\" in the markup — an icon without text is not read aloud",
                 "the spoken refusal in the live region: a silently ignored press looks broken",
                 "numbering the movable rows from two — it confirms the first slot is taken",
-                "the up and down buttons: dragging is unavailable from a keyboard"
+                "the up and down buttons: dragging is unavailable from a keyboard",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array and the title",
-                "pinned — the text of the pinned row",
-                "the onChange handler and the accent through the accent prop",
-                "the pin colour and the block width"
+                "pinned — the text of the pinned row, pinnedBadge — the badge caption",
+                "moveUpLabel, moveDownLabel and announcements — they take {item}, {position}, {total} and {pinned}",
+                "the onChange handler",
+                "the pin colour through the pin prop and the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the block width"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The pinned row is not part of the items array and never reaches onChange.",
                 "There is exactly one pin and it is always first: several pins need a different model.",
                 "The row key is its text: duplicate labels are not allowed.",
@@ -609,11 +925,45 @@
               "title": {
                 "label": "Heading",
                 "default": "Dashboard widgets"
+              },
+              "pinnedBadge": {
+                "label": "Pin badge",
+                "default": "pinned"
+              },
+              "pin": {
+                "label": "Pin colour"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Pinned First Row"
+            "title": "Pinned First Row",
+            "preview": {
+              "props": {
+                "title": "Dashboard widgets",
+                "pinned": "Today at a glance",
+                "pinnedBadge": "pinned",
+                "items": [
+                  "Leads today",
+                  "Revenue this week",
+                  "Failed payments",
+                  "Warehouse stock"
+                ],
+                "moveUpLabel": "Move “{item}” up, now {position} of {total}",
+                "moveDownLabel": "Move “{item}” down, now {position} of {total}",
+                "announcements": {
+                  "moved": "“{item}” at position {position} of {total}, below the pinned “{pinned}”.",
+                  "blocked": "No higher: the first slot is pinned to “{pinned}”.",
+                  "last": "“{item}” is already last in the list."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["pin", "background"]
       }
     },
     {
@@ -631,7 +981,7 @@
           "target": "@components/vibeui/sortable-007.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-007-*. Клиентский: \"use client\" ради порядка и истории. Каждый перенос — мышью или кнопками — сохраняет прежний массив и подпись шага в стек, поэтому отмена не пересчитывает движение, а возвращает снимок. Полоса отмены отсутствует в разметке, пока история пуста: неактивная кнопка без причины сбивает с толку. Возвращённая строка подсвечивается, а отмена объявляется в живой области role=status.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sortable-007-*. Клиентский: \"use client\" ради порядка и истории. Каждый перенос — мышью или кнопками — сохраняет прежний массив и подпись шага в стек, поэтому отмена не пересчитывает движение, а возвращает снимок. Полоса отмены отсутствует в разметке, пока история пуста: неактивная кнопка без причины сбивает с толку. Возвращённая строка подсвечивается, а отмена объявляется в живой области role=status. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Описание шага, строка полосы отмены, подписи кнопок и реплики живой области вынесены в пропсы, русские значения остаются дефолтами; в снимке шага хранится сама строка, поэтому подпись можно переписать, не ломая отмену.",
       "meta": {
         "tags": ["sortable", "undo", "history", "list"],
         "preview": {
@@ -647,15 +997,21 @@
             "исчезновение полосы при пустой истории — неактивная кнопка без причины сбивает с толку",
             "описание шага словами: «отменить» без указания, что именно, — это лотерея",
             "подсветку возвращённой строки: результат отмены должен быть виден",
-            "кнопки «выше» и «ниже»: перетаскивание недоступно с клавиатуры"
+            "кнопки «выше» и «ниже»: перетаскивание недоступно с клавиатуры",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
-            "массив items и title",
-            "undoLabel — подпись кнопки отмены",
-            "обработчик onChange, акцент через проп accent",
+            "массив items и заголовок title",
+            "undoLabel — подпись кнопки отмены, lastLabel и undoHint — строка полосы и подпись кнопки",
+            "stepLabel, moveUpLabel, moveDownLabel и announcements — подстановки {item}, {from}, {to}, {position}, {total}, {step}",
+            "обработчик onChange",
+            "акцент через проп accent — цвет кнопки отмены, подсветки и фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "глубину истории и ширину блока"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "История не ограничена по длине: для длинных сессий обрежьте стек в вызывающем коде.",
             "Повтора отменённого шага здесь нет: стек только разматывается.",
             "Ключом строк служит их текст: одинаковые подписи недопустимы.",
@@ -676,6 +1032,18 @@
             "type": "text",
             "default": "Отменить",
             "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -689,15 +1057,21 @@
                 "hiding the bar when the history is empty — a disabled button with no cause is confusing",
                 "the worded description of the step: \"undo\" without saying what is a lottery",
                 "the highlight on the restored row: the result of an undo has to be visible",
-                "the up and down buttons: dragging is unavailable from a keyboard"
+                "the up and down buttons: dragging is unavailable from a keyboard",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array and the title",
-                "undoLabel — the label of the undo button",
-                "the onChange handler and the accent through the accent prop",
+                "undoLabel — the undo button caption, lastLabel and undoHint — the bar text and the button label",
+                "stepLabel, moveUpLabel, moveDownLabel and announcements — they take {item}, {from}, {to}, {position}, {total} and {step}",
+                "the onChange handler",
+                "the accent through the accent prop — it colours the undo button, the highlight and the focus ring",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the history depth and the block width"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The history is unbounded: trim the stack in the caller for long sessions.",
                 "There is no redo here: the stack only unwinds.",
                 "The row key is its text: duplicate labels are not allowed.",
@@ -713,11 +1087,40 @@
               "undoLabel": {
                 "label": "Undo button",
                 "default": "Undo"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Undoable Reorder"
+            "title": "Undoable Reorder",
+            "preview": {
+              "props": {
+                "title": "Email sequence",
+                "items": [
+                  "Welcome email",
+                  "Cart reminder",
+                  "Order feedback",
+                  "Repeat discount",
+                  "Win-back"
+                ],
+                "undoLabel": "Undo",
+                "stepLabel": "“{item}”: {from} → {to}",
+                "lastLabel": "Last move: {step}",
+                "undoHint": "{undo} the last move: {step}",
+                "moveUpLabel": "Move “{item}” up, now {position} of {total}",
+                "moveDownLabel": "Move “{item}” down, now {position} of {total}",
+                "announcements": {
+                  "moved": "“{item}” at position {position} of {total}.",
+                  "undone": "Undone: {step}. “{item}” is back at position {position} of {total}."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -735,7 +1138,7 @@
           "target": "@components/vibeui/sortable-008.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-sortable-008-*. Клиентский: порядок и готовность задач в состоянии. Чекбокс отмечает задачу выполненной и зачёркивает текст, но не переставляет строку — готовность и порядок разведены осознанно. Перенос сделан на нативном drag and drop с кнопками «выше»/«ниже» как единственным путём для клавиатуры; после каждого переноса aria-live проговаривает список целиком, а не только сдвинутую строку.",
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-sortable-008-*. Клиентский: порядок и готовность задач в состоянии. Чекбокс отмечает задачу выполненной и зачёркивает текст, но не переставляет строку — готовность и порядок разведены осознанно. Перенос сделан на нативном drag and drop с кнопками «выше»/«ниже» как единственным путём для клавиатуры; после каждого переноса aria-live проговаривает список целиком, а не только сдвинутую строку. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Подписи чекбокса, кнопок и реплика живой области вынесены в пропсы, русские значения остаются дефолтами.",
       "meta": {
         "tags": ["sortable", "checklist", "tasks", "a11y"],
         "ai": {
@@ -748,15 +1151,20 @@
             "кнопки перемещения: перетаскивание недоступно с клавиатуры в принципе",
             "aria-live, называющий список целиком после переноса, а не только сдвинутую строку",
             "нативный drag and drop: библиотека здесь не нужна",
-            "aria-label на чекбоксе с текстом задачи: голый чекбокс без подписи не называет, что именно отмечено"
+            "aria-label на чекбоксе с текстом задачи: голый чекбокс без подписи не называет, что именно отмечено",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив tasks — id, текст и готовность каждой задачи",
             "заголовок title",
+            "doneLabel, moveUpLabel, moveDownLabel и orderLabel — подстановки {item}, {position}, {total}, {order}",
             "обработчик onChange",
-            "акцент через проп accent"
+            "акцент через проп accent — цвет чекбокса и обводки фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Готовые задачи не уезжают вниз списка: если это нужно, сортируйте tasks перед передачей в компонент.",
             "onChange получает весь массив tasks при любом изменении — и при переносе, и при отметке готовности.",
             "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
@@ -775,6 +1183,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -788,15 +1202,20 @@
                 "the move buttons: dragging is not reachable from a keyboard at all",
                 "the aria-live region naming the whole list after a move, not just the shifted row",
                 "the native drag and drop: no library is needed here",
-                "the aria-label on the checkbox carrying the task text: a bare checkbox without a caption names nothing"
+                "the aria-label on the checkbox carrying the task text: a bare checkbox without a caption names nothing",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the tasks array — the id, text and done flag for each task",
                 "the title heading",
+                "doneLabel, moveUpLabel, moveDownLabel and orderLabel — they take {item}, {position}, {total} and {order}",
                 "the onChange handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop — it colours the checkbox and the focus ring",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Completed tasks do not drop to the bottom: sort tasks yourself before passing them in if you need that.",
                 "onChange receives the whole tasks array on any change — both a move and a done toggle.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -810,11 +1229,46 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Task Checklist"
+            "title": "Task Checklist",
+            "preview": {
+              "props": {
+                "title": "Today's tasks",
+                "tasks": [
+                  {
+                    "id": "brief",
+                    "text": "Collect the brief"
+                  },
+                  {
+                    "id": "mock",
+                    "text": "Draw the mockup"
+                  },
+                  {
+                    "id": "review",
+                    "text": "Review with the team"
+                  },
+                  {
+                    "id": "build",
+                    "text": "Build the markup"
+                  },
+                  {
+                    "id": "ship",
+                    "text": "Publish"
+                  }
+                ],
+                "doneLabel": "Done: {item}",
+                "moveUpLabel": "Move “{item}” up, now {position} of {total}",
+                "moveDownLabel": "Move “{item}” down, now {position} of {total}",
+                "orderLabel": "New order: {order}."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     }
   ]

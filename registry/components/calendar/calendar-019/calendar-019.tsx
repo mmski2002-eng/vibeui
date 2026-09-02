@@ -14,9 +14,25 @@ export type Calendar019Props = Omit<
   nights?: number
   currency?: string
   soldOut?: number[]
+  /** Строка «от … за ночь» в шапке. {price} подставляется и выделяется жирным. */
+  fromText?: string
+  /** Подпись сетки для скринридера. */
+  groupLabel?: string
+  /** Подпись доступного дня. {date}, {price} и {currency} подставляются. */
+  priceLabelText?: string
+  /** Подпись занятого дня. {date} подставляется. */
+  soldOutLabelText?: string
+  /** Короткая подпись цены в занятой клетке. */
+  soldOutText?: string
+  /** Формы счётчика ночей по категориям Intl.PluralRules. {count} подставляется. */
+  nightsText?: Record<string, string>
+  /** Строка подвала. {date} и {nights} подставляются. */
+  checkInText?: string
   locale?: string
   onChange?: (iso: string) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: цена стоит в клетке, а не открывается после выбора.
@@ -25,13 +41,14 @@ export type Calendar019Props = Omit<
 // а не исчезают: пропавший день читается как ошибка загрузки.
 const STYLES = `
 :where([data-vibeui-block="calendar-019"]){
---vibeui-calendar-019-bg:oklch(1 0 0);
---vibeui-calendar-019-fg:oklch(0.24 0.014 265);
---vibeui-calendar-019-muted:oklch(0.62 0.014 265);
---vibeui-calendar-019-border:oklch(0.91 0.006 265);
---vibeui-calendar-019-hover:oklch(0.96 0.004 265);
---vibeui-calendar-019-accent:oklch(0.5 0.14 175);
---vibeui-calendar-019-cheap:oklch(0.52 0.15 145);
+--vibeui-calendar-019-bg:transparent;
+--vibeui-calendar-019-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-calendar-019-muted:light-dark(oklch(0.62 0.014 265),oklch(0.67 0.013 265));
+--vibeui-calendar-019-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-calendar-019-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-calendar-019-accent:light-dark(oklch(0.5 0.14 175),oklch(0.72 0.12 175));
+--vibeui-calendar-019-cheap:light-dark(oklch(0.52 0.15 145),oklch(0.74 0.13 145));
+--vibeui-calendar-019-on-accent:light-dark(oklch(0.99 0.01 175),oklch(0.2 0.03 175));
 --vibeui-calendar-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="calendar-019"]{
@@ -84,9 +101,9 @@ cursor:not-allowed;color:var(--vibeui-calendar-019-muted);opacity:.45;
 [data-vibeui-block="calendar-019"] [data-part="grid"] button:disabled [data-part="day"]{text-decoration:line-through}
 [data-vibeui-block="calendar-019"] [data-part="grid"] button[aria-pressed="true"]{
 background:var(--vibeui-calendar-019-accent);border-color:var(--vibeui-calendar-019-accent);
-color:oklch(0.99 0.01 175);
+color:var(--vibeui-calendar-019-on-accent);
 }
-[data-vibeui-block="calendar-019"] [data-part="grid"] button[aria-pressed="true"] [data-part="price"]{color:oklch(0.99 0.01 175);font-weight:650}
+[data-vibeui-block="calendar-019"] [data-part="grid"] button[aria-pressed="true"] [data-part="price"]{color:var(--vibeui-calendar-019-on-accent);font-weight:650}
 [data-vibeui-block="calendar-019"] [data-part="total"]{
 display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:0.5rem;
 padding-top:0.75rem;border-top:1px solid var(--vibeui-calendar-019-border);
@@ -109,23 +126,40 @@ function priceOf(base: number, date: Date) {
   return Math.round((base * bump + wave * 80) / 50) * 50
 }
 
-function pluralize(count: number, forms: [string, string, string]) {
-  const tens = count % 100
-  const ones = count % 10
+const DEFAULT_NIGHTS_TEXT: Record<string, string> = {
+  one: "{count} ночь",
+  few: "{count} ночи",
+  many: "{count} ночей",
+  other: "{count} ночей",
+}
 
-  if (tens > 10 && tens < 20) {
-    return forms[2]
+function fillText(template: string, values: Record<string, string | number>) {
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, key) => `${values[key] ?? match}`,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
   }
 
-  if (ones === 1) {
-    return forms[0]
-  }
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
 
-  if (ones > 1 && ones < 5) {
-    return forms[1]
-  }
-
-  return forms[2]
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -139,9 +173,17 @@ export function Calendar019({
   nights = 2,
   currency = "₽",
   soldOut = [9, 10, 22],
+  fromText = "от {price} за ночь",
+  groupLabel = "Даты заезда и цены",
+  priceLabelText = "{date} — {price} {currency} за ночь",
+  soldOutLabelText = "{date} — мест нет",
+  soldOutText = "нет",
+  nightsText = DEFAULT_NIGHTS_TEXT,
+  checkInText = "Заезд {date}, {nights}",
   locale = "ru-RU",
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -181,8 +223,25 @@ export function Calendar019({
   }).format(first)
   const long = new Intl.DateTimeFormat(locale, { dateStyle: "long" })
 
+  // Формы счётчика выбираются по правилам самого языка, а не по русским:
+  // словарь приходит пропсом, а категорию называет Intl.
+  const plural = new Intl.PluralRules(locale)
+  const nightsLabel = fillText(
+    nightsText[plural.select(nights)] ??
+      nightsText.other ??
+      DEFAULT_NIGHTS_TEXT.other,
+    { count: nights },
+  )
+  const [fromBefore, fromAfter = ""] = fromText.split("{price}")
+
   const palette = {
     ...(accent ? { "--vibeui-calendar-019-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -210,14 +269,14 @@ export function Calendar019({
         <div data-part="head">
           <p data-part="title">{title}</p>
           <p data-part="from">
-            от{" "}
+            {fromBefore}
             <b>
               {money.format(cheapest)} {currency}
-            </b>{" "}
-            за ночь
+            </b>
+            {fromAfter}
           </p>
         </div>
-        <div data-part="grid" role="group" aria-label="Даты заезда и цены">
+        <div data-part="grid" role="group" aria-label={groupLabel}>
           {weekdays.map((label) => (
             <span key={label} data-part="wd" aria-hidden="true">
               {label}
@@ -235,22 +294,30 @@ export function Calendar019({
               data-cheap={!entry.sold && entry.price === cheapest}
               aria-label={
                 entry.sold
-                  ? `${long.format(entry.date)} — мест нет`
-                  : `${long.format(entry.date)} — ${money.format(entry.price)} ${currency} за ночь`
+                  ? fillText(soldOutLabelText, {
+                      date: long.format(entry.date),
+                    })
+                  : fillText(priceLabelText, {
+                      date: long.format(entry.date),
+                      price: money.format(entry.price),
+                      currency,
+                    })
               }
               onClick={() => pick(entry.day)}
             >
               <span data-part="day">{entry.day}</span>
               <span data-part="price">
-                {entry.sold ? "нет" : money.format(entry.price)}
+                {entry.sold ? soldOutText : money.format(entry.price)}
               </span>
             </button>
           ))}
         </div>
         <div data-part="total">
           <span>
-            Заезд {long.format(current.date)}, {nights}{" "}
-            {pluralize(nights, ["ночь", "ночи", "ночей"])}
+            {fillText(checkInText, {
+              date: long.format(current.date),
+              nights: nightsLabel,
+            })}
           </span>
           <span data-part="sum">
             {money.format(total)} {currency}

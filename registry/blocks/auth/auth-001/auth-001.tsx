@@ -10,6 +10,13 @@ export type Auth001Props = {
   providers?: string[]
   switchText?: string
   switchLink?: string
+  /** Подпись флажка «не выходить»: компонент несёт русскую. */
+  keepLabel?: string
+  /** Слово в разделителе перед входом через сервисы. */
+  orLabel?: string
+  emailPlaceholder?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -23,13 +30,17 @@ export type Auth001Props = {
 // подвале: её ищут именно в момент неудачи. Вход через сервисы вынесен ниже
 // формы и отделён разделителем: сверху он перехватывает внимание у тех, кто
 // уже завёл пароль. Кнопка занимает всю ширину — это главное действие экрана.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="auth-001"]){
---vibeui-auth-001-bg:oklch(1 0 0);
---vibeui-auth-001-fg:oklch(0.22 0.014 265);
---vibeui-auth-001-muted:oklch(0.55 0.014 265);
---vibeui-auth-001-border:oklch(0.9 0.006 265);
---vibeui-auth-001-accent:oklch(0.55 0.2 262);
+--vibeui-auth-001-bg:transparent;
+--vibeui-auth-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-auth-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.013 265));
+--vibeui-auth-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265));
+--vibeui-auth-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-auth-001-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
 --vibeui-auth-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -68,13 +79,13 @@ background:var(--vibeui-auth-001-accent);border-color:var(--vibeui-auth-001-acce
 [data-vibeui-block="auth-001"] input[type="checkbox"]:checked::after{
 content:"";position:absolute;left:0.3rem;top:0.1rem;
 width:0.2rem;height:0.45rem;
-border:solid oklch(1 0 0);border-width:0 2px 2px 0;transform:rotate(45deg);
+border:solid var(--vibeui-auth-001-on-accent);border-width:0 2px 2px 0;transform:rotate(45deg);
 }
 /* Главное действие занимает всю ширину: на этом экране оно одно. */
 [data-vibeui-block="auth-001"] [data-part="submit"]{
 width:100%;appearance:none;cursor:pointer;height:2.625rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-001-accent);color:oklch(1 0 0);
+background:var(--vibeui-auth-001-accent);color:var(--vibeui-auth-001-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="auth-001"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-auth-001-accent);outline-offset:2px}
@@ -100,6 +111,28 @@ margin:1rem 0 0;text-align:center;font-size:0.8125rem;color:var(--vibeui-auth-00
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Вход: подсказки для менеджеров паролей и «забыли пароль» рядом с полем.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -113,12 +146,22 @@ export function Auth001({
   providers = ["Продолжить с Google", "Продолжить с GitHub"],
   switchText = "Нет аккаунта?",
   switchLink = "Создать",
+  keepLabel = "Не выходить на этом устройстве",
+  orLabel = "или",
+  emailPlaceholder = "name@company.ru",
+  background = "",
   accent,
   className,
   style,
 }: Auth001Props) {
   const palette = {
     ...(accent ? { "--vibeui-auth-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -144,7 +187,7 @@ export function Auth001({
               name="email"
               type="email"
               autoComplete="username"
-              placeholder="name@company.ru"
+              placeholder={emailPlaceholder}
               required
             />
           </div>
@@ -167,7 +210,7 @@ export function Auth001({
 
           <label data-part="keep">
             <input type="checkbox" defaultChecked />
-            Не выходить на этом устройстве
+            {keepLabel}
           </label>
 
           <button type="submit" data-part="submit">
@@ -175,7 +218,7 @@ export function Auth001({
           </button>
         </form>
 
-        <p data-part="or">или</p>
+        <p data-part="or">{orLabel}</p>
 
         <div data-part="providers">
           {providers.map((provider) => (

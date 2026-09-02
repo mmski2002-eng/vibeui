@@ -10,6 +10,14 @@ export type Date005Props = Omit<
   label?: string
   defaultValue?: string
   presets?: { text: string; days: number }[]
+  /** Локаль для названия дня недели. */
+  locale?: string
+  /** Строка под полем с подстановкой {day}. */
+  weekdayText?: string
+  /** Чем заменить день недели, когда дата не разобралась. */
+  unknownDayText?: string
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,19 +27,22 @@ export type Date005Props = Omit<
 // вычислить «сегодня» на сервере и на клиенте — верный способ получить разные
 // даты на границе часовых поясов и расхождение при гидратации. Под полем
 // подписан день недели: «16 сентября» само по себе не говорит, что это среда.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="date-005"]){
---vibeui-date-005-surface:oklch(1 0 0);
---vibeui-date-005-field:oklch(1 0 0);
---vibeui-date-005-shell:oklch(0.9 0.006 265);
---vibeui-date-005-fg:oklch(0.23 0.014 265);
---vibeui-date-005-muted:oklch(0.55 0.014 265);
---vibeui-date-005-border:oklch(0.88 0.008 265);
---vibeui-date-005-accent:oklch(0.54 0.15 165);
---vibeui-date-005-soft:oklch(0.54 0.15 165 / 12%);
+--vibeui-date-005-surface:transparent;
+--vibeui-date-005-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-date-005-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-date-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-date-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-date-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-date-005-accent:light-dark(oklch(0.54 0.15 165),oklch(0.78 0.13 165));
+--vibeui-date-005-soft:color-mix(in oklch,var(--vibeui-date-005-accent) 14%,transparent);
 --vibeui-date-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: рамка держит форму, фон приходит со страницы. */
 [data-vibeui-block="date-005"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -93,12 +104,35 @@ function shiftedToday(days: number) {
 
 // Дата разбирается по частям: Date.parse трактует «2026-09-16» как UTC и
 // в минусовых поясах отдаёт предыдущий день.
-function weekdayOf(value: string) {
+function weekdayOf(value: string, locale: string) {
   const [year, month, day] = value.split("-").map(Number)
   if (!year || !month || !day) return ""
-  return new Date(year, month - 1, day).toLocaleDateString("ru-RU", {
+  return new Date(year, month - 1, day).toLocaleDateString(locale, {
     weekday: "long",
   })
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -109,6 +143,10 @@ export function Date005({
   label = "Дата доставки",
   defaultValue = "2026-09-16",
   presets = DEFAULT_PRESETS,
+  locale = "ru-RU",
+  weekdayText = "Это {day}",
+  unknownDayText = "неизвестный день",
+  background = "",
   accent,
   className,
   style,
@@ -117,9 +155,17 @@ export function Date005({
   const id = useId()
   const [value, setValue] = useState(defaultValue)
   const [picked, setPicked] = useState<string | null>(null)
+  // Выделенный день недели остаётся внутри <b>, поэтому строка режется по метке.
+  const [beforeDay, afterDay] = weekdayText.split("{day}")
 
   const palette = {
     ...(accent ? { "--vibeui-date-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-date-005-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -161,7 +207,9 @@ export function Date005({
           ))}
         </div>
         <p id={`${id}-weekday`} data-part="weekday" aria-live="polite">
-          Это <b>{weekdayOf(value) || "неизвестный день"}</b>
+          {beforeDay}
+          <b>{weekdayOf(value, locale) || unknownDayText}</b>
+          {afterDay}
         </p>
       </div>
     </>

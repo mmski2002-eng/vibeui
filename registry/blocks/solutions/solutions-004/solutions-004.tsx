@@ -16,7 +16,19 @@ export type Solutions004Props = {
   usedShare?: number
   files?: Solutions004File[]
   upload?: string
+  /** Подпись полосы занятого места. */
+  quotaLabel?: string
+  /** Занято и всего, {used} и {quota} — значения одноимённых пропов. */
+  quotaValueText?: string
+  /** Шапка таблицы: ключи file, owner, changed, size. */
+  columnText?: Record<string, string>
+  /** Строка о доступе, {count} — число участников. */
+  sharedText?: string
+  /** Подписи на плитке типа: ключи doc, image, table, archive. */
+  kindText?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,13 +43,14 @@ export type Solutions004Props = {
 // этом при загрузке поздно.
 const STYLES = `
 :where([data-vibeui-block="solutions-004"]){
---vibeui-solutions-004-bg:oklch(1 0 0);
---vibeui-solutions-004-panel:oklch(0.985 0.002 265);
---vibeui-solutions-004-fg:oklch(0.22 0.014 265);
---vibeui-solutions-004-muted:oklch(0.55 0.014 265);
---vibeui-solutions-004-border:oklch(0.91 0.006 265);
---vibeui-solutions-004-track:oklch(0.93 0.005 265);
---vibeui-solutions-004-accent:oklch(0.55 0.2 262);
+--vibeui-solutions-004-bg:transparent;
+--vibeui-solutions-004-panel:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-solutions-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-solutions-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-solutions-004-track:light-dark(oklch(0.93 0.005 265),oklch(0.33 0.01 265));
+--vibeui-solutions-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-solutions-004-onaccent:light-dark(oklch(1 0 0),oklch(0.17 0.012 265));
 --vibeui-solutions-004-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -56,7 +69,7 @@ padding:0.875rem 1rem 0.75rem;
 [data-vibeui-block="solutions-004"] [data-part="upload"]{
 appearance:none;cursor:pointer;height:2.125rem;padding:0 0.875rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-solutions-004-accent);color:oklch(1 0 0);
+background:var(--vibeui-solutions-004-accent);color:var(--vibeui-solutions-004-onaccent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="solutions-004"] [data-part="upload"]:focus-visible{outline:2px solid var(--vibeui-solutions-004-accent);outline-offset:2px}
@@ -91,8 +104,8 @@ background:var(--vibeui-solutions-004-panel);
 [data-vibeui-block="solutions-004"] [data-part="kind"]{
 display:inline-flex;align-items:center;justify-content:center;flex:none;
 width:2rem;height:2rem;border-radius:0.5rem;
-background:oklch(0.94 0.03 var(--vibeui-solutions-004-hue,262));
-color:oklch(0.4 0.1 var(--vibeui-solutions-004-hue,262));
+background:light-dark(oklch(0.94 0.03 var(--vibeui-solutions-004-hue,262)),oklch(0.33 0.055 var(--vibeui-solutions-004-hue,262)));
+color:light-dark(oklch(0.4 0.1 var(--vibeui-solutions-004-hue,262)),oklch(0.86 0.075 var(--vibeui-solutions-004-hue,262)));
 font-size:0.5625rem;font-weight:700;letter-spacing:0.04em;
 }
 [data-vibeui-block="solutions-004"] [data-kind="image"]{--vibeui-solutions-004-hue:152}
@@ -103,11 +116,40 @@ font-size:0.5625rem;font-weight:700;letter-spacing:0.04em;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="solutions-004"] *{animation:none!important;transition:none!important}}
 `
 
-const KIND_LABEL: Record<Solutions004File["kind"], string> = {
+const KIND_LABEL: Record<string, string> = {
   doc: "DOC",
   image: "PNG",
   table: "CSV",
   archive: "ZIP",
+}
+
+const DEFAULT_COLUMN_TEXT: Record<string, string> = {
+  file: "Файл",
+  owner: "Владелец",
+  changed: "Изменён",
+  size: "Размер",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 const DEFAULT_FILES: Solutions004File[] = [
@@ -154,13 +196,25 @@ export function Solutions004({
   usedShare = 62,
   files = DEFAULT_FILES,
   upload = "Загрузить",
+  quotaLabel = "Занято места",
+  quotaValueText = "{used} из {quota}",
+  columnText = DEFAULT_COLUMN_TEXT,
+  sharedText = "доступ у {count} участников",
+  kindText = KIND_LABEL,
   accent,
+  background = "",
   className,
   style,
 }: Solutions004Props) {
   const palette = {
     "--vibeui-solutions-004-used": `${usedShare}%`,
     ...(accent ? { "--vibeui-solutions-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -184,9 +238,9 @@ export function Solutions004({
 
         <div data-part="quota">
           <p data-part="quotaline">
-            Занято места
+            {quotaLabel}
             <span data-part="quotavalue">
-              {used} из {quota}
+              {quotaValueText.replace("{used}", used).replace("{quota}", quota)}
             </span>
           </p>
           <div
@@ -195,7 +249,7 @@ export function Solutions004({
             aria-valuenow={usedShare}
             aria-valuemin={0}
             aria-valuemax={100}
-            aria-label="Занято места"
+            aria-label={quotaLabel}
           >
             <span data-part="fill" />
           </div>
@@ -204,11 +258,15 @@ export function Solutions004({
         <table>
           <thead>
             <tr>
-              <th scope="col">Файл</th>
-              <th scope="col">Владелец</th>
-              <th scope="col">Изменён</th>
+              <th scope="col">{columnText.file ?? DEFAULT_COLUMN_TEXT.file}</th>
+              <th scope="col">
+                {columnText.owner ?? DEFAULT_COLUMN_TEXT.owner}
+              </th>
+              <th scope="col">
+                {columnText.changed ?? DEFAULT_COLUMN_TEXT.changed}
+              </th>
               <th scope="col" data-align="end">
-                Размер
+                {columnText.size ?? DEFAULT_COLUMN_TEXT.size}
               </th>
             </tr>
           </thead>
@@ -218,13 +276,13 @@ export function Solutions004({
                 <td>
                   <span data-part="file">
                     <span data-part="kind" aria-hidden="true">
-                      {KIND_LABEL[file.kind]}
+                      {kindText[file.kind] ?? KIND_LABEL[file.kind]}
                     </span>
                     <span>
                       <span data-part="name">{file.name}</span>
                       {file.shared ? (
                         <span data-part="shared">
-                          доступ у {file.shared} участников
+                          {sharedText.replace("{count}", String(file.shared))}
                         </span>
                       ) : null}
                     </span>

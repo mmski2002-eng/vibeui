@@ -13,7 +13,11 @@ export type Stepper003Props = Omit<
   steps?: Stepper003Step[]
   /** Номер текущего шага, считая с нуля. */
   current?: number
+  /** Подписи состояний: компонент несёт русские, проект подставляет свои. */
+  stateText?: Record<string, string>
   label?: string
+  /** Пусто — подложки нет, лента лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,15 +25,19 @@ export type Stepper003Props = Omit<
 // Линия рисуется псевдоэлементом ::before самого пункта и обрывается на
 // последнем, поэтому она не выходит за нижний кружок. Пройденный участок
 // линии окрашен, но состояние дублируется словом рядом с заголовком.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="stepper-003"]){
---vibeui-stepper-003-bg:oklch(1 0 0);
---vibeui-stepper-003-fg:oklch(0.24 0.016 265);
---vibeui-stepper-003-muted:oklch(0.56 0.014 265);
---vibeui-stepper-003-border:oklch(0.92 0.006 265);
---vibeui-stepper-003-line:oklch(0.9 0.006 265);
---vibeui-stepper-003-accent:oklch(0.55 0.2 262);
---vibeui-stepper-003-accent-fg:oklch(1 0 0);
+--vibeui-stepper-003-bg:transparent;
+--vibeui-stepper-003-surface:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-stepper-003-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-stepper-003-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-stepper-003-border:light-dark(oklch(0.92 0.006 265),oklch(0.32 0.012 265));
+--vibeui-stepper-003-line:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-stepper-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-stepper-003-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
 --vibeui-stepper-003-dot:1.5rem;
 --vibeui-stepper-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -61,7 +69,7 @@ grid-column:1;grid-row:1 / span 3;
 display:flex;align-items:center;justify-content:center;
 width:var(--vibeui-stepper-003-dot);height:var(--vibeui-stepper-003-dot);
 border-radius:9999px;border:2px solid var(--vibeui-stepper-003-line);
-background:var(--vibeui-stepper-003-bg);color:var(--vibeui-stepper-003-muted);
+background:var(--vibeui-stepper-003-surface);color:var(--vibeui-stepper-003-muted);
 font-size:0.6875rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="stepper-003"] li[data-state="done"] [data-part="mark"]{
@@ -126,11 +134,33 @@ const DEFAULT_STEPS: Stepper003Step[] = [
   },
 ]
 
-const STATES = {
+const STATE_TEXT: Record<string, string> = {
   done: "Готово",
   current: "Сейчас",
   todo: "Впереди",
-} as const
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Вертикальная лента шагов с описанием и подписью состояния словом.
@@ -139,7 +169,9 @@ const STATES = {
 export function Stepper003({
   steps = DEFAULT_STEPS,
   current = 2,
+  stateText = STATE_TEXT,
   label = "Ход заявки",
+  background = "",
   accent,
   className,
   style,
@@ -147,6 +179,13 @@ export function Stepper003({
 }: Stepper003Props) {
   const palette = {
     ...(accent ? { "--vibeui-stepper-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-stepper-003-bg": background,
+          "--vibeui-stepper-003-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -183,7 +222,9 @@ export function Stepper003({
                   </span>
                   <span data-part="head">
                     <span data-part="title">{step.title}</span>
-                    <span data-part="state">{STATES[state]}</span>
+                    <span data-part="state">
+                      {stateText[state] ?? STATE_TEXT[state]}
+                    </span>
                   </span>
                   {step.description ? (
                     <p data-part="description">{step.description}</p>

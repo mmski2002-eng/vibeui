@@ -10,6 +10,8 @@ export type Popover001Props = Omit<
   text?: string
   actionLabel?: string
   accent?: string
+  /** Подложка карточки и кнопки. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: всплывающая карточка с текстом и действием на HTML
@@ -18,12 +20,14 @@ export type Popover001Props = Omit<
 // уходу курсора — только по Escape, клику вне или действию.
 const STYLES = `
 :where([data-vibeui-block="popover-001"]){
---vibeui-popover-001-bg:oklch(1 0 0);
---vibeui-popover-001-fg:oklch(0.24 0.014 265);
---vibeui-popover-001-muted:oklch(0.56 0.014 265);
---vibeui-popover-001-border:oklch(0.9 0.006 265);
---vibeui-popover-001-hover:oklch(0.96 0.004 265);
---vibeui-popover-001-accent:oklch(0.55 0.17 265);
+--vibeui-popover-001-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-popover-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-popover-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-popover-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-popover-001-hover:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.014 265));
+--vibeui-popover-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
+--vibeui-popover-001-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.03 265));
+--vibeui-popover-001-shadow:light-dark(oklch(0.2 0.02 265 / 55%),oklch(0.02 0.01 265 / 70%));
 --vibeui-popover-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="popover-001"]{
@@ -46,7 +50,7 @@ position:fixed;margin:0;padding:0.875rem;
 width:min(18rem,100vw - 2rem);box-sizing:border-box;
 border:1px solid var(--vibeui-popover-001-border);border-radius:0.875rem;
 background:var(--vibeui-popover-001-bg);color:inherit;
-box-shadow:0 20px 44px -24px oklch(0.2 0.02 265 / 55%);
+box-shadow:0 20px 44px -24px var(--vibeui-popover-001-shadow);
 position-anchor:--vibeui-popover-001-anchor;
 top:anchor(bottom);left:anchor(left);margin-top:0.5rem;
 }
@@ -59,12 +63,34 @@ top:anchor(bottom);left:anchor(left);margin-top:0.5rem;
 [data-vibeui-block="popover-001"] [data-part="action"]{
 appearance:none;cursor:pointer;
 height:2rem;padding:0 0.75rem;border:0;border-radius:0.5rem;
-background:var(--vibeui-popover-001-accent);color:oklch(0.99 0.01 265);
+background:var(--vibeui-popover-001-accent);color:var(--vibeui-popover-001-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="popover-001"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-popover-001-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-001"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Всплывающая карточка на HTML popover: внутрь можно попасть мышью и Tab.
@@ -76,6 +102,7 @@ export function Popover001({
   text = "Берём уникальных посетителей за семь дней и вычитаем ботов по списку известных агентов.",
   actionLabel = "Открыть методику",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -83,6 +110,12 @@ export function Popover001({
   const id = useId().replace(/:/g, "")
   const palette = {
     ...(accent ? { "--vibeui-popover-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-popover-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

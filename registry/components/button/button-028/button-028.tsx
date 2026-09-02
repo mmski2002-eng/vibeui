@@ -8,6 +8,8 @@ export type Button028Props = Omit<
   label?: string
   icon?: "info" | "trash" | "edit"
   side?: "top" | "bottom"
+  /** Пусто — подложки нет, кнопка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,12 +20,12 @@ export type Button028Props = Omit<
 // по клавиатуре — сразу, без задержки и без JS.
 const STYLES = `
 :where([data-vibeui-block="button-028"]){
---vibeui-button-028-bg:oklch(1 0 0);
---vibeui-button-028-fg:oklch(0.32 0.016 265);
---vibeui-button-028-border:oklch(0.9 0.006 265);
---vibeui-button-028-accent:oklch(0.55 0.17 265);
---vibeui-button-028-tip:oklch(0.24 0.02 265);
---vibeui-button-028-tip-fg:oklch(0.98 0.005 265);
+--vibeui-button-028-bg:transparent;
+--vibeui-button-028-fg:light-dark(oklch(0.32 0.016 265),oklch(0.9 0.008 265));
+--vibeui-button-028-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-button-028-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-button-028-tip:light-dark(oklch(0.24 0.02 265),oklch(0.93 0.008 265));
+--vibeui-button-028-tip-fg:light-dark(oklch(0.98 0.005 265),oklch(0.22 0.02 265));
 --vibeui-button-028-size:2.25rem;
 --vibeui-button-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -105,6 +107,28 @@ border:0.1875rem solid transparent;border-top-color:currentColor;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кнопка со значком без подписи: имя действия живёт в aria-label и подсказке.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -112,6 +136,7 @@ export function Button028({
   label = "Удалить черновик",
   icon = "trash",
   side = "top",
+  background = "",
   accent,
   type = "button",
   className,
@@ -120,6 +145,12 @@ export function Button028({
 }: Button028Props) {
   const palette = {
     ...(accent ? { "--vibeui-button-028-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-028-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

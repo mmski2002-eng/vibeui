@@ -16,6 +16,18 @@ export type Item008Props = Omit<
   position?: number
   total?: number
   onMove?: (direction: -1 | 1) => void
+  /**
+   * Подпись ручки. Компонент несёт русскую, проект подставляет свою:
+   * {title}, {position} и {total} подставляются на месте.
+   */
+  handleLabel?: string
+  /**
+   * Реплики живой области по ключам grabbed, dropped, cancelled, edge и moved.
+   * Подстановки те же плюс {target} — позиция после шага.
+   */
+  announceText?: Record<string, string>
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,13 +37,17 @@ export type Item008Props = Omit<
 // её обратно. Без этого перенос доступен ровно половине людей. Ручка называет
 // свою позицию вслух («3 из 8»), а переход в режим переноса объявляется в
 // живой области: визуальный сдвиг строки скринридер не увидит.
+//
+// Тема берётся из color-scheme окружения через light-dark(): строка темнеет
+// там, где тёмный контекст, и не выкладывает под себя белую плашку.
 const STYLES = `
 :where([data-vibeui-block="item-008"]){
---vibeui-item-008-bg:oklch(1 0 0);
---vibeui-item-008-fg:oklch(0.23 0.014 265);
---vibeui-item-008-muted:oklch(0.56 0.014 265);
---vibeui-item-008-border:oklch(0.9 0.006 265);
---vibeui-item-008-accent:oklch(0.55 0.19 262);
+--vibeui-item-008-bg:transparent;
+--vibeui-item-008-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-item-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-item-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-item-008-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.16 262));
+--vibeui-item-008-shadow:light-dark(oklch(0.2 0.02 265 / 14%),oklch(0 0 0 / 46%));
 --vibeui-item-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="item-008"]{
@@ -47,7 +63,7 @@ transition:box-shadow .15s ease,border-color .15s ease;
 /* Поднятая строка отличается тенью и рамкой, а не только оттенком. */
 [data-vibeui-block="item-008"][data-grabbed="true"]{
 border-color:var(--vibeui-item-008-accent);
-box-shadow:0 6px 16px oklch(0.2 0.02 265 / 14%);
+box-shadow:0 6px 16px var(--vibeui-item-008-shadow);
 }
 [data-vibeui-block="item-008"][data-dragging="true"]{opacity:.5}
 /* Ручка — кнопка, а не декоративный значок: иначе она недостижима с клавиатуры. */
@@ -74,6 +90,46 @@ clip-path:inset(50%);white-space:nowrap;border:0;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="item-008"] *{animation:none!important;transition:none!important}}
 `
 
+const HANDLE_LABEL = "Перенести «{title}», позиция {position} из {total}"
+
+const ANNOUNCE: Record<string, string> = {
+  grabbed:
+    "«{title}» поднята, позиция {position} из {total}. Стрелки двигают, пробел кладёт.",
+  dropped: "«{title}» опущена на позицию {position} из {total}.",
+  cancelled: "Перенос «{title}» отменён.",
+  edge: "«{title}» уже на краю списка, позиция {position} из {total}.",
+  moved: "«{title}» перемещена на позицию {target} из {total}.",
+}
+
+/** Подстановка {ключей} в шаблон подписи. */
+function fill(template: string, values: Record<string, string | number>) {
+  return template.replace(/\{(\w+)\}/g, (whole, key: string) =>
+    String(values[key] ?? whole),
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Строка с ручкой переноса: мышью — drag, с клавиатуры — пробел и стрелки.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -84,6 +140,9 @@ export function Item008({
   position = 3,
   total = 8,
   onMove,
+  handleLabel = HANDLE_LABEL,
+  announceText = ANNOUNCE,
+  background = "",
   accent,
   className,
   style,
@@ -93,24 +152,28 @@ export function Item008({
   const [dragging, setDragging] = useState(false)
   const [announcement, setAnnouncement] = useState("")
 
-  const say = (text: string) => setAnnouncement(text)
+  const say = (key: string, target = position) =>
+    setAnnouncement(
+      fill(announceText[key] ?? ANNOUNCE[key], {
+        title,
+        position,
+        total,
+        target,
+      }),
+    )
 
   const handleKey = (event: KeyboardEvent<HTMLButtonElement>) => {
     if (event.key === " " || event.key === "Enter") {
       event.preventDefault()
       const next = !grabbed
       setGrabbed(next)
-      say(
-        next
-          ? `«${title}» поднята, позиция ${position} из ${total}. Стрелки двигают, пробел кладёт.`
-          : `«${title}» опущена на позицию ${position} из ${total}.`,
-      )
+      say(next ? "grabbed" : "dropped")
       return
     }
 
     if (event.key === "Escape" && grabbed) {
       setGrabbed(false)
-      say(`Перенос «${title}» отменён.`)
+      say("cancelled")
       return
     }
 
@@ -122,17 +185,23 @@ export function Item008({
       const target = position + direction
 
       if (target < 1 || target > total) {
-        say(`«${title}» уже на краю списка, позиция ${position} из ${total}.`)
+        say("edge")
         return
       }
 
       onMove?.(direction)
-      say(`«${title}» перемещена на позицию ${target} из ${total}.`)
+      say("moved", target)
     }
   }
 
   const palette = {
     ...(accent ? { "--vibeui-item-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-item-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -156,7 +225,7 @@ export function Item008({
           type="button"
           data-part="grip"
           aria-pressed={grabbed}
-          aria-label={`Перенести «${title}», позиция ${position} из ${total}`}
+          aria-label={fill(handleLabel, { title, position, total })}
           onKeyDown={handleKey}
           onBlur={() => setGrabbed(false)}
         >

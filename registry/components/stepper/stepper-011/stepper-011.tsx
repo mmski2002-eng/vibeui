@@ -18,25 +18,37 @@ export type Stepper011Props = Omit<
   "children"
 > & {
   steps?: Stepper011Step[]
+  /** Заголовок карточки ошибки. {title} — название шага. */
+  alertTitleText?: string
+  /** Подпись ссылки исправления, когда у шага нет своей. */
+  actionLabel?: string
+  /** Подписи состояний: компонент несёт русские, проект подставляет свои. */
+  stateText?: Record<Stepper011State, string>
   label?: string
+  /** Пусто — подложки нет, лента лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
 // Идея компонента: ошибка на шаге — не тупик, а точка с понятным следующим
 // действием. Под лентой шагов отдельной карточкой выводится то, что пошло не
 // так, и то, что конкретно исправить, — а не только значок "!" на кружке.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="stepper-011"]){
---vibeui-stepper-011-bg:oklch(1 0 0);
---vibeui-stepper-011-fg:oklch(0.24 0.016 265);
---vibeui-stepper-011-muted:oklch(0.56 0.014 265);
---vibeui-stepper-011-border:oklch(0.92 0.006 265);
---vibeui-stepper-011-line:oklch(0.9 0.006 265);
---vibeui-stepper-011-accent:oklch(0.55 0.2 262);
---vibeui-stepper-011-done:oklch(0.55 0.14 155);
---vibeui-stepper-011-error:oklch(0.55 0.19 27);
---vibeui-stepper-011-on:oklch(1 0 0);
---vibeui-stepper-011-alert-bg:oklch(0.97 0.03 27);
+--vibeui-stepper-011-bg:transparent;
+--vibeui-stepper-011-surface:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-stepper-011-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-stepper-011-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-stepper-011-border:light-dark(oklch(0.92 0.006 265),oklch(0.32 0.012 265));
+--vibeui-stepper-011-line:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-stepper-011-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-stepper-011-done:light-dark(oklch(0.55 0.14 155),oklch(0.74 0.14 155));
+--vibeui-stepper-011-error:light-dark(oklch(0.55 0.19 27),oklch(0.72 0.16 27));
+--vibeui-stepper-011-on:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
+--vibeui-stepper-011-alert-bg:light-dark(oklch(0.97 0.03 27),oklch(0.26 0.045 27));
 --vibeui-stepper-011-size:2rem;
 --vibeui-stepper-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -69,7 +81,7 @@ position:relative;z-index:1;
 display:flex;align-items:center;justify-content:center;
 width:var(--vibeui-stepper-011-size);height:var(--vibeui-stepper-011-size);
 border-radius:9999px;border:2px solid var(--vibeui-stepper-011-tone);
-background:var(--vibeui-stepper-011-bg);color:var(--vibeui-stepper-011-tone);
+background:var(--vibeui-stepper-011-surface);color:var(--vibeui-stepper-011-tone);
 font-size:0.8125rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="stepper-011"] li[data-state="done"] [data-part="mark"],
@@ -120,11 +132,33 @@ outline:2px solid var(--vibeui-stepper-011-error);outline-offset:2px;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="stepper-011"] *{animation:none!important;transition:none!important}}
 `
 
-const WORDS: Record<Stepper011State, string> = {
+const STATE_TEXT: Record<Stepper011State, string> = {
   done: "Готово",
   error: "Ошибка",
   current: "Сейчас",
   todo: "Впереди",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 const DEFAULT_STEPS: Stepper011Step[] = [
@@ -147,7 +181,11 @@ const DEFAULT_STEPS: Stepper011Step[] = [
  */
 export function Stepper011({
   steps = DEFAULT_STEPS,
+  alertTitleText = "Ошибка на шаге «{title}»",
+  actionLabel = "Исправить",
+  stateText = STATE_TEXT,
   label = "Настройка магазина",
+  background = "",
   accent,
   className,
   style,
@@ -155,6 +193,13 @@ export function Stepper011({
 }: Stepper011Props) {
   const palette = {
     ...(accent ? { "--vibeui-stepper-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-stepper-011-bg": background,
+          "--vibeui-stepper-011-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -188,7 +233,9 @@ export function Stepper011({
                       : "•"}
                 </span>
                 <span data-part="title">{step.title}</span>
-                <span data-part="state">{WORDS[step.state]}</span>
+                <span data-part="state">
+                  {stateText[step.state] ?? STATE_TEXT[step.state]}
+                </span>
               </li>
             ))}
           </ol>
@@ -200,7 +247,7 @@ export function Stepper011({
                     <span data-part="alert-icon" aria-hidden="true">
                       !
                     </span>
-                    Ошибка на шаге «{step.title}»
+                    {alertTitleText.replace("{title}", step.title)}
                   </p>
                   {step.issue ? (
                     <p data-part="alert-text">{step.issue}</p>
@@ -208,7 +255,7 @@ export function Stepper011({
                   {step.fix ? <p data-part="alert-text">{step.fix}</p> : null}
                   {step.href ? (
                     <a data-part="alert-action" href={step.href}>
-                      {step.actionLabel ?? "Исправить"}
+                      {step.actionLabel ?? actionLabel}
                     </a>
                   ) : null}
                 </div>

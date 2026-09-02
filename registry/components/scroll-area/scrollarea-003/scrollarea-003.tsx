@@ -13,20 +13,31 @@ export type Scrollarea003Props = Omit<
   cards?: Scrollarea003Card[]
   /** Ширина карточки в ленте: от неё зависит, сколько видно за раз. */
   cardWidth?: string
+  /** Подсказка справа в шапке. */
+  hint?: string
+  /** Имя ленты для скринридера. {title} подставляется заголовком. */
+  railLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: горизонтальная лента с прилипанием. scroll-snap-align на
 // карточках плюс scroll-padding у ленты — и остановка всегда приходится на
 // начало карточки, а не на её середину. Последняя карточка не упирается в
 // край: у ленты есть внутренние отступы, поэтому её видно целиком.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="scrollarea-003"]){
---vibeui-scrollarea-003-bg:oklch(1 0 0);
---vibeui-scrollarea-003-fg:oklch(0.24 0.014 265);
---vibeui-scrollarea-003-muted:oklch(0.55 0.014 265);
---vibeui-scrollarea-003-border:oklch(0.9 0.006 265);
---vibeui-scrollarea-003-tile:oklch(0.97 0.008 265);
---vibeui-scrollarea-003-accent:oklch(0.55 0.17 265);
+--vibeui-scrollarea-003-bg:transparent;
+--vibeui-scrollarea-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-scrollarea-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-scrollarea-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.33 0.012 265));
+--vibeui-scrollarea-003-tile:light-dark(oklch(0.97 0.008 265),oklch(0.26 0.012 265));
+--vibeui-scrollarea-003-thumb-from:light-dark(oklch(0.88 0.06 265),oklch(0.45 0.09 265));
+--vibeui-scrollarea-003-thumb-to:light-dark(oklch(0.93 0.03 200),oklch(0.52 0.06 200));
+--vibeui-scrollarea-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-scrollarea-003-card:9.5rem;
 --vibeui-scrollarea-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -65,7 +76,7 @@ border:1px solid var(--vibeui-scrollarea-003-border);
 }
 [data-vibeui-block="scrollarea-003"] [data-part="thumb"]{
 aspect-ratio:16 / 10;border-radius:0.5rem;
-background:linear-gradient(135deg,oklch(0.88 0.06 265),oklch(0.93 0.03 200));
+background:linear-gradient(135deg,var(--vibeui-scrollarea-003-thumb-from),var(--vibeui-scrollarea-003-thumb-to));
 }
 [data-vibeui-block="scrollarea-003"] [data-part="name"]{
 font-size:0.75rem;font-weight:650;line-height:1.25;
@@ -90,6 +101,28 @@ const DEFAULT_CARDS: Scrollarea003Card[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Горизонтальная лента с прилипанием карточек.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -97,12 +130,21 @@ export function Scrollarea003({
   title = "Готовые блоки",
   cards = DEFAULT_CARDS,
   cardWidth = "9.5rem",
+  hint = "листайте вбок",
+  railLabel = "{title}: горизонтальная лента",
+  background = "",
   className,
   style,
   ...props
 }: Scrollarea003Props) {
   const palette = {
     "--vibeui-scrollarea-003-card": cardWidth,
+    ...(background
+      ? {
+          "--vibeui-scrollarea-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -119,13 +161,13 @@ export function Scrollarea003({
       >
         <div data-part="head">
           <span>{title}</span>
-          <span data-part="hint">листайте вбок</span>
+          <span data-part="hint">{hint}</span>
         </div>
         <div
           data-part="rail"
           tabIndex={0}
           role="region"
-          aria-label={`${title}: горизонтальная лента`}
+          aria-label={railLabel.replace("{title}", title)}
         >
           {cards.map((card) => (
             <article key={card.title} data-part="card">

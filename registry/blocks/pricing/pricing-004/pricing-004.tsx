@@ -15,9 +15,41 @@ export type Pricing004Props = {
   title?: string
   plans?: { name: string; price: string; href: string; featured?: boolean }[]
   groups?: Pricing004Group[]
+  /** Подпись таблицы. {plans} — число тарифов, {features} — число признаков. */
+  caption?: string
+  /** Заголовок первой колонки. */
+  featureHeading?: string
+  /** Подпись ссылки в шапке колонки тарифа. */
+  pickLabel?: string
+  /** Подписи логических значений в ячейках. */
+  valueText?: { yes: string; no: string }
   accent?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 // Идея блока: полная таблица сравнения тарифов. Настоящая <table> со
@@ -28,13 +60,14 @@ export type Pricing004Props = {
 // прокручивается вбок внутри обёртки, а не разваливается на карточки.
 const STYLES = `
 :where([data-vibeui-block="pricing-004"]){
---vibeui-pricing-004-bg:oklch(1 0 0);
---vibeui-pricing-004-fg:oklch(0.2 0.01 265);
---vibeui-pricing-004-muted:oklch(0.53 0.01 265);
---vibeui-pricing-004-line:oklch(0.91 0.005 265);
---vibeui-pricing-004-soft:oklch(0.97 0.004 265);
---vibeui-pricing-004-accent:oklch(0.5 0.17 265);
---vibeui-pricing-004-accent-fg:oklch(0.99 0 0);
+--vibeui-pricing-004-bg:transparent;
+--vibeui-pricing-004-card:light-dark(oklch(1 0 0),oklch(0.195 0.012 265));
+--vibeui-pricing-004-fg:light-dark(oklch(0.2 0.01 265),oklch(0.95 0.004 265));
+--vibeui-pricing-004-muted:light-dark(oklch(0.53 0.01 265),oklch(0.72 0.01 265));
+--vibeui-pricing-004-line:light-dark(oklch(0.91 0.005 265),oklch(0.34 0.012 265));
+--vibeui-pricing-004-soft:light-dark(oklch(0.97 0.004 265),oklch(0.26 0.013 265));
+--vibeui-pricing-004-accent:light-dark(oklch(0.5 0.17 265),oklch(0.75 0.15 265));
+--vibeui-pricing-004-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 265));
 --vibeui-pricing-004-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -51,14 +84,14 @@ color:var(--vibeui-pricing-004-accent);
 [data-vibeui-block="pricing-004"] h2{
 margin:0 0 2rem;max-width:24ch;font-size:clamp(1.5rem,4.2cqi,2.25rem);line-height:1.14;letter-spacing:-0.025em;font-weight:700;text-wrap:balance;
 }
-[data-vibeui-block="pricing-004"] [data-part="scroll"]{overflow-x:auto;border:1px solid var(--vibeui-pricing-004-line);border-radius:1rem}
+[data-vibeui-block="pricing-004"] [data-part="scroll"]{overflow-x:auto;border:1px solid var(--vibeui-pricing-004-line);border-radius:1rem;background:var(--vibeui-pricing-004-card)}
 [data-vibeui-block="pricing-004"] table{width:100%;min-width:40rem;border-collapse:collapse;font-size:0.875rem}
 [data-vibeui-block="pricing-004"] caption{
 caption-side:top;padding:1rem 1.25rem;text-align:left;font-size:0.75rem;color:var(--vibeui-pricing-004-muted);
 }
 [data-vibeui-block="pricing-004"] thead th{
 position:sticky;top:0;z-index:1;padding:1rem;text-align:left;vertical-align:top;
-background:var(--vibeui-pricing-004-bg);border-bottom:1px solid var(--vibeui-pricing-004-line);
+background:var(--vibeui-pricing-004-card);border-bottom:1px solid var(--vibeui-pricing-004-line);
 }
 [data-vibeui-block="pricing-004"] [data-part="planname"]{display:block;font-size:0.9375rem;font-weight:700}
 [data-vibeui-block="pricing-004"] [data-part="planprice"]{display:block;margin-top:0.25rem;font-size:0.8125rem;font-weight:500;color:var(--vibeui-pricing-004-muted);font-variant-numeric:tabular-nums}
@@ -122,20 +155,38 @@ const DEFAULT_GROUPS: Pricing004Group[] = [
   },
 ]
 
+const DEFAULT_VALUE_TEXT = { yes: "Есть", no: "—" }
+
 /** Таблица сравнения тарифов: строки сгруппированы, шапка с ценами залипает при прокрутке. */
 export function Pricing004({
   eyebrow = "Сравнение",
   title = "Что именно меняется при переходе на следующий тариф",
   plans = DEFAULT_PLANS,
   groups = DEFAULT_GROUPS,
+  caption = "Сравнение {plans} тарифов по {features} признакам, сгруппированным по разделам.",
+  featureHeading = "Возможность",
+  pickLabel = "Выбрать",
+  valueText = DEFAULT_VALUE_TEXT,
   accent,
+  background = "",
   className,
   style,
 }: Pricing004Props) {
   const palette = {
     ...(accent ? { "--vibeui-pricing-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pricing-004-bg": background,
+          "--vibeui-pricing-004-card": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+  const featureCount = groups.reduce((sum, group) => sum + group.rows.length, 0)
+  const captionText = caption
+    .replace("{plans}", String(plans.length))
+    .replace("{features}", String(featureCount))
 
   return (
     <>
@@ -153,13 +204,10 @@ export function Pricing004({
 
           <div data-part="scroll">
             <table>
-              <caption>
-                Сравнение трёх тарифов по девяти признакам, сгруппированным по
-                разделам.
-              </caption>
+              <caption>{captionText}</caption>
               <thead>
                 <tr>
-                  <th scope="col">Возможность</th>
+                  <th scope="col">{featureHeading}</th>
                   {plans.map((plan) => (
                     <th
                       key={plan.name}
@@ -169,7 +217,7 @@ export function Pricing004({
                       <span data-part="planname">{plan.name}</span>
                       <span data-part="planprice">{plan.price}</span>
                       <a data-part="pick" href={plan.href}>
-                        Выбрать
+                        {pickLabel}
                       </a>
                     </th>
                   ))}
@@ -188,9 +236,9 @@ export function Pricing004({
                       {row.values.map((value, index) => (
                         <td key={plans[index]?.name ?? index}>
                           {value === true ? (
-                            <span data-part="yes">Есть</span>
+                            <span data-part="yes">{valueText.yes}</span>
                           ) : value === false ? (
-                            <span data-part="no">—</span>
+                            <span data-part="no">{valueText.no}</span>
                           ) : (
                             value
                           )}

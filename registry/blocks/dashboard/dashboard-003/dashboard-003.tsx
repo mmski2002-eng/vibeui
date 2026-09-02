@@ -17,6 +17,16 @@ export type Dashboard003Props = {
   dangerTitle?: string
   dangerText?: string
   dangerAction?: string
+  /** Название оглавления для скринридера. */
+  tocText?: string
+  /** Заголовки групп полей по ключам project и notifications. */
+  legendText?: Record<string, string>
+  /** Подписи полей по ключам name, slug и пояснение slugNote. */
+  fieldText?: Record<string, string>
+  /** Подписи кнопок по ключам reset и save. */
+  actionText?: Record<string, string>
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -30,16 +40,20 @@ export type Dashboard003Props = {
 // Опасная зона отделена не только цветом: у неё своя рамка, свой заголовок и
 // действие вторичной кнопкой — красная кнопка рядом с «Сохранить» слишком
 // легко нажимается по инерции.
+//
+// Тема берётся из color-scheme окружения через light-dark(): собственной
+// подложки у страницы нет, карточки внутри держат свою поверхность.
 const STYLES = `
 :where([data-vibeui-block="dashboard-003"]){
---vibeui-dashboard-003-bg:oklch(0.985 0.002 265);
---vibeui-dashboard-003-card:oklch(1 0 0);
---vibeui-dashboard-003-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-003-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-003-border:oklch(0.91 0.006 265);
---vibeui-dashboard-003-hover:oklch(0.55 0.02 265 / 8%);
---vibeui-dashboard-003-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-003-danger:oklch(0.56 0.19 25);
+--vibeui-dashboard-003-bg:transparent;
+--vibeui-dashboard-003-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-dashboard-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-dashboard-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-dashboard-003-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 12%));
+--vibeui-dashboard-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-dashboard-003-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
+--vibeui-dashboard-003-danger:light-dark(oklch(0.56 0.19 25),oklch(0.74 0.16 25));
 --vibeui-dashboard-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -122,7 +136,7 @@ appearance:none;cursor:pointer;height:2.25rem;padding:0 0.875rem;
 border-radius:0.625rem;font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="dashboard-003"] [data-part="save"]{
-border:0;background:var(--vibeui-dashboard-003-accent);color:oklch(1 0 0);
+border:0;background:var(--vibeui-dashboard-003-accent);color:var(--vibeui-dashboard-003-on-accent);
 }
 [data-vibeui-block="dashboard-003"] [data-part="reset"]{
 border:1px solid var(--vibeui-dashboard-003-border);
@@ -145,6 +159,45 @@ background:none;color:var(--vibeui-dashboard-003-danger);
 `
 
 const DEFAULT_SECTIONS = ["Общие", "Доступ", "Уведомления", "Оплата"]
+
+const DEFAULT_LEGENDS: Record<string, string> = {
+  project: "Проект",
+  notifications: "Уведомления",
+}
+
+const DEFAULT_FIELDS: Record<string, string> = {
+  name: "Название",
+  slug: "Адрес",
+  slugNote:
+    "Адрес входит в ссылки установки: старые ссылки перестанут работать.",
+}
+
+const DEFAULT_ACTIONS: Record<string, string> = {
+  reset: "Отменить",
+  save: "Сохранить",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_TOGGLES: Dashboard003Toggle[] = [
   {
@@ -179,12 +232,23 @@ export function Dashboard003({
   dangerTitle = "Удаление проекта",
   dangerText = "Каталог, ключи доступа и история установок будут удалены безвозвратно. Действие нельзя отменить.",
   dangerAction = "Удалить проект",
+  tocText = "Разделы настроек",
+  legendText = DEFAULT_LEGENDS,
+  fieldText = DEFAULT_FIELDS,
+  actionText = DEFAULT_ACTIONS,
+  background = "",
   accent,
   className,
   style,
 }: Dashboard003Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -203,7 +267,7 @@ export function Dashboard003({
         <p data-part="lead">{hint}</p>
 
         <div data-part="layout">
-          <nav data-part="toc" aria-label="Разделы настроек">
+          <nav data-part="toc" aria-label={tocText}>
             {sections.map((section) => (
               <a
                 key={section}
@@ -218,9 +282,11 @@ export function Dashboard003({
 
           <form data-part="form">
             <fieldset>
-              <legend>Проект</legend>
+              <legend>{legendText.project ?? DEFAULT_LEGENDS.project}</legend>
               <div data-part="field">
-                <label htmlFor="vibeui-dashboard-003-name">Название</label>
+                <label htmlFor="vibeui-dashboard-003-name">
+                  {fieldText.name ?? DEFAULT_FIELDS.name}
+                </label>
                 <input
                   id="vibeui-dashboard-003-name"
                   type="text"
@@ -228,7 +294,9 @@ export function Dashboard003({
                 />
               </div>
               <div data-part="field">
-                <label htmlFor="vibeui-dashboard-003-slug">Адрес</label>
+                <label htmlFor="vibeui-dashboard-003-slug">
+                  {fieldText.slug ?? DEFAULT_FIELDS.slug}
+                </label>
                 <input
                   id="vibeui-dashboard-003-slug"
                   type="text"
@@ -236,14 +304,15 @@ export function Dashboard003({
                   aria-describedby="vibeui-dashboard-003-slug-note"
                 />
                 <p id="vibeui-dashboard-003-slug-note" data-part="note">
-                  Адрес входит в ссылки установки: старые ссылки перестанут
-                  работать.
+                  {fieldText.slugNote ?? DEFAULT_FIELDS.slugNote}
                 </p>
               </div>
             </fieldset>
 
             <fieldset>
-              <legend>Уведомления</legend>
+              <legend>
+                {legendText.notifications ?? DEFAULT_LEGENDS.notifications}
+              </legend>
               {toggles.map((toggle) => (
                 <label key={toggle.label} data-part="switch">
                   <span data-part="text">
@@ -257,10 +326,10 @@ export function Dashboard003({
 
             <div data-part="actions">
               <button type="reset" data-part="reset">
-                Отменить
+                {actionText.reset ?? DEFAULT_ACTIONS.reset}
               </button>
               <button type="submit" data-part="save">
-                Сохранить
+                {actionText.save ?? DEFAULT_ACTIONS.save}
               </button>
             </div>
 

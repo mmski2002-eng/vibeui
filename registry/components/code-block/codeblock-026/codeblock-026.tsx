@@ -5,6 +5,12 @@ export type Codeblock026Props = {
   reason?: string
   editInstead?: string
   code?: string
+  /** Подпись значка запрета. */
+  badgeText?: string
+  /** Сноска под кодом; {file} подставляется значением editInstead. */
+  noteText?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -12,16 +18,19 @@ export type Codeblock026Props = {
 // Идея компонента: листинг, который нельзя править руками. Замок в шапке,
 // косая штриховка поверх кода и подпись «правьте вот это вместо файла» —
 // три сигнала подряд, потому что один читатель всегда пропускает.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, плашка кода и штриховка — полупрозрачные слои поверх страницы.
 const STYLES = `
 :where([data-vibeui-block="codeblock-026"]){
---vibeui-codeblock-026-bg:oklch(0.985 0.003 265);
---vibeui-codeblock-026-code:oklch(0.96 0.005 265);
---vibeui-codeblock-026-fg:oklch(0.3 0.014 265);
---vibeui-codeblock-026-muted:oklch(0.53 0.012 265);
---vibeui-codeblock-026-border:oklch(0.89 0.008 265);
---vibeui-codeblock-026-lock:oklch(0.48 0.09 265);
---vibeui-codeblock-026-lock-bg:oklch(0.93 0.03 265);
---vibeui-codeblock-026-hatch:oklch(0.5 0.02 265 / 7%);
+--vibeui-codeblock-026-bg:transparent;
+--vibeui-codeblock-026-code:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
+--vibeui-codeblock-026-fg:light-dark(oklch(0.3 0.014 265),oklch(0.93 0.008 265));
+--vibeui-codeblock-026-muted:light-dark(oklch(0.53 0.012 265),oklch(0.67 0.014 265));
+--vibeui-codeblock-026-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 13%));
+--vibeui-codeblock-026-lock:light-dark(oklch(0.45 0.1 265),oklch(0.83 0.1 265));
+--vibeui-codeblock-026-lock-bg:light-dark(oklch(0.6 0.12 265 / 18%),oklch(0.62 0.12 265 / 26%));
+--vibeui-codeblock-026-hatch:light-dark(oklch(0.5 0.02 265 / 7%),oklch(1 0 0 / 6%));
 --vibeui-codeblock-026-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -93,15 +102,56 @@ export const ITEMS = [
   "codeblock-003",
 ]`
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+const NOTE =
+  "Правки внесите в {file} и пересоберите: ручные изменения здесь пропадут при следующей сборке."
+
 /** Листинг сгенерированного файла с пометкой «только для чтения». */
 export function Codeblock026({
   path = "registry/index.ts",
   reason = "Файл собирает команда npm run indexes",
   editInstead = "registry/components/*/registry.json",
   code = CODE,
+  badgeText = "только для чтения",
+  noteText = NOTE,
+  background = "",
   className,
   style,
 }: Codeblock026Props) {
+  // Сноска приходит одной строкой с {file}: разрезаем её, чтобы имя файла
+  // осталось моноширинным, а перевод не тащил за собой разметку.
+  const [notePrefix, noteSuffix] = noteText.split("{file}")
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-026-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-codeblock-026" precedence="medium">
@@ -110,7 +160,7 @@ export function Codeblock026({
       <figure
         data-vibeui-block="codeblock-026"
         className={className}
-        style={style}
+        style={palette}
       >
         <figcaption data-part="head">
           <span data-part="badge">
@@ -132,7 +182,7 @@ export function Codeblock026({
                 strokeWidth="1.2"
               />
             </svg>
-            только для чтения
+            {badgeText}
           </span>
           <span data-part="path">{path}</span>
         </figcaption>
@@ -143,8 +193,13 @@ export function Codeblock026({
         </div>
         <p data-part="note" role="note">
           <b>{reason}</b>
-          Правки внесите в <code>{editInstead}</code> и пересоберите: ручные
-          изменения здесь пропадут при следующей сборке.
+          {notePrefix}
+          {noteSuffix === undefined ? null : (
+            <>
+              <code>{editInstead}</code>
+              {noteSuffix}
+            </>
+          )}
         </p>
       </figure>
     </>

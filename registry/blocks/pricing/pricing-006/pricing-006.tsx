@@ -1,6 +1,6 @@
 "use client"
 
-import { useId, useState } from "react"
+import { useId, useMemo, useState } from "react"
 import type { CSSProperties } from "react"
 
 export type Pricing006Tier = {
@@ -21,7 +21,21 @@ export type Pricing006Props = {
   tiers?: Pricing006Tier[]
   action?: { label: string; href: string }
   note?: string
+  /** Подпись ползунка. */
+  volumeLabel?: string
+  /** Подписи ступеней: {value} — верхняя граница ступени. */
+  tierText?: { upTo: string; above: string }
+  /** Цена ступени. {price} — ставка, {unit} — подпись unitOne. */
+  perUnitText?: string
+  /** Итоговая сумма. {sum} — рассчитанное значение. */
+  sumText?: string
+  /** Пояснение под суммой. {volume}, {unit} и {base} подставляются. */
+  summaryText?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,14 +48,14 @@ export type Pricing006Props = {
 // пересчёт слышен, а не только виден. Ползунок — нативный input[type=range].
 const STYLES = `
 :where([data-vibeui-block="pricing-006"]){
---vibeui-pricing-006-bg:oklch(0.98 0.004 250);
---vibeui-pricing-006-fg:oklch(0.2 0.012 250);
---vibeui-pricing-006-muted:oklch(0.52 0.012 250);
---vibeui-pricing-006-card:oklch(1 0 0);
---vibeui-pricing-006-line:oklch(0.89 0.006 250);
---vibeui-pricing-006-track:oklch(0.91 0.008 250);
---vibeui-pricing-006-accent:oklch(0.52 0.17 250);
---vibeui-pricing-006-accent-fg:oklch(0.99 0 0);
+--vibeui-pricing-006-bg:transparent;
+--vibeui-pricing-006-fg:light-dark(oklch(0.2 0.012 250),oklch(0.95 0.004 250));
+--vibeui-pricing-006-muted:light-dark(oklch(0.52 0.012 250),oklch(0.72 0.012 250));
+--vibeui-pricing-006-card:light-dark(oklch(1 0 0),oklch(0.22 0.014 250));
+--vibeui-pricing-006-line:light-dark(oklch(0.89 0.006 250),oklch(0.34 0.014 250));
+--vibeui-pricing-006-track:light-dark(oklch(0.91 0.008 250),oklch(0.33 0.014 250));
+--vibeui-pricing-006-accent:light-dark(oklch(0.52 0.17 250),oklch(0.75 0.15 250));
+--vibeui-pricing-006-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 250));
 --vibeui-pricing-006-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -124,8 +138,34 @@ const DEFAULT_TIERS: Pricing006Tier[] = [
   { upTo: Number.POSITIVE_INFINITY, perUnit: 0.35 },
 ]
 
-const NUMBER = new Intl.NumberFormat("ru-RU")
-const MONEY = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 })
+const DEFAULT_TIER_TEXT = { upTo: "до {value}", above: "свыше" }
+
+/** Подстановка значений в шаблон подписи: {ключ} → значение. */
+function fill(template: string, values: Record<string, string>) {
+  return template.replace(/\{(\w+)\}/g, (_, key: string) => values[key] ?? "")
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 // Сумма складывается по ступеням: первая тысяча дороже последней, как в
 // реальных объёмных тарифах. Одна ставка на весь объём дала бы скачок цены
@@ -160,15 +200,33 @@ export function Pricing006({
   tiers = DEFAULT_TIERS,
   action = { label: "Подключить тариф", href: "#" },
   note = "Оплата помесячно, объём пересчитывается по факту. Ступени применяются последовательно.",
+  volumeLabel = "Объём",
+  tierText = DEFAULT_TIER_TEXT,
+  perUnitText = "{price} ₽ {unit}",
+  sumText = "{sum} ₽",
+  summaryText = "в месяц при {volume} {unit}. Абонплата {base} ₽ включена.",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Pricing006Props) {
   const id = useId()
   const [volume, setVolume] = useState(defaultVolume)
+  const numberFormat = useMemo(() => new Intl.NumberFormat(locale), [locale])
+  const moneyFormat = useMemo(
+    () => new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }),
+    [locale],
+  )
 
   const palette = {
     ...(accent ? { "--vibeui-pricing-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pricing-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -191,9 +249,9 @@ export function Pricing006({
 
           <div data-part="card">
             <div>
-              <label htmlFor={`${id}-range`}>Объём</label>
+              <label htmlFor={`${id}-range`}>{volumeLabel}</label>
               <p data-part="volume">
-                {NUMBER.format(volume)}
+                {numberFormat.format(volume)}
                 <span data-part="unit">{unitLabel}</span>
               </p>
               <input
@@ -206,8 +264,8 @@ export function Pricing006({
                 onChange={(event) => setVolume(Number(event.target.value))}
               />
               <p data-part="range">
-                <span>{NUMBER.format(min)}</span>
-                <span>{NUMBER.format(max)}</span>
+                <span>{numberFormat.format(min)}</span>
+                <span>{numberFormat.format(max)}</span>
               </p>
 
               <ul data-part="tiers">
@@ -218,11 +276,16 @@ export function Pricing006({
                   >
                     <span>
                       {Number.isFinite(tier.upTo)
-                        ? `до ${NUMBER.format(tier.upTo)}`
-                        : "свыше"}
+                        ? fill(tierText.upTo, {
+                            value: numberFormat.format(tier.upTo),
+                          })
+                        : tierText.above}
                     </span>
                     <span>
-                      {tier.perUnit.toLocaleString("ru-RU")} ₽ {unitOne}
+                      {fill(perUnitText, {
+                        price: tier.perUnit.toLocaleString(locale),
+                        unit: unitOne,
+                      })}
                     </span>
                   </li>
                 ))}
@@ -231,11 +294,16 @@ export function Pricing006({
 
             <div data-part="total">
               <p aria-live="polite">
-                <span data-part="sum">{MONEY.format(sum)} ₽</span>
+                <span data-part="sum">
+                  {fill(sumText, { sum: moneyFormat.format(sum) })}
+                </span>
               </p>
               <p data-part="sumnote">
-                в месяц при {NUMBER.format(volume)} {unitLabel}. Абонплата{" "}
-                {MONEY.format(base)} ₽ включена.
+                {fill(summaryText, {
+                  volume: numberFormat.format(volume),
+                  unit: unitLabel,
+                  base: moneyFormat.format(base),
+                })}
               </p>
               <a href={action.href}>{action.label}</a>
             </div>

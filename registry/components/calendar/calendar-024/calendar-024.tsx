@@ -14,8 +14,16 @@ export type Calendar024Props = Omit<
   maxAge?: number
   today?: string
   locale?: string
+  /** Подписи полей: day, month, year. */
+  fieldLabels?: Record<string, string>
+  /** Сообщения под полями. {days} и {minAge} подставляются. */
+  noteText?: Record<string, string>
+  /** Формы возраста по категориям Intl.PluralRules. {count} подставляется. */
+  ageText?: Record<string, string>
   onChange?: (value: string) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: дату рождения выбирают не в сетке месяца — до 1985 года
@@ -24,14 +32,14 @@ export type Calendar024Props = Omit<
 // разбираются отдельными сообщениями, а не одним «неверная дата».
 const STYLES = `
 :where([data-vibeui-block="calendar-024"]){
---vibeui-calendar-024-bg:oklch(1 0 0);
---vibeui-calendar-024-fg:oklch(0.23 0.014 275);
---vibeui-calendar-024-muted:oklch(0.56 0.014 275);
---vibeui-calendar-024-border:oklch(0.9 0.008 275);
---vibeui-calendar-024-field:oklch(0.985 0.004 275);
---vibeui-calendar-024-accent:oklch(0.51 0.13 275);
---vibeui-calendar-024-ok:oklch(0.5 0.11 155);
---vibeui-calendar-024-bad:oklch(0.55 0.18 25);
+--vibeui-calendar-024-bg:transparent;
+--vibeui-calendar-024-fg:light-dark(oklch(0.23 0.014 275),oklch(0.93 0.008 275));
+--vibeui-calendar-024-muted:light-dark(oklch(0.56 0.014 275),oklch(0.68 0.014 275));
+--vibeui-calendar-024-border:light-dark(oklch(0.9 0.008 275),oklch(0.35 0.012 275));
+--vibeui-calendar-024-field:light-dark(oklch(0.985 0.004 275),oklch(0.28 0.012 275));
+--vibeui-calendar-024-accent:light-dark(oklch(0.51 0.13 275),oklch(0.72 0.12 275));
+--vibeui-calendar-024-ok:light-dark(oklch(0.5 0.11 155),oklch(0.74 0.11 155));
+--vibeui-calendar-024-bad:light-dark(oklch(0.55 0.18 25),oklch(0.74 0.15 25));
 --vibeui-calendar-024-radius:0.625rem;
 --vibeui-calendar-024-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -92,15 +100,55 @@ function daysInMonth(year: number, month: number) {
   return new Date(year, month, 0).getDate()
 }
 
-function pluralize(count: number, forms: [string, string, string]) {
-  const tens = count % 100
-  const ones = count % 10
+const DEFAULT_FIELD_LABELS: Record<string, string> = {
+  day: "День",
+  month: "Месяц",
+  year: "Год",
+}
 
-  if (tens > 10 && tens < 20) return forms[2]
-  if (ones === 1) return forms[0]
-  if (ones > 1 && ones < 5) return forms[1]
+const DEFAULT_NOTE_TEXT: Record<string, string> = {
+  empty: "Введите день, месяц и год",
+  shortYear: "Год из четырёх цифр",
+  daysInMonth: "В этом месяце {days} дней",
+  future: "Дата в будущем",
+  tooYoung: "Нужно не меньше {minAge} лет",
+  tooOld: "Проверьте год: возраст слишком большой",
+}
 
-  return forms[2]
+const DEFAULT_AGE_TEXT: Record<string, string> = {
+  one: "{count} год",
+  few: "{count} года",
+  many: "{count} лет",
+  other: "{count} лет",
+}
+
+function fillText(template: string, values: Record<string, string | number>) {
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, key) => `${values[key] ?? match}`,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -114,8 +162,12 @@ export function Calendar024({
   maxAge = 120,
   today = "2026-04-15",
   locale = "ru-RU",
+  fieldLabels = DEFAULT_FIELD_LABELS,
+  noteText = DEFAULT_NOTE_TEXT,
+  ageText = DEFAULT_AGE_TEXT,
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -135,9 +187,13 @@ export function Calendar024({
     }))
   }, [locale])
 
+  const fields = { ...DEFAULT_FIELD_LABELS, ...fieldLabels }
+
   const check = useMemo(() => {
+    const notes = { ...DEFAULT_NOTE_TEXT, ...noteText }
+
     if (!year || !month || !day) {
-      return { state: "idle", note: "Введите день, месяц и год" }
+      return { state: "idle", note: notes.empty }
     }
 
     const numbers = {
@@ -147,7 +203,7 @@ export function Calendar024({
     }
 
     if (numbers.year < 1000) {
-      return { state: "idle", note: "Год из четырёх цифр" }
+      return { state: "idle", note: notes.shortYear }
     }
 
     if (
@@ -156,7 +212,9 @@ export function Calendar024({
     ) {
       return {
         state: "bad",
-        note: `В этом месяце ${daysInMonth(numbers.year, numbers.month)} дней`,
+        note: fillText(notes.daysInMonth, {
+          days: daysInMonth(numbers.year, numbers.month),
+        }),
       }
     }
 
@@ -164,7 +222,7 @@ export function Calendar024({
     const now = new Date(`${today}T00:00:00`)
 
     if (born.getTime() > now.getTime()) {
-      return { state: "bad", note: "Дата в будущем" }
+      return { state: "bad", note: notes.future }
     }
 
     let age = now.getFullYear() - born.getFullYear()
@@ -175,18 +233,25 @@ export function Calendar024({
     if (!passed) age -= 1
 
     if (age < minAge) {
-      return { state: "bad", note: `Нужно не меньше ${minAge} лет` }
+      return { state: "bad", note: fillText(notes.tooYoung, { minAge }) }
     }
 
     if (age > maxAge) {
-      return { state: "bad", note: "Проверьте год: возраст слишком большой" }
+      return { state: "bad", note: notes.tooOld }
     }
+
+    // Форма возраста выбирается по правилам самого языка, а не по русским:
+    // словарь приходит пропсом, а категорию называет Intl.
+    const category = new Intl.PluralRules(locale).select(age)
 
     return {
       state: "ok",
-      note: `${age} ${pluralize(age, ["год", "года", "лет"])}`,
+      note: fillText(
+        ageText[category] ?? ageText.other ?? DEFAULT_AGE_TEXT.other,
+        { count: age },
+      ),
     }
-  }, [year, month, day, today, minAge, maxAge])
+  }, [year, month, day, today, minAge, maxAge, locale, ageText, noteText])
 
   const push = (next: { year: string; month: string; day: string }) => {
     onChange?.(
@@ -198,6 +263,12 @@ export function Calendar024({
 
   const palette = {
     ...(accent ? { "--vibeui-calendar-024-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-024-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -216,7 +287,7 @@ export function Calendar024({
         <legend>{label}</legend>
         <div data-part="row">
           <div data-part="cell">
-            <label htmlFor={`${id}-day`}>День</label>
+            <label htmlFor={`${id}-day`}>{fields.day}</label>
             <input
               id={`${id}-day`}
               inputMode="numeric"
@@ -233,7 +304,7 @@ export function Calendar024({
             />
           </div>
           <div data-part="cell">
-            <label htmlFor={`${id}-month`}>Месяц</label>
+            <label htmlFor={`${id}-month`}>{fields.month}</label>
             <select
               id={`${id}-month`}
               autoComplete="bday-month"
@@ -255,7 +326,7 @@ export function Calendar024({
             </select>
           </div>
           <div data-part="cell">
-            <label htmlFor={`${id}-year`}>Год</label>
+            <label htmlFor={`${id}-year`}>{fields.year}</label>
             <input
               id={`${id}-year`}
               inputMode="numeric"

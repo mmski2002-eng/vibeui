@@ -13,22 +13,30 @@ export type Menu007Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
   title?: string
   actions?: Menu007Action[]
   cancelLabel?: string
+  /** Подпись кнопки, снова открывающей лист: русская по умолчанию. */
+  triggerLabel?: string
   accent?: string
+  /** Подложка листа и кнопки открытия. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: меню действий, которое на телефоне выезжает снизу. Список у
 // края экрана — единственное место, куда дотягивается большой палец; выпадающее
 // меню в верхнем углу для этого не годится. Кнопка «отмена» стоит отдельно и
 // крупно: закрыть лист должно быть так же легко, как открыть.
+//
+// Тема берётся из color-scheme окружения через light-dark(): лист темнеет
+// там, где тёмный контекст, и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="menu-007"]){
---vibeui-menu-007-bg:oklch(1 0 0);
---vibeui-menu-007-fg:oklch(0.24 0.014 265);
---vibeui-menu-007-muted:oklch(0.56 0.014 265);
---vibeui-menu-007-border:oklch(0.9 0.006 265);
---vibeui-menu-007-hover:oklch(0.96 0.004 265);
---vibeui-menu-007-danger:oklch(0.56 0.19 25);
---vibeui-menu-007-accent:oklch(0.55 0.17 265);
+--vibeui-menu-007-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-menu-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-menu-007-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-menu-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-menu-007-hover:light-dark(oklch(0.96 0.004 265),oklch(0.29 0.012 265));
+--vibeui-menu-007-danger:light-dark(oklch(0.56 0.19 25),oklch(0.74 0.16 25));
+--vibeui-menu-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.16 265));
+--vibeui-menu-007-shadow:light-dark(oklch(0.2 0.02 265 / 55%),oklch(0.02 0.01 265 / 72%));
 --vibeui-menu-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="menu-007"]{
@@ -51,7 +59,7 @@ padding:0.5rem 0.5rem calc(0.5rem + env(safe-area-inset-bottom,0px));
 border:1px solid var(--vibeui-menu-007-border);
 border-radius:1.125rem 1.125rem 0.875rem 0.875rem;
 background:var(--vibeui-menu-007-bg);
-box-shadow:0 -12px 32px -24px oklch(0.2 0.02 265 / 55%);
+box-shadow:0 -12px 32px -24px var(--vibeui-menu-007-shadow);
 }
 [data-vibeui-block="menu-007"] [data-part="grabber"]{
 align-self:center;width:2.25rem;height:0.25rem;margin:0.125rem 0 0.25rem;
@@ -89,6 +97,28 @@ const DEFAULT_ACTIONS: Menu007Action[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Лист действий снизу: крупные цели и отдельная кнопка отмены.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -96,7 +126,9 @@ export function Menu007({
   title = "Проект «Каталог»",
   actions = DEFAULT_ACTIONS,
   cancelLabel = "Отмена",
+  triggerLabel = "Действия",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -105,6 +137,12 @@ export function Menu007({
 
   const palette = {
     ...(accent ? { "--vibeui-menu-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-menu-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -125,7 +163,7 @@ export function Menu007({
             data-part="trigger"
             onClick={() => setOpen(true)}
           >
-            Действия
+            {triggerLabel}
           </button>
         )}
         {open ? (

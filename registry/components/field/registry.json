@@ -25,7 +25,8 @@
           "summary": "Поле с подписью, пояснением и ошибкой: обязательность подписана словом, ошибка со знаком и цветом. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-field-001-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "aria-describedby на пояснение и ошибку сразу: они читаются вместе со значением",
             "aria-invalid на поле с ошибкой",
             "сохранение пояснения рядом с ошибкой: условия нужны именно в этот момент",
@@ -34,11 +35,15 @@
           ],
           "adapt": [
             "label, hint, error и placeholder",
+            "requiredText — подпись обязательности рядом с label",
+            "required — показывать ли пометку обязательности",
             "name и тип поля",
             "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "ширину поля"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Проверку компонент не делает: он только показывает переданную ошибку.",
             "Ошибку показывают после попытки отправки, а не во время набора первого символа.",
             "Текст ошибки должен говорить, что исправить, а не «поле заполнено неверно».",
@@ -59,6 +64,24 @@
             "type": "text",
             "default": "Адрес без «@» — проверьте написание.",
             "maxLength": 48
+          },
+          {
+            "prop": "required",
+            "label": "Обязательное",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -68,7 +91,8 @@
               "summary": "A field with a label, a note and an error: the requirement is spelled out, the error carries a mark as well as colour. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-field-001-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "aria-describedby pointing at both note and error: they read with the value",
                 "aria-invalid on the field in error",
                 "keeping the note beside the error: the rules are needed exactly then",
@@ -77,11 +101,15 @@
               ],
               "adapt": [
                 "label, hint, error and placeholder",
+                "requiredText — the requirement note beside the label",
+                "required — whether the requirement note shows at all",
                 "name and the input type",
                 "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the field width"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not validate: it only renders the error you pass.",
                 "Show the error after a submit attempt, not on the first typed character.",
                 "The error text must say what to fix, not \"the field is invalid\".",
@@ -97,11 +125,31 @@
               "error": {
                 "label": "Error",
                 "default": "The address has no \"@\" — check the spelling."
+              },
+              "required": {
+                "label": "Required"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Field With Error"
+            "title": "Field With Error",
+            "preview": {
+              "props": {
+                "label": "Work email",
+                "hint": "We will send your registry access key there.",
+                "error": "The address has no \"@\" — check the spelling.",
+                "placeholder": "name@company.com",
+                "defaultValue": "name@company",
+                "requiredText": "· required"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["required", "background"]
       }
     },
     {
@@ -131,6 +179,8 @@
           "summary": "Каркас поля, а не само поле: рамка обнимает подпись и контрол, служебная строка снизу одна на подсказку и ошибку, справа помещается метка состояния. Через children внутрь кладут input, textarea или select — обвязка остаётся одинаковой во всей форме. Серверный компонент, ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-field-002-* и не подменять её токенами вашей темы (bg-background, border-input, text-muted-foreground и подобными)",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "рамку на каркасе, а не на контроле: у input внутри бордюра нет, иначе внутри рамки появится вторая",
             "общее место для подсказки и ошибки: когда они меняются местами, а не добавляются друг к другу, форма не прыгает и соседние поля не уезжают вниз",
             "подсветку :focus-within вместе с кольцом box-shadow — фокус стоит на контроле, а показать его должна вся рамка",
@@ -140,12 +190,15 @@
           ],
           "adapt": [
             "тексты label и hint, сообщение error и метку badge",
+            "defaultValue и placeholder встроенного поля",
             "содержимое children — вместо input внутрь кладут textarea, select или собственный контрол",
-            "акцент через проп accent — цвет рамки и кольца при фокусе",
+            "акцент через проп accent — цвет рамки, кольца при фокусе и метки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "проп name: из него собираются id поля и id примечания",
             "ширину и внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Свой контрол в children должен получить id вида `${name}-input`, иначе клик по подписи не наведёт на него фокус.",
             "Ошибка вытесняет подсказку, а не дополняет её: если условия нужны и во время ошибки, впишите их в текст error.",
             "Метка badge — украшение состояния, а не кнопка: интерактив внутрь неё не кладут.",
@@ -182,8 +235,21 @@
             "maxLength": 16
           },
           {
+            "prop": "defaultValue",
+            "label": "Значение",
+            "type": "text",
+            "default": "Каталог компонентов",
+            "maxLength": 40
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -195,6 +261,8 @@
               "summary": "A shell rather than a field: the border wraps the label and the control, one line below carries either the hint or the error, and a state badge fits on the right. Through children you drop in an input, a textarea or a select — the wrapper stays identical across the form. A server component, zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-field-002-* palette — do not swap it for your theme tokens (bg-background, border-input, text-muted-foreground and the like)",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the border on the shell rather than on the control: the input inside has none, otherwise a second border appears inside the first",
                 "the shared slot for hint and error: because they swap instead of stacking, the form does not jump and the fields below stay put",
                 "the :focus-within highlight together with the box-shadow ring — focus sits on the control, but the whole frame has to show it",
@@ -204,12 +272,15 @@
               ],
               "adapt": [
                 "the label and hint copy, the error message and the badge text",
+                "defaultValue and placeholder of the built-in input",
                 "the children content — a textarea, a select or your own control instead of the input",
-                "the accent through the accent prop — it colours the border and ring on focus",
+                "the accent through the accent prop — it colours the border, the focus ring and the badge",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the name prop: the field id and the note id are built from it",
                 "width and outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Your own control in children needs the id `${name}-input`, otherwise clicking the label will not focus it.",
                 "The error replaces the hint rather than joining it: if the rules still matter during the error, fold them into the error text.",
                 "The badge is a state marker, not a button: do not put interactive content inside it.",
@@ -234,13 +305,30 @@
                 "label": "Badge",
                 "default": "draft"
               },
+              "defaultValue": {
+                "label": "Value",
+                "default": "Component catalog"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Field Shell"
+            "title": "Field Shell",
+            "preview": {
+              "props": {
+                "label": "Project name",
+                "hint": "Only you and your teammates can see it.",
+                "badge": "draft",
+                "defaultValue": "Component catalog",
+                "placeholder": "What shall we call it"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -270,6 +358,8 @@
           "summary": "Пара полей — обязательное и необязательное — вместе со сноской, объясняющей звёздочку. Символ обёрнут в <abbr> с расшифровкой и продублирован скрытым словом, поэтому его понимают и глазами, и на слух. Серверный компонент, ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-field-003-* и не подменять её токенами вашей темы (bg-background, border-input и подобными)",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "расшифровку звёздочки: <abbr title> для мыши, скрытый текст для screen reader и сноска для тех, кто читает форму первый раз",
             "aria-hidden у самого символа вместе с видимым скрытым дублем — иначе «звёздочка» прочитается вслух буквально",
             "пару полей: обязательное рядом с необязательным — по одному полю разницу не увидеть",
@@ -279,12 +369,16 @@
           ],
           "adapt": [
             "тексты label и optionalLabel, а также текст сноски legend",
+            "placeholder обязательного поля, optionalTitle и optionalPlaceholder необязательного",
+            "requiredTitle и requiredNote — расшифровка звёздочки для мыши и для screen reader",
             "проп name: из него собираются id обоих полей",
             "акцент через проп accent — цвет фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "набор полей внутри: пара показана как образец, полей может быть больше",
             "ширину и внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Если обязательны почти все поля, помечайте наоборот — необязательные: звёздочка у каждой строки перестаёт что-либо значить.",
             "Сноска нужна рядом с полями. В конце длинной формы её не читают, а под первой ошибкой уже поздно.",
             "Атрибут required — подсказка браузеру, а не проверка: обязательность подтверждает сервер.",
@@ -297,6 +391,20 @@
             "label": "Подпись",
             "type": "text",
             "default": "Юридическое название",
+            "maxLength": 40
+          },
+          {
+            "prop": "placeholder",
+            "label": "Плейсхолдер",
+            "type": "text",
+            "default": "ООО «Ромашка»",
+            "maxLength": 40
+          },
+          {
+            "prop": "optionalTitle",
+            "label": "Подпись необязательного",
+            "type": "text",
+            "default": "Комментарий",
             "maxLength": 40
           },
           {
@@ -318,6 +426,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -327,6 +441,8 @@
               "summary": "A pair of fields — one required, one optional — with a footnote that explains the asterisk. The symbol is wrapped in an <abbr> and doubled by hidden text, so it lands both by eye and by ear. A server component, zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-field-003-* palette — do not swap it for your theme tokens (bg-background, border-input and the like)",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the three-way explanation of the asterisk: <abbr title> for the mouse, hidden text for screen readers and the footnote for first-time readers",
                 "aria-hidden on the glyph itself paired with the visually hidden duplicate — otherwise it is announced literally as \"asterisk\"",
                 "the pair of fields: required next to optional — one field alone shows no contrast",
@@ -336,12 +452,16 @@
               ],
               "adapt": [
                 "the label and optionalLabel copy, and the legend footnote text",
+                "the placeholder of the required field, plus optionalTitle and optionalPlaceholder of the optional one",
+                "requiredTitle and requiredNote — the asterisk expansion for the mouse and for screen readers",
                 "the name prop: both field ids are built from it",
                 "the accent through the accent prop — it colours focus",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the set of fields inside: the pair is a sample, there can be more",
                 "width and outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "If nearly everything is required, mark the optional fields instead: an asterisk on every row stops meaning anything.",
                 "The footnote belongs beside the fields. At the end of a long form nobody reads it, and under the first error it is too late.",
                 "The required attribute is a browser hint, not validation: the server confirms what is mandatory.",
@@ -354,6 +474,14 @@
                 "label": "Label",
                 "default": "Registered name"
               },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Acme Ltd"
+              },
+              "optionalTitle": {
+                "label": "Optional field label",
+                "default": "Comment"
+              },
               "optionalLabel": {
                 "label": "Optional marker",
                 "default": "optional"
@@ -364,11 +492,27 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Required Marker"
+            "title": "Required Marker",
+            "preview": {
+              "props": {
+                "label": "Registered name",
+                "placeholder": "Acme Ltd",
+                "requiredTitle": "required field",
+                "requiredNote": ", required field",
+                "optionalTitle": "Comment",
+                "optionalLabel": "optional",
+                "optionalPlaceholder": "Anything we should know upfront",
+                "legend": "Starred fields are required to submit."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -398,6 +542,8 @@
           "summary": "Однострочное поле с кольцевым счётчиком остатка в углу рамки. Доля заполнения нарисована conic-gradient, число стоит внутри кольца, а на последней четверти и кольцо, и число меняют цвет. Вслух объявляется только тревожный участок. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-field-004-* и не подменять её токенами вашей темы (bg-background, border-input и подобными)",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "кольцо на conic-gradient с долей в переменной --vibeui-field-004-ratio: без переменной кольцо перестанет следить за вводом",
             "вырез в кольце псевдоэлементом ::before, покрашенным в цвет поля — иначе число ляжет на заливку и потеряет читаемость",
             "остаток вместо набранного: «12» отвечает на вопрос «сколько ещё влезет», а «48» заставляет вычитать в уме",
@@ -407,12 +553,16 @@
           ],
           "adapt": [
             "тексты label и placeholder",
+            "defaultValue — начальное значение поля",
+            "hint и statusText — шаблоны, в которые подставляются {limit} и {left}",
             "limit — сколько символов помещается; на нём же держится нативный maxLength",
             "акцент через проп accent — цвет кольца и кольца фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "обработчик onChange: он получает текущее значение строкой",
             "ширину и внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Значение хранится в состоянии компонента. Для контролируемой формы прокиньте его наружу через onChange.",
             "Нативный maxLength не даёт превысить лимит, поэтому отрицательного остатка не бывает — красная зона предупреждает, а не сообщает об ошибке.",
             "Для длинного многострочного текста лучше подходит счётчик строкой: кольцо рассчитано на короткие поля.",
@@ -428,6 +578,20 @@
             "maxLength": 40
           },
           {
+            "prop": "defaultValue",
+            "label": "Значение",
+            "type": "text",
+            "default": "Каталог AI-компонентов",
+            "maxLength": 60
+          },
+          {
+            "prop": "hint",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Не длиннее {limit} символов — столько помещается в карточку каталога.",
+            "maxLength": 90
+          },
+          {
             "prop": "limit",
             "label": "Лимит символов",
             "type": "number",
@@ -440,6 +604,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -449,6 +619,8 @@
               "summary": "A single-line field with a ring counter in the corner of the frame. The share is drawn with conic-gradient, the number sits inside the ring, and on the last quarter both ring and number change colour. Only the alarming stretch is announced aloud. Zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-field-004-* palette — do not swap it for your theme tokens (bg-background, border-input and the like)",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the conic-gradient ring driven by the --vibeui-field-004-ratio variable: without it the ring stops following the input",
                 "the ::before cut-out painted in the field colour — otherwise the number lands on the fill and becomes unreadable",
                 "the remaining count rather than the typed one: \"12\" answers \"how much more fits\", while \"48\" makes you subtract in your head",
@@ -458,12 +630,16 @@
               ],
               "adapt": [
                 "the label and placeholder copy",
+                "defaultValue — the starting value of the field",
+                "hint and statusText — templates where {limit} and {left} are substituted",
                 "limit — how many characters fit; the native maxLength rides on it too",
                 "the accent through the accent prop — it colours the ring and the focus ring",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the onChange handler: it receives the current value as a string",
                 "width and outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The value lives in the component's state. For a controlled form lift it out through onChange.",
                 "The native maxLength prevents overshooting, so the remainder never goes negative — the red zone warns, it does not report an error.",
                 "For long multiline copy a counter on its own line works better: the ring is sized for short fields.",
@@ -476,16 +652,37 @@
                 "label": "Label",
                 "default": "Card headline"
               },
+              "defaultValue": {
+                "label": "Value",
+                "default": "AI component catalog"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "No longer than {limit} characters — that is what fits on a catalog card."
+              },
               "limit": {
                 "label": "Character limit"
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Counter Ring"
+            "title": "Counter Ring",
+            "preview": {
+              "props": {
+                "label": "Card headline",
+                "defaultValue": "AI component catalog",
+                "placeholder": "Short and to the point",
+                "hint": "No longer than {limit} characters — that is what fits on a catalog card.",
+                "statusText": "{left} of {limit} characters left"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["limit", "accent", "background"]
       }
     },
     {
@@ -515,6 +712,8 @@
           "summary": "Числовое поле в общей рамке с текстовой приставкой слева и нативным select единицы справа. Приставка — часть формулировки и не редактируется, единица выбирается тут же и уходит отдельным полем формы. Серверный компонент, ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-field-005-* и не подменять её токенами вашей темы (bg-muted, border-input и подобными)",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "рамку на группе: у input и select её нет, иначе внутри рамки появятся ещё две",
             "нативный select для единицы — от него достаются клавиатура, поиск по букве и системное колесо на телефоне",
             "подсветку :focus-within вместе с кольцом: фокус может стоять и на поле, и на выборе единицы, а показывать его должна вся группа",
@@ -525,11 +724,14 @@
           "adapt": [
             "текст label и приставку prefix",
             "массив units — свои единицы измерения",
+            "hint под полем и unitLabel — подпись выбора единицы для screen reader",
             "стартовое число defaultValue",
             "акцент через проп accent — цвет рамки и кольца при фокусе",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "проп name: из него собираются имена обоих полей формы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Единица уходит отдельным полем `${name}-unit`. Пересчитывать значение на клиенте не нужно — это работа сервера.",
             "Не кладите в prefix кнопку: это неинтерактивная часть рамки, и мишень внутри рамки поля путает.",
             "Список units держите коротким: длинные подписи растягивают select и съедают место у числа.",
@@ -552,6 +754,13 @@
             "maxLength": 20
           },
           {
+            "prop": "hint",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Значение и единица уходят двумя полями формы — пересчитывать ничего не нужно.",
+            "maxLength": 100
+          },
+          {
             "prop": "defaultValue",
             "label": "Значение",
             "type": "number",
@@ -564,6 +773,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -573,6 +788,8 @@
               "summary": "A numeric field sharing one border with a text prefix on the left and a native unit select on the right. The prefix is part of the sentence and stays uneditable; the unit is chosen in place and submitted as its own form field. A server component, zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-field-005-* palette — do not swap it for your theme tokens (bg-muted, border-input and the like)",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the border on the group: neither the input nor the select has one, otherwise two more appear inside it",
                 "the native select for the unit — keyboard support, type-ahead and the system wheel on phones all come with it",
                 "the :focus-within highlight and the ring: focus can sit on the number or on the unit, and the whole group has to show it",
@@ -583,11 +800,14 @@
               "adapt": [
                 "the label copy and the prefix text",
                 "the units array — your own units of measurement",
+                "the hint under the field and unitLabel — the screen-reader name of the unit picker",
                 "the starting number in defaultValue",
                 "the accent through the accent prop — it colours the border and ring on focus",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the name prop: both form field names are built from it"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The unit is submitted as a separate `${name}-unit` field. Converting the value on the client is unnecessary — that is the server's job.",
                 "Do not put a button in prefix: it is a non-interactive part of the border, and a target inside a field frame confuses.",
                 "Keep the units list short: long captions stretch the select and eat the room the number needs.",
@@ -604,16 +824,33 @@
                 "label": "Prefix",
                 "default": "at most"
               },
+              "hint": {
+                "label": "Hint",
+                "default": "The value and the unit are submitted as two form fields — nothing needs converting."
+              },
               "defaultValue": {
                 "label": "Value"
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Unit Affix"
+            "title": "Unit Affix",
+            "preview": {
+              "props": {
+                "label": "Per-file limit",
+                "prefix": "at most",
+                "units": ["KB", "MB", "GB"],
+                "unitLabel": "Unit of measurement",
+                "hint": "The value and the unit are submitted as two form fields — nothing needs converting."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "background"]
       }
     },
     {
@@ -643,6 +880,8 @@
           "summary": "Поле с кнопкой действия внутри общей рамки: промокод, приглашение, короткий запрос. Обёртка — настоящая форма, поэтому Enter работает сам; на пустом значении кнопка выключена, а результат появляется строкой под полем. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-field-006-* и не подменять её токенами вашей темы (bg-primary, border-input и подобными)",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "обёртку <form> с preventDefault: именно она даёт Enter в поле без обработчика клавиш",
             "кнопку внутри рамки: поле и действие — одно целое, разрыв между ними заставляет глаз прыгать",
             "выключенную кнопку на пустом значении вместе с видимым понижением контраста — иначе нажатие просто ничего не делает",
@@ -652,12 +891,14 @@
           ],
           "adapt": [
             "тексты label и placeholder, а также подпись кнопки action",
+            "note и doneText — строка под полем до и после отправки; в doneText {code} заменяется введённым значением",
             "обработчик onSubmit: он получает введённое значение строкой",
             "акцент через проп accent — цвет кнопки и кольца при фокусе",
-            "текст результата под полем",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "ширину и внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент ничего не проверяет: настоящую проверку кода делает сервер в onSubmit.",
             "Не вкладывайте компонент внутрь другой формы: вложенные <form> запрещены в HTML и ломают отправку внешней.",
             "Пока запрос идёт, кнопку стоит выключить снаружи — компонент не знает о сети.",
@@ -687,8 +928,21 @@
             "maxLength": 30
           },
           {
+            "prop": "note",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Код появится в чеке, скидка пересчитается сразу.",
+            "maxLength": 80
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -700,6 +954,8 @@
               "summary": "A field with an action button sharing its border: a promo code, an invite, a short lookup. The wrapper is a real form, so Enter works by itself; on an empty value the button is disabled, and the result appears on the line below. Zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-field-006-* palette — do not swap it for your theme tokens (bg-primary, border-input and the like)",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the <form> wrapper with preventDefault: that is what makes Enter work without a key handler",
                 "the button inside the border: field and action are one thing, and a gap between them makes the eye jump",
                 "the disabled button on an empty value together with the visible contrast drop — otherwise pressing simply does nothing",
@@ -709,12 +965,14 @@
               ],
               "adapt": [
                 "the label and placeholder copy, and the action button caption",
+                "note and doneText — the line under the field before and after submitting; in doneText {code} is replaced by the entered value",
                 "the onSubmit handler: it receives the entered value as a string",
                 "the accent through the accent prop — it colours the button and the focus ring",
-                "the result wording under the field",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "width and outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component validates nothing: the real check happens on the server inside onSubmit.",
                 "Do not nest it inside another form: nested <form> elements are invalid HTML and break the outer submit.",
                 "While a request is in flight, disable the button from outside — the component knows nothing about the network.",
@@ -735,13 +993,30 @@
                 "label": "Placeholder",
                 "default": "VIBEUI-2026"
               },
+              "note": {
+                "label": "Hint",
+                "default": "The code shows up on the receipt, the discount updates at once."
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Action Field"
+            "title": "Action Field",
+            "preview": {
+              "props": {
+                "label": "Promo code",
+                "action": "Apply",
+                "placeholder": "VIBEUI-2026",
+                "note": "The code shows up on the receipt, the discount updates at once.",
+                "doneText": "Code \"{code}\" accepted"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -771,6 +1046,8 @@
           "summary": "Поле только для чтения с кнопкой копирования: ключ, ссылка приглашения, идентификатор. Значение лежит в настоящем readOnly-поле, кнопка сначала выделяет его, потом пробует буфер обмена, а результат сообщается словом. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-field-007-* и не подменять её токенами вашей темы (bg-muted, border-input и подобными)",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "настоящее readOnly-поле вместо <code>: значение надо выделять, прокручивать и отдавать менеджеру паролей",
             "выделение текста перед обращением к буферу — это запасной путь, когда буфер недоступен без защищённого соединения",
             "readOnly вместо disabled: выключенное поле нельзя ни сфокусировать, ни выделить",
@@ -781,11 +1058,13 @@
           "adapt": [
             "текст label и подсказку hint",
             "содержимое value — ключ, ссылка или идентификатор",
+            "copyText, copiedText и copiedHint — подписи кнопки и строки состояния",
             "акцент через проп accent — цвет рамки и кнопки",
-            "подписи кнопки для двух состояний",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "ширину и внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "navigator.clipboard недоступен без HTTPS и может быть запрещён настройками: поэтому выделение делается всегда, а не только при ошибке.",
             "Состояние «Готово» не сбрасывается само. Если нужен таймер возврата, добавьте его в вызывающем коде.",
             "Секрет, который показывают один раз, стоит сопровождать подсказкой об этом: восстановить его после закрытия страницы нельзя.",
@@ -815,8 +1094,21 @@
             "maxLength": 80
           },
           {
+            "prop": "copyText",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Копировать",
+            "maxLength": 20
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -828,6 +1120,8 @@
               "summary": "A read-only field with a copy button: a key, an invite link, an identifier. The value sits in a real readOnly input, the button selects it first and then tries the clipboard, and the outcome is stated in words. Zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-field-007-* palette — do not swap it for your theme tokens (bg-muted, border-input and the like)",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "a real readOnly input instead of <code>: the value has to be selectable, scrollable and reachable by a password manager",
                 "selecting the text before reaching for the clipboard — that is the fallback when the clipboard is unavailable outside HTTPS",
                 "readOnly rather than disabled: a disabled field can be neither focused nor selected",
@@ -838,11 +1132,13 @@
               "adapt": [
                 "the label copy and the hint line",
                 "the value content — a key, a link or an identifier",
+                "copyText, copiedText and copiedHint — the button captions and the status line",
                 "the accent through the accent prop — it colours the border and the button",
-                "the button captions for both states",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "width and outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "navigator.clipboard needs HTTPS and can be blocked by settings: that is why the selection always happens, not only on failure.",
                 "The \"Done\" state does not reset itself. Add a timer in the caller if you want it to.",
                 "A secret shown once deserves a line saying so: it cannot be recovered after the page closes.",
@@ -863,13 +1159,31 @@
                 "label": "Hint",
                 "default": "Shown once — save it now."
               },
+              "copyText": {
+                "label": "Button",
+                "default": "Copy"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Copy Field"
+            "title": "Copy Field",
+            "preview": {
+              "props": {
+                "label": "Registry access key",
+                "value": "vibeui_live_8f3c21a7b904e6d5",
+                "hint": "Shown once — save it now.",
+                "copyText": "Copy",
+                "copiedText": "Done",
+                "copiedHint": "Copied to the clipboard"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -899,6 +1213,8 @@
           "summary": "Поле с проверкой занятости прямо во время ввода: пауза после последнего нажатия, кольцо ожидания, затем «занято» или «свободно». Состояние продублировано словом под полем, поэтому значок никогда не работает один. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-field-008-* и не подменять её токенами вашей темы (bg-background, border-input и подобными)",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "паузу перед проверкой и отмену прошлого таймера: без неё каждая буква превращается в отдельный запрос",
             "состояние словом рядом со значком — цвет и галочка не читаются вслух и не различаются при дальтонизме",
             "role=\"status\" у строки состояния: ответ приходит без действия пользователя и обязан быть объявлен",
@@ -907,13 +1223,15 @@
             "блок <style> внутри компонента — в нём вся палитра, значки и цвет состояния"
           ],
           "adapt": [
-            "текст label и приставку prefix",
+            "текст label, приставку prefix и placeholder",
             "delay — сколько ждать после последнего нажатия перед проверкой",
             "список taken заменяется настоящим запросом к серверу",
-            "акцент через проп accent",
-            "тексты состояний под полем"
+            "noteText — подписи всех пяти состояний под полем",
+            "акцент через проп accent — цвет рамки и кольца, пока вердикта нет",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Список taken — заглушка для демонстрации. В настоящем проекте на его месте запрос, и его нужно уметь отменять при новом вводе.",
             "Проверка на клиенте не гарантия: между ответом «свободно» и отправкой формы адрес может занять кто-то другой, поэтому сервер проверяет ещё раз.",
             "Не блокируйте кнопку отправки на время проверки: короткая пауза выглядит как зависание формы.",
@@ -936,6 +1254,13 @@
             "maxLength": 24
           },
           {
+            "prop": "placeholder",
+            "label": "Плейсхолдер",
+            "type": "text",
+            "default": "ваша-команда",
+            "maxLength": 24
+          },
+          {
             "prop": "delay",
             "label": "Пауза, мс",
             "type": "number",
@@ -948,6 +1273,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -957,6 +1288,8 @@
               "summary": "A field that checks availability while you type: a pause after the last keystroke, a waiting ring, then taken or free. The state is doubled in words under the field, so the glyph never works alone. Zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-field-008-* palette — do not swap it for your theme tokens (bg-background, border-input and the like)",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the pause before checking and the cancellation of the previous timer: without it every letter becomes its own request",
                 "the state in words next to the glyph — colour and a tick are not read aloud and not distinguishable with colour blindness",
                 "role=\"status\" on the state line: the answer arrives without user action and has to be announced",
@@ -965,13 +1298,15 @@
                 "the <style> block inside the component — it holds the palette, the glyphs and the state colour"
               ],
               "adapt": [
-                "the label copy and the prefix text",
+                "the label copy, the prefix text and the placeholder",
                 "delay — how long to wait after the last keystroke before checking",
                 "the taken list, replaced by a real server request",
-                "the accent through the accent prop",
-                "the state wording under the field"
+                "noteText — the wording of all five states under the field",
+                "the accent through the accent prop — it colours the border and ring while no verdict is in",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The taken list is a demo stub. In a real project a request goes there, and it must be cancellable on new input.",
                 "A client check is no guarantee: between \"free\" and submit someone else can take the name, so the server checks again.",
                 "Do not disable the submit button while checking: a short pause then reads as a frozen form.",
@@ -988,16 +1323,38 @@
                 "label": "Prefix",
                 "default": "vibeui.io/"
               },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "your-team"
+              },
               "delay": {
                 "label": "Pause, ms"
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Availability Check"
+            "title": "Availability Check",
+            "preview": {
+              "props": {
+                "label": "Workspace address",
+                "prefix": "vibeui.io/",
+                "placeholder": "your-team",
+                "noteText": {
+                  "idle": "You can change the address later, but the old link will stop working.",
+                  "short": "At least three characters, please.",
+                  "checking": "Checking whether the address is free…",
+                  "taken": "Taken. Try another address.",
+                  "free": "Free — we will reserve this address for you."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["delay", "background"]
       }
     },
     {
@@ -1027,6 +1384,8 @@
           "summary": "Форма из строк «подпись слева — поле справа». От 30rem собственной ширины подписи выстраиваются в колонку и поля получают общую вертикаль, ниже — складываются в столбец. Ширина считается по блоку, а не по вьюпорту. Серверный компонент, ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-field-009-* и не подменять её токенами вашей темы (bg-background, border-input и подобными)",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "container-type:inline-size на корне и правила @container на внутреннем [data-part=\"shell\"]: контейнерный запрос не действует на сам контейнер, и правило для корня внутри него молча не сработает",
             "переход в столбец на узкой ширине: строка «подпись слева» на телефоне оставляет полю треть экрана",
             "фиксированную ширину колонки подписей через переменную — без неё поля перестанут стоять на одной вертикали",
@@ -1036,12 +1395,15 @@
           ],
           "adapt": [
             "тексты label и подсказки hint",
+            "defaultValue первой строки, roleLabel со списком roles, cityLabel и cityPlaceholder",
             "labelWidth — ширина колонки подписей на широкой раскладке",
             "порог @container, на котором строка перестаёт складываться",
             "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "проп name: из него собираются id всех полей"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Порог указан в rem собственной ширины блока, а не окна: узкая колонка на десктопе получит мобильную раскладку, и это правильно.",
             "Подписи в одну строку: длинный текст в колонке подписей рвётся и рушит общую вертикаль полей.",
             "Подсказку кладите под поле, а не под подпись — иначе она уедет в колонку подписей и потеряется.",
@@ -1064,6 +1426,27 @@
             "maxLength": 90
           },
           {
+            "prop": "defaultValue",
+            "label": "Значение",
+            "type": "text",
+            "default": "Анна Кузнецова",
+            "maxLength": 40
+          },
+          {
+            "prop": "roleLabel",
+            "label": "Подпись роли",
+            "type": "text",
+            "default": "Роль в команде",
+            "maxLength": 40
+          },
+          {
+            "prop": "cityLabel",
+            "label": "Подпись города",
+            "type": "text",
+            "default": "Город",
+            "maxLength": 40
+          },
+          {
             "prop": "labelWidth",
             "label": "Ширина подписей",
             "type": "text",
@@ -1075,6 +1458,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1084,6 +1473,8 @@
               "summary": "A form of label-left, field-right rows. From 30rem of the block's own width the labels form a column and the fields share one vertical; below that each row folds. The width is measured on the block, not the viewport. A server component, zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-field-009-* palette — do not swap it for your theme tokens (bg-background, border-input and the like)",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "container-type:inline-size on the root and the @container rules on the inner [data-part=\"shell\"]: a container query does not apply to its own container, and a rule targeting the root inside it silently does nothing",
                 "the fold to a column at narrow widths: a label-left row leaves the field a third of a phone screen",
                 "the fixed label column width through the variable — without it the fields stop sharing one vertical",
@@ -1093,12 +1484,15 @@
               ],
               "adapt": [
                 "the label and hint copy",
+                "defaultValue of the first row, roleLabel with its roles list, cityLabel and cityPlaceholder",
                 "labelWidth — the width of the label column in the wide layout",
                 "the @container threshold at which the row stops folding",
                 "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the name prop: every field id is built from it"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The threshold is in rem of the block's own width, not the window: a narrow desktop column gets the mobile layout, and that is correct.",
                 "Keep labels to one line: long text in the label column wraps and breaks the shared vertical.",
                 "Put the hint under the field, not under the label — otherwise it slides into the label column and gets lost.",
@@ -1115,17 +1509,44 @@
                 "label": "Hint",
                 "default": "This is how you appear in comments and history."
               },
+              "defaultValue": {
+                "label": "Value",
+                "default": "Anna Kuznetsova"
+              },
+              "roleLabel": {
+                "label": "Role label",
+                "default": "Team role"
+              },
+              "cityLabel": {
+                "label": "City label",
+                "default": "City"
+              },
               "labelWidth": {
                 "label": "Label column width",
                 "default": "9rem"
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Inline Label Row"
+            "title": "Inline Label Row",
+            "preview": {
+              "props": {
+                "label": "Display name",
+                "hint": "This is how you appear in comments and history.",
+                "defaultValue": "Anna Kuznetsova",
+                "roleLabel": "Team role",
+                "roles": ["Owner", "Editor", "Viewer"],
+                "cityLabel": "City",
+                "cityPlaceholder": "For example, Lisbon"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -1155,6 +1576,8 @@
           "summary": "Дата, разбитая на три поля, с одной ошибкой на всю группу. Сообщение связано с fieldset через aria-describedby, поэтому звучит при входе в любое поле, а рамки краснеют у всех трёх — неверна дата целиком, а не одно из значений. Серверный компонент, ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-field-010-* и не подменять её токенами вашей темы (bg-background, border-input и подобными)",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "настоящий <fieldset> с <legend>: группа полей обязана быть группой и в разметке, иначе три поля читаются как три несвязанные строки",
             "сообщение на группе, а не под одним полем — ошибка относится к сочетанию значений",
             "aria-describedby у fieldset вместе с role=\"alert\" у сообщения: так его слышно при входе в любое из трёх полей",
@@ -1165,11 +1588,14 @@
           "adapt": [
             "заголовок группы legend и текст ошибки error",
             "подсказку hint, которая стоит на месте ошибки, пока её нет",
+            "dayLabel, monthLabel и yearLabel, список months и defaultMonth",
             "состав группы: вместо дня, месяца и года — любые поля, которые проверяются вместе",
             "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "проп name: из него собираются id всех полей группы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Проверку делает вызывающий код: компонент показывает ошибку, а не вычисляет её.",
             "Не дублируйте общее сообщение под каждым полем — три одинаковых строки читаются вслух три раза.",
             "Если ошибка относится к одному значению из группы, покажите её под этим полем: общая ошибка нужна только для сочетаний.",
@@ -1199,8 +1625,35 @@
             "maxLength": 90
           },
           {
+            "prop": "dayLabel",
+            "label": "Подпись дня",
+            "type": "text",
+            "default": "День",
+            "maxLength": 20
+          },
+          {
+            "prop": "monthLabel",
+            "label": "Подпись месяца",
+            "type": "text",
+            "default": "Месяц",
+            "maxLength": 20
+          },
+          {
+            "prop": "yearLabel",
+            "label": "Подпись года",
+            "type": "text",
+            "default": "Год",
+            "maxLength": 20
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -1212,6 +1665,8 @@
               "summary": "A date split across three fields with one error for the whole group. The message is tied to the fieldset through aria-describedby, so it is announced on entering any of the three, and all three borders turn red — the date is wrong as a whole. A server component, zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-field-010-* palette — do not swap it for your theme tokens (bg-background, border-input and the like)",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "a real <fieldset> with a <legend>: a group of fields must be a group in the markup too, otherwise three fields read as three unrelated rows",
                 "the message on the group rather than under one field — the error is about the combination of values",
                 "aria-describedby on the fieldset together with role=\"alert\" on the message: that is what makes it audible from any of the three fields",
@@ -1222,11 +1677,14 @@
               "adapt": [
                 "the legend group heading and the error text",
                 "the hint that occupies the error slot while there is no error",
+                "dayLabel, monthLabel and yearLabel, the months list and defaultMonth",
                 "the makeup of the group: any fields validated together instead of day, month and year",
                 "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the name prop: every field id in the group is built from it"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Validation belongs to the caller: the component displays the error, it does not compute it.",
                 "Do not repeat the shared message under each field — three identical lines get read aloud three times.",
                 "If the error is about one value, show it under that field: a group-level error is only for combinations.",
@@ -1247,13 +1705,54 @@
                 "label": "Hint",
                 "default": "Used to confirm you are of age. Never shown publicly."
               },
+              "dayLabel": {
+                "label": "Day label",
+                "default": "Day"
+              },
+              "monthLabel": {
+                "label": "Month label",
+                "default": "Month"
+              },
+              "yearLabel": {
+                "label": "Year label",
+                "default": "Year"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Grouped Error"
+            "title": "Grouped Error",
+            "preview": {
+              "props": {
+                "legend": "Date of birth",
+                "error": "February 31st does not exist — check day and month.",
+                "hint": "Used to confirm you are of age. Never shown publicly.",
+                "dayLabel": "Day",
+                "monthLabel": "Month",
+                "yearLabel": "Year",
+                "months": [
+                  "January",
+                  "February",
+                  "March",
+                  "April",
+                  "May",
+                  "June",
+                  "July",
+                  "August",
+                  "September",
+                  "October",
+                  "November",
+                  "December"
+                ],
+                "defaultMonth": "February"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -1280,6 +1779,8 @@
           "summary": "Черновик с автосохранением: пауза после ввода запускает сохранение, короткая фаза «сохраняем» подтверждает его, а метка времени показывает, когда это случилось в последний раз. Один файл, ноль зависимостей.",
           "preserve": [
             "локальную палитру --vibeui-field-011-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "паузу после последнего нажатия перед сохранением — иначе на каждую букву уходит отдельное сохранение",
             "промежуточную фазу «сохраняем» между вводом и меткой времени — иначе сохранение неотличимо от простого молчания",
             "состояние, выводимое из сравнения текста с последним сохранённым значением, а не хранимое отдельным флагом",
@@ -1291,9 +1792,12 @@
             "placeholder — подсказка в пустом поле",
             "defaultValue — исходный текст черновика",
             "delay — пауза в миллисекундах перед сохранением",
-            "акцент через проп accent — цвет фокуса и индикатора «сохраняем»"
+            "statusText, savedAtText и locale — подписи фаз, хвост со временем и формат времени",
+            "акцент через проп accent — цвет фокуса и индикатора «сохраняем»",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Реального сетевого сохранения нет: имитация нужна для демонстрации UX, подключите свой обработчик отдельно.",
             "Метка времени берётся в момент завершения сохранения через new Date() внутри эффекта — она не выводится на сервере и не ломает гидратацию.",
             "При delay короче 400 мс фаза «сохраняем» не успевает быть замеченной — увеличьте паузу или уберите её.",
@@ -1316,8 +1820,29 @@
             "maxLength": 60
           },
           {
+            "prop": "defaultValue",
+            "label": "Черновик",
+            "type": "text",
+            "default": "Созвон перенесли на четверг, обсудить бюджет Q3.",
+            "maxLength": 90
+          },
+          {
+            "prop": "delay",
+            "label": "Пауза, мс",
+            "type": "number",
+            "default": 1200,
+            "min": 300,
+            "max": 4000
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -1329,6 +1854,8 @@
               "summary": "A draft with autosave: a pause after typing triggers the save, a brief \"saving\" phase confirms it, and a timestamp shows when it last happened. One file, zero dependencies.",
               "preserve": [
                 "the local --vibeui-field-011-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the pause after the last keystroke before saving — otherwise every letter triggers its own save",
                 "the intermediate \"saving\" phase between typing and the timestamp — without it a save is indistinguishable from plain silence",
                 "the state derived from comparing the current text to the last saved value, rather than a separate stored flag",
@@ -1340,9 +1867,12 @@
                 "placeholder — the hint in the empty field",
                 "defaultValue — the draft's starting text",
                 "delay — the pause in milliseconds before saving",
-                "the accent through the accent prop — the focus ring and \"saving\" indicator colour"
+                "statusText, savedAtText and locale — the phase wording, the time suffix and the time format",
+                "the accent through the accent prop — the focus ring and \"saving\" indicator colour",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is no real network save: the simulation is for demonstrating the UX — wire up your own handler separately.",
                 "The timestamp is taken when the save finishes, via new Date() inside an effect — it never renders on the server, so hydration stays safe.",
                 "Below a 400 ms delay the \"saving\" phase goes unnoticed — lengthen the pause or drop the phase.",
@@ -1359,13 +1889,39 @@
                 "label": "Placeholder",
                 "default": "Describe what was agreed…"
               },
+              "defaultValue": {
+                "label": "Draft",
+                "default": "Call moved to Thursday, discuss the Q3 budget."
+              },
+              "delay": {
+                "label": "Pause, ms"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Draft Autosave"
+            "title": "Draft Autosave",
+            "preview": {
+              "props": {
+                "label": "Deal note",
+                "placeholder": "Describe what was agreed…",
+                "defaultValue": "Call moved to Thursday, discuss the Q3 budget.",
+                "locale": "en-GB",
+                "savedAtText": " at {time}",
+                "statusText": {
+                  "idle": "Start typing — the draft saves itself.",
+                  "pending": "Unsaved changes…",
+                  "saving": "Saving…",
+                  "saved": "Saved"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["delay", "background"]
       }
     }
   ]

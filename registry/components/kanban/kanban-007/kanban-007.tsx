@@ -18,6 +18,10 @@ export type Kanban007Props = Omit<
   cards?: Kanban007Card[]
   unit?: string
   onChange?: (cards: Kanban007Card[]) => void
+  /** Подписи и объявления: шаблоны с {name}, {title}, {count}, {total}, {unit}. */
+  text?: Record<string, string>
+  /** Пусто — подложки нет, доска лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,14 +32,18 @@ export type Kanban007Props = Omit<
 // взгляда, цифра — точность. Итоговая строка сделана тегом footer со сводкой
 // словами, поэтому её читают и глазами, и скринридером. Перенос: мышью — drag,
 // с клавиатуры — список колонок на карточке, результат объявляется вслух.
+//
+// Тема берётся из color-scheme окружения через light-dark(): доска темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="kanban-007"]){
---vibeui-kanban-007-bg:oklch(0.985 0.002 265);
---vibeui-kanban-007-card:oklch(1 0 0);
---vibeui-kanban-007-fg:oklch(0.24 0.014 265);
---vibeui-kanban-007-muted:oklch(0.56 0.014 265);
---vibeui-kanban-007-border:oklch(0.91 0.006 265);
---vibeui-kanban-007-accent:oklch(0.55 0.2 262);
+--vibeui-kanban-007-bg:transparent;
+--vibeui-kanban-007-card:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-kanban-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-kanban-007-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-kanban-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-kanban-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.15 262));
+--vibeui-kanban-007-shadow:light-dark(oklch(0.2 0.02 265 / 6%),oklch(0 0 0 / 32%));
 --vibeui-kanban-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="kanban-007"]{
@@ -69,14 +77,14 @@ color:var(--vibeui-kanban-007-muted);font-size:0.6875rem;font-variant-numeric:ta
 display:grid;gap:0.375rem;padding:0.5rem;border-radius:0.625rem;cursor:grab;
 background:var(--vibeui-kanban-007-card);
 border:1px solid var(--vibeui-kanban-007-border);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 6%);
+box-shadow:0 1px 2px var(--vibeui-kanban-007-shadow);
 font-size:0.75rem;line-height:1.35;
 }
 [data-vibeui-block="kanban-007"] [data-part="card"][data-dragging="true"]{opacity:.45}
 [data-vibeui-block="kanban-007"] [data-part="hours"]{
 justify-self:start;padding:0 0.375rem;border-radius:0.375rem;
 background:color-mix(in oklab,var(--vibeui-kanban-007-accent) 10%,transparent);
-color:color-mix(in oklab,var(--vibeui-kanban-007-accent) 80%,black);
+color:color-mix(in oklab,var(--vibeui-kanban-007-accent) 80%,light-dark(black,white));
 font-size:0.625rem;font-weight:650;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="kanban-007"] select{
@@ -124,6 +132,43 @@ const DEFAULT_CARDS: Kanban007Card[] = [
   { id: "5", title: "Страница тарифов", hours: 5, column: "Сдано" },
 ]
 
+const DEFAULT_TEXT: Record<string, string> = {
+  moved: "«{title}» перенесена в «{name}». Итог колонки {total} {unit}.",
+  column: "{name}: {count} задач, {total} {unit}",
+  picker: "Колонка задачи «{title}»",
+  grand: "Итого: {total} {unit}",
+  summary: "{count} задач в {columns} колонках",
+}
+
+/** Подстановка значений в шаблон подписи. */
+function fill(template: string, values: Record<string, string | number>) {
+  return template.replace(/\{(\w+)\}/g, (whole, key: string) =>
+    key in values ? String(values[key]) : whole,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Доска со счётчиками и итогом по колонкам: часы суммируются из карточек.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -133,11 +178,14 @@ export function Kanban007({
   cards = DEFAULT_CARDS,
   unit = "ч",
   onChange,
+  text,
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Kanban007Props) {
+  const labels = { ...DEFAULT_TEXT, ...text }
   const [board, setBoard] = useState(cards)
   const [dragged, setDragged] = useState<string | null>(null)
   const [over, setOver] = useState<string | null>(null)
@@ -157,7 +205,7 @@ export function Kanban007({
     setBoard(next)
     onChange?.(next)
     setAnnouncement(
-      `«${card.title}» перенесена в «${column}». Итог колонки ${total} ${unit}.`,
+      fill(labels.moved, { title: card.title, name: column, total, unit }),
     )
   }
 
@@ -170,6 +218,12 @@ export function Kanban007({
 
   const palette = {
     ...(accent ? { "--vibeui-kanban-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-kanban-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -195,7 +249,12 @@ export function Kanban007({
                 key={column}
                 data-part="column"
                 data-over={column === over}
-                aria-label={`${column}: ${rows.length} задач, ${total} ${unit}`}
+                aria-label={fill(labels.column, {
+                  name: column,
+                  count: rows.length,
+                  total,
+                  unit,
+                })}
                 onDragOver={(event) => {
                   event.preventDefault()
                   setOver(column)
@@ -226,7 +285,9 @@ export function Kanban007({
                         </span>
                         <select
                           value={card.column}
-                          aria-label={`Колонка задачи «${card.title}»`}
+                          aria-label={fill(labels.picker, {
+                            title: card.title,
+                          })}
                           onChange={(event) => put(card.id, event.target.value)}
                         >
                           {columns.map((option) => (
@@ -255,9 +316,12 @@ export function Kanban007({
           })}
         </div>
         <footer>
-          Итого: {grand} {unit}
+          {fill(labels.grand, { total: grand, unit })}
           <span>
-            {board.length} задач в {columns.length} колонках
+            {fill(labels.summary, {
+              count: board.length,
+              columns: columns.length,
+            })}
           </span>
         </footer>
         <span data-part="live" role="status" aria-live="polite">

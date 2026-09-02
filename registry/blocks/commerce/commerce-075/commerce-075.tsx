@@ -17,6 +17,12 @@ export type Commerce075Props = {
   roundTo?: number
   currency?: string
   toggleLabel?: string
+  /** Строка галочки: {label} — подпись, {sum} — округлённая сумма. */
+  toggleTemplate?: string
+  /** Строка надбавки: {sum} — то, что уйдёт фонду. */
+  addTemplate?: string
+  /** Локаль для разрядов в суммах: компонент несёт русскую. */
+  locale?: string
   fundLegend?: string
   funds?: Commerce075Fund[]
   addLabel?: string
@@ -25,6 +31,8 @@ export type Commerce075Props = {
   reportLabel?: string
   reportText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -38,12 +46,12 @@ export type Commerce075Props = {
 // пожертвование — это списание, о котором не просили.
 const STYLES = `
 :where([data-vibeui-block="commerce-075"]){
---vibeui-commerce-075-bg:oklch(1 0 0);
---vibeui-commerce-075-fg:oklch(0.21 0.014 120);
---vibeui-commerce-075-muted:oklch(0.53 0.016 120);
---vibeui-commerce-075-border:oklch(0.9 0.008 120);
---vibeui-commerce-075-soft:oklch(0.972 0.008 120);
---vibeui-commerce-075-accent:oklch(0.46 0.12 140);
+--vibeui-commerce-075-bg:transparent;
+--vibeui-commerce-075-fg:light-dark(oklch(0.21 0.014 120),oklch(0.94 0.007 120));
+--vibeui-commerce-075-muted:light-dark(oklch(0.53 0.016 120),oklch(0.73 0.013 120));
+--vibeui-commerce-075-border:light-dark(oklch(0.9 0.008 120),oklch(0.38 0.016 120));
+--vibeui-commerce-075-soft:light-dark(oklch(0.972 0.008 120),oklch(0.27 0.016 120));
+--vibeui-commerce-075-accent:light-dark(oklch(0.46 0.12 140),oklch(0.78 0.13 140));
 --vibeui-commerce-075-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -122,8 +130,30 @@ const DEFAULT_FUNDS: Commerce075Fund[] = [
   },
 ]
 
-function money(value: number, currency: string) {
-  return `${Math.round(value).toLocaleString("ru-RU")} ${currency}`
+function money(value: number, currency: string, locale: string) {
+  return `${Math.round(value).toLocaleString(locale)} ${currency}`
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -138,6 +168,9 @@ export function Commerce075({
   roundTo = 100,
   currency = "₽",
   toggleLabel = "Округлить заказ",
+  toggleTemplate = "{label} до {sum}",
+  addTemplate = "Фонду уйдёт {sum}",
+  locale = "ru-RU",
   fundLegend = "Куда пойдёт надбавка",
   funds = DEFAULT_FUNDS,
   addLabel = "Пожертвование",
@@ -146,6 +179,7 @@ export function Commerce075({
   reportLabel = "Как мы это подтверждаем",
   reportText = "Надбавка не проходит через счёт магазина: платёж делится на стороне банка, и вторая часть уходит фонду напрямую. В чеке она стоит отдельной строкой, а фонд присылает подтверждение на вашу почту.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce075Props) {
@@ -155,9 +189,16 @@ export function Commerce075({
   const rounded = Math.ceil(order / roundTo) * roundTo
   const add = rounded === order ? roundTo : rounded - order
   const total = on ? order + add : order
+  const [addBefore, addAfter = ""] = addTemplate.split("{sum}")
 
   const palette = {
     ...(accent ? { "--vibeui-commerce-075-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-075-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -186,10 +227,14 @@ export function Commerce075({
               />
               <span>
                 <span data-part="tlabel">
-                  {toggleLabel} до {money(order + add, currency)}
+                  {toggleTemplate
+                    .replace("{label}", toggleLabel)
+                    .replace("{sum}", money(order + add, currency, locale))}
                 </span>
                 <span data-part="tadd">
-                  Фонду уйдёт <strong>{money(add, currency)}</strong>
+                  {addBefore}
+                  <strong>{money(add, currency, locale)}</strong>
+                  {addAfter}
                 </span>
               </span>
             </label>
@@ -222,17 +267,17 @@ export function Commerce075({
             <dl>
               <div data-part="pair">
                 <dt>{orderLabel}</dt>
-                <dd>{money(order, currency)}</dd>
+                <dd>{money(order, currency, locale)}</dd>
               </div>
               <div data-part="pair">
                 <dt>{addLabel}</dt>
-                <dd>{on ? `+ ${money(add, currency)}` : "—"}</dd>
+                <dd>{on ? `+ ${money(add, currency, locale)}` : "—"}</dd>
               </div>
             </dl>
 
             <p data-part="total" aria-live="polite">
               <span>{totalLabel}</span>
-              <span data-part="sum">{money(total, currency)}</span>
+              <span data-part="sum">{money(total, currency, locale)}</span>
             </p>
 
             <p data-part="year">{yearNote}</p>

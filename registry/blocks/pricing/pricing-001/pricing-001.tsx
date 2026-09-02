@@ -22,8 +22,12 @@ export type Pricing001Props = {
   description?: string
   plans?: Pricing001Plan[]
   footnote?: string
+  /** Подпись бейджа рекомендованного плана. */
+  badgeLabel?: string
   accent?: string
   accentForeground?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   className?: string
 }
 
@@ -31,9 +35,12 @@ export type Pricing001Props = {
 // и keyframes. Переменные объявлены в :where() с нулевой специфичностью,
 // поэтому пользователь переопределяет их чем угодно.
 //
-// Секция светлая, но рекомендованный план — инвертированная тёмная панель.
-// Это единственная «тяжёлая» поверхность в блоке: она и создаёт иерархию,
-// поэтому у остальных планов нет ни рамок-карточек, ни теней.
+// Рекомендованный план — инвертированная панель: в светлой теме тёмная, в
+// тёмной светлая. Это единственная «тяжёлая» поверхность в блоке: она и
+// создаёт иерархию, поэтому у остальных планов нет ни теней, ни заливок.
+//
+// Тема берётся из color-scheme окружения через light-dark(): собственной
+// подложки у секции по умолчанию нет, она лежит на фоне страницы.
 //
 // container-type делает блок собственным query-контейнером: раскладка и размер
 // шрифта считаются от ширины блока, а не от ширины окна. Поэтому три колонки
@@ -43,17 +50,18 @@ export type Pricing001Props = {
 // утилит.
 const STYLES = `
 :where([data-vibeui-block="pricing-001"]){
---vibeui-pricing-001-bg:oklch(0.985 0.002 285);
---vibeui-pricing-001-card:oklch(1 0 0);
---vibeui-pricing-001-ink:oklch(0.2 0.015 285);
---vibeui-pricing-001-muted:oklch(0.5 0.012 285);
---vibeui-pricing-001-border:oklch(0.9 0.006 285);
---vibeui-pricing-001-accent:oklch(0.55 0.19 295);
---vibeui-pricing-001-accent-fg:oklch(0.99 0.003 285);
---vibeui-pricing-001-featured-bg:oklch(0.2 0.015 285);
---vibeui-pricing-001-featured-fg:oklch(0.98 0.002 285);
---vibeui-pricing-001-featured-muted:oklch(0.74 0.01 285);
---vibeui-pricing-001-featured-border:oklch(1 0 0 / 14%);
+--vibeui-pricing-001-bg:transparent;
+--vibeui-pricing-001-card:light-dark(oklch(1 0 0),oklch(0.215 0.012 285));
+--vibeui-pricing-001-tint:light-dark(oklch(0.96 0.004 285),oklch(0.27 0.013 285));
+--vibeui-pricing-001-ink:light-dark(oklch(0.2 0.015 285),oklch(0.95 0.004 285));
+--vibeui-pricing-001-muted:light-dark(oklch(0.5 0.012 285),oklch(0.72 0.012 285));
+--vibeui-pricing-001-border:light-dark(oklch(0.9 0.006 285),oklch(0.34 0.012 285));
+--vibeui-pricing-001-accent:light-dark(oklch(0.55 0.19 295),oklch(0.74 0.16 295));
+--vibeui-pricing-001-accent-fg:light-dark(oklch(0.99 0.003 285),oklch(0.19 0.03 295));
+--vibeui-pricing-001-featured-bg:light-dark(oklch(0.2 0.015 285),oklch(0.95 0.004 285));
+--vibeui-pricing-001-featured-fg:light-dark(oklch(0.98 0.002 285),oklch(0.2 0.015 285));
+--vibeui-pricing-001-featured-muted:light-dark(oklch(0.74 0.01 285),oklch(0.45 0.012 285));
+--vibeui-pricing-001-featured-border:light-dark(oklch(1 0 0 / 14%),oklch(0 0 0 / 12%));
 --vibeui-pricing-001-ring:color-mix(in oklab, var(--vibeui-pricing-001-accent) 70%, transparent);
 --vibeui-pricing-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -112,6 +120,28 @@ function CheckIcon({ featured }: { featured: boolean }) {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Единственная логика блока: какой план подсвечен. Первый с featured, иначе
  * средний. Никакого биллинга, тарифных расчётов и состояния — цены статичны.
  */
@@ -159,14 +189,22 @@ export function Pricing001({
     },
   ],
   footnote = "Billed annually, switch anytime. 30-day refund, no questions asked.",
+  badgeLabel = "Recommended",
   accent,
   accentForeground,
+  background = "",
   className,
 }: Pricing001Props) {
   const style = {
     ...(accent ? { "--vibeui-pricing-001-accent": accent } : {}),
     ...(accentForeground
       ? { "--vibeui-pricing-001-accent-fg": accentForeground }
+      : {}),
+    ...(background
+      ? {
+          "--vibeui-pricing-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
       : {}),
   } as CSSProperties
 
@@ -239,9 +277,9 @@ export function Pricing001({
                 >
                   <div className="flex items-center gap-3">
                     <h3 className="text-[1rem] font-medium">{plan.name}</h3>
-                    {featured ? (
+                    {featured && badgeLabel ? (
                       <span className="rounded-full bg-[var(--vibeui-pricing-001-accent)] px-2 py-0.5 text-[0.6875rem] font-medium text-[var(--vibeui-pricing-001-accent-fg)]">
-                        Recommended
+                        {badgeLabel}
                       </span>
                     ) : null}
                   </div>
@@ -282,7 +320,7 @@ export function Pricing001({
                       "mt-5",
                       featured
                         ? "bg-[var(--vibeui-pricing-001-accent)] text-[var(--vibeui-pricing-001-accent-fg)] transition-[filter] duration-150 hover:brightness-110"
-                        : "border border-[var(--vibeui-pricing-001-border)] transition-colors duration-150 hover:bg-[var(--vibeui-pricing-001-bg)]",
+                        : "border border-[var(--vibeui-pricing-001-border)] transition-colors duration-150 hover:bg-[var(--vibeui-pricing-001-tint)]",
                     )}
                   >
                     {plan.action.label}

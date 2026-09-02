@@ -6,9 +6,18 @@ import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 export type Datagrid020Row = {
   id: string
   deal: string
-  stage: "Квалификация" | "Предложение" | "Переговоры" | "Закрыта"
+  /** Ключ этапа: значение из stages, оно же попадает в фильтр. */
+  stage: string
   owner: string
   amount: number
+}
+
+export type Datagrid020Sort = "amount" | "deal" | "stage"
+
+export type Datagrid020View = {
+  id: string
+  label: string
+  state: { stage: string; sort: Datagrid020Sort }
 }
 
 export type Datagrid020Props = Omit<
@@ -18,6 +27,32 @@ export type Datagrid020Props = Omit<
   rows?: Datagrid020Row[]
   caption?: string
   startView?: string
+  /** Сохранённые представления: компонент несёт русские. */
+  views?: Datagrid020View[]
+  /** Этапы сделки в порядке воронки: они же значения фильтра. */
+  stages?: string[]
+  /** Названия способов сортировки по ключу. */
+  sortText?: Record<string, string>
+  /** Подпись фильтра по этапу. */
+  stageLabel?: string
+  /** Значение «любой этап» в списке. */
+  anyStageText?: string
+  /** Подпись списка сортировки. */
+  sortLabel?: string
+  /** Подпись кнопки сохранения в представление. */
+  saveText?: string
+  /** Пометка «набор отличается от сохранённого». */
+  dirtyText?: string
+  /** Подпись полосы представлений для скринридера. */
+  navLabel?: string
+  /** Строка, когда в представлении нет строк. */
+  emptyText?: string
+  /** Заголовки колонок по ключу: компонент несёт русские. */
+  columnText?: Record<string, string>
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,15 +62,19 @@ export type Datagrid020Props = Omit<
 // Активная вкладка помечена aria-current, а отклонение от сохранённого
 // набора показано отдельной пометкой «изменено» — без неё непонятно,
 // смотришь ты представление или уже что-то своё.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-020"]){
---vibeui-datagrid-020-bg:oklch(1 0 0);
---vibeui-datagrid-020-fg:oklch(0.23 0.014 285);
---vibeui-datagrid-020-muted:oklch(0.55 0.014 285);
---vibeui-datagrid-020-border:oklch(0.92 0.006 285);
---vibeui-datagrid-020-head:oklch(0.975 0.003 285);
---vibeui-datagrid-020-accent:oklch(0.48 0.15 320);
---vibeui-datagrid-020-chip:oklch(0.97 0.025 320);
+--vibeui-datagrid-020-bg:transparent;
+--vibeui-datagrid-020-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-020-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-020-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
+--vibeui-datagrid-020-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
+--vibeui-datagrid-020-panel:light-dark(oklch(0.985 0.004 285),oklch(0.26 0.011 285));
+--vibeui-datagrid-020-accent:light-dark(oklch(0.48 0.15 320),oklch(0.78 0.13 320));
+--vibeui-datagrid-020-chip:light-dark(oklch(0.97 0.025 320),oklch(0.31 0.045 320));
 --vibeui-datagrid-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-020"]{
@@ -53,7 +92,7 @@ padding:0.625rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-020-bord
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:550;
 padding:0.3125rem 0.6875rem;border-radius:999px;
 border:1px solid var(--vibeui-datagrid-020-border);
-background:var(--vibeui-datagrid-020-bg);color:var(--vibeui-datagrid-020-muted);
+background:transparent;color:var(--vibeui-datagrid-020-muted);
 }
 [data-vibeui-block="datagrid-020"] [data-part="view"][aria-current="true"]{
 border-color:var(--vibeui-datagrid-020-accent);background:var(--vibeui-datagrid-020-chip);
@@ -67,7 +106,7 @@ color:var(--vibeui-datagrid-020-accent);
 [data-vibeui-block="datagrid-020"] [data-part="tools"]{
 display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
 padding:0.625rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-020-border);
-background:oklch(0.985 0.004 285);
+background:var(--vibeui-datagrid-020-panel);
 }
 [data-vibeui-block="datagrid-020"] [data-part="tools"] label{
 display:inline-flex;align-items:center;gap:0.375rem;font-size:0.75rem;color:var(--vibeui-datagrid-020-muted);
@@ -75,7 +114,7 @@ display:inline-flex;align-items:center;gap:0.375rem;font-size:0.75rem;color:var(
 [data-vibeui-block="datagrid-020"] select{
 font:inherit;font-size:0.75rem;color:inherit;padding:0.25rem 0.4375rem;
 border:1px solid var(--vibeui-datagrid-020-border);border-radius:0.4375rem;
-background:var(--vibeui-datagrid-020-bg);
+background:transparent;
 }
 [data-vibeui-block="datagrid-020"] select:focus-visible{outline:2px solid var(--vibeui-datagrid-020-accent);outline-offset:1px}
 [data-vibeui-block="datagrid-020"] [data-part="save"]{
@@ -151,9 +190,9 @@ const DEFAULT_ROWS: Datagrid020Row[] = [
   },
 ]
 
-type ViewState = { stage: string; sort: "amount" | "deal" | "stage" }
+type ViewState = Datagrid020View["state"]
 
-const VIEWS: { id: string; label: string; state: ViewState }[] = [
+const VIEWS: Datagrid020View[] = [
   { id: "all", label: "Все сделки", state: { stage: "", sort: "deal" } },
   {
     id: "hot",
@@ -166,11 +205,42 @@ const VIEWS: { id: string; label: string; state: ViewState }[] = [
 
 const STAGES = ["Квалификация", "Предложение", "Переговоры", "Закрыта"]
 
-const SORTS: { value: ViewState["sort"]; label: string }[] = [
-  { value: "deal", label: "по названию" },
-  { value: "amount", label: "по сумме" },
-  { value: "stage", label: "по этапу" },
-]
+const SORTS: Datagrid020Sort[] = ["deal", "amount", "stage"]
+
+const SORT_TEXT: Record<string, string> = {
+  deal: "по названию",
+  amount: "по сумме",
+  stage: "по этапу",
+}
+
+const COLUMN_TEXT: Record<string, string> = {
+  deal: "Сделка",
+  stage: "Этап",
+  owner: "Ответственный",
+  amount: "Сумма, ₽",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Сетка с сохранёнными представлениями: вкладка восстанавливает фильтр и
@@ -180,18 +250,50 @@ export function Datagrid020({
   rows = DEFAULT_ROWS,
   caption = "Представление хранит фильтр по этапу и порядок сортировки",
   startView = "hot",
+  views = VIEWS,
+  stages = STAGES,
+  sortText = SORT_TEXT,
+  stageLabel = "Этап",
+  anyStageText = "любой",
+  sortLabel = "Сортировка",
+  saveText = "Сохранить в представление",
+  dirtyText = "изменено",
+  navLabel = "Сохранённые представления сетки",
+  emptyText = "В этом представлении нет сделок",
+  columnText = COLUMN_TEXT,
+  scrollLabel = "Таблица сделок, прокручивается вбок",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Datagrid020Props) {
-  const [views, setViews] = useState(VIEWS)
+  // Правки читателя живут рядом с пропами, а не вместо них: смена views
+  // или startView снаружи обязана переставить сетку, иначе пропы работали
+  // бы ровно один раз, при монтировании.
+  const [edited, setEdited] = useState<Datagrid020View[] | null>(null)
+  const [seedViews, setSeedViews] = useState(views)
+  const [seedStart, setSeedStart] = useState(startView)
   const [active, setActive] = useState(startView)
   const [state, setState] = useState<ViewState>(
-    VIEWS.find((view) => view.id === startView)?.state ?? VIEWS[0].state,
+    views.find((view) => view.id === startView)?.state ?? views[0].state,
   )
 
-  const saved = views.find((view) => view.id === active)?.state
+  if (seedViews !== views) {
+    setSeedViews(views)
+    setEdited(null)
+  }
+
+  if (seedStart !== startView) {
+    setSeedStart(startView)
+    setActive(startView)
+    setState(
+      views.find((view) => view.id === startView)?.state ?? views[0].state,
+    )
+  }
+
+  const list = edited ?? views
+  const saved = list.find((view) => view.id === active)?.state
   const dirty =
     !saved || saved.stage !== state.stage || saved.sort !== state.sort
 
@@ -204,7 +306,7 @@ export function Datagrid020({
       }
 
       if (state.sort === "stage") {
-        return STAGES.indexOf(left.stage) - STAGES.indexOf(right.stage)
+        return stages.indexOf(left.stage) - stages.indexOf(right.stage)
       }
 
       return left.deal.localeCompare(right.deal, "ru")
@@ -212,6 +314,12 @@ export function Datagrid020({
 
   const palette = {
     ...(accent ? { "--vibeui-datagrid-020-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-020-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -226,8 +334,8 @@ export function Datagrid020({
         className={className}
         style={palette}
       >
-        <nav data-part="views" aria-label="Сохранённые представления сетки">
-          {views.map((view) => (
+        <nav data-part="views" aria-label={navLabel}>
+          {list.map((view) => (
             <button
               key={view.id}
               type="button"
@@ -243,13 +351,13 @@ export function Datagrid020({
           ))}
           {dirty ? (
             <span data-part="dirty" role="status" aria-live="polite">
-              изменено
+              {dirtyText}
             </span>
           ) : null}
         </nav>
         <div data-part="tools">
           <label>
-            Этап
+            {stageLabel}
             <select
               value={state.stage}
               onChange={(event) =>
@@ -259,8 +367,8 @@ export function Datagrid020({
                 }))
               }
             >
-              <option value="">любой</option>
-              {STAGES.map((stage) => (
+              <option value="">{anyStageText}</option>
+              {stages.map((stage) => (
                 <option key={stage} value={stage}>
                   {stage}
                 </option>
@@ -268,7 +376,7 @@ export function Datagrid020({
             </select>
           </label>
           <label>
-            Сортировка
+            {sortLabel}
             <select
               value={state.sort}
               onChange={(event) =>
@@ -279,8 +387,8 @@ export function Datagrid020({
               }
             >
               {SORTS.map((item) => (
-                <option key={item.value} value={item.value}>
-                  {item.label}
+                <option key={item} value={item}>
+                  {sortText[item] ?? SORT_TEXT[item]}
                 </option>
               ))}
             </select>
@@ -290,31 +398,31 @@ export function Datagrid020({
             data-part="save"
             disabled={!dirty}
             onClick={() =>
-              setViews((current) =>
-                current.map((view) =>
+              setEdited((current) =>
+                (current ?? views).map((view) =>
                   view.id === active ? { ...view, state } : view,
                 ),
               )
             }
           >
-            Сохранить в представление
+            {saveText}
           </button>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица сделок, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
             <caption>{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Сделка</th>
-                <th scope="col">Этап</th>
-                <th scope="col">Ответственный</th>
+                <th scope="col">{columnText.deal ?? COLUMN_TEXT.deal}</th>
+                <th scope="col">{columnText.stage ?? COLUMN_TEXT.stage}</th>
+                <th scope="col">{columnText.owner ?? COLUMN_TEXT.owner}</th>
                 <th scope="col" data-align="end">
-                  Сумма, ₽
+                  {columnText.amount ?? COLUMN_TEXT.amount}
                 </th>
               </tr>
             </thead>
@@ -332,7 +440,7 @@ export function Datagrid020({
               {visible.length === 0 ? (
                 <tr>
                   <td colSpan={4} data-part="none">
-                    В этом представлении нет сделок
+                    {emptyText}
                   </td>
                 </tr>
               ) : null}

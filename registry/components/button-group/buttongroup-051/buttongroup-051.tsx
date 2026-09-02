@@ -15,6 +15,8 @@ export type Buttongroup051Props = Omit<
   defaultValue?: string
   label?: string
   name?: string
+  /** Пусто — заливки нет, сцепка ложится на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,11 +29,12 @@ export type Buttongroup051Props = Omit<
 // не трогая CSS.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-051"]){
---vibeui-buttongroup-051-surface:oklch(1 0 0);
---vibeui-buttongroup-051-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-051-muted:oklch(0.58 0.014 265);
---vibeui-buttongroup-051-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-051-accent:oklch(0.45 0.03 265);
+--vibeui-buttongroup-051-surface:transparent;
+--vibeui-buttongroup-051-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-051-muted:light-dark(oklch(0.58 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-051-border:light-dark(oklch(0.89 0.008 265),oklch(0.41 0.012 265));
+--vibeui-buttongroup-051-off:light-dark(oklch(0.85 0.015 265),oklch(0.45 0.012 265));
+--vibeui-buttongroup-051-accent:light-dark(oklch(0.45 0.03 265),oklch(0.82 0.03 265));
 --vibeui-buttongroup-051-hue:265;
 --vibeui-buttongroup-051-radius:0.625rem;
 --vibeui-buttongroup-051-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -75,10 +78,10 @@ display:flex;align-items:flex-end;gap:2px;height:0.9375rem;flex:none;
 }
 [data-vibeui-block="buttongroup-051"] [data-part="bars"] i{
 width:3px;border-radius:1.5px;
-background:oklch(0.82 0.02 var(--vibeui-buttongroup-051-hue));
+background:var(--vibeui-buttongroup-051-off);
 }
 [data-vibeui-block="buttongroup-051"] [data-part="bars"] i[data-on="true"]{
-background:oklch(0.62 0.17 var(--vibeui-buttongroup-051-hue));
+background:light-dark(oklch(0.62 0.17 var(--vibeui-buttongroup-051-hue)),oklch(0.74 0.16 var(--vibeui-buttongroup-051-hue)));
 }
 [data-vibeui-block="buttongroup-051"] [data-part="bars"] i:nth-child(1){height:35%}
 [data-vibeui-block="buttongroup-051"] [data-part="bars"] i:nth-child(2){height:55%}
@@ -87,9 +90,9 @@ background:oklch(0.62 0.17 var(--vibeui-buttongroup-051-hue));
 [data-vibeui-block="buttongroup-051"] [data-part="level"]:hover{color:var(--vibeui-buttongroup-051-fg)}
 [data-vibeui-block="buttongroup-051"] [data-part="level"]:has(input:checked){
 z-index:1;
-background:oklch(0.97 0.03 var(--vibeui-buttongroup-051-hue));
-border-color:oklch(0.62 0.17 var(--vibeui-buttongroup-051-hue));
-color:oklch(0.42 0.16 var(--vibeui-buttongroup-051-hue));
+background:light-dark(oklch(0.97 0.03 var(--vibeui-buttongroup-051-hue)),oklch(0.31 0.05 var(--vibeui-buttongroup-051-hue)));
+border-color:light-dark(oklch(0.62 0.17 var(--vibeui-buttongroup-051-hue)),oklch(0.66 0.15 var(--vibeui-buttongroup-051-hue)));
+color:light-dark(oklch(0.42 0.16 var(--vibeui-buttongroup-051-hue)),oklch(0.88 0.1 var(--vibeui-buttongroup-051-hue)));
 }
 [data-vibeui-block="buttongroup-051"] [data-part="level"]:has(input:focus-visible){
 z-index:2;outline:2px solid var(--vibeui-buttongroup-051-accent);outline-offset:1px;
@@ -105,6 +108,28 @@ const DEFAULT_LEVELS: Buttongroup051Level[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Приоритет лесенкой из столбиков: порядок виден высотой, а не только цветом.
  * Один файл, ноль зависимостей, серверный компонент.
  */
@@ -113,6 +138,7 @@ export function Buttongroup051({
   defaultValue = "high",
   label = "Приоритет задачи",
   name = "buttongroup-051",
+  background = "",
   accent,
   className,
   style,
@@ -120,6 +146,12 @@ export function Buttongroup051({
 }: Buttongroup051Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-051-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-051-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

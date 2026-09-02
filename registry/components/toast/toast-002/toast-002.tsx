@@ -9,23 +9,40 @@ export type Toast002Props = Omit<
 > & {
   message?: string
   undoLabel?: string
+  /** Сообщение после нажатия «Отменить». */
+  undoneMessage?: string
+  /** Строка обратного отсчёта; {seconds} заменяется на число секунд. */
+  countdownText?: string
+  /** Подпись после успешной отмены. */
+  doneLabel?: string
+  /** Подпись, когда время вышло. */
+  expiredLabel?: string
   /** Сколько секунд можно передумать. */
   seconds?: number
   onUndo?: () => void
   accent?: string
+  /** Пусто — подложка берётся из темы окружения. */
+  background?: string
 }
 
 // Идея компонента: сообщение с отменой вместо подтверждения. «Точно удалить?»
 // останавливает всех ради ошибки одного; отмена после действия стоит одного
 // нажатия и только тому, кто ошибся. Полоса показывает, сколько осталось
 // времени, и таймер останавливается при наведении.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
+// граница светлее подложки, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="toast-002"]){
---vibeui-toast-002-bg:oklch(0.24 0.02 265);
---vibeui-toast-002-fg:oklch(0.98 0.004 265);
---vibeui-toast-002-muted:oklch(0.82 0.012 265);
---vibeui-toast-002-track:oklch(1 0 0 / 22%);
---vibeui-toast-002-accent:oklch(0.78 0.14 195);
+--vibeui-toast-002-bg:light-dark(oklch(0.99 0.003 265),oklch(0.24 0.02 265));
+--vibeui-toast-002-fg:light-dark(oklch(0.24 0.02 265),oklch(0.98 0.004 265));
+--vibeui-toast-002-muted:light-dark(oklch(0.52 0.014 265),oklch(0.82 0.012 265));
+--vibeui-toast-002-line:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.016 265));
+--vibeui-toast-002-track:light-dark(oklch(0.2 0.02 265 / 12%),oklch(1 0 0 / 22%));
+--vibeui-toast-002-button:light-dark(oklch(0.2 0.02 265 / 8%),oklch(1 0 0 / 12%));
+--vibeui-toast-002-button-hover:light-dark(oklch(0.2 0.02 265 / 14%),oklch(1 0 0 / 18%));
+--vibeui-toast-002-shadow:light-dark(oklch(0.55 0.02 265 / 20%),oklch(0.2 0.02 265 / 65%));
+--vibeui-toast-002-accent:light-dark(oklch(0.5 0.12 195),oklch(0.78 0.14 195));
 --vibeui-toast-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="toast-002"]{
@@ -34,7 +51,7 @@ width:100%;max-width:23rem;box-sizing:border-box;overflow:hidden;
 padding:0.75rem 0.875rem;border-radius:0.75rem;
 background:var(--vibeui-toast-002-bg);color:var(--vibeui-toast-002-fg);
 font-family:var(--vibeui-toast-002-font);
-box-shadow:0 18px 40px -22px oklch(0.2 0.02 265 / 65%);
+box-shadow:0 0 0 1px var(--vibeui-toast-002-line),0 18px 40px -22px var(--vibeui-toast-002-shadow);
 }
 [data-vibeui-block="toast-002"] [data-part="text"]{flex:1;min-width:0;font-size:0.875rem;line-height:1.35}
 [data-vibeui-block="toast-002"] [data-part="left"]{display:block;margin-top:0.125rem;font-size:0.75rem;color:var(--vibeui-toast-002-muted);font-variant-numeric:tabular-nums}
@@ -42,10 +59,10 @@ box-shadow:0 18px 40px -22px oklch(0.2 0.02 265 / 65%);
 [data-vibeui-block="toast-002"] button{
 appearance:none;cursor:pointer;flex:none;
 height:2rem;padding:0 0.75rem;border:0;border-radius:0.5rem;
-background:oklch(1 0 0 / 12%);color:var(--vibeui-toast-002-accent);
+background:var(--vibeui-toast-002-button);color:var(--vibeui-toast-002-accent);
 font:inherit;font-size:0.8125rem;font-weight:700;
 }
-[data-vibeui-block="toast-002"] button:hover{background:oklch(1 0 0 / 18%)}
+[data-vibeui-block="toast-002"] button:hover{background:var(--vibeui-toast-002-button-hover)}
 [data-vibeui-block="toast-002"] button:focus-visible{outline:2px solid var(--vibeui-toast-002-accent);outline-offset:2px}
 /* Полоса времени: без неё непонятно, сколько ещё можно передумать. */
 [data-vibeui-block="toast-002"] [data-part="track"]{
@@ -60,15 +77,42 @@ transition:width .2s linear;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сообщение с отменой: полоса времени и пауза по наведению.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Toast002({
   message = "Проект перемещён в архив",
   undoLabel = "Отменить",
+  undoneMessage = "Действие отменено",
+  countdownText = "Отменить можно ещё {seconds} с",
+  doneLabel = "Готово",
+  expiredLabel = "Время вышло",
   seconds = 8,
   onUndo,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -89,6 +133,12 @@ export function Toast002({
 
   const palette = {
     ...(accent ? { "--vibeui-toast-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-toast-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -121,15 +171,18 @@ export function Toast002({
         }}
       >
         <span data-part="text">
-          {undone ? "Действие отменено" : message}
+          {undone ? undoneMessage : message}
           {!undone && !expired ? (
             <span data-part="left">
-              Отменить можно ещё {Math.ceil(left / 1000)} с
+              {countdownText.replace(
+                "{seconds}",
+                String(Math.ceil(left / 1000)),
+              )}
             </span>
           ) : null}
         </span>
         {undone || expired ? (
-          <span data-part="done">{undone ? "Готово" : "Время вышло"}</span>
+          <span data-part="done">{undone ? doneLabel : expiredLabel}</span>
         ) : (
           <button
             type="button"

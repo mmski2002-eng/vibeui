@@ -3,6 +3,10 @@ import type { CSSProperties } from "react"
 export type Codeblock003Props = {
   packageName?: string
   group?: string
+  /** Подпись группы вкладок для скринридера. */
+  groupLabel?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -10,16 +14,20 @@ export type Codeblock003Props = {
 // Идея компонента: четыре менеджера пакетов в одном блоке без единой строки
 // JS. Вкладки — это радиокнопки, а панель выбирается через :has() по
 // отмеченному значению, поэтому переключение работает и до гидратации.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, полоса вкладок и активная вкладка — полупрозрачные накладки.
 const STYLES = `
 :where([data-vibeui-block="codeblock-003"]){
---vibeui-codeblock-003-bg:oklch(0.2 0.02 210);
---vibeui-codeblock-003-head:oklch(0.24 0.024 210);
---vibeui-codeblock-003-fg:oklch(0.94 0.006 210);
---vibeui-codeblock-003-muted:oklch(0.68 0.016 210);
---vibeui-codeblock-003-border:oklch(1 0 0 / 13%);
---vibeui-codeblock-003-active:oklch(0.98 0.01 210);
---vibeui-codeblock-003-accent:oklch(0.78 0.13 195);
---vibeui-codeblock-003-flag:oklch(0.8 0.12 195);
+--vibeui-codeblock-003-bg:transparent;
+--vibeui-codeblock-003-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
+--vibeui-codeblock-003-pill:light-dark(oklch(0 0 0 / 9%),oklch(1 0 0 / 12%));
+--vibeui-codeblock-003-fg:light-dark(oklch(0.27 0.018 210),oklch(0.94 0.006 210));
+--vibeui-codeblock-003-muted:light-dark(oklch(0.52 0.02 210),oklch(0.68 0.016 210));
+--vibeui-codeblock-003-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 13%));
+--vibeui-codeblock-003-active:light-dark(oklch(0.22 0.02 210),oklch(0.98 0.01 210));
+--vibeui-codeblock-003-accent:light-dark(oklch(0.5 0.11 195),oklch(0.78 0.13 195));
+--vibeui-codeblock-003-flag:light-dark(oklch(0.53 0.1 195),oklch(0.8 0.12 195));
 --vibeui-codeblock-003-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -48,7 +56,7 @@ border:0;clip-path:inset(50%);overflow:hidden;white-space:nowrap;
 }
 [data-vibeui-block="codeblock-003"] label:hover{color:var(--vibeui-codeblock-003-fg)}
 [data-vibeui-block="codeblock-003"] label:has(input:checked){
-background:oklch(1 0 0 / 12%);color:var(--vibeui-codeblock-003-active);
+background:var(--vibeui-codeblock-003-pill);color:var(--vibeui-codeblock-003-active);
 }
 [data-vibeui-block="codeblock-003"] label:has(input:focus-visible){
 outline:2px solid var(--vibeui-codeblock-003-accent);outline-offset:2px;
@@ -75,13 +83,47 @@ const MANAGERS = [
   { id: "bun", binary: "bun", verb: "add", flag: "--exact" },
 ] as const
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Команда установки в четырёх менеджерах пакетов, переключение без JS. */
 export function Codeblock003({
   packageName = "@vibeui/button",
   group = "vibeui-codeblock-003",
+  groupLabel = "Менеджер пакетов",
+  background = "",
   className,
   style,
 }: Codeblock003Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-codeblock-003" precedence="medium">
@@ -90,10 +132,10 @@ export function Codeblock003({
       <div
         data-vibeui-block="codeblock-003"
         className={className}
-        style={style}
+        style={palette}
       >
         <div data-part="shell">
-          <div data-part="tabs" role="group" aria-label="Менеджер пакетов">
+          <div data-part="tabs" role="group" aria-label={groupLabel}>
             {MANAGERS.map((manager, index) => (
               <label key={manager.id}>
                 <input

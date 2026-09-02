@@ -8,6 +8,10 @@ export type Rating008Props = Omit<
   name?: string
   lowAnchor?: string
   highAnchor?: string
+  /** Ответные реплики по зонам: ключи low, mid, high. */
+  replies?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,20 +21,24 @@ export type Rating008Props = Omit<
 // видеть, что «семёрка» здесь не «хорошо», иначе метрика собирает не то, что
 // считает. Всё на радиокнопках и :has(), поэтому клавиатура, отправка формы и
 // смена ответной реплики работают без JS, а компонент остаётся серверным.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="rating-008"]){
---vibeui-rating-008-surface:oklch(1 0 0);
---vibeui-rating-008-shell:oklch(0.9 0.006 265);
---vibeui-rating-008-fg:oklch(0.23 0.014 265);
---vibeui-rating-008-muted:oklch(0.55 0.014 265);
---vibeui-rating-008-border:oklch(0.9 0.006 265);
---vibeui-rating-008-low:oklch(0.58 0.18 25);
---vibeui-rating-008-mid:oklch(0.7 0.14 75);
---vibeui-rating-008-high:oklch(0.56 0.15 155);
---vibeui-rating-008-accent:oklch(0.55 0.17 265);
+--vibeui-rating-008-surface:transparent;
+--vibeui-rating-008-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-rating-008-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-rating-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-rating-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-rating-008-low:light-dark(oklch(0.58 0.18 25),oklch(0.74 0.16 25));
+--vibeui-rating-008-mid:light-dark(oklch(0.7 0.14 75),oklch(0.82 0.14 78));
+--vibeui-rating-008-high:light-dark(oklch(0.56 0.15 155),oklch(0.76 0.14 158));
+--vibeui-rating-008-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-rating-008-on:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
 --vibeui-rating-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: опрос показывают поверх любого фона. */
+/* Подложки по умолчанию нет: опрос ложится на фон страницы. */
 [data-vibeui-block="rating-008"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:24rem;box-sizing:border-box;margin:0;padding:0.875rem;
@@ -57,7 +65,7 @@ transition:background-color .12s ease,color .12s ease,border-color .12s ease;
 [data-vibeui-block="rating-008"] label[data-zone="mid"]{color:var(--vibeui-rating-008-mid)}
 [data-vibeui-block="rating-008"] label[data-zone="high"]{color:var(--vibeui-rating-008-high)}
 [data-vibeui-block="rating-008"] label:hover{border-color:currentColor}
-[data-vibeui-block="rating-008"] label:has(input:checked){color:oklch(1 0 0);border-color:transparent}
+[data-vibeui-block="rating-008"] label:has(input:checked){color:var(--vibeui-rating-008-on);border-color:transparent}
 [data-vibeui-block="rating-008"] label[data-zone="low"]:has(input:checked){background:var(--vibeui-rating-008-low)}
 [data-vibeui-block="rating-008"] label[data-zone="mid"]:has(input:checked){background:var(--vibeui-rating-008-mid)}
 [data-vibeui-block="rating-008"] label[data-zone="high"]:has(input:checked){background:var(--vibeui-rating-008-high)}
@@ -86,16 +94,40 @@ font-size:0.6875rem;color:var(--vibeui-rating-008-muted);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="rating-008"] *{animation:none!important;transition:none!important}}
 `
 
-const REPLIES = [
-  { zone: "low", text: "Жаль. Расскажете, что испортило впечатление?" },
-  { zone: "mid", text: "Спасибо. Чего не хватило до девятки?" },
-  { zone: "high", text: "Спасибо! Поделитесь ссылкой с коллегами." },
-]
+const ZONES = ["low", "mid", "high"]
+
+const DEFAULT_REPLIES: Record<string, string> = {
+  low: "Жаль. Расскажете, что испортило впечатление?",
+  mid: "Спасибо. Чего не хватило до девятки?",
+  high: "Спасибо! Поделитесь ссылкой с коллегами.",
+}
 
 function zoneOf(score: number) {
   if (score <= 6) return "low"
   if (score <= 8) return "mid"
   return "high"
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -107,6 +139,8 @@ export function Rating008({
   name = "vibeui-rating-008",
   lowAnchor = "0 — точно нет",
   highAnchor = "10 — обязательно",
+  replies = DEFAULT_REPLIES,
+  background = "",
   accent,
   className,
   style,
@@ -116,6 +150,12 @@ export function Rating008({
 
   const palette = {
     ...(accent ? { "--vibeui-rating-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-rating-008-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -144,9 +184,9 @@ export function Rating008({
           <span>{highAnchor}</span>
         </p>
         <div data-part="replies" aria-live="polite">
-          {REPLIES.map((reply) => (
-            <p key={reply.zone} data-part="reply" data-zone={reply.zone}>
-              {reply.text}
+          {ZONES.map((zone) => (
+            <p key={zone} data-part="reply" data-zone={zone}>
+              {replies[zone] ?? DEFAULT_REPLIES[zone]}
             </p>
           ))}
         </div>

@@ -12,6 +12,8 @@ export type Buttongroup055Props = Omit<
 > & {
   clusters?: Buttongroup055Cluster[]
   label?: string
+  /** Пусто — заливки нет, панель ложится на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,11 +26,12 @@ export type Buttongroup055Props = Omit<
 // линия принадлежит промежутку, а не соседу.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-055"]){
---vibeui-buttongroup-055-surface:oklch(1 0 0);
---vibeui-buttongroup-055-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-055-muted:oklch(0.58 0.014 265);
---vibeui-buttongroup-055-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-055-accent:oklch(0.5 0.16 265);
+--vibeui-buttongroup-055-surface:transparent;
+--vibeui-buttongroup-055-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-055-muted:light-dark(oklch(0.58 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-055-border:light-dark(oklch(0.89 0.008 265),oklch(0.41 0.012 265));
+--vibeui-buttongroup-055-hover:light-dark(oklch(0.96 0.005 265),oklch(0.34 0.01 265));
+--vibeui-buttongroup-055-accent:light-dark(oklch(0.5 0.16 265),oklch(0.76 0.14 265));
 --vibeui-buttongroup-055-radius:0.5rem;
 --vibeui-buttongroup-055-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -57,7 +60,7 @@ width:0.9375rem;height:0.9375rem;
 stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;
 }
 [data-vibeui-block="buttongroup-055"] button:hover{
-background:oklch(0.96 0.005 265);color:var(--vibeui-buttongroup-055-fg);
+background:var(--vibeui-buttongroup-055-hover);color:var(--vibeui-buttongroup-055-fg);
 }
 [data-vibeui-block="buttongroup-055"] button:focus-visible{
 outline:2px solid var(--vibeui-buttongroup-055-accent);outline-offset:1px;
@@ -106,12 +109,35 @@ const DEFAULT_CLUSTERS: Buttongroup055Cluster[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Панель, разделённая на смысловые блоки: линия и зазор вместо сплошного ряда.
  * Один файл, ноль зависимостей, серверный компонент.
  */
 export function Buttongroup055({
   clusters = DEFAULT_CLUSTERS,
   label = "Панель редактора",
+  background = "",
   accent,
   className,
   style,
@@ -119,6 +145,12 @@ export function Buttongroup055({
 }: Buttongroup055Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-055-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-055-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

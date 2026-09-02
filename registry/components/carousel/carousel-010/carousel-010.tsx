@@ -17,6 +17,14 @@ export type Carousel010Props = Omit<
 > & {
   products?: Carousel010Product[]
   title?: string
+  /** Роль секции для скринридера. */
+  roleText?: string
+  /** Подписи стрелок: компонент несёт русские, проект подставляет свои. */
+  navText?: Record<string, string>
+  /** Значок скидки на снимке товара. */
+  saleLabel?: string
+  /** Пусто — подложка своя; цвет заменяет её целиком. */
+  background?: string
   accent?: string
 }
 
@@ -25,13 +33,17 @@ export type Carousel010Props = Omit<
 // ответ на вопрос «дальше есть что-нибудь»: без него пользователь жмёт в
 // пустоту. Шаг прокрутки равен ширине карточки с зазором, поэтому лента
 // останавливается ровно на карточке, а не в середине.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложка, цены и
+// названия темнеют вместе со страницей, своей тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="carousel-010"]){
---vibeui-carousel-010-bg:oklch(1 0 0);
---vibeui-carousel-010-fg:oklch(0.22 0.014 265);
---vibeui-carousel-010-muted:oklch(0.58 0.014 265);
---vibeui-carousel-010-border:oklch(0.91 0.006 265);
---vibeui-carousel-010-accent:oklch(0.55 0.19 25);
+--vibeui-carousel-010-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-carousel-010-hover:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.014 265));
+--vibeui-carousel-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-010-muted:light-dark(oklch(0.58 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-carousel-010-accent:light-dark(oklch(0.55 0.19 25),oklch(0.66 0.19 25));
 --vibeui-carousel-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="carousel-010"]{
@@ -51,7 +63,7 @@ width:2rem;height:2rem;padding:0;
 border:1px solid var(--vibeui-carousel-010-border);border-radius:0.5rem;
 background:var(--vibeui-carousel-010-bg);color:var(--vibeui-carousel-010-fg);
 }
-[data-vibeui-block="carousel-010"] [data-part="nav"] button:hover:not(:disabled){background:oklch(0.96 0.004 265)}
+[data-vibeui-block="carousel-010"] [data-part="nav"] button:hover:not(:disabled){background:var(--vibeui-carousel-010-hover)}
 [data-vibeui-block="carousel-010"] [data-part="nav"] button:focus-visible{outline:2px solid var(--vibeui-carousel-010-accent);outline-offset:2px}
 /* Гаснущая стрелка отвечает «дальше пусто» до нажатия, а не после. */
 [data-vibeui-block="carousel-010"] [data-part="nav"] button:disabled{cursor:not-allowed;opacity:.35}
@@ -113,6 +125,33 @@ const DEFAULT_PRODUCTS: Carousel010Product[] = [
   { title: "Термос 0,5 л", price: "2 190 ₽", rating: 4.5, hue: 20 },
 ]
 
+const NAV_LABEL: Record<string, string> = {
+  prev: "Предыдущие товары",
+  next: "Следующие товары",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Витрина товаров с выглядывающей карточкой и стрелками, гаснущими на краях.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -120,6 +159,10 @@ const DEFAULT_PRODUCTS: Carousel010Product[] = [
 export function Carousel010({
   products = DEFAULT_PRODUCTS,
   title = "Часто покупают",
+  roleText = "карусель",
+  navText = NAV_LABEL,
+  saleLabel = "скидка",
+  background = "",
   accent,
   className,
   style,
@@ -147,6 +190,12 @@ export function Carousel010({
 
   const palette = {
     ...(accent ? { "--vibeui-carousel-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-carousel-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -158,7 +207,7 @@ export function Carousel010({
       <section
         {...props}
         data-vibeui-block="carousel-010"
-        aria-roledescription="карусель"
+        aria-roledescription={roleText}
         aria-label={title}
         className={className}
         style={palette}
@@ -168,7 +217,7 @@ export function Carousel010({
           <div data-part="nav">
             <button
               type="button"
-              aria-label="Предыдущие товары"
+              aria-label={navText.prev ?? NAV_LABEL.prev}
               disabled={edge.start}
               onClick={() => step(-1)}
             >
@@ -183,7 +232,7 @@ export function Carousel010({
             </button>
             <button
               type="button"
-              aria-label="Следующие товары"
+              aria-label={navText.next ?? NAV_LABEL.next}
               disabled={edge.end}
               onClick={() => step(1)}
             >
@@ -210,7 +259,9 @@ export function Carousel010({
               }
             >
               <div data-part="shot">
-                {product.oldPrice ? <span data-part="sale">скидка</span> : null}
+                {product.oldPrice ? (
+                  <span data-part="sale">{saleLabel}</span>
+                ) : null}
               </div>
               <span data-part="name">{product.title}</span>
               <span data-part="row">

@@ -15,6 +15,16 @@ export type Carousel013Props = Omit<
 > & {
   shots?: Carousel013Shot[]
   label?: string
+  /** Роль блока для скринридера: компонент несёт русскую, проект подставит свою. */
+  roleDescription?: string
+  /** Подпись полосы миниатюр. */
+  stripLabel?: string
+  /** Шаблон подписи миниатюры: {n} — номер кадра, {title} — его заголовок. */
+  thumbLabel?: string
+  /** Подсказка под полосой. Пусто — подсказки нет. */
+  hint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,13 +34,16 @@ export type Carousel013Props = Omit<
 // block:"nearest", чтобы прокрутить полосу и не дёрнуть страницу. Выбор
 // помечен рамкой и подписью «кадр N», а не только яркостью: приглушение
 // соседей на маленьком экране почти незаметно.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="carousel-013"]){
---vibeui-carousel-013-bg:oklch(1 0 0);
---vibeui-carousel-013-fg:oklch(0.22 0.014 265);
---vibeui-carousel-013-muted:oklch(0.58 0.014 265);
---vibeui-carousel-013-border:oklch(0.91 0.006 265);
---vibeui-carousel-013-accent:oklch(0.55 0.19 262);
+--vibeui-carousel-013-bg:transparent;
+--vibeui-carousel-013-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-013-muted:light-dark(oklch(0.58 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-013-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-carousel-013-accent:light-dark(oklch(0.55 0.19 262),oklch(0.74 0.16 262));
 --vibeui-carousel-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="carousel-013"]{
@@ -94,12 +107,39 @@ const DEFAULT_SHOTS: Carousel013Shot[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё на светлой плашке достался бы
+ * текст тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Галерея с полосой миниатюр: выбранная доезжает до центра, стрелки работают.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Carousel013({
   shots = DEFAULT_SHOTS,
   label = "Галерея",
+  roleDescription = "карусель",
+  stripLabel = "Кадры",
+  thumbLabel = "Кадр {n}: {title}",
+  hint = "Стрелками ← и → можно перейти к соседнему кадру.",
+  background = "",
   accent,
   className,
   style,
@@ -126,6 +166,12 @@ export function Carousel013({
   const palette = {
     "--vibeui-carousel-013-hue": shot.hue ?? 250,
     ...(accent ? { "--vibeui-carousel-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-carousel-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -137,7 +183,7 @@ export function Carousel013({
       <section
         {...props}
         data-vibeui-block="carousel-013"
-        aria-roledescription="карусель"
+        aria-roledescription={roleDescription}
         aria-label={label}
         className={className}
         style={palette}
@@ -153,7 +199,7 @@ export function Carousel013({
           data-part="thumbs"
           ref={strip}
           role="group"
-          aria-label="Кадры"
+          aria-label={stripLabel}
           onKeyDown={(event) => {
             if (event.key === "ArrowRight") {
               event.preventDefault()
@@ -171,7 +217,9 @@ export function Carousel013({
               type="button"
               data-part="thumb"
               aria-current={position === index}
-              aria-label={`Кадр ${position + 1}: ${item.title}`}
+              aria-label={thumbLabel
+                .replace("{n}", String(position + 1))
+                .replace("{title}", item.title)}
               style={
                 {
                   "--vibeui-carousel-013-hue": item.hue ?? 250,
@@ -181,9 +229,7 @@ export function Carousel013({
             />
           ))}
         </div>
-        <span data-part="hint">
-          Стрелками ← и → можно перейти к соседнему кадру.
-        </span>
+        {hint ? <span data-part="hint">{hint}</span> : null}
       </section>
     </>
   )

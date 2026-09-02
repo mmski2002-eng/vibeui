@@ -6,6 +6,8 @@ export type Spinner007Props = Omit<
 > & {
   label?: string
   speed?: number
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: индикатор набора сообщения — форма чат-пузыря с тремя
@@ -13,19 +15,22 @@ export type Spinner007Props = Omit<
 // общей точечной загрузки, здесь только одна точка ярка в любой момент
 // времени: это читается как «идёт набор», а не как абстрактное ожидание.
 // Тайминг — steps(), а не ease: подсветка перескакивает, а не перетекает.
+//
+// Тема берётся из color-scheme окружения через light-dark(): пузырь светлее
+// тёмного фона и темнее светлого, собственной тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="spinner-007"]){
 --vibeui-spinner-007-speed:1.05s;
 --vibeui-spinner-007-dot:0.375rem;
---vibeui-spinner-007-surface:oklch(1 0 0);
---vibeui-spinner-007-border:oklch(0.9 0.006 265);
---vibeui-spinner-007-track:oklch(0.95 0.006 265);
---vibeui-spinner-007-fg:oklch(0.26 0.014 265);
---vibeui-spinner-007-muted:oklch(0.55 0.014 265);
---vibeui-spinner-007-accent:oklch(0.55 0.17 262);
+--vibeui-spinner-007-surface:transparent;
+--vibeui-spinner-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.32 0.012 265));
+--vibeui-spinner-007-track:light-dark(oklch(0.95 0.006 265),oklch(0.3 0.012 265));
+--vibeui-spinner-007-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
+--vibeui-spinner-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-spinner-007-accent:light-dark(oklch(0.55 0.17 262),oklch(0.74 0.15 262));
 --vibeui-spinner-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: подпись рядом с пузырём тёмная. */
+/* Подложки нет по умолчанию: плашка появляется только пропом background. */
 [data-vibeui-block="spinner-007"]{
 display:inline-flex;align-items:center;gap:0.625rem;
 box-sizing:border-box;padding:0.75rem 1rem;
@@ -74,18 +79,47 @@ animation-delay:calc(var(--vibeui-spinner-007-speed) / 3 * 2);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Индикатор набора сообщения: точки в пузыре подсвечиваются по очереди.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Spinner007({
   label = "Собеседник печатает",
   speed = 1.05,
+  background = "",
   className,
   style,
   ...props
 }: Spinner007Props) {
   const palette = {
     "--vibeui-spinner-007-speed": `${speed}s`,
+    ...(background
+      ? {
+          "--vibeui-spinner-007-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

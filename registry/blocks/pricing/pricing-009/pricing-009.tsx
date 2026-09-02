@@ -15,9 +15,37 @@ export type Pricing009Props = {
   currencyLabel?: string
   plans?: Pricing009Plan[]
   note?: string
+  /** Приписка к сумме: за какой период она указана. */
+  perLabel?: string
+  /** Подписи переключателя валют по ключам rub, usd и eur. */
+  currencyText?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 // Идея блока: валюта выбирается на месте и без перезагрузки. Три радиокнопки
@@ -28,14 +56,14 @@ export type Pricing009Props = {
 // округлена под рынок, а не получена умножением.
 const STYLES = `
 :where([data-vibeui-block="pricing-009"]){
---vibeui-pricing-009-bg:oklch(0.98 0.005 200);
---vibeui-pricing-009-fg:oklch(0.19 0.014 200);
---vibeui-pricing-009-muted:oklch(0.5 0.014 200);
---vibeui-pricing-009-card:oklch(1 0 0);
---vibeui-pricing-009-line:oklch(0.88 0.008 200);
---vibeui-pricing-009-soft:oklch(0.95 0.01 200);
---vibeui-pricing-009-accent:oklch(0.48 0.12 195);
---vibeui-pricing-009-accent-fg:oklch(0.99 0 0);
+--vibeui-pricing-009-bg:transparent;
+--vibeui-pricing-009-fg:light-dark(oklch(0.19 0.014 200),oklch(0.95 0.005 200));
+--vibeui-pricing-009-muted:light-dark(oklch(0.5 0.014 200),oklch(0.71 0.012 200));
+--vibeui-pricing-009-card:light-dark(oklch(1 0 0),oklch(0.22 0.014 200));
+--vibeui-pricing-009-line:light-dark(oklch(0.88 0.008 200),oklch(0.34 0.014 200));
+--vibeui-pricing-009-soft:light-dark(oklch(0.95 0.01 200),oklch(0.27 0.016 200));
+--vibeui-pricing-009-accent:light-dark(oklch(0.48 0.12 195),oklch(0.76 0.12 195));
+--vibeui-pricing-009-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.03 195));
 --vibeui-pricing-009-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -115,11 +143,13 @@ outline:2px solid var(--vibeui-pricing-009-accent);outline-offset:2px;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="pricing-009"] *{animation:none!important;transition:none!important}}
 `
 
-const CURRENCIES = [
-  { key: "rub", label: "₽ RUB" },
-  { key: "usd", label: "$ USD" },
-  { key: "eur", label: "€ EUR" },
-] as const
+const CURRENCIES = ["rub", "usd", "eur"] as const
+
+const DEFAULT_CURRENCY_TEXT: Record<string, string> = {
+  rub: "₽ RUB",
+  usd: "$ USD",
+  eur: "€ EUR",
+}
 
 const DEFAULT_PLANS: Pricing009Plan[] = [
   {
@@ -161,14 +191,24 @@ export function Pricing009({
   currencyLabel = "Валюта",
   plans = DEFAULT_PLANS,
   note = "Списание проходит в выбранной валюте. Сменить её можно в настройках подписки в любой момент.",
+  perLabel = "в месяц",
+  currencyText,
   accent,
+  background = "",
   className,
   style,
 }: Pricing009Props) {
   const palette = {
     ...(accent ? { "--vibeui-pricing-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pricing-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+  const currencyLabels = { ...DEFAULT_CURRENCY_TEXT, ...currencyText }
 
   return (
     <>
@@ -183,9 +223,9 @@ export function Pricing009({
         <div data-part="shell">
           {CURRENCIES.map((currency, index) => (
             <input
-              key={currency.key}
-              data-cur={currency.key}
-              id={`vibeui-pricing-009-${currency.key}`}
+              key={currency}
+              data-cur={currency}
+              id={`vibeui-pricing-009-${currency}`}
               type="radio"
               name="vibeui-pricing-009-currency"
               defaultChecked={index === 0}
@@ -200,12 +240,12 @@ export function Pricing009({
             <div data-part="switch" role="group" aria-label={currencyLabel}>
               {CURRENCIES.map((currency) => (
                 <label
-                  key={currency.key}
+                  key={currency}
                   data-part="opt"
-                  data-opt={currency.key}
-                  htmlFor={`vibeui-pricing-009-${currency.key}`}
+                  data-opt={currency}
+                  htmlFor={`vibeui-pricing-009-${currency}`}
                 >
-                  {currency.label}
+                  {currencyLabels[currency]}
                 </label>
               ))}
             </div>
@@ -230,7 +270,7 @@ export function Pricing009({
                   <span data-part="amount" data-amount="eur">
                     {plan.amounts.eur}
                   </span>
-                  <span data-part="per">в месяц</span>
+                  <span data-part="per">{perLabel}</span>
                 </p>
                 <ul data-part="feats">
                   {plan.features.slice(0, 5).map((feature) => (

@@ -8,6 +8,8 @@ export type Item007Props = Omit<
   meta?: string
   name?: string
   defaultChecked?: boolean
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,13 +19,17 @@ export type Item007Props = Omit<
 // сам input не спрятан display:none — он прозрачен и растянут на строку, иначе
 // пропадёт из последовательности фокуса. Выбранная строка меняет не только
 // цвет, но и заливку с рамкой: одного оттенка мало при дальтонизме.
+//
+// Тема берётся из color-scheme окружения через light-dark(): строка темнеет
+// там, где тёмный контекст, и не выкладывает под себя белую плашку.
 const STYLES = `
 :where([data-vibeui-block="item-007"]){
---vibeui-item-007-bg:oklch(1 0 0);
---vibeui-item-007-fg:oklch(0.23 0.014 265);
---vibeui-item-007-muted:oklch(0.56 0.014 265);
---vibeui-item-007-border:oklch(0.9 0.006 265);
---vibeui-item-007-accent:oklch(0.55 0.19 262);
+--vibeui-item-007-bg:transparent;
+--vibeui-item-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-item-007-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-item-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-item-007-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.16 262));
+--vibeui-item-007-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
 --vibeui-item-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="item-007"]{
@@ -53,13 +59,35 @@ transition:background-color .15s ease,border-color .15s ease,color .15s ease;
 }
 [data-vibeui-block="item-007"]:has(input:checked) [data-part="box"]{
 background:var(--vibeui-item-007-accent);border-color:var(--vibeui-item-007-accent);
-color:oklch(1 0 0);
+color:var(--vibeui-item-007-on-accent);
 }
 [data-vibeui-block="item-007"] [data-part="text"]{display:grid;gap:0.125rem;min-width:0}
 [data-vibeui-block="item-007"] [data-part="title"]{font-size:0.875rem;font-weight:650;line-height:1.3}
 [data-vibeui-block="item-007"] [data-part="meta"]{font-size:0.75rem;line-height:1.35;color:var(--vibeui-item-007-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="item-007"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Строка выбора с галочкой на нативном чекбоксе, без клиентского состояния.
@@ -70,6 +98,7 @@ export function Item007({
   meta = "Подключается за пять минут · 490 ₽ в месяц",
   name = "option",
   defaultChecked = true,
+  background = "",
   accent,
   className,
   style,
@@ -77,6 +106,12 @@ export function Item007({
 }: Item007Props) {
   const palette = {
     ...(accent ? { "--vibeui-item-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-item-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

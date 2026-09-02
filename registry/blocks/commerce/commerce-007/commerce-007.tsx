@@ -20,7 +20,15 @@ export type Commerce007Props = {
   products?: Commerce007Product[]
   found?: number
   more?: string
+  /** Подписи блока: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
+  /** Шаблон цены: {value} — отформатированное число. */
+  priceText?: string
+  /** Локаль форматирования цен. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,16 +40,21 @@ export type Commerce007Props = {
 // сортировка и фильтры выглядят так, будто ничего не изменилось. Сортировка
 // сделана нативным select: он открывается на телефоне системным списком и
 // работает с клавиатуры без единой строки JS.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="commerce-007"]){
---vibeui-commerce-007-bg:oklch(1 0 0);
---vibeui-commerce-007-fg:oklch(0.22 0.014 265);
---vibeui-commerce-007-muted:oklch(0.55 0.014 265);
---vibeui-commerce-007-border:oklch(0.91 0.006 265);
---vibeui-commerce-007-soft:oklch(0.97 0.004 265);
---vibeui-commerce-007-accent:oklch(0.55 0.2 262);
---vibeui-commerce-007-sale:oklch(0.58 0.19 22);
---vibeui-commerce-007-star:oklch(0.72 0.16 75);
+--vibeui-commerce-007-bg:transparent;
+--vibeui-commerce-007-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-commerce-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-commerce-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-007-soft:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.01 265));
+--vibeui-commerce-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-commerce-007-sale:light-dark(oklch(0.58 0.19 22),oklch(0.7 0.17 22));
+--vibeui-commerce-007-on-sale:light-dark(oklch(1 0 0),oklch(0.19 0.02 22));
+--vibeui-commerce-007-star:light-dark(oklch(0.72 0.16 75),oklch(0.82 0.15 75));
 --vibeui-commerce-007-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -68,7 +81,7 @@ display:flex;flex-wrap:wrap;align-items:baseline;gap:0.5rem 0.75rem;margin-botto
 [data-vibeui-block="commerce-007"] select{
 appearance:none;font:inherit;font-size:0.75rem;font-weight:600;color:inherit;
 padding:0.375rem 1.5rem 0.375rem 0.5rem;border-radius:0.5rem;
-border:1px solid var(--vibeui-commerce-007-border);background:var(--vibeui-commerce-007-bg);
+border:1px solid var(--vibeui-commerce-007-border);background:var(--vibeui-commerce-007-card);
 background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
 background-position:calc(100% - 0.75rem) 55%,calc(100% - 0.5rem) 55%;
 background-size:0.25rem 0.25rem,0.25rem 0.25rem;background-repeat:no-repeat;
@@ -96,17 +109,17 @@ list-style:none;margin:0;padding:0;display:grid;gap:0.75rem;grid-template-column
 [data-vibeui-block="commerce-007"] [data-part="card"]{
 position:relative;display:flex;flex-direction:column;
 border:1px solid var(--vibeui-commerce-007-border);border-radius:0.875rem;overflow:hidden;
-background:var(--vibeui-commerce-007-bg);
+background:var(--vibeui-commerce-007-card);
 }
 [data-vibeui-block="commerce-007"] [data-part="card"]:has(a:focus-visible){outline:2px solid var(--vibeui-commerce-007-accent);outline-offset:2px}
 [data-vibeui-block="commerce-007"] [data-part="cover"]{
 aspect-ratio:4/3;
-background:linear-gradient(150deg,oklch(0.93 0.06 var(--vibeui-commerce-007-hue,262)),oklch(0.86 0.09 var(--vibeui-commerce-007-hue,262)));
+background:linear-gradient(150deg,light-dark(oklch(0.93 0.06 var(--vibeui-commerce-007-hue,262)),oklch(0.42 0.07 var(--vibeui-commerce-007-hue,262))),light-dark(oklch(0.86 0.09 var(--vibeui-commerce-007-hue,262)),oklch(0.32 0.06 var(--vibeui-commerce-007-hue,262))));
 }
 [data-vibeui-block="commerce-007"] [data-part="badge"]{
 position:absolute;top:0.5rem;left:0.5rem;z-index:1;
 padding:0.125rem 0.375rem;border-radius:0.375rem;
-background:var(--vibeui-commerce-007-sale);color:oklch(1 0 0);
+background:var(--vibeui-commerce-007-sale);color:var(--vibeui-commerce-007-on-sale);
 font-size:0.625rem;font-weight:700;letter-spacing:0.02em;
 }
 [data-vibeui-block="commerce-007"] [data-part="body"]{padding:0.625rem;display:flex;flex-direction:column;gap:0.25rem;flex:1}
@@ -128,7 +141,7 @@ display:flex;flex-direction:column;align-items:center;gap:0.375rem;margin-top:1r
 [data-vibeui-block="commerce-007"] [data-part="more"]{
 appearance:none;cursor:pointer;height:2.375rem;padding:0 1.25rem;
 border:1px solid var(--vibeui-commerce-007-border);border-radius:0.625rem;
-background:var(--vibeui-commerce-007-bg);color:inherit;font:inherit;font-size:0.8125rem;font-weight:650;
+background:var(--vibeui-commerce-007-card);color:inherit;font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="commerce-007"] [data-part="more"]:focus-visible{outline:2px solid var(--vibeui-commerce-007-accent);outline-offset:2px}
 [data-vibeui-block="commerce-007"] [data-part="shown"]{margin:0;font-size:0.6875rem;color:var(--vibeui-commerce-007-muted);font-variant-numeric:tabular-nums}
@@ -178,10 +191,41 @@ const DEFAULT_PRODUCTS: Commerce007Product[] = [
   },
 ]
 
-const money = (value: number) => `${value.toLocaleString("ru-RU")} ₽`
+/** Русские подписи по умолчанию: установленный файл не меняет язык сам. */
+const LABELS: Record<string, string> = {
+  found: "{count} товаров",
+  sort: "Сортировка",
+  filters: "Выбранные фильтры",
+  removeFilter: "Снять фильтр «{chip}»",
+  votes: "{count} оценок",
+  oldPrice: "Старая цена",
+  shown: "Показано {shown} из {found}",
+}
 
 function stars(rating: number) {
   return "★★★★★".slice(0, Math.round(rating)).padEnd(5, "☆")
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -201,12 +245,26 @@ export function Commerce007({
   products = DEFAULT_PRODUCTS,
   found = 128,
   more = "Показать ещё",
+  labels = LABELS,
+  priceText = "{value} ₽",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Commerce007Props) {
+  const text = { ...LABELS, ...labels }
+  const money = (value: number) =>
+    priceText.replace("{value}", value.toLocaleString(locale))
+
   const palette = {
     ...(accent ? { "--vibeui-commerce-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -230,9 +288,11 @@ export function Commerce007({
 
           <div data-part="bar">
             <h2>{title}</h2>
-            <span data-part="found">{found} товаров</span>
+            <span data-part="found">
+              {text.found.replace("{count}", String(found))}
+            </span>
             <span data-part="sort">
-              <label htmlFor="commerce-007-sort">Сортировка</label>
+              <label htmlFor="commerce-007-sort">{text.sort}</label>
               <select id="commerce-007-sort" defaultValue={sorts[0]}>
                 {sorts.map((sort) => (
                   <option key={sort}>{sort}</option>
@@ -242,11 +302,14 @@ export function Commerce007({
           </div>
 
           {chips.length > 0 ? (
-            <ul data-part="chips" aria-label="Выбранные фильтры">
+            <ul data-part="chips" aria-label={text.filters}>
               {chips.map((chip) => (
                 <li key={chip} data-part="chip">
                   {chip}
-                  <button type="button" aria-label={`Снять фильтр «${chip}»`}>
+                  <button
+                    type="button"
+                    aria-label={text.removeFilter.replace("{chip}", chip)}
+                  >
                     ✕
                   </button>
                 </li>
@@ -278,13 +341,14 @@ export function Commerce007({
                     <span data-part="stars" aria-hidden="true">
                       {stars(product.rating)}
                     </span>
-                    {product.rating} · {product.votes} оценок
+                    {product.rating} ·{" "}
+                    {text.votes.replace("{count}", String(product.votes))}
                   </p>
                   <p data-part="prices">
                     <span data-part="now">{money(product.price)}</span>
                     {product.old ? (
                       <s data-part="was">
-                        <span data-part="vh">Старая цена </span>
+                        <span data-part="vh">{text.oldPrice} </span>
                         {money(product.old)}
                       </s>
                     ) : null}
@@ -299,7 +363,9 @@ export function Commerce007({
               {more}
             </button>
             <p data-part="shown">
-              Показано {products.length} из {found}
+              {text.shown
+                .replace("{shown}", String(products.length))
+                .replace("{found}", String(found))}
             </p>
           </div>
         </div>

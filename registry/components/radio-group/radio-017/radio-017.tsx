@@ -12,8 +12,12 @@ export type Radio017Props = Omit<
   otherLabel?: string
   placeholder?: string
   footnote?: string
+  /** Accessible-имя поля: {label} подставляет подпись пункта «другое». */
+  otherFieldLabel?: string
   name?: string
   defaultValue?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,16 +25,18 @@ export type Radio017Props = Omit<
 // закрывают почти все случаи, а строка «другое» с полем — редкий остаток.
 // Поле — textarea, а не однострочный input: причину часто хочется пояснить
 // парой предложений. Строка стоит на месте всегда, но включается по выбору.
+//
+// Тема берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="radio-017"]){
---vibeui-radio-017-bg:oklch(1 0 0);
---vibeui-radio-017-fg:oklch(0.22 0.014 265);
---vibeui-radio-017-muted:oklch(0.56 0.014 265);
---vibeui-radio-017-border:oklch(0.9 0.006 265);
---vibeui-radio-017-ring:oklch(0.74 0.012 265);
---vibeui-radio-017-field:oklch(0.985 0.002 265);
---vibeui-radio-017-accent:oklch(0.55 0.18 25);
---vibeui-radio-017-tint:oklch(0.55 0.18 25 / 6%);
+--vibeui-radio-017-bg:transparent;
+--vibeui-radio-017-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-017-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-radio-017-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-radio-017-ring:light-dark(oklch(0.74 0.012 265),oklch(0.5 0.014 265));
+--vibeui-radio-017-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-radio-017-accent:light-dark(oklch(0.55 0.18 25),oklch(0.75 0.15 25));
+--vibeui-radio-017-tint:light-dark(oklch(0.55 0.18 25 / 6%),oklch(0.75 0.15 25 / 15%));
 --vibeui-radio-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="radio-017"]{
@@ -59,11 +65,13 @@ border-color:var(--vibeui-radio-017-accent);background:var(--vibeui-radio-017-ti
 appearance:none;-webkit-appearance:none;flex:none;margin:0;cursor:pointer;
 width:1.0625rem;height:1.0625rem;border-radius:9999px;
 border:1.5px solid var(--vibeui-radio-017-ring);
-background:var(--vibeui-radio-017-bg);
+background:transparent;
 }
+/* Точка — градиент, а не внутренняя тень: тени пришлось бы закрашивать
+   зазор цветом подложки, а подложки у компонента по умолчанию нет. */
 [data-vibeui-block="radio-017"] input[type="radio"]:checked{
 border-color:var(--vibeui-radio-017-accent);
-box-shadow:inset 0 0 0 0.1875rem var(--vibeui-radio-017-bg),inset 0 0 0 1rem var(--vibeui-radio-017-accent);
+background:radial-gradient(circle at 50% 50%,var(--vibeui-radio-017-accent) 0 0.21875rem,transparent 0.21875rem);
 }
 [data-vibeui-block="radio-017"] input[type="radio"]:focus-visible{outline:2px solid var(--vibeui-radio-017-accent);outline-offset:2px}
 /* Поле занимает место всегда: исчезающий textarea дёргает высоту формы и
@@ -105,14 +113,38 @@ const LIMIT = 240
  * включённым только после выбора последнего пункта. Один файл, ноль
  * зависимостей, собственная палитра.
  */
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 export function Radio017({
   legend = "Почему вы отменяете подписку?",
   reasons = DEFAULT_REASONS,
   otherLabel = "Другая причина",
   placeholder = "Опишите, что пошло не так",
   footnote = "Ответ поможет нам стать лучше — это не обязательное поле.",
+  otherFieldLabel = "{label}: причина своими словами",
   name = "vibeui-radio-017",
   defaultValue = DEFAULT_REASONS[0],
+  background = "",
   accent,
   className,
   style,
@@ -125,6 +157,12 @@ export function Radio017({
 
   const palette = {
     ...(accent ? { "--vibeui-radio-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-radio-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -173,7 +211,7 @@ export function Radio017({
                 maxLength={LIMIT}
                 disabled={!isOther}
                 placeholder={placeholder}
-                aria-label={`${otherLabel}: причина своими словами`}
+                aria-label={otherFieldLabel.replace("{label}", otherLabel)}
                 onChange={(event) => setOther(event.target.value)}
               />
               {isOther ? (

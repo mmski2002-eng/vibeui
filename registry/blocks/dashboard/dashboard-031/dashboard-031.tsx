@@ -22,6 +22,14 @@ export type Dashboard031Props = {
   goals?: Dashboard031Goal[]
   timeGone?: number
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Шаблон опорной строки: {gone} и {average}. */
+  timelineText?: string
+  /** Слова состояния: ontrack, risk, behind. */
+  stateText?: Record<string, string>
+  /** Шаблон числа результата: {now} и {target}. */
+  resultText?: string
   className?: string
   style?: CSSProperties
 }
@@ -36,15 +44,17 @@ export type Dashboard031Props = {
 // «зелёный–жёлтый–красный» на печати и при дальтонизме сливается.
 const STYLES = `
 :where([data-vibeui-block="dashboard-031"]){
---vibeui-dashboard-031-bg:oklch(1 0 0);
---vibeui-dashboard-031-panel:oklch(0.985 0.003 265);
---vibeui-dashboard-031-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-031-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-031-border:oklch(0.91 0.006 265);
---vibeui-dashboard-031-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-031-ok:oklch(0.55 0.14 152);
---vibeui-dashboard-031-risk:oklch(0.66 0.15 70);
---vibeui-dashboard-031-late:oklch(0.55 0.18 25);
+--vibeui-dashboard-031-bg:transparent;
+--vibeui-dashboard-031-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.012 265));
+/* Жёлоб полосы результата: подложка блока прозрачна, и рисовать жёлоб ею нечем. */
+--vibeui-dashboard-031-track:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-dashboard-031-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-031-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-031-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-dashboard-031-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-dashboard-031-ok:light-dark(oklch(0.55 0.14 152),oklch(0.76 0.14 152));
+--vibeui-dashboard-031-risk:light-dark(oklch(0.66 0.15 70),oklch(0.8 0.13 70));
+--vibeui-dashboard-031-late:light-dark(oklch(0.55 0.18 25),oklch(0.73 0.16 25));
 --vibeui-dashboard-031-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -125,7 +135,7 @@ color:var(--vibeui-dashboard-031-muted);
 }
 [data-vibeui-block="dashboard-031"] [data-part="track"]{
 display:block;height:0.3125rem;border-radius:9999px;overflow:hidden;
-background:var(--vibeui-dashboard-031-bg);
+background:var(--vibeui-dashboard-031-track);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-031-border);
 }
 [data-vibeui-block="dashboard-031"] [data-part="fill"]{
@@ -217,10 +227,32 @@ const DEFAULT_GOALS: Dashboard031Goal[] = [
   },
 ]
 
-const STATE_WORD = {
+const STATE_WORD: Record<string, string> = {
   ontrack: "по графику",
   risk: "под угрозой",
   behind: "отстаёт",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -233,11 +265,21 @@ export function Dashboard031({
   goals = DEFAULT_GOALS,
   timeGone = 62,
   accent,
+  background = "",
+  timelineText = "Квартал пройден на {gone} %, цели выполнены в среднем на {average} %",
+  stateText = STATE_WORD,
+  resultText = "{now} из {target}",
   className,
   style,
 }: Dashboard031Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-031-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-031-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -263,8 +305,9 @@ export function Dashboard031({
             <p data-part="quarter">{quarter}</p>
           </header>
           <p data-part="timeline">
-            Квартал пройден на {timeGone} %, цели выполнены в среднем на{" "}
-            {average} %
+            {timelineText
+              .replace("{gone}", String(timeGone))
+              .replace("{average}", String(average))}
           </p>
 
           <ul data-part="goals">
@@ -293,7 +336,8 @@ export function Dashboard031({
                   <h3>{goal.title}</h3>
                   <span data-part="state">
                     <span data-part="mark" aria-hidden="true" />
-                    {STATE_WORD[goal.state ?? "ontrack"]}
+                    {stateText[goal.state ?? "ontrack"] ??
+                      STATE_WORD[goal.state ?? "ontrack"]}
                   </span>
                 </div>
                 <p data-part="owner">
@@ -305,7 +349,9 @@ export function Dashboard031({
                       <p data-part="krline">
                         <span>{result.label}</span>
                         <span data-part="krnums">
-                          {result.now} из {result.target}
+                          {resultText
+                            .replace("{now}", result.now)
+                            .replace("{target}", result.target)}
                         </span>
                       </p>
                       <span data-part="track">

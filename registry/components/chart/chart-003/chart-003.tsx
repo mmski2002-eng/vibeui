@@ -13,19 +13,27 @@ export type Chart003Props = Omit<
   title?: string
   slices?: Chart003Slice[]
   unit?: string
+  /** Подпись итога под легендой: {total} и {unit}. */
+  totalLabel?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: кольцевая диаграмма на conic-gradient. SVG с дугами и
 // расчётом длины окружности здесь не нужен: доли складываются в один градиент,
 // а дырка вырезается маской. Легенда обязательна — по кольцу без подписей
 // нельзя назвать ни одну долю, а угол глаз оценивает хуже длины.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подписи и рамка
+// темнеют вместе со страницей, оттенки секторов читаются в обеих темах.
 const STYLES = `
 :where([data-vibeui-block="chart-003"]){
---vibeui-chart-003-bg:oklch(1 0 0);
---vibeui-chart-003-fg:oklch(0.22 0.014 265);
---vibeui-chart-003-muted:oklch(0.56 0.014 265);
---vibeui-chart-003-border:oklch(0.91 0.006 265);
+--vibeui-chart-003-bg:transparent;
+--vibeui-chart-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-003-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-chart-003-accent:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
 --vibeui-chart-003-size:7.5rem;
 --vibeui-chart-003-thickness:1.375rem;
 --vibeui-chart-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -49,7 +57,10 @@ mask:radial-gradient(farthest-side,transparent calc(100% - var(--vibeui-chart-00
 position:absolute;inset:0;display:flex;flex-direction:column;
 align-items:center;justify-content:center;
 }
-[data-vibeui-block="chart-003"] [data-part="total"]{font-size:1.125rem;font-weight:680;font-variant-numeric:tabular-nums;line-height:1.1}
+[data-vibeui-block="chart-003"] [data-part="total"]{
+font-size:1.125rem;font-weight:680;font-variant-numeric:tabular-nums;line-height:1.1;
+color:var(--vibeui-chart-003-accent);
+}
 [data-vibeui-block="chart-003"] [data-part="unit"]{font-size:0.6875rem;color:var(--vibeui-chart-003-muted)}
 [data-vibeui-block="chart-003"] [data-part="body"]{display:flex;flex-direction:column;gap:0.5rem;min-width:0;flex:1}
 [data-vibeui-block="chart-003"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
@@ -76,6 +87,37 @@ const DEFAULT_SLICES: Chart003Slice[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+function fillTemplate(
+  template: string,
+  values: Record<string, string | number>,
+) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
+/**
  * Кольцевая диаграмма на conic-gradient с обязательной легендой.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -83,7 +125,9 @@ export function Chart003({
   title = "Источники трафика",
   slices = DEFAULT_SLICES,
   unit = "тысяч визитов",
+  totalLabel = "Всего: {total} {unit}",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -108,6 +152,12 @@ export function Chart003({
   const palette = {
     "--vibeui-chart-003-stops": stops,
     ...(accent ? { "--vibeui-chart-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-chart-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -145,7 +195,7 @@ export function Chart003({
             ))}
           </ul>
           <span data-part="unit">
-            Всего: {total} {unit}
+            {fillTemplate(totalLabel, { total, unit })}
           </span>
         </div>
       </figure>

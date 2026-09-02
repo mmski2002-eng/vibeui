@@ -10,6 +10,11 @@ export type Input005Props = Omit<
   label?: string
   prefix?: string
   hint?: string
+  placeholder?: string
+  /** Начальные цифры номера без кода страны. */
+  defaultValue?: string
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   onChange?: (digits: string) => void
   accent?: string
 }
@@ -20,20 +25,25 @@ export type Input005Props = Omit<
 // не застревает на скобке.
 const STYLES = `
 :where([data-vibeui-block="input-005"]){
---vibeui-input-005-bg:oklch(1 0 0);
---vibeui-input-005-fg:oklch(0.22 0.014 265);
---vibeui-input-005-muted:oklch(0.56 0.014 265);
---vibeui-input-005-border:oklch(0.9 0.006 265);
---vibeui-input-005-field:oklch(0.985 0.002 265);
---vibeui-input-005-accent:oklch(0.55 0.17 265);
+--vibeui-input-005-bg:transparent;
+--vibeui-input-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-input-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.014 265));
+--vibeui-input-005-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-input-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-input-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-005"]{
 display:flex;flex-direction:column;gap:0.375rem;
-width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:20rem;box-sizing:border-box;
+font-family:var(--vibeui-input-005-font);color:var(--vibeui-input-005-fg);
+}
+/* Подложка появляется только вместе с пропом background: без него поле
+   лежит прямо на фоне страницы. */
+[data-vibeui-block="input-005"][data-surface="on"]{
+padding:0.875rem;
 background:var(--vibeui-input-005-bg);
 border:1px solid var(--vibeui-input-005-border);border-radius:0.875rem;
-font-family:var(--vibeui-input-005-font);color:var(--vibeui-input-005-fg);
 }
 [data-vibeui-block="input-005"] label{font-size:0.8125rem;font-weight:600}
 [data-vibeui-block="input-005"] [data-part="row"]{
@@ -75,6 +85,28 @@ function format(digits: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Телефон с маской от цифр: вставка в любом формате не ломает поле.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -82,6 +114,9 @@ export function Input005({
   label = "Телефон",
   prefix = "+7",
   hint = "Пришлём код подтверждения в СМС",
+  placeholder = "(999) 000-00-00",
+  defaultValue = "9990000000",
+  background = "",
   onChange,
   accent,
   className,
@@ -89,10 +124,16 @@ export function Input005({
   ...props
 }: Input005Props) {
   const id = useId()
-  const [digits, setDigits] = useState("9990000000")
+  const [digits, setDigits] = useState(defaultValue.replace(/\D/g, ""))
 
   const palette = {
     ...(accent ? { "--vibeui-input-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -104,6 +145,7 @@ export function Input005({
       <div
         {...props}
         data-vibeui-block="input-005"
+        data-surface={background ? "on" : undefined}
         className={className}
         style={palette}
       >
@@ -115,7 +157,7 @@ export function Input005({
             type="tel"
             inputMode="tel"
             autoComplete="tel-national"
-            placeholder="(999) 000-00-00"
+            placeholder={placeholder}
             value={format(digits)}
             aria-describedby={hint ? `${id}-hint` : undefined}
             onChange={(event) => {

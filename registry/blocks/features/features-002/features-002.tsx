@@ -11,6 +11,8 @@ export type Features002Props = {
   title?: string
   lede?: string
   items?: Features002Item[]
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -22,13 +24,18 @@ export type Features002Props = {
 // шрифта. Ячейки разделены не рамками, а фоном подложки: сетка читается
 // линиями зазора, поэтому на узкой ширине она сворачивается в столбец без
 // «висящих» рамок.
+//
+// Тема берётся из color-scheme окружения через light-dark(): секция темнеет
+// вместе с контекстом и не выкладывает под себя плашку. Тёмная ветка — не
+// инверсия светлой: ячейка там светлее фона, а линии зазора светлее ячейки.
 const STYLES = `
 :where([data-vibeui-block="features-002"]){
---vibeui-features-002-bg:oklch(0.96 0.004 255);
---vibeui-features-002-cell:oklch(1 0 0);
---vibeui-features-002-fg:oklch(0.2 0.012 255);
---vibeui-features-002-muted:oklch(0.51 0.012 255);
---vibeui-features-002-accent:oklch(0.53 0.16 258);
+--vibeui-features-002-bg:transparent;
+--vibeui-features-002-cell:light-dark(oklch(1 0 0),oklch(0.25 0.011 255));
+--vibeui-features-002-fg:light-dark(oklch(0.2 0.012 255),oklch(0.95 0.005 255));
+--vibeui-features-002-muted:light-dark(oklch(0.51 0.012 255),oklch(0.72 0.012 255));
+--vibeui-features-002-line:light-dark(oklch(0.88 0.008 255),oklch(0.36 0.012 255));
+--vibeui-features-002-accent:light-dark(oklch(0.53 0.16 258),oklch(0.76 0.14 258));
 --vibeui-features-002-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -52,8 +59,8 @@ color:var(--vibeui-features-002-muted);text-wrap:pretty;
 }
 [data-vibeui-block="features-002"] [data-part="grid"]{
 list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:1px;
-background:color-mix(in oklab,var(--vibeui-features-002-fg) 12%,transparent);
-border:1px solid color-mix(in oklab,var(--vibeui-features-002-fg) 12%,transparent);border-radius:1rem;overflow:hidden;
+background:var(--vibeui-features-002-line);
+border:1px solid var(--vibeui-features-002-line);border-radius:1rem;overflow:hidden;
 }
 [data-vibeui-block="features-002"] [data-part="cell"]{background:var(--vibeui-features-002-cell);padding:1.5rem}
 [data-vibeui-block="features-002"] [data-part="icon"]{
@@ -125,18 +132,47 @@ const DEFAULT_ITEMS: Features002Item[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Сетка из шести возможностей с иконками: три колонки, ячейки на зазорах-линиях. */
 export function Features002({
   eyebrow = "Возможности",
   title = "Шесть причин не верстать секции руками",
   lede = "Каждая возможность работает сама по себе — включать их по очереди не нужно.",
   items = DEFAULT_ITEMS,
+  background = "",
   accent,
   className,
   style,
 }: Features002Props) {
   const palette = {
     ...(accent ? { "--vibeui-features-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-features-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

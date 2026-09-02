@@ -9,13 +9,17 @@ export type Button004Props = ComponentPropsWithoutRef<"button"> & {
 // Идея компонента: минимальный вес в покое. Ни рамки, ни фона — только текст
 // и маленькая точка-маркер. Подложка проявляется на наведении и фокусе,
 // поэтому кнопка не конкурирует с главным действием на экране.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте подпись светлеет, а подложка наведения из тёмной становится
+// светлой — тёмный налёт на тёмном фоне не читался бы.
 const STYLES = `
 :where([data-vibeui-block="button-004"]){
---vibeui-button-004-fg:oklch(0.45 0.012 265);
---vibeui-button-004-fg-strong:oklch(0.27 0.016 265);
---vibeui-button-004-wash:oklch(0.55 0.02 265 / 10%);
---vibeui-button-004-marker:oklch(0.63 0.017 265);
---vibeui-button-004-ring:oklch(0.55 0.02 265 / 60%);
+--vibeui-button-004-fg:light-dark(oklch(0.45 0.012 265),oklch(0.72 0.014 265));
+--vibeui-button-004-fg-strong:light-dark(oklch(0.27 0.016 265),oklch(0.95 0.006 265));
+--vibeui-button-004-wash:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.85 0.02 265 / 14%));
+--vibeui-button-004-marker:light-dark(oklch(0.63 0.017 265),oklch(0.68 0.02 265));
+--vibeui-button-004-ring:light-dark(oklch(0.55 0.02 265 / 60%),oklch(0.8 0.02 265 / 60%));
 --vibeui-button-004-radius:0.5rem;
 --vibeui-button-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

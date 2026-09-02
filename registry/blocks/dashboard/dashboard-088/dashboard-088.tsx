@@ -1,5 +1,11 @@
 import type { CSSProperties } from "react"
 
+export type Dashboard088DangerAction = {
+  title: string
+  note: string
+  action: string
+}
+
 export type Dashboard088Props = {
   title?: string
   workspaceName?: string
@@ -10,10 +16,22 @@ export type Dashboard088Props = {
   locale?: string
   locales?: string[]
   joinMode?: string
+  /** Варианты режима присоединения в выпадающем списке. */
+  joinModes?: string[]
   retention?: string
+  /** Варианты срока хранения истории. */
+  retentions?: string[]
   saveLabel?: string
   dangerTitle?: string
+  /** Строки опасной зоны: заголовок, последствие и подпись кнопки. */
+  dangerActions?: Dashboard088DangerAction[]
+  /** Приставка перед адресом пространства. */
+  slugPrefix?: string
+  /** Подписи формы: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -28,16 +46,22 @@ export type Dashboard088Props = {
 // должна быть слышна и в скринридере. Опасная зона отделена рамкой и отступом,
 // а не только красным цветом, и её действия названы точно — «удалить
 // пространство и все данные», потому что «удалить» звучит обратимо.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-088"]){
---vibeui-dashboard-088-bg:oklch(0.985 0.003 245);
---vibeui-dashboard-088-card:oklch(1 0 0);
---vibeui-dashboard-088-fg:oklch(0.21 0.014 245);
---vibeui-dashboard-088-muted:oklch(0.54 0.014 245);
---vibeui-dashboard-088-border:oklch(0.91 0.006 245);
---vibeui-dashboard-088-accent:oklch(0.5 0.15 245);
---vibeui-dashboard-088-soft:oklch(0.965 0.02 245);
---vibeui-dashboard-088-danger:oklch(0.55 0.19 25);
+--vibeui-dashboard-088-bg:transparent;
+/* Группа полей и само поле ввода: подложка блока остаётся прозрачной. */
+--vibeui-dashboard-088-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 245));
+--vibeui-dashboard-088-inset:light-dark(oklch(0.985 0.003 245),oklch(0.22 0.012 245));
+--vibeui-dashboard-088-fg:light-dark(oklch(0.21 0.014 245),oklch(0.94 0.005 245));
+--vibeui-dashboard-088-muted:light-dark(oklch(0.54 0.014 245),oklch(0.72 0.012 245));
+--vibeui-dashboard-088-border:light-dark(oklch(0.91 0.006 245),oklch(0.36 0.012 245));
+--vibeui-dashboard-088-accent:light-dark(oklch(0.5 0.15 245),oklch(0.74 0.14 245));
+--vibeui-dashboard-088-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 245));
+--vibeui-dashboard-088-soft:light-dark(oklch(0.965 0.02 245),oklch(0.3 0.03 245));
+--vibeui-dashboard-088-danger:light-dark(oklch(0.55 0.19 25),oklch(0.72 0.16 25));
 --vibeui-dashboard-088-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 --vibeui-dashboard-088-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -66,7 +90,7 @@ color:var(--vibeui-dashboard-088-muted);
 [data-vibeui-block="dashboard-088"] [data-part="field"] > span{font-size:0.75rem;font-weight:700}
 [data-vibeui-block="dashboard-088"] :is(input[type="text"],select){
 font:inherit;font-size:0.8125rem;padding:0.4375rem 0.5625rem;border-radius:0.5rem;
-background:var(--vibeui-dashboard-088-bg);color:inherit;
+background:var(--vibeui-dashboard-088-inset);color:inherit;
 border:1px solid var(--vibeui-dashboard-088-border);width:100%;
 }
 [data-vibeui-block="dashboard-088"] input:disabled{color:var(--vibeui-dashboard-088-muted);cursor:not-allowed}
@@ -87,13 +111,13 @@ background:var(--vibeui-dashboard-088-soft);color:var(--vibeui-dashboard-088-mut
 [data-vibeui-block="dashboard-088"] [data-part="save"]{
 appearance:none;border:0;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:700;
 padding:0.5rem 1rem;border-radius:0.625rem;align-self:flex-start;
-background:var(--vibeui-dashboard-088-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-088-accent);color:var(--vibeui-dashboard-088-on-accent);
 }
 /* Опасная зона отделена рамкой и отступом, а не только цветом. */
 [data-vibeui-block="dashboard-088"] [data-part="danger"]{
 margin-top:0.375rem;padding:0.875rem;border-radius:0.875rem;
 background:var(--vibeui-dashboard-088-card);
-border:1px solid color-mix(in oklab,var(--vibeui-dashboard-088-danger) 45%,white);
+border:1px solid color-mix(in oklab,var(--vibeui-dashboard-088-danger) 45%,light-dark(white,black));
 border-left-width:0.25rem;
 }
 [data-vibeui-block="dashboard-088"] [data-part="danger"] legend{color:var(--vibeui-dashboard-088-danger)}
@@ -109,7 +133,7 @@ padding:0.5rem 0;border-top:1px solid var(--vibeui-dashboard-088-border);
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:700;
 padding:0.375rem 0.8125rem;border-radius:0.5rem;background:transparent;
 color:var(--vibeui-dashboard-088-danger);
-border:1px solid color-mix(in oklab,var(--vibeui-dashboard-088-danger) 40%,white);
+border:1px solid color-mix(in oklab,var(--vibeui-dashboard-088-danger) 40%,light-dark(white,black));
 white-space:nowrap;
 }
 [data-vibeui-block="dashboard-088"] :is(a,button,input,select):focus-visible{
@@ -119,6 +143,78 @@ outline:2px solid var(--vibeui-dashboard-088-accent);outline-offset:2px;
 [data-vibeui-block="dashboard-088"] [data-part="fields"]{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 `
+
+const LABELS: Record<string, string> = {
+  basics: "Основное",
+  name: "Название пространства",
+  nameHint: "Видно всем участникам и подставляется в письма клиентам.",
+  address: "Адрес пространства",
+  addressHint:
+    "Старые ссылки перестанут работать сразу после сохранения — переадресации не будет.",
+  domain: "Домен для писем",
+  domainHint: "Домен подтверждён 3 марта. Смена потребует новой записи DNS.",
+  locale: "Язык интерфейса по умолчанию",
+  localeHint: "Новые участники получат этот язык; личный выбор сильнее.",
+  access: "Данные и доступ",
+  region: "Регион хранения данных",
+  locked: "нельзя изменить",
+  regionHint:
+    "Регион задаётся при создании пространства. Для переезда нужно создать новое и перенести данные выгрузкой. Доступные регионы: {regions}.",
+  join: "Кто может присоединиться",
+  joinHint:
+    "Правило действует на новых участников, уже вошедшие сохранят доступ.",
+  retention: "Хранить историю изменений",
+  retentionHint:
+    "Сокращение срока удаляет старые версии записей сразу и необратимо.",
+}
+
+const JOIN_MODES = [
+  "Только по приглашению",
+  "Любой с почтой на домене",
+  "По ссылке-приглашению",
+]
+
+const RETENTIONS = ["6 месяцев", "12 месяцев", "24 месяца", "Бессрочно"]
+
+const DANGER_ACTIONS: Dashboard088DangerAction[] = [
+  {
+    title: "Передать владение пространством",
+    note: "Вы останетесь участником с ролью администратора, но вернуть владение сможет только новый владелец.",
+    action: "Передать владение",
+  },
+  {
+    title: "Отключить всех участников",
+    note: "Сессии завершатся немедленно, данные останутся. Пригодится при подозрении на утечку доступа.",
+    action: "Завершить все сессии",
+  },
+  {
+    title: "Удалить пространство и все данные",
+    note: "Заявки, клиенты, файлы и история будут стёрты через 7 дней. Всё это время удаление можно отменить, потом — нет.",
+    action: "Удалить пространство",
+  },
+]
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Экран настроек рабочего пространства: поля в fieldset с подписью последствия
@@ -135,17 +231,31 @@ export function Dashboard088({
   locale = "Русский",
   locales = ["Русский", "English", "Қазақша"],
   joinMode = "Только по приглашению",
+  joinModes = JOIN_MODES,
   retention = "24 месяца",
+  retentions = RETENTIONS,
   saveLabel = "Сохранить настройки",
   dangerTitle = "Опасная зона",
+  dangerActions = DANGER_ACTIONS,
+  slugPrefix = "vibeui.app/",
+  labels,
   accent,
+  background = "",
   className,
   style,
 }: Dashboard088Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-088-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-088-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const text = { ...LABELS, ...labels }
 
   return (
     <>
@@ -162,95 +272,77 @@ export function Dashboard088({
           <h2>{title}</h2>
 
           <fieldset>
-            <legend>Основное</legend>
+            <legend>{text.basics}</legend>
             <div data-part="fields">
               <label data-part="field">
-                <span>Название пространства</span>
+                <span>{text.name}</span>
                 <input type="text" defaultValue={workspaceName} />
-                <p data-part="hint">
-                  Видно всем участникам и подставляется в письма клиентам.
-                </p>
+                <p data-part="hint">{text.nameHint}</p>
               </label>
 
               <div data-part="field">
-                <span>Адрес пространства</span>
+                <span>{text.address}</span>
                 <span data-part="slug">
-                  <span data-part="prefix">vibeui.app/</span>
+                  <span data-part="prefix">{slugPrefix}</span>
                   <input
                     type="text"
                     defaultValue={slug}
-                    aria-label="Адрес пространства"
+                    aria-label={text.address}
                   />
                 </span>
-                <p data-part="hint">
-                  Старые ссылки перестанут работать сразу после сохранения —
-                  переадресации не будет.
-                </p>
+                <p data-part="hint">{text.addressHint}</p>
               </div>
 
               <label data-part="field">
-                <span>Домен для писем</span>
+                <span>{text.domain}</span>
                 <input type="text" defaultValue={domain} />
-                <p data-part="hint">
-                  Домен подтверждён 3 марта. Смена потребует новой записи DNS.
-                </p>
+                <p data-part="hint">{text.domainHint}</p>
               </label>
 
               <label data-part="field">
-                <span>Язык интерфейса по умолчанию</span>
+                <span>{text.locale}</span>
                 <select defaultValue={locale}>
                   {locales.map((entry) => (
                     <option key={entry}>{entry}</option>
                   ))}
                 </select>
-                <p data-part="hint">
-                  Новые участники получат этот язык; личный выбор сильнее.
-                </p>
+                <p data-part="hint">{text.localeHint}</p>
               </label>
             </div>
           </fieldset>
 
           <fieldset>
-            <legend>Данные и доступ</legend>
+            <legend>{text.access}</legend>
             <div data-part="fields">
               <label data-part="field">
                 <span>
-                  Регион хранения данных
-                  <span data-part="locked">нельзя изменить</span>
+                  {text.region}
+                  <span data-part="locked">{text.locked}</span>
                 </span>
                 <input type="text" defaultValue={region} disabled />
                 <p data-part="hint">
-                  Регион задаётся при создании пространства. Для переезда нужно
-                  создать новое и перенести данные выгрузкой. Доступные регионы:{" "}
-                  {regions.join(", ")}.
+                  {text.regionHint.replace("{regions}", regions.join(", "))}
                 </p>
               </label>
 
               <label data-part="field">
-                <span>Кто может присоединиться</span>
+                <span>{text.join}</span>
                 <select defaultValue={joinMode}>
-                  <option>Только по приглашению</option>
-                  <option>Любой с почтой на домене</option>
-                  <option>По ссылке-приглашению</option>
+                  {joinModes.map((entry) => (
+                    <option key={entry}>{entry}</option>
+                  ))}
                 </select>
-                <p data-part="hint">
-                  Правило действует на новых участников, уже вошедшие сохранят
-                  доступ.
-                </p>
+                <p data-part="hint">{text.joinHint}</p>
               </label>
 
               <label data-part="field">
-                <span>Хранить историю изменений</span>
+                <span>{text.retention}</span>
                 <select defaultValue={retention}>
-                  <option>6 месяцев</option>
-                  <option>12 месяцев</option>
-                  <option>24 месяца</option>
-                  <option>Бессрочно</option>
+                  {retentions.map((entry) => (
+                    <option key={entry}>{entry}</option>
+                  ))}
                 </select>
-                <p data-part="hint">
-                  Сокращение срока удаляет старые версии записей сразу и
-                  необратимо.
-                </p>
+                <p data-part="hint">{text.retentionHint}</p>
               </label>
             </div>
           </fieldset>
@@ -262,44 +354,17 @@ export function Dashboard088({
           <fieldset data-part="danger">
             <legend>{dangerTitle}</legend>
 
-            <div data-part="drow">
-              <div data-part="dtext">
-                <b>Передать владение пространством</b>
-                <span>
-                  Вы останетесь участником с ролью администратора, но вернуть
-                  владение сможет только новый владелец.
-                </span>
+            {dangerActions.map((entry) => (
+              <div key={entry.title} data-part="drow">
+                <div data-part="dtext">
+                  <b>{entry.title}</b>
+                  <span>{entry.note}</span>
+                </div>
+                <button type="button" data-part="dbtn">
+                  {entry.action}
+                </button>
               </div>
-              <button type="button" data-part="dbtn">
-                Передать владение
-              </button>
-            </div>
-
-            <div data-part="drow">
-              <div data-part="dtext">
-                <b>Отключить всех участников</b>
-                <span>
-                  Сессии завершатся немедленно, данные останутся. Пригодится при
-                  подозрении на утечку доступа.
-                </span>
-              </div>
-              <button type="button" data-part="dbtn">
-                Завершить все сессии
-              </button>
-            </div>
-
-            <div data-part="drow">
-              <div data-part="dtext">
-                <b>Удалить пространство и все данные</b>
-                <span>
-                  Заявки, клиенты, файлы и история будут стёрты через 7 дней.
-                  Всё это время удаление можно отменить, потом — нет.
-                </span>
-              </div>
-              <button type="button" data-part="dbtn">
-                Удалить пространство
-              </button>
-            </div>
+            ))}
           </fieldset>
         </div>
       </section>

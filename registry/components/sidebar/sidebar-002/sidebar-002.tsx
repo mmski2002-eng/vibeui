@@ -13,6 +13,10 @@ export type Sidebar002Props = Omit<
   items?: Sidebar002Item[]
   activeLabel?: string
   title?: string
+  /** Подпись списка разделов для скринридера. */
+  navLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,13 +27,13 @@ export type Sidebar002Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="sidebar-002"]){
 --vibeui-sidebar-002-width:12.5rem;
---vibeui-sidebar-002-bg:oklch(0.985 0.002 265);
---vibeui-sidebar-002-fg:oklch(0.24 0.014 265);
---vibeui-sidebar-002-muted:oklch(0.56 0.014 265);
---vibeui-sidebar-002-border:oklch(0.91 0.006 265);
---vibeui-sidebar-002-hover:oklch(0.55 0.02 265 / 8%);
---vibeui-sidebar-002-active:oklch(0.55 0.02 265 / 13%);
---vibeui-sidebar-002-accent:oklch(0.55 0.2 262);
+--vibeui-sidebar-002-bg:transparent;
+--vibeui-sidebar-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-sidebar-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-sidebar-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-sidebar-002-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 11%));
+--vibeui-sidebar-002-active:light-dark(oklch(0.55 0.02 265 / 13%),oklch(0.85 0.02 265 / 18%));
+--vibeui-sidebar-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.17 262));
 --vibeui-sidebar-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="sidebar-002"]{
@@ -93,6 +97,28 @@ const DEFAULT_ITEMS: Sidebar002Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сворачиваемая боковая навигация на чекбоксе: ширина в одной переменной.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -100,6 +126,8 @@ export function Sidebar002({
   items = DEFAULT_ITEMS,
   activeLabel = "Компоненты",
   title = "Свернуть",
+  navLabel = "Разделы",
+  background = "",
   accent,
   className,
   style,
@@ -107,6 +135,12 @@ export function Sidebar002({
 }: Sidebar002Props) {
   const palette = {
     ...(accent ? { "--vibeui-sidebar-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-sidebar-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -128,7 +162,7 @@ export function Sidebar002({
             <span data-part="text">{title}</span>
           </span>
         </label>
-        <nav aria-label="Разделы">
+        <nav aria-label={navLabel}>
           {items.map((item) => (
             <a
               key={item.label}

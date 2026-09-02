@@ -15,6 +15,8 @@ export type Pricing018Props = {
   price?: string
   period?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -27,13 +29,13 @@ export type Pricing018Props = {
 // чтобы длинный перечень не уводил от действия.
 const STYLES = `
 :where([data-vibeui-block="pricing-018"]){
---vibeui-pricing-018-bg:oklch(0.985 0.004 210);
---vibeui-pricing-018-fg:oklch(0.19 0.014 210);
---vibeui-pricing-018-muted:oklch(0.51 0.014 210);
---vibeui-pricing-018-card:oklch(1 0 0);
---vibeui-pricing-018-line:oklch(0.89 0.008 210);
---vibeui-pricing-018-accent:oklch(0.47 0.13 205);
---vibeui-pricing-018-accent-fg:oklch(0.99 0 0);
+--vibeui-pricing-018-bg:transparent;
+--vibeui-pricing-018-fg:light-dark(oklch(0.19 0.014 210),oklch(0.94 0.006 210));
+--vibeui-pricing-018-muted:light-dark(oklch(0.51 0.014 210),oklch(0.7 0.012 210));
+--vibeui-pricing-018-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 210));
+--vibeui-pricing-018-line:light-dark(oklch(0.89 0.008 210),oklch(0.37 0.012 210));
+--vibeui-pricing-018-accent:light-dark(oklch(0.47 0.13 205),oklch(0.76 0.12 205));
+--vibeui-pricing-018-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 205));
 --vibeui-pricing-018-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -132,6 +134,28 @@ const DEFAULT_SECTIONS: Pricing018Section[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Блок «что входит» списком: перечень разложен по разделам, цена в липкой колонке. */
 export function Pricing018({
   eyebrow = "Состав тарифа",
@@ -142,11 +166,18 @@ export function Pricing018({
   price = "1 490 ₽",
   period = "в месяц",
   accent,
+  background = "",
   className,
   style,
 }: Pricing018Props) {
   const palette = {
     ...(accent ? { "--vibeui-pricing-018-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pricing-018-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

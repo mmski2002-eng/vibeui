@@ -15,6 +15,16 @@ export type Auth024Props = {
   goals?: Auth024Goal[]
   submit?: string
   limit?: number
+  /** Метка над заголовком: блок несёт русскую. */
+  hiText?: string
+  /** Счётчик выбранного; {count} и {limit} подставляются числами. */
+  countText?: string
+  /** Хвост счётчика, когда предел выбран. */
+  fullText?: string
+  /** Подпись кнопки «пропустить». */
+  skipText?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -32,15 +42,21 @@ export type Auth024Props = {
 // «Пропустить» стоит рядом с кнопкой, а не спрятано: онбординг, из которого
 // нельзя выйти, воспринимается как платёжная форма.
 //
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не носит собственной подложки.
+//
 // Демонстрация интерфейса: ответы никуда не уходят.
 const STYLES = `
 :where([data-vibeui-block="auth-024"]){
---vibeui-auth-024-bg:oklch(0.96 0.01 265);
---vibeui-auth-024-card:oklch(1 0 0);
---vibeui-auth-024-fg:oklch(0.22 0.014 265);
---vibeui-auth-024-muted:oklch(0.54 0.014 265);
---vibeui-auth-024-border:oklch(0.9 0.006 265);
---vibeui-auth-024-accent:oklch(0.53 0.18 275);
+--vibeui-auth-024-bg:transparent;
+--vibeui-auth-024-card:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
+--vibeui-auth-024-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-auth-024-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-auth-024-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-auth-024-accent:light-dark(oklch(0.53 0.18 275),oklch(0.76 0.14 275));
+--vibeui-auth-024-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-auth-024-tint:light-dark(oklch(0.53 0.18 275 / 12%),oklch(0.76 0.14 275 / 18%));
+--vibeui-auth-024-soft:light-dark(oklch(0.53 0.18 275 / 10%),oklch(0.76 0.14 275 / 16%));
 --vibeui-auth-024-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -60,7 +76,7 @@ font-family:var(--vibeui-auth-024-sans);
 }
 [data-vibeui-block="auth-024"] [data-part="hi"]{
 display:inline-block;margin-bottom:0.5rem;padding:0.1875rem 0.5rem;border-radius:9999px;
-background:oklch(0.53 0.18 275 / 12%);color:var(--vibeui-auth-024-accent);
+background:var(--vibeui-auth-024-tint);color:var(--vibeui-auth-024-accent);
 font-size:0.6875rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
 }
 [data-vibeui-block="auth-024"] h2{margin:0 0 0.375rem;font-size:1.375rem;font-weight:700;line-height:1.2;letter-spacing:-0.02em}
@@ -82,9 +98,9 @@ box-shadow:inset 0 0 0 1px var(--vibeui-auth-024-accent);
 [data-vibeui-block="auth-024"] [data-part="glyph"]{
 flex:none;display:inline-flex;align-items:center;justify-content:center;
 width:2.25rem;height:2.25rem;border-radius:0.625rem;
-background:oklch(0.53 0.18 275 / 10%);font-size:1rem;line-height:1;
+background:var(--vibeui-auth-024-soft);font-size:1rem;line-height:1;
 }
-[data-vibeui-block="auth-024"] [data-part="goal"]:has(input:checked) [data-part="glyph"]{background:var(--vibeui-auth-024-accent);color:oklch(1 0 0)}
+[data-vibeui-block="auth-024"] [data-part="goal"]:has(input:checked) [data-part="glyph"]{background:var(--vibeui-auth-024-accent);color:var(--vibeui-auth-024-on-accent)}
 [data-vibeui-block="auth-024"] [data-part="gtitle"]{display:block;font-size:0.875rem;font-weight:650}
 [data-vibeui-block="auth-024"] [data-part="gtext"]{display:block;margin-top:0.1875rem;font-size:0.75rem;line-height:1.45;color:var(--vibeui-auth-024-muted)}
 [data-vibeui-block="auth-024"] [data-part="tick"]{
@@ -93,14 +109,14 @@ width:1.25rem;height:1.25rem;border-radius:9999px;margin-left:auto;
 border:1px solid var(--vibeui-auth-024-border);font-size:0.6875rem;color:transparent;
 }
 [data-vibeui-block="auth-024"] [data-part="goal"]:has(input:checked) [data-part="tick"]{
-background:var(--vibeui-auth-024-accent);border-color:var(--vibeui-auth-024-accent);color:oklch(1 0 0);
+background:var(--vibeui-auth-024-accent);border-color:var(--vibeui-auth-024-accent);color:var(--vibeui-auth-024-on-accent);
 }
 [data-vibeui-block="auth-024"] [data-part="foot"]{display:flex;flex-direction:column;gap:0.75rem}
 [data-vibeui-block="auth-024"] [data-part="count"]{margin:0;font-size:0.8125rem;color:var(--vibeui-auth-024-muted)}
 [data-vibeui-block="auth-024"] [data-part="submit"]{
 width:100%;appearance:none;cursor:pointer;height:2.75rem;padding:0 1.25rem;
 border:0;border-radius:0.75rem;
-background:var(--vibeui-auth-024-accent);color:oklch(1 0 0);
+background:var(--vibeui-auth-024-accent);color:var(--vibeui-auth-024-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 transition:opacity .16s ease;
 }
@@ -148,6 +164,28 @@ const DEFAULT_GOALS: Auth024Goal[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Онбординг после регистрации: цели карточками, предел выбора
  * и честное «пропустить». Один файл, ноль зависимостей.
  */
@@ -157,6 +195,11 @@ export function Auth024({
   goals = DEFAULT_GOALS,
   submit = "Открыть каталог",
   limit = 3,
+  hiText = "Аккаунт создан",
+  countText = "Выбрано {count} из {limit}",
+  fullText = " — больше не нужно, порядок уже понятен",
+  skipText = "Пропустить",
+  background = "",
   accent,
   className,
   style,
@@ -167,6 +210,12 @@ export function Auth024({
 
   const palette = {
     ...(accent ? { "--vibeui-auth-024-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-024-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -182,7 +231,7 @@ export function Auth024({
         aria-label={title}
       >
         <div data-part="shell">
-          <span data-part="hi">Аккаунт создан</span>
+          <span data-part="hi">{hiText}</span>
           <h2>{title}</h2>
           <p data-part="lead">{lead}</p>
 
@@ -225,11 +274,13 @@ export function Auth024({
 
           <div data-part="foot">
             <p data-part="count" role="status">
-              Выбрано {chosen.length} из {limit}
-              {full ? " — больше не нужно, порядок уже понятен" : ""}
+              {countText
+                .replace("{count}", String(chosen.length))
+                .replace("{limit}", String(limit))}
+              {full ? fullText : ""}
             </p>
             <button type="button" data-part="skip">
-              Пропустить
+              {skipText}
             </button>
             <button
               type="button"

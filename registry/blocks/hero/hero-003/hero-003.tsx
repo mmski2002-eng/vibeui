@@ -22,6 +22,8 @@ export type Hero003Props = {
   accentNote?: string
   accent?: string
   accentForeground?: string
+  /** Пусто — подложки нет, секция ложится на фон страницы. */
+  background?: string
   className?: string
 }
 
@@ -41,14 +43,14 @@ export type Hero003Props = {
 // зависел от версии Tailwind в чужом проекте; специфичность (0,2,0) выше утилит.
 const STYLES = `
 :where([data-vibeui-block="hero-003"]){
---vibeui-hero-003-bg:oklch(0.968 0.004 70);
---vibeui-hero-003-card:oklch(0.995 0.002 70);
---vibeui-hero-003-card-alt:oklch(0.953 0.005 250);
---vibeui-hero-003-ink:oklch(0.21 0.012 55);
---vibeui-hero-003-muted:oklch(0.5 0.012 55);
---vibeui-hero-003-border:oklch(0.881 0.005 250);
---vibeui-hero-003-accent:oklch(0.5 0.145 42);
---vibeui-hero-003-accent-fg:oklch(0.99 0.004 70);
+--vibeui-hero-003-bg:transparent;
+--vibeui-hero-003-card:light-dark(oklch(0.995 0.002 70),oklch(0.235 0.008 55));
+--vibeui-hero-003-card-alt:light-dark(oklch(0.953 0.005 250),oklch(0.285 0.011 250));
+--vibeui-hero-003-ink:light-dark(oklch(0.21 0.012 55),oklch(0.95 0.006 70));
+--vibeui-hero-003-muted:light-dark(oklch(0.5 0.012 55),oklch(0.73 0.01 70));
+--vibeui-hero-003-border:light-dark(oklch(0.881 0.005 250),oklch(0.38 0.011 250));
+--vibeui-hero-003-accent:light-dark(oklch(0.5 0.145 42),oklch(0.68 0.145 42));
+--vibeui-hero-003-accent-fg:light-dark(oklch(0.99 0.004 70),oklch(0.2 0.03 42));
 --vibeui-hero-003-ring:color-mix(in oklab, var(--vibeui-hero-003-accent) 70%, transparent);
 --vibeui-hero-003-serif:ui-serif,Georgia,"Times New Roman",Times,serif;
 --vibeui-hero-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -93,6 +95,28 @@ function cx(...classes: (string | false | undefined)[]) {
   return classes.filter(Boolean).join(" ")
 }
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлый фон достался бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function CheckIcon() {
   return (
     <svg
@@ -113,27 +137,34 @@ function CheckIcon() {
 }
 
 export function Hero003({
-  eyebrow = "Design system · v3",
-  title = "Everything you ship",
-  titleAccent = "deserves a shape",
-  description = "A calm, opinionated foundation for teams that would rather design once and reuse forever.",
-  primaryAction = { label: "Get started", href: "#" },
-  secondaryAction = { label: "Read the docs", href: "#" },
-  stat = { value: "12k+", label: "components shipped" },
+  eyebrow = "Дизайн-система · v3",
+  title = "Всё, что вы выпускаете,",
+  titleAccent = "заслуживает формы",
+  description = "Спокойная и убеждённая основа для команд, которым проще спроектировать один раз и переиспользовать всегда.",
+  primaryAction = { label: "Начать", href: "#" },
+  secondaryAction = { label: "Читать документацию", href: "#" },
+  stat = { value: "12k+", label: "выпущенных компонентов" },
   highlights = [
-    "Accessible by default",
-    "Zero runtime deps",
-    "Works in any theme",
+    "Доступность по умолчанию",
+    "Ноль зависимостей в рантайме",
+    "Работает в любой теме",
   ],
-  accentNote = "Built to be copied, not configured",
+  accentNote = "Сделано, чтобы копировать, а не настраивать",
   accent,
   accentForeground,
+  background = "",
   className,
 }: Hero003Props) {
   const style = {
     ...(accent ? { "--vibeui-hero-003-accent": accent } : {}),
     ...(accentForeground
       ? { "--vibeui-hero-003-accent-fg": accentForeground }
+      : {}),
+    ...(background
+      ? {
+          "--vibeui-hero-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
       : {}),
   } as CSSProperties
 
@@ -197,7 +228,7 @@ export function Hero003({
                   href={primaryAction.href}
                   className={cx(
                     ACTION_BASE,
-                    "bg-[var(--vibeui-hero-003-ink)] text-[var(--vibeui-hero-003-bg)] transition-opacity duration-150 hover:opacity-90",
+                    "bg-[var(--vibeui-hero-003-ink)] text-[var(--vibeui-hero-003-card)] transition-opacity duration-150 hover:opacity-90",
                   )}
                 >
                   {primaryAction.label}

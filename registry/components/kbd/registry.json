@@ -16,7 +16,7 @@
           "target": "@components/vibeui/kbd-001.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kbd-001-*. Серверный: хуков нет. Клавиши выводятся тегом kbd с утолщённой нижней гранью — так они читаются как физические. Разделитель между клавишами лежит в разметке, поэтому скринридер произносит «command плюс K», а не две отдельные клавиши.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kbd-001-*. Серверный: хуков нет. Клавиши выводятся тегом kbd с утолщённой нижней гранью — так они читаются как физические. Разделитель между клавишами лежит в разметке, поэтому скринридер произносит «command плюс K», а не две отдельные клавиши. Тема приходит из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а плашка включается пропом background.",
       "meta": {
         "tags": ["kbd", "shortcuts", "help", "keyboard"],
         "ai": {
@@ -29,15 +29,19 @@
             "плюс в разметке, а не в CSS — иначе сочетание читается как две клавиши",
             "утолщённую нижнюю грань: клавиша выглядит нажимаемой",
             "минимальную ширину клавиши, чтобы «K» и «Esc» стояли ровным столбцом",
-            "действие слева, клавиши справа — так список сканируют"
+            "действие слева, клавиши справа — так список сканируют",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив rows с действиями и клавишами",
             "title — заголовок списка",
             "цвет и радиус клавиш",
-            "ширину блока"
+            "ширину блока",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Символы клавиш зависят от системы: на Windows вместо ⌘ должен стоять Ctrl.",
             "Компонент ничего не слушает: сами сочетания вешает вызывающий код.",
             "Список не место для всех клавиш подряд: показывайте те, что экономят время.",
@@ -51,6 +55,12 @@
             "type": "text",
             "default": "Горячие клавиши",
             "maxLength": 30
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -64,15 +74,19 @@
                 "the plus in the markup rather than CSS — otherwise a combination reads as two keys",
                 "the thicker bottom border: the key looks pressable",
                 "the minimum key width so \"K\" and \"Esc\" line up",
-                "the action left, keys right — that is how the list gets scanned"
+                "the action left, keys right — that is how the list gets scanned",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the rows array of actions and keys",
                 "title — the list heading",
                 "the key colour and radius",
-                "the block width"
+                "the block width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Key glyphs depend on the platform: Windows needs Ctrl where macOS shows ⌘.",
                 "The component listens to nothing: the caller binds the shortcuts.",
                 "This is not a place for every key: show the ones that save time.",
@@ -84,11 +98,38 @@
               "title": {
                 "label": "Heading",
                 "default": "Keyboard shortcuts"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Shortcut List"
+            "title": "Shortcut List",
+            "preview": {
+              "props": {
+                "title": "Keyboard shortcuts",
+                "rows": [
+                  {
+                    "action": "Open search",
+                    "keys": ["⌘", "K"]
+                  },
+                  {
+                    "action": "Copy for AI",
+                    "keys": ["⌘", "⇧", "C"]
+                  },
+                  {
+                    "action": "Next component",
+                    "keys": ["J"]
+                  },
+                  {
+                    "action": "Close the dialog",
+                    "keys": ["Esc"]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -106,7 +147,7 @@
           "target": "@components/vibeui/kbd-002.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Клавиши набраны тегом kbd — это его прямое назначение, скринридер объявит их как ввод. Разделитель лежит в разметке отдельным узлом, а не рисуется псевдоэлементом: содержимое ::before не попадает в поток чтения, и вслух сочетание превратилось бы в две несвязанные клавиши. Вариант разделителя переключается атрибутом data-separator, набор вариантов вынесен в объект: plus для одновременного нажатия, then для последовательного, arrow для перехода. Подложка светлая, потому что и клавиши, и подпись тёмные.",
+      "docs": "Серверный компонент, хуков нет. Клавиши набраны тегом kbd — это его прямое назначение, скринридер объявит их как ввод. Разделитель лежит в разметке отдельным узлом, а не рисуется псевдоэлементом: содержимое ::before не попадает в поток чтения, и вслух сочетание превратилось бы в две несвязанные клавиши. Вариант разделителя переключается атрибутом data-separator, набор вариантов вынесен в объект: plus для одновременного нажатия, then для последовательного, arrow для перехода. Тема приходит из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а плашка включается пропом background.",
       "meta": {
         "tags": ["kbd", "shortcut", "chord", "keyboard"],
         "ai": {
@@ -119,18 +160,22 @@
             "разделитель в разметке — псевдоэлемент не читается вслух и рвёт смысл сочетания",
             "различие plus и then: одновременное и последовательное нажатие — разные действия",
             "нижнюю грань клавиши в 2px: она даёт объём клавиши без теней и градиентов",
-            "собственную светлую подложку: клавиши и подпись тёмные и на тёмном фоне пропадают"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "вид разделителя через separator: plus, then или arrow",
+            "подписи разделителей через separatorText",
             "подпись действия через caption",
             "состав сочетания через keys",
-            "радиус клавиш через переменные --vibeui-kbd-002-*"
+            "радиус клавиш через переменные --vibeui-kbd-002-*",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Символы ⌘ и ⇧ есть не во всех шрифтах: на Windows часть систем покажет квадрат.",
             "Сочетание длиннее четырёх клавиш переносится — проверьте на узкой ширине.",
-            "Разделитель «затем» русский: для англоязычного интерфейса подставьте своё слово.",
+            "Подпись «затем» русская по умолчанию: для другого языка передайте separatorText.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -148,6 +193,12 @@
             "type": "text",
             "default": "Палитра команд",
             "maxLength": 30
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -161,18 +212,22 @@
                 "the separator in markup — a pseudo-element is not read aloud and breaks the chord's meaning",
                 "the difference between plus and then: simultaneous and sequential presses are different actions",
                 "the 2px bottom edge of the key: it gives the key depth without shadows or gradients",
-                "the component's own light surface: keys and caption are dark and vanish on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the separator style through separator: plus, then or arrow",
+                "the separator wording through separatorText",
                 "the action caption through caption",
                 "the chord contents through keys",
-                "the key radius through the --vibeui-kbd-002-* variables"
+                "the key radius through the --vibeui-kbd-002-* variables",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The ⌘ and ⇧ glyphs are missing from some fonts: certain Windows setups show a box.",
                 "A chord longer than four keys wraps — check it on narrow widths.",
-                "The \"then\" separator is Russian in the default: substitute your own word for other locales.",
+                "The \"then\" wording is Russian by default: pass separatorText for another locale.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Kbd002 keys={[\"⌘\", \"⇧\", \"P\"]} separator=\"plus\" caption=\"Command palette\" />"
@@ -185,11 +240,25 @@
               "caption": {
                 "label": "Caption",
                 "default": "Command palette"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Key Chord Separator"
+            "title": "Key Chord Separator",
+            "preview": {
+              "props": {
+                "caption": "Command palette",
+                "separatorText": {
+                  "plus": "+",
+                  "then": "then",
+                  "arrow": "→"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["separator", "background"]
       }
     },
     {
@@ -207,7 +276,7 @@
           "target": "@components/vibeui/kbd-003.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Обычная kbd с вертикальным паддингом делает свою строку выше соседних, и абзац «разъезжается». Здесь высота клавиши выражена в em и вписана в строку, вертикальные отступы нулевые, а точная посадка на базовую линию сделана сдвигом на 0.05em — не изменением line-height абзаца, которое поехало бы на весь текст. Кегль клавиши задан долей от текста (0.85em), поэтому она масштабируется вместе с абзацем. Сочетание обёрнуто в nowrap, чтобы «⌘ + K» не разорвался переносом. Подложка светлая: текст тёмный.",
+      "docs": "Серверный компонент, хуков нет. Обычная kbd с вертикальным паддингом делает свою строку выше соседних, и абзац «разъезжается». Здесь высота клавиши выражена в em и вписана в строку, вертикальные отступы нулевые, а точная посадка на базовую линию сделана сдвигом на 0.05em — не изменением line-height абзаца, которое поехало бы на весь текст. Кегль клавиши задан долей от текста (0.85em), поэтому она масштабируется вместе с абзацем. Сочетание обёрнуто в nowrap, чтобы «⌘ + K» не разорвался переносом. Тема приходит из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а плашка включается пропом background.",
       "meta": {
         "tags": ["kbd", "inline", "typography", "text"],
         "preview": {
@@ -223,15 +292,18 @@
             "высоту и кегль в em — клавиша обязана масштабироваться вместе с абзацем",
             "сдвиг на 0.05em вместо правки line-height: правка line-height поедет на весь текст",
             "nowrap на сочетании, иначе «⌘ + K» разрывается переносом строки",
-            "собственную светлую подложку: абзац и клавиши тёмные и на тёмном фоне пропадают"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст до клавиши через before",
             "текст после клавиши через after",
             "состав сочетания через keys",
-            "ширину абзаца через max-width"
+            "ширину абзаца через max-width",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Клавиша занимает 1.5em высоты: при интерлиньяже меньше 1.5 строки начнут задевать друг друга.",
             "Внутри одного абзаца допустимо одно-два сочетания — дальше текст превращается в список.",
             "Сдвиг на базовую линию подобран для системного шрифта; при своём шрифте проверьте посадку.",
@@ -252,6 +324,12 @@
             "type": "text",
             "default": "чтобы открыть поиск по каталогу — строка ввода появится поверх страницы.",
             "maxLength": 90
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -265,15 +343,18 @@
                 "the em-based height and size — the key must scale together with the paragraph",
                 "the 0.05em nudge instead of editing line-height: a line-height change affects the whole text",
                 "nowrap on the chord, otherwise \"⌘ + K\" is split across lines",
-                "the component's own light surface: paragraph and keys are dark and vanish on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the text before the key through before",
                 "the text after the key through after",
                 "the chord contents through keys",
-                "the paragraph width through max-width"
+                "the paragraph width through max-width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The key takes 1.5em of height: with leading below 1.5 the lines start touching.",
                 "One or two chords per paragraph is the limit — beyond that the text becomes a list.",
                 "The baseline nudge is tuned for the system font; verify it with your own typeface.",
@@ -289,11 +370,22 @@
               "after": {
                 "label": "Text after",
                 "default": "to open the catalog search — the input appears above the page."
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Inline Text Key"
+            "title": "Inline Text Key",
+            "preview": {
+              "props": {
+                "before": "Press",
+                "keys": ["⌘", "K"],
+                "after": "to open the catalog search — the input appears above the page."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -311,7 +403,7 @@
           "target": "@components/vibeui/kbd-004.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Полоса читается боковым зрением, поэтому подсказки разделены только промежутком: рамка вокруг каждой пары превращает служебную строку в панель кнопок. Каждая пара помечена white-space:nowrap, так что при нехватке ширины полоса переносит подсказки целиком, а не рвёт «↵ выбрать» пополам. Выравнивание переключается атрибутом data-align (start, center, between), плотность — data-size. Клавиши набраны тегом kbd. Подложка светлая, потому что вся полоса набрана тёмным.",
+      "docs": "Серверный компонент, хуков нет. Полоса читается боковым зрением, поэтому подсказки разделены только промежутком: рамка вокруг каждой пары превращает служебную строку в панель кнопок. Каждая пара помечена white-space:nowrap, так что при нехватке ширины полоса переносит подсказки целиком, а не рвёт «↵ выбрать» пополам. Выравнивание переключается атрибутом data-align (start, center, between), плотность — data-size. Клавиши набраны тегом kbd. Тема приходит из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а плашка включается пропом background.",
       "meta": {
         "tags": ["kbd", "hints", "footer", "shortcuts"],
         "preview": {
@@ -327,15 +419,18 @@
             "отсутствие рамок вокруг пар — с ними служебная полоса читается как панель кнопок",
             "тег kbd для клавиш: скринридер объявит их как ввод, а не как символы",
             "мелкий кегль полосы: она читается боковым зрением и не должна спорить с содержимым",
-            "собственную светлую подложку: полоса набрана тёмным и на тёмном фоне исчезает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "выравнивание полосы через align: start, center или between",
             "плотность через size: sm или md",
             "состав подсказок через hints",
-            "ширину полосы через max-width"
+            "ширину полосы через max-width",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше пяти подсказок в полосе никто не читает — оставьте главные.",
             "Выравнивание between на узкой ширине даёт большие дыры: проверьте на телефоне.",
             "Полоса не интерактивна: если подсказку надо нажимать, ставьте настоящие кнопки.",
@@ -356,6 +451,12 @@
             "type": "select",
             "default": "sm",
             "options": ["sm", "md"]
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -369,15 +470,18 @@
                 "the absence of borders around pairs — with them the status bar reads as a button panel",
                 "the kbd tag for keys: a screen reader announces them as input, not as symbols",
                 "the small type size: the bar is read peripherally and must not compete with the content",
-                "the component's own light surface: the bar is dark and disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the bar alignment through align: start, center or between",
                 "the density through size: sm or md",
                 "the hint set through hints",
-                "the bar width through max-width"
+                "the bar width through max-width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Nobody reads more than five hints in a bar — keep the important ones.",
                 "The between alignment leaves large gaps on narrow widths: check it on a phone.",
                 "The bar is not interactive: use real buttons if a hint has to be clickable.",
@@ -393,11 +497,37 @@
               "size": {
                 "label": "Density",
                 "default": "sm"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Shortcut Hint Bar"
+            "title": "Shortcut Hint Bar",
+            "preview": {
+              "props": {
+                "hints": [
+                  {
+                    "keys": ["↑", "↓"],
+                    "action": "navigate"
+                  },
+                  {
+                    "keys": ["↵"],
+                    "action": "select"
+                  },
+                  {
+                    "keys": ["⌘", "K"],
+                    "action": "search"
+                  },
+                  {
+                    "keys": ["Esc"],
+                    "action": "close"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["align", "size", "background"]
       }
     },
     {
@@ -415,28 +545,32 @@
           "target": "@components/vibeui/kbd-005.tsx"
         }
       ],
-      "docs": "Клиентский компонент: систему определяет useEffect после гидрации, поэтому в файле есть «use client». Сервер не знает системы клиента, и попытка угадать её при рендере даёт рассинхрон разметки — до определения показывается вариант с Ctrl, понятный на любой системе, в отличие от ⌘. Проп platform позволяет отключить автоопределение и зафиксировать вариант для документации. Ширина клавиши модификатора увеличена для ⌘ атрибутом data-system: знак шире буквы, и без правки ряд клавиш выглядит неровным. Подложка светлая: клавиши и подписи тёмные.",
+      "docs": "Клиентский компонент: систему он узнаёт только после гидрации, поэтому в файле есть «use client». Сервер не знает системы клиента, и попытка угадать её при рендере даёт рассинхрон разметки — до определения показывается вариант с Ctrl, понятный на любой системе, в отличие от ⌘. Проп platform позволяет отключить автоопределение и зафиксировать вариант для документации. Ширина клавиши модификатора увеличена для ⌘ атрибутом data-system: знак шире буквы, и без правки ряд клавиш выглядит неровным. Тема приходит из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а плашка включается пропом background.",
       "meta": {
         "tags": ["kbd", "platform", "shortcut", "macos"],
         "ai": {
           "export": "Kbd005",
           "usage": "<Kbd005 platform=\"auto\" action=\"Открыть поиск\" letter=\"K\" />",
-          "summary": "Сочетание, которое подстраивается под систему: ⌘ на macOS, Ctrl на остальных. Ноль зависимостей, один файл, определение системы в useEffect.",
+          "summary": "Сочетание, которое подстраивается под систему: ⌘ на macOS, Ctrl на остальных. Ноль зависимостей, один файл, определение системы после гидрации.",
           "preserve": [
             "локальную палитру --vibeui-kbd-005-* и не подменять её токенами вашей темы",
             "определение системы после гидрации: угаданное при рендере значение рассинхронизирует разметку",
             "Ctrl как стартовый вариант — он понятен на любой системе, в отличие от ⌘",
             "подпись системы под действием: без неё пользователь не понимает, почему знак другой",
             "тег kbd для клавиш: скринридер объявит их как ввод, а не как текст",
-            "собственную светлую подложку: клавиши и подписи тёмные и на тёмном фоне пропадают"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "режим определения через platform: auto, mac или windows",
             "название действия через action",
+            "названия систем через systemText",
             "букву сочетания через letter",
-            "ширину клавиш через переменные --vibeui-kbd-005-*"
+            "ширину клавиш через переменные --vibeui-kbd-005-*",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Определение идёт по userAgent: он подделывается, и на редких системах даст мимо.",
             "До гидрации показан вариант Windows — на macOS знак сменится после загрузки скрипта.",
             "На Linux принят тот же Ctrl, что и на Windows: отдельной ветки для него нет.",
@@ -457,28 +591,38 @@
             "type": "text",
             "default": "Открыть поиск",
             "maxLength": 24
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "A platform-aware chord: macOS writes the modifier as ⌘, Windows and Linux write it as Ctrl, because a hint with the wrong glyph reads as a mistake.",
             "ai": {
-              "summary": "A chord that adapts to the system: ⌘ on macOS, Ctrl elsewhere. Zero dependencies, one file, detection in useEffect.",
+              "summary": "A chord that adapts to the system: ⌘ on macOS, Ctrl elsewhere. Zero dependencies, one file, detection after hydration.",
               "preserve": [
                 "the local --vibeui-kbd-005-* palette — do not swap it for your theme tokens",
                 "detecting the system after hydration: a value guessed at render time desynchronises the markup",
                 "Ctrl as the starting variant — it is understood on any system, unlike ⌘",
                 "the system caption under the action: without it users cannot tell why the glyph changed",
                 "the kbd tag for keys: a screen reader announces them as input rather than text",
-                "the component's own light surface: keys and captions are dark and vanish on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the detection mode through platform: auto, mac or windows",
                 "the action name through action",
+                "the system names through systemText",
                 "the chord letter through letter",
-                "the key widths through the --vibeui-kbd-005-* variables"
+                "the key widths through the --vibeui-kbd-005-* variables",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Detection reads the userAgent: it can be spoofed and will miss on rare systems.",
                 "Before hydration the Windows variant is shown — on macOS the glyph swaps once the script loads.",
                 "Linux uses the same Ctrl as Windows: there is no separate branch for it.",
@@ -494,11 +638,24 @@
               "action": {
                 "label": "Action",
                 "default": "Open search"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Platform Aware Keys"
+            "title": "Platform Aware Keys",
+            "preview": {
+              "props": {
+                "action": "Open search",
+                "systemText": {
+                  "mac": "macOS",
+                  "windows": "Windows and Linux"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["platform", "background"]
       }
     },
     {
@@ -516,7 +673,7 @@
           "target": "@components/vibeui/kbd-006.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Режим auto даёт клавише ширину по содержимому при общей минимальной — ряд выглядит как настоящая клавиатура с разными клавишами. Режим even переводит ряд на grid с repeat(auto-fit, minmax(4.5rem, 1fr)), и все клавиши получают равные колонки: это нужно, когда ряд должен читаться строем, например в легенде. Высота и кегль в обоих режимах общие, поэтому переключение не меняет ритм строки. Подписи помечены nowrap, чтобы «Page Down» не разорвался. Подложка светлая: клавиши и подпись тёмные.",
+      "docs": "Серверный компонент, хуков нет. Режим auto даёт клавише ширину по содержимому при общей минимальной — ряд выглядит как настоящая клавиатура с разными клавишами. Режим even переводит ряд на grid с repeat(auto-fit, minmax(4.5rem, 1fr)), и все клавиши получают равные колонки: это нужно, когда ряд должен читаться строем, например в легенде. Высота и кегль в обоих режимах общие, поэтому переключение не меняет ритм строки. Подписи помечены nowrap, чтобы «Page Down» не разорвался. Тема приходит из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а плашка включается пропом background.",
       "meta": {
         "tags": ["kbd", "keyboard", "layout", "labels"],
         "preview": {
@@ -532,15 +689,18 @@
             "nowrap на подписи — разорванное «Page Down» перестаёт читаться как одна клавиша",
             "минимальную ширину клавиши: узкая «K» рядом с «Backspace» выглядит выпавшей",
             "тег kbd для клавиш, чтобы скринридер объявил их как ввод",
-            "собственную светлую подложку: клавиши и подпись тёмные и на тёмном фоне пропадают"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "режим ширины через width: auto или even",
             "подпись под рядом через caption",
             "состав ряда через keys",
-            "высоту клавиш через переменную --vibeui-kbd-006-height"
+            "высоту клавиш через переменную --vibeui-kbd-006-height",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "В режиме even очень длинная подпись обрезается многоточием, а не растягивает колонку.",
             "Минимум колонки 4.5rem подобран под «Backspace»; для более длинных слов увеличьте его.",
             "Ряд не имитирует раскладку клавиатуры — это перечисление клавиш, а не карта.",
@@ -561,6 +721,12 @@
             "type": "text",
             "default": "Клавиши редактора текста",
             "maxLength": 30
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -574,15 +740,18 @@
                 "nowrap on the label — a split \"Page Down\" stops reading as one key",
                 "the minimum key width: a narrow \"K\" beside \"Backspace\" looks dropped out of the row",
                 "the kbd tag for keys so a screen reader announces them as input",
-                "the component's own light surface: keys and caption are dark and vanish on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the width mode through width: auto or even",
                 "the caption under the row through caption",
                 "the row contents through keys",
-                "the key height through the --vibeui-kbd-006-height variable"
+                "the key height through the --vibeui-kbd-006-height variable",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "In even mode a very long label is truncated with an ellipsis instead of stretching the column.",
                 "The 4.5rem column minimum is tuned for \"Backspace\"; raise it for longer words.",
                 "The row does not imitate a keyboard layout — it is a list of keys, not a map.",
@@ -598,11 +767,21 @@
               "caption": {
                 "label": "Caption",
                 "default": "Editor keys"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Wide Label Keys"
+            "title": "Wide Label Keys",
+            "preview": {
+              "props": {
+                "keys": ["Shift", "Backspace", "Page Down", "Space", "↵"],
+                "caption": "Text editor keys"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["width", "background"]
       }
     }
   ]

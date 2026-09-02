@@ -18,6 +18,8 @@ export type Autocomplete002Props = Omit<
   /** Открыть список сразу: витрина и скриншоты, в форме не нужен. */
   defaultOpen?: boolean
   onSelect?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,13 +30,14 @@ export type Autocomplete002Props = Omit<
 // перенос фокуса на строку ломает ввод.
 const STYLES = `
 :where([data-vibeui-block="autocomplete-002"]){
---vibeui-autocomplete-002-bg:oklch(1 0 0);
---vibeui-autocomplete-002-fg:oklch(0.22 0.014 265);
---vibeui-autocomplete-002-muted:oklch(0.52 0.014 265);
---vibeui-autocomplete-002-border:oklch(0.9 0.006 265);
---vibeui-autocomplete-002-field:oklch(0.985 0.002 265);
---vibeui-autocomplete-002-active:oklch(0.95 0.02 265);
---vibeui-autocomplete-002-accent:oklch(0.55 0.17 265);
+--vibeui-autocomplete-002-bg:transparent;
+--vibeui-autocomplete-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-autocomplete-002-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-autocomplete-002-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-autocomplete-002-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
+--vibeui-autocomplete-002-active:light-dark(oklch(0.95 0.02 265),oklch(0.33 0.028 265));
+--vibeui-autocomplete-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-autocomplete-002-radius:0.625rem;
 --vibeui-autocomplete-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -66,7 +69,7 @@ margin:0;padding:0.25rem;list-style:none;
 max-height:11rem;overflow-y:auto;
 border:1px solid var(--vibeui-autocomplete-002-border);
 border-radius:var(--vibeui-autocomplete-002-radius);
-background:var(--vibeui-autocomplete-002-bg);
+background:var(--vibeui-autocomplete-002-panel);
 }
 [data-vibeui-block="autocomplete-002"] [data-part="option"]{
 display:flex;align-items:center;min-height:2rem;padding:0 0.5rem;
@@ -108,6 +111,28 @@ function highlight(option: string, query: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox с фильтрацией, клавиатурой и правильными ролями ARIA.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -118,6 +143,7 @@ export function Autocomplete002({
   emptyLabel = "Ничего не нашлось",
   defaultOpen = false,
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -137,6 +163,12 @@ export function Autocomplete002({
 
   const palette = {
     ...(accent ? { "--vibeui-autocomplete-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-autocomplete-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

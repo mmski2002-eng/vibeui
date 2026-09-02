@@ -17,6 +17,10 @@ export type Filters002Props = Omit<
   total?: string
   resetLabel?: string
   onChange?: (chips: Filters002Chip[]) => void
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,16 +31,18 @@ export type Filters002Props = Omit<
 // можно поштучно, а «сбросить всё» стоит отдельно и появляется от двух фишек.
 const STYLES = `
 :where([data-vibeui-block="filters-002"]){
---vibeui-filters-002-surface:oklch(1 0 0);
---vibeui-filters-002-chip:oklch(0.97 0.004 265);
---vibeui-filters-002-fg:oklch(0.23 0.014 265);
---vibeui-filters-002-muted:oklch(0.55 0.014 265);
---vibeui-filters-002-border:oklch(0.89 0.008 265);
---vibeui-filters-002-shell:oklch(0.91 0.006 265);
---vibeui-filters-002-accent:oklch(0.53 0.18 268);
+--vibeui-filters-002-surface:transparent;
+--vibeui-filters-002-chip:light-dark(oklch(0.97 0.004 265),oklch(0.28 0.012 265));
+--vibeui-filters-002-cross:light-dark(oklch(1 0 0),oklch(0.36 0.014 265));
+--vibeui-filters-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-filters-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-filters-002-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.014 265));
+--vibeui-filters-002-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-filters-002-accent:light-dark(oklch(0.53 0.18 268),oklch(0.74 0.15 268));
+--vibeui-filters-002-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 268));
 --vibeui-filters-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: строку показывают поверх любого фона. */
+/* Подложки по умолчанию нет: строка ложится на фон страницы. */
 [data-vibeui-block="filters-002"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:32rem;box-sizing:border-box;padding:0.875rem;
@@ -70,12 +76,12 @@ font-size:0.75rem;line-height:1.35;
 appearance:none;cursor:pointer;flex:none;
 display:grid;place-items:center;
 width:1.125rem;height:1.125rem;border-radius:9999px;border:0;
-background:oklch(1 0 0);color:var(--vibeui-filters-002-muted);
+background:var(--vibeui-filters-002-cross);color:var(--vibeui-filters-002-muted);
 font:inherit;font-size:0.75rem;line-height:1;
 transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="filters-002"] [data-part="chip"] button:hover{
-background:var(--vibeui-filters-002-accent);color:oklch(1 0 0);
+background:var(--vibeui-filters-002-accent);color:var(--vibeui-filters-002-on-accent);
 }
 [data-vibeui-block="filters-002"] [data-part="chip"] button:focus-visible{
 outline:2px solid var(--vibeui-filters-002-accent);outline-offset:2px;
@@ -103,6 +109,52 @@ const DEFAULT_CHIPS: Filters002Chip[] = [
   { id: "4", group: "Обновлён", value: "за месяц" },
 ]
 
+/** Русский словарь по умолчанию: установленный файл не меняет язык проекта. */
+const DEFAULT_LABELS: Record<string, string> = {
+  title: "Активные фильтры",
+  empty: "Фильтров нет — показан весь каталог целиком.",
+  remove: "Снять фильтр {group}: {value}",
+}
+
+function label(
+  labels: Record<string, string>,
+  key: string,
+  values?: Record<string, string>,
+): string {
+  const template = labels[key] ?? DEFAULT_LABELS[key] ?? ""
+
+  if (!values) {
+    return template
+  }
+
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, name: string) => values[name] ?? match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Строка активных фильтров: снятие по одному и отдельный сброс всего набора.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -112,6 +164,8 @@ export function Filters002({
   total = "Найдено 128 компонентов",
   resetLabel = "Сбросить всё",
   onChange,
+  labels = DEFAULT_LABELS,
+  background = "",
   accent,
   className,
   style,
@@ -121,6 +175,12 @@ export function Filters002({
 
   const palette = {
     ...(accent ? { "--vibeui-filters-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-filters-002-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -141,14 +201,14 @@ export function Filters002({
         style={palette}
       >
         <div data-part="head">
-          <h3>Активные фильтры</h3>
+          <h3>{label(labels, "title")}</h3>
           <p data-part="total" aria-live="polite">
             {total}
           </p>
         </div>
 
         {list.length === 0 ? (
-          <p data-part="empty">Фильтров нет — показан весь каталог целиком.</p>
+          <p data-part="empty">{label(labels, "empty")}</p>
         ) : (
           <ul>
             {list.map((chip) => (
@@ -157,7 +217,10 @@ export function Filters002({
                 <span data-part="value">{chip.value}</span>
                 <button
                   type="button"
-                  aria-label={`Снять фильтр ${chip.group}: ${chip.value}`}
+                  aria-label={label(labels, "remove", {
+                    group: chip.group,
+                    value: chip.value,
+                  })}
                   onClick={() =>
                     apply(list.filter((item) => item.id !== chip.id))
                   }

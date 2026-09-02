@@ -7,6 +7,8 @@ export type Item002Props = Omit<
   title?: string
   meta?: string
   glyph?: string
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
   tint?: string
 }
 
@@ -15,13 +17,16 @@ export type Item002Props = Omit<
 // названий начинается по одной вертикали независимо от длины текста. Оттенок
 // плитки считается от одного числа, а фон и цвет знака выводятся из него через
 // color-mix — рассогласовать пару невозможно.
+//
+// Тема берётся из color-scheme окружения через light-dark(): строка темнеет
+// там, где тёмный контекст, и не выкладывает под себя белую плашку.
 const STYLES = `
 :where([data-vibeui-block="item-002"]){
---vibeui-item-002-bg:oklch(1 0 0);
---vibeui-item-002-fg:oklch(0.23 0.014 265);
---vibeui-item-002-muted:oklch(0.56 0.014 265);
---vibeui-item-002-border:oklch(0.9 0.006 265);
---vibeui-item-002-tint:oklch(0.55 0.17 265);
+--vibeui-item-002-bg:transparent;
+--vibeui-item-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-item-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-item-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-item-002-tint:light-dark(oklch(0.55 0.17 265),oklch(0.75 0.15 265));
 --vibeui-item-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="item-002"]{
@@ -55,6 +60,28 @@ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Строка списка с ведущим знаком и вторичным текстом.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -62,6 +89,7 @@ export function Item002({
   title = "Проектная документация",
   meta = "14 файлов · обновлено вчера",
   glyph = "ПД",
+  background = "",
   tint,
   className,
   style,
@@ -69,6 +97,12 @@ export function Item002({
 }: Item002Props) {
   const palette = {
     ...(tint ? { "--vibeui-item-002-tint": tint } : null),
+    ...(background
+      ? {
+          "--vibeui-item-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

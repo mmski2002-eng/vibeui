@@ -17,28 +17,41 @@ export type Checkbox009Props = Omit<
   title?: string
   options?: Checkbox009Option[]
   defaultValue?: string[]
+  /** Строка состояния, когда черновик совпадает с сохранённым. */
+  savedText?: string
+  /** Строка состояния с черновиком. {count} — сколько строк изменено. */
+  unsavedText?: string
+  /** Подпись кнопки сохранения. */
+  saveLabel?: string
   onChange?: (value: string[]) => void
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
 // Идея компонента: панель настроек, где под каждой подписью живёт пояснение,
 // а изменённые с момента сохранения строки помечаются точкой. Черновик виден
 // до нажатия «Сохранить»: настройки, применяющиеся молча, невозможно отменить.
+//
+// Тема берётся из color-scheme окружения через light-dark(): панель темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="checkbox-009"]){
---vibeui-checkbox-009-bg:oklch(1 0 0);
---vibeui-checkbox-009-fg:oklch(0.22 0.014 265);
---vibeui-checkbox-009-muted:oklch(0.55 0.014 265);
---vibeui-checkbox-009-border:oklch(0.9 0.006 265);
---vibeui-checkbox-009-hover:oklch(0.975 0.003 265);
---vibeui-checkbox-009-accent:oklch(0.56 0.16 265);
---vibeui-checkbox-009-badge:oklch(0.95 0.03 265);
+--vibeui-checkbox-009-surface:transparent;
+--vibeui-checkbox-009-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-checkbox-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-checkbox-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-checkbox-009-hover:light-dark(oklch(0.975 0.003 265),oklch(0.32 0.012 265));
+--vibeui-checkbox-009-accent:light-dark(oklch(0.56 0.16 265),oklch(0.74 0.14 265));
+--vibeui-checkbox-009-badge:light-dark(oklch(0.95 0.03 265),oklch(0.34 0.05 265));
+--vibeui-checkbox-009-mark:light-dark(oklch(0.99 0.01 265),oklch(0.2 0.014 265));
 --vibeui-checkbox-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="checkbox-009"]{
 display:block;width:100%;max-width:26rem;box-sizing:border-box;
 padding:1rem;border:1px solid var(--vibeui-checkbox-009-border);border-radius:1rem;
-background:var(--vibeui-checkbox-009-bg);
+background:var(--vibeui-checkbox-009-surface);
 font-family:var(--vibeui-checkbox-009-font);color:var(--vibeui-checkbox-009-fg);
 }
 [data-vibeui-block="checkbox-009"] [data-part="title"]{
@@ -67,7 +80,8 @@ transition:background-color .15s ease,border-color .15s ease;
 [data-vibeui-block="checkbox-009"] input:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;
-border-right:2px solid oklch(0.99 0.01 265);border-bottom:2px solid oklch(0.99 0.01 265);
+border-right:2px solid var(--vibeui-checkbox-009-mark);
+border-bottom:2px solid var(--vibeui-checkbox-009-mark);
 transform:rotate(45deg);
 }
 [data-vibeui-block="checkbox-009"] input:focus-visible{outline:2px solid var(--vibeui-checkbox-009-accent);outline-offset:2px}
@@ -97,7 +111,7 @@ font-size:0.75rem;color:var(--vibeui-checkbox-009-muted);
 [data-vibeui-block="checkbox-009"] button{
 appearance:none;cursor:pointer;border:0;border-radius:0.5rem;
 padding:0.375rem 0.75rem;font:inherit;font-size:0.75rem;font-weight:650;
-background:var(--vibeui-checkbox-009-accent);color:oklch(0.99 0.01 265);
+background:var(--vibeui-checkbox-009-accent);color:var(--vibeui-checkbox-009-mark);
 transition:opacity .15s ease;
 }
 [data-vibeui-block="checkbox-009"] button:disabled{cursor:not-allowed;opacity:.45}
@@ -125,6 +139,28 @@ const DEFAULT_OPTIONS: Checkbox009Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Настройки с пояснениями: изменённые строки помечаются точкой,
  * а черновик применяется кнопкой. Один файл, ноль зависимостей.
  */
@@ -132,7 +168,11 @@ export function Checkbox009({
   title = "Уведомления",
   options = DEFAULT_OPTIONS,
   defaultValue = ["digest"],
+  savedText = "Всё сохранено",
+  unsavedText = "Не сохранено: {count}",
+  saveLabel = "Сохранить",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -143,6 +183,12 @@ export function Checkbox009({
 
   const palette = {
     ...(accent ? { "--vibeui-checkbox-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-checkbox-009-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -202,15 +248,15 @@ export function Checkbox009({
         <p data-part="foot">
           <span role="status">
             {changed.length === 0
-              ? "Всё сохранено"
-              : `Не сохранено: ${changed.length}`}
+              ? savedText
+              : unsavedText.replace("{count}", String(changed.length))}
           </span>
           <button
             type="button"
             disabled={changed.length === 0}
             onClick={() => setSaved(draft)}
           >
-            Сохранить
+            {saveLabel}
           </button>
         </p>
       </section>

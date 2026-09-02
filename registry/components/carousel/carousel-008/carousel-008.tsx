@@ -16,6 +16,13 @@ export type Carousel008Props = Omit<
   label?: string
   nextLabel?: string
   doneLabel?: string
+  skipLabel?: string
+  /** Роль секции для скринридера. */
+  roleText?: string
+  /** Шаблон подписи точек: {index}, {total}. */
+  dotsText?: string
+  /** Пусто — подложка своя; цвет заменяет её целиком. */
+  background?: string
   accent?: string
 }
 
@@ -23,13 +30,16 @@ export type Carousel008Props = Omit<
 // от слайдера тем, что у неё есть конец: на последнем шаге кнопка меняет
 // подпись и становится завершением. Пропустить можно с первого шага — вести
 // человека силой через пять экранов нельзя.
+//
+// Тема берётся из color-scheme окружения через light-dark(): карточка и текст
+// темнеют вместе со страницей, своей тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="carousel-008"]){
---vibeui-carousel-008-bg:oklch(1 0 0);
---vibeui-carousel-008-fg:oklch(0.22 0.014 265);
---vibeui-carousel-008-muted:oklch(0.56 0.014 265);
---vibeui-carousel-008-border:oklch(0.91 0.006 265);
---vibeui-carousel-008-accent:oklch(0.55 0.17 265);
+--vibeui-carousel-008-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-carousel-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-carousel-008-accent:light-dark(oklch(0.55 0.17 265),oklch(0.7 0.16 265));
 --vibeui-carousel-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="carousel-008"]{
@@ -65,7 +75,7 @@ width:0.4375rem;height:0.4375rem;border-radius:9999px;background:var(--vibeui-ca
 appearance:none;cursor:pointer;
 height:2.125rem;padding:0 0.875rem;
 border:0;border-radius:0.5rem;
-background:var(--vibeui-carousel-008-accent);color:oklch(0.99 0.01 265);
+background:var(--vibeui-carousel-008-accent);color:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.02 265));
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="carousel-008"] [data-part="skip"]{
@@ -90,6 +100,35 @@ const DEFAULT_STEPS: Carousel008Step[] = [
   },
 ]
 
+/** Подстановка чисел в подпись: перевод остаётся одной строкой. */
+function fill(template: string, values: Record<string, string | number>) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Карусель-онбординг: у неё есть конец, а пропустить можно с первого шага.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -99,6 +138,10 @@ export function Carousel008({
   label = "Знакомство",
   nextLabel = "Дальше",
   doneLabel = "Начать",
+  skipLabel = "Пропустить",
+  roleText = "карусель",
+  dotsText = "Шаг {index} из {total}",
+  background = "",
   accent,
   className,
   style,
@@ -110,6 +153,12 @@ export function Carousel008({
   const palette = {
     "--vibeui-carousel-008-hue": 250 + index * 40,
     ...(accent ? { "--vibeui-carousel-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-carousel-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -121,7 +170,7 @@ export function Carousel008({
       <section
         {...props}
         data-vibeui-block="carousel-008"
-        aria-roledescription="карусель"
+        aria-roledescription={roleText}
         aria-label={label}
         className={className}
         style={palette}
@@ -145,7 +194,10 @@ export function Carousel008({
         <div data-part="foot">
           <div
             data-part="dots"
-            aria-label={`Шаг ${index + 1} из ${steps.length}`}
+            aria-label={fill(dotsText, {
+              index: index + 1,
+              total: steps.length,
+            })}
           >
             {steps.map((step, position) => (
               <span
@@ -163,7 +215,7 @@ export function Carousel008({
                 data-part="skip"
                 onClick={() => setIndex(steps.length - 1)}
               >
-                Пропустить
+                {skipLabel}
               </button>
             )}
             <button

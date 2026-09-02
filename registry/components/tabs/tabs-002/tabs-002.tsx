@@ -8,21 +8,29 @@ export type Tabs002Tab = {
 export type Tabs002Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
   tabs?: Tabs002Tab[]
   name?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
+  /** Подпись группы вкладок для скринридера. */
+  groupLabel?: string
 }
 
 // Идея компонента: вкладки без единой строки JS. Переключение держат
 // радиокнопки: браузер сам следит, что выбрана одна, и даёт стрелки по группе.
 // Панель показывается селектором :has() по отмеченной кнопке, поэтому правила
 // заданы на шесть вкладок — больше требует ещё одной строки CSS.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте дорожка темнее фона, а рамка светлее его.
 const STYLES = `
 :where([data-vibeui-block="tabs-002"]){
---vibeui-tabs-002-bg:oklch(1 0 0);
---vibeui-tabs-002-fg:oklch(0.24 0.014 265);
---vibeui-tabs-002-muted:oklch(0.56 0.014 265);
---vibeui-tabs-002-border:oklch(0.91 0.006 265);
---vibeui-tabs-002-track:oklch(0.96 0.003 265);
---vibeui-tabs-002-accent:oklch(0.55 0.2 262);
+--vibeui-tabs-002-bg:transparent;
+--vibeui-tabs-002-pill:light-dark(oklch(1 0 0),oklch(0.32 0.012 265));
+--vibeui-tabs-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tabs-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-tabs-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-tabs-002-track:light-dark(oklch(0.96 0.003 265),oklch(0.25 0.01 265));
+--vibeui-tabs-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-tabs-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="tabs-002"]{
@@ -47,7 +55,7 @@ font-size:0.8125rem;color:var(--vibeui-tabs-002-muted);white-space:nowrap;
 }
 /* Отмеченная радиокнопка задаёт и вид вкладки, и видимость панели. */
 [data-vibeui-block="tabs-002"] input:checked + [data-part="tab"]{
-background:var(--vibeui-tabs-002-bg);color:var(--vibeui-tabs-002-fg);font-weight:650;
+background:var(--vibeui-tabs-002-pill);color:var(--vibeui-tabs-002-fg);font-weight:650;
 box-shadow:0 1px 2px oklch(0.2 0.02 265 / 12%);
 }
 [data-vibeui-block="tabs-002"] input:focus-visible + [data-part="tab"]{outline:2px solid var(--vibeui-tabs-002-accent);outline-offset:-2px}
@@ -81,19 +89,49 @@ const DEFAULT_TABS: Tabs002Tab[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Вкладки на радиокнопках: переключение и стрелки без JS.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tabs002({
   tabs = DEFAULT_TABS,
   name = "vibeui-tabs-002",
+  background = "",
   accent,
+  groupLabel = "Разделы",
   className,
   style,
   ...props
 }: Tabs002Props) {
   const palette = {
     ...(accent ? { "--vibeui-tabs-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tabs-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -108,7 +146,7 @@ export function Tabs002({
         className={className}
         style={palette}
       >
-        <div data-part="strip" role="radiogroup" aria-label="Разделы">
+        <div data-part="strip" role="radiogroup" aria-label={groupLabel}>
           {tabs.map((tab, index) => (
             <label key={tab.label}>
               <input

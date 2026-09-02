@@ -8,6 +8,10 @@ export type Pagination012Props = {
   batch?: number
   height?: string
   delay?: number
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labelText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -21,12 +25,12 @@ export type Pagination012Props = {
 // с клавиатуры и для скринридера.
 const STYLES = `
 :where([data-vibeui-block="pagination-012"]){
---vibeui-pagination-012-bg:oklch(1 0 0);
---vibeui-pagination-012-row:oklch(0.975 0.003 265);
---vibeui-pagination-012-fg:oklch(0.24 0.014 265);
---vibeui-pagination-012-muted:oklch(0.55 0.014 265);
---vibeui-pagination-012-border:oklch(0.91 0.006 265);
---vibeui-pagination-012-accent:oklch(0.55 0.2 262);
+--vibeui-pagination-012-bg:transparent;
+--vibeui-pagination-012-row:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.009 265));
+--vibeui-pagination-012-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-pagination-012-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-pagination-012-border:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.012 265));
+--vibeui-pagination-012-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
 --vibeui-pagination-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="pagination-012"]{
@@ -75,6 +79,37 @@ outline:2px solid var(--vibeui-pagination-012-accent);outline-offset:2px;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="pagination-012"] *{animation:none!important;transition:none!important}}
 `
 
+const LABEL: Record<string, string> = {
+  feed: "Лента записей",
+  row: "Запись из ленты — заголовок и дата",
+  loading: "Загрузка…",
+  shown: "Показано {shown} из {total}",
+  done: "Показаны все записи: {total}",
+  more: "Загрузить ещё",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Бесконечная лента с автоматической подгрузкой по прокрутке и точками
  * внизу вместо кнопки. Скрытая, но фокусируемая кнопка остаётся запасным
@@ -86,6 +121,8 @@ export function Pagination012({
   batch = 15,
   height = "13rem",
   delay = 450,
+  labelText = LABEL,
+  background = "",
   accent,
   className,
   style,
@@ -99,6 +136,12 @@ export function Pagination012({
   const palette = {
     "--vibeui-pagination-012-height": height,
     ...(accent ? { "--vibeui-pagination-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pagination-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -141,7 +184,7 @@ export function Pagination012({
         <div
           data-part="feed"
           role="region"
-          aria-label="Лента записей"
+          aria-label={labelText.feed ?? LABEL.feed}
           tabIndex={0}
           onScroll={onScroll}
         >
@@ -149,7 +192,7 @@ export function Pagination012({
             {Array.from({ length: shown }, (unused, index) => (
               <li key={index} data-part="row">
                 <span data-part="num">{index + 1}</span>
-                Запись из ленты — заголовок и дата
+                {labelText.row ?? LABEL.row}
               </li>
             ))}
           </ul>
@@ -166,14 +209,16 @@ export function Pagination012({
           </span>
           <span aria-live="polite">
             {done
-              ? `Показаны все записи: ${total}`
+              ? (labelText.done ?? LABEL.done).replace("{total}", String(total))
               : loading
-                ? "Загрузка…"
-                : `Показано ${shown} из ${total}`}
+                ? (labelText.loading ?? LABEL.loading)
+                : (labelText.shown ?? LABEL.shown)
+                    .replace("{shown}", String(shown))
+                    .replace("{total}", String(total))}
           </span>
           {done ? null : (
             <button type="button" data-part="fallback" onClick={loadMore}>
-              Загрузить ещё
+              {labelText.more ?? LABEL.more}
             </button>
           )}
         </p>

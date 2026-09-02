@@ -15,6 +15,21 @@ export type Calendar027Props = Omit<
   today?: string
   defaultPreset?: Calendar027Preset
   locale?: string
+  /** Подписи пресетов: компонент несёт русские, проект подставляет свои. */
+  presetText?: Record<string, string>
+  /** Подпись группы фишек-пресетов. */
+  presetsLabel?: string
+  /** Подписи полей начала и конца периода. */
+  fromLabel?: string
+  toLabel?: string
+  /** Три формы склонения слова «день»: 1 / 2 / 5. */
+  dayForms?: [string, string, string]
+  /** Приписка к итогу, когда период правили руками. */
+  customText?: string
+  /** Текст итога, когда конец периода раньше начала. */
+  invalidText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   onChange?: (from: string, to: string, preset: Calendar027Preset) => void
   accent?: string
 }
@@ -25,13 +40,14 @@ export type Calendar027Props = Omit<
 // редактируемыми: ручная правка просто переводит выбор в «свой период».
 const STYLES = `
 :where([data-vibeui-block="calendar-027"]){
---vibeui-calendar-027-bg:oklch(1 0 0);
---vibeui-calendar-027-fg:oklch(0.23 0.014 230);
---vibeui-calendar-027-muted:oklch(0.56 0.014 230);
---vibeui-calendar-027-border:oklch(0.91 0.008 230);
---vibeui-calendar-027-field:oklch(0.985 0.004 230);
---vibeui-calendar-027-accent:oklch(0.5 0.12 230);
---vibeui-calendar-027-accentsoft:oklch(0.95 0.04 230);
+--vibeui-calendar-027-bg:transparent;
+--vibeui-calendar-027-fg:light-dark(oklch(0.23 0.014 230),oklch(0.94 0.005 230));
+--vibeui-calendar-027-muted:light-dark(oklch(0.56 0.014 230),oklch(0.68 0.012 230));
+--vibeui-calendar-027-border:light-dark(oklch(0.91 0.008 230),oklch(0.35 0.014 230));
+--vibeui-calendar-027-field:light-dark(oklch(0.985 0.004 230),oklch(0.26 0.012 230));
+--vibeui-calendar-027-accent:light-dark(oklch(0.5 0.12 230),oklch(0.72 0.12 230));
+--vibeui-calendar-027-accentsoft:light-dark(oklch(0.95 0.04 230),oklch(0.3 0.045 230));
+--vibeui-calendar-027-onaccent:light-dark(oklch(0.99 0 0),oklch(0.18 0.02 230));
 --vibeui-calendar-027-radius:0.625rem;
 --vibeui-calendar-027-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -67,7 +83,7 @@ outline:2px solid var(--vibeui-calendar-027-accent);outline-offset:2px;
 }
 [data-vibeui-block="calendar-027"] [data-part="preset"][aria-pressed="true"]{
 background:var(--vibeui-calendar-027-accent);border-color:transparent;
-color:var(--vibeui-calendar-027-bg);
+color:var(--vibeui-calendar-027-onaccent);
 }
 [data-vibeui-block="calendar-027"] [data-part="fields"]{
 display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;
@@ -101,7 +117,7 @@ background:var(--vibeui-calendar-027-field);color:var(--vibeui-calendar-027-mute
 
 const DAY = 86400000
 
-const TITLES: Record<Exclude<Calendar027Preset, "custom">, string> = {
+const PRESET_TEXT: Record<Exclude<Calendar027Preset, "custom">, string> = {
   today: "Сегодня",
   yesterday: "Вчера",
   "7d": "Последние 7 дней",
@@ -154,6 +170,28 @@ function pluralize(count: number, forms: [string, string, string]) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор периода: пресеты сверху, два поля дат снизу, итог в днях.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -162,6 +200,14 @@ export function Calendar027({
   today = "2026-04-15",
   defaultPreset = "7d",
   locale = "ru-RU",
+  presetText = PRESET_TEXT,
+  presetsLabel = "Быстрые периоды",
+  fromLabel = "С",
+  toLabel = "По",
+  dayForms = ["день", "дня", "дней"],
+  customText = " (свой период)",
+  invalidText = "Конец периода раньше начала",
+  background = "",
   onChange,
   accent,
   className,
@@ -212,6 +258,12 @@ export function Calendar027({
 
   const palette = {
     ...(accent ? { "--vibeui-calendar-027-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-027-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -227,22 +279,24 @@ export function Calendar027({
         style={palette}
       >
         <h3 data-part="title">{label}</h3>
-        <div data-part="presets" role="group" aria-label="Быстрые периоды">
-          {(Object.keys(TITLES) as (keyof typeof TITLES)[]).map((key) => (
-            <button
-              key={key}
-              type="button"
-              data-part="preset"
-              aria-pressed={preset === key}
-              onClick={() => apply(key)}
-            >
-              {TITLES[key]}
-            </button>
-          ))}
+        <div data-part="presets" role="group" aria-label={presetsLabel}>
+          {(Object.keys(PRESET_TEXT) as (keyof typeof PRESET_TEXT)[]).map(
+            (key) => (
+              <button
+                key={key}
+                type="button"
+                data-part="preset"
+                aria-pressed={preset === key}
+                onClick={() => apply(key)}
+              >
+                {presetText[key] ?? PRESET_TEXT[key]}
+              </button>
+            ),
+          )}
         </div>
         <div data-part="fields">
           <div data-part="cell">
-            <label htmlFor={`${id}-from`}>С</label>
+            <label htmlFor={`${id}-from`}>{fromLabel}</label>
             <input
               id={`${id}-from`}
               type="date"
@@ -252,7 +306,7 @@ export function Calendar027({
             />
           </div>
           <div data-part="cell">
-            <label htmlFor={`${id}-to`}>По</label>
+            <label htmlFor={`${id}-to`}>{toLabel}</label>
             <input
               id={`${id}-to`}
               type="date"
@@ -267,11 +321,11 @@ export function Calendar027({
             <>
               {span.format(new Date(`${from}T00:00:00`))} —{" "}
               {span.format(new Date(`${to}T00:00:00`))}, <b>{days}</b>{" "}
-              {pluralize(days, ["день", "дня", "дней"])}
-              {preset === "custom" ? " (свой период)" : ""}
+              {pluralize(days, dayForms)}
+              {preset === "custom" ? customText : ""}
             </>
           ) : (
-            "Конец периода раньше начала"
+            invalidText
           )}
         </p>
       </section>

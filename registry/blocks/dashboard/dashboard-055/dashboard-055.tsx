@@ -31,6 +31,24 @@ export type Dashboard055Props = {
   activeView?: string
   saveLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Заголовок колонки представлений. */
+  viewsTitle?: string
+  /** Подпись навигации представлений для скринридера. */
+  viewsLabel?: string
+  /** Пометка общего представления. */
+  sharedLabel?: string
+  /** Подписи колонок таблицы: заявка, клиент, этап, сумма, срок. */
+  columns?: string[]
+  /** Подпись кнопки снятия фильтра: {field}. */
+  dropFilterText?: string
+  /** Строка «показано N из M»: {shown} и {total}. */
+  shownText?: string
+  /** Строка про фильтры и несохранённое представление: {count}. */
+  filtersText?: string
+  /** Локаль форматирования чисел. */
+  numberLocale?: string
   className?: string
   style?: CSSProperties
 }
@@ -46,16 +64,19 @@ export type Dashboard055Props = {
 // сохранения — иначе пользователь теряет правки, переключив вид.
 const STYLES = `
 :where([data-vibeui-block="dashboard-055"]){
---vibeui-dashboard-055-bg:oklch(0.985 0.003 260);
---vibeui-dashboard-055-card:oklch(1 0 0);
---vibeui-dashboard-055-fg:oklch(0.21 0.014 260);
---vibeui-dashboard-055-muted:oklch(0.55 0.014 260);
---vibeui-dashboard-055-border:oklch(0.91 0.006 260);
---vibeui-dashboard-055-accent:oklch(0.52 0.16 260);
---vibeui-dashboard-055-soft:oklch(0.965 0.018 260);
---vibeui-dashboard-055-warn:oklch(0.68 0.15 72);
---vibeui-dashboard-055-late:oklch(0.57 0.19 25);
---vibeui-dashboard-055-ok:oklch(0.6 0.13 155);
+--vibeui-dashboard-055-bg:transparent;
+/* Панель таблицы: подложка блока прозрачна, и рисовать её ею нечем. */
+--vibeui-dashboard-055-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 260));
+--vibeui-dashboard-055-fg:light-dark(oklch(0.21 0.014 260),oklch(0.94 0.005 260));
+--vibeui-dashboard-055-muted:light-dark(oklch(0.55 0.014 260),oklch(0.72 0.012 260));
+--vibeui-dashboard-055-border:light-dark(oklch(0.91 0.006 260),oklch(0.36 0.012 260));
+--vibeui-dashboard-055-accent:light-dark(oklch(0.52 0.16 260),oklch(0.75 0.13 260));
+--vibeui-dashboard-055-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.04 260));
+--vibeui-dashboard-055-accent-line:light-dark(oklch(0.78 0.07 260),oklch(0.5 0.09 260));
+--vibeui-dashboard-055-soft:light-dark(oklch(0.965 0.018 260),oklch(0.32 0.045 260));
+--vibeui-dashboard-055-warn:light-dark(oklch(0.68 0.15 72),oklch(0.78 0.14 72));
+--vibeui-dashboard-055-late:light-dark(oklch(0.57 0.19 25),oklch(0.72 0.17 25));
+--vibeui-dashboard-055-ok:light-dark(oklch(0.6 0.13 155),oklch(0.74 0.13 155));
 --vibeui-dashboard-055-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -80,7 +101,7 @@ background:transparent;color:inherit;
 }
 [data-vibeui-block="dashboard-055"] [data-part="view"][aria-current="true"]{
 background:var(--vibeui-dashboard-055-soft);
-border-color:color-mix(in oklab,var(--vibeui-dashboard-055-accent) 30%,white);
+border-color:var(--vibeui-dashboard-055-accent-line);
 font-weight:750;
 }
 [data-vibeui-block="dashboard-055"] [data-part="view"] em{
@@ -106,7 +127,7 @@ line-height:1;font-size:0.875rem;color:var(--vibeui-dashboard-055-muted);padding
 [data-vibeui-block="dashboard-055"] [data-part="save"]{
 margin-left:auto;appearance:none;cursor:pointer;font:inherit;
 font-size:0.75rem;font-weight:700;padding:0.375rem 0.75rem;border-radius:0.5rem;
-background:var(--vibeui-dashboard-055-accent);color:oklch(1 0 0);border:0;
+background:var(--vibeui-dashboard-055-accent);color:var(--vibeui-dashboard-055-on-accent);border:0;
 }
 [data-vibeui-block="dashboard-055"] [data-part="scroll"]{
 overflow-x:auto;background:var(--vibeui-dashboard-055-card);
@@ -214,6 +235,28 @@ const DEFAULT_ROWS: Dashboard055Row[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сетка заявок с сохранёнными представлениями: список видов со счётчиками,
  * активные фильтры чипами и таблица с состоянием срока. Один файл,
  * ноль зависимостей, клиентского JS нет.
@@ -226,13 +269,33 @@ export function Dashboard055({
   activeView = "Мои на этой неделе",
   saveLabel = "Сохранить как представление",
   accent,
+  background = "",
+  viewsTitle = "Представления",
+  viewsLabel = "Сохранённые представления",
+  sharedLabel = "общее",
+  columns = ["Заявка", "Клиент", "Этап", "Сумма", "Срок"],
+  dropFilterText = "Снять фильтр «{field}»",
+  shownText = "Показано {shown} из {total}",
+  filtersText = "Фильтров применено: {count}. Представление изменено и пока не сохранено.",
+  numberLocale = "ru-RU",
   className,
   style,
 }: Dashboard055Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-055-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-055-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const total =
+    views
+      .find((view) => view.name === activeView)
+      ?.count.toLocaleString(numberLocale) ?? "—"
 
   return (
     <>
@@ -250,8 +313,8 @@ export function Dashboard055({
             <h2>{title}</h2>
           </div>
 
-          <nav data-part="side" aria-label="Сохранённые представления">
-            <h3>Представления</h3>
+          <nav data-part="side" aria-label={viewsLabel}>
+            <h3>{viewsTitle}</h3>
             <ul data-part="views">
               {views.map((view) => (
                 <li key={view.name}>
@@ -261,8 +324,8 @@ export function Dashboard055({
                     aria-current={view.name === activeView}
                   >
                     {view.name}
-                    {view.shared ? <em>общее</em> : null}
-                    <b>{view.count.toLocaleString("ru-RU")}</b>
+                    {view.shared ? <em>{sharedLabel}</em> : null}
+                    <b>{view.count.toLocaleString(numberLocale)}</b>
                   </button>
                 </li>
               ))}
@@ -278,7 +341,7 @@ export function Dashboard055({
                   <button
                     type="button"
                     data-part="drop"
-                    aria-label={`Снять фильтр «${filter.field}»`}
+                    aria-label={dropFilterText.replace("{field}", filter.field)}
                   >
                     ×
                   </button>
@@ -293,11 +356,11 @@ export function Dashboard055({
               <table>
                 <thead>
                   <tr>
-                    <th scope="col">Заявка</th>
-                    <th scope="col">Клиент</th>
-                    <th scope="col">Этап</th>
-                    <th scope="col">Сумма</th>
-                    <th scope="col">Срок</th>
+                    {columns.map((column) => (
+                      <th key={column} scope="col">
+                        {column}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
@@ -323,14 +386,12 @@ export function Dashboard055({
 
             <p data-part="foot">
               <span>
-                Показано {rows.length} из{" "}
-                {views
-                  .find((view) => view.name === activeView)
-                  ?.count.toLocaleString("ru-RU") ?? "—"}
+                {shownText
+                  .replace("{shown}", String(rows.length))
+                  .replace("{total}", total)}
               </span>
               <span>
-                Фильтров применено: {filters.length}. Представление изменено и
-                пока не сохранено.
+                {filtersText.replace("{count}", String(filters.length))}
               </span>
             </p>
           </div>

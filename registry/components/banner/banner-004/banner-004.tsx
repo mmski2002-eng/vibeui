@@ -8,18 +8,28 @@ export type Banner004Props = Omit<
   note?: string
   /** Окружение: попадает в текст и в подпись для скринридера. */
   environment?: string
+  /** Шаблон доступного имени: «{label}: {environment}». */
+  labelTemplate?: string
+  /** Цвет косых полос ленты. */
+  stripe?: string
+  /** Подложка полосы. Пусто — остаётся собственная. */
+  background?: string
 }
 
 // Идея компонента: полоса тестового режима. Косая штриховка и моноширинный
 // шрифт делают её непохожей на продуктовый интерфейс — именно этого мы и
 // добиваемся: она должна кричать «это не боевые данные» с любого скриншота.
+//
+// Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не
+// инверсия светлой, жёлтый в ней приглушён, а граница светлее подложки.
 const STYLES = `
 :where([data-vibeui-block="banner-004"]){
---vibeui-banner-004-bg:oklch(0.97 0.05 95);
---vibeui-banner-004-fg:oklch(0.32 0.07 75);
---vibeui-banner-004-muted:oklch(0.48 0.06 75);
---vibeui-banner-004-stripe:oklch(0.86 0.11 95);
---vibeui-banner-004-border:oklch(0.82 0.11 95);
+--vibeui-banner-004-bg:light-dark(oklch(0.97 0.05 95),oklch(0.29 0.045 90));
+--vibeui-banner-004-fg:light-dark(oklch(0.32 0.07 75),oklch(0.93 0.04 92));
+--vibeui-banner-004-muted:light-dark(oklch(0.48 0.06 75),oklch(0.76 0.045 88));
+--vibeui-banner-004-stripe:light-dark(oklch(0.86 0.11 95),oklch(0.63 0.1 92));
+--vibeui-banner-004-border:light-dark(oklch(0.82 0.11 95),oklch(0.46 0.08 92));
+--vibeui-banner-004-chip:light-dark(oklch(1 0 0 / 55%),oklch(1 0 0 / 8%));
 --vibeui-banner-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-banner-004-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -57,7 +67,7 @@ margin:0;min-width:0;font-size:0.8125rem;line-height:1.45;color:var(--vibeui-ban
 margin-left:auto;flex:none;
 padding:0.125rem 0.5rem;border-radius:0.375rem;
 border:1px dashed var(--vibeui-banner-004-border);
-background:oklch(1 0 0 / 55%);
+background:var(--vibeui-banner-004-chip);
 font-family:var(--vibeui-banner-004-mono);font-size:0.6875rem;font-weight:650;
 }
 @container (max-width: 30rem){
@@ -68,6 +78,28 @@ font-family:var(--vibeui-banner-004-mono);font-size:0.6875rem;font-weight:650;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Полоса тестового режима: штриховка, моноширинная метка и имя окружения.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -75,10 +107,27 @@ export function Banner004({
   label = "Тестовый режим",
   note = "Платежи не проходят, письма никому не уходят. Данные обнуляются каждую ночь.",
   environment = "staging",
+  labelTemplate = "{label}: {environment}",
+  stripe,
+  background = "",
   className,
   style,
   ...props
 }: Banner004Props) {
+  const palette = {
+    ...(stripe ? { "--vibeui-banner-004-stripe": stripe } : null),
+    ...(background
+      ? {
+          "--vibeui-banner-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+  const accessibleName = labelTemplate
+    .replace("{label}", label)
+    .replace("{environment}", environment)
+
   return (
     <>
       <style href="vibeui-banner-004" precedence="medium">
@@ -88,9 +137,9 @@ export function Banner004({
         {...props}
         data-vibeui-block="banner-004"
         role="note"
-        aria-label={`${label}: ${environment}`}
+        aria-label={accessibleName}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="shell">
           <span data-part="tape" aria-hidden="true" />

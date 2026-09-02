@@ -12,6 +12,8 @@ export type Input028Props = Omit<
   reason?: string
   actionLabel?: string
   onRequestChange?: () => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,13 +25,13 @@ export type Input028Props = Omit<
 // это не сам ввод, а обращение в поддержку или отдельная форма).
 const STYLES = `
 :where([data-vibeui-block="input-028"]){
---vibeui-input-028-surface:oklch(1 0 0);
---vibeui-input-028-shell:oklch(0.91 0.006 265);
---vibeui-input-028-fg:oklch(0.23 0.014 265);
---vibeui-input-028-muted:oklch(0.56 0.014 265);
---vibeui-input-028-field:oklch(0.96 0.003 265);
---vibeui-input-028-border:oklch(0.88 0.008 265);
---vibeui-input-028-accent:oklch(0.5 0.02 265);
+--vibeui-input-028-surface:transparent;
+--vibeui-input-028-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-input-028-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-028-muted:light-dark(oklch(0.56 0.014 265),oklch(0.69 0.014 265));
+--vibeui-input-028-field:light-dark(oklch(0.96 0.003 265),oklch(0.28 0.012 265));
+--vibeui-input-028-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
+--vibeui-input-028-accent:light-dark(oklch(0.5 0.02 265),oklch(0.8 0.02 265));
 --vibeui-input-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-028"]{
@@ -74,6 +76,29 @@ outline:2px solid var(--vibeui-input-028-accent);outline-offset:2px;border-radiu
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Readonly-поле с замком и объяснением причины блокировки под полем, плюс
  * необязательное действие в обход неё. Один файл, ноль зависимостей.
  */
@@ -83,6 +108,7 @@ export function Input028({
   reason = "Подтверждена при регистрации — изменить может только поддержка.",
   actionLabel = "Обратиться в поддержку",
   onRequestChange,
+  background = "",
   accent,
   className,
   style,
@@ -92,6 +118,12 @@ export function Input028({
 
   const palette = {
     ...(accent ? { "--vibeui-input-028-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-028-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

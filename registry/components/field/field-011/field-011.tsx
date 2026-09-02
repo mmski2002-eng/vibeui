@@ -13,6 +13,14 @@ export type Field011Props = Omit<
   placeholder?: string
   defaultValue?: string
   delay?: number
+  /** Подписи фаз: компонент несёт русские, проект подставляет свои. */
+  statusText?: Record<Field011Phase, string>
+  /** Хвост с временем сохранения; {time} подставляется. */
+  savedAtText?: string
+  /** Локаль форматирования времени. */
+  locale?: string
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,14 +30,14 @@ export type Field011Props = Omit<
 // текста — иначе непонятно, случилось оно вообще или нет.
 const STYLES = `
 :where([data-vibeui-block="field-011"]){
---vibeui-field-011-bg:oklch(1 0 0);
---vibeui-field-011-surface:oklch(1 0 0);
---vibeui-field-011-fg:oklch(0.24 0.014 265);
---vibeui-field-011-muted:oklch(0.55 0.014 265);
---vibeui-field-011-border:oklch(0.88 0.008 265);
---vibeui-field-011-shell:oklch(0.91 0.006 265);
---vibeui-field-011-accent:oklch(0.55 0.2 262);
---vibeui-field-011-ok:oklch(0.5 0.13 155);
+--vibeui-field-011-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-field-011-surface:transparent;
+--vibeui-field-011-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-field-011-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-field-011-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
+--vibeui-field-011-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
+--vibeui-field-011-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-field-011-ok:light-dark(oklch(0.5 0.13 155),oklch(0.75 0.13 155));
 --vibeui-field-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="field-011"]{
@@ -78,6 +86,28 @@ const STATUS_TEXT: Record<Field011Phase, string> = {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поле с автосохранением черновика: пауза после ввода запускает сохранение,
  * а под полем остаётся метка времени последнего сохранения.
  */
@@ -86,6 +116,10 @@ export function Field011({
   placeholder = "Опишите договорённости…",
   defaultValue = "Созвон перенесли на четверг, обсудить бюджет Q3.",
   delay = 1200,
+  statusText = STATUS_TEXT,
+  savedAtText = " в {time}",
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -130,7 +164,7 @@ export function Field011({
 
   const timestamp =
     phase === "saved" && saved
-      ? saved.at.toLocaleTimeString("ru-RU", {
+      ? saved.at.toLocaleTimeString(locale, {
           hour: "2-digit",
           minute: "2-digit",
         })
@@ -138,6 +172,12 @@ export function Field011({
 
   const palette = {
     ...(accent ? { "--vibeui-field-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-field-011-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -167,8 +207,8 @@ export function Field011({
         />
         <p id="field-011-status" data-part="status" role="status">
           <span data-part="dot" aria-hidden="true" />
-          {STATUS_TEXT[phase]}
-          {timestamp ? ` в ${timestamp}` : ""}
+          {statusText[phase] ?? STATUS_TEXT[phase]}
+          {timestamp ? savedAtText.replace("{time}", timestamp) : ""}
         </p>
       </div>
     </>

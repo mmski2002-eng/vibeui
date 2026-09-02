@@ -10,6 +10,10 @@ export type Contact003Props = {
   submitLabel?: string
   privacyNote?: string
   name?: string
+  /** Подписи полей: компонент несёт русские, проект подставляет свои. */
+  fieldText?: Record<string, string>
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -32,13 +36,15 @@ export type Contact003Props = {
 // ответ пользователю реализует вызывающий код.
 const STYLES = `
 :where([data-vibeui-block="contact-003"]){
---vibeui-contact-003-bg:oklch(0.985 0.004 265);
---vibeui-contact-003-card:oklch(1 0 0);
---vibeui-contact-003-fg:oklch(0.2 0.014 265);
---vibeui-contact-003-muted:oklch(0.52 0.014 265);
---vibeui-contact-003-border:oklch(0.9 0.006 265);
---vibeui-contact-003-accent:oklch(0.5 0.17 285);
---vibeui-contact-003-alarm:oklch(0.55 0.19 25);
+--vibeui-contact-003-bg:transparent;
+--vibeui-contact-003-card:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-contact-003-field:light-dark(oklch(0.985 0.004 265),oklch(0.2 0.012 265));
+--vibeui-contact-003-fg:light-dark(oklch(0.2 0.014 265),oklch(0.94 0.005 265));
+--vibeui-contact-003-muted:light-dark(oklch(0.52 0.014 265),oklch(0.72 0.012 265));
+--vibeui-contact-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-contact-003-accent:light-dark(oklch(0.5 0.17 285),oklch(0.74 0.14 285));
+--vibeui-contact-003-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 285));
+--vibeui-contact-003-alarm:light-dark(oklch(0.55 0.19 25),oklch(0.73 0.16 25));
 --vibeui-contact-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -89,7 +95,7 @@ display:grid;gap:0.875rem;padding-top:1.25rem;border-top:1px solid var(--vibeui-
 [data-vibeui-block="contact-003"] select{
 width:100%;height:2.625rem;padding:0 0.75rem;border-radius:0.6875rem;
 border:1px solid var(--vibeui-contact-003-border);
-background:var(--vibeui-contact-003-bg);color:inherit;font:inherit;font-size:0.875rem;
+background:var(--vibeui-contact-003-field);color:inherit;font:inherit;font-size:0.875rem;
 }
 [data-vibeui-block="contact-003"] select{appearance:none;cursor:pointer;padding-right:2rem}
 [data-vibeui-block="contact-003"] [data-part="select"]{position:relative;display:block}
@@ -115,7 +121,7 @@ position:static;width:auto;height:auto;clip-path:none;
 [data-vibeui-block="contact-003"] [data-part="goal"]{
 display:inline-flex;align-items:center;gap:0.4375rem;cursor:pointer;
 height:2.125rem;padding:0 0.8125rem;border-radius:9999px;
-border:1px solid var(--vibeui-contact-003-border);background:var(--vibeui-contact-003-bg);
+border:1px solid var(--vibeui-contact-003-border);background:var(--vibeui-contact-003-field);
 font-size:0.8125rem;font-weight:600;color:var(--vibeui-contact-003-muted);
 }
 [data-vibeui-block="contact-003"] [data-part="goal"]:has(input:checked){
@@ -129,7 +135,7 @@ width:0.8125rem;height:0.8125rem;margin:0;accent-color:var(--vibeui-contact-003-
 [data-vibeui-block="contact-003"] button{
 appearance:none;cursor:pointer;border:0;justify-self:start;
 height:2.75rem;padding:0 1.375rem;border-radius:0.75rem;
-background:var(--vibeui-contact-003-accent);color:oklch(1 0 0);
+background:var(--vibeui-contact-003-accent);color:var(--vibeui-contact-003-on-accent);
 font:inherit;font-size:0.9375rem;font-weight:660;
 }
 [data-vibeui-block="contact-003"] [data-part="privacy"]{
@@ -165,6 +171,42 @@ const DEFAULT_TEAM_SIZES = [
   "Больше 200 человек",
 ]
 
+const FIELD_TEXT: Record<string, string> = {
+  name: "Имя и фамилия",
+  namePlaceholder: "Мария Орлова",
+  nameError: "Укажите имя — так мы обратимся к вам в письме.",
+  email: "Рабочая почта",
+  emailPlaceholder: "maria@company.ru",
+  emailError: "Нужен адрес с @ и доменом компании.",
+  company: "Компания",
+  companyPlaceholder: "Название",
+  companyError: "Напишите название компании.",
+  teamSize: "Размер команды",
+  goalsLegend: "Что хотите увидеть",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Заявка на демо: три шага над формой, цель встречи чипами и рабочая почта.
  * Один файл, ноль зависимостей, отправку реализует вызывающий код.
@@ -179,12 +221,21 @@ export function Contact003({
   submitLabel = "Записаться на демо",
   privacyNote = "Оставляя заявку, вы соглашаетесь на обработку контактов для организации встречи. В рассылку адрес не попадает.",
   name = "contact-003-goal",
+  fieldText,
+  background = "",
   accent,
   className,
   style,
 }: Contact003Props) {
+  const labels = { ...FIELD_TEXT, ...fieldText }
   const palette = {
     ...(accent ? { "--vibeui-contact-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-contact-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -216,55 +267,55 @@ export function Contact003({
             <form>
               <div data-part="pair">
                 <div data-part="field">
-                  <label htmlFor="contact-003-name">Имя и фамилия</label>
+                  <label htmlFor="contact-003-name">{labels.name}</label>
                   <input
                     id="contact-003-name"
                     name="name"
                     required
                     autoComplete="name"
-                    placeholder="Мария Орлова"
+                    placeholder={labels.namePlaceholder}
                     aria-describedby="contact-003-name-error"
                   />
                   <span id="contact-003-name-error" data-part="error">
-                    Укажите имя — так мы обратимся к вам в письме.
+                    {labels.nameError}
                   </span>
                 </div>
 
                 <div data-part="field">
-                  <label htmlFor="contact-003-email">Рабочая почта</label>
+                  <label htmlFor="contact-003-email">{labels.email}</label>
                   <input
                     id="contact-003-email"
                     type="email"
                     name="email"
                     required
                     autoComplete="email"
-                    placeholder="maria@company.ru"
+                    placeholder={labels.emailPlaceholder}
                     aria-describedby="contact-003-email-error"
                   />
                   <span id="contact-003-email-error" data-part="error">
-                    Нужен адрес с @ и доменом компании.
+                    {labels.emailError}
                   </span>
                 </div>
               </div>
 
               <div data-part="pair">
                 <div data-part="field">
-                  <label htmlFor="contact-003-company">Компания</label>
+                  <label htmlFor="contact-003-company">{labels.company}</label>
                   <input
                     id="contact-003-company"
                     name="company"
                     required
                     autoComplete="organization"
-                    placeholder="Название"
+                    placeholder={labels.companyPlaceholder}
                     aria-describedby="contact-003-company-error"
                   />
                   <span id="contact-003-company-error" data-part="error">
-                    Напишите название компании.
+                    {labels.companyError}
                   </span>
                 </div>
 
                 <div data-part="field">
-                  <label htmlFor="contact-003-size">Размер команды</label>
+                  <label htmlFor="contact-003-size">{labels.teamSize}</label>
                   <span data-part="select">
                     <select id="contact-003-size" name="teamSize">
                       {teamSizes.map((size) => (
@@ -276,7 +327,7 @@ export function Contact003({
               </div>
 
               <fieldset>
-                <legend>Что хотите увидеть</legend>
+                <legend>{labels.goalsLegend}</legend>
                 <div data-part="goals">
                   {goals.map((goal, index) => (
                     <label key={goal} data-part="goal">

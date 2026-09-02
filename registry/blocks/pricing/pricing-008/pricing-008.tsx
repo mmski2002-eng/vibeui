@@ -20,29 +20,57 @@ export type Pricing008Props = {
     action: { label: string; href: string }
   }
   note?: string
+  /** Подпись перед списком того, что платный тариф добавляет к бесплатному. */
+  extraLabel?: string
   accent?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 // Идея блока: только два варианта — бесплатный и платный, и разница между
-// ними видна с одного взгляда. Платная карточка залита тёмным, бесплатная
-// остаётся светлой: контраст материала работает быстрее, чем цветная рамка.
+// ними видна с одного взгляда. Платная карточка инвертирована относительно
+// бесплатной — тёмная в светлой теме и светлая в тёмной: контраст материала
+// работает быстрее, чем цветная рамка.
 // В платной список делится на две части — «всё из бесплатного» и «и ещё»:
 // повторять общие пункты во второй колонке значит заставлять сравнивать
 // строки глазами. Кнопки прижаты к низу, поэтому карточки заканчиваются ровно.
 const STYLES = `
 :where([data-vibeui-block="pricing-008"]){
---vibeui-pricing-008-bg:oklch(0.97 0.004 285);
---vibeui-pricing-008-fg:oklch(0.19 0.014 285);
---vibeui-pricing-008-muted:oklch(0.51 0.014 285);
---vibeui-pricing-008-card:oklch(1 0 0);
---vibeui-pricing-008-line:oklch(0.89 0.008 285);
---vibeui-pricing-008-dark:oklch(0.22 0.03 285);
---vibeui-pricing-008-darkfg:oklch(0.98 0.004 285);
---vibeui-pricing-008-darkmuted:oklch(0.74 0.016 285);
---vibeui-pricing-008-accent:oklch(0.7 0.17 300);
---vibeui-pricing-008-accent-fg:oklch(0.18 0.04 300);
+--vibeui-pricing-008-bg:transparent;
+--vibeui-pricing-008-fg:light-dark(oklch(0.19 0.014 285),oklch(0.95 0.005 285));
+--vibeui-pricing-008-muted:light-dark(oklch(0.51 0.014 285),oklch(0.72 0.012 285));
+--vibeui-pricing-008-card:light-dark(oklch(1 0 0),oklch(0.22 0.014 285));
+--vibeui-pricing-008-line:light-dark(oklch(0.89 0.008 285),oklch(0.35 0.014 285));
+--vibeui-pricing-008-dark:light-dark(oklch(0.22 0.03 285),oklch(0.95 0.005 285));
+--vibeui-pricing-008-darkfg:light-dark(oklch(0.98 0.004 285),oklch(0.2 0.02 285));
+--vibeui-pricing-008-darkmuted:light-dark(oklch(0.74 0.016 285),oklch(0.46 0.016 285));
+--vibeui-pricing-008-darkline:light-dark(oklch(1 0 0 / 16%),oklch(0 0 0 / 14%));
+--vibeui-pricing-008-accent:light-dark(oklch(0.7 0.17 300),oklch(0.55 0.19 300));
+--vibeui-pricing-008-accent-fg:light-dark(oklch(0.18 0.04 300),oklch(0.99 0.005 300));
 --vibeui-pricing-008-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -77,10 +105,10 @@ font-size:2.5rem;font-weight:700;letter-spacing:-0.045em;font-variant-numeric:ta
 [data-vibeui-block="pricing-008"] [data-part="feats"]{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:0.5rem}
 [data-vibeui-block="pricing-008"] [data-part="feats"] li{display:flex;align-items:flex-start;gap:0.5rem;font-size:0.875rem;line-height:1.5}
 [data-vibeui-block="pricing-008"] [data-part="tick"]{flex:0 0 auto;margin-top:0.25rem;color:var(--vibeui-pricing-008-accent)}
-[data-vibeui-block="pricing-008"] [data-part="card"] [data-part="tick"]{color:color-mix(in oklab,var(--vibeui-pricing-008-accent) 70%,black)}
+[data-vibeui-block="pricing-008"] [data-part="card"] [data-part="tick"]{color:light-dark(color-mix(in oklab,var(--vibeui-pricing-008-accent) 70%,black),color-mix(in oklab,var(--vibeui-pricing-008-accent) 70%,white))}
 [data-vibeui-block="pricing-008"] [data-paid="true"] [data-part="tick"]{color:var(--vibeui-pricing-008-accent)}
 [data-vibeui-block="pricing-008"] [data-part="divider"]{
-margin:1.25rem 0 0;padding-top:1rem;border-top:1px solid oklch(1 0 0 / 16%);
+margin:1.25rem 0 0;padding-top:1rem;border-top:1px solid var(--vibeui-pricing-008-darkline);
 font-size:0.6875rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--vibeui-pricing-008-darkmuted);
 }
 [data-vibeui-block="pricing-008"] a{
@@ -149,19 +177,27 @@ function Tick() {
   )
 }
 
-/** Бесплатный тариф рядом с платным: светлая карточка против тёмной, без третьего варианта. */
+/** Бесплатный тариф рядом с платным: обычная карточка против инвертированной, без третьего варианта. */
 export function Pricing008({
   title = "Два варианта, между которыми легко выбрать",
   lede = "Бесплатный тариф не урезан по качеству — он урезан по объёму. Платный снимает лимиты.",
   free = DEFAULT_FREE,
   paid = DEFAULT_PAID,
   note = "Перейти с бесплатного на платный можно в любой момент — установленные секции остаются вашими.",
+  extraLabel = "И сверх того",
   accent,
+  background = "",
   className,
   style,
 }: Pricing008Props) {
   const palette = {
     ...(accent ? { "--vibeui-pricing-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pricing-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -214,7 +250,7 @@ export function Pricing008({
                   </li>
                 ))}
               </ul>
-              <p data-part="divider">И сверх того</p>
+              <p data-part="divider">{extraLabel}</p>
               <ul data-part="feats">
                 {paid.extra.slice(0, 6).map((feature) => (
                   <li key={feature}>

@@ -16,7 +16,25 @@ export type Solutions034Props = {
   hint?: string
   renewalWindowMonths?: number
   leases?: Solutions034Lease[]
+  /** Подписи плиток сводки: objects, area. */
+  summaryText?: Record<string, string>
+  /** Плитка истекающих договоров. {months} — окно продления. */
+  expiringText?: string
+  /** Площадь. {area} — число квадратных метров. */
+  areaText?: string
+  /** Индексация. {percent} — процент, {monthly} — платёж. */
+  indexationText?: string
+  /** Скрытая подпись полосы срока. {object} — объект. */
+  termLabel?: string
+  /** Пройденный срок. {elapsed} и {total} — месяцы. */
+  termProgressText?: string
+  /** Статусы договора: expired, window, active; {months} — остаток. */
+  statusText?: Record<string, string>
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,14 +50,14 @@ export type Solutions034Props = {
 // раз в год.
 const STYLES = `
 :where([data-vibeui-block="solutions-034"]){
---vibeui-solutions-034-bg:oklch(1 0 0);
---vibeui-solutions-034-panel:oklch(0.974 0.004 190);
---vibeui-solutions-034-fg:oklch(0.21 0.014 210);
---vibeui-solutions-034-muted:oklch(0.54 0.014 210);
---vibeui-solutions-034-border:oklch(0.9 0.006 210);
---vibeui-solutions-034-accent:oklch(0.53 0.12 190);
---vibeui-solutions-034-warn:oklch(0.65 0.15 80);
---vibeui-solutions-034-late:oklch(0.57 0.19 25);
+--vibeui-solutions-034-bg:transparent;
+--vibeui-solutions-034-panel:light-dark(oklch(0.974 0.004 190),oklch(0.27 0.011 210));
+--vibeui-solutions-034-fg:light-dark(oklch(0.21 0.014 210),oklch(0.94 0.005 210));
+--vibeui-solutions-034-muted:light-dark(oklch(0.54 0.014 210),oklch(0.69 0.012 210));
+--vibeui-solutions-034-border:light-dark(oklch(0.9 0.006 210),oklch(0.36 0.012 210));
+--vibeui-solutions-034-accent:light-dark(oklch(0.53 0.12 190),oklch(0.74 0.11 190));
+--vibeui-solutions-034-warn:light-dark(oklch(0.65 0.15 80),oklch(0.8 0.14 80));
+--vibeui-solutions-034-late:light-dark(oklch(0.57 0.19 25),oklch(0.71 0.17 25));
 --vibeui-solutions-034-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -110,6 +128,17 @@ display:flex;justify-content:space-between;font-size:0.6875rem;color:var(--vibeu
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="solutions-034"] *{animation:none!important;transition:none!important}}
 `
 
+const SUMMARY_LABEL: Record<string, string> = {
+  objects: "объектов в аренде",
+  area: "м² сдано суммарно",
+}
+
+const STATUS_LABEL: Record<string, string> = {
+  expired: "срок истёк",
+  window: "окно продления, осталось {months} мес.",
+  active: "действует, осталось {months} мес.",
+}
+
 const DEFAULT_LEASES: Solutions034Lease[] = [
   {
     object: "Склад Б, корпус 2",
@@ -154,6 +183,28 @@ const DEFAULT_LEASES: Solutions034Lease[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Реестр договоров аренды: срок — полоса прошедшего времени, окно продления
  * считается из остатка месяцев. Один файл, ноль зависимостей, своя палитра.
  */
@@ -162,7 +213,16 @@ export function Solutions034({
   hint = "Объекты в управлении, актуально на сегодня",
   renewalWindowMonths = 3,
   leases = DEFAULT_LEASES,
+  summaryText = SUMMARY_LABEL,
+  expiringText = "истекают в ближайшие {months} мес.",
+  areaText = "{area} м²",
+  indexationText = "индексация +{percent}%/год · {monthly}",
+  termLabel = "Срок договора: {object}",
+  termProgressText = "{elapsed} из {total} мес.",
+  statusText = STATUS_LABEL,
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions034Props) {
@@ -170,9 +230,17 @@ export function Solutions034({
     const left = lease.totalMonths - lease.elapsedMonths
     return left <= renewalWindowMonths && left > 0
   })
+  const summary = (key: string) => summaryText[key] ?? SUMMARY_LABEL[key]
+  const status = (key: string) => statusText[key] ?? STATUS_LABEL[key]
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-034-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-034-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -197,19 +265,21 @@ export function Solutions034({
         <div data-part="summary">
           <p data-part="tile">
             <b>{leases.length}</b>
-            <span>объектов в аренде</span>
+            <span>{summary("objects")}</span>
           </p>
           <p data-part="tile">
             <b>
               {leases
                 .reduce((sum, lease) => sum + lease.area, 0)
-                .toLocaleString("ru-RU")}
+                .toLocaleString(locale)}
             </b>
-            <span>м² сдано суммарно</span>
+            <span>{summary("area")}</span>
           </p>
           <p data-part="tile" data-tile="warn">
             <b>{soon.length}</b>
-            <span>истекают в ближайшие {renewalWindowMonths} мес.</span>
+            <span>
+              {expiringText.replace("{months}", String(renewalWindowMonths))}
+            </span>
           </p>
         </div>
 
@@ -226,12 +296,16 @@ export function Solutions034({
                 : left <= renewalWindowMonths
                   ? "true"
                   : "false"
-            const statusLabel =
+            const statusKey =
               left <= 0
-                ? "срок истёк"
+                ? "expired"
                 : left <= renewalWindowMonths
-                  ? `окно продления, осталось ${left} мес.`
-                  : `действует, осталось ${left} мес.`
+                  ? "window"
+                  : "active"
+            const statusLabel = status(statusKey).replace(
+              "{months}",
+              String(left),
+            )
 
             return (
               <article data-part="card" key={lease.object}>
@@ -239,13 +313,16 @@ export function Solutions034({
                   <div>
                     <p data-part="object">{lease.object}</p>
                     <p data-part="tenant">
-                      {lease.tenant} · {lease.area} м²
+                      {lease.tenant} ·{" "}
+                      {areaText.replace("{area}", String(lease.area))}
                     </p>
                   </div>
                   <div data-part="rate">
                     {lease.ratePerSqmLabel}
                     <span data-part="index">
-                      индексация +{lease.indexation}%/год · {lease.monthlyLabel}
+                      {indexationText
+                        .replace("{percent}", String(lease.indexation))
+                        .replace("{monthly}", lease.monthlyLabel)}
                     </span>
                   </div>
                 </div>
@@ -256,7 +333,7 @@ export function Solutions034({
                   aria-valuenow={percent}
                   aria-valuemin={0}
                   aria-valuemax={100}
-                  aria-label={`Срок договора: ${lease.object}`}
+                  aria-label={termLabel.replace("{object}", lease.object)}
                   data-window={windowState}
                 >
                   <span
@@ -266,7 +343,9 @@ export function Solutions034({
                 </div>
                 <div data-part="term-labels" data-window={windowState}>
                   <span>
-                    {lease.elapsedMonths} из {lease.totalMonths} мес.
+                    {termProgressText
+                      .replace("{elapsed}", String(lease.elapsedMonths))
+                      .replace("{total}", String(lease.totalMonths))}
                   </span>
                   <span data-part="status">{statusLabel}</span>
                 </div>

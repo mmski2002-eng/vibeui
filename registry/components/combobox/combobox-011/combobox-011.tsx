@@ -17,7 +17,15 @@ export type Combobox011Props = Omit<
   defaultValue?: string
   clearLabel?: string
   undoLabel?: string
+  /** Строка под списком о снятом значении. {value} — снятое значение. */
+  droppedText?: string
+  /** Строка под списком о выбранном значении. {value} — выбранное. */
+  selectedText?: string
+  /** Строка под списком, пока фильтр пуст. */
+  emptyText?: string
   onSelect?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,13 +35,14 @@ export type Combobox011Props = Omit<
 // строка снизу предлагает вернуть его одним нажатием.
 const STYLES = `
 :where([data-vibeui-block="combobox-011"]){
---vibeui-combobox-011-bg:oklch(1 0 0);
---vibeui-combobox-011-fg:oklch(0.22 0.016 215);
---vibeui-combobox-011-muted:oklch(0.54 0.016 215);
---vibeui-combobox-011-border:oklch(0.9 0.008 215);
---vibeui-combobox-011-field:oklch(0.985 0.004 215);
---vibeui-combobox-011-active:oklch(0.95 0.03 215);
---vibeui-combobox-011-accent:oklch(0.52 0.12 215);
+--vibeui-combobox-011-bg:transparent;
+--vibeui-combobox-011-panel:light-dark(oklch(1 0 0),oklch(0.26 0.014 215));
+--vibeui-combobox-011-fg:light-dark(oklch(0.22 0.016 215),oklch(0.94 0.006 215));
+--vibeui-combobox-011-muted:light-dark(oklch(0.54 0.016 215),oklch(0.7 0.014 215));
+--vibeui-combobox-011-border:light-dark(oklch(0.9 0.008 215),oklch(0.37 0.014 215));
+--vibeui-combobox-011-field:light-dark(oklch(0.985 0.004 215),oklch(0.3 0.014 215));
+--vibeui-combobox-011-active:light-dark(oklch(0.95 0.03 215),oklch(0.37 0.04 215));
+--vibeui-combobox-011-accent:light-dark(oklch(0.52 0.12 215),oklch(0.78 0.12 215));
 --vibeui-combobox-011-radius:0.625rem;
 --vibeui-combobox-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -70,7 +79,7 @@ display:inline-flex;align-items:center;justify-content:center;flex:none;
 width:1.2rem;height:1.2rem;border-radius:999px;font-size:0.9rem;line-height:1;
 transition:background-color .16s ease;
 }
-[data-vibeui-block="combobox-011"] [data-part="clear"]:hover{background:var(--vibeui-combobox-011-bg)}
+[data-vibeui-block="combobox-011"] [data-part="clear"]:hover{background:var(--vibeui-combobox-011-panel)}
 [data-vibeui-block="combobox-011"] [data-part="clear"]:focus-visible{outline:2px solid var(--vibeui-combobox-011-accent);outline-offset:1px}
 [data-vibeui-block="combobox-011"] input{
 flex:1 1 5rem;min-width:4rem;height:1.9rem;padding:0 0.25rem;
@@ -111,6 +120,28 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая плашка иначе досталась бы тексту
+ * тёмной ветки, потому что light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox с очисткой значения: фишка с крестиком снимает выбор, фокус
  * остаётся в поле, а снятое значение можно вернуть.
  */
@@ -121,7 +152,11 @@ export function Combobox011({
   defaultValue = "Личный кабинет",
   clearLabel = "Очистить выбор",
   undoLabel = "вернуть",
+  droppedText = "Снято: {value}",
+  selectedText = "Выбрано: {value}",
+  emptyText = "Фильтр не задан",
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -143,6 +178,12 @@ export function Combobox011({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -265,7 +306,7 @@ export function Combobox011({
         <p data-part="foot" aria-live="polite">
           {dropped ? (
             <>
-              <span>Снято: {dropped}</span>
+              <span>{droppedText.replace("{value}", dropped)}</span>
               <button
                 type="button"
                 data-part="undo"
@@ -275,7 +316,9 @@ export function Combobox011({
               </button>
             </>
           ) : (
-            <span>{value ? `Выбрано: ${value}` : "Фильтр не задан"}</span>
+            <span>
+              {value ? selectedText.replace("{value}", value) : emptyText}
+            </span>
           )}
         </p>
       </div>

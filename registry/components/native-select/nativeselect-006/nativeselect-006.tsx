@@ -8,6 +8,10 @@ export type Nativeselect006Props = Omit<
   label?: string
   error?: string
   options?: string[]
+  /** Текст пустого пункта: он показан в закрытом поле, но недоступен в списке. */
+  placeholder?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -16,23 +20,28 @@ export type Nativeselect006Props = Omit<
 // исчезает. Здесь сообщение живёт в разметке постоянно: полоса слева
 // у текста ошибки держит взгляд у поля, стрелка и рамка перекрашиваются
 // от того же aria-invalid, что и сообщение.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// блока по умолчанию нет, а поле, границы и цвет ошибки получают свои
+// пары светлот.
 const STYLES = `
 :where([data-vibeui-block="nativeselect-006"]){
---vibeui-nativeselect-006-surface:oklch(1 0 0);
---vibeui-nativeselect-006-surface-border:oklch(0.91 0.006 265);
---vibeui-nativeselect-006-fg:oklch(0.24 0.016 265);
---vibeui-nativeselect-006-muted:oklch(0.58 0.014 265);
---vibeui-nativeselect-006-field-border:oklch(0.85 0.01 265);
---vibeui-nativeselect-006-accent:oklch(0.55 0.2 262);
---vibeui-nativeselect-006-error:oklch(0.55 0.2 25);
+--vibeui-nativeselect-006-bg:transparent;
+--vibeui-nativeselect-006-line:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-nativeselect-006-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-nativeselect-006-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.004 265));
+--vibeui-nativeselect-006-muted:light-dark(oklch(0.58 0.014 265),oklch(0.66 0.012 265));
+--vibeui-nativeselect-006-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.42 0.014 265));
+--vibeui-nativeselect-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-nativeselect-006-error:light-dark(oklch(0.55 0.2 25),oklch(0.74 0.16 25));
 --vibeui-nativeselect-006-radius:0.625rem;
 --vibeui-nativeselect-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="nativeselect-006"]{
 box-sizing:border-box;width:100%;max-width:22rem;
 padding:1rem;border-radius:0.875rem;
-background:var(--vibeui-nativeselect-006-surface);
-border:1px solid var(--vibeui-nativeselect-006-surface-border);
+background:var(--vibeui-nativeselect-006-bg);
+border:1px solid var(--vibeui-nativeselect-006-line);
 font-family:var(--vibeui-nativeselect-006-font);color:var(--vibeui-nativeselect-006-fg);
 display:flex;flex-direction:column;gap:0.375rem;
 }
@@ -46,7 +55,7 @@ box-sizing:border-box;width:100%;height:2.5rem;
 padding:0 2.25rem 0 0.75rem;
 font:inherit;font-size:0.9375rem;line-height:1.2;
 color:var(--vibeui-nativeselect-006-muted);
-background:var(--vibeui-nativeselect-006-surface);
+background:var(--vibeui-nativeselect-006-field);
 border:1px solid var(--vibeui-nativeselect-006-field-border);
 border-radius:var(--vibeui-nativeselect-006-radius);
 cursor:pointer;
@@ -89,6 +98,29 @@ font-size:0.8125rem;line-height:1.4;color:var(--vibeui-nativeselect-006-error);
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Нативный select с постоянным сообщением об ошибке вместо всплывающей
  * подсказки браузера. Один файл, ноль зависимостей.
  */
@@ -96,6 +128,8 @@ export function Nativeselect006({
   label = "Способ оплаты",
   error = "Выберите способ оплаты — без него заказ не оформить.",
   options = ["Картой онлайн", "Наличными курьеру", "Счёт для юрлица"],
+  placeholder = "Не выбрано",
+  background = "",
   accent,
   className,
   style,
@@ -105,6 +139,12 @@ export function Nativeselect006({
   const errorId = `${id}-error`
   const palette = {
     ...(accent ? { "--vibeui-nativeselect-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-nativeselect-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -130,7 +170,7 @@ export function Nativeselect006({
             aria-describedby={errorId}
           >
             <option value="" disabled hidden>
-              Не выбрано
+              {placeholder}
             </option>
             {options.map((option) => (
               <option key={option} value={option}>

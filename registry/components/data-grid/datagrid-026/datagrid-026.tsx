@@ -19,6 +19,22 @@ export type Datagrid026Props = Omit<
   rows?: Datagrid026Row[]
   caption?: string
   showDelta?: boolean
+  /** Заголовок панели над таблицей. */
+  heading?: string
+  /** Подпись флажка «показывать отклонение». */
+  deltaToggleText?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Заголовки колонок по ключу: компонент несёт русские. */
+  columnText?: Record<string, string>
+  /** Подпись радиокнопки выбора эталона. {model} — название строки. */
+  referenceLabel?: string
+  /** Метка на строке-эталоне. */
+  referenceBadge?: string
+  /** Подпись нулевого отклонения. */
+  sameText?: string
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,17 +43,21 @@ export type Datagrid026Props = Omit<
 // радиокнопкой — это выбор одного из многих, флажок здесь соврал бы.
 // Отклонение подписано знаком, а не только цветом: цвет один при
 // дальтонизме не читается, а «дешевле» и «дороже» тут противоположны.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-026"]){
---vibeui-datagrid-026-bg:oklch(1 0 0);
---vibeui-datagrid-026-fg:oklch(0.23 0.014 285);
---vibeui-datagrid-026-muted:oklch(0.55 0.014 285);
---vibeui-datagrid-026-border:oklch(0.92 0.006 285);
---vibeui-datagrid-026-head:oklch(0.975 0.003 285);
---vibeui-datagrid-026-accent:oklch(0.5 0.16 30);
---vibeui-datagrid-026-pin:oklch(0.97 0.03 30);
---vibeui-datagrid-026-up:oklch(0.53 0.17 27);
---vibeui-datagrid-026-down:oklch(0.48 0.13 155);
+--vibeui-datagrid-026-bg:transparent;
+--vibeui-datagrid-026-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-026-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-026-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
+--vibeui-datagrid-026-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
+--vibeui-datagrid-026-accent:light-dark(oklch(0.5 0.16 30),oklch(0.72 0.15 30));
+--vibeui-datagrid-026-pin:light-dark(oklch(0.97 0.03 30),oklch(0.3 0.036 30));
+--vibeui-datagrid-026-up:light-dark(oklch(0.53 0.17 27),oklch(0.75 0.15 27));
+--vibeui-datagrid-026-down:light-dark(oklch(0.48 0.13 155),oklch(0.74 0.13 155));
+--vibeui-datagrid-026-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 30));
 --vibeui-datagrid-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-026"]{
@@ -92,7 +112,7 @@ display:block;font-size:0.6875rem;font-weight:600;font-variant-numeric:tabular-n
 [data-vibeui-block="datagrid-026"] [data-part="badge"]{
 display:inline-block;margin-inline-start:0.375rem;padding:0.0625rem 0.375rem;border-radius:999px;
 font-size:0.625rem;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;
-background:var(--vibeui-datagrid-026-accent);color:oklch(1 0 0);
+background:var(--vibeui-datagrid-026-accent);color:var(--vibeui-datagrid-026-on-accent);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-026"] *{animation:none!important;transition:none!important}}
 `
@@ -141,17 +161,48 @@ const DEFAULT_ROWS: Datagrid026Row[] = [
 ]
 
 const COLUMNS = [
-  { key: "price" as const, label: "Цена, ₽", digits: 0 },
-  { key: "power" as const, label: "Мощность, кВт", digits: 1 },
-  { key: "weight" as const, label: "Масса, кг", digits: 1 },
-  { key: "warranty" as const, label: "Гарантия, мес.", digits: 0 },
+  { key: "price" as const, digits: 0 },
+  { key: "power" as const, digits: 1 },
+  { key: "weight" as const, digits: 1 },
+  { key: "warranty" as const, digits: 0 },
 ]
+
+const COLUMN_TEXT: Record<string, string> = {
+  pick: "Эталон",
+  model: "Модель",
+  price: "Цена, ₽",
+  power: "Мощность, кВт",
+  weight: "Масса, кг",
+  warranty: "Гарантия, мес.",
+}
 
 function format(value: number, digits: number) {
   return value.toLocaleString("ru-RU", {
     minimumFractionDigits: digits,
     maximumFractionDigits: digits,
   })
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -162,6 +213,14 @@ export function Datagrid026({
   rows = DEFAULT_ROWS,
   caption = "Выберите эталон радиокнопкой — остальные строки покажут отклонение",
   showDelta = true,
+  heading = "Сравнение моделей",
+  deltaToggleText = "Показывать отклонение",
+  scrollLabel = "Таблица моделей, прокручивается",
+  columnText = COLUMN_TEXT,
+  referenceLabel = "Сделать «{model}» эталоном сравнения",
+  referenceBadge = "эталон",
+  sameText = "как эталон",
+  background = "",
   accent,
   className,
   style,
@@ -175,6 +234,12 @@ export function Datagrid026({
 
   const palette = {
     ...(accent ? { "--vibeui-datagrid-026-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-026-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -186,13 +251,13 @@ export function Datagrid026({
             type="radio"
             name="vibeui-datagrid-026-reference"
             checked={row.id === reference.id}
-            aria-label={`Сделать «${row.model}» эталоном сравнения`}
+            aria-label={referenceLabel.replace("{model}", row.model)}
             onChange={() => setReferenceId(row.id)}
           />
         </td>
         <th scope="row">
           {row.model}
-          {pinned ? <span data-part="badge">эталон</span> : null}
+          {pinned ? <span data-part="badge">{referenceBadge}</span> : null}
         </th>
         {COLUMNS.map((column) => {
           const value = row[column.key]
@@ -205,7 +270,7 @@ export function Datagrid026({
               {!pinned && deltas ? (
                 <span data-part="delta" data-dir={dir}>
                   {diff === 0
-                    ? "как эталон"
+                    ? sameText
                     : `${diff > 0 ? "+" : "−"}${format(Math.abs(diff), column.digits)}`}
                 </span>
               ) : null}
@@ -228,20 +293,20 @@ export function Datagrid026({
         style={palette}
       >
         <div data-part="bar">
-          <h3 data-part="title">Сравнение моделей</h3>
+          <h3 data-part="title">{heading}</h3>
           <label data-part="mode">
             <input
               type="checkbox"
               checked={deltas}
               onChange={(event) => setDeltas(event.target.checked)}
             />
-            Показывать отклонение
+            {deltaToggleText}
           </label>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица моделей, прокручивается"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
@@ -249,12 +314,12 @@ export function Datagrid026({
             <thead>
               <tr>
                 <th scope="col" data-part="pick">
-                  <span hidden>Эталон</span>
+                  <span hidden>{columnText.pick ?? COLUMN_TEXT.pick}</span>
                 </th>
-                <th scope="col">Модель</th>
+                <th scope="col">{columnText.model ?? COLUMN_TEXT.model}</th>
                 {COLUMNS.map((column) => (
                   <th key={column.key} scope="col" data-align="end">
-                    {column.label}
+                    {columnText[column.key] ?? COLUMN_TEXT[column.key]}
                   </th>
                 ))}
               </tr>

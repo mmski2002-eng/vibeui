@@ -13,6 +13,11 @@ export type Field008Props = Omit<
   prefix?: string
   taken?: string[]
   delay?: number
+  placeholder?: string
+  /** Подписи состояний: компонент несёт русские, проект подставляет свои. */
+  noteText?: Record<Field008State, string>
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,20 +28,20 @@ export type Field008Props = Omit<
 // словом: «проверяем», «занято», «свободно». Значок никогда не работает один.
 const STYLES = `
 :where([data-vibeui-block="field-008"]){
---vibeui-field-008-bg:oklch(1 0 0);
---vibeui-field-008-surface:oklch(1 0 0);
---vibeui-field-008-fill:oklch(0.975 0.004 265);
---vibeui-field-008-fg:oklch(0.24 0.014 265);
---vibeui-field-008-muted:oklch(0.55 0.014 265);
---vibeui-field-008-border:oklch(0.88 0.008 265);
---vibeui-field-008-shell:oklch(0.91 0.006 265);
---vibeui-field-008-accent:oklch(0.55 0.2 262);
---vibeui-field-008-ok:oklch(0.5 0.13 155);
---vibeui-field-008-busy:oklch(0.56 0.19 28);
+--vibeui-field-008-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-field-008-surface:transparent;
+--vibeui-field-008-fill:light-dark(oklch(0.975 0.004 265),oklch(0.29 0.011 265));
+--vibeui-field-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-field-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-field-008-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
+--vibeui-field-008-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
+--vibeui-field-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-field-008-ok:light-dark(oklch(0.5 0.13 155),oklch(0.75 0.13 155));
+--vibeui-field-008-busy:light-dark(oklch(0.56 0.19 28),oklch(0.74 0.16 28));
 --vibeui-field-008-state:var(--vibeui-field-008-muted);
 --vibeui-field-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="field-008"]{
 display:flex;flex-direction:column;gap:0.4375rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -55,6 +60,11 @@ transition:border-color .16s ease,box-shadow .16s ease;
 [data-vibeui-block="field-008"] [data-part="frame"]:focus-within{
 border-color:var(--vibeui-field-008-state);
 box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-field-008-state) 18%,transparent);
+}
+/* Пока вердикта нет, фокус красится акцентом, а не серым тоном состояния. */
+[data-vibeui-block="field-008"]:not([data-state="taken"]):not([data-state="free"]) [data-part="frame"]:focus-within{
+border-color:var(--vibeui-field-008-accent);
+box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-field-008-accent) 18%,transparent);
 }
 [data-vibeui-block="field-008"][data-state="taken"] [data-part="frame"],
 [data-vibeui-block="field-008"][data-state="free"] [data-part="frame"]{border-color:var(--vibeui-field-008-state)}
@@ -111,6 +121,28 @@ const NOTES: Record<Field008State, string> = {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поле с проверкой занятости: пауза после ввода, состояние словом и значком.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -119,6 +151,9 @@ export function Field008({
   prefix = "vibeui.ru/",
   taken = DEFAULT_TAKEN,
   delay = 600,
+  placeholder = "ваша-команда",
+  noteText = NOTES,
+  background = "",
   accent,
   className,
   style,
@@ -164,6 +199,12 @@ export function Field008({
   const palette = {
     "--vibeui-field-008-state": tone,
     ...(accent ? { "--vibeui-field-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-field-008-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -190,7 +231,7 @@ export function Field008({
             type="text"
             autoComplete="off"
             spellCheck={false}
-            placeholder="ваша-команда"
+            placeholder={placeholder}
             value={value}
             aria-describedby="field-008-note"
             aria-invalid={state === "taken" ? true : undefined}
@@ -200,7 +241,7 @@ export function Field008({
         </div>
         {/* Состояние словом: значок сам по себе не читается вслух. */}
         <p id="field-008-note" data-part="note" role="status">
-          {NOTES[state]}
+          {noteText[state] ?? NOTES[state]}
         </p>
       </div>
     </>

@@ -11,6 +11,8 @@ export type Testimonials002Props = {
   eyebrow?: string
   title?: string
   items?: Testimonials002Item[]
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -22,12 +24,13 @@ export type Testimonials002Props = {
 // указания, откуда он взят, читается как написанный маркетологом.
 const STYLES = `
 :where([data-vibeui-block="testimonials-002"]){
---vibeui-testimonials-002-bg:oklch(0.98 0.004 260);
---vibeui-testimonials-002-card:oklch(1 0 0);
---vibeui-testimonials-002-ink:oklch(0.22 0.014 260);
---vibeui-testimonials-002-muted:oklch(0.5 0.014 260);
---vibeui-testimonials-002-border:oklch(0.91 0.006 260);
---vibeui-testimonials-002-accent:oklch(0.51 0.17 268);
+--vibeui-testimonials-002-bg:transparent;
+--vibeui-testimonials-002-card:light-dark(oklch(1 0 0),oklch(0.255 0.016 260));
+--vibeui-testimonials-002-ink:light-dark(oklch(0.22 0.014 260),oklch(0.95 0.006 260));
+--vibeui-testimonials-002-muted:light-dark(oklch(0.5 0.014 260),oklch(0.72 0.012 260));
+--vibeui-testimonials-002-border:light-dark(oklch(0.91 0.006 260),oklch(0.35 0.014 260));
+--vibeui-testimonials-002-accent:light-dark(oklch(0.51 0.17 268),oklch(0.76 0.14 268));
+--vibeui-testimonials-002-shadow:light-dark(oklch(0.2 0.04 260 / 70%),oklch(0.05 0.02 260 / 85%));
 --vibeui-testimonials-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -56,7 +59,7 @@ transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease;
 [data-vibeui-block="testimonials-002"] [data-part="card"]:hover{
 border-color:color-mix(in oklab,var(--vibeui-testimonials-002-accent) 40%,var(--vibeui-testimonials-002-border));
 transform:translateY(-2px);
-box-shadow:0 22px 44px -36px oklch(0.2 0.04 260 / 70%);
+box-shadow:0 22px 44px -36px var(--vibeui-testimonials-002-shadow);
 }
 [data-vibeui-block="testimonials-002"] [data-part="quote"]{
 margin:0;flex:1 1 auto;
@@ -71,7 +74,7 @@ padding-top:1rem;border-top:1px solid var(--vibeui-testimonials-002-border);
 [data-vibeui-block="testimonials-002"] [data-part="avatar"]{
 width:2.5rem;height:2.5rem;flex:none;border-radius:999px;
 display:grid;place-items:center;
-background:color-mix(in oklab,var(--vibeui-testimonials-002-accent) 15%,white);
+background:color-mix(in oklab,var(--vibeui-testimonials-002-accent) 15%,var(--vibeui-testimonials-002-card));
 color:var(--vibeui-testimonials-002-accent);
 font-size:0.8125rem;font-weight:750;letter-spacing:0.02em;
 }
@@ -139,6 +142,28 @@ const DEFAULT_ITEMS: Testimonials002Item[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function initials(name: string) {
   return name
     .split(" ")
@@ -152,12 +177,19 @@ export function Testimonials002({
   eyebrow = "Отзывы",
   title = "Что говорят команды, которые уже перешли",
   items = DEFAULT_ITEMS,
+  background = "",
   accent,
   className,
   style,
 }: Testimonials002Props) {
   const palette = {
     ...(accent ? { "--vibeui-testimonials-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-testimonials-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

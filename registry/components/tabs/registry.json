@@ -34,7 +34,8 @@
             "tabIndex={0} у панели: её содержимое может прокручиваться, и до него нужно доезжать с клавиатуры",
             "полоску через ::after у каждой вкладки, а не один общий бегунок с расчётом позиции в JS",
             "горизонтальную прокрутку списка со скрытой полосой прокрутки",
-            "блок <style> внутри компонента — в нём вся палитра, раскладка и анимация полоски"
+            "блок <style> внутри компонента — в нём вся палитра, раскладка и анимация полоски",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массив items: id, подпись и содержимое панели — content это ReactNode",
@@ -43,6 +44,7 @@
             "ширину и внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент клиентский: \"use client\" нужен ради состояния и клавиатуры.",
             "Не используйте вкладки для навигации между страницами: это переключение содержимого на одной. Для страниц нужны ссылки.",
             "Не прячьте за вкладками то, что нужно сравнивать между собой: сравнение требует видеть оба варианта сразу.",
@@ -78,7 +80,8 @@
                 "tabIndex={0} on the panel: its content can scroll and has to be reachable from the keyboard",
                 "the underline as each tab's own ::after rather than one shared slider positioned from JS",
                 "the horizontal scrolling of the list with its hidden scrollbar",
-                "the <style> block inside the component — it holds the palette, the layout and the underline animation"
+                "the <style> block inside the component — it holds the palette, the layout and the underline animation",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the items array: id, label and panel content — content is a ReactNode",
@@ -87,6 +90,7 @@
                 "width and outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component is a client one: \"use client\" is there for the state and the keyboard handling.",
                 "Do not use tabs to navigate between pages: they switch content within one. Pages need links.",
                 "Do not hide things that must be compared behind tabs: comparison requires seeing both at once.",
@@ -103,9 +107,31 @@
                 "label": "Accent"
               }
             },
-            "title": "Keyboard Tabs"
+            "title": "Keyboard Tabs",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "id": "overview",
+                    "label": "Overview",
+                    "content": "A project summary: the address, the last publish date and the build size."
+                  },
+                  {
+                    "id": "pages",
+                    "label": "Pages",
+                    "content": "The list of pages with their change dates and publish status."
+                  },
+                  {
+                    "id": "domains",
+                    "label": "Domains",
+                    "content": "Connected domains, certificates and DNS records."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultId", "accent"]
       }
     },
     {
@@ -136,15 +162,20 @@
             "точку у активного пункта — цвета мало, когда экран на солнце",
             "aria-current=\"page\" на активной ссылке",
             "число со значка в aria-label ссылки: сам значок скрыт от скринридера",
-            "подписи под значками: иконки без слов угадывают неверно"
+            "подписи под значками: иконки без слов угадывают неверно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items и адреса",
             "activeLabel — текущий раздел",
             "акцент через проп accent",
-            "фигуры значков"
+            "фигуры значков",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи для скринридера: navLabel — имя панели, countLabel — шаблон пункта со значком из {label} и {count}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше пяти пунктов не ставьте: подписи перестают помещаться на узком экране.",
             "Панель рассчитана на телефон: на десктопе используйте боковую навигацию.",
             "Значки нарисованы рамками, а не набором иконок: подставьте свои, сохранив размер.",
@@ -164,6 +195,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -177,15 +214,20 @@
                 "the dot on the active item — colour alone fails in sunlight",
                 "aria-current=\"page\" on the active link",
                 "the badge number in the link's aria-label: the badge itself is hidden from screen readers",
-                "labels under the glyphs: wordless icons get guessed wrong"
+                "labels under the glyphs: wordless icons get guessed wrong",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array and their URLs",
                 "activeLabel — the current section",
                 "the accent through the accent prop",
-                "the glyph shapes"
+                "the glyph shapes",
+                "background — the component background; empty means no background, taking the page colour",
+                "the screen-reader captions: navLabel names the bar, countLabel is the badge item template built from {label} and {count}"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not go past five items: the labels stop fitting on a narrow screen.",
                 "The bar is meant for phones: on desktop use side navigation.",
                 "Glyphs are drawn with borders rather than an icon set: swap in your own, keeping the size.",
@@ -200,11 +242,41 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Mobile Tab Bar"
+            "title": "Mobile Tab Bar",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "label": "Catalog",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Search",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Orders",
+                    "href": "#",
+                    "count": 3
+                  },
+                  {
+                    "label": "Profile",
+                    "href": "#"
+                  }
+                ],
+                "activeLabel": "Catalog",
+                "navLabel": "Main navigation",
+                "countLabel": "{label}, new: {count}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -235,15 +307,20 @@
             "уникальный name для каждой пары вкладок на странице — иначе группы смешаются",
             "правила :has() на шесть вкладок: седьмой нужна ещё одна строка CSS",
             "прокрутку полосы вместо переноса подписей",
-            "видимую рамку фокуса на выбранной вкладке"
+            "видимую рамку фокуса на выбранной вкладке",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив tabs и их содержимое",
             "name — имя группы радиокнопок",
             "акцент через проп accent",
-            "ширину блока"
+            "ширину блока",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "groupLabel — имя группы вкладок для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Роли tab/tabpanel не проставлены намеренно: без JS их состояние нечем поддерживать, поэтому группа объявлена радиогруппой.",
             "Адрес вкладки не попадает в URL: если нужна ссылка на раздел, берите tabs-001.",
             "Содержимое всех вкладок приходит сразу: тяжёлые панели лучше грузить своим кодом.",
@@ -263,6 +340,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -276,15 +359,20 @@
                 "a unique name per tab set on the page — otherwise the groups merge",
                 "the :has() rules covering six tabs: a seventh needs one more CSS line",
                 "scrolling the strip instead of wrapping the labels",
-                "the visible focus ring on the selected tab"
+                "the visible focus ring on the selected tab",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the tabs array and their content",
                 "name — the radio group name",
                 "the accent through the accent prop",
-                "the block width"
+                "the block width",
+                "background — the component background; empty means no background, taking the page colour",
+                "groupLabel — the name of the tab group for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "tab/tabpanel roles are deliberately absent: without JS their state cannot be maintained, so the strip is a radiogroup.",
                 "The tab is not reflected in the URL: for a linkable section use tabs-001.",
                 "Every panel's content ships at once: load heavy panels through your own code.",
@@ -299,11 +387,34 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "CSS Tabs"
+            "title": "CSS Tabs",
+            "preview": {
+              "props": {
+                "tabs": [
+                  {
+                    "label": "Overview",
+                    "text": "The component renders without a single prop: the defaults live in the file itself."
+                  },
+                  {
+                    "label": "Install",
+                    "text": "One command copies the file into your project. No external dependencies — only react."
+                  },
+                  {
+                    "label": "Theme",
+                    "text": "The colours live in variables prefixed with the component name, so the host theme cannot override them."
+                  }
+                ],
+                "groupLabel": "Sections"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -337,15 +448,20 @@
             "абсолютное позиционирование индикатора — иначе он станет ещё одной колонкой сетки и сдвинет вкладки",
             "разметку tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby",
             "roving tabindex: tabIndex 0 только у активной вкладки, у остальных -1 — иначе Tab перебирает все вкладки подряд",
-            "перенос фокуса вместе со сменой выбора при стрелках: без него выбор меняется, а фокус остаётся на месте"
+            "перенос фокуса вместе со сменой выбора при стрелках: без него выбор меняется, а фокус остаётся на месте",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items: id, подписи и содержимое панелей",
             "defaultId — какая вкладка открыта изначально",
             "акцент через проп accent — цвет индикатора и кольца фокуса",
-            "ширину индикатора через множитель scaleX"
+            "ширину индикатора через множитель scaleX",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "listLabel — имя списка вкладок для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент клиентский: \"use client\" нужен ради состояния и клавиатуры.",
             "Больше пяти вкладок в равных колонках плохо читаются: длинные подписи начинают переноситься.",
             "Идентификаторы панелей строятся из id вкладки: два экземпляра с одинаковыми id дадут повторяющиеся id в разметке.",
@@ -365,6 +481,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -378,15 +500,20 @@
                 "the absolute positioning of the indicator — otherwise it becomes another grid column and shifts the tabs",
                 "the WAI-ARIA tabs markup: role=\"tablist\", role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\" with aria-labelledby",
                 "the roving tabindex: 0 on the active tab and -1 on the rest, otherwise Tab walks through every tab",
-                "moving focus together with the selection on arrow keys: without it the selection changes while focus stays behind"
+                "moving focus together with the selection on arrow keys: without it the selection changes while focus stays behind",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array: ids, labels and panel content",
                 "defaultId — which tab starts open",
                 "the accent through the accent prop — it colours the indicator and the focus ring",
-                "the indicator width through the scaleX factor"
+                "the indicator width through the scaleX factor",
+                "background — the component background; empty means no background, taking the page colour",
+                "listLabel — the name of the tab list for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component is a client one: \"use client\" is there for the state and the keyboard.",
                 "More than five equal columns read poorly: long labels start wrapping.",
                 "Panel ids are built from the tab id: two instances sharing ids produce duplicate ids in the document.",
@@ -400,11 +527,37 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Sliding Underline"
+            "title": "Sliding Underline",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "id": "brief",
+                    "label": "Brief",
+                    "content": "What has to be delivered, in what volume and by when. One paragraph, no implementation detail."
+                  },
+                  {
+                    "id": "team",
+                    "label": "Team",
+                    "content": "Who takes part, who signs the result off and who to check with on the arguable parts."
+                  },
+                  {
+                    "id": "budget",
+                    "label": "Budget",
+                    "content": "An estimate by stage with room for revisions. On a separate line — what it does not cover."
+                  }
+                ],
+                "listLabel": "Brief sections"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultId", "accent", "background"]
       }
     },
     {
@@ -435,15 +588,20 @@
             "заливку активной пилюли вместе с цветом текста — контраст обязан оставаться достаточным на акценте",
             "разметку tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby",
             "roving tabindex: tabIndex 0 только у активной вкладки, у остальных -1",
-            "перенос фокуса вместе со сменой выбора при стрелках"
+            "перенос фокуса вместе со сменой выбора при стрелках",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items: id, подписи и содержимое панелей",
             "defaultId — какая вкладка открыта изначально",
             "акцент через проп accent — цвет активной пилюли",
-            "радиус пилюль и высоту дорожки"
+            "радиус пилюль и высоту дорожки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "listLabel — имя списка вкладок для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сегментированный переключатель рассчитан на два-четыре коротких варианта: длинные подписи в него не помещаются.",
             "Это переключение содержимого, а не навигация: для перехода между страницами нужны ссылки.",
             "Компонент клиентский: \"use client\" нужен ради состояния и клавиатуры.",
@@ -463,6 +621,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -476,15 +640,20 @@
                 "the filled active pill together with its text colour — the contrast has to stay sufficient on the accent",
                 "the WAI-ARIA tabs markup: role=\"tablist\", role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\" with aria-labelledby",
                 "the roving tabindex: 0 on the active tab and -1 on the rest",
-                "moving focus together with the selection on arrow keys"
+                "moving focus together with the selection on arrow keys",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array: ids, labels and panel content",
                 "defaultId — which tab starts open",
                 "the accent through the accent prop — it colours the active pill",
-                "the pill radius and the track height"
+                "the pill radius and the track height",
+                "background — the component background; empty means no background, taking the page colour",
+                "listLabel — the name of the tab list for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A segmented control is meant for two to four short options: long labels do not fit.",
                 "This switches content, it is not navigation: moving between pages needs links.",
                 "The component is a client one: \"use client\" is there for the state and the keyboard.",
@@ -498,11 +667,37 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Pill Tabs"
+            "title": "Pill Tabs",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "id": "day",
+                    "label": "Day",
+                    "content": "1,284 visits in the last 24 hours, 8% more than yesterday."
+                  },
+                  {
+                    "id": "week",
+                    "label": "Week",
+                    "content": "9,470 visits over seven days, peaking on Thursday."
+                  },
+                  {
+                    "id": "month",
+                    "label": "Month",
+                    "content": "38,902 visits over the month, half of them from search."
+                  }
+                ],
+                "listLabel": "Period"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultId", "accent", "background"]
       }
     },
     {
@@ -536,15 +731,20 @@
             "полосу у края активной вкладки: рядом с наведением одной заливки мало, чтобы отличить выбранное",
             "разметку tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby",
             "контейнерный запрос на внутреннем [data-part=\"shell\"], а не на корне: @container не действует на сам контейнер",
-            "roving tabindex: tabIndex 0 только у активной вкладки, у остальных -1"
+            "roving tabindex: tabIndex 0 только у активной вкладки, у остальных -1",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items: подписи, пояснения и содержимое панелей",
             "defaultId — какой раздел открыт изначально",
             "ширину колонки со списком и порог перестроения",
-            "акцент через проп accent — цвет полосы и кольца фокуса"
+            "акцент через проп accent — цвет полосы и кольца фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "listLabel — имя списка вкладок для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент клиентский: \"use client\" нужен ради состояния и клавиатуры.",
             "Вертикальные вкладки окупаются от четырёх разделов: на двух дешевле обойтись заголовками.",
             "Панель прокручивается вместе со страницей: если содержимое длинное, задайте ей свою высоту и прокрутку.",
@@ -564,6 +764,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -577,15 +783,20 @@
                 "the bar at the edge of the active tab: next to a hover state a fill alone is not enough to tell the selection apart",
                 "the WAI-ARIA tabs markup: role=\"tablist\", role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\" with aria-labelledby",
                 "the container query on the inner [data-part=\"shell\"] rather than the root: @container does not apply to the container itself",
-                "the roving tabindex: 0 on the active tab and -1 on the rest"
+                "the roving tabindex: 0 on the active tab and -1 on the rest",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array: labels, hints and panel content",
                 "defaultId — which section starts open",
                 "the list column width and the rearranging threshold",
-                "the accent through the accent prop — it colours the bar and the focus ring"
+                "the accent through the accent prop — it colours the bar and the focus ring",
+                "background — the component background; empty means no background, taking the page colour",
+                "listLabel — the name of the tab list for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component is a client one: \"use client\" is there for the state and the keyboard.",
                 "Vertical tabs pay off from four sections up: with two, headings are cheaper.",
                 "The panel scrolls with the page: for long content give it its own height and scrolling.",
@@ -599,11 +810,46 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Vertical Tabs"
+            "title": "Vertical Tabs",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "id": "profile",
+                    "label": "Profile",
+                    "hint": "Name and avatar",
+                    "content": "The name is visible to everyone in the workspace. The avatar comes from the email address unless you upload your own."
+                  },
+                  {
+                    "id": "security",
+                    "label": "Security",
+                    "hint": "Password and sign-in",
+                    "content": "Two-factor sign-in, active sessions and the list of devices used over the past month."
+                  },
+                  {
+                    "id": "alerts",
+                    "label": "Notifications",
+                    "hint": "Email and browser",
+                    "content": "What to send by email and what to show in the browser. The weekly digest is separate."
+                  },
+                  {
+                    "id": "billing",
+                    "label": "Billing",
+                    "hint": "Plan and invoices",
+                    "content": "The current plan, the next charge date and the archive of invoices from earlier periods."
+                  }
+                ],
+                "listLabel": "Settings"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultId", "accent", "background"]
       }
     },
     {
@@ -637,15 +883,20 @@
             "подписи рядом со значками: значок без слова угадывают неверно, особенно в почте",
             "разметку tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby",
             "значки из бордюров и clip-path вместо иконочного шрифта — компонент обязан оставаться одним файлом",
-            "табличные цифры в счётчике: без них ширина вкладки пляшет от чисел"
+            "табличные цифры в счётчике: без них ширина вкладки пляшет от чисел",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items: подписи, значки, счётчики и содержимое панелей",
             "defaultId — какая папка открыта изначально",
             "набор значков: подставьте свои, сохранив размер в 0.875rem",
-            "акцент через проп accent — цвет полоски и счётчика активной вкладки"
+            "акцент через проп accent — цвет полоски и счётчика активной вкладки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи для скринридера: listLabel — имя списка, countLabel — шаблон вкладки со счётчиком из {label} и {count}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Счётчик — это то, что требует внимания: непрочитанные, ошибки. Общее число писем там не нужно.",
             "Компонент клиентский: \"use client\" нужен ради состояния и клавиатуры.",
             "Значки нарисованы условно: для узнаваемых иконок подставьте свой набор.",
@@ -665,6 +916,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -678,15 +935,20 @@
                 "the labels beside the glyphs: a wordless glyph gets guessed wrong, especially in mail",
                 "the WAI-ARIA tabs markup: role=\"tablist\", role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\" with aria-labelledby",
                 "glyphs from borders and clip-path instead of an icon font — the component has to stay a single file",
-                "tabular figures in the counter: without them the tab width jitters with the numbers"
+                "tabular figures in the counter: without them the tab width jitters with the numbers",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array: labels, glyphs, counts and panel content",
                 "defaultId — which folder starts open",
                 "the glyph set: swap in your own, keeping the 0.875rem size",
-                "the accent through the accent prop — it colours the underline and the active counter"
+                "the accent through the accent prop — it colours the underline and the active counter",
+                "background — the component background; empty means no background, taking the page colour",
+                "the screen-reader captions: listLabel names the list, countLabel is the counted-tab template built from {label} and {count}"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A counter means something needing attention — unread, failing. A total message count does not belong there.",
                 "The component is a client one: \"use client\" is there for the state and the keyboard.",
                 "The glyphs are schematic: for recognisable icons drop in your own set.",
@@ -700,11 +962,50 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Counter Tabs"
+            "title": "Counter Tabs",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "id": "inbox",
+                    "label": "Inbox",
+                    "glyph": "inbox",
+                    "count": 12,
+                    "content": "Twelve unread messages, three of them marked as urgent."
+                  },
+                  {
+                    "id": "star",
+                    "label": "Starred",
+                    "glyph": "star",
+                    "count": 3,
+                    "content": "Messages starred by hand or by a filter rule."
+                  },
+                  {
+                    "id": "later",
+                    "label": "Snoozed",
+                    "glyph": "clock",
+                    "count": 5,
+                    "content": "They return to the inbox at the chosen time and become visible again."
+                  },
+                  {
+                    "id": "trash",
+                    "label": "Trash",
+                    "glyph": "trash",
+                    "content": "Deleted mail is kept for thirty days, then it is gone."
+                  }
+                ],
+                "listLabel": "Folders",
+                "countLabel": "{label}, {count} messages"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultId", "accent", "background"]
       }
     },
     {
@@ -735,15 +1036,20 @@
             "цвет маски, совпадающий с фоном блока: если фон другой, у края появится полоса чужого цвета",
             "тени по краям вообще: без них не видно, что ряд продолжается, и половина вкладок остаётся ненайденной",
             "scrollIntoView при переходе стрелками — иначе выбранная вкладка получает фокус за пределами видимой области",
-            "разметку tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby"
+            "разметку tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items: подписи и содержимое панелей",
             "defaultId — какая вкладка открыта изначально",
             "ширину и плотность теней в размере фона",
-            "акцент через проп accent — цвет полоски и кольца фокуса"
+            "акцент через проп accent — цвет полоски и кольца фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "listLabel — имя списка вкладок для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Полоса прокрутки скрыта намеренно: её роль выполняют тени. Если ряд короткий, теней не будет вовсе.",
             "Компонент клиентский: \"use client\" нужен ради состояния и клавиатуры.",
             "Приём с background-attachment требует непрозрачного фона у ряда: на просвечивающей подложке маска выдаст себя.",
@@ -763,6 +1069,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -776,15 +1088,20 @@
                 "the mask colour matching the block background: with a different background a stripe of foreign colour appears at the edge",
                 "the edge shadows at all: without them nobody sees the row continues and half the tabs go unfound",
                 "scrollIntoView on arrow navigation — otherwise the selected tab takes focus outside the visible area",
-                "the WAI-ARIA tabs markup: role=\"tablist\", role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\" with aria-labelledby"
+                "the WAI-ARIA tabs markup: role=\"tablist\", role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\" with aria-labelledby",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array: labels and panel content",
                 "defaultId — which tab starts open",
                 "the width and density of the shadows in the background size",
-                "the accent through the accent prop — it colours the underline and the focus ring"
+                "the accent through the accent prop — it colours the underline and the focus ring",
+                "background — the component background; empty means no background, taking the page colour",
+                "listLabel — the name of the tab list for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The scrollbar is hidden on purpose: the shadows do its job. With a short row there are no shadows at all.",
                 "The component is a client one: \"use client\" is there for the state and the keyboard.",
                 "The background-attachment trick needs an opaque row background: on a translucent surface the mask gives itself away.",
@@ -798,11 +1115,57 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Scrolling Tabs"
+            "title": "Scrolling Tabs",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "id": "all",
+                    "label": "All",
+                    "content": "The full list of delivery cities."
+                  },
+                  {
+                    "id": "msk",
+                    "label": "Moscow",
+                    "content": "Same-day delivery for orders placed before 22:00."
+                  },
+                  {
+                    "id": "spb",
+                    "label": "St Petersburg",
+                    "content": "Next-day delivery."
+                  },
+                  {
+                    "id": "ekb",
+                    "label": "Yekaterinburg",
+                    "content": "Two to three days, by courier."
+                  },
+                  {
+                    "id": "nsk",
+                    "label": "Novosibirsk",
+                    "content": "Three days, pickup points."
+                  },
+                  {
+                    "id": "kzn",
+                    "label": "Kazan",
+                    "content": "Two days, by courier or pickup."
+                  },
+                  {
+                    "id": "sochi",
+                    "label": "Sochi",
+                    "content": "Three to four days, pickup only."
+                  }
+                ],
+                "listLabel": "Cities"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultId", "accent", "background"]
       }
     },
     {
@@ -836,15 +1199,20 @@
             "счётчик у кнопки «ещё»: без него непонятно, спрятана одна вкладка или десять",
             "aria-expanded у кнопки «ещё» — по нему скринридер понимает, раскрыт список или нет",
             "разметку tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby",
-            "roving tabindex по видимому ряду: скрытые вкладки не должны попадать в Tab-порядок"
+            "roving tabindex по видимому ряду: скрытые вкладки не должны попадать в Tab-порядок",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items: подписи и содержимое панелей",
             "visible — сколько вкладок остаётся в ряду",
             "moreLabel — подпись кнопки со скрытыми вкладками",
-            "акцент через проп accent — цвет полоски и колец фокуса"
+            "акцент через проп accent — цвет полоски и колец фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи для скринридера: listLabel — имя списка вкладок, menuLabel — имя списка скрытых"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Число видимых вкладок задаётся числом, а не измеряется: компонент не считает реальную ширину подписей.",
             "Стрелки ходят только по видимому ряду: до скрытых вкладок добираются через кнопку «ещё».",
             "Список закрывается выбором и повторным нажатием кнопки, но не кликом мимо: добавьте закрытие, если оно нужно.",
@@ -866,6 +1234,18 @@
             "type": "text",
             "default": "Ещё",
             "maxLength": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -879,15 +1259,20 @@
                 "the counter on the \"more\" button: without it nobody knows whether one tab is hidden or ten",
                 "aria-expanded on the \"more\" button — it is how a screen reader knows whether the list is open",
                 "the WAI-ARIA tabs markup: role=\"tablist\", role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\" with aria-labelledby",
-                "the roving tabindex across the visible row: hidden tabs must not enter the tab order"
+                "the roving tabindex across the visible row: hidden tabs must not enter the tab order",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array: labels and panel content",
                 "visible — how many tabs stay in the row",
                 "moreLabel — the caption of the hidden-tabs button",
-                "the accent through the accent prop — it colours the underline and the focus rings"
+                "the accent through the accent prop — it colours the underline and the focus rings",
+                "background — the component background; empty means no background, taking the page colour",
+                "the screen-reader captions: listLabel names the tab list, menuLabel names the hidden-tabs menu"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The visible count is a number, not a measurement: the component does not compute the real label widths.",
                 "Arrows walk the visible row only: hidden tabs are reached through the \"more\" button.",
                 "The list closes on a pick and on a second press of the button, but not on an outside click: add that if you need it.",
@@ -902,11 +1287,57 @@
               "moreLabel": {
                 "label": "Button",
                 "default": "More"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Overflow Tabs"
+            "title": "Overflow Tabs",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "id": "summary",
+                    "label": "Summary",
+                    "content": "The key numbers for the period."
+                  },
+                  {
+                    "id": "sources",
+                    "label": "Sources",
+                    "content": "Where the visitors come from."
+                  },
+                  {
+                    "id": "pages",
+                    "label": "Pages",
+                    "content": "The most visited addresses."
+                  },
+                  {
+                    "id": "devices",
+                    "label": "Devices",
+                    "content": "The phone and desktop shares."
+                  },
+                  {
+                    "id": "geo",
+                    "label": "Geography",
+                    "content": "Cities and countries of the visitors."
+                  },
+                  {
+                    "id": "funnels",
+                    "label": "Funnels",
+                    "content": "The steps towards the target action."
+                  }
+                ],
+                "listLabel": "Reports",
+                "menuLabel": "Hidden tabs",
+                "moreLabel": "More"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["visible", "accent", "background"]
       }
     },
     {
@@ -940,15 +1371,20 @@
             "остановку всплытия у кнопки закрытия — без неё закрытие заодно переключает вкладку",
             "tabIndex -1 у крестика: иначе Tab перебирает по две цели на каждую вкладку",
             "aria-label у кнопки закрытия с именем файла: «×» скринридер прочитает как символ",
-            "перевод выбора на соседа слева при закрытии — иначе после закрытия активной вкладки не остаётся ни одной"
+            "перевод выбора на соседа слева при закрытии — иначе после закрытия активной вкладки не остаётся ни одной",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив files: имена, признак dirty и содержимое",
             "defaultId — какой файл открыт изначально",
             "моноширинный шрифт и высоту ряда",
-            "акцент через проп accent — цвет верхней полоски активной вкладки"
+            "акцент через проп accent — цвет верхней полоски активной вкладки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи: listLabel — имя ряда, closeLabel — шаблон кнопки закрытия из {label}, emptyText — текст, когда закрыты все вкладки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Закрытие безусловно: подтверждения для несохранённого файла компонент не показывает, добавьте его под свою модель.",
             "Закрытые вкладки не возвращаются: список открытого живёт в состоянии компонента.",
             "Вкладка — это div с role=\"tab\", а не кнопка: внутри неё уже есть своя кнопка, и кнопка в кнопке недопустима.",
@@ -968,6 +1404,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -981,15 +1423,20 @@
                 "the stopPropagation on the close button — without it closing also switches the tab",
                 "tabIndex -1 on the cross: otherwise Tab walks two targets per tab",
                 "the aria-label on the close button carrying the file name: a screen reader reads \"×\" as a symbol",
-                "handing the selection to the left neighbour on close — otherwise closing the active tab leaves none selected"
+                "handing the selection to the left neighbour on close — otherwise closing the active tab leaves none selected",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the files array: names, the dirty flag and the contents",
                 "defaultId — which file starts open",
                 "the monospaced font and the row height",
-                "the accent through the accent prop — it colours the active tab's top bar"
+                "the accent through the accent prop — it colours the active tab's top bar",
+                "background — the component background; empty means no background, taking the page colour",
+                "the captions: listLabel names the row, closeLabel is the close-button template built from {label}, emptyText is shown when every tab is closed"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Closing is unconditional: the component shows no confirmation for an unsaved file, add one for your model.",
                 "Closed tabs do not come back: the list of open files lives in component state.",
                 "A tab is a div with role=\"tab\", not a button: it already contains a button, and a button inside a button is invalid.",
@@ -1003,11 +1450,40 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Editor Tabs"
+            "title": "Editor Tabs",
+            "preview": {
+              "props": {
+                "files": [
+                  {
+                    "id": "page",
+                    "label": "page.tsx",
+                    "text": "export default function Page() {\n  return <main>Home</main>\n}"
+                  },
+                  {
+                    "id": "layout",
+                    "label": "layout.tsx",
+                    "dirty": true,
+                    "text": "export const metadata = {\n  title: 'Canvas',\n}"
+                  },
+                  {
+                    "id": "styles",
+                    "label": "globals.css",
+                    "text": ":root {\n  color-scheme: light;\n}"
+                  }
+                ],
+                "listLabel": "Open files",
+                "closeLabel": "Close {label}",
+                "emptyText": "All tabs are closed"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultId", "accent", "background"]
       }
     },
     {
@@ -1041,15 +1517,20 @@
             "уникальное значение name у группы: два экземпляра с одинаковым именем начнут переключать друг друга",
             "правила :has(), выставляющие индекс: без них индикатор останется под первой вкладкой",
             "сетку равными колонками: на ней держится арифметика сдвига индикатора",
-            "кольцо фокуса на подписи через input:focus-visible + [data-part=\"tab\"] — сам input скрыт и своего фокуса не показывает"
+            "кольцо фокуса на подписи через input:focus-visible + [data-part=\"tab\"] — сам input скрыт и своего фокуса не показывает",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив tabs: подписи, заголовки и тексты панелей",
             "name — имя группы радиокнопок",
             "акцент через проп accent — цвет индикатора и кольца фокуса",
-            "ширину индикатора через множитель scaleX"
+            "ширину индикатора через множитель scaleX",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "groupLabel — имя группы вкладок для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Правила заданы на шесть вкладок: седьмая не покажет ни панель, ни индикатор, пока не добавите ещё две строки CSS.",
             "Это не паттерн tabs из WAI-ARIA, а группа радиокнопок: скринридер объявит её переключателем, и это честно — разметка именно такая.",
             "Выбранная вкладка не запоминается между страницами: состояние живёт только в разметке.",
@@ -1060,6 +1541,12 @@
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -1075,15 +1562,20 @@
                 "a unique name for the group: two instances sharing a name start switching each other",
                 "the :has() rules that set the index: without them the indicator stays under the first tab",
                 "the equal-column grid: the indicator's offset arithmetic rests on it",
-                "the focus ring on the label through input:focus-visible + [data-part=\"tab\"] — the input itself is hidden and shows no focus of its own"
+                "the focus ring on the label through input:focus-visible + [data-part=\"tab\"] — the input itself is hidden and shows no focus of its own",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the tabs array: labels, headings and panel text",
                 "name — the radio group name",
                 "the accent through the accent prop — it colours the indicator and the focus ring",
-                "the indicator width through the scaleX factor"
+                "the indicator width through the scaleX factor",
+                "background — the component background; empty means no background, taking the page colour",
+                "groupLabel — the name of the tab group for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The rules cover six tabs: a seventh shows neither panel nor indicator until you add two more CSS lines.",
                 "This is not the WAI-ARIA tabs pattern but a radio group: a screen reader announces a set of choices, which is honest — that is what the markup is.",
                 "The selected tab is not remembered between pages: the state lives only in the markup.",
@@ -1094,11 +1586,42 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Radio Tabs"
+            "title": "Radio Tabs",
+            "preview": {
+              "props": {
+                "tabs": [
+                  {
+                    "label": "Delivery",
+                    "title": "Timing and cost",
+                    "text": "Within the city — the same day for orders placed before 16:00. Across the country — from two days by carrier."
+                  },
+                  {
+                    "label": "Payment",
+                    "title": "Ways to pay",
+                    "text": "By card on the site, on delivery, or by invoice for companies. Instalments over three months, interest free."
+                  },
+                  {
+                    "label": "Returns",
+                    "title": "How to return",
+                    "text": "Fourteen days to return without giving a reason. The money arrives within five business days."
+                  },
+                  {
+                    "label": "Warranty",
+                    "title": "Warranty period",
+                    "text": "One year on hardware and two years on accessories. Repairs and replacements go through the maker's service centre."
+                  }
+                ],
+                "groupLabel": "Terms"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

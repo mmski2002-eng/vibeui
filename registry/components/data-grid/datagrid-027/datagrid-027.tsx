@@ -19,6 +19,23 @@ export type Datagrid027Props = Omit<
   rows?: Datagrid027Row[]
   caption?: string
   density?: "compact" | "regular" | "roomy"
+  /** Заголовок панели над таблицей. */
+  heading?: string
+  /** Подпись переключателя плотности. */
+  densityLegend?: string
+  /** Подписи режимов плотности по ключу: компонент несёт русские. */
+  densityText?: Record<string, string>
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Заголовки колонок по ключу: компонент несёт русские. */
+  columnText?: Record<string, string>
+  /** Строка состояния. {density} — режим, {height} — высота строки. */
+  metricsText?: string
+  /** Хвост строки состояния про примечание. */
+  noteShownText?: string
+  noteHiddenText?: string
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,15 +44,18 @@ export type Datagrid027Props = Omit<
 // строки, а на просторной плотности показывает вторую строку с примечанием,
 // которой в компактном режиме нет. Переключатель собран радиокнопками в
 // fieldset: это выбор одного из трёх, а не три независимые кнопки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-027"]){
---vibeui-datagrid-027-bg:oklch(1 0 0);
---vibeui-datagrid-027-fg:oklch(0.23 0.014 285);
---vibeui-datagrid-027-muted:oklch(0.55 0.014 285);
---vibeui-datagrid-027-border:oklch(0.92 0.006 285);
---vibeui-datagrid-027-head:oklch(0.975 0.003 285);
---vibeui-datagrid-027-accent:oklch(0.5 0.14 145);
---vibeui-datagrid-027-chip:oklch(0.96 0.03 145);
+--vibeui-datagrid-027-bg:transparent;
+--vibeui-datagrid-027-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-027-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-027-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
+--vibeui-datagrid-027-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
+--vibeui-datagrid-027-accent:light-dark(oklch(0.5 0.14 145),oklch(0.75 0.13 145));
+--vibeui-datagrid-027-chip:light-dark(oklch(0.96 0.03 145),oklch(0.31 0.04 145));
 --vibeui-datagrid-027-pad:0.5rem;
 --vibeui-datagrid-027-size:0.8125rem;
 --vibeui-datagrid-027-lead:1.4;
@@ -148,10 +168,45 @@ const DEFAULT_ROWS: Datagrid027Row[] = [
 ]
 
 const MODES = [
-  { value: "compact", label: "Компактно", height: "≈28 px" },
-  { value: "regular", label: "Обычно", height: "≈36 px" },
-  { value: "roomy", label: "Просторно", height: "≈48 px" },
+  { value: "compact", height: "≈28 px" },
+  { value: "regular", height: "≈36 px" },
+  { value: "roomy", height: "≈48 px" },
 ] as const
+
+const DENSITY_TEXT: Record<string, string> = {
+  compact: "Компактно",
+  regular: "Обычно",
+  roomy: "Просторно",
+}
+
+const COLUMN_TEXT: Record<string, string> = {
+  document: "Документ",
+  author: "Автор",
+  changed: "Изменён",
+  size: "Размер",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Сетка с переключателем плотности: отступ, кегль и высота строки меняются
@@ -161,6 +216,15 @@ export function Datagrid027({
   rows = DEFAULT_ROWS,
   caption = "Плотность меняет отступ, кегль и высоту строки одновременно",
   density = "regular",
+  heading = "Документы сделки",
+  densityLegend = "Плотность",
+  densityText = DENSITY_TEXT,
+  scrollLabel = "Таблица документов, прокручивается вбок",
+  columnText = COLUMN_TEXT,
+  metricsText = "Плотность: {density}, высота строки {height}",
+  noteShownText = ", примечание показано",
+  noteHiddenText = ", примечание скрыто",
+  background = "",
   accent,
   className,
   style,
@@ -169,9 +233,16 @@ export function Datagrid027({
   const [mode, setMode] = useState<(typeof MODES)[number]["value"]>(density)
 
   const current = MODES.find((item) => item.value === mode) ?? MODES[1]
+  const currentLabel = densityText[current.value] ?? DENSITY_TEXT[current.value]
 
   const palette = {
     ...(accent ? { "--vibeui-datagrid-027-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-027-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -188,9 +259,9 @@ export function Datagrid027({
         style={palette}
       >
         <div data-part="bar">
-          <h3 data-part="title">Документы сделки</h3>
+          <h3 data-part="title">{heading}</h3>
           <fieldset data-part="switch">
-            <legend>Плотность</legend>
+            <legend>{densityLegend}</legend>
             {MODES.map((item) => (
               <label key={item.value}>
                 <input
@@ -200,7 +271,7 @@ export function Datagrid027({
                   checked={mode === item.value}
                   onChange={() => setMode(item.value)}
                 />
-                {item.label}
+                {densityText[item.value] ?? DENSITY_TEXT[item.value]}
               </label>
             ))}
           </fieldset>
@@ -208,18 +279,20 @@ export function Datagrid027({
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица документов, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
             <caption>{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Документ</th>
-                <th scope="col">Автор</th>
-                <th scope="col">Изменён</th>
+                <th scope="col">
+                  {columnText.document ?? COLUMN_TEXT.document}
+                </th>
+                <th scope="col">{columnText.author ?? COLUMN_TEXT.author}</th>
+                <th scope="col">{columnText.changed ?? COLUMN_TEXT.changed}</th>
                 <th scope="col" data-align="end">
-                  Размер
+                  {columnText.size ?? COLUMN_TEXT.size}
                 </th>
               </tr>
             </thead>
@@ -241,9 +314,10 @@ export function Datagrid027({
           </table>
         </div>
         <p data-part="metrics" role="status" aria-live="polite">
-          Плотность: {current.label.toLowerCase()}, высота строки{" "}
-          {current.height}
-          {mode === "roomy" ? ", примечание показано" : ", примечание скрыто"}
+          {metricsText
+            .replace("{density}", currentLabel.toLowerCase())
+            .replace("{height}", current.height)}
+          {mode === "roomy" ? noteShownText : noteHiddenText}
         </p>
       </section>
     </>

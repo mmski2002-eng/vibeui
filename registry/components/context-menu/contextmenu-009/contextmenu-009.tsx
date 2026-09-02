@@ -3,12 +3,29 @@
 import { useEffect, useRef, useState } from "react"
 import type { ComponentPropsWithoutRef, CSSProperties, MouseEvent } from "react"
 
+export type Contextmenu009Action = {
+  label: string
+  keys?: string
+}
+
 export type Contextmenu009Props = Omit<
   ComponentPropsWithoutRef<"section">,
   "children" | "title"
 > & {
   fileName?: string
   meta?: string
+  actions?: Contextmenu009Action[]
+  /** Доступное имя блока для скринридера. */
+  sectionLabel?: string
+  /** Подсказка под карточкой. */
+  hint?: string
+  /** Имя кнопки и открытого меню; {file} — имя файла. */
+  menuLabel?: string
+  deleteLabel?: string
+  /** Строка отчёта; {action} — действие, {file} — имя файла. */
+  doneText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,13 +37,15 @@ export type Contextmenu009Props = Omit<
 // Escape и клик мимо закрывают меню, фокус возвращается на кнопку-дублёр.
 const STYLES = `
 :where([data-vibeui-block="contextmenu-009"]){
---vibeui-contextmenu-009-bg:oklch(1 0 0);
---vibeui-contextmenu-009-fg:oklch(0.24 0.014 265);
---vibeui-contextmenu-009-muted:oklch(0.55 0.014 265);
---vibeui-contextmenu-009-border:oklch(0.9 0.006 265);
---vibeui-contextmenu-009-hover:oklch(0.96 0.004 265);
---vibeui-contextmenu-009-accent:oklch(0.55 0.18 258);
---vibeui-contextmenu-009-danger:oklch(0.56 0.19 25);
+--vibeui-contextmenu-009-bg:transparent;
+--vibeui-contextmenu-009-surface:light-dark(oklch(1 0 0),oklch(0.24 0.013 265));
+--vibeui-contextmenu-009-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-contextmenu-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-contextmenu-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-contextmenu-009-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.014 265));
+--vibeui-contextmenu-009-accent:light-dark(oklch(0.55 0.18 258),oklch(0.75 0.14 258));
+--vibeui-contextmenu-009-danger:light-dark(oklch(0.56 0.19 25),oklch(0.73 0.16 25));
+--vibeui-contextmenu-009-shadow:light-dark(oklch(0.2 0.03 265 / 50%),oklch(0 0 0 / 72%));
 --vibeui-contextmenu-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="contextmenu-009"]{
@@ -49,7 +68,7 @@ padding:1rem;display:flex;flex-direction:column;align-items:flex-start;gap:0.75r
 display:flex;align-items:center;gap:0.625rem;width:100%;max-width:16rem;
 padding:0.625rem 0.625rem 0.625rem 0.75rem;box-sizing:border-box;
 border:1px solid var(--vibeui-contextmenu-009-border);border-radius:0.75rem;
-background:var(--vibeui-contextmenu-009-bg);
+background:var(--vibeui-contextmenu-009-surface);
 }
 [data-vibeui-block="contextmenu-009"] [data-part="sheet"]{
 display:flex;align-items:center;justify-content:center;flex:none;
@@ -75,9 +94,9 @@ font:inherit;font-size:0.875rem;line-height:1;
 /* Координаты клика уже переведены в систему отсчёта stage — просто px. */
 [data-vibeui-block="contextmenu-009"] [data-part="menu"]{
 position:absolute;margin:0;padding:0.3125rem;width:12rem;box-sizing:border-box;
-background:var(--vibeui-contextmenu-009-bg);color:var(--vibeui-contextmenu-009-fg);
+background:var(--vibeui-contextmenu-009-surface);color:var(--vibeui-contextmenu-009-fg);
 border:1px solid var(--vibeui-contextmenu-009-border);border-radius:0.75rem;
-box-shadow:0 18px 40px -20px oklch(0.2 0.03 265 / 50%);
+box-shadow:0 18px 40px -20px var(--vibeui-contextmenu-009-shadow);
 font-family:var(--vibeui-contextmenu-009-font);
 }
 [data-vibeui-block="contextmenu-009"] [data-part="target"]{
@@ -104,12 +123,34 @@ height:1px;margin:0.3125rem 0.25rem;background:var(--vibeui-contextmenu-009-bord
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="contextmenu-009"] *{animation:none!important;transition:none!important}}
 `
 
-const ACTIONS = [
+const DEFAULT_ACTIONS: Contextmenu009Action[] = [
   { label: "Открыть", keys: "↵" },
   { label: "Переименовать", keys: "F2" },
   { label: "Дублировать", keys: "⌘D" },
   { label: "Скачать", keys: "⌘S" },
 ]
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 // Размер меню известен заранее (ширина фиксирована в CSS, высота — сумма
 // шапки, пунктов и разделителя), поэтому клик можно зажать в границах stage
@@ -125,6 +166,13 @@ const MENU_HEIGHT = 224
 export function Contextmenu009({
   fileName = "Презентация Q3.pdf",
   meta = "4,1 МБ · изменён вчера",
+  actions = DEFAULT_ACTIONS,
+  sectionLabel = "Карточка файла с меню",
+  hint = "правый клик по карточке — или кнопка «•••»",
+  menuLabel = "Действия: {file}",
+  deleteLabel = "Удалить безвозвратно",
+  doneText = "{action}: {file}",
+  background = "",
   accent,
   className,
   style,
@@ -189,12 +237,18 @@ export function Contextmenu009({
   }, [open])
 
   const run = (action: string) => {
-    setDone(`${action}: ${fileName}`)
+    setDone(doneText.replace("{action}", action).replace("{file}", fileName))
     close(true)
   }
 
   const palette = {
     ...(accent ? { "--vibeui-contextmenu-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-contextmenu-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -206,7 +260,7 @@ export function Contextmenu009({
       <section
         {...props}
         data-vibeui-block="contextmenu-009"
-        aria-label="Карточка файла с меню"
+        aria-label={sectionLabel}
         className={className}
         style={palette}
       >
@@ -229,7 +283,7 @@ export function Contextmenu009({
               type="button"
               data-part="more"
               aria-haspopup="menu"
-              aria-label={`Действия: ${fileName}`}
+              aria-label={menuLabel.replace("{file}", fileName)}
               onClick={(event) => {
                 const box = event.currentTarget.getBoundingClientRect()
                 openAt(box.left, box.bottom + 4, event.currentTarget)
@@ -238,15 +292,13 @@ export function Contextmenu009({
               •••
             </button>
           </div>
-          <span data-part="hint">
-            правый клик по карточке — или кнопка «•••»
-          </span>
+          <span data-part="hint">{hint}</span>
           {open ? (
             <div
               ref={menu}
               data-part="menu"
               role="menu"
-              aria-label={`Действия: ${fileName}`}
+              aria-label={menuLabel.replace("{file}", fileName)}
               style={{ left: `${spot.x}px`, top: `${spot.y}px` }}
               onKeyDown={(event) => {
                 if (event.key !== "ArrowDown" && event.key !== "ArrowUp") {
@@ -272,7 +324,7 @@ export function Contextmenu009({
               }}
             >
               <div data-part="target">{fileName}</div>
-              {ACTIONS.map((action) => (
+              {actions.map((action) => (
                 <button
                   key={action.label}
                   type="button"
@@ -290,9 +342,9 @@ export function Contextmenu009({
                 role="menuitem"
                 data-part="item"
                 data-danger="true"
-                onClick={() => run("Удалить безвозвратно")}
+                onClick={() => run(deleteLabel)}
               >
-                Удалить безвозвратно
+                {deleteLabel}
                 <span data-part="keys">⌫</span>
               </button>
             </div>

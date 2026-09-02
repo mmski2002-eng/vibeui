@@ -17,6 +17,25 @@ export type Calendar026Props = Omit<
   defaultWeekdays?: number[]
   occurrences?: number
   locale?: string
+  /** Подпись поля интервала. */
+  intervalLabel?: string
+  /** Подпись поля единицы повтора. */
+  unitLabel?: string
+  /** Пункты списка единиц: компонент несёт русские, проект подставляет свои. */
+  unitText?: Record<Calendar026Frequency, string>
+  /** Три формы склонения единицы для фразы: 1 / 2 / 5. */
+  unitForms?: Record<Calendar026Frequency, [string, string, string]>
+  /**
+   * Фраза правила. {count} — интервал, {unit} — единица, {head} — начало
+   * фразы, {days} — список дней, {day} — число месяца.
+   */
+  phraseText?: Record<string, string>
+  /** Подпись группы кнопок дней недели. */
+  weekdaysLabel?: string
+  /** Подпись списка ближайших дат. */
+  nextLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   onChange?: (rule: string) => void
   accent?: string
 }
@@ -27,13 +46,14 @@ export type Calendar026Props = Omit<
 // Ошибку «каждые 2 недели» вместо «каждую неделю» видно сразу по датам.
 const STYLES = `
 :where([data-vibeui-block="calendar-026"]){
---vibeui-calendar-026-bg:oklch(1 0 0);
---vibeui-calendar-026-fg:oklch(0.23 0.014 300);
---vibeui-calendar-026-muted:oklch(0.56 0.014 300);
---vibeui-calendar-026-border:oklch(0.91 0.008 300);
---vibeui-calendar-026-field:oklch(0.985 0.004 300);
---vibeui-calendar-026-soft:oklch(0.96 0.02 300);
---vibeui-calendar-026-accent:oklch(0.5 0.14 300);
+--vibeui-calendar-026-bg:transparent;
+--vibeui-calendar-026-fg:light-dark(oklch(0.23 0.014 300),oklch(0.94 0.005 300));
+--vibeui-calendar-026-muted:light-dark(oklch(0.56 0.014 300),oklch(0.68 0.012 300));
+--vibeui-calendar-026-border:light-dark(oklch(0.91 0.008 300),oklch(0.35 0.014 300));
+--vibeui-calendar-026-field:light-dark(oklch(0.985 0.004 300),oklch(0.26 0.012 300));
+--vibeui-calendar-026-soft:light-dark(oklch(0.96 0.02 300),oklch(0.3 0.03 300));
+--vibeui-calendar-026-accent:light-dark(oklch(0.5 0.14 300),oklch(0.74 0.13 300));
+--vibeui-calendar-026-onaccent:light-dark(oklch(0.99 0 0),oklch(0.18 0.02 300));
 --vibeui-calendar-026-radius:0.625rem;
 --vibeui-calendar-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-calendar-026-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
@@ -82,7 +102,7 @@ transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="calendar-026"] [data-part="day"][aria-pressed="true"]{
 background:var(--vibeui-calendar-026-accent);border-color:transparent;
-color:var(--vibeui-calendar-026-bg);
+color:var(--vibeui-calendar-026-onaccent);
 }
 [data-vibeui-block="calendar-026"] [data-part="day"]:focus-visible{
 outline:2px solid var(--vibeui-calendar-026-accent);outline-offset:2px;
@@ -110,6 +130,35 @@ color:var(--vibeui-calendar-026-muted);word-break:break-all;
 `
 
 const BYDAY = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
+
+const UNIT_TEXT: Record<Calendar026Frequency, string> = {
+  daily: "дней",
+  weekly: "недель",
+  monthly: "месяцев",
+}
+
+const UNIT_FORMS: Record<Calendar026Frequency, [string, string, string]> = {
+  daily: ["день", "дня", "дней"],
+  weekly: ["неделю", "недели", "недель"],
+  monthly: ["месяц", "месяца", "месяцев"],
+}
+
+const PHRASE_TEXT: Record<string, string> = {
+  singleDaily: "Каждый день",
+  singleWeekly: "Каждую неделю",
+  singleMonthly: "Каждый месяц",
+  every: "Каждые {count} {unit}",
+  monthDay: "{head}, {day}-го числа",
+  byDays: "{head} по дням: {days}",
+  noDays: "{head} — день недели не выбран",
+}
+
+/** Подстановка {placeholder} в шаблон фразы. */
+function fill(template: string, values: Record<string, string>) {
+  return template.replace(/\{(\w+)\}/g, (whole, key: string) =>
+    key in values ? values[key] : whole,
+  )
+}
 
 /** Строка RRULE из состояния формы: её же отдаёт onChange. */
 function ruleOf(
@@ -143,6 +192,28 @@ function pluralize(count: number, forms: [string, string, string]) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Правило повтора: форма, фраза словами, ближайшие даты и строка RRULE.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -154,6 +225,14 @@ export function Calendar026({
   defaultWeekdays = [1, 3],
   occurrences = 3,
   locale = "ru-RU",
+  intervalLabel = "Каждые",
+  unitLabel = "Единица",
+  unitText = UNIT_TEXT,
+  unitForms = UNIT_FORMS,
+  phraseText = PHRASE_TEXT,
+  weekdaysLabel = "Дни недели",
+  nextLabel = "Ближайшие повторы",
+  background = "",
   onChange,
   accent,
   className,
@@ -226,34 +305,39 @@ export function Calendar026({
   const rule = ruleOf(frequency, interval, weekdays, start.getDate())
 
   const phrase = useMemo(() => {
+    const single = {
+      daily: "singleDaily",
+      weekly: "singleWeekly",
+      monthly: "singleMonthly",
+    }[frequency]
+    const head =
+      interval === 1
+        ? (phraseText[single] ?? PHRASE_TEXT[single])
+        : fill(phraseText.every ?? PHRASE_TEXT.every, {
+            count: String(interval),
+            unit: pluralize(interval, unitForms[frequency]),
+          })
+
     if (frequency === "daily") {
-      return interval === 1
-        ? "Каждый день"
-        : `Каждые ${interval} ${pluralize(interval, ["день", "дня", "дней"])}`
+      return head
     }
 
     if (frequency === "monthly") {
-      const head =
-        interval === 1
-          ? "Каждый месяц"
-          : `Каждые ${interval} ${pluralize(interval, ["месяц", "месяца", "месяцев"])}`
-
-      return `${head}, ${start.getDate()}-го числа`
+      return fill(phraseText.monthDay ?? PHRASE_TEXT.monthDay, {
+        head,
+        day: String(start.getDate()),
+      })
     }
-
-    const head =
-      interval === 1
-        ? "Каждую неделю"
-        : `Каждые ${interval} ${pluralize(interval, ["неделю", "недели", "недель"])}`
 
     if (!weekdays.length) {
-      return `${head} — день недели не выбран`
+      return fill(phraseText.noDays ?? PHRASE_TEXT.noDays, { head })
     }
 
-    const list = weekdays.map((day) => names[day].long.toLowerCase()).join(", ")
-
-    return `${head} по дням: ${list}`
-  }, [frequency, interval, weekdays, names, startDate])
+    return fill(phraseText.byDays ?? PHRASE_TEXT.byDays, {
+      head,
+      days: weekdays.map((day) => names[day].long.toLowerCase()).join(", "),
+    })
+  }, [frequency, interval, weekdays, names, startDate, phraseText, unitForms])
 
   const toggle = (index: number) => {
     const next = weekdays.includes(index)
@@ -272,6 +356,12 @@ export function Calendar026({
 
   const palette = {
     ...(accent ? { "--vibeui-calendar-026-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-026-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -289,7 +379,7 @@ export function Calendar026({
         <h3 data-part="title">{label}</h3>
         <div data-part="row">
           <div data-part="cell">
-            <label htmlFor={`${id}-interval`}>Каждые</label>
+            <label htmlFor={`${id}-interval`}>{intervalLabel}</label>
             <input
               id={`${id}-interval`}
               inputMode="numeric"
@@ -308,7 +398,7 @@ export function Calendar026({
             />
           </div>
           <div data-part="cell">
-            <label htmlFor={`${id}-freq`}>Единица</label>
+            <label htmlFor={`${id}-freq`}>{unitLabel}</label>
             <select
               id={`${id}-freq`}
               value={frequency}
@@ -318,14 +408,18 @@ export function Calendar026({
                 onChange?.(ruleOf(next, interval, weekdays, start.getDate()))
               }}
             >
-              <option value="daily">дней</option>
-              <option value="weekly">недель</option>
-              <option value="monthly">месяцев</option>
+              {(["daily", "weekly", "monthly"] as Calendar026Frequency[]).map(
+                (unit) => (
+                  <option key={unit} value={unit}>
+                    {unitText[unit] ?? UNIT_TEXT[unit]}
+                  </option>
+                ),
+              )}
             </select>
           </div>
         </div>
         {frequency === "weekly" ? (
-          <div data-part="days" role="group" aria-label="Дни недели">
+          <div data-part="days" role="group" aria-label={weekdaysLabel}>
             {names.map((name, index) => (
               <button
                 key={name.long}
@@ -343,7 +437,7 @@ export function Calendar026({
         <p data-part="phrase" aria-live="polite">
           {phrase}
         </p>
-        <ul data-part="next" aria-label="Ближайшие повторы">
+        <ul data-part="next" aria-label={nextLabel}>
           {dates.map((date) => (
             <li key={date.getTime()}>{stamp.format(date)}</li>
           ))}

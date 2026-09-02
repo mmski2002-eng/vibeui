@@ -9,9 +9,13 @@ export type Toggle012Props = Omit<
 > & {
   label?: string
   delay?: number
+  /** Строка состояния по ключам busy, confirmedOn, confirmedOff, on и off. */
+  statusText?: Record<string, string>
   defaultPressed?: boolean
   onChange?: (pressed: boolean) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: подписка на уведомления — это настройка на будущее, а не
@@ -20,13 +24,13 @@ export type Toggle012Props = Omit<
 // сохранение: до ответа переключатель держит старое состояние и aria-busy.
 const STYLES = `
 :where([data-vibeui-block="toggle-012"]){
---vibeui-toggle-012-bg:oklch(1 0 0);
---vibeui-toggle-012-fg:oklch(0.22 0.014 265);
---vibeui-toggle-012-muted:oklch(0.55 0.014 265);
---vibeui-toggle-012-border:oklch(0.9 0.006 265);
---vibeui-toggle-012-accent:oklch(0.58 0.17 250);
---vibeui-toggle-012-track-off:oklch(0.88 0.006 265);
---vibeui-toggle-012-thumb:oklch(1 0 0);
+--vibeui-toggle-012-bg:transparent;
+--vibeui-toggle-012-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-012-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-toggle-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-toggle-012-accent:light-dark(oklch(0.58 0.17 250),oklch(0.72 0.15 250));
+--vibeui-toggle-012-track-off:light-dark(oklch(0.88 0.006 265),oklch(0.38 0.012 265));
+--vibeui-toggle-012-thumb:light-dark(oklch(1 0 0),oklch(0.96 0.004 265));
 --vibeui-toggle-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="toggle-012"]{
@@ -89,6 +93,36 @@ animation:vibeui-toggle-012-spin .7s linear infinite;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="toggle-012"] *{animation:none!important;transition:none!important}}
 `
 
+const STATUS_TEXT: Record<string, string> = {
+  busy: "Сохраняем…",
+  confirmedOn: "Подписка оформлена",
+  confirmedOff: "Подписка отменена",
+  on: "Вы подписаны",
+  off: "Вы не подписаны",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Переключатель подписки на уведомления: role="switch" с запросом на сервер,
  * во время которого включён aria-busy. Один файл, ноль зависимостей.
@@ -96,9 +130,11 @@ animation:vibeui-toggle-012-spin .7s linear infinite;
 export function Toggle012({
   label = "Уведомления о новых комментариях",
   delay = 1000,
+  statusText = STATUS_TEXT,
   defaultPressed = false,
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -119,8 +155,24 @@ export function Toggle012({
 
   const palette = {
     ...(accent ? { "--vibeui-toggle-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-toggle-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const statusKey = busy
+    ? "busy"
+    : confirmed
+      ? checked
+        ? "confirmedOn"
+        : "confirmedOff"
+      : checked
+        ? "on"
+        : "off"
 
   const subscribe = () => {
     if (busy) {
@@ -161,15 +213,7 @@ export function Toggle012({
         <div data-part="text">
           <p data-part="title">{label}</p>
           <p data-part="status" role="status">
-            {busy
-              ? "Сохраняем…"
-              : confirmed
-                ? checked
-                  ? "Подписка оформлена"
-                  : "Подписка отменена"
-                : checked
-                  ? "Вы подписаны"
-                  : "Вы не подписаны"}
+            {statusText[statusKey] ?? STATUS_TEXT[statusKey]}
           </p>
         </div>
         <button

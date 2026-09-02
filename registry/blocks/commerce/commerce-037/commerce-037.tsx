@@ -14,12 +14,24 @@ export type Commerce037Props = {
   title?: string
   order?: string
   deadline?: string
+  /** Условия возврата рядом со сроком. */
+  deadlineNote?: string
   lines?: Commerce037Line[]
   reasons?: string[]
   refund?: string
   refundNote?: string
   cta?: string
+  /** Подписи внутри строки заказа: {count} — количество, {title} — название. */
+  unitText?: string
+  pickLabel?: string
+  quantityLabel?: string
+  reasonLabel?: string
+  summaryLabel?: string
+  summaryTitle?: string
+  summaryHint?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -33,12 +45,13 @@ export type Commerce037Props = {
 // объяснением: удалённая строка выглядит как потерянный товар.
 const STYLES = `
 :where([data-vibeui-block="commerce-037"]){
---vibeui-commerce-037-bg:oklch(1 0 0);
---vibeui-commerce-037-fg:oklch(0.21 0.014 265);
---vibeui-commerce-037-muted:oklch(0.55 0.014 265);
---vibeui-commerce-037-border:oklch(0.91 0.006 265);
---vibeui-commerce-037-soft:oklch(0.975 0.004 265);
---vibeui-commerce-037-accent:oklch(0.5 0.16 30);
+--vibeui-commerce-037-bg:transparent;
+--vibeui-commerce-037-fg:light-dark(oklch(0.21 0.014 265),oklch(0.93 0.006 265));
+--vibeui-commerce-037-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-commerce-037-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-037-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.009 265));
+--vibeui-commerce-037-accent:light-dark(oklch(0.5 0.16 30),oklch(0.72 0.15 35));
+--vibeui-commerce-037-onaccent:light-dark(oklch(1 0 0),oklch(0.18 0.03 35));
 --vibeui-commerce-037-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -110,7 +123,7 @@ font-size:1.375rem;font-weight:750;font-variant-numeric:tabular-nums;letter-spac
 [data-vibeui-block="commerce-037"] [data-part="refundnote"]{margin:0.5rem 0 0;font-size:0.75rem;line-height:1.5;color:var(--vibeui-commerce-037-muted)}
 [data-vibeui-block="commerce-037"] [data-part="cta"]{
 margin-top:0.875rem;width:100%;appearance:none;border:0;cursor:pointer;height:2.875rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-037-accent);color:oklch(1 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-037-accent);color:var(--vibeui-commerce-037-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-037"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-commerce-037-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-037"] *{animation:none!important;transition:none!important}}
@@ -154,6 +167,28 @@ const DEFAULT_REASONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Возврат с выбором позиций: у каждой строки своя причина, сумма считается от отметок.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -161,17 +196,32 @@ export function Commerce037({
   title = "Что вернуть",
   order = "Заказ № 2024-1187 от 28 февраля",
   deadline = "Вернуть можно до 14 марта — осталось 9 дней",
+  deadlineNote = "Товар должен быть в исходном виде, с бирками и в упаковке.",
   lines = DEFAULT_LINES,
   reasons = DEFAULT_REASONS,
   refund = "12 800 ₽",
   refundNote = "Деньги вернутся на карту, с которой платили, за 3–10 рабочих дней после того, как склад примет посылку.",
   cta = "Оформить возврат",
+  unitText = "{count} шт.",
+  pickLabel = "Вернуть «{title}»",
+  quantityLabel = "Сколько вернуть",
+  reasonLabel = "Причина возврата",
+  summaryLabel = "Сумма возврата",
+  summaryTitle = "К возврату",
+  summaryHint = "За отмеченные позиции",
   accent,
+  background = "",
   className,
   style,
 }: Commerce037Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-037-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-037-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -190,8 +240,7 @@ export function Commerce037({
           <h2>{title}</h2>
           <p data-part="order">{order}</p>
           <p data-part="deadline">
-            <b>{deadline}</b>. Товар должен быть в исходном виде, с бирками и в
-            упаковке.
+            <b>{deadline}</b>. {deadlineNote}
           </p>
 
           <div data-part="grid">
@@ -213,13 +262,14 @@ export function Commerce037({
                       data-part="pick"
                       defaultChecked={!line.blocked && index === 0}
                       disabled={Boolean(line.blocked)}
-                      aria-label={`Вернуть «${line.title}»`}
+                      aria-label={pickLabel.replace("{title}", line.title)}
                     />
                     <span data-part="thumb" aria-hidden="true" />
                     <div>
                       <p data-part="name">{line.title}</p>
                       <p data-part="spec">
-                        {line.spec} · {line.count} шт.
+                        {line.spec} ·{" "}
+                        {unitText.replace("{count}", String(line.count))}
                       </p>
                     </div>
                     <p data-part="cost">{line.price}</p>
@@ -230,17 +280,17 @@ export function Commerce037({
                   ) : (
                     <div data-part="fields">
                       <label data-part="field">
-                        <span>Сколько вернуть</span>
+                        <span>{quantityLabel}</span>
                         <select defaultValue={String(line.count)}>
                           {Array.from({ length: line.count }, (_, i) => (
                             <option key={i} value={String(i + 1)}>
-                              {i + 1} шт.
+                              {unitText.replace("{count}", String(i + 1))}
                             </option>
                           ))}
                         </select>
                       </label>
                       <label data-part="field">
-                        <span>Причина возврата</span>
+                        <span>{reasonLabel}</span>
                         <select defaultValue={reasons[0]}>
                           {reasons.map((reason) => (
                             <option key={reason} value={reason}>
@@ -255,10 +305,10 @@ export function Commerce037({
               ))}
             </ul>
 
-            <aside aria-label="Сумма возврата">
-              <h3>К возврату</h3>
+            <aside aria-label={summaryLabel}>
+              <h3>{summaryTitle}</h3>
               <p data-part="sum">
-                <span>За отмеченные позиции</span>
+                <span>{summaryHint}</span>
                 <span>{refund}</span>
               </p>
               <p data-part="refundnote">{refundNote}</p>

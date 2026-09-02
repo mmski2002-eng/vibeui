@@ -19,6 +19,8 @@ export type Card005Props = Omit<
   options?: Card005Option[]
   defaultValue?: string
   onChange?: (value: string) => void
+  /** Пусто — подложки нет, группа лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,18 +28,21 @@ export type Card005Props = Omit<
 // стрелки и объявление «2 из 3» работают сами; вся карточка — это label, и
 // попасть можно в любую её точку, а не в кружок диаметром 16 пикселей.
 // Выбранная отличается рамкой и кружком, а не только фоном.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте рамка светлее подложки, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="card-005"]){
---vibeui-card-005-bg:oklch(1 0 0);
---vibeui-card-005-surface:oklch(0.975 0.002 265);
---vibeui-card-005-fg:oklch(0.22 0.014 265);
---vibeui-card-005-muted:oklch(0.56 0.014 265);
---vibeui-card-005-border:oklch(0.91 0.006 265);
---vibeui-card-005-accent:oklch(0.55 0.17 265);
+--vibeui-card-005-bg:light-dark(oklch(1 0 0),oklch(0.29 0.011 265));
+--vibeui-card-005-surface:transparent;
+--vibeui-card-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-card-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-card-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-card-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-card-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Собственная подложка у группы: заголовок «как платить» — это текст, и на
-   тёмной странице он обязан читаться без правки палитры проекта. */
+/* Подложка группы по умолчанию прозрачная: заголовок «как платить» ложится
+   на фон страницы и красится из color-scheme. */
 [data-vibeui-block="card-005"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:20rem;box-sizing:border-box;
@@ -110,6 +115,29 @@ const DEFAULT_OPTIONS: Card005Option[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор тарифа карточками на настоящих radio.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -118,6 +146,7 @@ export function Card005({
   options = DEFAULT_OPTIONS,
   defaultValue = "year",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -128,6 +157,12 @@ export function Card005({
 
   const palette = {
     ...(accent ? { "--vibeui-card-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-card-005-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

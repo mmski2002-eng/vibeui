@@ -10,6 +10,8 @@ export type Empty008Props = Omit<
   reason?: string
   actionLabel?: string
   onAction?: () => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,13 +19,18 @@ export type Empty008Props = Omit<
 // тупик: непонятно, почему нельзя и у кого просить. Поэтому здесь названа
 // причина, назван владелец доступа, и одно действие — попросить у него.
 // Пустым состоянием это притворяться не должно: данные есть, их не отдают.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="empty-008"]){
---vibeui-empty-008-bg:oklch(1 0 0);
---vibeui-empty-008-fg:oklch(0.21 0.014 265);
---vibeui-empty-008-muted:oklch(0.55 0.014 265);
---vibeui-empty-008-border:oklch(0.91 0.006 265);
---vibeui-empty-008-accent:oklch(0.55 0.17 265);
+--vibeui-empty-008-bg:transparent;
+--vibeui-empty-008-fg:light-dark(oklch(0.21 0.014 265),oklch(0.95 0.005 265));
+--vibeui-empty-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-empty-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-empty-008-pill:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.011 265));
+--vibeui-empty-008-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-empty-008-accent-fg:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.03 265));
 --vibeui-empty-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="empty-008"]{
@@ -56,13 +63,13 @@ margin:0;max-width:34ch;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-e
 /* Причина отдельной строкой: без неё отказ выглядит сбоем. */
 [data-vibeui-block="empty-008"] [data-part="reason"]{
 margin:0.25rem 0 0;padding:0.375rem 0.75rem;border-radius:9999px;
-background:oklch(0.97 0.003 265);
+background:var(--vibeui-empty-008-pill);
 font-size:0.75rem;font-weight:600;color:var(--vibeui-empty-008-fg);
 }
 [data-vibeui-block="empty-008"] [data-part="action"]{
 appearance:none;border:0;cursor:pointer;margin-top:0.5rem;
 height:2.5rem;padding:0 1.125rem;border-radius:0.75rem;
-background:var(--vibeui-empty-008-accent);color:oklch(0.99 0.01 265);
+background:var(--vibeui-empty-008-accent);color:var(--vibeui-empty-008-accent-fg);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="empty-008"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-empty-008-accent);outline-offset:2px}
@@ -71,6 +78,28 @@ margin:0.375rem 0 0;font-size:0.6875rem;color:var(--vibeui-empty-008-muted);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="empty-008"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Нет доступа: причина, владелец доступа и одно действие — запросить.
@@ -83,6 +112,7 @@ export function Empty008({
   reason = "Ваша роль: наблюдатель",
   actionLabel = "Запросить доступ",
   onAction,
+  background = "",
   accent,
   className,
   style,
@@ -90,6 +120,12 @@ export function Empty008({
 }: Empty008Props) {
   const palette = {
     ...(accent ? { "--vibeui-empty-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-empty-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

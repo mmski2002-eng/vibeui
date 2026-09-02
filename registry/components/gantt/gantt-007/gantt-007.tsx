@@ -15,6 +15,22 @@ export type Gantt007Props = Omit<
   heading?: string
   startDate?: string
   tasks?: Gantt007Task[]
+  /** Сводка под заголовком: {total}, {critical} и {count} подставляют числа. */
+  hintText?: string
+  /** Подпись области прокрутки: {heading} — заголовок плана. */
+  scrollText?: string
+  /** Метка критической задачи на полосе. */
+  tagText?: string
+  /** Длительность внутри полосы: {days} — число дней. */
+  daysText?: string
+  /** Пометка критической задачи в таблице. */
+  criticalText?: string
+  /** Подпись раскрывающейся таблицы сроков и запаса. */
+  tableText?: string
+  /** Заголовки таблицы по ключам task, start, end, slack. */
+  columnText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,15 +40,19 @@ export type Gantt007Props = Omit<
 // сдвинется от любой задержки, а где есть люфт. Сроки и запас считаются из
 // связей прямо при рендере — прямого и обратного прохода хватает, состояния
 // нет, компонент остаётся серверным.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="gantt-007"]){
---vibeui-gantt-007-bg:oklch(1 0 0);
---vibeui-gantt-007-fg:oklch(0.22 0.014 265);
---vibeui-gantt-007-muted:oklch(0.6 0.014 265);
---vibeui-gantt-007-border:oklch(0.91 0.006 265);
---vibeui-gantt-007-line:oklch(0.955 0.004 265);
---vibeui-gantt-007-accent:oklch(0.52 0.19 25);
---vibeui-gantt-007-calm:oklch(0.55 0.03 265);
+--vibeui-gantt-007-bg:transparent;
+--vibeui-gantt-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.93 0.006 265));
+--vibeui-gantt-007-muted:light-dark(oklch(0.6 0.014 265),oklch(0.7 0.012 265));
+--vibeui-gantt-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-gantt-007-line:light-dark(oklch(0.955 0.004 265),oklch(0.3 0.01 265));
+--vibeui-gantt-007-accent:light-dark(oklch(0.52 0.19 25),oklch(0.7 0.17 30));
+--vibeui-gantt-007-calm:light-dark(oklch(0.55 0.03 265),oklch(0.68 0.02 265));
+--vibeui-gantt-007-onaccent:light-dark(oklch(0.99 0 0),oklch(0.17 0.01 265));
 --vibeui-gantt-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="gantt-007"]{
@@ -85,15 +105,15 @@ font-size:0.5625rem;line-height:1;white-space:nowrap;overflow:hidden;
 font-variant-numeric:tabular-nums;
 border:1px solid var(--vibeui-gantt-007-calm);
 color:var(--vibeui-gantt-007-fg);
-background:color-mix(in oklab,var(--vibeui-gantt-007-calm) 10%,var(--vibeui-gantt-007-bg));
+background:color-mix(in oklab,var(--vibeui-gantt-007-calm) 12%,transparent);
 }
 /* Критическая задача отличается начертанием, а не оттенком: заливка,
    двойная рамка и жирный текст переживают и печать, и дальтонизм. */
 [data-vibeui-block="gantt-007"] [data-part="bar"][data-critical="true"]{
 border:2px solid var(--vibeui-gantt-007-accent);
-background:color-mix(in oklab,var(--vibeui-gantt-007-accent) 22%,var(--vibeui-gantt-007-bg));
+background:color-mix(in oklab,var(--vibeui-gantt-007-accent) 24%,transparent);
 font-weight:750;
-box-shadow:inset 0 0 0 1px var(--vibeui-gantt-007-bg);
+box-shadow:inset 0 0 0 1px var(--vibeui-gantt-007-onaccent);
 }
 [data-vibeui-block="gantt-007"] [data-part="row"][data-critical="true"] [data-part="label"]{
 font-weight:700;
@@ -117,7 +137,7 @@ border-left:1px solid var(--vibeui-gantt-007-line);padding-left:0.1875rem;
 }
 [data-vibeui-block="gantt-007"] [data-part="tag"]{
 margin-left:0.375rem;padding:0 0.1875rem;border-radius:0.1875rem;
-background:var(--vibeui-gantt-007-accent);color:var(--vibeui-gantt-007-bg);
+background:var(--vibeui-gantt-007-accent);color:var(--vibeui-gantt-007-onaccent);
 font-size:0.5rem;font-weight:700;letter-spacing:0.04em;
 }
 [data-vibeui-block="gantt-007"] [data-part="table"]{margin:0.75rem 0 0}
@@ -153,6 +173,35 @@ const DEFAULT_TASKS: Gantt007Task[] = [
   { id: "qa", title: "Проверка", days: 3, after: ["build", "photo"] },
   { id: "launch", title: "Запуск", days: 1, after: ["qa"] },
 ]
+
+const DEFAULT_COLUMNS: Record<string, string> = {
+  task: "Задача",
+  start: "Начало",
+  end: "Конец",
+  slack: "Запас, дн",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Прямой и обратный проход по связям: ранние сроки, поздние сроки и запас.
@@ -203,6 +252,14 @@ export function Gantt007({
   heading = "Критический путь",
   startDate = "2026-05-04",
   tasks = DEFAULT_TASKS,
+  hintText = "{total} дней, без запаса {critical} из {count}",
+  scrollText = "{heading}: диаграмма, прокручивается вбок",
+  tagText = "КП",
+  daysText = "{days} дн",
+  criticalText = " (критическая)",
+  tableText = "Сроки и запас таблицей",
+  columnText = DEFAULT_COLUMNS,
+  background = "",
   accent,
   className,
   style,
@@ -220,6 +277,12 @@ export function Gantt007({
   const palette = {
     "--vibeui-gantt-007-ticks": ticks,
     ...(accent ? { "--vibeui-gantt-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-gantt-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -238,7 +301,10 @@ export function Gantt007({
         <header data-part="head">
           <h3 data-part="heading">{heading}</h3>
           <p data-part="hint">
-            {total} дней, без запаса {critical} из {rows.length}
+            {hintText
+              .replace("{total}", String(total))
+              .replace("{critical}", String(critical))
+              .replace("{count}", String(rows.length))}
           </p>
         </header>
 
@@ -246,7 +312,7 @@ export function Gantt007({
           data-part="scroll"
           tabIndex={0}
           role="group"
-          aria-label={`${heading}: диаграмма, прокручивается вбок`}
+          aria-label={scrollText.replace("{heading}", heading)}
         >
           <div data-part="shell">
             <ol>
@@ -258,7 +324,7 @@ export function Gantt007({
                 >
                   <span data-part="label">
                     {row.task.title}
-                    {row.critical ? <b data-part="tag">КП</b> : null}
+                    {row.critical ? <b data-part="tag">{tagText}</b> : null}
                   </span>
 
                   <span data-part="track">
@@ -281,7 +347,7 @@ export function Gantt007({
                         width: `${(row.task.days / total) * 100}%`,
                       }}
                     >
-                      {row.task.days} дн
+                      {daysText.replace("{days}", String(row.task.days))}
                     </b>
                   </span>
                 </li>
@@ -297,14 +363,14 @@ export function Gantt007({
         </div>
 
         <details data-part="table">
-          <summary>Сроки и запас таблицей</summary>
+          <summary>{tableText}</summary>
           <table>
             <thead>
               <tr>
-                <th scope="col">Задача</th>
-                <th scope="col">Начало</th>
-                <th scope="col">Конец</th>
-                <th scope="col">Запас, дн</th>
+                <th scope="col">{columnText.task ?? DEFAULT_COLUMNS.task}</th>
+                <th scope="col">{columnText.start ?? DEFAULT_COLUMNS.start}</th>
+                <th scope="col">{columnText.end ?? DEFAULT_COLUMNS.end}</th>
+                <th scope="col">{columnText.slack ?? DEFAULT_COLUMNS.slack}</th>
               </tr>
             </thead>
             <tbody>
@@ -312,7 +378,7 @@ export function Gantt007({
                 <tr key={row.task.id} data-critical={String(row.critical)}>
                   <th scope="row">
                     {row.task.title}
-                    {row.critical ? " (критическая)" : ""}
+                    {row.critical ? criticalText : ""}
                   </th>
                   <td>{dateText(row.start)}</td>
                   <td>{dateText(row.finish - 1)}</td>

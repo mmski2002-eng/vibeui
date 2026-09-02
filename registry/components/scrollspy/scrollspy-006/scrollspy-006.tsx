@@ -16,6 +16,10 @@ export type Scrollspy006Props = Omit<
   sections?: Scrollspy006Section[]
   title?: string
   topLabel?: string
+  /** Подпись области чтения для скринридера. */
+  bodyLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,13 +28,20 @@ export type Scrollspy006Props = Omit<
 // Наблюдатель пересечений следит за меткой в самом верху текста и прячет
 // ссылку, пока начало и так на экране, — иначе кнопка предлагает то, что
 // уже сделано. Активный раздел подсвечивается тем же наблюдателем.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы. Подложки у
+// него нет, но кнопка возврата обязана быть непрозрачной — она берёт
+// системный Canvas, то есть тот же цвет, по которому идёт страница.
 const STYLES = `
 :where([data-vibeui-block="scrollspy-006"]){
---vibeui-scrollspy-006-bg:oklch(1 0 0);
---vibeui-scrollspy-006-fg:oklch(0.23 0.014 265);
---vibeui-scrollspy-006-muted:oklch(0.56 0.014 265);
---vibeui-scrollspy-006-border:oklch(0.91 0.006 265);
---vibeui-scrollspy-006-accent:oklch(0.52 0.15 200);
+--vibeui-scrollspy-006-bg:transparent;
+--vibeui-scrollspy-006-chip:Canvas;
+--vibeui-scrollspy-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-scrollspy-006-muted:light-dark(oklch(0.56 0.014 265),oklch(0.69 0.012 265));
+--vibeui-scrollspy-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-scrollspy-006-accent:light-dark(oklch(0.52 0.15 200),oklch(0.76 0.12 200));
+--vibeui-scrollspy-006-shadow:light-dark(oklch(0.2 0.02 265 / 12%),oklch(0 0 0 / 44%));
 --vibeui-scrollspy-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="scrollspy-006"]{
@@ -73,8 +84,8 @@ position:absolute;right:0.625rem;bottom:0.625rem;
 display:inline-flex;align-items:center;gap:0.3125rem;
 padding:0.3125rem 0.625rem;border-radius:9999px;
 border:1px solid var(--vibeui-scrollspy-006-border);
-background:var(--vibeui-scrollspy-006-bg);color:var(--vibeui-scrollspy-006-fg);
-box-shadow:0 2px 8px oklch(0.2 0.02 265 / 12%);
+background:var(--vibeui-scrollspy-006-chip);color:var(--vibeui-scrollspy-006-fg);
+box-shadow:0 2px 8px var(--vibeui-scrollspy-006-shadow);
 font-size:0.75rem;font-weight:600;text-decoration:none;
 transition:opacity .16s ease,transform .16s ease;
 }
@@ -118,6 +129,28 @@ const DEFAULT_SECTIONS: Scrollspy006Section[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Оглавление с кнопкой возврата к началу: обычный якорь, скрытый пока начало видно.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -125,6 +158,8 @@ export function Scrollspy006({
   sections = DEFAULT_SECTIONS,
   title = "Содержание",
   topLabel = "Наверх",
+  bodyLabel = "Текст статьи",
+  background = "",
   accent,
   className,
   style,
@@ -169,6 +204,13 @@ export function Scrollspy006({
 
   const palette = {
     ...(accent ? { "--vibeui-scrollspy-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-scrollspy-006-bg": background,
+          "--vibeui-scrollspy-006-chip": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -207,7 +249,7 @@ export function Scrollspy006({
             ref={body}
             tabIndex={0}
             role="group"
-            aria-label="Текст статьи"
+            aria-label={bodyLabel}
           >
             <span data-part="sentinel" ref={sentinel} aria-hidden="true" />
             {sections.map((section) => (

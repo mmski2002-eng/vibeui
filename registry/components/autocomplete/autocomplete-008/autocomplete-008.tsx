@@ -15,7 +15,13 @@ export type Autocomplete008Props = Omit<
   placeholder?: string
   domains?: string[]
   defaultValue?: string
+  /** Строка рядом с клавишей Tab. {domain} — домен целиком. */
+  acceptHint?: string
+  /** Строка, пока дописывать нечего. */
+  idleHint?: string
   onChange?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,13 +31,13 @@ export type Autocomplete008Props = Omit<
 // после «@»: до собаки угадывать нечего.
 const STYLES = `
 :where([data-vibeui-block="autocomplete-008"]){
---vibeui-autocomplete-008-bg:oklch(1 0 0);
---vibeui-autocomplete-008-fg:oklch(0.22 0.014 265);
---vibeui-autocomplete-008-muted:oklch(0.52 0.014 265);
---vibeui-autocomplete-008-ghost:oklch(0.72 0.012 265);
---vibeui-autocomplete-008-border:oklch(0.9 0.006 265);
---vibeui-autocomplete-008-field:oklch(0.985 0.002 265);
---vibeui-autocomplete-008-accent:oklch(0.55 0.17 265);
+--vibeui-autocomplete-008-bg:transparent;
+--vibeui-autocomplete-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-autocomplete-008-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-008-ghost:light-dark(oklch(0.72 0.012 265),oklch(0.53 0.012 265));
+--vibeui-autocomplete-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-autocomplete-008-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-autocomplete-008-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-autocomplete-008-radius:0.625rem;
 --vibeui-autocomplete-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -107,6 +113,28 @@ function completion(value: string, domains: string[]) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Почта с дописыванием домена: серый хвост принимается Tab.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -115,7 +143,10 @@ export function Autocomplete008({
   placeholder = "имя@почта",
   domains = DEFAULT_DOMAINS,
   defaultValue = "anna.petrova@ya",
+  acceptHint = "допишет домен {domain}",
+  idleHint = "После @ поле допишет домен",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -127,6 +158,12 @@ export function Autocomplete008({
 
   const palette = {
     ...(accent ? { "--vibeui-autocomplete-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-autocomplete-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -179,11 +216,14 @@ export function Autocomplete008({
         <span data-part="hint" id={`${id}-hint`}>
           {rest ? (
             <>
-              <kbd>Tab</kbd> допишет домен {value.slice(value.indexOf("@") + 1)}
-              {rest}
+              <kbd>Tab</kbd>{" "}
+              {acceptHint.replace(
+                "{domain}",
+                `${value.slice(value.indexOf("@") + 1)}${rest}`,
+              )}
             </>
           ) : (
-            "После @ поле допишет домен"
+            idleHint
           )}
         </span>
       </div>

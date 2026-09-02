@@ -15,7 +15,15 @@ export type Dropdown015Props = Omit<
   side?: "right" | "left"
   submenuLabel?: string
   formats?: string[]
+  /** Подпись над кнопкой: имя файла, который делят. */
+  caption?: string
+  /** Пункты первого уровня: ключи link и invite. */
+  itemsText?: Record<string, string>
+  /** Расширение рядом с форматом: ключ — название формата. */
+  extensionText?: Record<string, string>
   accent?: string
+  /** Подложка карточки и меню. Пусто — собственный фон по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: пункт «Экспортировать как» раскрывает второй уровень
@@ -23,14 +31,17 @@ export type Dropdown015Props = Omit<
 // закрыл бы первый — второй уровень поэтому обычный абсолютный слой внутри
 // первого popover. Стрелка вправо входит в подменю и ставит фокус на первый
 // формат, стрелка влево выходит и возвращает фокус на родительский пункт.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте карточка светлее фона страницы, а её граница светлее карточки.
 const STYLES = `
 :where([data-vibeui-block="dropdown-015"]){
---vibeui-dropdown-015-bg:oklch(1 0 0);
---vibeui-dropdown-015-fg:oklch(0.24 0.014 220);
---vibeui-dropdown-015-muted:oklch(0.56 0.014 220);
---vibeui-dropdown-015-border:oklch(0.9 0.006 220);
---vibeui-dropdown-015-hover:oklch(0.96 0.004 220);
---vibeui-dropdown-015-accent:oklch(0.56 0.17 220);
+--vibeui-dropdown-015-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 220));
+--vibeui-dropdown-015-fg:light-dark(oklch(0.24 0.014 220),oklch(0.94 0.006 220));
+--vibeui-dropdown-015-muted:light-dark(oklch(0.56 0.014 220),oklch(0.7 0.012 220));
+--vibeui-dropdown-015-border:light-dark(oklch(0.9 0.006 220),oklch(0.37 0.012 220));
+--vibeui-dropdown-015-hover:light-dark(oklch(0.96 0.004 220),oklch(0.32 0.014 220));
+--vibeui-dropdown-015-accent:light-dark(oklch(0.56 0.17 220),oklch(0.76 0.13 220));
 --vibeui-dropdown-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="dropdown-015"]{
@@ -122,6 +133,33 @@ const EXTENSIONS: Record<string, string> = {
   "CSV-таблица": ".csv",
 }
 
+const DEFAULT_ITEMS: Record<string, string> = {
+  link: "Ссылка для просмотра",
+  invite: "Пригласить соавтора",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function stepFocus(scope: HTMLElement | null, delta: number) {
   if (!scope) {
     return
@@ -148,7 +186,11 @@ export function Dropdown015({
   side = "right",
   submenuLabel = "Экспортировать как",
   formats = DEFAULT_FORMATS,
+  caption = "Презентация Q3.key",
+  itemsText = DEFAULT_ITEMS,
+  extensionText = EXTENSIONS,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -181,6 +223,12 @@ export function Dropdown015({
 
   const palette = {
     ...(accent ? { "--vibeui-dropdown-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dropdown-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -196,7 +244,7 @@ export function Dropdown015({
         className={className}
         style={palette}
       >
-        <span data-part="caption">Презентация Q3.key</span>
+        <span data-part="caption">{caption}</span>
         <button
           ref={anchor}
           type="button"
@@ -255,7 +303,7 @@ export function Dropdown015({
             data-part="item"
             onClick={close}
           >
-            Ссылка для просмотра
+            {itemsText.link ?? DEFAULT_ITEMS.link}
           </button>
           <button
             type="button"
@@ -263,7 +311,7 @@ export function Dropdown015({
             data-part="item"
             onClick={close}
           >
-            Пригласить соавтора
+            {itemsText.invite ?? DEFAULT_ITEMS.invite}
           </button>
           <div data-part="rule" role="separator" />
           <div
@@ -311,7 +359,7 @@ export function Dropdown015({
                     onClick={close}
                   >
                     {format}
-                    <span data-part="ext">{EXTENSIONS[format] ?? ""}</span>
+                    <span data-part="ext">{extensionText[format] ?? ""}</span>
                   </button>
                 ))}
               </div>

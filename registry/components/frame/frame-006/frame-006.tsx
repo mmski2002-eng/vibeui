@@ -5,6 +5,13 @@ export type Frame006Props = ComponentPropsWithoutRef<"figure"> & {
   index?: number
   source?: string
   align?: "start" | "center"
+  /** Шаблон номера рисунка: {index} подставляется числом. */
+  indexText?: string
+  /** Надпись пустого медиа-слота. */
+  stubText?: string
+  accent?: string
+  /** Пусто — подложки нет, рамка ложится на фон страницы. */
+  background?: string
   children?: ReactNode
 }
 
@@ -15,12 +22,12 @@ export type Frame006Props = ComponentPropsWithoutRef<"figure"> & {
 // подпись «Рис. 2. Каталог. Скриншот» читается как одно предложение.
 const STYLES = `
 :where([data-vibeui-block="frame-006"]){
---vibeui-frame-006-bg:oklch(1 0 0);
---vibeui-frame-006-media:oklch(0.96 0.004 265);
---vibeui-frame-006-fg:oklch(0.23 0.014 265);
---vibeui-frame-006-muted:oklch(0.55 0.014 265);
---vibeui-frame-006-border:oklch(0.9 0.006 265);
---vibeui-frame-006-accent:oklch(0.52 0.16 262);
+--vibeui-frame-006-bg:transparent;
+--vibeui-frame-006-media:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.008 265));
+--vibeui-frame-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.005 265));
+--vibeui-frame-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-frame-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.011 265));
+--vibeui-frame-006-accent:light-dark(oklch(0.52 0.16 262),oklch(0.74 0.15 262));
 --vibeui-frame-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="frame-006"]{
@@ -60,6 +67,28 @@ font-size:0.6875rem;color:var(--vibeui-frame-006-muted);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Рамка с нумерованной подписью и строкой источника под содержимым.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -68,11 +97,26 @@ export function Frame006({
   index = 2,
   source = "Источник: скриншот VibeUI, август 2026",
   align = "start",
+  indexText = "Рис. {index}",
+  stubText = "Место под скриншот",
+  accent,
+  background = "",
   children,
   className,
   style,
   ...props
 }: Frame006Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-frame-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-frame-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-frame-006" precedence="medium">
@@ -83,13 +127,15 @@ export function Frame006({
         data-vibeui-block="frame-006"
         data-align={align}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="media">
-          {children ?? <div data-part="stub">Место под скриншот</div>}
+          {children ?? <div data-part="stub">{stubText}</div>}
         </div>
         <figcaption>
-          <span data-part="index">Рис. {index}</span>
+          <span data-part="index">
+            {indexText.replace("{index}", String(index))}
+          </span>
           <p data-part="text">{caption}</p>
           {source ? <span data-part="source">{source}</span> : null}
         </figcaption>

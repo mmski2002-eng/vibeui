@@ -6,6 +6,10 @@ export type Frame011Props = Omit<
 > & {
   tilt?: "left" | "right"
   caption?: string
+  /** Надпись пустого кадра: компонент несёт русскую. */
+  stubText?: string
+  /** Пусто — остаётся собственная поверхность кадра; сюда задают свой цвет. */
+  background?: string
   children?: ReactNode
 }
 
@@ -17,11 +21,11 @@ export type Frame011Props = Omit<
 // чисто CSS-псевдоклассом, без JS, и гасится по prefers-reduced-motion.
 const STYLES = `
 :where([data-vibeui-block="frame-011"]){
---vibeui-frame-011-bg:oklch(1 0 0);
---vibeui-frame-011-fg:oklch(0.24 0.014 265);
---vibeui-frame-011-muted:oklch(0.55 0.014 265);
---vibeui-frame-011-border:oklch(0.88 0.006 265);
---vibeui-frame-011-shadow:oklch(0.2 0.02 265 / 0.28);
+--vibeui-frame-011-bg:light-dark(oklch(1 0 0),oklch(0.28 0.008 265));
+--vibeui-frame-011-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.005 265));
+--vibeui-frame-011-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-frame-011-border:light-dark(oklch(0.88 0.006 265),oklch(0.42 0.011 265));
+--vibeui-frame-011-shadow:light-dark(oklch(0.2 0.02 265 / 0.28),oklch(0 0 0 / 0.5));
 --vibeui-frame-011-radius:0.875rem;
 --vibeui-frame-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -76,17 +80,51 @@ color:var(--vibeui-frame-011-muted);text-align:center;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кадр с 3D-разворотом скриншота: perspective и rotateX/rotateY имитируют
  * вид на экран сбоку. Один файл, ноль зависимостей, собственная палитра.
  */
 export function Frame011({
   tilt = "left",
   caption = "Кадр с разворотом в перспективе для hero-секции",
+  stubText = "Скриншот интерфейса",
+  background = "",
   children,
   className,
   style,
   ...props
 }: Frame011Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-frame-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-frame-011" precedence="medium">
@@ -97,7 +135,7 @@ export function Frame011({
         data-vibeui-block="frame-011"
         data-tilt={tilt}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="stage">
           <div data-part="card">
@@ -107,7 +145,7 @@ export function Frame011({
               <span data-part="dot" />
             </div>
             <div data-part="body">
-              {children ?? <div data-part="stub">Скриншот интерфейса</div>}
+              {children ?? <div data-part="stub">{stubText}</div>}
             </div>
           </div>
         </div>

@@ -13,6 +13,8 @@ export type Empty013Props = {
   steps?: Empty013Step[]
   actionLabel?: string
   onAction?: () => void
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -24,11 +26,13 @@ export type Empty013Props = {
 // ждёт, пока отметят все пункты: начать можно и раньше.
 const STYLES = `
 :where([data-vibeui-block="empty-013"]){
---vibeui-empty-013-bg:oklch(1 0 0);
---vibeui-empty-013-fg:oklch(0.21 0.014 265);
---vibeui-empty-013-muted:oklch(0.55 0.014 265);
---vibeui-empty-013-border:oklch(0.91 0.006 265);
---vibeui-empty-013-accent:oklch(0.55 0.17 265);
+--vibeui-empty-013-bg:transparent;
+--vibeui-empty-013-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-empty-013-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-empty-013-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-empty-013-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-empty-013-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.02 265));
+--vibeui-empty-013-track:light-dark(oklch(0.94 0.004 265),oklch(0.3 0.01 265));
 --vibeui-empty-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="empty-013"]{
@@ -45,7 +49,7 @@ font-family:var(--vibeui-empty-013-font);color:var(--vibeui-empty-013-fg);
 flex:none;font-size:0.75rem;font-weight:650;color:var(--vibeui-empty-013-muted);
 }
 [data-vibeui-block="empty-013"] [data-part="progress-track"]{
-flex:1;height:0.375rem;border-radius:9999px;background:oklch(0.94 0.004 265);overflow:hidden;
+flex:1;height:0.375rem;border-radius:9999px;background:var(--vibeui-empty-013-track);overflow:hidden;
 }
 [data-vibeui-block="empty-013"] [data-part="progress-fill"]{
 height:100%;border-radius:inherit;background:var(--vibeui-empty-013-accent);
@@ -68,7 +72,7 @@ outline:2px solid var(--vibeui-empty-013-accent);outline-offset:2px;
 [data-vibeui-block="empty-013"] [data-part="check"]{
 flex:none;width:1.375rem;height:1.375rem;border-radius:9999px;margin-top:0.0625rem;
 border:1.5px solid var(--vibeui-empty-013-border);
-display:flex;align-items:center;justify-content:center;color:oklch(0.99 0.01 265);
+display:flex;align-items:center;justify-content:center;color:var(--vibeui-empty-013-on-accent);
 }
 [data-vibeui-block="empty-013"] [data-part="step"][aria-pressed="true"] [data-part="check"]{
 border-color:transparent;background:var(--vibeui-empty-013-accent);
@@ -83,7 +87,7 @@ text-decoration:line-through;color:var(--vibeui-empty-013-muted);
 [data-vibeui-block="empty-013"] [data-part="action"]{
 appearance:none;border:0;cursor:pointer;width:100%;
 height:2.625rem;border-radius:0.75rem;
-background:var(--vibeui-empty-013-accent);color:oklch(0.99 0.01 265);
+background:var(--vibeui-empty-013-accent);color:var(--vibeui-empty-013-on-accent);
 font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="empty-013"] [data-part="action"]:focus-visible{
@@ -111,6 +115,29 @@ const DEFAULT_STEPS: Empty013Step[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Первый запуск как чек-лист: шаги отмечаются в любом порядке,
  * прогресс-бар считает готовность, действие одно.
  * Один файл, ноль внешних зависимостей.
@@ -120,6 +147,7 @@ export function Empty013({
   steps = DEFAULT_STEPS,
   actionLabel = "Перейти к проекту",
   onAction,
+  background = "",
   accent,
   className,
   style,
@@ -128,6 +156,12 @@ export function Empty013({
   const doneCount = steps.filter((step) => done[step.id]).length
   const palette = {
     ...(accent ? { "--vibeui-empty-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-empty-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -9,7 +9,16 @@ export type Inputgroup010Props = Omit<
 > & {
   label?: string
   prefix?: string
+  placeholder?: string
+  /** Стартовый адрес. */
+  defaultValue?: string
+  /** Предел длины адреса. */
+  limit?: number
+  /** Счётчик длины: {count} — набрано, {limit} — предел. */
+  counterText?: string
   onChange?: (slug: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,16 +28,19 @@ export type Inputgroup010Props = Omit<
 // пробелы и запрещённые символы превращаются в дефис прямо под курсором —
 // иначе человек видит одно, а сохраняется другое. Приставка сжимается
 // многоточием: длинный домен не должен съедать место у самого адреса.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-010"]){
---vibeui-inputgroup-010-surface:oklch(1 0 0);
---vibeui-inputgroup-010-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-010-fg:oklch(0.23 0.014 265);
---vibeui-inputgroup-010-muted:oklch(0.56 0.014 265);
---vibeui-inputgroup-010-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-010-fixed:oklch(0.955 0.004 265);
---vibeui-inputgroup-010-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-010-accent:oklch(0.5 0.15 175);
+--vibeui-inputgroup-010-surface:transparent;
+--vibeui-inputgroup-010-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-inputgroup-010-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-010-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-inputgroup-010-field:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.013 265));
+--vibeui-inputgroup-010-fixed:light-dark(oklch(0.955 0.004 265),oklch(0.32 0.012 265));
+--vibeui-inputgroup-010-border:light-dark(oklch(0.86 0.008 265),oklch(0.44 0.013 265));
+--vibeui-inputgroup-010-accent:light-dark(oklch(0.5 0.15 175),oklch(0.76 0.13 175));
 --vibeui-inputgroup-010-radius:0.75rem;
 --vibeui-inputgroup-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-inputgroup-010-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
@@ -86,13 +98,35 @@ color:var(--vibeui-inputgroup-010-accent);
 `
 
 // Чистка на вводе, а не на отправке: адрес показывают человеку сразу.
-function slugify(value: string) {
+function slugify(value: string, limit: number) {
   return value
     .toLowerCase()
     .replace(/[\s_]+/g, "-")
     .replace(/[^a-z0-9-]/g, "")
     .replace(/-{2,}/g, "-")
-    .slice(0, 32)
+    .slice(0, limit)
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -102,17 +136,28 @@ function slugify(value: string) {
 export function Inputgroup010({
   label = "Адрес страницы",
   prefix = "vibeui.ru/",
+  placeholder = "moya-stranica",
+  defaultValue = "moya-komanda",
+  limit = 32,
+  counterText = "{count}/{limit}",
   onChange,
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Inputgroup010Props) {
   const id = useId()
-  const [slug, setSlug] = useState("moya-komanda")
+  const [slug, setSlug] = useState(defaultValue)
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-010-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -139,11 +184,11 @@ export function Inputgroup010({
             autoComplete="off"
             spellCheck={false}
             autoCapitalize="none"
-            placeholder="moya-stranica"
+            placeholder={placeholder}
             value={slug}
             aria-describedby={`${id}-foot`}
             onChange={(event) => {
-              const next = slugify(event.target.value)
+              const next = slugify(event.target.value, limit)
               setSlug(next)
               onChange?.(next)
             }}
@@ -154,7 +199,11 @@ export function Inputgroup010({
             {prefix}
             {slug || "…"}
           </b>
-          <span>{slug.length}/32</span>
+          <span>
+            {counterText
+              .replace("{count}", String(slug.length))
+              .replace("{limit}", String(limit))}
+          </span>
         </p>
       </div>
     </>

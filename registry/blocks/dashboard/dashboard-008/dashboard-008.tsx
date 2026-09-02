@@ -16,6 +16,10 @@ export type Dashboard008Props = {
   activeTab?: string
   rows?: Dashboard008Row[]
   more?: string
+  /** Название полосы вкладок для скринридера. */
+  tabsText?: string
+  /** Пусто — подложки нет, список ложится на фон страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -29,17 +33,20 @@ export type Dashboard008Props = {
 // значка, а не только цветом. Ссылка растянута по строке, но статус и сумма
 // остаются текстом — их не нужно нажимать. Вкладки сделаны ссылками: у
 // отфильтрованного списка должен быть свой адрес.
+//
+// Тема берётся из color-scheme окружения через light-dark(): собственной
+// подложки у списка нет, остаётся только рамка.
 const STYLES = `
 :where([data-vibeui-block="dashboard-008"]){
---vibeui-dashboard-008-bg:oklch(1 0 0);
---vibeui-dashboard-008-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-008-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-008-border:oklch(0.91 0.006 265);
---vibeui-dashboard-008-hover:oklch(0.55 0.02 265 / 5%);
---vibeui-dashboard-008-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-008-ok:oklch(0.58 0.14 152);
---vibeui-dashboard-008-wait:oklch(0.72 0.15 75);
---vibeui-dashboard-008-fail:oklch(0.57 0.19 25);
+--vibeui-dashboard-008-bg:transparent;
+--vibeui-dashboard-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-dashboard-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-dashboard-008-hover:light-dark(oklch(0.55 0.02 265 / 5%),oklch(0.85 0.02 265 / 8%));
+--vibeui-dashboard-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-dashboard-008-ok:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
+--vibeui-dashboard-008-wait:light-dark(oklch(0.72 0.15 75),oklch(0.82 0.14 75));
+--vibeui-dashboard-008-fail:light-dark(oklch(0.57 0.19 25),oklch(0.74 0.16 25));
 --vibeui-dashboard-008-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -137,6 +144,28 @@ const DEFAULT_ROWS: Dashboard008Row[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Список записей со статусами: строка целиком важнее сравнения колонок.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -147,12 +176,20 @@ export function Dashboard008({
   activeTab = "Все",
   rows = DEFAULT_ROWS,
   more = "Показать все счета",
+  tabsText = "Отбор списка",
+  background = "",
   accent,
   className,
   style,
 }: Dashboard008Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -172,7 +209,7 @@ export function Dashboard008({
           <p data-part="hint">{hint}</p>
         </header>
 
-        <nav data-part="tabs" aria-label="Отбор списка">
+        <nav data-part="tabs" aria-label={tabsText}>
           {tabs.map((tab) => (
             <a
               key={tab}

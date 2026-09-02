@@ -17,7 +17,17 @@ export type Dashboard023Props = {
   activeRange?: string
   entries?: Dashboard023Entry[]
   foundLabel?: string
+  /** Метки уровней: ключи info, warn и error. */
+  levelText?: Record<string, string>
+  searchLabel?: string
+  searchPlaceholder?: string
+  levelLabel?: string
+  rangeLabel?: string
+  logLabel?: string
+  copyLabel?: string
   accent?: string
+  /** Подложка карточки; пусто — цвет из палитры блока. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,14 +42,15 @@ export type Dashboard023Props = {
 // время идёт моноширинным с табличными цифрами, чтобы столбец не дрожал.
 const STYLES = `
 :where([data-vibeui-block="dashboard-023"]){
---vibeui-dashboard-023-bg:oklch(1 0 0);
---vibeui-dashboard-023-panel:oklch(0.98 0.003 265);
---vibeui-dashboard-023-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-023-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-023-border:oklch(0.91 0.006 265);
---vibeui-dashboard-023-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-023-warn:oklch(0.62 0.15 65);
---vibeui-dashboard-023-error:oklch(0.55 0.18 25);
+--vibeui-dashboard-023-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
+--vibeui-dashboard-023-panel:light-dark(oklch(0.98 0.003 265),oklch(0.27 0.013 265));
+--vibeui-dashboard-023-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-023-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-dashboard-023-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-023-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.15 262));
+--vibeui-dashboard-023-warn:light-dark(oklch(0.62 0.15 65),oklch(0.79 0.13 65));
+--vibeui-dashboard-023-error:light-dark(oklch(0.55 0.18 25),oklch(0.62 0.19 25));
+--vibeui-dashboard-023-on-error:light-dark(oklch(1 0 0),oklch(0.98 0.01 25));
 --vibeui-dashboard-023-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-dashboard-023-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;
@@ -106,7 +117,7 @@ box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-023-border);
 color:var(--vibeui-dashboard-023-warn);box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-023-warn);
 }
 [data-vibeui-block="dashboard-023"] [data-level="error"] [data-part="level"]{
-color:oklch(1 0 0);background:var(--vibeui-dashboard-023-error);box-shadow:none;
+color:var(--vibeui-dashboard-023-on-error);background:var(--vibeui-dashboard-023-error);box-shadow:none;
 }
 [data-vibeui-block="dashboard-023"] [data-part="message"]{
 grid-column:3;overflow-wrap:anywhere;
@@ -186,7 +197,33 @@ const DEFAULT_ENTRIES: Dashboard023Entry[] = [
   },
 ]
 
-const LEVEL_LETTER = { info: "INF", warn: "WRN", error: "ERR" }
+const LEVEL_LETTER: Record<string, string> = {
+  info: "INF",
+  warn: "WRN",
+  error: "ERR",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Журнал событий: фильтры сверху, подробности записи раскрываются на месте
@@ -201,12 +238,26 @@ export function Dashboard023({
   activeRange = "Последний час",
   entries = DEFAULT_ENTRIES,
   foundLabel = "Показано 4 записи из 1 284",
+  levelText = LEVEL_LETTER,
+  searchLabel = "Поиск по записям",
+  searchPlaceholder = "Подстрока или источник",
+  levelLabel = "Уровень",
+  rangeLabel = "Период",
+  logLabel = "Записи",
+  copyLabel = "Скопировать запись",
   accent,
+  background = "",
   className,
   style,
 }: Dashboard023Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-023-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-023-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -227,15 +278,15 @@ export function Dashboard023({
             <input
               type="search"
               defaultValue={query}
-              aria-label="Поиск по записям"
-              placeholder="Подстрока или источник"
+              aria-label={searchLabel}
+              placeholder={searchPlaceholder}
             />
-            <select defaultValue={activeLevel} aria-label="Уровень">
+            <select defaultValue={activeLevel} aria-label={levelLabel}>
               {levels.map((level) => (
                 <option key={level}>{level}</option>
               ))}
             </select>
-            <select defaultValue={activeRange} aria-label="Период">
+            <select defaultValue={activeRange} aria-label={rangeLabel}>
               {ranges.map((range) => (
                 <option key={range}>{range}</option>
               ))}
@@ -246,7 +297,7 @@ export function Dashboard023({
           </p>
         </header>
 
-        <div data-part="log" tabIndex={0} role="group" aria-label="Записи">
+        <div data-part="log" tabIndex={0} role="group" aria-label={logLabel}>
           {entries.map((entry) => (
             <details
               key={`${entry.time}-${entry.message}`}
@@ -255,7 +306,9 @@ export function Dashboard023({
             >
               <summary>
                 <span data-part="time">{entry.time}</span>
-                <span data-part="level">{LEVEL_LETTER[entry.level]}</span>
+                <span data-part="level">
+                  {levelText[entry.level] ?? LEVEL_LETTER[entry.level]}
+                </span>
                 <span data-part="message">{entry.message}</span>
                 <span data-part="source">{entry.source}</span>
               </summary>
@@ -269,7 +322,7 @@ export function Dashboard023({
                   ))}
                 </dl>
                 <button type="button" data-part="copy">
-                  Скопировать запись
+                  {copyLabel}
                 </button>
               </div>
             </details>

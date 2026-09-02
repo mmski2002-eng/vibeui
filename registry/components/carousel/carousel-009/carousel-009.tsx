@@ -15,6 +15,14 @@ export type Carousel009Props = Omit<
 > & {
   slides?: Carousel009Slide[]
   label?: string
+  /** Роль секции для скринридера. */
+  roleText?: string
+  /** Имя группы точек для скринридера. */
+  dotsLabel?: string
+  /** Шаблон подписи точки: {index}, {total}, {label}. */
+  dotText?: string
+  /** Пусто — подложка своя; цвет заменяет её целиком. */
+  background?: string
   accent?: string
 }
 
@@ -24,13 +32,16 @@ export type Carousel009Props = Omit<
 // трансформацией, а не прокруткой: так позиция задаётся числом и не зависит
 // от того, куда пользователь докрутил пальцем. Невидимые слайды помечены
 // inert, иначе Tab уходит за край кадра.
+//
+// Тема берётся из color-scheme окружения через light-dark(): карточка и точки
+// темнеют вместе со страницей, своей тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="carousel-009"]){
---vibeui-carousel-009-bg:oklch(1 0 0);
---vibeui-carousel-009-fg:oklch(0.22 0.014 265);
---vibeui-carousel-009-muted:oklch(0.58 0.014 265);
---vibeui-carousel-009-border:oklch(0.91 0.006 265);
---vibeui-carousel-009-accent:oklch(0.55 0.19 262);
+--vibeui-carousel-009-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-carousel-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-009-muted:light-dark(oklch(0.58 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-carousel-009-accent:light-dark(oklch(0.55 0.19 262),oklch(0.74 0.16 262));
 --vibeui-carousel-009-index:0;
 --vibeui-carousel-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -104,6 +115,35 @@ const DEFAULT_SLIDES: Carousel009Slide[] = [
   },
 ]
 
+/** Подстановка чисел в подпись: перевод остаётся одной строкой. */
+function fill(template: string, values: Record<string, string | number>) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Карусель с точками-кнопками и управлением стрелками клавиатуры.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -111,6 +151,10 @@ const DEFAULT_SLIDES: Carousel009Slide[] = [
 export function Carousel009({
   slides = DEFAULT_SLIDES,
   label = "Маршруты",
+  roleText = "карусель",
+  dotsLabel = "Переключение слайдов",
+  dotText = "Слайд {index} из {total}: {label}",
+  background = "",
   accent,
   className,
   style,
@@ -129,6 +173,12 @@ export function Carousel009({
   const palette = {
     "--vibeui-carousel-009-index": index,
     ...(accent ? { "--vibeui-carousel-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-carousel-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -140,7 +190,7 @@ export function Carousel009({
       <section
         {...props}
         data-vibeui-block="carousel-009"
-        aria-roledescription="карусель"
+        aria-roledescription={roleText}
         aria-label={label}
         className={className}
         style={palette}
@@ -169,7 +219,7 @@ export function Carousel009({
           data-part="dots"
           ref={dots}
           role="group"
-          aria-label="Переключение слайдов"
+          aria-label={dotsLabel}
           onKeyDown={(event) => {
             if (event.key === "ArrowRight") {
               event.preventDefault()
@@ -195,7 +245,11 @@ export function Carousel009({
               type="button"
               data-part="dot"
               aria-current={position === index}
-              aria-label={`Слайд ${position + 1} из ${slides.length}: ${slide.title}`}
+              aria-label={fill(dotText, {
+                index: position + 1,
+                total: slides.length,
+                label: slide.title,
+              })}
               onClick={() => setIndex(position)}
             />
           ))}

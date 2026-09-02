@@ -21,6 +21,10 @@ export type Table020Props = Omit<
   caption?: string
   /** Вторая строка подписи: единицы, округление, дата среза. */
   note?: string
+  /** Подпись первой колонки. */
+  leadTitle?: string
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,14 +32,17 @@ export type Table020Props = Omit<
 // В нём же лежит вторая строка про единицы, округление и дату среза, поэтому
 // скринридер объявляет условия чтения до первой ячейки. Единица каждой
 // колонки вынесена в отдельную строку шапки, сокращения раскрыты через abbr.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-020"]){
---vibeui-table-020-bg:oklch(1 0 0);
---vibeui-table-020-fg:oklch(0.24 0.014 265);
---vibeui-table-020-muted:oklch(0.56 0.014 265);
---vibeui-table-020-border:oklch(0.92 0.006 265);
---vibeui-table-020-head:oklch(0.975 0.003 265);
---vibeui-table-020-accent:oklch(0.55 0.2 262);
+--vibeui-table-020-bg:transparent;
+--vibeui-table-020-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-020-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-table-020-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
+--vibeui-table-020-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-020-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
 --vibeui-table-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="table-020"]{
@@ -101,6 +108,28 @@ const DEFAULT_ROWS: Table020Row[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: light-dark() смотрит на color-scheme, а не
+ * на цвет подложки, поэтому светлую плашку приходится объявлять светлой.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Таблица с подписью caption, где объяснены единицы, округление и дата среза.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -109,6 +138,8 @@ export function Table020({
   rows = DEFAULT_ROWS,
   caption = "Продажи по точкам, август",
   note = "Значения округлены до целых, выручка — в тысячах рублей без НДС. Срез данных на 31 августа, 23:59 по Москве.",
+  leadTitle = "Точка продаж",
+  background = "",
   accent,
   className,
   style,
@@ -116,6 +147,12 @@ export function Table020({
 }: Table020Props) {
   const palette = {
     ...(accent ? { "--vibeui-table-020-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-table-020-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -144,7 +181,7 @@ export function Table020({
               </caption>
               <thead>
                 <tr>
-                  <th scope="col">Точка продаж</th>
+                  <th scope="col">{leadTitle}</th>
                   {columns.map((column) => (
                     <th key={column.title} scope="col">
                       {column.title}

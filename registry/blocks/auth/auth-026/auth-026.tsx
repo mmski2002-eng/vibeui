@@ -14,6 +14,32 @@ export type Auth026Props = {
   lead?: string
   countries?: Auth026Country[]
   submit?: string
+  /** Сколько цифр в коде из сообщения. */
+  codeLength?: number
+  /** Подпись поля номера. */
+  phoneLabel?: string
+  /** Подпись списка кодов стран для скринридера. */
+  countryLabel?: string
+  /** Заголовок второго шага. */
+  codeTitle?: string
+  /** Подзаголовок второго шага; {length} подставляется числом цифр. */
+  codeLead?: string
+  /** Кнопка возврата к номеру. */
+  changeText?: string
+  /** Подпись поля кода. */
+  codeLabel?: string
+  /** Кнопка на втором шаге. */
+  codeSubmit?: string
+  /** Сноска под кнопкой первого шага. */
+  hintText?: string
+  /** Ссылка на вход по почте. */
+  emailLinkText?: string
+  /** Сноска под кнопкой второго шага. */
+  resendText?: string
+  /** Ссылка на звонок с кодом. */
+  resendLinkText?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -29,15 +55,20 @@ export type Auth026Props = {
 // такого входа — опечатка в номере, и обнаруживается она ровно тогда, когда
 // SMS не пришла. Возврат назад сохраняет уже введённые цифры.
 //
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не носит собственной подложки.
+//
 // Демонстрация интерфейса: SMS не отправляются, код не проверяется.
 const STYLES = `
 :where([data-vibeui-block="auth-026"]){
---vibeui-auth-026-bg:oklch(0.96 0.006 210);
---vibeui-auth-026-card:oklch(1 0 0);
---vibeui-auth-026-fg:oklch(0.22 0.014 210);
---vibeui-auth-026-muted:oklch(0.54 0.014 210);
---vibeui-auth-026-border:oklch(0.9 0.008 210);
---vibeui-auth-026-accent:oklch(0.52 0.16 235);
+--vibeui-auth-026-bg:transparent;
+--vibeui-auth-026-card:light-dark(oklch(1 0 0),oklch(0.22 0.014 235));
+--vibeui-auth-026-fg:light-dark(oklch(0.22 0.014 210),oklch(0.94 0.006 230));
+--vibeui-auth-026-muted:light-dark(oklch(0.54 0.014 210),oklch(0.71 0.012 230));
+--vibeui-auth-026-border:light-dark(oklch(0.9 0.008 210),oklch(0.36 0.012 230));
+--vibeui-auth-026-accent:light-dark(oklch(0.52 0.16 235),oklch(0.76 0.13 240));
+--vibeui-auth-026-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 240));
+--vibeui-auth-026-soft:light-dark(oklch(0.55 0.02 210 / 7%),oklch(0.82 0.02 230 / 10%));
 --vibeui-auth-026-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-auth-026-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -80,7 +111,7 @@ letter-spacing:0.4em;text-align:center;text-indent:0.4em;margin-bottom:0.875rem;
 [data-vibeui-block="auth-026"] [data-part="sent"]{
 display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
 margin:0 0 1rem;padding:0.625rem 0.75rem;border-radius:0.625rem;
-background:oklch(0.55 0.02 210 / 7%);font-size:0.8125rem;
+background:var(--vibeui-auth-026-soft);font-size:0.8125rem;
 }
 [data-vibeui-block="auth-026"] [data-part="number"]{font-weight:700;font-variant-numeric:tabular-nums}
 [data-vibeui-block="auth-026"] [data-part="change"]{
@@ -91,7 +122,7 @@ color:var(--vibeui-auth-026-accent);font:inherit;font-size:0.75rem;font-weight:6
 [data-vibeui-block="auth-026"] [data-part="submit"]{
 width:100%;appearance:none;cursor:pointer;height:2.75rem;
 border:0;border-radius:0.75rem;
-background:var(--vibeui-auth-026-accent);color:oklch(1 0 0);
+background:var(--vibeui-auth-026-accent);color:var(--vibeui-auth-026-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 transition:opacity .16s ease;
 }
@@ -110,6 +141,28 @@ const DEFAULT_COUNTRIES: Auth026Country[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Вход по телефону: код страны отдельным списком, затем код из SMS
  * с возможностью поправить номер. Один файл, ноль зависимостей.
  */
@@ -118,6 +171,19 @@ export function Auth026({
   lead = "Пришлём код в SMS. Пароль не понадобится.",
   countries = DEFAULT_COUNTRIES,
   submit = "Получить код",
+  codeLength = 4,
+  phoneLabel = "Номер телефона",
+  countryLabel = "Код страны",
+  codeTitle = "Код из SMS",
+  codeLead = "Сообщение идёт до минуты. Код состоит из {length} цифр.",
+  changeText = "Изменить номер",
+  codeLabel = "Код из сообщения",
+  codeSubmit = "Войти",
+  hintText = "Отправляя номер, вы соглашаетесь получить одно служебное SMS. Есть почта?",
+  emailLinkText = "Войти по почте",
+  resendText = "SMS не пришла? Проверьте номер выше, а через минуту",
+  resendLinkText = "закажите звонок с кодом",
+  background = "",
   accent,
   className,
   style,
@@ -131,6 +197,12 @@ export function Auth026({
 
   const palette = {
     ...(accent ? { "--vibeui-auth-026-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-026-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -156,11 +228,11 @@ export function Auth026({
               <h2>{title}</h2>
               <p data-part="lead">{lead}</p>
 
-              <label htmlFor="vibeui-auth-026-phone">Номер телефона</label>
+              <label htmlFor="vibeui-auth-026-phone">{phoneLabel}</label>
               <div data-part="phone">
                 <select
                   name="country"
-                  aria-label="Код страны"
+                  aria-label={countryLabel}
                   value={country}
                   onChange={(event) => setCountry(event.target.value)}
                 >
@@ -193,8 +265,7 @@ export function Auth026({
               </button>
 
               <p data-part="hint">
-                Отправляя номер, вы соглашаетесь получить одно служебное SMS.
-                Есть почта? <a href="#">Войти по почте</a>
+                {hintText} <a href="#">{emailLinkText}</a>
               </p>
             </form>
           ) : (
@@ -203,9 +274,9 @@ export function Auth026({
                 event.preventDefault()
               }}
             >
-              <h2>Код из SMS</h2>
+              <h2>{codeTitle}</h2>
               <p data-part="lead">
-                Сообщение идёт до минуты. Код состоит из четырёх цифр.
+                {codeLead.replace("{length}", String(codeLength))}
               </p>
 
               <p data-part="sent">
@@ -217,11 +288,11 @@ export function Auth026({
                   data-part="change"
                   onClick={() => setStep("phone")}
                 >
-                  Изменить номер
+                  {changeText}
                 </button>
               </p>
 
-              <label htmlFor="vibeui-auth-026-code">Код из сообщения</label>
+              <label htmlFor="vibeui-auth-026-code">{codeLabel}</label>
               <input
                 id="vibeui-auth-026-code"
                 data-part="code"
@@ -229,24 +300,25 @@ export function Auth026({
                 type="text"
                 inputMode="numeric"
                 autoComplete="one-time-code"
-                maxLength={4}
+                maxLength={codeLength}
                 value={code}
                 onChange={(event) =>
-                  setCode(event.target.value.replace(/\D/g, "").slice(0, 4))
+                  setCode(
+                    event.target.value.replace(/\D/g, "").slice(0, codeLength),
+                  )
                 }
               />
 
               <button
                 type="submit"
                 data-part="submit"
-                disabled={code.length < 4}
+                disabled={code.length < codeLength}
               >
-                Войти
+                {codeSubmit}
               </button>
 
               <p data-part="hint">
-                SMS не пришла? Проверьте номер выше, а через минуту{" "}
-                <a href="#">закажите звонок с кодом</a>.
+                {resendText} <a href="#">{resendLinkText}</a>.
               </p>
             </form>
           )}

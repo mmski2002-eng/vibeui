@@ -20,6 +20,14 @@ export type Command002Props = Omit<
   commands?: Command002Command[]
   placeholder?: string
   label?: string
+  /** Ответ на пустой поиск: компонент несёт русский, проект подставляет свой. */
+  emptyText?: string
+  /** Подсказка внизу панели про клавиши. */
+  hintText?: string
+  /** Строка после запуска команды; {command} — её название. */
+  doneText?: string
+  /** Подложка панели. Пусто — цвет по умолчанию из палитры. */
+  background?: string
   accent?: string
 }
 
@@ -29,20 +37,24 @@ export type Command002Props = Omit<
 // что фокус остаётся в поле ввода и не уходит на строки. Стрелки ходят по
 // плоскому видимому порядку: после группировки он не совпадает с исходным
 // массивом, и индекс от исходного массива подсветил бы не ту строку.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
+// граница светлее подложки, а не темнее — иначе панель растворяется.
 const STYLES = `
 :where([data-vibeui-block="command-002"]){
---vibeui-command-002-bg:oklch(1 0 0);
---vibeui-command-002-fg:oklch(0.23 0.014 265);
---vibeui-command-002-muted:oklch(0.57 0.014 265);
---vibeui-command-002-border:oklch(0.9 0.006 265);
---vibeui-command-002-accent:oklch(0.55 0.19 262);
+--vibeui-command-002-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-command-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-command-002-muted:light-dark(oklch(0.57 0.014 265),oklch(0.68 0.012 265));
+--vibeui-command-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-command-002-accent:light-dark(oklch(0.55 0.19 262),oklch(0.74 0.16 262));
+--vibeui-command-002-shadow:light-dark(oklch(0.2 0.03 265 / 60%),oklch(0.04 0.015 265 / 70%));
 --vibeui-command-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="command-002"]{
 display:block;box-sizing:border-box;width:100%;max-width:24rem;
 background:var(--vibeui-command-002-bg);color:var(--vibeui-command-002-fg);
 border:1px solid var(--vibeui-command-002-border);border-radius:0.875rem;
-box-shadow:0 18px 40px -28px oklch(0.2 0.03 265 / 60%);
+box-shadow:0 18px 40px -28px var(--vibeui-command-002-shadow);
 font-family:var(--vibeui-command-002-font);overflow:hidden;
 }
 [data-vibeui-block="command-002"] [data-part="field"]{
@@ -101,6 +113,28 @@ const DEFAULT_COMMANDS: Command002Command[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Встроенная командная палитра с группами и полным договором combobox +
  * listbox. Один файл, ноль зависимостей, собственная палитра.
  */
@@ -108,6 +142,10 @@ export function Command002({
   commands = DEFAULT_COMMANDS,
   placeholder = "Команда или переход…",
   label = "Командная палитра",
+  emptyText = "Ничего не нашлось. Попробуйте другое слово.",
+  hintText = "↑↓ выбор · Enter запуск · Esc сброс",
+  doneText = "Выполнено: {command}",
+  background = "",
   accent,
   className,
   style,
@@ -159,6 +197,12 @@ export function Command002({
 
   const palette = {
     ...(accent ? { "--vibeui-command-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-command-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -199,7 +243,7 @@ export function Command002({
           />
         </div>
         {ordered.length === 0 ? (
-          <p data-part="empty">Ничего не нашлось. Попробуйте другое слово.</p>
+          <p data-part="empty">{emptyText}</p>
         ) : (
           <ul id={listId} data-part="list" role="listbox" aria-label={label}>
             {Object.entries(groups).map(([group, rows]) => (
@@ -225,9 +269,7 @@ export function Command002({
           </ul>
         )}
         <p data-part="foot" role="status">
-          {chosen
-            ? `Выполнено: ${chosen}`
-            : "↑↓ выбор · Enter запуск · Esc сброс"}
+          {chosen ? doneText.replace("{command}", chosen) : hintText}
         </p>
       </div>
     </>

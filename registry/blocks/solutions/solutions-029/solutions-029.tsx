@@ -16,7 +16,22 @@ export type Solutions029Props = {
   hint?: string
   stages?: string[]
   orders?: Solutions029Order[]
+  /** Подписи плиток сводки: orders, load, behind. */
+  summaryText?: Record<string, string>
+  progressLabel?: string
+  /** Строка справа от «Выполнено». {done}, {plan} и {left} — числа. */
+  progressValue?: string
+  loadLabel?: string
+  /** Скрытая подпись полосы плана. {number} — номер заказа. */
+  progressAriaLabel?: string
+  /** Скрытая подпись полосы загрузки. {number} — номер заказа. */
+  loadAriaLabel?: string
+  /** Строка отгрузки. {date} — дата. */
+  dueText?: string
+  footNote?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,14 +47,14 @@ export type Solutions029Props = {
 // нельзя, они про разные вещи и могут расходиться в любую сторону.
 const STYLES = `
 :where([data-vibeui-block="solutions-029"]){
---vibeui-solutions-029-bg:oklch(1 0 0);
---vibeui-solutions-029-panel:oklch(0.977 0.004 255);
---vibeui-solutions-029-fg:oklch(0.21 0.014 265);
---vibeui-solutions-029-muted:oklch(0.54 0.014 265);
---vibeui-solutions-029-border:oklch(0.9 0.006 265);
---vibeui-solutions-029-accent:oklch(0.52 0.16 255);
---vibeui-solutions-029-behind:oklch(0.6 0.18 40);
---vibeui-solutions-029-load:oklch(0.6 0.14 300);
+--vibeui-solutions-029-bg:transparent;
+--vibeui-solutions-029-panel:light-dark(oklch(0.977 0.004 255),oklch(0.27 0.011 265));
+--vibeui-solutions-029-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-029-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-029-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-029-accent:light-dark(oklch(0.52 0.16 255),oklch(0.74 0.14 255));
+--vibeui-solutions-029-behind:light-dark(oklch(0.6 0.18 40),oklch(0.74 0.16 40));
+--vibeui-solutions-029-load:light-dark(oklch(0.6 0.14 300),oklch(0.75 0.13 300));
 --vibeui-solutions-029-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -206,6 +221,34 @@ const DEFAULT_ORDERS: Solutions029Order[] = [
   },
 ]
 
+const SUMMARY_LABEL: Record<string, string> = {
+  orders: "заказов в цехах",
+  load: "средняя загрузка линий",
+  behind: "отстают от плана",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Производственные заказы: процент выполнения плана считается из плана и
  * факта, стадия — степпер точек, загрузка линии — отдельная полоса.
@@ -216,7 +259,16 @@ export function Solutions029({
   hint = "Механосборочный участок · смена сегодня",
   stages = DEFAULT_STAGES,
   orders = DEFAULT_ORDERS,
+  summaryText = SUMMARY_LABEL,
+  progressLabel = "Выполнено",
+  progressValue = "{done} из {plan} шт · осталось {left}",
+  loadLabel = "Загрузка линии",
+  progressAriaLabel = "Выполнение плана по заказу {number}",
+  loadAriaLabel = "Загрузка линии заказа {number}",
+  dueText = "Отгрузка: {date}",
+  footNote = "Выполнение плана и загрузка линии — разные полосы: заказ может идти по графику при перегруженной линии и наоборот.",
   accent,
+  background = "",
   className,
   style,
 }: Solutions029Props) {
@@ -230,8 +282,16 @@ export function Solutions029({
     return progress + 0.15 < stageShare
   }).length
 
+  const summary = (key: string) => summaryText[key] ?? SUMMARY_LABEL[key]
+
   const palette = {
     ...(accent ? { "--vibeui-solutions-029-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-029-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -256,15 +316,15 @@ export function Solutions029({
         <div data-part="summary">
           <p data-part="tile">
             <b>{orders.length}</b>
-            <span>заказов в цехах</span>
+            <span>{summary("orders")}</span>
           </p>
           <p data-part="tile">
             <b>{avgLoad}%</b>
-            <span>средняя загрузка линий</span>
+            <span>{summary("load")}</span>
           </p>
           <p data-part="tile">
             <b>{behindCount}</b>
-            <span>отстают от плана</span>
+            <span>{summary("behind")}</span>
           </p>
         </div>
 
@@ -310,10 +370,12 @@ export function Solutions029({
 
                   <div data-part="meter">
                     <span data-part="label">
-                      <span>Выполнено</span>
+                      <span>{progressLabel}</span>
                       <span>
-                        {order.producedQty} из {order.planQty} шт · осталось{" "}
-                        {remaining}
+                        {progressValue
+                          .replace("{done}", String(order.producedQty))
+                          .replace("{plan}", String(order.planQty))
+                          .replace("{left}", String(remaining))}
                       </span>
                     </span>
                     <span
@@ -322,7 +384,10 @@ export function Solutions029({
                       aria-valuenow={progress}
                       aria-valuemin={0}
                       aria-valuemax={100}
-                      aria-label={`Выполнение плана по заказу ${order.number}`}
+                      aria-label={progressAriaLabel.replace(
+                        "{number}",
+                        order.number,
+                      )}
                     >
                       <span
                         data-part="fill"
@@ -332,7 +397,7 @@ export function Solutions029({
                       />
                     </span>
                     <span data-part="label">
-                      <span>Загрузка линии</span>
+                      <span>{loadLabel}</span>
                       <span>{order.lineLoad}%</span>
                     </span>
                     <span
@@ -341,7 +406,10 @@ export function Solutions029({
                       aria-valuenow={order.lineLoad}
                       aria-valuemin={0}
                       aria-valuemax={100}
-                      aria-label={`Загрузка линии заказа ${order.number}`}
+                      aria-label={loadAriaLabel.replace(
+                        "{number}",
+                        order.number,
+                      )}
                     >
                       <span
                         data-part="fill"
@@ -353,17 +421,16 @@ export function Solutions029({
                     </span>
                   </div>
 
-                  <p data-part="due">Отгрузка: {order.dueDate}</p>
+                  <p data-part="due">
+                    {dueText.replace("{date}", order.dueDate)}
+                  </p>
                 </li>
               )
             })}
           </ul>
         </div>
 
-        <p data-part="foot">
-          Выполнение плана и загрузка линии — разные полосы: заказ может идти по
-          графику при перегруженной линии и наоборот.
-        </p>
+        <p data-part="foot">{footNote}</p>
       </section>
     </>
   )

@@ -16,6 +16,24 @@ export type Gantt006Props = Omit<
   startDate?: string
   tasks?: Gantt006Task[]
   unit?: "week" | "day"
+  /** Пояснение под заголовком по ключам week и day. */
+  hintText?: Record<string, string>
+  /** Подпись области прокрутки: {heading} — заголовок плана. */
+  scrollText?: string
+  /** Верхняя строка недельной шапки: {number} — номер недели. */
+  weekText?: string
+  /** Подпись полосы: {title}, {from} и {to} подставляют значения. */
+  barText?: string
+  /** Длительность внутри полосы: {days} — число дней. */
+  daysText?: string
+  /** Легенда по ключам work, risk, done. */
+  toneText?: Record<string, string>
+  /** Подпись раскрывающейся таблицы точных дат. */
+  tableText?: string
+  /** Заголовки таблицы по ключам task, start, end, days. */
+  columnText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,16 +42,21 @@ export type Gantt006Props = Omit<
 // колонка — неделя, полоса округляется наружу до целых недель. Округление
 // названо словами в подписи и продублировано точными датами в таблице:
 // сжатый вид обязан признаваться, что он сжатый.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="gantt-006"]){
---vibeui-gantt-006-bg:oklch(1 0 0);
---vibeui-gantt-006-fg:oklch(0.23 0.014 265);
---vibeui-gantt-006-muted:oklch(0.6 0.014 265);
---vibeui-gantt-006-border:oklch(0.91 0.006 265);
---vibeui-gantt-006-line:oklch(0.955 0.004 265);
---vibeui-gantt-006-accent:oklch(0.55 0.14 200);
---vibeui-gantt-006-risk:oklch(0.62 0.16 45);
---vibeui-gantt-006-done:oklch(0.6 0.12 165);
+--vibeui-gantt-006-bg:transparent;
+--vibeui-gantt-006-sticky:light-dark(oklch(0.995 0.001 265),oklch(0.19 0.008 265));
+--vibeui-gantt-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-gantt-006-muted:light-dark(oklch(0.6 0.014 265),oklch(0.7 0.012 265));
+--vibeui-gantt-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-gantt-006-line:light-dark(oklch(0.955 0.004 265),oklch(0.3 0.01 265));
+--vibeui-gantt-006-accent:light-dark(oklch(0.55 0.14 200),oklch(0.72 0.13 200));
+--vibeui-gantt-006-risk:light-dark(oklch(0.62 0.16 45),oklch(0.74 0.15 55));
+--vibeui-gantt-006-done:light-dark(oklch(0.6 0.12 165),oklch(0.74 0.12 165));
+--vibeui-gantt-006-onaccent:light-dark(oklch(0.99 0 0),oklch(0.17 0.01 265));
 --vibeui-gantt-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="gantt-006"]{
@@ -65,7 +88,7 @@ display:grid;
 grid-template-columns:8.5rem repeat(var(--vibeui-gantt-006-cols,8),var(--vibeui-gantt-006-col,3rem));
 }
 [data-vibeui-block="gantt-006"] [data-part="corner"]{
-position:sticky;left:0;z-index:3;background:var(--vibeui-gantt-006-bg);
+position:sticky;left:0;z-index:3;background:var(--vibeui-gantt-006-sticky);
 border-right:1px solid var(--vibeui-gantt-006-border);
 border-bottom:1px solid var(--vibeui-gantt-006-border);
 }
@@ -84,7 +107,7 @@ color:var(--vibeui-gantt-006-fg);
 position:sticky;left:0;z-index:1;
 display:flex;align-items:center;
 height:1.625rem;padding:0 0.5rem;
-background:var(--vibeui-gantt-006-bg);
+background:var(--vibeui-gantt-006-sticky);
 border-right:1px solid var(--vibeui-gantt-006-border);
 border-top:1px solid var(--vibeui-gantt-006-line);
 font-size:0.6875rem;font-weight:600;
@@ -99,14 +122,14 @@ align-self:center;z-index:1;margin:0 0.125rem;
 display:flex;align-items:center;justify-content:center;
 height:0.875rem;border-radius:0.25rem;
 background:var(--vibeui-gantt-006-accent);
-color:var(--vibeui-gantt-006-bg);
+color:var(--vibeui-gantt-006-onaccent);
 font-size:0.5rem;font-weight:700;line-height:1;
 white-space:nowrap;overflow:hidden;
 }
 [data-vibeui-block="gantt-006"] [data-tone="risk"]{
 background:repeating-linear-gradient(135deg,
 var(--vibeui-gantt-006-risk) 0 4px,
-color-mix(in oklab,var(--vibeui-gantt-006-risk) 60%,var(--vibeui-gantt-006-bg)) 4px 8px);
+color-mix(in oklab,var(--vibeui-gantt-006-risk) 60%,transparent) 4px 8px);
 }
 [data-vibeui-block="gantt-006"] [data-tone="done"]{background:var(--vibeui-gantt-006-done)}
 [data-vibeui-block="gantt-006"] [data-part="legend"]{
@@ -123,7 +146,7 @@ background:var(--vibeui-gantt-006-accent);
 [data-vibeui-block="gantt-006"] [data-part="legend"] i[data-tone="risk"]{
 background:repeating-linear-gradient(135deg,
 var(--vibeui-gantt-006-risk) 0 4px,
-color-mix(in oklab,var(--vibeui-gantt-006-risk) 60%,var(--vibeui-gantt-006-bg)) 4px 8px);
+color-mix(in oklab,var(--vibeui-gantt-006-risk) 60%,transparent) 4px 8px);
 }
 [data-vibeui-block="gantt-006"] [data-part="legend"] i[data-tone="done"]{
 background:var(--vibeui-gantt-006-done);
@@ -162,6 +185,46 @@ const DEFAULT_TASKS: Gantt006Task[] = [
   { title: "Релиз", start: 52, days: 4 },
 ]
 
+const DEFAULT_HINTS: Record<string, string> = {
+  week: "полоса округлена наружу до целых недель",
+  day: "колонка — один день",
+}
+
+const DEFAULT_TONES: Record<string, string> = {
+  work: "в работе",
+  risk: "под риском",
+  done: "сделано",
+}
+
+const DEFAULT_COLUMNS: Record<string, string> = {
+  task: "Задача",
+  start: "Начало",
+  end: "Конец",
+  days: "Дней",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Сжатый план: данные дневные, сетка недельная. Полоса округляется наружу
  * до целых недель, точные даты остаются в таблице. Ноль зависимостей.
@@ -171,6 +234,15 @@ export function Gantt006({
   startDate = "2026-01-05",
   tasks = DEFAULT_TASKS,
   unit = "week",
+  hintText = DEFAULT_HINTS,
+  scrollText = "{heading}: диаграмма, прокручивается вбок",
+  weekText = "н{number}",
+  barText = "{title}: {from} — {to}",
+  daysText = "{days} дн",
+  toneText = DEFAULT_TONES,
+  tableText = "Точные даты таблицей",
+  columnText = DEFAULT_COLUMNS,
+  background = "",
   accent,
   className,
   style,
@@ -186,7 +258,10 @@ export function Gantt006({
 
     return {
       key: date.toISOString().slice(0, 10),
-      top: unit === "week" ? `н${index + 1}` : String(date.getUTCDate()),
+      top:
+        unit === "week"
+          ? weekText.replace("{number}", String(index + 1))
+          : String(date.getUTCDate()),
       bottom: `${date.getUTCDate()}.${String(date.getUTCMonth() + 1).padStart(2, "0")}`,
     }
   })
@@ -198,6 +273,13 @@ export function Gantt006({
     "--vibeui-gantt-006-cols": columns,
     "--vibeui-gantt-006-col": unit === "week" ? "3rem" : "1.75rem",
     ...(accent ? { "--vibeui-gantt-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-gantt-006-bg": background,
+          "--vibeui-gantt-006-sticky": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -215,18 +297,14 @@ export function Gantt006({
       >
         <header data-part="head">
           <h3 data-part="heading">{heading}</h3>
-          <p data-part="hint">
-            {unit === "week"
-              ? "полоса округлена наружу до целых недель"
-              : "колонка — один день"}
-          </p>
+          <p data-part="hint">{hintText[unit] ?? DEFAULT_HINTS[unit]}</p>
         </header>
 
         <div
           data-part="scroll"
           tabIndex={0}
           role="group"
-          aria-label={`${heading}: диаграмма, прокручивается вбок`}
+          aria-label={scrollText.replace("{heading}", heading)}
         >
           <div data-part="grid">
             <span data-part="corner" />
@@ -273,7 +351,10 @@ export function Gantt006({
                   data-part="bar"
                   data-tone={task.tone ?? "work"}
                   role="img"
-                  aria-label={`${task.title}: ${dateText(task.start)} — ${dateText(task.start + task.days - 1)}`}
+                  aria-label={barText
+                    .replace("{title}", task.title)
+                    .replace("{from}", dateText(task.start))
+                    .replace("{to}", dateText(task.start + task.days - 1))}
                   style={
                     {
                       gridRow: row + 2,
@@ -281,7 +362,7 @@ export function Gantt006({
                     } as CSSProperties
                   }
                 >
-                  {task.days} дн
+                  {daysText.replace("{days}", String(task.days))}
                 </span>
               )
             })}
@@ -290,25 +371,25 @@ export function Gantt006({
 
         <ul data-part="legend">
           <li>
-            <i /> в работе
+            <i /> {toneText.work ?? DEFAULT_TONES.work}
           </li>
           <li>
-            <i data-tone="risk" /> под риском
+            <i data-tone="risk" /> {toneText.risk ?? DEFAULT_TONES.risk}
           </li>
           <li>
-            <i data-tone="done" /> сделано
+            <i data-tone="done" /> {toneText.done ?? DEFAULT_TONES.done}
           </li>
         </ul>
 
         <details data-part="table">
-          <summary>Точные даты таблицей</summary>
+          <summary>{tableText}</summary>
           <table>
             <thead>
               <tr>
-                <th scope="col">Задача</th>
-                <th scope="col">Начало</th>
-                <th scope="col">Конец</th>
-                <th scope="col">Дней</th>
+                <th scope="col">{columnText.task ?? DEFAULT_COLUMNS.task}</th>
+                <th scope="col">{columnText.start ?? DEFAULT_COLUMNS.start}</th>
+                <th scope="col">{columnText.end ?? DEFAULT_COLUMNS.end}</th>
+                <th scope="col">{columnText.days ?? DEFAULT_COLUMNS.days}</th>
               </tr>
             </thead>
             <tbody>

@@ -13,6 +13,12 @@ export type Slider008Props = Omit<
   step?: number
   defaultValue?: number
   unit?: string
+  /** Имя числового поля для скринридера. Шаблон: {label} подставляется. */
+  exactText?: string
+  /** Строка под полем. Шаблон: {min}, {max}, {unit} и {step} подставляются. */
+  hintText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,15 +27,19 @@ export type Slider008Props = Omit<
 // Поле не «чинит» ввод на каждом нажатии: пока в нём печатают, значение
 // живёт строкой, а к диапазону приводится на blur — иначе «10» невозможно
 // набрать, если минимум равен 100.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="slider-008"]){
---vibeui-slider-008-bg:oklch(1 0 0);
---vibeui-slider-008-fg:oklch(0.22 0.014 265);
---vibeui-slider-008-muted:oklch(0.55 0.014 265);
---vibeui-slider-008-border:oklch(0.9 0.006 265);
---vibeui-slider-008-field:oklch(0.985 0.002 265);
---vibeui-slider-008-track:oklch(0.92 0.006 265);
---vibeui-slider-008-accent:oklch(0.52 0.16 195);
+--vibeui-slider-008-bg:transparent;
+--vibeui-slider-008-surface:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
+--vibeui-slider-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-slider-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-slider-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-slider-008-field:light-dark(oklch(0.985 0.002 265),oklch(0.32 0.01 265));
+--vibeui-slider-008-track:light-dark(oklch(0.92 0.006 265),oklch(0.42 0.012 265));
+--vibeui-slider-008-accent:light-dark(oklch(0.52 0.16 195),oklch(0.74 0.14 195));
 --vibeui-slider-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-008-fill:50%;
 }
@@ -57,12 +67,12 @@ background:linear-gradient(to right,var(--vibeui-slider-008-accent) var(--vibeui
 [data-vibeui-block="slider-008"] [data-part="range"]::-webkit-slider-thumb{
 appearance:none;margin-top:-0.3125rem;
 width:1rem;height:1rem;border-radius:9999px;
-background:var(--vibeui-slider-008-accent);border:3px solid var(--vibeui-slider-008-bg);
+background:var(--vibeui-slider-008-accent);border:3px solid var(--vibeui-slider-008-surface);
 box-shadow:0 1px 4px oklch(0.2 0.02 265 / 30%);
 }
 [data-vibeui-block="slider-008"] [data-part="range"]::-moz-range-thumb{
 width:1rem;height:1rem;border-radius:9999px;box-sizing:border-box;
-background:var(--vibeui-slider-008-accent);border:3px solid var(--vibeui-slider-008-bg);
+background:var(--vibeui-slider-008-accent);border:3px solid var(--vibeui-slider-008-surface);
 }
 [data-vibeui-block="slider-008"] [data-part="range"]:focus-visible{outline:2px solid var(--vibeui-slider-008-accent);outline-offset:4px;border-radius:0.5rem}
 /* Поле числа: стрелки убраны, ширина фиксирована и цифры моноширинные —
@@ -96,6 +106,36 @@ margin:0;font-size:0.6875rem;color:var(--vibeui-slider-008-muted);font-variant-n
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="slider-008"] *{animation:none!important;transition:none!important}}
 `
 
+/** Подстановка значений в шаблон подписи. */
+function fillTemplate(template: string, values: Record<string, string>) {
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, key: string) => values[key] ?? match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Ползунок с полем числа: приблизительно мышью, точно — с клавиатуры.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -107,6 +147,9 @@ export function Slider008({
   step = 5,
   defaultValue = 60,
   unit = "тыс. ₽",
+  exactText = "{label}, точное значение",
+  hintText = "от {min} до {max} {unit}, шаг {step}",
+  background = "",
   accent,
   className,
   style,
@@ -125,9 +168,23 @@ export function Slider008({
     setDraft(String(next))
   }
 
+  const words = {
+    label,
+    min: String(min),
+    max: String(max),
+    step: String(step),
+    unit,
+  }
+
   const palette = {
     "--vibeui-slider-008-fill": `${((value - min) / (max - min)) * 100}%`,
     ...(accent ? { "--vibeui-slider-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-slider-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -171,7 +228,7 @@ export function Slider008({
               max={max}
               step={step}
               value={draft}
-              aria-label={`${label}, точное значение`}
+              aria-label={fillTemplate(exactText, words)}
               onChange={(event) => setDraft(event.target.value)}
               onBlur={(event) => commit(event.target.value)}
               onKeyDown={(event) => {
@@ -183,9 +240,7 @@ export function Slider008({
             <span data-part="unit">{unit}</span>
           </span>
         </div>
-        <p data-part="hint">
-          от {min} до {max} {unit}, шаг {step}
-        </p>
+        <p data-part="hint">{fillTemplate(hintText, words)}</p>
       </div>
     </>
   )

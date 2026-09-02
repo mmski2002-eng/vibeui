@@ -18,6 +18,22 @@ export type Datagrid001Props = Omit<
   rows?: Datagrid001Row[]
   caption?: string
   density?: "comfortable" | "compact"
+  /** Заголовок панели над таблицей. */
+  heading?: string
+  /** Названия колонок по ключу строки: компонент несёт русские. */
+  columnText?: Record<string, string>
+  /** Строка панели, когда ключей сортировки нет. */
+  emptySortText?: string
+  /** Подпись фишки на снятие ключа. {column} — название колонки. */
+  removeSortLabel?: string
+  /** Подпись кнопки сброса сортировки. */
+  resetText?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Знак валюты в колонке цены. */
+  currency?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -29,16 +45,20 @@ type SortKey = { column: Column; direction: Direction }
 // Порядок кликов и есть приоритет, поэтому он показан цифрой в заголовке
 // и продублирован фишками в панели — иначе «почему строки стоят так»
 // нельзя прочитать глазами. Заголовок остаётся кнопкой с aria-sort.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-001"]){
---vibeui-datagrid-001-bg:oklch(1 0 0);
---vibeui-datagrid-001-fg:oklch(0.24 0.014 265);
---vibeui-datagrid-001-muted:oklch(0.55 0.014 265);
---vibeui-datagrid-001-border:oklch(0.92 0.006 265);
---vibeui-datagrid-001-head:oklch(0.975 0.003 265);
---vibeui-datagrid-001-hover:oklch(0.55 0.02 265 / 6%);
---vibeui-datagrid-001-accent:oklch(0.55 0.2 262);
---vibeui-datagrid-001-accent-soft:oklch(0.55 0.2 262 / 10%);
+--vibeui-datagrid-001-bg:transparent;
+--vibeui-datagrid-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-datagrid-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-datagrid-001-border:light-dark(oklch(0.92 0.006 265),oklch(0.34 0.012 265));
+--vibeui-datagrid-001-head:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.012 265));
+--vibeui-datagrid-001-hover:light-dark(oklch(0.55 0.02 265 / 6%),oklch(0.78 0.03 265 / 10%));
+--vibeui-datagrid-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-datagrid-001-accent-soft:light-dark(oklch(0.55 0.2 262 / 10%),oklch(0.74 0.16 262 / 20%));
+--vibeui-datagrid-001-rank-fg:light-dark(oklch(1 0 0),oklch(0.21 0.014 265));
 --vibeui-datagrid-001-radius:0.875rem;
 --vibeui-datagrid-001-pad:0.625rem;
 --vibeui-datagrid-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -120,7 +140,7 @@ font-size:0.6875rem;color:var(--vibeui-datagrid-001-accent);
 min-width:1rem;height:1rem;border-radius:999px;
 display:inline-flex;align-items:center;justify-content:center;
 font-size:0.625rem;font-weight:700;
-color:var(--vibeui-datagrid-001-bg);background:var(--vibeui-datagrid-001-accent);
+color:var(--vibeui-datagrid-001-rank-fg);background:var(--vibeui-datagrid-001-accent);
 }
 [data-vibeui-block="datagrid-001"] [data-align="end"]{text-align:right;font-variant-numeric:tabular-nums}
 [data-vibeui-block="datagrid-001"] tbody tr:hover{background:var(--vibeui-datagrid-001-hover)}
@@ -174,13 +194,21 @@ const DEFAULT_ROWS: Datagrid001Row[] = [
   },
 ]
 
-const COLUMNS: { key: Column; title: string; numeric?: boolean }[] = [
-  { key: "title", title: "Позиция" },
-  { key: "team", title: "Группа" },
-  { key: "stock", title: "Остаток", numeric: true },
-  { key: "price", title: "Цена", numeric: true },
-  { key: "updated", title: "Обновлено" },
+const COLUMNS: { key: Column; numeric?: boolean }[] = [
+  { key: "title" },
+  { key: "team" },
+  { key: "stock", numeric: true },
+  { key: "price", numeric: true },
+  { key: "updated" },
 ]
+
+const COLUMN_LABEL: Record<string, string> = {
+  title: "Позиция",
+  team: "Группа",
+  stock: "Остаток",
+  price: "Цена",
+  updated: "Обновлено",
+}
 
 const ARROW = { ascending: "▲", descending: "▼" } as const
 
@@ -195,6 +223,28 @@ function compare(row: Datagrid001Row, other: Datagrid001Row, key: SortKey) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сетка с сортировкой по нескольким колонкам сразу: приоритет ключей
  * задаётся порядком кликов и виден цифрой. Один файл, ноль зависимостей.
  */
@@ -202,6 +252,14 @@ export function Datagrid001({
   rows = DEFAULT_ROWS,
   caption = "Клик по заголовку добавляет колонку в сортировку, повторный — меняет направление, третий убирает",
   density = "comfortable",
+  heading = "Каталог склада",
+  columnText = COLUMN_LABEL,
+  emptySortText = "Сортировка не задана",
+  removeSortLabel = "Убрать сортировку по колонке «{column}»",
+  resetText = "Сбросить",
+  scrollLabel = "Таблица позиций, прокручивается вбок",
+  currency = "₽",
+  background = "",
   accent,
   className,
   style,
@@ -249,8 +307,16 @@ export function Datagrid001({
     return 0
   })
 
+  const label = (column: Column) => columnText[column] ?? COLUMN_LABEL[column]
+
   const palette = {
     ...(accent ? { "--vibeui-datagrid-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -267,9 +333,9 @@ export function Datagrid001({
         style={palette}
       >
         <div data-part="bar">
-          <h3 data-part="bar-title">Каталог склада</h3>
+          <h3 data-part="bar-title">{heading}</h3>
           {keys.length === 0 ? (
-            <p data-part="empty-sort">Сортировка не задана</p>
+            <p data-part="empty-sort">{emptySortText}</p>
           ) : (
             <ul data-part="chips">
               {keys.map((key, index) => (
@@ -277,7 +343,10 @@ export function Datagrid001({
                   <button
                     type="button"
                     data-part="chip"
-                    aria-label={`Убрать сортировку по колонке «${COLUMNS.find((column) => column.key === key.column)?.title}»`}
+                    aria-label={removeSortLabel.replace(
+                      "{column}",
+                      label(key.column),
+                    )}
                     onClick={() =>
                       setKeys((current) =>
                         current.filter((item) => item.column !== key.column),
@@ -285,7 +354,7 @@ export function Datagrid001({
                     }
                   >
                     <span aria-hidden="true">{index + 1}</span>
-                    {COLUMNS.find((column) => column.key === key.column)?.title}
+                    {label(key.column)}
                     <span aria-hidden="true">{ARROW[key.direction]}</span>
                     <span aria-hidden="true">×</span>
                   </button>
@@ -299,13 +368,13 @@ export function Datagrid001({
             disabled={keys.length === 0}
             onClick={() => setKeys([])}
           >
-            Сбросить
+            {resetText}
           </button>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица позиций, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
@@ -329,7 +398,7 @@ export function Datagrid001({
                         type="button"
                         onClick={() => cycle(column.key, column.numeric)}
                       >
-                        {column.title}
+                        {label(column.key)}
                         <span data-part="mark" aria-hidden="true">
                           {keys.length > 1 && key ? (
                             <span data-part="rank">{index + 1}</span>
@@ -351,7 +420,7 @@ export function Datagrid001({
                   <td data-part="team">{row.team}</td>
                   <td data-align="end">{row.stock}</td>
                   <td data-align="end">
-                    {row.price.toLocaleString("ru-RU")} ₽
+                    {row.price.toLocaleString("ru-RU")} {currency}
                   </td>
                   <td data-part="team">{row.updated}</td>
                 </tr>

@@ -32,15 +32,20 @@
             "счётчик, посчитанный из карточек — отдельное число врёт после первого переноса",
             "подсветку цели рамкой, а не заливкой: заливка спорит с карточками внутри",
             "горизонтальную прокрутку колонок вместо их сжатия",
-            "aria-label колонки с числом карточек"
+            "aria-label колонки с числом карточек",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив columns и cards",
             "обработчик onChange",
             "акцент через проп accent",
-            "ширину колонки"
+            "ширину колонки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "columnPickerLabel — подпись списка выбора колонки, шаблон с {title}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
             "Состояние живёт внутри компонента: сохранение делает вызывающий код.",
             "Для длинных колонок добавьте свою прокрутку по вертикали — здесь её нет.",
@@ -51,6 +56,12 @@
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -66,15 +77,20 @@
                 "the counter computed from the cards — a stored number lies after the first move",
                 "highlighting the target with a border, not a fill: a fill fights the cards inside",
                 "horizontal scrolling of columns instead of squeezing them",
-                "the column aria-label carrying the card count"
+                "the column aria-label carrying the card count",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the columns and cards arrays",
                 "the onChange handler",
                 "the accent through the accent prop",
-                "the column width"
+                "the column width",
+                "background — the component background; empty means no background, taking the page colour",
+                "columnPickerLabel — the label of the column select, a template with {title}"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Order inside a column does not change: the move only sets membership.",
                 "State lives inside the component: persisting it is the caller's job.",
                 "For long columns add your own vertical scrolling — there is none here.",
@@ -85,11 +101,47 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Kanban Board"
+            "title": "Kanban Board",
+            "preview": {
+              "props": {
+                "columns": ["Queue", "In progress", "Done"],
+                "cards": [
+                  {
+                    "id": "1",
+                    "title": "Second wave of tables",
+                    "tag": "catalog",
+                    "column": "Queue"
+                  },
+                  {
+                    "id": "2",
+                    "title": "Product page blocks",
+                    "tag": "catalog",
+                    "column": "Queue"
+                  },
+                  {
+                    "id": "3",
+                    "title": "Filter panel",
+                    "tag": "blocks",
+                    "column": "In progress"
+                  },
+                  {
+                    "id": "4",
+                    "title": "Weekly schedule",
+                    "tag": "blocks",
+                    "column": "Done"
+                  }
+                ],
+                "columnPickerLabel": "Column for “{title}”"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -123,15 +175,21 @@
             "живую область role=status: молча отменённый перенос выглядит как поломка интерфейса",
             "счётчик, посчитанный из карточек — отдельное число врёт после первого переноса",
             "полосу заполнения рядом с числом: приближение к лимиту должно читаться без счёта",
-            "aria-label колонки с числом карточек и лимитом"
+            "aria-label колонки с числом карточек и лимитом",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массивы columns и cards вместе с лимитами",
             "обработчик onChange",
             "акцент через проп accent и цвет предупреждения",
-            "ширину колонки"
+            "ширину колонки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи и объявления через проп text: шаблоны с {name}, {title}, {count}, {limit}",
+            "warn — цвет предупреждения о переполнении колонки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
             "Лимит проверяется и для мыши, и для клавиатуры — оба пути идут через одну функцию.",
             "Состояние живёт внутри компонента: сохранение делает вызывающий код.",
@@ -142,6 +200,18 @@
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "warn",
+            "label": "Предупреждение",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -157,15 +227,21 @@
                 "the role=status live region: a silently cancelled move looks like a broken interface",
                 "the counter computed from the cards — a stored number lies after the first move",
                 "the fill bar next to the number: approaching the limit must read without counting",
-                "the column aria-label carrying the card count and the limit"
+                "the column aria-label carrying the card count and the limit",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the columns and cards arrays together with the limits",
                 "the onChange handler",
                 "the accent through the accent prop and the warning colour",
-                "the column width"
+                "the column width",
+                "background — the component background; empty means no background, taking the page colour",
+                "the labels and announcements through the text prop: templates with {name}, {title}, {count}, {limit}",
+                "warn — the colour of the over-limit warning"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Order inside a column does not change: the move only sets membership.",
                 "The limit is checked for mouse and keyboard alike — both paths go through one function.",
                 "State lives inside the component: persisting it is the caller's job.",
@@ -176,11 +252,70 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "warn": {
+                "label": "Warning"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "WIP Limit Board"
+            "title": "WIP Limit Board",
+            "preview": {
+              "props": {
+                "columns": [
+                  {
+                    "name": "Queue",
+                    "limit": 6
+                  },
+                  {
+                    "name": "In progress",
+                    "limit": 2
+                  },
+                  {
+                    "name": "Review",
+                    "limit": 3
+                  }
+                ],
+                "cards": [
+                  {
+                    "id": "1",
+                    "title": "Move the catalog to the new routing",
+                    "column": "Queue"
+                  },
+                  {
+                    "id": "2",
+                    "title": "Pagination in search",
+                    "column": "Queue"
+                  },
+                  {
+                    "id": "3",
+                    "title": "CSV export",
+                    "column": "In progress"
+                  },
+                  {
+                    "id": "4",
+                    "title": "Payment error triage",
+                    "column": "In progress"
+                  },
+                  {
+                    "id": "5",
+                    "title": "Email copy",
+                    "column": "Review"
+                  }
+                ],
+                "text": {
+                  "column": "{name}: {count} of {limit}",
+                  "refused": "“{title}” was not moved: “{name}” already holds {count} of {limit}.",
+                  "moved": "“{title}” moved to “{name}”, now {count} of {limit}.",
+                  "previous": "Move “{title}” to the previous column",
+                  "next": "Move “{title}” to the next column"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "warn", "background"]
       }
     },
     {
@@ -214,15 +349,21 @@
             "слово «просрочен» рядом с датой — красным цветом одним пользоваться нельзя",
             "оттенок инициалов из хеша имени: руками заведённая палитра расходится с составом команды",
             "стрелки влево и вправо на карточке: перетаскивание недоступно с клавиатуры",
-            "живую область role=status: перенос обязан быть слышен, а не только виден"
+            "живую область role=status: перенос обязан быть слышен, а не только виден",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массивы columns и cards с исполнителями и сроками",
             "today — дату, относительно которой считается просрочка",
             "обработчик onChange, акцент через проп accent",
-            "формат даты и ширину колонки"
+            "формат даты и ширину колонки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи и объявления через проп text: шаблоны с {title}, {assignee}, {due}, {name}",
+            "late — цвет отметки просрочки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Даты сравниваются как строки: формат обязан быть ГГГГ-ММ-ДД, иначе сравнение неверно.",
             "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
             "Инициалы берутся из первых двух слов имени: одно слово даст одну букву.",
@@ -242,6 +383,18 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "late",
+            "label": "Просрочка",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -255,15 +408,21 @@
                 "the word \"overdue\" next to the date — red alone must not carry the meaning",
                 "the initials tint from a name hash: a hand-kept palette drifts away from the team roster",
                 "the left and right arrows on the card: dragging is unavailable from a keyboard",
-                "the role=status live region: a move has to be audible, not only visible"
+                "the role=status live region: a move has to be audible, not only visible",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the columns and cards arrays with assignees and due dates",
                 "today — the date the overdue check is made against",
                 "the onChange handler and the accent through the accent prop",
-                "the date format and the column width"
+                "the date format and the column width",
+                "background — the component background; empty means no background, taking the page colour",
+                "the labels and announcements through the text prop: templates with {title}, {assignee}, {due}, {name}",
+                "late — the colour of the overdue marker"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Dates are compared as strings: the format must be YYYY-MM-DD or the comparison is wrong.",
                 "Order inside a column does not change: the move only sets membership.",
                 "Initials come from the first two words of the name: a single word yields one letter.",
@@ -278,11 +437,61 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "late": {
+                "label": "Overdue"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Assignee Due Board"
+            "title": "Assignee Due Board",
+            "preview": {
+              "props": {
+                "columns": ["Queue", "In progress", "Done"],
+                "cards": [
+                  {
+                    "id": "1",
+                    "title": "Sign off the phase two estimate",
+                    "assignee": "Irina Lapteva",
+                    "due": "2026-03-16",
+                    "column": "Queue"
+                  },
+                  {
+                    "id": "2",
+                    "title": "Collect the warranty report",
+                    "assignee": "Peter Kim",
+                    "due": "2026-03-24",
+                    "column": "Queue"
+                  },
+                  {
+                    "id": "3",
+                    "title": "Move payments to the new gateway",
+                    "assignee": "Maria Kovaleva",
+                    "due": "2026-03-19",
+                    "column": "In progress"
+                  },
+                  {
+                    "id": "4",
+                    "title": "Refresh the email copy",
+                    "assignee": "Peter Kim",
+                    "due": "2026-03-12",
+                    "column": "Done"
+                  }
+                ],
+                "text": {
+                  "moved": "“{title}” moved to “{name}”.",
+                  "edge": "“{title}” is already in the outermost column “{name}”.",
+                  "card": "{title}. Assignee {assignee}. Due {due}{overdue}. Column “{name}”. Left and right arrows move the card.",
+                  "overdue": ", overdue",
+                  "due": "due",
+                  "late": "overdue"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "late", "background"]
       }
     },
     {
@@ -316,15 +525,20 @@
             "aria-expanded на кнопке заголовка — иначе состояние свёртки не слышно",
             "разворот колонки при переносе в неё: скрытая цель, куда нельзя попасть, — ловушка",
             "счётчик на свёрнутой полосе: без него колонка выглядит пустой",
-            "кнопки со стрелками на карточке — перетаскивание недоступно с клавиатуры"
+            "кнопки со стрелками на карточке — перетаскивание недоступно с клавиатуры",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массивы columns и cards",
             "collapsed — какие колонки свёрнуты изначально",
             "обработчик onChange, акцент через проп accent",
-            "ширину развёрнутой и свёрнутой колонки"
+            "ширину развёрнутой и свёрнутой колонки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи и объявления через проп text: шаблоны с {name}, {title}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Свёрнутость хранится внутри компонента: начальное значение задаёт проп collapsed.",
             "Вертикальное имя опирается на writing-mode — проверьте длинные названия колонок.",
             "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
@@ -335,6 +549,12 @@
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -350,15 +570,20 @@
                 "aria-expanded on the header button — otherwise the collapsed state is inaudible",
                 "expanding a column when a card is moved into it: a hidden target you cannot reach is a trap",
                 "the counter on the collapsed strip: without it the column looks empty",
-                "the arrow buttons on the card — dragging is unavailable from a keyboard"
+                "the arrow buttons on the card — dragging is unavailable from a keyboard",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the columns and cards arrays",
                 "collapsed — which columns start collapsed",
                 "the onChange handler and the accent through the accent prop",
-                "the width of an expanded and of a collapsed column"
+                "the width of an expanded and of a collapsed column",
+                "background — the component background; empty means no background, taking the page colour",
+                "the labels and announcements through the text prop: templates with {name}, {title}"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The collapsed set lives inside the component: the collapsed prop only seeds it.",
                 "The vertical name relies on writing-mode — check long column titles.",
                 "Order inside a column does not change: the move only sets membership.",
@@ -369,11 +594,61 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Collapsible Columns"
+            "title": "Collapsible Columns",
+            "preview": {
+              "props": {
+                "columns": ["Queue", "In progress", "Review", "Done"],
+                "collapsed": ["Done"],
+                "cards": [
+                  {
+                    "id": "1",
+                    "title": "Catalog: faceted filter",
+                    "column": "Queue"
+                  },
+                  {
+                    "id": "2",
+                    "title": "Scheduled stock import",
+                    "column": "Queue"
+                  },
+                  {
+                    "id": "3",
+                    "title": "Component page: tabs",
+                    "column": "In progress"
+                  },
+                  {
+                    "id": "4",
+                    "title": "Contract amendments",
+                    "column": "Review"
+                  },
+                  {
+                    "id": "5",
+                    "title": "Log migration",
+                    "column": "Done"
+                  },
+                  {
+                    "id": "6",
+                    "title": "February report",
+                    "column": "Done"
+                  }
+                ],
+                "text": {
+                  "collapse": "Column “{name}” collapsed.",
+                  "expand": "Column “{name}” expanded.",
+                  "moved": "“{title}” moved to “{name}”{expanded}.",
+                  "expanded": ", the column was expanded",
+                  "previous": "Move “{title}” to the previous column",
+                  "next": "Move “{title}” to the next column"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -407,15 +682,20 @@
             "объяснение в опустевшей колонке вместо схлопывания — иначе фильтр читается как удаление",
             "aria-pressed на чипсах: выбранный фильтр обязан быть слышен, а не только подсвечен",
             "заливку и рамку выбранного чипса, а не один оттенок текста",
-            "кнопки со стрелками на карточке — перетаскивание недоступно с клавиатуры"
+            "кнопки со стрелками на карточке — перетаскивание недоступно с клавиатуры",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массивы columns и cards с исполнителями",
             "everyone — подпись чипса «без фильтра»",
             "обработчик onChange, акцент через проп accent",
-            "ширину колонки"
+            "ширину колонки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи и объявления через проп text: шаблоны с {name}, {title}, {count}, {total}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Список исполнителей строится из исходного пропа cards, а не из текущего состояния доски.",
             "Фильтр не меняет данные: скрытые карточки остаются в состоянии и учитываются в общем числе.",
             "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
@@ -435,6 +715,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -448,15 +734,20 @@
                 "the explanation inside an emptied column instead of collapsing it — otherwise filtering reads as deletion",
                 "aria-pressed on the chips: the active filter has to be audible, not merely highlighted",
                 "the fill and border of the selected chip, not a lone text tint",
-                "the arrow buttons on the card — dragging is unavailable from a keyboard"
+                "the arrow buttons on the card — dragging is unavailable from a keyboard",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the columns and cards arrays with assignees",
                 "everyone — the label of the no-filter chip",
                 "the onChange handler and the accent through the accent prop",
-                "the column width"
+                "the column width",
+                "background — the component background; empty means no background, taking the page colour",
+                "the labels and announcements through the text prop: templates with {name}, {title}, {count}, {total}"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The assignee list is built from the original cards prop, not from the current board state.",
                 "Filtering changes no data: hidden cards stay in state and count towards the total.",
                 "Order inside a column does not change: the move only sets membership.",
@@ -471,11 +762,65 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Assignee Filter Board"
+            "title": "Assignee Filter Board",
+            "preview": {
+              "props": {
+                "everyone": "All",
+                "columns": ["Queue", "In progress", "Done"],
+                "cards": [
+                  {
+                    "id": "1",
+                    "title": "Faceted filter",
+                    "assignee": "Irina",
+                    "column": "Queue"
+                  },
+                  {
+                    "id": "2",
+                    "title": "Stock import",
+                    "assignee": "Peter",
+                    "column": "Queue"
+                  },
+                  {
+                    "id": "3",
+                    "title": "Product card",
+                    "assignee": "Irina",
+                    "column": "In progress"
+                  },
+                  {
+                    "id": "4",
+                    "title": "Delivery logs",
+                    "assignee": "Maria",
+                    "column": "In progress"
+                  },
+                  {
+                    "id": "5",
+                    "title": "Order emails",
+                    "assignee": "Peter",
+                    "column": "Done"
+                  }
+                ],
+                "text": {
+                  "filters": "Filter by assignee",
+                  "cleared": "Filter cleared, all {total} tasks are shown.",
+                  "filtered": "Filter “{name}”: {count} of {total} tasks shown.",
+                  "moved": "“{title}” moved to “{name}”.",
+                  "column": "{name}: {count} of {total} shown",
+                  "count": "{count} of {total}",
+                  "empty": "Empty",
+                  "hidden": "Hidden by the filter: {total}",
+                  "previous": "Move “{title}” to the previous column",
+                  "next": "Move “{title}” to the next column"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -509,15 +854,20 @@
             "снимок доски при захвате: без него Escape нечего восстанавливать",
             "живую область с aria-live=assertive: при переносе вслепую промежуточные шаги важнее вежливости",
             "название колонки и позиции в каждом сообщении — «перемещено» без координат бесполезно",
-            "поднятый вид карточки тенью и сдвигом, а не только цветом рамки"
+            "поднятый вид карточки тенью и сдвигом, а не только цветом рамки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массивы columns и cards",
             "hint — текст подсказки о клавишах",
             "обработчик onChange, акцент через проп accent",
-            "ширину колонки"
+            "ширину колонки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи и объявления через проп text: шаблоны с {title}, {name}, {index}, {total}, {place}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Мышиного перетаскивания здесь нет намеренно: блок показывает клавиатурную модель целиком.",
             "Потеря фокуса кладёт карточку: это защита от зависшего режима переноса.",
             "Перенос в соседнюю колонку ставит карточку в конец — внутри колонки её двигают стрелками вверх и вниз.",
@@ -531,6 +881,18 @@
             "type": "text",
             "default": "Пробел берёт карточку, стрелки несут, пробел кладёт, Escape отменяет.",
             "maxLength": 96
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -544,15 +906,20 @@
                 "the board snapshot taken on pick-up: without it Escape has nothing to restore",
                 "the aria-live=assertive region: while moving blind, intermediate steps matter more than politeness",
                 "the column and position in every message — \"moved\" without coordinates is useless",
-                "the lifted card look via shadow and offset, not the border colour alone"
+                "the lifted card look via shadow and offset, not the border colour alone",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the columns and cards arrays",
                 "hint — the text explaining the keys",
                 "the onChange handler and the accent through the accent prop",
-                "the column width"
+                "the column width",
+                "background — the component background; empty means no background, taking the page colour",
+                "the labels and announcements through the text prop: templates with {title}, {name}, {index}, {total}, {place}"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Mouse dragging is deliberately absent: the block demonstrates the keyboard model in full.",
                 "Losing focus drops the card: that guards against a stuck move mode.",
                 "Moving to a neighbouring column appends the card — inside the column it is moved with up and down arrows.",
@@ -564,11 +931,60 @@
               "hint": {
                 "label": "Hint",
                 "default": "Space picks the card up, arrows carry it, space drops it, Escape cancels."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Keyboard Card Move"
+            "title": "Keyboard Card Move",
+            "preview": {
+              "props": {
+                "hint": "Space picks the card up, arrows carry it, space drops it, Escape cancels.",
+                "columns": ["Backlog", "In progress", "Done"],
+                "cards": [
+                  {
+                    "id": "1",
+                    "title": "Newsletter schedule",
+                    "column": "Backlog"
+                  },
+                  {
+                    "id": "2",
+                    "title": "Catalog search",
+                    "column": "Backlog"
+                  },
+                  {
+                    "id": "3",
+                    "title": "Warehouse map",
+                    "column": "Backlog"
+                  },
+                  {
+                    "id": "4",
+                    "title": "Pay in instalments",
+                    "column": "In progress"
+                  },
+                  {
+                    "id": "5",
+                    "title": "Onboarding",
+                    "column": "Done"
+                  }
+                ],
+                "text": {
+                  "place": "“{title}”: column “{name}”, position {index} of {total}.",
+                  "columnEdge": "End of the column. {place}",
+                  "boardEdge": "End of the board. {place}",
+                  "taken": "Picked up. {place} Arrows carry the card.",
+                  "dropped": "Dropped. {place}",
+                  "cancelled": "Move cancelled. {place}",
+                  "card": "{title}, column “{name}”, position {index} of {total}"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -602,15 +1018,20 @@
             "долю и полосой, и цифрой — полоса даёт сравнение, цифра даёт точность",
             "список выбора колонки на карточке: перенос мышью недоступен с клавиатуры",
             "живую область role=status с новым итогом колонки после переноса",
-            "итоговую строку тегом footer со сводкой словами"
+            "итоговую строку тегом footer со сводкой словами",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массивы columns и cards с оценками в часах",
             "unit — единицу измерения оценки",
             "обработчик onChange, акцент через проп accent",
-            "ширину колонки"
+            "ширину колонки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи и объявления через проп text: шаблоны с {name}, {title}, {count}, {total}, {unit}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Оценка обязана быть числом: строка сломает суммирование.",
             "Доля округляется до целых процентов, поэтому сумма долей может дать 99 или 101.",
             "Порядок внутри колонки не меняется: перенос управляет только принадлежностью.",
@@ -630,6 +1051,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -643,15 +1070,20 @@
                 "the share as both a bar and a number — the bar gives comparison, the number gives precision",
                 "the column select on the card: mouse dragging is unavailable from a keyboard",
                 "the role=status live region carrying the column's new total after a move",
-                "the footer element for the grand total with a worded summary"
+                "the footer element for the grand total with a worded summary",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the columns and cards arrays with estimates in hours",
                 "unit — the unit of the estimate",
                 "the onChange handler and the accent through the accent prop",
-                "the column width"
+                "the column width",
+                "background — the component background; empty means no background, taking the page colour",
+                "the labels and announcements through the text prop: templates with {name}, {title}, {count}, {total}, {unit}"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The estimate has to be a number: a string breaks the summation.",
                 "The share is rounded to whole percents, so the shares may add up to 99 or 101.",
                 "Order inside a column does not change: the move only sets membership.",
@@ -666,11 +1098,60 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Column Totals Board"
+            "title": "Column Totals Board",
+            "preview": {
+              "props": {
+                "unit": "h",
+                "columns": ["Estimated", "In progress", "Delivered"],
+                "cards": [
+                  {
+                    "id": "1",
+                    "title": "Catalog: filters",
+                    "hours": 12,
+                    "column": "Estimated"
+                  },
+                  {
+                    "id": "2",
+                    "title": "Order export",
+                    "hours": 6,
+                    "column": "Estimated"
+                  },
+                  {
+                    "id": "3",
+                    "title": "Customer area",
+                    "hours": 20,
+                    "column": "In progress"
+                  },
+                  {
+                    "id": "4",
+                    "title": "Stock import",
+                    "hours": 8,
+                    "column": "In progress"
+                  },
+                  {
+                    "id": "5",
+                    "title": "Pricing page",
+                    "hours": 5,
+                    "column": "Delivered"
+                  }
+                ],
+                "text": {
+                  "moved": "“{title}” moved to “{name}”. Column total {total} {unit}.",
+                  "column": "{name}: {count} tasks, {total} {unit}",
+                  "picker": "Column for “{title}”",
+                  "grand": "Total: {total} {unit}",
+                  "summary": "{count} tasks across {columns} columns"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

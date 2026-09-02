@@ -20,7 +20,17 @@ export type Solutions018Props = {
   today?: number
   rows?: Solutions018Row[]
   emptyLabel?: string
+  /** Счётчик в шапке: {label}, {present} и {total}. */
+  presentText?: string
+  /** Подписи легенды: ключи vacation, sick, remote, study. */
+  kindText?: Record<string, string>
+  /** Буквы на полосе: те же ключи. */
+  kindLetterText?: Record<string, string>
+  /** Подпись под сеткой: {out} и {total}. */
+  footText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -36,16 +46,16 @@ export type Solutions018Props = {
 // букву и штриховку, а не только цвет.
 const STYLES = `
 :where([data-vibeui-block="solutions-018"]){
---vibeui-solutions-018-bg:oklch(1 0 0);
---vibeui-solutions-018-panel:oklch(0.975 0.004 230);
---vibeui-solutions-018-fg:oklch(0.21 0.014 240);
---vibeui-solutions-018-muted:oklch(0.55 0.014 240);
---vibeui-solutions-018-border:oklch(0.91 0.006 240);
---vibeui-solutions-018-vacation:oklch(0.62 0.15 200);
---vibeui-solutions-018-sick:oklch(0.62 0.17 30);
---vibeui-solutions-018-remote:oklch(0.6 0.13 285);
---vibeui-solutions-018-study:oklch(0.62 0.13 145);
---vibeui-solutions-018-accent:oklch(0.5 0.17 250);
+--vibeui-solutions-018-bg:transparent;
+--vibeui-solutions-018-panel:light-dark(oklch(0.975 0.004 230),oklch(0.28 0.012 240));
+--vibeui-solutions-018-fg:light-dark(oklch(0.21 0.014 240),oklch(0.94 0.005 240));
+--vibeui-solutions-018-muted:light-dark(oklch(0.55 0.014 240),oklch(0.7 0.012 240));
+--vibeui-solutions-018-border:light-dark(oklch(0.91 0.006 240),oklch(0.36 0.012 240));
+--vibeui-solutions-018-vacation:light-dark(oklch(0.62 0.15 200),oklch(0.66 0.14 200));
+--vibeui-solutions-018-sick:light-dark(oklch(0.62 0.17 30),oklch(0.66 0.16 30));
+--vibeui-solutions-018-remote:light-dark(oklch(0.6 0.13 285),oklch(0.64 0.13 285));
+--vibeui-solutions-018-study:light-dark(oklch(0.62 0.13 145),oklch(0.66 0.13 145));
+--vibeui-solutions-018-accent:light-dark(oklch(0.5 0.17 250),oklch(0.74 0.15 250));
 --vibeui-solutions-018-days:31;
 --vibeui-solutions-018-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -160,12 +170,41 @@ const DEFAULT_ROWS: Solutions018Row[] = [
   },
 ]
 
-const KIND_LETTER = {
+const DEFAULT_KIND_LETTER_TEXT: Record<string, string> = {
   vacation: "О",
   sick: "Б",
   remote: "У",
   study: "Ч",
-} as const
+}
+
+const DEFAULT_KIND_TEXT: Record<string, string> = {
+  vacation: "отпуск",
+  sick: "больничный",
+  remote: "удалённо",
+  study: "учёба",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Календарь отсутствий: диапазон занимает ячейки гридом, сегодня — линией.
@@ -178,7 +217,12 @@ export function Solutions018({
   today = 14,
   rows = DEFAULT_ROWS,
   emptyLabel = "Сегодня на месте",
+  presentText = "{label}: {present} из {total}",
+  kindText = DEFAULT_KIND_TEXT,
+  kindLetterText = DEFAULT_KIND_LETTER_TEXT,
+  footText = "Сегодня отсутствуют {out} из {total} человек. Пересечения видно по вертикали: полосы друг под другом — день без людей.",
   accent,
+  background = "",
   className,
   style,
 }: Solutions018Props) {
@@ -191,6 +235,12 @@ export function Solutions018({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-018-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-018-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     "--vibeui-solutions-018-days": String(daysInMonth),
     ...style,
   } as CSSProperties
@@ -212,35 +262,22 @@ export function Solutions018({
             <p data-part="month">{month}</p>
           </div>
           <p data-part="month">
-            {emptyLabel}: {rows.length - outToday} из {rows.length}
+            {presentText
+              .replace("{label}", emptyLabel)
+              .replace("{present}", String(rows.length - outToday))
+              .replace("{total}", String(rows.length))}
           </p>
         </header>
 
         <p data-part="legend">
-          <span>
-            <span data-part="chip" data-kind="vacation" aria-hidden="true">
-              О
+          {["vacation", "sick", "remote", "study"].map((kind) => (
+            <span key={kind}>
+              <span data-part="chip" data-kind={kind} aria-hidden="true">
+                {kindLetterText[kind] ?? DEFAULT_KIND_LETTER_TEXT[kind]}
+              </span>
+              {kindText[kind] ?? DEFAULT_KIND_TEXT[kind]}
             </span>
-            отпуск
-          </span>
-          <span>
-            <span data-part="chip" data-kind="sick" aria-hidden="true">
-              Б
-            </span>
-            больничный
-          </span>
-          <span>
-            <span data-part="chip" data-kind="remote" aria-hidden="true">
-              У
-            </span>
-            удалённо
-          </span>
-          <span>
-            <span data-part="chip" data-kind="study" aria-hidden="true">
-              Ч
-            </span>
-            учёба
-          </span>
+          ))}
         </p>
 
         <div data-part="scroll">
@@ -277,7 +314,8 @@ export function Solutions018({
                     }}
                   >
                     <span data-part="letter" aria-hidden="true">
-                      {KIND_LETTER[absence.kind]}
+                      {kindLetterText[absence.kind] ??
+                        DEFAULT_KIND_LETTER_TEXT[absence.kind]}
                     </span>
                     {absence.label} {absence.from}–{absence.to}
                   </span>
@@ -288,8 +326,9 @@ export function Solutions018({
         </div>
 
         <p data-part="foot">
-          Сегодня отсутствуют {outToday} из {rows.length} человек. Пересечения
-          видно по вертикали: полосы друг под другом — день без людей.
+          {footText
+            .replace("{out}", String(outToday))
+            .replace("{total}", String(rows.length))}
         </p>
       </section>
     </>

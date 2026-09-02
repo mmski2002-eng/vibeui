@@ -9,9 +9,13 @@ export type Toggle006Props = Omit<
 > & {
   label?: string
   delay?: number
+  /** Строка под кнопкой по ключам busy, savedOn, savedOff и idle. */
+  statusText?: Record<string, string>
   defaultPressed?: boolean
   onChange?: (pressed: boolean) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: toggle, за которым стоит запрос. Состояние переключается
@@ -19,12 +23,13 @@ export type Toggle006Props = Omit<
 // и добавляет aria-busy, поэтому она не врёт о том, что уже сохранено.
 const STYLES = `
 :where([data-vibeui-block="toggle-006"]){
---vibeui-toggle-006-bg:oklch(1 0 0);
---vibeui-toggle-006-fg:oklch(0.22 0.014 265);
---vibeui-toggle-006-muted:oklch(0.55 0.014 265);
---vibeui-toggle-006-border:oklch(0.9 0.006 265);
---vibeui-toggle-006-accent:oklch(0.55 0.15 155);
---vibeui-toggle-006-soft:oklch(0.95 0.04 155);
+--vibeui-toggle-006-bg:transparent;
+--vibeui-toggle-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-toggle-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-toggle-006-accent:light-dark(oklch(0.55 0.15 155),oklch(0.75 0.13 155));
+--vibeui-toggle-006-soft:light-dark(oklch(0.95 0.04 155),oklch(0.3 0.05 155));
+--vibeui-toggle-006-strong:light-dark(oklch(0.36 0.09 155),oklch(0.88 0.1 155));
 --vibeui-toggle-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="toggle-006"]{
@@ -50,7 +55,7 @@ outline:2px solid var(--vibeui-toggle-006-accent);outline-offset:2px;
 [data-vibeui-block="toggle-006"] button[aria-pressed="true"]{
 background:var(--vibeui-toggle-006-soft);
 border-color:var(--vibeui-toggle-006-accent);
-color:oklch(0.36 0.09 155);
+color:var(--vibeui-toggle-006-strong);
 }
 /* Ширина кнопки зафиксирована: значок меняется с галочки на волчок, и без
    min-width кнопка дёргалась бы на каждое сохранение. */
@@ -69,6 +74,35 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-toggle-006-muted);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="toggle-006"] *{animation:none!important;transition:none!important}}
 `
 
+const STATUS_TEXT: Record<string, string> = {
+  busy: "Сохраняем…",
+  savedOn: "Сохранено: страница видна всем",
+  savedOff: "Сохранено: страница снята с публикации",
+  idle: "Изменение уходит на сервер сразу",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Toggle с сохранением на сервере: пока идёт запрос, кнопка помечена
  * aria-busy и не меняет состояние. Один файл, ноль зависимостей.
@@ -76,9 +110,11 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-toggle-006-muted);
 export function Toggle006({
   label = "Опубликовано",
   delay = 1200,
+  statusText = STATUS_TEXT,
   defaultPressed = false,
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -99,8 +135,22 @@ export function Toggle006({
 
   const palette = {
     ...(accent ? { "--vibeui-toggle-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-toggle-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const statusKey = busy
+    ? "busy"
+    : saved
+      ? pressed
+        ? "savedOn"
+        : "savedOff"
+      : "idle"
 
   const save = () => {
     if (busy) {
@@ -153,13 +203,7 @@ export function Toggle006({
           {label}
         </button>
         <p data-part="status" role="status">
-          {busy
-            ? "Сохраняем…"
-            : saved
-              ? pressed
-                ? "Сохранено: страница видна всем"
-                : "Сохранено: страница снята с публикации"
-              : "Изменение уходит на сервер сразу"}
+          {statusText[statusKey] ?? STATUS_TEXT[statusKey]}
         </p>
       </div>
     </>

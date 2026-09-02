@@ -14,8 +14,8 @@ export type Button052Props = Omit<ComponentPropsWithoutRef<"a">, "href"> & {
 // записи номера пробелы и скобки вычищаются только в href.
 const STYLES = `
 :where([data-vibeui-block="button-052"]){
---vibeui-button-052-accent:oklch(0.55 0.15 150);
---vibeui-button-052-fg:oklch(0.99 0.01 150);
+--vibeui-button-052-accent:light-dark(oklch(0.55 0.15 150),oklch(0.64 0.14 150));
+--vibeui-button-052-fg:light-dark(oklch(0.99 0.01 150),oklch(0.98 0.012 150));
 --vibeui-button-052-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-button-052-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }

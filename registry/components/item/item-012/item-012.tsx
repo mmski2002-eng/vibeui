@@ -8,6 +8,11 @@ export type Item012Props = Omit<
   meta?: string
   time?: string
   unread?: boolean
+  /** Скрытая подпись непрочитанного: компонент несёт русскую. */
+  unreadText?: string
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
+  accent?: string
 }
 
 // Идея компонента: строка уведомления, где непрочитанное состояние держится
@@ -16,13 +21,16 @@ export type Item012Props = Omit<
 // что дублирует смысл: настоящий сигнал для скринридера — скрытый текст
 // «Непрочитано» перед названием, который существует только в непрочитанном
 // состоянии, а не превращается в пустой узел в прочитанном.
+//
+// Тема берётся из color-scheme окружения через light-dark(): строка темнеет
+// там, где тёмный контекст, и не выкладывает под себя белую плашку.
 const STYLES = `
 :where([data-vibeui-block="item-012"]){
---vibeui-item-012-bg:oklch(1 0 0);
---vibeui-item-012-fg:oklch(0.23 0.014 265);
---vibeui-item-012-muted:oklch(0.56 0.014 265);
---vibeui-item-012-border:oklch(0.9 0.006 265);
---vibeui-item-012-accent:oklch(0.58 0.18 258);
+--vibeui-item-012-bg:transparent;
+--vibeui-item-012-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-item-012-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-item-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-item-012-accent:light-dark(oklch(0.58 0.18 258),oklch(0.75 0.16 258));
 --vibeui-item-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="item-012"]{
@@ -63,6 +71,28 @@ clip:rect(0,0,0,0);white-space:nowrap;border:0;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Строка уведомления с непрочитанной меткой и временем: точка, вес шрифта
  * и заливка строки — три сигнала, а не один. Один файл, ноль зависимостей.
  */
@@ -71,10 +101,24 @@ export function Item012({
   meta = "«Проверьте цифры по разделу три»",
   time = "14:32",
   unread = true,
+  unreadText = "Непрочитано.",
+  background = "",
+  accent,
   className,
   style,
   ...props
 }: Item012Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-item-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-item-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-item-012" precedence="medium">
@@ -85,11 +129,11 @@ export function Item012({
         data-vibeui-block="item-012"
         data-unread={unread || undefined}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="dot" aria-hidden="true" />
         <span data-part="text">
-          {unread ? <span data-part="sr">Непрочитано. </span> : null}
+          {unread ? <span data-part="sr">{`${unreadText} `}</span> : null}
           <span data-part="title">{title}</span>
           <span data-part="meta">{meta}</span>
         </span>

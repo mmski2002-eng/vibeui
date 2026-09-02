@@ -8,6 +8,12 @@ export type Scrollarea005Props = Omit<
   items?: string[]
   /** Сколько строк видно без прокрутки: из них и считается высота области. */
   rows?: number
+  /** Подпись вместимости. {visible} и {total} подставляются числами. */
+  capacityText?: string
+  /** Подсказка справа в подвале. */
+  hint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: высота области задана не пикселями, а числом видимых
@@ -15,13 +21,17 @@ export type Scrollarea005Props = Omit<
 // Поэтому обрезка всегда приходится на границу строки, а не на её середину,
 // и подпись «видно 6 из 18» не врёт. Номера рисует CSS-счётчик: в разметке
 // их нет, и при смене порядка список не надо перенумеровывать руками.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="scrollarea-005"]){
---vibeui-scrollarea-005-bg:oklch(1 0 0);
---vibeui-scrollarea-005-fg:oklch(0.24 0.014 265);
---vibeui-scrollarea-005-muted:oklch(0.55 0.014 265);
---vibeui-scrollarea-005-border:oklch(0.9 0.006 265);
---vibeui-scrollarea-005-accent:oklch(0.55 0.17 265);
+--vibeui-scrollarea-005-bg:transparent;
+--vibeui-scrollarea-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-scrollarea-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-scrollarea-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.33 0.012 265));
+--vibeui-scrollarea-005-rule:light-dark(oklch(0.955 0.004 265),oklch(0.28 0.01 265));
+--vibeui-scrollarea-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-scrollarea-005-row:2.25rem;
 --vibeui-scrollarea-005-rows:6;
 --vibeui-scrollarea-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -63,7 +73,7 @@ box-sizing:border-box;height:var(--vibeui-scrollarea-005-row);
 padding:0 0.875rem;font-size:0.8125rem;
 counter-increment:vibeui-scrollarea-005-row;
 }
-[data-vibeui-block="scrollarea-005"] li + li{border-top:1px solid oklch(0.955 0.004 265)}
+[data-vibeui-block="scrollarea-005"] li + li{border-top:1px solid var(--vibeui-scrollarea-005-rule)}
 /* Номера рисует счётчик: в разметке их нет и перенумеровывать нечего. */
 [data-vibeui-block="scrollarea-005"] li::before{
 content:counter(vibeui-scrollarea-005-row);
@@ -95,6 +105,28 @@ const DEFAULT_ITEMS = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Область фиксированной высоты в строках, с нумерацией от CSS-счётчика.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -102,6 +134,9 @@ export function Scrollarea005({
   title = "История сборок",
   items = DEFAULT_ITEMS,
   rows = 6,
+  capacityText = "видно {visible} из {total}",
+  hint = "прокрутите список",
+  background = "",
   className,
   style,
   ...props
@@ -109,6 +144,12 @@ export function Scrollarea005({
   const visible = Math.min(items.length, Math.max(1, rows))
   const palette = {
     "--vibeui-scrollarea-005-rows": visible,
+    ...(background
+      ? {
+          "--vibeui-scrollarea-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -138,9 +179,11 @@ export function Scrollarea005({
         </div>
         <div data-part="foot">
           <span>
-            видно {visible} из {items.length}
+            {capacityText
+              .replace("{visible}", String(visible))
+              .replace("{total}", String(items.length))}
           </span>
-          <span>прокрутите список</span>
+          <span>{hint}</span>
         </div>
       </div>
     </>

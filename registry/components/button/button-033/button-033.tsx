@@ -14,6 +14,8 @@ export type Button033Props = Omit<
   active?: boolean
   disabled?: boolean
   onClick?: MouseEventHandler<HTMLButtonElement>
+  /** Поверхность под кнопкой-призраком. Пусто — своя, из палитры. */
+  background?: string
   accent?: string
 }
 
@@ -23,11 +25,11 @@ export type Button033Props = Omit<
 // а на тёмной подложке каталога его было бы не видно.
 const STYLES = `
 :where([data-vibeui-block="button-033"]){
---vibeui-button-033-surface:oklch(0.99 0.003 265);
---vibeui-button-033-border:oklch(0.9 0.006 265);
---vibeui-button-033-fg:oklch(0.46 0.014 265);
---vibeui-button-033-fg-strong:oklch(0.24 0.02 265);
---vibeui-button-033-accent:oklch(0.55 0.17 265);
+--vibeui-button-033-surface:light-dark(oklch(0.99 0.003 265),oklch(0.24 0.012 265));
+--vibeui-button-033-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-button-033-fg:light-dark(oklch(0.46 0.014 265),oklch(0.74 0.012 265));
+--vibeui-button-033-fg-strong:light-dark(oklch(0.24 0.02 265),oklch(0.96 0.006 265));
+--vibeui-button-033-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-button-033-radius:0.5rem;
 --vibeui-button-033-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -69,6 +71,28 @@ outline:2px solid var(--vibeui-button-033-accent);outline-offset:2px;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кнопка-призрак на собственной поверхности: вес появляется только
  * на наведении. Один файл, ноль зависимостей, собственная палитра.
  */
@@ -77,6 +101,7 @@ export function Button033({
   active = false,
   disabled,
   onClick,
+  background = "",
   accent,
   className,
   style,
@@ -84,6 +109,12 @@ export function Button033({
 }: Button033Props) {
   const palette = {
     ...(accent ? { "--vibeui-button-033-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-033-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

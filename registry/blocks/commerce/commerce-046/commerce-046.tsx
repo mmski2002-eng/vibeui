@@ -20,7 +20,21 @@ export type Commerce046Props = {
   promo?: string
   cta?: string
   safe?: string
+  /** Хвост строки промо после выделенного текста. */
+  promoNote?: string
+  /** Число товаров в шапке: {count} — сколько их. */
+  countText?: string
+  /** Ярлык подарочной упаковки. */
+  giftText?: string
+  /** Подписи кнопок количества для читалки: {title} — товар. */
+  qtyAriaText?: Record<string, string>
+  /** Подпись кнопки «назад» для читалки. */
+  backAriaText?: string
+  /** Подписи итога: ключи goods (с {count}), shipping, discount и total. */
+  summaryText?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,12 +48,14 @@ export type Commerce046Props = {
 // чтобы последняя строка не пряталась под панелью.
 const STYLES = `
 :where([data-vibeui-block="commerce-046"]){
---vibeui-commerce-046-bg:oklch(0.985 0.003 265);
---vibeui-commerce-046-fg:oklch(0.21 0.014 265);
---vibeui-commerce-046-muted:oklch(0.55 0.014 265);
---vibeui-commerce-046-border:oklch(0.91 0.006 265);
---vibeui-commerce-046-card:oklch(1 0 0);
---vibeui-commerce-046-accent:oklch(0.55 0.2 262);
+--vibeui-commerce-046-bg:transparent;
+--vibeui-commerce-046-fg:light-dark(oklch(0.21 0.014 265),oklch(0.93 0.006 265));
+--vibeui-commerce-046-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-commerce-046-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-046-card:light-dark(oklch(1 0 0),oklch(0.26 0.01 265));
+--vibeui-commerce-046-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.17 262));
+--vibeui-commerce-046-onaccent:light-dark(oklch(1 0 0),oklch(0.17 0.03 262));
+--vibeui-commerce-046-save:light-dark(oklch(0.5 0.13 150),oklch(0.76 0.13 155));
 --vibeui-commerce-046-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -54,7 +70,7 @@ display:flex;flex-direction:column;
 }
 [data-vibeui-block="commerce-046"] [data-part="top"]{
 position:sticky;top:0;z-index:2;padding:0.75rem 1rem;
-background:var(--vibeui-commerce-046-bg);border-bottom:1px solid var(--vibeui-commerce-046-border);
+background:var(--vibeui-commerce-046-card);border-bottom:1px solid var(--vibeui-commerce-046-border);
 display:flex;align-items:center;gap:0.625rem;
 }
 [data-vibeui-block="commerce-046"] [data-part="back"]{
@@ -114,7 +130,7 @@ border-radius:1.25rem 1.25rem 0 0;box-shadow:0 -8px 24px oklch(0.2 0.02 265 / 8%
 [data-vibeui-block="commerce-046"] dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:0.25rem 0.5rem;font-size:0.8125rem}
 [data-vibeui-block="commerce-046"] dt{color:var(--vibeui-commerce-046-muted)}
 [data-vibeui-block="commerce-046"] dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
-[data-vibeui-block="commerce-046"] [data-part="minus"]{color:oklch(0.5 0.13 150)}
+[data-vibeui-block="commerce-046"] [data-part="minus"]{color:var(--vibeui-commerce-046-save)}
 [data-vibeui-block="commerce-046"] [data-part="total"]{
 margin:0.5rem 0 0;padding-top:0.5rem;border-top:1px solid var(--vibeui-commerce-046-border);
 display:flex;align-items:baseline;justify-content:space-between;gap:0.5rem;
@@ -123,7 +139,7 @@ display:flex;align-items:baseline;justify-content:space-between;gap:0.5rem;
 [data-vibeui-block="commerce-046"] [data-part="total"] span:last-child{font-size:1.375rem;font-weight:800;letter-spacing:-0.025em;font-variant-numeric:tabular-nums}
 [data-vibeui-block="commerce-046"] [data-part="cta"]{
 margin-top:0.625rem;width:100%;appearance:none;border:0;cursor:pointer;height:3rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-046-accent);color:oklch(1 0 0);font:inherit;font-size:1rem;font-weight:700;
+background:var(--vibeui-commerce-046-accent);color:var(--vibeui-commerce-046-onaccent);font:inherit;font-size:1rem;font-weight:700;
 }
 [data-vibeui-block="commerce-046"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-commerce-046-accent);outline-offset:2px}
 [data-vibeui-block="commerce-046"] [data-part="safe"]{margin:0.5rem 0 0;text-align:center;font-size:0.6875rem;color:var(--vibeui-commerce-046-muted)}
@@ -161,6 +177,40 @@ const DEFAULT_LINES: Commerce046Line[] = [
   },
 ]
 
+const DEFAULT_QTY_ARIA: Record<string, string> = {
+  decrease: "Убрать одну штуку: {title}",
+  increase: "Добавить одну штуку: {title}",
+}
+
+const DEFAULT_SUMMARY: Record<string, string> = {
+  goods: "Товары, {count} шт.",
+  shipping: "Доставка",
+  discount: "Скидка",
+  total: "Итого",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Корзина под узкий экран: итог и кнопка прилипают к нижнему краю списка.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -175,12 +225,25 @@ export function Commerce046({
   promo = "До бесплатной доставки не хватает 2 100 ₽",
   cta = "Оформить за 32 190 ₽",
   safe = "Оплата картой, СБП или при получении",
+  promoNote = "— добавьте что-нибудь небольшое или заберите заказ из пункта выдачи бесплатно.",
+  countText = "{count} товара",
+  giftText = "подарочная упаковка",
+  qtyAriaText = DEFAULT_QTY_ARIA,
+  backAriaText = "Назад в каталог",
+  summaryText = DEFAULT_SUMMARY,
   accent,
+  background = "",
   className,
   style,
 }: Commerce046Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-046-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-046-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -199,11 +262,13 @@ export function Commerce046({
       >
         <div data-part="shell">
           <header data-part="top">
-            <button type="button" data-part="back" aria-label="Назад в каталог">
+            <button type="button" data-part="back" aria-label={backAriaText}>
               ←
             </button>
             <h2>{title}</h2>
-            <span data-part="count">{count} товара</span>
+            <span data-part="count">
+              {countText.replace("{count}", String(count))}
+            </span>
           </header>
 
           <ul>
@@ -221,21 +286,23 @@ export function Commerce046({
                 <div>
                   <p data-part="name">{line.title}</p>
                   <p data-part="spec">{line.spec}</p>
-                  {line.gift ? (
-                    <span data-part="gift">подарочная упаковка</span>
-                  ) : null}
+                  {line.gift ? <span data-part="gift">{giftText}</span> : null}
                   <div data-part="row">
                     <span data-part="qty">
                       <button
                         type="button"
-                        aria-label={`Убрать одну штуку: ${line.title}`}
+                        aria-label={(
+                          qtyAriaText.decrease ?? DEFAULT_QTY_ARIA.decrease
+                        ).replace("{title}", line.title)}
                       >
                         −
                       </button>
                       <span>{line.count}</span>
                       <button
                         type="button"
-                        aria-label={`Добавить одну штуку: ${line.title}`}
+                        aria-label={(
+                          qtyAriaText.increase ?? DEFAULT_QTY_ARIA.increase
+                        ).replace("{title}", line.title)}
                       >
                         +
                       </button>
@@ -248,22 +315,26 @@ export function Commerce046({
           </ul>
 
           <p data-part="promo">
-            <b>{promo}</b> — добавьте что-нибудь небольшое или заберите заказ из
-            пункта выдачи бесплатно.
+            <b>{promo}</b> {promoNote}
           </p>
           <div data-part="gap" aria-hidden="true" />
 
           <div data-part="bottom">
             <dl>
-              <dt>Товары, {count} шт.</dt>
+              <dt>
+                {(summaryText.goods ?? DEFAULT_SUMMARY.goods).replace(
+                  "{count}",
+                  String(count),
+                )}
+              </dt>
               <dd>{goods}</dd>
-              <dt>Доставка</dt>
+              <dt>{summaryText.shipping ?? DEFAULT_SUMMARY.shipping}</dt>
               <dd>{shipping}</dd>
-              <dt>Скидка</dt>
+              <dt>{summaryText.discount ?? DEFAULT_SUMMARY.discount}</dt>
               <dd data-part="minus">{discount}</dd>
             </dl>
             <p data-part="total">
-              <span>Итого</span>
+              <span>{summaryText.total ?? DEFAULT_SUMMARY.total}</span>
               <span>{total}</span>
             </p>
             <button type="button" data-part="cta">

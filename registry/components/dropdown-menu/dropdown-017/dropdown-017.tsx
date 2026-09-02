@@ -15,7 +15,15 @@ export type Dropdown017Props = Omit<
   fields?: string[]
   recommended?: string
   onChange?: (value: string) => void
+  /** Заголовок меню и доступное имя списка. */
+  menuLabel?: string
+  /** Доступное имя кнопки. Плейсхолдер {value}. */
+  triggerLabelTemplate?: string
+  /** Подпись бейджа у рекомендованного поля. */
+  recommendedText?: string
   accent?: string
+  /** Подложка плашки и меню. Пусто — собственный фон по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: радиогруппа сортировки по одному полю — без второй группы
@@ -23,14 +31,17 @@ export type Dropdown017Props = Omit<
 // один вопрос, а не два сразу. Кнопка-триггер — маленькая иконка, а не
 // текстовая подпись: компонент рассчитан на панель инструментов, где рядом
 // уже стоит название таблицы. Рекомендованное поле помечено бейджем.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте плашка светлее фона страницы, а её граница светлее плашки.
 const STYLES = `
 :where([data-vibeui-block="dropdown-017"]){
---vibeui-dropdown-017-bg:oklch(1 0 0);
---vibeui-dropdown-017-fg:oklch(0.24 0.014 235);
---vibeui-dropdown-017-muted:oklch(0.56 0.014 235);
---vibeui-dropdown-017-border:oklch(0.9 0.006 235);
---vibeui-dropdown-017-hover:oklch(0.96 0.004 235);
---vibeui-dropdown-017-accent:oklch(0.56 0.17 235);
+--vibeui-dropdown-017-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 235));
+--vibeui-dropdown-017-fg:light-dark(oklch(0.24 0.014 235),oklch(0.94 0.006 235));
+--vibeui-dropdown-017-muted:light-dark(oklch(0.56 0.014 235),oklch(0.7 0.012 235));
+--vibeui-dropdown-017-border:light-dark(oklch(0.9 0.006 235),oklch(0.37 0.012 235));
+--vibeui-dropdown-017-hover:light-dark(oklch(0.96 0.004 235),oklch(0.32 0.014 235));
+--vibeui-dropdown-017-accent:light-dark(oklch(0.56 0.17 235),oklch(0.76 0.13 235));
 --vibeui-dropdown-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="dropdown-017"]{
@@ -107,6 +118,28 @@ color:var(--vibeui-dropdown-017-accent);opacity:0;
 
 const DEFAULT_FIELDS = ["Дата создания", "Название", "Приоритет", "Исполнитель"]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function stepFocus(menu: HTMLElement | null, delta: number) {
   if (!menu) {
     return
@@ -133,7 +166,11 @@ export function Dropdown017({
   fields = DEFAULT_FIELDS,
   recommended = "Дата создания",
   onChange,
+  menuLabel = "Сортировать по",
+  triggerLabelTemplate = "Порядок сортировки: {value}",
+  recommendedText = "Рекомендуем",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -153,6 +190,12 @@ export function Dropdown017({
 
   const palette = {
     ...(accent ? { "--vibeui-dropdown-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dropdown-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -175,7 +218,7 @@ export function Dropdown017({
           popoverTarget={`${id}-menu`}
           aria-haspopup="menu"
           aria-expanded={open}
-          aria-label={`Порядок сортировки: ${picked}`}
+          aria-label={triggerLabelTemplate.replace("{value}", picked)}
           onKeyDown={(event) => {
             if (event.key === "ArrowDown") {
               event.preventDefault()
@@ -210,7 +253,7 @@ export function Dropdown017({
           ref={menu}
           popover="auto"
           role="menu"
-          aria-label="Сортировать по"
+          aria-label={menuLabel}
           data-part="menu"
           onToggle={(event) => setOpen(event.newState === "open")}
           onKeyDown={(event: KeyboardEvent<HTMLDivElement>) => {
@@ -224,7 +267,7 @@ export function Dropdown017({
           }}
         >
           <div data-part="title" id={`${id}-title`}>
-            Сортировать по
+            {menuLabel}
           </div>
           <div role="group" aria-labelledby={`${id}-title`}>
             {fields.map((field) => (
@@ -253,7 +296,7 @@ export function Dropdown017({
                     />
                   </svg>
                 ) : field === recommended ? (
-                  <span data-part="badge">Рекомендуем</span>
+                  <span data-part="badge">{recommendedText}</span>
                 ) : null}
               </button>
             ))}

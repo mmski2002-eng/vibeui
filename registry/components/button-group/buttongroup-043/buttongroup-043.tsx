@@ -8,6 +8,12 @@ export type Buttongroup043Props = Omit<
   total?: number
   entity?: string
   label?: string
+  /** Счётчик: {entity}, {index} и {total} подставляются на месте. */
+  counterText?: string
+  /** Имена кнопок: компонент несёт русские, проект подставляет свои. */
+  stepText?: Record<string, string>
+  /** Пусто — заливки нет, сцепка ложится на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,11 +27,13 @@ export type Buttongroup043Props = Omit<
 // левые, и гасить только одну — значит обмануть.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-043"]){
---vibeui-buttongroup-043-surface:oklch(1 0 0);
---vibeui-buttongroup-043-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-043-muted:oklch(0.56 0.014 265);
---vibeui-buttongroup-043-border:oklch(0.88 0.008 265);
---vibeui-buttongroup-043-accent:oklch(0.5 0.16 265);
+--vibeui-buttongroup-043-surface:transparent;
+--vibeui-buttongroup-043-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-043-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-043-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.012 265));
+--vibeui-buttongroup-043-hover:light-dark(oklch(0.965 0.005 265),oklch(0.33 0.012 265));
+--vibeui-buttongroup-043-rail:light-dark(oklch(0.93 0.006 265),oklch(0.36 0.01 265));
+--vibeui-buttongroup-043-accent:light-dark(oklch(0.5 0.16 265),oklch(0.77 0.13 265));
 --vibeui-buttongroup-043-radius:0.625rem;
 --vibeui-buttongroup-043-progress:0%;
 --vibeui-buttongroup-043-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -59,7 +67,7 @@ width:1rem;height:1rem;
 stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
 }
 [data-vibeui-block="buttongroup-043"] button:hover:not(:disabled){
-background:oklch(0.965 0.005 265);color:var(--vibeui-buttongroup-043-fg);
+background:var(--vibeui-buttongroup-043-hover);color:var(--vibeui-buttongroup-043-fg);
 }
 [data-vibeui-block="buttongroup-043"] button:disabled{opacity:.32;cursor:not-allowed}
 [data-vibeui-block="buttongroup-043"] button:focus-visible{
@@ -75,7 +83,7 @@ font-variant-numeric:tabular-nums;white-space:nowrap;
 /* Полоса положения: «12 из 340» цифрами читается, но не ощущается. */
 [data-vibeui-block="buttongroup-043"] [data-part="bar"]{
 position:relative;height:3px;border-radius:2px;
-background:oklch(0.93 0.006 265);overflow:hidden;
+background:var(--vibeui-buttongroup-043-rail);overflow:hidden;
 }
 [data-vibeui-block="buttongroup-043"] [data-part="bar"] i{
 position:absolute;inset-block:0;inset-inline-start:0;
@@ -93,6 +101,35 @@ const ICONS = {
   last: "M6 5l7 7-7 7M17 5v14",
 }
 
+const STEP_LABEL: Record<string, string> = {
+  first: "К первой записи",
+  prev: "К предыдущей записи",
+  next: "К следующей записи",
+  last: "К последней записи",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Навигация по записям: край и шаг различаются формой значка, снизу — полоса.
  * Один файл, ноль зависимостей, серверный компонент.
@@ -102,6 +139,9 @@ export function Buttongroup043({
   total = 340,
   entity = "Запись",
   label = "Навигация по записям",
+  counterText = "{entity} {index} из {total}",
+  stepText = STEP_LABEL,
+  background = "",
   accent,
   className,
   style,
@@ -110,10 +150,21 @@ export function Buttongroup043({
   const current = Math.min(Math.max(1, index), total)
   const atStart = current === 1
   const atEnd = current === total
+  const counter = counterText
+    .replace("{entity}", entity)
+    .replace("{index}", String(current))
+    .replace("{total}", String(total))
+  const stepLabel = (step: string) => stepText[step] ?? STEP_LABEL[step]
 
   const palette = {
     "--vibeui-buttongroup-043-progress": `${total > 1 ? ((current - 1) / (total - 1)) * 100 : 100}%`,
     ...(accent ? { "--vibeui-buttongroup-043-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-043-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -130,7 +181,11 @@ export function Buttongroup043({
         aria-label={label}
       >
         <div data-part="track">
-          <button type="button" disabled={atStart} aria-label="К первой записи">
+          <button
+            type="button"
+            disabled={atStart}
+            aria-label={stepLabel("first")}
+          >
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d={ICONS.first} />
             </svg>
@@ -138,29 +193,19 @@ export function Buttongroup043({
           <button
             type="button"
             disabled={atStart}
-            aria-label="К предыдущей записи"
+            aria-label={stepLabel("prev")}
           >
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d={ICONS.prev} />
             </svg>
           </button>
-          <span data-part="counter">
-            {entity} {current} из {total}
-          </span>
-          <button
-            type="button"
-            disabled={atEnd}
-            aria-label="К следующей записи"
-          >
+          <span data-part="counter">{counter}</span>
+          <button type="button" disabled={atEnd} aria-label={stepLabel("next")}>
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d={ICONS.next} />
             </svg>
           </button>
-          <button
-            type="button"
-            disabled={atEnd}
-            aria-label="К последней записи"
-          >
+          <button type="button" disabled={atEnd} aria-label={stepLabel("last")}>
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d={ICONS.last} />
             </svg>

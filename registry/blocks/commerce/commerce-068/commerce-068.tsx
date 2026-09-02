@@ -22,6 +22,9 @@ export type Commerce068Props = {
   returnedLabel?: string
   returned?: string
   payments?: Commerce068Payment[]
+  periodLabel?: string
+  /** Подписи статусов: done, hold, back, fail. */
+  stateText?: Record<string, string>
   columnDate?: string
   columnWhat?: string
   columnAmount?: string
@@ -30,6 +33,8 @@ export type Commerce068Props = {
   emptyText?: string
   more?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -43,15 +48,16 @@ export type Commerce068Props = {
 // потратил» без вычета возвратов — неверная цифра.
 const STYLES = `
 :where([data-vibeui-block="commerce-068"]){
---vibeui-commerce-068-bg:oklch(1 0 0);
---vibeui-commerce-068-fg:oklch(0.21 0.012 265);
---vibeui-commerce-068-muted:oklch(0.53 0.014 265);
---vibeui-commerce-068-border:oklch(0.9 0.006 265);
---vibeui-commerce-068-soft:oklch(0.972 0.004 265);
---vibeui-commerce-068-accent:oklch(0.48 0.14 265);
---vibeui-commerce-068-done:oklch(0.47 0.12 150);
---vibeui-commerce-068-hold:oklch(0.58 0.13 75);
---vibeui-commerce-068-fail:oklch(0.54 0.17 25);
+--vibeui-commerce-068-bg:transparent;
+--vibeui-commerce-068-surface:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-commerce-068-fg:light-dark(oklch(0.21 0.012 265),oklch(0.94 0.006 265));
+--vibeui-commerce-068-muted:light-dark(oklch(0.53 0.014 265),oklch(0.73 0.012 265));
+--vibeui-commerce-068-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
+--vibeui-commerce-068-soft:light-dark(oklch(0.972 0.004 265),oklch(0.27 0.014 265));
+--vibeui-commerce-068-accent:light-dark(oklch(0.48 0.14 265),oklch(0.76 0.13 265));
+--vibeui-commerce-068-done:light-dark(oklch(0.47 0.12 150),oklch(0.78 0.14 150));
+--vibeui-commerce-068-hold:light-dark(oklch(0.58 0.13 75),oklch(0.82 0.14 75));
+--vibeui-commerce-068-fail:light-dark(oklch(0.54 0.17 25),oklch(0.73 0.15 25));
 --vibeui-commerce-068-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -65,7 +71,7 @@ color:var(--vibeui-commerce-068-fg);font-family:var(--vibeui-commerce-068-sans);
 [data-vibeui-block="commerce-068"] h2{margin:0;font-size:1.375rem;font-weight:700;letter-spacing:-0.02em}
 [data-vibeui-block="commerce-068"] select{
 height:2.5rem;padding:0 2rem 0 0.75rem;border-radius:0.625rem;appearance:none;
-border:1px solid var(--vibeui-commerce-068-border);background:var(--vibeui-commerce-068-bg);
+border:1px solid var(--vibeui-commerce-068-border);background:var(--vibeui-commerce-068-surface);
 font:inherit;font-size:0.875rem;color:inherit;
 background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
 background-position:calc(100% - 1.0625rem) 1.125rem,calc(100% - 0.75rem) 1.125rem;
@@ -111,7 +117,7 @@ text-decoration:underline;text-underline-offset:2px;
 [data-vibeui-block="commerce-068"] [data-part="empty"]{margin:0;padding:1.5rem 0.875rem;text-align:center;font-size:0.8125rem;color:var(--vibeui-commerce-068-muted)}
 [data-vibeui-block="commerce-068"] [data-part="more"]{
 appearance:none;cursor:pointer;display:block;margin:1rem auto 0;height:2.625rem;padding:0 1.5rem;border-radius:0.875rem;
-border:1px solid var(--vibeui-commerce-068-border);background:var(--vibeui-commerce-068-bg);
+border:1px solid var(--vibeui-commerce-068-border);background:var(--vibeui-commerce-068-surface);
 color:inherit;font:inherit;font-size:0.875rem;font-weight:650;
 }
 @container (min-width: 44rem){
@@ -126,6 +132,28 @@ const STATE_WORD: Record<Commerce068State, string> = {
   hold: "Ожидает банк",
   back: "Возврат",
   fail: "Отклонён",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 const DEFAULT_PAYMENTS: Commerce068Payment[] = [
@@ -192,6 +220,8 @@ export function Commerce068({
   returnedLabel = "Вернулось",
   returned = "7 400 ₽",
   payments = DEFAULT_PAYMENTS,
+  periodLabel = "Период",
+  stateText = STATE_WORD,
   columnDate = "Дата",
   columnWhat = "Операция",
   columnAmount = "Сумма",
@@ -200,11 +230,21 @@ export function Commerce068({
   emptyText = "За этот период платежей не было.",
   more = "Показать более ранние",
   accent,
+  background = "",
   className,
   style,
 }: Commerce068Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-068-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-068-bg": background,
+          // Select периода и кнопка догрузки не должны просвечивать: им нужна
+          // непрозрачная подложка, а она задана тем же цветом.
+          "--vibeui-commerce-068-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -224,7 +264,7 @@ export function Commerce068({
             <h2>{title}</h2>
             <div>
               <label htmlFor="commerce-068-period" hidden>
-                Период
+                {periodLabel}
               </label>
               <select id="commerce-068-period" defaultValue={period}>
                 {periods.map((entry) => (
@@ -288,7 +328,8 @@ export function Commerce068({
                             data-state={payment.state}
                             aria-hidden="true"
                           />
-                          {STATE_WORD[payment.state]}
+                          {stateText[payment.state] ??
+                            STATE_WORD[payment.state]}
                         </span>
                         {payment.receipt ? (
                           <>

@@ -16,6 +16,12 @@ export type Menubar002Menu = {
 
 export type Menubar002Props = {
   menus?: Menubar002Menu[]
+  /** Имя строки меню для скринридера. */
+  menubarLabel?: string
+  /** Подсказка справа: компонент несёт русскую, проект подставляет свою. */
+  hint?: string
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -27,12 +33,14 @@ export type Menubar002Props = {
 // живёт только один раздел (roving tabindex), поэтому меню не ловит табуляцию.
 const STYLES = `
 :where([data-vibeui-block="menubar-002"]){
---vibeui-menubar-002-bg:oklch(1 0 0);
---vibeui-menubar-002-fg:oklch(0.24 0.014 265);
---vibeui-menubar-002-muted:oklch(0.58 0.014 265);
---vibeui-menubar-002-border:oklch(0.9 0.006 265);
---vibeui-menubar-002-hover:oklch(0.55 0.02 265 / 10%);
---vibeui-menubar-002-accent:oklch(0.55 0.2 262);
+--vibeui-menubar-002-bg:transparent;
+--vibeui-menubar-002-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-menubar-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-menubar-002-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-menubar-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-menubar-002-hover:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.88 0.02 265 / 14%));
+--vibeui-menubar-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-menubar-002-shadow:light-dark(oklch(0.2 0.03 265 / 45%),oklch(0 0 0 / 62%));
 --vibeui-menubar-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="menubar-002"]{
@@ -55,9 +63,9 @@ transition:background-color .14s ease;
 [data-vibeui-block="menubar-002"] [data-part="menu"]{
 position:absolute;top:calc(100% + 0.375rem);left:0;z-index:30;
 min-width:12rem;padding:0.25rem;box-sizing:border-box;
-background:var(--vibeui-menubar-002-bg);color:var(--vibeui-menubar-002-fg);
+background:var(--vibeui-menubar-002-panel);color:var(--vibeui-menubar-002-fg);
 border:1px solid var(--vibeui-menubar-002-border);border-radius:0.625rem;
-box-shadow:0 16px 36px -18px oklch(0.2 0.03 265 / 45%);
+box-shadow:0 16px 36px -18px var(--vibeui-menubar-002-shadow);
 }
 [data-vibeui-block="menubar-002"] [data-part="item"]{
 display:flex;align-items:center;justify-content:space-between;gap:1.5rem;
@@ -104,11 +112,36 @@ const DEFAULT_MENUS: Menubar002Menu[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Строка меню приложения с переходом между разделами стрелками.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Menubar002({
   menus = DEFAULT_MENUS,
+  menubarLabel = "Меню приложения",
+  hint = "← → между разделами",
+  background = "",
   accent,
   className,
   style,
@@ -120,6 +153,13 @@ export function Menubar002({
 
   const palette = {
     ...(accent ? { "--vibeui-menubar-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-menubar-002-bg": background,
+          "--vibeui-menubar-002-panel": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -250,7 +290,7 @@ export function Menubar002({
         ref={rootRef}
         data-vibeui-block="menubar-002"
         role="menubar"
-        aria-label="Меню приложения"
+        aria-label={menubarLabel}
         className={className}
         style={palette}
         onKeyDown={onBarKeyDown}
@@ -301,7 +341,7 @@ export function Menubar002({
             ) : null}
           </span>
         ))}
-        <span data-part="hint">← → между разделами</span>
+        <span data-part="hint">{hint}</span>
       </div>
     </>
   )

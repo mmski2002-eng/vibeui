@@ -13,6 +13,8 @@ export type Button050Props = Omit<
   defaultPressed?: boolean
   onChange?: (pressed: boolean) => void
   accent?: string
+  /** Поверхность кнопки. Пусто — своя, из палитры. */
+  background?: string
 }
 
 // Идея компонента: переключатель избранного без счётчика и без подписи.
@@ -21,10 +23,10 @@ export type Button050Props = Omit<
 // — короткая вспышка, которая подтверждает нажатие без смены раскладки.
 const STYLES = `
 :where([data-vibeui-block="button-050"]){
---vibeui-button-050-surface:oklch(1 0 0);
---vibeui-button-050-border:oklch(0.9 0.006 265);
---vibeui-button-050-idle:oklch(0.6 0.014 265);
---vibeui-button-050-accent:oklch(0.6 0.22 20);
+--vibeui-button-050-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
+--vibeui-button-050-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.014 265));
+--vibeui-button-050-idle:light-dark(oklch(0.6 0.014 265),oklch(0.74 0.012 265));
+--vibeui-button-050-accent:light-dark(oklch(0.6 0.22 20),oklch(0.72 0.19 20));
 --vibeui-button-050-size:2.75rem;
 --vibeui-button-050-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -73,6 +75,29 @@ to{opacity:0;transform:scale(1.6)}
 `
 
 /**
+ * Ветка темы для заданной поверхности. Без неё светлая заливка досталась бы
+ * контуру тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кнопка избранного с переключением: сердце на CSS и кольцо-вспышка.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -82,6 +107,7 @@ export function Button050({
   defaultPressed = false,
   onChange,
   accent,
+  background = "",
   type = "button",
   className,
   style,
@@ -91,6 +117,12 @@ export function Button050({
 
   const palette = {
     ...(accent ? { "--vibeui-button-050-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-050-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

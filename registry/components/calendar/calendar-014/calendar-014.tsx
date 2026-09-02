@@ -10,8 +10,16 @@ export type Calendar014Props = Omit<
   events?: Record<number, number>
   today?: number
   caption?: string
+  /** Формы счётчика событий по категориям Intl.PluralRules. {count} подставляется. */
+  eventsText?: Record<string, string>
+  /** Подпись клетки с событиями. {day}, {month} и {events} подставляются. */
+  dayLabelText?: string
+  /** Подпись всего календаря. {month} и {year} подставляются. */
+  calendarLabelText?: string
   locale?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: мини-календарь для боковой колонки. Ширина — пятнадцать
@@ -20,11 +28,12 @@ export type Calendar014Props = Omit<
 // подложка под цифрой съела бы саму цифру.
 const STYLES = `
 :where([data-vibeui-block="calendar-014"]){
---vibeui-calendar-014-bg:oklch(1 0 0);
---vibeui-calendar-014-fg:oklch(0.24 0.014 265);
---vibeui-calendar-014-muted:oklch(0.63 0.014 265);
---vibeui-calendar-014-border:oklch(0.91 0.006 265);
---vibeui-calendar-014-accent:oklch(0.56 0.16 25);
+--vibeui-calendar-014-bg:transparent;
+--vibeui-calendar-014-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-calendar-014-muted:light-dark(oklch(0.63 0.014 265),oklch(0.67 0.013 265));
+--vibeui-calendar-014-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-calendar-014-accent:light-dark(oklch(0.56 0.16 25),oklch(0.74 0.14 25));
+--vibeui-calendar-014-on-accent:light-dark(oklch(0.99 0.01 25),oklch(0.2 0.04 25));
 --vibeui-calendar-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="calendar-014"]{
@@ -60,7 +69,7 @@ font-size:0.6875rem;line-height:1;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="calendar-014"] [data-part="cell"][data-weekend="true"]{color:var(--vibeui-calendar-014-muted)}
 [data-vibeui-block="calendar-014"] [data-part="cell"][data-today="true"]{
-background:var(--vibeui-calendar-014-accent);color:oklch(0.99 0.01 25);font-weight:700;
+background:var(--vibeui-calendar-014-accent);color:var(--vibeui-calendar-014-on-accent);font-weight:700;
 }
 [data-vibeui-block="calendar-014"] [data-part="dots"]{
 display:flex;align-items:center;gap:0.09375rem;height:0.25rem;
@@ -69,12 +78,12 @@ display:flex;align-items:center;gap:0.09375rem;height:0.25rem;
 width:0.1875rem;height:0.1875rem;border-radius:50%;
 background:var(--vibeui-calendar-014-accent);
 }
-[data-vibeui-block="calendar-014"] [data-part="cell"][data-today="true"] [data-part="dots"] i{background:oklch(0.99 0.01 25)}
+[data-vibeui-block="calendar-014"] [data-part="cell"][data-today="true"] [data-part="dots"] i{background:var(--vibeui-calendar-014-on-accent)}
 [data-vibeui-block="calendar-014"] [data-part="more"]{
 font-size:0.5rem;line-height:0.25rem;font-weight:700;
 color:var(--vibeui-calendar-014-accent);
 }
-[data-vibeui-block="calendar-014"] [data-part="cell"][data-today="true"] [data-part="more"]{color:oklch(0.99 0.01 25)}
+[data-vibeui-block="calendar-014"] [data-part="cell"][data-today="true"] [data-part="more"]{color:var(--vibeui-calendar-014-on-accent)}
 [data-vibeui-block="calendar-014"] [data-part="foot"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
 padding-top:0.375rem;border-top:1px solid var(--vibeui-calendar-014-border);
@@ -101,23 +110,40 @@ const DEFAULT_EVENTS: Record<number, number> = {
   30: 1,
 }
 
-function pluralize(count: number, forms: [string, string, string]) {
-  const tens = count % 100
-  const ones = count % 10
+const DEFAULT_EVENTS_TEXT: Record<string, string> = {
+  one: "{count} событие",
+  few: "{count} события",
+  many: "{count} событий",
+  other: "{count} событий",
+}
 
-  if (tens > 10 && tens < 20) {
-    return forms[2]
+function fill(template: string, values: Record<string, string | number>) {
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, key) => `${values[key] ?? match}`,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
   }
 
-  if (ones === 1) {
-    return forms[0]
-  }
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
 
-  if (ones > 1 && ones < 5) {
-    return forms[1]
-  }
-
-  return forms[2]
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -130,8 +156,12 @@ export function Calendar014({
   events = DEFAULT_EVENTS,
   today = 14,
   caption = "Все события",
+  eventsText = DEFAULT_EVENTS_TEXT,
+  dayLabelText = "{day} {month}: {events}",
+  calendarLabelText = "Календарь: {month} {year}",
   locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -150,8 +180,25 @@ export function Calendar014({
 
   const total = Object.values(events).reduce((sum, count) => sum + count, 0)
 
+  // Формы счётчика выбираются по правилам самого языка, а не по русским:
+  // словарь приходит пропсом, а категорию называет Intl.
+  const plural = new Intl.PluralRules(locale)
+  const countText = (count: number) =>
+    fill(
+      eventsText[plural.select(count)] ??
+        eventsText.other ??
+        DEFAULT_EVENTS_TEXT.other,
+      { count },
+    )
+
   const palette = {
     ...(accent ? { "--vibeui-calendar-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -165,7 +212,7 @@ export function Calendar014({
         data-vibeui-block="calendar-014"
         className={className}
         style={palette}
-        aria-label={`Календарь: ${monthName} ${year}`}
+        aria-label={fill(calendarLabelText, { month: monthName, year })}
       >
         <header data-part="head">
           <h3 data-part="month">{monthName}</h3>
@@ -194,7 +241,11 @@ export function Calendar014({
                 data-today={day === today}
                 aria-label={
                   count > 0
-                    ? `${day} ${monthName}: ${count} ${pluralize(count, ["событие", "события", "событий"])}`
+                    ? fill(dayLabelText, {
+                        day,
+                        month: monthName,
+                        events: countText(count),
+                      })
                     : undefined
                 }
               >
@@ -210,9 +261,7 @@ export function Calendar014({
           })}
         </div>
         <footer data-part="foot">
-          <span>
-            {total} {pluralize(total, ["событие", "события", "событий"])}
-          </span>
+          <span>{countText(total)}</span>
           <a href="#events">{caption}</a>
         </footer>
       </aside>

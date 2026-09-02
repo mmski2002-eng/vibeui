@@ -10,6 +10,12 @@ export type Badge005Props = Omit<
   label?: string
   onRemove?: () => void
   size?: "sm" | "md"
+  /** Имя кнопки-крестика. `{label}` подставляется названием фильтра. */
+  removeText?: string
+  /** Подпись кнопки возврата. `{label}` подставляется названием фильтра. */
+  undoText?: string
+  /** Пусто — чип держит собственный нейтральный фон. */
+  background?: string
 }
 
 // Идея компонента: снимаемая плашка фильтра. Крестик — настоящая кнопка с
@@ -18,11 +24,12 @@ export type Badge005Props = Omit<
 // исчезнувший без следа фильтр нечем восстановить, кроме памяти.
 const STYLES = `
 :where([data-vibeui-block="badge-005"]){
---vibeui-badge-005-bg:oklch(0.96 0.004 265);
---vibeui-badge-005-fg:oklch(0.3 0.014 265);
---vibeui-badge-005-border:oklch(0.89 0.006 265);
---vibeui-badge-005-muted:oklch(0.55 0.014 265);
---vibeui-badge-005-accent:oklch(0.55 0.17 265);
+--vibeui-badge-005-bg:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.009 265));
+--vibeui-badge-005-fg:light-dark(oklch(0.3 0.014 265),oklch(0.93 0.006 265));
+--vibeui-badge-005-border:light-dark(oklch(0.89 0.006 265),oklch(0.39 0.011 265));
+--vibeui-badge-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-badge-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-badge-005-hover:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-badge-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="badge-005"]{
@@ -42,7 +49,7 @@ display:inline-flex;align-items:center;justify-content:center;
 width:1.125rem;height:1.125rem;padding:0;border-radius:9999px;
 color:var(--vibeui-badge-005-muted);
 }
-[data-vibeui-block="badge-005"] button:hover{background:oklch(0.91 0.006 265);color:var(--vibeui-badge-005-fg)}
+[data-vibeui-block="badge-005"] button:hover{background:var(--vibeui-badge-005-hover);color:var(--vibeui-badge-005-fg)}
 [data-vibeui-block="badge-005"] button:focus-visible{outline:2px solid var(--vibeui-badge-005-accent);outline-offset:1px}
 /* Крестик нарисован двумя полосками: символ × в шрифтах кривой и прыгает. */
 [data-vibeui-block="badge-005"] [data-part="cross"]{position:relative;width:0.5rem;height:0.5rem}
@@ -66,6 +73,28 @@ font-family:var(--vibeui-badge-005-font);font-size:0.75rem;line-height:1;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлый чип достался бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Снимаемая плашка фильтра: крестик — настоящая кнопка с именем.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -73,11 +102,23 @@ export function Badge005({
   label = "Москва",
   onRemove,
   size = "md",
+  removeText = "Снять фильтр «{label}»",
+  undoText = "Вернуть «{label}»",
+  background = "",
   className,
   style,
   ...props
 }: Badge005Props) {
   const [gone, setGone] = useState(false)
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-badge-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -90,18 +131,18 @@ export function Badge005({
         data-size={size}
         data-gone={gone}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         {gone ? (
           <button type="button" data-part="undo" onClick={() => setGone(false)}>
-            Вернуть «{label}»
+            {undoText.replace("{label}", label)}
           </button>
         ) : null}
         {gone ? null : label}
         {gone ? null : (
           <button
             type="button"
-            aria-label={`Снять фильтр «${label}»`}
+            aria-label={removeText.replace("{label}", label)}
             onClick={() => {
               setGone(true)
               onRemove?.()

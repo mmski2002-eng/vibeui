@@ -18,7 +18,13 @@ export type Checkbox018Props = Omit<
   legend?: string
   options?: Checkbox018Option[]
   defaultValue?: string[]
+  /** Строка под рядом, когда отметок нет. */
+  emptyText?: string
+  /** Строка под рядом со счётчиком. {count} — отмечено, {total} — всего. */
+  countText?: string
   onChange?: (value: string[]) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,15 +32,18 @@ export type Checkbox018Props = Omit<
 // флажок и молния вырезаны из залитого квадрата через clip-path, поэтому
 // иконочная библиотека не нужна. Невыбранное состояние показывает ту же
 // фигуру приглушённой: пустая рамка не подсказала бы, что будет после клика.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="checkbox-018"]){
---vibeui-checkbox-018-bg:oklch(1 0 0);
---vibeui-checkbox-018-fg:oklch(0.22 0.014 265);
---vibeui-checkbox-018-muted:oklch(0.58 0.014 265);
---vibeui-checkbox-018-border:oklch(0.9 0.006 265);
---vibeui-checkbox-018-idle:oklch(0.87 0.008 265);
---vibeui-checkbox-018-surface:oklch(0.975 0.003 265);
---vibeui-checkbox-018-accent:oklch(0.64 0.16 65);
+--vibeui-checkbox-018-bg:transparent;
+--vibeui-checkbox-018-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-checkbox-018-muted:light-dark(oklch(0.58 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-018-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-checkbox-018-idle:light-dark(oklch(0.87 0.008 265),oklch(0.45 0.012 265));
+--vibeui-checkbox-018-surface:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.009 265));
+--vibeui-checkbox-018-accent:light-dark(oklch(0.64 0.16 65),oklch(0.76 0.15 65));
 --vibeui-checkbox-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="checkbox-018"]{
@@ -99,6 +108,28 @@ const DEFAULT_OPTIONS: Checkbox018Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Чекбоксы с фигурой вместо галочки: звезда, флажок и молния вырезаны
  * через clip-path. Один файл, ноль зависимостей, собственная палитра.
  */
@@ -106,7 +137,10 @@ export function Checkbox018({
   legend = "Отметки для карточки",
   options = DEFAULT_OPTIONS,
   defaultValue = ["favorite"],
+  emptyText = "Отметок нет",
+  countText = "Отметок: {count} из {total}",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -116,6 +150,12 @@ export function Checkbox018({
 
   const palette = {
     ...(accent ? { "--vibeui-checkbox-018-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-checkbox-018-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -157,8 +197,10 @@ export function Checkbox018({
         ))}
         <p data-part="foot" role="status">
           {value.length === 0
-            ? "Отметок нет"
-            : `Отметок: ${value.length} из ${options.length}`}
+            ? emptyText
+            : countText
+                .replace("{count}", String(value.length))
+                .replace("{total}", String(options.length))}
         </p>
       </fieldset>
     </>

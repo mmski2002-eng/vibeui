@@ -8,17 +8,29 @@ export type Banner008Props = Omit<
   /** Промокод: копировать его глазами проще, чем искать в письме. */
   code?: string
   actionLabel?: string
+  actionHref?: string
+  /** Подпись чекбокса закрытия для скринридера. */
+  dismissLabel?: string
   /** Уникальный идентификатор чекбокса закрытия: нужен при двух полосах на странице. */
   id?: string
+  /** Начальный цвет градиента; он же красит подпись кнопки. */
+  accent?: string
+  /** Подложка полосы целиком. Пусто — остаётся собственный градиент. */
+  background?: string
 }
 
 // Идея компонента: закрываемая полоса акции без единой строки JS. Крестик —
 // это <label> к спрятанному чекбоксу, а :has(:checked) убирает полосу целиком.
 // Состояние живёт в DOM, поэтому компонент остаётся серверным.
+//
+// Градиент — это дизайн, а не тема, поэтому текст на нём светлый в обеих
+// ветках. Но на тёмной странице тёмные концы градиента сливаются с фоном,
+// и в тёмной ветке light-dark() они светлее.
 const STYLES = `
 :where([data-vibeui-block="banner-008"]){
---vibeui-banner-008-from:oklch(0.42 0.15 315);
---vibeui-banner-008-to:oklch(0.46 0.16 265);
+--vibeui-banner-008-from:light-dark(oklch(0.42 0.15 315),oklch(0.5 0.16 315));
+--vibeui-banner-008-to:light-dark(oklch(0.46 0.16 265),oklch(0.55 0.16 265));
+--vibeui-banner-008-bg:linear-gradient(100deg,var(--vibeui-banner-008-from),var(--vibeui-banner-008-to));
 --vibeui-banner-008-fg:oklch(0.98 0.01 315);
 --vibeui-banner-008-muted:oklch(0.86 0.04 315);
 --vibeui-banner-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -39,7 +51,7 @@ clip-path:inset(50%);white-space:nowrap;border:0;
 display:flex;align-items:center;gap:0.875rem;flex-wrap:wrap;
 box-sizing:border-box;padding:0.75rem 0.875rem 0.75rem 1.125rem;
 border-radius:0.875rem;
-background:linear-gradient(100deg,var(--vibeui-banner-008-from),var(--vibeui-banner-008-to));
+background:var(--vibeui-banner-008-bg);
 }
 [data-vibeui-block="banner-008"] [data-part="message"]{
 margin:0;flex:1 1 13rem;min-width:0;font-size:0.8125rem;line-height:1.45;
@@ -80,11 +92,21 @@ export function Banner008({
   message = "Годовая подписка на 30% дешевле до конца недели.",
   code = "AUTUMN30",
   actionLabel = "Забрать скидку",
+  actionHref = "#pricing",
+  dismissLabel = "Скрыть полосу акции",
   id = "vibeui-banner-008",
+  accent,
+  background = "",
   className,
   style,
   ...props
 }: Banner008Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-banner-008-from": accent } : null),
+    ...(background ? { "--vibeui-banner-008-bg": background } : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-banner-008" precedence="medium">
@@ -94,18 +116,18 @@ export function Banner008({
         {...props}
         data-vibeui-block="banner-008"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <input
           data-part="switch"
           id={id}
           type="checkbox"
-          aria-label="Скрыть полосу акции"
+          aria-label={dismissLabel}
         />
         <div data-part="shell">
           <p data-part="message">{message}</p>
           {code ? <span data-part="code">{code}</span> : null}
-          <a data-part="action" href="#pricing">
+          <a data-part="action" href={actionHref}>
             {actionLabel}
           </a>
           <label data-part="close" htmlFor={id} aria-hidden="true">

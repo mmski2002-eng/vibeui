@@ -13,6 +13,13 @@ export type Auth008Props = {
   divider?: string
   submit?: string
   legal?: string
+  /** Подпись у сервиса, которым заходили в прошлый раз. */
+  lastLabel?: string
+  legalLink?: string
+  emailLabel?: string
+  emailPlaceholder?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -29,14 +36,22 @@ export type Auth008Props = {
 // подложке и не тянется по ширине.
 //
 // Демонстрация интерфейса: кнопки никуда не ведут, редиректы за вызывающим кодом.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не выкладывает под себя плашку — подложка приходит
+// пропом background.
 const STYLES = `
 :where([data-vibeui-block="auth-008"]){
---vibeui-auth-008-bg:oklch(0.97 0.005 265);
---vibeui-auth-008-card:oklch(1 0 0);
---vibeui-auth-008-fg:oklch(0.22 0.014 265);
---vibeui-auth-008-muted:oklch(0.55 0.014 265);
---vibeui-auth-008-border:oklch(0.9 0.006 265);
---vibeui-auth-008-accent:oklch(0.52 0.16 275);
+--vibeui-auth-008-bg:transparent;
+--vibeui-auth-008-card:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
+--vibeui-auth-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-auth-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.013 265));
+--vibeui-auth-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265));
+--vibeui-auth-008-accent:light-dark(oklch(0.52 0.16 275),oklch(0.74 0.14 275));
+--vibeui-auth-008-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-auth-008-accent-wash:light-dark(oklch(0.52 0.16 275 / 5%),oklch(0.74 0.14 275 / 12%));
+--vibeui-auth-008-accent-chip:light-dark(oklch(0.52 0.16 275 / 12%),oklch(0.74 0.14 275 / 20%));
+--vibeui-auth-008-chip:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.85 0.02 265 / 14%));
 --vibeui-auth-008-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -67,16 +82,16 @@ background:var(--vibeui-auth-008-card);color:inherit;
 font:inherit;font-size:0.875rem;font-weight:600;text-align:left;
 transition:border-color .16s ease,background-color .16s ease;
 }
-[data-vibeui-block="auth-008"] [data-part="provider"]:hover{border-color:var(--vibeui-auth-008-accent);background:oklch(0.52 0.16 275 / 5%)}
+[data-vibeui-block="auth-008"] [data-part="provider"]:hover{border-color:var(--vibeui-auth-008-accent);background:var(--vibeui-auth-008-accent-wash)}
 [data-vibeui-block="auth-008"] [data-part="provider"]:focus-visible{outline:2px solid var(--vibeui-auth-008-accent);outline-offset:2px}
 [data-vibeui-block="auth-008"] [data-part="mark"]{
 flex:none;display:inline-flex;align-items:center;justify-content:center;
 width:1.5rem;height:1.5rem;border-radius:0.5rem;
-background:oklch(0.55 0.02 265 / 10%);font-size:0.75rem;font-weight:700;
+background:var(--vibeui-auth-008-chip);font-size:0.75rem;font-weight:700;
 }
 [data-vibeui-block="auth-008"] [data-part="last"]{
 margin-left:auto;padding:0.125rem 0.4375rem;border-radius:9999px;
-background:oklch(0.52 0.16 275 / 12%);color:var(--vibeui-auth-008-accent);
+background:var(--vibeui-auth-008-accent-chip);color:var(--vibeui-auth-008-accent);
 font-size:0.6875rem;font-weight:650;
 }
 [data-vibeui-block="auth-008"] [data-part="divider"]{
@@ -98,7 +113,7 @@ background:var(--vibeui-auth-008-card);color:inherit;font:inherit;font-size:0.87
 [data-vibeui-block="auth-008"] [data-part="submit"]{
 width:100%;appearance:none;cursor:pointer;height:2.625rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-008-accent);color:oklch(1 0 0);
+background:var(--vibeui-auth-008-accent);color:var(--vibeui-auth-008-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="auth-008"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-auth-008-accent);outline-offset:2px}
@@ -116,6 +131,28 @@ const DEFAULT_PROVIDERS: Auth008Provider[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Вход через сервисы первым экраном, почта — под разделителем «или».
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -126,12 +163,23 @@ export function Auth008({
   divider = "или по почте",
   submit = "Прислать ссылку для входа",
   legal = "Продолжая, вы соглашаетесь с условиями и политикой конфиденциальности.",
+  lastLabel = "в прошлый раз",
+  legalLink = "Подробнее",
+  emailLabel = "Почта",
+  emailPlaceholder = "name@company.ru",
+  background = "",
   accent,
   className,
   style,
 }: Auth008Props) {
   const palette = {
     ...(accent ? { "--vibeui-auth-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -166,7 +214,7 @@ export function Auth008({
                 <span>{provider.name}</span>
                 {provider.last ? (
                   <span data-part="last" id="vibeui-auth-008-last">
-                    в прошлый раз
+                    {lastLabel}
                   </span>
                 ) : null}
               </button>
@@ -179,13 +227,13 @@ export function Auth008({
 
           <form>
             <div data-part="field">
-              <label htmlFor="vibeui-auth-008-email">Почта</label>
+              <label htmlFor="vibeui-auth-008-email">{emailLabel}</label>
               <input
                 id="vibeui-auth-008-email"
                 name="email"
                 type="email"
                 autoComplete="username"
-                placeholder="name@company.ru"
+                placeholder={emailPlaceholder}
                 required
               />
             </div>
@@ -195,7 +243,7 @@ export function Auth008({
           </form>
 
           <p data-part="legal">
-            {legal} <a href="#">Подробнее</a>
+            {legal} <a href="#">{legalLink}</a>
           </p>
         </div>
       </section>

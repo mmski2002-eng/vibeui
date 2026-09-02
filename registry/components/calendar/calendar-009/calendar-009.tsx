@@ -8,6 +8,10 @@ export type Calendar009Props = Omit<
   to?: string
   locale?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  /** Счёт ночей. {count} подставляется числом. */
+  nightsText?: string
 }
 
 // Идея компонента: два месяца рядом для брони. Диапазон почти всегда
@@ -16,12 +20,13 @@ export type Calendar009Props = Omit<
 // не сжимается: календарь в 140 пикселей нечитаем.
 const STYLES = `
 :where([data-vibeui-block="calendar-009"]){
---vibeui-calendar-009-bg:oklch(1 0 0);
---vibeui-calendar-009-fg:oklch(0.24 0.014 265);
---vibeui-calendar-009-muted:oklch(0.6 0.014 265);
---vibeui-calendar-009-border:oklch(0.91 0.006 265);
---vibeui-calendar-009-accent:oklch(0.55 0.17 265);
---vibeui-calendar-009-range:color-mix(in oklab,var(--vibeui-calendar-009-accent) 12%,oklch(1 0 0));
+--vibeui-calendar-009-bg:transparent;
+--vibeui-calendar-009-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-calendar-009-muted:light-dark(oklch(0.6 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-calendar-009-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-calendar-009-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.19 0.03 265));
+--vibeui-calendar-009-range:light-dark(color-mix(in oklab,var(--vibeui-calendar-009-accent) 12%,oklch(1 0 0)),color-mix(in oklab,var(--vibeui-calendar-009-accent) 26%,oklch(0.24 0.014 265)));
 --vibeui-calendar-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -53,7 +58,7 @@ font-size:0.75rem;font-variant-numeric:tabular-nums;
 [data-vibeui-block="calendar-009"] td[data-edge] span{
 display:inline-flex;align-items:center;justify-content:center;
 width:1.75rem;height:1.75rem;border-radius:0.4375rem;
-background:var(--vibeui-calendar-009-accent);color:oklch(0.99 0.01 265);font-weight:650;
+background:var(--vibeui-calendar-009-accent);color:var(--vibeui-calendar-009-on-accent);font-weight:650;
 }
 [data-vibeui-block="calendar-009"] td[data-outside="true"]{color:var(--vibeui-calendar-009-muted);opacity:.45}
 [data-vibeui-block="calendar-009"] [data-part="summary"]{
@@ -89,6 +94,28 @@ function buildGrid(year: number, month: number) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Два месяца рядом с подсвеченным диапазоном и счётом ночей.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -97,6 +124,8 @@ export function Calendar009({
   to = "2026-04-05",
   locale = "ru-RU",
   accent,
+  background = "",
+  nightsText = "{count} ночей",
   className,
   style,
   ...props
@@ -127,6 +156,12 @@ export function Calendar009({
 
   const palette = {
     ...(accent ? { "--vibeui-calendar-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -203,7 +238,9 @@ export function Calendar009({
               {day.format(new Date(`${from}T00:00:00`))} —{" "}
               {day.format(new Date(`${to}T00:00:00`))}
             </span>
-            <span data-part="nights">{nights} ночей</span>
+            <span data-part="nights">
+              {nightsText.replace("{count}", String(nights))}
+            </span>
           </p>
         </div>
       </div>

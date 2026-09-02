@@ -8,7 +8,13 @@ export type Auth003Props = {
   sentText?: string
   resend?: string
   back?: string
+  emailLabel?: string
+  emailPlaceholder?: string
+  /** Адрес на экране отправки: его показывают, чтобы заметить опечатку. */
+  email?: string
   state?: "form" | "sent"
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -22,14 +28,20 @@ export type Auth003Props = {
 // Экран «письмо отправлено» показывает адрес, чтобы человек заметил опечатку,
 // и даёт кнопку повторной отправки — без неё остаётся только перезагружать
 // страницу. Оба состояния живут в одном блоке и переключаются пропом.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="auth-003"]){
---vibeui-auth-003-bg:oklch(1 0 0);
---vibeui-auth-003-fg:oklch(0.22 0.014 265);
---vibeui-auth-003-muted:oklch(0.55 0.014 265);
---vibeui-auth-003-border:oklch(0.9 0.006 265);
---vibeui-auth-003-accent:oklch(0.55 0.2 262);
---vibeui-auth-003-ok:oklch(0.58 0.14 152);
+--vibeui-auth-003-bg:transparent;
+--vibeui-auth-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-auth-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.013 265));
+--vibeui-auth-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265));
+--vibeui-auth-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-auth-003-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-auth-003-ok:light-dark(oklch(0.58 0.14 152),oklch(0.74 0.13 152));
+--vibeui-auth-003-ok-soft:light-dark(oklch(0.58 0.14 152 / 14%),oklch(0.74 0.13 152 / 20%));
+--vibeui-auth-003-chip:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 12%));
 --vibeui-auth-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -53,7 +65,7 @@ background:var(--vibeui-auth-003-bg);color:inherit;font:inherit;font-size:0.875r
 [data-vibeui-block="auth-003"] [data-part="submit"]{
 width:100%;appearance:none;cursor:pointer;height:2.625rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-003-accent);color:oklch(1 0 0);
+background:var(--vibeui-auth-003-accent);color:var(--vibeui-auth-003-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="auth-003"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-auth-003-accent);outline-offset:2px}
@@ -61,12 +73,12 @@ font:inherit;font-size:0.875rem;font-weight:650;
 [data-vibeui-block="auth-003"] [data-part="badge"]{
 display:flex;align-items:center;justify-content:center;
 width:2.5rem;height:2.5rem;margin-bottom:0.75rem;
-border-radius:9999px;background:oklch(0.58 0.14 152 / 14%);
+border-radius:9999px;background:var(--vibeui-auth-003-ok-soft);
 color:var(--vibeui-auth-003-ok);font-size:1.125rem;line-height:1;
 }
 [data-vibeui-block="auth-003"] [data-part="mail"]{
 display:inline-block;margin:0 0 0.875rem;padding:0.25rem 0.5rem;
-border-radius:0.5rem;background:oklch(0.55 0.02 265 / 8%);
+border-radius:0.5rem;background:var(--vibeui-auth-003-chip);
 font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="auth-003"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.5rem}
@@ -83,6 +95,28 @@ display:inline-block;margin-top:0.875rem;font-size:0.8125rem;color:var(--vibeui-
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Восстановление пароля: ответ не раскрывает, существует ли адрес.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -94,13 +128,23 @@ export function Auth003({
   sentText = "Если адрес зарегистрирован, письмо со ссылкой уже отправлено. Ссылка действует час.",
   resend = "Отправить ещё раз",
   back = "Вернуться ко входу",
+  emailLabel = "Почта",
+  emailPlaceholder = "name@company.ru",
+  email = "anna@vibeui.ru",
   state = "form",
+  background = "",
   accent,
   className,
   style,
 }: Auth003Props) {
   const palette = {
     ...(accent ? { "--vibeui-auth-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -121,7 +165,7 @@ export function Auth003({
               ✓
             </span>
             <h2>{sentTitle}</h2>
-            <p data-part="mail">anna@vibeui.ru</p>
+            <p data-part="mail">{email}</p>
             <p data-part="lead">{sentText}</p>
             <div data-part="actions">
               <button type="button" data-part="resend">
@@ -138,13 +182,13 @@ export function Auth003({
             <p data-part="lead">{lead}</p>
             <form>
               <div data-part="field">
-                <label htmlFor="vibeui-auth-003-email">Почта</label>
+                <label htmlFor="vibeui-auth-003-email">{emailLabel}</label>
                 <input
                   id="vibeui-auth-003-email"
                   name="email"
                   type="email"
                   autoComplete="username"
-                  placeholder="name@company.ru"
+                  placeholder={emailPlaceholder}
                   required
                 />
               </div>

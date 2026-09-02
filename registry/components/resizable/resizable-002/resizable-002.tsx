@@ -18,6 +18,15 @@ export type Resizable002Props = Omit<
   defaultLeft?: number
   defaultMiddle?: number
   onChange?: (sizes: number[]) => void
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  projectsTitle?: string
+  projectsItems?: string[]
+  tasksTitle?: string
+  tasksItems?: string[]
+  summaryTitle?: string
+  summaryText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,12 +36,13 @@ export type Resizable002Props = Omit<
 // зажим границы между соседями.
 const STYLES = `
 :where([data-vibeui-block="resizable-002"]){
---vibeui-resizable-002-bg:oklch(1 0 0);
---vibeui-resizable-002-fg:oklch(0.22 0.014 265);
---vibeui-resizable-002-muted:oklch(0.55 0.014 265);
---vibeui-resizable-002-border:oklch(0.9 0.006 265);
---vibeui-resizable-002-surface:oklch(0.975 0.004 265);
---vibeui-resizable-002-accent:oklch(0.56 0.15 195);
+--vibeui-resizable-002-bg:transparent;
+--vibeui-resizable-002-pane:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-resizable-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-resizable-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-resizable-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-resizable-002-surface:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.011 265));
+--vibeui-resizable-002-accent:light-dark(oklch(0.56 0.15 195),oklch(0.76 0.13 195));
 --vibeui-resizable-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="resizable-002"]{
@@ -48,7 +58,7 @@ display:flex;align-items:stretch;height:10.5rem;
 border:1px solid var(--vibeui-resizable-002-border);border-radius:0.75rem;overflow:hidden;
 }
 [data-vibeui-block="resizable-002"] [data-part="pane"]{
-min-width:0;padding:0.625rem;overflow:auto;background:var(--vibeui-resizable-002-bg);
+min-width:0;padding:0.625rem;overflow:auto;background:var(--vibeui-resizable-002-pane);
 }
 [data-vibeui-block="resizable-002"] [data-part="pane"][data-role="rest"]{flex:1}
 [data-vibeui-block="resizable-002"] [data-part="pane"][data-role="fixed"]{flex:none}
@@ -85,6 +95,28 @@ margin:0;font-size:0.75rem;color:var(--vibeui-resizable-002-muted);font-variant-
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Три панели и два разделителя: состояние — положения границ, каждая
  * зажата между соседями. Мышь и клавиатура равноправны. Один файл.
  */
@@ -95,6 +127,13 @@ export function Resizable002({
   defaultLeft = 26,
   defaultMiddle = 40,
   onChange,
+  projectsTitle = "Проекты",
+  projectsItems = ["Витрина", "Каталог", "Документы"],
+  tasksTitle = "Задачи",
+  tasksItems = ["Собрать реестр", "Проверить превью", "Обновить документацию"],
+  summaryTitle = "Описание",
+  summaryText = "Правая панель забирает остаток ширины, поэтому сумма всегда сходится к сотне процентов без пересчёта.",
+  background = "",
   accent,
   className,
   style,
@@ -111,6 +150,12 @@ export function Resizable002({
 
   const palette = {
     ...(accent ? { "--vibeui-resizable-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-resizable-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -200,13 +245,13 @@ export function Resizable002({
             data-role="fixed"
             id={paneIds[0]}
             style={{ width: `${widths[0]}%` }}
-            aria-label="Проекты"
+            aria-label={projectsTitle}
           >
-            <h3>Проекты</h3>
+            <h3>{projectsTitle}</h3>
             <ul>
-              <li>Витрина</li>
-              <li>Каталог</li>
-              <li>Документы</li>
+              {projectsItems.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
             </ul>
           </section>
           <div {...splitProps(0)} />
@@ -215,13 +260,13 @@ export function Resizable002({
             data-role="fixed"
             id={paneIds[1]}
             style={{ width: `${widths[1]}%` }}
-            aria-label="Задачи"
+            aria-label={tasksTitle}
           >
-            <h3>Задачи</h3>
+            <h3>{tasksTitle}</h3>
             <ul>
-              <li>Собрать реестр</li>
-              <li>Проверить превью</li>
-              <li>Обновить документацию</li>
+              {tasksItems.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
             </ul>
           </section>
           <div {...splitProps(1)} />
@@ -229,13 +274,10 @@ export function Resizable002({
             data-part="pane"
             data-role="rest"
             id={paneIds[2]}
-            aria-label="Описание"
+            aria-label={summaryTitle}
           >
-            <h3>Описание</h3>
-            <p>
-              Правая панель забирает остаток ширины, поэтому сумма всегда
-              сходится к сотне процентов без пересчёта.
-            </p>
+            <h3>{summaryTitle}</h3>
+            <p>{summaryText}</p>
           </section>
         </div>
         <p data-part="status" role="status">

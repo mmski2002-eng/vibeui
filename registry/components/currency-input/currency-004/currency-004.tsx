@@ -13,6 +13,14 @@ export type Currency004Props = Omit<
   to?: string
   defaultValue?: number
   updatedAt?: string
+  /** Подпись между полями. */
+  linkText?: string
+  /** Подпись поля для скринридера; {code} подставляется кодом валюты. */
+  amountLabel?: string
+  /** Локаль разрядов: компонент несёт русскую, проект подставляет свою. */
+  locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,18 +31,21 @@ export type Currency004Props = Omit<
 // база — сумма отправления, поэтому округление случается один раз и суммы не
 // расходятся при правках туда-обратно. Курс подписан вместе со временем: без
 // времени он выглядит как обещание, а не как справка.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="currency-004"]){
---vibeui-currency-004-surface:oklch(1 0 0);
---vibeui-currency-004-field:oklch(0.985 0.002 265);
---vibeui-currency-004-shell:oklch(0.9 0.006 265);
---vibeui-currency-004-fg:oklch(0.22 0.014 265);
---vibeui-currency-004-muted:oklch(0.55 0.014 265);
---vibeui-currency-004-border:oklch(0.88 0.008 265);
---vibeui-currency-004-accent:oklch(0.53 0.16 285);
+--vibeui-currency-004-surface:transparent;
+--vibeui-currency-004-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-currency-004-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-currency-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-currency-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.014 265));
+--vibeui-currency-004-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.013 265));
+--vibeui-currency-004-accent:light-dark(oklch(0.53 0.16 285),oklch(0.74 0.14 285));
 --vibeui-currency-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: конвертер показывают поверх любого фона. */
+/* Подложки по умолчанию нет: конвертер ложится на фон страницы. */
 [data-vibeui-block="currency-004"]{
 display:flex;flex-direction:column;gap:0.375rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -51,7 +62,7 @@ background:var(--vibeui-currency-004-field);
 }
 [data-vibeui-block="currency-004"] [data-part="line"]:focus-within{
 border-color:var(--vibeui-currency-004-accent);
-box-shadow:0 0 0 2px oklch(0.53 0.16 285 / 18%);
+box-shadow:0 0 0 2px color-mix(in oklch,var(--vibeui-currency-004-accent) 20%,transparent);
 }
 [data-vibeui-block="currency-004"] input{
 flex:1 1 auto;min-width:0;width:100%;
@@ -87,6 +98,28 @@ function round(value: number) {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Две суммы, связанные курсом: править можно любую, база хранится одна.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -97,6 +130,10 @@ export function Currency004({
   to = "EUR",
   defaultValue = 50000,
   updatedAt = "курс на 12:40, обновляется каждые 15 минут",
+  linkText = "по курсу",
+  amountLabel = "Сумма в {code}",
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -108,6 +145,12 @@ export function Currency004({
 
   const palette = {
     ...(accent ? { "--vibeui-currency-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-currency-004-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -130,7 +173,7 @@ export function Currency004({
             inputMode="decimal"
             min={0}
             value={round(source)}
-            aria-label={`Сумма в ${from}`}
+            aria-label={amountLabel.replace("{code}", from)}
             onChange={(event) => {
               const next = Number(event.target.value)
               setSource(Number.isFinite(next) ? Math.max(0, next) : 0)
@@ -138,7 +181,7 @@ export function Currency004({
           />
           <span data-part="code">{from}</span>
         </div>
-        <p data-part="link">по курсу</p>
+        <p data-part="link">{linkText}</p>
         <div data-part="line">
           <input
             id={`${id}-to`}
@@ -146,7 +189,7 @@ export function Currency004({
             inputMode="decimal"
             min={0}
             value={round(source * rate)}
-            aria-label={`Сумма в ${to}`}
+            aria-label={amountLabel.replace("{code}", to)}
             onChange={(event) => {
               const next = Number(event.target.value)
               setSource(Number.isFinite(next) ? Math.max(0, next) / rate : 0)
@@ -155,7 +198,7 @@ export function Currency004({
           <span data-part="code">{to}</span>
         </div>
         <p data-part="rate">
-          1 {to} = <b>{round(1 / rate).toLocaleString("ru-RU")}</b> {from} ·{" "}
+          1 {to} = <b>{round(1 / rate).toLocaleString(locale)}</b> {from} ·{" "}
           {updatedAt}
         </p>
       </div>

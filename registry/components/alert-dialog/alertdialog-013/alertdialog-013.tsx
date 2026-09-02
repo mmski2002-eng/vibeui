@@ -10,11 +10,20 @@ export type Alertdialog013Props = Omit<
   triggerLabel?: string
   title?: string
   person?: string
+  /** Последствие блокировки. {person} подставляется именем участника. */
+  personNote?: string
   reasons?: string[]
+  reasonLabel?: string
+  reasonPlaceholder?: string
   noteLabel?: string
   notePlaceholder?: string
+  /** Пояснение под комментарием: куда попадёт запись. */
+  historyNote?: string
   confirm?: string
   cancel?: string
+  danger?: string
+  /** Подложка окна и полей. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: блокировка участника с причиной. Причина обязательна не
@@ -25,12 +34,16 @@ export type Alertdialog013Props = Omit<
 // в истории — об этом сказано под полем, а не в документации.
 const STYLES = `
 :where([data-vibeui-block="alertdialog-013"]){
---vibeui-alertdialog-013-bg:oklch(1 0 0);
---vibeui-alertdialog-013-panel:oklch(0.97 0.003 265);
---vibeui-alertdialog-013-fg:oklch(0.22 0.014 265);
---vibeui-alertdialog-013-muted:oklch(0.55 0.014 265);
---vibeui-alertdialog-013-border:oklch(0.9 0.006 265);
---vibeui-alertdialog-013-danger:oklch(0.55 0.19 25);
+--vibeui-alertdialog-013-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-alertdialog-013-panel:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.014 265));
+--vibeui-alertdialog-013-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-alertdialog-013-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-alertdialog-013-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-alertdialog-013-danger:light-dark(oklch(0.55 0.19 25),oklch(0.73 0.16 25));
+--vibeui-alertdialog-013-on-danger:light-dark(oklch(1 0 0),oklch(0.19 0.04 25));
+--vibeui-alertdialog-013-avatar-bg:light-dark(oklch(0.9 0.06 25),oklch(0.36 0.07 25));
+--vibeui-alertdialog-013-avatar-fg:light-dark(oklch(0.38 0.12 25),oklch(0.91 0.06 25));
+--vibeui-alertdialog-013-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.02 0.01 265 / 70%));
 --vibeui-alertdialog-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="alertdialog-013"]{
@@ -49,10 +62,10 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 margin:auto;width:min(24rem,calc(100vw - 2rem));padding:1.125rem;
 border:1px solid var(--vibeui-alertdialog-013-border);border-radius:0.875rem;
 background:var(--vibeui-alertdialog-013-bg);color:var(--vibeui-alertdialog-013-fg);
-box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 55%);
+box-shadow:0 24px 60px -24px var(--vibeui-alertdialog-013-shadow);
 font-family:var(--vibeui-alertdialog-013-font);
 }
-[data-vibeui-block="alertdialog-013"] dialog::backdrop{background:oklch(0.2 0.02 265 / 45%)}
+[data-vibeui-block="alertdialog-013"] dialog::backdrop{background:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.08 0.014 265 / 62%))}
 [data-vibeui-block="alertdialog-013"] h2{margin:0 0 0.375rem;font-size:1rem;font-weight:700;line-height:1.3}
 [data-vibeui-block="alertdialog-013"] [data-part="who"]{
 display:flex;align-items:center;gap:0.5rem;margin:0 0 0.875rem;
@@ -62,7 +75,7 @@ background:var(--vibeui-alertdialog-013-panel);font-size:0.8125rem;
 [data-vibeui-block="alertdialog-013"] [data-part="avatar"]{
 display:inline-flex;align-items:center;justify-content:center;flex:none;
 width:1.75rem;height:1.75rem;border-radius:9999px;
-background:oklch(0.9 0.06 25);color:oklch(0.38 0.12 25);
+background:var(--vibeui-alertdialog-013-avatar-bg);color:var(--vibeui-alertdialog-013-avatar-fg);
 font-size:0.6875rem;font-weight:700;
 }
 [data-vibeui-block="alertdialog-013"] label{display:block;margin-bottom:0.3125rem;font-size:0.75rem;font-weight:600}
@@ -86,7 +99,7 @@ margin:0 0 0.875rem;font-size:0.6875rem;line-height:1.45;color:var(--vibeui-aler
 flex:1 1 0;appearance:none;cursor:pointer;height:2.375rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="alertdialog-013"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-013-danger);color:oklch(1 0 0)}
+[data-vibeui-block="alertdialog-013"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-013-danger);color:var(--vibeui-alertdialog-013-on-danger)}
 [data-vibeui-block="alertdialog-013"] [data-part="confirm"]:disabled{opacity:.45;cursor:default}
 [data-vibeui-block="alertdialog-013"] [data-part="cancel"]{
 border:1px solid var(--vibeui-alertdialog-013-border);background:var(--vibeui-alertdialog-013-bg);color:inherit;
@@ -111,6 +124,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Блокировка участника: причина обязательна и попадает в историю.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -118,17 +153,34 @@ export function Alertdialog013({
   triggerLabel = "Заблокировать",
   title = "Заблокировать участника?",
   person = "Ким Сон",
+  personNote = "{person} потеряет доступ к проекту сразу",
   reasons = DEFAULT_REASONS,
+  reasonLabel = "Причина",
+  reasonPlaceholder = "Выберите причину…",
   noteLabel = "Комментарий",
   notePlaceholder = "Что случилось и когда",
+  historyNote = "Причина и комментарий попадут в историю проекта — их увидят владельцы, когда участник спросит, за что его отключили.",
   confirm = "Заблокировать",
   cancel = "Отменить",
+  danger,
+  background = "",
   className,
   style,
   ...props
 }: Alertdialog013Props) {
   const box = useRef<HTMLDialogElement>(null)
   const [reason, setReason] = useState("")
+
+  const palette = {
+    ...(danger ? { "--vibeui-alertdialog-013-danger": danger } : null),
+    ...(background
+      ? {
+          "--vibeui-alertdialog-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -139,7 +191,7 @@ export function Alertdialog013({
         {...props}
         data-vibeui-block="alertdialog-013"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <button
           type="button"
@@ -158,16 +210,16 @@ export function Alertdialog013({
             <span data-part="avatar" aria-hidden="true">
               {initials(person)}
             </span>
-            {person} потеряет доступ к проекту сразу
+            {personNote.replace("{person}", person)}
           </p>
 
-          <label htmlFor="vibeui-alertdialog-013-reason">Причина</label>
+          <label htmlFor="vibeui-alertdialog-013-reason">{reasonLabel}</label>
           <select
             id="vibeui-alertdialog-013-reason"
             value={reason}
             onChange={(event) => setReason(event.target.value)}
           >
-            <option value="">Выберите причину…</option>
+            <option value="">{reasonPlaceholder}</option>
             {reasons.map((item) => (
               <option key={item} value={item}>
                 {item}
@@ -182,8 +234,7 @@ export function Alertdialog013({
             aria-describedby="vibeui-alertdialog-013-hint"
           />
           <p id="vibeui-alertdialog-013-hint" data-part="note">
-            Причина и комментарий попадут в историю проекта — их увидят
-            владельцы, когда участник спросит, за что его отключили.
+            {historyNote}
           </p>
 
           <div data-part="actions">

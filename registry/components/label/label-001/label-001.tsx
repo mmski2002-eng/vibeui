@@ -8,6 +8,10 @@ export type Label001Props = Omit<
   label?: string
   hint?: string
   placeholder?: string
+  /** Расшифровка звёздочки для озвучки: читается вместо слова «звёздочка». */
+  requiredText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,18 +21,18 @@ export type Label001Props = Omit<
 // скринридера и подкреплена одной строкой, которая говорит зачем поле.
 const STYLES = `
 :where([data-vibeui-block="label-001"]){
---vibeui-label-001-surface:oklch(1 0 0);
---vibeui-label-001-surface-border:oklch(0.91 0.006 265);
---vibeui-label-001-fg:oklch(0.24 0.016 265);
---vibeui-label-001-muted:oklch(0.54 0.014 265);
---vibeui-label-001-field-border:oklch(0.85 0.01 265);
---vibeui-label-001-accent:oklch(0.55 0.2 262);
---vibeui-label-001-required:oklch(0.58 0.19 25);
+--vibeui-label-001-surface:transparent;
+--vibeui-label-001-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-label-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-label-001-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-label-001-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-label-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-label-001-required:light-dark(oklch(0.58 0.19 25),oklch(0.74 0.16 25));
 --vibeui-label-001-radius:0.625rem;
 --vibeui-label-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Собственная светлая подложка: подпись — это тёмный текст, и на тёмной
-   карточке каталога он обязан читаться без правки палитры проекта. */
+/* Подложки по умолчанию нет: палитра идёт от color-scheme окружения, и блок
+   ложится на фон страницы. Плашка появляется только пропом background. */
 [data-vibeui-block="label-001"]{
 box-sizing:border-box;width:100%;max-width:24rem;
 padding:1rem;border-radius:0.875rem;
@@ -72,6 +76,28 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-label-001-accent) 22%,trans
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подпись обязательного поля: звёздочка, скрытая расшифровка для
  * скринридера и строка-объяснение под подписью. Один файл, ноль
  * зависимостей, собственная палитра.
@@ -80,6 +106,8 @@ export function Label001({
   label = "Рабочая почта",
   hint = "Пришлём на неё счёт и доступ в кабинет.",
   placeholder = "name@company.com",
+  requiredText = ", обязательное поле",
+  background = "",
   accent,
   className,
   style,
@@ -89,6 +117,12 @@ export function Label001({
   const hintId = `${id}-hint`
   const palette = {
     ...(accent ? { "--vibeui-label-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-label-001-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -108,7 +142,7 @@ export function Label001({
           <span data-part="star" aria-hidden="true">
             *
           </span>
-          <span data-part="sr">, обязательное поле</span>
+          <span data-part="sr">{requiredText}</span>
         </label>
         <p data-part="hint" id={hintId}>
           {hint}

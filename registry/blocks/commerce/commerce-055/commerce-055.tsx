@@ -25,7 +25,11 @@ export type Commerce055Props = {
   vinHint?: string
   vinPlaceholder?: string
   vinCta?: string
+  /** Названия состояний: компонент несёт русские, проект подставляет свои. */
+  fitText?: Record<Commerce055Fit, string>
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -39,15 +43,17 @@ export type Commerce055Props = {
 // непонятно, к какой модели относится ячейка.
 const STYLES = `
 :where([data-vibeui-block="commerce-055"]){
---vibeui-commerce-055-bg:oklch(1 0 0);
---vibeui-commerce-055-fg:oklch(0.21 0.012 250);
---vibeui-commerce-055-muted:oklch(0.53 0.014 250);
---vibeui-commerce-055-border:oklch(0.9 0.006 250);
---vibeui-commerce-055-soft:oklch(0.972 0.004 250);
---vibeui-commerce-055-accent:oklch(0.48 0.14 250);
---vibeui-commerce-055-yes:oklch(0.5 0.13 150);
---vibeui-commerce-055-partial:oklch(0.6 0.14 75);
---vibeui-commerce-055-no:oklch(0.55 0.17 25);
+--vibeui-commerce-055-bg:transparent;
+--vibeui-commerce-055-surface:light-dark(oklch(1 0 0),oklch(0.21 0.01 250));
+--vibeui-commerce-055-fg:light-dark(oklch(0.21 0.012 250),oklch(0.94 0.006 250));
+--vibeui-commerce-055-muted:light-dark(oklch(0.53 0.014 250),oklch(0.73 0.012 250));
+--vibeui-commerce-055-border:light-dark(oklch(0.9 0.006 250),oklch(0.38 0.012 250));
+--vibeui-commerce-055-soft:light-dark(oklch(0.972 0.004 250),oklch(0.27 0.01 250));
+--vibeui-commerce-055-accent:light-dark(oklch(0.48 0.14 250),oklch(0.74 0.13 250));
+--vibeui-commerce-055-yes:light-dark(oklch(0.5 0.13 150),oklch(0.74 0.14 152));
+--vibeui-commerce-055-partial:light-dark(oklch(0.6 0.14 75),oklch(0.8 0.13 80));
+--vibeui-commerce-055-no:light-dark(oklch(0.55 0.17 25),oklch(0.72 0.16 27));
+--vibeui-commerce-055-onmark:light-dark(oklch(0.99 0 0),oklch(0.18 0.02 250));
 --vibeui-commerce-055-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -64,7 +70,7 @@ color:var(--vibeui-commerce-055-fg);font-family:var(--vibeui-commerce-055-sans);
 [data-vibeui-block="commerce-055"] [data-part="legend"] li{display:flex;align-items:center;gap:0.375rem}
 [data-vibeui-block="commerce-055"] [data-part="mark"]{
 flex:none;width:1.125rem;height:1.125rem;border-radius:9999px;display:inline-flex;align-items:center;justify-content:center;
-font-size:0.6875rem;font-weight:800;color:oklch(0.99 0 0);
+font-size:0.6875rem;font-weight:800;color:var(--vibeui-commerce-055-onmark);
 }
 [data-vibeui-block="commerce-055"] [data-part="mark"][data-fit="yes"]{background:var(--vibeui-commerce-055-yes)}
 [data-vibeui-block="commerce-055"] [data-part="mark"][data-fit="partial"]{
@@ -85,7 +91,7 @@ position:sticky;top:0;background:var(--vibeui-commerce-055-soft);font-size:0.687
 text-transform:uppercase;color:var(--vibeui-commerce-055-muted);font-weight:700;
 }
 [data-vibeui-block="commerce-055"] tbody th{
-position:sticky;left:0;background:var(--vibeui-commerce-055-bg);font-weight:650;min-width:11rem;
+position:sticky;left:0;background:var(--vibeui-commerce-055-surface);font-weight:650;min-width:11rem;
 box-shadow:1px 0 0 var(--vibeui-commerce-055-border);
 }
 [data-vibeui-block="commerce-055"] tbody th span{display:block;font-weight:400;font-size:0.75rem;color:var(--vibeui-commerce-055-muted)}
@@ -105,14 +111,14 @@ padding:0.875rem 1rem;background:var(--vibeui-commerce-055-soft);
 [data-vibeui-block="commerce-055"] [data-part="vinrow"]{display:flex;flex-wrap:wrap;gap:0.5rem}
 [data-vibeui-block="commerce-055"] input{
 flex:1 1 12rem;height:2.5rem;padding:0 0.75rem;border-radius:0.625rem;
-border:1px solid var(--vibeui-commerce-055-border);background:var(--vibeui-commerce-055-bg);
+border:1px solid var(--vibeui-commerce-055-border);background:var(--vibeui-commerce-055-surface);
 font:inherit;font-size:0.875rem;color:inherit;
 }
 [data-vibeui-block="commerce-055"] input:focus-visible,
 [data-vibeui-block="commerce-055"] [data-part="check"]:focus-visible{outline:2px solid var(--vibeui-commerce-055-accent);outline-offset:2px}
 [data-vibeui-block="commerce-055"] [data-part="check"]{
 appearance:none;border:0;cursor:pointer;height:2.5rem;padding:0 1.125rem;border-radius:0.625rem;
-background:var(--vibeui-commerce-055-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.875rem;font-weight:650;
+background:var(--vibeui-commerce-055-accent);color:var(--vibeui-commerce-055-onmark);font:inherit;font-size:0.875rem;font-weight:650;
 }
 @container (min-width: 44rem){
 [data-vibeui-block="commerce-055"] [data-part="shell"]{padding:2rem 2rem 3rem}
@@ -130,6 +136,28 @@ const FIT_WORD: Record<Commerce055Fit, string> = {
   yes: "Подходит",
   partial: "С доработкой",
   no: "Не подходит",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 const DEFAULT_MODELS: Commerce055Model[] = [
@@ -195,12 +223,23 @@ export function Commerce055({
   vinHint = "Пришлите VIN — сверим крышу и рейлинги по заводской спецификации.",
   vinPlaceholder = "VIN, 17 символов",
   vinCta = "Проверить",
+  fitText = FIT_WORD,
   accent,
+  background = "",
   className,
   style,
 }: Commerce055Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-055-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-055-bg": background,
+          // Залипающая колонка обязана быть непрозрачной: под ней проезжает
+          // остальная таблица, поэтому она красится в ту же подложку.
+          "--vibeui-commerce-055-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -226,7 +265,7 @@ export function Commerce055({
                 <span data-part="mark" data-fit={fit} aria-hidden="true">
                   {FIT_MARK[fit]}
                 </span>
-                {FIT_WORD[fit]}
+                {fitText[fit] ?? FIT_WORD[fit]}
               </li>
             ))}
           </ul>
@@ -259,7 +298,7 @@ export function Commerce055({
                         >
                           {FIT_MARK[model.fit]}
                         </span>
-                        {FIT_WORD[model.fit]}
+                        {fitText[model.fit] ?? FIT_WORD[model.fit]}
                       </span>
                     </td>
                     <td data-part="comment">{model.comment}</td>

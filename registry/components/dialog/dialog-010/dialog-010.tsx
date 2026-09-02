@@ -16,6 +16,10 @@ export type Dialog010Props = {
   title?: string
   groups?: Dialog010Group[]
   closeLabel?: string
+  /** Подложка окна. Пусто — цвет из палитры компонента. */
+  background?: string
+  /** Акцент: кольцо фокуса. */
+  accent?: string
   className?: string
   style?: CSSProperties
 }
@@ -26,12 +30,12 @@ export type Dialog010Props = {
 // что плоские тридцать строк не запоминаются.
 const STYLES = `
 :where([data-vibeui-block="dialog-010"]){
---vibeui-dialog-010-fg:oklch(0.22 0.016 265);
---vibeui-dialog-010-muted:oklch(0.5 0.014 265);
---vibeui-dialog-010-bg:oklch(1 0 0);
---vibeui-dialog-010-key:oklch(0.98 0.003 265);
---vibeui-dialog-010-border:oklch(0.88 0.006 265);
---vibeui-dialog-010-accent:oklch(0.55 0.2 262);
+--vibeui-dialog-010-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
+--vibeui-dialog-010-muted:light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dialog-010-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-dialog-010-key:light-dark(oklch(0.98 0.003 265),oklch(0.3 0.008 265));
+--vibeui-dialog-010-border:light-dark(oklch(0.88 0.006 265),oklch(0.38 0.012 265));
+--vibeui-dialog-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-dialog-010-radius:1rem;
 --vibeui-dialog-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -47,10 +51,10 @@ background:var(--vibeui-dialog-010-bg);color:var(--vibeui-dialog-010-fg);
 [data-vibeui-dialog-010-window]{
 position:fixed;inset:0;margin:auto;height:fit-content;max-height:min(32rem,calc(100vh - 3rem));
 width:min(30rem,calc(100vw - 2rem));box-sizing:border-box;padding:1.375rem;overflow-y:auto;
-border:1px solid var(--vibeui-dialog-010-border,oklch(0.88 0.006 265));
+border:1px solid var(--vibeui-dialog-010-border,light-dark(oklch(0.88 0.006 265),oklch(0.38 0.012 265)));
 border-radius:var(--vibeui-dialog-010-radius,1rem);
-background:var(--vibeui-dialog-010-bg,oklch(1 0 0));
-color:var(--vibeui-dialog-010-fg,oklch(0.22 0.016 265));
+background:var(--vibeui-dialog-010-bg,light-dark(oklch(1 0 0),oklch(0.24 0.012 265)));
+color:var(--vibeui-dialog-010-fg,light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265)));
 font-family:var(--vibeui-dialog-010-font,ui-sans-serif,system-ui,sans-serif);
 box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 45%);
 opacity:0;transform:scale(0.97);
@@ -63,7 +67,7 @@ transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,ove
 [data-vibeui-dialog-010-window] [data-part="group"] + [data-part="group"]{margin-top:1.125rem}
 [data-vibeui-dialog-010-window] [data-part="group-title"]{
 margin:0 0 0.5rem;font-size:0.6875rem;font-weight:650;letter-spacing:0.06em;text-transform:uppercase;
-color:var(--vibeui-dialog-010-muted,oklch(0.5 0.014 265));
+color:var(--vibeui-dialog-010-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)));
 }
 [data-vibeui-dialog-010-window] dl{margin:0;display:flex;flex-direction:column;gap:0.375rem}
 [data-vibeui-dialog-010-window] [data-part="row"]{display:flex;align-items:center;gap:1rem;font-size:0.875rem}
@@ -73,9 +77,9 @@ color:var(--vibeui-dialog-010-muted,oklch(0.5 0.014 265));
 [data-vibeui-dialog-010-window] kbd{
 display:inline-flex;align-items:center;justify-content:center;
 min-width:1.5rem;height:1.5rem;padding:0 0.375rem;
-border:1px solid var(--vibeui-dialog-010-border,oklch(0.88 0.006 265));
+border:1px solid var(--vibeui-dialog-010-border,light-dark(oklch(0.88 0.006 265),oklch(0.38 0.012 265)));
 border-bottom-width:2px;border-radius:0.375rem;
-background:var(--vibeui-dialog-010-key,oklch(0.98 0.003 265));
+background:var(--vibeui-dialog-010-key,light-dark(oklch(0.98 0.003 265),oklch(0.3 0.008 265)));
 font-family:inherit;font-size:0.75rem;font-weight:600;line-height:1;
 }
 [data-vibeui-dialog-010-window] [data-part="actions"]{display:flex;justify-content:flex-end;margin-top:1.25rem}
@@ -83,9 +87,9 @@ font-family:inherit;font-size:0.75rem;font-weight:600;line-height:1;
 appearance:none;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:600;
 display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;
 border-radius:0.5rem;background:transparent;color:inherit;
-border:1px solid var(--vibeui-dialog-010-border,oklch(0.88 0.006 265));
+border:1px solid var(--vibeui-dialog-010-border,light-dark(oklch(0.88 0.006 265),oklch(0.38 0.012 265)));
 }
-[data-vibeui-dialog-010-window] :focus-visible{outline:2px solid var(--vibeui-dialog-010-accent,oklch(0.55 0.2 262));outline-offset:2px}
+[data-vibeui-dialog-010-window] :focus-visible{outline:2px solid var(--vibeui-dialog-010-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-010"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-010-window]{transition:none!important;opacity:1;transform:none}
@@ -120,6 +124,29 @@ const DEFAULT_GROUPS: Dialog010Group[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлый фон достался бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Окно горячих клавиш: группы и клавиши, набранные <kbd>.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -129,15 +156,28 @@ export function Dialog010({
   title = "Горячие клавиши",
   groups = DEFAULT_GROUPS,
   closeLabel = "Закрыть",
+  background = "",
+  accent,
   className,
   style,
 }: Dialog010Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-dialog-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dialog-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-dialog-010" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="dialog-010" className={className} style={style}>
+      <div data-vibeui-block="dialog-010" className={className} style={palette}>
         <button data-part="trigger" type="button" popoverTarget={id}>
           {trigger}
           <kbd>?</kbd>
@@ -148,7 +188,7 @@ export function Dialog010({
           data-vibeui-dialog-010-window=""
           role="dialog"
           aria-labelledby={`${id}-title`}
-          style={style}
+          style={palette}
         >
           <h2 data-part="title" id={`${id}-title`}>
             {title}

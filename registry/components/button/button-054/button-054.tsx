@@ -22,9 +22,9 @@ export type Button054Props = Omit<
 // от системного листа (AbortError) не считается ошибкой и не даёт отчёта.
 const STYLES = `
 :where([data-vibeui-block="button-054"]){
---vibeui-button-054-accent:oklch(0.52 0.16 235);
---vibeui-button-054-done:oklch(0.5 0.13 155);
---vibeui-button-054-fg:oklch(0.99 0.01 235);
+--vibeui-button-054-accent:light-dark(oklch(0.52 0.16 235),oklch(0.62 0.15 235));
+--vibeui-button-054-done:light-dark(oklch(0.5 0.13 155),oklch(0.6 0.13 155));
+--vibeui-button-054-fg:light-dark(oklch(0.99 0.01 235),oklch(0.17 0.02 250));
 --vibeui-button-054-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-054"]{

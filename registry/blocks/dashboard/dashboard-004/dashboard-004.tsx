@@ -14,6 +14,18 @@ export type Dashboard004Props = {
   seatsTotal?: number
   members?: Dashboard004Member[]
   inviteLabel?: string
+  /** Список ролей в выпадающем меню. */
+  roles?: string[]
+  /** Подпись строки мест. */
+  seatsText?: string
+  /** Значение мест: {used} и {total} — числа. */
+  seatsValueText?: string
+  /** Подписи состояния по ключам active и invited. */
+  statusText?: Record<string, string>
+  /** Подпись выбора роли для скринридера: {name} — имя участника. */
+  roleText?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -27,15 +39,19 @@ export type Dashboard004Props = {
 // символов сталкивает целые алфавиты в один сектор круга, и все русские имена
 // выходят одного цвета. Приглашённый участник помечен формой значка, а не
 // только цветом, — иначе состояние теряется на чёрно-белой печати.
+//
+// Тема берётся из color-scheme окружения через light-dark(): собственной
+// подложки у списка нет, карточки внутри держат свою поверхность.
 const STYLES = `
 :where([data-vibeui-block="dashboard-004"]){
---vibeui-dashboard-004-bg:oklch(0.985 0.002 265);
---vibeui-dashboard-004-card:oklch(1 0 0);
---vibeui-dashboard-004-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-004-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-004-border:oklch(0.91 0.006 265);
---vibeui-dashboard-004-track:oklch(0.93 0.005 265);
---vibeui-dashboard-004-accent:oklch(0.55 0.2 262);
+--vibeui-dashboard-004-bg:transparent;
+--vibeui-dashboard-004-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-dashboard-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-dashboard-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-dashboard-004-track:light-dark(oklch(0.93 0.005 265),oklch(0.34 0.01 265));
+--vibeui-dashboard-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-dashboard-004-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
 --vibeui-dashboard-004-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -54,7 +70,7 @@ gap:0.75rem;margin-bottom:1rem;
 [data-vibeui-block="dashboard-004"] [data-part="invite"]{
 appearance:none;cursor:pointer;flex:none;
 height:2.25rem;padding:0 0.875rem;border:0;border-radius:0.625rem;
-background:var(--vibeui-dashboard-004-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-004-accent);color:var(--vibeui-dashboard-004-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="dashboard-004"] [data-part="invite"]:focus-visible{outline:2px solid var(--vibeui-dashboard-004-accent);outline-offset:2px}
@@ -143,6 +159,39 @@ const DEFAULT_MEMBERS: Dashboard004Member[] = [
 
 const ROLES = ["Владелец", "Редактор", "Читатель"]
 
+const DEFAULT_STATUS: Record<string, string> = {
+  active: "Активен",
+  invited: "Приглашён",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+function fill(template: string, values: Record<string, string>) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? values[key] : match,
+  )
+}
+
 function hue(name: string) {
   let hash = 2166136261
   for (const symbol of name) {
@@ -171,6 +220,12 @@ export function Dashboard004({
   seatsTotal = 10,
   members = DEFAULT_MEMBERS,
   inviteLabel = "Пригласить",
+  roles = ROLES,
+  seatsText = "Занято мест",
+  seatsValueText = "{used} из {total}",
+  statusText = DEFAULT_STATUS,
+  roleText = "Роль: {name}",
+  background = "",
   accent,
   className,
   style,
@@ -180,6 +235,12 @@ export function Dashboard004({
   const palette = {
     "--vibeui-dashboard-004-used": used,
     ...(accent ? { "--vibeui-dashboard-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -206,9 +267,12 @@ export function Dashboard004({
 
         <div data-part="seats">
           <p data-part="seatline">
-            Занято мест
+            {seatsText}
             <span data-part="seatvalue">
-              {seatsUsed} из {seatsTotal}
+              {fill(seatsValueText, {
+                used: String(seatsUsed),
+                total: String(seatsTotal),
+              })}
             </span>
           </p>
           <div
@@ -217,7 +281,7 @@ export function Dashboard004({
             aria-valuenow={seatsUsed}
             aria-valuemin={0}
             aria-valuemax={seatsTotal}
-            aria-label="Занято мест"
+            aria-label={seatsText}
           >
             <span data-part="fill" />
           </div>
@@ -247,13 +311,14 @@ export function Dashboard004({
               </div>
               <span data-part="status">
                 <span data-part="mark" aria-hidden="true" />
-                {member.status === "invited" ? "Приглашён" : "Активен"}
+                {statusText[member.status ?? "active"] ??
+                  DEFAULT_STATUS[member.status ?? "active"]}
               </span>
               <select
                 defaultValue={member.role}
-                aria-label={`Роль: ${member.name}`}
+                aria-label={fill(roleText, { name: member.name })}
               >
-                {ROLES.map((role) => (
+                {roles.map((role) => (
                   <option key={role} value={role}>
                     {role}
                   </option>

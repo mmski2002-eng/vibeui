@@ -11,6 +11,15 @@ export type Calendar029Props = Omit<
   defaultValue?: string
   neighbours?: string[]
   locale?: string
+  /** Значение фишки при снятом фильтре. */
+  anyText?: string
+  /** Подпись кнопки сброса фильтра. */
+  clearLabel?: string
+  /** Подписи кнопок перелистывания месяца. */
+  prevLabel?: string
+  nextLabel?: string
+  /** Пусто — подложки нет, строка фильтров лежит прямо на фоне страницы. */
+  background?: string
   onChange?: (value: string) => void
   accent?: string
 }
@@ -22,13 +31,16 @@ export type Calendar029Props = Omit<
 // панель, — это отдельная кнопка внутри фишки.
 const STYLES = `
 :where([data-vibeui-block="calendar-029"]){
---vibeui-calendar-029-bg:oklch(1 0 0);
---vibeui-calendar-029-fg:oklch(0.23 0.014 265);
---vibeui-calendar-029-muted:oklch(0.57 0.014 265);
---vibeui-calendar-029-border:oklch(0.9 0.008 265);
---vibeui-calendar-029-soft:oklch(0.97 0.006 265);
---vibeui-calendar-029-accent:oklch(0.5 0.14 265);
---vibeui-calendar-029-accentsoft:oklch(0.94 0.04 265);
+--vibeui-calendar-029-bg:transparent;
+--vibeui-calendar-029-panel:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-calendar-029-shadow:light-dark(oklch(0.2 0.02 265 / 14%),oklch(0 0 0 / 50%));
+--vibeui-calendar-029-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-calendar-029-muted:light-dark(oklch(0.57 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-029-border:light-dark(oklch(0.9 0.008 265),oklch(0.35 0.014 265));
+--vibeui-calendar-029-soft:light-dark(oklch(0.97 0.006 265),oklch(0.28 0.01 265));
+--vibeui-calendar-029-accent:light-dark(oklch(0.5 0.14 265),oklch(0.74 0.13 265));
+--vibeui-calendar-029-accentsoft:light-dark(oklch(0.94 0.04 265),oklch(0.31 0.05 265));
+--vibeui-calendar-029-onaccent:light-dark(oklch(0.99 0 0),oklch(0.18 0.02 265));
 --vibeui-calendar-029-radius:0.6rem;
 --vibeui-calendar-029-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -74,10 +86,10 @@ outline:2px solid var(--vibeui-calendar-029-accent);outline-offset:1px;
 [data-vibeui-block="calendar-029"] [data-part="panel"]{
 position:absolute;top:calc(100% + 0.35rem);left:0;z-index:20;
 width:15.5rem;box-sizing:border-box;padding:0.6rem;
-background:var(--vibeui-calendar-029-bg);
+background:var(--vibeui-calendar-029-panel);
 border:1px solid var(--vibeui-calendar-029-border);
 border-radius:0.75rem;
-box-shadow:0 12px 28px oklch(0.2 0.02 265 / 14%);
+box-shadow:0 12px 28px var(--vibeui-calendar-029-shadow);
 }
 [data-vibeui-block="calendar-029"] [data-part="nav"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.3rem;margin-bottom:0.4rem;
@@ -114,7 +126,7 @@ outline:2px solid var(--vibeui-calendar-029-accent);outline-offset:-2px;
 }
 [data-vibeui-block="calendar-029"] [data-part="day"][data-outside="true"]{color:var(--vibeui-calendar-029-muted);opacity:.6}
 [data-vibeui-block="calendar-029"] [data-part="day"][aria-pressed="true"]{
-background:var(--vibeui-calendar-029-accent);color:var(--vibeui-calendar-029-bg);font-weight:700;
+background:var(--vibeui-calendar-029-accent);color:var(--vibeui-calendar-029-onaccent);font-weight:700;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-029"] *{animation:none!important;transition:none!important}}
 `
@@ -128,6 +140,28 @@ function stamp(date: Date) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Компактный выбор даты фишкой в строке фильтров.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -136,6 +170,11 @@ export function Calendar029({
   defaultValue = "2026-04-15",
   neighbours = ["Статус: в работе", "Автор: любой"],
   locale = "ru-RU",
+  anyText = "любая",
+  clearLabel = "Снять фильтр по дате",
+  prevLabel = "Предыдущий месяц",
+  nextLabel = "Следующий месяц",
+  background = "",
   onChange,
   accent,
   className,
@@ -180,6 +219,12 @@ export function Calendar029({
 
   const palette = {
     ...(accent ? { "--vibeui-calendar-029-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-029-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -215,14 +260,14 @@ export function Calendar029({
             onClick={() => setOpen(!open)}
           >
             {label}:{" "}
-            {value ? short.format(new Date(`${value}T00:00:00`)) : "любая"}
+            {value ? short.format(new Date(`${value}T00:00:00`)) : anyText}
             <span aria-hidden="true">▾</span>
           </button>
           {value ? (
             <button
               type="button"
               data-part="clear"
-              aria-label="Снять фильтр по дате"
+              aria-label={clearLabel}
               onClick={() => {
                 setValue("")
                 onChange?.("")
@@ -237,7 +282,7 @@ export function Calendar029({
                 <button
                   type="button"
                   data-part="step"
-                  aria-label="Предыдущий месяц"
+                  aria-label={prevLabel}
                   onClick={() =>
                     setView(
                       new Date(view.getFullYear(), view.getMonth() - 1, 1),
@@ -255,7 +300,7 @@ export function Calendar029({
                 <button
                   type="button"
                   data-part="step"
-                  aria-label="Следующий месяц"
+                  aria-label={nextLabel}
                   onClick={() =>
                     setView(
                       new Date(view.getFullYear(), view.getMonth() + 1, 1),

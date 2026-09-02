@@ -11,6 +11,14 @@ export type Currency005Props = Omit<
   limit?: number
   defaultValue?: number
   currency?: string
+  /** Подпись потолка; {limit} и {currency} подставляются. */
+  limitText?: string
+  /** Пояснение по состоянию; {amount} и {currency} подставляются. */
+  noteText?: Record<string, string>
+  /** Локаль разрядов: компонент несёт русскую, проект подставляет свою. */
+  locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,23 +28,26 @@ export type Currency005Props = Omit<
 // лимиту меняет цвет: остаток читается площадью быстрее, чем цифрой. Ввод
 // выше лимита не запрещается — он помечается как ошибка, потому что человек
 // часто сначала набирает нужную сумму, а потом идёт повышать лимит.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у поля по
+// умолчанию нет, оно лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="currency-005"]){
---vibeui-currency-005-surface:oklch(1 0 0);
---vibeui-currency-005-field:oklch(0.985 0.002 265);
---vibeui-currency-005-shell:oklch(0.9 0.006 265);
---vibeui-currency-005-fg:oklch(0.22 0.014 265);
---vibeui-currency-005-muted:oklch(0.55 0.014 265);
---vibeui-currency-005-border:oklch(0.88 0.008 265);
---vibeui-currency-005-track:oklch(0.93 0.006 265);
---vibeui-currency-005-ok:oklch(0.55 0.15 160);
---vibeui-currency-005-near:oklch(0.68 0.15 70);
---vibeui-currency-005-over:oklch(0.56 0.19 25);
+--vibeui-currency-005-surface:transparent;
+--vibeui-currency-005-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-currency-005-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-currency-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-currency-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.014 265));
+--vibeui-currency-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.013 265));
+--vibeui-currency-005-track:light-dark(oklch(0.93 0.006 265),oklch(0.32 0.012 265));
+--vibeui-currency-005-ok:light-dark(oklch(0.55 0.15 160),oklch(0.74 0.13 160));
+--vibeui-currency-005-near:light-dark(oklch(0.68 0.15 70),oklch(0.8 0.14 75));
+--vibeui-currency-005-over:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25));
 --vibeui-currency-005-accent:var(--vibeui-currency-005-ok);
 --vibeui-currency-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-currency-005-fill:0%;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="currency-005"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -93,6 +104,34 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-currency-005-muted
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="currency-005"] *{animation:none!important;transition:none!important}}
 `
 
+const NOTE_TEXT: Record<string, string> = {
+  ok: "Останется {amount} {currency} из месячного лимита.",
+  near: "Останется {amount} {currency} из месячного лимита.",
+  over: "Превышение на {amount} {currency} — уменьшите сумму или поднимите лимит.",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Поле бюджета с потолком: полоса остатка и предупреждение до отправки формы.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -102,6 +141,10 @@ export function Currency005({
   limit = 100000,
   defaultValue = 68000,
   currency = "₽",
+  limitText = "потолок {limit} {currency}",
+  noteText = NOTE_TEXT,
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -113,9 +156,19 @@ export function Currency005({
   const state = share > 1 ? "over" : share >= 0.85 ? "near" : "ok"
   const rest = limit - value
 
+  const note = (noteText[state] ?? NOTE_TEXT[state])
+    .replace("{amount}", Math.abs(rest).toLocaleString(locale))
+    .replace("{currency}", currency)
+
   const palette = {
     "--vibeui-currency-005-fill": `${Math.min(100, Math.max(0, share * 100))}%`,
     ...(accent ? { "--vibeui-currency-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-currency-005-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -134,7 +187,9 @@ export function Currency005({
         <p data-part="head">
           <label htmlFor={id}>{label}</label>
           <span data-part="limit">
-            потолок {limit.toLocaleString("ru-RU")} {currency}
+            {limitText
+              .replace("{limit}", limit.toLocaleString(locale))
+              .replace("{currency}", currency)}
           </span>
         </p>
         <div data-part="row">
@@ -160,9 +215,7 @@ export function Currency005({
           <span data-part="fill" />
         </div>
         <p id={`${id}-note`} data-part="note" aria-live="polite">
-          {state === "over"
-            ? `Превышение на ${Math.abs(rest).toLocaleString("ru-RU")} ${currency} — уменьшите сумму или поднимите лимит.`
-            : `Останется ${rest.toLocaleString("ru-RU")} ${currency} из месячного лимита.`}
+          {note}
         </p>
       </div>
     </>

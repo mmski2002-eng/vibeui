@@ -11,6 +11,10 @@ export type Select008Props = Omit<
   options?: string[]
   placeholder?: string
   error?: string
+  /** Строка на месте ошибки, когда поле заполнено. */
+  hint?: string
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,24 +22,33 @@ export type Select008Props = Omit<
 // висящая до повторной отправки формы, выглядит как обвинение: человек уже
 // исправил поле, а его всё ещё ругают. Здесь сообщение снимается на первом
 // же осмысленном выборе, а до этого связано с полем через aria-describedby.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="select-008"]){
---vibeui-select-008-surface:oklch(1 0 0);
---vibeui-select-008-surface-border:oklch(0.91 0.006 265);
---vibeui-select-008-fg:oklch(0.23 0.016 265);
---vibeui-select-008-muted:oklch(0.55 0.014 265);
---vibeui-select-008-field:oklch(0.985 0.002 265);
---vibeui-select-008-border:oklch(0.87 0.008 265);
---vibeui-select-008-accent:oklch(0.55 0.19 262);
---vibeui-select-008-danger:oklch(0.55 0.2 25);
---vibeui-select-008-danger-tint:oklch(0.55 0.2 25 / 9%);
+--vibeui-select-008-surface:transparent;
+--vibeui-select-008-surface-border:transparent;
+--vibeui-select-008-surface-pad:0;
+--vibeui-select-008-surface-radius:0;
+--vibeui-select-008-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-select-008-field:light-dark(oklch(0.985 0.002 265),oklch(0.25 0.012 265));
+--vibeui-select-008-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-select-008-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.15 262));
+--vibeui-select-008-danger:light-dark(oklch(0.55 0.2 25),oklch(0.72 0.17 25));
+--vibeui-select-008-danger-tint:light-dark(oklch(0.55 0.2 25 / 9%),oklch(0.72 0.17 25 / 18%));
 --vibeui-select-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Подложка появляется только вместе с пропом background: по умолчанию поле
+   лежит прямо на фоне страницы. */
 [data-vibeui-block="select-008"]{
 display:flex;flex-direction:column;gap:0.375rem;
-width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:20rem;box-sizing:border-box;
+padding:var(--vibeui-select-008-surface-pad);
 background:var(--vibeui-select-008-surface);
-border:1px solid var(--vibeui-select-008-surface-border);border-radius:0.875rem;
+border:1px solid var(--vibeui-select-008-surface-border);
+border-radius:var(--vibeui-select-008-surface-radius);
 font-family:var(--vibeui-select-008-font);color:var(--vibeui-select-008-fg);
 }
 [data-vibeui-block="select-008"] [data-part="label"]{font-size:0.8125rem;font-weight:600}
@@ -105,6 +118,29 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Select с ошибкой валидации, которая снимается при первом верном выборе.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -113,6 +149,8 @@ export function Select008({
   options = DEFAULT_OPTIONS,
   placeholder = "Не выбрано",
   error = "Без этого поля счёт не выставить",
+  hint = "Реквизиты подставим автоматически.",
+  background = "",
   accent,
   className,
   style,
@@ -122,8 +160,20 @@ export function Select008({
   const [value, setValue] = useState("")
   const invalid = value === ""
 
+  // Подложка приходит вместе с полями и скруглением: без неё поле лежит
+  // прямо на странице, и лишние поля по бокам ему только мешают.
   const palette = {
     ...(accent ? { "--vibeui-select-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-select-008-surface": background,
+          "--vibeui-select-008-surface-border":
+            "light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265))",
+          "--vibeui-select-008-surface-pad": "0.875rem",
+          "--vibeui-select-008-surface-radius": "0.875rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -168,7 +218,7 @@ export function Select008({
           </p>
         ) : (
           <p data-part="ok" id={`${id}-message`}>
-            Реквизиты подставим автоматически.
+            {hint}
           </p>
         )}
       </div>

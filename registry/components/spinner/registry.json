@@ -16,7 +16,7 @@
           "target": "@components/vibeui/spinner-001.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-spinner-001-*. Серверный: хуков нет. Кольцо собрано из бордюра с окрашенной верхней гранью, размер задаётся одной переменной. Блок объявлен role=\"status\" с aria-live. При prefers-reduced-motion вращение заменяется пульсацией прозрачности.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-spinner-001-*. Серверный: хуков нет. Кольцо собрано из бордюра с окрашенной верхней гранью, размер задаётся одной переменной. Блок объявлен role=\"status\" с aria-live. При prefers-reduced-motion вращение заменяется пульсацией прозрачности. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
         "tags": ["spinner", "loading", "status", "a11y"],
         "ai": {
@@ -28,17 +28,20 @@
             "обязательную подпись: кольцо не сообщает, что именно происходит",
             "role=\"status\" с aria-live — ожидание должно быть услышано",
             "пульсацию вместо вращения при prefers-reduced-motion: состояние остаётся видимым",
-            "собственную светлую подложку: ожидание показывают поверх любого фона",
             "размер одной переменной, чтобы кольцо совпадало с кеглем рядом",
-            "оценку времени, когда она известна"
+            "оценку времени, когда она известна",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "label и hint",
             "size — sm, md или lg",
             "акцент через проп accent",
-            "толщину кольца"
+            "толщину кольца",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Оценку времени не выдумывайте: неверная раздражает сильнее её отсутствия.",
             "Для ожидания дольше пары секунд лучше показать прогресс или объяснение, а не кольцо.",
             "Не ставьте спиннер вместо содержимого списка: для этого есть заглушки-скелеты.",
@@ -66,6 +69,12 @@
             "type": "select",
             "default": "md",
             "options": ["sm", "md", "lg"]
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -78,17 +87,20 @@
                 "the mandatory label: a ring does not say what is running",
                 "role=\"status\" with aria-live — waiting has to be heard",
                 "pulsing instead of spinning under prefers-reduced-motion: the state stays visible",
-                "its own light surface: waiting gets shown over any background",
                 "the single size variable so the ring matches the type beside it",
-                "the time estimate when it is known"
+                "the time estimate when it is known",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "label and hint",
                 "size — sm, md or lg",
                 "the accent through the accent prop",
-                "the ring thickness"
+                "the ring thickness",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not invent the estimate: a wrong one annoys more than none.",
                 "Past a couple of seconds show progress or a reason rather than a ring.",
                 "Do not use a spinner in place of list content: skeletons exist for that.",
@@ -107,11 +119,21 @@
               },
               "size": {
                 "label": "Size"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Labelled Spinner"
+            "title": "Labelled Spinner",
+            "preview": {
+              "props": {
+                "label": "Building the catalog",
+                "hint": "Usually under a minute"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["size", "background"]
       }
     },
     {
@@ -129,7 +151,7 @@
           "target": "@components/vibeui/spinner-002.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Волна собрана задержками, посчитанными от одной переменной --vibeui-spinner-002-speed через calc, поэтому темп меняется одним числом, а не тремя правками анимации. Точки декоративны и помечены aria-hidden, состояние объявлено role=status с aria-live=polite на корне — иначе скринридер молчит о том, что идёт работа. При prefers-reduced-motion анимация выключается, но точки замирают разной яркостью: сообщение «идёт работа» остаётся, мигание исчезает. Подложка светлая, потому что подпись тёмная.",
+      "docs": "Серверный компонент, хуков нет. Волна собрана задержками, посчитанными от одной переменной --vibeui-spinner-002-speed через calc, поэтому темп меняется одним числом, а не тремя правками анимации. Точки декоративны и помечены aria-hidden, состояние объявлено role=status с aria-live=polite на корне — иначе скринридер молчит о том, что идёт работа. При prefers-reduced-motion анимация выключается, но точки замирают разной яркостью: сообщение «идёт работа» остаётся, мигание исчезает. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
         "tags": ["spinner", "dots", "loading", "status"],
         "ai": {
@@ -142,15 +164,18 @@
             "задержки, посчитанные от одной длительности — иначе темп правится в трёх местах",
             "role=status с aria-live: без них скринридер молчит о начавшейся работе",
             "замирание точек разной яркостью при prefers-reduced-motion: состояние обязано остаться видимым",
-            "собственную светлую подложку: подпись тёмная и на тёмном фоне каталога исчезает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст подписи и её длину",
             "темп волны через speed в секундах",
             "цвет точек через переменную --vibeui-spinner-002-accent",
-            "размер точек через переменную --vibeui-spinner-002-dot"
+            "размер точек через переменную --vibeui-spinner-002-dot",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Слишком быстрая волна (меньше 0.6с) читается как дрожание, а не как ожидание.",
             "Три точки — не индикатор прогресса: если доля известна, берите полосу с процентом.",
             "aria-live=polite не перебивает чтение: сообщение прозвучит после текущей фразы.",
@@ -172,6 +197,12 @@
             "default": 1.2,
             "min": 0.4,
             "max": 3
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -185,15 +216,18 @@
                 "the delays derived from a single duration — otherwise the tempo is edited in three places",
                 "role=status with aria-live: without them a screen reader stays silent about the work",
                 "the dots freezing at different opacities under prefers-reduced-motion: the state must remain visible",
-                "the component's own light surface: the caption is dark and disappears on a dark catalog background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption text and its length",
                 "the wave tempo through speed in seconds",
                 "the dot colour through the --vibeui-spinner-002-accent variable",
-                "the dot size through the --vibeui-spinner-002-dot variable"
+                "the dot size through the --vibeui-spinner-002-dot variable",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A wave faster than 0.6s reads as jitter rather than waiting.",
                 "Three dots are not a progress indicator: use a bar with a percentage when the share is known.",
                 "aria-live=polite does not interrupt: the message is spoken after the current phrase.",
@@ -209,11 +243,20 @@
               "speed": {
                 "label": "Tempo, s",
                 "default": 1.2
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Dots Wave Loader"
+            "title": "Dots Wave Loader",
+            "preview": {
+              "props": {
+                "label": "Building the catalog"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["speed", "background"]
       }
     },
     {
@@ -231,7 +274,7 @@
           "target": "@components/vibeui/spinner-003.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Дорожка помечена role=progressbar с aria-busy и без aria-valuenow — это и есть корректное объявление неопределённого прогресса; выдуманный процент хуже его отсутствия. Отрезок ездит по дорожке анимацией transform, а не изменением left или width: браузер не пересчитывает раскладку на каждом кадре, и полоса не греет процессор в длинном списке. Толщина вынесена в проп height и подставляется переменной в пикселях. При prefers-reduced-motion отрезок занимает дорожку целиком и медленно дышит. Подложка светлая: подписи тёмные.",
+      "docs": "Серверный компонент, хуков нет. Дорожка помечена role=progressbar с aria-busy и без aria-valuenow — это и есть корректное объявление неопределённого прогресса; выдуманный процент хуже его отсутствия. Отрезок ездит по дорожке анимацией transform, а не изменением left или width: браузер не пересчитывает раскладку на каждом кадре, и полоса не греет процессор в длинном списке. Толщина вынесена в проп height и подставляется переменной в пикселях. При prefers-reduced-motion отрезок занимает дорожку целиком и медленно дышит. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
         "tags": ["spinner", "progress", "indeterminate", "bar"],
         "preview": {
@@ -247,15 +290,18 @@
             "анимацию через transform — изменение width пересчитывает раскладку на каждом кадре",
             "overflow:hidden на дорожке, иначе отрезок выезжает за её пределы",
             "подпись над полосой: полоса без слов не сообщает, что именно синхронизируется",
-            "собственную светлую подложку: подписи тёмные и на тёмном фоне каталога пропадают"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись и вторую строку через label и hint",
             "толщину полосы через height в пикселях",
             "цвет отрезка через переменную --vibeui-spinner-003-accent",
-            "ширину блока через max-width"
+            "ширину блока через max-width",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Как только доля известна, замените компонент на детерминированный прогресс с процентом.",
             "Толщина меньше 3px плохо видна на мониторах без масштабирования.",
             "aria-busy стоит на дорожке: если блокируется целый раздел, поднимите его на контейнер.",
@@ -271,12 +317,25 @@
             "maxLength": 30
           },
           {
+            "prop": "hint",
+            "label": "Вторая строка",
+            "type": "text",
+            "default": "Осталось немного",
+            "maxLength": 30
+          },
+          {
             "prop": "height",
             "label": "Толщина, px",
             "type": "number",
             "default": 4,
             "min": 2,
             "max": 12
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -290,15 +349,18 @@
                 "the transform-based animation — animating width recalculates layout on every frame",
                 "overflow:hidden on the track, otherwise the beam escapes past its edges",
                 "the caption above the bar: a bar without words never says what is syncing",
-                "the component's own light surface: the captions are dark and vanish on a dark catalog background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption and the second line through label and hint",
                 "the bar thickness through height in pixels",
                 "the beam colour through the --vibeui-spinner-003-accent variable",
-                "the block width through max-width"
+                "the block width through max-width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Once the share is known, replace this with a determinate progress bar showing a percentage.",
                 "A thickness below 3px is hard to see on unscaled displays.",
                 "aria-busy sits on the track: lift it to the container when a whole section is blocked.",
@@ -314,11 +376,25 @@
               "height": {
                 "label": "Thickness, px",
                 "default": 4
+              },
+              "hint": {
+                "label": "Second line",
+                "default": "Almost there"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Indeterminate Progress Bar"
+            "title": "Indeterminate Progress Bar",
+            "preview": {
+              "props": {
+                "label": "Syncing the catalog",
+                "hint": "Almost there"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["height", "background"]
       }
     },
     {
@@ -336,7 +412,7 @@
           "target": "@components/vibeui/spinner-004.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Дуга — conic-gradient, из которого радиальная маска вырезает середину: так кольцо остаётся одним элементом, без svg и без второго круга, закрывающего центр. Число лежит поверх кольца отдельным узлом, а не внутри маскированного элемента, иначе маска вырезала бы и цифры. Значение зажимается в 0–100 внутри компонента и объявляется через role=progressbar с aria-valuenow, valuemin и valuemax. Цифры моноширинные: при обычных ширина «11 %» и «88 %» разная, и подпись дёргается на каждом обновлении. Подложка светлая: число и подписи тёмные.",
+      "docs": "Серверный компонент, хуков нет. Дуга — conic-gradient, из которого радиальная маска вырезает середину: так кольцо остаётся одним элементом, без svg и без второго круга, закрывающего центр. Число лежит поверх кольца отдельным узлом, а не внутри маскированного элемента, иначе маска вырезала бы и цифры. Значение зажимается в 0–100 внутри компонента и объявляется через role=progressbar с aria-valuenow, valuemin и valuemax. Цифры моноширинные: при обычных ширина «11 %» и «88 %» разная, и подпись дёргается на каждом обновлении. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
         "tags": ["spinner", "progress", "ring", "percent"],
         "ai": {
@@ -349,15 +425,19 @@
             "радиальную маску вместо круга-заглушки — заглушка выдаёт себя на любом фоне, кроме сплошного",
             "моноширинные цифры: обычные меняют ширину, и подпись дёргается при каждом обновлении",
             "aria-valuenow вместе с valuemin и valuemax: без границ значение не имеет смысла",
-            "собственную светлую подложку: число и подписи тёмные и на тёмном фоне пропадают"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "долю через value от 0 до 100",
             "подпись действия через label",
             "размер кольца через size: sm, md или lg",
-            "толщину кольца через переменную --vibeui-spinner-004-thickness"
+            "толщину кольца через переменную --vibeui-spinner-004-thickness",
+            "hintTemplate — вторая строка под подписью; {value} заменяется значением",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "conic-gradient не анимируется переходом: плавный рост требует своей анимации или JS.",
             "Значение округляется до целого — доли процента в таком кольце всё равно не читаются.",
             "mask поддерживается всеми актуальными браузерами, но в старых кольцо станет сплошным кругом.",
@@ -379,6 +459,26 @@
             "type": "text",
             "default": "Загружаем компоненты",
             "maxLength": 30
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": ["sm", "md", "lg"]
+          },
+          {
+            "prop": "hintTemplate",
+            "label": "Вторая строка",
+            "type": "text",
+            "default": "Готово {value} из 100",
+            "maxLength": 32
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -392,15 +492,19 @@
                 "the radial mask instead of a cover circle — a cover gives itself away on anything but a flat background",
                 "the tabular figures: proportional ones change width and make the caption jitter on every update",
                 "aria-valuenow together with valuemin and valuemax: without bounds the value means nothing",
-                "the component's own light surface: number and captions are dark and vanish on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the share through value from 0 to 100",
                 "the action caption through label",
                 "the ring size through size: sm, md or lg",
-                "the ring thickness through the --vibeui-spinner-004-thickness variable"
+                "the ring thickness through the --vibeui-spinner-004-thickness variable",
+                "hintTemplate — the second line under the caption; {value} is replaced with the value",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "conic-gradient cannot be transitioned: a smooth fill needs its own animation or JS.",
                 "The value is rounded to an integer — fractions of a percent are unreadable in a ring this size.",
                 "mask is supported by every current browser, but older ones render a solid disc.",
@@ -416,11 +520,28 @@
               "label": {
                 "label": "Caption",
                 "default": "Loading components"
+              },
+              "size": {
+                "label": "Size"
+              },
+              "hintTemplate": {
+                "label": "Second line",
+                "default": "{value} of 100 done"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Percent Ring Meter"
+            "title": "Percent Ring Meter",
+            "preview": {
+              "props": {
+                "label": "Loading components",
+                "hintTemplate": "{value} of 100 done"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["value", "size", "background"]
       }
     },
     {
@@ -438,7 +559,7 @@
           "target": "@components/vibeui/spinner-005.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет: состояние приходит пропом busy. Полупрозрачная плёнка сама по себе ничего не запрещает — под ней остаются рабочие кнопки и поля, до которых доходит таб. Здесь содержимое получает атрибут inert, который убирает его и из фокуса, и из дерева доступности, а на область ставится aria-busy, чтобы скринридер сообщил о работе. Плёнка сделана color-mix от цвета подложки плюс backdrop-filter: она приглушает содержимое, но не прячет его целиком, и пользователь видит, что именно сохраняется. При prefers-reduced-motion кольцо не крутится, а дышит.",
+      "docs": "Серверный компонент, хуков нет: состояние приходит пропом busy. Полупрозрачная плёнка сама по себе ничего не запрещает — под ней остаются рабочие кнопки и поля, до которых доходит таб. Здесь содержимое получает атрибут inert, который убирает его и из фокуса, и из дерева доступности, а на область ставится aria-busy, чтобы скринридер сообщил о работе. Плёнка залита собственным полупрозрачным токеном --vibeui-spinner-005-veil плюс backdrop-filter: она приглушает содержимое, но не прячет его целиком, и пользователь видит, что именно сохраняется. При prefers-reduced-motion кольцо не крутится, а дышит. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
         "tags": ["spinner", "overlay", "busy", "inert"],
         "preview": {
@@ -454,15 +575,19 @@
             "aria-busy на области — иначе скринридер молчит о том, что блок занят",
             "полупрозрачную плёнку вместо непрозрачной: пользователь должен видеть, что сохраняется",
             "подпись рядом с кольцом: кольцо без слов не сообщает, чего именно ждут",
-            "собственную светлую подложку: и содержимое, и подпись наложения тёмные"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст наложения через label",
             "включение блокировки через busy",
             "содержимое блока — любым узлом в слоте",
-            "плотность плёнки через долю в color-mix"
+            "плотность плёнки через переменную --vibeui-spinner-005-veil",
+            "sampleTitle и sampleFields — демо-содержимое, пока слот пуст",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "inert поддерживается актуальными браузерами; в старых под плёнкой останется фокус.",
             "backdrop-filter стоит дорого на слабых устройствах: на длинном списке его лучше убрать.",
             "Фокус внутри заблокированного содержимого не переносится сам — уведите его до включения busy.",
@@ -482,6 +607,19 @@
             "label": "Блокировка",
             "type": "boolean",
             "default": true
+          },
+          {
+            "prop": "sampleTitle",
+            "label": "Заголовок демо",
+            "type": "text",
+            "default": "Профиль команды",
+            "maxLength": 24
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -495,15 +633,19 @@
                 "aria-busy on the region — otherwise a screen reader says nothing about the block being busy",
                 "the translucent veil rather than an opaque one: the user must see what is being saved",
                 "the caption beside the ring: a ring without words never says what is being awaited",
-                "the component's own light surface: both the content and the overlay caption are dark"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the overlay text through label",
                 "turning the block on through busy",
                 "the block content — any node in the slot",
-                "the veil density through the color-mix share"
+                "the veil density through the --vibeui-spinner-005-veil variable",
+                "sampleTitle and sampleFields — the demo content shown while the slot is empty",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "inert is supported by current browsers; older ones keep focus reachable under the veil.",
                 "backdrop-filter is expensive on weak devices: drop it inside a long list.",
                 "Focus inside blocked content does not move on its own — move it away before turning busy on.",
@@ -519,11 +661,26 @@
               "busy": {
                 "label": "Blocking",
                 "default": true
+              },
+              "sampleTitle": {
+                "label": "Demo heading",
+                "default": "Team profile"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Blocking Busy Overlay"
+            "title": "Blocking Busy Overlay",
+            "preview": {
+              "props": {
+                "label": "Saving changes",
+                "sampleTitle": "Team profile",
+                "sampleFields": ["Name", "Domain"]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["busy", "background"]
       }
     },
     {
@@ -541,7 +698,7 @@
           "target": "@components/vibeui/spinner-006.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Бегущий блик — это анимация большого градиента, и на списке заглушек он заметно греет процессор; пульсация прозрачности анимирует только opacity, что браузер отдаёт композитору. Заглушка повторяет метрику будущей карточки: та же высота строк, те же промежутки и та же пропорция картинки, поэтому при подстановке данных ничего не прыгает. Строки получают небольшие задержки, чтобы карточка не мигала одним куском. Для скринридера это одно сообщение role=status с именем, а не двадцать серых прямоугольников. Подложка светлая: серые плашки на тёмном фоне теряются.",
+      "docs": "Серверный компонент, хуков нет. Бегущий блик — это анимация большого градиента, и на списке заглушек он заметно греет процессор; пульсация прозрачности анимирует только opacity, что браузер отдаёт композитору. Заглушка повторяет метрику будущей карточки: та же высота строк, те же промежутки и та же пропорция картинки, поэтому при подстановке данных ничего не прыгает. Строки получают небольшие задержки, чтобы карточка не мигала одним куском. Для скринридера это одно сообщение role=status с именем, а не двадцать серых прямоугольников. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
         "tags": ["spinner", "skeleton", "pulse", "placeholder"],
         "preview": {
@@ -557,15 +714,18 @@
             "метрику будущей карточки — заглушка другой высоты заставляет содержимое прыгать",
             "одно role=status с именем: двадцать плашек не должны читаться как двадцать сообщений",
             "укороченную последнюю строку: она превращает набор плашек в абзац",
-            "собственную светлую подложку: серые плашки на тёмном фоне каталога теряются"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "число строк через lines",
             "показ картинки через media",
             "цвет плашек через переменную --vibeui-spinner-006-base",
-            "текст сообщения через label"
+            "текст сообщения через label",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Скелетон обязан совпадать с настоящей карточкой: расхождение заметно именно в момент подстановки.",
             "Больше шести строк выглядят как абзац текста, а не как карточка.",
             "Показывать скелетон меньше 300мс не стоит — мелькание раздражает сильнее ожидания.",
@@ -586,6 +746,19 @@
             "label": "Картинка",
             "type": "boolean",
             "default": true
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Загружаем карточку компонента",
+            "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -599,15 +772,18 @@
                 "the metrics of the real card — a placeholder of a different height makes the content jump",
                 "a single role=status with a name: twenty slabs must not read as twenty messages",
                 "the shortened last line: it turns a set of slabs into a paragraph",
-                "the component's own light surface: grey slabs get lost on a dark catalog background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the number of rows through lines",
                 "showing the image through media",
                 "the slab colour through the --vibeui-spinner-006-base variable",
-                "the message text through label"
+                "the message text through label",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The skeleton must match the real card: any mismatch shows exactly at the swap moment.",
                 "More than six rows look like a paragraph of text rather than a card.",
                 "Showing a skeleton for under 300ms is not worth it — the flash annoys more than the wait.",
@@ -623,11 +799,24 @@
               "media": {
                 "label": "Image",
                 "default": true
+              },
+              "label": {
+                "label": "Caption",
+                "default": "Loading the component card"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Pulse Skeleton Card"
+            "title": "Pulse Skeleton Card",
+            "preview": {
+              "props": {
+                "label": "Loading the component card"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["lines", "media", "background"]
       }
     },
     {
@@ -645,7 +834,7 @@
           "target": "@components/vibeui/spinner-007.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Форма — чат-пузырь с хвостиком-псевдоэлементом, внутри три точки. В отличие от волны точек, здесь очерёдность строгая: animation-timing-function steps(1,end) переключает яркость точки скачком, а не плавно, и в любой момент ярка ровно одна точка — так подсветка читается как «идёт набор», а не как общая загрузка. Задержки посчитаны от одной переменной --vibeui-spinner-007-speed, поэтому темп меняется одним числом. Блок объявлен role=\"status\" с aria-live, точки декоративны и помечены aria-hidden. При prefers-reduced-motion точки замирают разной яркостью. Подложка светлая: подпись тёмная.",
+      "docs": "Серверный компонент, хуков нет. Форма — чат-пузырь с хвостиком-псевдоэлементом, внутри три точки. В отличие от волны точек, здесь очерёдность строгая: animation-timing-function steps(1,end) переключает яркость точки скачком, а не плавно, и в любой момент ярка ровно одна точка — так подсветка читается как «идёт набор», а не как общая загрузка. Задержки посчитаны от одной переменной --vibeui-spinner-007-speed, поэтому темп меняется одним числом. Блок объявлен role=\"status\" с aria-live, точки декоративны и помечены aria-hidden. При prefers-reduced-motion точки замирают разной яркостью. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
         "tags": ["spinner", "dots", "typing", "status"],
         "ai": {
@@ -659,15 +848,18 @@
             "подпись рядом с пузырём: точки без слов не сообщают, кто и что делает",
             "role=\"status\" с aria-live — без них скринридер молчит о начавшемся наборе",
             "замирание точек разной яркостью при prefers-reduced-motion",
-            "собственную светлую подложку: подпись тёмная и на тёмном фоне каталога пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст подписи через label",
             "темп очереди через speed в секундах",
             "цвет точек через переменную --vibeui-spinner-007-accent",
-            "размер точек через переменную --vibeui-spinner-007-dot"
+            "размер точек через переменную --vibeui-spinner-007-dot",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Индикатор рассчитан на чаты и комментарии — не подменяйте им общий спиннер загрузки страницы.",
             "Темп быстрее 0.6с читается как дрожание, а не как набор текста.",
             "Хвостик пузыря — псевдоэлемент ::after: при смене формы контейнера его придётся поправить отдельно.",
@@ -689,6 +881,12 @@
             "default": 1.05,
             "min": 0.5,
             "max": 3
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -703,15 +901,18 @@
                 "the caption beside the bubble: dots alone never say who is doing what",
                 "role=\"status\" with aria-live — without it a screen reader stays silent about typing starting",
                 "the dots freezing at different opacities under prefers-reduced-motion",
-                "the component's own light surface: the caption is dark and disappears on a dark catalog background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption text through label",
                 "the sequence tempo through speed in seconds",
                 "the dot colour through the --vibeui-spinner-007-accent variable",
-                "the dot size through the --vibeui-spinner-007-dot variable"
+                "the dot size through the --vibeui-spinner-007-dot variable",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Built for chats and comment threads — do not use it as a general page loading spinner.",
                 "A tempo faster than 0.6s reads as jitter rather than typing.",
                 "The bubble tail is an ::after pseudo-element: adjust it separately if the container shape changes.",
@@ -727,11 +928,20 @@
               "speed": {
                 "label": "Tempo, s",
                 "default": 1.05
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Chasing Bubble Dots"
+            "title": "Chasing Bubble Dots",
+            "preview": {
+              "props": {
+                "label": "Someone is typing"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["speed", "background"]
       }
     },
     {
@@ -749,7 +959,7 @@
           "target": "@components/vibeui/spinner-008.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. В отличие от дорожки с уезжающим сегментом, здесь вся полоса залита repeating-linear-gradient и целиком едет через background-position — «полосатый конвейер», один элемент вместо дорожки и бегунка. Дорожка помечена role=\"progressbar\" с aria-busy и без aria-valuenow: выдуманный процент хуже его отсутствия. При prefers-reduced-motion узор замирает на месте — полосы видны, движение исчезает. Толщина вынесена в проп height. Подложка светлая: подпись и подсказка тёмные.",
+      "docs": "Серверный компонент, хуков нет. В отличие от дорожки с уезжающим сегментом, здесь вся полоса залита repeating-linear-gradient и целиком едет через background-position — «полосатый конвейер», один элемент вместо дорожки и бегунка. Дорожка помечена role=\"progressbar\" с aria-busy и без aria-valuenow: выдуманный процент хуже его отсутствия. При prefers-reduced-motion узор замирает на месте — полосы видны, движение исчезает. Толщина вынесена в проп height. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
         "tags": ["spinner", "progress", "indeterminate", "bar"],
         "preview": {
@@ -765,15 +975,19 @@
             "анимацию через background-position на одном элементе, а не через второй элемент-бегунок",
             "подпись над полосой: полоса без слов не сообщает, что именно проверяется",
             "подсказку под полосой, поясняющую, что доля неизвестна",
-            "собственную светлую подложку: подпись и подсказка тёмные и на тёмном фоне каталога пропадают"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись через label",
             "толщину полосы через height в пикселях",
             "цвет полос через переменную --vibeui-spinner-008-accent",
-            "цвет фона дорожки через переменную --vibeui-spinner-008-track"
+            "цвет фона дорожки через переменную --vibeui-spinner-008-track",
+            "подсказку под полосой через hint",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Как только доля станет известна, замените компонент на детерминированный прогресс с процентом.",
             "Толщина меньше 3px плохо видна на мониторах без масштабирования.",
             "Шаг узора мельче 12px на слабых экранах выглядит замыленным пятном.",
@@ -789,12 +1003,25 @@
             "maxLength": 30
           },
           {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Доля неизвестна, работа продолжается",
+            "maxLength": 48
+          },
+          {
             "prop": "height",
             "label": "Толщина, px",
             "type": "number",
             "default": 6,
             "min": 3,
             "max": 12
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -808,15 +1035,19 @@
                 "the animation via background-position on one element rather than a second beam element",
                 "the caption above the bar: a bar without words never says what is being checked",
                 "the hint below the bar explaining that the share is unknown",
-                "the component's own light surface: caption and hint are dark and vanish on a dark catalog background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption through label",
                 "the bar thickness through height in pixels",
                 "the stripe colour through the --vibeui-spinner-008-accent variable",
-                "the track background colour through the --vibeui-spinner-008-track variable"
+                "the track background colour through the --vibeui-spinner-008-track variable",
+                "the hint below the bar through hint",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Once the share becomes known, replace this with a determinate progress bar showing a percentage.",
                 "A thickness below 3px is hard to see on unscaled displays.",
                 "A stripe pitch under 12px looks like a smeared blur on weak displays.",
@@ -832,11 +1063,25 @@
               "height": {
                 "label": "Thickness, px",
                 "default": 6
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "The share is unknown, work continues"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Barber Pole Loading Bar"
+            "title": "Barber Pole Loading Bar",
+            "preview": {
+              "props": {
+                "label": "Checking the connection",
+                "hint": "The share is unknown, work continues"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["height", "background"]
       }
     },
     {
@@ -854,7 +1099,7 @@
           "target": "@components/vibeui/spinner-009.tsx"
         }
       ],
-      "docs": "Клиентский компонент: состояние pending хранится в useState, таймер снятия блокировки очищается в useEffect при размонтировании. По клику кнопка получает disabled, aria-disabled и aria-busy, рядом с видимой подписью появляются три подпрыгивающие точки — повторный клик во время работы игнорируется. Видимый текст кнопки не меняется, чтобы не дёргать раскладку; статус объявляет отдельная визуально скрытая область с role=\"status\" и aria-live=\"polite\". При prefers-reduced-motion точки замирают разной яркостью.",
+      "docs": "Клиентский компонент: состояние pending хранится в useState, таймер снятия блокировки очищается в useEffect при размонтировании. По клику кнопка получает disabled, aria-disabled и aria-busy, рядом с видимой подписью появляются три подпрыгивающие точки — повторный клик во время работы игнорируется. Видимый текст кнопки не меняется, чтобы не дёргать раскладку; статус объявляет отдельная визуально скрытая область с role=\"status\" и aria-live=\"polite\". При prefers-reduced-motion точки замирают разной яркостью. Заливки у кнопки нет по замыслу: контур ложится прямо на фон страницы, поэтому пропа background у неё не появилось. Тема берётся из color-scheme окружения через light-dark() — на тёмном фоне акцент светлее.",
       "meta": {
         "tags": ["spinner", "button", "loading", "double-submit"],
         "ai": {
@@ -868,7 +1113,9 @@
             "визуально скрытую область role=\"status\" с aria-live — она одна объявляет начало и конец ожидания",
             "точки как декоративный индикатор рядом с подписью, помеченные aria-hidden",
             "замирание точек разной яркостью при prefers-reduced-motion",
-            "очистку таймера в useEffect — иначе setState вызывается после размонтирования"
+            "очистку таймера в useEffect — иначе setState вызывается после размонтирования",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "контур без заливки: подложки у кнопки нет по замыслу, она ложится прямо на фон страницы"
           ],
           "adapt": [
             "текст кнопки через label",
@@ -877,6 +1124,7 @@
             "акцентный цвет через проп accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "pendingDuration — заглушка для витрины; в реальной форме снимайте pending по ответу сервера, а не по таймеру.",
             "Если действие может провалиться, добавьте обработку ошибки: pending обязан сняться и в этом случае.",
             "Не убирайте aria-disabled вместе с disabled: некоторые технологии озвучивают только aria-атрибут.",
@@ -905,6 +1153,12 @@
             "default": 1600,
             "min": 600,
             "max": 5000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -919,7 +1173,9 @@
                 "the visually hidden role=\"status\" region with aria-live — it alone announces waiting starting and ending",
                 "the dots as a decorative indicator beside the label, marked aria-hidden",
                 "the dots freezing at different opacities under prefers-reduced-motion",
-                "clearing the timer in useEffect — otherwise setState fires after unmount"
+                "clearing the timer in useEffect — otherwise setState fires after unmount",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the outline without a fill: the button deliberately has no surface of its own and sits straight on the page background"
               ],
               "adapt": [
                 "the button text through label",
@@ -928,6 +1184,7 @@
                 "the accent colour through the accent prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "pendingDuration is a showcase stand-in; in a real form clear pending on the server response, not on a timer.",
                 "If the action can fail, handle the error too: pending must clear in that case as well.",
                 "Do not drop aria-disabled alongside disabled: some assistive tech only announces the aria attribute.",
@@ -947,11 +1204,21 @@
               "pendingDuration": {
                 "label": "Duration, ms",
                 "default": 1600
+              },
+              "accent": {
+                "label": "Accent"
               }
             },
-            "title": "Submit Lock Button"
+            "title": "Submit Lock Button",
+            "preview": {
+              "props": {
+                "label": "Save settings",
+                "pendingLabel": "Saving, please wait"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["pendingDuration", "accent"]
       }
     },
     {
@@ -969,7 +1236,7 @@
           "target": "@components/vibeui/spinner-010.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. В отличие от карточки на пульсации прозрачности, здесь заглушка — строка таблицы, и по ней едет один накладной элемент с линейным градиентом через transform: translateX, не пересчитывая раскладку ячеек под собой. Аватар и ячейки строки статичны и лишь очерчивают будущую метрику ряда. Для скринридера это одно сообщение role=\"status\" с aria-label, а не пять серых прямоугольников. При prefers-reduced-motion блик замирает статичным пятном по центру. Подложка светлая: серые плашки на тёмном фоне теряются.",
+      "docs": "Серверный компонент, хуков нет. В отличие от карточки на пульсации прозрачности, здесь заглушка — строка таблицы, и по ней едет один накладной элемент с линейным градиентом через transform: translateX, не пересчитывая раскладку ячеек под собой. Аватар и ячейки строки статичны и лишь очерчивают будущую метрику ряда. Для скринридера это одно сообщение role=\"status\" с aria-label, а не пять серых прямоугольников. При prefers-reduced-motion блик замирает статичным пятном по центру. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
         "tags": ["spinner", "skeleton", "shimmer", "table"],
         "preview": {
@@ -985,15 +1252,18 @@
             "overflow:hidden на строке, иначе блик выезжает за её пределы",
             "метрику будущей строки: аватар и ширину ячеек, чтобы при подстановке данных ничего не прыгало",
             "одно role=\"status\" с aria-label: несколько плашек не должны читаться как несколько сообщений",
-            "собственную светлую подложку: серые плашки на тёмном фоне каталога теряются"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "число ячеек через columns",
             "текст сообщения через label",
             "цвет плашек через переменную --vibeui-spinner-010-base",
-            "цвет и яркость блика через переменную --vibeui-spinner-010-shine"
+            "цвет и яркость блика через переменную --vibeui-spinner-010-shine",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Блик стоит дороже пульсации прозрачности: на списке из двадцати строк предпочтите Spinner006.",
             "Заглушка обязана совпадать с метрикой настоящей строки — расхождение заметно в момент подстановки данных.",
             "Меньше двух ячеек не создают ощущения строки таблицы: используйте одиночную полосу для другого случая.",
@@ -1015,6 +1285,12 @@
             "type": "text",
             "default": "Загружаем строку таблицы",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1028,15 +1304,18 @@
                 "overflow:hidden on the row, otherwise the shine escapes past its edges",
                 "the metrics of the real row: the avatar and cell widths, so nothing jumps when data is swapped in",
                 "a single role=\"status\" with aria-label: several slabs must not read as several messages",
-                "the component's own light surface: grey slabs get lost on a dark catalog background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the number of cells through columns",
                 "the message text through label",
                 "the slab colour through the --vibeui-spinner-010-base variable",
-                "the shine colour and brightness through the --vibeui-spinner-010-shine variable"
+                "the shine colour and brightness through the --vibeui-spinner-010-shine variable",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A shine costs more than an opacity pulse: prefer Spinner006 for a list of twenty rows.",
                 "The skeleton must match the real row's metrics: any mismatch shows exactly at the data-swap moment.",
                 "Fewer than two cells does not read as a table row: use a single bar for that case instead.",
@@ -1052,11 +1331,20 @@
               "label": {
                 "label": "Caption",
                 "default": "Loading the table row"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Shimmer Skeleton Row"
+            "title": "Shimmer Skeleton Row",
+            "preview": {
+              "props": {
+                "label": "Loading the table row"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["columns", "background"]
       }
     },
     {
@@ -1074,7 +1362,7 @@
           "target": "@components/vibeui/spinner-011.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. В отличие от кольца на conic-gradient, здесь циферблат собран из отдельных делений: каждое — короткая палочка, повёрнутая на свой угол через transform-origin в центре круга и inline-стиль rotate(), посчитанный в компоненте. Количество закрашенных делений считается от доли value. Число лежит поверх циферблата отдельным узлом. Значение зажимается в 0–100 и объявляется через role=\"progressbar\" с aria-valuenow, valuemin и valuemax. Цифры моноширинные, чтобы подпись не дёргалась при обновлении. Подложка светлая: число и подписи тёмные.",
+      "docs": "Серверный компонент, хуков нет. В отличие от кольца на conic-gradient, здесь циферблат собран из отдельных делений: каждое — короткая палочка, повёрнутая на свой угол через transform-origin в центре круга и inline-стиль rotate(), посчитанный в компоненте. Количество закрашенных делений считается от доли value. Число лежит поверх циферблата отдельным узлом. Значение зажимается в 0–100 и объявляется через role=\"progressbar\" с aria-valuenow, valuemin и valuemax. Цифры моноширинные, чтобы подпись не дёргалась при обновлении. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
         "tags": ["spinner", "progress", "dial", "percent"],
         "ai": {
@@ -1087,15 +1375,19 @@
             "число поверх циферблата отдельным узлом, чтобы оно не терялось среди делений",
             "моноширинные цифры: обычные меняют ширину, и подпись дёргается при каждом обновлении",
             "aria-valuenow вместе с valuemin и valuemax: без границ значение не имеет смысла",
-            "собственную светлую подложку: число и подписи тёмные и на тёмном фоне пропадают"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "долю через value от 0 до 100",
             "подпись действия через label",
             "число делений через segments",
-            "размер циферблата через size: sm, md или lg"
+            "размер циферблата через size: sm, md или lg",
+            "hintTemplate — вторая строка под подписью; {value} заменяется значением",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше 40 делений на маленьком размере sm сливаются в сплошное кольцо — для этого случая ближе Spinner004.",
             "Угол каждого деления посчитан в компоненте, а не в CSS: это законный inline-style для значения, которое нельзя выразить классом.",
             "Значение округляется до целого — доли процента в делениях всё равно не читаются.",
@@ -1117,6 +1409,34 @@
             "type": "text",
             "default": "Обрабатываем видео",
             "maxLength": 30
+          },
+          {
+            "prop": "segments",
+            "label": "Делений",
+            "type": "number",
+            "default": 24,
+            "min": 8,
+            "max": 60
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "default": "md",
+            "options": ["sm", "md", "lg"]
+          },
+          {
+            "prop": "hintTemplate",
+            "label": "Вторая строка",
+            "type": "text",
+            "default": "Готово {value} из 100",
+            "maxLength": 32
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1130,15 +1450,19 @@
                 "the number layered above the dial as its own node, so it never gets lost among the ticks",
                 "the tabular figures: proportional ones change width and make the caption jitter on every update",
                 "aria-valuenow together with valuemin and valuemax: without bounds the value means nothing",
-                "the component's own light surface: number and captions are dark and vanish on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the share through value from 0 to 100",
                 "the action caption through label",
                 "the tick count through segments",
-                "the dial size through size: sm, md or lg"
+                "the dial size through size: sm, md or lg",
+                "hintTemplate — the second line under the caption; {value} is replaced with the value",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "More than 40 ticks at the small sm size blur into a solid ring — prefer Spinner004 for that case.",
                 "Each tick's angle is computed in the component, not in CSS: a legitimate inline style for a value no class can express.",
                 "The value is rounded to an integer — fractions of a percent are unreadable across ticks anyway.",
@@ -1154,11 +1478,31 @@
               "label": {
                 "label": "Caption",
                 "default": "Processing the video"
+              },
+              "segments": {
+                "label": "Ticks"
+              },
+              "size": {
+                "label": "Size"
+              },
+              "hintTemplate": {
+                "label": "Second line",
+                "default": "{value} of 100 done"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Segmented Percent Dial"
+            "title": "Segmented Percent Dial",
+            "preview": {
+              "props": {
+                "label": "Processing the video",
+                "hintTemplate": "{value} of 100 done"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["value", "segments", "size", "background"]
       }
     },
     {
@@ -1176,7 +1520,7 @@
           "target": "@components/vibeui/spinner-012.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Три строки стадии наложены друг на друга абсолютным позиционированием и по очереди становятся видимыми через animation-delay, посчитанный от одной переменной --vibeui-spinner-012-speed — тот же приём, что и в очереди точек, только на тексте. Смена стадий декоративна и помечена aria-hidden: без состояния скринридеру нечего внятно объявлять на каждый кадр CSS-анимации, поэтому доступное имя — статичная подпись через aria-label на корневом role=\"status\". При prefers-reduced-motion видна только первая стадия, кольцо рядом с текстом дышит вместо вращения.",
+      "docs": "Серверный компонент, хуков нет. Три строки стадии наложены друг на друга абсолютным позиционированием и по очереди становятся видимыми через animation-delay, посчитанный от одной переменной --vibeui-spinner-012-speed — тот же приём, что и в очереди точек, только на тексте. Смена стадий декоративна и помечена aria-hidden: без состояния скринридеру нечего внятно объявлять на каждый кадр CSS-анимации, поэтому доступное имя — статичная подпись через aria-label на корневом role=\"status\". При prefers-reduced-motion видна только первая стадия, кольцо рядом с текстом дышит вместо вращения. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
         "tags": ["spinner", "stages", "status", "loading"],
         "ai": {
@@ -1190,15 +1534,19 @@
             "aria-hidden на смене стадий: без состояния скринридер не может внятно озвучивать каждый кадр CSS-анимации",
             "aria-label на корневом role=\"status\" как единственный источник текста для скринридера",
             "фиксированную минимальную ширину блока стадий, иначе смена длины текста дёргает раскладку",
-            "показ только первой стадии при prefers-reduced-motion вместо бесконечного цикла"
+            "показ только первой стадии при prefers-reduced-motion вместо бесконечного цикла",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "доступную подпись через label",
             "тексты трёх стадий через stages",
             "длительность полного круга через speed в секундах",
-            "цвет кольца через переменную --vibeui-spinner-012-accent"
+            "цвет кольца через переменную --vibeui-spinner-012-accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "stages принимает ровно три строки: короткий кортеж, а не произвольный список.",
             "Если стадии значимы для скринридера отдельно, замените компонент на версию с состоянием и явными aria-live обновлениями.",
             "Слишком короткий speed (меньше 3с на три стадии) не успевает дочитаться до конца.",
@@ -1220,6 +1568,12 @@
             "default": 4.5,
             "min": 3,
             "max": 12
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1234,15 +1588,19 @@
                 "aria-hidden on the stage cycling: without state a screen reader cannot meaningfully announce every CSS animation frame",
                 "aria-label on the root role=\"status\" as the sole source of text for screen readers",
                 "the fixed minimum width of the stages block, otherwise varying text length jitters the layout",
-                "showing only the first stage under prefers-reduced-motion instead of an endless loop"
+                "showing only the first stage under prefers-reduced-motion instead of an endless loop",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the accessible caption through label",
                 "the three stage texts through stages",
                 "the full-loop duration through speed in seconds",
-                "the ring colour through the --vibeui-spinner-012-accent variable"
+                "the ring colour through the --vibeui-spinner-012-accent variable",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "stages accepts exactly three strings: a short tuple, not an arbitrary list.",
                 "If the stages matter individually to screen reader users, replace this with a stateful version with explicit aria-live updates.",
                 "Too short a speed (under 3s for three stages) does not give a stage time to be read.",
@@ -1258,11 +1616,25 @@
               "speed": {
                 "label": "Loop duration, s",
                 "default": 4.5
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Staged Status Message"
+            "title": "Staged Status Message",
+            "preview": {
+              "props": {
+                "label": "Multi-stage loading in progress",
+                "stages": [
+                  "Preparing data…",
+                  "Assembling the result…",
+                  "Almost done"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["speed", "background"]
       }
     }
   ]

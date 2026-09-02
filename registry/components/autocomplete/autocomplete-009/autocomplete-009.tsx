@@ -19,7 +19,14 @@ export type Autocomplete009Props = Omit<
   countries?: Autocomplete009Country[]
   defaultCode?: string
   defaultOpen?: boolean
+  /**
+   * Подписи выбора страны: ключи country ({name} и {dial}),
+   * searchPlaceholder, searchLabel, listLabel, empty.
+   */
+  countryText?: Record<string, string>
   onSelect?: (code: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -29,13 +36,14 @@ export type Autocomplete009Props = Omit<
 // их сам. Код страны показан всегда — по одному флагу их не различить.
 const STYLES = `
 :where([data-vibeui-block="autocomplete-009"]){
---vibeui-autocomplete-009-bg:oklch(1 0 0);
---vibeui-autocomplete-009-fg:oklch(0.22 0.014 265);
---vibeui-autocomplete-009-muted:oklch(0.52 0.014 265);
---vibeui-autocomplete-009-border:oklch(0.9 0.006 265);
---vibeui-autocomplete-009-field:oklch(0.985 0.002 265);
---vibeui-autocomplete-009-active:oklch(0.95 0.02 265);
---vibeui-autocomplete-009-accent:oklch(0.55 0.17 265);
+--vibeui-autocomplete-009-bg:transparent;
+--vibeui-autocomplete-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-autocomplete-009-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-autocomplete-009-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-autocomplete-009-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
+--vibeui-autocomplete-009-active:light-dark(oklch(0.95 0.02 265),oklch(0.33 0.028 265));
+--vibeui-autocomplete-009-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-autocomplete-009-radius:0.625rem;
 --vibeui-autocomplete-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -81,7 +89,7 @@ outline:2px solid var(--vibeui-autocomplete-009-accent);outline-offset:1px;borde
 display:flex;flex-direction:column;gap:0.25rem;padding:0.375rem;
 border:1px solid var(--vibeui-autocomplete-009-border);
 border-radius:var(--vibeui-autocomplete-009-radius);
-background:var(--vibeui-autocomplete-009-bg);
+background:var(--vibeui-autocomplete-009-panel);
 }
 [data-vibeui-block="autocomplete-009"] [data-part="list"]{margin:0;padding:0;list-style:none;max-height:9rem;overflow-y:auto}
 [data-vibeui-block="autocomplete-009"] [data-part="option"]{
@@ -109,6 +117,36 @@ const DEFAULT_COUNTRIES: Autocomplete009Country[] = [
   { name: "ОАЭ", code: "AE", dial: "+971", flag: "🇦🇪" },
 ]
 
+const COUNTRY_TEXT = {
+  country: "Страна: {name}, {dial}",
+  searchPlaceholder: "Страна или код",
+  searchLabel: "Поиск страны",
+  listLabel: "Страна",
+  empty: "Такой страны в списке нет",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Номер телефона с выбором страны: поиск и по названию, и по коду.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -119,7 +157,9 @@ export function Autocomplete009({
   countries = DEFAULT_COUNTRIES,
   defaultCode = "RU",
   defaultOpen = false,
+  countryText = COUNTRY_TEXT,
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -145,6 +185,12 @@ export function Autocomplete009({
 
   const palette = {
     ...(accent ? { "--vibeui-autocomplete-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-autocomplete-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -166,7 +212,9 @@ export function Autocomplete009({
             data-part="country"
             aria-expanded={open}
             aria-controls={`${id}-panel`}
-            aria-label={`Страна: ${current.name}, ${current.dial}`}
+            aria-label={(countryText.country ?? COUNTRY_TEXT.country)
+              .replace("{name}", current.name)
+              .replace("{dial}", current.dial)}
             onClick={() => setOpen(!open)}
           >
             <span data-part="flag" aria-hidden="true">
@@ -188,13 +236,19 @@ export function Autocomplete009({
             <input
               type="search"
               autoComplete="off"
-              placeholder="Страна или код"
-              aria-label="Поиск страны"
+              placeholder={
+                countryText.searchPlaceholder ?? COUNTRY_TEXT.searchPlaceholder
+              }
+              aria-label={countryText.searchLabel ?? COUNTRY_TEXT.searchLabel}
               value={query}
               onChange={(event) => setQuery(event.target.value)}
             />
             {matches.length ? (
-              <ul data-part="list" role="listbox" aria-label="Страна">
+              <ul
+                data-part="list"
+                role="listbox"
+                aria-label={countryText.listLabel ?? COUNTRY_TEXT.listLabel}
+              >
                 {matches.map((country) => (
                   <li
                     key={country.code}
@@ -219,7 +273,7 @@ export function Autocomplete009({
                 ))}
               </ul>
             ) : (
-              <p data-part="empty">Такой страны в списке нет</p>
+              <p data-part="empty">{countryText.empty ?? COUNTRY_TEXT.empty}</p>
             )}
           </div>
         ) : null}

@@ -19,7 +19,19 @@ export type Dropdown016Props = Omit<
 > & {
   trigger?: string
   labels?: Dropdown016Label[]
+  /** Подпись над кнопкой: где стоит фильтр. */
+  caption?: string
+  /** Значок «фильтр не включён» в кнопке. */
+  allText?: string
+  /** Строка под списком при выборе. Плейсхолдер {count}. */
+  selectedTemplate?: string
+  /** Строка под списком при пустом выборе. */
+  allShownText?: string
+  /** Подпись кнопки сброса. */
+  resetText?: string
   accent?: string
+  /** Подложка карточки и меню. Пусто — собственный фон по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: фильтр по меткам доски. От обычного списка команд его
@@ -27,14 +39,18 @@ export type Dropdown016Props = Omit<
 // у каждой метки есть цветной кружок (по одному слову «Срочно» и «Баг» не
 // различить в списке из десяти пунктов) и число карточек с этой меткой,
 // чтобы было видно, включать ли фильтр вообще. Пустой выбор равен «показать всё».
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте карточка светлее фона страницы, а её граница светлее карточки.
 const STYLES = `
 :where([data-vibeui-block="dropdown-016"]){
---vibeui-dropdown-016-bg:oklch(1 0 0);
---vibeui-dropdown-016-fg:oklch(0.24 0.014 150);
---vibeui-dropdown-016-muted:oklch(0.56 0.014 150);
---vibeui-dropdown-016-border:oklch(0.9 0.006 150);
---vibeui-dropdown-016-hover:oklch(0.96 0.004 150);
---vibeui-dropdown-016-accent:oklch(0.58 0.15 150);
+--vibeui-dropdown-016-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 150));
+--vibeui-dropdown-016-fg:light-dark(oklch(0.24 0.014 150),oklch(0.94 0.006 150));
+--vibeui-dropdown-016-muted:light-dark(oklch(0.56 0.014 150),oklch(0.7 0.012 150));
+--vibeui-dropdown-016-border:light-dark(oklch(0.9 0.006 150),oklch(0.37 0.012 150));
+--vibeui-dropdown-016-hover:light-dark(oklch(0.96 0.004 150),oklch(0.32 0.014 150));
+--vibeui-dropdown-016-accent:light-dark(oklch(0.58 0.15 150),oklch(0.76 0.13 150));
+--vibeui-dropdown-016-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 150));
 --vibeui-dropdown-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="dropdown-016"]{
@@ -109,7 +125,7 @@ transition:background-color .14s ease,border-color .14s ease;
 background:var(--vibeui-dropdown-016-accent);border-color:var(--vibeui-dropdown-016-accent);
 }
 [data-vibeui-block="dropdown-016"] [data-part="box"] svg{width:0.75rem;height:0.75rem;opacity:0}
-[data-vibeui-block="dropdown-016"] [data-part="item"][aria-checked="true"] [data-part="box"] svg{opacity:1;color:oklch(1 0 0)}
+[data-vibeui-block="dropdown-016"] [data-part="item"][aria-checked="true"] [data-part="box"] svg{opacity:1;color:var(--vibeui-dropdown-016-on-accent)}
 [data-vibeui-block="dropdown-016"] [data-part="dot"]{
 flex:none;width:0.5rem;height:0.5rem;border-radius:9999px;
 background:oklch(0.62 0.16 var(--vibeui-dropdown-016-dot));
@@ -137,6 +153,28 @@ const DEFAULT_LABELS: Dropdown016Label[] = [
   { name: "Вопрос", hue: 60, count: 2 },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function stepFocus(menu: HTMLElement | null, delta: number) {
   if (!menu) {
     return
@@ -161,7 +199,13 @@ function stepFocus(menu: HTMLElement | null, delta: number) {
 export function Dropdown016({
   trigger = "Метки",
   labels = DEFAULT_LABELS,
+  caption = "Доска спринта",
+  allText = "Все",
+  selectedTemplate = "Выбрано меток: {count}",
+  allShownText = "Показаны все карточки",
+  resetText = "Сбросить",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -181,6 +225,12 @@ export function Dropdown016({
 
   const palette = {
     ...(accent ? { "--vibeui-dropdown-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dropdown-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -195,7 +245,7 @@ export function Dropdown016({
         className={className}
         style={palette}
       >
-        <span data-part="caption">Доска спринта</span>
+        <span data-part="caption">{caption}</span>
         <button
           ref={anchorRef}
           type="button"
@@ -223,7 +273,7 @@ export function Dropdown016({
           }}
         >
           {trigger}
-          <span data-part="count">{on.length || "Все"}</span>
+          <span data-part="count">{on.length || allText}</span>
         </button>
         <div
           id={`${id}-menu`}
@@ -277,12 +327,12 @@ export function Dropdown016({
           <div data-part="foot">
             <span>
               {on.length > 0
-                ? `Выбрано меток: ${on.length}`
-                : "Показаны все карточки"}
+                ? selectedTemplate.replace("{count}", String(on.length))
+                : allShownText}
             </span>
             {on.length > 0 ? (
               <button type="button" data-part="reset" onClick={() => setOn([])}>
-                Сбросить
+                {resetText}
               </button>
             ) : null}
           </div>

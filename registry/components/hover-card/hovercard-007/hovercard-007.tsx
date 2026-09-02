@@ -9,18 +9,33 @@ export type Hovercard007Props = Omit<
   text?: string
   /** Задержка перед раскрытием в секундах: уход курсора отменяет её. */
   delay?: number
+  /** Текст строки до ссылки. */
+  leadText?: string
+  /** Текст строки после ссылки. */
+  tailText?: string
+  /** Подпись внизу карточки: на месте {delay} встаёт время ожидания. */
+  hintText?: string
+  /** Сокращение единицы времени рядом с задержкой. */
+  delayUnit?: string
+  accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: карточка с намерением. Пока курсор стоит на ссылке, снизу
 // растёт тонкая полоска ожидания, и только потом раскрывается карточка. Уход
 // курсора обнуляет и полоску, и задержку — пролёт мышью ничего не открывает.
+//
+// Тема берётся из color-scheme окружения через light-dark(): собственной
+// тёмной темы у компонента нет, он следует за страницей.
 const STYLES = `
 :where([data-vibeui-block="hovercard-007"]){
---vibeui-hovercard-007-bg:oklch(1 0 0);
---vibeui-hovercard-007-fg:oklch(0.22 0.014 265);
---vibeui-hovercard-007-muted:oklch(0.54 0.014 265);
---vibeui-hovercard-007-border:oklch(0.9 0.006 265);
---vibeui-hovercard-007-accent:oklch(0.55 0.16 200);
+--vibeui-hovercard-007-bg:transparent;
+--vibeui-hovercard-007-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-hovercard-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-hovercard-007-muted:light-dark(oklch(0.54 0.014 265),oklch(0.71 0.012 265));
+--vibeui-hovercard-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-hovercard-007-accent:light-dark(oklch(0.55 0.16 200),oklch(0.76 0.13 200));
 --vibeui-hovercard-007-delay:0.45s;
 --vibeui-hovercard-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -54,7 +69,7 @@ position:absolute;left:0;top:calc(100% + 0.5rem);z-index:20;
 display:flex;flex-direction:column;gap:0.375rem;
 width:17rem;box-sizing:border-box;padding:0.8125rem 0.875rem;
 border:1px solid var(--vibeui-hovercard-007-border);border-radius:0.875rem;
-background:var(--vibeui-hovercard-007-bg);
+background:var(--vibeui-hovercard-007-card);
 box-shadow:0 22px 46px -28px oklch(0.2 0.02 265 / 55%);
 opacity:0;visibility:hidden;translate:0 -0.25rem;
 transition:opacity .14s ease 0s,translate .14s ease 0s,visibility .14s 0s;
@@ -76,6 +91,28 @@ font-size:0.6875rem;color:var(--vibeui-hovercard-007-muted);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Карточка с задержкой раскрытия: полоска ожидания и отмена при уходе курсора.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -84,14 +121,28 @@ export function Hovercard007({
   title = "Хранение файлов",
   text = "Первые 50 ГБ входят в любой тариф. Дальше считаем по 4 ₽ за гигабайт в месяц, округляя вниз до целого.",
   delay = 0.45,
+  leadText = "Подробности смотрите в разделе ",
+  tailText = " — проведите курсором мимо, карточка не откроется.",
+  hintText = "карточка раскроется через {delay} наведения",
+  delayUnit = "с",
+  accent,
+  background = "",
   className,
   style,
   ...props
 }: Hovercard007Props) {
   const palette = {
     "--vibeui-hovercard-007-delay": `${delay}s`,
+    ...(accent ? { "--vibeui-hovercard-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-hovercard-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+  const [hintBefore, hintAfter = ""] = hintText.split("{delay}")
 
   return (
     <>
@@ -105,7 +156,7 @@ export function Hovercard007({
         style={palette}
       >
         <p data-part="line">
-          Подробности смотрите в разделе{" "}
+          {leadText}
           <span data-part="host">
             <a
               data-part="link"
@@ -122,11 +173,15 @@ export function Hovercard007({
               <span data-part="title">{title}</span>
               <span data-part="text">{text}</span>
               <span data-part="hint">
-                карточка раскроется через <b>{delay}&nbsp;с</b> наведения
+                {hintBefore}
+                <b>
+                  {delay}&nbsp;{delayUnit}
+                </b>
+                {hintAfter}
               </span>
             </span>
-          </span>{" "}
-          — проведите курсором мимо, карточка не откроется.
+          </span>
+          {tailText}
         </p>
       </div>
     </>

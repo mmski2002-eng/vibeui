@@ -23,13 +23,13 @@ export type Buttongroup003Props = Omit<
 // popover остаётся карточкой по центру экрана, и это рабочий вид.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-003"]){
---vibeui-buttongroup-003-surface:oklch(1 0 0);
---vibeui-buttongroup-003-fg:oklch(0.26 0.016 265);
---vibeui-buttongroup-003-muted:oklch(0.55 0.014 265);
---vibeui-buttongroup-003-border:oklch(0.9 0.006 265);
---vibeui-buttongroup-003-hover:oklch(0.96 0.004 265);
---vibeui-buttongroup-003-accent:oklch(0.52 0.17 265);
---vibeui-buttongroup-003-accent-dark:oklch(0.45 0.16 265);
+--vibeui-buttongroup-003-surface:light-dark(oklch(1 0 0),oklch(0.23 0.014 265));
+--vibeui-buttongroup-003-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-buttongroup-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-buttongroup-003-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-buttongroup-003-accent:light-dark(oklch(0.52 0.17 265),oklch(0.62 0.17 265));
+--vibeui-buttongroup-003-accent-dark:light-dark(oklch(0.45 0.16 265),oklch(0.55 0.17 265));
 --vibeui-buttongroup-003-on-accent:oklch(0.99 0.005 265);
 --vibeui-buttongroup-003-radius:0.625rem;
 --vibeui-buttongroup-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

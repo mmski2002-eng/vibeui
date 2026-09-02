@@ -21,6 +21,16 @@ export type Select032Props = Omit<
   options?: Select032Option[]
   defaultValue?: string
   warningText?: string
+  /** Вопрос панели, {from} — текущий вариант, {to} — предложенный. */
+  confirmQuestionText?: string
+  /** Название панели для скринридера. */
+  confirmDialogText?: string
+  /** Надпись на кнопке отказа. */
+  cancelText?: string
+  /** Надпись на кнопке согласия. */
+  applyText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -31,15 +41,16 @@ export type Select032Props = Omit<
 // откатиться назад по «Отмена» или Escape.
 const STYLES = `
 :where([data-vibeui-block="select-032"]){
---vibeui-select-032-surface:oklch(1 0 0);
---vibeui-select-032-surface-border:oklch(0.91 0.006 265);
---vibeui-select-032-fg:oklch(0.22 0.014 265);
---vibeui-select-032-muted:oklch(0.55 0.014 265);
---vibeui-select-032-field:oklch(0.985 0.002 265);
---vibeui-select-032-border:oklch(0.87 0.008 265);
---vibeui-select-032-accent:oklch(0.55 0.19 262);
---vibeui-select-032-warn:oklch(0.6 0.19 45);
---vibeui-select-032-warn-tint:oklch(0.6 0.19 45 / 10%);
+--vibeui-select-032-surface:transparent;
+--vibeui-select-032-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-select-032-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-select-032-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-032-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-select-032-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.012 265));
+--vibeui-select-032-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
+--vibeui-select-032-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.012 265));
+--vibeui-select-032-warn:light-dark(oklch(0.6 0.19 45),oklch(0.79 0.15 58));
+--vibeui-select-032-warn-tint:color-mix(in oklab,var(--vibeui-select-032-warn) 10%,transparent);
 --vibeui-select-032-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="select-032"]{
@@ -83,7 +94,7 @@ background:var(--vibeui-select-032-warn-tint);
 [data-vibeui-block="select-032"] [data-part="confirm-actions"] button{
 flex:1 1 auto;box-sizing:border-box;height:2.25rem;padding:0 0.75rem;
 border-radius:0.5rem;font:inherit;font-size:0.8125rem;font-weight:600;cursor:pointer;
-border:1px solid var(--vibeui-select-032-border);background:var(--vibeui-select-032-surface);color:var(--vibeui-select-032-fg);
+border:1px solid var(--vibeui-select-032-border);background:var(--vibeui-select-032-field);color:var(--vibeui-select-032-fg);
 transition:border-color .16s ease,box-shadow .16s ease,background-color .16s ease;
 }
 [data-vibeui-block="select-032"] [data-part="confirm-actions"] button:focus-visible{
@@ -92,7 +103,7 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-select-032-accent) 22%,tran
 }
 [data-vibeui-block="select-032"] [data-part="confirm-actions"] [data-action="apply"]{
 background:var(--vibeui-select-032-accent);border-color:var(--vibeui-select-032-accent);
-color:var(--vibeui-select-032-surface);
+color:var(--vibeui-select-032-on-accent);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="select-032"] *{animation:none!important;transition:none!important}}
 `
@@ -105,6 +116,28 @@ const DEFAULT_OPTIONS: Select032Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Select со ступенчатым подтверждением: смена значения открывает панель
  * с вопросом и кнопками «Подтвердить» / «Отмена», применяется только после
  * согласия. Один файл, ноль зависимостей, клиентский компонент.
@@ -115,6 +148,11 @@ export function Select032({
   options = DEFAULT_OPTIONS,
   defaultValue = options[0]?.value,
   warningText = "Несохранённые правки для текущего статуса будут потеряны.",
+  confirmQuestionText = "Сменить «{from}» на «{to}»?",
+  confirmDialogText = "Подтверждение смены значения",
+  cancelText = "Отмена",
+  applyText = "Подтвердить",
+  background = "",
   accent,
   id,
   className,
@@ -169,6 +207,12 @@ export function Select032({
 
   const palette = {
     ...(accent ? { "--vibeui-select-032-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-select-032-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -208,16 +252,18 @@ export function Select032({
             data-part="confirm"
             id={confirmId}
             role="alertdialog"
-            aria-label="Подтверждение смены значения"
+            aria-label={confirmDialogText}
             onKeyDown={handleKeyDown}
           >
             <p data-part="confirm-text">
-              Сменить «{currentOption?.label}» на «{pendingOption.label}»?{" "}
+              {confirmQuestionText
+                .replace("{from}", currentOption?.label ?? "")
+                .replace("{to}", pendingOption.label)}{" "}
               {warningText}
             </p>
             <div data-part="confirm-actions">
               <button type="button" onClick={cancel}>
-                Отмена
+                {cancelText}
               </button>
               <button
                 ref={confirmButtonRef}
@@ -225,7 +271,7 @@ export function Select032({
                 data-action="apply"
                 onClick={confirm}
               >
-                Подтвердить
+                {applyText}
               </button>
             </div>
           </div>

@@ -14,6 +14,8 @@ export type Sortable003Column = {
   numeric?: boolean
 }
 
+export type Sortable003Announcement = "moved" | "edge"
+
 export type Sortable003Props = Omit<
   ComponentPropsWithoutRef<"div">,
   "children" | "onChange"
@@ -22,6 +24,12 @@ export type Sortable003Props = Omit<
   columns?: Sortable003Column[]
   rows?: Record<string, string>[]
   onChange?: (columns: Sortable003Column[]) => void
+  /** Подпись ручки: {column} — колонка, {position} — номер, {total} — всего. */
+  gripLabel?: string
+  /** Реплики живой области: те же подстановки. */
+  announcements?: Record<Sortable003Announcement, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -34,12 +42,12 @@ export type Sortable003Props = Omit<
 // шаг объявляется в живой области.
 const STYLES = `
 :where([data-vibeui-block="sortable-003"]){
---vibeui-sortable-003-bg:oklch(1 0 0);
---vibeui-sortable-003-head:oklch(0.975 0.003 265);
---vibeui-sortable-003-fg:oklch(0.24 0.014 265);
---vibeui-sortable-003-muted:oklch(0.56 0.014 265);
---vibeui-sortable-003-border:oklch(0.91 0.006 265);
---vibeui-sortable-003-accent:oklch(0.55 0.2 262);
+--vibeui-sortable-003-bg:transparent;
+--vibeui-sortable-003-head:light-dark(oklch(0.975 0.003 265),oklch(0.29 0.011 265));
+--vibeui-sortable-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-sortable-003-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-sortable-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-sortable-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
 --vibeui-sortable-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="sortable-003"]{
@@ -92,6 +100,33 @@ clip-path:inset(50%);white-space:nowrap;border:0;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="sortable-003"] *{animation:none!important;transition:none!important}}
 `
 
+const DEFAULT_ANNOUNCEMENTS: Record<Sortable003Announcement, string> = {
+  moved: "Колонка «{column}» на позиции {position} из {total}.",
+  edge: "Колонка «{column}» уже с краю таблицы.",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 const DEFAULT_COLUMNS: Sortable003Column[] = [
   { key: "sku", label: "Артикул" },
   { key: "name", label: "Название" },
@@ -114,6 +149,9 @@ export function Sortable003({
   columns = DEFAULT_COLUMNS,
   rows = DEFAULT_ROWS,
   onChange,
+  gripLabel = "Переместить колонку «{column}», сейчас {position} из {total}",
+  announcements = DEFAULT_ANNOUNCEMENTS,
+  background = "",
   accent,
   className,
   style,
@@ -124,6 +162,17 @@ export function Sortable003({
   const [over, setOver] = useState<string | null>(null)
   const [announcement, setAnnouncement] = useState("")
 
+  const say = (
+    key: Sortable003Announcement,
+    column: string,
+    position: number,
+    total: number,
+  ) =>
+    (announcements[key] ?? DEFAULT_ANNOUNCEMENTS[key])
+      .replace("{column}", column)
+      .replace("{position}", String(position))
+      .replace("{total}", String(total))
+
   const move = (from: number, to: number) => {
     if (to < 0 || to >= order.length) return
 
@@ -132,9 +181,7 @@ export function Sortable003({
     next.splice(to, 0, column)
     setOrder(next)
     onChange?.(next)
-    setAnnouncement(
-      `Колонка «${column.label}» на позиции ${to + 1} из ${next.length}.`,
-    )
+    setAnnouncement(say("moved", column.label, to + 1, next.length))
   }
 
   const handleKey = (event: KeyboardEvent<HTMLButtonElement>, key: string) => {
@@ -145,7 +192,7 @@ export function Sortable003({
     const to = index + (event.key === "ArrowLeft" ? -1 : 1)
 
     if (to < 0 || to >= order.length) {
-      setAnnouncement(`Колонка «${order[index].label}» уже с краю таблицы.`)
+      setAnnouncement(say("edge", order[index].label, index + 1, order.length))
       return
     }
 
@@ -166,6 +213,12 @@ export function Sortable003({
 
   const palette = {
     ...(accent ? { "--vibeui-sortable-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-sortable-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -205,7 +258,10 @@ export function Sortable003({
                   <button
                     type="button"
                     data-part="grip"
-                    aria-label={`Переместить колонку «${column.label}», сейчас ${index + 1} из ${order.length}`}
+                    aria-label={gripLabel
+                      .replace("{column}", column.label)
+                      .replace("{position}", String(index + 1))
+                      .replace("{total}", String(order.length))}
                     onKeyDown={(event) => handleKey(event, column.key)}
                   >
                     <span data-part="dots" aria-hidden="true">

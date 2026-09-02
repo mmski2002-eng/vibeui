@@ -13,6 +13,10 @@ export type Calendar003Props = Omit<
   locale?: string
   onChange?: (iso: string) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  /** Подпись под полосой. {date} подставляется полной датой. */
+  pickedText?: string
 }
 
 // Идея компонента: неделя полосой, а не сеткой. На телефоне месяц занимает
@@ -21,11 +25,14 @@ export type Calendar003Props = Omit<
 // в узкой ленте без метки теряется даже он.
 const STYLES = `
 :where([data-vibeui-block="calendar-003"]){
---vibeui-calendar-003-bg:oklch(1 0 0);
---vibeui-calendar-003-fg:oklch(0.24 0.014 265);
---vibeui-calendar-003-muted:oklch(0.6 0.014 265);
---vibeui-calendar-003-border:oklch(0.91 0.006 265);
---vibeui-calendar-003-accent:oklch(0.55 0.17 265);
+--vibeui-calendar-003-bg:transparent;
+--vibeui-calendar-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-calendar-003-muted:light-dark(oklch(0.6 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-calendar-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-calendar-003-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.19 0.03 265));
+--vibeui-calendar-003-on-accent-muted:light-dark(oklch(0.95 0.02 265),oklch(0.34 0.05 265));
+--vibeui-calendar-003-weekend:light-dark(oklch(0.55 0.16 25),oklch(0.75 0.14 25));
 --vibeui-calendar-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="calendar-003"]{
@@ -63,12 +70,12 @@ background:transparent;color:inherit;font:inherit;
 width:0.25rem;height:0.25rem;border-radius:9999px;background:var(--vibeui-calendar-003-accent);
 }
 [data-vibeui-block="calendar-003"] button[aria-pressed="true"]{
-border-color:transparent;background:var(--vibeui-calendar-003-accent);color:oklch(0.99 0.01 265);
+border-color:transparent;background:var(--vibeui-calendar-003-accent);color:var(--vibeui-calendar-003-on-accent);
 }
-[data-vibeui-block="calendar-003"] button[aria-pressed="true"] [data-part="weekday"]{color:oklch(0.95 0.02 265)}
-[data-vibeui-block="calendar-003"] button[aria-pressed="true"] [data-part="dot"]{background:oklch(0.99 0.01 265)}
-[data-vibeui-block="calendar-003"] button[data-weekend="true"] [data-part="day"]{color:oklch(0.55 0.16 25)}
-[data-vibeui-block="calendar-003"] button[aria-pressed="true"][data-weekend="true"] [data-part="day"]{color:oklch(0.99 0.01 265)}
+[data-vibeui-block="calendar-003"] button[aria-pressed="true"] [data-part="weekday"]{color:var(--vibeui-calendar-003-on-accent-muted)}
+[data-vibeui-block="calendar-003"] button[aria-pressed="true"] [data-part="dot"]{background:var(--vibeui-calendar-003-on-accent)}
+[data-vibeui-block="calendar-003"] button[data-weekend="true"] [data-part="day"]{color:var(--vibeui-calendar-003-weekend)}
+[data-vibeui-block="calendar-003"] button[aria-pressed="true"][data-weekend="true"] [data-part="day"]{color:var(--vibeui-calendar-003-on-accent)}
 [data-vibeui-block="calendar-003"] [data-part="picked"]{font-size:0.75rem;color:var(--vibeui-calendar-003-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-003"] *{animation:none!important;transition:none!important}}
 `
@@ -77,6 +84,28 @@ const DAY = 86400000
 
 function iso(date: Date) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -89,6 +118,8 @@ export function Calendar003({
   locale = "ru-RU",
   onChange,
   accent,
+  background = "",
+  pickedText = "Выбрано: {date}",
   className,
   style,
   ...props
@@ -118,6 +149,12 @@ export function Calendar003({
 
   const palette = {
     ...(accent ? { "--vibeui-calendar-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -167,7 +204,10 @@ export function Calendar003({
           })}
         </ul>
         <p data-part="picked">
-          Выбрано: {formats.full.format(new Date(`${selected}T00:00:00`))}
+          {pickedText.replace(
+            "{date}",
+            formats.full.format(new Date(`${selected}T00:00:00`)),
+          )}
         </p>
       </div>
     </>

@@ -17,6 +17,8 @@ export type Blog002Props = {
   readingTime?: string
   tocTitle?: string
   sections?: Blog002Section[]
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -36,12 +38,13 @@ export type Blog002Props = {
 // размера шрифта, а не от разрешения.
 const STYLES = `
 :where([data-vibeui-block="blog-002"]){
---vibeui-blog-002-bg:oklch(1 0 0);
---vibeui-blog-002-soft:oklch(0.975 0.004 265);
---vibeui-blog-002-fg:oklch(0.2 0.014 265);
---vibeui-blog-002-muted:oklch(0.5 0.014 265);
---vibeui-blog-002-border:oklch(0.91 0.006 265);
---vibeui-blog-002-accent:oklch(0.5 0.17 268);
+--vibeui-blog-002-bg:transparent;
+--vibeui-blog-002-soft:light-dark(oklch(0.975 0.004 265),oklch(0.255 0.012 265));
+--vibeui-blog-002-fg:light-dark(oklch(0.2 0.014 265),oklch(0.95 0.005 265));
+--vibeui-blog-002-muted:light-dark(oklch(0.5 0.014 265),oklch(0.71 0.012 265));
+--vibeui-blog-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-blog-002-accent:light-dark(oklch(0.5 0.17 268),oklch(0.75 0.14 268));
+--vibeui-blog-002-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 268));
 --vibeui-blog-002-serif:ui-serif,Georgia,"Times New Roman",serif;
 --vibeui-blog-002-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -76,7 +79,7 @@ font-size:0.8125rem;color:var(--vibeui-blog-002-muted);
 [data-vibeui-block="blog-002"] [data-part="avatar"]{
 display:inline-flex;align-items:center;justify-content:center;
 width:2rem;height:2rem;border-radius:9999px;
-background:var(--vibeui-blog-002-accent);color:oklch(1 0 0);
+background:var(--vibeui-blog-002-accent);color:var(--vibeui-blog-002-on-accent);
 font-size:0.75rem;font-weight:700;
 }
 [data-vibeui-block="blog-002"] [data-part="author"]{color:var(--vibeui-blog-002-fg);font-weight:640}
@@ -170,6 +173,28 @@ const DEFAULT_SECTIONS: Blog002Section[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Страница статьи с липким оглавлением и сворачиваемым списком на узком блоке.
  * Один файл, ноль зависимостей, клиентского JS нет.
  */
@@ -183,12 +208,19 @@ export function Blog002({
   readingTime = "11 минут",
   tocTitle = "В статье",
   sections = DEFAULT_SECTIONS,
+  background = "",
   accent,
   className,
   style,
 }: Blog002Props) {
   const palette = {
     ...(accent ? { "--vibeui-blog-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-blog-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

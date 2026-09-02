@@ -18,6 +18,22 @@ export type Dashboard046Props = {
   addLabel?: string
   checkLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подпись перед списком имён серверов. */
+  nameserversLabel?: string
+  /** Оговорка рядом с именами серверов. */
+  nameserversNote?: string
+  /** Кнопка правки записи. */
+  editLabel?: string
+  /** Шаблон подписи блока: {domain}. */
+  domainAriaText?: string
+  /** Шаблон подписи таблицы: {domain}. */
+  captionText?: string
+  /** Заголовки колонок таблицы по ключам. */
+  columnsText?: Record<string, string>
+  /** Подписи состояний: ключ — значение state. */
+  stateText?: Record<string, string>
   className?: string
   style?: CSSProperties
 }
@@ -33,16 +49,18 @@ export type Dashboard046Props = {
 // у регистратора, а не здесь.
 const STYLES = `
 :where([data-vibeui-block="dashboard-046"]){
---vibeui-dashboard-046-bg:oklch(0.985 0.003 210);
---vibeui-dashboard-046-card:oklch(1 0 0);
---vibeui-dashboard-046-fg:oklch(0.22 0.014 210);
---vibeui-dashboard-046-muted:oklch(0.55 0.014 210);
---vibeui-dashboard-046-border:oklch(0.91 0.006 210);
---vibeui-dashboard-046-accent:oklch(0.5 0.13 210);
---vibeui-dashboard-046-soft:oklch(0.96 0.02 210);
---vibeui-dashboard-046-ok:oklch(0.56 0.13 155);
---vibeui-dashboard-046-wait:oklch(0.66 0.15 70);
---vibeui-dashboard-046-bad:oklch(0.58 0.19 25);
+--vibeui-dashboard-046-bg:transparent;
+/* Панели и таблица: подложка блока прозрачна, и рисовать их ею нечем. */
+--vibeui-dashboard-046-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 210));
+--vibeui-dashboard-046-fg:light-dark(oklch(0.22 0.014 210),oklch(0.94 0.005 210));
+--vibeui-dashboard-046-muted:light-dark(oklch(0.55 0.014 210),oklch(0.72 0.012 210));
+--vibeui-dashboard-046-border:light-dark(oklch(0.91 0.006 210),oklch(0.36 0.012 210));
+--vibeui-dashboard-046-accent:light-dark(oklch(0.5 0.13 210),oklch(0.75 0.12 210));
+--vibeui-dashboard-046-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 210));
+--vibeui-dashboard-046-soft:light-dark(oklch(0.96 0.02 210),oklch(0.32 0.04 210));
+--vibeui-dashboard-046-ok:light-dark(oklch(0.56 0.13 155),oklch(0.75 0.13 155));
+--vibeui-dashboard-046-wait:light-dark(oklch(0.66 0.15 70),oklch(0.81 0.13 70));
+--vibeui-dashboard-046-bad:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.17 25));
 --vibeui-dashboard-046-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-dashboard-046-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;
@@ -67,8 +85,8 @@ font-size:1.0625rem;font-weight:700;letter-spacing:-0.01em;
 display:inline-flex;align-items:center;gap:0.375rem;
 font-size:0.6875rem;font-weight:750;padding:0.1875rem 0.5rem;border-radius:9999px;
 color:var(--vibeui-dashboard-046-ok);
-border:1px solid color-mix(in oklab,var(--vibeui-dashboard-046-ok) 40%,white);
-background:color-mix(in oklab,var(--vibeui-dashboard-046-ok) 10%,white);
+border:1px solid color-mix(in oklab,var(--vibeui-dashboard-046-ok) 40%,var(--vibeui-dashboard-046-card));
+background:color-mix(in oklab,var(--vibeui-dashboard-046-ok) 12%,var(--vibeui-dashboard-046-card));
 }
 [data-vibeui-block="dashboard-046"] [data-part="ok"]::before{
 content:"";width:0.4375rem;height:0.4375rem;border-radius:50%;background:currentColor;
@@ -80,7 +98,7 @@ margin:0;font-size:0.75rem;color:var(--vibeui-dashboard-046-muted);
 [data-vibeui-block="dashboard-046"] [data-part="add"]{
 appearance:none;border:0;cursor:pointer;font:inherit;
 font-size:0.8125rem;font-weight:700;padding:0.5rem 0.9375rem;border-radius:0.625rem;
-background:var(--vibeui-dashboard-046-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-046-accent);color:var(--vibeui-dashboard-046-on-accent);
 }
 [data-vibeui-block="dashboard-046"] [data-part="check"]{
 appearance:none;cursor:pointer;font:inherit;
@@ -209,6 +227,42 @@ const DEFAULT_RECORDS: Dashboard046Record[] = [
   },
 ]
 
+const COLUMN_LABEL: Record<string, string> = {
+  kind: "Тип",
+  host: "Имя",
+  value: "Значение",
+  ttl: "TTL",
+  state: "Состояние",
+}
+
+const STATE_LABEL: Record<string, string> = {
+  Применена: "Применена",
+  Разъезжается: "Разъезжается",
+  Ошибка: "Ошибка",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Страница домена: состояние домена, имена серверов и таблица DNS-записей с
  * моноширинными значениями и состоянием распространения. Один файл, ноль
@@ -223,11 +277,25 @@ export function Dashboard046({
   addLabel = "Добавить запись",
   checkLabel = "Проверить распространение",
   accent,
+  background = "",
+  nameserversLabel = "Имена серверов:",
+  nameserversNote = "меняются у регистратора, не здесь",
+  editLabel = "Изменить",
+  domainAriaText = "Домен {domain}",
+  captionText = "DNS-записи домена {domain}",
+  columnsText = COLUMN_LABEL,
+  stateText = STATE_LABEL,
   className,
   style,
 }: Dashboard046Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-046-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-046-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -240,7 +308,7 @@ export function Dashboard046({
         data-vibeui-block="dashboard-046"
         className={className}
         style={palette}
-        aria-label={`Домен ${domain}`}
+        aria-label={domainAriaText.replace("{domain}", domain)}
       >
         <div data-part="shell">
           <div data-part="head">
@@ -258,23 +326,25 @@ export function Dashboard046({
           </div>
 
           <p data-part="ns">
-            <b>Имена серверов:</b>
+            <b>{nameserversLabel}</b>
             {nameservers.map((server) => (
               <code key={server}>{server}</code>
             ))}
-            <span data-part="reg">меняются у регистратора, не здесь</span>
+            <span data-part="reg">{nameserversNote}</span>
           </p>
 
           <div data-part="scroll">
             <table>
-              <caption hidden>DNS-записи домена {domain}</caption>
+              <caption hidden>
+                {captionText.replace("{domain}", domain)}
+              </caption>
               <thead>
                 <tr>
-                  <th scope="col">Тип</th>
-                  <th scope="col">Имя</th>
-                  <th scope="col">Значение</th>
-                  <th scope="col">TTL</th>
-                  <th scope="col">Состояние</th>
+                  <th scope="col">{columnsText.kind ?? COLUMN_LABEL.kind}</th>
+                  <th scope="col">{columnsText.host ?? COLUMN_LABEL.host}</th>
+                  <th scope="col">{columnsText.value ?? COLUMN_LABEL.value}</th>
+                  <th scope="col">{columnsText.ttl ?? COLUMN_LABEL.ttl}</th>
+                  <th scope="col">{columnsText.state ?? COLUMN_LABEL.state}</th>
                 </tr>
               </thead>
               <tbody>
@@ -295,9 +365,11 @@ export function Dashboard046({
                     </td>
                     <td data-part="ttl">{record.ttl}</td>
                     <td>
-                      <span data-part="state">{record.state}</span>
+                      <span data-part="state">
+                        {stateText[record.state] ?? record.state}
+                      </span>
                       <a href="#dashboard-046" data-part="edit">
-                        Изменить
+                        {editLabel}
                       </a>
                     </td>
                   </tr>

@@ -32,15 +32,18 @@
             "скрытие системного маркера вместе со своим значком — иначе стрелок будет две",
             "поворот значка через селектор [open], а не подмену символа: так состояние остаётся в CSS",
             "outline focus-visible у summary с отрицательным offset: заголовок перебирают с клавиатуры",
-            "светлую подложку и рамку блока — на тёмной витрине без них текст не читается"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок через проп title",
             "подсказку справа через проп hint",
             "текст раскрытия через проп text",
-            "акцент через проп accent и ширину блока"
+            "акцент через проп accent и ширину блока",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Анимации раскрытия здесь нет намеренно: нативный details меняет высоту скачком, плавность требует другой механики.",
             "Атрибут open передаётся напрямую в details: он и есть состояние, отдельный стейт заводить не нужно.",
             "Внутри summary не должно быть интерактивных элементов: клик по ним всё равно переключит свёртку.",
@@ -61,6 +64,18 @@
             "type": "text",
             "default": "30 секунд",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -74,15 +89,18 @@
                 "hiding the system marker along with drawing your own — otherwise there are two arrows",
                 "rotating the marker via the [open] selector instead of swapping glyphs: the state stays in CSS",
                 "the focus-visible outline on summary with a negative offset: headings get tabbed through",
-                "the light surface and border — without them the text is unreadable on a dark showcase"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the heading through the title prop",
                 "the trailing hint through the hint prop",
                 "the body copy through the text prop",
-                "the accent through the accent prop and the block width"
+                "the accent through the accent prop and the block width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is deliberately no open animation: native details snaps, smooth height needs different machinery.",
                 "The open attribute goes straight to details: it is the state, no separate React state is needed.",
                 "Do not put interactive elements inside summary: clicking them still toggles the disclosure.",
@@ -98,11 +116,25 @@
               "hint": {
                 "label": "Hint",
                 "default": "30 seconds"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Native Disclosure"
+            "title": "Native Disclosure",
+            "preview": {
+              "props": {
+                "title": "How the component is installed",
+                "hint": "30 seconds",
+                "text": "Copy the command from the card and run it in the project root — the file lands in components/vibeui and works straight away: it has no external dependencies."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -136,15 +168,19 @@
             "overflow:hidden и min-height:0 на внутреннем слое — без них строка грида не сожмётся",
             "атрибут inert на свёрнутой части: иначе Tab уводит фокус в невидимое содержимое",
             "связку aria-expanded и aria-controls на кнопке — по ней скринридер понимает состояние",
-            "правило prefers-reduced-motion: анимация высоты особенно неприятна при вестибулярных нарушениях"
+            "правило prefers-reduced-motion: анимация высоты особенно неприятна при вестибулярных нарушениях",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок через проп title",
             "текст раскрытия через проп text",
             "стартовое состояние через проп defaultOpen",
-            "длительность перехода и акцент через проп accent"
+            "длительность перехода и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Содержимое остаётся в DOM и в свёрнутом виде: тяжёлые списки лучше монтировать по требованию.",
             "Внутренние отступы кладите на сам текст, а не на слой с overflow: иначе они не сожмутся вместе с высотой.",
             "Поддержка анимации grid-template-rows появилась не во всех старых браузерах: там свёртка просто переключится скачком.",
@@ -164,6 +200,18 @@
             "label": "Открыт сразу",
             "type": "boolean",
             "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -177,15 +225,19 @@
                 "overflow:hidden and min-height:0 on the inner layer — without them the grid row will not shrink",
                 "the inert attribute on the collapsed part: otherwise Tab moves focus into invisible content",
                 "the aria-expanded plus aria-controls pairing on the trigger — that is how the state is announced",
-                "the prefers-reduced-motion rule: height animation is the worst offender for vestibular disorders"
+                "the prefers-reduced-motion rule: height animation is the worst offender for vestibular disorders",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the heading through the title prop",
                 "the body copy through the text prop",
                 "the initial state through the defaultOpen prop",
-                "the transition duration and the accent through the accent prop"
+                "the transition duration and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The content stays in the DOM while collapsed: mount heavy lists on demand instead.",
                 "Put padding on the text itself, not on the overflow layer, or it will not collapse with the height.",
                 "Animating grid-template-rows is unsupported in older browsers: there the disclosure simply snaps.",
@@ -200,11 +252,24 @@
               },
               "defaultOpen": {
                 "label": "Open by default"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Animated Height"
+            "title": "Animated Height",
+            "preview": {
+              "props": {
+                "title": "What you get",
+                "text": "One .tsx file with every style inside, no npm dependencies and no calls into your project theme. The palette is declared in local variables, so the component looks the same in any environment."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultOpen", "accent", "background"]
       }
     },
     {
@@ -238,15 +303,19 @@
             "градиент, уходящий в переменную фона блока — иначе на другой подложке появится полоса",
             "aria-expanded и aria-controls на кнопке: без них связь кнопки и текста не читается",
             "полный текст в DOM даже в свёрнутом виде — так работают поиск по странице и копирование",
-            "светлую подложку карточки: на тёмной витрине тёмный текст без неё пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок через проп title",
             "текст через проп text",
             "число видимых строк через проп lines",
-            "акцент через проп accent и высоту градиента"
+            "акцент через проп accent и высоту градиента",
+            "подписи кнопки через пропы moreText и lessText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не проверяет, влезает ли текст: для короткого текста кнопку лучше скрывать снаружи по длине строки.",
             "line-clamp работает только вместе с display:-webkit-box — обычный блок обрежется без многоточия.",
             "Градиент рисуется поверх текста и не кликается благодаря pointer-events:none, не убирайте это правило.",
@@ -268,6 +337,18 @@
             "type": "text",
             "default": "Почему компонент отдаётся одним файлом",
             "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -281,15 +362,19 @@
                 "the gradient ending in the block's own background variable — on another surface it would show a band",
                 "aria-expanded and aria-controls on the button: without them the link to the text is invisible",
                 "the full text staying in the DOM while collapsed — that keeps find-in-page and copying working",
-                "the light card surface: dark text disappears on a dark showcase without it"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the heading through the title prop",
                 "the copy through the text prop",
                 "the number of visible lines through the lines prop",
-                "the accent through the accent prop and the gradient height"
+                "the accent through the accent prop and the gradient height",
+                "the button captions through the moreText and lessText props",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not measure whether the text overflows: hide the button from outside for short copy.",
                 "line-clamp only works together with display:-webkit-box — a plain block clips without the ellipsis.",
                 "The gradient sits above the text and stays click-through thanks to pointer-events:none; keep that rule.",
@@ -304,11 +389,26 @@
               "title": {
                 "label": "Heading",
                 "default": "Why the component ships as one file"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Read More"
+            "title": "Read More",
+            "preview": {
+              "props": {
+                "title": "Why the component ships as one file",
+                "text": "VibeUI hands over the whole component: markup, styles and palette in a single file. Nothing is pulled from the project theme, so after installing, the block looks exactly as it did in the catalog preview — the same typography, the same spacing, the same behaviour as it narrows. Edits happen right in the file: it is yours, nobody will update it from the registry, and it will not clash with your design tokens.",
+                "moreText": "Show more",
+                "lessText": "Collapse"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["lines", "accent", "background"]
       }
     },
     {
@@ -342,13 +442,15 @@
             "нумерацию через CSS-счётчик, а не текстом в разметке: копия лога остаётся чистой",
             "моноширинный шрифт лога — колонки и отступы в выводе значимы",
             "рамку блока: тёмная панель на тёмной витрине без неё сливается с фоном",
-            "ограничение высоты с прокруткой: длинный лог не должен растягивать страницу"
+            "ограничение высоты с прокруткой: длинный лог не должен растягивать страницу",
+            "тёмную поверхность лога как дизайн-решение: это терминальная панель, и она остаётся тёмной при любой теме страницы"
           ],
           "adapt": [
             "заголовок через проп title",
             "массив lines и уровни строк",
             "максимальную высоту прокрутки",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подписи счётчиков через пропы linesText и errorsText с плейсхолдером {count}"
           ],
           "notes": [
             "Подсветки синтаксиса нет: она стоит библиотеки, а вывод сборки в ней не нуждается.",
@@ -383,13 +485,15 @@
                 "numbering through a CSS counter rather than markup: a copied log stays clean",
                 "the monospaced face — columns and indentation carry meaning in build output",
                 "the block border: a dark panel merges into a dark showcase without it",
-                "the capped height with scrolling: a long log must not stretch the page"
+                "the capped height with scrolling: a long log must not stretch the page",
+                "the dark log surface as a design decision: this is a terminal panel and it stays dark under any page theme"
               ],
               "adapt": [
                 "the heading through the title prop",
                 "the lines array and their levels",
                 "the maximum scroll height",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the tally captions through the linesText and errorsText props with the {count} placeholder"
               ],
               "notes": [
                 "There is no syntax highlighting: it costs a library and build output does not need it.",
@@ -408,9 +512,42 @@
                 "label": "Accent"
               }
             },
-            "title": "Collapsed Log"
+            "title": "Collapsed Log",
+            "preview": {
+              "props": {
+                "title": "Build output",
+                "lines": [
+                  {
+                    "text": "▲ Next.js 16.0.1 — compiling registry"
+                  },
+                  {
+                    "text": "indexes: 39 registries, 463 items"
+                  },
+                  {
+                    "text": "meta: checked, no errors"
+                  },
+                  {
+                    "text": "warn  collapsible-004: preview wider than the card",
+                    "level": "warn"
+                  },
+                  {
+                    "text": "registry:build → public/r (463 files)"
+                  },
+                  {
+                    "text": "error  route /r/[name] returned no JSON",
+                    "level": "error"
+                  },
+                  {
+                    "text": "build failed in 12.4s"
+                  }
+                ],
+                "linesText": "{count} lines",
+                "errorsText": "{count} errors"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent"]
       }
     },
     {
@@ -444,15 +581,18 @@
             "CSS-счётчик для номеров: при перестановке массива нумерация не разъедется",
             "подсветку открытого шага через details[open], а не через класс из JS",
             "отступ текста под номером: колонка задаёт направление чтения сверху вниз",
-            "светлую подложку карточки — на тёмной витрине тёмный текст без неё не виден"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив steps и стартовый шаг через флаг open",
             "имя радиогруппы через проп groupName",
             "акцент через проп accent",
-            "ширину блока и скругления"
+            "ширину блока и скругления",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Имя группы обязано быть уникальным на странице: два блока с одинаковым groupName начнут закрывать друг друга.",
             "Все шаги можно закрыть щелчком по открытому — это поведение радиогруппы details, а не ошибка.",
             "Анимации при переключении нет: браузер закрывает предыдущий details мгновенно.",
@@ -472,6 +612,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -485,15 +631,18 @@
                 "the CSS counter for numbering: reordering the array cannot desynchronise it",
                 "highlighting the open step via details[open] rather than a class pushed from JS",
                 "the text indent under the number: the column sets the top-down reading direction",
-                "the light card surface — dark text is invisible on a dark showcase without it"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the steps array and the initial step through its open flag",
                 "the radio group name through the groupName prop",
                 "the accent through the accent prop",
-                "the block width and corner radii"
+                "the block width and corner radii",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The group name must be unique on the page: two blocks sharing groupName will close each other.",
                 "Every step can end up closed by clicking the open one — that is details radio behaviour, not a bug.",
                 "There is no switch animation: the browser closes the previous details instantly.",
@@ -508,11 +657,34 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Exclusive Steps"
+            "title": "Exclusive Steps",
+            "preview": {
+              "props": {
+                "steps": [
+                  {
+                    "label": "Connect the registry",
+                    "text": "Add the registry URL to components.json — after that the CLI resolves components by their short name.",
+                    "open": true
+                  },
+                  {
+                    "label": "Install the component",
+                    "text": "The command drops a single file into components/vibeui and touches nothing else: it has no dependencies."
+                  },
+                  {
+                    "label": "Plug in your own data",
+                    "text": "The props are described in metadata: swap the texts and arrays, leave the markup and the palette alone."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -546,15 +718,19 @@
             "инициалы вместо картинок — компонент обязан работать без загрузки аватаров",
             "рамку кружка цветом фона: она и создаёт эффект наложения в стеке",
             "aria-label у кружка «+N»: сам по себе он читается как бессмысленное число",
-            "светлую подложку карточки — на тёмной витрине тёмный текст без неё не виден"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок через проп title",
             "список people",
             "сколько имён остаётся на виду через проп visible",
-            "акцент через проп accent и размер кружков"
+            "акцент через проп accent и размер кружков",
+            "подпись кружка «+N» через проп restLabel с плейсхолдером {count}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Внутри показываются только скрытые участники: видимые уже есть в заголовке, дублировать их не нужно.",
             "При visible больше длины списка кружок «+N» и раскрытие исчезают — это штатное поведение.",
             "Инициалы берутся из первых двух слов имени: для одного слова получится одна буква.",
@@ -576,6 +752,18 @@
             "type": "text",
             "default": "Участники проекта",
             "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -589,15 +777,19 @@
                 "initials instead of pictures — the component must work without loading avatars",
                 "the background-coloured ring on each circle: it is what creates the overlap",
                 "the aria-label on the +N circle: on its own it reads as a meaningless number",
-                "the light card surface — dark text is invisible on a dark showcase without it"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the heading through the title prop",
                 "the people list",
                 "how many names stay visible through the visible prop",
-                "the accent through the accent prop and the circle size"
+                "the accent through the accent prop and the circle size",
+                "the +N circle label through the restLabel prop with the {count} placeholder",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Only hidden people are listed inside: the visible ones are already in the header.",
                 "When visible exceeds the list length the +N circle and the expansion disappear — that is intended.",
                 "Initials come from the first two words of the name: a single word yields one letter.",
@@ -612,11 +804,34 @@
               "title": {
                 "label": "Heading",
                 "default": "Project members"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Hidden Count"
+            "title": "Hidden Count",
+            "preview": {
+              "props": {
+                "title": "Project members",
+                "people": [
+                  "Anna Kim",
+                  "Boris Radov",
+                  "Vera Ilyina",
+                  "Gleb Mostovoy",
+                  "Dina Salikh",
+                  "Egor Panin",
+                  "Zhanna Tur",
+                  "Zakhar Lemeshev"
+                ],
+                "restLabel": "{count} more members"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["visible", "accent", "background"]
       }
     },
     {
@@ -650,15 +865,19 @@
             "переход по одной переменной ширины — так анимация не рассыпается на несколько свойств",
             "aria-expanded у кнопки переключения: она сообщает состояние всей панели",
             "видимую иконку в свёрнутом виде — панель, схлопнутая в ноль, лишает навигации",
-            "светлую подложку и рамку панели: на тёмной витрине без них ничего не видно"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "название через проп title",
             "массив items с подписями и глифами",
             "стартовое состояние через проп defaultCollapsed",
-            "ширину полосы и акцент через проп accent"
+            "ширину полосы и акцент через проп accent",
+            "подписи переключателя через пропы expandLabel и collapseLabel",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Глифы здесь текстовые: подставьте свои SVG-иконки, если нужен единый стиль и толщина линий.",
             "aria-current=\"page\" проставлен первому пункту как пример — связывайте его со своим роутером.",
             "Свёрнутая панель опирается на title кнопки: полноценный тултип с клавиатурной поддержкой добавляется отдельно.",
@@ -678,6 +897,18 @@
             "label": "Свёрнута сразу",
             "type": "boolean",
             "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -691,15 +922,19 @@
                 "the single width variable driving the transition — otherwise the animation splits across properties",
                 "aria-expanded on the toggle: it reports the state of the whole panel",
                 "a visible icon while collapsed — a panel shrunk to zero takes navigation away",
-                "the light surface and border: nothing is visible on a dark showcase without them"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the product name through the title prop",
                 "the items array with labels and glyphs",
                 "the initial state through the defaultCollapsed prop",
-                "the rail width and the accent through the accent prop"
+                "the rail width and the accent through the accent prop",
+                "the toggle labels through the expandLabel and collapseLabel props",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The glyphs are plain text: swap in your own SVG icons if you need consistent stroke weights.",
                 "aria-current=\"page\" sits on the first item as an example — wire it to your router.",
                 "The collapsed rail relies on the button title: a real keyboard-accessible tooltip is a separate addition.",
@@ -714,11 +949,44 @@
               },
               "defaultCollapsed": {
                 "label": "Collapsed by default"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Icon Rail"
+            "title": "Icon Rail",
+            "preview": {
+              "props": {
+                "title": "VibeUI",
+                "items": [
+                  {
+                    "label": "Catalog",
+                    "glyph": "▦"
+                  },
+                  {
+                    "label": "Components",
+                    "glyph": "◍",
+                    "badge": "24"
+                  },
+                  {
+                    "label": "Registry",
+                    "glyph": "⌗"
+                  },
+                  {
+                    "label": "Settings",
+                    "glyph": "⚙"
+                  }
+                ],
+                "expandLabel": "Expand the panel",
+                "collapseLabel": "Collapse the panel"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultCollapsed", "accent", "background"]
       }
     },
     {
@@ -752,15 +1020,18 @@
             "разметку dl/dt/dd — это пары «параметр — значение», а не таблица",
             "двойной признак изменения (точка и насыщенность значения): цвет один не читается при дальтонизме",
             "моноширинный шрифт значений: их сравнивают посимвольно",
-            "светлую подложку карточки — на тёмной витрине тёмный текст без неё не виден"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок через проп title",
             "массив settings и флаги changed",
-            "формулировку плашки со счётчиком",
-            "акцент через проп accent"
+            "подписи плашки через пропы defaultText и changedText с плейсхолдером {count}",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не сравнивает значения сам: флаг changed приходит снаружи, сравнение с умолчаниями за вами.",
             "Кнопки «сбросить» здесь нет намеренно: это действие, а блок остаётся представлением.",
             "Длинное значение не переносится — при длинных строках задайте перенос или сократите текст.",
@@ -780,6 +1051,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -793,15 +1070,18 @@
                 "the dl/dt/dd markup — these are name/value pairs, not a table",
                 "the double change cue (a dot plus a stronger value): colour alone fails for colour blindness",
                 "the monospaced values: they get compared character by character",
-                "the light card surface — dark text is invisible on a dark showcase without it"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the heading through the title prop",
                 "the settings array and its changed flags",
-                "the wording of the counter badge",
-                "the accent through the accent prop"
+                "the badge captions through the defaultText and changedText props with the {count} placeholder",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not diff anything itself: the changed flag comes from outside.",
                 "There is deliberately no reset button: that is an action, and this block stays a view.",
                 "Long values do not wrap — add wrapping or shorten the text if your values are long.",
@@ -816,11 +1096,46 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Changed Settings"
+            "title": "Changed Settings",
+            "preview": {
+              "props": {
+                "title": "Build options",
+                "settings": [
+                  {
+                    "label": "Build format",
+                    "value": "standalone",
+                    "changed": true
+                  },
+                  {
+                    "label": "Registry cache",
+                    "value": "1 hour"
+                  },
+                  {
+                    "label": "Preview theme",
+                    "value": "auto"
+                  },
+                  {
+                    "label": "Warning threshold",
+                    "value": "12",
+                    "changed": true
+                  },
+                  {
+                    "label": "Telemetry",
+                    "value": "off"
+                  }
+                ],
+                "defaultText": "defaults",
+                "changedText": "{count} changed"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -854,15 +1169,18 @@
             "смену подписи через селектор details[open] и узлы data-when — React для этого не нужен",
             "моноширинный номер версии: версии сравнивают посимвольно",
             "видимый фокус у summary: разделы перебирают с клавиатуры",
-            "светлую подложку карточки — на тёмной витрине тёмный текст без неё не виден"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок через проп title",
             "массив releases и флаги open",
-            "формат даты и подписи переключателя",
-            "акцент через проп accent"
+            "формат даты и подписи переключателя через пропы expandText и collapseText",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Состояние не сохраняется между переходами: для запоминания нужен внешний слой, но тогда пропадёт работа до гидратации.",
             "Открытыми можно оставить сразу несколько разделов — взаимного исключения здесь нет намеренно.",
             "Обе подписи переключателя лежат в DOM: скринридер может прочитать скрытую, если убрать display:none.",
@@ -882,6 +1200,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -895,15 +1219,18 @@
                 "the caption swap through details[open] and the data-when nodes — React is not needed for that",
                 "the monospaced version number: versions get compared character by character",
                 "the visible focus ring on summary: sections get tabbed through",
-                "the light card surface — dark text is invisible on a dark showcase without it"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the heading through the title prop",
                 "the releases array and its open flags",
-                "the date format and toggle captions",
-                "the accent through the accent prop"
+                "the date format and the toggle captions through the expandText and collapseText props",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "State does not persist across navigations: persisting it needs an outer layer, which costs pre-hydration behaviour.",
                 "Several sections may stay open at once — there is deliberately no mutual exclusion here.",
                 "Both toggle captions live in the DOM: a screen reader could read the hidden one if display:none is removed.",
@@ -918,11 +1245,40 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Markup State"
+            "title": "Markup State",
+            "preview": {
+              "props": {
+                "title": "Release history",
+                "releases": [
+                  {
+                    "version": "0.6.0",
+                    "date": "12 August",
+                    "text": "The registry serves the component source at /f/<name>.tsx — the agent now takes the file byte for byte.",
+                    "open": true
+                  },
+                  {
+                    "version": "0.5.2",
+                    "date": "29 July",
+                    "text": "The catalog filters by tags, and cards size themselves from their own container."
+                  },
+                  {
+                    "version": "0.5.0",
+                    "date": "14 July",
+                    "text": "The Copy for AI instruction is assembled from metadata instead of being written by hand for every component."
+                  }
+                ],
+                "expandText": "expand",
+                "collapseText": "collapse"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -956,15 +1312,19 @@
             "непрозрачный фон у summary — иначе строки списка просвечивают сквозь липкий заголовок",
             "overscroll-behavior:contain: прокрутка карточки не должна утягивать за собой страницу",
             "z-index у липкого заголовка: без него он окажется под содержимым",
-            "светлую подложку карточки — на тёмной витрине тёмный текст без неё не виден"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок через проп title",
             "массив sections и флаги open",
             "максимальную высоту прокрутки",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подпись счётчика через проп totalText с плейсхолдером {count}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Липкий заголовок требует, чтобы у карточки была ограниченная высота: без max-height прилипать не к чему.",
             "Если раскрыть все разделы, липких заголовков станет несколько — они сменяют друг друга по мере прокрутки, это нормально.",
             "Элементы списка здесь не интерактивны: добавьте ссылки или кнопки под свою модель навигации.",
@@ -984,6 +1344,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -997,15 +1363,19 @@
                 "the opaque background on summary — otherwise list rows show through the sticky heading",
                 "overscroll-behavior:contain: scrolling the card must not drag the page along",
                 "the z-index on the sticky heading: without it the content covers it",
-                "the light card surface — dark text is invisible on a dark showcase without it"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the heading through the title prop",
                 "the sections array and its open flags",
                 "the maximum scroll height",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the total caption through the totalText prop with the {count} placeholder",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A sticky heading needs the card to have a capped height: with no max-height there is nothing to stick to.",
                 "Open every section and several headings become sticky — they replace each other while scrolling, which is expected.",
                 "List items are not interactive here: add links or buttons to match your navigation model.",
@@ -1020,11 +1390,52 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Sticky Sections"
+            "title": "Sticky Sections",
+            "preview": {
+              "props": {
+                "title": "Library",
+                "sections": [
+                  {
+                    "label": "Inputs",
+                    "items": [
+                      "Text field",
+                      "Autocomplete",
+                      "Combobox",
+                      "Switch"
+                    ],
+                    "open": true
+                  },
+                  {
+                    "label": "Display",
+                    "items": [
+                      "Skeleton",
+                      "Timeline",
+                      "File tree",
+                      "Code block"
+                    ],
+                    "open": true
+                  },
+                  {
+                    "label": "Navigation",
+                    "items": [
+                      "Tabs",
+                      "Breadcrumbs",
+                      "Command palette",
+                      "Pagination"
+                    ]
+                  }
+                ],
+                "totalText": "{count} components"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

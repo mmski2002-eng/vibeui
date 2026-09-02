@@ -5,9 +5,18 @@ export type Field003Props = Omit<
   "children" | "defaultValue"
 > & {
   label?: string
+  placeholder?: string
+  /** Расшифровка звёздочки в title у abbr. */
+  requiredTitle?: string
+  /** То же слово для screen reader: звёздочку он не читает. */
+  requiredNote?: string
   optionalLabel?: string
+  optionalTitle?: string
+  optionalPlaceholder?: string
   legend?: string
   name?: string
+  /** Пусто — подложки нет, форма лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,17 +27,18 @@ export type Field003Props = Omit<
 // необязательное поле с явной меткой: пара показывает разницу, а не намекает.
 const STYLES = `
 :where([data-vibeui-block="field-003"]){
---vibeui-field-003-bg:oklch(1 0 0);
---vibeui-field-003-surface:oklch(1 0 0);
---vibeui-field-003-fg:oklch(0.24 0.014 265);
---vibeui-field-003-muted:oklch(0.55 0.014 265);
---vibeui-field-003-border:oklch(0.88 0.008 265);
---vibeui-field-003-shell:oklch(0.91 0.006 265);
---vibeui-field-003-accent:oklch(0.55 0.2 262);
---vibeui-field-003-danger:oklch(0.55 0.19 25);
+--vibeui-field-003-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-field-003-surface:transparent;
+--vibeui-field-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-field-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-field-003-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
+--vibeui-field-003-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
+--vibeui-field-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-field-003-danger:light-dark(oklch(0.55 0.19 25),oklch(0.73 0.16 25));
+--vibeui-field-003-edge:light-dark(oklch(0.79 0.09 25),oklch(0.52 0.12 25));
 --vibeui-field-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: форму показывают поверх любого фона. */
+/* Подложки по умолчанию нет: форма ложится на фон страницы. */
 [data-vibeui-block="field-003"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
@@ -62,7 +72,7 @@ outline:2px solid var(--vibeui-field-003-accent);outline-offset:1px;
 border-color:var(--vibeui-field-003-accent);
 }
 [data-vibeui-block="field-003"] input[required]{
-border-inline-start:3px solid color-mix(in oklab,var(--vibeui-field-003-danger) 45%,oklch(1 0 0));
+border-inline-start:3px solid var(--vibeui-field-003-edge);
 }
 /* Сноска рядом с полями, а не в конце длинной формы: там её не читают. */
 [data-vibeui-block="field-003"] [data-part="legend"]{
@@ -79,14 +89,42 @@ overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Обязательное поле со звёздочкой, у которой есть расшифровка и сноска.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Field003({
   label = "Юридическое название",
+  placeholder = "ООО «Ромашка»",
+  requiredTitle = "обязательное поле",
+  requiredNote = ", обязательное поле",
   optionalLabel = "необязательно",
+  optionalTitle = "Комментарий",
+  optionalPlaceholder = "Что важно знать заранее",
   legend = "Звёздочкой отмечены поля, без которых заявку не примут.",
   name = "company",
+  background = "",
   accent,
   className,
   style,
@@ -94,6 +132,12 @@ export function Field003({
 }: Field003Props) {
   const palette = {
     ...(accent ? { "--vibeui-field-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-field-003-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -111,10 +155,10 @@ export function Field003({
         <div data-part="row">
           <label htmlFor={`${name}-required`}>
             {label}
-            <abbr title="обязательное поле" aria-hidden="true">
+            <abbr title={requiredTitle} aria-hidden="true">
               *
             </abbr>
-            <span data-part="sr">, обязательное поле</span>
+            <span data-part="sr">{requiredNote}</span>
           </label>
           <input
             id={`${name}-required`}
@@ -122,20 +166,20 @@ export function Field003({
             type="text"
             required
             aria-required="true"
-            placeholder="ООО «Ромашка»"
+            placeholder={placeholder}
           />
         </div>
 
         <div data-part="row">
           <label htmlFor={`${name}-optional`}>
-            Комментарий
+            {optionalTitle}
             <span data-part="optional">· {optionalLabel}</span>
           </label>
           <input
             id={`${name}-optional`}
             name={`${name}-comment`}
             type="text"
-            placeholder="Что важно знать заранее"
+            placeholder={optionalPlaceholder}
           />
         </div>
 

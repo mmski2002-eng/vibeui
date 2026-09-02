@@ -29,6 +29,18 @@ export type Dashboard058Props = {
   mergeLabel?: string
   keepLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Строка об оставшихся группах: {count}. */
+  pendingText?: string
+  /** Подпись схожести: {score}. */
+  scoreText?: string
+  /** Заголовок колонки полей. */
+  fieldLabel?: string
+  /** Пометка строки с расхождением. */
+  conflictLabel?: string
+  /** Пояснение рядом с кнопками. */
+  noteText?: string
   className?: string
   style?: CSSProperties
 }
@@ -44,14 +56,18 @@ export type Dashboard058Props = {
 // Причина склейки подписана словами: доверие к автоматике держится на ней.
 const STYLES = `
 :where([data-vibeui-block="dashboard-058"]){
---vibeui-dashboard-058-bg:oklch(0.985 0.003 190);
---vibeui-dashboard-058-card:oklch(1 0 0);
---vibeui-dashboard-058-fg:oklch(0.21 0.014 190);
---vibeui-dashboard-058-muted:oklch(0.55 0.014 190);
---vibeui-dashboard-058-border:oklch(0.91 0.006 190);
---vibeui-dashboard-058-accent:oklch(0.5 0.12 190);
---vibeui-dashboard-058-soft:oklch(0.965 0.02 190);
---vibeui-dashboard-058-conflict:oklch(0.68 0.15 72);
+--vibeui-dashboard-058-bg:transparent;
+/* Карточка группы: подложка блока прозрачна, и рисовать её ею нечем. */
+--vibeui-dashboard-058-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 190));
+--vibeui-dashboard-058-fg:light-dark(oklch(0.21 0.014 190),oklch(0.94 0.005 190));
+--vibeui-dashboard-058-muted:light-dark(oklch(0.55 0.014 190),oklch(0.72 0.012 190));
+--vibeui-dashboard-058-border:light-dark(oklch(0.91 0.006 190),oklch(0.36 0.012 190));
+--vibeui-dashboard-058-accent:light-dark(oklch(0.5 0.12 190),oklch(0.76 0.11 190));
+--vibeui-dashboard-058-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 190));
+--vibeui-dashboard-058-soft:light-dark(oklch(0.965 0.02 190),oklch(0.31 0.04 190));
+--vibeui-dashboard-058-conflict:light-dark(oklch(0.68 0.15 72),oklch(0.79 0.14 72));
+--vibeui-dashboard-058-conflict-soft:light-dark(oklch(0.975 0.02 72),oklch(0.3 0.045 72));
+--vibeui-dashboard-058-conflict-ink:light-dark(oklch(0.48 0.11 72),oklch(0.84 0.12 72));
 --vibeui-dashboard-058-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -96,17 +112,17 @@ color:var(--vibeui-dashboard-058-muted);white-space:nowrap;width:1%;
 background:var(--vibeui-dashboard-058-soft);
 box-shadow:inset 0 0.1875rem 0 var(--vibeui-dashboard-058-accent);
 }
-[data-vibeui-block="dashboard-058"] tr[data-conflict="true"]{background:color-mix(in oklab,var(--vibeui-dashboard-058-conflict) 7%,white)}
+[data-vibeui-block="dashboard-058"] tr[data-conflict="true"]{background:var(--vibeui-dashboard-058-conflict-soft)}
 [data-vibeui-block="dashboard-058"] tr[data-conflict="true"] th[scope="row"]{color:var(--vibeui-dashboard-058-fg)}
-[data-vibeui-block="dashboard-058"] tr[data-conflict="true"] th[scope="row"]::after{
-content:" расхождение";display:block;font-size:0.5625rem;font-weight:750;text-transform:none;
-color:color-mix(in oklab,var(--vibeui-dashboard-058-conflict) 70%,black);
+[data-vibeui-block="dashboard-058"] [data-part="flag"]{
+display:block;font-size:0.5625rem;font-weight:750;text-transform:none;
+color:var(--vibeui-dashboard-058-conflict-ink);
 }
 [data-vibeui-block="dashboard-058"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center}
 [data-vibeui-block="dashboard-058"] [data-part="merge"]{
 appearance:none;border:0;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:700;
 padding:0.5rem 0.9375rem;border-radius:0.625rem;
-background:var(--vibeui-dashboard-058-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-058-accent);color:var(--vibeui-dashboard-058-on-accent);
 }
 [data-vibeui-block="dashboard-058"] [data-part="keep"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:700;
@@ -179,6 +195,28 @@ const DEFAULT_GROUPS: Dashboard058Group[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Экран дедупликации: группа похожих записей разложена таблицей «поле ×
  * кандидат», мастер выбирается радиокнопкой и подсвечивает свою колонку,
  * расхождения помечены строкой. Один файл, ноль зависимостей, без JS.
@@ -190,11 +228,23 @@ export function Dashboard058({
   mergeLabel = "Объединить в выбранную",
   keepLabel = "Это разные компании",
   accent,
+  background = "",
+  pendingText = "осталось разобрать групп: {count}. Разобранные группы больше не предлагаются, даже если совпадение повторится",
+  scoreText = "схожесть {score} %",
+  fieldLabel = "Поле",
+  conflictLabel = "расхождение",
+  noteText = "Непустые значения из остальных записей переедут в мастер, связанные заявки и письма — тоже.",
   className,
   style,
 }: Dashboard058Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-058-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-058-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -213,15 +263,16 @@ export function Dashboard058({
           <div data-part="head">
             <h2>{title}</h2>
             <p data-part="pending">
-              осталось разобрать групп: {pending}. Разобранные группы больше не
-              предлагаются, даже если совпадение повторится
+              {pendingText.replace("{count}", String(pending))}
             </p>
           </div>
 
           {groups.map((group) => (
             <article key={group.key} data-part="group">
               <div data-part="why">
-                <span data-part="score">схожесть {group.score} %</span>
+                <span data-part="score">
+                  {scoreText.replace("{score}", String(group.score))}
+                </span>
                 <p data-part="reason">{group.reason}</p>
               </div>
 
@@ -230,7 +281,7 @@ export function Dashboard058({
                   <thead>
                     <tr>
                       <th scope="col">
-                        <span data-part="reason">Поле</span>
+                        <span data-part="reason">{fieldLabel}</span>
                       </th>
                       {group.candidates.map((candidate) => (
                         <th key={candidate.id} scope="col">
@@ -253,7 +304,12 @@ export function Dashboard058({
                   <tbody>
                     {group.rows.map((row) => (
                       <tr key={row.field} data-conflict={row.conflict}>
-                        <th scope="row">{row.field}</th>
+                        <th scope="row">
+                          {row.field}
+                          {row.conflict ? (
+                            <span data-part="flag">{conflictLabel}</span>
+                          ) : null}
+                        </th>
                         {row.values.map((value, index) => (
                           <td key={`${row.field}-${index}`}>{value}</td>
                         ))}
@@ -270,10 +326,7 @@ export function Dashboard058({
                 <button type="button" data-part="keep">
                   {keepLabel}
                 </button>
-                <p data-part="note">
-                  Непустые значения из остальных записей переедут в мастер,
-                  связанные заявки и письма — тоже.
-                </p>
+                <p data-part="note">{noteText}</p>
               </div>
             </article>
           ))}

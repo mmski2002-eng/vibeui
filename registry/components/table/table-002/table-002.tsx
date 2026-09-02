@@ -16,20 +16,30 @@ export type Table002Props = Omit<
   rows?: Table002Row[]
   /** Номер выделенной колонки, считая с нуля. -1 — без выделения. */
   highlight?: number
+  /** Заголовок первой колонки. */
+  featureLabel?: string
+  /** Подписи для скринридера: компонент несёт русские, проект подставляет свои. */
+  valueText?: Record<string, string>
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
 // Идея компонента: сравнение читают строками, а глазами держатся за колонку.
 // Поэтому первая колонка липнет при горизонтальной прокрутке, а выбранный
 // вариант подсвечен целиком, а не только в заголовке.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-002"]){
---vibeui-table-002-fg:oklch(0.24 0.016 265);
---vibeui-table-002-muted:oklch(0.54 0.014 265);
---vibeui-table-002-bg:oklch(1 0 0);
---vibeui-table-002-border:oklch(0.91 0.006 265);
---vibeui-table-002-accent:oklch(0.55 0.2 262);
---vibeui-table-002-yes:oklch(0.58 0.15 152);
+--vibeui-table-002-fg:light-dark(oklch(0.24 0.016 265),oklch(0.93 0.006 265));
+--vibeui-table-002-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-table-002-bg:transparent;
+--vibeui-table-002-head:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.012 265));
+--vibeui-table-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-table-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
+--vibeui-table-002-yes:light-dark(oklch(0.58 0.15 152),oklch(0.76 0.14 152));
 --vibeui-table-002-radius:0.75rem;
 --vibeui-table-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -50,16 +60,16 @@ text-align:center;white-space:nowrap;
 [data-vibeui-block="table-002"] tr:last-child td{border-bottom:0}
 [data-vibeui-block="table-002"] thead th{
 font-size:0.8125rem;font-weight:600;
-background:oklch(0.975 0.003 265);
+background:var(--vibeui-table-002-head);
 }
-/* Первая колонка липнет: при прокрутке вправо строка не теряет подпись. */
+/* Первая колонка липнет: при прокрутке вправо строка не теряет подпись.
+   Плашка под ней непрозрачная — иначе значения проезжали бы сквозь подписи. */
 [data-vibeui-block="table-002"] [data-part="label"]{
 position:sticky;left:0;z-index:1;
 text-align:left;font-weight:500;white-space:normal;
-background:var(--vibeui-table-002-bg);
+background:var(--vibeui-table-002-head);
 box-shadow:1px 0 0 var(--vibeui-table-002-border);
 }
-[data-vibeui-block="table-002"] thead [data-part="label"]{background:oklch(0.975 0.003 265)}
 /* Выделенный вариант подсвечен во всех строках, а не только в шапке. */
 [data-vibeui-block="table-002"] [data-highlight="true"]{
 background:color-mix(in oklab,var(--vibeui-table-002-accent) 7%,transparent);
@@ -87,6 +97,30 @@ const DEFAULT_ROWS: Table002Row[] = [
   { label: "Поддержка", values: ["Почта", "Почта", "Чат за час"] },
 ]
 
+const VALUE_TEXT: Record<string, string> = { yes: "да", no: "нет" }
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Таблица сравнения вариантов: липкая первая колонка, выделенный столбец.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -95,6 +129,9 @@ export function Table002({
   options = DEFAULT_OPTIONS,
   rows = DEFAULT_ROWS,
   highlight = 1,
+  featureLabel = "Что входит",
+  valueText = VALUE_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -102,6 +139,12 @@ export function Table002({
 }: Table002Props) {
   const palette = {
     ...(accent ? { "--vibeui-table-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-table-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -120,7 +163,7 @@ export function Table002({
           <thead>
             <tr>
               <th data-part="label" scope="col">
-                Что входит
+                {featureLabel}
               </th>
               {options.map((option, index) => (
                 <th
@@ -147,7 +190,11 @@ export function Table002({
                     {typeof value === "boolean" ? (
                       <span data-part={value ? "yes" : "no"}>
                         <span aria-hidden="true">{value ? "✓" : "—"}</span>
-                        <span data-part="sr">{value ? "да" : "нет"}</span>
+                        <span data-part="sr">
+                          {value
+                            ? (valueText.yes ?? VALUE_TEXT.yes)
+                            : (valueText.no ?? VALUE_TEXT.no)}
+                        </span>
                       </span>
                     ) : (
                       value

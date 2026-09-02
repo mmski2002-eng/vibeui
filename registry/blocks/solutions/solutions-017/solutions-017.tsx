@@ -18,7 +18,21 @@ export type Solutions017Props = {
   weekDays?: string[]
   dayNorm?: number
   runningLabel?: string
+  /** Пометка неоплачиваемой записи. */
+  nonBillableLabel?: string
+  /** Счётчик записей в подзаголовке, {count} — сколько их. */
+  entryCountText?: string
+  /** Норма дня под суммой, {hours} — норма в часах. */
+  normText?: string
+  /** Заголовок недельной сводки. */
+  weekTitle?: string
+  /** Подпись столбиков для скринридера, {total} — часы за неделю. */
+  weekLabelText?: string
+  /** Подпись суммы недели перед числом. */
+  weekTotalLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -33,13 +47,13 @@ export type Solutions017Props = {
 // отвечает на вопрос «догоняю или отстаю».
 const STYLES = `
 :where([data-vibeui-block="solutions-017"]){
---vibeui-solutions-017-bg:oklch(1 0 0);
---vibeui-solutions-017-panel:oklch(0.975 0.004 190);
---vibeui-solutions-017-fg:oklch(0.21 0.014 210);
---vibeui-solutions-017-muted:oklch(0.54 0.014 210);
---vibeui-solutions-017-border:oklch(0.9 0.006 210);
---vibeui-solutions-017-accent:oklch(0.55 0.14 195);
---vibeui-solutions-017-live:oklch(0.6 0.19 25);
+--vibeui-solutions-017-bg:transparent;
+--vibeui-solutions-017-panel:light-dark(oklch(0.975 0.004 190),oklch(0.26 0.012 210));
+--vibeui-solutions-017-fg:light-dark(oklch(0.21 0.014 210),oklch(0.94 0.005 210));
+--vibeui-solutions-017-muted:light-dark(oklch(0.54 0.014 210),oklch(0.7 0.012 210));
+--vibeui-solutions-017-border:light-dark(oklch(0.9 0.006 210),oklch(0.36 0.012 210));
+--vibeui-solutions-017-accent:light-dark(oklch(0.55 0.14 195),oklch(0.74 0.13 195));
+--vibeui-solutions-017-live:light-dark(oklch(0.6 0.19 25),oklch(0.74 0.16 25));
 --vibeui-solutions-017-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-017-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -189,6 +203,28 @@ function clock(minutes: number) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Учёт времени за день: записи с полосой длительности и неделя столбиками.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -200,7 +236,14 @@ export function Solutions017({
   weekDays = DEFAULT_WEEK_DAYS,
   dayNorm = 480,
   runningLabel = "идёт сейчас",
+  nonBillableLabel = "не оплачивается",
+  entryCountText = "{count} записей",
+  normText = "из {hours} по норме дня",
+  weekTitle = "Неделя",
+  weekLabelText = "Часы по дням недели, всего {total}",
+  weekTotalLabel = "Всего за неделю",
   accent,
+  background = "",
   className,
   style,
 }: Solutions017Props) {
@@ -211,6 +254,12 @@ export function Solutions017({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -229,12 +278,15 @@ export function Solutions017({
           <div>
             <h2>{title}</h2>
             <p data-part="day">
-              {day} · {entries.length} записей
+              {day} ·{" "}
+              {entryCountText.replace("{count}", String(entries.length))}
             </p>
           </div>
           <p data-part="sum">
             {clock(total)}
-            <span data-part="norm">из {clock(dayNorm)} по норме дня</span>
+            <span data-part="norm">
+              {normText.replace("{hours}", clock(dayNorm))}
+            </span>
           </p>
         </header>
 
@@ -254,7 +306,7 @@ export function Solutions017({
                     {entry.task}
                     <span data-part="project">
                       {entry.project}
-                      {entry.billable === false ? " · не оплачивается" : ""}
+                      {entry.billable === false ? ` · ${nonBillableLabel}` : ""}
                       {entry.running ? ` · ${runningLabel}` : ""}
                     </span>
                   </span>
@@ -279,11 +331,11 @@ export function Solutions017({
           </ul>
 
           <aside data-part="week">
-            <h3>Неделя</h3>
+            <h3>{weekTitle}</h3>
             <div
               data-part="bars"
               role="img"
-              aria-label={`Часы по дням недели, всего ${clock(weekTotal)}`}
+              aria-label={weekLabelText.replace("{total}", clock(weekTotal))}
             >
               {weekBars.map((value, index) => (
                 <div data-part="bar" key={weekDays[index]}>
@@ -297,7 +349,7 @@ export function Solutions017({
               ))}
             </div>
             <p data-part="weeksum">
-              Всего за неделю <b>{clock(weekTotal)}</b>
+              {weekTotalLabel} <b>{clock(weekTotal)}</b>
             </p>
           </aside>
         </div>

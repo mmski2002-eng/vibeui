@@ -9,22 +9,29 @@ export type Alert007Props = Omit<
   message?: string
   time?: string
   replyLabel?: string
+  /** Подпись тихой кнопки: компонент несёт русскую. */
+  dismissLabel?: string
   onReply?: () => void
   onDismiss?: () => void
   accent?: string
+  /** Пусто — подложки нет, уведомление лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: уведомление о сообщении от человека. Слева инициалы с
 // оттенком, выведенным из имени, — тот же приём, что в аватаре: один человек
 // всегда одного цвета. Текст сообщения показывается целиком до трёх строк и
 // дальше обрывается многоточием, потому что уведомление — не переписка.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-007"]){
---vibeui-alert-007-fg:oklch(0.22 0.014 265);
---vibeui-alert-007-muted:oklch(0.5 0.014 265);
---vibeui-alert-007-bg:oklch(1 0 0);
---vibeui-alert-007-border:oklch(0.9 0.006 265);
---vibeui-alert-007-accent:oklch(0.55 0.2 262);
+--vibeui-alert-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.006 265));
+--vibeui-alert-007-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-007-bg:transparent;
+--vibeui-alert-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-alert-007-hue:250;
 --vibeui-alert-007-radius:0.875rem;
 --vibeui-alert-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -83,6 +90,28 @@ function hueOf(name: string): number {
   return sum
 }
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function initialsOf(name: string): string {
   return name
     .trim()
@@ -102,9 +131,11 @@ export function Alert007({
   message = "Посмотрела главную — блок с тарифами лучше поднять выше отзывов. И на мобильном заголовок переносится некрасиво, гляньте.",
   time = "12 минут назад",
   replyLabel = "Ответить",
+  dismissLabel = "Скрыть",
   onReply,
   onDismiss,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -112,6 +143,12 @@ export function Alert007({
   const palette = {
     "--vibeui-alert-007-hue": hueOf(name),
     ...(accent ? { "--vibeui-alert-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-alert-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -143,9 +180,9 @@ export function Alert007({
                 {replyLabel}
               </button>
             ) : null}
-            {onDismiss ? (
+            {onDismiss && dismissLabel ? (
               <button data-part="dismiss" type="button" onClick={onDismiss}>
-                Скрыть
+                {dismissLabel}
               </button>
             ) : null}
           </span>

@@ -11,29 +11,42 @@ export type Checkbox012Props = Omit<
   options?: string[]
   limit?: number
   defaultValue?: string[]
+  /** Счётчик у полосы. {selected} — выбрано, {limit} — потолок. */
+  counterText?: string
+  /** Подпись, когда лимит выбран целиком. */
+  fullText?: string
+  /** Подпись с остатком. {left} — сколько ещё можно отметить. */
+  remainingText?: string
   onChange?: (value: string[]) => void
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
 // Идея компонента: группа с потолком выбора. На лимите невыбранные пункты
 // выключаются, а счётчик заранее показывает, сколько осталось, — запрет
 // объясняется до нажатия, а не после него сообщением об ошибке.
+//
+// Тема берётся из color-scheme окружения через light-dark(): панель темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="checkbox-012"]){
---vibeui-checkbox-012-bg:oklch(1 0 0);
---vibeui-checkbox-012-fg:oklch(0.22 0.014 265);
---vibeui-checkbox-012-muted:oklch(0.56 0.014 265);
---vibeui-checkbox-012-border:oklch(0.9 0.006 265);
---vibeui-checkbox-012-hover:oklch(0.975 0.003 265);
---vibeui-checkbox-012-accent:oklch(0.58 0.16 35);
---vibeui-checkbox-012-track:oklch(0.93 0.006 265);
+--vibeui-checkbox-012-surface:transparent;
+--vibeui-checkbox-012-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-checkbox-012-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-checkbox-012-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-checkbox-012-hover:light-dark(oklch(0.975 0.003 265),oklch(0.32 0.012 265));
+--vibeui-checkbox-012-accent:light-dark(oklch(0.58 0.16 35),oklch(0.76 0.15 45));
+--vibeui-checkbox-012-track:light-dark(oklch(0.93 0.006 265),oklch(0.36 0.012 265));
+--vibeui-checkbox-012-mark:light-dark(oklch(0.99 0.01 35),oklch(0.2 0.03 45));
 --vibeui-checkbox-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="checkbox-012"]{
 display:flex;flex-direction:column;gap:0.125rem;
 width:100%;max-width:20rem;box-sizing:border-box;
 margin:0;padding:0.875rem;border:1px solid var(--vibeui-checkbox-012-border);border-radius:0.875rem;
-background:var(--vibeui-checkbox-012-bg);
+background:var(--vibeui-checkbox-012-surface);
 font-family:var(--vibeui-checkbox-012-font);color:var(--vibeui-checkbox-012-fg);
 }
 [data-vibeui-block="checkbox-012"] legend{float:left;width:100%;padding:0;font-size:0.875rem;font-weight:650}
@@ -77,7 +90,8 @@ transition:background-color .15s ease,border-color .15s ease;
 [data-vibeui-block="checkbox-012"] input:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;
-border-right:2px solid oklch(0.99 0.01 35);border-bottom:2px solid oklch(0.99 0.01 35);
+border-right:2px solid var(--vibeui-checkbox-012-mark);
+border-bottom:2px solid var(--vibeui-checkbox-012-mark);
 transform:rotate(45deg);
 }
 [data-vibeui-block="checkbox-012"] input:disabled{background:var(--vibeui-checkbox-012-track);border-color:transparent}
@@ -98,6 +112,28 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Группа чекбоксов с потолком выбора: на лимите остальные выключаются,
  * счётчик показывает остаток. Один файл, ноль зависимостей.
  */
@@ -106,7 +142,11 @@ export function Checkbox012({
   options = DEFAULT_OPTIONS,
   limit = 3,
   defaultValue = ["Цена"],
+  counterText = "{selected} из {limit}",
+  fullText = "Выбрано максимум. Снимите одну галочку, чтобы поставить другую.",
+  remainingText = "Можно отметить ещё {left}.",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -116,6 +156,12 @@ export function Checkbox012({
 
   const palette = {
     ...(accent ? { "--vibeui-checkbox-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-checkbox-012-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -151,7 +197,9 @@ export function Checkbox012({
             />
           </span>
           <span role="status">
-            {value.length} из {limit}
+            {counterText
+              .replace("{selected}", String(value.length))
+              .replace("{limit}", String(limit))}
           </span>
         </p>
         {options.map((option) => {
@@ -170,9 +218,7 @@ export function Checkbox012({
           )
         })}
         <p data-part="note">
-          {full
-            ? "Выбрано максимум. Снимите одну галочку, чтобы поставить другую."
-            : `Можно отметить ещё ${left}.`}
+          {full ? fullText : remainingText.replace("{left}", String(left))}
         </p>
       </fieldset>
     </>

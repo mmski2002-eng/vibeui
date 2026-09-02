@@ -9,6 +9,8 @@ export type Label010Props = Omit<
   toggleText?: string
   answer?: string
   placeholder?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,13 +21,16 @@ export type Label010Props = Omit<
 // нужен: open/closed и aria-expanded браузер ведёт сам.
 const STYLES = `
 :where([data-vibeui-block="label-010"]){
---vibeui-label-010-surface:oklch(1 0 0);
---vibeui-label-010-surface-border:oklch(0.91 0.006 265);
---vibeui-label-010-fg:oklch(0.24 0.016 265);
---vibeui-label-010-muted:oklch(0.54 0.014 265);
---vibeui-label-010-field-border:oklch(0.85 0.01 265);
---vibeui-label-010-accent:oklch(0.55 0.2 262);
---vibeui-label-010-answer-bg:oklch(0.97 0.004 265);
+--vibeui-label-010-surface:transparent;
+--vibeui-label-010-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-label-010-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-label-010-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-label-010-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-label-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-label-010-answer-bg:light-dark(oklch(0.97 0.004 265),oklch(0.28 0.011 265));
+/* Наведение уводит акцент в сторону подложки темы: к чёрному в светлой,
+   к белому в тёмной — иначе в темноте ссылка гаснет вместо подсветки. */
+--vibeui-label-010-hover-mix:light-dark(black,white);
 --vibeui-label-010-radius:0.625rem;
 --vibeui-label-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -53,7 +58,7 @@ transition:color .16s ease;
 }
 [data-vibeui-block="label-010"] summary::-webkit-details-marker{display:none}
 [data-vibeui-block="label-010"] summary:hover{
-color:color-mix(in oklab,var(--vibeui-label-010-accent) 75%,black);
+color:color-mix(in oklab,var(--vibeui-label-010-accent) 75%,var(--vibeui-label-010-hover-mix));
 }
 [data-vibeui-block="label-010"] summary:focus-visible{
 outline:2px solid var(--vibeui-label-010-accent);outline-offset:2px;border-radius:0.25rem;
@@ -86,6 +91,28 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-label-010-accent) 22%,trans
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подпись с разворачивающимся пояснением на нативном <details>/<summary>:
  * ответ раздвигает форму, а не всплывает поверх неё. Один файл, ноль
  * зависимостей, без клиентского JS.
@@ -95,6 +122,7 @@ export function Label010({
   toggleText = "Зачем это нужно",
   answer = "Трёхбуквенный код по ISO 4217 (например, RUB или USD) — по нему платёжный шлюз определяет валюту счёта и не путает суммы при конвертации.",
   placeholder = "RUB",
+  background = "",
   accent,
   className,
   style,
@@ -104,6 +132,12 @@ export function Label010({
   const answerId = `${id}-answer`
   const palette = {
     ...(accent ? { "--vibeui-label-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-label-010-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

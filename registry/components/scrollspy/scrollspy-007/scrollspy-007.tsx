@@ -17,6 +17,10 @@ export type Scrollspy007Props = Omit<
   title?: string
   /** Ширина блока в пикселях, ниже которой оглавление сворачивается. */
   compactAt?: number
+  /** Подпись области чтения для скринридера. */
+  bodyLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,13 +30,16 @@ export type Scrollspy007Props = Omit<
 // «где я», иначе оно бесполезно. Порог считается от ширины самого блока
 // (ResizeObserver), а не от ширины окна: тот же компонент может стоять в
 // узкой колонке на большом экране.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="scrollspy-007"]){
---vibeui-scrollspy-007-bg:oklch(1 0 0);
---vibeui-scrollspy-007-fg:oklch(0.23 0.014 265);
---vibeui-scrollspy-007-muted:oklch(0.56 0.014 265);
---vibeui-scrollspy-007-border:oklch(0.91 0.006 265);
---vibeui-scrollspy-007-accent:oklch(0.55 0.18 145);
+--vibeui-scrollspy-007-bg:transparent;
+--vibeui-scrollspy-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-scrollspy-007-muted:light-dark(oklch(0.56 0.014 265),oklch(0.69 0.012 265));
+--vibeui-scrollspy-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-scrollspy-007-accent:light-dark(oklch(0.55 0.18 145),oklch(0.76 0.15 145));
 --vibeui-scrollspy-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="scrollspy-007"]{
@@ -120,6 +127,28 @@ const DEFAULT_SECTIONS: Scrollspy007Section[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Оглавление, которое на узком блоке сворачивается в список с текущим разделом в заголовке.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -127,6 +156,8 @@ export function Scrollspy007({
   sections = DEFAULT_SECTIONS,
   title = "Содержание",
   compactAt = 420,
+  bodyLabel = "Текст соглашения",
+  background = "",
   accent,
   className,
   style,
@@ -172,6 +203,12 @@ export function Scrollspy007({
 
   const palette = {
     ...(accent ? { "--vibeui-scrollspy-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-scrollspy-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -233,7 +270,7 @@ export function Scrollspy007({
           ref={body}
           tabIndex={0}
           role="group"
-          aria-label="Текст соглашения"
+          aria-label={bodyLabel}
         >
           {sections.map((section) => (
             <section key={section.id} id={section.id} data-part="section">

@@ -20,7 +20,13 @@ export type Pricing019Props = {
   upgradeGains?: string[]
   upgradeAction?: { label: string; href: string }
   manageAction?: { label: string; href: string }
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
+  /** Строка расхода. Плейсхолдеры {used} и {limit}. */
+  usageText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -33,15 +39,15 @@ export type Pricing019Props = {
 // она и есть аргумент за переход, поэтому апгрейд стоит рядом, а не в письме.
 const STYLES = `
 :where([data-vibeui-block="pricing-019"]){
---vibeui-pricing-019-bg:oklch(0.97 0.004 265);
---vibeui-pricing-019-fg:oklch(0.2 0.012 265);
---vibeui-pricing-019-muted:oklch(0.51 0.012 265);
---vibeui-pricing-019-card:oklch(1 0 0);
---vibeui-pricing-019-line:oklch(0.89 0.006 265);
---vibeui-pricing-019-track:oklch(0.92 0.006 265);
---vibeui-pricing-019-accent:oklch(0.52 0.17 265);
---vibeui-pricing-019-accent-fg:oklch(0.99 0 0);
---vibeui-pricing-019-warn:oklch(0.65 0.16 55);
+--vibeui-pricing-019-bg:transparent;
+--vibeui-pricing-019-fg:light-dark(oklch(0.2 0.012 265),oklch(0.94 0.005 265));
+--vibeui-pricing-019-muted:light-dark(oklch(0.51 0.012 265),oklch(0.7 0.01 265));
+--vibeui-pricing-019-card:light-dark(oklch(1 0 0),oklch(0.25 0.011 265));
+--vibeui-pricing-019-line:light-dark(oklch(0.89 0.006 265),oklch(0.37 0.011 265));
+--vibeui-pricing-019-track:light-dark(oklch(0.92 0.006 265),oklch(0.34 0.01 265));
+--vibeui-pricing-019-accent:light-dark(oklch(0.52 0.17 265),oklch(0.72 0.15 265));
+--vibeui-pricing-019-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 265));
+--vibeui-pricing-019-warn:light-dark(oklch(0.65 0.16 55),oklch(0.79 0.15 55));
 --vibeui-pricing-019-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -129,6 +135,39 @@ const DEFAULT_GAINS = [
   "Счета и закрывающие документы",
 ]
 
+const DEFAULT_LABELS: Record<string, string> = {
+  current: "Текущий план",
+  next: "Следующий шаг",
+}
+
+function fill(template: string, values: Record<string, number>): string {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Блок текущего плана и апгрейда: расход лимитов на <progress> и предложение рядом. */
 export function Pricing019({
   currentName = "Тариф «Команда»",
@@ -143,12 +182,23 @@ export function Pricing019({
   upgradeGains = DEFAULT_GAINS,
   upgradeAction = { label: "Перейти на «Агентство»", href: "#" },
   manageAction = { label: "Управлять подпиской", href: "#" },
+  labels = DEFAULT_LABELS,
+  usageText = "{used} из {limit}",
   accent,
+  background = "",
   className,
   style,
 }: Pricing019Props) {
+  const text = (key: string) => labels[key] ?? DEFAULT_LABELS[key]
+
   const palette = {
     ...(accent ? { "--vibeui-pricing-019-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pricing-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -164,7 +214,7 @@ export function Pricing019({
       >
         <div data-part="shell">
           <div data-part="panel">
-            <p data-part="tag">Текущий план</p>
+            <p data-part="tag">{text("current")}</p>
             <h2>{currentName}</h2>
             <p data-part="line">
               <span data-part="amount">{currentPrice}</span>
@@ -183,7 +233,10 @@ export function Pricing019({
                     <span data-part="usagehead">
                       <span>{entry.label}</span>
                       <span data-part="value">
-                        {entry.used} из {entry.limit}
+                        {fill(usageText, {
+                          used: entry.used,
+                          limit: entry.limit,
+                        })}
                         {entry.unit ? ` ${entry.unit}` : ""}
                       </span>
                     </span>
@@ -203,7 +256,7 @@ export function Pricing019({
           </div>
 
           <div data-part="panel" data-upgrade="true">
-            <p data-part="tag">Следующий шаг</p>
+            <p data-part="tag">{text("next")}</p>
             <h2>{upgradeName}</h2>
             <p data-part="line">
               <span data-part="amount">{upgradePrice}</span>

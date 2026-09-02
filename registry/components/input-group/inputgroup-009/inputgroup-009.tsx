@@ -8,6 +8,13 @@ export type Inputgroup009Props = Omit<
   label?: string
   error?: string
   domains?: string[]
+  /** Подпись списка доменов для чтения вслух. */
+  domainLabel?: string
+  /** Имя пользователя в поле по умолчанию. */
+  user?: string
+  hint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,17 +24,20 @@ export type Inputgroup009Props = Omit<
 // рамка ставится на группу, aria-invalid — на оба поля, а aria-describedby
 // у обоих указывает на одно сообщение: озвучено оно будет один раз, с какой
 // бы половины ни начали.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-009"]){
---vibeui-inputgroup-009-surface:oklch(1 0 0);
---vibeui-inputgroup-009-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-009-fg:oklch(0.23 0.014 265);
---vibeui-inputgroup-009-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-009-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-009-fixed:oklch(0.96 0.004 265);
---vibeui-inputgroup-009-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-009-accent:oklch(0.52 0.17 265);
---vibeui-inputgroup-009-bad:oklch(0.55 0.2 25);
+--vibeui-inputgroup-009-surface:transparent;
+--vibeui-inputgroup-009-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-inputgroup-009-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-inputgroup-009-field:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.013 265));
+--vibeui-inputgroup-009-fixed:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
+--vibeui-inputgroup-009-border:light-dark(oklch(0.86 0.008 265),oklch(0.44 0.013 265));
+--vibeui-inputgroup-009-accent:light-dark(oklch(0.52 0.17 265),oklch(0.72 0.15 265));
+--vibeui-inputgroup-009-bad:light-dark(oklch(0.55 0.2 25),oklch(0.72 0.17 25));
 --vibeui-inputgroup-009-radius:0.75rem;
 --vibeui-inputgroup-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -100,6 +110,28 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-inputgroup-009-mut
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сцепка с ошибкой на всей группе: красная рамка и одно сообщение на два поля.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -108,6 +140,10 @@ export function Inputgroup009({
   label = "Корпоративная почта",
   error = "Такой почты нет в вашей организации — проверьте имя и домен.",
   domains = ["vibeui.ru", "vibeui.com", "team.local"],
+  domainLabel = "Домен",
+  user = "anna.orlova",
+  hint = "Имя и домен уходят двумя полями формы.",
+  background = "",
   accent,
   className,
   style,
@@ -115,6 +151,12 @@ export function Inputgroup009({
 }: Inputgroup009Props) {
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-009-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -140,8 +182,8 @@ export function Inputgroup009({
             type="text"
             autoComplete="username"
             spellCheck={false}
-            placeholder="anna.orlova"
-            defaultValue="anna.orlova"
+            placeholder={user}
+            defaultValue={user}
             aria-invalid={bad}
             aria-describedby={described}
           />
@@ -150,7 +192,7 @@ export function Inputgroup009({
           </span>
           <select
             name={`${name}-domain`}
-            aria-label="Домен"
+            aria-label={domainLabel}
             defaultValue={domains[0]}
             aria-invalid={bad}
             aria-describedby={described}
@@ -185,7 +227,7 @@ export function Inputgroup009({
           </p>
         ) : (
           <p data-part="hint" id={`${name}-hint`}>
-            Имя и домен уходят двумя полями формы.
+            {hint}
           </p>
         )}
       </div>

@@ -9,6 +9,9 @@ export type Dialog014Props = {
   seconds?: number
   stayLabel?: string
   leaveLabel?: string
+  accent?: string
+  /** Подложка окна и кнопки. Пусто — собственная подложка по теме. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -19,13 +22,15 @@ export type Dialog014Props = {
 // выделена: выход по бездействию должен требовать бездействия, а не клика.
 const STYLES = `
 :where([data-vibeui-block="dialog-014"]){
---vibeui-dialog-014-fg:oklch(0.22 0.016 265);
---vibeui-dialog-014-muted:oklch(0.5 0.014 265);
---vibeui-dialog-014-bg:oklch(1 0 0);
---vibeui-dialog-014-track:oklch(0.93 0.006 265);
---vibeui-dialog-014-border:oklch(0.89 0.006 265);
---vibeui-dialog-014-warn:oklch(0.68 0.15 70);
---vibeui-dialog-014-accent:oklch(0.55 0.2 262);
+--vibeui-dialog-014-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
+--vibeui-dialog-014-muted:light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dialog-014-bg:light-dark(oklch(1 0 0),oklch(0.23 0.012 265));
+--vibeui-dialog-014-mark:light-dark(oklch(0.45 0.11 70),oklch(0.86 0.12 70));
+--vibeui-dialog-014-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 262));
+--vibeui-dialog-014-track:light-dark(oklch(0.93 0.006 265),oklch(0.3 0.012 265));
+--vibeui-dialog-014-border:light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dialog-014-warn:light-dark(oklch(0.68 0.15 70),oklch(0.78 0.15 70));
+--vibeui-dialog-014-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-dialog-014-radius:1rem;
 --vibeui-dialog-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -41,10 +46,10 @@ background:var(--vibeui-dialog-014-bg);color:var(--vibeui-dialog-014-fg);
 [data-vibeui-dialog-014-window]{
 position:fixed;inset:0;margin:auto;height:fit-content;
 width:min(25rem,calc(100vw - 2rem));box-sizing:border-box;padding:1.375rem;overflow:hidden;
-border:1px solid var(--vibeui-dialog-014-border,oklch(0.89 0.006 265));
+border:1px solid var(--vibeui-dialog-014-border,light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265)));
 border-radius:var(--vibeui-dialog-014-radius,1rem);
-background:var(--vibeui-dialog-014-bg,oklch(1 0 0));
-color:var(--vibeui-dialog-014-fg,oklch(0.22 0.016 265));
+background:var(--vibeui-dialog-014-bg,light-dark(oklch(1 0 0),oklch(0.23 0.012 265)));
+color:var(--vibeui-dialog-014-fg,light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265)));
 font-family:var(--vibeui-dialog-014-font,ui-sans-serif,system-ui,sans-serif);
 box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 45%);
 opacity:0;transform:scale(0.97);
@@ -57,20 +62,20 @@ transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,ove
 [data-vibeui-dialog-014-window] [data-part="mark"]{
 display:flex;align-items:center;justify-content:center;flex:none;
 width:2rem;height:2rem;border-radius:9999px;
-background:color-mix(in oklab,var(--vibeui-dialog-014-warn,oklch(0.68 0.15 70)) 16%,transparent);
-color:color-mix(in oklab,var(--vibeui-dialog-014-warn,oklch(0.68 0.15 70)) 75%,black);
+background:color-mix(in oklab,var(--vibeui-dialog-014-warn,light-dark(oklch(0.68 0.15 70),oklch(0.78 0.15 70))) 16%,transparent);
+color:var(--vibeui-dialog-014-mark,light-dark(oklch(0.45 0.11 70),oklch(0.86 0.12 70)));
 font-size:0.875rem;font-weight:800;line-height:1;
 }
 [data-vibeui-dialog-014-window] [data-part="title"]{margin:0;font-size:1rem;font-weight:620;line-height:1.35}
-[data-vibeui-dialog-014-window] [data-part="description"]{margin:0;font-size:0.875rem;line-height:1.55;color:var(--vibeui-dialog-014-muted,oklch(0.5 0.014 265))}
+[data-vibeui-dialog-014-window] [data-part="description"]{margin:0;font-size:0.875rem;line-height:1.55;color:var(--vibeui-dialog-014-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)))}
 [data-vibeui-dialog-014-window] [data-part="track"]{
 margin-top:1rem;height:0.25rem;border-radius:9999px;overflow:hidden;
-background:var(--vibeui-dialog-014-track,oklch(0.93 0.006 265));
+background:var(--vibeui-dialog-014-track,light-dark(oklch(0.93 0.006 265),oklch(0.3 0.012 265)));
 }
 /* Полоса убывает ровно столько секунд, сколько названо в тексте. */
 [data-vibeui-dialog-014-window] [data-part="bar"]{
 display:block;height:100%;border-radius:inherit;transform-origin:left center;
-background:var(--vibeui-dialog-014-warn,oklch(0.68 0.15 70));
+background:var(--vibeui-dialog-014-warn,light-dark(oklch(0.68 0.15 70),oklch(0.78 0.15 70)));
 animation:vibeui-dialog-014-drain linear forwards;
 animation-duration:calc(var(--vibeui-dialog-014-seconds,60) * 1s);
 }
@@ -81,16 +86,38 @@ appearance:none;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:600;
 display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;
 border-radius:0.5rem;border:1px solid transparent;
 }
-[data-vibeui-dialog-014-window] [data-part="leave"]{background:transparent;color:inherit;border-color:var(--vibeui-dialog-014-border,oklch(0.89 0.006 265))}
-[data-vibeui-dialog-014-window] [data-part="stay"]{background:var(--vibeui-dialog-014-accent,oklch(0.55 0.2 262));color:oklch(1 0 0)}
+[data-vibeui-dialog-014-window] [data-part="leave"]{background:transparent;color:inherit;border-color:var(--vibeui-dialog-014-border,light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265)))}
+[data-vibeui-dialog-014-window] [data-part="stay"]{background:var(--vibeui-dialog-014-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));color:var(--vibeui-dialog-014-on-accent,light-dark(oklch(1 0 0),oklch(0.18 0.03 262)))}
 [data-vibeui-dialog-014-window] [data-part="stay"]:hover{filter:brightness(0.94)}
-[data-vibeui-dialog-014-window] :focus-visible{outline:2px solid var(--vibeui-dialog-014-accent,oklch(0.55 0.2 262));outline-offset:2px}
+[data-vibeui-dialog-014-window] :focus-visible{outline:2px solid var(--vibeui-dialog-014-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-014"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-014-window]{transition:none!important;opacity:1;transform:none}
 [data-vibeui-dialog-014-window] [data-part="bar"]{transform:scaleX(1)}
 }
 `
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая подложка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Окно истекающей сессии: полоса убывает столько же, сколько названо в тексте.
@@ -104,11 +131,20 @@ export function Dialog014({
   seconds = 60,
   stayLabel = "Остаться",
   leaveLabel = "Выйти",
+  accent,
+  background = "",
   className,
   style,
 }: Dialog014Props) {
   const palette = {
     "--vibeui-dialog-014-seconds": seconds,
+    ...(accent ? { "--vibeui-dialog-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dialog-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

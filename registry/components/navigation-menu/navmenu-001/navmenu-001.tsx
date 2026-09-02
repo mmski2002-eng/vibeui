@@ -19,6 +19,10 @@ export type Navmenu001Entry = {
 
 export type Navmenu001Props = {
   entries?: Navmenu001Entry[]
+  /** Подпись навигации для скринридера. */
+  label?: string
+  /** Подложка полосы и панели. Пусто — своя палитра компонента. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -30,12 +34,13 @@ export type Navmenu001Props = {
 // навигации, поэтому панель встаёт под ней целиком, а не под отдельной кнопкой.
 const STYLES = `
 :where([data-vibeui-block="navmenu-001"]){
---vibeui-navmenu-001-bg:oklch(1 0 0);
---vibeui-navmenu-001-fg:oklch(0.22 0.014 265);
---vibeui-navmenu-001-muted:oklch(0.55 0.014 265);
---vibeui-navmenu-001-border:oklch(0.91 0.006 265);
---vibeui-navmenu-001-hover:oklch(0.55 0.02 265 / 8%);
---vibeui-navmenu-001-accent:oklch(0.55 0.2 262);
+--vibeui-navmenu-001-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
+--vibeui-navmenu-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-navmenu-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-navmenu-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-navmenu-001-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 12%));
+--vibeui-navmenu-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-navmenu-001-shadow:light-dark(oklch(0.2 0.03 265 / 40%),oklch(0 0 0 / 70%));
 --vibeui-navmenu-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="navmenu-001"]{
@@ -72,7 +77,7 @@ width:min(40rem,92vw);padding:1rem;box-sizing:border-box;
 background:var(--vibeui-navmenu-001-bg);color:var(--vibeui-navmenu-001-fg);
 border:1px solid var(--vibeui-navmenu-001-border);border-radius:0.875rem;
 font-family:var(--vibeui-navmenu-001-font);
-box-shadow:0 24px 48px -24px oklch(0.2 0.03 265 / 40%);
+box-shadow:0 24px 48px -24px var(--vibeui-navmenu-001-shadow);
 }
 /* Якорь — вся полоса: панель широкая и не должна прыгать за отдельной кнопкой. */
 @supports (anchor-name: --a){
@@ -140,17 +145,48 @@ const DEFAULT_ENTRIES: Navmenu001Entry[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Навигация сайта с выпадающей панелью из колонок ссылок с описаниями.
  * Один файл, ноль зависимостей, собственная палитра, клиентского JS нет.
  */
 export function Navmenu001({
   entries = DEFAULT_ENTRIES,
+  label = "Основная навигация",
+  background = "",
   accent,
   className,
   style,
 }: Navmenu001Props) {
   const palette = {
     ...(accent ? { "--vibeui-navmenu-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-navmenu-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -161,7 +197,7 @@ export function Navmenu001({
       </style>
       <nav
         data-vibeui-block="navmenu-001"
-        aria-label="Основная навигация"
+        aria-label={label}
         className={className}
         style={palette}
       >

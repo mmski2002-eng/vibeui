@@ -5,7 +5,7 @@ import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
 export type Textarea007Props = Omit<
   ComponentPropsWithoutRef<"div">,
-  "children" | "onChange"
+  "children" | "onChange" | "defaultValue"
 > & {
   label?: string
   placeholder?: string
@@ -13,6 +13,14 @@ export type Textarea007Props = Omit<
   wordsPerMinute?: number
   /** Целевой объём текста: по нему считается полоса прогресса. */
   target?: number
+  /** Текст, с которого поле начинает жизнь. */
+  defaultValue?: string
+  /** Подписи счётчиков: words, characters, minutes. */
+  statsText?: Record<string, string>
+  /** Подпись полосы для скринридера: {percent} подставляется числом. */
+  progressLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,15 +29,18 @@ export type Textarea007Props = Omit<
 // поэтому под полем стоят слова, знаки и время, а полоса показывает, далеко
 // ли до целевого объёма. Слова считаются по разделителям, а не по пробелам:
 // иначе двойной пробел добавлял бы лишнее слово.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="textarea-007"]){
---vibeui-textarea-007-bg:oklch(1 0 0);
---vibeui-textarea-007-fg:oklch(0.22 0.014 265);
---vibeui-textarea-007-muted:oklch(0.55 0.014 265);
---vibeui-textarea-007-border:oklch(0.9 0.006 265);
---vibeui-textarea-007-field:oklch(0.985 0.002 265);
---vibeui-textarea-007-track:oklch(0.93 0.005 265);
---vibeui-textarea-007-accent:oklch(0.52 0.15 165);
+--vibeui-textarea-007-bg:transparent;
+--vibeui-textarea-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-textarea-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-textarea-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-textarea-007-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-textarea-007-track:light-dark(oklch(0.93 0.005 265),oklch(0.33 0.011 265));
+--vibeui-textarea-007-accent:light-dark(oklch(0.52 0.15 165),oklch(0.74 0.14 165));
 --vibeui-textarea-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-textarea-007-progress:0%;
 }
@@ -79,6 +90,34 @@ font-weight:700;font-variant-numeric:tabular-nums;color:var(--vibeui-textarea-00
 const START =
   "Компонент из VibeUI ставится одной командой, живёт в одном файле и не тянет зависимостей. Скопируйте инструкцию для агента — и он поставит блок сам, сохранив анимации, типографику и отступы."
 
+const STATS_TEXT: Record<string, string> = {
+  words: "слов",
+  characters: "знаков",
+  minutes: "мин чтения",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Поле со счётчиком слов и временем чтения, с полосой до целевого объёма.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -88,13 +127,17 @@ export function Textarea007({
   placeholder = "Первый абзац задаёт тон всему тексту",
   wordsPerMinute = 200,
   target = 120,
+  defaultValue = START,
+  statsText = STATS_TEXT,
+  progressLabel = "Объём текста: {percent}% от цели",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Textarea007Props) {
   const id = useId()
-  const [value, setValue] = useState(START)
+  const [value, setValue] = useState(defaultValue)
   const words = value.split(/[\s\n]+/u).filter(Boolean).length
   const minutes = Math.max(1, Math.round(words / wordsPerMinute))
   const progress = Math.min(100, Math.round((words / target) * 100))
@@ -102,6 +145,12 @@ export function Textarea007({
   const palette = {
     "--vibeui-textarea-007-progress": `${progress}%`,
     ...(accent ? { "--vibeui-textarea-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-textarea-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -127,7 +176,7 @@ export function Textarea007({
         <div
           data-part="bar"
           role="progressbar"
-          aria-label={`Объём текста: ${progress}% от цели`}
+          aria-label={progressLabel.replace("{percent}", String(progress))}
           aria-valuenow={progress}
           aria-valuemin={0}
           aria-valuemax={100}
@@ -136,13 +185,16 @@ export function Textarea007({
         </div>
         <ul data-part="stats" id={`${id}-stats`}>
           <li>
-            <span data-part="number">{words}</span> слов
+            <span data-part="number">{words}</span>{" "}
+            {statsText.words ?? STATS_TEXT.words}
           </li>
           <li>
-            <span data-part="number">{value.length}</span> знаков
+            <span data-part="number">{value.length}</span>{" "}
+            {statsText.characters ?? STATS_TEXT.characters}
           </li>
           <li>
-            ≈ <span data-part="number">{minutes}</span> мин чтения
+            ≈ <span data-part="number">{minutes}</span>{" "}
+            {statsText.minutes ?? STATS_TEXT.minutes}
           </li>
         </ul>
       </div>

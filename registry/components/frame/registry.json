@@ -32,15 +32,19 @@
             "слот для содержимого — внутрь встаёт картинка, iframe или другой блок",
             "подпись под кадром, а не поверх него",
             "ограничение ширины у варианта phone: без него это не телефон",
-            "figure и figcaption вместо пары div: подпись должна быть связана с кадром"
+            "figure и figcaption вместо пары div: подпись должна быть связана с кадром",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "variant — browser, phone или plain",
             "url, title и caption",
             "скругление и толщину рамки",
-            "содержимое слота"
+            "содержимое слота",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Рамка декоративна: alt и подписи должны нести смысл сами, без опоры на неё.",
             "Скриншот внутри не масштабируется по высоте: задайте пропорцию картинке или возьмите aspect-001.",
             "Не рисуйте кнопки «назад» и «обновить»: они выглядят рабочими и вводят в заблуждение.",
@@ -68,6 +72,12 @@
             "type": "text",
             "default": "Каталог компонентов в браузере",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -81,15 +91,19 @@
                 "the content slot — an image, an iframe or another block goes inside",
                 "the caption below the frame rather than over it",
                 "the width cap on the phone variant: without it it is not a phone",
-                "figure and figcaption instead of two divs: the caption must belong to the frame"
+                "figure and figcaption instead of two divs: the caption must belong to the frame",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "variant — browser, phone or plain",
                 "url, title and caption",
                 "the corner radius and border weight",
-                "the slot content"
+                "the slot content",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The frame is decorative: alt text and captions must carry the meaning alone.",
                 "A screenshot inside does not scale by height: set a ratio or use aspect-001.",
                 "Do not draw back and reload buttons: they look functional and mislead.",
@@ -108,11 +122,22 @@
               "caption": {
                 "label": "Caption",
                 "default": "The catalog in a browser"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Demo Frame"
+            "title": "Demo Frame",
+            "preview": {
+              "props": {
+                "title": "The VibeUI catalog",
+                "url": "vibeui.ru/components",
+                "caption": "The component catalog in a browser"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["variant", "background"]
       }
     },
     {
@@ -130,7 +155,7 @@
           "target": "@components/vibeui/frame-002.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Соотношение сторон объявлено переменной --vibeui-frame-002-ratio на самой рамке, а варианты 4:3, 1:1 и 21:9 переопределяют её через атрибут data-ratio — так пропорция задаётся одной строкой, а не набором классов. Вложенный iframe, img или video растягиваются правилом для :where(iframe,img,video) на inset:0: без него iframe держит собственные 150px высоты и пропорция рамки перестаёт что-либо значить. Заглушка с треугольником нарисована рамками через ::before, чтобы не тащить svg. Компонент несёт свою белую подложку — тёмный экран внутри белой карточки читается на любом фоне каталога.",
+      "docs": "Серверный компонент, хуков нет. Соотношение сторон объявлено переменной --vibeui-frame-002-ratio на самой рамке, а варианты 4:3, 1:1 и 21:9 переопределяют её через атрибут data-ratio — так пропорция задаётся одной строкой, а не набором классов. Вложенный iframe, img или video растягиваются правилом для :where(iframe,img,video) на inset:0: без него iframe держит собственные 150px высоты и пропорция рамки перестаёт что-либо значить. Заглушка с треугольником нарисована рамками через ::before, чтобы не тащить svg. Подложки у рамки нет: она ложится на фон страницы, а тёмный экран внутри остаётся тёмным в обеих темах — это экран, а не поверхность карточки.",
       "meta": {
         "tags": ["frame", "video", "embed", "aspect-ratio"],
         "preview": {
@@ -146,15 +171,19 @@
             "растягивание вложенного iframe на inset:0 — иначе он остаётся высотой 150px и ломает пропорцию",
             "overflow:hidden на рамке: у видеоплееров свои скруглённые углы, которые вылезают за границу",
             "заглушку с треугольником: пустой тёмный прямоугольник читается как ошибка загрузки",
-            "собственную светлую подложку: тёмный экран без неё сливается с тёмным фоном каталога"
+            "тёмный экран внутри рамки: это подложка ролика, и светлеть вместе с темой она не должна",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "пропорцию через ratio: 16:9 для роликов, 1:1 для сторис, 21:9 для трейлеров",
             "подпись заглушки через title",
             "текст под рамкой через caption",
-            "ширину рамки через max-width"
+            "ширину рамки через max-width",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Соотношение сторон поддерживается всеми актуальными браузерами, но в очень старых движках рамка схлопнется в ноль высоты.",
             "object-fit:cover обрезает картинку по краям: если кадр важен целиком, поменяйте на contain.",
             "Внутрь допустим ровно один медиа-узел — двум абсолютным детям рамка не поможет.",
@@ -175,6 +204,12 @@
             "type": "text",
             "default": "Обзор каталога VibeUI",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -188,15 +223,19 @@
                 "stretching the nested iframe to inset:0 — otherwise it stays 150px tall and breaks the ratio",
                 "overflow:hidden on the frame: video players carry their own rounded corners that spill outside",
                 "the stub with the play triangle: an empty dark rectangle reads as a loading error",
-                "the component's own light surface: without it the dark screen merges into a dark catalog background"
+                "the dark screen inside the frame: it is the video surface and must not lighten with the theme",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the proportion through ratio: 16:9 for clips, 1:1 for stories, 21:9 for trailers",
                 "the stub caption through title",
                 "the text under the frame through caption",
-                "the frame width through max-width"
+                "the frame width through max-width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "aspect-ratio is supported by every current browser, but in very old engines the frame collapses to zero height.",
                 "object-fit:cover crops the edges: switch it to contain when the whole frame matters.",
                 "Exactly one media node belongs inside — the frame cannot help two absolutely positioned children.",
@@ -212,11 +251,21 @@
               "title": {
                 "label": "Stub caption",
                 "default": "VibeUI catalog tour"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Aspect Video Frame"
+            "title": "Aspect Video Frame",
+            "preview": {
+              "props": {
+                "title": "VibeUI catalog tour",
+                "caption": "The clip is still loading — its space is already reserved"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["ratio", "background"]
       }
     },
     {
@@ -234,7 +283,7 @@
           "target": "@components/vibeui/frame-003.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Хром окна собран из трёх полос: вкладка со скруглением только сверху, строка адреса и тело со слотом. Замок в адресной строке нарисован блоком и ::before, а не эмодзи: эмодзи меняет начертание от системы и сбивает вертикальный ритм строки. Адрес обрезается многоточием (overflow + text-overflow), иначе длинный URL растягивает окно и ломает раскладку на телефоне. Хром помечен aria-hidden: для скринридера это декорация, а не навигация. Собственная белая подложка обязательна — вся типографика окна тёмная.",
+      "docs": "Серверный компонент, хуков нет. Хром окна собран из трёх полос: вкладка со скруглением только сверху, строка адреса и тело со слотом. Замок в адресной строке нарисован блоком и ::before, а не эмодзи: эмодзи меняет начертание от системы и сбивает вертикальный ритм строки. Адрес обрезается многоточием (overflow + text-overflow), иначе длинный URL растягивает окно и ломает раскладку на телефоне. Хром помечен aria-hidden: для скринридера это декорация, а не навигация. Подложки у окна нет: тело прозрачно и лежит на фоне страницы, а полосы хрома заданы парами светлот через light-dark() и следуют теме окружения.",
       "meta": {
         "tags": ["frame", "browser", "mockup", "screenshot"],
         "preview": {
@@ -250,15 +299,19 @@
             "обрезку адреса многоточием — длинный URL иначе растягивает окно и ломает телефон",
             "замок, нарисованный CSS: эмодзи меняет начертание от системы и сбивает строку",
             "условность хрома: подробная подделка браузера начинает спорить с интерфейсом вокруг",
-            "собственную светлую подложку: вся типографика окна тёмная и на тёмном фоне пропадает"
+            "разницу светлот вкладки и полосы хрома: активная вкладка светлее панели в обеих темах",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "адрес в строке через url",
             "заголовок вкладки через tab",
             "содержимое окна — картинкой, iframe или любым блоком в слоте",
-            "ширину окна через max-width"
+            "ширину окна через max-width",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Вкладка одна: ряд из трёх вкладок требует своей раскладки и проверки на узкой ширине.",
             "Картинку внутри отдавайте в пропорции окна — рамка её не обрезает и не масштабирует.",
             "Стрелки навигации не кнопки: если нужен рабочий переход, ставьте настоящие button.",
@@ -279,6 +332,12 @@
             "type": "text",
             "default": "VibeUI — каталог компонентов",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -292,15 +351,19 @@
                 "the ellipsis truncation of the address — a long URL otherwise stretches the window and breaks phones",
                 "the lock drawn in CSS: an emoji changes shape per system and knocks the line out of rhythm",
                 "the deliberately loose chrome: a detailed browser fake starts arguing with the surrounding UI",
-                "the component's own light surface: all of the window typography is dark and vanishes on a dark background"
+                "the lightness gap between the tab and the chrome strip: the active tab stays lighter than the panel in both themes",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the address in the bar through url",
                 "the tab caption through tab",
                 "the window content — an image, an iframe or any block in the slot",
-                "the window width through max-width"
+                "the window width through max-width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is a single tab: a row of three needs its own layout and a check on narrow widths.",
                 "Supply the inner image in the window's proportion — the frame neither crops nor scales it.",
                 "The navigation arrows are not buttons: use real buttons if a working action is required.",
@@ -316,11 +379,21 @@
               "tab": {
                 "label": "Tab",
                 "default": "VibeUI — component catalog"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Browser Window Frame"
+            "title": "Browser Window Frame",
+            "preview": {
+              "props": {
+                "url": "vibeui.ru/components/frame-003",
+                "tab": "VibeUI — component catalog"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -338,7 +411,7 @@
           "target": "@components/vibeui/frame-004.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Экран держит aspect-ratio 9 / 19.5 вместо фиксированной высоты, а корпус ограничен width:min(100%, 15rem) — рамка ужимается на телефоне, но не растекается на десктопе. Островок вынесен из потока в absolute: в потоке он сдвигал бы статус-строку вниз и съедал верх скриншота. Сигнал и батарея нарисованы блоками и градиентом, без иконочного шрифта. Корпус светлый с тонкой обводкой сознательно: тёмный корпус на тёмной подложке каталога сливается, и от телефона остаётся плавающий белый прямоугольник. Статус-строка помечена aria-hidden — это декорация макета.",
+      "docs": "Серверный компонент, хуков нет. Экран держит aspect-ratio 9 / 19.5 вместо фиксированной высоты, а корпус ограничен width:min(100%, 15rem) — рамка ужимается на телефоне, но не растекается на десктопе. Островок вынесен из потока в absolute: в потоке он сдвигал бы статус-строку вниз и съедал верх скриншота. Сигнал и батарея нарисованы блоками и градиентом, без иконочного шрифта. Корпус и обводка заданы парами светлот через light-dark() и следуют теме окружения, а экран по умолчанию прозрачен: под скриншотом видно фон страницы, а не собственная плашка компонента. Статус-строка помечена aria-hidden — это декорация макета.",
       "meta": {
         "tags": ["frame", "phone", "mockup", "screenshot"],
         "preview": {
@@ -353,16 +426,21 @@
             "пропорцию экрана вместо фиксированной высоты: иначе скриншот обрезается или получает поля",
             "островок в absolute — в потоке он сдвигает статус-строку и съедает верх скриншота",
             "ограничение ширины корпуса: телефон шириной с экран перестаёт читаться как телефон",
-            "светлый корпус с тонкой обводкой: тёмный сливается с тёмным фоном каталога",
-            "aria-hidden на статус-строке: время и батарея — декорация макета, а не данные"
+            "контраст корпуса и обводки: в обеих темах корпус отделён от фона страницы, иначе от телефона остаётся плавающий прямоугольник",
+            "aria-hidden на статус-строке: время и батарея — декорация макета, а не данные",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "время в статус-строке через time",
             "надпись оператора через carrier",
             "содержимое экрана — картинкой или блоком в слоте",
-            "ширину корпуса через переменную --vibeui-frame-004-width"
+            "ширину корпуса через переменную --vibeui-frame-004-width",
+            "stubTitle — заголовок заглушки экрана",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Скриншот масштабируется по object-fit:cover: узкая картинка потеряет края.",
             "Пропорция 9 / 19.5 соответствует современным телефонам; для старых моделей поменяйте её на 9 / 16.",
             "Островок и полоса домой — детали конкретной платформы, на Android-макете их убирают.",
@@ -383,6 +461,19 @@
             "type": "text",
             "default": "VibeUI",
             "maxLength": 12
+          },
+          {
+            "prop": "stubTitle",
+            "label": "Заголовок заглушки",
+            "type": "text",
+            "default": "Сегодня",
+            "maxLength": 16
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -395,16 +486,21 @@
                 "the screen ratio instead of a fixed height: otherwise the screenshot is cropped or gets bars",
                 "the island in absolute position — in flow it pushes the status bar down and eats the screenshot",
                 "the body width cap: a phone as wide as the viewport stops reading as a phone",
-                "the light body with a thin outline: a dark one merges into the dark catalog background",
-                "aria-hidden on the status bar: the clock and battery are mockup decoration, not data"
+                "the contrast between the body and its outline: in both themes the body stays separated from the page background, otherwise only a floating rectangle is left",
+                "aria-hidden on the status bar: the clock and battery are mockup decoration, not data",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the clock in the status bar through time",
                 "the carrier caption through carrier",
                 "the screen content — an image or a block in the slot",
-                "the body width through the --vibeui-frame-004-width variable"
+                "the body width through the --vibeui-frame-004-width variable",
+                "stubTitle — the heading of the screen stub",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The screenshot is scaled with object-fit:cover: a narrow image loses its edges.",
                 "The 9 / 19.5 ratio matches modern phones; switch it to 9 / 16 for older models.",
                 "The island and the home bar are platform details — drop them in an Android mockup.",
@@ -420,11 +516,26 @@
               "carrier": {
                 "label": "Carrier",
                 "default": "VibeUI"
+              },
+              "stubTitle": {
+                "label": "Stub heading",
+                "default": "Today"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Phone Screenshot Frame"
+            "title": "Phone Screenshot Frame",
+            "preview": {
+              "props": {
+                "time": "9:41",
+                "carrier": "VibeUI",
+                "stubTitle": "Today"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -442,7 +553,7 @@
           "target": "@components/vibeui/frame-005.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Крышка — обычный блок со скруглением сверху, экран держит aspect-ratio 16 / 10 (стандарт ноутбучной матрицы; 16 / 9 читается как телевизор). Основание нарисовано clip-path:polygon и потому сужается книзу без второго прямоугольника и без изображений; оно чуть шире крышки, что и даёт силуэт устройства. Оттенок корпуса переключается атрибутом data-tone: silver и graphite меняют три переменные палитры разом. Экран белый, поэтому конструкция читается и на тёмной подложке каталога; вся типографика демо-содержимого лежит внутри белого экрана.",
+      "docs": "Серверный компонент, хуков нет. Крышка — обычный блок со скруглением сверху, экран держит aspect-ratio 16 / 10 (стандарт ноутбучной матрицы; 16 / 9 читается как телевизор). Основание нарисовано clip-path:polygon и потому сужается книзу без второго прямоугольника и без изображений; оно чуть шире крышки, что и даёт силуэт устройства. Оттенок корпуса переключается атрибутом data-tone: silver и graphite меняют три переменные палитры разом. Экран по умолчанию прозрачен: сквозь него виден фон страницы, а корпус, обводка и типографика заданы парами светлот через light-dark() и следуют теме окружения. Оттенок graphite остаётся фиксированным — это отделка корпуса, а не тема.",
       "meta": {
         "tags": ["frame", "laptop", "device", "mockup"],
         "preview": {
@@ -457,16 +568,20 @@
             "пропорцию экрана 16 / 10: на 16 / 9 силуэт перестаёт читаться как ноутбук",
             "трапецию на clip-path — прямоугольное основание превращает устройство в две плашки",
             "основание чуть шире крышки: ровно по ширине оно теряет перспективу",
-            "белый экран внутри корпуса: он держит контраст на любой подложке каталога",
-            "overflow:hidden на экране — скриншот со своими углами иначе вылезает за скругление"
+            "фиксированный оттенок graphite: это отделка корпуса, а не тёмная тема, и светлеть вместе с окружением он не должен",
+            "overflow:hidden на экране — скриншот со своими углами иначе вылезает за скругление",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок демо-экрана через title",
             "оттенок корпуса через tone: silver или graphite",
             "содержимое экрана — картинкой или блоком в слоте",
-            "ширину устройства через max-width"
+            "ширину устройства через max-width",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Основание шире крышки на 8%: при вложении в узкий контейнер с overflow:hidden его срежет.",
             "Скриншот отдавайте в пропорции 16 / 10, иначе object-fit обрежет края.",
             "Клавиатуры и тачпада нет намеренно: детали корпуса спорят с содержимым экрана.",
@@ -487,6 +602,12 @@
             "type": "select",
             "default": "silver",
             "options": ["silver", "graphite"]
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -499,16 +620,20 @@
                 "the 16 / 10 screen ratio: at 16 / 9 the silhouette stops reading as a laptop",
                 "the clip-path trapezoid — a rectangular base turns the device into two slabs",
                 "the base being slightly wider than the lid: flush widths lose the perspective",
-                "the white screen inside the body: it keeps contrast on any catalog background",
-                "overflow:hidden on the screen — a screenshot with its own corners otherwise spills past the radius"
+                "the fixed graphite finish: it is a body colour, not a dark theme, and must not lighten with the surroundings",
+                "overflow:hidden on the screen — a screenshot with its own corners otherwise spills past the radius",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the demo screen heading through title",
                 "the body finish through tone: silver or graphite",
                 "the screen content — an image or a block in the slot",
-                "the device width through max-width"
+                "the device width through max-width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The base is 8% wider than the lid: a narrow parent with overflow:hidden will clip it.",
                 "Supply the screenshot in a 16 / 10 ratio, otherwise object-fit crops the edges.",
                 "There is deliberately no keyboard or trackpad: body details argue with the screen content.",
@@ -524,11 +649,21 @@
               "tone": {
                 "label": "Body",
                 "default": "silver"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Laptop Device Frame"
+            "title": "Laptop Device Frame",
+            "preview": {
+              "props": {
+                "title": "Project dashboard",
+                "tone": "silver"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["tone", "background"]
       }
     },
     {
@@ -546,7 +681,7 @@
           "target": "@components/vibeui/frame-006.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Разметка — figure с figcaption внутри, а не картинка и абзац рядом: только так связь изображения и подписи видна скринридеру. Номер рисунка вынесен в отдельный элемент с white-space:nowrap, поэтому «Рис. 12» не разрывается переносом; текст подписи и строка источника отличаются кеглем и цветом, иначе всё склеивается в одно предложение. Медиа-слот держит пропорцию 16 / 10, чтобы подпись не уезжала при разной высоте картинок. Выравнивание переключается атрибутом data-align. Подложка светлая: вся типографика подписи тёмная.",
+      "docs": "Серверный компонент, хуков нет. Разметка — figure с figcaption внутри, а не картинка и абзац рядом: только так связь изображения и подписи видна скринридеру. Номер рисунка вынесен в отдельный элемент с white-space:nowrap, поэтому «Рис. 12» не разрывается переносом; текст подписи и строка источника отличаются кеглем и цветом, иначе всё склеивается в одно предложение. Медиа-слот держит пропорцию 16 / 10, чтобы подпись не уезжала при разной высоте картинок. Выравнивание переключается атрибутом data-align. Подложки у рамки нет: она ложится на фон страницы, а палитра задана парами светлот через light-dark() и следует теме окружения.",
       "meta": {
         "tags": ["frame", "caption", "figure", "gallery"],
         "preview": {
@@ -562,15 +697,22 @@
             "номер рисунка отдельным элементом с nowrap — иначе «Рис. 12» рвётся переносом",
             "разный кегль подписи и источника: слитые строки читаются как одно предложение",
             "пропорцию медиа-слота: без неё подпись прыгает от высоты каждой картинки",
-            "собственную светлую подложку: подпись тёмная и на тёмном фоне каталога исчезает"
+            "разведение подписи и источника по светлоте: акцент номера и приглушённый источник должны различаться в обеих темах",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст подписи через caption",
             "номер рисунка через index",
             "строку происхождения через source",
-            "выравнивание подписи через align"
+            "выравнивание подписи через align",
+            "indexText — шаблон номера рисунка; {index} подставляется числом",
+            "stubText — надпись пустого медиа-слота",
+            "акцент через проп accent — цвет номера рисунка",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Нумерация ручная: сквозной счётчик по странице делается CSS-счётчиком на родителе.",
             "Пустой source убирает третью строку — проверьте, что подпись без неё не выглядит обрезанной.",
             "Подпись не альтернативный текст: alt у картинки всё равно обязателен.",
@@ -592,6 +734,32 @@
             "default": 2,
             "min": 1,
             "max": 99
+          },
+          {
+            "prop": "align",
+            "label": "Выравнивание",
+            "type": "select",
+            "default": "start",
+            "options": ["start", "center"]
+          },
+          {
+            "prop": "indexText",
+            "label": "Шаблон номера",
+            "type": "text",
+            "default": "Рис. {index}",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -605,15 +773,22 @@
                 "the figure number as a separate nowrap element — otherwise \"Fig. 12\" breaks across lines",
                 "the different sizes of caption and source: merged rows read as one sentence",
                 "the media slot ratio: without it the caption jumps with every image height",
-                "the component's own light surface: the caption is dark and disappears on a dark catalog background"
+                "the lightness split between caption and source: the accented number and the muted source must stay distinct in both themes",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption text through caption",
                 "the figure number through index",
                 "the provenance line through source",
-                "the caption alignment through align"
+                "the caption alignment through align",
+                "indexText — the figure number template; {index} is replaced by the number",
+                "stubText — the caption of the empty media slot",
+                "the accent through the accent prop — it colours the figure number",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Numbering is manual: a page-wide sequence is done with a CSS counter on the parent.",
                 "An empty source removes the third row — check the caption still looks finished without it.",
                 "A caption is not alternative text: the image still needs its alt.",
@@ -629,11 +804,34 @@
               "index": {
                 "label": "Figure number",
                 "default": 2
+              },
+              "align": {
+                "label": "Alignment"
+              },
+              "indexText": {
+                "label": "Number template",
+                "default": "Fig. {index}"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Captioned Figure Frame"
+            "title": "Captioned Figure Frame",
+            "preview": {
+              "props": {
+                "caption": "The catalog card expands the preview on hover",
+                "index": 2,
+                "source": "Source: VibeUI screenshot, August 2026",
+                "indexText": "Fig. {index}",
+                "stubText": "Room for a screenshot"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["align", "index", "accent", "background"]
       }
     },
     {
@@ -666,13 +864,16 @@
             "моноширинный шрифт и pre для вывода — иначе строки теряют выравнивание команды и результата",
             "приглашение только у строк типа command — вывод без него, иначе журнал превращается в стену значков",
             "анимацию курсора через CSS, а не текст: так её гасит prefers-reduced-motion, не трогая разметку",
-            "aria-label на выводе терминала — скринридер должен понимать, что это лог, а не случайный текст"
+            "aria-label на выводе терминала — скринридер должен понимать, что это лог, а не случайный текст",
+            "тёмный кадр терминала: это осознанное одноцветное решение, а не тёмная тема — компонент остаётся тёмным и на светлой странице, поэтому light-dark() в его палитре нет"
           ],
           "adapt": [
             "заголовок окна через title",
             "символ приглашения через prompt",
             "список команд и вывода через lines",
-            "содержимое целиком через children вместо lines"
+            "содержимое целиком через children вместо lines",
+            "outputLabel — подпись вывода для скринридера",
+            "акцент через проп accent — цвет приглашения"
           ],
           "notes": [
             "Курсор один и в конце вывода: курсор после каждой строки не имитируется намеренно.",
@@ -694,6 +895,19 @@
             "type": "text",
             "default": "❯",
             "maxLength": 4
+          },
+          {
+            "prop": "outputLabel",
+            "label": "Подпись вывода",
+            "type": "text",
+            "default": "Вывод терминала",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -706,13 +920,16 @@
                 "the monospace font and pre for the output — otherwise command and result lines lose alignment",
                 "the prompt only on command-type lines — output without it, otherwise the log turns into a wall of glyphs",
                 "the cursor animation in CSS, not text: prefers-reduced-motion can then mute it without touching markup",
-                "the aria-label on the terminal output — a screen reader needs to know it is a log, not random text"
+                "the aria-label on the terminal output — a screen reader needs to know it is a log, not random text",
+                "the dark terminal frame: a deliberate single-tone decision rather than a dark theme — the component stays dark on a light page too, which is why its palette carries no light-dark()"
               ],
               "adapt": [
                 "the window title through title",
                 "the prompt symbol through prompt",
                 "the list of commands and output through lines",
-                "the whole content through children instead of lines"
+                "the whole content through children instead of lines",
+                "outputLabel — the screen-reader label of the output",
+                "the accent through the accent prop — it colours the prompt"
               ],
               "notes": [
                 "There is a single cursor at the end of the output: a cursor after every line is deliberately not simulated.",
@@ -729,11 +946,40 @@
               "prompt": {
                 "label": "Prompt",
                 "default": "❯"
+              },
+              "outputLabel": {
+                "label": "Output label",
+                "default": "Terminal output"
+              },
+              "accent": {
+                "label": "Accent"
               }
             },
-            "title": "Terminal Frame"
+            "title": "Terminal Frame",
+            "preview": {
+              "props": {
+                "title": "zsh — vibeui",
+                "prompt": "❯",
+                "outputLabel": "Terminal output",
+                "lines": [
+                  {
+                    "text": "npx shadcn@latest add frame-007",
+                    "type": "command"
+                  },
+                  {
+                    "text": "Installed into components/vibeui/frame-007.tsx",
+                    "type": "output"
+                  },
+                  {
+                    "text": "Done: no dependencies, its own palette.",
+                    "type": "output"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent"]
       }
     },
     {
@@ -751,7 +997,7 @@
           "target": "@components/vibeui/frame-008.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Корпус — блок с обводкой и внутренним отступом, экран держит aspect-ratio 4 / 3 и overflow:hidden, чтобы скриншот со своими углами не вылезал за скругление. Камера — точка в absolute на боковой грани корпуса: в альбомной ориентации она уходит с верхнего края, как у настоящего планшета. Домашняя полоса — тонкая линия внизу экрана, деталь макета без физической кнопки. Подпись — обычный figcaption под фигурой.",
+      "docs": "Серверный компонент, хуков нет. Корпус — блок с обводкой и внутренним отступом, экран держит aspect-ratio 4 / 3 и overflow:hidden, чтобы скриншот со своими углами не вылезал за скругление. Камера — точка в absolute на боковой грани корпуса: в альбомной ориентации она уходит с верхнего края, как у настоящего планшета. Домашняя полоса — тонкая линия внизу экрана, деталь макета без физической кнопки. Подпись — обычный figcaption под фигурой. Корпус и обводка заданы парами светлот через light-dark() и следуют теме окружения, а экран по умолчанию прозрачен: под скриншотом виден фон страницы.",
       "meta": {
         "tags": ["frame", "tablet", "landscape", "mockup"],
         "preview": {
@@ -766,15 +1012,20 @@
             "пропорцию экрана 4 / 3 вместо фиксированной высоты: иначе скриншот обрезается или получает поля",
             "альбомную ориентацию: портретный планшет с тем же макетом читается как другое устройство",
             "камеру на боковой, а не верхней грани — в альбомной ориентации она физически там",
-            "светлый корпус с тонкой обводкой: тёмный сливается с тёмным фоном каталога"
+            "контраст корпуса и обводки: в обеих темах корпус отделён от фона страницы, иначе от планшета остаётся плавающий прямоугольник",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись под кадром через caption",
             "содержимое экрана — картинкой или блоком в слоте",
             "ширину корпуса через max-width на самом кадре",
-            "оттенок корпуса через переменную --vibeui-frame-008-bezel"
+            "оттенок корпуса через переменную --vibeui-frame-008-bezel",
+            "stubText — надпись пустого экрана",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Скриншот масштабируется object-fit:cover: узкая картинка потеряет края.",
             "Домашняя полоса — деталь макета без физической кнопки, актуальная для современных планшетов.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -787,6 +1038,19 @@
             "type": "text",
             "default": "Интерфейс на планшете в альбомной ориентации",
             "maxLength": 60
+          },
+          {
+            "prop": "stubText",
+            "label": "Надпись экрана",
+            "type": "text",
+            "default": "Экран планшета",
+            "maxLength": 24
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -799,15 +1063,20 @@
                 "the 4 / 3 screen ratio instead of a fixed height: otherwise the screenshot is cropped or gets bars",
                 "the landscape orientation: a portrait tablet with the same layout reads as a different device",
                 "the camera on the side edge rather than the top — in landscape it physically sits there",
-                "the light body with a thin outline: a dark one merges into the dark catalog background"
+                "the contrast between the body and its outline: in both themes the body stays separated from the page background, otherwise only a floating rectangle is left",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption below the frame through caption",
                 "the screen content — an image or a block in the slot",
                 "the body width through max-width on the frame itself",
-                "the body finish through the --vibeui-frame-008-bezel variable"
+                "the body finish through the --vibeui-frame-008-bezel variable",
+                "stubText — the caption of the empty screen",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The screenshot is scaled with object-fit:cover: a narrow image loses its edges.",
                 "The home bar is a layout detail with no physical button, matching modern tablets.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -818,11 +1087,25 @@
               "caption": {
                 "label": "Caption",
                 "default": "UI on a tablet in landscape orientation"
+              },
+              "stubText": {
+                "label": "Screen caption",
+                "default": "Tablet screen"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Tablet Landscape Frame"
+            "title": "Tablet Landscape Frame",
+            "preview": {
+              "props": {
+                "caption": "UI on a tablet in landscape orientation",
+                "stubText": "Tablet screen"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -840,7 +1123,7 @@
           "target": "@components/vibeui/frame-009.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Карта — условная сетка из двух repeating-linear-gradient на фоне земли, полностью декоративна и заменяется содержимым слота children. Метка нарисована каплей: круг со срезанным углом (border-radius) развёрнут через transform:rotate(-45deg), внутри — маленький кружок фона поверх исходного поворота. Масштабная линейка — три чередующихся сегмента и подпись в углу карты. И метка, и линейка обёрнуты в контейнер с aria-label, а визуальные детали внутри скрыты aria-hidden, чтобы текст не звучал дважды.",
+      "docs": "Серверный компонент, хуков нет. Карта — условная сетка из двух repeating-linear-gradient на фоне земли, полностью декоративна и заменяется содержимым слота children. Метка нарисована каплей: круг со срезанным углом (border-radius) развёрнут через transform:rotate(-45deg), внутри — маленький кружок фона поверх исходного поворота. Масштабная линейка — три чередующихся сегмента и подпись в углу карты. И метка, и линейка обёрнуты в контейнер с aria-label, а визуальные детали внутри скрыты aria-hidden, чтобы текст не звучал дважды. Палитра задана парами светлот через light-dark() и следует теме окружения; тон земли остаётся собственным — это рисунок карты, а не подложка компонента.",
       "meta": {
         "tags": ["frame", "map", "location", "pin"],
         "preview": {
@@ -855,15 +1138,21 @@
             "условную сетку улиц вместо попытки нарисовать настоящую карту — сетка честно читается как заглушка",
             "форму метки каплей через border-radius и transform, а не иконочный шрифт",
             "aria-label на метке и линейке — визуальные детали декоративны, а текст должен звучать один раз",
-            "масштабную линейку в углу, а не поверх метки: иначе они перекрывают друг друга"
+            "масштабную линейку в углу, а не поверх метки: иначе они перекрывают друг друга",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "собственный тон земли: это рисунок карты, а не плашка под компонентом, и прозрачным он не делается"
           ],
           "adapt": [
             "подпись метки через label",
             "значение масштаба через scale",
             "подпись под кадром через caption",
-            "саму карту — картинкой, iframe или другим блоком в слоте children"
+            "саму карту — картинкой, iframe или другим блоком в слоте children",
+            "scaleLabel — подпись линейки для скринридера; {scale} подставляется значением",
+            "акцент через проп accent — цвет метки",
+            "background — цвет земли карты; пусто оставляет собственный тон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Позиция метки зафиксирована в процентах shell: для другой точки поменяйте top и left у [data-part=\"pin\"].",
             "Масштаб не пересчитывается автоматически от карты — это статичная подпись, а не логика линейки.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -883,6 +1172,25 @@
             "type": "text",
             "default": "500 м",
             "maxLength": 12
+          },
+          {
+            "prop": "scaleLabel",
+            "label": "Подпись линейки",
+            "type": "text",
+            "default": "Масштаб: {scale}",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -895,15 +1203,21 @@
                 "the placeholder street grid instead of faking a real map — the grid honestly reads as a stand-in",
                 "the teardrop pin shape via border-radius and transform, not an icon font",
                 "the aria-label on the pin and the scale bar — the visual details are decorative and the text must announce once",
-                "the scale bar in the corner rather than over the pin — otherwise they overlap"
+                "the scale bar in the corner rather than over the pin — otherwise they overlap",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the map's own land tint: it is part of the map drawing, not a panel under the component, and is never made transparent"
               ],
               "adapt": [
                 "the pin caption through label",
                 "the scale value through scale",
                 "the caption below the frame through caption",
-                "the map itself — an image, an iframe or another block through the children slot"
+                "the map itself — an image, an iframe or another block through the children slot",
+                "scaleLabel — the screen-reader label of the scale bar; {scale} is replaced by the value",
+                "the accent through the accent prop — it colours the pin",
+                "background — the land colour of the map; empty keeps the component's own tint"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The pin position is fixed in percent on the shell: change top and left on [data-part=\"pin\"] for a different point.",
                 "The scale is not recalculated from the map — it is a static caption, not ruler logic.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -918,11 +1232,30 @@
               "scale": {
                 "label": "Scale",
                 "default": "500 m"
+              },
+              "scaleLabel": {
+                "label": "Scale bar label",
+                "default": "Scale: {scale}"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Map Pin Frame"
+            "title": "Map Pin Frame",
+            "preview": {
+              "props": {
+                "label": "12 Pushkin St.",
+                "scale": "500 m",
+                "caption": "A point on the map with a scale bar",
+                "scaleLabel": "Scale: {scale}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -940,7 +1273,7 @@
           "target": "@components/vibeui/frame-010.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Три карточки — data-part=\"card\" с data-role back, middle и front — расположены absolute внутри stage с aspect-ratio 6 / 5. Смещения (top, left), ширина и поворот заданы в процентах и градусах на каждой карточке отдельно, z-index растёт от заднего кадра к переднему. На узкой ширине контейнера @container уменьшает смещения и повороты, чтобы коллаж не вылезал за stage. Пустой слот показывает подпись-заглушку «Кадр N».",
+      "docs": "Серверный компонент, хуков нет. Три карточки — data-part=\"card\" с data-role back, middle и front — расположены absolute внутри stage с aspect-ratio 6 / 5. Смещения (top, left), ширина и поворот заданы в процентах и градусах на каждой карточке отдельно, z-index растёт от заднего кадра к переднему. На узкой ширине контейнера @container уменьшает смещения и повороты, чтобы коллаж не вылезал за stage. Пустой слот показывает подпись-заглушку «Кадр N». Палитра задана парами светлот через light-dark() и следует теме окружения; бумага кадров остаётся собственной поверхностью — это лицо карточки коллажа, а не плашка под компонентом.",
       "meta": {
         "tags": ["frame", "collage", "hero", "gallery"],
         "preview": {
@@ -955,15 +1288,20 @@
             "проценты в смещениях и ширине карточек — пиксели привязали бы коллаж к конкретному контейнеру",
             "разный z-index у трёх карточек — без него порядок наложения зависит от порядка в разметке",
             "разные пропорции карточек: три одинаковых прямоугольника читаются как сетка, а не коллаж",
-            "тень у переднего кадра сильнее, чем у заднего — это и создаёт ощущение стопки"
+            "тень у переднего кадра сильнее, чем у заднего — это и создаёт ощущение стопки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "собственную бумагу кадров: это лицо карточки коллажа, а не подложка компонента, и прозрачной она не делается"
           ],
           "adapt": [
             "содержимое заднего кадра через back",
             "содержимое среднего кадра через middle",
             "содержимое переднего кадра через front",
-            "подпись под коллажем через caption"
+            "подпись под коллажем через caption",
+            "stubText — шаблон заглушки кадра; {index} подставляется номером",
+            "background — цвет бумаги кадров; пусто оставляет собственный тон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пустой слот показывает подпись-заглушку «Кадр N» — замените все три перед публикацией.",
             "На узкой ширине сжатие срабатывает через @container: коллаж не завязан на ширину окна.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -976,6 +1314,19 @@
             "type": "text",
             "default": "Три кадра внахлёст: коллаж для обложки",
             "maxLength": 60
+          },
+          {
+            "prop": "stubText",
+            "label": "Заглушка кадра",
+            "type": "text",
+            "default": "Кадр {index}",
+            "maxLength": 24
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -988,15 +1339,20 @@
                 "percentage offsets and card widths — pixels would tie the collage to one specific container",
                 "the different z-index per card — without it the stacking order depends on markup order",
                 "the different card proportions — three identical rectangles read as a grid, not a collage",
-                "the stronger shadow on the front card than the back one — that is what reads as a stack"
+                "the stronger shadow on the front card than the back one — that is what reads as a stack",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the frames' own paper: it is the face of a collage card, not a panel under the component, and is never made transparent"
               ],
               "adapt": [
                 "the back card content through back",
                 "the middle card content through middle",
                 "the front card content through front",
-                "the caption below the collage through caption"
+                "the caption below the collage through caption",
+                "stubText — the frame placeholder template; {index} is replaced by the number",
+                "background — the paper colour of the frames; empty keeps the component's own tint"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "An empty slot shows a placeholder caption \"Frame N\" — replace all three before shipping.",
                 "The narrow-width squeeze runs through @container: the collage is not tied to the viewport width.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1007,11 +1363,25 @@
               "caption": {
                 "label": "Caption",
                 "default": "Three overlapping frames: a cover collage"
+              },
+              "stubText": {
+                "label": "Frame placeholder",
+                "default": "Frame {index}"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Overlapping Frame Collage"
+            "title": "Overlapping Frame Collage",
+            "preview": {
+              "props": {
+                "caption": "Three overlapping frames: a cover collage",
+                "stubText": "Frame {index}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -1029,7 +1399,7 @@
           "target": "@components/vibeui/frame-011.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Карточка внутри stage с perspective развёрнута через rotateX/rotateY; направление разворота задаёт data-tilt со значениями left или right. При наведении на stage разворот выравнивается CSS-псевдоклассом :hover — эффект достигается без JS. На узкой ширине через @container угол разворота уменьшается, чтобы карточка не вылезала за stage.",
+      "docs": "Серверный компонент, хуков нет. Карточка внутри stage с perspective развёрнута через rotateX/rotateY; направление разворота задаёт data-tilt со значениями left или right. При наведении на stage разворот выравнивается CSS-псевдоклассом :hover — эффект достигается без JS. На узкой ширине через @container угол разворота уменьшается, чтобы карточка не вылезала за stage. Палитра задана парами светлот через light-dark() и следует теме окружения; поверхность кадра остаётся собственной — на ней и держится объём разворота.",
       "meta": {
         "tags": ["frame", "3d", "perspective", "mockup"],
         "preview": {
@@ -1044,14 +1414,19 @@
             "perspective на stage, а не на самой карточке — иначе 3D-эффект не срабатывает",
             "переход разворота при наведении через CSS-transition, а не JS-обработчик",
             "тень под карточкой сильнее, чем у плоских кадров — без неё разворот не читается как объём",
-            "уменьшение угла разворота на узкой ширине через @container — иначе карточка вылезает за контейнер"
+            "уменьшение угла разворота на узкой ширине через @container — иначе карточка вылезает за контейнер",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "собственную поверхность кадра: прозрачный кадр теряет объём, ради которого разворот и сделан"
           ],
           "adapt": [
             "направление разворота через tilt",
             "подпись под кадром через caption",
-            "содержимое экрана через children"
+            "содержимое экрана через children",
+            "stubText — надпись пустого кадра",
+            "background — поверхность кадра; пусто оставляет собственный тон"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Три точки в верхней панели декоративны и не работают как кнопки окна.",
             "На наведение реагирует только stage целиком — не отдельные части карточки.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -1064,6 +1439,26 @@
             "type": "select",
             "options": ["left", "right"],
             "default": "left"
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Кадр с разворотом в перспективе для hero-секции",
+            "maxLength": 60
+          },
+          {
+            "prop": "stubText",
+            "label": "Надпись кадра",
+            "type": "text",
+            "default": "Скриншот интерфейса",
+            "maxLength": 24
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1076,14 +1471,19 @@
                 "perspective on the stage, not on the card itself — otherwise the 3D effect does not work",
                 "the hover tilt transition through CSS, not a JS handler",
                 "the stronger shadow under the card than on flat frames — without it the tilt does not read as depth",
-                "the reduced tilt angle at narrow widths through @container — otherwise the card overflows the container"
+                "the reduced tilt angle at narrow widths through @container — otherwise the card overflows the container",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the frame's own surface: a transparent card loses the depth the whole tilt exists for"
               ],
               "adapt": [
                 "the tilt direction through tilt",
                 "the caption below the frame through caption",
-                "the screen content through children"
+                "the screen content through children",
+                "stubText — the caption of the empty frame",
+                "background — the frame surface; empty keeps the component's own tint"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The three dots in the top bar are decorative and do not act as window buttons.",
                 "Only the whole stage reacts to hover — not individual parts of the card.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1093,11 +1493,29 @@
             "controls": {
               "tilt": {
                 "label": "Tilt direction"
+              },
+              "caption": {
+                "label": "Caption",
+                "default": "A frame tilted in perspective for a hero section"
+              },
+              "stubText": {
+                "label": "Frame caption",
+                "default": "UI screenshot"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "3D Tilt Frame"
+            "title": "3D Tilt Frame",
+            "preview": {
+              "props": {
+                "caption": "A frame tilted in perspective for a hero section",
+                "stubText": "UI screenshot"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["tilt", "background"]
       }
     },
     {
@@ -1115,7 +1533,7 @@
           "target": "@components/vibeui/frame-012.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Два слота before и after занимают по 50% ширины stage во flex-раскладке, разделены линией и декоративной ручкой по центру. Подписи beforeLabel и afterLabel — настоящий текст в углах, а не оверлей на картинке. На узкой ширине через @container панели переключаются в колонку, разделитель становится горизонтальным.",
+      "docs": "Серверный компонент, хуков нет. Два слота before и after занимают по 50% ширины stage во flex-раскладке, разделены линией и декоративной ручкой по центру. Подписи beforeLabel и afterLabel — настоящий текст в углах, а не оверлей на картинке. На узкой ширине через @container панели переключаются в колонку, разделитель становится горизонтальным. Подложки у кадра нет: он ложится на фон страницы, а палитра задана парами светлот через light-dark() и следует теме окружения.",
       "meta": {
         "tags": ["frame", "comparison", "before-after", "mockup"],
         "preview": {
@@ -1130,16 +1548,22 @@
             "равное деление 50/50 между панелями — асимметрия читается как ошибка вёрстки, а не приём",
             "подписи beforeLabel и afterLabel настоящим текстом, а не картинкой поверх снимка",
             "разделительную линию и ручку по центру — без них два кадра выглядят как случайная пара",
-            "переключение панелей в колонку на узкой ширине через @container"
+            "переключение панелей в колонку на узкой ширине через @container",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "содержимое левой панели через before",
             "содержимое правой панели через after",
             "подпись левой панели через beforeLabel",
             "подпись правой панели через afterLabel",
-            "подпись под кадром через caption"
+            "подпись под кадром через caption",
+            "beforeStub и afterStub — надписи пустых панелей",
+            "акцент через проп accent — цвет значка на ручке",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ручка по центру декоративна: разделитель не перетаскивается, деление всегда 50/50.",
             "Пустые слоты показывают подписи-заглушки «Кадр «до»» и «Кадр «после»».",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -1159,6 +1583,32 @@
             "type": "text",
             "default": "После",
             "maxLength": 20
+          },
+          {
+            "prop": "beforeStub",
+            "label": "Заглушка «до»",
+            "type": "text",
+            "default": "Кадр «до»",
+            "maxLength": 24
+          },
+          {
+            "prop": "afterStub",
+            "label": "Заглушка «после»",
+            "type": "text",
+            "default": "Кадр «после»",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1171,16 +1621,22 @@
                 "the equal 50/50 split between panes — asymmetry reads as a layout bug, not a choice",
                 "the beforeLabel and afterLabel as real text, not an image overlay on the shot",
                 "the divider line and handle at the center — without them the two frames look like a random pair",
-                "the panel-to-column switch at narrow widths through @container"
+                "the panel-to-column switch at narrow widths through @container",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the left pane content through before",
                 "the right pane content through after",
                 "the left pane label through beforeLabel",
                 "the right pane label through afterLabel",
-                "the caption below the frame through caption"
+                "the caption below the frame through caption",
+                "beforeStub and afterStub — the captions of the empty panes",
+                "the accent through the accent prop — it colours the handle glyph",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The center handle is decorative: the divider is not draggable, the split is always 50/50.",
                 "Empty slots show the placeholder captions \"Frame «before»\" and \"Frame «after»\".",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1195,11 +1651,35 @@
               "afterLabel": {
                 "label": "After label",
                 "default": "After"
+              },
+              "beforeStub": {
+                "label": "Before placeholder",
+                "default": "Frame «before»"
+              },
+              "afterStub": {
+                "label": "After placeholder",
+                "default": "Frame «after»"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Before After Comparison Frame"
+            "title": "Before After Comparison Frame",
+            "preview": {
+              "props": {
+                "beforeLabel": "Before",
+                "afterLabel": "After",
+                "beforeStub": "Frame «before»",
+                "afterStub": "Frame «after»",
+                "caption": "A before/after comparison with a divider at the center"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1232,16 +1712,22 @@
             "aria-current=\"page\" на активном пункте меню — иначе состояние теряется для вспомогательных технологий",
             "nav с aria-label вокруг списка пунктов — список без него не опознаётся как навигация",
             "усечение названия приложения и заголовка страницы многоточием, а не их скрытие на узкой ширине",
-            "сужение панели, а не её исчезновение, на узкой ширине через @container"
+            "сужение панели, а не её исчезновение, на узкой ширине через @container",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "название приложения через appName",
             "заголовок рабочей области через pageTitle",
             "список пунктов меню через navItems",
             "индекс активного пункта через activeIndex",
-            "содержимое рабочей области через children"
+            "содержимое рабочей области через children",
+            "подпись навигации для скринридера через navLabel",
+            "акцент через проп accent — цвет знака приложения и метки активного пункта",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Два кружка в шапке декоративны и не работают как кнопки действий.",
             "Пустая рабочая область показывает сетку карточек-заглушек из четырёх блоков.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -1261,6 +1747,26 @@
             "type": "text",
             "default": "Обзор",
             "maxLength": 32
+          },
+          {
+            "prop": "activeIndex",
+            "label": "Активный пункт",
+            "type": "number",
+            "default": 0,
+            "min": 0,
+            "max": 3
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1273,16 +1779,22 @@
                 "aria-current=\"page\" on the active menu item — otherwise the state is lost for assistive technology",
                 "the nav with aria-label around the item list — without it the list is not recognized as navigation",
                 "truncating the app name and page title with an ellipsis, not hiding them, at narrow widths",
-                "narrowing the sidebar, not removing it, at narrow widths through @container"
+                "narrowing the sidebar, not removing it, at narrow widths through @container",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the app name through appName",
                 "the work area title through pageTitle",
                 "the menu item list through navItems",
                 "the active item index through activeIndex",
-                "the work area content through children"
+                "the work area content through children",
+                "the navigation label for screen readers through navLabel",
+                "the accent through the accent prop — it colours the app mark and the active item dot",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The two circles in the header are decorative and do not act as action buttons.",
                 "An empty work area shows a placeholder grid of four cards.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1297,11 +1809,29 @@
               "pageTitle": {
                 "label": "Page title",
                 "default": "Overview"
+              },
+              "activeIndex": {
+                "label": "Active item"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "App Shell Frame"
+            "title": "App Shell Frame",
+            "preview": {
+              "props": {
+                "appName": "Vibe",
+                "pageTitle": "Overview",
+                "navItems": ["Overview", "Projects", "Team", "Settings"],
+                "navLabel": "Main navigation"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["activeIndex", "accent", "background"]
       }
     },
     {
@@ -1334,16 +1864,22 @@
             "аватар-инициал, вычисленный из sender, а не внешнюю картинку — письмо остаётся читаемым без загрузки изображений",
             "тему как отдельный крупный элемент над телом — если её слить с телом, письмо теряет иерархию",
             "перенос строки meta на узкой ширине через @container вместо обрезки имени или адреса",
-            "адрес отправителя рядом с именем — без него в письме не видно, кому доверять"
+            "адрес отправителя рядом с именем — без него в письме не видно, кому доверять",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя отправителя через sender",
             "адрес отправителя через senderEmail",
             "дату или время через date",
             "тему письма через subject",
-            "тело письма через children"
+            "тело письма через children",
+            "строки тела письма по умолчанию через bodyLines",
+            "акцент через проп accent — цвет кружка аватара",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Аватар — первая буква sender в кружке, не настоящее изображение.",
             "Пустое тело письма показывает три строки текста по умолчанию.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -1351,11 +1887,37 @@
         },
         "controls": [
           {
+            "prop": "sender",
+            "label": "Отправитель",
+            "type": "text",
+            "default": "Команда VibeUI",
+            "maxLength": 32
+          },
+          {
             "prop": "subject",
             "label": "Тема письма",
             "type": "text",
             "default": "Новый макет письма готов к проверке",
             "maxLength": 80
+          },
+          {
+            "prop": "date",
+            "label": "Дата",
+            "type": "text",
+            "default": "9:41",
+            "maxLength": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1368,16 +1930,22 @@
                 "the initial avatar computed from sender, not an external image — the message stays readable without loading images",
                 "the subject as a separate, larger element above the body — merging it with the body loses the hierarchy",
                 "the meta line wrapping at narrow widths through @container instead of truncating the name or address",
-                "the sender address next to the name — without it the message gives no way to judge trust"
+                "the sender address next to the name — without it the message gives no way to judge trust",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the sender name through sender",
                 "the sender address through senderEmail",
                 "the date or time through date",
                 "the subject line through subject",
-                "the message body through children"
+                "the message body through children",
+                "the default body lines through bodyLines",
+                "the accent through the accent prop — it colours the avatar circle",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The avatar is the first letter of sender in a circle, not a real image.",
                 "An empty body shows three default lines of placeholder text.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1385,14 +1953,42 @@
               "usage": "<Frame014 sender=\"VibeUI Team\" senderEmail=\"hello@vibeui.dev\" subject=\"New email layout\"><p>Message text.</p></Frame014>"
             },
             "controls": {
+              "sender": {
+                "label": "Sender",
+                "default": "VibeUI Team"
+              },
               "subject": {
                 "label": "Subject",
                 "default": "New email layout is ready for review"
+              },
+              "date": {
+                "label": "Date",
+                "default": "9:41"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Email Message Frame"
+            "title": "Email Message Frame",
+            "preview": {
+              "props": {
+                "sender": "VibeUI Team",
+                "senderEmail": "hello@vibeui.dev",
+                "date": "9:41",
+                "subject": "New email layout is ready for review",
+                "bodyLines": [
+                  "Good afternoon!",
+                  "Sending over the newsletter layout — check the subject and the copy before it goes out.",
+                  "Thanks, the VibeUI team"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1425,15 +2021,22 @@
             "затемнение (scrim) снизу обложки — без него заголовок и время не читаются на светлом кадре",
             "единственный инлайн-стиль у заполнения дорожки — это единственный способ передать процент без класса",
             "aspect-ratio 16 / 9 на сцене плеера — иначе кадр прыгает при загрузке обложки",
-            "aria-hidden на декоративной кнопке воспроизведения и дорожке — они не работают как реальные контролы"
+            "aria-hidden на декоративной кнопке воспроизведения и дорожке — они не работают как реальные контролы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "тёмную сцену плеера в обеих темах: обложка намеренно одноцветная, светлая сцена съела бы контраст белого заголовка и затемнения"
           ],
           "adapt": [
             "заголовок ролика через title",
             "текущее время и длительность через currentTime и duration",
             "заполнение дорожки через progress",
-            "обложку — картинкой или блоком в слоте children"
+            "обложку — картинкой или блоком в слоте children",
+            "надпись пустой обложки через posterStub",
+            "акцент через проп accent — цвет заполнения дорожки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Кнопка воспроизведения декоративна и не реагирует на клик: компонент серверный и без JS.",
             "Дорожка не перетаскивается: это статичная визуализация прогресса, а не полноценный сикер.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -1454,6 +2057,39 @@
             "default": 32,
             "min": 0,
             "max": 100
+          },
+          {
+            "prop": "currentTime",
+            "label": "Текущее время",
+            "type": "text",
+            "default": "1:24",
+            "maxLength": 8
+          },
+          {
+            "prop": "duration",
+            "label": "Длительность",
+            "type": "text",
+            "default": "4:12",
+            "maxLength": 8
+          },
+          {
+            "prop": "posterStub",
+            "label": "Надпись обложки",
+            "type": "text",
+            "default": "Обложка ролика",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1466,15 +2102,22 @@
                 "the scrim under the poster — without it the title and time are unreadable on a light frame",
                 "the single inline style on the track fill — it is the only way to pass a percentage without a class",
                 "the 16 / 9 aspect ratio on the player stage — otherwise the frame jumps as the poster loads",
-                "aria-hidden on the decorative play button and track — they do not act as real controls"
+                "aria-hidden on the decorative play button and track — they do not act as real controls",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the dark player stage in both themes: the poster area is deliberately single-toned, a light stage would eat the contrast of the white title and the scrim"
               ],
               "adapt": [
                 "the video title through title",
                 "the current time and duration through currentTime and duration",
                 "the track fill through progress",
-                "the poster — an image or a block through the children slot"
+                "the poster — an image or a block through the children slot",
+                "the empty poster caption through posterStub",
+                "the accent through the accent prop — it colours the track fill",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The play button is decorative and does not respond to clicks: the component is server-rendered with no JS.",
                 "The track is not draggable: it is a static progress visualization, not a real seeker.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1488,11 +2131,39 @@
               },
               "progress": {
                 "label": "Watch progress"
+              },
+              "currentTime": {
+                "label": "Current time",
+                "default": "1:24"
+              },
+              "duration": {
+                "label": "Duration",
+                "default": "4:12"
+              },
+              "posterStub": {
+                "label": "Poster caption",
+                "default": "Video poster"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Video Player Frame"
+            "title": "Video Player Frame",
+            "preview": {
+              "props": {
+                "title": "VibeUI catalog tour",
+                "currentTime": "1:24",
+                "duration": "4:12",
+                "posterStub": "Video poster",
+                "caption": "A video player frame: poster, play button and the timeline track"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["progress", "accent", "background"]
       }
     },
     {
@@ -1525,15 +2196,20 @@
             "круглую форму экрана и корпуса — квадратный экран здесь читается как другое устройство",
             "ремешок на clip-path сверху и снизу корпуса — прямоугольная лента превращает часы в две плашки",
             "светлый металлический корпус: тёмный сливается с тёмной подложкой каталога",
-            "overflow:hidden на экране — содержимое со своими углами иначе вылезает за окружность"
+            "overflow:hidden на экране — содержимое со своими углами иначе вылезает за окружность",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "тёмный экран в обеих темах: циферблат намеренно одноцветный, светлый экран перестал бы читаться как включённые часы"
           ],
           "adapt": [
             "время на циферблате через time",
             "подпись под временем через subtitle",
             "содержимое экрана целиком через children вместо time и subtitle",
-            "ширину корпуса через переменную --vibeui-frame-016-size"
+            "ширину корпуса через переменную --vibeui-frame-016-size",
+            "цвет корпуса через проп caseColor",
+            "подпись под кадром через caption"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Коронка декоративна и не работает как кнопка или колёсико прокрутки.",
             "На очень узкой ширине корпус уменьшается через @container, а не переполняет контейнер.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -1553,6 +2229,19 @@
             "type": "text",
             "default": "6 482 шага",
             "maxLength": 24
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись под кадром",
+            "type": "text",
+            "default": "Кадр умных часов с круглым экраном",
+            "maxLength": 60
+          },
+          {
+            "prop": "caseColor",
+            "label": "Цвет корпуса",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1565,15 +2254,20 @@
                 "the round shape of the screen and case — a square screen here reads as a different device",
                 "the clip-path strap above and below the case — a rectangular band turns the watch into two slabs",
                 "the light metal case — a dark one merges into the dark catalog background",
-                "overflow:hidden on the screen — content with its own corners otherwise spills past the circle"
+                "overflow:hidden on the screen — content with its own corners otherwise spills past the circle",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the dark screen in both themes: the dial is deliberately single-toned, a light screen would stop reading as a switched-on watch"
               ],
               "adapt": [
                 "the dial time through time",
                 "the caption under the time through subtitle",
                 "the whole screen content through children instead of time and subtitle",
-                "the case width through the --vibeui-frame-016-size variable"
+                "the case width through the --vibeui-frame-016-size variable",
+                "the case colour through the caseColor prop",
+                "the caption below the frame through caption"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The crown is decorative and does not act as a button or scroll wheel.",
                 "At very narrow widths the case shrinks through @container instead of overflowing the container.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1588,11 +2282,26 @@
               "subtitle": {
                 "label": "Caption",
                 "default": "6,482 steps"
+              },
+              "caption": {
+                "label": "Frame caption",
+                "default": "A smart watch frame with a round screen"
+              },
+              "caseColor": {
+                "label": "Case colour"
               }
             },
-            "title": "Smart Watch Frame"
+            "title": "Smart Watch Frame",
+            "preview": {
+              "props": {
+                "time": "9:41",
+                "subtitle": "6,482 steps",
+                "caption": "A smart watch frame with a round screen"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["caseColor"]
       }
     },
     {
@@ -1625,15 +2334,21 @@
             "aspect-ratio 16 / 9 на поле слайда — без него кадр меняет пропорцию от слайда к слайду",
             "текстовый счётчик «index / total» как обычный текст — точки под ним декоративны и aria-hidden",
             "ограничение точек-индикаторов восемью — лента из полусотни точек нечитаема и бесполезна",
-            "подпись фигуры под кадром, а не поверх слайда"
+            "подпись фигуры под кадром, а не поверх слайда",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "номер слайда через index",
             "общее число слайдов через total",
             "содержимое поля через children",
-            "подпись под кадром через caption"
+            "подпись под кадром через caption",
+            "заголовок пустого слайда через stubTitle",
+            "акцент через проп accent — цвет текущей точки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Точки не интерактивны и не переключают слайд: это статичный индикатор позиции.",
             "При total больше восьми в ряду остаётся восемь точек, а счётчик продолжает показывать реальные числа.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -1646,7 +2361,7 @@
             "type": "number",
             "default": 3,
             "min": 1,
-            "max": 99
+            "max": 8
           },
           {
             "prop": "total",
@@ -1654,7 +2369,33 @@
             "type": "number",
             "default": 12,
             "min": 1,
-            "max": 99
+            "max": 12
+          },
+          {
+            "prop": "stubTitle",
+            "label": "Заголовок слайда",
+            "type": "text",
+            "default": "Заголовок слайда",
+            "maxLength": 40
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись под кадром",
+            "type": "text",
+            "default": "Кадр слайда презентации: поле 16 / 9 и позиция в колоде",
+            "maxLength": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1667,15 +2408,21 @@
                 "the 16 / 9 aspect ratio on the slide field — without it the frame changes proportion from slide to slide",
                 "the \"index / total\" text counter as real text — the dots below it are decorative and aria-hidden",
                 "the eight-dot cap on the indicators — a ribbon of fifty dots is unreadable and useless",
-                "the figure caption below the frame rather than over the slide"
+                "the figure caption below the frame rather than over the slide",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the slide number through index",
                 "the total slide count through total",
                 "the field content through children",
-                "the caption below the frame through caption"
+                "the caption below the frame through caption",
+                "the empty slide heading through stubTitle",
+                "the accent through the accent prop — it colours the current dot",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The dots are not interactive and do not switch slides: it is a static position indicator.",
                 "When total exceeds eight, the row keeps eight dots while the counter still shows the real numbers.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1688,11 +2435,34 @@
               },
               "total": {
                 "label": "Total slides"
+              },
+              "stubTitle": {
+                "label": "Slide heading",
+                "default": "Slide title"
+              },
+              "caption": {
+                "label": "Frame caption",
+                "default": "A presentation slide frame: a 16 / 9 field and the position in the deck"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Presentation Slide Frame"
+            "title": "Presentation Slide Frame",
+            "preview": {
+              "props": {
+                "index": 3,
+                "total": 12,
+                "stubTitle": "Slide title",
+                "caption": "A presentation slide frame: a 16 / 9 field and the position in the deck"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["index", "total", "accent", "background"]
       }
     },
     {
@@ -1725,16 +2495,23 @@
             "выравнивание и форму хвостика пузыря как признак отправителя — смысл должен читаться и без цвета",
             "role=\"log\" с aria-label на ленте сообщений — иначе переписка не опознаётся как связный поток",
             "disabled на поле ввода и кнопке отправки — это честно сообщает, что перед пользователем макет, а не форма",
-            "сжатие ширины пузырей на узкой ширине через @container, а не фиксированный процент"
+            "сжатие ширины пузырей на узкой ширине через @container, а не фиксированный процент",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя собеседника через contact",
             "список сообщений через messages с полями text и from",
             "плейсхолдер поля ввода через placeholder",
             "ленту сообщений целиком через children вместо messages",
-            "подпись под кадром через caption"
+            "подпись под кадром через caption",
+            "подпись ленты через feedLabel — {name} подставляется именем собеседника",
+            "подписи поля ввода и кнопки отправки через inputLabel и sendLabel",
+            "акцент через проп accent — цвет своих пузырей и аватара",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Поле ввода и кнопка отправки задизейблены намеренно: клиентского JS в компоненте нет.",
             "from принимает только «me» или «them» — сторонние значения ломают выравнивание пузыря.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -1754,6 +2531,25 @@
             "type": "text",
             "default": "Сообщение…",
             "maxLength": 30
+          },
+          {
+            "prop": "caption",
+            "label": "Подпись под кадром",
+            "type": "text",
+            "default": "Кадр чата: пузыри сообщений и поле ввода снизу",
+            "maxLength": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1766,16 +2562,23 @@
                 "the alignment and bubble tail shape as the sender cue — the meaning must read even without color",
                 "the role=\"log\" with aria-label on the message feed — otherwise the conversation is not recognized as a coherent stream",
                 "disabled on the input and send button — it honestly tells assistive tech this is a mockup, not a working form",
-                "the bubble width shrinking at narrow widths through @container rather than a fixed percentage"
+                "the bubble width shrinking at narrow widths through @container rather than a fixed percentage",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the contact name through contact",
                 "the message list through messages with text and from fields",
                 "the input placeholder through placeholder",
                 "the whole message feed through children instead of messages",
-                "the caption below the frame through caption"
+                "the caption below the frame through caption",
+                "the feed label through feedLabel — {name} is replaced with the contact name",
+                "the input and send button labels through inputLabel and sendLabel",
+                "the accent through the accent prop — it colours your own bubbles and the avatar",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The input and send button are deliberately disabled: the component ships with no client JS.",
                 "from only accepts \"me\" or \"them\" — other values break the bubble alignment.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1790,11 +2593,46 @@
               "placeholder": {
                 "label": "Input placeholder",
                 "default": "Message…"
+              },
+              "caption": {
+                "label": "Frame caption",
+                "default": "A chat frame: message bubbles and an input field at the bottom"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Chat Message Frame"
+            "title": "Chat Message Frame",
+            "preview": {
+              "props": {
+                "contact": "Eve",
+                "placeholder": "Message…",
+                "caption": "A chat frame: message bubbles and an input field at the bottom",
+                "feedLabel": "Conversation with {name}",
+                "inputLabel": "Message input (demo, does not send)",
+                "sendLabel": "Send message (demo)",
+                "messages": [
+                  {
+                    "from": "them",
+                    "text": "Hi! The chat mockup is nearly ready."
+                  },
+                  {
+                    "from": "me",
+                    "text": "Great, send a preview when you have a minute."
+                  },
+                  {
+                    "from": "them",
+                    "text": "Putting the frame together now — bubbles and the input field."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1827,14 +2665,20 @@
             "паддинг 2px на градиентном слое вместо border — border-image даёт куда меньше контроля над углами",
             "свечение отдельным слоем позади кадра, а не тенью на самой рамке — иначе подсветка обрезается overflow:hidden кадра",
             "пульсацию свечения через CSS keyframes с prefers-reduced-motion — а не постоянную статичную заливку",
-            "z-index свечения ниже рамки — иначе оно перекрывает содержимое, а не подсвечивает его снизу"
+            "z-index свечения ниже рамки — иначе оно перекрывает содержимое, а не подсвечивает его снизу",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "сплошную заливку кадра: она держит середину градиентной рамки — прозрачный кадр показал бы градиент целиком, и рамка перестала бы читаться рамкой"
           ],
           "adapt": [
             "содержимое кадра через children",
             "подпись под кадром через caption",
-            "цвета рамки и свечения через --vibeui-frame-019-border-a/-b и --vibeui-frame-019-glow-a/-b"
+            "цвета рамки через --vibeui-frame-019-border-a/-b — свечение считается из них через color-mix",
+            "надпись пустого кадра через stub",
+            "первый цвет рамки и свечения через проп accent",
+            "background — заливка кадра под содержимым; пусто означает «заливка из палитры»"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Свечение декоративно и помечено aria-hidden — смысл несёт содержимое кадра, а не подсветка.",
             "На очень узкой ширине паддинг сцены уменьшается через @container, чтобы свечение не обрезалось.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -1850,23 +2694,80 @@
                 "the 2px padding on the gradient layer instead of border — border-image gives far less control over the corners",
                 "the glow as a separate layer behind the frame, not a shadow on the frame itself — otherwise the frame's overflow:hidden clips it",
                 "the glow pulse through CSS keyframes with prefers-reduced-motion — not a constant static fill",
-                "the glow's lower z-index than the frame — otherwise it covers the content instead of lighting it from below"
+                "the glow's lower z-index than the frame — otherwise it covers the content instead of lighting it from below",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the solid frame fill: it holds the middle of the gradient border — a transparent card would show the whole gradient and the border would stop reading as a border"
               ],
               "adapt": [
                 "the frame content through children",
                 "the caption below the frame through caption",
-                "the border and glow colors through --vibeui-frame-019-border-a/-b and --vibeui-frame-019-glow-a/-b"
+                "the border colours through --vibeui-frame-019-border-a/-b — the glow is mixed out of them with color-mix",
+                "the empty frame caption through stub",
+                "the first border and glow colour through the accent prop",
+                "background — the frame fill under the content; empty means the palette fill"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The glow is decorative and marked aria-hidden — the frame's content carries the meaning, not the backlight.",
                 "At very narrow widths the stage padding shrinks through @container so the glow does not get clipped.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Frame019 caption=\"A product cover in a gradient frame\"><img src=\"/shots/product.jpg\" alt=\"\" /></Frame019>"
             },
-            "title": "Gradient Glow Frame"
+            "title": "Gradient Glow Frame",
+            "controls": {
+              "caption": {
+                "label": "Frame caption",
+                "default": "A frame with a gradient border and a soft glow beneath it"
+              },
+              "stub": {
+                "label": "Empty frame caption",
+                "default": "Frame content"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Frame fill"
+              }
+            },
+            "preview": {
+              "props": {
+                "caption": "A frame with a gradient border and a soft glow beneath it",
+                "stub": "Frame content"
+              }
+            }
           }
-        }
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись под кадром",
+            "type": "text",
+            "default": "Кадр с рамкой-градиентом и мягким свечением под ним",
+            "maxLength": 80
+          },
+          {
+            "prop": "stub",
+            "label": "Надпись пустого кадра",
+            "type": "text",
+            "default": "Содержимое кадра",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Заливка кадра",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["accent", "background"]
       }
     }
   ]

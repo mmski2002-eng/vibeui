@@ -6,6 +6,10 @@ export type Tooltip010Props = Omit<
 > & {
   /** Пункты меню: значок, подпись и сочетание клавиш одной строкой. */
   items?: { glyph: string; label: string; shortcut: string }[]
+  /** Подпись перед чипом сочетания. */
+  shortcutLabel?: string
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: компактное меню значков, где полная подпись действия и
@@ -13,12 +17,13 @@ export type Tooltip010Props = Omit<
 // строки, а не отдельными раскиданными <kbd>, как в подсказке-справочнике.
 const STYLES = `
 :where([data-vibeui-block="tooltip-010"]){
---vibeui-tooltip-010-bg:oklch(1 0 0);
---vibeui-tooltip-010-fg:oklch(0.25 0.014 265);
---vibeui-tooltip-010-border:oklch(0.9 0.006 265);
---vibeui-tooltip-010-tip:oklch(0.22 0.014 265);
+--vibeui-tooltip-010-bg:transparent;
+--vibeui-tooltip-010-fg:light-dark(oklch(0.25 0.014 265),oklch(0.93 0.005 265));
+--vibeui-tooltip-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-tooltip-010-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-tooltip-010-tip:light-dark(oklch(0.22 0.014 265),oklch(0.34 0.014 265));
 --vibeui-tooltip-010-chip:oklch(1 0 0 / 16%);
---vibeui-tooltip-010-accent:oklch(0.6 0.16 265);
+--vibeui-tooltip-010-accent:light-dark(oklch(0.6 0.16 265),oklch(0.74 0.15 265));
 --vibeui-tooltip-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="tooltip-010"]{
@@ -36,7 +41,7 @@ display:flex;align-items:center;gap:0.625rem;
 height:2.25rem;padding:0 0.625rem;border-radius:0.625rem;border:none;
 background:transparent;color:inherit;font:inherit;font-size:0.8125rem;text-align:left;
 }
-[data-vibeui-block="tooltip-010"] [data-part="button"]:hover{background:oklch(0.96 0.004 265)}
+[data-vibeui-block="tooltip-010"] [data-part="button"]:hover{background:var(--vibeui-tooltip-010-hover)}
 [data-vibeui-block="tooltip-010"] [data-part="button"]:focus-visible{outline:2px solid var(--vibeui-tooltip-010-accent);outline-offset:-2px}
 [data-vibeui-block="tooltip-010"] [data-part="glyph"]{flex:none;width:1.125rem;text-align:center;opacity:0.75}
 /* Подсказка выезжает вправо от пункта, чип с клавишей — внутри неё же. */
@@ -76,15 +81,49 @@ const DEFAULT_ITEMS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Меню значков, где подсказка на пункте несёт и подпись, и чип горячей
  * клавиши в одной строке. Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tooltip010({
   items = DEFAULT_ITEMS,
+  shortcutLabel = "Сочетание клавиш",
+  background = "",
   className,
   style,
   ...props
 }: Tooltip010Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-tooltip-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-tooltip-010" precedence="medium">
@@ -94,7 +133,7 @@ export function Tooltip010({
         {...props}
         data-vibeui-block="tooltip-010"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         {items.map((item, index) => {
           const id = `vibeui-tooltip-010-${index}`
@@ -108,7 +147,7 @@ export function Tooltip010({
                 {item.label}
               </button>
               <span data-part="tip" role="tooltip" id={id}>
-                <span>Сочетание клавиш</span>
+                <span>{shortcutLabel}</span>
                 <span data-part="chip">{item.shortcut}</span>
               </span>
             </span>

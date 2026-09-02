@@ -12,22 +12,29 @@ export type Codeblock005Props = Omit<
   path?: string
   showStats?: boolean
   lines?: Codeblock005Line[]
+  /** Подписи видов строки: компонент несёт русские, проект подставляет свои. */
+  kindText?: Record<string, string>
+  /** Пусто — подложки нет, диф лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: диф, который читается и без цвета. Знак «+» или «−»
 // рисуется псевдоэлементом рядом с каждой строкой, поэтому смысл строки
 // понятен при дальтонизме и в чёрно-белой печати, а в буфер он не попадает.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, подложки строк остаются полупрозрачными и работают на обеих темах.
 const STYLES = `
 :where([data-vibeui-block="codeblock-005"]){
---vibeui-codeblock-005-bg:oklch(0.2 0.01 265);
---vibeui-codeblock-005-head:oklch(0.24 0.012 265);
---vibeui-codeblock-005-fg:oklch(0.92 0.006 265);
---vibeui-codeblock-005-muted:oklch(0.67 0.014 265);
---vibeui-codeblock-005-border:oklch(1 0 0 / 13%);
---vibeui-codeblock-005-add:oklch(0.84 0.15 150);
---vibeui-codeblock-005-add-bg:oklch(0.5 0.13 150 / 22%);
---vibeui-codeblock-005-del:oklch(0.79 0.15 22);
---vibeui-codeblock-005-del-bg:oklch(0.5 0.15 22 / 22%);
+--vibeui-codeblock-005-bg:transparent;
+--vibeui-codeblock-005-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
+--vibeui-codeblock-005-fg:light-dark(oklch(0.27 0.014 265),oklch(0.92 0.006 265));
+--vibeui-codeblock-005-muted:light-dark(oklch(0.5 0.016 265),oklch(0.67 0.014 265));
+--vibeui-codeblock-005-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 13%));
+--vibeui-codeblock-005-add:light-dark(oklch(0.49 0.15 150),oklch(0.84 0.15 150));
+--vibeui-codeblock-005-add-bg:light-dark(oklch(0.75 0.16 150 / 28%),oklch(0.5 0.13 150 / 22%));
+--vibeui-codeblock-005-del:light-dark(oklch(0.5 0.18 22),oklch(0.79 0.15 22));
+--vibeui-codeblock-005-del-bg:light-dark(oklch(0.75 0.17 22 / 26%),oklch(0.5 0.15 22 / 22%));
 --vibeui-codeblock-005-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -81,17 +88,55 @@ const LINES: Codeblock005Line[] = [
   { text: "}" },
 ]
 
+const KIND_TEXT: Record<string, string> = {
+  add: "добавлено",
+  del: "удалено",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Диф файла: добавленные и удалённые строки со знаком и подложкой. */
 export function Codeblock005({
   path = "components/price.tsx",
   showStats = true,
   lines = LINES,
+  kindText = KIND_TEXT,
+  background = "",
   className,
   style,
   ...props
 }: Codeblock005Props) {
   const added = lines.filter((line) => line.kind === "add").length
   const deleted = lines.filter((line) => line.kind === "del").length
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -102,17 +147,17 @@ export function Codeblock005({
         {...props}
         data-vibeui-block="codeblock-005"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <figcaption>
           <span data-part="path">{path}</span>
           {showStats ? (
             <span data-part="stats">
               <span data-kind="add">
-                <b>+{added}</b> добавлено
+                <b>+{added}</b> {kindText.add ?? KIND_TEXT.add}
               </span>
               <span data-kind="del">
-                <b>−{deleted}</b> удалено
+                <b>−{deleted}</b> {kindText.del ?? KIND_TEXT.del}
               </span>
             </span>
           ) : null}
@@ -125,11 +170,9 @@ export function Codeblock005({
                 data-part="row"
                 data-kind={line.kind}
                 aria-label={
-                  line.kind === "add"
-                    ? "добавлено"
-                    : line.kind === "del"
-                      ? "удалено"
-                      : undefined
+                  line.kind
+                    ? (kindText[line.kind] ?? KIND_TEXT[line.kind])
+                    : undefined
                 }
               >
                 <span>{line.text}</span>

@@ -11,18 +11,23 @@ export type Alert001Props = Omit<
   description?: string
   /** Действие справа: ссылка «Подробнее», кнопка «Повторить». */
   action?: ReactNode
+  /** Пусто — подложки нет, уведомление лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: тон несёт полоса слева и значок, а не заливка во всю
 // ширину. Уведомление остаётся частью страницы, а не куском чужого интерфейса,
 // и три сообщения подряд не превращают экран в светофор.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-001"]){
---vibeui-alert-001-fg:oklch(0.26 0.016 265);
---vibeui-alert-001-muted:oklch(0.48 0.014 265);
---vibeui-alert-001-bg:oklch(0.985 0.002 265);
---vibeui-alert-001-border:oklch(0.9 0.006 265);
---vibeui-alert-001-tone:oklch(0.58 0.18 262);
+--vibeui-alert-001-fg:light-dark(oklch(0.26 0.016 265),oklch(0.93 0.006 265));
+--vibeui-alert-001-muted:light-dark(oklch(0.48 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-001-bg:transparent;
+--vibeui-alert-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-001-tone:light-dark(oklch(0.58 0.18 262),oklch(0.74 0.16 262));
 --vibeui-alert-001-radius:0.75rem;
 --vibeui-alert-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -59,9 +64,9 @@ font-size:0.75rem;font-weight:700;line-height:1;
 display:flex;align-items:center;flex:none;gap:0.5rem;
 font-size:0.8125rem;font-weight:500;color:var(--vibeui-alert-001-tone);
 }
-[data-vibeui-block="alert-001"][data-tone="success"]{--vibeui-alert-001-tone:oklch(0.58 0.15 152)}
-[data-vibeui-block="alert-001"][data-tone="warning"]{--vibeui-alert-001-tone:oklch(0.68 0.15 70)}
-[data-vibeui-block="alert-001"][data-tone="danger"]{--vibeui-alert-001-tone:oklch(0.56 0.19 25)}
+[data-vibeui-block="alert-001"][data-tone="success"]{--vibeui-alert-001-tone:light-dark(oklch(0.58 0.15 152),oklch(0.75 0.14 152))}
+[data-vibeui-block="alert-001"][data-tone="warning"]{--vibeui-alert-001-tone:light-dark(oklch(0.68 0.15 70),oklch(0.81 0.14 75))}
+[data-vibeui-block="alert-001"][data-tone="danger"]{--vibeui-alert-001-tone:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25))}
 /* В узкой колонке действие уходит под текст, а не сжимает его. */
 @container (max-width: 26rem){
 /* Текст занимает строку целиком, иначе действие сжимает его до нуля. */
@@ -79,6 +84,28 @@ const GLYPHS: Record<Alert001Tone, string> = {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Встроенное уведомление: тон несёт полоса слева, а не заливка.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -87,10 +114,21 @@ export function Alert001({
   title = "Домен ещё не подключён",
   description = "Сайт открывается по временному адресу. Подключите домен, чтобы им можно было делиться.",
   action = "Подключить",
+  background = "",
   className,
   style,
   ...props
 }: Alert001Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-alert-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-alert-001" precedence="medium">
@@ -102,7 +140,7 @@ export function Alert001({
         data-tone={tone}
         role={tone === "danger" ? "alert" : "status"}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="icon" aria-hidden="true">
           {GLYPHS[tone]}

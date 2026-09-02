@@ -10,6 +10,8 @@ export type Faq004Props = {
   title?: string
   items?: Faq004Item[]
   name?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -19,13 +21,16 @@ export type Faq004Props = {
 // атрибут name, и браузер сам закрывает предыдущий ответ при открытии
 // следующего. Это ровно тот случай, когда одновременное раскрытие вредно —
 // длинные ответы про условия читают по одному, сравнивая их между собой.
+//
+// Тема приходит из color-scheme окружения через light-dark(): подложки у
+// секции по умолчанию нет, она темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="faq-004"]){
---vibeui-faq-004-bg:oklch(0.99 0.006 85);
---vibeui-faq-004-ink:oklch(0.21 0.02 60);
---vibeui-faq-004-muted:oklch(0.48 0.02 60);
---vibeui-faq-004-border:oklch(0.88 0.014 75);
---vibeui-faq-004-accent:oklch(0.5 0.13 55);
+--vibeui-faq-004-bg:transparent;
+--vibeui-faq-004-ink:light-dark(oklch(0.21 0.02 60),oklch(0.94 0.008 75));
+--vibeui-faq-004-muted:light-dark(oklch(0.48 0.02 60),oklch(0.71 0.015 75));
+--vibeui-faq-004-border:light-dark(oklch(0.88 0.014 75),oklch(0.35 0.014 70));
+--vibeui-faq-004-accent:light-dark(oklch(0.5 0.13 55),oklch(0.76 0.12 60));
 --vibeui-faq-004-serif:ui-serif,Georgia,"Times New Roman",serif;
 --vibeui-faq-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -112,18 +117,48 @@ const DEFAULT_ITEMS: Faq004Item[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Согласованный аккордеон: одновременно открыт только один ответ, без JS. */
 export function Faq004({
   eyebrow = "Условия работы",
   title = "Что спрашивают до подписания договора",
   items = DEFAULT_ITEMS,
   name = "vibeui-faq-004",
+  background = "",
   accent,
   className,
   style,
 }: Faq004Props) {
   const palette = {
     ...(accent ? { "--vibeui-faq-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-faq-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

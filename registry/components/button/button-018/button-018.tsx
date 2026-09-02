@@ -13,6 +13,13 @@ export type Button018Props = Omit<
   step?: number
   label?: string
   unit?: string
+  /** Подпись кнопки «минус». {value} — значение, которое получится. */
+  decreaseLabel?: string
+  /** Подпись кнопки «плюс». {value} — значение, которое получится. */
+  increaseLabel?: string
+  /** Пусто — подложки нет, счётчик лежит прямо на фоне страницы. */
+  background?: string
+  accent?: string
   onChange?: (value: number) => void
 }
 
@@ -22,12 +29,12 @@ export type Button018Props = Omit<
 // имя со значением — «минус» без контекста скринридеру бесполезен.
 const STYLES = `
 :where([data-vibeui-block="button-018"]){
---vibeui-button-018-fg:oklch(0.3 0.014 265);
---vibeui-button-018-muted:oklch(0.55 0.014 265);
---vibeui-button-018-bg:oklch(1 0 0);
---vibeui-button-018-border:oklch(0.9 0.006 265);
---vibeui-button-018-hover:oklch(0.96 0.004 265);
---vibeui-button-018-accent:oklch(0.55 0.17 265);
+--vibeui-button-018-fg:light-dark(oklch(0.3 0.014 265),oklch(0.94 0.006 265));
+--vibeui-button-018-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-button-018-bg:transparent;
+--vibeui-button-018-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-button-018-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
+--vibeui-button-018-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-button-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-018"]{
@@ -75,6 +82,28 @@ padding:0 0.625rem;font-size:0.75rem;color:var(--vibeui-button-018-muted);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Счётчик количества: две кнопки вокруг настоящего поля ввода.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -85,6 +114,10 @@ export function Button018({
   step = 1,
   label = "Количество",
   unit = "шт",
+  decreaseLabel = "Уменьшить до {value}",
+  increaseLabel = "Увеличить до {value}",
+  background = "",
+  accent,
   onChange,
   className,
   style,
@@ -99,6 +132,17 @@ export function Button018({
     onChange?.(safe)
   }
 
+  const palette = {
+    ...(accent ? { "--vibeui-button-018-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-018-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-button-018" precedence="medium">
@@ -108,11 +152,14 @@ export function Button018({
         {...props}
         data-vibeui-block="button-018"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <button
           type="button"
-          aria-label={`Уменьшить до ${Math.max(min, value - step)}`}
+          aria-label={decreaseLabel.replace(
+            "{value}",
+            String(Math.max(min, value - step)),
+          )}
           disabled={value <= min}
           onClick={() => update(value - step)}
         >
@@ -133,7 +180,10 @@ export function Button018({
         />
         <button
           type="button"
-          aria-label={`Увеличить до ${Math.min(max, value + step)}`}
+          aria-label={increaseLabel.replace(
+            "{value}",
+            String(Math.min(max, value + step)),
+          )}
           disabled={value >= max}
           onClick={() => update(value + step)}
         >

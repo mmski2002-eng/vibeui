@@ -31,16 +31,20 @@
             "outline focus-visible у дорожки — переключатель нажимают пробелом с клавиатуры",
             "тень под кружком: без неё белый кружок теряется на светлой дорожке",
             "правила :has(input:disabled), гасящие всю строку целиком",
-            "блок <style> внутри компонента — в нём вся палитра, геометрия и анимация тумблера"
+            "блок <style> внутри компонента — в нём вся палитра, геометрия и анимация тумблера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты label и description; без description строка становится однострочной",
             "align: end — тумблер справа, start — слева, для узкой колонки",
             "акцент через проп accent — цвет включённой дорожки и кольца фокуса",
             "любые нативные пропсы input: name, checked, defaultChecked, onChange, disabled, value",
-            "внешние отступы и ширину через className"
+            "внешние отступы и ширину через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Переключатель применяет настройку сразу. Если изменение вступает в силу только по кнопке «Сохранить» — это чекбокс, а не тумблер.",
             "Не оборачивайте компонент в свой <label>: он уже внутри, вложенные label ломают клик.",
             "Не подписывайте состояния словами «вкл» и «выкл» внутри дорожки: место рассчитано под кружок, текст в него не поместится.",
@@ -86,6 +90,12 @@
             "label": "Выключено",
             "type": "boolean",
             "default": false
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -101,16 +111,20 @@
                 "the focus-visible outline on the track — the switch is toggled with the space key",
                 "the shadow under the thumb: without it a white thumb disappears on a light track",
                 "the :has(input:disabled) rules that dim the entire row",
-                "the <style> block inside the component — it holds the palette, the geometry and the thumb animation"
+                "the <style> block inside the component — it holds the palette, the geometry and the thumb animation",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label and description copy; without description the row becomes single-line",
                 "align: end puts the switch on the right, start on the left for a narrow column",
                 "the accent through the accent prop — it colours the on-state track and the focus ring",
                 "any native input props: name, checked, defaultChecked, onChange, disabled, value",
-                "outer spacing and width through className"
+                "outer spacing and width through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A switch applies its setting immediately. If the change only takes effect on a Save button, that is a checkbox, not a switch.",
                 "Do not wrap the component in your own <label> — there is one inside, and nested labels break clicking.",
                 "Do not put On/Off wording inside the track: the room in there is sized for the thumb, not for text.",
@@ -138,14 +152,30 @@
               },
               "disabled": {
                 "label": "Disabled"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Setting Switch"
+            "title": "Setting Switch",
+            "preview": {
+              "props": {
+                "label": "Two-factor protection",
+                "description": "Ask for a code from the app when signing in from a new device."
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": [
+          "align",
+          "defaultChecked",
+          "disabled",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -179,15 +209,19 @@
             "корневой <label>: цель нажатия — вся плитка, а не бегунок шириной в палец",
             "переключение фона и рамки через :has(input:checked) — среди нескольких плиток положение бегунка читается хуже цвета",
             "кольцо фокуса на плитке через :has(input:focus-visible): сам input визуально крошечный",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок плитки через title",
             "объяснение через description",
             "надпись в бейдже через badge",
-            "акцентный цвет через accent"
+            "начальное состояние плитки через defaultChecked",
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Бейдж появляется только у включённой плитки: пустая строка в badge убирает его совсем.",
             "Плитка расширяется до max-width — в сетке из нескольких карточек ширину задаёт родитель.",
             "Описание короткое не случайно: длинный абзац превращает плитку в статью и ломает ритм сетки.",
@@ -203,11 +237,36 @@
             "maxLength": 32
           },
           {
+            "prop": "description",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Присылаем задачу за час до дедлайна и молчим по выходным.",
+            "maxLength": 90
+          },
+          {
             "prop": "badge",
             "label": "Бейдж",
             "type": "text",
             "default": "Включено",
             "maxLength": 16
+          },
+          {
+            "prop": "defaultChecked",
+            "label": "Включено",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -221,15 +280,19 @@
                 "the root <label>: the tap target is the whole tile, not a thumb the width of a finger",
                 "the background and border driven by :has(input:checked) — across several tiles colour reads better than thumb position",
                 "the focus ring on the tile via :has(input:focus-visible): the input itself is visually tiny",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the tile heading through title",
                 "the explanation through description",
                 "the badge caption through badge",
-                "the accent colour through accent"
+                "the initial state through defaultChecked",
+                "the accent colour through accent",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The badge only shows on an enabled tile: an empty badge removes it entirely.",
                 "The tile stretches to its max-width — in a grid of cards the parent decides the width.",
                 "The description is short on purpose: a long paragraph turns the tile into an article and breaks the grid rhythm.",
@@ -242,14 +305,35 @@
                 "label": "Heading",
                 "default": "Smart reminders"
               },
+              "description": {
+                "label": "Description",
+                "default": "We send the task an hour before the deadline and stay quiet on weekends."
+              },
               "badge": {
                 "label": "Badge",
                 "default": "On"
+              },
+              "defaultChecked": {
+                "label": "On"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Switch Tile"
+            "title": "Switch Tile",
+            "preview": {
+              "props": {
+                "title": "Smart reminders",
+                "description": "We send the task an hour before the deadline and stay quiet on weekends.",
+                "badge": "On"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultChecked", "accent", "background"]
       }
     },
     {
@@ -283,16 +367,20 @@
             "float:left у легенды вместе с clear:both у списка — иначе легенда садится на рамку, а строки её обтекают",
             "текстовый статус «Вкл/Выкл»: цвет бегунка сам по себе не говорит, что включено",
             "нативные checkbox с role=\"switch\" в каждой строке: клавиатура и форма достаются даром",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "название раздела через legend",
             "состав строк, подписи и начальные состояния через items",
+            "слова статуса через onText и offText",
             "акцентный цвет через accent",
-            "ширину карточки через max-width в CSS блока"
+            "ширину карточки через max-width в CSS блока",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
-            "Статус нарисован через content в CSS — при переводе интерфейса эти две строки правятся в стилях, а не в разметке.",
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Статус рисуется свойством content, поэтому слова живут в переменных --vibeui-switch-003-on-text и --vibeui-switch-003-off-text: пропы onText и offText только подставляют их закавыченными.",
             "Каждый переключатель получает свой name из items: без него форма отправит одно поле на всю группу.",
             "Разделитель нарисован тенью, поэтому первая строка остаётся без линии — так и задумано.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
@@ -305,6 +393,32 @@
             "type": "text",
             "default": "Уведомления",
             "maxLength": 30
+          },
+          {
+            "prop": "onText",
+            "label": "Статус «вкл»",
+            "type": "text",
+            "default": "Вкл",
+            "maxLength": 12
+          },
+          {
+            "prop": "offText",
+            "label": "Статус «выкл»",
+            "type": "text",
+            "default": "Выкл",
+            "maxLength": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -318,16 +432,20 @@
                 "float:left on the legend together with clear:both on the list — otherwise the legend sits on the border and rows wrap around it",
                 "the textual On/Off status: the thumb colour alone does not say what is enabled",
                 "native checkboxes with role=\"switch\" in every row: keyboard and form support come for free",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the section title through legend",
                 "the rows, captions and initial states through items",
+                "the status wording through onText and offText",
                 "the accent colour through accent",
-                "the card width through max-width in the block CSS"
+                "the card width through max-width in the block CSS",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
-                "The status is drawn with CSS content — when localising the UI those two strings live in the styles, not the markup.",
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The status is drawn with the content property, so the words live in the --vibeui-switch-003-on-text and --vibeui-switch-003-off-text variables: onText and offText merely feed them in, already quoted.",
                 "Every switch takes its name from items: without it the form submits a single field for the whole group.",
                 "The divider is a shadow, so the first row has no line above it — that is intentional.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -338,11 +456,57 @@
               "legend": {
                 "label": "Section",
                 "default": "Notifications"
+              },
+              "onText": {
+                "label": "On status",
+                "default": "On"
+              },
+              "offText": {
+                "label": "Off status",
+                "default": "Off"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Settings Switch List"
+            "title": "Settings Switch List",
+            "preview": {
+              "props": {
+                "legend": "Notifications",
+                "onText": "On",
+                "offText": "Off",
+                "items": [
+                  {
+                    "id": "digest",
+                    "label": "Weekly digest",
+                    "hint": "One email on Monday morning.",
+                    "defaultChecked": true
+                  },
+                  {
+                    "id": "mentions",
+                    "label": "Mentions in comments",
+                    "hint": "A ping when someone pulls you into a thread.",
+                    "defaultChecked": true
+                  },
+                  {
+                    "id": "marketing",
+                    "label": "Product news",
+                    "hint": "Releases and big updates, no more than once a month."
+                  },
+                  {
+                    "id": "sms",
+                    "label": "SMS about charges",
+                    "hint": "Paid — at your carrier's rate."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -376,15 +540,19 @@
             "переключение подписи через :has(input:checked): текст обязан следовать за реальным состоянием input'а, а не за отдельным флагом",
             "display:none у скрытой подписи — так она не попадает ни на экран, ни в доступное имя",
             "нативный checkbox с role=\"switch\": он даёт клавиатуру, форму и объявление состояния",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись переключателя через label",
             "слово включённого состояния через onText",
             "слово выключенного состояния через offText",
-            "акцентный цвет через accent"
+            "начальное состояние через defaultChecked",
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Значки нарисованы CSS: при смене размера бегунка их геометрию придётся пересчитать вручную.",
             "Слова состояния попадают в доступное имя переключателя — писать их коротко и по делу.",
             "Крупный бегунок здесь не украшение: значку внутри нужно место, меньше 28 пикселей он не читается.",
@@ -405,6 +573,31 @@
             "type": "text",
             "default": "включён",
             "maxLength": 16
+          },
+          {
+            "prop": "offText",
+            "label": "Состояние «выкл»",
+            "type": "text",
+            "default": "выключен",
+            "maxLength": 16
+          },
+          {
+            "prop": "defaultChecked",
+            "label": "Включено",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -418,15 +611,19 @@
                 "the caption swap via :has(input:checked): the text must follow the real input state, not a separate flag",
                 "display:none on the hidden caption — that keeps it off the screen and out of the accessible name",
                 "the native checkbox with role=\"switch\": it brings keyboard, form support and state announcement",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the switch caption through label",
                 "the word for the on state through onText",
                 "the word for the off state through offText",
-                "the accent colour through accent"
+                "the initial state through defaultChecked",
+                "the accent colour through accent",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The marks are drawn in CSS: change the thumb size and their geometry has to be recomputed by hand.",
                 "The state words end up in the switch's accessible name — keep them short and literal.",
                 "The large thumb is not decoration: the mark inside needs room and stops reading below 28 pixels.",
@@ -442,11 +639,32 @@
               "onText": {
                 "label": "On state",
                 "default": "on"
+              },
+              "offText": {
+                "label": "Off state",
+                "default": "off"
+              },
+              "defaultChecked": {
+                "label": "On"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Icon State Switch"
+            "title": "Icon State Switch",
+            "preview": {
+              "props": {
+                "label": "Taking orders",
+                "onText": "on",
+                "offText": "off"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultChecked", "accent", "background"]
       }
     },
     {
@@ -480,15 +698,18 @@
             "тумблер, который не двигается до подтверждения — иначе состояние на экране расходится с реальным",
             "текст последствия в панели: «вы уверены?» без последствия ничего не объясняет",
             "две отдельные кнопки вместо одной: отмена обязана быть таким же явным действием",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись настройки через label и пояснение через description",
             "текст вопроса через question",
             "надписи кнопок через confirmText и cancelText",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Панель встроена в карточку — при узкой колонке проверить, что кнопки не наезжают друг на друга.",
             "Фокус после открытия панели не переносится: для по-настоящему разрушительных действий уместнее модальный диалог с ловушкой фокуса.",
             "Отмена возвращает исходное состояние молча, без всплывающих сообщений: лишний тост здесь только раздражает.",
@@ -497,11 +718,25 @@
         },
         "controls": [
           {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Защита от удаления",
+            "maxLength": 30
+          },
+          {
+            "prop": "description",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Проекты нельзя стереть без подтверждения по почте.",
+            "maxLength": 90
+          },
+          {
             "prop": "question",
             "label": "Вопрос",
             "type": "text",
             "default": "Выключить защиту? Любой участник команды сможет удалить проект целиком.",
-            "maxLength": 80
+            "maxLength": 110
           },
           {
             "prop": "confirmText",
@@ -509,6 +744,25 @@
             "type": "text",
             "default": "Выключить",
             "maxLength": 20
+          },
+          {
+            "prop": "cancelText",
+            "label": "Кнопка отмены",
+            "type": "text",
+            "default": "Оставить",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -522,15 +776,18 @@
                 "the thumb that does not move until confirmation — otherwise the screen state disagrees with the real one",
                 "the consequence spelled out in the panel: \"are you sure?\" without a consequence explains nothing",
                 "two separate buttons rather than one: cancelling must be an equally explicit action",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the setting caption through label and the explanation through description",
                 "the question text through question",
                 "the button captions through confirmText and cancelText",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The panel is inline — in a narrow column check that the buttons do not collide.",
                 "Focus is not moved when the panel opens: for truly destructive actions a modal dialog with a focus trap fits better.",
                 "Cancelling restores the state silently, with no toast: an extra notification here is only noise.",
@@ -539,6 +796,14 @@
               "usage": "<Switch005\n  label=\"Deletion protection\"\n  question=\"Turn protection off?\"\n  confirmText=\"Turn off\"\n/>"
             },
             "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Deletion protection"
+              },
+              "description": {
+                "label": "Description",
+                "default": "Projects cannot be erased without email confirmation."
+              },
               "question": {
                 "label": "Question",
                 "default": "Turn protection off? Any teammate will be able to delete the whole project."
@@ -546,11 +811,31 @@
               "confirmText": {
                 "label": "Action button",
                 "default": "Turn off"
+              },
+              "cancelText": {
+                "label": "Cancel button",
+                "default": "Keep it"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Confirmed Danger Switch"
+            "title": "Confirmed Danger Switch",
+            "preview": {
+              "props": {
+                "label": "Deletion protection",
+                "description": "Projects cannot be erased without email confirmation.",
+                "question": "Turn protection off? Any teammate will be able to delete the whole project.",
+                "confirmText": "Turn off",
+                "cancelText": "Keep it"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -584,15 +869,18 @@
             "фиксированную высоту строки статуса — иначе карточка прыгает на каждом переключении и прыжок читается как ошибка",
             "role=\"status\" на строке: смена фазы объявляется без кражи фокуса",
             "три честные фазы вместо мгновенного «сохранено»: оптимистичный ответ без записи теряет настройку",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись настройки через label и спокойный текст через description",
             "паузу до состояния «сохранено» через delay",
+            "подписи фаз записи через savingText и savedText",
             "акцентный цвет через accent",
-            "формулировки фаз в тексте компонента"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Запрос компонент не делает: delay имитирует его — подключая настоящую запись, состояние переводит владелец данных.",
             "Ошибку записи этот вариант не показывает: для неё нужна четвёртая фаза и кнопка повтора.",
             "Быстрые повторные переключения сбрасывают прежние таймеры — иначе статусы наложатся друг на друга.",
@@ -608,12 +896,45 @@
             "maxLength": 40
           },
           {
+            "prop": "description",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Задачи с датой попадают в рабочий календарь.",
+            "maxLength": 90
+          },
+          {
+            "prop": "savingText",
+            "label": "Фаза «сохраняем»",
+            "type": "text",
+            "default": "Сохраняем настройку…",
+            "maxLength": 32
+          },
+          {
+            "prop": "savedText",
+            "label": "Фаза «сохранено»",
+            "type": "text",
+            "default": "Сохранено",
+            "maxLength": 32
+          },
+          {
             "prop": "delay",
             "label": "Пауза, мс",
             "type": "number",
             "default": 900,
             "min": 200,
             "max": 4000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -627,15 +948,18 @@
                 "the fixed height of the status line — otherwise the card jumps on every toggle and the jump reads as an error",
                 "role=\"status\" on the line: the phase change is announced without stealing focus",
                 "three honest phases instead of an instant \"saved\": an optimistic answer without a write loses the setting",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the setting caption through label and the calm text through description",
-                "the pause before \"saved\" through delay",
+                "the pause before the saved phase through delay",
+                "the phase wording through savingText and savedText",
                 "the accent colour through accent",
-                "the phase wording inside the component text"
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component issues no request: delay imitates it — wire a real write and let the data owner drive the state.",
                 "This variant shows no write error: that needs a fourth phase and a retry button.",
                 "Rapid re-toggling clears the previous timers — otherwise the statuses stack on each other.",
@@ -648,14 +972,41 @@
                 "label": "Caption",
                 "default": "Calendar sync"
               },
+              "description": {
+                "label": "Description",
+                "default": "Tasks with a date land in your work calendar."
+              },
+              "savingText": {
+                "label": "Saving phase",
+                "default": "Saving the setting…"
+              },
+              "savedText": {
+                "label": "Saved phase",
+                "default": "Saved"
+              },
               "delay": {
                 "label": "Pause, ms",
                 "default": 900
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Autosave Switch"
+            "title": "Autosave Switch",
+            "preview": {
+              "props": {
+                "label": "Calendar sync",
+                "description": "Tasks with a date land in your work calendar.",
+                "savingText": "Saving the setting…",
+                "savedText": "Saved"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["delay", "accent", "background"]
       }
     },
     {
@@ -689,15 +1040,19 @@
             "пропорции 1.85 и 0.85 в calc — бегунок должен доезжать ровно до края дорожки при любом размере",
             "fieldset с legend: три строки объявляются как одна размерная шкала",
             "float:left у легенды вместе с clear:both у списка — иначе строки обтекают легенду",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "название шкалы через legend",
             "изначально включённый размер через checkedSize",
+            "подписи размеров через sizeLabels",
             "акцентный цвет через accent",
-            "сами значения размеров в CSS-переменной unit"
+            "сами значения размеров в CSS-переменной unit",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Размер sm — 18 пикселей: это ниже рекомендованной цели нажатия, поэтому строка целиком остаётся кликабельной.",
             "Три переключателя здесь независимы и служат демонстрацией шкалы, а не группой настроек.",
             "Тень бегунка не масштабируется вместе с размером: на lg её стоит немного усилить.",
@@ -718,6 +1073,18 @@
             "type": "select",
             "default": "md",
             "options": ["sm", "md", "lg"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -731,15 +1098,19 @@
                 "the 1.85 and 0.85 ratios in calc — the thumb has to land exactly at the track edge at every size",
                 "the fieldset with a legend: the three rows are announced as one size scale",
                 "float:left on the legend together with clear:both on the list — otherwise the rows wrap around the legend",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the scale title through legend",
                 "the size that starts enabled through checkedSize",
+                "the size captions through sizeLabels",
                 "the accent colour through accent",
-                "the size values themselves in the unit CSS variable"
+                "the size values themselves in the unit CSS variable",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The sm size is 18 pixels: below the recommended tap target, which is why the whole row stays clickable.",
                 "The three switches are independent and demonstrate the scale rather than form a settings group.",
                 "The thumb shadow does not scale with the size: on lg it is worth strengthening slightly.",
@@ -753,13 +1124,29 @@
                 "default": "Switch size"
               },
               "checkedSize": {
-                "label": "Enabled size",
-                "default": "md"
+                "label": "Enabled size"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Switch Size Scale"
+            "title": "Switch Size Scale",
+            "preview": {
+              "props": {
+                "legend": "Switch size",
+                "sizeLabels": {
+                  "sm": "Compact",
+                  "md": "Regular",
+                  "lg": "Large"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["checkedSize", "accent", "background"]
       }
     },
     {
@@ -793,15 +1180,18 @@
             "живую ссылку внутри объяснения — она единственный выход из заблокированного состояния и не должна быть выключена",
             "disabled на самом input'е: визуальная имитация блокировки всё равно отправит значение формой",
             "пунктирную дорожку и замок: состояние обязано читаться и без цвета",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись настройки через label",
             "текст причины через reason",
             "надпись ссылки через actionText и её адрес через actionHref",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Выключенный input не получает фокус — поэтому клавиатурный путь ведёт прямо на ссылку в объяснении.",
             "Причина должна называть условие, а не отказ: «доступно на тарифе X» полезнее, чем «недоступно».",
             "Курсор not-allowed стоит на строке, а не только на бегунке: наводят обычно на подпись.",
@@ -809,6 +1199,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Экспорт в облако",
+            "maxLength": 30
+          },
           {
             "prop": "reason",
             "label": "Причина",
@@ -822,6 +1219,25 @@
             "type": "text",
             "default": "Сменить тариф",
             "maxLength": 24
+          },
+          {
+            "prop": "actionHref",
+            "label": "Адрес ссылки",
+            "type": "text",
+            "default": "#pricing",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -835,15 +1251,18 @@
                 "the live link inside the explanation — it is the only way out of the locked state and must not be disabled",
                 "disabled on the input itself: a merely visual lock still submits a value with the form",
                 "the dashed track and the padlock: the state has to read without colour too",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the setting caption through label",
                 "the reason text through reason",
                 "the link caption through actionText and its address through actionHref",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A disabled input takes no focus — so the keyboard path leads straight to the link in the explanation.",
                 "The reason should name the condition, not the refusal: \"available on plan X\" beats \"not available\".",
                 "The not-allowed cursor is on the row, not just the thumb: people hover the caption.",
@@ -852,6 +1271,10 @@
               "usage": "<Switch008\n  label=\"Cloud export\"\n  reason=\"Available on the Team plan.\"\n  actionText=\"Change plan\"\n  actionHref=\"/pricing\"\n/>"
             },
             "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Cloud export"
+              },
               "reason": {
                 "label": "Reason",
                 "default": "Available on the Team plan: on the current one export is manual only."
@@ -859,11 +1282,29 @@
               "actionText": {
                 "label": "Link",
                 "default": "Change plan"
+              },
+              "actionHref": {
+                "label": "Link address",
+                "default": "#pricing"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Locked Switch"
+            "title": "Locked Switch",
+            "preview": {
+              "props": {
+                "label": "Cloud export",
+                "reason": "Available on the Team plan: on the current one export is manual only.",
+                "actionText": "Change plan"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -897,15 +1338,21 @@
             "звёзды одной точкой с тремя тенями — три отдельных узла ради декора не нужны",
             "подпись режима рядом с бегунком: значок солнца и месяца сам по себе не объясняет, что произойдёт по нажатию",
             "правило prefers-reduced-motion — переезд, перекраска и восход звёзд обязаны выключаться",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "цвета неба, солнца и месяца одинаковыми в обеих ветках темы: это рисунок, а не палитра интерфейса — день обязан оставаться днём и на тёмной странице",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись светлого режима через dayLabel",
             "подпись тёмного режима через nightLabel",
+            "пояснение под названием режима через hint",
+            "начальное состояние через defaultChecked",
             "акцентный цвет фокуса через accent",
-            "цвета неба и светил в переменных day, night, sun и moon"
+            "цвета неба и светил в переменных day, night, sun и moon",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не переключает тему сайта: он только отражает выбор, применяет его владелец состояния.",
             "Настоящему переключателю темы нужен третий режим «как в системе» — здесь их сознательно два.",
             "Вырез месяца завязан на цвет ночного неба: при полупрозрачном фоне серп станет виден днём.",
@@ -926,6 +1373,31 @@
             "type": "text",
             "default": "Тёмная тема",
             "maxLength": 24
+          },
+          {
+            "prop": "hint",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Переключается вручную",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultChecked",
+            "label": "Ночь",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -939,15 +1411,21 @@
                 "the stars as a single dot with three shadows — decoration does not need three extra nodes",
                 "the mode caption beside the thumb: a sun and moon glyph alone does not say what a tap will do",
                 "the prefers-reduced-motion rule — the travel, the repaint and the rising stars must be switchable off",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "the sky, sun and crescent colours identical in both theme branches: they are a picture, not an interface palette — daytime has to stay daytime on a dark page too",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the light mode caption through dayLabel",
                 "the dark mode caption through nightLabel",
+                "the hint under the mode name through hint",
+                "the initial state through defaultChecked",
                 "the focus accent colour through accent",
-                "the sky and luminary colours in the day, night, sun and moon variables"
+                "the sky and luminary colours in the day, night, sun and moon variables",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not switch the site theme: it only reflects the choice, the state owner applies it.",
                 "A real theme switch needs a third \"follow system\" mode — here there are deliberately two.",
                 "The crescent cut depends on the night-sky colour: with a translucent background the crescent shows in daylight.",
@@ -963,11 +1441,32 @@
               "nightLabel": {
                 "label": "Dark mode",
                 "default": "Dark theme"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "Switched manually"
+              },
+              "defaultChecked": {
+                "label": "Night"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Day Night Switch"
+            "title": "Day Night Switch",
+            "preview": {
+              "props": {
+                "dayLabel": "Light theme",
+                "nightLabel": "Dark theme",
+                "hint": "Switched manually"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultChecked", "accent", "background"]
       }
     },
     {
@@ -998,15 +1497,19 @@
             "нативный input[type=checkbox] с role=\"switch\": роль объявляет поведение, а состояние остаётся настоящим",
             "сдвиг бегунка через transform, а не через left: transform не вызывает пересчёт раскладки",
             "outline focus-visible у дорожки — переключатель нажимают пробелом с клавиатуры",
-            "правило :has(input:disabled), гасящее всю строку целиком"
+            "правило :has(input:disabled), гасящее всю строку целиком",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты label и description; без description строка становится однострочной",
             "акцент через проп accent — цвет метки, включённой дорожки и кольца фокуса",
             "любые нативные пропсы input: name, checked, defaultChecked, onChange, disabled, value",
-            "внешние отступы и ширину через className"
+            "внешние отступы и ширину через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Метка раздела декоративна и не меняется формой — под свою иконографию перекрашивайте через accent или переопределяйте её в CSS.",
             "Не оборачивайте компонент в свой <label>: он уже внутри.",
             "Не подписывайте состояния словами «вкл»/«выкл» внутри дорожки: место рассчитано под кружок.",
@@ -1045,6 +1548,12 @@
             "label": "Выключено",
             "type": "boolean",
             "default": false
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1058,15 +1567,19 @@
                 "the native input[type=checkbox] with role=\"switch\": the role announces the behaviour while the state stays real",
                 "moving the thumb with transform rather than left: transform does not trigger layout",
                 "the focus-visible outline on the track — the switch is toggled with the space key",
-                "the :has(input:disabled) rule that dims the entire row"
+                "the :has(input:disabled) rule that dims the entire row",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label and description copy; without description the row becomes single-line",
                 "the accent through the accent prop — it colours the mark, the on-state track and the focus ring",
                 "any native input props: name, checked, defaultChecked, onChange, disabled, value",
-                "outer spacing and width through className"
+                "outer spacing and width through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The section mark is decorative and is not props-driven — recolour it with accent or override it in CSS for your own iconography.",
                 "Do not wrap the component in your own <label> — there is one inside.",
                 "Do not put On/Off wording inside the track: the room in there is sized for the thumb.",
@@ -1091,14 +1604,24 @@
               },
               "disabled": {
                 "label": "Disabled"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Icon Setting Switch"
+            "title": "Icon Setting Switch",
+            "preview": {
+              "props": {
+                "label": "Push notifications",
+                "description": "Short pings about important events on your phone."
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["defaultChecked", "disabled", "accent", "background"]
       }
     },
     {
@@ -1129,15 +1652,20 @@
             "тумблер, который не двигается до подтверждения — иначе состояние на экране расходится с реальным",
             "нативный <dialog> с showModal(): фокус-ловушка и закрытие по Esc достаются даром, без ручной разметки",
             "две отдельные кнопки вместо одной: отмена обязана быть таким же явным действием",
-            "aria-labelledby диалога, указывающий на текст вопроса"
+            "aria-labelledby диалога, указывающий на текст вопроса",
+            "непрозрачную заливку диалога отдельной переменной panel: модальное окно лежит поверх страницы и не может быть прозрачным вместе со строкой",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись настройки через label и пояснение через description",
             "текст вопроса через question",
             "надписи кнопок через confirmText и cancelText",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Диалог модальный: пока он открыт, остальная страница недоступна для клавиатуры и скринридера — это штатное поведение <dialog>.",
             "Перед повторным showModal() проверяется dialogRef.current?.open, иначе браузер бросает исключение.",
             "Отмена и Esc возвращают исходное состояние молча, без всплывающих сообщений.",
@@ -1145,6 +1673,20 @@
           ]
         },
         "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Публичная ссылка на проект",
+            "maxLength": 40
+          },
+          {
+            "prop": "description",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Любой человек со ссылкой сможет открыть проект без приглашения.",
+            "maxLength": 90
+          },
           {
             "prop": "question",
             "label": "Вопрос",
@@ -1158,6 +1700,25 @@
             "type": "text",
             "default": "Открыть доступ",
             "maxLength": 24
+          },
+          {
+            "prop": "cancelText",
+            "label": "Кнопка отмены",
+            "type": "text",
+            "default": "Отмена",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1171,15 +1732,20 @@
                 "the thumb that does not move until confirmation — otherwise the screen state disagrees with the real one",
                 "the native <dialog> with showModal(): the focus trap and Escape-to-close come for free, with no manual markup",
                 "two separate buttons rather than one: cancelling must be an equally explicit action",
-                "the dialog's aria-labelledby pointing at the question text"
+                "the dialog's aria-labelledby pointing at the question text",
+                "the dialog's opaque fill in its own panel variable: the modal sits above the page and cannot go transparent along with the row",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the setting caption through label and the explanation through description",
                 "the question text through question",
                 "the button captions through confirmText and cancelText",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The dialog is modal: while it is open the rest of the page is unreachable by keyboard and screen reader — that is standard <dialog> behaviour.",
                 "A repeat showModal() is guarded by checking dialogRef.current?.open first, or the browser throws.",
                 "Cancel and Escape restore the previous state silently, with no toast.",
@@ -1188,6 +1754,14 @@
               "usage": "<Switch011\n  label=\"Public project link\"\n  question=\"Grant link access?\"\n  confirmText=\"Grant access\"\n/>"
             },
             "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Public project link"
+              },
+              "description": {
+                "label": "Description",
+                "default": "Anyone with the link will be able to open the project without an invite."
+              },
               "question": {
                 "label": "Question",
                 "default": "Grant link access? Anyone who has the link will be able to open the project."
@@ -1195,14 +1769,34 @@
               "confirmText": {
                 "label": "Action button",
                 "default": "Grant access"
+              },
+              "cancelText": {
+                "label": "Cancel button",
+                "default": "Cancel"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Confirmed Enable Switch"
+            "title": "Confirmed Enable Switch",
+            "preview": {
+              "props": {
+                "label": "Public project link",
+                "description": "Anyone with the link will be able to open the project without an invite.",
+                "question": "Grant link access? Anyone who has the link will be able to open the project.",
+                "confirmText": "Grant access",
+                "cancelText": "Cancel"
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1233,15 +1827,20 @@
             "текстовый статус «Включено N из M» — tri-state у роли switch формально не описан ARIA, поэтому счёт словами обязателен",
             "fieldset с legend: список переключателей объявляется как один раздел настроек",
             "нативные checkbox с role=\"switch\" в каждой строке: клавиатура и форма достаются даром",
-            "пересчёт allOn/someOn от общего items, а не от отдельного флага — иначе общий тумблер разойдётся со строками"
+            "пересчёт allOn/someOn от общего items, а не от отдельного флага — иначе общий тумблер разойдётся со строками",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "название раздела через legend и подпись общего тумблера через masterLabel",
             "состав строк, подписи и начальные состояния через items",
+            "счётчик через statusText: {on} и {total} подставляются числами",
             "акцентный цвет через accent",
-            "ширину карточки через max-width в CSS блока"
+            "ширину карточки через max-width в CSS блока",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Общий тумблер не хранит своё состояние — оно каждый раз вычисляется из items, поэтому расхождений со строками не бывает.",
             "Каждый переключатель получает свой id из items: без него метки потеряют связь с полями.",
             "Индетерминированный бегунок останавливается по центру дорожки — это чисто визуальный сигнал, а не отдельное состояние формы.",
@@ -1262,6 +1861,25 @@
             "type": "text",
             "default": "Включить всё",
             "maxLength": 30
+          },
+          {
+            "prop": "statusText",
+            "label": "Счётчик",
+            "type": "text",
+            "default": "Включено {on} из {total}",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1275,15 +1893,20 @@
                 "the textual \"N of M on\" status — the switch role has no formal tri-state in ARIA, so a worded count is mandatory",
                 "the fieldset with a legend: the list of switches is announced as one settings section",
                 "native checkboxes with role=\"switch\" in every row: keyboard and form support come for free",
-                "computing allOn/someOn from the shared items state rather than a separate flag — otherwise the master toggle drifts from the rows"
+                "computing allOn/someOn from the shared items state rather than a separate flag — otherwise the master toggle drifts from the rows",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the section title through legend and the master caption through masterLabel",
                 "the rows, captions and initial states through items",
+                "the counter through statusText: {on} and {total} are filled with numbers",
                 "the accent colour through accent",
-                "the card width through max-width in the block CSS"
+                "the card width through max-width in the block CSS",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The master toggle keeps no state of its own — it is recomputed from items every render, so it can never drift from the rows.",
                 "Every switch takes its id from items: without it the labels lose their connection to the fields.",
                 "The indeterminate thumb parks in the middle of the track — that is a purely visual cue, not a separate form state.",
@@ -1299,14 +1922,54 @@
               "masterLabel": {
                 "label": "Master switch",
                 "default": "Turn on all"
+              },
+              "statusText": {
+                "label": "Counter",
+                "default": "{on} of {total} on"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Master Group Switch"
+            "title": "Master Group Switch",
+            "preview": {
+              "props": {
+                "legend": "Notification channels",
+                "masterLabel": "Turn on all",
+                "statusText": "{on} of {total} on",
+                "items": [
+                  {
+                    "id": "email",
+                    "label": "Email",
+                    "defaultChecked": true
+                  },
+                  {
+                    "id": "push",
+                    "label": "Push notifications",
+                    "defaultChecked": true
+                  },
+                  {
+                    "id": "sms",
+                    "label": "SMS",
+                    "defaultChecked": false
+                  },
+                  {
+                    "id": "digest",
+                    "label": "Weekly digest",
+                    "defaultChecked": false
+                  }
+                ]
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1337,15 +2000,18 @@
             "role=\"status\" на бейдже: смена фазы объявляется без кражи фокуса",
             "три честные фазы вместо мгновенного «сохранено»: оптимистичный ответ без записи теряет настройку",
             "смену цвета бейджа с акцентного на зелёный между «сохраняем» и «сохранено»: недостаточно одной обводки",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись настройки через label и спокойный текст через description",
             "паузу до состояния «сохранено» через delay",
             "акцентный цвет через accent",
-            "формулировки бейджа в тексте компонента"
+            "подписи фаз записи через statusText: ключи saving и saved",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Запрос компонент не делает: delay имитирует его — подключая настоящую запись, состояние переводит владелец данных.",
             "Бейдж не резервирует место в простое: карточка временно растёт на время записи — это осознанный выбор, а не баг.",
             "Быстрые повторные переключения сбрасывают прежние таймеры — иначе бейджи наложатся друг на друга.",
@@ -1361,12 +2027,31 @@
             "maxLength": 40
           },
           {
+            "prop": "description",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Копия базы каждую ночь в 03:00.",
+            "maxLength": 60
+          },
+          {
             "prop": "delay",
             "label": "Пауза, мс",
             "type": "number",
             "default": 900,
             "min": 200,
             "max": 4000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1380,15 +2065,18 @@
                 "role=\"status\" on the badge: the phase change is announced without stealing focus",
                 "three honest phases instead of an instant \"saved\": an optimistic answer without a write loses the setting",
                 "the badge colour switching from accent to green between \"saving\" and \"saved\": an outline alone is not enough",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the setting caption through label and the calm text through description",
                 "the pause before \"saved\" through delay",
                 "the accent colour through accent",
-                "the badge wording inside the component text"
+                "the phase captions through statusText: the saving and saved keys",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component issues no request: delay imitates it — wire a real write and let the data owner drive the state.",
                 "The badge reserves no space at rest: the card temporarily grows while saving — that is a deliberate choice, not a bug.",
                 "Rapid re-toggling clears the previous timers — otherwise the badges stack on each other.",
@@ -1401,17 +2089,38 @@
                 "label": "Caption",
                 "default": "Automatic backup"
               },
+              "description": {
+                "label": "Description",
+                "default": "A database copy every night at 03:00."
+              },
               "delay": {
                 "label": "Pause, ms",
                 "default": 900
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Save Status Switch"
+            "title": "Save Status Switch",
+            "preview": {
+              "props": {
+                "label": "Automatic backup",
+                "description": "A database copy every night at 03:00.",
+                "statusText": {
+                  "saving": "Saving…",
+                  "saved": "Saved"
+                }
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["delay", "accent", "background"]
       }
     },
     {
@@ -1442,15 +2151,18 @@
             "подсветку активного значка цветом через input:checked ~ и input:not(:checked) ~: состояние читается без утечки в текст",
             "цепочку смежных селекторов input:checked + [off-mark] + [on-mark] + [thumb] для сдвига бегунка — порядок узлов в разметке менять нельзя",
             "нативный checkbox с role=\"switch\": он даёт клавиатуру, форму и объявление состояния",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись переключателя через label и пояснение через description",
             "акцентный цвет включённой дорожки через accent",
             "изначальное состояние через defaultChecked",
-            "любые нативные пропсы input: name, checked, onChange, disabled, value"
+            "любые нативные пропсы input: name, checked, onChange, disabled, value",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Порядок узлов внутри дорожки жёсткий: input, off-mark, on-mark, thumb — селекторы завязаны именно на эту последовательность.",
             "Значки декоративны и спрятаны через aria-hidden: состояние объявляет сам role=\"switch\".",
             "Крупная дорожка здесь не украшение: знакам по краям нужно место, меньше 56 пикселей ширины они начинают наезжать на бегунок.",
@@ -1471,6 +2183,24 @@
             "type": "text",
             "default": "Следующее видео начинается без нажатия.",
             "maxLength": 70
+          },
+          {
+            "prop": "defaultChecked",
+            "label": "Включено",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1484,15 +2214,18 @@
                 "colouring the active mark through input:checked ~ and input:not(:checked) ~: the state reads without leaking into text",
                 "the chained adjacent-sibling selector input:checked + [off-mark] + [on-mark] + [thumb] that moves the thumb — the node order in the markup must not change",
                 "the native checkbox with role=\"switch\": it brings keyboard, form support and state announcement",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the switch caption through label and the explanation through description",
                 "the on-state track accent colour through accent",
                 "the initial state through defaultChecked",
-                "any native input props: name, checked, onChange, disabled, value"
+                "any native input props: name, checked, onChange, disabled, value",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The node order inside the track is fixed: input, off-mark, on-mark, thumb — the selectors depend on exactly that sequence.",
                 "The marks are decorative and hidden with aria-hidden: role=\"switch\" itself announces the state.",
                 "The large track is not decoration: the marks at the edges need room and start colliding with the thumb below 56 pixels wide.",
@@ -1508,14 +2241,30 @@
               "description": {
                 "label": "Description",
                 "default": "The next video starts without a tap."
+              },
+              "defaultChecked": {
+                "label": "On"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Track Icons Switch"
+            "title": "Track Icons Switch",
+            "preview": {
+              "props": {
+                "label": "Autoplay",
+                "description": "The next video starts without a tap."
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["defaultChecked", "accent", "background"]
       }
     }
   ]

@@ -17,6 +17,20 @@ export type Dashboard080Props = {
   spans?: Dashboard080Span[]
   summary?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Виды спанов по ключам http, db, cache, queue и code. */
+  kindText?: Record<string, string>
+  /** Общее время: {total}. */
+  totalText?: string
+  /** Расшифровка полосы: {name}, {start}, {duration}. */
+  laneAriaText?: string
+  /** Длительность спана: {duration}. */
+  durationText?: string
+  /** Доля от запроса: {percent}. */
+  shareText?: string
+  /** Крайние деления линейки: {value}. */
+  rulerText?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,19 +45,24 @@ export type Dashboard080Props = {
 // в запросе на 3 секунды и в запросе на 500 мс значат разное. Вид спана
 // подписан меткой (запрос, база, кэш): по нему решают, к кому идти. Спан с
 // ошибкой несёт штриховку и текст ошибки — искать её в другой вкладке незачем.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-080"]){
---vibeui-dashboard-080-bg:oklch(0.985 0.003 290);
---vibeui-dashboard-080-card:oklch(1 0 0);
---vibeui-dashboard-080-fg:oklch(0.21 0.014 290);
---vibeui-dashboard-080-muted:oklch(0.54 0.014 290);
---vibeui-dashboard-080-border:oklch(0.91 0.006 290);
---vibeui-dashboard-080-accent:oklch(0.52 0.16 290);
---vibeui-dashboard-080-soft:oklch(0.965 0.02 290);
---vibeui-dashboard-080-db:oklch(0.55 0.14 225);
---vibeui-dashboard-080-cache:oklch(0.6 0.13 165);
---vibeui-dashboard-080-queue:oklch(0.66 0.13 85);
---vibeui-dashboard-080-error:oklch(0.57 0.19 25);
+--vibeui-dashboard-080-bg:transparent;
+/* Полотно водопада и жёлоб дорожки: подложка самого блока прозрачна. */
+--vibeui-dashboard-080-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 290));
+--vibeui-dashboard-080-inset:light-dark(oklch(0.985 0.003 290),oklch(0.22 0.012 290));
+--vibeui-dashboard-080-fg:light-dark(oklch(0.21 0.014 290),oklch(0.94 0.005 290));
+--vibeui-dashboard-080-muted:light-dark(oklch(0.54 0.014 290),oklch(0.72 0.012 290));
+--vibeui-dashboard-080-border:light-dark(oklch(0.91 0.006 290),oklch(0.36 0.012 290));
+--vibeui-dashboard-080-accent:light-dark(oklch(0.52 0.16 290),oklch(0.74 0.14 290));
+--vibeui-dashboard-080-soft:light-dark(oklch(0.965 0.02 290),oklch(0.3 0.035 290));
+--vibeui-dashboard-080-db:light-dark(oklch(0.55 0.14 225),oklch(0.72 0.13 225));
+--vibeui-dashboard-080-cache:light-dark(oklch(0.55 0.13 165),oklch(0.75 0.12 165));
+--vibeui-dashboard-080-queue:light-dark(oklch(0.6 0.13 85),oklch(0.8 0.13 85));
+--vibeui-dashboard-080-error:light-dark(oklch(0.57 0.19 25),oklch(0.72 0.16 25));
 --vibeui-dashboard-080-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 --vibeui-dashboard-080-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -86,7 +105,7 @@ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 [data-vibeui-block="dashboard-080"] [data-part="lane"]{
 position:relative;height:1rem;border-radius:0.25rem;
-background:var(--vibeui-dashboard-080-bg);
+background:var(--vibeui-dashboard-080-inset);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-080-border);
 }
 [data-vibeui-block="dashboard-080"] [data-part="bar"]{
@@ -97,7 +116,7 @@ background:var(--vibeui-dashboard-080-accent);min-width:0.125rem;
 [data-vibeui-block="dashboard-080"] [data-kind="cache"] [data-part="bar"]{background:var(--vibeui-dashboard-080-cache)}
 [data-vibeui-block="dashboard-080"] [data-kind="queue"] [data-part="bar"]{background:var(--vibeui-dashboard-080-queue)}
 [data-vibeui-block="dashboard-080"] [data-error="true"] [data-part="bar"]{
-background:repeating-linear-gradient(135deg,var(--vibeui-dashboard-080-error) 0 0.25rem,color-mix(in oklab,var(--vibeui-dashboard-080-error) 70%,black) 0.25rem 0.5rem);
+background:repeating-linear-gradient(135deg,var(--vibeui-dashboard-080-error) 0 0.25rem,color-mix(in oklab,var(--vibeui-dashboard-080-error) 70%,light-dark(black,white)) 0.25rem 0.5rem);
 }
 [data-vibeui-block="dashboard-080"] [data-part="ms"]{
 font-size:0.6875rem;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;
@@ -180,12 +199,34 @@ const DEFAULT_SPANS: Dashboard080Span[] = [
   },
 ]
 
-const KIND_LABELS: Record<Dashboard080Span["kind"], string> = {
+const KIND_TEXT: Record<string, string> = {
   http: "запрос",
   db: "база",
   cache: "кэш",
   queue: "очередь",
   code: "код",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -200,13 +241,28 @@ export function Dashboard080({
   spans = DEFAULT_SPANS,
   summary = "Две трети времени ушло в базу: запрос по сделкам не использует индекс по периоду. Внешний курс валют отвалился по тайм-ауту, но отчёт собрался на вчерашних данных — в отчёте это не помечено.",
   accent,
+  background = "",
+  kindText = KIND_TEXT,
+  totalText = "{total} мс всего",
+  laneAriaText = "{name}: начало {start} мс, длительность {duration} мс",
+  durationText = "{duration} мс",
+  shareText = "{percent} % запроса",
+  rulerText = "{value} мс",
   className,
   style,
 }: Dashboard080Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-080-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-080-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const kinds = { ...KIND_TEXT, ...kindText }
 
   return (
     <>
@@ -223,7 +279,9 @@ export function Dashboard080({
           <div data-part="head">
             <h2>{title}</h2>
             <p data-part="id">{traceId}</p>
-            <p data-part="total">{total} мс всего</p>
+            <p data-part="total">
+              {totalText.replace("{total}", String(total))}
+            </p>
           </div>
 
           <div data-part="scroll">
@@ -241,7 +299,7 @@ export function Dashboard080({
                   >
                     <b>{span.name}</b>
                     <span>
-                      <span data-part="kind">{KIND_LABELS[span.kind]}</span>
+                      <span data-part="kind">{kinds[span.kind]}</span>
                       {span.service}
                     </span>
                   </div>
@@ -249,7 +307,10 @@ export function Dashboard080({
                   <div
                     data-part="lane"
                     role="img"
-                    aria-label={`${span.name}: начало ${span.start} мс, длительность ${span.duration} мс`}
+                    aria-label={laneAriaText
+                      .replace("{name}", span.name)
+                      .replace("{start}", String(span.start))
+                      .replace("{duration}", String(span.duration))}
                   >
                     <span
                       data-part="bar"
@@ -261,9 +322,17 @@ export function Dashboard080({
                   </div>
 
                   <p data-part="ms">
-                    <b>{span.duration} мс</b>
+                    <b>
+                      {durationText.replace(
+                        "{duration}",
+                        String(span.duration),
+                      )}
+                    </b>
                     <span>
-                      {Math.round((span.duration / total) * 100)} % запроса
+                      {shareText.replace(
+                        "{percent}",
+                        String(Math.round((span.duration / total) * 100)),
+                      )}
                     </span>
                   </p>
 
@@ -273,11 +342,11 @@ export function Dashboard080({
             </ul>
 
             <div data-part="ruler">
-              <span>0 мс</span>
+              <span>{rulerText.replace("{value}", "0")}</span>
               <span>{Math.round(total / 4)}</span>
               <span>{Math.round(total / 2)}</span>
               <span>{Math.round((total * 3) / 4)}</span>
-              <span>{total} мс</span>
+              <span>{rulerText.replace("{value}", String(total))}</span>
             </div>
           </div>
 

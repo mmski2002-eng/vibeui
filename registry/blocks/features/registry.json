@@ -26,7 +26,7 @@
             "асимметричное тело от 64rem: панель шире списка; шапка остаётся полноширинной над телом",
             "абстрактную геометрию в панели — это иллюстрация, а не интерфейс; не превращай её в окно приложения, дашборд, график с осями или скриншот и не заменяй на <img>",
             "второстепенные возможности как список на волосяных линиях: без карточек, без рамок вокруг каждой, без иллюстративных иконок",
-            "тёмную графитовую палитру --vibeui-features-001-* с низкой цветностью — не заменять на токены темы проекта (bg-background, text-foreground, primary, border) и не добавлять свечение, градиентные пятна или крупные тени",
+            "тёмную графитовую палитру --vibeui-features-001-* с низкой цветностью: секция намеренно одноцветная и тёмная в любой теме страницы — не заменять её на токены темы проекта (bg-background, text-foreground, primary, border), не переводить на light-dark() и не добавлять свечение, градиентные пятна или крупные тени",
             "плоскость: теней нет, тугой радиус только у панели, всё остальное держится на волосяных линиях",
             "h2 как заголовок секции — блок ставится под hero и не должен приносить второй h1 на страницу; заголовки возможностей остаются h3",
             "container-type: inline-size на корне блока и @container-правила в его <style> — блок меряет собственную ширину, а не ширину окна; не переписывай их на viewport-медиазапросы",
@@ -44,6 +44,7 @@
             "внешние отступы через className"
           ],
           "notes": [
+            "Тёмный тон здесь — часть композиции, а не тема: секция не следует color-scheme страницы и остаётся тёмной полосой между светлыми секциями. Если нужна секция, темнеющая вместе со страницей, берите features-002 или features-004.",
             "Не добавляй четвёртую второстепенную возможность и не убирай главную: количество зон фиксировано, это часть композиции.",
             "Не добавляй иконки из icon-библиотек: блок собран без зависимостей.",
             "Не добавляй motion-библиотеки: анимации уже на CSS.",
@@ -63,7 +64,7 @@
                 "the asymmetric body from 64rem: the panel is wider than the list; the header stays full width above the body",
                 "the abstract geometry in the panel — it is an illustration, not an interface; do not turn it into an app window, a dashboard, a chart with axes or a screenshot, and do not swap it for an <img>",
                 "the secondary features as a list on hairlines: no cards, no borders around each one, no illustrative icons",
-                "the dark low-chroma graphite --vibeui-features-001-* palette — do not swap it for your theme tokens (bg-background, text-foreground, primary, border) and do not add glow, gradient blobs or large shadows",
+                "the dark low-chroma graphite --vibeui-features-001-* palette: the section is deliberately single-tone and dark under any page theme — do not swap it for your theme tokens (bg-background, text-foreground, primary, border), do not move it to light-dark(), and do not add glow, gradient blobs or large shadows",
                 "the flatness: no shadows, a tight radius on the panel only, everything else held by hairlines",
                 "the h2 as the section heading — this block sits under a hero and must not bring a second h1 onto the page; feature titles stay h3",
                 "container-type: inline-size on the block root and the @container rules in its <style> — the block measures its own width, not the window's; do not rewrite them as viewport media queries",
@@ -81,6 +82,7 @@
                 "outer spacing through className"
               ],
               "notes": [
+                "The dark tone here is part of the composition, not a theme: the section does not follow the page color-scheme and stays a dark band between light sections. If you need a section that darkens with the page, take features-002 or features-004.",
                 "Do not add a fourth secondary feature and do not drop the headline one: the number of zones is fixed and it is part of the composition.",
                 "Do not add icons from an icon library: the block is built with no dependencies.",
                 "Do not add a motion library: the animations are already CSS.",
@@ -90,9 +92,86 @@
                 "Keep the link semantics. For internal navigation your router's component is fine, as long as the visual styling, the accessibility and the href behaviour survive."
               ]
             },
-            "title": "Spotlight Features"
+            "title": "Spotlight Features",
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Everything after the first"
+              },
+              "titleAccent": {
+                "label": "Accented word",
+                "default": "deploy"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Capabilities"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Capabilities",
+                "title": "Everything after the first",
+                "titleAccent": "deploy",
+                "description": "The unglamorous half of shipping — observability, rollbacks, access control — handled before you need it.",
+                "action": {
+                  "label": "See the full list",
+                  "href": "#"
+                },
+                "primaryFeature": {
+                  "title": "Layered environments",
+                  "description": "Preview, staging and production share one config and drift apart on purpose, not by accident."
+                },
+                "features": [
+                  {
+                    "title": "Instant rollback",
+                    "description": "Any deploy reverts to the previous build in one step."
+                  },
+                  {
+                    "title": "Scoped access",
+                    "description": "Per-environment roles, no shared production credentials."
+                  },
+                  {
+                    "title": "Audit trail",
+                    "description": "Every change carries an author, a reason and a timestamp."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Всё, что начинается после первого",
+            "maxLength": 60
+          },
+          {
+            "prop": "titleAccent",
+            "label": "Акцент в заголовке",
+            "type": "text",
+            "default": "деплоя",
+            "maxLength": 24
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Возможности",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["accent"]
       }
     },
     {
@@ -110,7 +189,7 @@
           "target": "@components/vibeui/features-002.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-002-*, светлая база. Сетка собрана приёмом gap:1px плюс фон контейнера: линии между ячейками — это просвет, а не border, поэтому на узкой ширине сетка сворачивается в столбец без «висящих» рамок. Иконки — inline SVG-пути из словаря по ключу, цвет берётся из currentColor. Колонок одна до 34rem, две от 34rem и три от 60rem — всё container-запросами от ширины блока.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-002-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background. Сетка собрана приёмом gap:1px плюс фон контейнера: линии между ячейками — это просвет, а не border, поэтому на узкой ширине сетка сворачивается в столбец без «висящих» рамок. Иконки — inline SVG-пути из словаря по ключу, цвет берётся из currentColor. Колонок одна до 34rem, две от 34rem и три от 60rem — всё container-запросами от ширины блока.",
       "meta": {
         "tags": ["features", "grid", "icons", "light"],
         "preview": {
@@ -119,22 +198,26 @@
         "ai": {
           "export": "Features002",
           "usage": "<Features002 title=\"Шесть причин\" items={[{ icon: \"bolt\", title: \"Быстро\", description: \"Одна команда.\" }]} />",
-          "summary": "Светлая секция возможностей: центрированная шапка и сетка из шести ячеек с иконкой, заголовком и описанием в каждой. Ячейки разделены линиями зазора. Один файл, ноль зависимостей.",
+          "summary": "Секция возможностей, следующая теме страницы: центрированная шапка и сетка из шести ячеек с иконкой, заголовком и описанием в каждой. Ячейки разделены линиями зазора. Один файл, ноль зависимостей.",
           "preserve": [
             "равенство шести ячеек: сетка работает именно тогда, когда ни одна возможность не важнее прочих — для иерархии есть features-001 и features-011",
             "линии между ячейками как зазор с фоном контейнера, а не как border у карточек: иначе на узкой ширине появятся двойные рамки",
             "иконки как inline SVG из словаря: подключать иконочный пакет ради шести путей — лишняя зависимость в чужом проекте",
-            "локальную палитру --vibeui-features-002-*: блок несёт свой светлый фон и не читает токены темы проекта",
+            "локальную палитру --vibeui-features-002-* и не подменять её токенами темы проекта (bg-card, border-border и подобными)",
             "container-запросы вместо медиазапросов окна: число колонок считается от ширины блока, поэтому в сайдбаре вёрстка честная",
-            "семантику: сетка как <ul>, заголовок ячейки как h3, иконки помечены aria-hidden"
+            "семантику: сетка как <ul>, заголовок ячейки как h3, иконки помечены aria-hidden",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow, title и lede в шапке",
             "массив items: ключ icon, заголовок и описание каждой ячейки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцентный цвет через проп accent",
             "внешние отступы через className и точечные переменные через style"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ключ icon ограничен словарём из шести значений: чтобы добавить свой рисунок, дополните объект PATHS в файле.",
             "Больше шести ячеек не выводится: седьмая ломает ритм сетки на трёх колонках.",
             "Описание держите в одну-две строки — разной высоты ячейки видны на границах зазора.",
@@ -147,36 +230,52 @@
             "label": "Заголовок",
             "type": "text",
             "default": "Шесть причин не верстать секции руками",
-            "maxLength": 80
+            "maxLength": 60
           },
           {
             "prop": "eyebrow",
             "label": "Надзаголовок",
             "type": "text",
             "default": "Возможности",
-            "maxLength": 40
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "A grid of six features with icons: the cells sit on gap lines rather than inside card borders. The icons are inline paths — no icon library required.",
             "ai": {
-              "summary": "A light features section: a centred header and a grid of six cells, each with an icon, a heading and a description. The cells are separated by gap lines. One file, zero dependencies.",
+              "summary": "A features section that follows the page theme: a centred header and a grid of six cells, each with an icon, a heading and a description. The cells are separated by gap lines. One file, zero dependencies.",
               "preserve": [
                 "the equality of the six cells: a grid works precisely when no feature outranks another — features-001 and features-011 exist for hierarchy",
                 "the lines between cells as a gap over the container background rather than borders on cards: otherwise a narrow block grows double rules",
                 "the icons as inline SVG from a dictionary: pulling an icon package in for six paths is a needless dependency in someone else's project",
-                "the local --vibeui-features-002-* palette: the block carries its own light background and never reads your theme tokens",
+                "the local --vibeui-features-002-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "container queries instead of window media queries: the column count is measured against the block's width, so the layout stays honest in a sidebar",
-                "the semantics: the grid as a <ul>, each cell heading as an h3, the icons marked aria-hidden"
+                "the semantics: the grid as a <ul>, each cell heading as an h3, the icons marked aria-hidden",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow, title and lede copy in the header",
                 "the items array: the icon key, heading and description of every cell",
+                "background — the component background; empty means no background, taking the page colour",
                 "the accent colour through the accent prop",
                 "outer spacing through className and single variables through style"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The icon key is limited to a dictionary of six values: extend the PATHS object in the file to add your own drawing.",
                 "No more than six cells are rendered: a seventh breaks the rhythm of the three-column grid.",
                 "Keep descriptions to one or two lines — uneven cell heights show up along the gap lines.",
@@ -192,11 +291,57 @@
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "Features"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Icon Grid Features"
+            "title": "Icon Grid Features",
+            "preview": {
+              "props": {
+                "eyebrow": "Features",
+                "title": "Six reasons not to hand-build sections",
+                "lede": "Every one of them works on its own — there is nothing to switch on in order.",
+                "items": [
+                  {
+                    "icon": "bolt",
+                    "title": "Instant install",
+                    "description": "One command and the section lands in your project with its styles, no config edits."
+                  },
+                  {
+                    "icon": "shield",
+                    "title": "Its own palette",
+                    "description": "The section never reads your theme and never breaks on foreign tokens: the colours live inside the file."
+                  },
+                  {
+                    "icon": "layers",
+                    "title": "A single file",
+                    "description": "No sibling components, no utilities: it moves to any project by copy and paste."
+                  },
+                  {
+                    "icon": "chat",
+                    "title": "Instructions for the agent",
+                    "description": "Copy for AI hands over the list of what must not break and what may change."
+                  },
+                  {
+                    "icon": "chart",
+                    "title": "Layout from the block",
+                    "description": "Container queries measure the section, not the window: inside a sidebar the layout stays honest."
+                  },
+                  {
+                    "icon": "plug",
+                    "title": "Zero dependencies",
+                    "description": "No icon packages and no motion libraries — only React and CSS."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -214,7 +359,7 @@
           "target": "@components/vibeui/features-003.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-003-*, бумажная тёплая база. Пара шрифтов системная: serif для заголовков, sans для остального. Колонки — flex-столбцы, ссылка прижата к низу через margin-top:auto, поэтому нижний край полосы ровный при разной длине описаний. Раскладка: один столбец до 56rem, три от 56rem container-запросом. Из движения только transition цвета и зазора у ссылки, для него объявлен prefers-reduced-motion.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-003-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background. Пара шрифтов системная: serif для заголовков, sans для остального. Колонки — flex-столбцы, ссылка прижата к низу через margin-top:auto, поэтому нижний край полосы ровный при разной длине описаний. Раскладка: один столбец до 56rem, три от 56rem container-запросом. Из движения только transition цвета и зазора у ссылки, для него объявлен prefers-reduced-motion.",
       "meta": {
         "tags": ["features", "editorial", "columns", "serif"],
         "preview": {
@@ -223,22 +368,26 @@
         "ai": {
           "export": "Features003",
           "usage": "<Features003 title=\"Три принципа\" columns={[{ number: \"I\", title: \"Переносимость\", description: \"Один файл.\" }]} />",
-          "summary": "Светлая редакционная секция: заголовок с подзаголовком и три колонки с верхней линейкой, порядковым номером, serif-подзаголовком, описанием и ссылкой внизу. Один файл, ноль зависимостей.",
+          "summary": "Редакционная секция, следующая теме страницы: заголовок с подзаголовком и три колонки с верхней линейкой, порядковым номером, serif-подзаголовком, описанием и ссылкой внизу. Один файл, ноль зависимостей.",
           "preserve": [
             "верхние линейки и порядковые номера: без них колонки распадаются на три абзаца без иерархии",
             "системную пару serif плюс sans: перевод заголовков на sans убирает журнальный характер, ради которого блок и сделан",
             "отсутствие иконок и карточек — этим блок отличается от features-002 с его сеткой и рисунками",
             "прижатую к низу ссылку через margin-top:auto: она выравнивает нижний край всех трёх колонок",
-            "локальную палитру --vibeui-features-003-* и container-запрос, разводящий колонки от 56rem ширины блока",
-            "семантику: полоса как <ul>, заголовок колонки как h3, ссылки как <a href>"
+            "локальную палитру --vibeui-features-003-* и container-запрос, разводящий колонки от 56rem ширины блока — не подменять её токенами темы проекта",
+            "семантику: полоса как <ul>, заголовок колонки как h3, ссылки как <a href>",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты title и lede над полосой",
             "массив columns: number, title, description и ссылка link у каждой колонки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцентный цвет через проп accent",
             "внешние отступы через className и точечные переменные через style"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Колонок ровно три: четвёртая не помещается в раскладку и ломает ритм линеек.",
             "Номер — обычная строка, поэтому подойдут и римские, и арабские цифры, и буквы.",
             "Ссылка необязательна: без неё колонка просто заканчивается описанием, но тогда убирайте её у всех трёх сразу.",
@@ -251,7 +400,7 @@
             "label": "Заголовок",
             "type": "text",
             "default": "Три принципа, на которых держится библиотека",
-            "maxLength": 90
+            "maxLength": 60
           },
           {
             "prop": "lede",
@@ -259,28 +408,44 @@
             "type": "text",
             "default": "Не список галочек, а редакционная полоса: каждая колонка объясняет одно решение и ведёт в документацию.",
             "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "A three-column magazine spread: top rules, roman numerals and serif headings. No cards, no icons — typography and lines carry the hierarchy.",
             "ai": {
-              "summary": "A light editorial section: a headline with a subhead and three columns, each with a top rule, an ordinal, a serif heading, a description and a link at the bottom. One file, zero dependencies.",
+              "summary": "An editorial section that follows the page theme: a headline with a subhead and three columns, each with a top rule, an ordinal, a serif heading, a description and a link at the bottom. One file, zero dependencies.",
               "preserve": [
                 "the top rules and the ordinals: without them the columns collapse into three paragraphs with no hierarchy",
                 "the system serif-plus-sans pairing: moving the headings to sans removes the magazine character the block exists for",
                 "the absence of icons and cards — that is what sets this block apart from features-002 with its grid and drawings",
                 "the link pinned to the bottom with margin-top:auto: it levels the bottom edge of all three columns",
-                "the local --vibeui-features-003-* palette and the container query that splits the columns from 56rem of block width",
-                "the semantics: the spread as a <ul>, each column heading as an h3, links as <a href>"
+                "the local --vibeui-features-003-* palette and the container query that splits the columns from 56rem of block width — do not swap the palette for your theme tokens",
+                "the semantics: the spread as a <ul>, each column heading as an h3, links as <a href>",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the title and lede copy above the spread",
                 "the columns array: number, title, description and link of every column",
+                "background — the component background; empty means no background, taking the page colour",
                 "the accent colour through the accent prop",
                 "outer spacing through className and single variables through style"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There are exactly three columns: a fourth does not fit the layout and breaks the rhythm of the rules.",
                 "The ordinal is a plain string, so roman numerals, arabic figures and letters all work.",
                 "The link is optional: without it a column simply ends on its description — but then drop it from all three at once.",
@@ -296,11 +461,53 @@
               "lede": {
                 "label": "Subhead",
                 "default": "Not a checklist but an editorial spread: every column explains one decision and points at the docs."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Editorial Columns"
+            "title": "Editorial Columns",
+            "preview": {
+              "props": {
+                "title": "Three principles the library rests on",
+                "lede": "Not a checklist but an editorial spread: every column explains one decision and points at the docs.",
+                "columns": [
+                  {
+                    "number": "I",
+                    "title": "Portability",
+                    "description": "A section is one file with no outside imports. It knows nothing about your theme, your utilities or your Tailwind version, so it moves into someone else's project by copy and paste.",
+                    "link": {
+                      "label": "How the file is built",
+                      "href": "#"
+                    }
+                  },
+                  {
+                    "number": "II",
+                    "title": "Fidelity",
+                    "description": "The preview renders exactly the file you receive. No demo copies that drift away from what ships.",
+                    "link": {
+                      "label": "The fidelity rule",
+                      "href": "#"
+                    }
+                  },
+                  {
+                    "number": "III",
+                    "title": "Readable for an agent",
+                    "description": "Every section carries instructions: what must not break, what may change and which props are responsible for it.",
+                    "link": {
+                      "label": "An example instruction",
+                      "href": "#"
+                    }
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -318,7 +525,7 @@
           "target": "@components/vibeui/features-004.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-004-*, белая база. Разметка у всех рядов одинаковая: змейка сделана правилом nth-child(even) с order у figure, поэтому добавить ряд — это добавить элемент массива. Оттенок иллюстрации приходит инлайновой переменной --vibeui-features-004-hue, посчитанной от индекса ряда; в корне объявлено значение по умолчанию. Раскладка: одна колонка до 56rem, две от 56rem container-запросом.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-004-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background. Иллюстрация красится прямо в правиле figure, а не через переменную: var(--hue) внутри переменной подставился бы один раз на корне и все ряды стали бы одного оттенка. Разметка у всех рядов одинаковая: змейка сделана правилом nth-child(even) с order у figure, поэтому добавить ряд — это добавить элемент массива. Оттенок иллюстрации приходит инлайновой переменной --vibeui-features-004-hue, посчитанной от индекса ряда; в корне объявлено значение по умолчанию. Раскладка: одна колонка до 56rem, две от 56rem container-запросом.",
       "meta": {
         "tags": ["features", "zigzag", "alternating", "light"],
         "preview": {
@@ -327,22 +534,26 @@
         "ai": {
           "export": "Features004",
           "usage": "<Features004 eyebrow=\"Как это устроено\" rows={[{ tag: \"Каталог\", title: \"Смотрите секцию\", description: \"Живое превью.\", points: [\"Рендер вместо скриншота\"] }]} />",
-          "summary": "Светлая секция возможностей из рядов «текст плюс иллюстрация», идущих змейкой. В каждом ряду тег, заголовок, описание и список пунктов, рядом нарисованная CSS-иллюстрация со столбиками и чипом. Один файл, ноль зависимостей.",
+          "summary": "Секция возможностей из рядов «текст плюс иллюстрация», идущих змейкой. В каждом ряду тег, заголовок, описание и список пунктов, рядом нарисованная CSS-иллюстрация со столбиками и чипом. Один файл, ноль зависимостей.",
           "preserve": [
             "змейку через order у чётных рядов: одинаковая разметка всех рядов — то, что позволяет добавлять ряды одной строкой массива",
             "иллюстрации как CSS-рисунок: это часть дизайна блока, а не заглушка под скриншот, и внешних файлов в поставке нет",
             "сдвиг оттенка по индексу ряда: иллюстрации различимы между собой, но остаются одной семьёй",
-            "локальную палитру --vibeui-features-004-* и объявленный в корне запасной --vibeui-features-004-hue",
+            "локальную палитру --vibeui-features-004-* и объявленный в корне запасной --vibeui-features-004-hue — не подменять палитру токенами темы проекта",
             "container-запрос, разводящий ряд в две колонки от 56rem ширины блока: на узкой ширине змейка отключается намеренно",
-            "семантику: ряд как <article>, заголовок ряда как h3, список пунктов как <ul>, иллюстрация помечена aria-hidden"
+            "семантику: ряд как <article>, заголовок ряда как h3, список пунктов как <ul>, иллюстрация помечена aria-hidden",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow и title над рядами",
             "массив rows: tag, title, description и до четырёх points в каждом ряду",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцентный цвет через проп accent",
             "внешние отступы через className и точечные переменные через style"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Рядов выводится не больше четырёх: пятый превращает секцию в отдельную страницу.",
             "Чтобы поставить настоящие изображения, замените содержимое figure на <img> и сохраните соотношение 4:3.",
             "Столбики в иллюстрации декоративные и не связаны с данными: не подписывайте их цифрами продукта.",
@@ -355,36 +566,52 @@
             "label": "Заголовок",
             "type": "text",
             "default": "Три ряда, которые объясняют продукт без демо-звонка",
-            "maxLength": 90
+            "maxLength": 70
           },
           {
             "prop": "eyebrow",
             "label": "Надзаголовок",
             "type": "text",
             "default": "Как это устроено",
-            "maxLength": 40
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "Alternating copy and picture: the rows zigzag, with the illustration moving to the first column on even rows through order. The pictures are gradients, each row on its own hue.",
             "ai": {
-              "summary": "A light features section of alternating copy-and-illustration rows. Each row carries a tag, a heading, a description and a point list beside a CSS-drawn illustration with bars and a chip. One file, zero dependencies.",
+              "summary": "A features section of alternating copy-and-illustration rows. Each row carries a tag, a heading, a description and a point list beside a CSS-drawn illustration with bars and a chip. One file, zero dependencies.",
               "preserve": [
                 "the zigzag through order on even rows: identical markup across rows is what lets you add a row with one array entry",
                 "the illustrations as CSS drawings: they are part of the design, not stand-ins for screenshots, and the delivery carries no external files",
                 "the hue shift by row index: the illustrations stay distinguishable while remaining one family",
-                "the local --vibeui-features-004-* palette and the fallback --vibeui-features-004-hue declared on the root",
+                "the local --vibeui-features-004-* palette and the fallback --vibeui-features-004-hue declared on the root — do not swap the palette for your theme tokens",
                 "the container query that splits a row into two columns from 56rem of block width: on a narrow block the zigzag is switched off deliberately",
-                "the semantics: each row as an <article>, its heading as an h3, the point list as a <ul>, the illustration aria-hidden"
+                "the semantics: each row as an <article>, its heading as an h3, the point list as a <ul>, the illustration aria-hidden",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow and title copy above the rows",
                 "the rows array: tag, title, description and up to four points per row",
+                "background — the component background; empty means no background, taking the page colour",
                 "the accent colour through the accent prop",
                 "outer spacing through className and single variables through style"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "At most four rows are rendered: a fifth turns the section into a page of its own.",
                 "To use real images, replace the figure contents with an <img> and keep the 4:3 ratio.",
                 "The bars in the illustration are decorative and unconnected to data: do not label them with product numbers.",
@@ -400,11 +627,56 @@
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "How it works"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Zigzag Features"
+            "title": "Zigzag Features",
+            "preview": {
+              "props": {
+                "eyebrow": "How it works",
+                "title": "Three rows that explain the product without a demo call",
+                "rows": [
+                  {
+                    "tag": "Catalog",
+                    "title": "See the section, not a description of it",
+                    "description": "The preview renders the very file you receive. No separate demo copies drifting away from what ships.",
+                    "points": [
+                      "A live render instead of a screenshot",
+                      "Dark and light backdrops",
+                      "Mobile, tablet and desktop widths"
+                    ]
+                  },
+                  {
+                    "tag": "Install",
+                    "title": "The agent installs the section itself",
+                    "description": "Copy for AI hands over the identifier, the command and the list of what must not be rewritten. Your agent takes it from there.",
+                    "points": [
+                      "Compatible with the shadcn registry",
+                      "Dependencies declared in metadata",
+                      "The file arrives byte for byte"
+                    ]
+                  },
+                  {
+                    "tag": "Edits",
+                    "title": "The copy changes, the layout does not",
+                    "description": "Content and brand colours live in props, so a redesign never turns into rebuilding the section.",
+                    "points": [
+                      "Your own copy through props",
+                      "The accent in a single variable",
+                      "Animation and spacing stay as authored"
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -436,7 +708,7 @@
             "колонку исключений: честный «не входит» снимает половину вопросов и отличает секцию от бесконечной простыни преимуществ",
             "маркеры как псевдоэлементы: скринридер читает только текст пункта, а вставка новой строки не требует копировать иконку",
             "разный рисунок маркера у включённого и исключённого — цвета одного мало, чтобы различать их",
-            "тёмную локальную палитру --vibeui-features-005-*: блок остаётся тёмным независимо от темы проекта",
+            "тёмную локальную палитру --vibeui-features-005-*: секция намеренно одноцветная и остаётся тёмной независимо от темы проекта — не переводить её на light-dark() и не подменять токенами темы",
             "container-запросы вместо медиазапросов окна: число колонок считается от ширины блока",
             "семантику: каждая группа как <ul> с заголовком h3 над ней"
           ],
@@ -447,6 +719,7 @@
             "акцентный цвет через проп accent и внешние отступы через className"
           ],
           "notes": [
+            "Тёмный тон здесь — часть композиции, а не тема: на нём галочка и прочерк различимы сильнее всего, поэтому секция не следует color-scheme страницы. Если нужна секция, темнеющая вместе со страницей, берите features-006.",
             "Групп включённого выводится не больше двух, пунктов в каждой — не больше шести: остальное обрезается.",
             "Не выбрасывайте колонку исключений ради «более позитивного» текста — на ней держится вся идея блока.",
             "Пункты держите короткими: это список, а не абзацы с описаниями.",
@@ -459,14 +732,27 @@
             "label": "Заголовок",
             "type": "text",
             "default": "Список без звёздочек и мелкого шрифта",
-            "maxLength": 80
+            "maxLength": 60
           },
           {
             "prop": "excludedTitle",
             "label": "Заголовок исключений",
             "type": "text",
             "default": "Чего нет",
-            "maxLength": 40
+            "maxLength": 24
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Что вы получаете",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -478,7 +764,7 @@
                 "the exclusions column: an honest «not included» answers half the questions and sets the section apart from an endless sheet of benefits",
                 "the markers as pseudo-elements: a screen reader reads only the item text, and adding a line does not mean copying an icon",
                 "the different marker shapes for included and excluded — colour alone cannot tell them apart",
-                "the dark local --vibeui-features-005-* palette: the block stays dark whatever theme the project runs",
+                "the dark local --vibeui-features-005-* palette: the section is deliberately single-tone and stays dark whatever theme the project runs — do not move it to light-dark() and do not swap it for theme tokens",
                 "container queries instead of window media queries: the column count is measured against the block's width",
                 "the semantics: every group as a <ul> with an h3 above it"
               ],
@@ -489,6 +775,7 @@
                 "the accent colour through the accent prop and outer spacing through className"
               ],
               "notes": [
+                "The dark tone here is part of the composition, not a theme: it is where the tick and the dash separate most clearly, so the section does not follow the page color-scheme. If you need a section that darkens with the page, take features-006.",
                 "At most two included groups are rendered, with at most six items each: the rest is trimmed.",
                 "Do not drop the exclusions column for «more positive» copy — the whole idea of the block rests on it.",
                 "Keep the items short: this is a list, not paragraphs with descriptions.",
@@ -504,11 +791,53 @@
               "excludedTitle": {
                 "label": "Exclusions heading",
                 "default": "What is not here"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "What you get"
+              },
+              "accent": {
+                "label": "Accent"
               }
             },
-            "title": "Checklist Features"
+            "title": "Checklist Features",
+            "preview": {
+              "props": {
+                "eyebrow": "What you get",
+                "title": "A list with no asterisks and no fine print",
+                "lede": "On the left, what every section carries. On the right, what it does not carry and never will.",
+                "groups": [
+                  {
+                    "title": "In every section",
+                    "items": [
+                      "Its own palette in CSS variables",
+                      "Layout measured from the block width",
+                      "prefers-reduced-motion support",
+                      "Semantic markup and a visible focus ring"
+                    ]
+                  },
+                  {
+                    "title": "In the delivery",
+                    "items": [
+                      "One file with no outside imports",
+                      "Instructions for an AI agent",
+                      "A shadcn-compatible registry",
+                      "Props with ready-made values"
+                    ]
+                  }
+                ],
+                "excluded": [
+                  "A mandatory sign-up",
+                  "A bundler and plugins in your project",
+                  "An icon library among the dependencies",
+                  "A tie to our theme and tokens"
+                ],
+                "excludedTitle": "What is not here"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent"]
       }
     },
     {
@@ -526,7 +855,7 @@
           "target": "@components/vibeui/features-006.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-006-*, светлая база. Разметка — настоящая таблица: <caption>, thead со scope=\"col\", заголовки строк через <th scope=\"row\">, поэтому скринридер объявляет и строку, и колонку. Своя колонка помечена data-part=\"mine\" у ячеек и подсвечена фоном. Обёртка со overflow-x:auto и min-width у таблицы: на узкой ширине сравнение прокручивается, а не разваливается на карточки. Значение true рисуется галочкой со словом «Есть», false — прочерком с aria-label.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-006-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background, полотно таблицы живёт в отдельном токене card. Разметка — настоящая таблица: <caption>, thead со scope=\"col\", заголовки строк через <th scope=\"row\">, поэтому скринридер объявляет и строку, и колонку. Своя колонка помечена data-part=\"mine\" у ячеек и подсвечена фоном. Обёртка со overflow-x:auto и min-width у таблицы: на узкой ширине сравнение прокручивается, а не разваливается на карточки. Значение true рисуется галочкой со словом из пропа yesLabel, false — прочерком с aria-label из noLabel. Подпись таблицы, заголовок первой колонки и оба слова вынесены в пропсы caption, featureLabel, yesLabel и noLabel.",
       "meta": {
         "tags": ["features", "comparison", "table", "light"],
         "preview": {
@@ -535,22 +864,27 @@
         "ai": {
           "export": "Features006",
           "usage": "<Features006 ourName=\"VibeUI\" theirName=\"Копипаст с сайта\" rows={[{ feature: \"Установка\", ours: true, theirs: false }]} />",
-          "summary": "Светлая секция сравнения: заголовок и таблица из шести признаков на три колонки — признак, наш вариант и альтернатива. Значения бывают текстом, галочкой или прочерком. Один файл, ноль зависимостей.",
+          "summary": "Секция сравнения, следующая теме страницы: заголовок и таблица из шести признаков на три колонки — признак, наш вариант и альтернатива. Значения бывают текстом, галочкой или прочерком. Один файл, ноль зависимостей.",
           "preserve": [
             "настоящую разметку таблицы с caption и scope: сетка из div'ов в сравнении оставляет скринридер без контекста строки и колонки",
             "горизонтальную прокрутку вместо карточек на узкой ширине: разложенное по карточкам сравнение перестаёт быть сравнением",
             "подсветку своей колонки на всю высоту: взгляд идёт по ней вертикально, и это единственный способ выделить её без цветного текста",
-            "слово рядом с галочкой и aria-label у прочерка: значок без подписи не читается ни скринридером, ни при печати",
-            "локальную палитру --vibeui-features-006-*: блок несёт свой светлый фон и не читает токены темы проекта",
-            "сноску под таблицей: сравнение без указания, с чем именно сравнивают, выглядит нечестным"
+            "слово рядом с галочкой (yesLabel) и aria-label у прочерка (noLabel): значок без подписи не читается ни скринридером, ни при печати",
+            "локальную палитру --vibeui-features-006-* и не подменять её токенами темы проекта (bg-card, border-border и подобными)",
+            "сноску под таблицей: сравнение без указания, с чем именно сравнивают, выглядит нечестным",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow и title, а также footnote под таблицей",
             "названия колонок ourName и theirName",
             "массив rows: feature, hint и значения ours и theirs",
+            "подписи caption, featureLabel, yesLabel и noLabel: у компонента они русские, проект передаёт свои",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцентный цвет через проп accent и внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Строк выводится не больше восьми: длинная таблица на первом экране не читается.",
             "Не сравнивайте с названным конкурентом без юридической проверки — в дефолтах намеренно стоит обобщённая практика.",
             "Значение может быть строкой, true или false: смешивайте их осознанно, чтобы колонка не выглядела разнобоем.",
@@ -560,39 +894,63 @@
         "controls": [
           {
             "prop": "ourName",
-            "label": "Наша колонка",
+            "label": "Своя колонка",
             "type": "text",
             "default": "VibeUI",
-            "maxLength": 30
+            "maxLength": 24
           },
           {
             "prop": "theirName",
             "label": "Колонка альтернативы",
             "type": "text",
             "default": "Копипаст с сайта",
-            "maxLength": 40
+            "maxLength": 24
+          },
+          {
+            "prop": "yesLabel",
+            "label": "Слово «есть»",
+            "type": "text",
+            "default": "Есть",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "A comparison table against the alternative: a real <table> with caption and scope, your own column highlighted top to bottom, and side-scrolling on a narrow block.",
             "ai": {
-              "summary": "A light comparison section: a headline and a table of six criteria across three columns — the criterion, your product and the alternative. Values render as text, a tick or a dash. One file, zero dependencies.",
+              "summary": "A comparison section that follows the page theme: a headline and a table of six criteria across three columns — the criterion, your product and the alternative. Values render as text, a tick or a dash. One file, zero dependencies.",
               "preserve": [
                 "the real table markup with caption and scope: a grid of divs leaves screen readers without row and column context",
                 "horizontal scrolling instead of cards on a narrow block: a comparison split into cards stops being a comparison",
                 "the full-height highlight of your own column: the eye travels down it, and that is the only way to single it out without coloured text",
-                "the word next to the tick and the aria-label on the dash: a glyph without a caption reads to neither a screen reader nor a printer",
-                "the local --vibeui-features-006-* palette: the block carries its own light background and never reads your theme tokens",
-                "the footnote under the table: a comparison that never says what it compares against looks dishonest"
+                "the word next to the tick (yesLabel) and the aria-label on the dash (noLabel): a glyph without a caption reads to neither a screen reader nor a printer",
+                "the local --vibeui-features-006-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the footnote under the table: a comparison that never says what it compares against looks dishonest",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow and title copy and the footnote under the table",
                 "the ourName and theirName column titles",
                 "the rows array: feature, hint and the ours and theirs values",
+                "the caption, featureLabel, yesLabel and noLabel copy: the component ships Russian defaults and the project passes its own",
+                "background — the component background; empty means no background, taking the page colour",
                 "the accent colour through the accent prop and outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "At most eight rows are rendered: a long table does not get read on a first screen.",
                 "Do not compare against a named competitor without legal review — the defaults deliberately describe a generic practice.",
                 "A value may be a string, true or false: mix them deliberately so the column does not look ragged.",
@@ -608,11 +966,70 @@
               "theirName": {
                 "label": "Alternative column",
                 "default": "Copy-paste"
+              },
+              "yesLabel": {
+                "label": "«Yes» word",
+                "default": "Yes"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Versus Table"
+            "title": "Versus Table",
+            "preview": {
+              "props": {
+                "eyebrow": "Comparison",
+                "title": "How this differs from copy-pasting someone else's landing page",
+                "ourName": "VibeUI",
+                "theirName": "Copy-paste",
+                "caption": "A comparison across six criteria that matter when a section moves into a working project.",
+                "featureLabel": "Criterion",
+                "yesLabel": "Yes",
+                "noLabel": "No",
+                "footnote": "Compared against the usual practice: copy a section out of someone else's project and repair it in place.",
+                "rows": [
+                  {
+                    "feature": "Installing into a project",
+                    "hint": "How many steps to a working section",
+                    "ours": "One agent command",
+                    "theirs": "Copy-paste and import fixing"
+                  },
+                  {
+                    "feature": "Section dependencies",
+                    "ours": "None",
+                    "theirs": "Icons, motion, utilities"
+                  },
+                  {
+                    "feature": "Match with the preview",
+                    "hint": "Preview and delivery are one file",
+                    "ours": true,
+                    "theirs": false
+                  },
+                  {
+                    "feature": "Works without your theme",
+                    "ours": true,
+                    "theirs": false
+                  },
+                  {
+                    "feature": "Instructions for an AI agent",
+                    "ours": "In every section",
+                    "theirs": false
+                  },
+                  {
+                    "feature": "Layout in a narrow container",
+                    "hint": "Sidebar, blog column, preview",
+                    "ours": "Container queries",
+                    "theirs": "Window media queries"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -630,7 +1047,7 @@
           "target": "@components/vibeui/features-007.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-007-*, светлая фиолетовая база. Шаги размечены как <ol>: порядок важен и должен читаться голосом, а не только цветными кружками. Соединительная линия — ::before у шага, у последнего она скрыта. На узкой ширине линия вертикальная и кружки стоят слева, от 56rem линия становится горизонтальной, а кружки уезжают наверх — обе раскладки задаются одним и тем же псевдоэлементом через container-запрос.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-007-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background. Шаги размечены как <ol>: порядок важен и должен читаться голосом, а не только цветными кружками. Соединительная линия — ::before у шага, у последнего она скрыта. На узкой ширине линия вертикальная и кружки стоят слева, от 56rem линия становится горизонтальной, а кружки уезжают наверх — обе раскладки задаются одним и тем же псевдоэлементом через container-запрос.",
       "meta": {
         "tags": ["features", "steps", "process", "light"],
         "preview": {
@@ -639,22 +1056,26 @@
         "ai": {
           "export": "Features007",
           "usage": "<Features007 title=\"От каталога до страницы\" steps={[{ title: \"Выберите секцию\", description: \"Живое превью.\", detail: \"Фильтр по категории\" }]} />",
-          "summary": "Светлая секция процесса: центрированная шапка, три пронумерованных шага на соединительной линии с описанием и технической деталью в рамке, кнопка под ними. Один файл, ноль зависимостей.",
+          "summary": "Секция процесса, следующая теме страницы: центрированная шапка, три пронумерованных шага на соединительной линии с описанием и технической деталью в рамке, кнопка под ними. Один файл, ноль зависимостей.",
           "preserve": [
             "разметку <ol>: в процессе порядок шагов и есть содержание, нумерованные div'ы его теряют",
             "соединительную линию между кружками: без неё три шага читаются как три независимые карточки",
             "поворот линии из вертикальной в горизонтальную одним псевдоэлементом — это то, что делает блок одинаково честным в узкой колонке и на широком экране",
             "техническую деталь в рамке под описанием: она превращает абстрактный шаг в проверяемое действие",
-            "локальную палитру --vibeui-features-007-* и container-запрос, перестраивающий шаги от 56rem ширины блока",
-            "семантику: заголовок шага как h3, номер помечен aria-hidden, поскольку его уже сообщает список"
+            "локальную палитру --vibeui-features-007-* и container-запрос, перестраивающий шаги от 56rem ширины блока — не подменять палитру токенами темы проекта",
+            "семантику: заголовок шага как h3, номер помечен aria-hidden, поскольку его уже сообщает список",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow и title в шапке",
             "массив steps: title, description и detail каждого шага",
             "подпись и адрес кнопки action под шагами",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцентный цвет через проп accent и внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Шагов ровно три: четвёртый не помещается в трёхколоночную раскладку и рвёт линию.",
             "Номера рисуются автоматически по индексу — не дублируйте их в тексте заголовка.",
             "detail — короткая строка: команда, фильтр или путь, а не второе описание.",
@@ -667,36 +1088,52 @@
             "label": "Заголовок",
             "type": "text",
             "default": "От каталога до страницы — три шага",
-            "maxLength": 80
+            "maxLength": 60
           },
           {
             "prop": "eyebrow",
             "label": "Надзаголовок",
             "type": "text",
             "default": "Как это работает",
-            "maxLength": 40
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "A «how it works» block in three steps: numbered circles on a connecting line, each step carrying a description and a technical detail in a frame.",
             "ai": {
-              "summary": "A light process section: a centred header, three numbered steps on a connecting line with a description and a framed technical detail each, and a button below. One file, zero dependencies.",
+              "summary": "A process section that follows the page theme: a centred header, three numbered steps on a connecting line with a description and a framed technical detail each, and a button below. One file, zero dependencies.",
               "preserve": [
                 "the <ol> markup: in a process the order of the steps is the content, and numbered divs lose it",
                 "the connecting line between the circles: without it three steps read as three unrelated cards",
                 "the line turning from vertical to horizontal through a single pseudo-element — that is what keeps the block honest both in a narrow column and on a wide screen",
                 "the framed technical detail under each description: it turns an abstract step into a checkable action",
-                "the local --vibeui-features-007-* palette and the container query that rebuilds the steps from 56rem of block width",
-                "the semantics: each step heading as an h3, the numeral aria-hidden because the list already announces it"
+                "the local --vibeui-features-007-* palette and the container query that rebuilds the steps from 56rem of block width — do not swap the palette for your theme tokens",
+                "the semantics: each step heading as an h3, the numeral aria-hidden because the list already announces it",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow and title copy in the header",
                 "the steps array: title, description and detail of every step",
                 "the label and href of the action button below the steps",
+                "background — the component background; empty means no background, taking the page colour",
                 "the accent colour through the accent prop and outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There are exactly three steps: a fourth does not fit the three-column layout and tears the line.",
                 "The numerals are drawn automatically from the index — do not repeat them in the heading text.",
                 "detail is a short line: a command, a filter or a path, not a second description.",
@@ -712,11 +1149,45 @@
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "How it works"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Three Step Flow"
+            "title": "Three Step Flow",
+            "preview": {
+              "props": {
+                "eyebrow": "How it works",
+                "title": "From catalog to page in three steps",
+                "steps": [
+                  {
+                    "title": "Pick a section",
+                    "description": "The catalog shows a live preview on two backdrops and three widths — the decision is made by eye.",
+                    "detail": "Filter by category, tag and light or dark backdrop"
+                  },
+                  {
+                    "title": "Copy the instruction",
+                    "description": "Copy for AI assembles the prompt from metadata: the identifier, the install command and the limits of what may be edited.",
+                    "detail": "npx shadcn@latest add https://vibeui.dev/r/features-007.json"
+                  },
+                  {
+                    "title": "Hand it to the agent",
+                    "description": "The agent installs the file, drops in your copy and leaves the layout alone. Only the content is left to check.",
+                    "detail": "The section lands in components/vibeui and works right away"
+                  }
+                ],
+                "action": {
+                  "label": "Try it on your own project",
+                  "href": "#"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -734,7 +1205,7 @@
           "target": "@components/vibeui/features-008.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-008-*, светлая база. Радиокнопки лежат перед списком вкладок и панелями, активная панель выбирается селектором вида input:checked ~ [data-part=\"panels\"] [data-part=\"panel\"]:nth-child(n). Инпуты уводятся с экрана, но остаются в потоке фокуса, а кольцо рисуется на подписи через :focus-visible. От радиогруппы достаются стрелки клавиатуры и объявление состояния. Раскладка панели — внутренний [data-part=\"panelgrid\"], поэтому скрытая панель не всплывает на широкой ширине.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-008-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background. Название группы вкладок для скринридера вынесено в проп tablistLabel. Радиокнопки лежат перед списком вкладок и панелями, активная панель выбирается селектором вида input:checked ~ [data-part=\"panels\"] [data-part=\"panel\"]:nth-child(n). Инпуты уводятся с экрана, но остаются в потоке фокуса, а кольцо рисуется на подписи через :focus-visible. От радиогруппы достаются стрелки клавиатуры и объявление состояния. Раскладка панели — внутренний [data-part=\"panelgrid\"], поэтому скрытая панель не всплывает на широкой ширине.",
       "meta": {
         "tags": ["features", "tabs", "no-js", "light"],
         "preview": {
@@ -743,22 +1214,27 @@
         "ai": {
           "export": "Features008",
           "usage": "<Features008 tabs={[{ id: \"catalog\", label: \"Каталог\", title: \"Секции видно до установки\", description: \"Живое превью.\", points: [\"Две подложки\"], metric: { value: \"1 080\", label: \"секций\" } }]} />",
-          "summary": "Светлая секция с вкладками: заголовок, ряд подписей-вкладок и панель с заголовком, описанием, списком пунктов и крупной метрикой. Переключение сделано на радиокнопках и CSS. Один файл, ноль зависимостей.",
+          "summary": "Секция с вкладками, следующая теме страницы: заголовок, ряд подписей-вкладок и панель с заголовком, описанием, списком пунктов и крупной метрикой. Переключение сделано на радиокнопках и CSS. Один файл, ноль зависимостей.",
           "preserve": [
             "переключение на радиокнопках вместо скрипта: секция остаётся серверной и работает до гидратации и без JavaScript",
             "настоящие input type=radio: от них достаются стрелки клавиатуры, фокус и объявление состояния, которые в самодельных вкладках на div'ах обычно теряются",
             "инпуты в потоке фокуса — уводить их display:none нельзя, иначе вкладки перестанут переключаться с клавиатуры",
             "раскладку панели на внутреннем [data-part=\"panelgrid\"]: правило на самой панели перебило бы display:none и показало все панели сразу",
-            "локальную палитру --vibeui-features-008-* и container-запрос, разводящий панель в две колонки от 56rem",
-            "уникальные id вкладок с префиксом блока: они связывают подпись с радиокнопкой"
+            "локальную палитру --vibeui-features-008-* и container-запрос, разводящий панель в две колонки от 56rem — не подменять палитру токенами темы проекта",
+            "уникальные id вкладок с префиксом блока: они связывают подпись с радиокнопкой",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow и title в шапке",
             "массив tabs: id, label, title, description, points и объект metric каждой вкладки",
+            "tablistLabel — название группы вкладок для скринридера; у компонента оно русское",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцентный цвет через проп accent",
             "внешние отступы через className и точечные переменные через style"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Вкладок выводится не больше четырёх: селекторы переключения написаны на четыре позиции.",
             "id должны быть уникальны на странице: два экземпляра блока на одной странице разделят радиогруппу и будут переключаться вместе.",
             "Панели выводятся все, лишние скрыты через display:none — не удаляйте скрытые панели ради «оптимизации», на них держится переключение.",
@@ -771,36 +1247,53 @@
             "label": "Заголовок",
             "type": "text",
             "default": "Три стороны продукта, между которыми можно переключаться",
-            "maxLength": 90
+            "maxLength": 70
           },
           {
             "prop": "eyebrow",
             "label": "Надзаголовок",
             "type": "text",
             "default": "Возможности",
-            "maxLength": 40
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "Feature tabs without a line of JavaScript: switching rests on a radio group and the :checked selector. Each panel carries a description, a list and a metric.",
             "ai": {
-              "summary": "A light tabbed section: a headline, a row of tab labels and a panel with a heading, a description, a point list and a large metric. Switching is built on radio buttons and CSS. One file, zero dependencies.",
+              "summary": "A tabbed section that follows the page theme: a headline, a row of tab labels and a panel with a heading, a description, a point list and a large metric. Switching is built on radio buttons and CSS. One file, zero dependencies.",
               "preserve": [
                 "the radio-driven switching instead of a script: the section stays server-rendered and works before hydration and with JavaScript off",
                 "real input type=radio elements: they bring the arrow keys, focus and state announcement that hand-rolled div tabs usually lose",
                 "the inputs staying in the focus order — hiding them with display:none stops the tabs from switching by keyboard",
                 "the panel layout living on the inner [data-part=\"panelgrid\"]: a rule on the panel itself would override display:none and show every panel at once",
-                "the local --vibeui-features-008-* palette and the container query that splits the panel into two columns from 56rem",
-                "the block-prefixed unique tab ids: they bind each label to its radio button"
+                "the local --vibeui-features-008-* palette and the container query that splits the panel into two columns from 56rem — do not swap the palette for your theme tokens",
+                "the block-prefixed unique tab ids: they bind each label to its radio button",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow and title copy in the header",
                 "the tabs array: id, label, title, description, points and the metric object of every tab",
+                "tablistLabel — the screen-reader name of the tab group; the component ships a Russian default",
+                "background — the component background; empty means no background, taking the page colour",
                 "the accent colour through the accent prop",
                 "outer spacing through className and single variables through style"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "At most four tabs are rendered: the switching selectors are written for four positions.",
                 "The ids must be unique on the page: two instances of the block share the radio group and switch together.",
                 "Every panel is rendered and the inactive ones are hidden with display:none — do not delete them for «optimisation», the switching rests on them.",
@@ -816,11 +1309,72 @@
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "Features"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "CSS Tabs Features"
+            "title": "CSS Tabs Features",
+            "preview": {
+              "props": {
+                "eyebrow": "Features",
+                "title": "Three sides of the product you can switch between",
+                "tablistLabel": "Features",
+                "tabs": [
+                  {
+                    "id": "catalog",
+                    "label": "Catalog",
+                    "title": "Sections you can see before installing",
+                    "description": "The preview renders the real section file rather than a picture: if you see the animation in the catalog, it ships with the code.",
+                    "points": [
+                      "Light and dark backdrop on one switch",
+                      "Three widths: phone, tablet, desktop",
+                      "Filter by category, group and tags"
+                    ],
+                    "metric": {
+                      "value": "1,080",
+                      "label": "sections in the catalog"
+                    }
+                  },
+                  {
+                    "id": "install",
+                    "label": "Install",
+                    "title": "One command instead of copy-paste",
+                    "description": "The registry is shadcn-compatible: the agent receives JSON with the files and target paths and puts the section exactly where you expect it.",
+                    "points": [
+                      "The file arrives byte for byte",
+                      "Dependencies declared in metadata",
+                      "The target path is set in components.json"
+                    ],
+                    "metric": {
+                      "value": "6 min",
+                      "label": "from choice to page"
+                    }
+                  },
+                  {
+                    "id": "agent",
+                    "label": "Agent",
+                    "title": "Instructions instead of guesswork",
+                    "description": "Copy for AI assembles the prompt from metadata: what to keep, what may change and what must never be done.",
+                    "points": [
+                      "A «do not break» list with the reasons spelled out",
+                      "A «may change» list with the prop names",
+                      "A ban on rebuilding the section generically"
+                    ],
+                    "metric": {
+                      "value": "97 %",
+                      "label": "installs with no layout edits"
+                    }
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -853,7 +1407,7 @@
             "строку об источнике под всеми цифрами — это то, что отличает секцию достижений от набора красивых чисел",
             "разметку <dl> с парами значение/подпись и переставленный order: семантика пары важнее визуального порядка",
             "tabular-nums и единицу измерения отдельным кеглем: иначе «12,4 млн» читается как одно длинное число",
-            "линии сетки вместо карточек и тёмную локальную палитру --vibeui-features-009-*",
+            "линии сетки вместо карточек и тёмную локальную палитру --vibeui-features-009-*: секция намеренно одноцветная и остаётся тёмной независимо от темы проекта — не переводить её на light-dark() и не подменять токенами темы",
             "container-запросы, меняющие число колонок от ширины блока, а не от ширины окна"
           ],
           "adapt": [
@@ -863,6 +1417,7 @@
             "акцентный цвет через проп accent и внешние отступы через className"
           ],
           "notes": [
+            "Тёмный тон здесь — часть композиции, а не тема: крупные цифры держатся на контрасте со светлыми секциями вокруг, поэтому блок не следует color-scheme страницы. Если нужна секция, темнеющая вместе со страницей, берите features-011.",
             "Показателей выводится ровно до четырёх: пятый ломает четырёхколоночную сетку.",
             "Подпись и сноска ограничены по ширине в символах: длинный текст перенесётся и разъедет ячейки по высоте.",
             "Цифры статичны: блок ничего не анимирует и не считает, подставляйте готовые значения.",
@@ -875,14 +1430,20 @@
             "label": "Заголовок",
             "type": "text",
             "default": "Мы считаем не компоненты, а сэкономленные вечера",
-            "maxLength": 90
+            "maxLength": 60
           },
           {
             "prop": "eyebrow",
             "label": "Надзаголовок",
             "type": "text",
             "default": "Итоги года",
-            "maxLength": 40
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -895,7 +1456,7 @@
                 "the source line under all the figures — that is what separates an achievements section from a set of pretty numbers",
                 "the <dl> markup with value/label pairs and the reordered order: the semantics of the pair matter more than the visual order",
                 "tabular-nums and the unit at its own size: otherwise «12.4m» reads as one long number",
-                "grid lines instead of cards and the dark local --vibeui-features-009-* palette",
+                "grid lines instead of cards and the dark local --vibeui-features-009-* palette: the section is deliberately single-tone and stays dark whatever theme the project runs — do not move it to light-dark() and do not swap it for theme tokens",
                 "the container queries that change the column count against the block's width, not the window's"
               ],
               "adapt": [
@@ -905,6 +1466,7 @@
                 "the accent colour through the accent prop and outer spacing through className"
               ],
               "notes": [
+                "The dark tone here is part of the composition, not a theme: the large figures live on the contrast with the light sections around them, so the block does not follow the page color-scheme. If you need a section that darkens with the page, take features-011.",
                 "Exactly up to four metrics are rendered: a fifth breaks the four-column grid.",
                 "The label and footnote are capped in character width: longer text wraps and pushes the cells out of alignment.",
                 "The figures are static: the block animates and counts nothing, feed it finished values.",
@@ -920,11 +1482,47 @@
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "The year in figures"
+              },
+              "accent": {
+                "label": "Accent"
               }
             },
-            "title": "Achievement Figures"
+            "title": "Achievement Figures",
+            "preview": {
+              "props": {
+                "eyebrow": "The year in figures",
+                "title": "We count saved evenings, not components",
+                "lede": "Every figure comes from the telemetry of projects that agreed to send it. What exactly was measured is spelled out below.",
+                "stats": [
+                  {
+                    "value": "1,080",
+                    "label": "sections in the catalog",
+                    "note": "Growing every week, old versions are never removed"
+                  },
+                  {
+                    "value": "6",
+                    "unit": "min",
+                    "label": "median time to a finished page",
+                    "note": "From opening the catalog to a deployed result"
+                  },
+                  {
+                    "value": "97",
+                    "unit": "%",
+                    "label": "installs with no layout edits",
+                    "note": "The agent changed only the copy and the accent colour"
+                  },
+                  {
+                    "value": "0",
+                    "label": "dependencies in a section",
+                    "note": "React and CSS only, not one outside library"
+                  }
+                ],
+                "source": "Data for January to December, 3,400 projects with telemetry enabled."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent"]
       }
     },
     {
@@ -942,7 +1540,7 @@
           "target": "@components/vibeui/features-010.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-010-*, светлая база. Монограмма — первая буква названия на подложке, оттенок которой считается FNV-хешем от названия и приходит инлайновой переменной --vibeui-features-010-hue; в корне объявлено значение по умолчанию. Одинаковое имя всегда даёт один цвет, поэтому переупорядочивание списка не перекрашивает плитки. Сетка — repeat(auto-fill, minmax(9.5rem, 1fr)): число колонок зависит от ширины блока, а не от заранее выбранного числа.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-010-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background. Монограмма красится прямо в своём правиле, а не через переменную: var(--hue) внутри переменной подставился бы один раз на корне и все плитки стали бы одного оттенка. Монограмма — первая буква названия на подложке, оттенок которой считается FNV-хешем от названия и приходит инлайновой переменной --vibeui-features-010-hue; в корне объявлено значение по умолчанию. Одинаковое имя всегда даёт один цвет, поэтому переупорядочивание списка не перекрашивает плитки. Сетка — repeat(auto-fill, minmax(9.5rem, 1fr)): число колонок зависит от ширины блока, а не от заранее выбранного числа.",
       "meta": {
         "tags": ["features", "integrations", "logos", "grid"],
         "preview": {
@@ -951,22 +1549,26 @@
         "ai": {
           "export": "Features010",
           "usage": "<Features010 integrations={[{ name: \"Next.js\", category: \"Фреймворк\" }]} />",
-          "summary": "Светлая секция интеграций: шапка с заголовком и до двенадцати плиток с монограммой, названием и категорией, под ними примечание и ссылка на полный список. Один файл, ноль зависимостей.",
+          "summary": "Секция интеграций, следующая теме страницы: шапка с заголовком и до двенадцати плиток с монограммой, названием и категорией, под ними примечание и ссылка на полный список. Один файл, ноль зависимостей.",
           "preserve": [
             "монограммы вместо картинок: чужие знаки требуют файлов и разрешений, а буква на подложке работает в любом проекте",
             "вывод оттенка из названия хешем: одно и то же имя всегда даёт один цвет, и порядок в списке ничего не перекрашивает",
             "автозаполняемую сетку auto-fill вместо фиксированного числа колонок — это то, что позволяет блоку жить и в узкой колонке, и во всю ширину",
             "категорию под названием: список названий без категорий не объясняет, зачем интеграция нужна",
-            "локальную палитру --vibeui-features-010-* и объявленный в корне запасной --vibeui-features-010-hue",
-            "семантику: плитки как <ul>, ссылка на полный список как <a href>"
+            "локальную палитру --vibeui-features-010-* и объявленный в корне запасной --vibeui-features-010-hue — не подменять палитру токенами темы проекта",
+            "семантику: плитки как <ul>, ссылка на полный список как <a href>",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow, title и lede в шапке",
             "массив integrations: name и category каждой плитки",
             "текст note и подпись со ссылкой action под сеткой",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцентный цвет через проп accent и внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Плиток выводится не больше двенадцати: длинная витрина превращается в справочник.",
             "Если ставите настоящие знаки, заменяйте монограмму на inline SVG и держите единый оптический размер.",
             "Монограмма берёт ровно первый символ названия: для имён на разных алфавитах проверьте, что буква читается.",
@@ -979,36 +1581,52 @@
             "label": "Заголовок",
             "type": "text",
             "default": "Работает там, где вы уже работаете",
-            "maxLength": 80
+            "maxLength": 60
           },
           {
             "prop": "eyebrow",
             "label": "Надзаголовок",
             "type": "text",
             "default": "Интеграции",
-            "maxLength": 40
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "An integrations showcase with no logo images: monogram tiles whose hue is derived from the name. The grid auto-fills against the block's own width.",
             "ai": {
-              "summary": "A light integrations section: a header and up to twelve tiles carrying a monogram, a name and a category, with a note and a link to the full list below. One file, zero dependencies.",
+              "summary": "An integrations section that follows the page theme: a header and up to twelve tiles carrying a monogram, a name and a category, with a note and a link to the full list below. One file, zero dependencies.",
               "preserve": [
                 "monograms instead of images: third-party marks need files and permissions, while a letter on a tint works in any project",
                 "deriving the hue from the name by hash: the same name always yields the same colour, and reordering the list repaints nothing",
                 "the auto-fill grid instead of a fixed column count — that is what lets the block live both in a narrow column and at full width",
                 "the category under the name: a list of names with no categories never explains what the integration is for",
-                "the local --vibeui-features-010-* palette and the fallback --vibeui-features-010-hue declared on the root",
-                "the semantics: the tiles as a <ul>, the full-list link as an <a href>"
+                "the local --vibeui-features-010-* palette and the fallback --vibeui-features-010-hue declared on the root — do not swap the palette for your theme tokens",
+                "the semantics: the tiles as a <ul>, the full-list link as an <a href>",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow, title and lede copy in the header",
                 "the integrations array: the name and category of every tile",
                 "the note copy and the action link caption under the grid",
+                "background — the component background; empty means no background, taking the page colour",
                 "the accent colour through the accent prop and outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "At most twelve tiles are rendered: a long showcase turns into a directory.",
                 "If you use real marks, replace the monogram with inline SVG and keep one optical size.",
                 "The monogram takes exactly the first character of the name: check that it reads for names in other alphabets.",
@@ -1024,11 +1642,72 @@
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "Integrations"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Integration Tiles"
+            "title": "Integration Tiles",
+            "preview": {
+              "props": {
+                "eyebrow": "Integrations",
+                "title": "It works where you already work",
+                "lede": "The sections need no runtime of their own and never argue with your stack: they are plain React files with their own CSS.",
+                "integrations": [
+                  {
+                    "name": "Next.js",
+                    "category": "Framework"
+                  },
+                  {
+                    "name": "Vite",
+                    "category": "Build"
+                  },
+                  {
+                    "name": "Remix",
+                    "category": "Framework"
+                  },
+                  {
+                    "name": "Astro",
+                    "category": "Framework"
+                  },
+                  {
+                    "name": "Tailwind",
+                    "category": "Styling"
+                  },
+                  {
+                    "name": "shadcn",
+                    "category": "Registry"
+                  },
+                  {
+                    "name": "Storybook",
+                    "category": "Docs"
+                  },
+                  {
+                    "name": "Figma",
+                    "category": "Design"
+                  },
+                  {
+                    "name": "GitHub",
+                    "category": "Repository"
+                  },
+                  {
+                    "name": "Vercel",
+                    "category": "Hosting"
+                  }
+                ],
+                "action": {
+                  "label": "All integrations",
+                  "href": "#"
+                },
+                "note": "Your stack is not on the list? The section still installs — all it needs is React."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1046,7 +1725,7 @@
           "target": "@components/vibeui/features-011.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-011-*, светлая тёплая база с плотной акцентной полосой. Кнопка на полосе инвертирована в цвет фона секции — на плотной заливке это единственный способ удержать контраст. Второстепенные пункты живут в отдельном <ul> с верхними линейками и не спорят с полосой по весу. Раскладка: полоса разбивается на текст и метрику от 60rem, пункты идут в два столбца от 34rem и в четыре от 60rem — всё container-запросами.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-011-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background. Кнопка на полосе инвертирована в accent-fg, а не в фон секции: прозрачный фон сделал бы её невидимой на плотной заливке. Второстепенные пункты живут в отдельном <ul> с верхними линейками и не спорят с полосой по весу. Раскладка: полоса разбивается на текст и метрику от 60rem, пункты идут в два столбца от 34rem и в четыре от 60rem — всё container-запросами.",
       "meta": {
         "tags": ["features", "benefits", "accent", "hierarchy"],
         "preview": {
@@ -1055,22 +1734,26 @@
         "ai": {
           "export": "Features011",
           "usage": "<Features011 main={{ title: \"Секция выглядит как в каталоге\", description: \"Один файл.\", metric: \"1:1\", metricLabel: \"совпадение\", action: { label: \"Проверить\", href: \"#\" } }} />",
-          "summary": "Светлая секция преимуществ с явной иерархией: заголовок, залитая акцентом полоса с главным утверждением, метрикой и кнопкой, под ней четыре коротких второстепенных преимущества на линейках. Один файл, ноль зависимостей.",
+          "summary": "Секция преимуществ с явной иерархией, следующая теме страницы: заголовок, залитая акцентом полоса с главным утверждением, метрикой и кнопкой, под ней четыре коротких второстепенных преимущества на линейках. Один файл, ноль зависимостей.",
           "preserve": [
             "иерархию «одно главное плюс четыре второстепенных»: как только пункты уравниваются, блок превращается в обычную сетку features-002",
             "плотную акцентную заливку полосы: именно контраст материала, а не размер шрифта, объявляет главное преимущество",
-            "инвертированную кнопку на полосе: тёмная кнопка на плотной заливке теряет контраст",
+            "инвертированную кнопку на полосе: её плашка — accent-fg, а не фон секции, поэтому она остаётся видимой и при прозрачной подложке",
             "метрику внутри полосы, а не отдельной карточкой: число подпирает утверждение, а не живёт само по себе",
-            "локальную палитру --vibeui-features-011-* и пару accent/accentForeground для контроля контраста текста на заливке",
-            "container-запросы, разбивающие полосу и пункты от ширины блока"
+            "локальную палитру --vibeui-features-011-* и пару accent/accentForeground для контроля контраста текста на заливке — не подменять её токенами темы проекта",
+            "container-запросы, разбивающие полосу и пункты от ширины блока",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow и headline над полосой",
             "объект main: title, description, metric, metricLabel и кнопку action",
             "до четырёх пунктов minor с заголовком и описанием",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "цвета через пропы accent и accentForeground, внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Второстепенных пунктов выводится не больше четырёх: пятый ломает четырёхколоночную раскладку.",
             "Если меняете accent, обязательно проверьте контраст текста и кнопки на заливке: нужно не меньше 4.5:1.",
             "metric — короткое значение вроде «1:1» или «−73 %», а не предложение.",
@@ -1083,36 +1766,58 @@
             "label": "Заголовок",
             "type": "text",
             "default": "Одно преимущество важнее остальных четырёх вместе взятых",
-            "maxLength": 90
+            "maxLength": 70
           },
           {
             "prop": "eyebrow",
             "label": "Надзаголовок",
             "type": "text",
             "default": "Почему это работает",
-            "maxLength": 40
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "accentForeground",
+            "label": "Текст на акценте",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "Benefits with the lead one singled out: an accent-filled band on top carrying one claim, a figure and a button, with four supporting points in neutral type below.",
             "ai": {
-              "summary": "A light benefits section with explicit hierarchy: a headline, an accent-filled band holding the main claim, a metric and a button, and four short supporting benefits on rules below. One file, zero dependencies.",
+              "summary": "A benefits section with explicit hierarchy that follows the page theme: a headline, an accent-filled band holding the main claim, a metric and a button, and four short supporting benefits on rules below. One file, zero dependencies.",
               "preserve": [
                 "the «one lead plus four supporting» hierarchy: level the points out and the block turns into the plain features-002 grid",
                 "the solid accent fill of the band: it is the contrast of material, not font size, that announces the lead benefit",
-                "the inverted button on the band: a dark button on a solid fill loses its contrast",
+                "the inverted button on the band: its plate is accent-fg rather than the section background, so it stays visible even with a transparent backdrop",
                 "the metric inside the band rather than in a card of its own: the figure props up the claim instead of standing alone",
-                "the local --vibeui-features-011-* palette and the accent/accentForeground pair that controls text contrast on the fill",
-                "the container queries that split the band and the points against the block's width"
+                "the local --vibeui-features-011-* palette and the accent/accentForeground pair that controls text contrast on the fill — do not swap it for your theme tokens",
+                "the container queries that split the band and the points against the block's width",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow and headline copy above the band",
                 "the main object: title, description, metric, metricLabel and the action button",
                 "up to four minor points with their heading and description",
+                "background — the component background; empty means no background, taking the page colour",
                 "the colours through the accent and accentForeground props, outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "At most four supporting points are rendered: a fifth breaks the four-column layout.",
                 "If you change accent, check the contrast of the text and the button on the fill: 4.5:1 minimum.",
                 "metric is a short value like «1:1» or «−73%», not a sentence.",
@@ -1128,11 +1833,55 @@
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "Why it works"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "accentForeground": {
+                "label": "Text on accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Lead Benefit Band"
+            "title": "Lead Benefit Band",
+            "preview": {
+              "props": {
+                "eyebrow": "Why it works",
+                "headline": "One benefit outweighs the other four combined",
+                "main": {
+                  "title": "The section always looks the way it does in the catalog",
+                  "description": "The preview renders the very file that reaches you. This is not a marketing promise but how the registry is built: a separate demo copy simply does not exist.",
+                  "metric": "1:1",
+                  "metricLabel": "match between preview and delivery",
+                  "action": {
+                    "label": "Check it on any section",
+                    "href": "#"
+                  }
+                },
+                "minor": [
+                  {
+                    "title": "Zero dependencies",
+                    "description": "No icon packages, no motion libraries: only React and CSS inside the file."
+                  },
+                  {
+                    "title": "Its own palette",
+                    "description": "The colours live in the section's variables and never read your theme tokens."
+                  },
+                  {
+                    "title": "Layout from the block",
+                    "description": "Container queries measure the section, so the layout stays honest in a sidebar."
+                  },
+                  {
+                    "title": "Instructions for the agent",
+                    "description": "Every section ships a list of what must not break and what may change."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "accentForeground", "background"]
       }
     },
     {
@@ -1150,7 +1899,7 @@
           "target": "@components/vibeui/features-012.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-012-*, светлая фиолетовая база. Смена состояния показана двумя строками: «сейчас» зачёркнутым серым и «станет» акцентом — контраст двух строк объясняет ценность быстрее списка. Карточка кликабельна целиком за счёт растянутой псевдоссылки ::after у <a>, но в дереве доступности на роль приходится одна ссылка. Фокус-кольцо рисуется на карточке через :focus-within. Раскладка: один столбец, два от 34rem, три от 64rem container-запросами.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-012-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background. Подпись ссылки в карточке вынесена в проп linkLabel. Смена состояния показана двумя строками: «сейчас» зачёркнутым серым и «станет» акцентом — контраст двух строк объясняет ценность быстрее списка. Карточка кликабельна целиком за счёт растянутой псевдоссылки ::after у <a>, но в дереве доступности на роль приходится одна ссылка. Фокус-кольцо рисуется на карточке через :focus-within. Раскладка: один столбец, два от 34rem, три от 64rem container-запросами.",
       "meta": {
         "tags": ["features", "audience", "roles", "cards"],
         "preview": {
@@ -1159,24 +1908,29 @@
         "ai": {
           "export": "Features012",
           "usage": "<Features012 roles={[{ role: \"Основателю\", pain: \"Лендинг ждёт разработчика\", gain: \"Страница за вечер\", jobs: [\"Проверить гипотезу\"], href: \"#\" }]} />",
-          "summary": "Светлая секция «для кого»: центрированная шапка и три карточки ролей, в каждой зачёркнутая боль, акцентный результат, три задачи и ссылка на сценарий. Один файл, ноль зависимостей.",
+          "summary": "Секция «для кого», следующая теме страницы: центрированная шапка и три карточки ролей, в каждой зачёркнутая боль, акцентный результат, три задачи и ссылка на сценарий. Один файл, ноль зависимостей.",
           "preserve": [
             "пару «боль зачёркнута — результат акцентом»: смена состояния объясняет ценность быстрее любого списка возможностей",
             "зачёркивание именно у боли: без line-through две строки читаются как противоречащие друг другу утверждения",
             "растянутую псевдоссылку ::after: кликабельна вся карточка, но в дереве доступности остаётся одна ссылка на роль",
             "фокус-кольцо на карточке через :focus-within: без него клавиатурная навигация невидима",
             "по три задачи в каждой роли: списки разной длины заставляют карточки визуально спорить",
-            "локальную палитру --vibeui-features-012-* и container-запросы, меняющие число колонок от ширины блока"
+            "локальную палитру --vibeui-features-012-* и container-запросы, меняющие число колонок от ширины блока — не подменять палитру токенами темы проекта",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow, title и lede в шапке",
             "массив roles: role, pain, gain, до четырёх jobs и адрес href",
+            "linkLabel — подпись ссылки в карточке; у компонента она русская",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцентный цвет через проп accent",
             "внешние отступы через className и точечные переменные через style"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ролей выводится ровно до трёх: четвёртая ломает трёхколоночную раскладку.",
-            "Подпись ссылки задана в разметке одинаковой для всех ролей: чтобы сделать её разной, правьте JSX.",
+            "Подпись ссылки одна на все роли и задаётся пропом linkLabel: разная подпись у каждой роли потребует правки JSX.",
             "Не вкладывайте внутрь карточки вторую ссылку — растянутая псевдоссылка перекроет её.",
             "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
           ]
@@ -1187,38 +1941,62 @@
             "label": "Заголовок",
             "type": "text",
             "default": "Три роли, у которых боль разная, а решение общее",
-            "maxLength": 90
+            "maxLength": 60
+          },
+          {
+            "prop": "linkLabel",
+            "label": "Подпись ссылки",
+            "type": "text",
+            "default": "Сценарий для роли",
+            "maxLength": 30
           },
           {
             "prop": "eyebrow",
             "label": "Надзаголовок",
             "type": "text",
             "default": "Для кого",
-            "maxLength": 40
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "A «who it is for» block with roles: every card pairs a struck-through pain with an accented outcome, followed by three concrete jobs and a link to the scenario.",
             "ai": {
-              "summary": "A light audience section: a centred header and three role cards, each with a struck-through pain, an accented outcome, three jobs and a scenario link. One file, zero dependencies.",
+              "summary": "An audience section that follows the page theme: a centred header and three role cards, each with a struck-through pain, an accented outcome, three jobs and a scenario link. One file, zero dependencies.",
               "preserve": [
                 "the «pain struck through — outcome in accent» pair: a change of state explains value faster than any feature list",
                 "the strikethrough on the pain specifically: without line-through the two lines read as contradictory claims",
                 "the stretched ::after pseudo-link: the whole card is clickable, yet the accessibility tree keeps one link per role",
                 "the focus ring on the card through :focus-within: without it keyboard navigation is invisible",
                 "three jobs per role: lists of different lengths make the cards visually argue",
-                "the local --vibeui-features-012-* palette and the container queries that change the column count against the block's width"
+                "the local --vibeui-features-012-* palette and the container queries that change the column count against the block's width — do not swap the palette for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow, title and lede copy in the header",
                 "the roles array: role, pain, gain, up to four jobs and the href",
+                "linkLabel — the caption of the card link; the component ships a Russian default",
+                "background — the component background; empty means no background, taking the page colour",
                 "the accent colour through the accent prop",
                 "outer spacing through className and single variables through style"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Exactly up to three roles are rendered: a fourth breaks the three-column layout.",
-                "The link caption is written in the markup and shared by all roles: edit the JSX to vary it.",
+                "The link caption is shared by all roles and set through the linkLabel prop: varying it per role means editing the JSX.",
                 "Do not nest a second link inside a card — the stretched pseudo-link covers it.",
                 "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
               ],
@@ -1232,11 +2010,65 @@
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "Who it is for"
+              },
+              "linkLabel": {
+                "label": "Link caption",
+                "default": "The scenario for this role"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Roles Cards"
+            "title": "Roles Cards",
+            "preview": {
+              "props": {
+                "eyebrow": "Who it is for",
+                "title": "Three roles, different pains, one answer",
+                "lede": "The section explains value through a change of state rather than a list of features: before and after.",
+                "linkLabel": "The scenario for this role",
+                "roles": [
+                  {
+                    "role": "Founders",
+                    "pain": "The landing page waits for a free developer",
+                    "gain": "The page comes together in one evening, by one person",
+                    "jobs": [
+                      "Test a hypothesis before hiring",
+                      "Update the offer without a release",
+                      "Launch a second landing page for a campaign"
+                    ],
+                    "href": "#"
+                  },
+                  {
+                    "role": "Developers",
+                    "pain": "Building sections instead of product work",
+                    "gain": "A section installs by command and drags in no dependencies",
+                    "jobs": [
+                      "Keep foreign tokens out of the project",
+                      "Stop repairing someone else's media queries",
+                      "Keep code review small"
+                    ],
+                    "href": "#"
+                  },
+                  {
+                    "role": "Marketers",
+                    "pain": "Every copy edit is a ticket in the tracker",
+                    "gain": "The copy lives in props and changes without touching layout",
+                    "jobs": [
+                      "Change the heading and CTA yourself",
+                      "Assemble a variant for an A/B test",
+                      "Edit without breaking the design"
+                    ],
+                    "href": "#"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1254,7 +2086,7 @@
           "target": "@components/vibeui/features-013.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-013-*, тёмная синяя база. Статус сертификата — текст, а не цвет: значок без подписи ничего не доказывает и недоступен дальтонику. Бейдж со словом «процесс» в статусе автоматически помечается атрибутом data-pending и перекрашивает щит в предупреждающий оттенок. Ссылки на документы — отдельный <ul> внизу: без них секция остаётся набором бейджей. Раскладка: щиты в две колонки, от 34rem в четыре; контроли в один, два и четыре столбца container-запросами.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-013-*, тёмная синяя база. Статус сертификата — текст, а не цвет: значок без подписи ничего не доказывает и недоступен дальтонику. Незавершённый сертификат помечается флагом pending: щит получает атрибут data-pending и предупреждающий оттенок, но статус всё равно написан словами. Ссылки на документы — отдельный <ul> внизу: без них секция остаётся набором бейджей. Раскладка: щиты в две колонки, от 34rem в четыре; контроли в один, два и четыре столбца container-запросами.",
       "meta": {
         "tags": ["features", "security", "compliance", "dark"],
         "preview": {
@@ -1262,26 +2094,27 @@
         },
         "ai": {
           "export": "Features013",
-          "usage": "<Features013 badges={[{ name: \"ISO 27001\", status: \"Сертификат действует\" }]} />",
+          "usage": "<Features013 badges={[{ name: \"ISO 27001\", status: \"Сертификат действует\" }, { name: \"GDPR\", status: \"Оценка в процессе\", pending: true }]} />",
           "summary": "Тёмная секция безопасности: заголовок с подзаголовком, четыре щита сертификатов со статусом словами, четыре описания контролей и ряд ссылок на документы. Один файл, ноль зависимостей.",
           "preserve": [
             "статус сертификата словами рядом со щитом: цветной значок без подписи не доказывает ничего и не читается дальтоником",
-            "автоматическую пометку незавершённого статуса: щит перекрашивается по слову «процесс» в тексте, а не по отдельному флагу",
+            "пометку незавершённого статуса флагом pending: щит перекрашивается в предупреждающий оттенок, но решает дело подпись словами, а не цвет",
             "ссылки на документы внизу: секция обязана вести к бумагам, иначе это просто набор бейджей",
             "описания контролей рядом с сертификатами: сертификат отвечает на вопрос «кто проверял», а контроль — «что именно сделано»",
-            "тёмную локальную палитру --vibeui-features-013-* и container-запросы, меняющие число колонок от ширины блока",
-            "семантику: щиты и контроли как <ul>, заголовок контроля как h3, ссылки как <a href>"
+            "тёмную локальную палитру --vibeui-features-013-*: секция намеренно одноцветная и остаётся тёмной независимо от темы проекта — не переводить её на light-dark() и не подменять токенами темы",
+            "семантику: щиты и контроли как <ul>, заголовок контроля как h3, ссылки как <a href>",
+            "container-запросы вместо медиазапросов окна: число колонок считается от ширины блока"
           ],
           "adapt": [
             "тексты eyebrow, title и lede в шапке",
-            "массив badges: name и status каждого сертификата",
+            "массив badges: name, status и флаг pending у каждого сертификата",
             "массив controls с заголовками и описаниями и список documents со ссылками",
             "акцентный цвет через проп accent и внешние отступы через className"
           ],
           "notes": [
+            "Тёмный тон здесь — часть композиции, а не тема: на нём щит и предупреждающий оттенок различимы сильнее всего, поэтому секция не следует color-scheme страницы. Если нужна секция, темнеющая вместе со страницей, берите features-015.",
             "Не публикуйте сертификаты, которых нет: статус здесь читается как утверждение компании, а не как оформление.",
             "Щитов и контролей выводится ровно по четыре: пятый ломает раскладку в четыре колонки.",
-            "Пометка «в процессе» ищется по слову «процесс» в тексте статуса — на другом языке правьте условие в JSX.",
             "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
           ]
         },
@@ -1299,6 +2132,12 @@
             "type": "text",
             "default": "Безопасность",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1308,25 +2147,26 @@
               "summary": "A dark security section: a headline with a subhead, four certificate shields with written-out statuses, four control descriptions and a row of document links. One file, zero dependencies.",
               "preserve": [
                 "the certificate status spelled out next to the shield: a coloured glyph with no caption proves nothing and fails colour-blind readers",
-                "the automatic marking of an unfinished status: the shield recolours on the word «process» in the text rather than on a separate flag",
+                "the unfinished status marked by the pending flag: the shield recolours to the warning tone, but it is the written caption that does the work, not the colour",
                 "the document links at the bottom: the section has to lead to the paperwork, otherwise it is just a badge collection",
                 "the control descriptions beside the certificates: a certificate answers «who audited», a control answers «what was actually done»",
-                "the dark local --vibeui-features-013-* palette and the container queries that change the column count against the block's width",
-                "the semantics: shields and controls as <ul>, each control heading as an h3, links as <a href>"
+                "the dark local --vibeui-features-013-* palette: the section is deliberately single-tone and stays dark whatever theme the project runs — do not move it to light-dark() and do not swap it for theme tokens",
+                "the semantics: shields and controls as <ul>, each control heading as an h3, links as <a href>",
+                "container queries instead of window media queries: the column count is measured against the block's width"
               ],
               "adapt": [
                 "the eyebrow, title and lede copy in the header",
-                "the badges array: the name and status of every certificate",
+                "the badges array: the name, status and pending flag of every certificate",
                 "the controls array with headings and descriptions and the documents list of links",
                 "the accent colour through the accent prop and outer spacing through className"
               ],
               "notes": [
+                "The dark tone here is part of the composition, not a theme: it is where the shield and the warning tone separate most clearly, so the section does not follow the page color-scheme. If you need a section that darkens with the page, take features-015.",
                 "Do not publish certificates you do not hold: the status here reads as a company claim, not as decoration.",
                 "Exactly four shields and four controls are rendered: a fifth breaks the four-column layout.",
-                "The «pending» marker is matched on the word «процесс» in the status text — edit the condition in the JSX for another language.",
                 "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
               ],
-              "usage": "<Features013 badges={[{ name: \"ISO 27001\", status: \"Certificate active\" }]} />"
+              "usage": "<Features013 badges={[{ name: \"ISO 27001\", status: \"Certificate active\" }, { name: \"GDPR\", status: \"Assessment in progress\", pending: true }]} />"
             },
             "controls": {
               "title": {
@@ -1336,11 +2176,73 @@
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "Security"
+              },
+              "accent": {
+                "label": "Accent"
               }
             },
-            "title": "Compliance Shields"
+            "title": "Compliance Shields",
+            "preview": {
+              "props": {
+                "eyebrow": "Security",
+                "title": "Compliance you can verify from the paperwork",
+                "lede": "Not one badge without a status in words: next to every certificate it says whether it is active or still under way.",
+                "badges": [
+                  {
+                    "name": "ISO 27001",
+                    "status": "Certificate active"
+                  },
+                  {
+                    "name": "SOC 2 Type II",
+                    "status": "Audit passed"
+                  },
+                  {
+                    "name": "GDPR",
+                    "status": "Data processed in the EU"
+                  },
+                  {
+                    "name": "CCPA",
+                    "status": "Assessment in progress",
+                    "pending": true
+                  }
+                ],
+                "controls": [
+                  {
+                    "title": "Encryption",
+                    "description": "TLS 1.3 in transit and AES-256 at rest. Keys rotate once a quarter."
+                  },
+                  {
+                    "title": "Access",
+                    "description": "SSO, per-project roles and mandatory two-factor authentication for admins."
+                  },
+                  {
+                    "title": "Audit log",
+                    "description": "Every change keeps the author, the time and the reason. Export for any period."
+                  },
+                  {
+                    "title": "Backups",
+                    "description": "Daily copies in two regions, with a restore drill once a month."
+                  }
+                ],
+                "documents": [
+                  {
+                    "label": "Security policy",
+                    "href": "#"
+                  },
+                  {
+                    "label": "SOC 2 report",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Personal data processing",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent"]
       }
     },
     {
@@ -1358,7 +2260,7 @@
           "target": "@components/vibeui/features-014.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-014-*, тёплая бумажная база. Разметка — <figure> с <blockquote> и <figcaption>: подпись формально связана с цитатой, а не просто лежит под ней. Открывающая кавычка нарисована псевдоэлементом и вынесена в левое поле, поэтому первая строка цитаты не съезжает. Цитата набрана системным serif, интерфейсный текст — sans. Раскладка: один столбец до 60rem, две колонки от 60rem container-запросом.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-014-* на light-dark(): тёплая бумажная гамма в светлой теме и тёплая тёмная в тёмной, подложки по умолчанию нет — секция лежит на фоне страницы, а проп background её задаёт. Разметка — <figure> с <blockquote> и <figcaption>: подпись формально связана с цитатой, а не просто лежит под ней. Открывающая кавычка нарисована псевдоэлементом и вынесена в левое поле, поэтому первая строка цитаты не съезжает. Цитата набрана системным serif, интерфейсный текст — sans. Раскладка: один столбец до 60rem, две колонки от 60rem container-запросом.",
       "meta": {
         "tags": ["features", "quote", "metric", "testimonial"],
         "preview": {
@@ -1374,15 +2276,19 @@
             "кавычку в левом поле через псевдоэлемент: кавычка в потоке сдвигает первую строку и ломает выключку",
             "сноску note под метрикой: число без указания периода и способа замера не убеждает",
             "системную пару serif для цитаты и sans для интерфейсного текста: веб-шрифты здесь не подключаются",
-            "локальную палитру --vibeui-features-014-* и container-запрос, разводящий цитату и панель от 60rem"
+            "локальную палитру --vibeui-features-014-* и container-запрос, разводящий цитату и панель от 60rem",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст quote и данные автора: authorName, authorRole и company",
             "объект metric: value, label и note",
             "до двух вспомогательных показателей supporting и ссылку action",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Монограмма берёт первый символ имени автора: для инициалов из двух букв правьте JSX.",
             "Вспомогательных показателей ровно два: третий ломает сетку панели.",
             "Не заменяйте монограмму фотографией без alt — она помечена aria-hidden как декоративная.",
@@ -1403,6 +2309,18 @@
             "type": "text",
             "default": "Литера",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1416,15 +2334,19 @@
                 "the quotation mark hung in the left margin through a pseudo-element: a mark in the flow shifts the first line and breaks the alignment",
                 "the note under the metric: a figure without a period and a method behind it convinces nobody",
                 "the system serif for the quote and sans for interface text: no web fonts are loaded here",
-                "the local --vibeui-features-014-* palette and the container query that splits quote and panel from 60rem"
+                "the local --vibeui-features-014-* palette and the container query that splits quote and panel from 60rem",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the quote text and the author details: authorName, authorRole and company",
                 "the metric object: value, label and note",
                 "up to two supporting metrics and the action link",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The monogram takes the first character of the author's name: edit the JSX for two-letter initials.",
                 "There are exactly two supporting metrics: a third breaks the panel grid.",
                 "Do not swap the monogram for a photo without alt text — it is marked aria-hidden as decorative.",
@@ -1440,11 +2362,45 @@
               "company": {
                 "label": "Company",
                 "default": "Litera"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Quote And Metric"
+            "title": "Quote And Metric",
+            "preview": {
+              "props": {
+                "quote": "We stopped queueing landing pages behind the development team. A marketer builds the page herself, and a developer only steps in where the logic lives.",
+                "authorName": "Anna Kravtsova",
+                "authorRole": "Head of marketing",
+                "company": "Litera",
+                "metric": {
+                  "value": "−73%",
+                  "label": "of the time spent building landing pages",
+                  "note": "Measured across six campaigns over a quarter: from brief to published page."
+                },
+                "supporting": [
+                  {
+                    "value": "14",
+                    "label": "pages per quarter"
+                  },
+                  {
+                    "value": "1",
+                    "label": "developer on the team"
+                  }
+                ],
+                "action": {
+                  "label": "Read the full story",
+                  "href": "#"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1462,7 +2418,7 @@
           "target": "@components/vibeui/features-015.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-015-*, светлая холодная база. Каждая группа — <section> с h3 и <dl>: параметр в <dt>, значение в <dd>, выключенное вправо. Значения набраны моноширинным шрифтом с tabular-nums, поэтому колонка читается по вертикали без сравнения символов глазами. Разделитель между парами — пунктирная нижняя граница, у последней пары снятая. Раскладка: одна группа в столбец, две от 34rem, три от 60rem container-запросами.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-015-* на light-dark(): холодная светлая гамма в светлой теме и холодная тёмная в тёмной, подложки по умолчанию нет — секция лежит на фоне страницы, а проп background её задаёт. Каждая группа — <section> с h3 и <dl>: параметр в <dt>, значение в <dd>, выключенное вправо. Значения набраны моноширинным шрифтом с tabular-nums, поэтому колонка читается по вертикали без сравнения символов глазами. Разделитель между парами — пунктирная нижняя граница, у последней пары снятая. Раскладка: одна группа в столбец, две от 34rem, три от 60rem container-запросами.",
       "meta": {
         "tags": ["features", "specs", "datasheet", "technical"],
         "preview": {
@@ -1478,15 +2434,19 @@
             "группировку по разделам с заголовком: двенадцать пар подряд без заголовков не читаются",
             "разметку <dl> внутри каждой группы: список определений — единственная семантически верная форма для спецификации",
             "локальную палитру --vibeui-features-015-* и container-запросы, меняющие число групп в ряду от ширины блока",
-            "сноску под группами: она объясняет, относятся характеристики ко всем секциям или только к этой"
+            "сноску под группами: она объясняет, относятся характеристики ко всем секциям или только к этой",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow, title и lede в шапке",
             "массив groups: заголовок и до шести пар label/value в каждой группе",
             "текст footnote под группами",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Групп выводится ровно до трёх, пар в группе — до шести: остальное обрезается.",
             "Значение держите коротким: длинное значение перенесётся и сломает выключку вправо.",
             "Не превращайте характеристики в маркетинговые формулировки — в даташите ценится точность, а не тон.",
@@ -1507,6 +2467,18 @@
             "type": "text",
             "default": "Спецификация",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1520,15 +2492,19 @@
                 "the grouping into sections with headings: twelve pairs in a row without headings do not get read",
                 "the <dl> markup inside every group: a definition list is the only semantically correct form for a specification",
                 "the local --vibeui-features-015-* palette and the container queries that change how many groups sit in a row",
-                "the footnote under the groups: it says whether the specs apply to every section or only to this one"
+                "the footnote under the groups: it says whether the specs apply to every section or only to this one",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow, title and lede copy in the header",
                 "the groups array: the heading and up to six label/value pairs in every group",
                 "the footnote copy under the groups",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Exactly up to three groups and six pairs per group are rendered: the rest is trimmed.",
                 "Keep the value short: a long one wraps and destroys the right alignment.",
                 "Do not turn the specs into marketing phrasing — a datasheet is valued for precision, not tone.",
@@ -1544,11 +2520,91 @@
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "Specification"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Spec Sheet"
+            "title": "Spec Sheet",
+            "preview": {
+              "props": {
+                "eyebrow": "Specification",
+                "title": "Technical specification of a section",
+                "lede": "Everything you normally find out after installing: how many files arrive, what the section asks of the project and how it behaves.",
+                "groups": [
+                  {
+                    "title": "Delivery",
+                    "specs": [
+                      {
+                        "label": "Files per section",
+                        "value": "1"
+                      },
+                      {
+                        "label": "External dependencies",
+                        "value": "0"
+                      },
+                      {
+                        "label": "Format",
+                        "value": ".tsx"
+                      },
+                      {
+                        "label": "Target path",
+                        "value": "components/vibeui"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Compatibility",
+                    "specs": [
+                      {
+                        "label": "React",
+                        "value": "19+"
+                      },
+                      {
+                        "label": "Next.js",
+                        "value": "15+"
+                      },
+                      {
+                        "label": "Tailwind",
+                        "value": "not required"
+                      },
+                      {
+                        "label": "Component type",
+                        "value": "server"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Behaviour",
+                    "specs": [
+                      {
+                        "label": "Layout",
+                        "value": "container queries"
+                      },
+                      {
+                        "label": "Minimum width",
+                        "value": "320 px"
+                      },
+                      {
+                        "label": "Reduced motion",
+                        "value": "supported"
+                      },
+                      {
+                        "label": "Dark theme",
+                        "value": "follows color-scheme"
+                      }
+                    ]
+                  }
+                ],
+                "footnote": "The specs are the same for every section in the catalogue: it is a registry requirement, not a property of this particular block."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

@@ -23,6 +23,16 @@ export type Dashboard061Props = {
   restoreLabel?: string
   compareLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подпись раскрытия версии. */
+  expandLabel?: string
+  /** Подпись сворачивания версии. */
+  collapseLabel?: string
+  /** Счётчик изменённых полей: {count}. */
+  changedText?: string
+  /** Подпись текущей версии вместо кнопок отката. */
+  currentText?: string
   className?: string
   style?: CSSProperties
 }
@@ -38,15 +48,22 @@ export type Dashboard061Props = {
 // словом и не предлагает откат: откатывать на саму себя незачем.
 const STYLES = `
 :where([data-vibeui-block="dashboard-061"]){
---vibeui-dashboard-061-bg:oklch(0.985 0.003 285);
---vibeui-dashboard-061-card:oklch(1 0 0);
---vibeui-dashboard-061-fg:oklch(0.21 0.014 285);
---vibeui-dashboard-061-muted:oklch(0.55 0.014 285);
---vibeui-dashboard-061-border:oklch(0.91 0.006 285);
---vibeui-dashboard-061-accent:oklch(0.51 0.16 285);
---vibeui-dashboard-061-soft:oklch(0.965 0.02 285);
---vibeui-dashboard-061-remove:oklch(0.57 0.19 25);
---vibeui-dashboard-061-add:oklch(0.55 0.13 155);
+--vibeui-dashboard-061-bg:transparent;
+/* Карточки версий и точки ленты: подложка блока прозрачна. */
+--vibeui-dashboard-061-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 285));
+--vibeui-dashboard-061-inset:light-dark(oklch(0.97 0.004 285),oklch(0.22 0.012 285));
+--vibeui-dashboard-061-fg:light-dark(oklch(0.21 0.014 285),oklch(0.94 0.005 285));
+--vibeui-dashboard-061-muted:light-dark(oklch(0.55 0.014 285),oklch(0.72 0.012 285));
+--vibeui-dashboard-061-border:light-dark(oklch(0.91 0.006 285),oklch(0.36 0.012 285));
+--vibeui-dashboard-061-accent:light-dark(oklch(0.51 0.16 285),oklch(0.77 0.13 285));
+--vibeui-dashboard-061-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.04 285));
+--vibeui-dashboard-061-accent-ring:light-dark(oklch(0.84 0.06 285),oklch(0.45 0.08 285));
+--vibeui-dashboard-061-soft:light-dark(oklch(0.965 0.02 285),oklch(0.31 0.04 285));
+--vibeui-dashboard-061-remove:light-dark(oklch(0.57 0.19 25),oklch(0.75 0.16 25));
+--vibeui-dashboard-061-remove-soft:light-dark(oklch(0.965 0.02 25),oklch(0.29 0.05 25));
+--vibeui-dashboard-061-add:light-dark(oklch(0.55 0.13 155),oklch(0.75 0.13 155));
+--vibeui-dashboard-061-add-ink:light-dark(oklch(0.44 0.11 155),oklch(0.82 0.12 155));
+--vibeui-dashboard-061-add-soft:light-dark(oklch(0.96 0.025 155),oklch(0.29 0.045 155));
 --vibeui-dashboard-061-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 --vibeui-dashboard-061-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -73,12 +90,12 @@ background:var(--vibeui-dashboard-061-border);
 [data-vibeui-block="dashboard-061"] [data-part="item"]{position:relative}
 [data-vibeui-block="dashboard-061"] [data-part="item"]::before{
 content:"";position:absolute;left:-1.0625rem;top:0.9375rem;width:0.625rem;height:0.625rem;
-border-radius:50%;background:var(--vibeui-dashboard-061-bg);
+border-radius:50%;background:var(--vibeui-dashboard-061-inset);
 box-shadow:0 0 0 2px var(--vibeui-dashboard-061-border);
 }
 [data-vibeui-block="dashboard-061"] [data-part="item"][data-current="true"]::before{
 background:var(--vibeui-dashboard-061-accent);
-box-shadow:0 0 0 2px color-mix(in oklab,var(--vibeui-dashboard-061-accent) 35%,white);
+box-shadow:0 0 0 2px var(--vibeui-dashboard-061-accent-ring);
 }
 [data-vibeui-block="dashboard-061"] details{
 background:var(--vibeui-dashboard-061-card);border:1px solid var(--vibeui-dashboard-061-border);
@@ -89,11 +106,13 @@ list-style:none;cursor:pointer;padding:0.6875rem 0.8125rem;
 display:flex;flex-wrap:wrap;align-items:baseline;gap:0.25rem 0.5rem;
 }
 [data-vibeui-block="dashboard-061"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="dashboard-061"] summary::after{
-content:"развернуть";margin-left:auto;font-size:0.6875rem;font-weight:700;
+[data-vibeui-block="dashboard-061"] :is([data-part="more"],[data-part="less"]){
+margin-left:auto;font-size:0.6875rem;font-weight:700;
 color:var(--vibeui-dashboard-061-accent);
 }
-[data-vibeui-block="dashboard-061"] details[open] summary::after{content:"свернуть"}
+[data-vibeui-block="dashboard-061"] [data-part="less"]{display:none}
+[data-vibeui-block="dashboard-061"] details[open] [data-part="more"]{display:none}
+[data-vibeui-block="dashboard-061"] details[open] [data-part="less"]{display:inline}
 [data-vibeui-block="dashboard-061"] [data-part="when"]{font-size:0.8125rem;font-weight:750}
 [data-vibeui-block="dashboard-061"] [data-part="who"]{font-size:0.75rem;color:var(--vibeui-dashboard-061-muted)}
 [data-vibeui-block="dashboard-061"] [data-part="via"]{
@@ -111,12 +130,12 @@ color:var(--vibeui-dashboard-061-muted);align-self:center;
 [data-vibeui-block="dashboard-061"] [data-part="before"]{
 font-family:var(--vibeui-dashboard-061-mono);padding:0.125rem 0.375rem;border-radius:0.3125rem;
 text-decoration:line-through;color:var(--vibeui-dashboard-061-remove);
-background:color-mix(in oklab,var(--vibeui-dashboard-061-remove) 9%,white);
+background:var(--vibeui-dashboard-061-remove-soft);
 }
 [data-vibeui-block="dashboard-061"] [data-part="after"]{
 font-family:var(--vibeui-dashboard-061-mono);padding:0.125rem 0.375rem;border-radius:0.3125rem;
-font-weight:700;color:color-mix(in oklab,var(--vibeui-dashboard-061-add) 80%,black);
-background:color-mix(in oklab,var(--vibeui-dashboard-061-add) 12%,white);
+font-weight:700;color:var(--vibeui-dashboard-061-add-ink);
+background:var(--vibeui-dashboard-061-add-soft);
 }
 [data-vibeui-block="dashboard-061"] [data-part="acts"]{display:flex;flex-wrap:wrap;gap:0.4375rem}
 [data-vibeui-block="dashboard-061"] [data-part="acts"] button{
@@ -125,7 +144,7 @@ padding:0.3125rem 0.625rem;border-radius:0.4375rem;background:transparent;color:
 border:1px solid var(--vibeui-dashboard-061-border);
 }
 [data-vibeui-block="dashboard-061"] [data-part="acts"] button[data-primary="true"]{
-background:var(--vibeui-dashboard-061-accent);color:oklch(1 0 0);border-color:transparent;
+background:var(--vibeui-dashboard-061-accent);color:var(--vibeui-dashboard-061-on-accent);border-color:transparent;
 }
 [data-vibeui-block="dashboard-061"] [data-part="now"]{
 font-size:0.6875rem;font-weight:750;color:var(--vibeui-dashboard-061-accent);
@@ -188,6 +207,28 @@ const DEFAULT_VERSIONS: Dashboard061Version[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * История изменений записи: версии в ленте, каждая свёрнута в details, внутри —
  * diff изменённых полей «было → стало» и откат. Один файл, ноль зависимостей,
  * клиентского JS нет.
@@ -199,11 +240,22 @@ export function Dashboard061({
   restoreLabel = "Откатить к этой версии",
   compareLabel = "Сравнить с текущей",
   accent,
+  background = "",
+  expandLabel = "развернуть",
+  collapseLabel = "свернуть",
+  changedText = "полей изменено: {count}",
+  currentText = "Это текущее состояние записи — откатывать не к чему.",
   className,
   style,
 }: Dashboard061Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-061-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-061-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -237,8 +289,13 @@ export function Dashboard061({
                     <span data-part="who">{version.author}</span>
                     <span data-part="via">{version.via}</span>
                     <span data-part="who">
-                      полей изменено: {version.changes.length}
+                      {changedText.replace(
+                        "{count}",
+                        String(version.changes.length),
+                      )}
                     </span>
+                    <span data-part="more">{expandLabel}</span>
+                    <span data-part="less">{collapseLabel}</span>
                   </summary>
                   <div data-part="body">
                     <p data-part="summary">{version.summary}</p>
@@ -255,9 +312,7 @@ export function Dashboard061({
                       ))}
                     </dl>
                     {version.current ? (
-                      <p data-part="now">
-                        Это текущее состояние записи — откатывать не к чему.
-                      </p>
+                      <p data-part="now">{currentText}</p>
                     ) : (
                       <div data-part="acts">
                         <button type="button" data-primary="true">

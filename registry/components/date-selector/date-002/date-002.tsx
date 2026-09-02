@@ -13,6 +13,10 @@ export type Date002Props = Omit<
   min?: string
   max?: string
   name?: string
+  /** Подпись кнопки календаря: компонент несёт русскую, проект подставляет свою. */
+  openLabel?: string
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,19 +25,22 @@ export type Date002Props = Omit<
 // вообще не видно, и попасть в неё пальцем почти невозможно. Кнопка на 2.75rem
 // зовёт тот же системный календарь через showPicker(), а если браузер метода
 // не знает — просто ставит фокус в поле, и остаётся ввод с клавиатуры.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="date-002"]){
---vibeui-date-002-surface:oklch(1 0 0);
---vibeui-date-002-field:oklch(1 0 0);
---vibeui-date-002-shell:oklch(0.9 0.006 265);
---vibeui-date-002-fg:oklch(0.23 0.014 265);
---vibeui-date-002-muted:oklch(0.55 0.014 265);
---vibeui-date-002-border:oklch(0.88 0.008 265);
---vibeui-date-002-accent:oklch(0.55 0.18 262);
---vibeui-date-002-soft:oklch(0.55 0.18 262 / 10%);
+--vibeui-date-002-surface:transparent;
+--vibeui-date-002-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-date-002-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-date-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-date-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-date-002-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-date-002-accent:light-dark(oklch(0.55 0.18 262),oklch(0.76 0.15 262));
+--vibeui-date-002-soft:color-mix(in oklch,var(--vibeui-date-002-accent) 12%,transparent);
 --vibeui-date-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: рамка держит форму, фон приходит со страницы. */
 [data-vibeui-block="date-002"]{
 display:flex;flex-direction:column;gap:0.375rem;
 width:100%;max-width:19rem;box-sizing:border-box;padding:0.875rem;
@@ -73,6 +80,29 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-date-002-muted);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поле даты с отдельной кнопкой, открывающей системный календарь.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -83,6 +113,8 @@ export function Date002({
   min = "2026-09-01",
   max = "2026-12-31",
   name = "visit-date",
+  openLabel = "Открыть календарь",
+  background = "",
   accent,
   className,
   style,
@@ -104,6 +136,12 @@ export function Date002({
 
   const palette = {
     ...(accent ? { "--vibeui-date-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-date-002-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -130,11 +168,7 @@ export function Date002({
             max={max}
             aria-describedby={hint ? `${id}-hint` : undefined}
           />
-          <button
-            type="button"
-            onClick={openCalendar}
-            aria-label="Открыть календарь"
-          >
+          <button type="button" onClick={openCalendar} aria-label={openLabel}>
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <rect
                 x="3"

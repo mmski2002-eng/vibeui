@@ -14,6 +14,14 @@ export type Tags002Props = Omit<
   label?: string
   options?: string[]
   defaultValue?: string[]
+  /** Подпись крестика: {tag} — имя тега. */
+  removeText?: string
+  /** Плейсхолдер поля ввода. */
+  placeholderText?: string
+  /** Пояснение под полем. */
+  hintText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,19 +31,23 @@ export type Tags002Props = Omit<
 // набранному, знает клавиатуру и на телефоне показывается системным способом.
 // Рядом лежат ещё не использованные варианты кнопками: до первой буквы человек
 // не знает, что вообще можно выбрать, а список подсказок пока не виден.
+//
+// Тема берётся из color-scheme окружения через light-dark(): поле темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="tags-002"]){
---vibeui-tags-002-surface:oklch(1 0 0);
---vibeui-tags-002-field:oklch(1 0 0);
---vibeui-tags-002-shell:oklch(0.9 0.006 265);
---vibeui-tags-002-fg:oklch(0.23 0.014 265);
---vibeui-tags-002-muted:oklch(0.55 0.014 265);
---vibeui-tags-002-border:oklch(0.88 0.008 265);
---vibeui-tags-002-chip:oklch(0.55 0.16 255 / 12%);
---vibeui-tags-002-accent:oklch(0.5 0.16 255);
+--vibeui-tags-002-surface:transparent;
+--vibeui-tags-002-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-tags-002-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.01 265));
+--vibeui-tags-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tags-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-tags-002-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-tags-002-chip:light-dark(oklch(0.55 0.16 255 / 12%),oklch(0.74 0.16 255 / 22%));
+--vibeui-tags-002-accent:light-dark(oklch(0.5 0.16 255),oklch(0.78 0.14 255));
+--vibeui-tags-002-ring:light-dark(oklch(0.5 0.16 255 / 18%),oklch(0.78 0.14 255 / 28%));
 --vibeui-tags-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложка по умолчанию прозрачная: поле ложится на фон страницы. */
 [data-vibeui-block="tags-002"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -52,7 +64,7 @@ border:1px solid var(--vibeui-tags-002-border);border-radius:0.625rem;
 }
 [data-vibeui-block="tags-002"] [data-part="field"]:focus-within{
 border-color:var(--vibeui-tags-002-accent);
-box-shadow:0 0 0 2px oklch(0.5 0.16 255 / 18%);
+box-shadow:0 0 0 2px var(--vibeui-tags-002-ring);
 }
 [data-vibeui-block="tags-002"] [data-part="chip"]{
 display:inline-flex;align-items:center;gap:0.25rem;
@@ -98,6 +110,28 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поле тегов с подсказками из готового списка на нативном datalist.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -105,6 +139,10 @@ export function Tags002({
   label = "Стек проекта",
   options = DEFAULT_OPTIONS,
   defaultValue = ["React", "TypeScript"],
+  removeText = "Убрать {tag}",
+  placeholderText = "Начните вводить…",
+  hintText = "Свои варианты не добавляются: список общий для всего каталога",
+  background = "",
   accent,
   className,
   style,
@@ -133,6 +171,12 @@ export function Tags002({
 
   const palette = {
     ...(accent ? { "--vibeui-tags-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tags-002-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -154,7 +198,7 @@ export function Tags002({
               {tag}
               <button
                 type="button"
-                aria-label={`Убрать ${tag}`}
+                aria-label={removeText.replace("{tag}", tag)}
                 onClick={() => setTags(tags.filter((item) => item !== tag))}
               >
                 ×
@@ -166,7 +210,7 @@ export function Tags002({
             type="text"
             list={`${id}-options`}
             value={draft}
-            placeholder="Начните вводить…"
+            placeholder={placeholderText}
             aria-describedby={`${id}-hint`}
             onChange={(event) => setDraft(event.target.value)}
             onKeyDown={onKeyDown}
@@ -191,7 +235,7 @@ export function Tags002({
           </div>
         ) : null}
         <p id={`${id}-hint`} data-part="hint">
-          Свои варианты не добавляются: список общий для всего каталога
+          {hintText}
         </p>
       </div>
     </>

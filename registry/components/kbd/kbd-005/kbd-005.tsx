@@ -9,6 +9,10 @@ export type Kbd005Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
   platform?: Kbd005Platform
   action?: string
   letter?: string
+  /** Названия систем: компонент несёт русские, проект подставляет свои. */
+  systemText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: одно сочетание, разное написание. На macOS модификатор
@@ -17,16 +21,18 @@ export type Kbd005Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
 // при рендере: сервер не знает системы клиента, и попытка угадать даёт
 // рассинхрон разметки. До определения показывается вариант с Ctrl —
 // он понятен на любой системе, в отличие от ⌘.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки по
+// умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="kbd-005"]){
---vibeui-kbd-005-surface:oklch(1 0 0);
---vibeui-kbd-005-fg:oklch(0.24 0.014 265);
---vibeui-kbd-005-muted:oklch(0.55 0.014 265);
---vibeui-kbd-005-border:oklch(0.88 0.008 265);
---vibeui-kbd-005-key:oklch(0.975 0.003 265);
+--vibeui-kbd-005-surface:transparent;
+--vibeui-kbd-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-kbd-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-kbd-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-kbd-005-key:light-dark(oklch(0.975 0.003 265),oklch(0.3 0.012 265));
 --vibeui-kbd-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: клавиши и подпись тёмные. */
 [data-vibeui-block="kbd-005"]{
 display:inline-flex;align-items:center;justify-content:space-between;gap:1.25rem;
 box-sizing:border-box;padding:0.75rem 0.875rem;
@@ -63,6 +69,33 @@ function detect(): "mac" | "windows" {
   return /Mac|iPhone|iPad|iPod/i.test(navigator.userAgent) ? "mac" : "windows"
 }
 
+const SYSTEM_TEXT: Record<string, string> = {
+  mac: "macOS",
+  windows: "Windows и Linux",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Платформозависимое сочетание: ⌘ на macOS, Ctrl на остальных системах.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -71,6 +104,8 @@ export function Kbd005({
   platform = "auto",
   action = "Открыть поиск",
   letter = "K",
+  systemText = SYSTEM_TEXT,
+  background = "",
   className,
   style,
   ...props
@@ -82,6 +117,15 @@ export function Kbd005({
 
   const system = platform === "auto" ? detected : platform
   const modifier = system === "mac" ? "⌘" : "Ctrl"
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-kbd-005-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -93,12 +137,12 @@ export function Kbd005({
         data-vibeui-block="kbd-005"
         data-system={system}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="text">
           <span data-part="action">{action}</span>
           <span data-part="system">
-            {system === "mac" ? "macOS" : "Windows и Linux"}
+            {systemText[system] ?? SYSTEM_TEXT[system]}
           </span>
         </span>
         <span data-part="keys">

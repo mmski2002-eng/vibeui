@@ -19,6 +19,14 @@ export type Table011Props = Omit<
   /** Имя тарифа, чью колонку подсвечиваем как рекомендованную. */
   featured?: string
   caption?: string
+  /** Заголовок первой колонки. */
+  featureLabel?: string
+  /** Подпись на рекомендованном тарифе. */
+  featuredText?: string
+  /** Подписи для скринридера: ключи yes и no. */
+  valueText?: Record<string, string>
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,16 +34,20 @@ export type Table011Props = Omit<
 // галочка, но и слово для скринридера. Названия возможностей — заголовки
 // строк (th scope="row"), поэтому ячейка «✓» всегда читается как пара
 // «возможность — тариф», а не как одинокий символ.
+//
+// Тема берётся из color-scheme окружения через light-dark(): матрица темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-011"]){
---vibeui-table-011-bg:oklch(1 0 0);
---vibeui-table-011-fg:oklch(0.24 0.014 265);
---vibeui-table-011-muted:oklch(0.56 0.014 265);
---vibeui-table-011-border:oklch(0.92 0.006 265);
---vibeui-table-011-head:oklch(0.975 0.003 265);
---vibeui-table-011-accent:oklch(0.55 0.2 262);
---vibeui-table-011-accent-soft:oklch(0.55 0.2 262 / 8%);
---vibeui-table-011-yes:oklch(0.52 0.15 155);
+--vibeui-table-011-bg:transparent;
+--vibeui-table-011-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-011-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-table-011-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
+--vibeui-table-011-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-011-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
+--vibeui-table-011-accent-soft:color-mix(in oklab,var(--vibeui-table-011-accent) 8%,transparent);
+--vibeui-table-011-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
+--vibeui-table-011-yes:light-dark(oklch(0.52 0.15 155),oklch(0.76 0.14 155));
 --vibeui-table-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="table-011"]{
@@ -76,7 +88,7 @@ font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="table-011"] [data-part="badge"]{
 margin-bottom:0.25rem;padding:0.0625rem 0.375rem;border-radius:9999px;
-background:var(--vibeui-table-011-accent);color:oklch(1 0 0);
+background:var(--vibeui-table-011-accent);color:var(--vibeui-table-011-on-accent);
 font-size:0.625rem;font-weight:650;letter-spacing:0.02em;text-transform:uppercase;
 }
 [data-vibeui-block="table-011"] [data-featured="true"]{background:var(--vibeui-table-011-accent-soft)}
@@ -108,6 +120,30 @@ const DEFAULT_FEATURES: Table011Feature[] = [
   { title: "Поддержка по телефону", values: [false, false, true] },
 ]
 
+const VALUE_TEXT: Record<string, string> = { yes: "есть", no: "нет" }
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Матрица сравнения тарифов: галочки продублированы словом для скринридера.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -117,6 +153,10 @@ export function Table011({
   features = DEFAULT_FEATURES,
   featured = "Команда",
   caption = "Что входит в тариф",
+  featureLabel = "Возможность",
+  featuredText = "Рекомендуем",
+  valueText = VALUE_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -124,6 +164,12 @@ export function Table011({
 }: Table011Props) {
   const palette = {
     ...(accent ? { "--vibeui-table-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-table-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -149,7 +195,7 @@ export function Table011({
               <caption>{caption}</caption>
               <thead>
                 <tr>
-                  <th scope="col">Возможность</th>
+                  <th scope="col">{featureLabel}</th>
                   {plans.map((plan) => (
                     <th
                       key={plan.name}
@@ -160,7 +206,7 @@ export function Table011({
                     >
                       <span data-part="plan">
                         {plan.name === featured ? (
-                          <span data-part="badge">Рекомендуем</span>
+                          <span data-part="badge">{featuredText}</span>
                         ) : null}
                         <span data-part="name">{plan.name}</span>
                         <span data-part="price">{plan.price}</span>
@@ -194,7 +240,9 @@ export function Table011({
                                 {value ? "✓" : "—"}
                               </span>
                               <span data-part="sr">
-                                {value ? "есть" : "нет"}
+                                {value
+                                  ? (valueText.yes ?? VALUE_TEXT.yes)
+                                  : (valueText.no ?? VALUE_TEXT.no)}
                               </span>
                             </>
                           )}

@@ -9,6 +9,8 @@ export type Menu006Section = {
 export type Menu006Props = Omit<ComponentPropsWithoutRef<"nav">, "children"> & {
   label?: string
   sections?: Menu006Section[]
+  /** Подложка кнопки и панели. Пусто — своя палитра компонента. */
+  background?: string
   accent?: string
 }
 
@@ -18,12 +20,13 @@ export type Menu006Props = Omit<ComponentPropsWithoutRef<"nav">, "children"> & {
 // работает с клавиатуры и без клиентского кода.
 const STYLES = `
 :where([data-vibeui-block="menu-006"]){
---vibeui-menu-006-bg:oklch(1 0 0);
---vibeui-menu-006-fg:oklch(0.24 0.014 265);
---vibeui-menu-006-muted:oklch(0.56 0.014 265);
---vibeui-menu-006-border:oklch(0.9 0.006 265);
---vibeui-menu-006-hover:oklch(0.97 0.003 265);
---vibeui-menu-006-accent:oklch(0.55 0.17 265);
+--vibeui-menu-006-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-menu-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-menu-006-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-menu-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-menu-006-hover:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.015 265));
+--vibeui-menu-006-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-menu-006-shadow:light-dark(oklch(0.2 0.02 265 / 55%),oklch(0 0 0 / 72%));
 --vibeui-menu-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -56,7 +59,7 @@ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.875rem;
 width:100%;box-sizing:border-box;padding:0.875rem;
 border:1px solid var(--vibeui-menu-006-border);border-radius:0.875rem;
 background:var(--vibeui-menu-006-bg);
-box-shadow:0 20px 44px -24px oklch(0.2 0.02 265 / 55%);
+box-shadow:0 20px 44px -24px var(--vibeui-menu-006-shadow);
 }
 [data-vibeui-block="menu-006"] [data-part="title"]{
 margin:0 0 0.375rem;font-size:0.6875rem;font-weight:700;
@@ -98,12 +101,36 @@ const DEFAULT_SECTIONS: Menu006Section[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Широкое меню навигации на details: колонки с пояснениями к ссылкам.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Menu006({
   label = "Продукт",
   sections = DEFAULT_SECTIONS,
+  background = "",
   accent,
   className,
   style,
@@ -112,6 +139,12 @@ export function Menu006({
   const id = useId()
   const palette = {
     ...(accent ? { "--vibeui-menu-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-menu-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

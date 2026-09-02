@@ -21,7 +21,13 @@ export type Autocomplete011Props = Omit<
   placeholder?: string
   people?: Autocomplete011Person[]
   defaultValue?: string
+  /** Имя списка для скринридера. */
+  listLabel?: string
+  /** Строка под полем. */
+  hintText?: string
   onChange?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -31,13 +37,14 @@ export type Autocomplete011Props = Omit<
 // оттенке из имени: сорок фотографий ради выпадающего списка не грузим.
 const STYLES = `
 :where([data-vibeui-block="autocomplete-011"]){
---vibeui-autocomplete-011-bg:oklch(1 0 0);
---vibeui-autocomplete-011-fg:oklch(0.22 0.014 265);
---vibeui-autocomplete-011-muted:oklch(0.52 0.014 265);
---vibeui-autocomplete-011-border:oklch(0.9 0.006 265);
---vibeui-autocomplete-011-field:oklch(0.985 0.002 265);
---vibeui-autocomplete-011-active:oklch(0.95 0.02 265);
---vibeui-autocomplete-011-accent:oklch(0.55 0.17 265);
+--vibeui-autocomplete-011-bg:transparent;
+--vibeui-autocomplete-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-autocomplete-011-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-autocomplete-011-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-autocomplete-011-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
+--vibeui-autocomplete-011-active:light-dark(oklch(0.95 0.02 265),oklch(0.33 0.028 265));
+--vibeui-autocomplete-011-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-autocomplete-011-radius:0.625rem;
 --vibeui-autocomplete-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -67,7 +74,7 @@ outline:2px solid var(--vibeui-autocomplete-011-accent);outline-offset:1px;borde
 margin:0;padding:0.25rem;list-style:none;max-height:11rem;overflow-y:auto;
 border:1px solid var(--vibeui-autocomplete-011-border);
 border-radius:var(--vibeui-autocomplete-011-radius);
-background:var(--vibeui-autocomplete-011-bg);
+background:var(--vibeui-autocomplete-011-panel);
 }
 [data-vibeui-block="autocomplete-011"] [data-part="option"]{
 display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:0.25rem 0.625rem;
@@ -122,6 +129,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Упоминания по «@» прямо в тексте: список открывает собака, а не фокус.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -130,7 +159,10 @@ export function Autocomplete011({
   placeholder = "Напишите и позовите коллегу через @",
   people = DEFAULT_PEOPLE,
   defaultValue = "Проверьте макет, пожалуйста, @ma",
+  listLabel = "Коллеги",
+  hintText = "Список открывается после @ и закрывается на пробеле",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -162,6 +194,12 @@ export function Autocomplete011({
 
   const palette = {
     ...(accent ? { "--vibeui-autocomplete-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-autocomplete-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -201,7 +239,7 @@ export function Autocomplete011({
           onClick={(event) => setCaret(event.currentTarget.selectionStart ?? 0)}
         />
         {matches.length ? (
-          <ul role="listbox" aria-label="Коллеги" data-part="list">
+          <ul role="listbox" aria-label={listLabel} data-part="list">
             {matches.map((person) => (
               <li
                 key={person.handle}
@@ -229,7 +267,7 @@ export function Autocomplete011({
           </ul>
         ) : null}
         <span data-part="hint" id={`${id}-hint`}>
-          Список открывается после @ и закрывается на пробеле
+          {hintText}
         </span>
       </div>
     </>

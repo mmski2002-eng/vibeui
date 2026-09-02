@@ -3,14 +3,28 @@
 import { useState } from "react"
 import type { ComponentPropsWithoutRef, CSSProperties, DragEvent } from "react"
 
+export type Sortable006Announcement = "moved" | "blocked" | "last"
+
 export type Sortable006Props = Omit<
   ComponentPropsWithoutRef<"div">,
   "children" | "onChange"
 > & {
   title?: string
   pinned?: string
+  /** Подпись метки закрепления. */
+  pinnedBadge?: string
   items?: string[]
   onChange?: (items: string[]) => void
+  /** Подпись кнопки «выше»: {item}, {position}, {total}. */
+  moveUpLabel?: string
+  /** Подпись кнопки «ниже»: те же подстановки. */
+  moveDownLabel?: string
+  /** Реплики живой области: {item}, {position}, {total}, {pinned}. */
+  announcements?: Record<Sortable006Announcement, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  /** Цвет закрепления: метка, рамка и заливка первой строки. */
+  pin?: string
   accent?: string
 }
 
@@ -23,13 +37,14 @@ export type Sortable006Props = Omit<
 // недоступен в принципе.
 const STYLES = `
 :where([data-vibeui-block="sortable-006"]){
---vibeui-sortable-006-bg:oklch(1 0 0);
---vibeui-sortable-006-row:oklch(0.99 0.002 265);
---vibeui-sortable-006-fg:oklch(0.24 0.014 265);
---vibeui-sortable-006-muted:oklch(0.56 0.014 265);
---vibeui-sortable-006-border:oklch(0.9 0.006 265);
---vibeui-sortable-006-accent:oklch(0.55 0.2 262);
---vibeui-sortable-006-pin:oklch(0.62 0.13 78);
+--vibeui-sortable-006-bg:transparent;
+--vibeui-sortable-006-row:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.011 265));
+--vibeui-sortable-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-sortable-006-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-sortable-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-sortable-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
+--vibeui-sortable-006-pin:light-dark(oklch(0.62 0.13 78),oklch(0.76 0.12 78));
+--vibeui-sortable-006-pin-ink:light-dark(oklch(0.48 0.11 78),oklch(0.86 0.09 78));
 --vibeui-sortable-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="sortable-006"]{
@@ -52,7 +67,7 @@ background:var(--vibeui-sortable-006-row);font-size:0.8125rem;
 [data-vibeui-block="sortable-006"] li[data-pinned="true"]{
 margin-bottom:0.25rem;
 border-color:color-mix(in oklab,var(--vibeui-sortable-006-pin) 45%,transparent);
-background:color-mix(in oklab,var(--vibeui-sortable-006-pin) 9%,var(--vibeui-sortable-006-bg));
+background:color-mix(in oklab,var(--vibeui-sortable-006-pin) 9%,var(--vibeui-sortable-006-row));
 box-shadow:0 1px 0 var(--vibeui-sortable-006-border);
 }
 [data-vibeui-block="sortable-006"] li[data-dragging="true"]{opacity:.45}
@@ -76,7 +91,7 @@ font-size:0.75rem;color:var(--vibeui-sortable-006-muted);font-variant-numeric:ta
 [data-vibeui-block="sortable-006"] [data-part="badge"]{
 flex:none;padding:0 0.375rem;border-radius:999px;
 background:color-mix(in oklab,var(--vibeui-sortable-006-pin) 18%,transparent);
-color:color-mix(in oklab,var(--vibeui-sortable-006-pin) 80%,black);
+color:var(--vibeui-sortable-006-pin-ink);
 font-size:0.5625rem;font-weight:700;line-height:1.6;text-transform:uppercase;letter-spacing:0.04em;
 }
 [data-vibeui-block="sortable-006"] [data-part="move"]{
@@ -94,6 +109,35 @@ clip-path:inset(50%);white-space:nowrap;border:0;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="sortable-006"] *{animation:none!important;transition:none!important}}
 `
 
+const DEFAULT_ANNOUNCEMENTS: Record<Sortable006Announcement, string> = {
+  moved:
+    "«{item}» на позиции {position} из {total}, ниже закреплённой «{pinned}».",
+  blocked: "Выше нельзя: первая позиция закреплена за «{pinned}».",
+  last: "«{item}» уже последняя в списке.",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 const DEFAULT_ITEMS = [
   "Заявки за сегодня",
   "Выручка за неделю",
@@ -108,8 +152,14 @@ const DEFAULT_ITEMS = [
 export function Sortable006({
   title = "Виджеты дашборда",
   pinned = "Сводка за сегодня",
+  pinnedBadge = "закреплено",
   items = DEFAULT_ITEMS,
   onChange,
+  moveUpLabel = "Поднять «{item}», сейчас {position} из {total}",
+  moveDownLabel = "Опустить «{item}», сейчас {position} из {total}",
+  announcements = DEFAULT_ANNOUNCEMENTS,
+  background = "",
+  pin,
   accent,
   className,
   style,
@@ -120,12 +170,27 @@ export function Sortable006({
   const [over, setOver] = useState<string | null>(null)
   const [announcement, setAnnouncement] = useState("")
 
+  const say = (
+    key: Sortable006Announcement,
+    row: string,
+    position: number,
+    total: number,
+  ) =>
+    (announcements[key] ?? DEFAULT_ANNOUNCEMENTS[key])
+      .replace("{item}", row)
+      .replace("{position}", String(position))
+      .replace("{total}", String(total))
+      .replace("{pinned}", pinned)
+
   const move = (from: number, to: number) => {
     if (to < 0 || to >= order.length) {
       setAnnouncement(
-        to < 0
-          ? `Выше нельзя: первая позиция закреплена за «${pinned}».`
-          : `«${order[from]}» уже последняя в списке.`,
+        say(
+          to < 0 ? "blocked" : "last",
+          order[from],
+          from + 2,
+          order.length + 1,
+        ),
       )
       return
     }
@@ -135,9 +200,7 @@ export function Sortable006({
     next.splice(to, 0, row)
     setOrder(next)
     onChange?.(next)
-    setAnnouncement(
-      `«${row}» на позиции ${to + 2} из ${next.length + 1}, ниже закреплённой «${pinned}».`,
-    )
+    setAnnouncement(say("moved", row, to + 2, next.length + 1))
   }
 
   const drop = (event: DragEvent<HTMLLIElement>, target: string) => {
@@ -150,6 +213,13 @@ export function Sortable006({
 
   const palette = {
     ...(accent ? { "--vibeui-sortable-006-accent": accent } : null),
+    ...(pin ? { "--vibeui-sortable-006-pin": pin } : null),
+    ...(background
+      ? {
+          "--vibeui-sortable-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -172,7 +242,7 @@ export function Sortable006({
             </span>
             <span data-part="index">1</span>
             <span data-part="text">{pinned}</span>
-            <span data-part="badge">закреплено</span>
+            <span data-part="badge">{pinnedBadge}</span>
           </li>
           {order.map((row, index) => (
             <li
@@ -202,7 +272,10 @@ export function Sortable006({
                 type="button"
                 data-part="move"
                 disabled={index === 0}
-                aria-label={`Поднять «${row}», сейчас ${index + 2} из ${order.length + 1}`}
+                aria-label={moveUpLabel
+                  .replace("{item}", row)
+                  .replace("{position}", String(index + 2))
+                  .replace("{total}", String(order.length + 1))}
                 onClick={() => move(index, index - 1)}
               >
                 ▲
@@ -211,7 +284,10 @@ export function Sortable006({
                 type="button"
                 data-part="move"
                 disabled={index === order.length - 1}
-                aria-label={`Опустить «${row}», сейчас ${index + 2} из ${order.length + 1}`}
+                aria-label={moveDownLabel
+                  .replace("{item}", row)
+                  .replace("{position}", String(index + 2))
+                  .replace("{total}", String(order.length + 1))}
                 onClick={() => move(index, index + 1)}
               >
                 ▼

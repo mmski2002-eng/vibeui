@@ -9,7 +9,13 @@ export type Hero006Props = {
   consent?: string
   proof?: string
   facts?: string[]
+  /** Название формы для скринридера: компонент несёт русское. */
+  formLabel?: string
+  /** Подпись поля для скринридера: компонент несёт русскую. */
+  emailLabel?: string
   accent?: string
+  /** Пусто — подложки нет, секция ложится на фон страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -21,13 +27,13 @@ export type Hero006Props = {
 // а не только на инпуте.
 const STYLES = `
 :where([data-vibeui-block="hero-006"]){
---vibeui-hero-006-bg:oklch(0.97 0.012 155);
---vibeui-hero-006-fg:oklch(0.2 0.03 155);
---vibeui-hero-006-muted:oklch(0.48 0.02 155);
---vibeui-hero-006-field:oklch(1 0 0);
---vibeui-hero-006-line:oklch(0.87 0.02 155);
---vibeui-hero-006-accent:oklch(0.52 0.13 155);
---vibeui-hero-006-accent-fg:oklch(0.99 0 0);
+--vibeui-hero-006-bg:transparent;
+--vibeui-hero-006-fg:light-dark(oklch(0.2 0.03 155),oklch(0.95 0.012 155));
+--vibeui-hero-006-muted:light-dark(oklch(0.48 0.02 155),oklch(0.73 0.018 155));
+--vibeui-hero-006-field:light-dark(oklch(1 0 0),oklch(0.24 0.018 155));
+--vibeui-hero-006-line:light-dark(oklch(0.87 0.02 155),oklch(0.38 0.02 155));
+--vibeui-hero-006-accent:light-dark(oklch(0.52 0.13 155),oklch(0.72 0.15 155));
+--vibeui-hero-006-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.19 0.04 155));
 --vibeui-hero-006-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -82,7 +88,7 @@ font-size:0.8125rem;font-weight:600;color:var(--vibeui-hero-006-muted);
 }
 [data-vibeui-block="hero-006"] [data-part="faces"]{display:flex}
 [data-vibeui-block="hero-006"] [data-part="face"]{
-width:1.5rem;height:1.5rem;border-radius:9999px;border:2px solid var(--vibeui-hero-006-bg);margin-left:-0.5rem;
+width:1.5rem;height:1.5rem;border-radius:9999px;border:2px solid var(--vibeui-hero-006-field);margin-left:-0.5rem;
 background:color-mix(in oklab,var(--vibeui-hero-006-accent) 45%,var(--vibeui-hero-006-field));
 }
 [data-vibeui-block="hero-006"] [data-part="face"]:first-child{margin-left:0}
@@ -104,6 +110,28 @@ const DEFAULT_FACTS = [
   "Без рекламы партнёров",
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлый фон достался бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Hero с формой подписки: поле и кнопка в одной рамке, фокус общий. */
 export function Hero006({
   eyebrow = "Рассылка «Секция недели»",
@@ -114,12 +142,21 @@ export function Hero006({
   consent = "Отправляя адрес, вы соглашаетесь получать письма. Мы не передаём его третьим лицам.",
   proof = "4 200 подписчиков уже читают",
   facts = DEFAULT_FACTS,
+  formLabel = "Подписка на рассылку",
+  emailLabel = "Электронная почта",
   accent,
+  background = "",
   className,
   style,
 }: Hero006Props) {
   const palette = {
     ...(accent ? { "--vibeui-hero-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-hero-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -143,10 +180,10 @@ export function Hero006({
           <h1>{title}</h1>
           {lede ? <p data-part="lede">{lede}</p> : null}
 
-          <form aria-label="Подписка на рассылку">
+          <form aria-label={formLabel}>
             <div data-part="field">
               <label htmlFor="vibeui-hero-006-email" hidden>
-                Электронная почта
+                {emailLabel}
               </label>
               <input
                 id="vibeui-hero-006-email"

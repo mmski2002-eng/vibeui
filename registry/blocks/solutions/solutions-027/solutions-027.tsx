@@ -14,7 +14,23 @@ export type Solutions027Props = {
   title?: string
   hint?: string
   assets?: Solutions027Asset[]
+  /** Подписи плиток сводки: balance, depreciation, residual. */
+  summaryText?: Record<string, string>
+  /** Заголовки колонок таблицы. */
+  columnText?: Record<string, string>
+  /** Срок полезного использования. {years} — число лет. */
+  yearsText?: string
+  /** Подписи состояний: ok, warn, risk. */
+  stateText?: Record<string, string>
+  /** Скрытая подпись полосы износа. {name} — название объекта. */
+  wearLabel?: string
+  footNote?: string
+  currency?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,15 +46,16 @@ export type Solutions027Props = {
 // только цветом полосы, но и формой метки и словом рядом с ней.
 const STYLES = `
 :where([data-vibeui-block="solutions-027"]){
---vibeui-solutions-027-bg:oklch(1 0 0);
---vibeui-solutions-027-panel:oklch(0.977 0.004 255);
---vibeui-solutions-027-fg:oklch(0.21 0.014 265);
---vibeui-solutions-027-muted:oklch(0.54 0.014 265);
---vibeui-solutions-027-border:oklch(0.9 0.006 265);
---vibeui-solutions-027-accent:oklch(0.5 0.15 250);
---vibeui-solutions-027-ok:oklch(0.55 0.14 152);
---vibeui-solutions-027-warn:oklch(0.64 0.15 75);
---vibeui-solutions-027-risk:oklch(0.57 0.19 25);
+--vibeui-solutions-027-bg:transparent;
+--vibeui-solutions-027-panel:light-dark(oklch(0.977 0.004 255),oklch(0.27 0.011 265));
+--vibeui-solutions-027-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-027-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-027-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-027-accent:light-dark(oklch(0.5 0.15 250),oklch(0.73 0.13 250));
+--vibeui-solutions-027-ok:light-dark(oklch(0.55 0.14 152),oklch(0.7 0.14 152));
+--vibeui-solutions-027-warn:light-dark(oklch(0.64 0.15 75),oklch(0.79 0.14 75));
+--vibeui-solutions-027-risk:light-dark(oklch(0.57 0.19 25),oklch(0.71 0.17 25));
+--vibeui-solutions-027-mark-fg:light-dark(oklch(1 0 0),oklch(0.19 0.014 265));
 --vibeui-solutions-027-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-027-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -116,7 +133,8 @@ font-size:0.6875rem;font-weight:650;color:var(--vibeui-solutions-027-ok);
 }
 [data-vibeui-block="solutions-027"] [data-part="mark"]{
 width:0.875rem;height:0.875rem;flex:none;display:grid;place-items:center;
-border-radius:9999px;background:var(--vibeui-solutions-027-ok);color:oklch(1 0 0);
+border-radius:9999px;background:var(--vibeui-solutions-027-ok);
+color:var(--vibeui-solutions-027-mark-fg);
 font-size:0.5625rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="solutions-027"] [data-state="warn"] [data-part="state"]{color:var(--vibeui-solutions-027-warn)}
@@ -185,18 +203,59 @@ const DEFAULT_ASSETS: Solutions027Asset[] = [
   },
 ]
 
-function wearState(percent: number): {
-  key: "ok" | "warn" | "risk"
-  label: string
-  mark: string
-} {
-  if (percent >= 90) return { key: "risk", label: "к списанию", mark: "!" }
-  if (percent >= 65) return { key: "warn", label: "высокий износ", mark: "▲" }
-  return { key: "ok", label: "в работе", mark: "•" }
+const SUMMARY_LABEL: Record<string, string> = {
+  balance: "балансовая стоимость",
+  depreciation: "накопленная амортизация",
+  residual: "остаточная стоимость",
 }
 
-const formatRub = (value: number) =>
-  `${Math.round(value).toLocaleString("ru-RU")} ₽`
+const COLUMN_LABEL: Record<string, string> = {
+  asset: "Объект",
+  group: "Группа",
+  commissioned: "Введён в эксплуатацию",
+  life: "Срок ПИ",
+  balance: "Баланс",
+  wear: "Износ",
+  residual: "Остаточная",
+  state: "Состояние",
+}
+
+const STATE_LABEL: Record<string, string> = {
+  ok: "в работе",
+  warn: "высокий износ",
+  risk: "к списанию",
+}
+
+function wearState(percent: number): { key: "ok" | "warn" | "risk"; mark: string } {
+  if (percent >= 90) return { key: "risk", mark: "!" }
+  if (percent >= 65) return { key: "warn", mark: "▲" }
+  return { key: "ok", mark: "•" }
+}
+
+const money = (value: number, currency: string, locale: string) =>
+  `${Math.round(value).toLocaleString(locale)} ${currency}`
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Реестр основных средств: остаточная стоимость и износ считаются из баланса
@@ -207,7 +266,16 @@ export function Solutions027({
   title = "Основные средства",
   hint = "Склад №2 · инвентаризация на 1 марта 2026",
   assets = DEFAULT_ASSETS,
+  summaryText = SUMMARY_LABEL,
+  columnText = COLUMN_LABEL,
+  yearsText = "{years} лет",
+  stateText = STATE_LABEL,
+  wearLabel = "Износ {name}",
+  footNote = "Остаточная стоимость и износ пересчитываются из баланса и накопленной амортизации построчно — сумма реестра не может разойтись с таблицей.",
+  currency = "₽",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions027Props) {
@@ -220,9 +288,17 @@ export function Solutions027({
     0,
   )
   const totalResidual = totalBalance - totalDepreciation
+  const column = (key: string) => columnText[key] ?? COLUMN_LABEL[key]
+  const summary = (key: string) => summaryText[key] ?? SUMMARY_LABEL[key]
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-027-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-027-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -246,16 +322,16 @@ export function Solutions027({
 
         <div data-part="summary">
           <p data-part="tile">
-            <b>{formatRub(totalBalance)}</b>
-            <span>балансовая стоимость</span>
+            <b>{money(totalBalance, currency, locale)}</b>
+            <span>{summary("balance")}</span>
           </p>
           <p data-part="tile">
-            <b>{formatRub(totalDepreciation)}</b>
-            <span>накопленная амортизация</span>
+            <b>{money(totalDepreciation, currency, locale)}</b>
+            <span>{summary("depreciation")}</span>
           </p>
           <p data-part="tile">
-            <b>{formatRub(totalResidual)}</b>
-            <span>остаточная стоимость</span>
+            <b>{money(totalResidual, currency, locale)}</b>
+            <span>{summary("residual")}</span>
           </p>
         </div>
 
@@ -263,20 +339,20 @@ export function Solutions027({
           <table>
             <thead>
               <tr>
-                <th scope="col">Объект</th>
-                <th scope="col">Группа</th>
-                <th scope="col">Введён в эксплуатацию</th>
+                <th scope="col">{column("asset")}</th>
+                <th scope="col">{column("group")}</th>
+                <th scope="col">{column("commissioned")}</th>
                 <th scope="col" data-align="end">
-                  Срок ПИ
+                  {column("life")}
                 </th>
                 <th scope="col" data-align="end">
-                  Баланс
+                  {column("balance")}
                 </th>
-                <th scope="col">Износ</th>
+                <th scope="col">{column("wear")}</th>
                 <th scope="col" data-align="end">
-                  Остаточная
+                  {column("residual")}
                 </th>
-                <th scope="col">Состояние</th>
+                <th scope="col">{column("state")}</th>
               </tr>
             </thead>
             <tbody>
@@ -304,8 +380,15 @@ export function Solutions027({
                       <span data-part="group">{asset.group}</span>
                     </td>
                     <td>{asset.commissioned}</td>
-                    <td data-align="end">{asset.usefulLifeYears} лет</td>
-                    <td data-align="end">{formatRub(asset.balanceValue)}</td>
+                    <td data-align="end">
+                      {yearsText.replace(
+                        "{years}",
+                        String(asset.usefulLifeYears),
+                      )}
+                    </td>
+                    <td data-align="end">
+                      {money(asset.balanceValue, currency, locale)}
+                    </td>
                     <td>
                       <span data-part="wear">
                         <span
@@ -314,7 +397,7 @@ export function Solutions027({
                           aria-valuenow={percent}
                           aria-valuemin={0}
                           aria-valuemax={100}
-                          aria-label={`Износ ${asset.name}`}
+                          aria-label={wearLabel.replace("{name}", asset.name)}
                         >
                           <span
                             data-part="fill"
@@ -326,13 +409,15 @@ export function Solutions027({
                         <span data-part="wear-value">{percent}%</span>
                       </span>
                     </td>
-                    <td data-align="end">{formatRub(residual)}</td>
+                    <td data-align="end">
+                      {money(residual, currency, locale)}
+                    </td>
                     <td>
                       <span data-part="state">
                         <span data-part="mark" aria-hidden="true">
                           {state.mark}
                         </span>
-                        {state.label}
+                        {stateText[state.key] ?? STATE_LABEL[state.key]}
                       </span>
                     </td>
                   </tr>
@@ -342,10 +427,7 @@ export function Solutions027({
           </table>
         </div>
 
-        <p data-part="foot">
-          Остаточная стоимость и износ пересчитываются из баланса и накопленной
-          амортизации построчно — сумма реестра не может разойтись с таблицей.
-        </p>
+        <p data-part="foot">{footNote}</p>
       </section>
     </>
   )

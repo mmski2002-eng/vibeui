@@ -13,11 +13,15 @@ export type Button002Props = ComponentPropsWithoutRef<"button"> & {
 // Идея компонента: одно управляющее пятно, разделённое волосяной линией на
 // две зоны — основное действие и его варианты. Вторая зона уже первой и чуть
 // притоплена, поэтому читается как приставка, а не как вторая кнопка.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте акцент светлее, подпись на нём темнее, а волосяная линия между
+// зонами меняет знак — светлая на светлом акценте не видна.
 const STYLES = `
 :where([data-vibeui-block="button-002"]){
---vibeui-button-002-accent:oklch(0.58 0.16 258);
---vibeui-button-002-accent-fg:oklch(0.99 0.004 258);
---vibeui-button-002-divider:oklch(1 0 0 / 28%);
+--vibeui-button-002-accent:light-dark(oklch(0.58 0.16 258),oklch(0.72 0.145 258));
+--vibeui-button-002-accent-fg:light-dark(oklch(0.99 0.004 258),oklch(0.21 0.04 258));
+--vibeui-button-002-divider:light-dark(oklch(1 0 0 / 28%),oklch(0.18 0.03 258 / 30%));
 --vibeui-button-002-ring:color-mix(in oklab, var(--vibeui-button-002-accent) 70%, transparent);
 --vibeui-button-002-radius:0.625rem;
 --vibeui-button-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

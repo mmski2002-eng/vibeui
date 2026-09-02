@@ -20,6 +20,20 @@ export type Dashboard070Props = {
   subtitle?: string
   releases?: Dashboard070Release[]
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Заголовки групп изменений по ключам added, changed, fixed, removed. */
+  kindText?: Record<Dashboard070Change["kind"], string>
+  /** Подписи каналов по ключам stable, beta, rollback. */
+  channelText?: Record<Dashboard070Release["channel"], string>
+  /** Строка доли выката: {rollout}. */
+  rolloutText?: string
+  /** Расшифровка полосы выката: {version} и {rollout}. */
+  rolloutAriaText?: string
+  /** Подпись раскрытия версии. */
+  moreLabel?: string
+  /** Подпись свёртывания версии. */
+  lessLabel?: string
   className?: string
   style?: CSSProperties
 }
@@ -35,15 +49,23 @@ export type Dashboard070Props = {
 // удаляется из списка — исчезнувший релиз ломает нумерацию в голове читателя.
 const STYLES = `
 :where([data-vibeui-block="dashboard-070"]){
---vibeui-dashboard-070-bg:oklch(0.985 0.003 155);
---vibeui-dashboard-070-card:oklch(1 0 0);
---vibeui-dashboard-070-fg:oklch(0.21 0.014 155);
---vibeui-dashboard-070-muted:oklch(0.54 0.014 155);
---vibeui-dashboard-070-border:oklch(0.91 0.006 155);
---vibeui-dashboard-070-accent:oklch(0.5 0.13 155);
---vibeui-dashboard-070-soft:oklch(0.965 0.02 155);
---vibeui-dashboard-070-beta:oklch(0.6 0.15 265);
---vibeui-dashboard-070-back:oklch(0.57 0.19 25);
+--vibeui-dashboard-070-bg:transparent;
+/* Карточки версий и жёлоб полосы выката: подложка блока прозрачна. */
+--vibeui-dashboard-070-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 155));
+--vibeui-dashboard-070-inset:light-dark(oklch(0.985 0.003 155),oklch(0.22 0.012 155));
+--vibeui-dashboard-070-fg:light-dark(oklch(0.21 0.014 155),oklch(0.94 0.005 155));
+--vibeui-dashboard-070-muted:light-dark(oklch(0.54 0.014 155),oklch(0.72 0.012 155));
+--vibeui-dashboard-070-border:light-dark(oklch(0.91 0.006 155),oklch(0.36 0.012 155));
+--vibeui-dashboard-070-accent:light-dark(oklch(0.5 0.13 155),oklch(0.74 0.13 155));
+--vibeui-dashboard-070-accent-ink:light-dark(oklch(0.4 0.11 155),oklch(0.82 0.12 155));
+--vibeui-dashboard-070-soft:light-dark(oklch(0.965 0.02 155),oklch(0.3 0.035 155));
+--vibeui-dashboard-070-beta:light-dark(oklch(0.6 0.15 265),oklch(0.76 0.13 265));
+--vibeui-dashboard-070-beta-soft:light-dark(oklch(0.955 0.025 265),oklch(0.3 0.05 265));
+--vibeui-dashboard-070-back:light-dark(oklch(0.57 0.19 25),oklch(0.75 0.17 25));
+--vibeui-dashboard-070-back-soft:light-dark(oklch(0.96 0.025 25),oklch(0.3 0.06 25));
+--vibeui-dashboard-070-back-line:light-dark(oklch(0.83 0.09 25),oklch(0.49 0.11 25));
+--vibeui-dashboard-070-more-label:"подробнее";
+--vibeui-dashboard-070-less-label:"свернуть";
 --vibeui-dashboard-070-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 --vibeui-dashboard-070-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -64,7 +86,7 @@ border:1px solid var(--vibeui-dashboard-070-border);border-radius:1rem;padding:1
 background:var(--vibeui-dashboard-070-card);border:1px solid var(--vibeui-dashboard-070-border);
 border-radius:0.875rem;overflow:hidden;
 }
-[data-vibeui-block="dashboard-070"] details[data-channel="rollback"]{border-color:color-mix(in oklab,var(--vibeui-dashboard-070-back) 40%,white)}
+[data-vibeui-block="dashboard-070"] details[data-channel="rollback"]{border-color:var(--vibeui-dashboard-070-back-line)}
 [data-vibeui-block="dashboard-070"] summary{
 list-style:none;cursor:pointer;padding:0.75rem 0.875rem;
 display:grid;grid-template-columns:auto 1fr;gap:0.3125rem 0.625rem;align-items:center;
@@ -77,13 +99,13 @@ font-family:var(--vibeui-dashboard-070-mono);font-size:0.9375rem;font-weight:750
 [data-vibeui-block="dashboard-070"] [data-part="chan"]{
 font-size:0.625rem;font-weight:750;text-transform:uppercase;letter-spacing:0.05em;
 padding:0.125rem 0.4375rem;border-radius:0.3125rem;
-background:var(--vibeui-dashboard-070-soft);color:color-mix(in oklab,var(--vibeui-dashboard-070-accent) 85%,black);
+background:var(--vibeui-dashboard-070-soft);color:var(--vibeui-dashboard-070-accent-ink);
 }
 [data-vibeui-block="dashboard-070"] [data-channel="beta"] [data-part="chan"]{
-background:color-mix(in oklab,var(--vibeui-dashboard-070-beta) 14%,white);color:var(--vibeui-dashboard-070-beta);
+background:var(--vibeui-dashboard-070-beta-soft);color:var(--vibeui-dashboard-070-beta);
 }
 [data-vibeui-block="dashboard-070"] [data-channel="rollback"] [data-part="chan"]{
-background:color-mix(in oklab,var(--vibeui-dashboard-070-back) 12%,white);color:var(--vibeui-dashboard-070-back);
+background:var(--vibeui-dashboard-070-back-soft);color:var(--vibeui-dashboard-070-back);
 }
 [data-vibeui-block="dashboard-070"] [data-part="when"]{font-size:0.6875rem;color:var(--vibeui-dashboard-070-muted)}
 [data-vibeui-block="dashboard-070"] [data-part="roll"]{
@@ -92,7 +114,7 @@ color:var(--vibeui-dashboard-070-muted);font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="dashboard-070"] [data-part="bar"]{
 flex:1 1 6rem;max-width:14rem;height:0.375rem;border-radius:9999px;position:relative;overflow:hidden;
-background:var(--vibeui-dashboard-070-bg);
+background:var(--vibeui-dashboard-070-inset);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-070-border);
 }
 [data-vibeui-block="dashboard-070"] [data-part="bar"] span{
@@ -110,10 +132,10 @@ color:var(--vibeui-dashboard-070-muted);
 [data-vibeui-block="dashboard-070"] [data-part="items"] li{font-size:0.8125rem;line-height:1.45}
 [data-vibeui-block="dashboard-070"] [data-part="author"]{margin:0;font-size:0.6875rem;color:var(--vibeui-dashboard-070-muted)}
 [data-vibeui-block="dashboard-070"] summary::after{
-content:"подробнее";grid-column:2;justify-self:end;grid-row:1;
+content:var(--vibeui-dashboard-070-more-label);grid-column:2;justify-self:end;grid-row:1;
 font-size:0.6875rem;font-weight:700;color:var(--vibeui-dashboard-070-accent);
 }
-[data-vibeui-block="dashboard-070"] details[open] summary::after{content:"свернуть"}
+[data-vibeui-block="dashboard-070"] details[open] summary::after{content:var(--vibeui-dashboard-070-less-label)}
 [data-vibeui-block="dashboard-070"] :is(a,button,summary):focus-visible{
 outline:2px solid var(--vibeui-dashboard-070-accent);outline-offset:2px;
 }
@@ -209,6 +231,28 @@ const ORDER: Dashboard070Change["kind"][] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Экран релизов и версий: список версий с долей выката полосой, изменения
  * сгруппированы по виду и подписаны словами, откаченный релиз остаётся в
  * списке. Один файл, ноль зависимостей, клиентского JS нет.
@@ -218,13 +262,31 @@ export function Dashboard070({
   subtitle = "Выкат идёт долями: бета доезжает до части пользователей и растёт, пока не поймана ошибка. Доля показана на момент последнего обновления страницы.",
   releases = DEFAULT_RELEASES,
   accent,
+  background = "",
+  kindText = KIND_LABELS,
+  channelText = CHANNEL_LABELS,
+  rolloutText = "доехал до {rollout} % пользователей",
+  rolloutAriaText = "Версия {version}: выкачена на {rollout} процентов",
+  moreLabel = "подробнее",
+  lessLabel = "свернуть",
   className,
   style,
 }: Dashboard070Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-070-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-070-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    "--vibeui-dashboard-070-more-label": `"${moreLabel}"`,
+    "--vibeui-dashboard-070-less-label": `"${lessLabel}"`,
     ...style,
   } as CSSProperties
+
+  const kinds = { ...KIND_LABELS, ...kindText }
+  const channels = { ...CHANNEL_LABELS, ...channelText }
 
   return (
     <>
@@ -250,9 +312,7 @@ export function Dashboard070({
                   <summary>
                     <span data-part="ver">{release.version}</span>
                     <span data-part="tags">
-                      <span data-part="chan">
-                        {CHANNEL_LABELS[release.channel]}
-                      </span>
+                      <span data-part="chan">{channels[release.channel]}</span>
                       <span data-part="when">{release.date}</span>
                     </span>
                     <span data-part="roll">
@@ -262,11 +322,16 @@ export function Dashboard070({
                         aria-valuenow={release.rollout}
                         aria-valuemin={0}
                         aria-valuemax={100}
-                        aria-label={`Версия ${release.version}: выкачена на ${release.rollout} процентов`}
+                        aria-label={rolloutAriaText
+                          .replace("{version}", release.version)
+                          .replace("{rollout}", String(release.rollout))}
                       >
                         <span style={{ width: `${release.rollout}%` }} />
                       </span>
-                      доехал до {release.rollout} % пользователей
+                      {rolloutText.replace(
+                        "{rollout}",
+                        String(release.rollout),
+                      )}
                     </span>
                   </summary>
 
@@ -275,7 +340,7 @@ export function Dashboard070({
                       release.changes.some((change) => change.kind === kind),
                     ).map((kind) => (
                       <div key={kind} data-part="group">
-                        <span data-part="gtitle">{KIND_LABELS[kind]}</span>
+                        <span data-part="gtitle">{kinds[kind]}</span>
                         <ul data-part="items">
                           {release.changes
                             .filter((change) => change.kind === kind)

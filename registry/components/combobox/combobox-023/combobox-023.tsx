@@ -19,6 +19,12 @@ export type Combobox023Props = Omit<
   emptyLabel?: string
   defaultValue?: string
   onSelect?: (value: string) => void
+  /** Строка над списком при непустом запросе; {count} — число совпадений. */
+  countText?: string
+  /** Строка над списком, пока запрос пуст. */
+  allText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,14 +34,14 @@ export type Combobox023Props = Omit<
 // строки на куски и семантическим <mark>, без dangerouslySetInnerHTML.
 const STYLES = `
 :where([data-vibeui-block="combobox-023"]){
---vibeui-combobox-023-bg:oklch(1 0 0);
---vibeui-combobox-023-fg:oklch(0.22 0.02 340);
---vibeui-combobox-023-muted:oklch(0.53 0.02 340);
---vibeui-combobox-023-border:oklch(0.9 0.01 340);
---vibeui-combobox-023-field:oklch(0.985 0.004 340);
---vibeui-combobox-023-active:oklch(0.95 0.035 340);
---vibeui-combobox-023-accent:oklch(0.5 0.17 340);
---vibeui-combobox-023-mark:oklch(0.92 0.09 340);
+--vibeui-combobox-023-bg:transparent;
+--vibeui-combobox-023-fg:light-dark(oklch(0.22 0.02 340),oklch(0.94 0.008 340));
+--vibeui-combobox-023-muted:light-dark(oklch(0.53 0.02 340),oklch(0.7 0.014 340));
+--vibeui-combobox-023-border:light-dark(oklch(0.9 0.01 340),oklch(0.35 0.014 340));
+--vibeui-combobox-023-field:light-dark(oklch(0.985 0.004 340),oklch(0.27 0.012 340));
+--vibeui-combobox-023-active:light-dark(oklch(0.95 0.035 340),oklch(0.33 0.04 340));
+--vibeui-combobox-023-accent:light-dark(oklch(0.5 0.17 340),oklch(0.74 0.15 340));
+--vibeui-combobox-023-mark:light-dark(oklch(0.92 0.09 340),oklch(0.45 0.11 340));
 --vibeui-combobox-023-radius:0.625rem;
 --vibeui-combobox-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -112,6 +118,28 @@ function highlight(text: string, needle: string): ReactNode {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox с подсветкой всех вхождений запроса, без изменения порядка
  * строк: это фильтр с подсветкой, а не ранжирование.
  */
@@ -123,6 +151,9 @@ export function Combobox023({
   emptyLabel = "Ничего не нашлось",
   defaultValue = "",
   onSelect,
+  countText = "Совпадений: {count}",
+  allText = "Все варианты",
+  background = "",
   accent,
   className,
   style,
@@ -144,6 +175,12 @@ export function Combobox023({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-023-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-023-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -210,7 +247,9 @@ export function Combobox023({
           onKeyDown={onKeyDown}
         />
         <p data-part="count" aria-live="polite">
-          {needle ? `Совпадений: ${matches.length}` : "Все варианты"}
+          {needle
+            ? countText.replace("{count}", String(matches.length))
+            : allText}
         </p>
         <ul
           ref={listRef}

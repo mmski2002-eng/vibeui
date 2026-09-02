@@ -30,6 +30,8 @@ export type Commerce067Props = {
   allMoves?: string
   note?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -42,13 +44,15 @@ export type Commerce067Props = {
 // карманы с датой сгорания — бонус без срока люди считают деньгами.
 const STYLES = `
 :where([data-vibeui-block="commerce-067"]){
---vibeui-commerce-067-bg:oklch(1 0 0);
---vibeui-commerce-067-fg:oklch(0.2 0.014 250);
---vibeui-commerce-067-muted:oklch(0.53 0.016 250);
---vibeui-commerce-067-border:oklch(0.9 0.008 250);
---vibeui-commerce-067-soft:oklch(0.972 0.006 250);
---vibeui-commerce-067-accent:oklch(0.48 0.14 245);
---vibeui-commerce-067-plus:oklch(0.47 0.12 150);
+--vibeui-commerce-067-bg:transparent;
+--vibeui-commerce-067-surface:light-dark(oklch(1 0 0),oklch(0.22 0.014 250));
+--vibeui-commerce-067-fg:light-dark(oklch(0.2 0.014 250),oklch(0.94 0.007 250));
+--vibeui-commerce-067-muted:light-dark(oklch(0.53 0.016 250),oklch(0.73 0.013 250));
+--vibeui-commerce-067-border:light-dark(oklch(0.9 0.008 250),oklch(0.38 0.016 250));
+--vibeui-commerce-067-soft:light-dark(oklch(0.972 0.006 250),oklch(0.28 0.018 250));
+--vibeui-commerce-067-accent:light-dark(oklch(0.48 0.14 245),oklch(0.75 0.13 245));
+--vibeui-commerce-067-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.04 245));
+--vibeui-commerce-067-plus:light-dark(oklch(0.47 0.12 150),oklch(0.78 0.14 150));
 --vibeui-commerce-067-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -61,7 +65,7 @@ color:var(--vibeui-commerce-067-fg);font-family:var(--vibeui-commerce-067-sans);
 [data-vibeui-block="commerce-067"] [data-part="greeting"]{margin:0 0 0.875rem;font-size:0.8125rem;color:var(--vibeui-commerce-067-muted)}
 [data-vibeui-block="commerce-067"] [data-part="hero"]{
 border:1px solid var(--vibeui-commerce-067-border);border-radius:1.25rem;padding:1.25rem;
-background:linear-gradient(140deg,var(--vibeui-commerce-067-soft),var(--vibeui-commerce-067-bg) 70%);
+background:linear-gradient(140deg,var(--vibeui-commerce-067-soft),var(--vibeui-commerce-067-surface) 70%);
 margin-bottom:1.25rem;
 }
 [data-vibeui-block="commerce-067"] [data-part="blabel"]{margin:0;font-size:0.75rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--vibeui-commerce-067-muted)}
@@ -70,11 +74,11 @@ margin-bottom:1.25rem;
 [data-vibeui-block="commerce-067"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem}
 [data-vibeui-block="commerce-067"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;height:2.625rem;padding:0 1.375rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-067-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-067-accent);color:var(--vibeui-commerce-067-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-067"] [data-part="alt"]{
 appearance:none;cursor:pointer;height:2.625rem;padding:0 1.25rem;border-radius:0.875rem;
-border:1px solid var(--vibeui-commerce-067-border);background:var(--vibeui-commerce-067-bg);
+border:1px solid var(--vibeui-commerce-067-border);background:var(--vibeui-commerce-067-surface);
 color:inherit;font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="commerce-067"] [data-part="go"]:focus-visible,
@@ -111,6 +115,28 @@ color:var(--vibeui-commerce-067-accent);text-decoration:underline;text-underline
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-067"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_POCKETS: Commerce067Pocket[] = [
   {
@@ -176,11 +202,21 @@ export function Commerce067({
   allMoves = "Вся история операций",
   note = "Вывести можно только деньги, которые пришли возвратом или пополнением. Бонусы и кэшбэк на карту не выводятся — их тратят в заказах.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce067Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-067-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-067-bg": background,
+          // Карточка баланса и вторая кнопка не должны просвечивать: им нужна
+          // непрозрачная подложка, а она задана тем же цветом.
+          "--vibeui-commerce-067-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

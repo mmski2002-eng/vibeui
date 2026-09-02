@@ -15,6 +15,10 @@ export type Faq003Props = {
   description?: string
   groups?: Faq003Group[]
   id?: string
+  /** Подпись радио-переключателя. {label} — название раздела. */
+  tabLabelText?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -25,15 +29,18 @@ export type Faq003Props = {
 // остаётся серверным. Радио спрятаны visually-hidden, но остаются в потоке
 // фокуса, поэтому стрелками вкладки листаются так же, как настоящие tabs.
 // Поддерживается до пяти категорий — по числу правил :nth-of-type ниже.
+//
+// Тема приходит из color-scheme окружения через light-dark(): подложки у
+// секции по умолчанию нет, она темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="faq-003"]){
---vibeui-faq-003-bg:oklch(0.985 0.003 285);
---vibeui-faq-003-card:oklch(1 0 0);
---vibeui-faq-003-ink:oklch(0.22 0.016 285);
---vibeui-faq-003-muted:oklch(0.5 0.016 285);
---vibeui-faq-003-border:oklch(0.9 0.007 285);
---vibeui-faq-003-accent:oklch(0.49 0.19 300);
---vibeui-faq-003-accent-fg:oklch(0.99 0 0);
+--vibeui-faq-003-bg:transparent;
+--vibeui-faq-003-card:light-dark(oklch(1 0 0),oklch(0.26 0.014 285));
+--vibeui-faq-003-ink:light-dark(oklch(0.22 0.016 285),oklch(0.95 0.006 285));
+--vibeui-faq-003-muted:light-dark(oklch(0.5 0.016 285),oklch(0.72 0.013 285));
+--vibeui-faq-003-border:light-dark(oklch(0.9 0.007 285),oklch(0.35 0.013 285));
+--vibeui-faq-003-accent:light-dark(oklch(0.49 0.19 300),oklch(0.72 0.16 300));
+--vibeui-faq-003-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.02 300));
 --vibeui-faq-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -194,18 +201,49 @@ const DEFAULT_GROUPS: Faq003Group[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Вопросы по категориям-вкладкам: переключение на радио, без JS. */
 export function Faq003({
   title = "Вопросы по разделам",
   description = "Выберите тему — покажем вопросы только по ней. Разделы переключаются без перезагрузки и работают с клавиатуры стрелками.",
   groups = DEFAULT_GROUPS,
   id = "vibeui-faq-003",
+  tabLabelText = "Раздел вопросов: {label}",
+  background = "",
   accent,
   className,
   style,
 }: Faq003Props) {
   const palette = {
     ...(accent ? { "--vibeui-faq-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-faq-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -231,7 +269,7 @@ export function Faq003({
                 name={id}
                 id={`${id}-${index}`}
                 defaultChecked={index === 0}
-                aria-label={`Раздел вопросов: ${group.label}`}
+                aria-label={tabLabelText.replace("{label}", group.label)}
               />
             ))}
             <div data-part="tablist">

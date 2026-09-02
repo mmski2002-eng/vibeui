@@ -12,8 +12,20 @@ export type Calendar021Props = Omit<
   today?: string
   locale?: string
   defaultWeek?: number
+  /** Подпись под заголовком. */
+  hint?: string
+  /** Заголовок колонки номеров недель. */
+  weekColumnLabel?: string
+  /** Подпись кнопки недели. {week}, {from} и {to} подставляются. */
+  weekLabelText?: string
+  /** Строка выбранной недели. {week} выделяется жирным, {from} и {to} подставляются. */
+  summaryText?: string
+  /** Строка, когда неделя не выбрана. */
+  emptyText?: string
   onSelect?: (week: number, start: string, end: string) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: в производстве, логистике и отчётности живут не даты,
@@ -22,14 +34,15 @@ export type Calendar021Props = Omit<
 // и подпись снизу переводит «неделя 15» в понятные человеку числа.
 const STYLES = `
 :where([data-vibeui-block="calendar-021"]){
---vibeui-calendar-021-bg:oklch(1 0 0);
---vibeui-calendar-021-fg:oklch(0.24 0.014 255);
---vibeui-calendar-021-muted:oklch(0.63 0.014 255);
---vibeui-calendar-021-faint:oklch(0.8 0.012 255);
---vibeui-calendar-021-border:oklch(0.91 0.006 255);
---vibeui-calendar-021-soft:oklch(0.965 0.006 255);
---vibeui-calendar-021-accent:oklch(0.52 0.14 255);
---vibeui-calendar-021-accentsoft:oklch(0.94 0.04 255);
+--vibeui-calendar-021-bg:transparent;
+--vibeui-calendar-021-fg:light-dark(oklch(0.24 0.014 255),oklch(0.93 0.006 255));
+--vibeui-calendar-021-muted:light-dark(oklch(0.63 0.014 255),oklch(0.67 0.013 255));
+--vibeui-calendar-021-faint:light-dark(oklch(0.8 0.012 255),oklch(0.5 0.013 255));
+--vibeui-calendar-021-border:light-dark(oklch(0.91 0.006 255),oklch(0.35 0.012 255));
+--vibeui-calendar-021-soft:light-dark(oklch(0.965 0.006 255),oklch(0.29 0.01 255));
+--vibeui-calendar-021-accent:light-dark(oklch(0.52 0.14 255),oklch(0.72 0.13 255));
+--vibeui-calendar-021-accentsoft:light-dark(oklch(0.94 0.04 255),oklch(0.34 0.05 255));
+--vibeui-calendar-021-on-accent:light-dark(oklch(0.99 0.005 255),oklch(0.2 0.03 255));
 --vibeui-calendar-021-radius:0.75rem;
 --vibeui-calendar-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -76,7 +89,7 @@ outline:2px solid var(--vibeui-calendar-021-accent);outline-offset:2px;
 }
 [data-vibeui-block="calendar-021"] [data-part="weekbtn"][aria-pressed="true"]{
 background:var(--vibeui-calendar-021-accent);border-color:transparent;
-color:var(--vibeui-calendar-021-bg);
+color:var(--vibeui-calendar-021-on-accent);
 }
 [data-vibeui-block="calendar-021"] [data-part="day"]{
 display:flex;align-items:center;justify-content:center;
@@ -128,6 +141,35 @@ function stamp(date: Date) {
   return `${year}-${month}-${day}`
 }
 
+function fillText(template: string, values: Record<string, string | number>) {
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, key) => `${values[key] ?? match}`,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Месячная сетка с колонкой номеров ISO-недель: выбирается неделя целиком.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -137,8 +179,14 @@ export function Calendar021({
   today = "2026-04-15",
   locale = "ru-RU",
   defaultWeek = 16,
+  hint = "Номера недель по ISO 8601",
+  weekColumnLabel = "нед",
+  weekLabelText = "Неделя {week}, с {from} по {to}",
+  summaryText = "Неделя {week}: {from} — {to}",
+  emptyText = "Неделя не выбрана",
   onSelect,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -180,8 +228,16 @@ export function Calendar021({
 
   const current = rows.find((row) => row.number === picked)
 
+  const [summaryBefore, summaryAfter = ""] = summaryText.split("{week}")
+
   const palette = {
     ...(accent ? { "--vibeui-calendar-021-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-021-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -198,13 +254,13 @@ export function Calendar021({
       >
         <header>
           <h3 data-part="title">{heading}</h3>
-          <p data-part="hint">Номера недель по ISO 8601</p>
+          <p data-part="hint">{hint}</p>
         </header>
         <table>
           <thead>
             <tr>
               <th data-part="weekcol" scope="col">
-                нед
+                {weekColumnLabel}
               </th>
               {weekdays.map((name) => (
                 <th key={name} scope="col">
@@ -221,7 +277,11 @@ export function Calendar021({
                     type="button"
                     data-part="weekbtn"
                     aria-pressed={row.number === picked}
-                    aria-label={`Неделя ${row.number}, с ${span.format(row.days[0])} по ${span.format(row.days[6])}`}
+                    aria-label={fillText(weekLabelText, {
+                      week: row.number,
+                      from: span.format(row.days[0]),
+                      to: span.format(row.days[6]),
+                    })}
                     onClick={() => {
                       setPicked(row.number)
                       onSelect?.(
@@ -254,11 +314,15 @@ export function Calendar021({
         <p data-part="foot" aria-live="polite">
           {current ? (
             <>
-              Неделя <b>{current.number}</b>: {span.format(current.days[0])} —{" "}
-              {span.format(current.days[6])}
+              {summaryBefore}
+              <b>{current.number}</b>
+              {fillText(summaryAfter, {
+                from: span.format(current.days[0]),
+                to: span.format(current.days[6]),
+              })}
             </>
           ) : (
-            "Неделя не выбрана"
+            emptyText
           )}
         </p>
       </section>

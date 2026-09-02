@@ -15,6 +15,10 @@ export type Contextmenu001Props = Omit<
 > & {
   items?: Contextmenu001Item[]
   hint?: string
+  /** Подпись кнопки-дублёра: компонент несёт русскую, проект подставляет свою. */
+  actionLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,13 +29,15 @@ export type Contextmenu001Props = Omit<
 // остаётся единственным способом, а он не работает без мыши.
 const STYLES = `
 :where([data-vibeui-block="contextmenu-001"]){
---vibeui-contextmenu-001-bg:oklch(1 0 0);
---vibeui-contextmenu-001-fg:oklch(0.24 0.014 265);
---vibeui-contextmenu-001-muted:oklch(0.56 0.014 265);
---vibeui-contextmenu-001-border:oklch(0.9 0.006 265);
---vibeui-contextmenu-001-hover:oklch(0.55 0.02 265 / 9%);
---vibeui-contextmenu-001-accent:oklch(0.55 0.2 262);
---vibeui-contextmenu-001-danger:oklch(0.56 0.19 25);
+--vibeui-contextmenu-001-bg:transparent;
+--vibeui-contextmenu-001-surface:light-dark(oklch(1 0 0),oklch(0.24 0.013 265));
+--vibeui-contextmenu-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-contextmenu-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-contextmenu-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-contextmenu-001-hover:light-dark(oklch(0.55 0.02 265 / 9%),oklch(0.92 0.02 265 / 12%));
+--vibeui-contextmenu-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-contextmenu-001-danger:light-dark(oklch(0.56 0.19 25),oklch(0.73 0.16 25));
+--vibeui-contextmenu-001-shadow:light-dark(oklch(0.2 0.03 265 / 45%),oklch(0 0 0 / 72%));
 --vibeui-contextmenu-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-contextmenu-001-x:50%;
 --vibeui-contextmenu-001-y:50%;
@@ -59,9 +65,9 @@ background:none;color:var(--vibeui-contextmenu-001-fg);font:inherit;font-size:0.
 position:fixed;margin:0;padding:0.25rem;
 top:var(--vibeui-contextmenu-001-y);left:var(--vibeui-contextmenu-001-x);
 min-width:11rem;box-sizing:border-box;
-background:var(--vibeui-contextmenu-001-bg);color:var(--vibeui-contextmenu-001-fg);
+background:var(--vibeui-contextmenu-001-surface);color:var(--vibeui-contextmenu-001-fg);
 border:1px solid var(--vibeui-contextmenu-001-border);border-radius:0.625rem;
-box-shadow:0 16px 36px -18px oklch(0.2 0.03 265 / 45%);
+box-shadow:0 16px 36px -18px var(--vibeui-contextmenu-001-shadow);
 font-family:var(--vibeui-contextmenu-001-font);
 }
 [data-vibeui-block="contextmenu-001"] [data-part="item"]{
@@ -85,12 +91,36 @@ const DEFAULT_ITEMS: Contextmenu001Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Меню по правому клику на HTML popover, с кнопкой-дублёром для клавиатуры.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Contextmenu001({
   items = DEFAULT_ITEMS,
   hint = "Правый клик по области — или кнопка ниже",
+  actionLabel = "Действия",
+  background = "",
   accent,
   className,
   style,
@@ -111,6 +141,12 @@ export function Contextmenu001({
 
   const palette = {
     ...(accent ? { "--vibeui-contextmenu-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-contextmenu-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...(spot
       ? {
           "--vibeui-contextmenu-001-x": spot.x,
@@ -141,7 +177,7 @@ export function Contextmenu001({
               openAt(box.left, box.bottom + 6)
             }}
           >
-            Действия
+            {actionLabel}
           </button>
         </div>
         <div data-part="menu" popover="auto" role="menu" ref={menu}>

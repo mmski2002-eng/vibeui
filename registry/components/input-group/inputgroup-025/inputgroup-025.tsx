@@ -14,6 +14,10 @@ export type Inputgroup025Props = Omit<
   buttonLabel?: string
   onChange?: (value: string) => void
   hint?: string
+  /** Подписи статуса: компонент несёт русские, проект подставляет свои. */
+  statusText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -33,15 +37,15 @@ const STATUS_TEXT: Record<Status, string> = {
 // чтобы можно было сразу продолжить редактировать значение.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-025"]){
---vibeui-inputgroup-025-surface:oklch(1 0 0);
---vibeui-inputgroup-025-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-025-fg:oklch(0.22 0.014 265);
---vibeui-inputgroup-025-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-025-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-025-fixed:oklch(0.96 0.004 265);
---vibeui-inputgroup-025-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-025-accent:oklch(0.55 0.14 250);
---vibeui-inputgroup-025-denied:oklch(0.56 0.19 25);
+--vibeui-inputgroup-025-surface:transparent;
+--vibeui-inputgroup-025-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-inputgroup-025-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-025-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-inputgroup-025-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
+--vibeui-inputgroup-025-fixed:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-inputgroup-025-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-inputgroup-025-accent:light-dark(oklch(0.55 0.14 250),oklch(0.76 0.13 250));
+--vibeui-inputgroup-025-denied:light-dark(oklch(0.56 0.19 25),oklch(0.73 0.16 25));
 --vibeui-inputgroup-025-radius:0.75rem;
 --vibeui-inputgroup-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -102,6 +106,28 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-inputgroup-025-mut
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сцепка «поле + вставка из буфера»: кнопка справа читает буфер обмена
  * через Clipboard API, статус снизу озвучивает результат и подсказывает
  * запасной способ, если доступа к буферу нет.
@@ -115,6 +141,8 @@ export function Inputgroup025({
   buttonLabel = "Вставить из буфера",
   onChange,
   hint = "Кнопка запрашивает доступ к буферу обмена браузера — без него значение вводится вручную.",
+  statusText = STATUS_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -127,6 +155,12 @@ export function Inputgroup025({
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-025-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-025-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -196,7 +230,7 @@ export function Inputgroup025({
           data-status={status}
           aria-live="polite"
         >
-          {STATUS_TEXT[status]}
+          {statusText[status] ?? STATUS_TEXT[status]}
         </p>
         <p data-part="hint" id={`${id}-hint`}>
           {hint}

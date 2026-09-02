@@ -32,15 +32,20 @@
             ":user-invalid вместо :invalid — пустое поле не должно краснеть до первого ввода",
             "текст ошибки в разметке всегда: появившийся из ниоткуда узел скринридер не найдёт",
             "прямые контакты рядом с формой — часть людей форму не заполнит никогда",
-            "обещание срока ответа под кнопкой: без него обращение отправляют в пустоту"
+            "обещание срока ответа под кнопкой: без него обращение отправляют в пустоту",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив topics — темы обращения",
             "массив channels с прямыми контактами",
             "title, description и eyebrow",
-            "submitLabel, consentLabel, responseNote и акцент через проп accent"
+            "submitLabel, consentLabel, responseNote и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "fieldText — подписи полей, плейсхолдеры и тексты ошибок формы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Отправку, защиту от ботов и ответ пользователю реализует вызывающий код: блок несёт только разметку и проверку в браузере.",
             "minLength у сообщения считает символы, а не слова: строка из двадцати пробелов пройдёт проверку.",
             "Идентификаторы полей фиксированы: две такие формы на странице дадут дублирующиеся id.",
@@ -61,6 +66,18 @@
             "type": "text",
             "default": "Отправить обращение",
             "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -74,15 +91,20 @@
                 ":user-invalid instead of :invalid — an untouched field must not turn red",
                 "the error text always present in the markup: a node appearing from nowhere is not found by a screen reader",
                 "the direct contacts beside the form — some people will never fill it in",
-                "the promised reply time under the button: without it messages go into the void"
+                "the promised reply time under the button: without it messages go into the void",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the topics array — the request subjects",
                 "the channels array with direct contacts",
                 "title, description and eyebrow",
-                "submitLabel, consentLabel, responseNote and the accent through the accent prop"
+                "submitLabel, consentLabel, responseNote and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "fieldText — the field labels, placeholders and error texts of the form"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Submission, bot protection and the confirmation belong to the caller: the block carries markup and in-browser validation only.",
                 "minLength counts characters, not words: twenty spaces pass the check.",
                 "Field ids are fixed: two of these forms on one page produce duplicate ids.",
@@ -98,11 +120,65 @@
               "submitLabel": {
                 "label": "Button caption",
                 "default": "Send the message"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Contact Form"
+            "title": "Contact Form",
+            "preview": {
+              "props": {
+                "eyebrow": "Get in touch",
+                "title": "Tell us what needs doing",
+                "description": "Describe the task in two paragraphs: that is enough for a straight answer instead of «let us jump on a call».",
+                "topics": [
+                  "New project",
+                  "Reworking an existing site",
+                  "Billing question",
+                  "Partnership",
+                  "Something else"
+                ],
+                "channels": [
+                  {
+                    "label": "Email",
+                    "value": "hello@studio.ru",
+                    "note": "We answer on business days until 18:00"
+                  },
+                  {
+                    "label": "Phone",
+                    "value": "+7 495 120-45-90",
+                    "note": "Mon–Fri, 10:00–19:00 Moscow time"
+                  },
+                  {
+                    "label": "Office",
+                    "value": "14 Bolshaya Dmitrovka, Moscow",
+                    "note": "Entrance from the courtyard, second floor"
+                  }
+                ],
+                "submitLabel": "Send the message",
+                "consentLabel": "I agree to my personal data being processed to answer this message.",
+                "responseNote": "We answer within one business day. The topic decides who replies.",
+                "fieldText": {
+                  "topic": "Topic",
+                  "name": "How should we address you",
+                  "namePlaceholder": "Name",
+                  "nameError": "Write your name — then the reply is addressed to a person.",
+                  "email": "Email",
+                  "emailPlaceholder": "you@company.com",
+                  "emailError": "Check the address: it needs an @ and a domain.",
+                  "message": "The task",
+                  "messageHint": " — what needs doing and by when",
+                  "messagePlaceholder": "We need a site for a studio: home, services and a request form. Target: end of May.",
+                  "messageError": "A couple of sentences is enough: this text is still too short."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -136,15 +212,20 @@
             "подсказку про вход и этаж — теряются на последних тридцати метрах",
             "часы работы таблицей: это данные в две колонки, и вслух они читаются парами",
             "ссылки tel: и mailto: — на телефоне это разница между касанием и перенабором",
-            "ссылку «открыть в картах»: ради этого действия карту и смотрят"
+            "ссылку «открыть в картах»: ради этого действия карту и смотрят",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "address, addressNote и pinLabel на метке",
             "hours — часы работы и routes — подсказки про дорогу",
             "phone, email и ссылку mapHref",
-            "mapLabel, mapCaption, legal и акцент через проп accent"
+            "mapLabel, mapCaption, legal и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "labels — подписи «Телефон», «Почта» и заголовок таблицы часов работы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Заглушка не показывает настоящее положение офиса: точность даёт только ссылка в карты.",
             "Ссылка tel: собирается вычищением всего, кроме цифр и плюса, — экзотические форматы проверьте руками.",
             "Реквизиты в подвале блока выводятся как есть: за их актуальность отвечает вызывающий код.",
@@ -165,6 +246,18 @@
             "type": "text",
             "default": "Студия",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -178,15 +271,20 @@
                 "the hint about the entrance and floor — people get lost in the last thirty metres",
                 "the opening hours as a table: two columns of data, read aloud as pairs",
                 "the tel: and mailto: links — on a phone that is the difference between a tap and retyping",
-                "the «open in maps» link: that action is why the map is looked at"
+                "the «open in maps» link: that action is why the map is looked at",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "address, addressNote and pinLabel on the marker",
                 "hours — the opening times, and routes — the travel notes",
                 "phone, email and the mapHref link",
-                "mapLabel, mapCaption, legal and the accent through the accent prop"
+                "mapLabel, mapCaption, legal and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "labels — the «Phone» and «Email» captions and the opening-hours table caption"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The placeholder does not show the real location: only the maps link gives precision.",
                 "The tel: link is built by stripping everything but digits and a plus — check exotic formats by hand.",
                 "The legal line renders as-is: keeping it current is the caller's responsibility.",
@@ -202,11 +300,56 @@
               "pinLabel": {
                 "label": "Marker caption",
                 "default": "Studio"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Office Map Card"
+            "title": "Office Map Card",
+            "preview": {
+              "props": {
+                "eyebrow": "Office",
+                "title": "Come by, we are here",
+                "address": "14 Bolshaya Dmitrovka, bldg 2, Moscow",
+                "addressNote": "Entrance from the courtyard, a blue door with no sign. Second floor, right to the end of the corridor.",
+                "mapLabel": "Open in maps",
+                "mapCaption": "The sketch is drawn by the block's own styles: no external map is loaded and no cookies are set.",
+                "pinLabel": "Studio",
+                "phone": "+7 495 120-45-90",
+                "email": "office@studio.ru",
+                "hours": [
+                  {
+                    "days": "Monday — Thursday",
+                    "time": "10:00 — 19:00"
+                  },
+                  {
+                    "days": "Friday",
+                    "time": "10:00 — 17:00"
+                  },
+                  {
+                    "days": "Saturday, Sunday",
+                    "time": "Closed"
+                  }
+                ],
+                "routes": [
+                  "Five minutes on foot from Kuznetsky Most metro",
+                  "Parking is paid and on weekdays there is almost never a space",
+                  "Couriers are received at the reception desk until 18:30"
+                ],
+                "legal": "Studio LLC, VAT 7701234567, reg. no. 1157746000000. The registered address matches the actual one.",
+                "labels": {
+                  "phone": "Phone",
+                  "email": "Email",
+                  "hours": "Opening hours"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -240,15 +383,20 @@
             "цель встречи чипами, а не свободным полем — свободное заполняют словом «интересно»",
             "видимую радиокнопку в чипе: display:none выбивает всю группу из клавиатуры",
             ":user-invalid вместо :invalid, чтобы нетронутые поля не краснели заранее",
-            "строку о судьбе контактов под кнопкой: рабочую почту оставляют осторожно"
+            "строку о судьбе контактов под кнопкой: рабочую почту оставляют осторожно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массивы steps, goals и teamSizes",
             "badge с длительностью и title",
             "description, submitLabel и privacyNote",
-            "name радиогруппы и акцент через проп accent"
+            "name радиогруппы и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "fieldText — подписи полей, плейсхолдеры и тексты ошибок формы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Отправку, защиту от ботов и подтверждение реализует вызывающий код: блок несёт только разметку и проверку в браузере.",
             "Нативная проверка почты не отличает рабочий адрес от личного — если это важно, проверяйте домен на сервере.",
             "Идентификаторы полей фиксированы: две такие формы на странице дадут дублирующиеся id.",
@@ -269,6 +417,18 @@
             "type": "text",
             "default": "Покажем продукт на ваших задачах",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -282,15 +442,20 @@
                 "the goal as chips rather than a free field — a free field gets filled with «curious»",
                 "the visible radio inside a chip: display:none drops the group out of keyboard reach",
                 ":user-invalid instead of :invalid so untouched fields do not turn red",
-                "the line about what happens to the contacts: a work email is given cautiously"
+                "the line about what happens to the contacts: a work email is given cautiously",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the steps, goals and teamSizes arrays",
                 "the duration badge and title",
                 "description, submitLabel and privacyNote",
-                "the radio group name and the accent through the accent prop"
+                "the radio group name and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "fieldText — the field labels, placeholders and error texts of the form"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Submission, bot protection and confirmation belong to the caller: the block carries markup and in-browser validation only.",
                 "Native email validation cannot tell a work address from a personal one — check the domain server-side if that matters.",
                 "Field ids are fixed: two of these forms on one page produce duplicate ids.",
@@ -306,11 +471,57 @@
               "title": {
                 "label": "Heading",
                 "default": "We will show it on your own tasks"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Demo Request"
+            "title": "Demo Request",
+            "preview": {
+              "props": {
+                "badge": "30 minutes",
+                "title": "We will show it on your own tasks",
+                "description": "Not a forty-slide deck but a walk through your own scenario. The request is read by someone from the rollout team.",
+                "steps": [
+                  "We read the request within a business day and write back by email.",
+                  "We meet for thirty minutes: we show the product on your tasks.",
+                  "We send the recording, answers to your questions and access to a trial environment."
+                ],
+                "goals": [
+                  "See the features",
+                  "Compare with our current tool",
+                  "Discuss a rollout",
+                  "Check the price"
+                ],
+                "teamSizes": [
+                  "1–10 people",
+                  "11–50 people",
+                  "51–200 people",
+                  "More than 200 people"
+                ],
+                "submitLabel": "Book a demo",
+                "privacyNote": "By sending the request you agree to your contacts being used to arrange the meeting. The address does not go to any mailing list.",
+                "fieldText": {
+                  "name": "Full name",
+                  "namePlaceholder": "Maria Orlova",
+                  "nameError": "Give us a name — that is how we address you in the email.",
+                  "email": "Work email",
+                  "emailPlaceholder": "maria@company.com",
+                  "emailError": "We need an address with an @ and a company domain.",
+                  "company": "Company",
+                  "companyPlaceholder": "Name",
+                  "companyError": "Write the company name.",
+                  "teamSize": "Team size",
+                  "goalsLegend": "What would you like to see"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -344,15 +555,20 @@
             "нативные details: браузер раскрывает раздел, найденный поиском по странице",
             "независимые разделы — сравнивая два условия, их открывают одновременно",
             "короткую форму на три поля: длинная читается как наказание за ненайденный ответ",
-            ":user-invalid вместо :invalid, чтобы нетронутые поля не краснели заранее"
+            ":user-invalid вместо :invalid, чтобы нетронутые поля не краснели заранее",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив questions с вопросами и ответами",
             "title, description и eyebrow",
             "formTitle, formHint и submitLabel",
-            "responseNote и акцент через проп accent"
+            "responseNote и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "fieldText — подписи полей формы, плейсхолдеры и тексты ошибок"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Отправку и ответ пользователю реализует вызывающий код: блок несёт только разметку и проверку в браузере.",
             "Ответы выводятся как обычный текст: ссылки и списки внутри не разбираются.",
             "Идентификаторы полей формы фиксированы: два таких блока на странице дадут дублирующиеся id.",
@@ -373,6 +589,18 @@
             "type": "text",
             "default": "Не нашли ответ?",
             "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -386,15 +614,20 @@
                 "the native details: the browser expands a section found by page search",
                 "independent sections — comparing two conditions means opening both",
                 "the short three-field form: a long one reads as punishment for not finding the answer",
-                ":user-invalid instead of :invalid so untouched fields do not turn red"
+                ":user-invalid instead of :invalid so untouched fields do not turn red",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the questions array with questions and answers",
                 "title, description and eyebrow",
                 "formTitle, formHint and submitLabel",
-                "responseNote and the accent through the accent prop"
+                "responseNote and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "fieldText — the form field labels, placeholders and error texts"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Submission and the reply belong to the caller: the block carries markup and in-browser validation only.",
                 "Answers render as plain text: links and lists inside are not parsed.",
                 "The form field ids are fixed: two of these blocks on one page produce duplicate ids.",
@@ -410,11 +643,59 @@
               "formTitle": {
                 "label": "Form heading",
                 "default": "Still stuck?"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Support FAQ Form"
+            "title": "Support FAQ Form",
+            "preview": {
+              "props": {
+                "eyebrow": "Support",
+                "title": "Check here first",
+                "description": "Half of all requests are questions from this list. If yours is not here, write to us on the right.",
+                "questions": [
+                  {
+                    "question": "How long does onboarding take?",
+                    "answer": "Usually two or three business days: one for access, one for moving the data and half a day for checks. If your export is unusual, we agree the timing separately and name it before the work starts."
+                  },
+                  {
+                    "question": "Can we migrate data from another system?",
+                    "answer": "Yes, if there is a CSV export or an available API. We move reference data, order history and users. Files over two gigabytes are moved in parts so the service stays up."
+                  },
+                  {
+                    "question": "What does support include after launch?",
+                    "answer": "Answers during business hours, bug fixes and updates at no extra cost. Changes for your own process are quoted separately and always agreed in advance."
+                  },
+                  {
+                    "question": "How does payment work?",
+                    "answer": "By invoice once a month, or yearly at a discount. The first month can be paid after launch: if it does not fit, we do not invoice."
+                  },
+                  {
+                    "question": "Where is the data stored?",
+                    "answer": "On servers in Russia. Backups are made daily and kept for thirty days. On request we export everything we hold about your organisation in a machine-readable form."
+                  }
+                ],
+                "formTitle": "Still stuck?",
+                "formHint": "Describe the question in your own words — we will answer by email.",
+                "submitLabel": "Send the question",
+                "responseNote": "We answer on business days, usually within a few hours.",
+                "fieldText": {
+                  "email": "Email for the reply",
+                  "emailPlaceholder": "you@company.com",
+                  "emailError": "Check the address: it needs an @ and a domain.",
+                  "question": "Question",
+                  "questionPlaceholder": "For example: how do we move the order history from the old system?",
+                  "questionError": "One word is not enough — write the whole question."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -448,15 +729,19 @@
             "обещанное время ответа — оно решает, писать сюда или звонить",
             "запасной общий адрес внизу: без него пишут во все ящики сразу",
             "настоящие ссылки mailto: и tel: вместо текста — на телефоне это одно касание",
-            "tabular-nums во времени ответа, иначе колонка прыгает от строки к строке"
+            "tabular-nums во времени ответа, иначе колонка прыгает от строки к строке",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив departments: названия, назначение, адреса и телефоны",
             "title, description и eyebrow",
             "fallbackTitle, fallbackText и fallbackEmail",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ключом списка служит адрес почты: два отдела с одним ящиком сломают отрисовку.",
             "Ссылка tel: собирается вычищением всего, кроме цифр и плюса, — экзотические форматы проверьте руками.",
             "Обещание времени ответа — публичное обязательство: не ставьте цифру, которую не держите.",
@@ -477,6 +762,18 @@
             "type": "text",
             "default": "hello@studio.ru",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -490,15 +787,19 @@
                 "the promised reply time — it decides between writing and calling",
                 "the catch-all address at the bottom: without it people write to every inbox at once",
                 "real mailto: and tel: links instead of plain text — on a phone that is one tap",
-                "tabular-nums on the reply time, or the column jumps from row to row"
+                "tabular-nums on the reply time, or the column jumps from row to row",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the departments array: names, purpose, addresses and phones",
                 "title, description and eyebrow",
                 "fallbackTitle, fallbackText and fallbackEmail",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The list key is the email address: two departments sharing an inbox break rendering.",
                 "The tel: link is built by stripping everything but digits and a plus — check exotic formats by hand.",
                 "A promised reply time is a public commitment: do not publish a number you cannot hold.",
@@ -514,11 +815,60 @@
               "fallbackEmail": {
                 "label": "Catch-all address",
                 "default": "hello@studio.ru"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Department Contacts"
+            "title": "Department Contacts",
+            "preview": {
+              "props": {
+                "eyebrow": "Contacts",
+                "title": "Write to whoever will answer",
+                "description": "Every department has its own inbox and its own promised reply time. A message in the right inbox is handled fastest.",
+                "departments": [
+                  {
+                    "name": "Sales",
+                    "purpose": "Prices, a quote, terms for several legal entities and a pilot rollout.",
+                    "email": "sales@studio.ru",
+                    "phone": "+7 495 120-45-91",
+                    "hours": "Mon–Fri, 10:00–19:00",
+                    "reply": "Reply within a day"
+                  },
+                  {
+                    "name": "Support",
+                    "purpose": "Errors in the service, access, data recovery and setup questions.",
+                    "email": "help@studio.ru",
+                    "phone": "+7 495 120-45-92",
+                    "hours": "Daily, 8:00–22:00",
+                    "reply": "Reply within 2 hours"
+                  },
+                  {
+                    "name": "Accounting",
+                    "purpose": "Invoices, acts, closing documents and reconciliation under the contract.",
+                    "email": "buh@studio.ru",
+                    "hours": "Mon–Fri, 10:00–17:00",
+                    "reply": "Reply within 3 business days"
+                  },
+                  {
+                    "name": "Press and partnerships",
+                    "purpose": "Comments for the media, joint materials, conferences and integrations.",
+                    "email": "press@studio.ru",
+                    "hours": "Mon–Fri, 11:00–18:00",
+                    "reply": "Reply within 2 business days"
+                  }
+                ],
+                "fallbackTitle": "Not sure who to write to?",
+                "fallbackText": "Send it to the shared address: it will be read and passed to the right department the same day. There is no need to copy the other inboxes.",
+                "fallbackEmail": "hello@studio.ru"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -552,15 +902,20 @@
             "подпись «занято» рядом с disabled — серым цветом занятость не передать",
             "радиокнопки в потоке фокуса: убраны визуально, но не display:none",
             "отказ от маски телефона — она ломает вставку из буфера и международный формат",
-            "выбор часового пояса: «в 15:00» без пояса означает разное в разных городах"
+            "выбор часового пояса: «в 15:00» без пояса означает разное в разных городах",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массивы days, slots и zones",
             "title, description и eyebrow",
             "phoneLabel, phoneHint и submitLabel",
-            "consentLabel, footNote и акцент через проп accent"
+            "consentLabel, footNote и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "labels — подписи «День», «Время звонка», «Часовой пояс» и текст ошибки телефона"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Отправку заявки и бронирование окна реализует вызывающий код: блок только показывает сетку.",
             "Занятость приходит из данных и не обновляется сама — перезапрашивайте слоты перед отправкой.",
             "pattern у телефона проверяет только состав символов и длину, а не существование номера.",
@@ -581,6 +936,18 @@
             "type": "text",
             "default": "Телефон",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -594,15 +961,20 @@
                 "the «taken» caption next to disabled — grey alone cannot carry unavailability",
                 "the radios kept in the focus order: visually removed, not display:none",
                 "no phone mask — it breaks pasting and international formats",
-                "the time zone picker: «at 15:00» means different things in different cities"
+                "the time zone picker: «at 15:00» means different things in different cities",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the days, slots and zones arrays",
                 "title, description and eyebrow",
                 "phoneLabel, phoneHint and submitLabel",
-                "consentLabel, footNote and the accent through the accent prop"
+                "consentLabel, footNote and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "labels — the «Day», «Call time» and «Time zone» captions and the phone error text"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Submitting the request and booking the slot belong to the caller: the block only renders the grid.",
                 "Availability comes from the data and does not refresh itself — re-fetch the slots before submitting.",
                 "The phone pattern only checks the character set and length, not that the number exists.",
@@ -618,11 +990,86 @@
               "phoneLabel": {
                 "label": "Phone caption",
                 "default": "Phone"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Callback Slots"
+            "title": "Callback Slots",
+            "preview": {
+              "props": {
+                "eyebrow": "Callback",
+                "title": "We will call when it suits you",
+                "description": "Pick a half-hour window — we call inside it. If we cannot reach you, we send a message and offer another time.",
+                "days": [
+                  {
+                    "label": "Today",
+                    "note": "14 May"
+                  },
+                  {
+                    "label": "Tomorrow",
+                    "note": "15 May"
+                  },
+                  {
+                    "label": "Friday",
+                    "note": "16 May"
+                  }
+                ],
+                "slots": [
+                  {
+                    "time": "10:00"
+                  },
+                  {
+                    "time": "11:00",
+                    "taken": true
+                  },
+                  {
+                    "time": "12:00"
+                  },
+                  {
+                    "time": "14:00"
+                  },
+                  {
+                    "time": "15:00",
+                    "taken": true
+                  },
+                  {
+                    "time": "16:00"
+                  },
+                  {
+                    "time": "17:00"
+                  },
+                  {
+                    "time": "18:00"
+                  }
+                ],
+                "zones": [
+                  "Moscow (UTC+3)",
+                  "Yekaterinburg (UTC+5)",
+                  "Novosibirsk (UTC+7)",
+                  "Vladivostok (UTC+10)"
+                ],
+                "phoneLabel": "Phone",
+                "phoneHint": "A country code is fine. We add no mask: it breaks pasting from the clipboard.",
+                "submitLabel": "Call me back",
+                "consentLabel": "I agree to my number being processed to arrange the call.",
+                "footNote": "We call from +7 495 120-45-90. Taken windows stay in the grid and cannot be selected.",
+                "labels": {
+                  "dayLegend": "Day",
+                  "slotLegend": "Call time",
+                  "taken": "taken",
+                  "zone": "Time zone",
+                  "phonePlaceholder": "+7 999 123-45-67",
+                  "phoneError": "The number looks short. Check the area code."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

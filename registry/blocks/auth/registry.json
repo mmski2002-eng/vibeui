@@ -29,15 +29,19 @@
             "ссылку «забыли пароль» рядом с полем — её ищут в момент неудачи",
             "вход через сервисы под формой: сверху он перехватывает внимание у тех, кто завёл пароль",
             "кнопку во всю ширину — на этом экране действие одно",
-            "разделитель сеткой, а не фоном под словом «или»"
+            "разделитель сеткой, а не фоном под словом «или»",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
-            "title, lead, submit и подписи полей",
+            "title, lead, submit, подписи полей, keepLabel, orLabel и emailPlaceholder",
             "список providers",
             "тексты switchText и switchLink",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Форма ничего не отправляет: обработчик и защита от подбора за вызывающим кодом.",
             "Не сообщайте, что именно неверно — почта или пароль: это подсказка для перебора.",
             "Больше двух сервисов не ставьте: список кнопок вытесняет саму форму.",
@@ -58,6 +62,18 @@
             "type": "text",
             "default": "Войти",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -71,15 +87,19 @@
                 "the forgot link beside the field — it gets looked for at the moment of failure",
                 "social sign-in below the form: above it hijacks attention from people who have a password",
                 "the full-width button — this screen has one action",
-                "the divider as a grid rather than a background behind the word"
+                "the divider as a grid rather than a background behind the word",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
-                "title, lead, submit and the field labels",
+                "title, lead, submit, the field labels, keepLabel, orLabel and emailPlaceholder",
                 "the providers list",
                 "the switchText and switchLink copy",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The form submits nothing: the handler and rate limiting belong to the caller.",
                 "Do not say which part was wrong — email or password: that helps enumeration.",
                 "Do not add more than two providers: the button stack crowds out the form.",
@@ -95,11 +115,34 @@
               "submit": {
                 "label": "Button",
                 "default": "Sign in"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Sign In"
+            "title": "Sign In",
+            "preview": {
+              "props": {
+                "title": "Sign in to VibeUI",
+                "lead": "The catalog, access keys and install history for your project.",
+                "emailLabel": "Email",
+                "passwordLabel": "Password",
+                "forgot": "Forgot password?",
+                "submit": "Sign in",
+                "providers": ["Continue with Google", "Continue with GitHub"],
+                "switchText": "No account yet?",
+                "switchLink": "Create one",
+                "keepLabel": "Keep me signed in on this device",
+                "orLabel": "or",
+                "emailPlaceholder": "name@company.com"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -130,15 +173,19 @@
             "требования, показанные до ввода, а не после ошибки",
             "отсутствие поля повтора пароля: оно мешает менеджерам и не ловит опечатки",
             "кнопку показа пароля вместо второго поля",
-            "aria-live у строки с оценкой"
+            "aria-live у строки с оценкой",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
-            "title, lead, submit и подписи кнопок",
-            "правила в функции score и тексты требований",
+            "title, lead, submit, подписи полей и кнопки показа пароля",
+            "правила в функции score, ruleLabels, verdicts и verdictTemplate",
             "текст соглашения terms",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Оценка приблизительная: настоящую стойкость считает библиотека вроде zxcvbn на сервере.",
             "Не запрещайте вставку в поле пароля — это ломает менеджеры и не даёт никакой защиты.",
             "Проверку занятости почты делайте на сервере: клиентская подсказка выдаёт чужие адреса.",
@@ -159,6 +206,18 @@
             "type": "text",
             "default": "Создать аккаунт",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -172,15 +231,19 @@
                 "requirements shown before typing, not after an error",
                 "the absence of a confirm field: it fights password managers and catches nothing",
                 "the reveal button instead of a second field",
-                "aria-live on the verdict line"
+                "aria-live on the verdict line",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
-                "title, lead, submit and the button labels",
-                "the rules inside score and the requirement texts",
+                "title, lead, submit, the field labels and the reveal button labels",
+                "the rules inside score, ruleLabels, verdicts and verdictTemplate",
                 "the terms copy",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The score is approximate: real strength needs something like zxcvbn on the server.",
                 "Never block pasting into the password field — it breaks managers and protects nothing.",
                 "Check email availability on the server: a client hint leaks other people's addresses.",
@@ -196,11 +259,42 @@
               "submit": {
                 "label": "Button",
                 "default": "Create account"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Sign Up"
+            "title": "Sign Up",
+            "preview": {
+              "props": {
+                "title": "Create account",
+                "lead": "One account for every project your team runs.",
+                "submit": "Create account",
+                "terms": "By creating an account you agree to the terms of service and the data processing policy.",
+                "switchText": "Already have an account?",
+                "switchLink": "Sign in",
+                "nameLabel": "Name",
+                "nameValue": "Anna Rebrova",
+                "emailLabel": "Work email",
+                "emailPlaceholder": "name@company.com",
+                "passwordLabel": "Password",
+                "showLabel": "Show",
+                "hideLabel": "Hide",
+                "verdicts": ["far too simple", "simple", "will do", "solid"],
+                "verdictTemplate": "Password is {verdict}",
+                "ruleLabels": [
+                  "10 characters or more",
+                  "letters and digits",
+                  "a symbol or 16+"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -231,15 +325,19 @@
             "показ адреса на экране отправки — так замечают опечатку",
             "кнопку повторной отправки: без неё остаётся только перезагрузка",
             "срок жизни ссылки в тексте",
-            "оба состояния в одном блоке — переключаются пропом, а не подменой экрана"
+            "оба состояния в одном блоке — переключаются пропом, а не подменой экрана",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "state — form или sent",
-            "title, lead и sentText",
+            "title, lead, sentText и показанный адрес email",
             "подписи submit, resend и back",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не пишите «почта не найдена»: это готовый список действующих адресов.",
             "Повторную отправку ограничьте по времени на сервере, иначе кнопка станет рассылкой.",
             "Ссылка должна быть одноразовой: повторное использование сводит защиту к нулю.",
@@ -260,6 +358,18 @@
             "type": "text",
             "default": "Восстановление доступа",
             "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -273,15 +383,19 @@
                 "showing the address on the sent screen — that is how typos get caught",
                 "the resend button: without it only a page reload remains",
                 "the link's lifetime spelled out in the text",
-                "both states inside one block — switched by a prop, not a swapped screen"
+                "both states inside one block — switched by a prop, not a swapped screen",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "state — form or sent",
-                "title, lead and sentText",
+                "title, lead, sentText and the email address on show",
                 "the submit, resend and back labels",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Never print \"email not found\": that is a ready list of valid addresses.",
                 "Rate-limit resending on the server, or the button becomes a mailer.",
                 "The link must be single-use: reuse reduces the protection to nothing.",
@@ -296,11 +410,32 @@
               "title": {
                 "label": "Heading",
                 "default": "Recover access"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Password Reset"
+            "title": "Password Reset",
+            "preview": {
+              "props": {
+                "title": "Recover access",
+                "lead": "Enter your email — we will send a link to change the password. The link lives for an hour.",
+                "submit": "Send the link",
+                "sentTitle": "Check your email",
+                "sentText": "If the address is registered, the email with the link is already on its way. The link is valid for an hour.",
+                "resend": "Send it again",
+                "back": "Back to sign in",
+                "emailLabel": "Email",
+                "emailPlaceholder": "name@company.com",
+                "email": "anna@vibeui.com"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["state", "accent", "background"]
       }
     },
     {
@@ -331,15 +466,19 @@
             "Backspace на пустой клетке с возвратом назад — иначе опечатку правят мышью",
             "autoComplete=\"one-time-code\" и inputMode=\"numeric\": телефон подставит код сам",
             "aria-label с номером клетки: «поле» без номера не помогает",
-            "выключенную кнопку до полного кода"
+            "выключенную кнопку до полного кода",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "length — длина кода",
-            "title, lead и текст help",
+            "title, lead, help, digitLabel и показанный адрес email",
             "подписи submit и resend",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Автоотправку по последней цифре не добавляйте: она срабатывает на опечатке.",
             "Ограничьте число попыток на сервере — клетки не защищают от перебора.",
             "Код и его срок жизни задаёт сервер: блок только принимает ввод.",
@@ -361,6 +500,18 @@
             "type": "text",
             "default": "Подтвердите вход",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -374,15 +525,19 @@
                 "Backspace on an empty cell stepping back — otherwise typos get fixed with the mouse",
                 "autoComplete=\"one-time-code\" and inputMode=\"numeric\": phones fill the code in",
                 "the aria-label carrying the cell number: \"field\" alone does not help",
-                "the disabled button until the code is complete"
+                "the disabled button until the code is complete",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "length — the code length",
-                "title, lead and the help text",
+                "title, lead, help, digitLabel and the email address on show",
                 "the submit and resend labels",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not auto-submit on the last digit: it fires on a typo.",
                 "Limit attempts on the server — cells do not stop brute force.",
                 "The code and its lifetime belong to the server: this block only takes input.",
@@ -397,11 +552,29 @@
               "title": {
                 "label": "Heading",
                 "default": "Confirm sign-in"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Code Verification"
+            "title": "Code Verification",
+            "preview": {
+              "props": {
+                "title": "Confirm sign-in",
+                "lead": "A six-digit code has been sent to",
+                "submit": "Confirm",
+                "resend": "Send the code again",
+                "help": "The email arrives within a minute. Check the spam folder if it does not.",
+                "email": "anna@vibeui.com",
+                "digitLabel": "Digit {index} of {total}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["length", "accent", "background"]
       }
     },
     {
@@ -435,15 +608,20 @@
             "скрытие обещания на узкой ширине вместо сжатия — обрезанное хуже отсутствующего",
             "перестановку колонок гридом, а не порядком в DOM",
             "подпись отзыва именем и должностью: анонимная цитата не работает",
-            "autoComplete в полях формы"
+            "autoComplete в полях формы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "тёмную левую колонку в обеих темах: это дизайн-идея блока, а не забытая палитра — обещание и отзыв читаются на ней одинаково при любом окружении"
           ],
           "adapt": [
             "claim, features и отзыв",
-            "title, lead и подписи кнопок",
+            "title, lead, подписи полей и кнопок",
             "порог перестроения в контейнерном запросе",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Тёмная колонка декоративна: не кладите в неё то, без чего нельзя войти.",
             "Обещаний больше трёх не перечисляйте — их не читают перед входом.",
             "Отзыв должен быть настоящим: выдуманная цитата подрывает доверие ко всему экрану.",
@@ -464,6 +642,18 @@
             "type": "text",
             "default": "Вход в аккаунт",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -477,15 +667,20 @@
                 "hiding the promise on narrow widths instead of squeezing it — a cropped promise is worse than none",
                 "swapping the columns with the grid rather than the DOM order",
                 "the quote signed with a name and a role: an anonymous testimonial does nothing",
-                "autoComplete on the form fields"
+                "autoComplete on the form fields",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the dark left column in both themes: it is the design idea of the block rather than a forgotten palette — the promise and the quote read the same in any surrounding"
               ],
               "adapt": [
                 "claim, features and the quote",
-                "title, lead and the button labels",
+                "title, lead, the field labels and the button labels",
                 "the container-query breakpoint",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The dark column is decorative: never put anything sign-in critical there.",
                 "Do not list more than three promises — nobody reads them before signing in.",
                 "The quote must be real: an invented one undermines the whole screen.",
@@ -501,11 +696,48 @@
               "title": {
                 "label": "Form heading",
                 "default": "Sign in"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Split Sign In"
+            "title": "Split Sign In",
+            "preview": {
+              "props": {
+                "brand": "VibeUI",
+                "claim": "Pick a design, hand it to AI, get a site",
+                "features": [
+                  {
+                    "title": "A catalog with no dependencies",
+                    "text": "Every block is one file that moves into someone else's project as it is."
+                  },
+                  {
+                    "title": "Instructions for the agent",
+                    "text": "Every component ships with an install command and the rules for edits."
+                  },
+                  {
+                    "title": "Install history",
+                    "text": "You see who installed what, and where the build tripped."
+                  }
+                ],
+                "quote": "A landing page used to take us a week. Now the agent places the blocks in an evening and we edit the copy.",
+                "quoteAuthor": "Peter Gai, Mera studio",
+                "title": "Sign in",
+                "lead": "Pick up where you left off.",
+                "submit": "Sign in",
+                "switchText": "No account yet?",
+                "switchLink": "Create one",
+                "emailLabel": "Email",
+                "emailPlaceholder": "name@company.com",
+                "passwordLabel": "Password"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -536,15 +768,19 @@
             "отказ обычной кнопкой рядом — это такой же законный исход",
             "роль пригласившего рядом с именем: видно, вправе ли он раздавать доступ",
             "срок действия приглашения — иначе протухшая ссылка выглядит поломкой",
-            "хеш FNV-1a для оттенка аватара"
+            "хеш FNV-1a для оттенка аватара",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
-            "project, inviter, role и массив rights",
-            "список members и срок expires",
+            "project, inviter, role, массив rights, headingTemplate и roleTemplate",
+            "список members, membersTemplate и срок expires",
             "подписи accept и decline",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Права должны совпадать с настоящими: расхождение обнаружится в первый же день.",
             "Приглашение проверяйте на сервере — ссылка может быть переслана третьему лицу.",
             "Не показывайте почты всей команды: список имён достаточен для решения.",
@@ -565,6 +801,18 @@
             "type": "select",
             "default": "Редактор",
             "options": ["Владелец", "Редактор", "Читатель"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -578,15 +826,19 @@
                 "declining as a normal button beside accept — it is an equally valid outcome",
                 "the inviter's role beside their name: it shows whether they may grant access",
                 "the invitation's expiry — otherwise a stale link looks like a broken service",
-                "the FNV-1a hash for the avatar hue"
+                "the FNV-1a hash for the avatar hue",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
-                "project, inviter, role and the rights array",
-                "the members list and the expiry",
+                "project, inviter, role, the rights array, headingTemplate and roleTemplate",
+                "the members list, membersTemplate and the expiry",
                 "the accept and decline labels",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The rights must match the real ones: a mismatch shows up on day one.",
                 "Verify the invitation on the server — the link may have been forwarded.",
                 "Do not expose the team's email addresses: names are enough to decide.",
@@ -600,13 +852,40 @@
                 "default": "VibeUI catalog"
               },
               "role": {
-                "label": "Role",
-                "default": "Редактор"
+                "label": "Role"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Team Invite"
+            "title": "Team Invite",
+            "preview": {
+              "props": {
+                "project": "VibeUI catalog",
+                "inviter": "Anna Rebrova",
+                "inviterRole": "project owner",
+                "role": "Editor",
+                "rights": [
+                  "See the catalog and the install history",
+                  "Place blocks into the team's projects",
+                  "Invite readers, but not owners"
+                ],
+                "members": ["Ilya Mokhov", "Kim Son", "Peter Gai"],
+                "accept": "Accept the invitation",
+                "decline": "Decline",
+                "note": "Declining is reversible: ask to be invited again.",
+                "expires": "The invitation is valid until 20 March",
+                "headingTemplate": "An invitation to the project {project}",
+                "roleTemplate": "Role: {role}",
+                "membersTemplate": "{count} people are already in: {names}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["role", "accent", "background"]
       }
     },
     {
@@ -640,15 +919,19 @@
             "общую формулировку ошибки: раздельные «нет такой почты» и «пароль неверен» превращают форму в перебор адресов",
             "подсказку о Caps Lock — самую частую причину «пароль не работает», которую не видно в точках",
             "кнопку показа пароля вместо второго поля повтора",
-            "autoComplete username и current-password: без них менеджеры паролей молчат"
+            "autoComplete username и current-password: без них менеджеры паролей молчат",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title, lead и submit",
-            "тексты forgot, switchText и switchLink",
+            "тексты forgot, switchText, switchLink, alertText и подсказки полей",
             "правило проверки адреса внутри компонента",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: форма ничего не отправляет, проверку данных и защиту от подбора обязан реализовать вызывающий код.",
             "Клиентская валидация — удобство, а не защита: те же проверки нужны на сервере.",
             "Не блокируйте вставку в поле пароля: это ломает менеджеры и ничего не даёт.",
@@ -669,6 +952,18 @@
             "type": "text",
             "default": "Войти",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -682,15 +977,19 @@
                 "the shared error wording: separate \"no such email\" and \"wrong password\" turn the form into an address prober",
                 "the Caps Lock hint — the most common cause of \"my password stopped working\", invisible behind dots",
                 "the reveal button instead of a second confirm field",
-                "autoComplete username and current-password: without them password managers stay silent"
+                "autoComplete username and current-password: without them password managers stay silent",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title, lead and submit",
-                "the forgot, switchText and switchLink copy",
+                "the forgot, switchText, switchLink and alertText copy and the field hints",
                 "the address check rule inside the component",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: the form submits nothing — validation and rate limiting are the caller's job.",
                 "Client validation is convenience, not security: the same checks belong on the server.",
                 "Never block pasting into the password field: it breaks managers and protects nothing.",
@@ -706,11 +1005,38 @@
               "submit": {
                 "label": "Button",
                 "default": "Sign in"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Email Password"
+            "title": "Email Password",
+            "preview": {
+              "props": {
+                "title": "Sign in",
+                "lead": "The same email and password you signed up with.",
+                "submit": "Sign in",
+                "forgot": "Forgot password?",
+                "switchText": "No account yet?",
+                "switchLink": "Create one",
+                "alertText": "That email and password do not match. Check the keyboard layout and try again.",
+                "emailLabel": "Work email",
+                "emailPlaceholder": "name@company.com",
+                "emailHint": "That looks like a typo: an address reads as name@company.com.",
+                "passwordLabel": "Password",
+                "passwordHint": "The password is shorter than eight characters.",
+                "showLabel": "Show",
+                "hideLabel": "Hide",
+                "capsLabel": "Caps Lock is on.",
+                "keepLabel": "Keep me signed in on this device"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -744,15 +1070,19 @@
             "метку «в прошлый раз» у одного провайдера: без неё люди заводят второй аккаунт на ту же почту через другой сервис",
             "разделитель гридом, а не фоном под словом: фон рвётся и не тянется по ширине",
             "aria-describedby, связывающий метку с кнопкой провайдера",
-            "не больше трёх провайдеров: длинный список кнопок вытесняет саму форму"
+            "не больше трёх провайдеров: длинный список кнопок вытесняет саму форму",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title, lead и текст divider",
-            "список providers и их значки",
-            "подпись submit и текст legal",
-            "акцент через проп accent"
+            "список providers, их значки и подпись lastLabel",
+            "подпись submit, текст legal и ссылку legalLink",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: кнопки никуда не ведут, редиректы и обмен токенами обязан реализовать вызывающий код.",
             "Значки провайдеров здесь текстовые: настоящие логотипы подчиняются брендбукам сервисов.",
             "Один и тот же адрес из разных сервисов сводите в один аккаунт на сервере.",
@@ -773,6 +1103,18 @@
             "type": "text",
             "default": "Прислать ссылку для входа",
             "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -786,15 +1128,19 @@
                 "the \"last time\" marker on one provider: without it people create a second account on the same email",
                 "the divider as a grid rather than a background behind the word: a background tears and does not stretch",
                 "the aria-describedby tying the marker to its provider button",
-                "no more than three providers: a long button stack crowds out the form"
+                "no more than three providers: a long button stack crowds out the form",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title, lead and the divider text",
-                "the providers list and their marks",
-                "the submit label and the legal copy",
-                "the accent through the accent prop"
+                "the providers list, their marks and the lastLabel copy",
+                "the submit label, the legal copy and the legalLink text",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: the buttons go nowhere — redirects and token exchange are the caller's job.",
                 "Provider marks are plain text here: real logos are governed by each service's brand rules.",
                 "Merge the same address arriving from different providers into one account on the server.",
@@ -810,11 +1156,46 @@
               "submit": {
                 "label": "Form button",
                 "default": "Send a sign-in link"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Provider First"
+            "title": "Provider First",
+            "preview": {
+              "props": {
+                "title": "Sign in to VibeUI",
+                "lead": "Your work account is faster and needs no new password.",
+                "providers": [
+                  {
+                    "name": "Continue with Google",
+                    "mark": "G",
+                    "last": true
+                  },
+                  {
+                    "name": "Continue with GitHub",
+                    "mark": "GH"
+                  },
+                  {
+                    "name": "Continue with work SSO",
+                    "mark": "SSO"
+                  }
+                ],
+                "divider": "or by email",
+                "submit": "Send a sign-in link",
+                "legal": "By continuing you agree to the terms and the privacy policy.",
+                "lastLabel": "last time",
+                "legalLink": "Read more",
+                "emailLabel": "Email",
+                "emailPlaceholder": "name@company.com"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -848,15 +1229,19 @@
             "невыбранную по умолчанию галочку рассылки: предвыбранная незаконна в ЕС и просто нечестна",
             "раскрытие условий на месте через <details>: уход по ссылке теряет заполненную форму",
             "разделение обязательного и необязательного согласия — одной галочкой на всё пользоваться нельзя",
-            "строку-подсказку под кнопкой: выключенная кнопка без объяснения читается как поломка"
+            "строку-подсказку под кнопкой: выключенная кнопка без объяснения читается как поломка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title, lead и submit",
             "тексты terms и marketing",
-            "набор полей формы и текст внутри details",
-            "акцент через проп accent"
+            "набор полей формы, подписи полей и текст внутри details",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: форма ничего не отправляет и не хранит, регистрацию обязан реализовать вызывающий код.",
             "Факт и время согласия сохраняйте на сервере: галочка на клиенте ничего не доказывает.",
             "Текст условий согласуйте с юристом — формулировки в блоке демонстрационные.",
@@ -877,6 +1262,18 @@
             "type": "text",
             "default": "Создать аккаунт",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -890,15 +1287,19 @@
                 "the marketing box unchecked by default: a pre-ticked one is unlawful in the EU and simply dishonest",
                 "opening the terms in place via <details>: leaving by link loses the filled-in form",
                 "keeping required and optional consent apart — one checkbox for everything is not consent",
-                "the hint line under the button: a disabled button with no explanation reads as a bug"
+                "the hint line under the button: a disabled button with no explanation reads as a bug",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title, lead and submit",
                 "the terms and marketing copy",
-                "the set of form fields and the text inside details",
-                "the accent through the accent prop"
+                "the set of form fields, the field labels and the text inside details",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: the form stores nothing — registration is the caller's job.",
                 "Record the fact and time of consent on the server: a client-side checkbox proves nothing.",
                 "Have the terms copy reviewed by a lawyer — the wording here is a placeholder.",
@@ -914,11 +1315,37 @@
               "submit": {
                 "label": "Button",
                 "default": "Create account"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Consent Signup"
+            "title": "Consent Signup",
+            "preview": {
+              "props": {
+                "title": "Create account",
+                "lead": "Free plan, no card needed. Cancel whenever you like.",
+                "submit": "Create account",
+                "terms": "I accept the terms of use and the privacy policy",
+                "marketing": "Email me about new blocks — no more than once a month",
+                "nameLabel": "Name",
+                "namePlaceholder": "Anna",
+                "companyLabel": "Company",
+                "companyPlaceholder": "Mera",
+                "emailLabel": "Work email",
+                "emailPlaceholder": "name@company.com",
+                "passwordLabel": "Password",
+                "detailsSummary": "What exactly am I accepting",
+                "detailsText": "Storing your email and name for account access, the history of installed blocks and service emails about how it works. Marketing emails only with the separate checkbox above.",
+                "requiredHint": "Tick the required consent to continue."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -952,15 +1379,19 @@
             "скрытие колонки шагов на узкой ширине вместо сжатия — обрезанный список хуже отсутствующего",
             "обратный отсчёт на кнопке: пять нажатий подряд дают пять ссылок, из которых рабочая только последняя",
             "формулировку «если такой адрес зарегистрирован»: иначе форма проверяет чужие почты",
-            "нумерацию шагов счётчиком CSS, а не вручную набранными цифрами"
+            "нумерацию шагов счётчиком CSS, а не вручную набранными цифрами",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title, lead и submit",
             "длительность cooldown",
-            "список steps и текст ссылки возврата",
-            "акцент через проп accent"
+            "список steps, stepsTitle, шаблоны waitTemplate и sentTemplate, текст ссылки back",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: письма не отправляются, отправку и одноразовость ссылки обязан реализовать вызывающий код.",
             "Клиентский таймер обходится перезагрузкой страницы — настоящий лимит держите на сервере.",
             "Не пишите «почта не найдена»: это готовый список действующих адресов.",
@@ -982,6 +1413,18 @@
             "default": 45,
             "min": 15,
             "max": 120
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -995,15 +1438,19 @@
                 "hiding the steps column on narrow widths instead of squeezing it — a cropped list is worse than none",
                 "the countdown on the button: five taps produce five links, only the last of which works",
                 "the \"if the address is registered\" wording: otherwise the form probes other people's emails",
-                "numbering the steps with a CSS counter rather than hand-typed digits"
+                "numbering the steps with a CSS counter rather than hand-typed digits",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title, lead and submit",
                 "the cooldown duration",
-                "the steps list and the back link copy",
-                "the accent through the accent prop"
+                "the steps list, stepsTitle, the waitTemplate and sentTemplate strings and the back link copy",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: no email is sent — delivery and single-use links are the caller's job.",
                 "A client timer is defeated by a page reload — keep the real limit on the server.",
                 "Never print \"email not found\": that is a ready list of valid addresses.",
@@ -1018,11 +1465,37 @@
               },
               "cooldown": {
                 "label": "Resend cooldown, s"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Reset Steps"
+            "title": "Reset Steps",
+            "preview": {
+              "props": {
+                "title": "Reset password",
+                "lead": "We will email a link to the address you signed up with.",
+                "submit": "Send the link",
+                "steps": [
+                  "The email comes from robot@vibeui.com — check Promotions and spam.",
+                  "The link inside is single-use and lives for one hour.",
+                  "The old password stops working the moment you change it.",
+                  "Every active session on other devices ends."
+                ],
+                "emailLabel": "Account email",
+                "emailPlaceholder": "name@company.com",
+                "stepsTitle": "What happens next",
+                "waitTemplate": "Retry in {left} s",
+                "sentTemplate": "If that address is registered, the email has already been sent. You can send it again in {left} s.",
+                "back": "Remembered it — back to sign in"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["cooldown", "accent", "background"]
       }
     },
     {
@@ -1056,15 +1529,19 @@
             "поле повтора именно здесь: опечатка в новом пароле отрезает от аккаунта, который только что восстанавливали",
             "проверку совпадения на лету, а не после отправки",
             "aria-live у списка требований — иначе отметки видит только зрячий",
-            "строку про завершение других сессий: смена пароля обязана их разлогинить"
+            "строку про завершение других сессий: смена пароля обязана их разлогинить",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title, lead и submit",
             "значение minLength и набор правил",
-            "тексты требований и заключительную заметку",
-            "акцент через проп accent"
+            "тексты требований ruleLabels, подписи полей и заключительную заметку",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: пароль никуда не отправляется, проверку и сохранение обязан реализовать вызывающий код.",
             "Оценка приблизительная: настоящую стойкость считает библиотека вроде zxcvbn на сервере.",
             "Проверяйте пароль по спискам утечек — правила про цифру и знак этого не заменяют.",
@@ -1086,6 +1563,18 @@
             "default": 10,
             "min": 8,
             "max": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1099,15 +1588,19 @@
                 "the repeat field precisely here: a typo in the new password locks out the account just recovered",
                 "checking the match while typing rather than after submission",
                 "aria-live on the requirements list — otherwise only sighted users see the ticks",
-                "the line about ending other sessions: a password change must log them out"
+                "the line about ending other sessions: a password change must log them out",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title, lead and submit",
                 "the minLength value and the rule set",
-                "the requirement texts and the closing note",
-                "the accent through the accent prop"
+                "the ruleLabels requirement texts, the field labels and the closing note",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: the password goes nowhere — validation and storage are the caller's job.",
                 "The score is approximate: real strength needs something like zxcvbn on the server.",
                 "Check passwords against breach lists — a digit-and-symbol rule is no substitute.",
@@ -1122,11 +1615,38 @@
               },
               "minLength": {
                 "label": "Minimum length"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "New Password"
+            "title": "New Password",
+            "preview": {
+              "props": {
+                "title": "New password",
+                "lead": "Pick a password you do not use anywhere else.",
+                "submit": "Save and sign in",
+                "email": "anna@vibeui.com",
+                "passwordLabel": "Password",
+                "repeatLabel": "Repeat the password",
+                "showLabel": "Show",
+                "hideLabel": "Hide",
+                "ruleLabels": [
+                  "At least {min} characters",
+                  "A lower and an upper case letter",
+                  "A digit",
+                  "A symbol or a space"
+                ],
+                "mismatchText": "The passwords do not match yet.",
+                "note": "Once saved, sessions on other devices end and the link from the email stops working."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["minLength", "accent", "background"]
       }
     },
     {
@@ -1160,15 +1680,19 @@
             "text-indent, равный letter-spacing: без него разрядка сдвигает центрирование",
             "autoComplete=\"one-time-code\" и inputMode=\"numeric\": телефон подставит код сам",
             "счётчик оставшихся попыток: молчаливая блокировка после третьей ошибки читается как поломка сервиса",
-            "ссылку «изменить адрес»: опечатка в почте обнаруживается ровно на этом экране"
+            "ссылку «изменить адрес»: опечатка в почте обнаруживается ровно на этом экране",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "length — длина кода",
             "attempts — сколько попыток осталось",
-            "title, email и подпись submit",
-            "акцент через проп accent"
+            "title, email, подпись submit и шаблоны leadTemplate, codeLabel, attemptsTemplate",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: код не сверяется, выдачу, срок жизни и лимит попыток обязан реализовать вызывающий код.",
             "Автоотправку по последней цифре не добавляйте: она срабатывает на опечатке.",
             "Счётчик попыток на клиенте — подсказка, а не защита: считайте попытки на сервере.",
@@ -1191,6 +1715,18 @@
             "default": 3,
             "min": 1,
             "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1204,15 +1740,19 @@
                 "the text-indent matching letter-spacing: without it the tracking throws off centring",
                 "autoComplete=\"one-time-code\" and inputMode=\"numeric\": phones fill the code in",
                 "the remaining-attempts counter: a silent lockout after the third mistake reads as a broken service",
-                "the \"change address\" link: an email typo surfaces on exactly this screen"
+                "the \"change address\" link: an email typo surfaces on exactly this screen",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "length — the code length",
                 "attempts — how many tries are left",
-                "title, email and the submit label",
-                "the accent through the accent prop"
+                "title, email, the submit label and the leadTemplate, codeLabel and attemptsTemplate strings",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: the code is not verified — issuing it, its lifetime and attempt limits are the caller's job.",
                 "Do not auto-submit on the last digit: it fires on a typo.",
                 "A client-side attempt counter is a hint, not protection: count attempts on the server.",
@@ -1226,11 +1766,30 @@
               },
               "attempts": {
                 "label": "Attempts left"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Single Field Code"
+            "title": "Single Field Code",
+            "preview": {
+              "props": {
+                "title": "Confirm your email",
+                "email": "anna@vibeui.com",
+                "submit": "Confirm",
+                "leadTemplate": "A {length}-digit code has been sent to {email}. It is valid for 10 minutes.",
+                "codeLabel": "Confirmation code, {length} digits",
+                "attemptsTemplate": "Attempts left: {attempts}. After that the code has to be requested again.",
+                "resend": "Send the code again",
+                "changeEmail": "Change the address"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["length", "attempts", "accent", "background"]
       }
     },
     {
@@ -1248,7 +1807,7 @@
           "target": "@components/vibeui/auth-013.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-013-*. Серверный: хуков нет, состояние приходит пропом state. Оба экрана — запрос и отправка — живут в одном блоке; список «как это работает» на широкой ширине разворачивается в три колонки контейнерным запросом.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-013-*. Серверный: хуков нет, состояние приходит пропом state. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Оба экрана — запрос и отправка — живут в одном блоке; список «как это работает» на широкой ширине разворачивается в три колонки контейнерным запросом.",
       "meta": {
         "tags": ["auth", "passwordless", "magic-link", "email"],
         "preview": {
@@ -1264,15 +1823,21 @@
             "предупреждение о пересылке: ссылка внутри письма и есть ключ от аккаунта",
             "упоминание, что письмо нужно открыть на том же устройстве — ссылка привязана к запросившему браузеру",
             "срок жизни ссылки прямо в тексте",
-            "оба состояния в одном блоке — переключаются пропом, а не подменой экрана"
+            "оба состояния в одном блоке — переключаются пропом, а не подменой экрана",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "state — request или sent",
             "title, lead и submit",
-            "адрес email на экране отправки и тексты шагов",
-            "акцент через проп accent"
+            "адрес email на экране отправки, подписи emailLabel и emailPlaceholder",
+            "тексты шагов howSteps и экрана отправки: sentTitle, sentLead, warnText, resendText, changeText",
+            "linkMinutes — срок жизни ссылки, подставляется в {minutes} внутри sentLead",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: письма не отправляются, выпуск и одноразовость ссылки обязан реализовать вызывающий код.",
             "Ссылка должна сгорать после первого перехода и по времени: иначе письмо в архиве остаётся вечным ключом.",
             "Не сообщайте, зарегистрирован ли адрес: ответ одинаков в обоих случаях.",
@@ -1286,6 +1851,26 @@
             "type": "select",
             "default": "request",
             "options": ["request", "sent"]
+          },
+          {
+            "prop": "linkMinutes",
+            "label": "Срок ссылки",
+            "type": "number",
+            "default": 15,
+            "min": 5,
+            "max": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           },
           {
             "prop": "title",
@@ -1306,15 +1891,21 @@
                 "the forwarding warning: the link inside the email is the key to the account",
                 "the note about opening the email on the same device — the link is bound to the requesting browser",
                 "the link's lifetime spelled out in the text",
-                "both states inside one block — switched by a prop, not a swapped screen"
+                "both states inside one block — switched by a prop, not a swapped screen",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "state — request or sent",
                 "title, lead and submit",
-                "the email address on the sent screen and the step texts",
-                "the accent through the accent prop"
+                "the email address on the sent screen, the emailLabel and emailPlaceholder copy",
+                "the howSteps texts and the sent screen copy: sentTitle, sentLead, warnText, resendText, changeText",
+                "linkMinutes — the link lifetime, substituted into {minutes} inside sentLead",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: no email is sent — issuing single-use links is the caller's job.",
                 "The link must expire on first use and by time: otherwise an archived email stays a permanent key.",
                 "Do not reveal whether the address is registered: the answer is identical either way.",
@@ -1326,14 +1917,44 @@
               "state": {
                 "label": "State"
               },
+              "linkMinutes": {
+                "label": "Link lifetime"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "title": {
                 "label": "Heading",
                 "default": "No-password sign-in"
               }
             },
-            "title": "Magic Link"
+            "title": "Magic Link",
+            "preview": {
+              "props": {
+                "title": "No-password sign-in",
+                "lead": "We will email you a one-time link. No password to invent.",
+                "submit": "Email me a link",
+                "email": "anna@vibeui.com",
+                "emailLabel": "Email",
+                "emailPlaceholder": "name@company.com",
+                "howSteps": [
+                  "Enter your email — no password needed.",
+                  "Open the email and press the button inside.",
+                  "Come back here already signed in."
+                ],
+                "sentTitle": "Link sent",
+                "sentLead": "Open the email on this device — the link is bound to the browser that requested it. It lives {minutes} minutes and works once.",
+                "warnText": "Do not forward the email: the link inside is the key to the account.",
+                "resendText": "Send again",
+                "changeText": "Use another address"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["state", "linkMinutes", "accent", "background"]
       }
     },
     {
@@ -1351,7 +1972,7 @@
           "target": "@components/vibeui/auth-014.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-014-*. Клиентский: \"use client\" ради отсечения нецифр и блокировки кнопки до шести знаков. Тёмная подложка блока даёт карточке контраст; запасные пути — обычные кнопки в списке, а не ссылки в подвале.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-014-*. Клиентский: \"use client\" ради отсечения нецифр и блокировки кнопки до шести знаков. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, свечение под карточкой остаётся акцентным пятном в обеих темах. Запасные пути — обычные кнопки в списке, а не ссылки в подвале.",
       "meta": {
         "tags": ["auth", "2fa", "otp", "security"],
         "preview": {
@@ -1367,15 +1988,22 @@
             "явный срок в галочке доверия: «запомнить» без срока — обещание, которое интерфейс не выполняет",
             "метку «шаг 2 из 2»: без неё непонятно, сколько ещё проверок впереди",
             "autoComplete=\"one-time-code\" и inputMode=\"numeric\"",
-            "выключенную кнопку до полного кода — это дешевле, чем запрос к серверу с четырьмя цифрами"
+            "выключенную кнопку до полного кода — это дешевле, чем запрос к серверу с четырьмя цифрами",
+            "свечение под карточкой: оно держит фокус на форме, а не украшает фон",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "app — название приложения-аутентификатора",
-            "trustDays — срок доверия браузеру",
+            "trustDays — срок доверия браузеру, подставляется в {days} внутри trustText",
             "title, lead и подпись submit",
-            "акцент через проп accent"
+            "badgeText, appText, codeLabel, trustText и stuckText",
+            "список fallbacks — заголовки и пояснения запасных путей",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: код не сверяется, проверку второго фактора обязан реализовать вызывающий код.",
             "Ограничьте число попыток на сервере: шесть цифр перебираются за минуты.",
             "Доверенный браузер отмечайте отдельным долгоживущим токеном, а не обычной сессионной кукой.",
@@ -1384,19 +2012,31 @@
         },
         "controls": [
           {
-            "prop": "app",
-            "label": "Приложение",
-            "type": "text",
-            "default": "Authenticator",
-            "maxLength": 24
-          },
-          {
             "prop": "trustDays",
             "label": "Доверять, дней",
             "type": "number",
             "default": 30,
             "min": 1,
             "max": 90
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "app",
+            "label": "Приложение",
+            "type": "text",
+            "default": "Authenticator",
+            "maxLength": 24
           }
         ],
         "i18n": {
@@ -1410,15 +2050,22 @@
                 "the explicit term on the trust checkbox: \"remember me\" without a term is a promise the interface does not keep",
                 "the \"step 2 of 2\" marker: without it nobody knows how many checks remain",
                 "autoComplete=\"one-time-code\" and inputMode=\"numeric\"",
-                "the button disabled until the code is complete — cheaper than a server round trip on four digits"
+                "the button disabled until the code is complete — cheaper than a server round trip on four digits",
+                "the glow behind the card: it holds attention on the form rather than decorating the background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "app — the authenticator's name",
-                "trustDays — how long the browser stays trusted",
+                "trustDays — how long the browser stays trusted, substituted into {days} inside trustText",
                 "title, lead and the submit label",
-                "the accent through the accent prop"
+                "badgeText, appText, codeLabel, trustText and stuckText",
+                "the fallbacks list — the titles and explanations of the backup routes",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: the code is not verified — checking the second factor is the caller's job.",
                 "Limit attempts on the server: six digits are brute-forced in minutes.",
                 "Mark a trusted browser with a separate long-lived token, not the ordinary session cookie.",
@@ -1427,17 +2074,51 @@
               "usage": "<Auth014 app=\"Authenticator\" trustDays={30} />"
             },
             "controls": {
+              "trustDays": {
+                "label": "Trust for, days"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "app": {
                 "label": "App",
                 "default": "Authenticator"
-              },
-              "trustDays": {
-                "label": "Trust for, days"
               }
             },
-            "title": "Two Factor App"
+            "title": "Two Factor App",
+            "preview": {
+              "props": {
+                "title": "Code from your app",
+                "lead": "Open the app and enter the six-digit code. It changes every 30 seconds.",
+                "submit": "Confirm sign-in",
+                "app": "Authenticator",
+                "badgeText": "Step 2 of 2",
+                "appText": "App: {app}.",
+                "codeLabel": "Confirmation code",
+                "trustText": "Trust this browser for {days} days — the code is asked again after that or when the device changes",
+                "stuckText": "No access to the app",
+                "fallbacks": [
+                  {
+                    "title": "Backup code",
+                    "text": "One of the ten issued when you set this up."
+                  },
+                  {
+                    "title": "Security key",
+                    "text": "A physical key, if you registered one."
+                  },
+                  {
+                    "title": "Message an admin",
+                    "text": "Manual second-factor reset, up to a day."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["trustDays", "accent", "background"]
       }
     },
     {
@@ -1455,7 +2136,7 @@
           "target": "@components/vibeui/auth-015.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-015-*. Клиентский: \"use client\" ради галочки сохранения и отметки «скопировано». Использованные коды помечены data-used и зачёркиваются, а не исчезают; для скринридера к ним добавлена визуально скрытая подпись.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-015-*. Клиентский: \"use client\" ради галочки сохранения и отметки «скопировано». Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Использованные коды помечены data-used и зачёркиваются, а не исчезают; для скринридера к ним добавлена визуально скрытая подпись.",
       "meta": {
         "tags": ["auth", "2fa", "backup", "recovery"],
         "preview": {
@@ -1471,15 +2152,23 @@
             "три способа унести коды рядом: у людей разные привычки, и один способ теряет часть из них",
             "зачёркивание использованных кодов вместо удаления: пропавшая строка выглядит как ошибка выдачи",
             "моноширинный шрифт и дефис в середине: коды переписывают с экрана на бумагу",
-            "предупреждение не хранить коды рядом с паролем от того же аккаунта"
+            "предупреждение не хранить коды рядом с паролем от того же аккаунта",
+            "скрытую подпись у израсходованного кода: зачёркивание видно глазами, но не скринридеру",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив codes и отметку used у каждого",
             "тексты confirm и submit",
-            "title, lead и предупреждение",
-            "акцент через проп accent"
+            "title, lead и предупреждение warnText",
+            "подписи кнопок copyText, copiedText, downloadText и printText",
+            "leftText — счётчик внизу, {left} и {total} подставляются из списка кодов",
+            "usedLabel — скрытая подпись израсходованного кода",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: коды здесь просто текст, выдачу и списание обязан реализовать вызывающий код.",
             "Настоящие коды генерируйте на сервере и храните только их хеши.",
             "Кнопки копирования и скачивания в блоке ничего не делают — обработчики за вызывающим кодом.",
@@ -1487,6 +2176,18 @@
           ]
         },
         "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "confirm",
             "label": "Текст галочки",
@@ -1513,15 +2214,23 @@
                 "three ways to take the codes away side by side: habits differ, and a single option loses people",
                 "striking used codes through instead of removing them: a missing row looks like a broken issuance",
                 "the monospace font and the mid-code hyphen: these get copied off the screen onto paper",
-                "the warning not to store the codes beside the password for the same account"
+                "the warning not to store the codes beside the password for the same account",
+                "the hidden label on a spent code: the strike-through is visible to the eye but not to a screen reader",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the codes array and the used flag on each",
                 "the confirm and submit copy",
-                "title, lead and the warning",
-                "the accent through the accent prop"
+                "title, lead and the warnText warning",
+                "the copyText, copiedText, downloadText and printText button labels",
+                "leftText — the counter at the bottom, {left} and {total} come from the codes list",
+                "usedLabel — the hidden label on a spent code",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: the codes are plain text — issuing and burning them is the caller's job.",
                 "Generate real codes on the server and store only their hashes.",
                 "The copy and download buttons do nothing here — handlers belong to the caller.",
@@ -1530,6 +2239,12 @@
               "usage": "<Auth015 confirm=\"I saved the codes somewhere safe\" submit=\"Done\" />"
             },
             "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "confirm": {
                 "label": "Checkbox text",
                 "default": "I saved the codes somewhere safe"
@@ -1539,9 +2254,25 @@
                 "default": "Done"
               }
             },
-            "title": "Backup Codes"
+            "title": "Backup Codes",
+            "preview": {
+              "props": {
+                "title": "Backup codes",
+                "lead": "Each code works once and stands in for the code from your app. This screen is shown only now.",
+                "confirm": "I saved the codes somewhere safe",
+                "submit": "Done",
+                "warnText": "Do not keep these codes in the same password manager as the password for this account: one leak then opens both factors.",
+                "usedLabel": " (used)",
+                "copyText": "Copy all",
+                "copiedText": "Copied",
+                "downloadText": "Download file",
+                "printText": "Print",
+                "leftText": "Unused codes left: {left} of {total}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1559,7 +2290,7 @@
           "target": "@components/vibeui/auth-016.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-016-*. Клиентский: \"use client\" ради фильтра и выбранного значения. Пункты — label с radio внутри, подсветка выбранного держится на :has(input:checked); оттенок аватара считается хешем FNV-1a по названию.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-016-*. Клиентский: \"use client\" ради фильтра и выбранного значения. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Пункты — label с radio внутри, подсветка выбранного держится на :has(input:checked); оттенок аватара считается хешем FNV-1a по названию.",
       "meta": {
         "tags": ["auth", "workspace", "tenant", "signin"],
         "preview": {
@@ -1575,15 +2306,22 @@
             "настоящие radio внутри label: стрелки клавиатуры и скринридер работают без единой строки JS",
             "поиск сверху: с семи пространств список перестаёт просматриваться глазами",
             "пустое состояние с подсказкой, что делать, если нужного пространства нет",
-            "хеш FNV-1a для оттенка аватара — цвет должен быть стабильным между заходами"
+            "хеш FNV-1a для оттенка аватара — цвет должен быть стабильным между заходами",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив workspaces с ролями и планами",
-            "title и адрес account",
-            "подпись submit и текст пустого состояния",
-            "акцент через проп accent"
+            "title, адрес account и текст leadText, где {account} — сам адрес",
+            "подпись submit и текст пустого состояния emptyText",
+            "searchLabel, searchPlaceholder и legendText",
+            "metaText — строка под названием, {role} и {people} берутся из пространства",
+            "footText и footLink в подвале",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: выбор никуда не отправляется, переключение пространства обязан реализовать вызывающий код.",
             "Права проверяйте на сервере при каждом запросе: выбор в списке ничего не разрешает.",
             "Не показывайте пространства, куда человек не приглашён, даже неактивными: это утечка структуры компании.",
@@ -1591,6 +2329,18 @@
           ]
         },
         "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -1617,15 +2367,22 @@
                 "real radios inside labels: arrow keys and screen readers work with no JS at all",
                 "the search on top: past seven workspaces the list stops being scannable",
                 "the empty state telling people what to do when their workspace is missing",
-                "the FNV-1a hash for the avatar hue — the colour must be stable between visits"
+                "the FNV-1a hash for the avatar hue — the colour must be stable between visits",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the workspaces array with roles and plans",
-                "title and the account address",
-                "the submit label and the empty-state copy",
-                "the accent through the accent prop"
+                "title, the account address and the leadText copy, where {account} is the address itself",
+                "the submit label and the emptyText copy",
+                "searchLabel, searchPlaceholder and legendText",
+                "metaText — the line under a name, {role} and {people} come from the workspace",
+                "footText and footLink in the footer",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: the choice goes nowhere — switching workspaces is the caller's job.",
                 "Check permissions on the server for every request: picking from a list authorises nothing.",
                 "Do not list workspaces the person was never invited to, even greyed out: that leaks company structure.",
@@ -1634,18 +2391,65 @@
               "usage": "<Auth016 title=\"Where to sign in\" account=\"anna@vibeui.ru\" />"
             },
             "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "title": {
                 "label": "Heading",
                 "default": "Where to sign in"
               },
               "account": {
                 "label": "Account",
-                "default": "anna@vibeui.ru"
+                "default": "anna@vibeui.com"
               }
             },
-            "title": "Workspace Picker"
+            "title": "Workspace Picker",
+            "preview": {
+              "props": {
+                "title": "Where to sign in",
+                "account": "anna@vibeui.com",
+                "submit": "Continue",
+                "leadText": "You are signed in as {account}. One account, several workspaces — pick the right one.",
+                "searchLabel": "Search workspaces",
+                "searchPlaceholder": "Search by name",
+                "legendText": "Workspaces",
+                "metaText": "{role} · {people} members",
+                "emptyText": "Nothing found. Check the name or ask an admin to send you an invite.",
+                "footText": "Not there?",
+                "footLink": "Create a workspace",
+                "workspaces": [
+                  {
+                    "name": "Mera — product",
+                    "role": "Owner",
+                    "people": 12,
+                    "plan": "Team"
+                  },
+                  {
+                    "name": "Mera — clients",
+                    "role": "Editor",
+                    "people": 34,
+                    "plan": "Business"
+                  },
+                  {
+                    "name": "VibeUI catalog",
+                    "role": "Reader",
+                    "people": 6
+                  },
+                  {
+                    "name": "Personal space",
+                    "role": "Owner",
+                    "people": 1,
+                    "plan": "Free"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1663,7 +2467,7 @@
           "target": "@components/vibeui/auth-017.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-017-*. Серверный: хуков нет. На широкой ширине заголовок и числа встают в строку контейнерным запросом; оттенок каждого аватара считается хешем FNV-1a по имени, стопка помечена aria-hidden и продублирована текстом.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-017-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. На широкой ширине заголовок и числа встают в строку контейнерным запросом; оттенок каждого аватара считается хешем FNV-1a по имени, стопка помечена aria-hidden и продублирована текстом.",
       "meta": {
         "tags": ["auth", "invite", "team", "onboarding"],
         "preview": {
@@ -1679,15 +2483,23 @@
             "дублирование стопки текстом — декоративные аватары для скринридера пустое место",
             "отказ обычной кнопкой рядом: это такой же законный исход, как согласие",
             "выход «войти другим аккаунтом»: приглашение одноразовое, и принять его не тем пользователем нечем исправить",
-            "срок действия приглашения — иначе протухшая ссылка выглядит поломкой"
+            "срок действия приглашения — иначе протухшая ссылка выглядит поломкой",
+            "хеш FNV-1a для оттенка лица в стопке — цвет должен быть стабильным между заходами",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
-            "project, inviter и inviterRole",
-            "role и списки team и stats",
+            "project, inviter и inviterRole, а также строку fromText вокруг них",
+            "role, строку roleText и списки team и stats",
+            "whoText и moreCount — состав команды и сколько человек сверх перечисленных",
             "подписи accept и decline",
-            "акцент через проп accent"
+            "footText, footLink, email и expiresDays в подвале",
+            "ariaLabel — заголовок области для скринридера",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: кнопки ничего не отправляют, выдачу доступа обязан реализовать вызывающий код.",
             "Приглашение проверяйте на сервере по токену из ссылки: письмо могли переслать.",
             "Числа о проекте должны быть настоящими: выдуманная статистика обнаруживается в первый же день.",
@@ -1695,6 +2507,26 @@
           ]
         },
         "controls": [
+          {
+            "prop": "expiresDays",
+            "label": "Срок, дней",
+            "type": "number",
+            "default": 7,
+            "min": 1,
+            "max": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "project",
             "label": "Проект",
@@ -1721,15 +2553,23 @@
                 "repeating the stack as text — decorative avatars are empty space to a screen reader",
                 "declining as a normal button beside accept: it is as valid an outcome as agreeing",
                 "the \"sign in with another account\" exit: the invite is single-use, and accepting it as the wrong user cannot be undone",
-                "the invitation's expiry — otherwise a stale link looks like a broken service"
+                "the invitation's expiry — otherwise a stale link looks like a broken service",
+                "the FNV-1a hash for the face hue in the stack — the colour must be stable between visits",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
-                "project, inviter and inviterRole",
-                "role and the team and stats lists",
+                "project, inviter and inviterRole, plus the fromText line around them",
+                "role, the roleText line and the team and stats lists",
+                "whoText and moreCount — the team line and how many people beyond those listed",
                 "the accept and decline labels",
-                "the accent through the accent prop"
+                "footText, footLink, email and expiresDays in the footer",
+                "ariaLabel — the region label for screen readers",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: the buttons send nothing — granting access is the caller's job.",
                 "Verify the invitation on the server by the token in the link: the email may have been forwarded.",
                 "The project figures must be real: invented statistics are noticed on day one.",
@@ -1738,6 +2578,15 @@
               "usage": "<Auth017 project=\"Mera Catalog\" role=\"Editor\" />"
             },
             "controls": {
+              "expiresDays": {
+                "label": "Expires in, days"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "project": {
                 "label": "Project",
                 "default": "Mera Catalog"
@@ -1747,9 +2596,47 @@
                 "default": "Editor"
               }
             },
-            "title": "Invite Banner"
+            "title": "Invite Banner",
+            "preview": {
+              "props": {
+                "project": "Mera Catalog",
+                "inviter": "Peter Guy",
+                "inviterRole": "project owner",
+                "role": "Editor",
+                "accept": "Accept and sign in",
+                "decline": "Decline",
+                "email": "anna@vibeui.com",
+                "team": [
+                  "Peter Guy",
+                  "Liza Kim",
+                  "Mark Ovchinnikov",
+                  "Dasha Li"
+                ],
+                "stats": [
+                  {
+                    "value": "128",
+                    "label": "blocks in the project"
+                  },
+                  {
+                    "value": "12",
+                    "label": "people on the team"
+                  },
+                  {
+                    "value": "3 years",
+                    "label": "of edit history"
+                  }
+                ],
+                "fromText": "{inviter}, {inviterRole}, invites you",
+                "roleText": "Role on entry: {role}. It can be changed later — the project owner does that.",
+                "whoText": "Already in the project: {team} and {more} more people",
+                "footText": "This invitation was issued to {email} and is valid for {days} days. Not your address?",
+                "footLink": "Sign in with another account",
+                "ariaLabel": "Invitation to the {project} project"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["expiresDays", "accent", "background"]
       }
     },
     {
@@ -1767,7 +2654,7 @@
           "target": "@components/vibeui/auth-018.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-018-*. Серверный: хуков нет. Приглашённый адрес выведен элементом <output> с aria-labelledby вместо заблокированного input: readonly-поле попадает в отправку формы и путает автозаполнение.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-018-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Приглашённый адрес выведен элементом <output> с aria-labelledby вместо заблокированного input: readonly-поле попадает в отправку формы и путает автозаполнение.",
       "meta": {
         "tags": ["auth", "signup", "invite", "prefilled"],
         "preview": {
@@ -1783,15 +2670,23 @@
             "объяснение, почему адрес нельзя изменить: приглашение выписано именно на него",
             "ровно два поля: всё остальное про человека уже знает тот, кто приглашал, а длинная форма здесь теряет людей",
             "ссылку «попросите новое приглашение» — это единственный законный путь сменить адрес",
-            "autoComplete=\"new-password\" и подсказку про менеджер паролей"
+            "autoComplete=\"new-password\" и подсказку про менеджер паролей",
+            "адрес элементом <output>, а не заблокированным input: readonly-поле уходит в отправку формы и путает автозаполнение",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
-            "project, email и имя inviter",
-            "title и подпись submit",
-            "тексты подсказок под полями",
-            "акцент через проп accent"
+            "project, email, имя inviter и строку inviterText вокруг него",
+            "title, подпись submit и текст leadText",
+            "emailLabel, emailHint и emailHintLink — подписи вокруг приглашённого адреса",
+            "nameLabel, namePlaceholder, passwordLabel и passwordHint",
+            "minPassword — минимальная длина пароля, подставляется в {min} внутри passwordHint",
+            "legalText и ariaLabel",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: форма ничего не отправляет, проверку токена приглашения обязан реализовать вызывающий код.",
             "Адрес берите из токена на сервере, а не из параметра ссылки: параметр правится в адресной строке.",
             "Не переносите заблокированный адрес в скрытое поле формы — сервер и так знает его по токену.",
@@ -1799,6 +2694,26 @@
           ]
         },
         "controls": [
+          {
+            "prop": "minPassword",
+            "label": "Минимум знаков",
+            "type": "number",
+            "default": 10,
+            "min": 6,
+            "max": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "project",
             "label": "Проект",
@@ -1825,15 +2740,23 @@
                 "the explanation of why the address is locked: the invitation was issued to exactly this one",
                 "exactly two fields: whoever invited already knows the rest, and a long form loses people here",
                 "the \"ask for a new invitation\" link — the only legitimate way to change the address",
-                "autoComplete=\"new-password\" and the password-manager hint"
+                "autoComplete=\"new-password\" and the password-manager hint",
+                "the address as an <output> rather than a locked input: a readonly field is submitted with the form and confuses autofill",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
-                "project, email and the inviter name",
-                "title and the submit label",
-                "the hint texts under the fields",
-                "the accent through the accent prop"
+                "project, email, the inviter name and the inviterText line around it",
+                "title, the submit label and the leadText copy",
+                "emailLabel, emailHint and emailHintLink — the copy around the invited address",
+                "nameLabel, namePlaceholder, passwordLabel and passwordHint",
+                "minPassword — the minimum password length, substituted into {min} inside passwordHint",
+                "legalText and ariaLabel",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: the form submits nothing — validating the invite token is the caller's job.",
                 "Take the address from the server-side token, not from a URL parameter: parameters are edited in the address bar.",
                 "Do not mirror the locked address into a hidden form field — the server already knows it from the token.",
@@ -1842,18 +2765,48 @@
               "usage": "<Auth018 project=\"Mera Catalog\" email=\"anna@vibeui.ru\" />"
             },
             "controls": {
+              "minPassword": {
+                "label": "Minimum characters"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "project": {
                 "label": "Project",
                 "default": "Mera Catalog"
               },
               "email": {
                 "label": "Invited email",
-                "default": "anna@vibeui.ru"
+                "default": "anna@vibeui.com"
               }
             },
-            "title": "Invited Signup"
+            "title": "Invited Signup",
+            "preview": {
+              "props": {
+                "project": "Mera Catalog",
+                "email": "anna@vibeui.com",
+                "title": "Two fields left",
+                "submit": "Create account and sign in",
+                "inviter": "Peter Guy",
+                "inviterText": "{inviter} invited you to the project",
+                "leadText": "The account is created straight onto the invited address — no need to type it.",
+                "emailLabel": "Email",
+                "emailHint": "The invitation was issued to this address. Need another — {link}.",
+                "emailHintLink": "ask for a new invitation",
+                "nameLabel": "What should we call you",
+                "namePlaceholder": "Anna Sokolova",
+                "passwordLabel": "Password",
+                "passwordHint": "At least {min} characters. A password manager will fill its own — safer than an invented one.",
+                "legalText": "By creating an account you accept the terms of use and the privacy policy.",
+                "ariaLabel": "Sign-up by invitation to {project}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["minPassword", "accent", "background"]
       }
     },
     {
@@ -1871,7 +2824,7 @@
           "target": "@components/vibeui/auth-019.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-019-*. Клиентский: \"use client\" ради отсчёта на useState и useEffect с setTimeout. Время выводится моноширинным шрифтом с font-variant-numeric:tabular-nums, чтобы цифры не прыгали; полоса помечена role=\"progressbar\" с aria-valuenow.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-019-*. Клиентский: \"use client\" ради отсчёта на useState и useEffect с setTimeout. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Время выводится моноширинным шрифтом с font-variant-numeric:tabular-nums, чтобы цифры не прыгали; полоса помечена role=\"progressbar\" с aria-valuenow.",
       "meta": {
         "tags": ["auth", "lockout", "security", "timer"],
         "preview": {
@@ -1887,15 +2840,22 @@
             "сам отсчёт цифрами: «подождите» без числа провоцирует перезагрузку и новую попытку",
             "ссылку «это были не вы»: блокировка без неё прячет от владельца аккаунта факт атаки",
             "tabular-nums на таймере — иначе цифры дёргаются каждую секунду",
-            "выключенную кнопку повтора до конца отсчёта"
+            "выключенную кнопку повтора до конца отсчёта",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "seconds — длительность блокировки",
             "attempts — сколько попыток было израсходовано",
-            "title, адрес account и подписи выходов",
-            "акцент через проп accent"
+            "title, адрес account и текст leadText, где {attempts} и {account} — подстановки",
+            "untilText, doneText, waitingText и retryText — подписи вокруг таймера и кнопки",
+            "resetText и notYouText — подписи двух выходов",
+            "noteText и barLabel",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: таймер локальный, настоящий счёт попыток и блокировку обязан реализовать вызывающий код.",
             "Клиентский отсчёт обходится перезагрузкой страницы: запрет должен жить на сервере.",
             "Не блокируйте по одному только адресу — иначе чужой аккаунт закрывается пятью запросами.",
@@ -1918,6 +2878,18 @@
             "default": 5,
             "min": 3,
             "max": 10
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1931,15 +2903,22 @@
                 "the countdown in digits: \"please wait\" with no number invites a reload and another attempt",
                 "the \"wasn't you?\" link: a lockout without it hides an ongoing attack from the account owner",
                 "tabular-nums on the timer — otherwise the digits jitter every second",
-                "the retry button disabled until the countdown ends"
+                "the retry button disabled until the countdown ends",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "seconds — how long the lockout lasts",
                 "attempts — how many tries were spent",
-                "title, the account address and the exit labels",
-                "the accent through the accent prop"
+                "title, the account address and the leadText copy, where {attempts} and {account} are substituted",
+                "untilText, doneText, waitingText and retryText — the copy around the timer and the button",
+                "resetText and notYouText — the labels of the two exits",
+                "noteText and barLabel",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: the timer is local — real attempt counting and lockout are the caller's job.",
                 "A client countdown is defeated by a reload: the ban must live on the server.",
                 "Do not lock by email alone — otherwise anyone can close someone else's account with five requests.",
@@ -1953,11 +2932,33 @@
               },
               "attempts": {
                 "label": "Attempts made"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Locked Out"
+            "title": "Locked Out",
+            "preview": {
+              "props": {
+                "title": "Sign-in temporarily closed",
+                "account": "anna@vibeui.com",
+                "leadText": "{attempts} failed attempts in a row for {account}. The account is intact — sign-in reopens by itself, nothing to do.",
+                "untilText": "until the next attempt",
+                "doneText": "You can try again",
+                "barLabel": "Time until unlock",
+                "resetText": "Reset password",
+                "notYouText": "Wasn't you?",
+                "waitingText": "Waiting for unlock",
+                "retryText": "Try again",
+                "noteText": "If the attempts continue, the waiting window grows. Changing the password lifts the lock at once."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["seconds", "attempts", "accent", "background"]
       }
     },
     {
@@ -1975,7 +2976,7 @@
           "target": "@components/vibeui/auth-020.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-020-*. Клиентский: \"use client\" ради подтверждения и состояния «завершено». На широкой ширине время сеанса уезжает вправо контейнерным запросом; текущий сеанс помечен data-current и не выключается.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-020-*. Клиентский: \"use client\" ради подтверждения и состояния «завершено». Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. На широкой ширине время сеанса уезжает вправо контейнерным запросом; текущий сеанс помечен data-current и не выключается.",
       "meta": {
         "tags": ["auth", "sessions", "devices", "security"],
         "preview": {
@@ -1991,15 +2992,21 @@
             "город и время у каждой строки — по ним и опознаётся лишнее устройство",
             "неотключаемый текущий сеанс: выкинуть себя из настроек безопасности значит потерять экран, где разбираешься с угрозой",
             "второе нажатие перед общим выходом: промах стоит всем открытым вкладкам команды",
-            "предупреждение про несохранённые черновики на других устройствах"
+            "предупреждение про несохранённые черновики на других устройствах",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив sessions и отметку current",
             "title, lead и подпись submit",
-            "тексты подтверждения и итогового сообщения",
-            "акцент через проп accent"
+            "hereText и whereText — пометка текущего сеанса и строка «{client} · {place}»",
+            "dangerLead, dangerText и confirmText — предупреждение и подтверждение, {count} подставляет число чужих сеансов",
+            "cancelText и doneText",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: сеансы не завершаются, отзыв токенов обязан реализовать вызывающий код.",
             "Город по IP приблизителен: не подавайте его как факт, иначе люди пугаются собственного VPN.",
             "После общего выхода стоит попросить сменить пароль: чужая сессия могла быть не единственной.",
@@ -2007,6 +3014,18 @@
           ]
         },
         "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -2033,15 +3052,21 @@
                 "the city and time on each row — that is how the odd device gets spotted",
                 "the current session left untouchable: throwing yourself out of security settings loses the screen where you are handling the threat",
                 "the second tap before the global sign-out: a mis-tap costs the whole team their open tabs",
-                "the warning about unsaved drafts on the other devices"
+                "the warning about unsaved drafts on the other devices",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the sessions array and the current flag",
                 "title, lead and the submit label",
-                "the confirmation and completion copy",
-                "the accent through the accent prop"
+                "hereText and whereText — the current-session mark and the “{client} · {place}” line",
+                "dangerLead, dangerText and confirmText — the warning and the confirmation, {count} stands for the number of other sessions",
+                "cancelText and doneText",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: nothing is terminated — revoking tokens is the caller's job.",
                 "IP-based cities are approximate: do not present them as fact, or people panic at their own VPN.",
                 "After a global sign-out, prompt for a password change: the stranger's session may not have been the only one.",
@@ -2050,6 +3075,12 @@
               "usage": "<Auth020 title=\"Active sessions\" submit=\"Sign out everywhere else\" />"
             },
             "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "title": {
                 "label": "Heading",
                 "default": "Active sessions"
@@ -2059,9 +3090,51 @@
                 "default": "Sign out everywhere else"
               }
             },
-            "title": "Active Sessions"
+            "title": "Active Sessions",
+            "preview": {
+              "props": {
+                "title": "Active sessions",
+                "lead": "Everywhere your account is open right now. An unfamiliar city or device is a reason to end them all and change the password.",
+                "submit": "Sign out everywhere else",
+                "hereText": "this device",
+                "whereText": "{client} · {place}",
+                "dangerLead": "Careful:",
+                "dangerText": "{count} sessions on other devices will end. Unsaved drafts there will be lost.",
+                "confirmText": "Yes, end {count}",
+                "cancelText": "Cancel",
+                "doneText": "The other sessions are closed. Those devices will ask to sign in again.",
+                "sessions": [
+                  {
+                    "device": "MacBook Pro",
+                    "client": "Chrome 141",
+                    "place": "Moscow",
+                    "seen": "now",
+                    "current": true
+                  },
+                  {
+                    "device": "iPhone 15",
+                    "client": "Safari",
+                    "place": "Moscow",
+                    "seen": "2 hours ago"
+                  },
+                  {
+                    "device": "Windows 11",
+                    "client": "Firefox 133",
+                    "place": "Kazan",
+                    "seen": "yesterday, 21:40"
+                  },
+                  {
+                    "device": "Unknown device",
+                    "client": "Chrome 118",
+                    "place": "Amsterdam",
+                    "seen": "4 days ago"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2079,7 +3152,7 @@
           "target": "@components/vibeui/auth-021.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-021-*. Серверный: хуков нет. Порядок «последствия → поле → кнопки» задан разметкой; на широкой ширине кнопки встают в строку через row-reverse, чтобы подтверждение оказалось справа, оставаясь вторым в DOM.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-021-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Порядок «последствия → поле → кнопки» задан разметкой; на широкой ширине кнопки встают в строку через row-reverse, чтобы подтверждение оказалось справа, оставаясь вторым в DOM.",
       "meta": {
         "tags": ["auth", "confirm", "danger", "reauth"],
         "preview": {
@@ -2095,15 +3168,20 @@
             "перечисление последствий конкретными числами, а не словом «безвозвратно»",
             "отмену такой же кнопкой рядом, а не ссылкой в углу",
             "объяснение, почему пароль спрашивают повторно",
-            "упоминание журнала безопасности: событие должно быть видимым для владельца"
+            "упоминание журнала безопасности: событие должно быть видимым для владельца",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
-            "action и объект target",
+            "action и объект target, а также строку targetText вокруг него",
             "массив effects",
             "подписи submit и cancel",
-            "акцент через проп accent"
+            "passwordLabel, whyText и footText",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: пароль не проверяется, повторную проверку обязан реализовать вызывающий код прямо перед действием.",
             "Проверяйте пароль на сервере в момент действия, а не «где-то раньше в сессии».",
             "Для аккаунтов со вторым фактором спрашивайте именно его: пароль мог утечь.",
@@ -2111,6 +3189,18 @@
           ]
         },
         "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "action",
             "label": "Действие",
@@ -2137,15 +3227,20 @@
                 "listing consequences with concrete numbers rather than the word \"permanently\"",
                 "cancel as an equal button beside confirm, not a link in the corner",
                 "the explanation of why the password is being asked again",
-                "the mention of the security log: the event must be visible to the owner"
+                "the mention of the security log: the event must be visible to the owner",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
-                "action and its target",
+                "action and its target, plus the targetText line around it",
                 "the effects array",
                 "the submit and cancel labels",
-                "the accent through the accent prop"
+                "passwordLabel, whyText and footText",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: the password is not verified — re-authentication right before the action is the caller's job.",
                 "Verify the password on the server at the moment of the action, not \"somewhere earlier in the session\".",
                 "For accounts with a second factor, ask for that instead: the password may already have leaked.",
@@ -2154,6 +3249,12 @@
               "usage": "<Auth021 action=\"Transfer the project to another owner\" submit=\"Confirm and transfer\" />"
             },
             "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "action": {
                 "label": "Action",
                 "default": "Transfer the project"
@@ -2163,9 +3264,27 @@
                 "default": "Confirm and transfer"
               }
             },
-            "title": "Confirm Identity"
+            "title": "Confirm Identity",
+            "preview": {
+              "props": {
+                "action": "Transfer the project to another owner",
+                "target": "Mera Catalog",
+                "submit": "Confirm and transfer",
+                "cancel": "Cancel",
+                "effects": [
+                  "All 128 blocks of the project become unavailable to a team of 12.",
+                  "Public preview links stop opening.",
+                  "It can be restored for 30 days, after that the data is erased for good."
+                ],
+                "targetText": "Target: {target}",
+                "passwordLabel": "Enter your account password",
+                "whyText": "We ask again because the action is irreversible and the session has been open for over an hour.",
+                "footText": "The event goes into the project security log with the time and the device."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2183,7 +3302,7 @@
           "target": "@components/vibeui/auth-022.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-022-*. Серверный: хуков нет. Размытый слой собран из простых полос с filter:blur и помечен aria-hidden; карточка объявлена role=\"alertdialog\" и связана с заголовком через aria-labelledby.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-022-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Размытый слой собран из простых полос с filter:blur и помечен aria-hidden; карточка объявлена role=\"alertdialog\" и связана с заголовком через aria-labelledby.",
       "meta": {
         "tags": ["auth", "session", "expired", "modal"],
         "preview": {
@@ -2199,15 +3318,20 @@
             "aria-hidden на размытом слое — для скринридера это шум, а не содержимое",
             "строку про сохранённый черновик: главный страх на этом экране — потерянная работа",
             "кнопку «выйти совсем» рядом, а не мелкой ссылкой: на общем компьютере это правильный исход",
-            "role=\"alertdialog\" и связь с заголовком через aria-labelledby"
+            "role=\"alertdialog\" и связь с заголовком через aria-labelledby",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title, lead и адрес account",
             "подписи submit и leave",
+            "badgeText, savedText и passwordLabel",
             "число полос в размытом слое",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: пароль не проверяется, продление сессии обязан реализовать вызывающий код.",
             "Срок жизни сессии считает сервер: клиентский таймер расходится с ним при спящем ноутбуке.",
             "Черновик действительно сохраняйте до показа окна, иначе строка про него — обман.",
@@ -2215,6 +3339,18 @@
           ]
         },
         "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -2241,15 +3377,20 @@
                 "aria-hidden on the blurred layer — to a screen reader it is noise, not content",
                 "the saved-draft line: the real fear on this screen is lost work",
                 "the \"sign out entirely\" button beside it, not a tiny link: on a shared computer that is the right outcome",
-                "role=\"alertdialog\" and the aria-labelledby link to the heading"
+                "role=\"alertdialog\" and the aria-labelledby link to the heading",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title, lead and the account address",
                 "the submit and leave labels",
+                "badgeText, savedText and passwordLabel",
                 "the number of bars in the blurred layer",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: the password is not checked — extending the session is the caller's job.",
                 "The session lifetime is the server's: a client timer drifts whenever the laptop sleeps.",
                 "Actually save the draft before showing the dialog, or the line about it is a lie.",
@@ -2258,6 +3399,12 @@
               "usage": "<Auth022 title=\"Session expired\" leave=\"Sign out entirely\" />"
             },
             "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "title": {
                 "label": "Heading",
                 "default": "Session expired"
@@ -2267,9 +3414,22 @@
                 "default": "Sign out entirely"
               }
             },
-            "title": "Session Expired"
+            "title": "Session Expired",
+            "preview": {
+              "props": {
+                "title": "Session expired",
+                "lead": "More than two hours passed without activity, so we closed access. Enter your password — you will land on the same page.",
+                "account": "anna@vibeui.com",
+                "submit": "Continue working",
+                "leave": "Sign out entirely",
+                "badgeText": "Sign-in required",
+                "savedText": "The page draft is saved — nothing will be lost.",
+                "passwordLabel": "Password"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2287,7 +3447,7 @@
           "target": "@components/vibeui/auth-023.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-023-*. Клиентский: \"use client\" ради переключения шагов. Индикатор — список из двух пунктов с data-active и линией-разделителем; на широкой ширине поля профиля встают в две колонки контейнерным запросом.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-023-*. Клиентский: \"use client\" ради переключения шагов. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Индикатор — список из двух пунктов с data-active и линией-разделителем; на широкой ширине поля профиля встают в две колонки контейнерным запросом.",
       "meta": {
         "tags": ["auth", "signup", "steps", "onboarding"],
         "preview": {
@@ -2303,15 +3463,22 @@
             "кнопку «пропустить» на втором шаге — без неё разрез превращается в ту же длинную форму",
             "индикатор из двух шагов: он обещает, что анкета не бесконечная",
             "возврат на пройденный шаг и запрет прыгать вперёд",
-            "строку внизу, объясняющую, что именно делает каждый шаг"
+            "строку внизу, объясняющую, что именно делает каждый шаг",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title и подписи firstStep и secondStep",
-            "подпись submit и набор полей второго шага",
-            "тексты пояснений под заголовками",
-            "акцент через проп accent"
+            "defaultStep — с какого шага открывается форма",
+            "firstTitle, secondTitle, firstLead и secondLead; {title} подставляет заголовок",
+            "подписи полей: emailLabel, emailPlaceholder, passwordLabel, nameLabel, namePlaceholder, roleLabel, rolePlaceholder, companyLabel, companyPlaceholder",
+            "roleOptions — список занятий во втором шаге",
+            "подписи submit, nextText, backText, skipText и сноску doneText",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: ничего не отправляется и не сохраняется, регистрацию обязан реализовать вызывающий код.",
             "Данные первого шага отправляйте сразу, а не копите до конца: иначе обещание «аккаунт уже создан» ложно.",
             "Не делайте второй шаг обязательным задним числом — люди уже увидели «пропустить».",
@@ -2319,6 +3486,26 @@
           ]
         },
         "controls": [
+          {
+            "prop": "defaultStep",
+            "label": "Открыть шаг",
+            "type": "number",
+            "default": 1,
+            "min": 1,
+            "max": 2
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -2345,15 +3532,22 @@
                 "the \"skip\" button on step two — without it the split becomes the same long form with scrolling",
                 "the two-step indicator: it promises the questionnaire is finite",
                 "going back to a completed step while forward jumps stay blocked",
-                "the closing line explaining what each step actually does"
+                "the closing line explaining what each step actually does",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title and the firstStep and secondStep labels",
-                "the submit label and the second step's fields",
-                "the explanatory copy under the headings",
-                "the accent through the accent prop"
+                "defaultStep — which step the form opens on",
+                "firstTitle, secondTitle, firstLead and secondLead; {title} stands for the heading",
+                "the field copy: emailLabel, emailPlaceholder, passwordLabel, nameLabel, namePlaceholder, roleLabel, rolePlaceholder, companyLabel, companyPlaceholder",
+                "roleOptions — the occupations offered on step two",
+                "the submit, nextText, backText, skipText labels and the doneText footnote",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: nothing is stored — registration is the caller's job.",
                 "Send step one immediately rather than buffering to the end, or the \"your account already exists\" promise is false.",
                 "Do not make step two mandatory after the fact — people already saw \"skip\".",
@@ -2362,6 +3556,15 @@
               "usage": "<Auth023 title=\"Sign up\" submit=\"Done, open the catalog\" />"
             },
             "controls": {
+              "defaultStep": {
+                "label": "Open step"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "title": {
                 "label": "Heading",
                 "default": "Sign up"
@@ -2371,9 +3574,36 @@
                 "default": "Done, open catalog"
               }
             },
-            "title": "Two Step Signup"
+            "title": "Two Step Signup",
+            "preview": {
+              "props": {
+                "title": "Sign up",
+                "firstStep": "Access",
+                "secondStep": "Profile",
+                "submit": "Done, open the catalog",
+                "firstTitle": "{title}: step 1 of 2",
+                "secondTitle": "{title}: step 2 of 2",
+                "firstLead": "Two fields are enough for the account to work. The profile comes next, or later.",
+                "secondLead": "The account already exists. These details help the team recognise you in comments — change them any time.",
+                "emailLabel": "Work email",
+                "emailPlaceholder": "name@company.com",
+                "passwordLabel": "Password",
+                "nextText": "Next — profile",
+                "nameLabel": "Name",
+                "namePlaceholder": "Anna Sokolova",
+                "roleLabel": "What you do",
+                "rolePlaceholder": "Choose",
+                "roleOptions": ["Design", "Frontend", "Product", "Other"],
+                "companyLabel": "Company",
+                "companyPlaceholder": "Mera Studio",
+                "backText": "Back",
+                "skipText": "Skip — I'll fill it in later",
+                "doneText": "Step 1 creates the account. Step 2 changes nothing but your byline in comments."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultStep", "accent", "background"]
       }
     },
     {
@@ -2391,7 +3621,7 @@
           "target": "@components/vibeui/auth-024.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-024-*. Клиентский: \"use client\" ради выбора и предела. Карточки — label с визуально скрытым чекбоксом внутри, подсветка держится на :has(input:checked); после исчерпания лимита остальные чекбоксы получают disabled.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-024-*. Клиентский: \"use client\" ради выбора и предела. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Карточки — label с визуально скрытым чекбоксом внутри, подсветка держится на :has(input:checked); после исчерпания лимита остальные чекбоксы получают disabled.",
       "meta": {
         "tags": ["auth", "onboarding", "goals", "survey"],
         "preview": {
@@ -2407,15 +3637,21 @@
             "предел выбора: отметивший всё не сообщил ничего",
             "чекбоксы внутри label: клавиатура и скринридер работают без ролей и обработчиков",
             "«пропустить» рядом с кнопкой: онбординг, из которого нельзя выйти, воспринимается как платёжная форма",
-            "счётчик с role=\"status\": иначе выключение остальных карточек выглядит поломкой"
+            "счётчик с role=\"status\": иначе выключение остальных карточек выглядит поломкой",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив goals с текстами и значками",
             "limit — сколько целей можно отметить",
             "title, lead и подпись submit",
-            "акцент через проп accent"
+            "hiText, skipText и countText, где {count} и {limit} — числа выбора",
+            "fullText — хвост счётчика, когда предел выбран",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: ответы никуда не уходят, их обработку обязан реализовать вызывающий код.",
             "Если ответы ни на что не влияют, экран лучше убрать: он крадёт первую минуту знакомства.",
             "Не блокируйте вход до ответа — онбординг обязан быть необязательным.",
@@ -2430,6 +3666,18 @@
             "default": 3,
             "min": 1,
             "max": 6
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           },
           {
             "prop": "submit",
@@ -2450,15 +3698,21 @@
                 "the selection cap: someone who ticks everything has told you nothing",
                 "checkboxes inside labels: keyboard and screen readers work with no roles or handlers",
                 "\"skip\" beside the button: onboarding you cannot leave feels like a payment form",
-                "the counter with role=\"status\": otherwise the other cards going disabled looks like a bug"
+                "the counter with role=\"status\": otherwise the other cards going disabled looks like a bug",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the goals array with its copy and glyphs",
                 "limit — how many goals can be ticked",
                 "title, lead and the submit label",
-                "the accent through the accent prop"
+                "hiText, skipText and countText, where {count} and {limit} are the selection numbers",
+                "fullText — the counter's tail once the cap is reached",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: the answers go nowhere — handling them is the caller's job.",
                 "If the answers change nothing, drop the screen: it steals the first minute of the relationship.",
                 "Never gate entry on answering — onboarding has to stay optional.",
@@ -2470,14 +3724,64 @@
               "limit": {
                 "label": "Maximum goals"
               },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "submit": {
                 "label": "Button",
                 "default": "Open the catalog"
               }
             },
-            "title": "Onboarding Goals"
+            "title": "Onboarding Goals",
+            "preview": {
+              "props": {
+                "title": "Where do we start?",
+                "lead": "Tick why you are here — the catalog opens on the right blocks. The answers only affect the card order.",
+                "submit": "Open the catalog",
+                "hiText": "Account created",
+                "countText": "Selected {count} of {limit}",
+                "fullText": " — that's enough, the order is already clear",
+                "skipText": "Skip",
+                "goals": [
+                  {
+                    "title": "Build a landing page",
+                    "text": "The catalog opens on hero sections and forms.",
+                    "glyph": "◆"
+                  },
+                  {
+                    "title": "Make an admin panel",
+                    "text": "Tables, filters and charts move to the top.",
+                    "glyph": "▤"
+                  },
+                  {
+                    "title": "Prototype fast",
+                    "text": "Copy for AI will hand over whole screens at once.",
+                    "glyph": "⚡"
+                  },
+                  {
+                    "title": "Tidy up the design",
+                    "text": "We point out blocks that drift away from your style.",
+                    "glyph": "☰"
+                  },
+                  {
+                    "title": "Work as a team",
+                    "text": "Shared install history and comments get switched on.",
+                    "glyph": "◎"
+                  },
+                  {
+                    "title": "Just looking",
+                    "text": "No emails, no hints — we open a plain catalog.",
+                    "glyph": "◐"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["limit", "accent", "background"]
       }
     },
     {
@@ -2495,7 +3799,7 @@
           "target": "@components/vibeui/auth-025.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-025-*. Клиентский: \"use client\" ради периода и выбранного тарифа. Тарифы — label с radio внутри, подсветка на :has(input:checked); на широкой ширине карточки встают в три колонки, а форма — в две.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-025-*. Клиентский: \"use client\" ради периода и выбранного тарифа. Тарифы — label с radio внутри, подсветка на :has(input:checked); на широкой ширине карточки встают в три колонки, а форма — в две. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы, а проп background её возвращает.",
       "meta": {
         "tags": ["auth", "signup", "pricing", "plans"],
         "preview": {
@@ -2511,15 +3815,20 @@
             "пересчёт цены при смене периода: «−20% при годовой оплате» мелким шрифтом читают единицы, а изменившееся число видят все",
             "строку «карта не нужна» под кнопкой — это главный страх этого шага",
             "радиокарточки внутри label: стрелки клавиатуры переключают тарифы без JS",
-            "название выбранного тарифа на кнопке: человек видит, за что подписывается"
+            "название выбранного тарифа на кнопке: человек видит, за что подписывается",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив plans с ценами и возможностями",
             "yearlyOff — скидка за годовую оплату",
             "title и подпись submit",
-            "акцент через проп accent"
+            "подписи periodLabel, monthlyText, yearlyText, priceText, perText и footText",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: оплата и подписка не подключаются, их обязан реализовать вызывающий код.",
             "Цены и валюту берите с сервера: захардкоженные числа расходятся с прайсом в первый же месяц.",
             "Скидку считайте так же, как в биллинге, иначе на счёте окажется другая сумма.",
@@ -2534,6 +3843,18 @@
             "default": 20,
             "min": 0,
             "max": 50
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           },
           {
             "prop": "submit",
@@ -2554,15 +3875,20 @@
                 "recalculating the price on period change: \"20% off annually\" in fine print is read by nobody, a changed number by everyone",
                 "the \"no card needed\" line under the button — the main fear at this step",
                 "radio cards inside labels: arrow keys switch plans with no JS",
-                "the chosen plan's name on the button: people see what they are subscribing to"
+                "the chosen plan's name on the button: people see what they are subscribing to",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the plans array with prices and perks",
                 "yearlyOff — the annual discount",
                 "title and the submit label",
-                "the accent through the accent prop"
+                "the periodLabel, monthlyText, yearlyText, priceText, perText and footText copy",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: no payment or subscription is set up — that is the caller's job.",
                 "Take prices and currency from the server: hard-coded numbers drift from the price list within a month.",
                 "Compute the discount exactly as billing does, or the invoice will show a different figure.",
@@ -2574,14 +3900,72 @@
               "yearlyOff": {
                 "label": "Annual discount, %"
               },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "submit": {
                 "label": "Button",
                 "default": "Create account"
               }
             },
-            "title": "Plan Signup"
+            "title": "Plan Signup",
+            "preview": {
+              "props": {
+                "title": "Choose a plan",
+                "submit": "Create account",
+                "periodLabel": "Billing period",
+                "monthlyText": "Monthly",
+                "yearlyText": "Yearly — {off}% off",
+                "bestText": "most popular",
+                "priceText": "${price}",
+                "perText": "per month",
+                "perYearText": ", billed annually",
+                "emailLabel": "Work email",
+                "emailPlaceholder": "name@company.com",
+                "passwordLabel": "Password",
+                "planSuffix": " — the {plan} plan",
+                "footText": "No card is needed on the free plan. A paid one can be switched on later — progress and projects are kept.",
+                "plans": [
+                  {
+                    "name": "Free",
+                    "price": 0,
+                    "note": "Free forever, no card needed.",
+                    "perks": [
+                      "The whole block catalog",
+                      "Copy for AI",
+                      "One project"
+                    ]
+                  },
+                  {
+                    "name": "Team",
+                    "price": 12,
+                    "note": "For studios of up to ten people.",
+                    "perks": [
+                      "Shared install history",
+                      "Comments",
+                      "Five projects"
+                    ],
+                    "best": true
+                  },
+                  {
+                    "name": "Business",
+                    "price": 35,
+                    "note": "Your own registry and SSO sign-in.",
+                    "perks": [
+                      "Private blocks",
+                      "SSO and an access log",
+                      "Unlimited projects"
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["yearlyOff", "accent", "background"]
       }
     },
     {
@@ -2599,7 +3983,7 @@
           "target": "@components/vibeui/auth-026.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-026-*. Клиентский: \"use client\" ради двух шагов и очистки ввода. Номер принимает только цифры, пробелы и дефисы; поле кода — одно, с letter-spacing и компенсирующим text-indent.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-026-*. Клиентский: \"use client\" ради двух шагов и очистки ввода. Номер принимает только цифры, пробелы и дефисы; поле кода — одно, с letter-spacing и компенсирующим text-indent. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы, а проп background её возвращает.",
       "meta": {
         "tags": ["auth", "phone", "sms", "otp"],
         "preview": {
@@ -2615,15 +3999,19 @@
             "inputMode=\"tel\" на номере — на телефоне это цифровая клавиатура, а не буквенная",
             "показ набранного номера на втором шаге: главная ошибка такого входа обнаруживается, когда SMS не приходит",
             "кнопку «изменить номер», сохраняющую уже введённые цифры",
-            "autoComplete=\"one-time-code\" на поле кода"
+            "autoComplete=\"one-time-code\" на поле кода",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив countries с кодами и масками",
             "title, lead и подпись submit",
-            "длину кода и тексты подсказок",
-            "акцент через проп accent"
+            "codeLength — сколько цифр в коде, и подписи полей со сносками",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: SMS не отправляются, выдачу и проверку кода обязан реализовать вызывающий код.",
             "SMS дорогие и перехватываемые: ограничьте частоту отправки и не считайте их сильным вторым фактором.",
             "Храните номер в формате E.164, а не так, как его набрали в поле.",
@@ -2631,6 +4019,26 @@
           ]
         },
         "controls": [
+          {
+            "prop": "codeLength",
+            "label": "Цифр в коде",
+            "type": "number",
+            "default": 4,
+            "min": 4,
+            "max": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -2657,15 +4065,19 @@
                 "inputMode=\"tel\" on the number — on a phone that is a numeric keypad, not a letter one",
                 "showing the entered number on step two: the classic mistake here surfaces only when no SMS arrives",
                 "the \"change number\" button that keeps the digits already typed",
-                "autoComplete=\"one-time-code\" on the code field"
+                "autoComplete=\"one-time-code\" on the code field",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the countries array with codes and masks",
                 "title, lead and the submit label",
-                "the code length and the hint texts",
-                "the accent through the accent prop"
+                "codeLength — how many digits the code has, and the field labels with their hints",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: no SMS is sent — issuing and checking the code is the caller's job.",
                 "SMS is costly and interceptable: rate-limit sending and do not treat it as a strong second factor.",
                 "Store the number in E.164 form, not as it was typed into the field.",
@@ -2674,6 +4086,15 @@
               "usage": "<Auth026 title=\"Sign in by phone\" submit=\"Send the code\" />"
             },
             "controls": {
+              "codeLength": {
+                "label": "Digits in the code"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "title": {
                 "label": "Heading",
                 "default": "Sign in by phone"
@@ -2683,9 +4104,50 @@
                 "default": "Send the code"
               }
             },
-            "title": "Phone Code"
+            "title": "Phone Code",
+            "preview": {
+              "props": {
+                "title": "Sign in by phone",
+                "lead": "We will text you a code. No password needed.",
+                "submit": "Send the code",
+                "phoneLabel": "Phone number",
+                "countryLabel": "Country code",
+                "codeTitle": "Code from the message",
+                "codeLead": "The message takes up to a minute. The code is {length} digits long.",
+                "changeText": "Change the number",
+                "codeLabel": "Code from the message",
+                "codeSubmit": "Sign in",
+                "hintText": "By sending your number you agree to receive one service text message. Got an email?",
+                "emailLinkText": "Sign in with email",
+                "resendText": "No message? Check the number above, and after a minute you can",
+                "resendLinkText": "ask for a call with the code",
+                "countries": [
+                  {
+                    "code": "+1",
+                    "label": "+1 United States",
+                    "mask": "555 000-0000"
+                  },
+                  {
+                    "code": "+44",
+                    "label": "+44 United Kingdom",
+                    "mask": "7700 000000"
+                  },
+                  {
+                    "code": "+49",
+                    "label": "+49 Germany",
+                    "mask": "1512 0000000"
+                  },
+                  {
+                    "code": "+33",
+                    "label": "+33 France",
+                    "mask": "6 00 00 00 00"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["codeLength", "accent", "background"]
       }
     },
     {
@@ -2703,7 +4165,7 @@
           "target": "@components/vibeui/auth-027.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-027-*. Клиентский: \"use client\" ради текста причины и состояния «запрос отправлен». Отправленный запрос заменяет только форму, а не весь экран; оттенок аватара администратора считается хешем FNV-1a по имени.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-027-*. Клиентский: \"use client\" ради текста причины и состояния «запрос отправлен». Отправленный запрос заменяет только форму, а не весь экран; оттенок аватара администратора считается хешем FNV-1a по имени. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы, а проп background её возвращает.",
       "meta": {
         "tags": ["auth", "403", "permissions", "request"],
         "preview": {
@@ -2719,15 +4181,20 @@
             "название конкретного права, а не общее «недостаточно прав»",
             "поле «зачем»: запрос без причины администратор откладывает, потому что не может его оценить",
             "уточнение, что вход в порядке и дело не в аккаунте — иначе люди начинают заново логиниться",
-            "замену только формы после отправки: подменённый экран прячет уже сделанный запрос"
+            "замену только формы после отправки: подменённый экран прячет уже сделанный запрос",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "resource и needed",
             "список admins",
-            "подпись submit и текст подтверждения",
-            "акцент через проп accent"
+            "account и role — под кем вошли и какая роль сейчас",
+            "подписи lead, sentText, submit и строк таблицы фактов",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: запрос никуда не отправляется, выдачу прав обязан реализовать вызывающий код.",
             "Права проверяйте на сервере: скрытая кнопка не защищает адрес страницы.",
             "Не показывайте на этом экране содержимое, к которому нет доступа, даже размытым.",
@@ -2735,6 +4202,18 @@
           ]
         },
         "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "needed",
             "label": "Требуемое право",
@@ -2761,15 +4240,20 @@
                 "the specific permission name rather than a generic \"insufficient rights\"",
                 "the \"why\" field: a request with no reason gets postponed because nobody can judge it",
                 "the note that sign-in is fine and the account is not at fault — otherwise people start logging in again",
-                "replacing only the form after sending: a swapped screen hides the request that was just made"
+                "replacing only the form after sending: a swapped screen hides the request that was just made",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "resource and needed",
                 "the admins list",
-                "the submit label and the confirmation copy",
-                "the accent through the accent prop"
+                "account and role — who is signed in and what role they hold now",
+                "the lead, sentText, submit and facts-table copy",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: the request goes nowhere — granting permissions is the caller's job.",
                 "Enforce permissions on the server: a hidden button does not protect a URL.",
                 "Never show the inaccessible content on this screen, not even blurred.",
@@ -2778,6 +4262,12 @@
               "usage": "<Auth027 needed=\"Private blocks reader\" submit=\"Request access\" />"
             },
             "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "needed": {
                 "label": "Required permission",
                 "default": "Private blocks reader"
@@ -2787,9 +4277,40 @@
                 "default": "Request access"
               }
             },
-            "title": "Access Request"
+            "title": "Access Request",
+            "preview": {
+              "props": {
+                "title": "Access denied",
+                "resource": "Mera catalog / private blocks",
+                "needed": "Private blocks reader",
+                "submit": "Request access",
+                "account": "anna@vibeui.com",
+                "lead": "You are signed in as {account}, but this account has no rights to the page. This is not a sign-in error — the account is fine.",
+                "role": "Reader",
+                "factsTitle": "What is closed",
+                "resourceLabel": "Page",
+                "neededLabel": "Permission needed",
+                "roleLabel": "Your role now",
+                "adminsTitle": "Who grants it",
+                "reasonLabel": "Why you need access",
+                "reasonPlaceholder": "For example: building a landing page for a client, I need the studio's private blocks.",
+                "sentText": "The request went to both administrators. They usually answer within a working day — you will get an email, no need to send it again.",
+                "backText": "Back to the public catalog",
+                "admins": [
+                  {
+                    "name": "Peter Guy",
+                    "role": "project owner"
+                  },
+                  {
+                    "name": "Liza Kim",
+                    "role": "access administrator"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2807,7 +4328,7 @@
           "target": "@components/vibeui/auth-028.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-028-*. Клиентский: \"use client\" ради состояния переключателей. Переключатели — обычные чекбоксы с прозрачным input поверх дорожки, вид даёт CSS через :has(input:checked); обязательная цель получает disabled.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-028-*. Клиентский: \"use client\" ради состояния переключателей. Переключатели — обычные чекбоксы с прозрачным input поверх дорожки, вид даёт CSS через :has(input:checked); обязательная цель получает disabled. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы, а проп background её возвращает.",
       "meta": {
         "tags": ["auth", "consent", "privacy", "gdpr"],
         "preview": {
@@ -2823,15 +4344,20 @@
             "выключенные по умолчанию необязательные переключатели",
             "показанную, но заблокированную обязательную цель с объяснением: спрятать её значило бы умолчать о собираемых данных",
             "описание под каждой целью — «улучшение сервиса» не позволяет принять решение",
-            "прозрачный чекбокс поверх дорожки: переключатель обязан работать с клавиатуры"
+            "прозрачный чекбокс поверх дорожки: переключатель обязан работать с клавиатуры",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив purposes с описаниями и отметкой required",
             "подписи acceptAll и saveChoice",
-            "title, lead и текст ссылки на политику",
-            "акцент через проп accent"
+            "title, lead, lockText и текст ссылки на политику",
+            "countText — счётчик, где {count} и {total} подставляются числами",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: выбор никуда не сохраняется, запись согласий обязан реализовать вызывающий код.",
             "Сохраняйте версию политики и время согласия: без них согласие недоказуемо.",
             "Отзыв согласия должен быть таким же простым, как его выдача.",
@@ -2839,6 +4365,18 @@
           ]
         },
         "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "acceptAll",
             "label": "Кнопка «принять всё»",
@@ -2865,15 +4403,20 @@
                 "optional switches off by default",
                 "the required purpose shown but locked with a reason: hiding it would conceal what data is collected",
                 "a description under every purpose — \"to improve the service\" supports no decision",
-                "the transparent checkbox over the track: a switch must work from the keyboard"
+                "the transparent checkbox over the track: a switch must work from the keyboard",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the purposes array with descriptions and the required flag",
                 "the acceptAll and saveChoice labels",
-                "title, lead and the policy link copy",
-                "the accent through the accent prop"
+                "title, lead, lockText and the policy link copy",
+                "countText — the counter, where {count} and {total} are numbers",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: the choice is not stored — recording consent is the caller's job.",
                 "Store the policy version and the time of consent: without them consent is unprovable.",
                 "Withdrawing consent must be as easy as giving it.",
@@ -2882,6 +4425,12 @@
               "usage": "<Auth028 acceptAll=\"Accept all\" saveChoice=\"Save my choice\" />"
             },
             "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "acceptAll": {
                 "label": "Accept-all button",
                 "default": "Accept all"
@@ -2891,9 +4440,46 @@
                 "default": "Save my choice"
               }
             },
-            "title": "Data Consent"
+            "title": "Data Consent",
+            "preview": {
+              "props": {
+                "title": "How we handle your data",
+                "lead": "Tick what you agree to. The settings can be changed at any time in your profile — consent is not forever.",
+                "acceptAll": "Accept all",
+                "saveChoice": "Save my choice",
+                "lockText": "cannot be switched off — the account stops working without it",
+                "countText": "Purposes selected: {count} of {total}.",
+                "policyText": "Details are in the",
+                "policyLinkText": "data processing policy",
+                "policyTailText": "; it also lists the processors and the retention periods.",
+                "purposes": [
+                  {
+                    "id": "core",
+                    "title": "Running the account",
+                    "text": "Email, password and the list of installed blocks. Without this you cannot sign in.",
+                    "required": true
+                  },
+                  {
+                    "id": "stats",
+                    "title": "Anonymised statistics",
+                    "text": "Which blocks get opened more often. Helps decide what to build next."
+                  },
+                  {
+                    "id": "help",
+                    "title": "Interface error reports",
+                    "text": "What broke and on which page. Without the contents of your projects."
+                  },
+                  {
+                    "id": "mail",
+                    "title": "Emails about new blocks",
+                    "text": "Once a month at most. One link in the email unsubscribes."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2911,7 +4497,7 @@
           "target": "@components/vibeui/auth-029.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-029-*. Клиентский: \"use client\" ради сверки набранного адреса. Сравнение без учёта регистра, кнопка удаления выключена до совпадения; на широкой ширине колонки последствий встают рядом контейнерным запросом.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-029-*. Клиентский: \"use client\" ради сверки набранного адреса. Сравнение без учёта регистра, кнопка удаления выключена до совпадения; на широкой ширине колонки последствий встают рядом контейнерным запросом. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы, а проп background её возвращает.",
       "meta": {
         "tags": ["auth", "delete", "account", "danger"],
         "preview": {
@@ -2927,15 +4513,20 @@
             "срок восстановления отдельной строкой: удаление неизвестной обратимости откладывают вместе с подпиской",
             "ввод собственной почты вместо слова «удалить»: почта не набирается механически и не копируется из соседней строки",
             "сравнение без учёта регистра — иначе кнопка не включается из-за автозаглавной буквы на телефоне",
-            "предложение заморозки внизу: часть людей приходит сюда за остановкой оплаты, а не за удалением"
+            "предложение заморозки внизу: часть людей приходит сюда за остановкой оплаты, а не за удалением",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массивы losses и keeps",
             "graceDays — срок восстановления",
             "адрес account и подпись submit",
-            "акцент через проп accent"
+            "подписи lead, graceText, confirmLabel, hintText и сноски внизу",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это демонстрация интерфейса: ничего не удаляется, удаление и повторную проверку пароля обязан реализовать вызывающий код.",
             "Список «что останется» должен совпадать с настоящей политикой хранения, иначе это обман.",
             "Владельца единственного проекта не удаляйте молча: сначала попросите передать владение.",
@@ -2950,6 +4541,18 @@
             "default": 30,
             "min": 0,
             "max": 90
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           },
           {
             "prop": "submit",
@@ -2970,15 +4573,20 @@
                 "the recovery window on its own line: a deletion of unknown reversibility gets postponed along with the subscription",
                 "typing your own email instead of the word \"delete\": an email is not typed on autopilot nor copied from the line above",
                 "the case-insensitive comparison — otherwise a phone's auto-capital keeps the button disabled",
-                "the freeze offer at the bottom: some people come here to stop paying, not to erase themselves"
+                "the freeze offer at the bottom: some people come here to stop paying, not to erase themselves",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the losses and keeps arrays",
                 "graceDays — the recovery window",
                 "the account address and the submit label",
-                "the accent through the accent prop"
+                "the lead, graceText, confirmLabel, hintText and footer copy",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an interface demo: nothing is deleted — deletion and re-authentication are the caller's job.",
                 "The \"what we keep\" list must match the real retention policy, otherwise it is a lie.",
                 "Do not silently delete the sole owner of a project: ask them to transfer ownership first.",
@@ -2990,14 +4598,50 @@
               "graceDays": {
                 "label": "Recovery window, days"
               },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "submit": {
                 "label": "Button",
                 "default": "Delete account"
               }
             },
-            "title": "Delete Account"
+            "title": "Delete Account",
+            "preview": {
+              "props": {
+                "title": "Delete account",
+                "account": "anna@vibeui.com",
+                "graceDays": 30,
+                "submit": "Delete account",
+                "lead": "The account being deleted is {account}. Read both columns — the second one usually comes as a surprise.",
+                "lossesTitle": "What disappears",
+                "keepsTitle": "What we keep",
+                "graceText": "For {days} days the account can be brought back — just sign in as usual. After that the data is erased for good.",
+                "confirmLabel": "Type {account} to confirm",
+                "hintText": "We ask for the email rather than the word \"delete\": that way the button is not pressed on autopilot.",
+                "keepText": "Keep the account",
+                "footText": "Don't want to lose your projects?",
+                "freezeText": "Freeze the account",
+                "footTailText": " — access closes, the data stays, billing stops.",
+                "losses": [
+                  "5 projects and 128 installed blocks",
+                  "Edit history and the team's comments",
+                  "Public preview links will stop opening",
+                  "Owner role in the Mera project — hand it over beforehand"
+                ],
+                "keeps": [
+                  "Invoices and receipts — the law requires keeping them, 5 years",
+                  "Anonymised statistics with no link to your email",
+                  "Support messages — we delete them separately on request"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["graceDays", "accent", "background"]
       }
     }
   ]

@@ -13,6 +13,15 @@ export type Input019Props = Omit<
   softLimit?: number
   hardLimit?: number
   onChange?: (value: string) => void
+  /** Счётчик над полем; {length} и {limit} подставляются. */
+  countText?: string
+  /**
+   * Строка под полем: ключи ok, soft, max.
+   * В soft подставляются {soft} и {over}.
+   */
+  noteText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,15 +31,15 @@ export type Input019Props = Omit<
 // полоска выводятся из одной и той же длины значения, поэтому не расходятся.
 const STYLES = `
 :where([data-vibeui-block="input-019"]){
---vibeui-input-019-bg:oklch(1 0 0);
---vibeui-input-019-fg:oklch(0.22 0.014 265);
---vibeui-input-019-muted:oklch(0.56 0.014 265);
---vibeui-input-019-border:oklch(0.9 0.006 265);
---vibeui-input-019-field:oklch(0.985 0.002 265);
---vibeui-input-019-track:oklch(0.92 0.005 265);
---vibeui-input-019-accent:oklch(0.55 0.17 265);
---vibeui-input-019-soft:oklch(0.72 0.16 75);
---vibeui-input-019-max:oklch(0.55 0.19 25);
+--vibeui-input-019-bg:transparent;
+--vibeui-input-019-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-019-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-input-019-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-input-019-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-input-019-track:light-dark(oklch(0.92 0.005 265),oklch(0.33 0.011 265));
+--vibeui-input-019-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-input-019-soft:light-dark(oklch(0.72 0.16 75),oklch(0.82 0.15 75));
+--vibeui-input-019-max:light-dark(oklch(0.55 0.19 25),oklch(0.74 0.16 25));
 --vibeui-input-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-019"]{
@@ -87,12 +96,32 @@ function toneOf(length: number, soft: number, hard: number) {
   return "ok"
 }
 
-function messageOf(length: number, soft: number, hard: number, hint?: string) {
-  if (length >= hard) return "Достигнут предел символов."
-  if (length > soft) {
-    return `Мягкий лимит ${soft} превышен на ${length - soft} — можно короче.`
+const NOTE: Record<string, string> = {
+  ok: "Коротко и по делу — то, что нужно.",
+  soft: "Мягкий лимит {soft} превышен на {over} — можно короче.",
+  max: "Достигнут предел символов.",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
   }
-  return hint ?? "Коротко и по делу — то, что нужно."
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -106,6 +135,9 @@ export function Input019({
   softLimit = 60,
   hardLimit = 80,
   onChange,
+  countText = "{length} / {limit}",
+  noteText = NOTE,
+  background = "",
   accent,
   className,
   style,
@@ -116,12 +148,20 @@ export function Input019({
 
   const palette = {
     ...(accent ? { "--vibeui-input-019-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
   const length = value.length
   const tone = toneOf(length, softLimit, hardLimit)
-  const message = messageOf(length, softLimit, hardLimit)
+  const message = (noteText[tone] ?? NOTE[tone])
+    .replace("{soft}", String(softLimit))
+    .replace("{over}", String(Math.max(0, length - softLimit)))
 
   return (
     <>
@@ -138,7 +178,9 @@ export function Input019({
         <div data-part="head">
           <label htmlFor={id}>{label}</label>
           <span data-part="count" aria-hidden="true">
-            {length} / {softLimit}
+            {countText
+              .replace("{length}", String(length))
+              .replace("{limit}", String(softLimit))}
           </span>
         </div>
         <input

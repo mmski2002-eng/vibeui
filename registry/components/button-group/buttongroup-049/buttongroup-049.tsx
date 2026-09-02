@@ -11,7 +11,13 @@ export type Buttongroup049Props = Omit<
   hiddenColumns?: string[]
   triggerLabel?: string
   label?: string
+  /** Счётчик в шапке: {visible} — показано, {total} — всего колонок. */
+  countText?: string
+  /** Объяснение к заблокированному флажку последней колонки. */
+  lastColumnHint?: string
   onChange?: (visible: string[]) => void
+  /** Пусто — заливки нет, кнопка ложится на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,11 +30,16 @@ export type Buttongroup049Props = Omit<
 // просто перестаёт реагировать: молчащий элемент читается как поломка.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-049"]){
---vibeui-buttongroup-049-surface:oklch(1 0 0);
---vibeui-buttongroup-049-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-049-muted:oklch(0.56 0.014 265);
---vibeui-buttongroup-049-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-049-accent:oklch(0.5 0.16 265);
+--vibeui-buttongroup-049-surface:transparent;
+--vibeui-buttongroup-049-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-049-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-049-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.012 265));
+--vibeui-buttongroup-049-hover:light-dark(oklch(0.97 0.004 265),oklch(0.33 0.01 265));
+/* Поповер перекрывает содержимое под собой, поэтому его подложка непрозрачна
+   всегда — она не наследует прозрачный фон кнопки. */
+--vibeui-buttongroup-049-panel:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-buttongroup-049-shadow:light-dark(oklch(0.2 0.03 265 / 16%),oklch(0 0 0 / 45%));
+--vibeui-buttongroup-049-accent:light-dark(oklch(0.5 0.16 265),oklch(0.76 0.14 265));
 --vibeui-buttongroup-049-radius:0.625rem;
 --vibeui-buttongroup-049-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -50,7 +61,7 @@ transition:background-color .16s ease;
 }
 [data-vibeui-block="buttongroup-049"] summary::marker{content:""}
 [data-vibeui-block="buttongroup-049"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="buttongroup-049"] summary:hover{background:oklch(0.97 0.004 265)}
+[data-vibeui-block="buttongroup-049"] summary:hover{background:var(--vibeui-buttongroup-049-hover)}
 [data-vibeui-block="buttongroup-049"] summary:focus-visible{
 outline:2px solid var(--vibeui-buttongroup-049-accent);outline-offset:2px;
 }
@@ -68,8 +79,8 @@ position:absolute;z-index:5;top:calc(100% + 0.375rem);left:0;
 min-width:13rem;padding:0.375rem;
 border:1px solid var(--vibeui-buttongroup-049-border);
 border-radius:0.75rem;
-background:var(--vibeui-buttongroup-049-surface);
-box-shadow:0 8px 24px oklch(0.2 0.03 265 / 16%);
+background:var(--vibeui-buttongroup-049-panel);
+box-shadow:0 8px 24px var(--vibeui-buttongroup-049-shadow);
 }
 [data-vibeui-block="buttongroup-049"] [data-part="row"]{
 display:flex;align-items:center;gap:0.5rem;
@@ -78,7 +89,7 @@ color:var(--vibeui-buttongroup-049-fg);
 font-size:0.8125rem;line-height:1.2;cursor:pointer;
 transition:background-color .14s ease;
 }
-[data-vibeui-block="buttongroup-049"] [data-part="row"]:hover{background:oklch(0.97 0.004 265)}
+[data-vibeui-block="buttongroup-049"] [data-part="row"]:hover{background:var(--vibeui-buttongroup-049-hover)}
 [data-vibeui-block="buttongroup-049"] [data-part="row"]:has(input:disabled){
 color:var(--vibeui-buttongroup-049-muted);cursor:not-allowed;
 }
@@ -101,6 +112,28 @@ const DEFAULT_COLUMNS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор видимых колонок в details, где последнюю колонку снять нельзя.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -109,7 +142,10 @@ export function Buttongroup049({
   hiddenColumns = ["Приоритет", "Обновлено"],
   triggerLabel = "Колонки",
   label = "Видимые колонки таблицы",
+  countText = "{visible} из {total}",
+  lastColumnHint = "Хотя бы одна колонка должна остаться",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -130,6 +166,12 @@ export function Buttongroup049({
 
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-049-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-049-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -148,7 +190,9 @@ export function Buttongroup049({
           <summary>
             {triggerLabel}
             <span data-part="count">
-              {visible.length} из {columns.length}
+              {countText
+                .replace("{visible}", String(visible.length))
+                .replace("{total}", String(columns.length))}
             </span>
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="m6 9 6 6 6-6" />
@@ -163,9 +207,7 @@ export function Buttongroup049({
                 <label
                   key={column}
                   data-part="row"
-                  title={
-                    last ? "Хотя бы одна колонка должна остаться" : undefined
-                  }
+                  title={last ? lastColumnHint : undefined}
                 >
                   <input
                     type="checkbox"

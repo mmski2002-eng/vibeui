@@ -5,6 +5,8 @@ export type Badge013Icon = "check" | "clock" | "alert" | "spark"
 export type Badge013Props = ComponentPropsWithoutRef<"span"> & {
   icon?: Badge013Icon
   tone?: "neutral" | "positive" | "warning" | "accent"
+  /** Пусто — плашка держит собственную заливку тона. */
+  background?: string
 }
 
 // Идея компонента: плашка, у которой слева стоит знак. Иконка живёт в тех же
@@ -15,10 +17,10 @@ const STYLES = `
 :where([data-vibeui-block="badge-013"]){
 --vibeui-badge-013-hue:265;
 --vibeui-badge-013-chroma:0.014;
---vibeui-badge-013-bg:oklch(0.96 calc(var(--vibeui-badge-013-chroma) * 0.5) var(--vibeui-badge-013-hue));
---vibeui-badge-013-fg:oklch(0.34 var(--vibeui-badge-013-chroma) var(--vibeui-badge-013-hue));
---vibeui-badge-013-mark:oklch(0.52 calc(var(--vibeui-badge-013-chroma) * 1.6) var(--vibeui-badge-013-hue));
---vibeui-badge-013-border:oklch(0.89 calc(var(--vibeui-badge-013-chroma) * 0.8) var(--vibeui-badge-013-hue));
+--vibeui-badge-013-bg:light-dark(oklch(0.96 calc(var(--vibeui-badge-013-chroma) * 0.5) var(--vibeui-badge-013-hue)),oklch(0.28 calc(var(--vibeui-badge-013-chroma) * 0.9) var(--vibeui-badge-013-hue)));
+--vibeui-badge-013-fg:light-dark(oklch(0.34 var(--vibeui-badge-013-chroma) var(--vibeui-badge-013-hue)),oklch(0.91 calc(var(--vibeui-badge-013-chroma) * 0.6) var(--vibeui-badge-013-hue)));
+--vibeui-badge-013-mark:light-dark(oklch(0.52 calc(var(--vibeui-badge-013-chroma) * 1.6) var(--vibeui-badge-013-hue)),oklch(0.76 calc(var(--vibeui-badge-013-chroma) * 1.3) var(--vibeui-badge-013-hue)));
+--vibeui-badge-013-border:light-dark(oklch(0.89 calc(var(--vibeui-badge-013-chroma) * 0.8) var(--vibeui-badge-013-hue)),oklch(0.41 var(--vibeui-badge-013-chroma) var(--vibeui-badge-013-hue)));
 --vibeui-badge-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="badge-013"]{
@@ -53,17 +55,50 @@ const ICONS: Record<Badge013Icon, ReactNode> = {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Плашка со знаком слева: иконка масштабируется вместе с текстом.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Badge013({
   icon = "check",
   tone = "positive",
+  background = "",
   className,
   style,
   children = "Оплачено",
   ...props
 }: Badge013Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-badge-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-badge-013" precedence="medium">
@@ -74,7 +109,7 @@ export function Badge013({
         data-vibeui-block="badge-013"
         data-tone={tone}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <svg
           data-part="icon"

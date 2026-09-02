@@ -11,6 +11,8 @@ export type Features015Props = {
   lede?: string
   groups?: Features015Group[]
   footnote?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -22,14 +24,19 @@ export type Features015Props = {
 // широкой — двумя колонками. Значения набраны моноширинным шрифтом и
 // tabular-nums, поэтому цифры выстраиваются столбиком и таблицу можно
 // читать по вертикали, не сравнивая символы глазами.
+//
+// Тема берётся из color-scheme окружения через light-dark(): секция темнеет
+// вместе с контекстом и не выкладывает под себя плашку. Тёмная ветка — не
+// инверсия светлой: карточка группы там светлее фона, линия светлее карточки,
+// а акцент поднимается по светлоте, чтобы надзаголовок остался читаемым.
 const STYLES = `
 :where([data-vibeui-block="features-015"]){
---vibeui-features-015-bg:oklch(0.97 0.003 250);
---vibeui-features-015-fg:oklch(0.2 0.01 250);
---vibeui-features-015-muted:oklch(0.52 0.01 250);
---vibeui-features-015-card:oklch(1 0 0);
---vibeui-features-015-line:oklch(0.9 0.005 250);
---vibeui-features-015-accent:oklch(0.5 0.13 200);
+--vibeui-features-015-bg:transparent;
+--vibeui-features-015-fg:light-dark(oklch(0.2 0.01 250),oklch(0.95 0.005 250));
+--vibeui-features-015-muted:light-dark(oklch(0.52 0.01 250),oklch(0.72 0.012 250));
+--vibeui-features-015-card:light-dark(oklch(1 0 0),oklch(0.24 0.012 250));
+--vibeui-features-015-line:light-dark(oklch(0.9 0.005 250),oklch(0.34 0.012 250));
+--vibeui-features-015-accent:light-dark(oklch(0.5 0.13 200),oklch(0.76 0.12 200));
 --vibeui-features-015-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-features-015-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;
@@ -108,10 +115,32 @@ const DEFAULT_GROUPS: Features015Group[] = [
       { label: "Раскладка", value: "container queries" },
       { label: "Минимальная ширина", value: "320 px" },
       { label: "Reduced motion", value: "поддержан" },
-      { label: "Тёмная тема", value: "своя палитра" },
+      { label: "Тёмная тема", value: "по color-scheme" },
     ],
   },
 ]
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /** Блок технических характеристик: три группы пар «параметр — значение» в стиле даташита. */
 export function Features015({
@@ -120,12 +149,19 @@ export function Features015({
   lede = "Всё, что обычно выясняется уже после установки: сколько файлов приедет, чего секция требует от проекта и как она себя ведёт.",
   groups = DEFAULT_GROUPS,
   footnote = "Характеристики одинаковы для всех секций каталога: это требование реестра, а не свойство конкретного блока.",
+  background = "",
   accent,
   className,
   style,
 }: Features015Props) {
   const palette = {
     ...(accent ? { "--vibeui-features-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-features-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

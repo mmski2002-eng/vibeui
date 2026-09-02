@@ -10,7 +10,11 @@ export type Buttongroup028Props = Omit<
   ascHint?: string
   descHint?: string
   defaultValue?: "asc" | "desc"
+  /** Шаблон подписи группы: {field} подставляется. */
+  legendTemplate?: string
   name?: string
+  /** Пусто — заливки нет, сцепка ложится на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,12 +27,13 @@ export type Buttongroup028Props = Omit<
 // него «по возрастанию» повисает в воздухе.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-028"]){
---vibeui-buttongroup-028-surface:oklch(1 0 0);
---vibeui-buttongroup-028-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-028-muted:oklch(0.56 0.014 265);
---vibeui-buttongroup-028-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-028-on:oklch(0.96 0.03 265);
---vibeui-buttongroup-028-accent:oklch(0.5 0.15 265);
+--vibeui-buttongroup-028-surface:transparent;
+--vibeui-buttongroup-028-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-028-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-028-border:light-dark(oklch(0.89 0.008 265),oklch(0.39 0.012 265));
+--vibeui-buttongroup-028-field:light-dark(oklch(0.975 0.003 265),oklch(0.31 0.01 265));
+--vibeui-buttongroup-028-on:light-dark(oklch(0.96 0.03 265),oklch(0.34 0.06 265));
+--vibeui-buttongroup-028-accent:light-dark(oklch(0.5 0.15 265),oklch(0.79 0.12 265));
 --vibeui-buttongroup-028-radius:0.625rem;
 --vibeui-buttongroup-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -53,7 +58,7 @@ overflow:hidden;
 display:inline-flex;align-items:center;
 height:2.375rem;padding:0 0.75rem;
 border-inline-end:1px solid var(--vibeui-buttongroup-028-border);
-background:oklch(0.975 0.003 265);
+background:var(--vibeui-buttongroup-028-field);
 color:var(--vibeui-buttongroup-028-fg);
 font-size:0.75rem;font-weight:700;letter-spacing:0.02em;white-space:nowrap;
 }
@@ -101,6 +106,28 @@ font-size:0.75rem;line-height:1.4;font-variant-numeric:tabular-nums;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Направление сортировки: одна стрелка, повёрнутая на 180°, и подпись поля.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -111,7 +138,9 @@ export function Buttongroup028({
   ascHint = "Сначала старые: 01.04 → 30.04",
   descHint = "Сначала новые: 30.04 → 01.04",
   defaultValue = "desc",
+  legendTemplate = "Сортировка: {field}",
   name = "buttongroup-028",
+  background = "",
   accent,
   className,
   style,
@@ -119,6 +148,12 @@ export function Buttongroup028({
 }: Buttongroup028Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-028-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-028-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -133,7 +168,7 @@ export function Buttongroup028({
         className={className}
         style={palette}
       >
-        <legend>Сортировка: {field}</legend>
+        <legend>{legendTemplate.replace("{field}", field)}</legend>
         <div data-part="track">
           <span data-part="field">{field}</span>
           <label data-part="segment" data-dir="asc">

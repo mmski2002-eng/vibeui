@@ -17,7 +17,11 @@ export type Checkbox002Props = Omit<
   legend?: string
   options?: Checkbox002Option[]
   defaultValue?: string[]
+  /** Строка счётчика. {selected} — выбрано, {total} — всего вариантов. */
+  countText?: string
   onChange?: (value: string[]) => void
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,14 +29,18 @@ export type Checkbox002Props = Omit<
 // поэтому пробел, Tab и объявление «отмечено» работают сами. Вся карточка —
 // label: попасть надо в неё, а не в квадратик 16 пикселей. Галочка нарисована
 // бордюрами и появляется только у отмеченного.
+//
+// Тема берётся из color-scheme окружения через light-dark(): панель темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="checkbox-002"]){
---vibeui-checkbox-002-bg:oklch(1 0 0);
---vibeui-checkbox-002-surface:oklch(0.975 0.002 265);
---vibeui-checkbox-002-fg:oklch(0.22 0.014 265);
---vibeui-checkbox-002-muted:oklch(0.56 0.014 265);
---vibeui-checkbox-002-border:oklch(0.91 0.006 265);
---vibeui-checkbox-002-accent:oklch(0.55 0.17 265);
+--vibeui-checkbox-002-surface:transparent;
+--vibeui-checkbox-002-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-checkbox-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-checkbox-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-checkbox-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.012 265));
+--vibeui-checkbox-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-checkbox-002-mark:light-dark(oklch(0.99 0.01 265),oklch(0.2 0.014 265));
 --vibeui-checkbox-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="checkbox-002"]{
@@ -63,7 +71,8 @@ background:var(--vibeui-checkbox-002-bg);
 }
 [data-vibeui-block="checkbox-002"] [data-part="tick"]{
 width:0.25rem;height:0.4375rem;margin-top:-0.0625rem;opacity:0;
-border-right:2px solid oklch(0.99 0.01 265);border-bottom:2px solid oklch(0.99 0.01 265);
+border-right:2px solid var(--vibeui-checkbox-002-mark);
+border-bottom:2px solid var(--vibeui-checkbox-002-mark);
 transform:rotate(45deg);
 }
 [data-vibeui-block="checkbox-002"] label:has(input:checked){
@@ -104,6 +113,28 @@ const DEFAULT_OPTIONS: Checkbox002Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Множественный выбор карточками на настоящих checkbox.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -111,7 +142,9 @@ export function Checkbox002({
   legend = "Дополнительно к заказу",
   options = DEFAULT_OPTIONS,
   defaultValue = ["delivery"],
+  countText = "Выбрано: {selected} из {total}",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -122,6 +155,12 @@ export function Checkbox002({
 
   const palette = {
     ...(accent ? { "--vibeui-checkbox-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-checkbox-002-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -132,6 +171,10 @@ export function Checkbox002({
     setValue(next)
     onChange?.(next)
   }
+
+  const count = countText
+    .replace("{selected}", String(value.length))
+    .replace("{total}", String(options.length))
 
   return (
     <>
@@ -163,9 +206,7 @@ export function Checkbox002({
             <span data-part="description">{option.description}</span>
           </label>
         ))}
-        <span data-part="count">
-          Выбрано: {value.length} из {options.length}
-        </span>
+        <span data-part="count">{count}</span>
       </fieldset>
     </>
   )

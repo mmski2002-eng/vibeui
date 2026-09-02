@@ -7,6 +7,11 @@ export type Frame009Props = Omit<
   label?: string
   scale?: string
   caption?: string
+  /** Подпись линейки для скринридера: {scale} подставляется значением. */
+  scaleLabel?: string
+  accent?: string
+  /** Пусто — остаётся собственный тон земли; сюда задают свой цвет карты. */
+  background?: string
   children?: ReactNode
 }
 
@@ -19,13 +24,13 @@ export type Frame009Props = Omit<
 // сама линейка и «хвост» метки декоративны и не должны звучать дважды.
 const STYLES = `
 :where([data-vibeui-block="frame-009"]){
---vibeui-frame-009-land:oklch(0.94 0.014 145);
---vibeui-frame-009-line:oklch(0.86 0.012 145);
---vibeui-frame-009-border:oklch(0.82 0.014 145);
---vibeui-frame-009-chip:oklch(1 0 0);
---vibeui-frame-009-fg:oklch(0.24 0.014 265);
---vibeui-frame-009-muted:oklch(0.5 0.014 265);
---vibeui-frame-009-accent:oklch(0.58 0.19 25);
+--vibeui-frame-009-land:light-dark(oklch(0.94 0.014 145),oklch(0.27 0.016 145));
+--vibeui-frame-009-line:light-dark(oklch(0.86 0.012 145),oklch(0.36 0.014 145));
+--vibeui-frame-009-border:light-dark(oklch(0.82 0.014 145),oklch(0.44 0.015 145));
+--vibeui-frame-009-chip:light-dark(oklch(1 0 0),oklch(0.3 0.01 265));
+--vibeui-frame-009-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.005 265));
+--vibeui-frame-009-muted:light-dark(oklch(0.5 0.014 265),oklch(0.71 0.012 265));
+--vibeui-frame-009-accent:light-dark(oklch(0.58 0.19 25),oklch(0.7 0.19 25));
 --vibeui-frame-009-radius:0.875rem;
 --vibeui-frame-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -108,6 +113,28 @@ color:var(--vibeui-frame-009-muted);text-align:center;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кадр карты с меткой и масштабной линейкой поверх условной сетки улиц.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -115,11 +142,25 @@ export function Frame009({
   label = "ул. Пушкина, 12",
   scale = "500 м",
   caption = "Точка на карте с масштабной линейкой",
+  scaleLabel = "Масштаб: {scale}",
+  accent,
+  background = "",
   children,
   className,
   style,
   ...props
 }: Frame009Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-frame-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-frame-009-land": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-frame-009" precedence="medium">
@@ -129,7 +170,7 @@ export function Frame009({
         {...props}
         data-vibeui-block="frame-009"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="shell">
           <div data-part="map">
@@ -141,7 +182,10 @@ export function Frame009({
             </span>
             <span data-part="pin-glyph" aria-hidden="true" />
           </div>
-          <div data-part="scale" aria-label={`Масштаб: ${scale}`}>
+          <div
+            data-part="scale"
+            aria-label={scaleLabel.replace("{scale}", scale)}
+          >
             <span data-part="scale-bar" aria-hidden="true">
               <span data-part="scale-seg" data-tone="dark" />
               <span data-part="scale-seg" data-tone="light" />

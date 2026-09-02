@@ -13,11 +13,15 @@ type Footer008Detail = {
 export type Footer008Props = {
   company?: string
   legalLinks?: Footer008Link[]
+  /** Подпись группы документов для скринридера. */
+  legalLinksLabel?: string
   details?: Footer008Detail[]
   disclaimer?: string
   copyright?: string
   cookieLabel?: string
   cookieHref?: string
+  /** Пусто — подложки нет, подвал лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -28,13 +32,16 @@ export type Footer008Props = {
 // и скринридер обязан читать их парами, а не сплошной строкой цифр.
 // Настройки cookie вынесены отдельной ссылкой: по регламенту согласие
 // должно отзываться так же просто, как давалось.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подвал темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="footer-008"]){
---vibeui-footer-008-bg:oklch(0.96 0.003 260);
---vibeui-footer-008-ink:oklch(0.24 0.012 260);
---vibeui-footer-008-muted:oklch(0.52 0.012 260);
---vibeui-footer-008-border:oklch(0.88 0.006 260);
---vibeui-footer-008-accent:oklch(0.45 0.14 258);
+--vibeui-footer-008-bg:transparent;
+--vibeui-footer-008-ink:light-dark(oklch(0.24 0.012 260),oklch(0.93 0.006 260));
+--vibeui-footer-008-muted:light-dark(oklch(0.52 0.012 260),oklch(0.7 0.012 260));
+--vibeui-footer-008-border:light-dark(oklch(0.88 0.006 260),oklch(0.33 0.012 260));
+--vibeui-footer-008-accent:light-dark(oklch(0.45 0.14 258),oklch(0.73 0.13 258));
 --vibeui-footer-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -108,21 +115,51 @@ const DEFAULT_DETAILS: Footer008Detail[] = [
   { term: "Лицензия", value: "№ ЛО-77-01-000000 от 14.02.2024" },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Юридический подвал: реквизиты, обязательные ссылки, отзыв согласия cookie. */
 export function Footer008({
   company = "ООО «Ориентир»",
   legalLinks = DEFAULT_LINKS,
+  legalLinksLabel = "Юридические документы",
   details = DEFAULT_DETAILS,
   disclaimer = "Информация на сайте носит справочный характер и не является публичной офертой, определяемой статьёй 437 Гражданского кодекса. Точные условия, сроки и стоимость услуг фиксируются в договоре. Изображения могут отличаться от фактического вида.",
   copyright = "© 2026 ООО «Ориентир». Все права защищены.",
   cookieLabel = "Настройки cookie",
   cookieHref = "#cookies",
+  background = "",
   accent,
   className,
   style,
 }: Footer008Props) {
   const palette = {
     ...(accent ? { "--vibeui-footer-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-footer-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -148,7 +185,7 @@ export function Footer008({
               ))}
             </dl>
           </div>
-          <nav data-part="links" aria-label="Юридические документы">
+          <nav data-part="links" aria-label={legalLinksLabel}>
             {legalLinks.map((link) => (
               <a key={link.href} href={link.href}>
                 {link.label}

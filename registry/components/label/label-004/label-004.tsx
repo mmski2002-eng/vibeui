@@ -8,6 +8,8 @@ export type Label004Props = Omit<
   label?: string
   hint?: string
   labelWidth?: number
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,12 +20,12 @@ export type Label004Props = Omit<
 // когда окно широкое.
 const STYLES = `
 :where([data-vibeui-block="label-004"]){
---vibeui-label-004-surface:oklch(1 0 0);
---vibeui-label-004-surface-border:oklch(0.91 0.006 265);
---vibeui-label-004-fg:oklch(0.24 0.016 265);
---vibeui-label-004-muted:oklch(0.54 0.014 265);
---vibeui-label-004-field-border:oklch(0.85 0.01 265);
---vibeui-label-004-accent:oklch(0.55 0.2 262);
+--vibeui-label-004-surface:transparent;
+--vibeui-label-004-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-label-004-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-label-004-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-label-004-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-label-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
 --vibeui-label-004-label-width:9rem;
 --vibeui-label-004-radius:0.625rem;
 --vibeui-label-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -77,6 +79,28 @@ align-items:start;
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подпись слева от поля для десктопной формы: колонка подписи фиксирована,
  * на узкой ширине блока подпись уходит наверх. Один файл, ноль зависимостей.
  */
@@ -84,6 +108,7 @@ export function Label004({
   label = "Название компании",
   hint = "Так, как написано в реквизитах, без кавычек и формы собственности.",
   labelWidth = 9,
+  background = "",
   accent,
   className,
   style,
@@ -94,6 +119,12 @@ export function Label004({
   const palette = {
     "--vibeui-label-004-label-width": `${labelWidth}rem`,
     ...(accent ? { "--vibeui-label-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-label-004-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

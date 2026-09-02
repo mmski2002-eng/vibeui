@@ -10,6 +10,15 @@ export type Inputgroup003Props = Omit<
   label?: string
   base?: string
   defaultValue?: string
+  /** Подпись кнопки перевыпуска. */
+  refreshText?: string
+  /** Подпись кнопки копирования. */
+  copyText?: string
+  /** Подтверждение после копирования. */
+  copiedText?: string
+  hint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,17 +27,20 @@ export type Inputgroup003Props = Omit<
 // (действие только читает). Поле между ними readonly: ссылку не набирают
 // руками, но выделить её должно быть можно, поэтому это настоящий input,
 // а не span. Обе кнопки делят рамку с полем, фокус поднимается z-index'ом.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-003"]){
---vibeui-inputgroup-003-surface:oklch(1 0 0);
---vibeui-inputgroup-003-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-003-fg:oklch(0.23 0.014 265);
---vibeui-inputgroup-003-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-003-field:oklch(0.985 0.002 265);
---vibeui-inputgroup-003-fixed:oklch(0.96 0.003 265);
---vibeui-inputgroup-003-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-003-accent:oklch(0.52 0.17 290);
---vibeui-inputgroup-003-ok:oklch(0.48 0.13 155);
+--vibeui-inputgroup-003-surface:transparent;
+--vibeui-inputgroup-003-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-inputgroup-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-inputgroup-003-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.013 265));
+--vibeui-inputgroup-003-fixed:light-dark(oklch(0.96 0.003 265),oklch(0.32 0.012 265));
+--vibeui-inputgroup-003-border:light-dark(oklch(0.86 0.008 265),oklch(0.44 0.013 265));
+--vibeui-inputgroup-003-accent:light-dark(oklch(0.52 0.17 290),oklch(0.72 0.15 290));
+--vibeui-inputgroup-003-ok:light-dark(oklch(0.48 0.13 155),oklch(0.76 0.14 155));
 --vibeui-inputgroup-003-radius:0.75rem;
 --vibeui-inputgroup-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-inputgroup-003-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
@@ -89,6 +101,28 @@ function token() {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сцепка с кнопками по краям: слева перевыпуск ссылки, справа копирование.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -96,6 +130,11 @@ export function Inputgroup003({
   label = "Ссылка-приглашение",
   base = "https://vibeui.ru/join/",
   defaultValue = "k7f2apqz",
+  refreshText = "Обновить",
+  copyText = "Копировать",
+  copiedText = "Готово",
+  hint = "Обновление ссылки отключает предыдущую — старая перестанет работать.",
+  background = "",
   accent,
   className,
   style,
@@ -108,6 +147,12 @@ export function Inputgroup003({
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-003-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -159,7 +204,7 @@ export function Inputgroup003({
                 strokeLinejoin="round"
               />
             </svg>
-            Обновить
+            {refreshText}
           </button>
           <input
             ref={field}
@@ -193,11 +238,11 @@ export function Inputgroup003({
                 </>
               )}
             </svg>
-            {copied ? "Готово" : "Копировать"}
+            {copied ? copiedText : copyText}
           </button>
         </div>
         <p data-part="hint" id={`${id}-hint`}>
-          Обновление ссылки отключает предыдущую — старая перестанет работать.
+          {hint}
         </p>
       </div>
     </>

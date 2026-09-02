@@ -8,11 +8,16 @@ export type Button006Props = ComponentPropsWithoutRef<"button"> & {
 // полоса предупреждающей штриховки — она проявляется на наведении и фокусе
 // и физически расширяется, отодвигая подпись. Цвет здесь не единственный
 // сигнал: штриховка читается и без цветовосприятия.
+//
+// Тема берётся из color-scheme окружения через light-dark(): красный в тёмном
+// контексте светлее, а граница и наведение подмешивают не чёрный, а белый —
+// иначе край кнопки уходит в фон страницы.
 const STYLES = `
 :where([data-vibeui-block="button-006"]){
---vibeui-button-006-danger:oklch(0.55 0.21 26);
+--vibeui-button-006-danger:light-dark(oklch(0.55 0.21 26),oklch(0.62 0.195 26));
 --vibeui-button-006-fg:oklch(0.99 0.005 26);
 --vibeui-button-006-hatch:oklch(1 0 0 / 30%);
+--vibeui-button-006-shade:light-dark(black,white);
 --vibeui-button-006-ring:color-mix(in oklab, var(--vibeui-button-006-danger) 75%, transparent);
 --vibeui-button-006-radius:0.5rem;
 --vibeui-button-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -20,7 +25,7 @@ const STYLES = `
 [data-vibeui-block="button-006"]{
 position:relative;overflow:hidden;appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;justify-content:center;
-height:2.5rem;padding:0 1.125rem;border:1px solid color-mix(in oklab, black 18%, var(--vibeui-button-006-danger));
+height:2.5rem;padding:0 1.125rem;border:1px solid color-mix(in oklab, var(--vibeui-button-006-shade) 18%, var(--vibeui-button-006-danger));
 border-radius:var(--vibeui-button-006-radius);
 font-family:var(--vibeui-button-006-font);font-size:0.875rem;font-weight:600;line-height:1;
 letter-spacing:0.01em;background:var(--vibeui-button-006-danger);color:var(--vibeui-button-006-fg);
@@ -32,7 +37,7 @@ background:repeating-linear-gradient(45deg,var(--vibeui-button-006-hatch) 0 3px,
 transform:translateX(-100%);transition:transform .22s cubic-bezier(0.16,1,0.3,1);
 }
 [data-vibeui-block="button-006"]:hover:not(:disabled),[data-vibeui-block="button-006"]:focus-visible{
-padding-left:1.75rem;background:color-mix(in oklab, var(--vibeui-button-006-danger) 88%, black);
+padding-left:1.75rem;background:color-mix(in oklab, var(--vibeui-button-006-danger) 88%, var(--vibeui-button-006-shade));
 }
 [data-vibeui-block="button-006"]:hover:not(:disabled)::before,[data-vibeui-block="button-006"]:focus-visible::before{transform:translateX(0)}
 [data-vibeui-block="button-006"]:focus-visible{outline:2px solid var(--vibeui-button-006-ring);outline-offset:2px}

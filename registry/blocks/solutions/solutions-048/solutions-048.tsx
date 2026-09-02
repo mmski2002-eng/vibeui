@@ -14,20 +14,44 @@ export type Solutions048Props = {
   title?: string
   asOf?: string
   debtors?: Solutions048Debtor[]
+  /** Подписи корзин срока: b0, b31, b61, b90. */
+  bucketText?: Record<string, string>
+  /** Строка в шапке. {total} — сумма долга, {percent} — доля старше 60 дней. */
+  summaryText?: string
+  /** Заголовки колонок: client, debt, oldest, mix, risk. */
+  columnText?: Record<string, string>
+  /** Возраст старейшего счёта. {days} — число дней. */
+  daysText?: string
+  /** Подписи риска: ok, watch, risk, critical. */
+  riskText?: Record<string, string>
+  /** Буквы в кружке риска: те же ключи, что и в riskText. */
+  riskLetter?: Record<string, string>
+  /** Скрытая подпись общей шкалы. {parts} — перечисление долей. */
+  stackLabel?: string
+  /** Скрытая подпись мини-шкалы строки. {client} — имя должника. */
+  mixLabel?: string
+  /** Итоговая строка. {first}, {second} и {percent} подставляются на месте. */
+  foot?: string
   currency?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
 
 type BucketKey = "b0" | "b31" | "b61" | "b90"
 
-const BUCKETS: { key: BucketKey; label: string }[] = [
-  { key: "b0", label: "0–30 дней" },
-  { key: "b31", label: "31–60 дней" },
-  { key: "b61", label: "61–90 дней" },
-  { key: "b90", label: "90+ дней" },
-]
+const BUCKET_KEYS: BucketKey[] = ["b0", "b31", "b61", "b90"]
+
+const BUCKET_LABEL: Record<string, string> = {
+  b0: "0–30 дней",
+  b31: "31–60 дней",
+  b61: "61–90 дней",
+  b90: "90+ дней",
+}
 
 function bucketOf(daysOverdue: number): BucketKey {
   if (daysOverdue <= 30) return "b0"
@@ -46,16 +70,16 @@ function bucketOf(daysOverdue: number): BucketKey {
 // же цвета, чтобы состав долга конкретного клиента читался тем же языком.
 const STYLES = `
 :where([data-vibeui-block="solutions-048"]){
---vibeui-solutions-048-bg:oklch(1 0 0);
---vibeui-solutions-048-panel:oklch(0.977 0.004 250);
---vibeui-solutions-048-fg:oklch(0.21 0.014 265);
---vibeui-solutions-048-muted:oklch(0.55 0.014 265);
---vibeui-solutions-048-border:oklch(0.9 0.006 265);
---vibeui-solutions-048-accent:oklch(0.5 0.17 265);
---vibeui-solutions-048-b0:oklch(0.62 0.13 155);
---vibeui-solutions-048-b31:oklch(0.72 0.14 95);
---vibeui-solutions-048-b61:oklch(0.66 0.17 55);
---vibeui-solutions-048-b90:oklch(0.58 0.2 25);
+--vibeui-solutions-048-bg:transparent;
+--vibeui-solutions-048-panel:light-dark(oklch(0.977 0.004 250),oklch(0.27 0.011 265));
+--vibeui-solutions-048-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-048-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-048-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-048-accent:light-dark(oklch(0.5 0.17 265),oklch(0.72 0.15 265));
+--vibeui-solutions-048-b0:light-dark(oklch(0.62 0.13 155),oklch(0.73 0.13 155));
+--vibeui-solutions-048-b31:light-dark(oklch(0.72 0.14 95),oklch(0.82 0.14 95));
+--vibeui-solutions-048-b61:light-dark(oklch(0.66 0.17 55),oklch(0.78 0.15 55));
+--vibeui-solutions-048-b90:light-dark(oklch(0.58 0.2 25),oklch(0.73 0.17 25));
 --vibeui-solutions-048-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-048-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -140,7 +164,7 @@ color:oklch(1 0 0);
 [data-vibeui-block="solutions-048"] [data-risk="ok"] [data-part="risk"]{color:var(--vibeui-solutions-048-b0)}
 [data-vibeui-block="solutions-048"] [data-risk="ok"] [data-part="letter"]{background:var(--vibeui-solutions-048-b0)}
 [data-vibeui-block="solutions-048"] [data-risk="watch"] [data-part="risk"]{color:var(--vibeui-solutions-048-b31)}
-[data-vibeui-block="solutions-048"] [data-risk="watch"] [data-part="letter"]{background:var(--vibeui-solutions-048-b31);color:var(--vibeui-solutions-048-fg)}
+[data-vibeui-block="solutions-048"] [data-risk="watch"] [data-part="letter"]{background:var(--vibeui-solutions-048-b31);color:oklch(0.25 0.03 95)}
 [data-vibeui-block="solutions-048"] [data-risk="risk"] [data-part="risk"]{color:var(--vibeui-solutions-048-b61)}
 [data-vibeui-block="solutions-048"] [data-risk="risk"] [data-part="letter"]{background:var(--vibeui-solutions-048-b61)}
 [data-vibeui-block="solutions-048"] [data-risk="critical"] [data-part="risk"]{color:var(--vibeui-solutions-048-b90)}
@@ -187,8 +211,26 @@ const DEFAULT_DEBTORS: Solutions048Debtor[] = [
   },
 ]
 
-function money(value: number, currency: string) {
-  return `${Math.round(value).toLocaleString("ru-RU")} ${currency}`
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 function riskOf(oldest: number): "ok" | "watch" | "risk" | "critical" {
@@ -198,12 +240,27 @@ function riskOf(oldest: number): "ok" | "watch" | "risk" | "critical" {
   return "critical"
 }
 
-const RISK_LABEL = {
-  ok: { letter: "Н", label: "в норме" },
-  watch: { letter: "К", label: "к оплате" },
-  risk: { letter: "Р", label: "риск" },
-  critical: { letter: "!", label: "критично" },
-} as const
+const RISK_LABEL: Record<string, string> = {
+  ok: "в норме",
+  watch: "к оплате",
+  risk: "риск",
+  critical: "критично",
+}
+
+const RISK_LETTER: Record<string, string> = {
+  ok: "Н",
+  watch: "К",
+  risk: "Р",
+  critical: "!",
+}
+
+const COLUMN_LABEL: Record<string, string> = {
+  client: "Клиент",
+  debt: "Долг",
+  oldest: "Старший счёт",
+  mix: "Состав",
+  risk: "Риск",
+}
 
 /**
  * Дебиторская задолженность по корзинам срока: суммы и доли сворачиваются из
@@ -214,11 +271,26 @@ export function Solutions048({
   title = "Дебиторская задолженность",
   asOf = "на 31 марта 2024",
   debtors = DEFAULT_DEBTORS,
+  bucketText = BUCKET_LABEL,
+  summaryText = "Всего долга {total} · старше 60 дней {percent}%",
+  columnText = COLUMN_LABEL,
+  daysText = "{days} дн.",
+  riskText = RISK_LABEL,
+  riskLetter = RISK_LETTER,
+  stackLabel = "Состав долга: {parts}",
+  mixLabel = "Состав долга {client} по корзинам срока",
+  foot = "Крупнейшие должники — {first} и {second} — вместе формируют {percent}% всей задолженности.",
   currency = "₽",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions048Props) {
+  const money = (value: number) =>
+    `${Math.round(value).toLocaleString(locale)} ${currency}`
+  const bucketLabel = (key: BucketKey) => bucketText[key] ?? BUCKET_LABEL[key]
+  const column = (key: string) => columnText[key] ?? COLUMN_LABEL[key]
   const buckets: Record<BucketKey, number> = { b0: 0, b31: 0, b61: 0, b90: 0 }
   let grandTotal = 0
 
@@ -253,6 +325,12 @@ export function Solutions048({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-048-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-048-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -273,19 +351,20 @@ export function Solutions048({
             <p data-part="sub">{asOf}</p>
           </div>
           <p data-part="sub">
-            Всего долга {money(grandTotal, currency)} · старше 60 дней{" "}
-            {overdueOver60.toFixed(0)}%
+            {summaryText
+              .replace("{total}", money(grandTotal))
+              .replace("{percent}", overdueOver60.toFixed(0))}
           </p>
         </header>
 
         <div data-part="buckets">
-          {BUCKETS.map((bucket) => (
-            <p data-part="tile" data-bucket={bucket.key} key={bucket.key}>
-              <b>{money(buckets[bucket.key], currency)}</b>
+          {BUCKET_KEYS.map((key) => (
+            <p data-part="tile" data-bucket={key} key={key}>
+              <b>{money(buckets[key])}</b>
               <span>
-                {bucket.label} ·{" "}
+                {bucketLabel(key)} ·{" "}
                 {grandTotal > 0
-                  ? ((buckets[bucket.key] / grandTotal) * 100).toFixed(0)
+                  ? ((buckets[key] / grandTotal) * 100).toFixed(0)
                   : 0}
                 %
               </span>
@@ -296,18 +375,21 @@ export function Solutions048({
         <div
           data-part="stack"
           role="img"
-          aria-label={`Состав долга: ${BUCKETS.map(
-            (bucket) =>
-              `${bucket.label} — ${grandTotal > 0 ? ((buckets[bucket.key] / grandTotal) * 100).toFixed(0) : 0}%`,
-          ).join(", ")}`}
+          aria-label={stackLabel.replace(
+            "{parts}",
+            BUCKET_KEYS.map(
+              (key) =>
+                `${bucketLabel(key)} — ${grandTotal > 0 ? ((buckets[key] / grandTotal) * 100).toFixed(0) : 0}%`,
+            ).join(", "),
+          )}
         >
-          {BUCKETS.map((bucket) => (
+          {BUCKET_KEYS.map((key) => (
             <span
               data-part="segment"
-              data-segment={bucket.key}
-              key={bucket.key}
+              data-segment={key}
+              key={key}
               style={{
-                width: `${grandTotal > 0 ? (buckets[bucket.key] / grandTotal) * 100 : 0}%`,
+                width: `${grandTotal > 0 ? (buckets[key] / grandTotal) * 100 : 0}%`,
               }}
             />
           ))}
@@ -317,15 +399,15 @@ export function Solutions048({
           <table>
             <thead>
               <tr>
-                <th scope="col">Клиент</th>
+                <th scope="col">{column("client")}</th>
                 <th scope="col" data-align="end">
-                  Долг
+                  {column("debt")}
                 </th>
                 <th scope="col" data-align="end">
-                  Старший счёт
+                  {column("oldest")}
                 </th>
-                <th scope="col">Состав</th>
-                <th scope="col">Риск</th>
+                <th scope="col">{column("mix")}</th>
+                <th scope="col">{column("risk")}</th>
               </tr>
             </thead>
             <tbody>
@@ -334,21 +416,23 @@ export function Solutions048({
                 return (
                   <tr key={row.client} data-risk={risk}>
                     <td>{row.client}</td>
-                    <td data-align="end">{money(row.total, currency)}</td>
-                    <td data-align="end">{row.oldest} дн.</td>
+                    <td data-align="end">{money(row.total)}</td>
+                    <td data-align="end">
+                      {daysText.replace("{days}", String(row.oldest))}
+                    </td>
                     <td>
                       <span
                         data-part="mini"
                         role="img"
-                        aria-label={`Состав долга ${row.client} по корзинам срока`}
+                        aria-label={mixLabel.replace("{client}", row.client)}
                       >
-                        {BUCKETS.map((bucket) => (
+                        {BUCKET_KEYS.map((key) => (
                           <span
                             data-part="segment"
-                            data-segment={bucket.key}
-                            key={bucket.key}
+                            data-segment={key}
+                            key={key}
                             style={{
-                              width: `${row.total > 0 ? (row.buckets[bucket.key] / row.total) * 100 : 0}%`,
+                              width: `${row.total > 0 ? (row.buckets[key] / row.total) * 100 : 0}%`,
                             }}
                           />
                         ))}
@@ -357,9 +441,9 @@ export function Solutions048({
                     <td>
                       <span data-part="risk">
                         <span data-part="letter" aria-hidden="true">
-                          {RISK_LABEL[risk].letter}
+                          {riskLetter[risk] ?? RISK_LETTER[risk]}
                         </span>
-                        {RISK_LABEL[risk].label}
+                        {riskText[risk] ?? RISK_LABEL[risk]}
                       </span>
                     </td>
                   </tr>
@@ -370,15 +454,19 @@ export function Solutions048({
         </div>
 
         <p data-part="foot">
-          Крупнейшие должники — {rows[0]?.client} и {rows[1]?.client} — вместе
-          формируют{" "}
-          {grandTotal > 0
-            ? (
-                (((rows[0]?.total ?? 0) + (rows[1]?.total ?? 0)) / grandTotal) *
-                100
-              ).toFixed(0)
-            : 0}
-          % всей задолженности.
+          {foot
+            .replace("{first}", rows[0]?.client ?? "—")
+            .replace("{second}", rows[1]?.client ?? "—")
+            .replace(
+              "{percent}",
+              grandTotal > 0
+                ? (
+                    (((rows[0]?.total ?? 0) + (rows[1]?.total ?? 0)) /
+                      grandTotal) *
+                    100
+                  ).toFixed(0)
+                : "0",
+            )}
         </p>
       </section>
     </>

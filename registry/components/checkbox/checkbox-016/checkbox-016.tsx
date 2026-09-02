@@ -11,7 +11,17 @@ export type Checkbox016Props = Omit<
   placeholder?: string
   options?: string[]
   defaultValue?: string[]
+  /** Заголовок группы отмеченных. */
+  pickedLabel?: string
+  /** Заголовок группы остальных. */
+  restLabel?: string
+  /** Строка, когда поиск ничего не дал. */
+  emptyText?: string
+  /** Счётчик внизу. {count} — отмечено, {total} — всего. */
+  countText?: string
   onChange?: (value: string[]) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,14 +29,18 @@ export type Checkbox016Props = Omit<
 // показываются сверху и не прячутся фильтром — иначе поиск выглядит так,
 // будто он сбросил выбор. Список прокручивается внутри себя, чтобы поле
 // поиска и счётчик оставались на месте.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="checkbox-016"]){
---vibeui-checkbox-016-bg:oklch(1 0 0);
---vibeui-checkbox-016-fg:oklch(0.22 0.014 265);
---vibeui-checkbox-016-muted:oklch(0.56 0.014 265);
---vibeui-checkbox-016-border:oklch(0.9 0.006 265);
---vibeui-checkbox-016-field:oklch(0.975 0.003 265);
---vibeui-checkbox-016-accent:oklch(0.54 0.16 245);
+--vibeui-checkbox-016-bg:transparent;
+--vibeui-checkbox-016-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-checkbox-016-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-016-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-checkbox-016-field:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.009 265));
+--vibeui-checkbox-016-accent:light-dark(oklch(0.54 0.16 245),oklch(0.66 0.16 245));
+--vibeui-checkbox-016-on-accent:oklch(0.99 0.01 245);
 --vibeui-checkbox-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="checkbox-016"]{
@@ -76,7 +90,7 @@ transition:background-color .15s ease,border-color .15s ease;
 [data-vibeui-block="checkbox-016"] input[type="checkbox"]:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;
-border-right:2px solid oklch(0.99 0.01 245);border-bottom:2px solid oklch(0.99 0.01 245);
+border-right:2px solid var(--vibeui-checkbox-016-on-accent);border-bottom:2px solid var(--vibeui-checkbox-016-on-accent);
 transform:rotate(45deg);
 }
 [data-vibeui-block="checkbox-016"] input[type="checkbox"]:focus-visible{outline:2px solid var(--vibeui-checkbox-016-accent);outline-offset:2px}
@@ -108,6 +122,28 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Список чекбоксов с поиском по пунктам: отмеченные закреплены сверху
  * и не исчезают при фильтрации. Один файл, ноль зависимостей.
  */
@@ -116,7 +152,12 @@ export function Checkbox016({
   placeholder = "Поиск по списку",
   options = DEFAULT_OPTIONS,
   defaultValue = ["Грузия"],
+  pickedLabel = "Выбрано",
+  restLabel = "Остальные",
+  emptyText = "Ничего не нашлось",
+  countText = "Отмечено {count} из {total}",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -127,6 +168,12 @@ export function Checkbox016({
 
   const palette = {
     ...(accent ? { "--vibeui-checkbox-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-checkbox-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -182,22 +229,24 @@ export function Checkbox016({
         <ul data-part="list">
           {picked.length > 0 ? (
             <li data-part="group" aria-hidden="true">
-              Выбрано
+              {pickedLabel}
             </li>
           ) : null}
           {picked.map(row)}
           {picked.length > 0 && rest.length > 0 ? (
             <li data-part="group" aria-hidden="true">
-              Остальные
+              {restLabel}
             </li>
           ) : null}
           {rest.map(row)}
           {rest.length === 0 && query.trim() !== "" ? (
-            <li data-part="empty">Ничего не нашлось</li>
+            <li data-part="empty">{emptyText}</li>
           ) : null}
         </ul>
         <p data-part="foot" role="status">
-          Отмечено {value.length} из {options.length}
+          {countText
+            .replace("{count}", String(value.length))
+            .replace("{total}", String(options.length))}
         </p>
       </section>
     </>

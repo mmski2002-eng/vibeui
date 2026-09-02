@@ -29,15 +29,20 @@
             "радиокнопки: выбор, клавиатура и отправка формы достаются от браузера",
             "aria-label на каждой звезде — «★» не читается как оценка",
             "подсветку будущего выбора при наведении вместо застывшего значения",
-            "подпись оценки словами: цифра без слова ничего не уточняет"
+            "подпись оценки словами: цифра без слова ничего не уточняет",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "legend, max и defaultValue",
             "массив hints — подписи оценок",
             "акцент через проп accent",
-            "размер звёзд"
+            "размер звёзд",
+            "starLabel — подпись звезды для скринридера, {value} и {max} подставляются",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Правила подписи выписаны на десять оценок: для более длинной шкалы добавьте строки CSS.",
             "Уникальный name обязателен: две шкалы с одним именем станут одной группой.",
             "Полузвёзды не поддерживаются: для них нужен ползунок или свой JS.",
@@ -53,12 +58,32 @@
             "maxLength": 28
           },
           {
+            "prop": "max",
+            "label": "Звёзд",
+            "type": "number",
+            "default": 5,
+            "min": 3,
+            "max": 10
+          },
+          {
             "prop": "defaultValue",
             "label": "Оценка",
             "type": "number",
             "default": 4,
             "min": 1,
             "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -72,15 +97,20 @@
                 "the radio buttons: selection, keyboard and form submission come from the browser",
                 "an aria-label on every star — \"★\" does not read as a score",
                 "previewing the prospective choice on hover instead of a frozen value",
-                "the worded caption: a bare number clarifies nothing"
+                "the worded caption: a bare number clarifies nothing",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "legend, max and defaultValue",
                 "the hints array — the score captions",
                 "the accent through the accent prop",
-                "the star size"
+                "the star size",
+                "starLabel — the screen-reader label for a star, with {value} and {max} filled in",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Caption rules cover ten scores: a longer scale needs more CSS lines.",
                 "A unique name is mandatory: two scales sharing one become a single group.",
                 "Half stars are unsupported: they need a slider or your own JS.",
@@ -93,13 +123,30 @@
                 "label": "Question",
                 "default": "Rate this component"
               },
+              "max": {
+                "label": "Stars"
+              },
               "defaultValue": {
                 "label": "Score"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Star Rating"
+            "title": "Star Rating",
+            "preview": {
+              "props": {
+                "legend": "Rate this component",
+                "hints": ["Poor", "So-so", "Okay", "Good", "Excellent"],
+                "starLabel": "{value} of {max}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["max", "defaultValue", "accent", "background"]
       }
     },
     {
@@ -126,21 +173,26 @@
           "summary": "Оценка звёздами с шагом в половину звезды на радиокнопках и :has(), без JS. Серверный, ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-rating-002-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: оценку показывают поверх любого фона",
             "закраску полосой поверх серого ряда: разрезать звёзды пришлось бы иконками, а тут хватает процентов",
             "радиокнопки под зонами нажатия: они дают клавиатуру, отправку формы и семантику группы даром",
             "десять зон нажатия по половине звезды: без них половинку мышью не выбрать",
             "clear:both у ряда звёзд: legend с float:left иначе заставляет его обтекать",
-            "pointer-events:none на полосе закраски: иначе она перехватывает клики по звёздам"
+            "pointer-events:none на полосе закраски: иначе она перехватывает клики по звёздам",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "legend — вопрос над рядом",
             "name — имя группы радиокнопок в форме",
             "defaultValue — предвыбранная оценка",
             "размер звёзд через font-size ряда",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "stepLabel и valueText — подпись деления и строка под рядом, {value} подставляется",
+            "locale — локаль записи числа: от неё зависит разделитель дроби",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Шкала жёстко на пять звёзд: десять значений закодированы правилами :has, для другой длины правила придётся переписать.",
             "Пять звёзд набраны текстом: в шрифте без символа ★ их надо заменить на иконку.",
             "Снять оценку нельзя — радиокнопка не снимается; добавьте кнопку сброса, если это нужно.",
@@ -162,6 +214,18 @@
             "default": 3.5,
             "min": 0.5,
             "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -171,21 +235,26 @@
               "summary": "A star rating with a half-star step built on radios and :has(), no JS. Server component, zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-rating-002-* palette — do not swap it for your theme tokens",
-                "its own light surface: the rating gets shown over any background",
                 "the fill stripe over the grey row: cutting stars in half would need icons, while percentages are enough here",
                 "the radios under the hit zones: they hand over keyboard support, form submission and group semantics for free",
                 "the ten half-star hit zones: without them a half cannot be picked with a mouse",
                 "clear:both on the star row: a legend with float:left otherwise makes it wrap around",
-                "pointer-events:none on the fill stripe: otherwise it swallows the clicks meant for the stars"
+                "pointer-events:none on the fill stripe: otherwise it swallows the clicks meant for the stars",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "legend — the question above the row",
                 "name — the radio group name in the form",
                 "defaultValue — the pre-selected score",
                 "the star size through the row font-size",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "stepLabel and valueText — the notch label and the line under the row, with {value} filled in",
+                "locale — the number formatting locale: it decides the decimal separator",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The scale is fixed at five stars: ten values are encoded in :has rules, another length means rewriting them.",
                 "The five stars are text: replace them with an icon in a font without the ★ glyph.",
                 "The score cannot be cleared — a radio never unchecks; add a reset button if you need one.",
@@ -200,11 +269,26 @@
               },
               "defaultValue": {
                 "label": "Score"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Half Stars"
+            "title": "Half Stars",
+            "preview": {
+              "props": {
+                "legend": "How was it",
+                "stepLabel": "{value} of 5",
+                "valueText": "Your score: {value} out of 5",
+                "locale": "en-US"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -231,21 +315,26 @@
           "summary": "Шкала от одного до десяти пронумерованными клетками, накопительная заливка, стрелки двигают выбор внутри группы. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-rating-003-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: шкалу показывают поверх любого фона",
             "цифры вместо значков: на десяти делениях звёзды приходится пересчитывать глазами",
             "roving tabindex: без него десять кнопок встают в табуляцию и до следующего поля формы десять нажатий Tab",
             "роли radiogroup и radio: кнопки без ролей скринридер прочитает как десять несвязанных команд",
             "накопительную заливку: длина полосы читается быстрее, чем позиция одной отметки",
-            "aria-label с оценкой на каждой клетке: одна цифра без контекста ничего не значит"
+            "aria-label с оценкой на каждой клетке: одна цифра без контекста ничего не значит",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "label — вопрос над шкалой",
             "max — длина шкалы, семибалльная тоже работает",
             "defaultValue — предвыбранная оценка",
             "hints — слова под шкалой для каждой оценки",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "pointLabel — подпись клетки для скринридера, {value} и {max} подставляются",
+            "lowAnchor — подпись под левым краем шкалы",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Длина hints должна совпадать с max, иначе под крайними оценками окажется пустота.",
             "Шкала начинается с единицы: для NPS нужна другая, от нуля.",
             "Компонент неуправляемый снаружи: чтобы поднять оценку наверх, добавьте свой onChange.",
@@ -267,6 +356,26 @@
             "default": 10,
             "min": 5,
             "max": 10
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Оценка",
+            "type": "number",
+            "default": 8,
+            "min": 1,
+            "max": 10
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -276,21 +385,26 @@
               "summary": "A one-to-ten scale of numbered cells with cumulative fill; arrow keys move the choice inside the group. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-rating-003-* palette — do not swap it for your theme tokens",
-                "its own light surface: the scale gets shown over any background",
                 "digits instead of glyphs: at ten notches stars have to be recounted by eye",
                 "the roving tabindex: without it ten buttons join the tab order and the next form field is ten Tabs away",
                 "the radiogroup and radio roles: role-less buttons read as ten unrelated commands to a screen reader",
                 "the cumulative fill: a bar length reads faster than the position of a single mark",
-                "the aria-label with the score on every cell: a lone digit means nothing out of context"
+                "the aria-label with the score on every cell: a lone digit means nothing out of context",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "label — the question above the scale",
                 "max — the scale length, seven points works too",
                 "defaultValue — the pre-selected score",
                 "hints — the words under the scale for each score",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "pointLabel — the screen-reader label for a cell, with {value} and {max} filled in",
+                "lowAnchor — the caption under the left end of the scale",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The hints length has to match max, otherwise the outer scores caption nothing.",
                 "The scale starts at one: NPS needs a different one, starting at zero.",
                 "The component is self-contained: add your own onChange to lift the score up.",
@@ -305,11 +419,40 @@
               },
               "max": {
                 "label": "Notches"
+              },
+              "defaultValue": {
+                "label": "Score"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Ten Point Scale"
+            "title": "Ten Point Scale",
+            "preview": {
+              "props": {
+                "label": "Rate the service",
+                "hints": [
+                  "never",
+                  "dreadful",
+                  "bad",
+                  "weak",
+                  "tolerable",
+                  "average",
+                  "decent",
+                  "good",
+                  "very good",
+                  "excellent"
+                ],
+                "pointLabel": "{value} of {max}",
+                "lowAnchor": "1 — as bad as it gets"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["max", "defaultValue", "accent", "background"]
       }
     },
     {
@@ -336,21 +479,25 @@
           "summary": "Оценка пятью эмодзи на радиокнопках: выбранное лицо цветное и крупнее, остальные обесцвечены. Серверный, ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-rating-004-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: оценку показывают поверх любого фона",
             "обесцвечивание невыбранных лиц: цветной ряд рожиц не показывает, что выбрано",
             "aria-label с текстом на каждой метке: эмодзи скринридеры читают по-разному и не всегда понятно",
             "радиокнопки под лицами: клавиатура и отправка формы достаются даром",
             "aria-hidden на самом эмодзи: иначе подпись прозвучит дважды",
-            "clear:both у ряда лиц: legend с float:left иначе заставляет его обтекать"
+            "clear:both у ряда лиц: legend с float:left иначе заставляет его обтекать",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "legend — вопрос над рядом",
             "faces — сами лица и подписи к ним",
             "name — имя группы радиокнопок",
             "defaultValue — предвыбранное лицо",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "note — сноска под рядом лиц",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Правила :has написаны на пять значений: другой длине ряда нужны свои правила.",
             "Эмодзи рисуются шрифтом системы: на разных платформах лица выглядят по-разному.",
             "Пять лиц — предел читаемости: семь оттенков настроения различить уже нельзя.",
@@ -372,6 +519,18 @@
             "default": 4,
             "min": 1,
             "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -381,21 +540,25 @@
               "summary": "A five-emoji rating on radios: the picked face is coloured and larger, the rest are desaturated. Server component, zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-rating-004-* palette — do not swap it for your theme tokens",
-                "its own light surface: the rating gets shown over any background",
                 "desaturating the unpicked faces: a full-colour row of emoji does not show what is selected",
                 "the aria-label with text on every option: screen readers announce emoji inconsistently",
                 "the radios under the faces: keyboard support and form submission come for free",
                 "aria-hidden on the emoji itself: otherwise the caption is announced twice",
-                "clear:both on the face row: a legend with float:left otherwise makes it wrap around"
+                "clear:both on the face row: a legend with float:left otherwise makes it wrap around",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "legend — the question above the row",
                 "faces — the faces themselves and their captions",
                 "name — the radio group name",
                 "defaultValue — the pre-selected face",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "note — the footnote under the row of faces",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The :has rules are written for five values: another row length needs its own rules.",
                 "Emoji are drawn by the system font: the faces look different across platforms.",
                 "Five faces is the readable limit: seven shades of mood cannot be told apart.",
@@ -410,11 +573,46 @@
               },
               "defaultValue": {
                 "label": "Selected"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Emoji Faces"
+            "title": "Emoji Faces",
+            "preview": {
+              "props": {
+                "legend": "How was your order?",
+                "faces": [
+                  {
+                    "face": "😠",
+                    "text": "Awful"
+                  },
+                  {
+                    "face": "🙁",
+                    "text": "Disappointing"
+                  },
+                  {
+                    "face": "😐",
+                    "text": "Fine"
+                  },
+                  {
+                    "face": "🙂",
+                    "text": "Good"
+                  },
+                  {
+                    "face": "😍",
+                    "text": "Delighted"
+                  }
+                ],
+                "note": "The answer is anonymous, only support sees it"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -441,21 +639,25 @@
           "summary": "Оценка «палец вверх / палец вниз» со счётчиками, где повторное нажатие отзывает голос. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-rating-005-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: блок показывают поверх любого фона",
             "отзыв голоса повторным нажатием: случайный клик иначе не откатить",
             "мгновенный пересчёт счётчика: «учтено» без движения цифры читается как обман",
             "aria-pressed на кнопках: это состояние выбора, а не разовое нажатие",
             "разные цвета для «за» и «против»: одинаковые кнопки заставляют читать иконку",
-            "aria-label на кнопках: внутри них иконка и число, а не слова"
+            "aria-label на кнопках: внутри них иконка и число, а не слова",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "question — сам вопрос",
             "up и down — исходные счётчики голосов",
             "иконку большого пальца",
             "текст благодарности после голоса",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "voteLabels, idleNote, thanksText и undoText — подписи кнопок и строка под ними",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Счётчик локальный: отправьте голос на сервер и подставьте настоящие числа.",
             "Повторное голосование ничем не ограничено — защиту от накрутки делайте на бэкенде.",
             "Кнопка «против» использует ту же иконку, повёрнутую на 180 градусов: второй файл ради этого не нужен.",
@@ -476,7 +678,27 @@
             "type": "number",
             "default": 128,
             "min": 0,
-            "max": 9999
+            "max": 999
+          },
+          {
+            "prop": "down",
+            "label": "Голосов «против»",
+            "type": "number",
+            "default": 6,
+            "min": 0,
+            "max": 999
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -486,21 +708,25 @@
               "summary": "A thumbs up / thumbs down vote with counters, where pressing the same button again withdraws the vote. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-rating-005-* palette — do not swap it for your theme tokens",
-                "its own light surface: the block gets shown over any background",
                 "withdrawing the vote on a second press: an accidental click is otherwise irreversible",
                 "the instant counter update: \"recorded\" without the digit moving reads as a lie",
                 "aria-pressed on the buttons: this is a selection state, not a one-off press",
                 "different colours for up and down: identical buttons force reading the icon",
-                "the aria-labels on the buttons: they hold an icon and a number, not words"
+                "the aria-labels on the buttons: they hold an icon and a number, not words",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "question — the question itself",
                 "up and down — the starting vote counters",
                 "the thumb icon",
                 "the thank-you text shown after voting",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "voteLabels, idleNote, thanksText and undoText — the button labels and the line under them",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The counter is local: send the vote to the server and feed the real numbers back.",
                 "Nothing limits repeat voting — put the anti-fraud logic on the backend.",
                 "The down button reuses the same icon rotated 180 degrees: a second file is not needed.",
@@ -515,11 +741,33 @@
               },
               "up": {
                 "label": "Upvotes"
+              },
+              "down": {
+                "label": "Downvotes"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Thumbs Vote"
+            "title": "Thumbs Vote",
+            "preview": {
+              "props": {
+                "question": "Was this article helpful?",
+                "voteLabels": {
+                  "up": "Yes, it helped",
+                  "down": "No, it did not"
+                },
+                "idleNote": "The vote is anonymous and a second press withdraws it.",
+                "thanksText": "Thanks, your vote is in.",
+                "undoText": "Press the same button again to withdraw it."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["up", "down", "accent", "background"]
       }
     },
     {
@@ -546,21 +794,26 @@
           "summary": "Звёздная оценка с обязательным комментарием ниже порога и выключенной кнопкой отправки, пока текст короче минимума. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-rating-006-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: форму показывают поверх любого фона",
             "появление поля только ниже порога: требовать объяснение у довольного человека — терять и оценку тоже",
             "выключенную кнопку вместо молчаливого отказа: иначе непонятно, почему ничего не происходит",
             "счётчик оставшихся символов: он показывает путь до цели, а не пройденный путь",
             "roving tabindex на звёздах: пять кнопок в табуляции удлиняют путь до следующего поля",
-            "проверку по обрезанным пробелам: двадцать пробелов не объяснение"
+            "проверку по обрезанным пробелам: двадцать пробелов не объяснение",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "legend — вопрос над звёздами",
             "threshold — оценка, ниже которой нужен комментарий",
             "minLength — минимальная длина объяснения",
             "текст-подсказку в поле комментария",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "reasonLabel, counterText, counterDoneText и submitText — тексты формы",
+            "starLabel — подпись звезды для скринридера, {value} подставляется",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Проверка клиентская: продублируйте порог на сервере, иначе форму отправят в обход.",
             "Поле появляется мгновенно и сдвигает кнопку — оставьте под блоком место в макете.",
             "Минимум в двадцать символов подобран под короткую фразу: сто символов люди бросают.",
@@ -582,6 +835,26 @@
             "default": 3,
             "min": 1,
             "max": 4
+          },
+          {
+            "prop": "minLength",
+            "label": "Минимум символов",
+            "type": "number",
+            "default": 20,
+            "min": 0,
+            "max": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -591,21 +864,26 @@
               "summary": "A star rating with a mandatory comment below the threshold and a submit button disabled until the text is long enough. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-rating-006-* palette — do not swap it for your theme tokens",
-                "its own light surface: the form gets shown over any background",
                 "showing the field only below the threshold: demanding an explanation from a happy customer loses the rating too",
                 "the disabled button instead of a silent refusal: otherwise nothing seems to happen",
                 "the remaining-characters counter: it shows the distance to the goal, not the distance covered",
                 "the roving tabindex on the stars: five buttons in the tab order lengthen the path to the next field",
-                "validating the trimmed text: twenty spaces are not an explanation"
+                "validating the trimmed text: twenty spaces are not an explanation",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "legend — the question above the stars",
                 "threshold — the score below which a comment is required",
                 "minLength — the minimum explanation length",
                 "the placeholder inside the comment field",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "reasonLabel, counterText, counterDoneText and submitText — the form copy",
+                "starLabel — the screen-reader label for a star, with {value} filled in",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The check is client-side: mirror the threshold on the server or the form gets submitted around it.",
                 "The field appears instantly and pushes the button down — leave room under the block in your layout.",
                 "Twenty characters is tuned to a short phrase: a hundred makes people give up.",
@@ -620,11 +898,32 @@
               },
               "threshold": {
                 "label": "Threshold"
+              },
+              "minLength": {
+                "label": "Minimum length"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Reason Required"
+            "title": "Reason Required",
+            "preview": {
+              "props": {
+                "legend": "Rate the delivery",
+                "starLabel": "{value} of 5",
+                "reasonLabel": "What went wrong? The rating will not send without it",
+                "reasonPlaceholder": "The courier turned up two hours after the slot…",
+                "counterText": "{left} more characters before sending",
+                "counterDoneText": "That is enough, you can send it",
+                "submitText": "Send the rating"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["threshold", "minLength", "accent", "background"]
       }
     },
     {
@@ -651,24 +950,29 @@
           "summary": "Витрина средней оценки: крупное число, дробная закраска звёзд, счётчик отзывов и разбивка по каждой оценке. Серверный, ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-rating-007-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: карточку показывают поверх любого фона",
             "дробную закраску без округления: 4.7, поднятые до пяти звёзд, — реклама, а не оценка",
             "разбивку по оценкам: одинаковая средняя складывается из совершенно разных отзывов",
             "role=\"img\" с полным aria-label на ряде звёзд: иначе скринридер прочитает пять одинаковых символов",
             "склонение слова «отзыв» по числу: «1284 отзыва» вместо «1284 отзывов» — признак живого продукта",
-            "отсутствие интерактивных элементов: это витрина, а не форма, и кликать здесь не по чему"
+            "отсутствие интерактивных элементов: это витрина, а не форма, и кликать здесь не по чему",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "value — сама средняя оценка",
             "count — число отзывов",
             "breakdown — разбивка по оценкам от пяти к одной",
             "размер крупного числа",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "reviewWords и summaryLabel — слово «отзыв» по числам и подпись ряда для скринридера",
+            "locale — локаль записи чисел",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Проценты разбивки считаются от суммы breakdown, а не от count: это разные числа, если часть отзывов без оценки.",
             "Значение не ограничено пятью — передайте согласованные value и ряд звёзд, если шкала другая.",
-            "Разделитель дробной части заменён на запятую под русскую типографику.",
+            "Числа записываются через toLocaleString(locale): по умолчанию ru-RU, поэтому дробная часть отделяется запятой.",
             "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
           ]
         },
@@ -688,6 +992,18 @@
             "default": 1284,
             "min": 0,
             "max": 99999
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -697,24 +1013,29 @@
               "summary": "An average-rating display: a large number, fractional star fill, a review counter and a breakdown per score. Server component, zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-rating-007-* palette — do not swap it for your theme tokens",
-                "its own light surface: the card gets shown over any background",
                 "the fractional fill without rounding: 4.7 rounded up to five stars is advertising, not a rating",
                 "the per-score breakdown: the same average is built from completely different reviews",
                 "role=\"img\" with a full aria-label on the star row: otherwise a screen reader reads five identical glyphs",
                 "the Russian plural agreement for \"review\": it is what a live product looks like",
-                "the absence of interactive elements: this is a display, not a form, and there is nothing to click"
+                "the absence of interactive elements: this is a display, not a form, and there is nothing to click",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "value — the average score itself",
                 "count — the number of reviews",
                 "breakdown — the per-score distribution from five down to one",
                 "the size of the large number",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "reviewWords and summaryLabel — the plural forms of \"review\" and the screen-reader label for the row",
+                "locale — the number formatting locale",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Breakdown percentages are computed from the breakdown sum, not from count: those differ when some reviews carry no score.",
                 "The value is not capped at five — pass a consistent value and star row if your scale differs.",
-                "The decimal separator is switched to a comma for Russian typography.",
+                "Numbers are written through toLocaleString(locale): ru-RU by default, which is why the decimal is a comma.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Rating007 value={4.7} count={1284} breakdown={[842, 271, 98, 41, 32]} />"
@@ -725,11 +1046,29 @@
               },
               "count": {
                 "label": "Reviews"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Average Summary"
+            "title": "Average Summary",
+            "preview": {
+              "props": {
+                "reviewWords": {
+                  "one": "review",
+                  "few": "reviews",
+                  "many": "reviews"
+                },
+                "summaryLabel": "{value} out of 5 based on {count} {word}",
+                "locale": "en-US"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["value", "accent", "background"]
       }
     },
     {
@@ -756,21 +1095,25 @@
           "summary": "Опрос NPS: одиннадцать делений от нуля до десяти, три цветовые зоны и ответная реплика без JS. Серверный, ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-rating-008-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: опрос показывают поверх любого фона",
             "начало шкалы с нуля: NPS с единицы — уже не NPS, и метрика перестаёт сравниваться",
             "границы зон 0–6, 7–8, 9–10: их сдвиг меняет сам показатель, а не оформление",
             "раскраску зон до ответа: иначе семёрку ставят в значении «хорошо»",
             "подписи-якоря под краями шкалы: без них ноль и десять читаются наоборот",
-            "clear:both у шкалы: legend с float:left иначе заставляет деления обтекать себя"
+            "clear:both у шкалы: legend с float:left иначе заставляет деления обтекать себя",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "legend — формулировку вопроса",
             "name — имя группы радиокнопок",
             "lowAnchor и highAnchor — подписи под краями",
             "тексты реплик для трёх зон",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "replies — реплики для зон low, mid и high",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Одиннадцать делений на узком экране становятся тесными: ниже 20rem лучше перенести шкалу на две строки.",
             "Ответная реплика меняется правилами :has — при смене числа делений правила надо переписать.",
             "Сам индекс NPS тут не считается: это ввод одного ответа, агрегируйте его на сервере.",
@@ -786,11 +1129,30 @@
             "maxLength": 64
           },
           {
+            "prop": "lowAnchor",
+            "label": "Подпись слева",
+            "type": "text",
+            "default": "0 — точно нет",
+            "maxLength": 24
+          },
+          {
             "prop": "highAnchor",
             "label": "Подпись справа",
             "type": "text",
             "default": "10 — обязательно",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -800,21 +1162,25 @@
               "summary": "An NPS survey: eleven notches from zero to ten, three colour zones and a reply line with no JS. Server component, zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-rating-008-* palette — do not swap it for your theme tokens",
-                "its own light surface: the survey gets shown over any background",
                 "the scale starting at zero: an NPS starting at one is not an NPS and stops being comparable",
                 "the 0–6, 7–8, 9–10 zone borders: moving them changes the metric itself, not the styling",
                 "colouring the zones before the answer: otherwise a seven gets picked to mean \"good\"",
                 "the anchor captions under the ends: without them zero and ten read the other way round",
-                "clear:both on the scale: a legend with float:left otherwise makes the notches wrap around it"
+                "clear:both on the scale: a legend with float:left otherwise makes the notches wrap around it",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "legend — the wording of the question",
                 "name — the radio group name",
                 "lowAnchor and highAnchor — the captions under the ends",
                 "the reply texts for the three zones",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "replies — the lines for the low, mid and high zones",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Eleven notches get cramped on a narrow screen: below 20rem move the scale onto two rows.",
                 "The reply line is switched by :has rules — a different notch count means rewriting them.",
                 "The NPS index itself is not computed here: this collects one answer, aggregate it on the server.",
@@ -827,14 +1193,37 @@
                 "label": "Question",
                 "default": "How likely are you to recommend us to a colleague?"
               },
+              "lowAnchor": {
+                "label": "Left caption",
+                "default": "0 — definitely not"
+              },
               "highAnchor": {
                 "label": "Right caption",
                 "default": "10 — for sure"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "NPS Scale"
+            "title": "NPS Scale",
+            "preview": {
+              "props": {
+                "legend": "How likely are you to recommend us to a colleague?",
+                "lowAnchor": "0 — definitely not",
+                "highAnchor": "10 — for sure",
+                "replies": {
+                  "low": "Sorry to hear it. What spoiled the impression?",
+                  "mid": "Thank you. What was missing for a nine?",
+                  "high": "Thank you! Share the link with your colleagues."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -861,19 +1250,24 @@
           "summary": "Распределение голосов: метка средней на шкале от одного до пяти и счётчик голосов на каждую отметку рядом с долей в процентах. Серверный, ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-rating-009-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: сводку показывают поверх любого фона",
             "метку на шкале вместо округления до целой звезды: средняя считается средневзвешенной по votes",
             "role=\"img\" с полным aria-label на шкале — иначе скринридер не узнает ни число, ни основание выборки",
             "числа голосов рядом с процентами в разбивке: одинаковая доля из разного количества голосов — разная надёжность",
-            "отсутствие интерактивных элементов: это витрина, а не форма, и кликать здесь не по чему"
+            "отсутствие интерактивных элементов: это витрина, а не форма, и кликать здесь не по чему",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив votes — голоса от пяти звёзд к одной",
             "акцент через проп accent",
             "текст сводки под шкалой",
-            "размер и вид метки через CSS-переменные компонента"
+            "размер и вид метки через CSS-переменные компонента",
+            "voteWords, gaugeLabel и summaryText — слово «голос» по числам и подписи шкалы",
+            "locale — локаль записи чисел",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Проценты разбивки считаются от суммы votes, а не от отдельного total — передавайте согласованные числа.",
             "Средняя округляется до одного знака после запятой; для другой точности поменяйте формулу value.",
             "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
@@ -885,6 +1279,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -894,19 +1294,24 @@
               "summary": "A vote spread: an average marker on a one-to-five rail plus a vote count next to the percentage share for every score. Server component, zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-rating-009-* palette — do not swap it for your theme tokens",
-                "its own light surface: the summary gets shown over any background",
                 "a marker on the rail instead of rounding to a whole star: the average is weighted from votes",
                 "role=\"img\" with a full aria-label on the rail — otherwise a screen reader learns neither the number nor the sample size",
                 "vote counts next to the percentages in the breakdown: the same share from a different vote count means different confidence",
-                "the absence of interactive elements: this is a display, not a form, and there is nothing to click"
+                "the absence of interactive elements: this is a display, not a form, and there is nothing to click",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the votes array — the counts from five stars down to one",
                 "the accent through the accent prop",
                 "the summary text under the rail",
-                "the marker size and shape through the component's CSS variables"
+                "the marker size and shape through the component's CSS variables",
+                "voteWords, gaugeLabel and summaryText — the plural forms of \"vote\" and the rail captions",
+                "locale — the number formatting locale",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Breakdown percentages are computed from the votes sum, not from a separate total — pass consistent numbers.",
                 "The average is rounded to one decimal place; change the value formula for a different precision.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -916,11 +1321,27 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Vote Spread"
+            "title": "Vote Spread",
+            "preview": {
+              "props": {
+                "voteWords": {
+                  "one": "vote",
+                  "few": "votes",
+                  "many": "votes"
+                },
+                "gaugeLabel": "Average score {value} out of 5 based on {count} {word}",
+                "summaryText": "{count} {word} in total",
+                "locale": "en-US"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

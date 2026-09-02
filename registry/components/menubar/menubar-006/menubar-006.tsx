@@ -9,6 +9,12 @@ export type Menubar006Section = {
 export type Menubar006Props = {
   sections?: Menubar006Section[]
   activeLabel?: string
+  /** Имя первой строки для скринридера. */
+  sectionsLabel?: string
+  /** Имя второй строки: {section} — подпись открытого раздела. */
+  pagesLabel?: string
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -20,13 +26,13 @@ export type Menubar006Props = {
 // значит, и без состояния, и без клиентского JS.
 const STYLES = `
 :where([data-vibeui-block="menubar-006"]){
---vibeui-menubar-006-bg:oklch(1 0 0);
---vibeui-menubar-006-sub:oklch(0.975 0.003 265);
---vibeui-menubar-006-fg:oklch(0.24 0.014 265);
---vibeui-menubar-006-muted:oklch(0.55 0.014 265);
---vibeui-menubar-006-border:oklch(0.9 0.006 265);
---vibeui-menubar-006-hover:oklch(0.55 0.02 265 / 9%);
---vibeui-menubar-006-accent:oklch(0.55 0.2 262);
+--vibeui-menubar-006-bg:transparent;
+--vibeui-menubar-006-sub:light-dark(oklch(0.975 0.003 265),oklch(0.28 0.012 265));
+--vibeui-menubar-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-menubar-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-menubar-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-menubar-006-hover:light-dark(oklch(0.55 0.02 265 / 9%),oklch(0.88 0.02 265 / 14%));
+--vibeui-menubar-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-menubar-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="menubar-006"]{
@@ -99,18 +105,49 @@ const DEFAULT_SECTIONS: Menubar006Section[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Строка меню приложения с активным разделом и его страницами во второй строке.
  * Один файл, ноль зависимостей, собственная палитра, клиентского JS нет.
  */
 export function Menubar006({
   sections = DEFAULT_SECTIONS,
   activeLabel = "Контент",
+  sectionsLabel = "Разделы",
+  pagesLabel = "Раздел «{section}»",
+  background = "",
   accent,
   className,
   style,
 }: Menubar006Props) {
   const palette = {
     ...(accent ? { "--vibeui-menubar-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-menubar-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -127,7 +164,7 @@ export function Menubar006({
         className={className}
         style={palette}
       >
-        <nav data-part="row" aria-label="Разделы">
+        <nav data-part="row" aria-label={sectionsLabel}>
           {sections.map((section) => (
             <a
               key={section.label}
@@ -140,7 +177,10 @@ export function Menubar006({
           ))}
         </nav>
         {active?.pages?.length ? (
-          <nav data-part="sub" aria-label={`Раздел «${active.label}»`}>
+          <nav
+            data-part="sub"
+            aria-label={pagesLabel.replace("{section}", active.label)}
+          >
             {active.pages.map((page) => (
               <a key={page.label} data-part="page" href={page.href ?? "#"}>
                 {page.label}

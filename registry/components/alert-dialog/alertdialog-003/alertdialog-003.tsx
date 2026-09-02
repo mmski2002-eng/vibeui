@@ -14,6 +14,8 @@ export type Alertdialog003Props = Omit<
   discardLabel?: string
   cancel?: string
   accent?: string
+  /** Подложка окна и кнопки открытия. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: развилка о несохранённых изменениях. Здесь три исхода, а не
@@ -24,12 +26,15 @@ export type Alertdialog003Props = Omit<
 // инерции. Закрытие по Escape равнозначно «остаться» — это самый безопасный исход.
 const STYLES = `
 :where([data-vibeui-block="alertdialog-003"]){
---vibeui-alertdialog-003-bg:oklch(1 0 0);
---vibeui-alertdialog-003-fg:oklch(0.22 0.014 265);
---vibeui-alertdialog-003-muted:oklch(0.55 0.014 265);
---vibeui-alertdialog-003-border:oklch(0.9 0.006 265);
---vibeui-alertdialog-003-accent:oklch(0.55 0.2 262);
---vibeui-alertdialog-003-warn:oklch(0.72 0.15 75);
+--vibeui-alertdialog-003-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-alertdialog-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-alertdialog-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-alertdialog-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-alertdialog-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
+--vibeui-alertdialog-003-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0.03 262));
+--vibeui-alertdialog-003-warn:light-dark(oklch(0.66 0.15 70),oklch(0.82 0.14 78));
+--vibeui-alertdialog-003-warn-bg:light-dark(oklch(0.72 0.15 75 / 18%),oklch(0.82 0.14 78 / 20%));
+--vibeui-alertdialog-003-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.02 0.01 265 / 70%));
 --vibeui-alertdialog-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="alertdialog-003"]{
@@ -48,15 +53,15 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 margin:auto;width:min(23rem,calc(100vw - 2rem));padding:1.125rem;
 border:1px solid var(--vibeui-alertdialog-003-border);border-radius:0.875rem;
 background:var(--vibeui-alertdialog-003-bg);color:var(--vibeui-alertdialog-003-fg);
-box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 55%);
+box-shadow:0 24px 60px -24px var(--vibeui-alertdialog-003-shadow);
 font-family:var(--vibeui-alertdialog-003-font);
 }
-[data-vibeui-block="alertdialog-003"] dialog::backdrop{background:oklch(0.2 0.02 265 / 45%)}
+[data-vibeui-block="alertdialog-003"] dialog::backdrop{background:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.08 0.014 265 / 62%))}
 [data-vibeui-block="alertdialog-003"] [data-part="head"]{display:flex;gap:0.625rem;margin-bottom:0.75rem}
 [data-vibeui-block="alertdialog-003"] [data-part="mark"]{
 flex:none;display:inline-flex;align-items:center;justify-content:center;
 width:2rem;height:2rem;border-radius:9999px;
-background:oklch(0.72 0.15 75 / 18%);color:var(--vibeui-alertdialog-003-warn);
+background:var(--vibeui-alertdialog-003-warn-bg);color:var(--vibeui-alertdialog-003-warn);
 font-size:0.9375rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="alertdialog-003"] h2{margin:0 0 0.25rem;font-size:1rem;font-weight:700;line-height:1.3}
@@ -67,7 +72,7 @@ font-size:0.9375rem;font-weight:700;line-height:1;
 width:100%;appearance:none;cursor:pointer;height:2.375rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="alertdialog-003"] [data-part="save"]{border:0;background:var(--vibeui-alertdialog-003-accent);color:oklch(1 0 0)}
+[data-vibeui-block="alertdialog-003"] [data-part="save"]{border:0;background:var(--vibeui-alertdialog-003-accent);color:var(--vibeui-alertdialog-003-on-accent)}
 /* Разрушающий вариант вторичной кнопкой: красная рядом жмётся по инерции. */
 [data-vibeui-block="alertdialog-003"] [data-part="discard"],
 [data-vibeui-block="alertdialog-003"] [data-part="stay"]{
@@ -78,6 +83,28 @@ background:var(--vibeui-alertdialog-003-bg);color:inherit;
 [data-vibeui-block="alertdialog-003"] dialog button:focus-visible{outline:2px solid var(--vibeui-alertdialog-003-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="alertdialog-003"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Развилка о несохранённых изменениях: три исхода, а не два.
@@ -91,6 +118,7 @@ export function Alertdialog003({
   discardLabel = "Закрыть без сохранения",
   cancel = "Остаться в редакторе",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -99,6 +127,12 @@ export function Alertdialog003({
 
   const palette = {
     ...(accent ? { "--vibeui-alertdialog-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-alertdialog-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

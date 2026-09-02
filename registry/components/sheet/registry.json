@@ -16,7 +16,7 @@
           "target": "@components/vibeui/sheet-001.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-001-*. Клиентский: \"use client\" — нужен ref для showModal и close. Высота ограничена min(28rem, 85dvh), нижний отступ учитывает env(safe-area-inset-bottom). Выезд снизу сделан переходом translate с @starting-style. Сводка выложена словарём dl.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-001-*. Клиентский: \"use client\" — нужен ref для showModal и close. Высота ограничена min(28rem, 85dvh), нижний отступ учитывает env(safe-area-inset-bottom). Выезд снизу сделан переходом translate с @starting-style. Сводка выложена словарём dl. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
         "tags": ["sheet", "mobile", "dialog", "checkout"],
         "ai": {
@@ -25,6 +25,8 @@
           "summary": "Лист снизу: ручка, заголовок, сводка пар «подпись — значение» и две крупные кнопки. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-sheet-001-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку листа: он лежит поверх страницы и обязан её перекрывать, прозрачной она быть не может",
             "ограничение высоты: за верхним краем должна быть видна страница",
             "ручку сверху — она обещает, что лист можно закрыть жестом",
             "env(safe-area-inset-bottom) в нижнем отступе",
@@ -33,11 +35,13 @@
           ],
           "adapt": [
             "triggerLabel, title и rows",
-            "primaryLabel — главное действие",
+            "primaryLabel и closeLabel — главное действие и отказ",
             "максимальную высоту листа",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Жест перетаскивания не реализован: ручка обещает его, добавьте обработчик, если нужно закрытие свайпом.",
             "На десктопе лист снизу неуместен: там уместнее диалог или боковая панель.",
             "Сводка — не место для длинных списков: прокрутка внутри листа неудобна.",
@@ -65,6 +69,18 @@
             "type": "text",
             "default": "Оформить",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -74,6 +90,8 @@
               "summary": "A bottom sheet: a grabber, a heading, a label–value summary and two large buttons. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-sheet-001-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque sheet surface: it sits above the page and has to cover it, so it cannot be transparent",
                 "the height cap: the page must remain visible above the sheet",
                 "the grabber — it promises the sheet can be dismissed by gesture",
                 "env(safe-area-inset-bottom) in the bottom padding",
@@ -82,11 +100,13 @@
               ],
               "adapt": [
                 "triggerLabel, title and rows",
-                "primaryLabel — the main action",
+                "primaryLabel and closeLabel — the main action and the refusal",
                 "the sheet's max height",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the surface of the sheet and the opener; empty keeps the built-in palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Drag-to-dismiss is not implemented: the grabber promises it, add a handler if you need it.",
                 "A bottom sheet is wrong on desktop: use a dialog or a side panel there.",
                 "The summary is not for long lists: scrolling inside a sheet is awkward.",
@@ -106,11 +126,44 @@
               "primaryLabel": {
                 "label": "Action",
                 "default": "Checkout"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Bottom Sheet"
+            "title": "Bottom Sheet",
+            "preview": {
+              "props": {
+                "triggerLabel": "Show order",
+                "title": "Your order",
+                "rows": [
+                  {
+                    "label": "Items",
+                    "value": "$168.40"
+                  },
+                  {
+                    "label": "Delivery",
+                    "value": "$5.20"
+                  },
+                  {
+                    "label": "Discount",
+                    "value": "−$16.00"
+                  },
+                  {
+                    "label": "Total",
+                    "value": "$157.60"
+                  }
+                ],
+                "primaryLabel": "Checkout",
+                "closeLabel": "Close"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -128,7 +181,7 @@
           "target": "@components/vibeui/sheet-002.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-002-*. Клиентский: \"use client\" — ref для showModal и close. Лист отстоит от края окна на 0.625rem, поэтому inset задан явно и margin:0 не даёт dialog прилипнуть к углу. Тумблер собран на input[type=checkbox] с appearance:none и role=\"switch\": состояние читается скринридером само. Прокручивается только средняя область.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-002-*. Клиентский: \"use client\" — ref для showModal и close. Лист отстоит от края окна на 0.625rem, поэтому inset задан явно и margin:0 не даёт dialog прилипнуть к углу. Тумблер собран на input[type=checkbox] с appearance:none и role=\"switch\": состояние читается скринридером само. Прокручивается только средняя область. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
         "tags": ["sheet", "settings", "switch", "dialog"],
         "ai": {
@@ -137,6 +190,8 @@
           "summary": "Лист настроек справа: группы строк с подписью, пояснением и тумблером. Висит карточкой с отступом от края, поэтому видно, что страница под ним на месте. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-sheet-002-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку листа: он лежит поверх страницы и обязан её перекрывать, прозрачной она быть не может",
             "отсутствие кнопки «Сохранить»: тумблер — это уже действие, подтверждать его нечем",
             "пояснение под каждой подписью: настройка без объяснения последствий переключается наугад",
             "role=\"switch\" на флажке — иначе скринридер объявит его обычной галочкой",
@@ -146,11 +201,14 @@
           "adapt": [
             "title — заголовок листа и его имя для скринридера",
             "массив groups: заголовки групп, подписи, пояснения и начальное состояние",
-            "triggerLabel — подпись кнопки, открывающей лист",
+            "triggerLabel и closeLabel — подписи кнопки открытия и крестика",
             "ширину листа: 23rem хватает на подпись с пояснением в две строки",
-            "сторону выезда и величину отступа от края"
+            "сторону выезда и величину отступа от края",
+            "акцент через проп accent — заливка включённого тумблера и обводка фокуса",
+            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Состояние тумблеров не поднимается наружу: навесьте onChange, если настройки должны сохраняться.",
             "Настройку с последствиями (удаление, оплата) тумблером не делают: для неё нужен диалог с подтверждением.",
             "Больше двух групп в листе не читается — остальное выносите на страницу настроек.",
@@ -171,6 +229,18 @@
             "type": "text",
             "default": "Настройки",
             "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -180,6 +250,8 @@
               "summary": "A right-hand settings sheet: groups of rows with a label, an explanation and a switch. It floats inset from the edge, so the page underneath stays visible. Zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-sheet-002-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque sheet surface: it sits above the page and has to cover it, so it cannot be transparent",
                 "the absence of a Save button: a switch is already the action, there is nothing to confirm",
                 "the explanation under each label: a setting with unexplained consequences gets flipped blindly",
                 "role=\"switch\" on the checkbox — otherwise a screen reader announces a plain tick box",
@@ -189,11 +261,14 @@
               "adapt": [
                 "title — the sheet heading and its accessible name",
                 "the groups array: group headings, labels, explanations and initial state",
-                "triggerLabel — the wording of the button that opens the sheet",
+                "triggerLabel and closeLabel — the opener and the close cross wording",
                 "the sheet width: 23rem fits a label with a two-line explanation",
-                "the side it slides from and the size of the inset"
+                "the side it slides from and the size of the inset",
+                "the accent through the accent prop — it fills a switched-on toggle and draws the focus ring",
+                "background — the surface of the sheet and the opener; empty keeps the built-in palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Switch state is not lifted out: attach onChange when the settings have to persist.",
                 "A setting with consequences (deleting, paying) is not a switch: that needs a confirmation dialog.",
                 "More than two groups stops being readable — move the rest to a settings page.",
@@ -209,11 +284,60 @@
               "title": {
                 "label": "Heading",
                 "default": "Settings"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Settings Sheet"
+            "title": "Settings Sheet",
+            "preview": {
+              "props": {
+                "triggerLabel": "Settings",
+                "title": "Settings",
+                "closeLabel": "Close settings",
+                "groups": [
+                  {
+                    "title": "Notifications",
+                    "rows": [
+                      {
+                        "label": "Build finished",
+                        "hint": "An email after every deploy",
+                        "on": true
+                      },
+                      {
+                        "label": "Build failed",
+                        "hint": "Arrives even at night",
+                        "on": true
+                      },
+                      {
+                        "label": "Weekly digest",
+                        "hint": "On Mondays"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Catalog",
+                    "rows": [
+                      {
+                        "label": "Dense list",
+                        "hint": "More rows on screen"
+                      },
+                      {
+                        "label": "Show drafts",
+                        "hint": "Visible to you and the team only",
+                        "on": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -231,7 +355,7 @@
           "target": "@components/vibeui/sheet-003.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-003-*. Клиентский: \"use client\", useState держит активный раздел, useId — имя группы радиокнопок, useRef — showModal и close. Сегментированный переключатель — fieldset с радиокнопками, спрятанными clip-path; активная вкладка подсвечивается через :has(input:checked). Высота листа зафиксирована, поэтому смена раздела не дёргает страницу.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-003-*. Клиентский: \"use client\", useState держит активный раздел, useId — имя группы радиокнопок, useRef — showModal и close. Сегментированный переключатель — fieldset с радиокнопками, спрятанными clip-path; активная вкладка подсвечивается через :has(input:checked). Высота листа зафиксирована, поэтому смена раздела не дёргает страницу. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
         "tags": ["sheet", "tabs", "radiogroup", "dialog"],
         "ai": {
@@ -240,6 +364,8 @@
           "summary": "Лист снизу с сегментированным переключателем разделов и таблицей значений внутри. Вкладки — настоящая группа радиокнопок, поэтому клавиатура работает без дописанной логики. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-sheet-003-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку листа: он лежит поверх страницы и обязан её перекрывать, прозрачной она быть не может",
             "радиокнопки вместо самописных вкладок: стрелки, Home и End достаются от браузера бесплатно",
             "скрытие радиокнопки через clip-path, а не display:none — иначе она перестаёт получать фокус",
             "фиксированную высоту листа: без неё смена раздела дёргает страницу под листом",
@@ -249,11 +375,14 @@
           "adapt": [
             "title — заголовок листа и его имя для скринридера",
             "массив tabs: подпись раздела и его строки",
-            "triggerLabel — подпись кнопки, открывающей лист",
+            "triggerLabel, closeLabel и tabsLabel — подписи открытия, закрытия и имя группы разделов для скринридера",
             "число разделов: сегменты делят ширину поровну",
-            "высоту листа и содержимое раздела — вместо таблицы может быть что угодно"
+            "высоту листа и содержимое раздела — вместо таблицы может быть что угодно",
+            "акцент через проп accent — заливка нижней кнопки и обводка фокуса",
+            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше четырёх разделов в сегменте не помещаются: делайте прокручиваемую полосу вкладок.",
             "Раздел не запоминается между открытиями: лист всегда открывается на первом.",
             "Это не ARIA-вкладки: если вам нужен именно паттерн tablist, его придётся собрать отдельно.",
@@ -274,6 +403,18 @@
             "type": "text",
             "default": "Показатели проекта",
             "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -283,6 +424,8 @@
               "summary": "A bottom sheet with a segmented section switcher and a table of values inside. The tabs are a real radio group, so the keyboard works without extra logic. Zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-sheet-003-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque sheet surface: it sits above the page and has to cover it, so it cannot be transparent",
                 "radio buttons instead of hand-made tabs: arrows, Home and End come free",
                 "hiding the radio with clip-path rather than display:none — otherwise it stops taking focus",
                 "the fixed sheet height: without it switching sections jolts the page underneath",
@@ -292,11 +435,14 @@
               "adapt": [
                 "title — the sheet heading and its accessible name",
                 "the tabs array: the section label and its rows",
-                "triggerLabel — the wording of the button that opens the sheet",
+                "triggerLabel, closeLabel and tabsLabel — the opener, the close button and the section group's accessible name",
                 "the number of sections: the segments split the width evenly",
-                "the sheet height and the section content — anything can replace the table"
+                "the sheet height and the section content — anything can replace the table",
+                "the accent through the accent prop — it fills the bottom button and draws the focus ring",
+                "background — the surface of the sheet and the opener; empty keeps the built-in palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "More than four sections will not fit the segment: use a scrollable tab strip instead.",
                 "The section is not remembered between openings: the sheet always opens on the first one.",
                 "These are not ARIA tabs: if you need the tablist pattern proper, build it separately.",
@@ -312,11 +458,91 @@
               "triggerLabel": {
                 "label": "Button",
                 "default": "Project metrics"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Tabbed Sheet"
+            "title": "Tabbed Sheet",
+            "preview": {
+              "props": {
+                "triggerLabel": "Project metrics",
+                "title": "Project Vitrina",
+                "tabsLabel": "Section",
+                "closeLabel": "Close",
+                "tabs": [
+                  {
+                    "label": "Overview",
+                    "rows": [
+                      {
+                        "label": "Status",
+                        "value": "Published"
+                      },
+                      {
+                        "label": "Address",
+                        "value": "vitrina.ru"
+                      },
+                      {
+                        "label": "Last build",
+                        "value": "12 March, 14:08"
+                      },
+                      {
+                        "label": "Size",
+                        "value": "4.2 MB"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Traffic",
+                    "rows": [
+                      {
+                        "label": "Visits this week",
+                        "value": "8,412"
+                      },
+                      {
+                        "label": "Unique",
+                        "value": "5,190"
+                      },
+                      {
+                        "label": "Average depth",
+                        "value": "3.4 pages"
+                      },
+                      {
+                        "label": "Bounce",
+                        "value": "31%"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Builds",
+                    "rows": [
+                      {
+                        "label": "Successful",
+                        "value": "48"
+                      },
+                      {
+                        "label": "Failed",
+                        "value": "3"
+                      },
+                      {
+                        "label": "Average time",
+                        "value": "51 s"
+                      },
+                      {
+                        "label": "Cache",
+                        "value": "On"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -334,7 +560,7 @@
           "target": "@components/vibeui/sheet-004.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-004-*. Клиентский: \"use client\" — ref для showModal и close. Область предпросмотра нарисована двумя градиентами, расширение вычисляется из имени файла, поэтому компонент не тащит ни картинок, ни иконочного шрифта. Факты выложены сеткой auto-fit, имя файла переносится по overflow-wrap:anywhere.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-004-*. Клиентский: \"use client\" — ref для showModal и close. Область предпросмотра нарисована двумя градиентами, расширение вычисляется из имени файла, поэтому компонент не тащит ни картинок, ни иконочного шрифта. Факты выложены сеткой auto-fit, имя файла переносится по overflow-wrap:anywhere. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
         "tags": ["sheet", "file", "preview", "download"],
         "ai": {
@@ -343,6 +569,8 @@
           "summary": "Лист предпросмотра файла: крупная область документа с расширением, имя, тип и факты плитками, внизу — закрытие и скачивание. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-sheet-004-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку листа: он лежит поверх страницы и обязан её перекрывать, прозрачной она быть не может",
             "предпросмотр самой крупной частью листа: файл узнают по виду, а не по строке свойств",
             "расширение, вычисленное из имени: подпись не должна расходиться с самим файлом",
             "перенос длинного имени через overflow-wrap:anywhere — иначе имя файла ломает раскладку",
@@ -352,11 +580,14 @@
           "adapt": [
             "fileName и fileKind — имя файла и строка типа с датой",
             "массив facts: любые пары «подпись — значение»",
-            "triggerLabel и downloadLabel — подписи триггера и скачивания",
+            "triggerLabel, downloadLabel, closeLabel и extensionFallback — подписи триггера, скачивания, закрытия и плашки для файла без расширения",
             "высоту области предпросмотра и её градиент",
-            "действия внизу: сюда же обычно добавляют «Поделиться» и «Удалить»"
+            "действия внизу: сюда же обычно добавляют «Поделиться» и «Удалить»",
+            "акцент через проп accent — заливка кнопки скачивания и подсветка области предпросмотра",
+            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Настоящего предпросмотра здесь нет: подставьте img или canvas вместо градиента, когда файл можно показать.",
             "Скачивание не реализовано — кнопка ждёт обработчика или ссылки с атрибутом download.",
             "Для галереи из нескольких файлов нужен переход между ними: лист показывает ровно один.",
@@ -377,6 +608,18 @@
             "type": "text",
             "default": "Скачать",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -386,6 +629,8 @@
               "summary": "A file preview sheet: a large document area with the extension, the name, the kind and facts as tiles, with close and download at the bottom. Zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-sheet-004-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque sheet surface: it sits above the page and has to cover it, so it cannot be transparent",
                 "the preview as the largest part of the sheet: a file is recognised by sight, not by a property row",
                 "the extension derived from the name: the badge must not disagree with the file",
                 "wrapping long names with overflow-wrap:anywhere — otherwise a file name breaks the layout",
@@ -395,11 +640,14 @@
               "adapt": [
                 "fileName and fileKind — the file name and the kind-plus-date line",
                 "the facts array: any label–value pairs",
-                "triggerLabel and downloadLabel — the trigger and download wording",
+                "triggerLabel, downloadLabel, closeLabel and extensionFallback — the trigger, download and close wording plus the badge for a file with no extension",
                 "the height of the preview area and its gradient",
-                "the bottom actions: Share and Delete usually join them here"
+                "the bottom actions: Share and Delete usually join them here",
+                "the accent through the accent prop — it fills the download button and tints the preview area",
+                "background — the surface of the sheet and the opener; empty keeps the built-in palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is no real preview: swap the gradient for an img or canvas when the file can be shown.",
                 "Downloading is not wired — the button awaits a handler or a link with the download attribute.",
                 "A gallery of several files needs navigation between them: this sheet shows exactly one.",
@@ -415,11 +663,46 @@
               "downloadLabel": {
                 "label": "Download",
                 "default": "Download"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "File Sheet"
+            "title": "File Sheet",
+            "preview": {
+              "props": {
+                "triggerLabel": "Open file",
+                "fileName": "Contract-2024.pdf",
+                "fileKind": "PDF document · uploaded 12 March",
+                "facts": [
+                  {
+                    "label": "Size",
+                    "value": "3.8 MB"
+                  },
+                  {
+                    "label": "Pages",
+                    "value": "24"
+                  },
+                  {
+                    "label": "Modified",
+                    "value": "12 March"
+                  },
+                  {
+                    "label": "Author",
+                    "value": "A. Kovaleva"
+                  }
+                ],
+                "downloadLabel": "Download",
+                "closeLabel": "Close",
+                "extensionFallback": "file"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -437,7 +720,7 @@
           "target": "@components/vibeui/sheet-005.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-005-*. Клиентский: \"use client\", useState держит строку поиска и выбранное значение, useId — имя группы радиокнопок, useRef — showModal и close. Фильтрация идёт по подстроке в нижнем регистре. Поиск и подтверждение вынесены из прокручиваемой области, список — fieldset с радиокнопками.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-005-*. Клиентский: \"use client\", useState держит строку поиска и выбранное значение, useId — имя группы радиокнопок, useRef — showModal и close. Фильтрация идёт по подстроке в нижнем регистре. Поиск и подтверждение вынесены из прокручиваемой области, список — fieldset с радиокнопками. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
         "tags": ["sheet", "picker", "search", "mobile"],
         "ai": {
@@ -446,6 +729,8 @@
           "summary": "Лист выбора: поле поиска в шапке, список радиокнопок в прокручиваемой середине и кнопка подтверждения с выбранным значением внизу. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-sheet-005-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку листа: он лежит поверх страницы и обязан её перекрывать, прозрачной она быть не может",
             "поиск вне прокрутки: поле, уезжающее вверх, заставляет прокручивать список обратно",
             "радиокнопки, а не кнопки-строки: выбор одного из многих обязан читаться как выбор",
             "выбранное значение на кнопке подтверждения — иначе после прокрутки непонятно, что выбрано",
@@ -455,11 +740,14 @@
           "adapt": [
             "title — заголовок листа и его имя для скринридера",
             "массив options: любой длины, фильтрация уже работает",
-            "triggerLabel, searchLabel и confirmLabel — подписи триггера, поиска и подтверждения",
+            "triggerLabel, searchLabel, confirmLabel и emptyText — подписи триггера и поиска, шаблон подтверждения ({option} — выбранное значение) и сообщение о пустом результате",
             "правило фильтрации: сейчас это поиск подстроки без учёта регистра",
-            "высоту листа: сейчас 32rem или 90% высоты экрана"
+            "высоту листа: сейчас 32rem или 90% высоты экрана",
+            "акцент через проп accent — заливка кнопки подтверждения и точка выбранного варианта",
+            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Выбранное значение не уходит наружу: поднимите его в обработчике кнопки подтверждения.",
             "Список в тысячу строк потребует виртуализации — здесь рисуются все найденные строки.",
             "Для выбора нескольких значений замените радиокнопки флажками и подпись кнопки на счётчик.",
@@ -480,6 +768,18 @@
             "type": "text",
             "default": "Найти регион",
             "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -489,6 +789,8 @@
               "summary": "A picker sheet: a search field in the header, a radio list in the scrolling middle and a confirm button carrying the chosen value at the bottom. Zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-sheet-005-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque sheet surface: it sits above the page and has to cover it, so it cannot be transparent",
                 "search outside the scroll: a field that scrolls away forces people back up the list",
                 "radio buttons rather than row buttons: one-of-many has to read as a choice",
                 "the chosen value on the confirm button — after scrolling nothing else says what is selected",
@@ -498,11 +800,14 @@
               "adapt": [
                 "title — the sheet heading and its accessible name",
                 "the options array: any length, filtering already works",
-                "triggerLabel, searchLabel and confirmLabel — the trigger, search and confirm wording",
+                "triggerLabel, searchLabel, confirmLabel and emptyText — the trigger and search wording, the confirm template ({option} stands for the chosen value) and the empty-result message",
                 "the filter rule: a case-insensitive substring match today",
-                "the sheet height: 32rem or 90% of the screen right now"
+                "the sheet height: 32rem or 90% of the screen right now",
+                "the accent through the accent prop — it fills the confirm button and the selected radio dot",
+                "background — the surface of the sheet and the opener; empty keeps the built-in palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The chosen value is not lifted out: read it in the confirm handler.",
                 "A thousand-row list needs virtualisation — every matching row is rendered here.",
                 "For multiple selection swap radios for checkboxes and put a counter on the button.",
@@ -518,11 +823,44 @@
               "searchLabel": {
                 "label": "Search",
                 "default": "Find a region"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Picker Sheet"
+            "title": "Picker Sheet",
+            "preview": {
+              "props": {
+                "triggerLabel": "Choose a region",
+                "title": "Delivery region",
+                "searchLabel": "Find a region",
+                "confirmLabel": "Choose: {option}",
+                "emptyText": "Nothing found. Try another query.",
+                "options": [
+                  "Aberdeenshire",
+                  "Berkshire",
+                  "Cambridgeshire",
+                  "Cornwall",
+                  "Derbyshire",
+                  "Devon",
+                  "East Sussex",
+                  "Greater Manchester",
+                  "Hampshire",
+                  "Kent",
+                  "Lancashire",
+                  "Norfolk",
+                  "North Yorkshire",
+                  "Somerset",
+                  "West Midlands"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -540,7 +878,7 @@
           "target": "@components/vibeui/sheet-006.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-006-*. Клиентский: \"use client\" — ref для showModal, дальше работает форма method=\"dialog\": обе кнопки закрывают лист сами и возвращают своё value. Заголовок связан с dialog через aria-labelledby и useId. Знак опасности нарисован псевдоэлементами, кнопки уложены в столбик и имеют высоту 3rem.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-006-*. Клиентский: \"use client\" — ref для showModal, дальше работает форма method=\"dialog\": обе кнопки закрывают лист сами и возвращают своё value. Заголовок связан с dialog через aria-labelledby и useId. Знак опасности нарисован псевдоэлементами, кнопки уложены в столбик и имеют высоту 3rem. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
         "tags": ["sheet", "confirm", "destructive", "mobile"],
         "ai": {
@@ -549,6 +887,8 @@
           "summary": "Лист подтверждения: знак опасности, вопрос, список последствий и две кнопки в столбик — опасная сверху, отказ снизу и в фокусе. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-sheet-006-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку листа: он лежит поверх страницы и обязан её перекрывать, прозрачной она быть не может",
             "фокус на отказе при открытии: опасная кнопка не должна срабатывать по Enter",
             "последствия списком, а не одной строкой: человек должен увидеть, что именно потеряет",
             "форму method=\"dialog\": кнопки закрывают лист сами, обработчик закрытия не нужен",
@@ -560,9 +900,12 @@
             "массив consequences: что именно случится после подтверждения",
             "confirmLabel и cancelLabel — подписи подтверждения и отказа",
             "triggerLabel — подпись кнопки, открывающей лист",
-            "тон: опасный красный можно заменить нейтральным, если действие обратимо"
+            "тон: опасный красный можно заменить нейтральным, если действие обратимо",
+            "danger — опасный цвет: знак, маркеры последствий и кнопка подтверждения",
+            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Подтверждение оправдано только для необратимого: для отменяемого действия честнее тост с отменой.",
             "Компонент не выполняет действие: значение нажатой кнопки читайте в обработчике close.",
             "Слово «Удалить» в подписи лучше названия объекта: «Да» и «ОК» не говорят, что произойдёт.",
@@ -583,6 +926,18 @@
             "type": "text",
             "default": "Удалить навсегда",
             "maxLength": 30
+          },
+          {
+            "prop": "danger",
+            "label": "Опасный цвет",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -592,6 +947,8 @@
               "summary": "A confirmation sheet: a danger mark, the question, a list of consequences and two stacked buttons — the destructive one on top, the refusal below and focused. Zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-sheet-006-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque sheet surface: it sits above the page and has to cover it, so it cannot be transparent",
                 "focus on the refusal at open: the destructive button must not fire on Enter",
                 "consequences as a list, not one line: people have to see what exactly they lose",
                 "the method=\"dialog\" form: the buttons close the sheet themselves, no close handler needed",
@@ -603,9 +960,12 @@
                 "the consequences array: what exactly happens after confirming",
                 "confirmLabel and cancelLabel — the confirm and refuse wording",
                 "triggerLabel — the wording of the button that opens the sheet",
-                "the tone: the dangerous red can go neutral when the action is reversible"
+                "the tone: the dangerous red can go neutral when the action is reversible",
+                "danger — the destructive colour: the mark, the consequence bullets and the confirm button",
+                "background — the surface of the sheet and the opener; empty keeps the built-in palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Confirmation only earns its place for the irreversible: for undoable work a toast with undo is honester.",
                 "The component performs nothing: read the pressed button's value in the close handler.",
                 "The verb beats the object name in the label: \"Yes\" and \"OK\" do not say what will happen.",
@@ -621,11 +981,32 @@
               "confirmLabel": {
                 "label": "Confirm",
                 "default": "Delete forever"
+              },
+              "danger": {
+                "label": "Destructive colour"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Confirm Sheet"
+            "title": "Confirm Sheet",
+            "preview": {
+              "props": {
+                "triggerLabel": "Delete project",
+                "title": "Delete project Vitrina?",
+                "text": "The action is irreversible and affects everyone in the workspace.",
+                "consequences": [
+                  "vitrina.ru stops resolving immediately",
+                  "The publishing history cannot be restored",
+                  "Team members lose access to the sources"
+                ],
+                "confirmLabel": "Delete forever",
+                "cancelLabel": "Keep it"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["danger", "background"]
       }
     },
     {
@@ -643,7 +1024,7 @@
           "target": "@components/vibeui/sheet-007.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-007-*. Клиентский: \"use client\", useState держит открытый раздел, useRef — showModal и close. Оба уровня лежат в дорожке шириной 200% и сдвигаются через translate по data-level; неактивный уровень помечен inert, поэтому его кнопки выпадают из Tab-порядка. Стрелка и шеврон нарисованы бордюрами повёрнутого квадрата.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-007-*. Клиентский: \"use client\", useState держит открытый раздел, useRef — showModal и close. Оба уровня лежат в дорожке шириной 200% и сдвигаются через translate по data-level; неактивный уровень помечен inert, поэтому его кнопки выпадают из Tab-порядка. Стрелка и шеврон нарисованы бордюрами повёрнутого квадрата. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
         "tags": ["sheet", "nested", "navigation", "mobile"],
         "ai": {
@@ -652,6 +1033,8 @@
           "summary": "Лист из двух уровней: список разделов и раздел с вариантами. «Назад» возвращает на уровень, крестик закрывает лист целиком. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-sheet-007-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку листа: он лежит поверх страницы и обязан её перекрывать, прозрачной она быть не может",
             "два уровня в одной дорожке вместо второго диалога: окно поверх окна ломает возврат фокуса",
             "раздельные «Назад» и крестик: вернуться на уровень и закрыть лист — разные операции",
             "inert на скрытом уровне — иначе Tab уезжает на кнопки за краем экрана",
@@ -661,11 +1044,14 @@
           "adapt": [
             "title — заголовок первого уровня и имя листа для скринридера",
             "массив sections: подпись, текущее значение и варианты каждого раздела",
-            "triggerLabel — подпись кнопки, открывающей лист",
+            "triggerLabel, backLabel и closeLabel — подписи открытия, возврата на уровень и закрытия",
             "высоту листа: сейчас 26rem или 82% высоты экрана",
-            "содержимое второго уровня — вместо радиокнопок может быть форма"
+            "содержимое второго уровня — вместо радиокнопок может быть форма",
+            "акцент через проп accent — точка выбранного варианта и обводка фокуса",
+            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Третьего уровня нет и не предполагается: дорожка рассчитана на два, глубже нужна страница.",
             "Выбор во втором уровне не поднимается наружу — навесьте onChange, если он должен сохраняться.",
             "Фокус при переходе на уровень не переносится: добавьте перевод фокуса на заголовок, если это важно.",
@@ -686,6 +1072,18 @@
             "type": "text",
             "default": "Настройки приложения",
             "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -695,6 +1093,8 @@
               "summary": "A two-level sheet: a list of sections and a section with its options. Back returns one level, the cross closes the sheet entirely. Zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-sheet-007-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque sheet surface: it sits above the page and has to cover it, so it cannot be transparent",
                 "two levels in one track instead of a second dialog: a window over a window breaks focus return",
                 "separate Back and close: stepping back and closing are different operations",
                 "inert on the hidden level — otherwise Tab wanders onto buttons off-screen",
@@ -704,11 +1104,14 @@
               "adapt": [
                 "title — the first level heading and the sheet's accessible name",
                 "the sections array: label, current value and options of each section",
-                "triggerLabel — the wording of the button that opens the sheet",
+                "triggerLabel, backLabel and closeLabel — the opener, the step-back and the close wording",
                 "the sheet height: 26rem or 82% of the screen right now",
-                "the second level's content — a form can replace the radio buttons"
+                "the second level's content — a form can replace the radio buttons",
+                "the accent through the accent prop — the selected radio dot and the focus ring",
+                "background — the surface of the sheet and the opener; empty keeps the built-in palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is no third level and none is planned: the track holds two, deeper needs a page.",
                 "The second-level choice is not lifted out — attach onChange when it has to persist.",
                 "Focus does not move when you go a level deeper: move it to the heading if that matters.",
@@ -724,11 +1127,47 @@
               "triggerLabel": {
                 "label": "Button",
                 "default": "App settings"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Nested Sheet"
+            "title": "Nested Sheet",
+            "preview": {
+              "props": {
+                "triggerLabel": "App settings",
+                "title": "Settings",
+                "backLabel": "Back to the settings list",
+                "closeLabel": "Close settings",
+                "sections": [
+                  {
+                    "label": "Interface language",
+                    "hint": "English",
+                    "options": ["English", "Русский", "Қазақша"]
+                  },
+                  {
+                    "label": "Appearance",
+                    "hint": "Match the system",
+                    "options": ["Match the system", "Light", "Dark"]
+                  },
+                  {
+                    "label": "Time zone",
+                    "hint": "London, UTC+0",
+                    "options": [
+                      "London, UTC+0",
+                      "Berlin, UTC+1",
+                      "New York, UTC−5"
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -746,7 +1185,7 @@
           "target": "@components/vibeui/menu-007.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-007-*. Клиентский: \"use client\". Нижний отступ учитывает env(safe-area-inset-bottom), высота пункта 2.75rem — цель под большой палец. У пунктов есть пояснения второй строкой, опасное действие красится текстом, отмена вынесена отдельной кнопкой во всю ширину.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-007-*. Клиентский: \"use client\". Нижний отступ учитывает env(safe-area-inset-bottom), высота пункта 2.75rem — цель под большой палец. У пунктов есть пояснения второй строкой, опасное действие красится текстом, отмена вынесена отдельной кнопкой во всю ширину. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
         "tags": ["menu", "sheet", "mobile", "actions"],
         "preview": {
@@ -758,6 +1197,8 @@
           "summary": "Лист действий для телефона: заголовок с именем объекта, крупные пункты с пояснениями и отдельная отмена. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-menu-007-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную подложку листа: он лежит поверх содержимого экрана и обязан его перекрывать, прозрачной она быть не может",
             "высоту пунктов 2.75rem: до нижнего края дотягивается только большой палец",
             "отдельную крупную отмену — закрыть должно быть так же легко, как открыть",
             "env(safe-area-inset-bottom): иначе лист уезжает под системную черту",
@@ -767,10 +1208,12 @@
           "adapt": [
             "массив actions и их пояснения",
             "title — что за объект",
-            "cancelLabel",
-            "акцент через проп accent"
+            "cancelLabel и triggerLabel — подписи отмены и кнопки, снова открывающей лист",
+            "акцент через проп accent",
+            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Позиционирование не входит в компонент: прижимает лист к низу вызывающий код.",
             "Больше пяти действий в листе не помещается: остальное — на отдельном экране.",
             "Опасное действие в листе стоит подтверждать отдельно: одно нажатие пальцем слишком легко.",
@@ -797,6 +1240,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -806,6 +1255,8 @@
               "summary": "A phone action sheet: a header naming the object, large items with explanations and a separate cancel button. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-menu-007-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque sheet surface: it sits above the screen content and has to cover it, so it cannot be transparent",
                 "the 2.75rem item height: only a thumb reaches the bottom edge",
                 "the separate large cancel — closing must be as easy as opening",
                 "env(safe-area-inset-bottom): otherwise the sheet slides under the home bar",
@@ -815,10 +1266,12 @@
               "adapt": [
                 "the actions array and their explanations",
                 "title — what the object is",
-                "cancelLabel",
-                "the accent through the accent prop"
+                "cancelLabel and triggerLabel — the cancel wording and the button that reopens the sheet",
+                "the accent through the accent prop",
+                "background — the surface of the sheet and the opener; empty keeps the built-in palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Positioning is not part of the component: pinning it to the bottom is the caller's job.",
                 "More than five actions do not fit: the rest belong on their own screen.",
                 "A destructive action here deserves its own confirmation: one thumb tap is too easy.",
@@ -837,11 +1290,40 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Action Sheet"
+            "title": "Action Sheet",
+            "preview": {
+              "props": {
+                "title": "The Catalog project",
+                "triggerLabel": "Actions",
+                "cancelLabel": "Cancel",
+                "actions": [
+                  {
+                    "label": "Share",
+                    "hint": "A view-only link"
+                  },
+                  {
+                    "label": "Duplicate",
+                    "hint": "The copy appears next to it"
+                  },
+                  {
+                    "label": "Move to archive"
+                  },
+                  {
+                    "label": "Delete",
+                    "hint": "This cannot be undone",
+                    "danger": true
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     }
   ]

@@ -9,6 +9,8 @@ export type Item010Row = {
 export type Item010Props = Omit<ComponentPropsWithoutRef<"ul">, "children"> & {
   rows?: Item010Row[]
   density?: "tight" | "compact" | "cozy"
+  /** Пусто — подложки нет, список лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,14 +20,17 @@ export type Item010Props = Omit<ComponentPropsWithoutRef<"ul">, "children"> & {
 // разделены внутренней линией, а не рамкой каждой строки: рамки удваивались бы
 // на стыках и давали двойную черту. Числа набраны табличными цифрами и выровнены
 // вправо — в плотном списке колонку сравнивают взглядом сверху вниз.
+//
+// Тема берётся из color-scheme окружения через light-dark(): список темнеет
+// там, где тёмный контекст, и не выкладывает под себя белую плашку.
 const STYLES = `
 :where([data-vibeui-block="item-010"]){
---vibeui-item-010-bg:oklch(1 0 0);
---vibeui-item-010-fg:oklch(0.23 0.014 265);
---vibeui-item-010-muted:oklch(0.56 0.014 265);
---vibeui-item-010-border:oklch(0.91 0.006 265);
---vibeui-item-010-hover:oklch(0.97 0.003 265);
---vibeui-item-010-accent:oklch(0.55 0.19 262);
+--vibeui-item-010-bg:transparent;
+--vibeui-item-010-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-item-010-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-item-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-item-010-hover:color-mix(in oklab,var(--vibeui-item-010-fg) 6%,var(--vibeui-item-010-bg));
+--vibeui-item-010-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.16 262));
 --vibeui-item-010-step:1.625rem;
 --vibeui-item-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -76,12 +81,35 @@ const DEFAULT_ROWS: Item010Row[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Плотный список: строка ростом в один шаг, три колонки, табличные цифры.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Item010({
   rows = DEFAULT_ROWS,
   density = "tight",
+  background = "",
   accent,
   className,
   style,
@@ -89,6 +117,12 @@ export function Item010({
 }: Item010Props) {
   const palette = {
     ...(accent ? { "--vibeui-item-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-item-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

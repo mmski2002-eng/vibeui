@@ -11,6 +11,14 @@ export type Date003Props = Omit<
   defaultFrom?: string
   defaultTo?: string
   min?: string
+  /** Подписи полей и итога: компонент несёт русские, проект подставляет свои. */
+  fromLabel?: string
+  toLabel?: string
+  durationLabel?: string
+  /** Склонения ночей с подстановкой {count}: ключи one, few и many. */
+  nightsText?: Record<string, string>
+  /** Пусто — подложки нет, поля лежат прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,19 +28,22 @@ export type Date003Props = Omit<
 // конец подтягивается за ним, а не превращается в ошибку: перевыбирать обе даты
 // из-за одной правки — обидно. Число ночей считается тут же: диапазон дат
 // пользователь всё равно мысленно переводит в длительность.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="date-003"]){
---vibeui-date-003-surface:oklch(1 0 0);
---vibeui-date-003-field:oklch(1 0 0);
---vibeui-date-003-shell:oklch(0.9 0.006 265);
---vibeui-date-003-fg:oklch(0.23 0.014 265);
---vibeui-date-003-muted:oklch(0.55 0.014 265);
---vibeui-date-003-border:oklch(0.88 0.008 265);
---vibeui-date-003-accent:oklch(0.52 0.16 210);
---vibeui-date-003-soft:oklch(0.52 0.16 210 / 10%);
+--vibeui-date-003-surface:transparent;
+--vibeui-date-003-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-date-003-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-date-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-date-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-date-003-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-date-003-accent:light-dark(oklch(0.52 0.16 210),oklch(0.78 0.13 210));
+--vibeui-date-003-soft:color-mix(in oklch,var(--vibeui-date-003-accent) 12%,transparent);
 --vibeui-date-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поля показывают поверх любого фона. */
+/* Подложки по умолчанию нет: рамка держит форму, фон приходит со страницы. */
 [data-vibeui-block="date-003"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;margin:0;padding:0.875rem;
@@ -86,13 +97,43 @@ function plusDay(date: string) {
   return new Date(next + DAY).toISOString().slice(0, 10)
 }
 
-function nightsWord(count: number) {
+const NIGHTS_TEXT: Record<string, string> = {
+  one: "{count} ночь",
+  few: "{count} ночи",
+  many: "{count} ночей",
+}
+
+// Русские склонения: 1 ночь, 2–4 ночи, остальное — ночей, кроме подростковых.
+function pluralKey(count: number) {
   const tail = count % 10
   const teen = count % 100
-  if (teen > 10 && teen < 20) return "ночей"
-  if (tail === 1) return "ночь"
-  if (tail > 1 && tail < 5) return "ночи"
-  return "ночей"
+  if (teen > 10 && teen < 20) return "many"
+  if (tail === 1) return "one"
+  if (tail > 1 && tail < 5) return "few"
+  return "many"
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -104,6 +145,11 @@ export function Date003({
   defaultFrom = "2026-09-14",
   defaultTo = "2026-09-19",
   min = "2026-09-01",
+  fromLabel = "Заезд",
+  toLabel = "Выезд",
+  durationLabel = "Длительность",
+  nightsText = NIGHTS_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -113,9 +159,20 @@ export function Date003({
   const [from, setFrom] = useState(defaultFrom)
   const [to, setTo] = useState(defaultTo)
   const nights = nightsBetween(from, to)
+  const key = pluralKey(nights)
+  const nightsLabel = (nightsText[key] ?? NIGHTS_TEXT[key]).replace(
+    "{count}",
+    String(nights),
+  )
 
   const palette = {
     ...(accent ? { "--vibeui-date-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-date-003-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -133,7 +190,7 @@ export function Date003({
         <legend>{legend}</legend>
         <div data-part="pair">
           <div data-part="cell">
-            <label htmlFor={`${id}-from`}>Заезд</label>
+            <label htmlFor={`${id}-from`}>{fromLabel}</label>
             <input
               id={`${id}-from`}
               type="date"
@@ -148,7 +205,7 @@ export function Date003({
             />
           </div>
           <div data-part="cell">
-            <label htmlFor={`${id}-to`}>Выезд</label>
+            <label htmlFor={`${id}-to`}>{toLabel}</label>
             <input
               id={`${id}-to`}
               type="date"
@@ -159,10 +216,8 @@ export function Date003({
           </div>
         </div>
         <p data-part="summary" aria-live="polite">
-          <span>Длительность</span>
-          <span data-part="nights">
-            {nights} {nightsWord(nights)}
-          </span>
+          <span>{durationLabel}</span>
+          <span data-part="nights">{nightsLabel}</span>
         </p>
       </fieldset>
     </>

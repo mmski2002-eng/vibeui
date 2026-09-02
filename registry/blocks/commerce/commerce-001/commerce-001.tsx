@@ -15,7 +15,15 @@ export type Commerce001Props = {
   title?: string
   products?: Commerce001Product[]
   cta?: string
+  /** Подпись рейтинга: {count} — число отзывов. */
+  reviewsText?: string
+  /** Подпись старой цены для скринридера. */
+  oldPriceLabel?: string
+  /** Локаль форматирования рейтинга. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,15 +38,21 @@ export type Commerce001Props = {
 // два действия нельзя объединять. Старая цена помечена тегом <s> и подписью
 // для скринридера — зачёркивание одним стилем не читается вслух. Рейтинг
 // продублирован числом: звёзды без цифры не дают точности.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="commerce-001"]){
---vibeui-commerce-001-bg:oklch(1 0 0);
---vibeui-commerce-001-fg:oklch(0.22 0.014 265);
---vibeui-commerce-001-muted:oklch(0.55 0.014 265);
---vibeui-commerce-001-border:oklch(0.91 0.006 265);
---vibeui-commerce-001-accent:oklch(0.55 0.2 262);
---vibeui-commerce-001-sale:oklch(0.56 0.19 25);
---vibeui-commerce-001-star:oklch(0.72 0.16 75);
+--vibeui-commerce-001-bg:transparent;
+--vibeui-commerce-001-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-commerce-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-commerce-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-commerce-001-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
+--vibeui-commerce-001-sale:light-dark(oklch(0.56 0.19 25),oklch(0.7 0.17 25));
+--vibeui-commerce-001-on-sale:light-dark(oklch(1 0 0),oklch(0.19 0.02 25));
+--vibeui-commerce-001-star:light-dark(oklch(0.72 0.16 75),oklch(0.82 0.15 75));
 --vibeui-commerce-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -57,20 +71,20 @@ display:grid;grid-template-columns:1fr;gap:0.75rem;
 @container (min-width: 46rem){[data-vibeui-block="commerce-001"] ul{grid-template-columns:repeat(3,1fr)}}
 [data-vibeui-block="commerce-001"] [data-part="card"]{
 position:relative;display:flex;flex-direction:column;overflow:hidden;
-background:var(--vibeui-commerce-001-bg);
+background:var(--vibeui-commerce-001-card);
 border:1px solid var(--vibeui-commerce-001-border);border-radius:0.875rem;
 }
 /* Обложка — цветное поле, а не картинка: блок не тянет чужие файлы. */
 [data-vibeui-block="commerce-001"] [data-part="shot"]{
 aspect-ratio:4 / 3;
 background:
-radial-gradient(120% 90% at 30% 20%, oklch(0.94 0.07 var(--vibeui-commerce-001-hue,262)), transparent 70%),
-oklch(0.96 0.02 var(--vibeui-commerce-001-hue,262));
+radial-gradient(120% 90% at 30% 20%, light-dark(oklch(0.94 0.07 var(--vibeui-commerce-001-hue,262)),oklch(0.46 0.08 var(--vibeui-commerce-001-hue,262))), transparent 70%),
+light-dark(oklch(0.96 0.02 var(--vibeui-commerce-001-hue,262)),oklch(0.34 0.03 var(--vibeui-commerce-001-hue,262)));
 }
 [data-vibeui-block="commerce-001"] [data-part="badge"]{
 position:absolute;top:0.5rem;left:0.5rem;
 padding:0.125rem 0.4375rem;border-radius:0.375rem;
-background:var(--vibeui-commerce-001-sale);color:oklch(1 0 0);
+background:var(--vibeui-commerce-001-sale);color:var(--vibeui-commerce-001-on-sale);
 font-size:0.625rem;font-weight:700;letter-spacing:0.02em;
 }
 [data-vibeui-block="commerce-001"] [data-part="body"]{
@@ -97,7 +111,7 @@ display:flex;align-items:baseline;gap:0.375rem;margin-top:0.125rem;
 position:relative;z-index:1;margin-top:0.5rem;
 appearance:none;cursor:pointer;height:2.125rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-commerce-001-accent);color:oklch(1 0 0);
+background:var(--vibeui-commerce-001-accent);color:var(--vibeui-commerce-001-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="commerce-001"] [data-part="cart"]:focus-visible{outline:2px solid var(--vibeui-commerce-001-accent);outline-offset:2px}
@@ -141,6 +155,28 @@ function stars(rating: number) {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Витрина товаров: карточка ведёт на товар, кнопка кладёт в корзину.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -148,12 +184,22 @@ export function Commerce001({
   title = "Хиты недели",
   products = DEFAULT_PRODUCTS,
   cta = "В корзину",
+  reviewsText = "{count} отзывов",
+  oldPriceLabel = "Старая цена",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Commerce001Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -196,15 +242,15 @@ export function Commerce001({
                       <span data-part="stars" aria-hidden="true">
                         {stars(product.rating)}
                       </span>
-                      {product.rating.toLocaleString("ru-RU")} ·{" "}
-                      {product.reviews} отзывов
+                      {product.rating.toLocaleString(locale)} ·{" "}
+                      {reviewsText.replace("{count}", String(product.reviews))}
                     </p>
                   ) : null}
                   <p data-part="prices">
                     <span data-part="price">{product.price}</span>
                     {product.oldPrice ? (
                       <s>
-                        <span data-part="sr">Старая цена </span>
+                        <span data-part="sr">{oldPriceLabel} </span>
                         {product.oldPrice}
                       </s>
                     ) : null}

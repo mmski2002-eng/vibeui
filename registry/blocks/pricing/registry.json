@@ -5,7 +5,7 @@
       "name": "pricing-001",
       "type": "registry:block",
       "title": "Тарифы с инверсией",
-      "description": "Светлая секция тарифов из трёх планов: рекомендованный выделен инвертированной тёмной панелью, остальные остаются лёгкими. Самодостаточна: не зависит от темы и стиля проекта.",
+      "description": "Секция тарифов из трёх планов: рекомендованный выделен инвертированной панелью, остальные остаются лёгкими. Следует теме окружения и не тянет за собой стиль проекта.",
       "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
@@ -16,16 +16,16 @@
           "target": "@components/vibeui/pricing-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, всегда светлый независимо от темы проекта. Цвета живут в локальных переменных --vibeui-pricing-001-*; акцент меняется пропом accent. Раскладка переключается container-запросами от ширины самого блока. Это секция лендинга, а не checkout: цены — статический контент, CTA — обычные ссылки, никакой логики биллинга в блоке нет.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей. Цвета живут в локальных переменных --vibeui-pricing-001-* и объявлены через light-dark(), поэтому секция следует color-scheme окружения; акцент меняется пропом accent, подложка — пропом background, по умолчанию её нет. Раскладка переключается container-запросами от ширины самого блока. Это секция лендинга, а не checkout: цены — статический контент, CTA — обычные ссылки, никакой логики биллинга в блоке нет.",
       "meta": {
         "tags": ["light", "pricing", "saas", "plans", "landing", "section"],
         "ai": {
-          "summary": "Светлая секция тарифов. Центрированная шапка: eyebrow, h2 в две части и описание. Ниже три плана в ряд: имя, описание, крупная цена с периодом, CTA-ссылка и список до четырёх пунктов с галочками. Рекомендованный план — единственная тяжёлая поверхность в блоке: инвертированная тёмная панель с акцентным бейджем, приподнятая относительно соседей. Под планами строка-сноска про условия. Ноль зависимостей, один файл, раскладка и типографика считаются от ширины блока через container-запросы и cqi.",
+          "summary": "Секция тарифов, следующая теме окружения. Центрированная шапка: eyebrow, h2 в две части и описание. Ниже три плана в ряд: имя, описание, крупная цена с периодом, CTA-ссылка и список до четырёх пунктов с галочками. Рекомендованный план — единственная тяжёлая поверхность в блоке: инвертированная тёмная панель с акцентным бейджем, приподнятая относительно соседей. Под планами строка-сноска про условия. Ноль зависимостей, один файл, раскладка и типографика считаются от ширины блока через container-запросы и cqi.",
           "preserve": [
             "иерархию: ровно один рекомендованный план выделен инвертированной тёмной панелью, остальные остаются светлыми и без теней — не выравнивай все три в одинаковые карточки",
             "инверсию как приём: тёмная панель это единственная тяжёлая поверхность секции, она и создаёт акцент; не заменяй её на рамку, тень или другой оттенок светлого",
             "приподнятость рекомендованного плана относительно соседей от 48rem ширины блока",
-            "светлую палитру --vibeui-pricing-001-* — не заменять на токены темы проекта (bg-background, text-foreground, primary, border) и не переводить секцию целиком в тёмную",
+            "локальную палитру --vibeui-pricing-001-* — не заменять на токены темы проекта (bg-background, text-foreground, primary, border)",
             "структуру плана: имя, описание, цена с периодом, CTA, список пунктов — и порядок этих элементов",
             "CTA как обычные ссылки <a href>: это секция лендинга, а не checkout; не превращай их в кнопки оплаты и не добавляй форму",
             "h2 как заголовок секции — блок ставится после hero и не должен приносить второй h1 на страницу; имена планов остаются h3",
@@ -33,7 +33,9 @@
             "типографику в единицах cqi, clamp и tracking",
             "одноразовый стагер планов; в этом блоке нет бесконечных анимаций",
             "блок <style> внутри компонента — в нём палитра, container-правила, keyframes и prefers-reduced-motion",
-            "семантику: планы и пункты как <ul>/<li>, иконки-галочки aria-hidden"
+            "семантику: планы и пункты как <ul>/<li>, иконки-галочки aria-hidden",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow, title, titleAccent, description и footnote",
@@ -42,9 +44,12 @@
             "подписи и href у CTA каждого плана",
             "какой план рекомендован — флаг featured у нужного плана",
             "акцентный цвет — проп accent (и accentForeground для контраста текста на акценте)",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "badgeLabel — подпись бейджа у рекомендованного плана"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не добавляй биллинг: в блоке нет и не должно быть подписок, оплаты, авторизации, обращений к API и состояния. Цены — статический текст.",
             "Не добавляй переключатель monthly/yearly: в блоке его намеренно нет, период оплаты объясняет строка footnote. Нерабочий переключатель, который выглядит кликабельным, вводит пользователя в заблуждение.",
             "Не добавляй четвёртый план и не убирай рекомендованный: рендерятся первые три плана и первые четыре пункта в каждом.",
@@ -57,14 +62,14 @@
         },
         "i18n": {
           "en": {
-            "description": "A light pricing section of three plans: the recommended one stands out as an inverted dark panel while the others stay light. Self-contained — indifferent to your project's theme and style.",
+            "description": "A pricing section of three plans: the recommended one stands out as an inverted panel while the others stay light. It follows the surrounding theme and drags none of your project's styling along.",
             "ai": {
-              "summary": "A light pricing section. A centred header: eyebrow, a two-part h2 and a description. Below it three plans in a row: name, description, a large price with its period, a CTA link and a list of up to four points with checkmarks. The recommended plan is the only heavy surface in the block: an inverted dark panel with an accent badge, raised above its neighbours. A footnote about terms sits under the plans. Zero dependencies, one file; layout and typography are measured against the block's own width through container queries and cqi.",
+              "summary": "A pricing section that follows the surrounding theme. A centred header: eyebrow, a two-part h2 and a description. Below it three plans in a row: name, description, a large price with its period, a CTA link and a list of up to four points with checkmarks. The recommended plan is the only heavy surface in the block: an inverted dark panel with an accent badge, raised above its neighbours. A footnote about terms sits under the plans. Zero dependencies, one file; layout and typography are measured against the block's own width through container queries and cqi.",
               "preserve": [
                 "the hierarchy: exactly one recommended plan marked by an inverted dark panel, the others staying light and shadowless — do not level all three into identical cards",
                 "inversion as the device: the dark panel is the only heavy surface in the section and it is what creates the accent; do not replace it with a border, a shadow or another shade of light",
                 "the recommended plan sitting raised above its neighbours from 48rem of block width",
-                "the light --vibeui-pricing-001-* palette — do not swap it for your theme tokens (bg-background, text-foreground, primary, border) and do not take the whole section dark",
+                "the local --vibeui-pricing-001-* palette — do not swap it for your theme tokens (bg-background, text-foreground, primary, border)",
                 "the structure of a plan: name, description, price with period, CTA, list of points — and the order of those elements",
                 "the CTAs as ordinary <a href> links: this is a landing section, not a checkout; do not turn them into payment buttons and do not add a form",
                 "the h2 as the section heading — this block sits after a hero and must not bring a second h1 onto the page; plan names stay h3",
@@ -72,7 +77,9 @@
                 "the typography in cqi units, clamp and tracking",
                 "the one-shot stagger of the plans; this block has no looping animation",
                 "the <style> block inside the component — it holds the palette, the container rules, the keyframes and prefers-reduced-motion",
-                "the semantics: plans and points as <ul>/<li>, the checkmark icons aria-hidden"
+                "the semantics: plans and points as <ul>/<li>, the checkmark icons aria-hidden",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow, title, titleAccent, description and footnote copy",
@@ -81,9 +88,12 @@
                 "the labels and hrefs of each plan's CTA",
                 "which plan is recommended, through the featured flag on that plan",
                 "the accent colour through the accent prop (and accentForeground for text contrast on the accent)",
-                "outer spacing through className"
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour",
+                "badgeLabel — the badge caption on the recommended plan"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not add billing: the block has no subscriptions, no payment, no auth, no API calls and no state, and it should stay that way. Prices are static text.",
                 "Do not add a monthly/yearly switch: its absence is deliberate, and the billing period is explained by the footnote. A dead switch that looks clickable misleads people.",
                 "Do not add a fourth plan and do not drop the recommended one: the first three plans and the first four points of each are what render.",
@@ -94,9 +104,52 @@
                 "Keep the link semantics. For internal navigation your router's component is fine, as long as the visual styling, the accessibility and the href behaviour survive."
               ]
             },
-            "title": "Inverted Pricing"
+            "title": "Inverted Pricing",
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "accentForeground": {
+                "label": "Text on accent"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "badgeLabel": {
+                "label": "Badge",
+                "default": "Recommended"
+              }
+            }
           }
-        }
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "accentForeground",
+            "label": "Текст на акценте",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "badgeLabel",
+            "label": "Бейдж",
+            "type": "text",
+            "default": "Recommended",
+            "maxLength": 24
+          }
+        ],
+        "cardControls": ["accent", "accentForeground", "background"]
       }
     },
     {
@@ -114,31 +167,35 @@
           "target": "@components/vibeui/pricing-002.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-002-*, светлая база. Рекомендованный тариф помечается атрибутом data-featured: он получает толстую акцентную рамку, тень и бейдж, а на широкой ширине ещё и увеличенные вертикальные отступы. Карточки — flex-колонки, кнопка прижата к низу через margin-top:auto, поэтому нижний край ряда ровный при разном числе пунктов. Раскладка: столбец до 58rem, три колонки от 58rem container-запросом.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-002-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; собственной подложки у него нет, она включается пропом background. Рекомендованный тариф помечается атрибутом data-featured: он получает толстую акцентную рамку, тень и бейдж, а на широкой ширине ещё и увеличенные вертикальные отступы. Карточки — flex-колонки, кнопка прижата к низу через margin-top:auto, поэтому нижний край ряда ровный при разном числе пунктов. Раскладка: столбец до 58rem, три колонки от 58rem container-запросом.",
       "meta": {
-        "tags": ["pricing", "plans", "featured", "light"],
+        "tags": ["pricing", "plans", "featured", "cards"],
         "preview": {
           "width": "full"
         },
         "ai": {
           "export": "Pricing002",
           "usage": "<Pricing002 plans={[{ name: \"Команда\", price: \"1 490 ₽\", period: \"в месяц\", description: \"Для команд.\", features: [\"До пяти участников\"], action: { label: \"Попробовать\", href: \"#\" }, featured: true, badge: \"Рекомендуем\" }]} />",
-          "summary": "Светлая секция тарифов: центрированная шапка и три карточки с названием, описанием, ценой, списком возможностей и кнопкой. Рекомендованный выделен рамкой, тенью и бейджем со словом. Один файл, ноль зависимостей.",
+          "summary": "Секция тарифов: центрированная шапка и три карточки с названием, описанием, ценой, списком возможностей и кнопкой. Рекомендованный выделен рамкой, тенью и бейджем со словом. Один файл, ноль зависимостей.",
           "preserve": [
             "бейдж словами у рекомендованного тарифа: цветной рамки мало — она не читается дальтоником и исчезает при печати",
             "кнопку, прижатую к низу через margin-top:auto: без неё нижний край ряда пляшет при разном числе пунктов",
             "три тарифа: четвёртая колонка не помещается в раскладку и делает выбор мучительным",
-            "локальную палитру --vibeui-pricing-002-*: блок несёт свой светлый фон и не читает токены темы проекта",
+            "локальную палитру --vibeui-pricing-002-*: блок несёт свои цвета и не читает токены темы проекта",
             "container-запрос, разводящий тарифы в три колонки от 58rem ширины блока, а не от ширины окна",
-            "семантику: список тарифов как <ul>, название тарифа как h3, кнопка как <a href>"
+            "семантику: список тарифов как <ul>, название тарифа как h3, кнопка как <a href>",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow, title и lede в шапке и note под тарифами",
             "массив plans: name, price, period, description, до шести features и кнопку action",
             "флаг featured и текст badge у рекомендованного тарифа",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Возможностей в тарифе выводится не больше шести: длинный список превращает карточку в таблицу.",
             "Выделяйте featured ровно у одного тарифа: два рекомендованных сводят подсказку на нет.",
             "Цена — строка, а не число: блок ничего не форматирует и не пересчитывает валюту.",
@@ -159,28 +216,44 @@
             "type": "text",
             "default": "Тарифы",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "Three plans with the recommended one singled out: it sits above its neighbours and carries a badge spelled out in words, not just a coloured border. The buttons are pinned to the bottom.",
             "ai": {
-              "summary": "A light pricing section: a centred header and three cards with a name, a description, a price, a feature list and a button. The recommended plan is marked by a border, a shadow and a worded badge. One file, zero dependencies.",
+              "summary": "A pricing section: a centred header and three cards with a name, a description, a price, a feature list and a button. The recommended plan is marked by a border, a shadow and a worded badge. One file, zero dependencies.",
               "preserve": [
                 "the worded badge on the recommended plan: a coloured border alone fails colour-blind readers and disappears in print",
                 "the button pinned to the bottom with margin-top:auto: without it the bottom edge of the row dances with the item count",
                 "three plans: a fourth column does not fit the layout and makes the choice painful",
-                "the local --vibeui-pricing-002-* palette: the block carries its own light background and never reads your theme tokens",
+                "the local --vibeui-pricing-002-* palette: the block carries its own colours and never reads your theme tokens",
                 "the container query that splits the plans into three columns from 58rem of block width, not the window's",
-                "the semantics: the plan list as a <ul>, each plan name as an h3, the button as an <a href>"
+                "the semantics: the plan list as a <ul>, each plan name as an h3, the button as an <a href>",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow, title and lede copy in the header and the note under the plans",
                 "the plans array: name, price, period, description, up to six features and the action button",
                 "the featured flag and the badge text on the recommended plan",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "At most six features per plan are rendered: a long list turns the card into a table.",
                 "Mark exactly one plan as featured: two recommendations cancel the hint out.",
                 "The price is a string, not a number: the block formats nothing and converts no currency.",
@@ -196,11 +269,77 @@
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "Pricing"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Recommended Trio"
+            "title": "Recommended Trio",
+            "preview": {
+              "props": {
+                "eyebrow": "Pricing",
+                "title": "Pay for speed, not for the component count",
+                "lede": "The catalogue is the same on every plan. What changes is the number of projects, seats and the support you get.",
+                "note": "Prices exclude VAT. Paying yearly saves you two months.",
+                "plans": [
+                  {
+                    "name": "Starter",
+                    "price": "$0",
+                    "period": "forever",
+                    "description": "For personal projects and testing an idea.",
+                    "features": [
+                      "10 sections per project",
+                      "Copy the agent instruction",
+                      "Catalogue updates"
+                    ],
+                    "action": {
+                      "label": "Start for free",
+                      "href": "#"
+                    }
+                  },
+                  {
+                    "name": "Team",
+                    "price": "$19",
+                    "period": "per month",
+                    "description": "For product teams shipping landings regularly.",
+                    "features": [
+                      "Every section in the catalogue",
+                      "Up to five seats",
+                      "Private palette presets",
+                      "Priority support"
+                    ],
+                    "action": {
+                      "label": "Try it for 14 days",
+                      "href": "#"
+                    },
+                    "featured": true,
+                    "badge": "Recommended"
+                  },
+                  {
+                    "name": "Agency",
+                    "price": "$59",
+                    "period": "per month",
+                    "description": "For studios delivering work to clients.",
+                    "features": [
+                      "Unlimited seats",
+                      "Hand sections over to the client",
+                      "A dedicated manager",
+                      "Invoices and closing documents"
+                    ],
+                    "action": {
+                      "label": "Talk to us",
+                      "href": "#"
+                    }
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -218,7 +357,7 @@
           "target": "@components/vibeui/pricing-003.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-003-*, светлая зелёная база. Обе цены лежат в разметке, лишняя скрыта через display:none; выбор делается правилом вида [data-vibeui-block=\"pricing-003\"]:has([data-part=\"periodyear\"]:checked). Радиокнопки уводятся с экрана, но остаются в потоке фокуса, кольцо рисуется на подписи. Скидка подписана бейджем прямо в переключателе. Раскладка: столбец до 56rem, три колонки от 56rem container-запросом.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-003-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; собственной подложки у него нет, она включается пропом background. Обе цены лежат в разметке, лишняя скрыта через display:none; выбор делается правилом вида [data-vibeui-block=\"pricing-003\"]:has([data-part=\"periodyear\"]:checked). Радиокнопки уводятся с экрана, но остаются в потоке фокуса, кольцо рисуется на подписи. Скидка подписана бейджем прямо в переключателе. Раскладка: столбец до 56rem, три колонки от 56rem container-запросом.",
       "meta": {
         "tags": ["pricing", "toggle", "no-js", "annual"],
         "preview": {
@@ -227,22 +366,27 @@
         "ai": {
           "export": "Pricing003",
           "usage": "<Pricing003 monthLabel=\"Помесячно\" yearLabel=\"За год\" saveLabel=\"−17 %\" />",
-          "summary": "Светлая секция тарифов с переключателем периода: заголовок, pill-переключатель месяц/год с бейджем скидки и три карточки, в которых цена и подпись о годовой оплате меняются на CSS. Один файл, ноль зависимостей.",
+          "summary": "Секция тарифов с переключателем периода: заголовок, pill-переключатель месяц/год с бейджем скидки и три карточки, в которых цена и подпись о годовой оплате меняются на CSS. Один файл, ноль зависимостей.",
           "preserve": [
             "переключение на радиокнопках и :has() вместо скрипта: секция остаётся серверной и работает до гидратации",
             "обе цены в разметке: это сознательный размен — разметка тяжелее, зато цена не «прыгает» после гидратации",
             "радиокнопки в потоке фокуса: display:none у них сломал бы переключение с клавиатуры",
             "бейдж скидки прямо в переключателе: скидка, спрятанная в сноску, не влияет на выбор периода",
             "локальную палитру --vibeui-pricing-003-* и container-запрос, разводящий тарифы от 56rem ширины блока",
-            "семантику: переключатель как группа с aria-label, тарифы как <ul>, кнопки как <a href>"
+            "семантику: переключатель как группа с aria-label, тарифы как <ul>, кнопки как <a href>",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты title и lede над переключателем",
             "подписи monthLabel, yearLabel и бейдж saveLabel",
             "массив plans: name, monthly, yearly, yearlyNote, до шести features и кнопку action",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "подписи switchLabel (группа переключателя для скринридера) и perLabel (за какой период указана сумма)",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Имя радиогруппы и id заданы строками с префиксом блока: два экземпляра на одной странице будут переключаться вместе.",
             "Значения monthly и yearly — готовые строки: блок ничего не пересчитывает и не делит на двенадцать.",
             "Подпись yearlyNote видна только в годовом режиме — не дублируйте в ней цену, она уже рядом.",
@@ -263,28 +407,52 @@
             "type": "text",
             "default": "−17 %",
             "maxLength": 20
+          },
+          {
+            "prop": "perLabel",
+            "label": "Период суммы",
+            "type": "text",
+            "default": "в месяц",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "Plans with a monthly/annual switch: two radio buttons hold the state and the prices swap through the :has() selector — without a line of JavaScript.",
             "ai": {
-              "summary": "A light pricing section with a period switch: a headline, a monthly/annual pill switch with a discount badge and three cards whose price and annual note swap in CSS. One file, zero dependencies.",
+              "summary": "A pricing section with a period switch: a headline, a monthly/annual pill switch with a discount badge and three cards whose price and annual note swap in CSS. One file, zero dependencies.",
               "preserve": [
                 "the radio-and-:has() switching instead of a script: the section stays server-rendered and works before hydration",
                 "both prices living in the markup: it is a deliberate trade — heavier markup, but the price never jumps after hydration",
                 "the radio buttons staying in the focus order: display:none on them would break keyboard switching",
                 "the discount badge inside the switch itself: a discount hidden in a footnote does not affect the choice of period",
                 "the local --vibeui-pricing-003-* palette and the container query that splits the plans from 56rem of block width",
-                "the semantics: the switch as a group with an aria-label, the plans as a <ul>, the buttons as <a href>"
+                "the semantics: the switch as a group with an aria-label, the plans as a <ul>, the buttons as <a href>",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the title and lede copy above the switch",
                 "the monthLabel and yearLabel captions and the saveLabel badge",
                 "the plans array: name, monthly, yearly, yearlyNote, up to six features and the action button",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "the switchLabel caption (the switch group for screen readers) and perLabel (the period the amount is quoted for)",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The radio group name and the ids are block-prefixed strings: two instances on one page switch together.",
                 "monthly and yearly are finished strings: the block recalculates nothing and divides by nothing.",
                 "The yearlyNote caption only shows in annual mode — do not repeat the price in it, it is already next to it.",
@@ -300,11 +468,82 @@
               "saveLabel": {
                 "label": "Discount badge",
                 "default": "−17%"
+              },
+              "perLabel": {
+                "label": "Amount period",
+                "default": "per month"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Period Switch Pricing"
+            "title": "Period Switch Pricing",
+            "preview": {
+              "props": {
+                "title": "Annual billing saves you two months",
+                "lede": "The switch reloads nothing and needs no scripts: the prices change in CSS.",
+                "monthLabel": "Monthly",
+                "yearLabel": "Annual",
+                "saveLabel": "−17%",
+                "switchLabel": "Billing period",
+                "perLabel": "per month",
+                "plans": [
+                  {
+                    "name": "Personal",
+                    "monthly": "$8",
+                    "yearly": "$6.60",
+                    "yearlyNote": "$79 once, two months free",
+                    "features": [
+                      "One project",
+                      "Every section in the catalogue",
+                      "Updates forever"
+                    ],
+                    "action": {
+                      "label": "Choose",
+                      "href": "#"
+                    }
+                  },
+                  {
+                    "name": "Team",
+                    "monthly": "$19",
+                    "yearly": "$15.80",
+                    "yearlyNote": "$190 once, two months free",
+                    "features": [
+                      "Up to five seats",
+                      "Private palette presets",
+                      "Priority support",
+                      "Shared projects"
+                    ],
+                    "action": {
+                      "label": "Try it for 14 days",
+                      "href": "#"
+                    },
+                    "featured": true
+                  },
+                  {
+                    "name": "Agency",
+                    "monthly": "$59",
+                    "yearly": "$49",
+                    "yearlyNote": "$590 once, two months free",
+                    "features": [
+                      "Unlimited seats",
+                      "Hand projects over to the client",
+                      "Invoices and closing documents"
+                    ],
+                    "action": {
+                      "label": "Talk to us",
+                      "href": "#"
+                    }
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -322,7 +561,7 @@
           "target": "@components/vibeui/pricing-004.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-004-*, белая база. Разметка — настоящая таблица с несколькими <tbody>: заголовок раздела вынесен в <th scope=\"colgroup\"> с colspan, поэтому скринридер объявляет и раздел, и колонку. Шапка с ценами держится на position:sticky, иначе на длинной таблице теряется, какая колонка чья. Обёртка со overflow-x:auto и min-width:40rem у таблицы. Значение true рисуется словом «Есть», false — прочерком.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-004-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background, а таблица лежит на собственной поверхности --vibeui-pricing-004-card. Разметка — настоящая таблица с несколькими <tbody>: заголовок раздела вынесен в <th scope=\"colgroup\"> с colspan, поэтому скринридер объявляет и раздел, и колонку. Шапка с ценами держится на position:sticky, иначе на длинной таблице теряется, какая колонка чья. Обёртка со overflow-x:auto и min-width:40rem у таблицы. Значение true рисуется словом из valueText.yes, false — из valueText.no.",
       "meta": {
         "tags": ["pricing", "comparison", "table", "grouped"],
         "preview": {
@@ -331,22 +570,28 @@
         "ai": {
           "export": "Pricing004",
           "usage": "<Pricing004 plans={[{ name: \"Команда\", price: \"1 490 ₽ / мес\", href: \"#\", featured: true }]} groups={[{ title: \"Каталог\", rows: [{ feature: \"Секций\", values: [\"10\", \"Все\", \"Все\"] }] }]} />",
-          "summary": "Светлая секция сравнения тарифов: заголовок и таблица из трёх колонок с ценами и кнопками в залипающей шапке, строки разбиты на три раздела по три признака. Один файл, ноль зависимостей.",
+          "summary": "Секция сравнения тарифов: заголовок и таблица из трёх колонок с ценами и кнопками в залипающей шапке, строки разбиты на три раздела по три признака. Один файл, ноль зависимостей.",
           "preserve": [
             "залипающую шапку с ценами: на таблице в девять строк пользователь иначе забывает, какая колонка чья",
             "группировку строк через отдельные <tbody> с заголовком в th scope=\"colgroup\": без неё девять признаков подряд не читаются",
             "настоящую разметку таблицы со scope у заголовков: сетка из div'ов оставляет скринридер без контекста",
             "горизонтальную прокрутку вместо разбиения на карточки: сравнение, разложенное по карточкам, перестаёт быть сравнением",
             "слово вместо голого значка в ячейках со значением true: галочка без подписи не читается при печати",
-            "локальную палитру --vibeui-pricing-004-* и кнопку «Выбрать» в каждой колонке — таблица должна заканчиваться действием"
+            "локальную палитру --vibeui-pricing-004-* и кнопку «Выбрать» в каждой колонке — таблица должна заканчиваться действием",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "непрозрачную поверхность таблицы: залипающая шапка обязана перекрывать строки под собой, сквозь прозрачную они просвечивают"
           ],
           "adapt": [
             "тексты eyebrow и title над таблицей",
             "массив plans: name, price, href и флаг featured у колонок",
             "массив groups: заголовок раздела и строки rows со значениями values",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "подписи caption (с подстановками {plans} и {features}), featureHeading, pickLabel и valueText.yes/valueText.no",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Порядок значений в values обязан совпадать с порядком колонок в plans: блок сопоставляет их по индексу.",
             "Колонок рассчитано три: четвёртая потребует правки min-width и, скорее всего, сломает залипающую шапку на телефоне.",
             "Значение может быть строкой, true или false — смешивайте осознанно, иначе колонка выглядит разнобоем.",
@@ -367,28 +612,53 @@
             "type": "text",
             "default": "Сравнение",
             "maxLength": 40
+          },
+          {
+            "prop": "pickLabel",
+            "label": "Кнопка колонки",
+            "type": "text",
+            "default": "Выбрать",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "A full plan comparison table: rows grouped into sections, a sticky header with prices and buttons, and side-scrolling on a narrow block.",
             "ai": {
-              "summary": "A light plan comparison section: a headline and a three-column table with prices and buttons in a sticky header, its rows split into three sections of three criteria. One file, zero dependencies.",
+              "summary": "A plan comparison section: a headline and a three-column table with prices and buttons in a sticky header, its rows split into three sections of three criteria. One file, zero dependencies.",
               "preserve": [
                 "the sticky price header: across nine rows the reader otherwise forgets which column is which",
                 "the row grouping through separate <tbody> elements with a th scope=\"colgroup\" heading: without it nine criteria in a row do not get read",
                 "the real table markup with scope on the headers: a grid of divs leaves screen readers without context",
                 "horizontal scrolling instead of a card breakdown: a comparison split into cards stops being a comparison",
                 "the word instead of a bare glyph in true cells: a tick with no caption does not survive print",
-                "the local --vibeui-pricing-004-* palette and the «choose» button in every column — a table has to end in an action"
+                "the local --vibeui-pricing-004-* palette and the «choose» button in every column — a table has to end in an action",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the opaque table surface: the sticky header has to cover the rows beneath it, and through a transparent one they show up"
               ],
               "adapt": [
                 "the eyebrow and title copy above the table",
                 "the plans array: name, price, href and the featured flag of each column",
                 "the groups array: the section heading and the rows with their values",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "the caption (with the {plans} and {features} placeholders), featureHeading, pickLabel and valueText.yes/valueText.no captions",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The order of values must match the order of plans: the block pairs them by index.",
                 "The layout is sized for three columns: a fourth needs the min-width adjusting and will most likely break the sticky header on a phone.",
                 "A value may be a string, true or false — mix them deliberately or the column looks ragged.",
@@ -404,11 +674,106 @@
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "Comparison"
+              },
+              "pickLabel": {
+                "label": "Column button",
+                "default": "Choose"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Plan Comparison Table"
+            "title": "Plan Comparison Table",
+            "preview": {
+              "props": {
+                "eyebrow": "Comparison",
+                "title": "What actually changes when you move up a plan",
+                "caption": "A comparison of {plans} plans across {features} criteria, grouped into sections.",
+                "featureHeading": "Capability",
+                "pickLabel": "Choose",
+                "valueText": {
+                  "yes": "Yes",
+                  "no": "—"
+                },
+                "plans": [
+                  {
+                    "name": "Starter",
+                    "price": "$0",
+                    "href": "#"
+                  },
+                  {
+                    "name": "Team",
+                    "price": "$19 / mo",
+                    "href": "#",
+                    "featured": true
+                  },
+                  {
+                    "name": "Agency",
+                    "price": "$59 / mo",
+                    "href": "#"
+                  }
+                ],
+                "groups": [
+                  {
+                    "title": "Catalogue",
+                    "rows": [
+                      {
+                        "feature": "Sections available",
+                        "values": ["10", "All", "All"]
+                      },
+                      {
+                        "feature": "Projects",
+                        "values": ["1", "10", "Unlimited"]
+                      },
+                      {
+                        "feature": "Early access to new work",
+                        "values": [false, true, true]
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Team",
+                    "rows": [
+                      {
+                        "feature": "Seats",
+                        "values": ["1", "5", "Unlimited"]
+                      },
+                      {
+                        "feature": "Shared palette presets",
+                        "values": [false, true, true]
+                      },
+                      {
+                        "feature": "Hand a project to the client",
+                        "values": [false, false, true]
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Support",
+                    "rows": [
+                      {
+                        "feature": "Email reply",
+                        "values": ["3 working days", "1 working day", "4 hours"]
+                      },
+                      {
+                        "feature": "A dedicated manager",
+                        "values": [false, false, true]
+                      },
+                      {
+                        "feature": "Invoices and closing documents",
+                        "values": [false, true, true]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -441,8 +806,9 @@
             "старую цену в <s>: скринридер обязан объявить её как удалённую, а не прочитать как вторую цену",
             "длинный перечень входящего в две колонки: он и есть замена сравнительной таблицы",
             "строку о гарантии рядом с кнопками: обещание возврата работает в момент решения, а не в подвале страницы",
-            "тёмную локальную палитру --vibeui-pricing-005-* и container-запрос, разводящий карточку от 56rem",
-            "семантику: перечень как <ul>, заголовок перечня как h3, обе CTA как <a href>"
+            "локальную палитру --vibeui-pricing-005-* и container-запрос, разводящий карточку от 56rem",
+            "семантику: перечень как <ul>, заголовок перечня как h3, обе CTA как <a href>",
+            "тёмный фон секции: одноцветность здесь сознательное дизайн-решение, а не забытая тема — блок намеренно остаётся тёмным и в светлом окружении, светлой ветки у палитры нет"
           ],
           "adapt": [
             "тексты eyebrow, title, lede и guarantee",
@@ -454,7 +820,8 @@
             "Пунктов перечня выводится не больше десяти: длинный список перестаёт читаться и требует группировки, как в pricing-018.",
             "oldPrice необязательна: без неё строка цены остаётся корректной, но не убирайте её ради «честности», если скидка настоящая.",
             "Цена — строка, блок ничего не форматирует и не пересчитывает валюту.",
-            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом.",
+            "Секция не следует color-scheme окружения намеренно: тёмная база с тёплым акцентом — её дизайн. Если нужна секция, темнеющая вместе со страницей, возьмите pricing-002 или pricing-003."
           ]
         },
         "controls": [
@@ -471,6 +838,12 @@
             "type": "text",
             "default": "в год",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -483,8 +856,9 @@
                 "the old price inside <s>: a screen reader has to announce it as deleted, not read it as a second price",
                 "the long two-column list of what is included: it is the replacement for a comparison table",
                 "the guarantee line next to the buttons: a refund promise works at the moment of decision, not in the page footer",
-                "the dark local --vibeui-pricing-005-* palette and the container query that splits the card from 56rem",
-                "the semantics: the list as a <ul>, its heading as an h3, both CTAs as <a href>"
+                "the local --vibeui-pricing-005-* palette and the container query that splits the card from 56rem",
+                "the semantics: the list as a <ul>, its heading as an h3, both CTAs as <a href>",
+                "the dark section ground: the single tone is a deliberate design decision rather than a forgotten theme — the block stays dark in a light context on purpose and its palette has no light branch"
               ],
               "adapt": [
                 "the eyebrow, title, lede and guarantee copy",
@@ -496,7 +870,8 @@
                 "At most ten list items are rendered: a longer list stops being read and needs grouping, as in pricing-018.",
                 "oldPrice is optional: the price line stays correct without it, but do not drop it for «honesty» if the discount is real.",
                 "The price is a string; the block formats nothing and converts no currency.",
-                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file.",
+                "The section deliberately does not follow the surrounding color-scheme: the dark ground with a warm accent is its design. If you need a section that darkens with the page, take pricing-002 or pricing-003."
               ],
               "usage": "<Pricing005 price=\"$119\" period=\"per year\" oldPrice=\"$179\" included={[\"Every section in the catalog\"]} />"
             },
@@ -508,11 +883,45 @@
               "period": {
                 "label": "Period",
                 "default": "per year"
+              },
+              "accent": {
+                "label": "Accent"
               }
             },
-            "title": "Single Plan Panel"
+            "title": "Single Plan Panel",
+            "preview": {
+              "props": {
+                "eyebrow": "One plan",
+                "title": "Everything included — there is nothing to choose",
+                "lede": "We do not cut the catalogue into tiers or hide sections behind an upgrade. One payment opens all of it at once.",
+                "price": "$119",
+                "period": "per year",
+                "oldPrice": "$179",
+                "includedTitle": "What you get",
+                "included": [
+                  "All 1,080 sections in the catalogue",
+                  "Unlimited projects",
+                  "An AI-agent instruction for every section",
+                  "Updates and new sections every week",
+                  "Private palette presets",
+                  "Export to a shadcn-compatible registry",
+                  "Email support within one working day",
+                  "Commercial use with no limits"
+                ],
+                "action": {
+                  "label": "Get access",
+                  "href": "#"
+                },
+                "secondary": {
+                  "label": "Ask a question",
+                  "href": "#"
+                },
+                "guarantee": "A refund within 30 days, no reasons asked."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent"]
       }
     },
     {
@@ -530,7 +939,7 @@
           "target": "@components/vibeui/pricing-006.tsx"
         }
       ],
-      "docs": "Клиентский компонент (\"use client\"): без состояния ползунок остаётся декорацией. Один файл, ноль зависимостей, палитра --vibeui-pricing-006-*, светлая база. Ступени заданы массивом «до скольки — почём», итог считается последовательно по ступеням, а не одной ставкой на весь объём: так работают реальные объёмные тарифы и не возникает скачка цены на границе. Значение объявляется через aria-live, активная ступень подсвечивается. Ползунок — нативный input type=range со стилизованными треком и бегунком для WebKit и Gecko.",
+      "docs": "Клиентский компонент (\"use client\"): без состояния ползунок остаётся декорацией. Один файл, ноль зависимостей, палитра --vibeui-pricing-006-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Ступени заданы массивом «до скольки — почём», итог считается последовательно по ступеням, а не одной ставкой на весь объём: так работают реальные объёмные тарифы и не возникает скачка цены на границе. Значение объявляется через aria-live, активная ступень подсвечивается. Ползунок — нативный input type=range со стилизованными треком и бегунком для WebKit и Gecko.",
       "meta": {
         "tags": ["pricing", "calculator", "slider", "client"],
         "preview": {
@@ -539,25 +948,31 @@
         "ai": {
           "export": "Pricing006",
           "usage": "<Pricing006 base={990} tiers={[{ upTo: 10000, perUnit: 0.9 }]} defaultVolume={25000} />",
-          "summary": "Светлая секция с калькулятором: ползунок объёма, подписи границ диапазона, список ступеней тарифа с подсветкой активной и панель итога с суммой, пояснением и кнопкой. Один файл, ноль зависимостей.",
+          "summary": "Секция с калькулятором: ползунок объёма, подписи границ диапазона, список ступеней тарифа с подсветкой активной и панель итога с суммой, пояснением и кнопкой. Один файл, ноль зависимостей.",
           "preserve": [
             "\"use client\" в начале файла: секция считает сумму на месте, и без состояния ползунок бессмысленен",
             "ступенчатый расчёт вместо одной ставки: одна ставка на весь объём даёт скачок цены на границе ступени и выглядит как обман",
             "aria-live у итога: пересчёт должен быть слышен, а не только виден",
             "нативный input type=range: перетаскивание, стрелки клавиатуры и поддержка тачскрина достаются от браузера",
             "подсветку активной ступени в списке: без неё непонятно, по какой ставке считается текущий объём",
-            "локальную палитру --vibeui-pricing-006-* и container-запрос, разводящий карточку в две колонки от 52rem"
+            "локальную палитру --vibeui-pricing-006-* и container-запрос, разводящий карточку в две колонки от 52rem",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow и title, подписи unitLabel и unitOne",
             "границы min, max, шаг step и стартовое значение defaultVolume",
             "абонплату base и массив ступеней tiers",
-            "подпись и адрес кнопки action, текст note и акцентный цвет через проп accent"
+            "подпись и адрес кнопки action, текст note и акцентный цвет через проп accent",
+            "подписи volumeLabel, tierText.upTo/tierText.above, perUnitText, sumText и summaryText — шаблоны с подстановками {value}, {price}, {unit}, {sum}, {volume} и {base}",
+            "locale — локаль форматирования чисел",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Последняя ступень должна иметь upTo: Number.POSITIVE_INFINITY, иначе объём сверх неё не будет посчитан.",
             "Ступени обязаны идти по возрастанию upTo: расчёт идёт последовательно и не сортирует массив.",
-            "Числа форматируются через Intl с локалью ru-RU — для другой локали правьте константы в файле.",
+            "Числа форматируются через Intl: локаль задаётся пропом locale, а валюта живёт в шаблонах perUnitText, sumText и summaryText.",
             "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
           ]
         },
@@ -576,31 +991,56 @@
             "default": 25000,
             "min": 1000,
             "max": 200000
+          },
+          {
+            "prop": "unitLabel",
+            "label": "Единица объёма",
+            "type": "text",
+            "default": "запросов в месяц",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "A volume price calculator: a slider, a tiered rate and a live total. The sum is accumulated tier by tier, so the next thousand costs less than the last.",
             "ai": {
-              "summary": "A light calculator section: a volume slider, range bounds, a list of rate tiers with the active one highlighted, and a total panel with the sum, an explanation and a button. One file, zero dependencies.",
+              "summary": "A calculator section: a volume slider, range bounds, a list of rate tiers with the active one highlighted, and a total panel with the sum, an explanation and a button. One file, zero dependencies.",
               "preserve": [
                 "\"use client\" at the top of the file: the section computes the sum in place, and without state the slider is decoration",
                 "the tiered calculation instead of a single rate: one rate across the whole volume creates a price jump at the tier boundary and reads as a trick",
                 "aria-live on the total: the recalculation has to be heard, not only seen",
                 "the native input type=range: dragging, arrow keys and touch support all come from the browser",
                 "the highlight on the active tier: without it there is no telling which rate the current volume is charged at",
-                "the local --vibeui-pricing-006-* palette and the container query that splits the card into two columns from 52rem"
+                "the local --vibeui-pricing-006-* palette and the container query that splits the card into two columns from 52rem",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow and title copy and the unitLabel and unitOne captions",
                 "the min and max bounds, the step and the starting defaultVolume",
                 "the base fee and the tiers array",
-                "the label and href of the action button, the note copy and the accent colour through the accent prop"
+                "the label and href of the action button, the note copy and the accent colour through the accent prop",
+                "the volumeLabel, tierText.upTo/tierText.above, perUnitText, sumText and summaryText captions — templates with the {value}, {price}, {unit}, {sum}, {volume} and {base} placeholders",
+                "locale — the number formatting locale",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The last tier must carry upTo: Number.POSITIVE_INFINITY, otherwise volume beyond it is never charged.",
                 "The tiers must ascend by upTo: the calculation runs sequentially and does not sort the array.",
-                "Numbers are formatted through Intl with the ru-RU locale — edit the constants in the file for another locale.",
+                "Numbers are formatted through Intl: the locale comes from the locale prop, and the currency lives in the perUnitText, sumText and summaryText templates.",
                 "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
               ],
               "usage": "<Pricing006 base={990} tiers={[{ upTo: 10000, perUnit: 0.9 }]} defaultVolume={25000} />"
@@ -613,11 +1053,44 @@
               "defaultVolume": {
                 "label": "Starting volume",
                 "default": 25000
+              },
+              "unitLabel": {
+                "label": "Volume unit",
+                "default": "requests per month"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Volume Calculator"
+            "title": "Volume Calculator",
+            "preview": {
+              "props": {
+                "eyebrow": "Calculator",
+                "title": "Price it against your own volume",
+                "unitLabel": "requests per month",
+                "unitOne": "per request",
+                "volumeLabel": "Volume",
+                "tierText": {
+                  "upTo": "up to {value}",
+                  "above": "beyond that"
+                },
+                "perUnitText": "${price} {unit}",
+                "sumText": "${sum}",
+                "summaryText": "per month at {volume} {unit}. The ${base} base fee is included.",
+                "locale": "en-US",
+                "action": {
+                  "label": "Get this plan",
+                  "href": "#"
+                },
+                "note": "Billed monthly, the volume is trued up as it comes. Tiers apply one after another."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -635,7 +1108,7 @@
           "target": "@components/vibeui/pricing-007.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-007-*, светлая холодная база. Полей ровно столько, сколько нужно менеджеру для первого ответа: имя, рабочая почта, размер команды и задача. Размер команды — <select>, а не свободный текст: это единственное поле, по которому заявку сортируют. У всех полей есть <label> и id, подсветка на :focus-visible. Обработчика отправки нет: блок серверный, подключите action или серверное действие. От 34rem имя и почта встают в пару, от 56rem форма уходит в правую колонку.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-007-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Полей ровно столько, сколько нужно менеджеру для первого ответа: имя, рабочая почта, размер команды и задача. Размер команды — <select>, а не свободный текст: это единственное поле, по которому заявку сортируют. У всех полей есть <label> и id, подсветка на :focus-visible. Обработчика отправки нет: блок серверный, подключите action или серверное действие. От 34rem имя и почта встают в пару, от 56rem форма уходит в правую колонку.",
       "meta": {
         "tags": ["pricing", "enterprise", "contact", "form"],
         "preview": {
@@ -644,22 +1117,27 @@
         "ai": {
           "export": "Pricing007",
           "usage": "<Pricing007 formTitle=\"Оставьте заявку\" sizes={[\"до 10 человек\", \"10–50 человек\"]} />",
-          "summary": "Светлая корпоративная секция: слева заголовок, описание и четыре аргумента с маркерами плюс прямой адрес почты, справа форма из имени, рабочей почты, размера команды и задачи. Один файл, ноль зависимостей.",
+          "summary": "Корпоративная секция: слева заголовок, описание и четыре аргумента с маркерами плюс прямой адрес почты, справа форма из имени, рабочей почты, размера команды и задачи. Один файл, ноль зависимостей.",
           "preserve": [
             "четыре поля и не больше: каждое лишнее поле в корпоративной форме стоит процентов конверсии",
             "размер команды как <select>: это единственное поле, по которому заявку сортируют, и свободный текст здесь бесполезен",
             "прямой адрес почты рядом с формой: часть людей никогда не заполнит форму и просто напишет письмо",
             "отсутствие цены: у корпоративного тарифа она считается под задачу, и подставленная сумма обесценивает разговор",
             "<label> у каждого поля и подсветку на :focus-visible: форма без подписей недоступна с клавиатуры и со скринридером",
-            "локальную палитру --vibeui-pricing-007-* и container-запросы, собирающие пару полей от 34rem и две колонки от 56rem"
+            "локальную палитру --vibeui-pricing-007-* и container-запросы, собирающие пару полей от 34rem и две колонки от 56rem",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow, title, lede и privacy",
             "массив points: заголовок и описание каждого аргумента",
             "formTitle, submitLabel и список вариантов sizes в поле размера команды",
-            "объект contact с прямым адресом и акцентный цвет через проп accent"
+            "объект contact с прямым адресом и акцентный цвет через проп accent",
+            "подписи полей формы через fieldText: name, email, size, sizePlaceholder, task, taskPlaceholder",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "У формы нет обработчика: подключите action, серверное действие или собственный перехват отправки.",
             "Первый пункт списка размеров — заглушка с пустым значением и disabled: не удаляйте её, иначе поле будет выглядеть заполненным.",
             "Аргументов выводится ровно четыре: пятый ломает вертикальный ритм левой колонки.",
@@ -680,28 +1158,52 @@
             "type": "text",
             "default": "Оставьте заявку",
             "maxLength": 40
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Кнопка отправки",
+            "type": "text",
+            "default": "Отправить заявку",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "An enterprise plan with no price but with a form: four arguments for a contract on the left, a short four-field form and a direct email address on the right.",
             "ai": {
-              "summary": "A light enterprise section: a headline, a description and four bulleted arguments plus a direct email on the left; a form asking for name, work email, team size and task on the right. One file, zero dependencies.",
+              "summary": "An enterprise section: a headline, a description and four bulleted arguments plus a direct email on the left; a form asking for name, work email, team size and task on the right. One file, zero dependencies.",
               "preserve": [
                 "four fields and no more: every extra field in an enterprise form costs conversion points",
                 "team size as a <select>: it is the one field the request gets sorted by, and free text is useless there",
                 "the direct email next to the form: some people will never fill a form and simply write a letter",
                 "the absence of a price: an enterprise plan is quoted against the task, and a printed figure cheapens the conversation",
                 "a <label> on every field and the :focus-visible highlight: a form without labels is unusable by keyboard and screen reader",
-                "the local --vibeui-pricing-007-* palette and the container queries that pair the fields from 34rem and split the columns from 56rem"
+                "the local --vibeui-pricing-007-* palette and the container queries that pair the fields from 34rem and split the columns from 56rem",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow, title, lede and privacy copy",
                 "the points array: the heading and description of every argument",
                 "formTitle, submitLabel and the sizes options in the team-size field",
-                "the contact object with the direct address and the accent colour through the accent prop"
+                "the contact object with the direct address and the accent colour through the accent prop",
+                "the form field captions through fieldText: name, email, size, sizePlaceholder, task, taskPlaceholder",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The form has no handler: wire up an action, a server action or your own submit interception.",
                 "The first option in the size list is a disabled empty placeholder: do not remove it or the field will look pre-filled.",
                 "Exactly four arguments are rendered: a fifth breaks the vertical rhythm of the left column.",
@@ -717,11 +1219,69 @@
               "formTitle": {
                 "label": "Form heading",
                 "default": "Tell us about the project"
+              },
+              "submitLabel": {
+                "label": "Submit button",
+                "default": "Send the request"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Enterprise Contact"
+            "title": "Enterprise Contact",
+            "preview": {
+              "props": {
+                "eyebrow": "Enterprise plan",
+                "title": "We quote against the task, not against a price list",
+                "lede": "For teams that need a contract, their own perimeter and sections built to their design code. We answer within a working day.",
+                "formTitle": "Tell us about the project",
+                "submitLabel": "Send the request",
+                "privacy": "By sending the form you agree to your data being processed. We only write back about your request.",
+                "fieldText": {
+                  "name": "Name",
+                  "email": "Work email",
+                  "size": "Team size",
+                  "sizePlaceholder": "Pick one",
+                  "task": "The task",
+                  "taskPlaceholder": "What has to be built and by when"
+                },
+                "sizes": [
+                  "under 10 people",
+                  "10–50 people",
+                  "50–200 people",
+                  "over 200 people"
+                ],
+                "points": [
+                  {
+                    "title": "A contract and closing documents",
+                    "description": "We work under a contract with acts and invoices, procurement procedures included."
+                  },
+                  {
+                    "title": "Deployment inside your perimeter",
+                    "description": "The registry can run on your own servers: sections install without reaching outside."
+                  },
+                  {
+                    "title": "Sections built to your design code",
+                    "description": "We build variants against your brand guidelines and hand them over with the sources."
+                  },
+                  {
+                    "title": "Training for the team",
+                    "description": "Two workshops — one for engineers, one for marketing — recorded, with materials."
+                  }
+                ],
+                "contact": {
+                  "label": "Or write to us directly",
+                  "value": "sales@vibeui.dev",
+                  "href": "mailto:sales@vibeui.dev"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -739,7 +1299,7 @@
           "target": "@components/vibeui/pricing-008.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-008-*, светлая база с тёмной платной карточкой. Платная карточка помечается атрибутом data-paid и переопределяет фон, цвета подписей и стиль кнопки. Список платного разбит на две части заголовком-разделителем: повторять общие пункты во второй колонке значит заставлять сравнивать строки глазами. Кнопки прижаты к низу через margin-top:auto. Раскладка: столбец до 48rem, две колонки от 48rem container-запросом.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-008-* объявлена через light-dark(), поэтому блок следует color-scheme окружения: платная карточка всегда инвертирована относительно бесплатной — тёмная в светлой теме и светлая в тёмной. Подложки у секции по умолчанию нет, она включается пропом background. Платная карточка помечается атрибутом data-paid и переопределяет фон, цвета подписей и стиль кнопки. Список платного разбит на две части заголовком-разделителем: повторять общие пункты во второй колонке значит заставлять сравнивать строки глазами. Кнопки прижаты к низу через margin-top:auto. Раскладка: столбец до 48rem, две колонки от 48rem container-запросом.",
       "meta": {
         "tags": ["pricing", "free", "two-plans", "contrast"],
         "preview": {
@@ -748,25 +1308,30 @@
         "ai": {
           "export": "Pricing008",
           "usage": "<Pricing008 free={{ name: \"Бесплатно\", price: \"0 ₽\", caption: \"Для одного лендинга.\", features: [\"10 секций\"], action: { label: \"Начать\", href: \"#\" } }} />",
-          "summary": "Светлая секция из двух тарифов: слева бесплатный на белой карточке, справа платный на тёмной с разделённым списком «всё из бесплатного» и «и сверх того». Один файл, ноль зависимостей.",
+          "summary": "Секция из двух тарифов: слева бесплатный на обычной карточке, справа платный на инвертированной с разделённым списком «всё из бесплатного» и «и сверх того». Один файл, ноль зависимостей.",
           "preserve": [
-            "контраст материала между карточками: светлая против тёмной работает быстрее, чем цветная рамка вокруг платной",
+            "контраст материала между карточками: инвертированная платная карточка работает быстрее, чем цветная рамка вокруг неё",
             "разделение списка платного на «всё из бесплатного» и «и сверх того»: повтор общих пунктов заставляет сравнивать строки глазами",
             "ровно два тарифа: третий превращает блок в обычную сетку и требует pricing-002",
             "кнопки, прижатые к низу через margin-top:auto: карточки должны заканчиваться на одной линии",
             "локальную палитру --vibeui-pricing-008-* с отдельными переменными для тёмной карточки",
-            "container-запрос, разводящий карточки в две колонки от 48rem ширины блока"
+            "container-запрос, разводящий карточки в две колонки от 48rem ширины блока",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты title и lede в шапке и note под карточками",
             "объект free: name, price, caption, features и кнопку action",
             "объект paid: name, price, period, caption, features, extra и кнопку action",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "extraLabel — подпись перед списком того, что платный тариф добавляет к бесплатному",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "В free.features выводится до шести пунктов, в paid.features — до трёх, в paid.extra — до шести.",
             "Не дублируйте в extra пункты бесплатного тарифа: первая часть списка уже сказала, что они включены.",
-            "Заголовок-разделитель «И сверх того» задан в разметке: чтобы поменять формулировку, правьте JSX.",
+            "Заголовок-разделитель задаётся пропом extraLabel, а не правкой JSX.",
             "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
           ]
         },
@@ -784,31 +1349,55 @@
             "type": "text",
             "default": "Перейти с бесплатного на платный можно в любой момент — установленные секции остаются вашими.",
             "maxLength": 160
+          },
+          {
+            "prop": "extraLabel",
+            "label": "Подпись добавки",
+            "type": "text",
+            "default": "И сверх того",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "A free plan next to a paid one: a light card against a dark one. The paid list is split into «everything in free» and «and beyond that», with no repeats.",
             "ai": {
-              "summary": "A light two-plan section: the free plan on a white card, the paid plan on a dark one with its list split into «everything in free» and «and beyond that». One file, zero dependencies.",
+              "summary": "A two-plan section: the free plan on a plain card, the paid plan on an inverted one with its list split into «everything in free» and «and beyond that». One file, zero dependencies.",
               "preserve": [
-                "the contrast of material between the cards: light against dark reads faster than a coloured border on the paid one",
+                "the contrast of material between the cards: an inverted paid card reads faster than a coloured border on it",
                 "splitting the paid list into «everything in free» and «and beyond that»: repeating shared items forces line-by-line comparison",
                 "exactly two plans: a third turns the block into an ordinary grid and calls for pricing-002",
                 "the buttons pinned to the bottom with margin-top:auto: the cards have to end on one line",
                 "the local --vibeui-pricing-008-* palette with its separate variables for the dark card",
-                "the container query that splits the cards into two columns from 48rem of block width"
+                "the container query that splits the cards into two columns from 48rem of block width",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the title and lede copy in the header and the note under the cards",
                 "the free object: name, price, caption, features and the action button",
                 "the paid object: name, price, period, caption, features, extra and the action button",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "extraLabel — the caption before the list of what the paid plan adds to the free one",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "free.features renders up to six items, paid.features up to three and paid.extra up to six.",
                 "Do not repeat free-plan items inside extra: the first half of the list has already said they are included.",
-                "The «and beyond that» divider caption lives in the markup: edit the JSX to reword it.",
+                "The divider caption comes from the extraLabel prop rather than an edit to the JSX.",
                 "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
               ],
               "usage": "<Pricing008 free={{ name: \"Free\", price: \"$0\", caption: \"For one landing page.\", features: [\"10 sections\"], action: { label: \"Start\", href: \"#\" } }} />"
@@ -821,11 +1410,62 @@
               "note": {
                 "label": "Note",
                 "default": "You can move from free to paid at any time — the sections you installed stay yours."
+              },
+              "extraLabel": {
+                "label": "Extras caption",
+                "default": "And beyond that"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Free Versus Paid"
+            "title": "Free Versus Paid",
+            "preview": {
+              "props": {
+                "title": "Two options, an easy choice",
+                "lede": "The free plan is not cut down in quality — it is cut down in volume. The paid one lifts the limits.",
+                "note": "You can move from free to paid at any time — the sections you installed stay yours.",
+                "extraLabel": "And beyond that",
+                "free": {
+                  "name": "Free",
+                  "price": "$0",
+                  "caption": "Enough to build one landing page and see whether the approach fits.",
+                  "features": [
+                    "10 sections of your choice",
+                    "One project",
+                    "The agent instruction",
+                    "Catalogue updates"
+                  ],
+                  "action": {
+                    "label": "Start without a card",
+                    "href": "#"
+                  }
+                },
+                "paid": {
+                  "name": "Full access",
+                  "price": "$19",
+                  "period": "per month",
+                  "caption": "For people who build pages regularly, not once.",
+                  "features": ["Everything in the free plan"],
+                  "extra": [
+                    "All 1,080 sections in the catalogue",
+                    "Unlimited projects",
+                    "Private palette presets",
+                    "Support within one working day"
+                  ],
+                  "action": {
+                    "label": "Subscribe",
+                    "href": "#"
+                  }
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -843,7 +1483,7 @@
           "target": "@components/vibeui/pricing-009.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-009-*, светлая бирюзовая база. Три радиокнопки задают валюту, нужная сумма показывается правилом вида [data-vibeui-block=\"pricing-009\"]:has([data-cur=\"usd\"]:checked) [data-amount=\"usd\"]. Инпуты уводятся с экрана, но остаются в потоке фокуса, кольцо рисуется на подписи. Все три суммы прописаны в данных вручную: локальная цена всегда округлена под рынок, а не получена умножением. Раскладка: столбец, три колонки от 56rem container-запросом.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-009-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Три радиокнопки задают валюту, нужная сумма показывается правилом вида [data-vibeui-block=\"pricing-009\"]:has([data-cur=\"usd\"]:checked) [data-amount=\"usd\"]. Инпуты уводятся с экрана, но остаются в потоке фокуса, кольцо рисуется на подписи. Все три суммы прописаны в данных вручную: локальная цена всегда округлена под рынок, а не получена умножением. Раскладка: столбец, три колонки от 56rem container-запросом.",
       "meta": {
         "tags": ["pricing", "currency", "no-js", "international"],
         "preview": {
@@ -852,22 +1492,27 @@
         "ai": {
           "export": "Pricing009",
           "usage": "<Pricing009 plans={[{ name: \"Команда\", description: \"Для команд.\", amounts: { rub: \"1 490 ₽\", usd: \"$19\", eur: \"€18\" }, features: [\"До пяти участников\"], action: { label: \"Попробовать\", href: \"#\" } }]} />",
-          "summary": "Светлая секция тарифов с переключателем валюты: заголовок с описанием, переключатель на три валюты и три карточки, в которых сумма меняется на CSS. Один файл, ноль зависимостей.",
+          "summary": "Секция тарифов с переключателем валюты: заголовок с описанием, переключатель на три валюты и три карточки, в которых сумма меняется на CSS. Один файл, ноль зависимостей.",
           "preserve": [
             "три суммы в разметке и переключение на :has(): цена не «прыгает» после гидратации и видна при выключенном JavaScript",
             "ручные суммы вместо пересчёта по курсу: локальная цена округляется под рынок, а умножение даёт нечитаемые «1 487 ₽»",
             "радиокнопки в потоке фокуса: display:none у них сломал бы переключение с клавиатуры",
             "подпись валюты со знаком и кодом: один знак «$» не различает доллары разных стран",
             "локальную палитру --vibeui-pricing-009-* и container-запросы, собирающие шапку в строку от 34rem и тарифы в три колонки от 56rem",
-            "примечание под тарифами о валюте списания: без него выбор валюты выглядит как справочная конвертация"
+            "примечание под тарифами о валюте списания: без него выбор валюты выглядит как справочная конвертация",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты title, lede и note, подпись currencyLabel у переключателя",
             "массив plans: name, description, объект amounts с тремя суммами и до пяти features",
             "подписи и адреса кнопок action у тарифов",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "подписи perLabel (за какой период указана сумма) и currencyText — названия валют по ключам rub, usd и eur",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Набор валют зафиксирован в константе CURRENCIES и в селекторах: добавление четвёртой требует правки и того, и другого.",
             "Имя радиогруппы и id заданы строками с префиксом блока: два экземпляра на одной странице будут переключаться вместе.",
             "Объект amounts обязан содержать все три ключа, иначе в одном из режимов цена исчезнет.",
@@ -888,28 +1533,52 @@
             "type": "text",
             "default": "Валюта",
             "maxLength": 30
+          },
+          {
+            "prop": "perLabel",
+            "label": "Период суммы",
+            "type": "text",
+            "default": "в месяц",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "Plans with a currency picker: all three amounts live in the markup and the extras are hidden with :has(). The prices are rounded per market, not converted at a rate.",
             "ai": {
-              "summary": "A light pricing section with a currency switch: a headline with a description, a three-currency switch and three cards whose amount swaps in CSS. One file, zero dependencies.",
+              "summary": "A pricing section with a currency switch: a headline with a description, a three-currency switch and three cards whose amount swaps in CSS. One file, zero dependencies.",
               "preserve": [
                 "the three amounts in the markup and the :has() switching: the price never jumps after hydration and shows with JavaScript off",
                 "hand-written amounts instead of rate conversion: a local price is rounded to its market, while multiplication yields unreadable figures",
                 "the radio buttons staying in the focus order: display:none on them would break keyboard switching",
                 "the currency label carrying both symbol and code: a lone «$» does not distinguish dollars of different countries",
                 "the local --vibeui-pricing-009-* palette and the container queries that line up the header from 34rem and the plans from 56rem",
-                "the note under the plans about the billing currency: without it the picker reads as a reference conversion"
+                "the note under the plans about the billing currency: without it the picker reads as a reference conversion",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the title, lede and note copy and the currencyLabel caption on the switch",
                 "the plans array: name, description, the amounts object with three sums and up to five features",
                 "the labels and hrefs of the plan action buttons",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "the perLabel caption (the period the amount is quoted for) and currencyText — the currency names under the rub, usd and eur keys",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The currency set is pinned in the CURRENCIES constant and in the selectors: a fourth needs both edited.",
                 "The radio group name and the ids are block-prefixed strings: two instances on one page switch together.",
                 "The amounts object must carry all three keys, otherwise the price vanishes in one of the modes.",
@@ -925,11 +1594,88 @@
               "currencyLabel": {
                 "label": "Switch label",
                 "default": "Currency"
+              },
+              "perLabel": {
+                "label": "Amount period",
+                "default": "per month"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Currency Picker Pricing"
+            "title": "Currency Picker Pricing",
+            "preview": {
+              "props": {
+                "title": "Priced in your currency, not converted at a rate",
+                "lede": "The amounts are rounded per market, so the plan costs a different figure in roubles and in dollars rather than «the same, at today's rate».",
+                "currencyLabel": "Currency",
+                "perLabel": "per month",
+                "note": "You are charged in the currency you pick. It can be changed in the subscription settings at any time.",
+                "plans": [
+                  {
+                    "name": "Personal",
+                    "description": "One project and everything a launch needs.",
+                    "amounts": {
+                      "rub": "590 ₽",
+                      "usd": "$9",
+                      "eur": "€9"
+                    },
+                    "features": [
+                      "One project",
+                      "Every section in the catalogue",
+                      "Updates forever"
+                    ],
+                    "action": {
+                      "label": "Choose",
+                      "href": "#"
+                    }
+                  },
+                  {
+                    "name": "Team",
+                    "description": "For product teams that launch regularly.",
+                    "amounts": {
+                      "rub": "1 490 ₽",
+                      "usd": "$19",
+                      "eur": "€18"
+                    },
+                    "features": [
+                      "Up to five seats",
+                      "Shared palette presets",
+                      "Support within a working day"
+                    ],
+                    "action": {
+                      "label": "Try it",
+                      "href": "#"
+                    },
+                    "featured": true
+                  },
+                  {
+                    "name": "Agency",
+                    "description": "For studios delivering projects to clients.",
+                    "amounts": {
+                      "rub": "4 900 ₽",
+                      "usd": "$59",
+                      "eur": "€55"
+                    },
+                    "features": [
+                      "Unlimited seats",
+                      "Hand the project to the client",
+                      "Documents for accounting"
+                    ],
+                    "action": {
+                      "label": "Talk to us",
+                      "href": "#"
+                    }
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -947,7 +1693,7 @@
           "target": "@components/vibeui/pricing-010.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-010-*, светлая зелёная база. Лента событий размечена как <ol>: порядок дней важен и должен читаться голосом, а не только цветными точками. Соединительная линия — ::before у события, у последнего скрыта. Главный страх пробного периода — «забуду отменить и спишут», поэтому ответ на него стоит прямо в ленте и продублирован тремя короткими гарантиями под кнопкой. Раскладка: столбец до 56rem, две колонки от 56rem container-запросом.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-010-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Лента событий размечена как <ol>: порядок дней важен и должен читаться голосом, а не только цветными точками. Соединительная линия — ::before у события, у последнего скрыта. Главный страх пробного периода — «забуду отменить и спишут», поэтому ответ на него стоит прямо в ленте и продублирован тремя короткими гарантиями под кнопкой. Раскладка: столбец до 56rem, две колонки от 56rem container-запросом.",
       "meta": {
         "tags": ["pricing", "trial", "timeline", "light"],
         "preview": {
@@ -956,26 +1702,32 @@
         "ai": {
           "export": "Pricing010",
           "usage": "<Pricing010 trialDays={14} price=\"1 490 ₽\" timeline={[{ day: \"Сегодня\", title: \"Открывается каталог\", description: \"Карта не нужна.\" }]} />",
-          "summary": "Светлая секция пробного периода: слева бейдж с числом дней, цена после окончания, кнопка и три гарантии; справа лента из трёх событий с датами и описаниями. Один файл, ноль зависимостей.",
+          "summary": "Секция пробного периода: слева бейдж с числом дней, цена после окончания, кнопка и три гарантии; справа лента из трёх событий с датами и описаниями. Один файл, ноль зависимостей.",
           "preserve": [
             "ленту событий вместо списка возможностей: пробный период продаётся спокойствием, а не набором функций",
             "событие об окончании с явным «списания не будет»: это главный страх пользователя, и прятать ответ в мелкий шрифт нельзя",
             "разметку <ol> для ленты: порядок дней и есть содержание",
             "цену после окончания рядом с числом дней: пробный период без указания следующей цены выглядит уловкой",
             "локальную палитру --vibeui-pricing-010-* и container-запрос, разводящий колонки от 56rem ширины блока",
-            "три коротких гарантии под кнопкой: они дублируют ленту в момент решения"
+            "три коротких гарантии под кнопкой: они дублируют ленту в момент решения",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow, title и lede",
             "число trialDays, значения price и period",
             "массив timeline: day, title и description каждого события",
-            "список reassurance, кнопку action и акцентный цвет через проп accent"
+            "список reassurance, кнопку action и акцентный цвет через проп accent",
+            "подписи daysLabel и afterText — шаблон строки под счётчиком с подстановками {price} и {period}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Событий выводится не больше четырёх: длинная лента превращает секцию в инструкцию.",
             "Даты в day — обычный текст: блок ничего не считает от trialDays и не связывает их между собой.",
             "Если у вас всё-таки есть автосписание, перепишите последнее событие честно — иначе секция обещает то, чего нет.",
-            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом.",
+            "В afterText подстановка {price} рисуется жирным: убрав её из шаблона, вы потеряете выделение цены."
           ]
         },
         "controls": [
@@ -993,32 +1745,57 @@
             "default": 14,
             "min": 1,
             "max": 90
+          },
+          {
+            "prop": "daysLabel",
+            "label": "Подпись счётчика",
+            "type": "text",
+            "default": "дней бесплатно",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "A plan with a trial: the number of days and the price afterwards on the left, a timeline on the right — what happens today, three days before the end and on the final day.",
             "ai": {
-              "summary": "A light trial section: a day-count badge, the price after the trial, a button and three reassurances on the left; a three-event timeline with dates and descriptions on the right. One file, zero dependencies.",
+              "summary": "A trial section: a day-count badge, the price after the trial, a button and three reassurances on the left; a three-event timeline with dates and descriptions on the right. One file, zero dependencies.",
               "preserve": [
                 "the timeline instead of a feature list: a trial is sold on peace of mind, not on a set of functions",
                 "the closing event stating plainly that nothing will be charged: this is the user's main fear and the answer must not hide in fine print",
                 "the <ol> markup for the timeline: the order of the days is the content",
                 "the after-trial price next to the day count: a trial that never names the next price looks like a trap",
                 "the local --vibeui-pricing-010-* palette and the container query that splits the columns from 56rem of block width",
-                "the three short reassurances under the button: they echo the timeline at the moment of decision"
+                "the three short reassurances under the button: they echo the timeline at the moment of decision",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow, title and lede copy",
                 "the trialDays number and the price and period values",
                 "the timeline array: day, title and description of every event",
-                "the reassurance list, the action button and the accent colour through the accent prop"
+                "the reassurance list, the action button and the accent colour through the accent prop",
+                "the daysLabel caption and afterText — the template of the line under the counter, with the {price} and {period} placeholders",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "At most four events are rendered: a long timeline turns the section into a manual.",
                 "The dates in day are plain text: the block computes nothing from trialDays and ties them to nothing.",
                 "If you do charge automatically, rewrite the last event honestly — otherwise the section promises what does not exist.",
-                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file.",
+                "The {price} placeholder in afterText is rendered in bold: drop it from the template and the price loses its emphasis."
               ],
               "usage": "<Pricing010 trialDays={14} price=\"$19\" timeline={[{ day: \"Today\", title: \"The catalog opens\", description: \"No card needed.\" }]} />"
             },
@@ -1030,11 +1807,60 @@
               "trialDays": {
                 "label": "Trial days",
                 "default": 14
+              },
+              "daysLabel": {
+                "label": "Counter caption",
+                "default": "days free"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Trial Timeline"
+            "title": "Trial Timeline",
+            "preview": {
+              "props": {
+                "eyebrow": "Trial",
+                "title": "Fourteen days with nothing to worry about",
+                "lede": "The trial is built so that you never think about it in a panic: no card at the start and no automatic charge at the end.",
+                "trialDays": 14,
+                "price": "$19",
+                "period": "per month",
+                "daysLabel": "days free",
+                "afterText": "After that — {price} {period}, if you decide to stay.",
+                "action": {
+                  "label": "Start the trial",
+                  "href": "#"
+                },
+                "reassurance": [
+                  "No card needed to start",
+                  "Nothing is charged without your confirmation",
+                  "The sections you installed stay yours"
+                ],
+                "timeline": [
+                  {
+                    "day": "Today",
+                    "title": "The whole catalogue opens",
+                    "description": "No card to attach. Drop sections into a real project right away."
+                  },
+                  {
+                    "day": "Day 11",
+                    "title": "A reminder email",
+                    "description": "Three days before the trial ends an email arrives with the date and the amount."
+                  },
+                  {
+                    "day": "Day 14",
+                    "title": "The decision is yours",
+                    "description": "If you do not confirm, access simply closes. There is no automatic charge."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["trialDays", "accent", "background"]
       }
     },
     {
@@ -1052,7 +1878,7 @@
           "target": "@components/vibeui/pricing-011.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-011-*, светлая база. Раскрытие построено на <details>/<summary>: без скрипта, с поддержкой браузерного поиска по странице и корректной печатью. Нативный маркер убран через list-style:none и ::-webkit-details-marker, вместо него плюс из двух псевдоэлементов, который превращается в минус по [open]. Первый вопрос открыт: пустая гармошка выглядит как список ссылок. Раскладка: столбец до 54rem, две колонки от 54rem container-запросом.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-011-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Раскрытие построено на <details>/<summary>: без скрипта, с поддержкой браузерного поиска по странице и корректной печатью. Нативный маркер убран через list-style:none и ::-webkit-details-marker, вместо него плюс из двух псевдоэлементов, который превращается в минус по [open]. Первый вопрос открыт: пустая гармошка выглядит как список ссылок. Раскладка: столбец до 54rem, две колонки от 54rem container-запросом.",
       "meta": {
         "tags": ["pricing", "faq", "details", "no-js"],
         "preview": {
@@ -1061,22 +1887,26 @@
         "ai": {
           "export": "Pricing011",
           "usage": "<Pricing011 questions={[{ question: \"Что будет при отмене?\", answer: \"Установленное остаётся у вас.\", open: true }]} />",
-          "summary": "Светлая секция вопросов о цене: слева заголовок с описанием и карточка с прямым адресом почты, справа гармошка из пяти вопросов на <details> с собственным маркером-плюсом. Один файл, ноль зависимостей.",
+          "summary": "Секция вопросов о цене: слева заголовок с описанием и карточка с прямым адресом почты, справа гармошка из пяти вопросов на <details> с собственным маркером-плюсом. Один файл, ноль зависимостей.",
           "preserve": [
             "<details>/<summary> вместо самодельной гармошки: браузерный поиск по странице находит текст в закрытых блоках, а скриптовая гармошка — нет",
             "собственный маркер-плюс: нативный треугольник выглядит по-разному в разных браузерах и ломает ритм списка",
             "первый вопрос открытым: закрытая гармошка читается как список ссылок и не показывает, что внутри ответы",
             "тематику блока — только деньги: смешивать сюда продуктовые вопросы значит потерять смысл секции",
             "карточку с прямым адресом: вопрос, которого нет в списке, должен куда-то вести",
-            "локальную палитру --vibeui-pricing-011-* и container-запрос, разводящий колонки от 54rem ширины блока"
+            "локальную палитру --vibeui-pricing-011-* и container-запрос, разводящий колонки от 54rem ширины блока",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow, title и lede в левой колонке",
             "массив questions: вопрос, ответ и флаг open у первого",
             "объект contact: текст, подпись и адрес ссылки",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Вопросов выводится не больше восьми: длинный FAQ на странице тарифов отпугивает сильнее, чем отсутствие ответов.",
             "Флаг open ставьте ровно одному вопросу: несколько раскрытых блоков растягивают секцию на два экрана.",
             "Ответ — один абзац: списки и подзаголовки внутри превращают FAQ в документацию.",
@@ -1097,28 +1927,44 @@
             "type": "text",
             "default": "Вопросы о деньгах",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "Frequently asked questions about money specifically: a <details> accordion that works without JavaScript, is found by in-page search and prints expanded.",
             "ai": {
-              "summary": "A light pricing-FAQ section: a headline with a description and a direct-email card on the left; a five-question <details> accordion with its own plus marker on the right. One file, zero dependencies.",
+              "summary": "A pricing-FAQ section: a headline with a description and a direct-email card on the left; a five-question <details> accordion with its own plus marker on the right. One file, zero dependencies.",
               "preserve": [
                 "<details>/<summary> instead of a hand-rolled accordion: in-page search finds text inside closed blocks, a scripted accordion hides it",
                 "the custom plus marker: the native triangle looks different in every browser and breaks the rhythm of the list",
                 "the first question open: a closed accordion reads as a list of links and never shows that answers live inside",
                 "the money-only scope of the block: mixing product questions in loses the point of the section",
                 "the direct-email card: a question that is not on the list has to lead somewhere",
-                "the local --vibeui-pricing-011-* palette and the container query that splits the columns from 54rem of block width"
+                "the local --vibeui-pricing-011-* palette and the container query that splits the columns from 54rem of block width",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow, title and lede copy in the left column",
                 "the questions array: the question, the answer and the open flag on the first one",
                 "the contact object: its text, caption and link address",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "At most eight questions are rendered: a long FAQ on a pricing page scares people more than missing answers.",
                 "Set open on exactly one question: several expanded blocks stretch the section across two screens.",
                 "An answer is one paragraph: lists and subheadings inside turn the FAQ into documentation.",
@@ -1134,11 +1980,53 @@
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "Money questions"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Billing FAQ"
+            "title": "Billing FAQ",
+            "preview": {
+              "props": {
+                "eyebrow": "Money questions",
+                "title": "What people ask before paying",
+                "lede": "Only questions about price, refunds and paperwork. The general product FAQ lives elsewhere.",
+                "questions": [
+                  {
+                    "question": "What happens to the sections if I cancel?",
+                    "answer": "Everything already installed in your project stays with you: they are ordinary files in your repository. Only access to the catalogue and to new sections closes.",
+                    "open": true
+                  },
+                  {
+                    "question": "Is there a discount for paying yearly?",
+                    "answer": "Yes, a year costs the same as ten months. On cancellation we refund the unused months pro rata."
+                  },
+                  {
+                    "question": "Does an edited section count as a separate purchase?",
+                    "answer": "No. Change the copy, the colours and the layout as much as you like — it is your file. You only pay for access to the catalogue."
+                  },
+                  {
+                    "question": "Can I use the sections in client projects?",
+                    "answer": "On the Team and Agency plans, yes, including handing the sources to the client. On the Personal plan the sections are for your own projects only."
+                  },
+                  {
+                    "question": "How do we pay as a company?",
+                    "answer": "We issue an invoice and send the closing documents. Invoice payment is available on Team and above."
+                  }
+                ],
+                "contact": {
+                  "text": "Did not find your question? We answer by email within one working day.",
+                  "label": "billing@vibeui.dev",
+                  "href": "mailto:billing@vibeui.dev"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1156,7 +2044,7 @@
           "target": "@components/vibeui/pricing-012.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-012-*, тёплая светлая база. Печать нарисована коническим градиентом с пунктирным внутренним кольцом на ::before — ни картинки, ни шрифтовой иконки. Шаги размечены как <ol> с нумерованными кружками. Условия вынесены отдельным абзацем нормального кегля, а не сноской шестым: спрятанные условия читаются как подвох. Раскладка: столбец до 54rem, печать и текст в две колонки от 54rem container-запросом.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-012-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Печать нарисована коническим градиентом с пунктирным внутренним кольцом на ::before — ни картинки, ни шрифтовой иконки. Шаги размечены как <ol> с нумерованными кружками. Условия вынесены отдельным абзацем нормального кегля, а не сноской шестым: спрятанные условия читаются как подвох. Раскладка: столбец до 54rem, печать и текст в две колонки от 54rem container-запросом.",
       "meta": {
         "tags": ["pricing", "guarantee", "refund", "trust"],
         "preview": {
@@ -1165,22 +2053,26 @@
         "ai": {
           "export": "Pricing012",
           "usage": "<Pricing012 days={30} daysLabel=\"дней на возврат\" price=\"1 490 ₽\" />",
-          "summary": "Светлая секция гарантии: круглая печать с числом дней, заголовок с описанием, три шага процедуры возврата с точными сроками, цена с кнопкой и абзац условий. Один файл, ноль зависимостей.",
+          "summary": "Секция гарантии: круглая печать с числом дней, заголовок с описанием, три шага процедуры возврата с точными сроками, цена с кнопкой и абзац условий. Один файл, ноль зависимостей.",
           "preserve": [
             "изложение гарантии как процедуры: обещание «вернём деньги» стоит ровно столько, сколько понятно про сроки и способ",
             "точные сроки в шагах: «за один рабочий день» и «5–10 дней» — это и есть содержание гарантии",
             "условия отдельным абзацем нормального кегля: сноска шестым кеглем читается как попытка спрятать оговорку",
             "печать, нарисованную градиентом: она держит композицию слева и не требует ни картинки, ни иконочного шрифта",
             "локальную палитру --vibeui-pricing-012-* и container-запросы, собирающие подвал в строку от 34rem и колонки от 54rem",
-            "семантику: шаги как <ol>, печать помечена aria-hidden, кнопка как <a href>"
+            "семантику: шаги как <ol>, печать помечена aria-hidden, кнопка как <a href>",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow, title, lede и terms",
             "число days и подпись daysLabel на печати",
             "массив steps: заголовок и описание каждого шага",
-            "значения price и period, кнопку action и акцентный цвет через проп accent"
+            "значения price и period, кнопку action и акцентный цвет через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Шагов выводится не больше четырёх: длинная процедура выглядит как препятствие, а не как гарантия.",
             "Не пишите в terms условий, которых нет в договоре: этот абзац читают внимательнее заголовка.",
             "Печать помечена aria-hidden: число дней обязано повторяться в тексте заголовка или описания.",
@@ -1202,28 +2094,51 @@
             "type": "text",
             "default": "дней на возврат",
             "maxLength": 30
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Не подошло — вернём деньги без разговоров",
+            "maxLength": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "A refund guarantee written as a procedure, not a stamp: a day-count seal on the left, three refund steps with exact timings on the right and the terms in their own paragraph.",
             "ai": {
-              "summary": "A light guarantee section: a round day-count seal, a headline with a description, three steps of the refund procedure with exact timings, a price with a button and a terms paragraph. One file, zero dependencies.",
+              "summary": "A guarantee section: a round day-count seal, a headline with a description, three steps of the refund procedure with exact timings, a price with a button and a terms paragraph. One file, zero dependencies.",
               "preserve": [
                 "stating the guarantee as a procedure: «we refund you» is worth exactly as much as the clarity about timings and method",
                 "the exact timings in the steps: «within one working day» and «5–10 days» are the substance of the guarantee",
                 "the terms as their own paragraph at normal size: fine print reads as an attempt to hide a caveat",
                 "the gradient-drawn seal: it anchors the left of the composition without an image or an icon font",
                 "the local --vibeui-pricing-012-* palette and the container queries that line up the footer from 34rem and the columns from 54rem",
-                "the semantics: the steps as an <ol>, the seal aria-hidden, the button as an <a href>"
+                "the semantics: the steps as an <ol>, the seal aria-hidden, the button as an <a href>",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow, title, lede and terms copy",
                 "the days number and the daysLabel caption on the seal",
                 "the steps array: the heading and description of every step",
-                "the price and period values, the action button and the accent colour through the accent prop"
+                "the price and period values, the action button and the accent colour through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "At most four steps are rendered: a long procedure reads as an obstacle rather than a guarantee.",
                 "Do not put terms into the paragraph that are not in the contract: this paragraph gets read more carefully than the headline.",
                 "The seal is aria-hidden: the day count has to be repeated in the heading or the description.",
@@ -1239,11 +2154,52 @@
               "daysLabel": {
                 "label": "Seal caption",
                 "default": "days to refund"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Not a fit? We refund you, no questions asked"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Refund Guarantee"
+            "title": "Refund Guarantee",
+            "preview": {
+              "props": {
+                "eyebrow": "Guarantee",
+                "title": "Not a fit? We refund you, no questions asked",
+                "lede": "The guarantee works as a procedure rather than a promise: below is exactly what happens after your email, and when.",
+                "days": 30,
+                "daysLabel": "days to refund",
+                "price": "$19",
+                "period": "per month",
+                "action": {
+                  "label": "Subscribe",
+                  "href": "#"
+                },
+                "terms": "The guarantee covers the first payment on every plan. A refund on an annual subscription is calculated pro rata for the unused months.",
+                "steps": [
+                  {
+                    "title": "Send one email",
+                    "description": "A single line — «please refund my payment» — from the address the subscription is on. No reason required."
+                  },
+                  {
+                    "title": "Get a confirmation within a day",
+                    "description": "We answer within one working day and tell you the amount to be refunded."
+                  },
+                  {
+                    "title": "The money is back in 5–10 days",
+                    "description": "The refund goes back the way the payment came. The timing depends on your bank, not on us."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["days", "accent", "background"]
       }
     },
     {
@@ -1277,15 +2233,20 @@
             "блокировку кнопок на границах диапазона: заблокированная кнопка объясняет предел, а молча проигнорированное нажатие — нет",
             "явное указание включённых мест: тариф «за место» без базы читается как обман при первом же счёте",
             "разбивку счёта на включённое и дополнительное: итог без строк выглядит взятым с потолка",
-            "локальную палитру --vibeui-pricing-013-* и container-запрос, разводящий карточку от 52rem ширины блока"
+            "локальную палитру --vibeui-pricing-013-* и container-запрос, разводящий карточку от 52rem ширины блока",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow, title, lede и note",
             "цену perSeat, валюту currency и число includedSeats",
             "границы minSeats и maxSeats и стартовое значение defaultSeats",
-            "список features, кнопку action и акцентный цвет через проп accent"
+            "список features, кнопку action и акцентный цвет через проп accent",
+            "подписи через labels, шаблоны seatsHint и includedText — русские значения по умолчанию",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Возможностей выводится не больше пяти: список не должен перевешивать счётчик.",
             "Цена считается как (мест − включено) × perSeat: скидок за объём здесь нет, для них есть pricing-006.",
             "Числа форматируются через Intl с локалью ru-RU — для другой локали правьте константу в файле.",
@@ -1308,6 +2269,26 @@
             "default": 3,
             "min": 0,
             "max": 50
+          },
+          {
+            "prop": "defaultSeats",
+            "label": "Мест при загрузке",
+            "type": "number",
+            "default": 8,
+            "min": 1,
+            "max": 50
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1321,15 +2302,20 @@
                 "the buttons disabling at the range bounds: a disabled button explains the limit, a silently ignored click does not",
                 "the explicit count of included seats: a per-seat plan with no base reads as a trick on the very first invoice",
                 "the bill split into included and additional: a total with no lines looks made up",
-                "the local --vibeui-pricing-013-* palette and the container query that splits the card from 52rem of block width"
+                "the local --vibeui-pricing-013-* palette and the container query that splits the card from 52rem of block width",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow, title, lede and note copy",
                 "the perSeat price, the currency and the includedSeats count",
                 "the minSeats and maxSeats bounds and the starting defaultSeats",
-                "the features list, the action button and the accent colour through the accent prop"
+                "the features list, the action button and the accent colour through the accent prop",
+                "the copy through labels and the seatsHint / includedText templates — Russian values are the defaults",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "At most five features are rendered: the list must not outweigh the stepper.",
                 "The price is (seats − included) × perSeat: there are no volume discounts here, pricing-006 covers those.",
                 "Numbers are formatted through Intl with the ru-RU locale — edit the constant in the file for another locale.",
@@ -1345,11 +2331,55 @@
               "includedSeats": {
                 "label": "Seats included",
                 "default": 3
+              },
+              "defaultSeats": {
+                "label": "Seats on load"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Per Seat Pricing"
+            "title": "Per Seat Pricing",
+            "preview": {
+              "props": {
+                "eyebrow": "For teams",
+                "title": "Pay for the people who actually work",
+                "lede": "The first seats come with the plan, the rest are counted one by one. Remove a member at any time — the bill adjusts from the next month.",
+                "features": [
+                  "Shared library of palette presets",
+                  "Project roles and permissions",
+                  "Install history for every member",
+                  "One invoice for the whole team"
+                ],
+                "action": {
+                  "label": "Set up the team",
+                  "href": "#"
+                },
+                "note": "Billed monthly. On an annual subscription a seat costs 17% less.",
+                "labels": {
+                  "seats": "Members in the team",
+                  "decrease": "Remove a member",
+                  "increase": "Add a member",
+                  "included": "Included in the plan",
+                  "additional": "Additional",
+                  "perMonth": "Per month"
+                },
+                "seatsHint": "The first {included} seats come with the plan. Maximum — {max}.",
+                "includedText": "{count} seats"
+              }
+            }
           }
-        }
+        },
+        "cardControls": [
+          "perSeat",
+          "includedSeats",
+          "defaultSeats",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1383,15 +2413,20 @@
             "цену допуслуги в той же строке, что и название: цена, спрятанная в подсказку, заставляет включать услугу вслепую",
             "строку допуслуги как <label>: кликабельна вся строка, а не только квадратик",
             "панель итога, повторяющую выбранное построчно: сумма без расшифровки выглядит взятой с потолка",
-            "aria-live у итога и локальную палитру --vibeui-pricing-014-*"
+            "aria-live у итога и локальную палитру --vibeui-pricing-014-*",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow, title и note",
             "baseName и basePrice базового тарифа, валюту currency",
             "массив addons: id, title, description, price и флаг preselected",
-            "кнопку action и акцентный цвет через проп accent"
+            "кнопку action и акцентный цвет через проп accent",
+            "подписи легенды и итога через labels — русские значения по умолчанию",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Допуслуг выводится не больше шести: длинный конструктор превращается в форму заказа.",
             "id допуслуги обязан быть уникальным: по нему хранится выбор, дубли ломают переключение.",
             "Числа форматируются через Intl с локалью ru-RU — для другой локали правьте константу в файле.",
@@ -1413,6 +2448,18 @@
             "default": 1490,
             "min": 0,
             "max": 1000000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1426,15 +2473,20 @@
                 "the add-on price in the same row as its name: a price hidden in a tooltip forces people to opt in blind",
                 "the add-on row as a <label>: the whole row is clickable, not just the square",
                 "the summary panel echoing the selection line by line: a total with no breakdown looks made up",
-                "aria-live on the total and the local --vibeui-pricing-014-* palette"
+                "aria-live on the total and the local --vibeui-pricing-014-* palette",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow, title and note copy",
                 "the baseName and basePrice of the base plan and the currency",
                 "the addons array: id, title, description, price and the preselected flag",
-                "the action button and the accent colour through the accent prop"
+                "the action button and the accent colour through the accent prop",
+                "the legend and total captions through labels — Russian values are the defaults",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "At most six add-ons are rendered: a long builder turns into an order form.",
                 "Every add-on id must be unique: the selection is keyed by it and duplicates break toggling.",
                 "Numbers are formatted through Intl with the ru-RU locale — edit the constant in the file for another locale.",
@@ -1450,11 +2502,61 @@
               "basePrice": {
                 "label": "Base price",
                 "default": 1490
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Add-ons Builder"
+            "title": "Add-ons Builder",
+            "preview": {
+              "props": {
+                "eyebrow": "Build your plan",
+                "title": "The base plus what you actually need",
+                "baseName": "Team plan, base",
+                "addons": [
+                  {
+                    "id": "seats",
+                    "title": "Extra seats",
+                    "description": "Five seats above the plan for designers and contractors.",
+                    "price": 990,
+                    "preselected": true
+                  },
+                  {
+                    "id": "brand",
+                    "title": "Sections in your brand",
+                    "description": "We build three sections to your guideline and hand over the sources.",
+                    "price": 4900
+                  },
+                  {
+                    "id": "support",
+                    "title": "Four-hour support",
+                    "description": "A reply within four working hours instead of one day.",
+                    "price": 1490
+                  },
+                  {
+                    "id": "onprem",
+                    "title": "Registry inside your network",
+                    "description": "Sections install without reaching any external address.",
+                    "price": 7900
+                  }
+                ],
+                "action": {
+                  "label": "Go to checkout",
+                  "href": "#"
+                },
+                "note": "Add-ons can be switched on and off at any time — the bill adjusts from the next month.",
+                "labels": {
+                  "legend": "What to include",
+                  "total": "Total per month"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["basePrice", "accent", "background"]
       }
     },
     {
@@ -1488,15 +2590,19 @@
             "перфорацию краёв маской: она делает форму узнаваемой без единой картинки и деградирует безопасно",
             "узкую максимальную ширину блока: растянутый на всю страницу чек перестаёт читаться как чек",
             "разметку <dl> для позиций и уточнение под названием позиции",
-            "локальную палитру --vibeui-pricing-015-* и строку о закрывающих документах под кнопкой"
+            "локальную палитру --vibeui-pricing-015-* и строку о закрывающих документах под кнопкой",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "merchant, documentNumber и date в шапке чека",
             "массив lines: title, detail и amount каждой позиции",
             "подписи и значения subtotal, discount, tax и total",
-            "кнопку action, текст footer и акцентный цвет через проп accent"
+            "кнопку action, текст footer и акцентный цвет через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Все суммы — строки: блок ничего не складывает, сходимость подытога, налога и итога на вашей стороне.",
             "Позиций выводится не больше восьми: длинный чек требует прокрутки и теряет форму.",
             "Строка скидки скрывается, если передать пустую строку в discount — подписи при этом остаются в пропсах.",
@@ -1517,6 +2623,18 @@
             "type": "text",
             "default": "36 525,60 ₽",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1530,15 +2648,19 @@
                 "the perforated edges from the mask: they make the shape recognisable without a single image and degrade safely",
                 "the narrow maximum width: a receipt stretched across the page stops reading as a receipt",
                 "the <dl> markup for the line items and the detail line under each item name",
-                "the local --vibeui-pricing-015-* palette and the closing-documents line under the button"
+                "the local --vibeui-pricing-015-* palette and the closing-documents line under the button",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the merchant, documentNumber and date in the receipt header",
                 "the lines array: title, detail and amount of every item",
                 "the labels and values of subtotal, discount, tax and total",
-                "the action button, the footer copy and the accent colour through the accent prop"
+                "the action button, the footer copy and the accent colour through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Every sum is a string: the block adds nothing up, and making the subtotal, tax and total agree is on you.",
                 "At most eight line items are rendered: a long receipt needs scrolling and loses its shape.",
                 "The discount line disappears if discount is an empty string — the captions stay in the props regardless.",
@@ -1554,11 +2676,55 @@
               "total": {
                 "label": "Total",
                 "default": "$421.60"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Receipt Total"
+            "title": "Receipt Total",
+            "preview": {
+              "props": {
+                "merchant": "VIBEUI",
+                "documentNumber": "Invoice 2026-0418",
+                "date": "14 March 2026",
+                "lines": [
+                  {
+                    "title": "Team plan",
+                    "detail": "12 months, up to 5 members",
+                    "amount": "$171.60"
+                  },
+                  {
+                    "title": "Extra seats",
+                    "detail": "3 × $4.50 × 12",
+                    "amount": "$162.00"
+                  },
+                  {
+                    "title": "Branded sections",
+                    "detail": "one-off work",
+                    "amount": "$56.50"
+                  }
+                ],
+                "subtotalLabel": "Subtotal",
+                "subtotal": "$390.10",
+                "discountLabel": "Annual discount",
+                "discount": "−$39.01",
+                "taxLabel": "VAT 20%",
+                "tax": "$70.21",
+                "totalLabel": "Amount due",
+                "total": "$421.30",
+                "action": {
+                  "label": "Pay the invoice",
+                  "href": "#"
+                },
+                "footer": "Closing documents arrive by email within a day of payment."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1592,15 +2758,20 @@
             "сохранение введённого кода после ошибки: стёртое поле не даёт увидеть опечатку и заставляет вводить заново",
             "старую цену в <s> рядом с новой: скидка без исходной суммы не читается как скидка",
             "нормализацию кода при сравнении: пользователь вводит его как угодно, а сверяется он в верхнем регистре без пробелов",
-            "локальную палитру --vibeui-pricing-016-* и примечание об условиях под полем"
+            "локальную палитру --vibeui-pricing-016-* и примечание об условиях под полем",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow, title, planName, planCaption и hint",
             "цену price, валюту currency и период period",
             "массив promos: code, percent и caption каждого промокода",
-            "placeholder поля, подпись applyLabel, кнопку action и акцентный цвет через проп accent"
+            "placeholder поля, подпись applyLabel, кнопку action и акцентный цвет через проп accent",
+            "подписи через labels и шаблоны notFoundText и appliedText — русские значения по умолчанию",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Промокоды лежат в пропсах и видны в разметке страницы: настоящую проверку делайте на сервере.",
             "Скидка считается округлением до рубля: для копеечной точности правьте формулу в файле.",
             "Строка результата занимает место всегда: это сделано намеренно, чтобы кнопка не прыгала при проверке.",
@@ -1622,6 +2793,18 @@
             "default": 14880,
             "min": 0,
             "max": 10000000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1635,15 +2818,20 @@
                 "keeping the entered code after an error: a cleared field hides the typo and forces a retype",
                 "the old price in <s> beside the new one: a discount without the original sum does not read as a discount",
                 "normalising the code on comparison: people type it however they like and it is matched uppercased and trimmed",
-                "the local --vibeui-pricing-016-* palette and the terms note under the field"
+                "the local --vibeui-pricing-016-* palette and the terms note under the field",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow, title, planName, planCaption and hint copy",
                 "the price, the currency and the period",
                 "the promos array: code, percent and caption of every promo",
-                "the field placeholder, the applyLabel caption, the action button and the accent colour through the accent prop"
+                "the field placeholder, the applyLabel caption, the action button and the accent colour through the accent prop",
+                "the copy through labels and the notFoundText / appliedText templates — Russian values are the defaults",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The promo codes live in props and are visible in the page markup: do the real validation on the server.",
                 "The discount is rounded to whole units: edit the formula in the file for sub-unit precision.",
                 "The status line always occupies its space on purpose, so the button does not jump during validation.",
@@ -1659,11 +2847,51 @@
               "price": {
                 "label": "Price before discount",
                 "default": 14880
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Promo Code Panel"
+            "title": "Promo Code Panel",
+            "preview": {
+              "props": {
+                "eyebrow": "Promo code",
+                "title": "Got a code? Apply it before you pay",
+                "planName": "Team plan, annual",
+                "planCaption": "Up to five members, every section in the catalogue, support within a working day.",
+                "period": "per year",
+                "applyLabel": "Apply",
+                "promos": [
+                  {
+                    "code": "VIBE20",
+                    "percent": 20,
+                    "caption": "20% off the first year"
+                  },
+                  {
+                    "code": "FRIEND10",
+                    "percent": 10,
+                    "caption": "10% off by invitation"
+                  }
+                ],
+                "hint": "The promo code applies to the first payment and does not stack with other discounts.",
+                "action": {
+                  "label": "Go to checkout",
+                  "href": "#"
+                },
+                "labels": {
+                  "field": "Promo code",
+                  "empty": "Enter a promo code"
+                },
+                "notFoundText": "Code «{code}» was not found or has already been used",
+                "appliedText": "{caption} applied"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["price", "accent", "background"]
       }
     },
     {
@@ -1697,15 +2925,20 @@
             "tabIndex и role=\"group\" у ленты: скрытый ползунок оставляет клавиатуру без способа прокрутить область",
             "подсказку о свайпе под лентой: невидимая прокрутка без подсказки читается как обрезанная вёрстка",
             "превращение ленты в сетку от 52rem с отключением snap: на десктопе горизонтальная прокрутка тарифов раздражает",
-            "локальную палитру --vibeui-pricing-017-* и боковые отступы ленты, равные отступам шапки"
+            "локальную палитру --vibeui-pricing-017-* и боковые отступы ленты, равные отступам шапки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow и title в шапке и подсказку hint под лентой",
             "массив plans: name, price, period, summary, до пяти features и кнопку action",
             "флаг featured у выделенного тарифа",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "подпись ленты для скринридера через trackLabel — русское значение по умолчанию",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Карточек выводится не больше четырёх: на широкой ширине сетка рассчитана на три колонки.",
             "Не убирайте скрытие ползунка вместе с подсказкой: без обоих лента выглядит сломанной на разных платформах.",
             "Боковые отступы ленты заданы в пикселях макета, а не в процентах: при изменении отступов шапки правьте оба места.",
@@ -1726,6 +2959,18 @@
             "type": "text",
             "default": "Листайте вбок, чтобы увидеть все тарифы",
             "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1739,15 +2984,20 @@
                 "tabIndex and role=\"group\" on the track: a hidden scrollbar leaves the keyboard with no way to scroll the region",
                 "the swipe hint under the track: invisible scrolling with no hint reads as broken layout",
                 "the track turning into a grid from 52rem with snap switched off: horizontal scrolling of plans irritates on desktop",
-                "the local --vibeui-pricing-017-* palette and the track's side padding matching the header's"
+                "the local --vibeui-pricing-017-* palette and the track's side padding matching the header's",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow and title copy in the header and the hint under the track",
                 "the plans array: name, price, period, summary, up to five features and the action button",
                 "the featured flag on the highlighted plan",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "the screen-reader caption of the track through trackLabel — the Russian value is the default",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "At most four cards are rendered: the wide layout is sized for three columns.",
                 "Do not remove the hidden scrollbar together with the hint: without both the track looks broken across platforms.",
                 "The track's side padding is written in layout units rather than percentages: change it alongside the header padding.",
@@ -1763,11 +3013,74 @@
               "hint": {
                 "label": "Swipe hint",
                 "default": "Swipe sideways to see every plan"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Swipeable Plans"
+            "title": "Swipeable Plans",
+            "preview": {
+              "props": {
+                "eyebrow": "Plans",
+                "title": "Swipe and pick — like in an app",
+                "hint": "Swipe sideways to see every plan",
+                "trackLabel": "Plans",
+                "plans": [
+                  {
+                    "name": "Personal",
+                    "price": "$7",
+                    "period": "per month",
+                    "summary": "One project and the whole section catalogue.",
+                    "features": [
+                      "One project",
+                      "Every section",
+                      "Updates forever"
+                    ],
+                    "action": {
+                      "label": "Choose",
+                      "href": "#"
+                    }
+                  },
+                  {
+                    "name": "Team",
+                    "price": "$19",
+                    "period": "per month",
+                    "summary": "For people who ship pages regularly.",
+                    "features": [
+                      "Up to five members",
+                      "Shared palette presets",
+                      "Support within a working day"
+                    ],
+                    "action": {
+                      "label": "Try it",
+                      "href": "#"
+                    },
+                    "featured": true
+                  },
+                  {
+                    "name": "Agency",
+                    "price": "$59",
+                    "period": "per month",
+                    "summary": "For studios and client work.",
+                    "features": [
+                      "Unlimited members",
+                      "Hand a project to the client",
+                      "Documents for accounting"
+                    ],
+                    "action": {
+                      "label": "Get in touch",
+                      "href": "#"
+                    }
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1801,15 +3114,19 @@
             "липкую левую колонку с ценой на широкой ширине: длинный перечень не должен уводить от действия",
             "формулировку «если чего-то нет в списке — этого нет в тарифе»: перечень имеет смысл только как исчерпывающий",
             "локальную палитру --vibeui-pricing-018-* и container-запросы, собирающие пункты в две колонки от 34rem и секцию от 58rem",
-            "семантику: разделы как <section> с h3, пункты как <ul>, кнопка как <a href>"
+            "семантику: разделы как <section> с h3, пункты как <ul>, кнопка как <a href>",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow, title и lede в левой колонке",
             "массив sections: заголовок, подпись caption и до восьми пунктов с уточнением",
             "значения price и period в карточке покупки",
-            "кнопку action и акцентный цвет через проп accent"
+            "кнопку action и акцентный цвет через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Разделов выводится не больше четырёх, пунктов в разделе — до восьми: остальное обрезается.",
             "Не оставляйте раздел без подписи caption: без неё группировка выглядит случайной.",
             "Липкая колонка работает только на широкой ширине: на телефоне карточка просто идёт первой.",
@@ -1830,6 +3147,18 @@
             "type": "text",
             "default": "1 490 ₽",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1843,15 +3172,19 @@
                 "the sticky left column with the price on a wide block: a long list must not carry the reader away from the action",
                 "the «if it is not on the list, it is not in the plan» framing: the list only makes sense as an exhaustive one",
                 "the local --vibeui-pricing-018-* palette and the container queries that pair the items from 34rem and split the section from 58rem",
-                "the semantics: the groups as <section> with an h3, the items as a <ul>, the button as an <a href>"
+                "the semantics: the groups as <section> with an h3, the items as a <ul>, the button as an <a href>",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow, title and lede copy in the left column",
                 "the sections array: heading, caption and up to eight items with their details",
                 "the price and period in the purchase card",
-                "the action button and the accent colour through the accent prop"
+                "the action button and the accent colour through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "At most four sections and eight items per section are rendered: the rest is trimmed.",
                 "Do not leave a section without its caption: without it the grouping looks arbitrary.",
                 "The sticky column only applies on a wide block: on a phone the card simply comes first.",
@@ -1867,11 +3200,99 @@
               "price": {
                 "label": "Price",
                 "default": "$19"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Everything Included"
+            "title": "Everything Included",
+            "preview": {
+              "props": {
+                "eyebrow": "What the plan holds",
+                "title": "Twelve items, not «and much more»",
+                "lede": "Below is the full list of what the subscription opens up. If something is not on the list, it is not in the plan either.",
+                "price": "$19",
+                "period": "per month",
+                "action": {
+                  "label": "Subscribe",
+                  "href": "#"
+                },
+                "sections": [
+                  {
+                    "title": "Catalogue and sections",
+                    "caption": "What people actually subscribe for.",
+                    "items": [
+                      {
+                        "title": "1,080 sections",
+                        "detail": "Every category, new ones included"
+                      },
+                      {
+                        "title": "Live preview",
+                        "detail": "The very file that lands in your project"
+                      },
+                      {
+                        "title": "New sections every week",
+                        "detail": "No surcharge for updates"
+                      },
+                      {
+                        "title": "Instructions for the agent",
+                        "detail": "Written for every section separately"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Working as a team",
+                    "caption": "Everything you need when more than one person owns the page.",
+                    "items": [
+                      {
+                        "title": "Up to five members",
+                        "detail": "More are billed per seat"
+                      },
+                      {
+                        "title": "Shared palette presets",
+                        "detail": "Brand colours in one pick"
+                      },
+                      {
+                        "title": "Install history",
+                        "detail": "Who installed a section and when"
+                      },
+                      {
+                        "title": "One invoice",
+                        "detail": "A single document for the whole team"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Support and paperwork",
+                    "caption": "What happens when something goes wrong.",
+                    "items": [
+                      {
+                        "title": "A reply within a working day",
+                        "detail": "Weekdays, 10 to 19"
+                      },
+                      {
+                        "title": "Invoices and statements",
+                        "detail": "For paying as a legal entity"
+                      },
+                      {
+                        "title": "30-day refund",
+                        "detail": "No reason required"
+                      },
+                      {
+                        "title": "Commercial use",
+                        "detail": "No limit on the number of clients"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1905,15 +3326,20 @@
             "предупреждающий цвет с порога 80 %: заполненная полоса и есть аргумент за апгрейд, и её нужно видеть",
             "предложение апгрейда рядом с расходом, а не в письме: решение принимается в момент, когда виден предел",
             "разницу в счёте словами в панели апгрейда: новая цена без дельты требует считать в уме",
-            "локальную палитру --vibeui-pricing-019-* и container-запрос, разводящий панели от 52rem ширины блока"
+            "локальную палитру --vibeui-pricing-019-* и container-запрос, разводящий панели от 52rem ширины блока",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты currentName, currentPrice, currentPeriod, renewLabel и renewDate",
             "массив usage: label, used, limit и unit каждой строки расхода",
             "тексты upgradeName, upgradePrice, upgradeDelta и список upgradeGains",
-            "кнопки upgradeAction и manageAction, акцентный цвет через проп accent"
+            "кнопки upgradeAction и manageAction, акцентный цвет через проп accent",
+            "подписи панелей через labels и шаблон usageText — русские значения по умолчанию",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Строк расхода выводится не больше четырёх, выгод апгрейда — не больше пяти.",
             "Порог предупреждения зашит как 80 %: чтобы поменять его, правьте условие в JSX.",
             "Блок ничего не запрашивает и не считает сам: значения used и limit приходят пропсами.",
@@ -1934,6 +3360,18 @@
             "type": "text",
             "default": "Тариф «Агентство»",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1947,15 +3385,20 @@
                 "the warning colour above the 80% threshold: a filling bar is the argument for upgrading and has to be visible",
                 "the upgrade offer next to the usage rather than in an email: the decision is made at the moment the limit shows",
                 "the billing difference spelled out in the upgrade panel: a new price with no delta forces mental arithmetic",
-                "the local --vibeui-pricing-019-* palette and the container query that splits the panels from 52rem of block width"
+                "the local --vibeui-pricing-019-* palette and the container query that splits the panels from 52rem of block width",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the currentName, currentPrice, currentPeriod, renewLabel and renewDate copy",
                 "the usage array: label, used, limit and unit of every row",
                 "the upgradeName, upgradePrice, upgradeDelta copy and the upgradeGains list",
-                "the upgradeAction and manageAction buttons and the accent colour through the accent prop"
+                "the upgradeAction and manageAction buttons and the accent colour through the accent prop",
+                "the panel captions through labels and the usageText template — Russian values are the defaults",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "At most four usage rows and five upgrade gains are rendered.",
                 "The warning threshold is hard-coded at 80%: edit the condition in the JSX to change it.",
                 "The block fetches and computes nothing: the used and limit values arrive as props.",
@@ -1971,11 +3414,66 @@
               "upgradeName": {
                 "label": "Upgrade plan",
                 "default": "Agency plan"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Current Plan Upgrade"
+            "title": "Current Plan Upgrade",
+            "preview": {
+              "props": {
+                "currentName": "Team plan",
+                "currentPrice": "$19",
+                "currentPeriod": "per month",
+                "renewLabel": "Next charge",
+                "renewDate": "14 April",
+                "usage": [
+                  {
+                    "label": "Projects",
+                    "used": 8,
+                    "limit": 10
+                  },
+                  {
+                    "label": "Members",
+                    "used": 5,
+                    "limit": 5
+                  },
+                  {
+                    "label": "Section installs this month",
+                    "used": 214,
+                    "limit": 500
+                  }
+                ],
+                "upgradeName": "Agency plan",
+                "upgradePrice": "$59",
+                "upgradeDelta": "+$40 on your current bill",
+                "upgradeGains": [
+                  "Unlimited projects and members",
+                  "Hand a project to the client with sources",
+                  "Four-hour support",
+                  "Invoices and closing documents"
+                ],
+                "upgradeAction": {
+                  "label": "Move to Agency",
+                  "href": "#"
+                },
+                "manageAction": {
+                  "label": "Manage subscription",
+                  "href": "#"
+                },
+                "labels": {
+                  "current": "Current plan",
+                  "next": "Next step"
+                },
+                "usageText": "{used} of {limit}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

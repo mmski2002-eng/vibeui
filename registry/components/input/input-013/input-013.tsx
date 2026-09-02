@@ -10,6 +10,20 @@ export type Input013Props = Omit<
   label?: string
   codes?: Record<string, number>
   onApply?: (code: string, percent: number) => void
+  /** Подсказка в пустом поле. */
+  placeholder?: string
+  /** Надпись на кнопке отправки. */
+  applyText?: string
+  /** Надпись на кнопке, пока идёт проверка. */
+  checkingText?: string
+  /** Надпись на кнопке снятия применённого кода. */
+  removeText?: string
+  /** Строка рядом с применённым кодом; {percent} подставляется числом. */
+  appliedText?: string
+  /** Подсказка под полем по состоянию: idle, bad, done. */
+  noteText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,15 +35,16 @@ export type Input013Props = Omit<
 // придётся.
 const STYLES = `
 :where([data-vibeui-block="input-013"]){
---vibeui-input-013-surface:oklch(1 0 0);
---vibeui-input-013-shell:oklch(0.91 0.006 265);
---vibeui-input-013-fg:oklch(0.23 0.014 265);
---vibeui-input-013-muted:oklch(0.55 0.014 265);
---vibeui-input-013-field:oklch(0.985 0.002 265);
---vibeui-input-013-border:oklch(0.88 0.008 265);
---vibeui-input-013-accent:oklch(0.5 0.16 300);
---vibeui-input-013-bad:oklch(0.55 0.2 25);
---vibeui-input-013-ok:oklch(0.48 0.13 155);
+--vibeui-input-013-surface:transparent;
+--vibeui-input-013-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-input-013-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-013-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-input-013-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.011 265));
+--vibeui-input-013-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.013 265));
+--vibeui-input-013-accent:light-dark(oklch(0.5 0.16 300),oklch(0.72 0.15 300));
+--vibeui-input-013-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 300));
+--vibeui-input-013-bad:light-dark(oklch(0.55 0.2 25),oklch(0.73 0.16 25));
+--vibeui-input-013-ok:light-dark(oklch(0.48 0.13 155),oklch(0.76 0.13 155));
 --vibeui-input-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-013"]{
@@ -64,7 +79,7 @@ text-transform:uppercase;
 [data-vibeui-block="input-013"] [data-part="apply"]{
 appearance:none;flex:none;cursor:pointer;
 height:2.5rem;padding:0 0.875rem;border:0;border-radius:0.75rem;
-background:var(--vibeui-input-013-accent);color:oklch(1 0 0);
+background:var(--vibeui-input-013-accent);color:var(--vibeui-input-013-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 transition:opacity .16s ease,filter .16s ease;
 }
@@ -106,6 +121,34 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-input-013-muted);
 
 const CODES: Record<string, number> = { VIBE10: 10, FIRST: 15, SPRING25: 25 }
 
+const NOTE: Record<string, string> = {
+  idle: "Код из письма или с чека. Регистр не важен.",
+  bad: "Такого кода нет или он уже использован.",
+  done: "Код можно снять и ввести другой — они не складываются.",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Поле промокода с проверкой и тремя состояниями: ввод, ожидание, применён.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -114,6 +157,13 @@ export function Input013({
   label = "Промокод",
   codes = CODES,
   onApply,
+  placeholder = "Например, VIBE10",
+  applyText = "Применить",
+  checkingText = "Проверяем…",
+  removeText = "Снять",
+  appliedText = "скидка {percent}% уже в сумме заказа",
+  noteText = NOTE,
+  background = "",
   accent,
   className,
   style,
@@ -128,6 +178,12 @@ export function Input013({
 
   const palette = {
     ...(accent ? { "--vibeui-input-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-013-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -166,7 +222,7 @@ export function Input013({
         {state === "done" ? (
           <div data-part="applied">
             <code>{value.trim().toUpperCase()}</code>
-            <span>скидка {percent}% уже в сумме заказа</span>
+            <span>{appliedText.replace("{percent}", String(percent))}</span>
             <button
               type="button"
               data-part="off"
@@ -176,7 +232,7 @@ export function Input013({
                 setState("idle")
               }}
             >
-              Снять
+              {removeText}
             </button>
           </div>
         ) : (
@@ -187,7 +243,7 @@ export function Input013({
                 type="text"
                 autoComplete="off"
                 spellCheck={false}
-                placeholder="Например, VIBE10"
+                placeholder={placeholder}
                 value={value}
                 aria-invalid={state === "bad"}
                 aria-describedby={`${id}-note`}
@@ -202,7 +258,7 @@ export function Input013({
               data-part="apply"
               disabled={!value.trim() || state === "checking"}
             >
-              {state === "checking" ? "Проверяем…" : "Применить"}
+              {state === "checking" ? checkingText : applyText}
             </button>
           </form>
         )}
@@ -212,11 +268,8 @@ export function Input013({
           aria-live="polite"
           data-tone={state === "bad" ? "bad" : "calm"}
         >
-          {state === "bad"
-            ? "Такого кода нет или он уже использован."
-            : state === "done"
-              ? "Код можно снять и ввести другой — они не складываются."
-              : "Код из письма или с чека. Регистр не важен."}
+          {noteText[state === "bad" || state === "done" ? state : "idle"] ??
+            NOTE.idle}
         </p>
       </div>
     </>

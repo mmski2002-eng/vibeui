@@ -8,6 +8,10 @@ export type Tooltip003Props = Omit<
   /** Клавиши сочетания: каждая рисуется отдельной клавишей. */
   keys?: string[]
   children?: ReactNode
+  /** Подпись кнопки-заглушки превью. */
+  triggerLabel?: string
+  /** Цвет самой подсказки. Пусто — собственный тёмный тон. */
+  background?: string
 }
 
 // Идея компонента: подсказка, которая заодно учит горячей клавише. Название
@@ -16,10 +20,14 @@ export type Tooltip003Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="tooltip-003"]){
 --vibeui-tooltip-003-bg:oklch(0.24 0.014 265);
---vibeui-tooltip-003-fg:oklch(0.97 0.002 265);
---vibeui-tooltip-003-key:oklch(1 0 0 / 14%);
---vibeui-tooltip-003-keyfg:oklch(0.88 0.008 265);
---vibeui-tooltip-003-accent:oklch(0.6 0.16 265);
+--vibeui-tooltip-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.97 0.002 265));
+--vibeui-tooltip-003-key:light-dark(oklch(0 0 0 / 10%),oklch(1 0 0 / 14%));
+--vibeui-tooltip-003-keyfg:light-dark(oklch(0.32 0.014 265),oklch(0.88 0.008 265));
+--vibeui-tooltip-003-accent:light-dark(oklch(0.6 0.16 265),oklch(0.74 0.15 265));
+--vibeui-tooltip-003-face:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-tooltip-003-facehover:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.012 265));
+--vibeui-tooltip-003-line:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265));
+--vibeui-tooltip-003-facefg:light-dark(oklch(0.26 0.014 265),oklch(0.92 0.006 265));
 --vibeui-tooltip-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="tooltip-003"]{
@@ -29,14 +37,17 @@ position:relative;display:inline-flex;font-family:var(--vibeui-tooltip-003-font)
 appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;gap:0.375rem;
 height:2.25rem;padding:0 0.875rem;border-radius:0.625rem;
-border:1px solid oklch(0.89 0.006 265);
-background:oklch(1 0 0);color:oklch(0.26 0.014 265);
+border:1px solid var(--vibeui-tooltip-003-line);
+background:var(--vibeui-tooltip-003-face);color:var(--vibeui-tooltip-003-facefg);
 font:inherit;font-size:0.8125rem;font-weight:620;
 }
-[data-vibeui-block="tooltip-003"] [data-part="trigger"]:hover{background:oklch(0.97 0.003 265)}
+[data-vibeui-block="tooltip-003"] [data-part="trigger"]:hover{background:var(--vibeui-tooltip-003-facehover)}
 [data-vibeui-block="tooltip-003"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-tooltip-003-accent);outline-offset:2px}
-/* Название и сочетание разведены по краям одной строки. */
+/* Название и сочетание разведены по краям одной строки. Плашка намеренно
+   тёмная в обеих темах, поэтому у неё своя ветка color-scheme: цвет текста и
+   клавиш считается от плашки, а не от страницы. */
 [data-vibeui-block="tooltip-003"] [data-part="tip"]{
+color-scheme:dark;
 position:absolute;bottom:calc(100% + 0.5rem);left:50%;z-index:20;
 display:flex;align-items:center;gap:0.625rem;width:max-content;
 padding:0.375rem 0.4375rem 0.375rem 0.625rem;border-radius:0.5rem;
@@ -67,6 +78,28 @@ font-family:inherit;font-size:0.6875rem;font-weight:650;line-height:1;
 const DEFAULT_KEYS = ["Ctrl", "K"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подсказка с горячей клавишей: название действия и сочетание в одной строке.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -74,11 +107,17 @@ export function Tooltip003({
   tip = "Открыть поиск",
   keys = DEFAULT_KEYS,
   children,
+  triggerLabel = "Поиск",
+  background = "",
   className,
   style,
   ...props
 }: Tooltip003Props) {
   const spoken = keys.join(" + ")
+  const palette = {
+    ...(background ? { "--vibeui-tooltip-003-bg": background } : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -89,7 +128,7 @@ export function Tooltip003({
         {...props}
         data-vibeui-block="tooltip-003"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         {children ?? (
           <button
@@ -98,10 +137,19 @@ export function Tooltip003({
             aria-keyshortcuts={keys.join("+")}
             aria-describedby="vibeui-tooltip-003-tip"
           >
-            Поиск
+            {triggerLabel}
           </button>
         )}
-        <span data-part="tip" role="tooltip" id="vibeui-tooltip-003-tip">
+        <span
+          data-part="tip"
+          role="tooltip"
+          id="vibeui-tooltip-003-tip"
+          style={
+            background
+              ? { colorScheme: schemeForBackground(background) }
+              : undefined
+          }
+        >
           <span>{tip}</span>
           <span data-part="keys" aria-label={spoken}>
             {keys.map((key) => (

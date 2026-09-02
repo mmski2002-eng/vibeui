@@ -7,6 +7,10 @@ export type Breadcrumb012Props = Omit<
   parentLabel?: string
   parentHref?: string
   currentLabel?: string
+  /** Подпись навигации: компонент несёт русскую, проект подставляет свою. */
+  navLabel?: string
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -14,21 +18,25 @@ export type Breadcrumb012Props = Omit<
 // Полный путь на узком экране всё равно не читают: он занимает две строки и
 // тянет вниз содержимое. Родитель назван словами, а не безымянной стрелкой:
 // «Назад» не отвечает, куда именно вернёт.
+//
+// Тема берётся из color-scheme окружения через light-dark(): строка темнеет
+// вместе со страницей и не выкладывает под себя плашку.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-012"]){
---vibeui-breadcrumb-012-surface:oklch(1 0 0);
---vibeui-breadcrumb-012-surface-border:oklch(0.91 0.006 265);
---vibeui-breadcrumb-012-fg:oklch(0.26 0.016 265);
---vibeui-breadcrumb-012-muted:oklch(0.56 0.014 265);
---vibeui-breadcrumb-012-accent:oklch(0.55 0.17 265);
+--vibeui-breadcrumb-012-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.008 265));
+--vibeui-breadcrumb-012-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-breadcrumb-012-sep:light-dark(oklch(0.78 0.01 265),oklch(0.5 0.012 265));
+--vibeui-breadcrumb-012-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-breadcrumb-012-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-breadcrumb-012-bg:transparent;
+--vibeui-breadcrumb-012-pad:0;
+--vibeui-breadcrumb-012-radius:0;
 --vibeui-breadcrumb-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Собственная подложка: крошки — это текст, и на тёмной странице
-   он обязан читаться без правки палитры проекта. */
 [data-vibeui-block="breadcrumb-012"]{
-box-sizing:border-box;padding:0.5rem 0.75rem;
-background:var(--vibeui-breadcrumb-012-surface);
-border:1px solid var(--vibeui-breadcrumb-012-surface-border);border-radius:0.625rem;
+box-sizing:border-box;padding:var(--vibeui-breadcrumb-012-pad);
+background:var(--vibeui-breadcrumb-012-bg);
+border-radius:var(--vibeui-breadcrumb-012-radius);
 display:flex;align-items:center;gap:0.5rem;min-width:0;
 font-family:var(--vibeui-breadcrumb-012-font);font-size:0.8125rem;line-height:1.4;
 color:var(--vibeui-breadcrumb-012-muted);
@@ -39,7 +47,7 @@ color:inherit;text-decoration:none;
 /* Высота под палец: ссылка «назад» на телефоне нажимается чаще всего. */
 min-height:2rem;padding:0 0.375rem 0 0.25rem;border-radius:0.4375rem;
 }
-[data-vibeui-block="breadcrumb-012"] a:hover{color:var(--vibeui-breadcrumb-012-fg);background:oklch(0.96 0.004 265)}
+[data-vibeui-block="breadcrumb-012"] a:hover{color:var(--vibeui-breadcrumb-012-fg);background:var(--vibeui-breadcrumb-012-hover)}
 [data-vibeui-block="breadcrumb-012"] a:focus-visible{outline:2px solid var(--vibeui-breadcrumb-012-accent);outline-offset:2px}
 /* Стрелка влево из двух бордюров. */
 [data-vibeui-block="breadcrumb-012"] [data-part="arrow"]{
@@ -51,9 +59,32 @@ transform:rotate(45deg);
 min-width:0;color:var(--vibeui-breadcrumb-012-fg);font-weight:600;
 overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
-[data-vibeui-block="breadcrumb-012"] [data-part="dot"]{flex:none;color:oklch(0.78 0.01 265)}
+[data-vibeui-block="breadcrumb-012"] [data-part="dot"]{flex:none;color:var(--vibeui-breadcrumb-012-sep)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="breadcrumb-012"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Крошки для телефона: одна названная ссылка на родителя и текущий уровень.
@@ -63,6 +94,8 @@ export function Breadcrumb012({
   parentLabel = "Компоненты",
   parentHref = "#",
   currentLabel = "Хлебные крошки для телефона",
+  navLabel = "Хлебные крошки",
+  background = "",
   accent,
   className,
   style,
@@ -70,6 +103,14 @@ export function Breadcrumb012({
 }: Breadcrumb012Props) {
   const palette = {
     ...(accent ? { "--vibeui-breadcrumb-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-breadcrumb-012-bg": background,
+          "--vibeui-breadcrumb-012-pad": "0.25rem 0.5rem",
+          "--vibeui-breadcrumb-012-radius": "0.625rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -81,7 +122,7 @@ export function Breadcrumb012({
       <nav
         {...props}
         data-vibeui-block="breadcrumb-012"
-        aria-label="Хлебные крошки"
+        aria-label={navLabel}
         className={className}
         style={palette}
       >

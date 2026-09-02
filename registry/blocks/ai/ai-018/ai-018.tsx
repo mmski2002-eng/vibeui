@@ -14,6 +14,8 @@ export type Ai018Props = {
   openLabel?: string
   copyLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,14 +33,15 @@ export type Ai018Props = {
 // уровне разметки, а не только визуально.
 const STYLES = `
 :where([data-vibeui-block="ai-018"]){
---vibeui-ai-018-bg:oklch(1 0 0);
---vibeui-ai-018-paper:oklch(0.98 0.006 95);
---vibeui-ai-018-fg:oklch(0.21 0.014 265);
---vibeui-ai-018-muted:oklch(0.55 0.014 265);
---vibeui-ai-018-faint:oklch(0.68 0.012 265);
---vibeui-ai-018-border:oklch(0.91 0.006 265);
---vibeui-ai-018-accent:oklch(0.52 0.16 250);
---vibeui-ai-018-mark:oklch(0.92 0.11 95);
+--vibeui-ai-018-bg:transparent;
+--vibeui-ai-018-paper:light-dark(oklch(0.98 0.006 95),oklch(0.27 0.014 95));
+--vibeui-ai-018-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-ai-018-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-ai-018-faint:light-dark(oklch(0.68 0.012 265),oklch(0.58 0.012 265));
+--vibeui-ai-018-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-ai-018-accent:light-dark(oklch(0.52 0.16 250),oklch(0.74 0.13 250));
+--vibeui-ai-018-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 250));
+--vibeui-ai-018-mark:light-dark(oklch(0.92 0.11 95),oklch(0.47 0.09 90));
 --vibeui-ai-018-serif:ui-serif,Georgia,"Times New Roman",serif;
 --vibeui-ai-018-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -100,7 +103,7 @@ width:0.4375rem;height:0.4375rem;border-radius:9999px;background:var(--vibeui-ai
 appearance:none;cursor:pointer;height:2.125rem;padding:0 0.875rem;border-radius:0.6875rem;
 font:inherit;font-size:0.8125rem;font-weight:640;
 }
-[data-vibeui-block="ai-018"] [data-part="open"]{border:0;background:var(--vibeui-ai-018-accent);color:oklch(1 0 0)}
+[data-vibeui-block="ai-018"] [data-part="open"]{border:0;background:var(--vibeui-ai-018-accent);color:var(--vibeui-ai-018-on-accent)}
 [data-vibeui-block="ai-018"] [data-part="copy"]{border:1px solid var(--vibeui-ai-018-border);background:none;color:inherit}
 [data-vibeui-block="ai-018"] :focus-visible{outline:2px solid var(--vibeui-ai-018-accent);outline-offset:2px}
 @container (min-width: 46rem){
@@ -109,6 +112,28 @@ font:inherit;font-size:0.8125rem;font-weight:640;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="ai-018"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Цитата из документа с окружающим контекстом и выводом, который на ней стоит.
@@ -128,11 +153,18 @@ export function Ai018({
   openLabel = "Открыть документ на с. 7",
   copyLabel = "Скопировать цитату",
   accent,
+  background = "",
   className,
   style,
 }: Ai018Props) {
   const palette = {
     ...(accent ? { "--vibeui-ai-018-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-ai-018-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

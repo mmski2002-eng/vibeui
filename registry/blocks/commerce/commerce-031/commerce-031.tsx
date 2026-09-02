@@ -20,7 +20,20 @@ export type Commerce031Props = {
   points?: Commerce031Point[]
   mapNote?: string
   cta?: string
+  /** Строка города: подпись и ссылка на смену. */
+  cityLabel?: string
+  cityChangeText?: string
+  /** Скрытая подпись группы способов получения. */
+  waysLegend?: string
+  /** Подписи полей курьерского адреса. */
+  fieldLabels?: Record<string, string>
+  /** Значения полей курьерского адреса по умолчанию. */
+  fieldValues?: Record<string, string>
+  /** Буква на метке курьерской доставки. */
+  courierPinLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,18 +47,26 @@ export type Commerce031Props = {
 // сторонний домен, а блок обязан работать в чужом проекте без них.
 const STYLES = `
 :where([data-vibeui-block="commerce-031"]){
---vibeui-commerce-031-bg:oklch(1 0 0);
---vibeui-commerce-031-fg:oklch(0.21 0.014 265);
---vibeui-commerce-031-muted:oklch(0.55 0.014 265);
---vibeui-commerce-031-border:oklch(0.91 0.006 265);
---vibeui-commerce-031-soft:oklch(0.975 0.004 265);
---vibeui-commerce-031-accent:oklch(0.53 0.16 250);
---vibeui-commerce-031-land:oklch(0.96 0.015 160);
+--vibeui-commerce-031-bg:transparent;
+--vibeui-commerce-031-radius:0;
+--vibeui-commerce-031-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-031-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-031-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-commerce-031-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-commerce-031-accent:light-dark(oklch(0.53 0.16 250),oklch(0.74 0.14 250));
+--vibeui-commerce-031-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 250));
+--vibeui-commerce-031-land:light-dark(oklch(0.96 0.015 160),oklch(0.29 0.02 160));
+--vibeui-commerce-031-water:light-dark(oklch(0.93 0.03 250),oklch(0.36 0.035 250));
+--vibeui-commerce-031-pin-ring:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-commerce-031-note-bg:light-dark(oklch(1 0 0 / 88%),oklch(0.2 0.012 265 / 88%));
+--vibeui-commerce-031-shadow:light-dark(oklch(0.2 0.02 265 / 30%),oklch(0 0 0 / 55%));
+--vibeui-commerce-031-eta:light-dark(oklch(0.5 0.13 150),oklch(0.78 0.14 150));
 --vibeui-commerce-031-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 [data-vibeui-block="commerce-031"]{
 box-sizing:border-box;background:var(--vibeui-commerce-031-bg);
+border-radius:var(--vibeui-commerce-031-radius);
 color:var(--vibeui-commerce-031-fg);font-family:var(--vibeui-commerce-031-sans);
 }
 [data-vibeui-block="commerce-031"] *{box-sizing:border-box}
@@ -88,22 +109,22 @@ position:relative;min-height:13rem;
 background:
 linear-gradient(var(--vibeui-commerce-031-border) 1px,transparent 1px) 0 0 / 100% 3rem,
 linear-gradient(90deg,var(--vibeui-commerce-031-border) 1px,transparent 1px) 0 0 / 3rem 100%,
-linear-gradient(115deg,oklch(0.93 0.03 250) 0 22%,transparent 22%),
+linear-gradient(115deg,var(--vibeui-commerce-031-water) 0 22%,transparent 22%),
 var(--vibeui-commerce-031-land);
 }
 [data-vibeui-block="commerce-031"] [data-part="pin"]{
 position:absolute;transform:translate(-50%,-100%);
 width:1.5rem;height:1.5rem;border-radius:9999px 9999px 9999px 2px;rotate:45deg;
-background:var(--vibeui-commerce-031-accent);border:2px solid oklch(1 0 0);
-box-shadow:0 2px 6px oklch(0.2 0.02 265 / 30%);
+background:var(--vibeui-commerce-031-accent);border:2px solid var(--vibeui-commerce-031-pin-ring);
+box-shadow:0 2px 6px var(--vibeui-commerce-031-shadow);
 }
 [data-vibeui-block="commerce-031"] [data-part="pin"] i{
 position:absolute;inset:0;display:grid;place-items:center;rotate:-45deg;
-font-style:normal;font-size:0.625rem;font-weight:800;color:oklch(1 0 0);
+font-style:normal;font-size:0.625rem;font-weight:800;color:var(--vibeui-commerce-031-on-accent);
 }
 [data-vibeui-block="commerce-031"] [data-part="mapnote"]{
 position:absolute;left:0.5rem;bottom:0.5rem;margin:0;padding:0.25rem 0.5rem;border-radius:0.5rem;
-background:oklch(1 0 0 / 88%);font-size:0.625rem;color:var(--vibeui-commerce-031-muted);
+background:var(--vibeui-commerce-031-note-bg);font-size:0.625rem;color:var(--vibeui-commerce-031-muted);
 }
 [data-vibeui-block="commerce-031"] ul{list-style:none;margin:0;padding:0.5rem;display:grid;gap:0.375rem;max-height:22rem;overflow-y:auto}
 [data-vibeui-block="commerce-031"] [data-part="point"]{position:relative;display:block;cursor:pointer}
@@ -119,7 +140,7 @@ border-color:var(--vibeui-commerce-031-accent);background:var(--vibeui-commerce-
 [data-vibeui-block="commerce-031"] [data-part="card"] b{display:block;font-size:0.875rem;font-weight:650}
 [data-vibeui-block="commerce-031"] [data-part="addr"]{display:block;margin-top:0.125rem;font-size:0.75rem;color:var(--vibeui-commerce-031-muted)}
 [data-vibeui-block="commerce-031"] [data-part="meta"]{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.3125rem;font-size:0.6875rem;color:var(--vibeui-commerce-031-muted)}
-[data-vibeui-block="commerce-031"] [data-part="eta"]{color:oklch(0.5 0.13 150);font-weight:650}
+[data-vibeui-block="commerce-031"] [data-part="eta"]{color:var(--vibeui-commerce-031-eta);font-weight:650}
 [data-vibeui-block="commerce-031"] [data-part="fields"]{padding:0.875rem;display:grid;gap:0.625rem}
 @container (min-width: 40rem){
 [data-vibeui-block="commerce-031"] [data-part="fields"]{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -135,7 +156,7 @@ color:inherit;font:inherit;font-size:0.875rem;
 [data-vibeui-block="commerce-031"] input[type="text"]:focus-visible{outline:2px solid var(--vibeui-commerce-031-accent);outline-offset:1px}
 [data-vibeui-block="commerce-031"] [data-part="cta"]{
 margin-top:1rem;width:100%;appearance:none;border:0;cursor:pointer;height:3rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-031-accent);color:oklch(1 0 0);font:inherit;font-size:1rem;font-weight:700;
+background:var(--vibeui-commerce-031-accent);color:var(--vibeui-commerce-031-on-accent);font:inherit;font-size:1rem;font-weight:700;
 }
 [data-vibeui-block="commerce-031"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-commerce-031-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-031"] *{animation:none!important;transition:none!important}}
@@ -171,6 +192,44 @@ const DEFAULT_POINTS: Commerce031Point[] = [
   },
 ]
 
+const DEFAULT_FIELD_LABELS: Record<string, string> = {
+  street: "Улица и дом",
+  flat: "Квартира",
+  code: "Код домофона",
+  floor: "Этаж",
+  note: "Что сказать курьеру",
+}
+
+const DEFAULT_FIELD_VALUES: Record<string, string> = {
+  street: "ул. Кирова, 12",
+  flat: "47",
+  code: "47К",
+  floor: "5",
+  note: "Позвонить за 20 минут",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Доставка и самовывоз одним экраном: пункты на карте-заглушке раскрываются под самовывозом.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -185,14 +244,32 @@ export function Commerce031({
   points = DEFAULT_POINTS,
   mapNote = "Схема условная",
   cta = "Сохранить способ доставки",
+  cityLabel = "Город доставки:",
+  cityChangeText = "изменить",
+  waysLegend = "Способ получения",
+  fieldLabels = DEFAULT_FIELD_LABELS,
+  fieldValues = DEFAULT_FIELD_VALUES,
+  courierPinLabel = "Д",
   accent,
+  background = "",
   className,
   style,
 }: Commerce031Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-031-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-031-bg": background,
+          "--vibeui-commerce-031-radius": "1.25rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+  const field = (key: string) => ({
+    label: fieldLabels[key] ?? DEFAULT_FIELD_LABELS[key],
+    value: fieldValues[key] ?? DEFAULT_FIELD_VALUES[key],
+  })
 
   return (
     <>
@@ -208,11 +285,11 @@ export function Commerce031({
         <div data-part="shell">
           <h2>{title}</h2>
           <p data-part="city">
-            Город доставки: <b>{city}</b> · <a href="#city">изменить</a>
+            {cityLabel} <b>{city}</b> · <a href="#city">{cityChangeText}</a>
           </p>
 
           <fieldset data-part="ways">
-            <legend hidden>Способ получения</legend>
+            <legend hidden>{waysLegend}</legend>
             <label data-part="way">
               <input
                 type="radio"
@@ -241,46 +318,26 @@ export function Commerce031({
           <div data-part="courier">
             <div data-part="pane">
               <div data-part="fields">
-                <div data-part="field">
-                  <label htmlFor="commerce-031-street">
-                    <span>Улица и дом</span>
-                  </label>
-                  <input
-                    id="commerce-031-street"
-                    type="text"
-                    defaultValue="ул. Кирова, 12"
-                  />
-                </div>
-                <div data-part="field">
-                  <label htmlFor="commerce-031-flat">
-                    <span>Квартира</span>
-                  </label>
-                  <input id="commerce-031-flat" type="text" defaultValue="47" />
-                </div>
-                <div data-part="field">
-                  <label htmlFor="commerce-031-code">
-                    <span>Код домофона</span>
-                  </label>
-                  <input
-                    id="commerce-031-code"
-                    type="text"
-                    defaultValue="47К"
-                  />
-                </div>
-                <div data-part="field">
-                  <label htmlFor="commerce-031-floor">
-                    <span>Этаж</span>
-                  </label>
-                  <input id="commerce-031-floor" type="text" defaultValue="5" />
-                </div>
+                {["street", "flat", "code", "floor"].map((key) => (
+                  <div data-part="field" key={key}>
+                    <label htmlFor={"commerce-031-" + key}>
+                      <span>{field(key).label}</span>
+                    </label>
+                    <input
+                      id={"commerce-031-" + key}
+                      type="text"
+                      defaultValue={field(key).value}
+                    />
+                  </div>
+                ))}
                 <div data-part="wide">
                   <label htmlFor="commerce-031-note">
-                    <span>Что сказать курьеру</span>
+                    <span>{field("note").label}</span>
                   </label>
                   <input
                     id="commerce-031-note"
                     type="text"
-                    defaultValue="Позвонить за 20 минут"
+                    defaultValue={field("note").value}
                   />
                 </div>
               </div>
@@ -289,7 +346,7 @@ export function Commerce031({
                   data-part="pin"
                   style={{ top: "44%", left: "40%" } as CSSProperties}
                 >
-                  <i>Д</i>
+                  <i>{courierPinLabel}</i>
                 </span>
                 <p data-part="mapnote">{mapNote}</p>
               </div>

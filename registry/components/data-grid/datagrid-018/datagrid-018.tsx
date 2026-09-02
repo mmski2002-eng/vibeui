@@ -18,6 +18,24 @@ export type Datagrid018Props = Omit<
   rows?: Datagrid018Row[]
   caption?: string
   placeholder?: string
+  /** Запрос, с которым таблица открывается. */
+  defaultQuery?: string
+  /** Скрытая подпись поля поиска. */
+  searchLabel?: string
+  /** Подпись флажка «только совпавшие». */
+  onlyText?: string
+  /** Счётчик без запроса. {count} — число строк. */
+  rowsTemplate?: string
+  /** Счётчик с запросом. {matches} и {rows} — числа. */
+  matchTemplate?: string
+  /** Строка, когда ничего не найдено. {query} — запрос. */
+  emptyTemplate?: string
+  /** Заголовки колонок по ключу: компонент несёт русские. */
+  columnText?: Record<string, string>
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,15 +44,18 @@ export type Datagrid018Props = Omit<
 // непонятно, за что она зацепилась. Совпадения считаются отдельно от
 // строк: «12 совпадений в 4 строках» честнее одного числа. Переключатель
 // прячет несовпавшие строки, но шапка и счётчик остаются на месте.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-018"]){
---vibeui-datagrid-018-bg:oklch(1 0 0);
---vibeui-datagrid-018-fg:oklch(0.23 0.014 285);
---vibeui-datagrid-018-muted:oklch(0.55 0.014 285);
---vibeui-datagrid-018-border:oklch(0.92 0.006 285);
---vibeui-datagrid-018-head:oklch(0.975 0.003 285);
---vibeui-datagrid-018-accent:oklch(0.55 0.17 55);
---vibeui-datagrid-018-mark:oklch(0.92 0.13 95);
+--vibeui-datagrid-018-bg:transparent;
+--vibeui-datagrid-018-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-018-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-018-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
+--vibeui-datagrid-018-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
+--vibeui-datagrid-018-accent:light-dark(oklch(0.55 0.17 55),oklch(0.78 0.15 55));
+--vibeui-datagrid-018-mark:light-dark(oklch(0.92 0.13 95),oklch(0.52 0.11 95));
 --vibeui-datagrid-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-018"]{
@@ -51,7 +72,7 @@ padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-018-borde
 [data-vibeui-block="datagrid-018"] [data-part="field"]{
 display:flex;align-items:center;gap:0.375rem;flex:1 1 12rem;min-width:9rem;
 padding:0.3125rem 0.625rem;border-radius:0.5rem;
-border:1px solid var(--vibeui-datagrid-018-border);background:var(--vibeui-datagrid-018-bg);
+border:1px solid var(--vibeui-datagrid-018-border);background:transparent;
 }
 [data-vibeui-block="datagrid-018"] [data-part="field"]:focus-within{border-color:var(--vibeui-datagrid-018-accent)}
 [data-vibeui-block="datagrid-018"] [data-part="field"]::before{
@@ -90,6 +111,13 @@ box-shadow:inset 0 -2px 0 var(--vibeui-datagrid-018-accent);
 [data-vibeui-block="datagrid-018"] [data-part="none"]{padding:1.5rem 0.875rem;text-align:center;color:var(--vibeui-datagrid-018-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-018"] *{animation:none!important;transition:none!important}}
 `
+
+const COLUMN_TEXT: Record<string, string> = {
+  ticket: "Обращение",
+  subject: "Тема",
+  requester: "Заявитель",
+  team: "Команда",
+}
 
 const DEFAULT_ROWS: Datagrid018Row[] = [
   {
@@ -170,6 +198,28 @@ function countIn(value: string, query: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сетка со сквозным поиском по всем колонкам и подсветкой совпадений
  * тегом mark. Один файл, ноль зависимостей.
  */
@@ -177,15 +227,34 @@ export function Datagrid018({
   rows = DEFAULT_ROWS,
   caption = "Поиск идёт по всем колонкам сразу, найденное подсвечено",
   placeholder = "Искать по таблице",
+  defaultQuery = "плат",
+  searchLabel = "Поиск по всей таблице обращений",
+  onlyText = "Только совпавшие",
+  rowsTemplate = "Строк: {count}",
+  matchTemplate = "{matches} совпадений в {rows} строках",
+  emptyTemplate = "По запросу «{query}» не найдено ни одной строки",
+  columnText = COLUMN_TEXT,
+  scrollLabel = "Таблица обращений, прокручивается вбок",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Datagrid018Props) {
-  const [query, setQuery] = useState("плат")
+  // Запрос читателя живёт рядом с пропом, а не вместо него: смена
+  // defaultQuery снаружи обязана переставить поле, иначе проп сработал бы
+  // ровно один раз, при монтировании.
+  const [typed, setTyped] = useState<string | null>(null)
+  const [source, setSource] = useState(defaultQuery)
   const [onlyHits, setOnlyHits] = useState(false)
   const inputId = useId()
 
+  if (source !== defaultQuery) {
+    setSource(defaultQuery)
+    setTyped(null)
+  }
+
+  const query = typed ?? defaultQuery
   const needle = query.trim()
 
   const scored = rows.map((row) => {
@@ -205,6 +274,12 @@ export function Datagrid018({
 
   const palette = {
     ...(accent ? { "--vibeui-datagrid-018-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-018-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -222,14 +297,14 @@ export function Datagrid018({
         <div data-part="bar">
           <span data-part="field">
             <label htmlFor={inputId} hidden>
-              Поиск по всей таблице обращений
+              {searchLabel}
             </label>
             <input
               id={inputId}
               type="search"
               value={query}
               placeholder={placeholder}
-              onChange={(event) => setQuery(event.target.value)}
+              onChange={(event) => setTyped(event.target.value)}
             />
           </span>
           <label data-part="only">
@@ -238,28 +313,32 @@ export function Datagrid018({
               checked={onlyHits}
               onChange={(event) => setOnlyHits(event.target.checked)}
             />
-            Только совпавшие
+            {onlyText}
           </label>
           <p data-part="count" role="status" aria-live="polite">
             {needle === ""
-              ? `Строк: ${rows.length}`
-              : `${total} совпадений в ${matched.length} строках`}
+              ? rowsTemplate.replace("{count}", String(rows.length))
+              : matchTemplate
+                  .replace("{matches}", String(total))
+                  .replace("{rows}", String(matched.length))}
           </p>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица обращений, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
             <caption>{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Обращение</th>
-                <th scope="col">Тема</th>
-                <th scope="col">Заявитель</th>
-                <th scope="col">Команда</th>
+                <th scope="col">{columnText.ticket ?? COLUMN_TEXT.ticket}</th>
+                <th scope="col">{columnText.subject ?? COLUMN_TEXT.subject}</th>
+                <th scope="col">
+                  {columnText.requester ?? COLUMN_TEXT.requester}
+                </th>
+                <th scope="col">{columnText.team ?? COLUMN_TEXT.team}</th>
               </tr>
             </thead>
             <tbody>
@@ -276,7 +355,7 @@ export function Datagrid018({
               {visible.length === 0 ? (
                 <tr>
                   <td colSpan={4} data-part="none">
-                    По запросу «{needle}» не найдено ни одной строки
+                    {emptyTemplate.replace("{query}", needle)}
                   </td>
                 </tr>
               ) : null}

@@ -9,8 +9,14 @@ export type Calendar017Props = Omit<
   /** Праздники месяца: ключ — число, значение — название. */
   holidays?: Record<number, string>
   workdays?: number[]
+  /** Легенда по видам дней: weekend, holiday, workday. */
+  legendText?: Record<string, string>
+  /** Подпись праздничной клетки. {day} и {name} подставляются. */
+  holidayLabelText?: string
   locale?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: выходной и праздник различаются формой, а не только
@@ -19,12 +25,12 @@ export type Calendar017Props = Omit<
 // печать читают такой месяц так же, как и все остальные.
 const STYLES = `
 :where([data-vibeui-block="calendar-017"]){
---vibeui-calendar-017-bg:oklch(1 0 0);
---vibeui-calendar-017-fg:oklch(0.24 0.014 265);
---vibeui-calendar-017-muted:oklch(0.62 0.014 265);
---vibeui-calendar-017-border:oklch(0.91 0.006 265);
---vibeui-calendar-017-weekend:oklch(0.95 0.012 265);
---vibeui-calendar-017-accent:oklch(0.55 0.16 25);
+--vibeui-calendar-017-bg:transparent;
+--vibeui-calendar-017-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-calendar-017-muted:light-dark(oklch(0.62 0.014 265),oklch(0.67 0.013 265));
+--vibeui-calendar-017-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-calendar-017-weekend:light-dark(oklch(0.95 0.012 265),oklch(0.3 0.015 265));
+--vibeui-calendar-017-accent:light-dark(oklch(0.55 0.16 25),oklch(0.75 0.14 25));
 --vibeui-calendar-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="calendar-017"]{
@@ -106,6 +112,41 @@ const DEFAULT_HOLIDAYS: Record<number, string> = {
   7: "Рождество",
 }
 
+const DEFAULT_LEGEND: Record<string, string> = {
+  weekend: "выходной",
+  holiday: "праздник",
+  workday: "рабочий перенос",
+}
+
+function fillText(template: string, values: Record<string, string | number>) {
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, key) => `${values[key] ?? match}`,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Месяц, где выходной, праздник и перенесённый рабочий день различаются формой.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -115,8 +156,11 @@ export function Calendar017({
   month = 1,
   holidays = DEFAULT_HOLIDAYS,
   workdays = [17],
+  legendText = DEFAULT_LEGEND,
+  holidayLabelText = "{day} — {name}",
   locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -134,8 +178,16 @@ export function Calendar017({
     year: "numeric",
   }).format(first)
 
+  const legend = { ...DEFAULT_LEGEND, ...legendText }
+
   const palette = {
     ...(accent ? { "--vibeui-calendar-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -202,7 +254,10 @@ export function Calendar017({
                         aria-label={
                           outside || !label
                             ? undefined
-                            : `${date.getDate()} — ${label}`
+                            : fillText(holidayLabelText, {
+                                day: date.getDate(),
+                                name: label,
+                              })
                         }
                       >
                         <span>{date.getDate()}</span>
@@ -217,15 +272,15 @@ export function Calendar017({
         <p data-part="legend">
           <span>
             <i data-part="chip" aria-hidden="true" />
-            выходной
+            {legend.weekend}
           </span>
           <span>
             <i data-part="chip" data-kind="holiday" aria-hidden="true" />
-            праздник
+            {legend.holiday}
           </span>
           <span>
             <i data-part="chip" data-kind="workday" aria-hidden="true" />
-            рабочий перенос
+            {legend.workday}
           </span>
         </p>
         <ul data-part="list">

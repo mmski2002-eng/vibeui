@@ -15,6 +15,8 @@ export type Buttongroup021Props = Omit<
   defaultValue?: string
   label?: string
   name?: string
+  /** Пусто — подложки нет, строки лежат прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,12 +28,14 @@ export type Buttongroup021Props = Omit<
 // в том числе те, кто не читает текущий язык интерфейса.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-021"]){
---vibeui-buttongroup-021-surface:oklch(1 0 0);
---vibeui-buttongroup-021-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-021-muted:oklch(0.57 0.014 265);
---vibeui-buttongroup-021-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-021-on:oklch(0.97 0.025 265);
---vibeui-buttongroup-021-accent:oklch(0.5 0.15 265);
+--vibeui-buttongroup-021-surface:transparent;
+--vibeui-buttongroup-021-fg:light-dark(oklch(0.25 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-021-muted:light-dark(oklch(0.57 0.014 265),oklch(0.69 0.012 265));
+--vibeui-buttongroup-021-border:light-dark(oklch(0.89 0.008 265),oklch(0.37 0.012 265));
+--vibeui-buttongroup-021-chip:light-dark(oklch(0.96 0.005 265),oklch(0.33 0.012 265));
+--vibeui-buttongroup-021-hover:light-dark(oklch(0.985 0.003 265),oklch(0.29 0.01 265));
+--vibeui-buttongroup-021-on:light-dark(oklch(0.97 0.025 265),oklch(0.3 0.045 265));
+--vibeui-buttongroup-021-accent:light-dark(oklch(0.5 0.15 265),oklch(0.76 0.13 265));
 --vibeui-buttongroup-021-radius:0.75rem;
 --vibeui-buttongroup-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -82,7 +86,7 @@ font-size:0.75rem;line-height:1.3;
 }
 [data-vibeui-block="buttongroup-021"] [data-part="tag"]{
 flex:none;padding:0.125rem 0.375rem;border-radius:0.3125rem;
-background:oklch(0.96 0.005 265);
+background:var(--vibeui-buttongroup-021-chip);
 color:var(--vibeui-buttongroup-021-muted);
 font-size:0.625rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
 }
@@ -92,7 +96,7 @@ stroke:var(--vibeui-buttongroup-021-accent);fill:none;stroke-width:2.2;
 stroke-linecap:round;stroke-linejoin:round;
 opacity:0;transition:opacity .16s ease;
 }
-[data-vibeui-block="buttongroup-021"] [data-part="row"]:hover{background:oklch(0.985 0.003 265)}
+[data-vibeui-block="buttongroup-021"] [data-part="row"]:hover{background:var(--vibeui-buttongroup-021-hover)}
 [data-vibeui-block="buttongroup-021"] [data-part="row"]:has(input:checked){
 z-index:1;
 background:var(--vibeui-buttongroup-021-on);
@@ -114,6 +118,28 @@ const DEFAULT_LANGUAGES: Buttongroup021Language[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор языка автонимами: у каждой строки свой lang и, где нужно, dir="rtl".
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -122,6 +148,7 @@ export function Buttongroup021({
   defaultValue = "ru",
   label = "Язык интерфейса",
   name = "buttongroup-021",
+  background = "",
   accent,
   className,
   style,
@@ -129,6 +156,12 @@ export function Buttongroup021({
 }: Buttongroup021Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-021-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-021-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

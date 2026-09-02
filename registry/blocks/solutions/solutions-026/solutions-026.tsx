@@ -28,7 +28,27 @@ export type Solutions026Props = {
   partners?: Solutions026Partner[]
   payouts?: Solutions026Payout[]
   thresholdLabel?: string
+  /** Счётчик партнёров в шапке. {count} — их число. */
+  partnersText?: string
+  balanceLabel?: string
+  pendingLabel?: string
+  /** Строка над порогом, когда он уже пройден. */
+  readyText?: string
+  /** Начало строки «до выплаты не хватает». */
+  shortfallText?: string
+  partnersHeading?: string
+  payoutsHeading?: string
+  /** Заголовки колонок обеих таблиц. */
+  columnText?: Record<string, string>
+  /** Подписи ступеней воронки: clicks, signups, paid. */
+  funnelText?: Record<string, string>
+  /** Подписи статусов выплаты: paid, processing, held. */
+  stateText?: Record<string, string>
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -44,14 +64,14 @@ export type Solutions026Props = {
 // повод для спора. Удержанная выплата остаётся в списке с причиной.
 const STYLES = `
 :where([data-vibeui-block="solutions-026"]){
---vibeui-solutions-026-bg:oklch(1 0 0);
---vibeui-solutions-026-panel:oklch(0.975 0.004 55);
---vibeui-solutions-026-fg:oklch(0.22 0.014 60);
---vibeui-solutions-026-muted:oklch(0.54 0.013 60);
---vibeui-solutions-026-border:oklch(0.9 0.006 60);
---vibeui-solutions-026-accent:oklch(0.6 0.15 55);
---vibeui-solutions-026-paid:oklch(0.55 0.14 150);
---vibeui-solutions-026-held:oklch(0.58 0.19 25);
+--vibeui-solutions-026-bg:transparent;
+--vibeui-solutions-026-panel:light-dark(oklch(0.975 0.004 55),oklch(0.27 0.01 60));
+--vibeui-solutions-026-fg:light-dark(oklch(0.22 0.014 60),oklch(0.94 0.005 60));
+--vibeui-solutions-026-muted:light-dark(oklch(0.54 0.013 60),oklch(0.69 0.011 60));
+--vibeui-solutions-026-border:light-dark(oklch(0.9 0.006 60),oklch(0.36 0.011 60));
+--vibeui-solutions-026-accent:light-dark(oklch(0.6 0.15 55),oklch(0.76 0.14 55));
+--vibeui-solutions-026-paid:light-dark(oklch(0.55 0.14 150),oklch(0.72 0.14 150));
+--vibeui-solutions-026-held:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.16 25));
 --vibeui-solutions-026-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -213,14 +233,53 @@ const DEFAULT_PAYOUTS: Solutions026Payout[] = [
   },
 ]
 
-const STATE_LABEL = {
+const STATE_LABEL: Record<string, string> = {
   paid: "выплачено",
   processing: "в обработке",
   held: "удержано",
-} as const
+}
 
-function money(value: number, currency: string) {
-  return `${value.toLocaleString("ru-RU")} ${currency}`
+const COLUMN_LABEL: Record<string, string> = {
+  partner: "Партнёр",
+  funnel: "Воронка",
+  rate: "Ставка",
+  earned: "Начислено",
+  date: "Дата",
+  method: "Куда",
+  amount: "Сумма",
+  status: "Статус",
+}
+
+const FUNNEL_LABEL: Record<string, string> = {
+  clicks: "переходов",
+  signups: "регистраций",
+  paid: "оплат",
+}
+
+function money(value: number, currency: string, locale: string) {
+  return `${value.toLocaleString(locale)} ${currency}`
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -237,15 +296,34 @@ export function Solutions026({
   partners = DEFAULT_PARTNERS,
   payouts = DEFAULT_PAYOUTS,
   thresholdLabel = "Минимальная сумма выплаты",
+  partnersText = "{count} активных партнёров",
+  balanceLabel = "доступно к выводу",
+  pendingLabel = "в обработке",
+  readyText = "Порог пройден — выплата уйдёт в ближайшую дату.",
+  shortfallText = "До выплаты не хватает",
+  partnersHeading = "Партнёры",
+  payoutsHeading = "Выплаты",
+  columnText = COLUMN_LABEL,
+  funnelText = FUNNEL_LABEL,
+  stateText = STATE_LABEL,
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions026Props) {
   const ready = balance >= threshold
   const left = Math.max(0, threshold - balance)
+  const column = (key: string) => columnText[key] ?? COLUMN_LABEL[key]
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-026-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-026-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -265,18 +343,20 @@ export function Solutions026({
             <h2>{title}</h2>
             <p data-part="hint">{hint}</p>
           </div>
-          <p data-part="hint">{partners.length} активных партнёров</p>
+          <p data-part="hint">
+            {partnersText.replace("{count}", String(partners.length))}
+          </p>
         </header>
 
         <div data-part="wallet" data-ready={ready ? "true" : "false"}>
           <p data-part="figures">
             <span>
-              <span data-part="big">{money(balance, currency)}</span>
-              <span data-part="cap">доступно к выводу</span>
+              <span data-part="big">{money(balance, currency, locale)}</span>
+              <span data-part="cap">{balanceLabel}</span>
             </span>
             <span>
-              <span data-part="small">{money(pending, currency)}</span>
-              <span data-part="cap">в обработке</span>
+              <span data-part="small">{money(pending, currency, locale)}</span>
+              <span data-part="cap">{pendingLabel}</span>
             </span>
           </p>
 
@@ -299,29 +379,29 @@ export function Solutions026({
           <p data-part="gap">
             {ready ? (
               <>
-                Порог пройден — выплата уйдёт в ближайшую дату.{" "}
-                <b>{thresholdLabel.toLowerCase()}</b>:{" "}
-                {money(threshold, currency)}
+                {readyText} <b>{thresholdLabel.toLowerCase()}</b>:{" "}
+                {money(threshold, currency, locale)}
               </>
             ) : (
               <>
-                До выплаты не хватает <b>{money(left, currency)}</b> ·{" "}
-                {thresholdLabel.toLowerCase()} {money(threshold, currency)}
+                {shortfallText} <b>{money(left, currency, locale)}</b> ·{" "}
+                {thresholdLabel.toLowerCase()}{" "}
+                {money(threshold, currency, locale)}
               </>
             )}
           </p>
         </div>
 
-        <h3>Партнёры</h3>
+        <h3>{partnersHeading}</h3>
         <div data-part="scroll">
           <table>
             <thead>
               <tr>
-                <th scope="col">Партнёр</th>
-                <th scope="col">Воронка</th>
-                <th scope="col">Ставка</th>
+                <th scope="col">{column("partner")}</th>
+                <th scope="col">{column("funnel")}</th>
+                <th scope="col">{column("rate")}</th>
                 <th scope="col" data-align="end">
-                  Начислено
+                  {column("earned")}
                 </th>
               </tr>
             </thead>
@@ -333,16 +413,18 @@ export function Solutions026({
                     <span data-part="channel">{partner.channel}</span>
                   </td>
                   <td data-part="funnel">
-                    <b>{partner.clicks.toLocaleString("ru-RU")}</b> переходов →{" "}
-                    <b>{partner.signups}</b> регистраций → <b>{partner.paid}</b>{" "}
-                    оплат
+                    <b>{partner.clicks.toLocaleString(locale)}</b>{" "}
+                    {funnelText.clicks ?? FUNNEL_LABEL.clicks} →{" "}
+                    <b>{partner.signups}</b>{" "}
+                    {funnelText.signups ?? FUNNEL_LABEL.signups} →{" "}
+                    <b>{partner.paid}</b> {funnelText.paid ?? FUNNEL_LABEL.paid}
                   </td>
                   <td>
                     <span data-part="rate">{partner.rate}%</span>
                   </td>
                   <td data-align="end">
                     <span data-part="earned">
-                      {money(partner.earned, currency)}
+                      {money(partner.earned, currency, locale)}
                     </span>
                   </td>
                 </tr>
@@ -351,17 +433,17 @@ export function Solutions026({
           </table>
         </div>
 
-        <h3>Выплаты</h3>
+        <h3>{payoutsHeading}</h3>
         <div data-part="scroll">
           <table>
             <thead>
               <tr>
-                <th scope="col">Дата</th>
-                <th scope="col">Куда</th>
+                <th scope="col">{column("date")}</th>
+                <th scope="col">{column("method")}</th>
                 <th scope="col" data-align="end">
-                  Сумма
+                  {column("amount")}
                 </th>
-                <th scope="col">Статус</th>
+                <th scope="col">{column("status")}</th>
               </tr>
             </thead>
             <tbody>
@@ -372,11 +454,13 @@ export function Solutions026({
                 >
                   <td>{payout.date}</td>
                   <td>{payout.method}</td>
-                  <td data-align="end">{money(payout.amount, currency)}</td>
+                  <td data-align="end">
+                    {money(payout.amount, currency, locale)}
+                  </td>
                   <td>
                     <span data-part="state">
                       <span data-part="dot" aria-hidden="true" />
-                      {STATE_LABEL[payout.state]}
+                      {stateText[payout.state] ?? STATE_LABEL[payout.state]}
                     </span>
                     {payout.note ? (
                       <span data-part="why">{payout.note}</span>

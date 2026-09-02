@@ -14,8 +14,18 @@ export type Calendar016Props = Omit<
   members?: Calendar016Member[]
   capacity?: number
   heading?: string
+  /** Подпись столбца с именами для скринридера. */
+  memberColumnLabel?: string
+  /** Подсказка клетки. {name}, {date}, {hours} и {capacity} подставляются. */
+  cellTitleText?: string
+  /** Часы под полосой. {hours} подставляется. */
+  hoursText?: string
+  /** Легенда по состояниям free, busy и full. {capacity} подставляется. */
+  legendText?: Record<string, string>
   locale?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: занятость команды — это таблица «люди × дни», а не
@@ -24,13 +34,13 @@ export type Calendar016Props = Omit<
 // на вопрос «а насколько занят», на который цвет не отвечает.
 const STYLES = `
 :where([data-vibeui-block="calendar-016"]){
---vibeui-calendar-016-bg:oklch(1 0 0);
---vibeui-calendar-016-fg:oklch(0.24 0.014 265);
---vibeui-calendar-016-muted:oklch(0.62 0.014 265);
---vibeui-calendar-016-border:oklch(0.91 0.006 265);
---vibeui-calendar-016-track:oklch(0.95 0.004 265);
---vibeui-calendar-016-accent:oklch(0.55 0.15 210);
---vibeui-calendar-016-full:oklch(0.56 0.16 25);
+--vibeui-calendar-016-bg:transparent;
+--vibeui-calendar-016-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-calendar-016-muted:light-dark(oklch(0.62 0.014 265),oklch(0.67 0.013 265));
+--vibeui-calendar-016-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-calendar-016-track:light-dark(oklch(0.95 0.004 265),oklch(0.3 0.011 265));
+--vibeui-calendar-016-accent:light-dark(oklch(0.55 0.15 210),oklch(0.72 0.13 210));
+--vibeui-calendar-016-full:light-dark(oklch(0.56 0.16 25),oklch(0.74 0.14 25));
 --vibeui-calendar-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="calendar-016"]{
@@ -112,6 +122,41 @@ const DEFAULT_MEMBERS: Calendar016Member[] = [
   { name: "Дина Соль", hours: [2, 0, 5, 3, 7] },
 ]
 
+const DEFAULT_LEGEND: Record<string, string> = {
+  free: "свободно",
+  busy: "занято частично",
+  full: "день забит ({capacity} ч)",
+}
+
+function fillText(template: string, values: Record<string, string | number>) {
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, key) => `${values[key] ?? match}`,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Недельная сетка занятости команды: люди по строкам, дни по столбцам.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -121,8 +166,13 @@ export function Calendar016({
   members = DEFAULT_MEMBERS,
   capacity = 8,
   heading = "Загрузка команды",
+  memberColumnLabel = "Участник",
+  cellTitleText = "{name}, {date}: {hours} из {capacity} ч",
+  hoursText = "{hours} ч",
+  legendText = DEFAULT_LEGEND,
   locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -141,8 +191,16 @@ export function Calendar016({
     month: "short",
   })
 
+  const legend = { ...DEFAULT_LEGEND, ...legendText }
+
   const palette = {
     ...(accent ? { "--vibeui-calendar-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -167,7 +225,7 @@ export function Calendar016({
           <table aria-label={heading}>
             <thead>
               <tr>
-                <th scope="col" aria-label="Участник" />
+                <th scope="col" aria-label={memberColumnLabel} />
                 {days.map((date) => {
                   const weekend = date.getDay() === 0 || date.getDay() === 6
 
@@ -202,7 +260,12 @@ export function Calendar016({
                         <span
                           data-part="cell"
                           data-state={state}
-                          title={`${member.name}, ${short.format(date)}: ${hours} из ${capacity} ч`}
+                          title={fillText(cellTitleText, {
+                            name: member.name,
+                            date: short.format(date),
+                            hours,
+                            capacity,
+                          })}
                         >
                           <span data-part="bar" aria-hidden="true">
                             <i
@@ -213,7 +276,9 @@ export function Calendar016({
                               }
                             />
                           </span>
-                          <span data-part="hours">{hours} ч</span>
+                          <span data-part="hours">
+                            {fillText(hoursText, { hours })}
+                          </span>
                         </span>
                       </td>
                     )
@@ -226,15 +291,15 @@ export function Calendar016({
         <p data-part="legend">
           <span>
             <i aria-hidden="true" />
-            свободно
+            {fillText(legend.free, { capacity })}
           </span>
           <span>
             <i data-tone="busy" aria-hidden="true" />
-            занято частично
+            {fillText(legend.busy, { capacity })}
           </span>
           <span>
             <i data-tone="full" aria-hidden="true" />
-            день забит ({capacity} ч)
+            {fillText(legend.full, { capacity })}
           </span>
         </p>
       </section>

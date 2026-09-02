@@ -17,9 +17,13 @@ export type Combobox008Props = Omit<
   suggestions?: string[]
   loadingLabel?: string
   emptyLabel?: string
+  /** Пояснение под сообщением о пустой выдаче. */
+  emptyHint?: string
   delay?: number
   defaultQuery?: string
   onSelect?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -29,13 +33,13 @@ export type Combobox008Props = Omit<
 // готовые запросы, по которым точно что-то есть.
 const STYLES = `
 :where([data-vibeui-block="combobox-008"]){
---vibeui-combobox-008-bg:oklch(1 0 0);
---vibeui-combobox-008-fg:oklch(0.23 0.02 350);
---vibeui-combobox-008-muted:oklch(0.55 0.02 350);
---vibeui-combobox-008-border:oklch(0.9 0.01 350);
---vibeui-combobox-008-field:oklch(0.985 0.005 350);
---vibeui-combobox-008-active:oklch(0.95 0.035 350);
---vibeui-combobox-008-accent:oklch(0.55 0.17 350);
+--vibeui-combobox-008-bg:transparent;
+--vibeui-combobox-008-fg:light-dark(oklch(0.23 0.02 350),oklch(0.94 0.008 350));
+--vibeui-combobox-008-muted:light-dark(oklch(0.55 0.02 350),oklch(0.71 0.016 350));
+--vibeui-combobox-008-border:light-dark(oklch(0.9 0.01 350),oklch(0.38 0.016 350));
+--vibeui-combobox-008-field:light-dark(oklch(0.985 0.005 350),oklch(0.3 0.014 350));
+--vibeui-combobox-008-active:light-dark(oklch(0.95 0.035 350),oklch(0.37 0.04 350));
+--vibeui-combobox-008-accent:light-dark(oklch(0.55 0.17 350),oklch(0.76 0.15 350));
 --vibeui-combobox-008-radius:0.625rem;
 --vibeui-combobox-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -113,6 +117,28 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая плашка иначе досталась бы тексту
+ * тёмной ветки, потому что light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox с состоянием загрузки и содержательной пустотой: полосы-заглушки
  * вместо прыгающей панели, готовые запросы вместо «ничего не найдено».
  */
@@ -123,9 +149,11 @@ export function Combobox008({
   suggestions = ["Прага", "Пусан", "Портленд"],
   loadingLabel = "Ищем совпадения",
   emptyLabel = "Ничего не нашлось",
+  emptyHint = "Проверьте раскладку или попробуйте один из запросов ниже.",
   delay = 600,
   defaultQuery = "",
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -160,6 +188,12 @@ export function Combobox008({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -241,9 +275,7 @@ export function Combobox008({
           {showEmpty ? (
             <div data-part="empty">
               <strong data-part="emptytitle">{emptyLabel}</strong>
-              <p data-part="emptyhint">
-                Проверьте раскладку или попробуйте один из запросов ниже.
-              </p>
+              <p data-part="emptyhint">{emptyHint}</p>
               <div data-part="chips">
                 {suggestions.map((suggestion) => (
                   <button

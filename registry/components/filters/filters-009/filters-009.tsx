@@ -16,6 +16,10 @@ export type Filters009Props = Omit<
   options?: Filters009Option[]
   baseCount?: number
   onApply?: (values: string[]) => void
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,16 +30,18 @@ export type Filters009Props = Omit<
 // пока черновик отличается от применённого, панель честно говорит об этом.
 const STYLES = `
 :where([data-vibeui-block="filters-009"]){
---vibeui-filters-009-surface:oklch(1 0 0);
---vibeui-filters-009-fill:oklch(0.975 0.004 265);
---vibeui-filters-009-fg:oklch(0.23 0.014 265);
---vibeui-filters-009-muted:oklch(0.55 0.014 265);
---vibeui-filters-009-border:oklch(0.89 0.008 265);
---vibeui-filters-009-shell:oklch(0.91 0.006 265);
---vibeui-filters-009-accent:oklch(0.5 0.17 145);
+--vibeui-filters-009-surface:transparent;
+--vibeui-filters-009-box:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-filters-009-fill:light-dark(oklch(0.975 0.004 265),oklch(0.3 0.012 265));
+--vibeui-filters-009-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-filters-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-filters-009-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.014 265));
+--vibeui-filters-009-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-filters-009-accent:light-dark(oklch(0.5 0.17 145),oklch(0.76 0.14 145));
+--vibeui-filters-009-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 145));
 --vibeui-filters-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: панель показывают поверх любого фона. */
+/* Подложки по умолчанию нет: панель ложится на фон страницы. */
 [data-vibeui-block="filters-009"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:18rem;box-sizing:border-box;padding:0.875rem;
@@ -57,7 +63,7 @@ transition:background-color .16s ease;
 [data-vibeui-block="filters-009"] input{
 appearance:none;flex:none;margin:0;cursor:pointer;position:relative;
 width:1rem;height:1rem;border-radius:0.3125rem;
-border:1.5px solid var(--vibeui-filters-009-border);background:oklch(1 0 0);
+border:1.5px solid var(--vibeui-filters-009-border);background:var(--vibeui-filters-009-box);
 transition:background-color .16s ease,border-color .16s ease;
 }
 [data-vibeui-block="filters-009"] input:checked{
@@ -66,7 +72,8 @@ background:var(--vibeui-filters-009-accent);border-color:var(--vibeui-filters-00
 [data-vibeui-block="filters-009"] input:checked::after{
 content:"";position:absolute;left:0.3125rem;top:0.0625rem;
 width:0.25rem;height:0.5rem;transform:rotate(42deg);
-border-right:2px solid oklch(1 0 0);border-bottom:2px solid oklch(1 0 0);
+border-right:2px solid var(--vibeui-filters-009-on-accent);
+border-bottom:2px solid var(--vibeui-filters-009-on-accent);
 }
 [data-vibeui-block="filters-009"] input:focus-visible{outline:2px solid var(--vibeui-filters-009-accent);outline-offset:2px}
 [data-vibeui-block="filters-009"] [data-part="value"]{flex:1;min-width:0}
@@ -78,7 +85,7 @@ font-variant-numeric:tabular-nums;
 [data-vibeui-block="filters-009"] [data-part="apply"]{
 appearance:none;cursor:pointer;width:100%;
 height:2.375rem;border:0;border-radius:0.625rem;
-background:var(--vibeui-filters-009-accent);color:oklch(1 0 0);
+background:var(--vibeui-filters-009-accent);color:var(--vibeui-filters-009-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:700;
 font-variant-numeric:tabular-nums;
 transition:opacity .16s ease;
@@ -101,6 +108,52 @@ const DEFAULT_OPTIONS: Filters009Option[] = [
   { value: "Возврат", count: 12 },
 ]
 
+/** Русский словарь по умолчанию: установленный файл не меняет язык проекта. */
+const DEFAULT_LABELS: Record<string, string> = {
+  dirty: "Черновик изменён — отбор ещё не применён.",
+  applied: "Применено условий: {count}",
+  apply: "Показать {count}",
+}
+
+function label(
+  labels: Record<string, string>,
+  key: string,
+  values?: Record<string, string>,
+): string {
+  const template = labels[key] ?? DEFAULT_LABELS[key] ?? ""
+
+  if (!values) {
+    return template
+  }
+
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, name: string) => values[name] ?? match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Фильтры с отложенным применением: кнопка сообщает, сколько записей останется.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -110,6 +163,8 @@ export function Filters009({
   options = DEFAULT_OPTIONS,
   baseCount = 412,
   onApply,
+  labels = DEFAULT_LABELS,
+  background = "",
   accent,
   className,
   style,
@@ -120,6 +175,12 @@ export function Filters009({
 
   const palette = {
     ...(accent ? { "--vibeui-filters-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-filters-009-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -170,8 +231,8 @@ export function Filters009({
         </ul>
         <p data-part="state" role="status">
           {dirty
-            ? "Черновик изменён — отбор ещё не применён."
-            : `Применено условий: ${applied.length}`}
+            ? label(labels, "dirty")
+            : label(labels, "applied", { count: String(applied.length) })}
         </p>
         <button
           type="button"
@@ -182,7 +243,7 @@ export function Filters009({
             onApply?.(draft)
           }}
         >
-          Показать {predicted}
+          {label(labels, "apply", { count: String(predicted) })}
         </button>
       </div>
     </>

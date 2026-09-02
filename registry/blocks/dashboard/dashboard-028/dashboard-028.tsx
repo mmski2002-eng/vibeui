@@ -20,6 +20,22 @@ export type Dashboard028Props = {
   tickets?: Dashboard028Ticket[]
   slaLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Среднее время ответа в шапке. */
+  averageReply?: string
+  /** Подписи счётчиков: queue, overdue, free, average. */
+  countersText?: Record<string, string>
+  /** Слова приоритета: low, normal, high. */
+  priorityText?: Record<string, string>
+  /** Шаблон числа ответов: {count}. */
+  repliesText?: string
+  /** Слово перед именем исполнителя. */
+  assigneeText?: string
+  /** Подпись кнопки «взять себе». */
+  takeText?: string
+  /** Шаблон подписи кнопки для скринридера: {id}. */
+  takeAriaText?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,14 +50,16 @@ export type Dashboard028Props = {
 // счётчики сама из массива, чтобы цифры не разъезжались с содержимым.
 const STYLES = `
 :where([data-vibeui-block="dashboard-028"]){
---vibeui-dashboard-028-bg:oklch(1 0 0);
---vibeui-dashboard-028-panel:oklch(0.985 0.003 265);
---vibeui-dashboard-028-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-028-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-028-border:oklch(0.91 0.006 265);
---vibeui-dashboard-028-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-028-late:oklch(0.55 0.18 25);
---vibeui-dashboard-028-soon:oklch(0.64 0.15 65);
+--vibeui-dashboard-028-bg:transparent;
+--vibeui-dashboard-028-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.012 265));
+--vibeui-dashboard-028-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-028-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-028-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.011 265));
+--vibeui-dashboard-028-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+/* Текст на заливке акцента: в тёмной теме акцент светлее, и белым по нему не прочесть. */
+--vibeui-dashboard-028-onaccent:light-dark(oklch(1 0 0),oklch(0.19 0.012 265));
+--vibeui-dashboard-028-late:light-dark(oklch(0.55 0.18 25),oklch(0.73 0.16 25));
+--vibeui-dashboard-028-soon:light-dark(oklch(0.64 0.15 65),oklch(0.79 0.13 65));
 --vibeui-dashboard-028-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -86,7 +104,7 @@ color:var(--vibeui-dashboard-028-muted);
 border:1px solid var(--vibeui-dashboard-028-border);
 }
 [data-vibeui-block="dashboard-028"] [data-part="queues"] a[aria-current="true"]{
-color:oklch(1 0 0);
+color:var(--vibeui-dashboard-028-onaccent);
 background:var(--vibeui-dashboard-028-accent);
 border-color:var(--vibeui-dashboard-028-accent);
 }
@@ -188,7 +206,40 @@ const DEFAULT_TICKETS: Dashboard028Ticket[] = [
   },
 ]
 
-const PRIORITY_WORD = { low: "низкий", normal: "обычный", high: "срочно" }
+const PRIORITY_WORD: Record<string, string> = {
+  low: "низкий",
+  normal: "обычный",
+  high: "срочно",
+}
+
+const DEFAULT_COUNTERS: Record<string, string> = {
+  queue: "в очереди",
+  overdue: "просрочено",
+  free: "без исполнителя",
+  average: "средний ответ",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Очередь обращений: сортировка по сроку ответа, просрочка тремя признаками,
@@ -201,11 +252,26 @@ export function Dashboard028({
   tickets = DEFAULT_TICKETS,
   slaLabel = "Норматив первого ответа — 4 часа в рабочее время",
   accent,
+  background = "",
+  averageReply = "1 ч 52 м",
+  countersText = DEFAULT_COUNTERS,
+  priorityText = PRIORITY_WORD,
+  repliesText = "ответов {count}",
+  assigneeText = "ведёт",
+  takeText = "Взять себе",
+  takeAriaText = "Взять обращение {id}",
   className,
   style,
 }: Dashboard028Props) {
+  const counter = (key: string) => countersText[key] ?? DEFAULT_COUNTERS[key]
   const palette = {
     ...(accent ? { "--vibeui-dashboard-028-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-028-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -232,19 +298,19 @@ export function Dashboard028({
           <ul data-part="counters">
             <li data-part="counter">
               <span data-part="cvalue">{tickets.length}</span>
-              <span data-part="clabel">в очереди</span>
+              <span data-part="clabel">{counter("queue")}</span>
             </li>
             <li data-part="counter" data-tone="late">
               <span data-part="cvalue">{late}</span>
-              <span data-part="clabel">просрочено</span>
+              <span data-part="clabel">{counter("overdue")}</span>
             </li>
             <li data-part="counter">
               <span data-part="cvalue">{free}</span>
-              <span data-part="clabel">без исполнителя</span>
+              <span data-part="clabel">{counter("free")}</span>
             </li>
             <li data-part="counter">
-              <span data-part="cvalue">1 ч 52 м</span>
-              <span data-part="clabel">средний ответ</span>
+              <span data-part="cvalue">{averageReply}</span>
+              <span data-part="clabel">{counter("average")}</span>
             </li>
           </ul>
 
@@ -274,16 +340,19 @@ export function Dashboard028({
                 <span data-part="id">{ticket.id}</span>
                 <p data-part="subject">{ticket.subject}</p>
                 <span data-part="prio">
-                  {PRIORITY_WORD[ticket.priority ?? "normal"]}
+                  {priorityText[ticket.priority ?? "normal"] ??
+                    PRIORITY_WORD[ticket.priority ?? "normal"]}
                 </span>
                 <span data-part="due">{ticket.due}</span>
               </div>
               <p data-part="meta">
                 {ticket.from} · {ticket.channel} · {ticket.waiting}
-                {ticket.replies ? ` · ответов ${ticket.replies}` : ""}
+                {ticket.replies
+                  ? ` · ${repliesText.replace("{count}", String(ticket.replies))}`
+                  : ""}
                 {ticket.assignee ? (
                   <>
-                    {" · ведёт "}
+                    {` · ${assigneeText} `}
                     <span data-part="who">{ticket.assignee}</span>
                   </>
                 ) : null}
@@ -292,9 +361,9 @@ export function Dashboard028({
                 <button
                   type="button"
                   data-part="take"
-                  aria-label={`Взять обращение ${ticket.id}`}
+                  aria-label={takeAriaText.replace("{id}", ticket.id)}
                 >
-                  Взять себе
+                  {takeText}
                 </button>
               )}
             </li>

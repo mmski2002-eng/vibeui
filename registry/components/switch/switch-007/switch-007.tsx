@@ -9,6 +9,10 @@ export type Switch007Props = Omit<
   legend?: string
   /** Какой размер показан включённым — остальные остаются выключенными. */
   checkedSize?: Switch007Size
+  /** Подписи размеров: компонент несёт русские, проект подставляет свои. */
+  sizeLabels?: Record<Switch007Size, string>
+  /** Пусто — подложки нет, карточка держится рамкой на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,13 +22,13 @@ export type Switch007Props = Omit<
 // это одна строка, а не копия всего блока правил.
 const STYLES = `
 :where([data-vibeui-block="switch-007"]){
---vibeui-switch-007-bg:oklch(1 0 0);
---vibeui-switch-007-fg:oklch(0.22 0.014 265);
---vibeui-switch-007-muted:oklch(0.55 0.014 265);
---vibeui-switch-007-border:oklch(0.91 0.006 265);
---vibeui-switch-007-track:oklch(0.88 0.008 265);
---vibeui-switch-007-thumb:oklch(1 0 0);
---vibeui-switch-007-accent:oklch(0.55 0.19 300);
+--vibeui-switch-007-bg:transparent;
+--vibeui-switch-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-switch-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-switch-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-switch-007-track:light-dark(oklch(0.88 0.008 265),oklch(0.43 0.014 265));
+--vibeui-switch-007-thumb:light-dark(oklch(1 0 0),oklch(0.93 0.004 265));
+--vibeui-switch-007-accent:light-dark(oklch(0.55 0.19 300),oklch(0.74 0.16 300));
 --vibeui-switch-007-unit:1.5rem;
 --vibeui-switch-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -80,11 +84,39 @@ transform:translateX(calc(var(--vibeui-switch-007-unit) * 0.85));
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="switch-007"] *{animation:none!important;transition:none!important}}
 `
 
-const SIZES: { value: Switch007Size; name: string; unit: string }[] = [
-  { value: "sm", name: "Компактный", unit: "18px" },
-  { value: "md", name: "Обычный", unit: "24px" },
-  { value: "lg", name: "Крупный", unit: "30px" },
+const SIZES: { value: Switch007Size; unit: string }[] = [
+  { value: "sm", unit: "18px" },
+  { value: "md", unit: "24px" },
+  { value: "lg", unit: "30px" },
 ]
+
+const SIZE_LABEL: Record<Switch007Size, string> = {
+  sm: "Компактный",
+  md: "Обычный",
+  lg: "Крупный",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Размерная шкала переключателя: sm, md и lg от одной CSS-переменной.
@@ -93,6 +125,8 @@ const SIZES: { value: Switch007Size; name: string; unit: string }[] = [
 export function Switch007({
   legend = "Размер переключателя",
   checkedSize = "md",
+  sizeLabels = SIZE_LABEL,
+  background = "",
   accent,
   className,
   style,
@@ -100,6 +134,12 @@ export function Switch007({
 }: Switch007Props) {
   const palette = {
     ...(accent ? { "--vibeui-switch-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-switch-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -119,7 +159,8 @@ export function Switch007({
           {SIZES.map((size) => (
             <label key={size.value} data-part="row" data-size={size.value}>
               <span data-part="name">
-                {size.name} <span data-part="code">{size.unit}</span>
+                {sizeLabels[size.value] ?? SIZE_LABEL[size.value]}{" "}
+                <span data-part="code">{size.unit}</span>
               </span>
               <span data-part="track">
                 <input

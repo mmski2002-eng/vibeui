@@ -11,6 +11,10 @@ export type Breadcrumb009Props = Omit<
 > & {
   steps?: Breadcrumb009Step[]
   current?: number
+  /** Подпись навигации; {step} — номер шага, {total} — их число. */
+  navLabel?: string
+  /** Пусто — подложки нет, шаги лежат прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,23 +22,26 @@ export type Breadcrumb009Props = Omit<
 // Разница между «уже был» и «ещё не был» показана не только цветом: у
 // пройденных шагов галочка, у будущих — номер. Вперёд через крошки не
 // прыгают: следующий шаг может зависеть от ответов на текущем.
+//
+// Тема берётся из color-scheme окружения через light-dark(): шаги темнеют
+// вместе со страницей и не выкладывают под себя плашку.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-009"]){
---vibeui-breadcrumb-009-surface:oklch(1 0 0);
---vibeui-breadcrumb-009-surface-border:oklch(0.91 0.006 265);
---vibeui-breadcrumb-009-fg:oklch(0.26 0.016 265);
---vibeui-breadcrumb-009-muted:oklch(0.6 0.014 265);
---vibeui-breadcrumb-009-line:oklch(0.86 0.008 265);
---vibeui-breadcrumb-009-accent:oklch(0.55 0.17 265);
---vibeui-breadcrumb-009-done:oklch(0.6 0.15 152);
+--vibeui-breadcrumb-009-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.008 265));
+--vibeui-breadcrumb-009-muted:light-dark(oklch(0.6 0.014 265),oklch(0.68 0.012 265));
+--vibeui-breadcrumb-009-line:light-dark(oklch(0.86 0.008 265),oklch(0.4 0.012 265));
+--vibeui-breadcrumb-009-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-breadcrumb-009-done:light-dark(oklch(0.6 0.15 152),oklch(0.72 0.16 152));
+--vibeui-breadcrumb-009-on-done:light-dark(oklch(0.99 0.01 152),oklch(0.2 0.04 152));
+--vibeui-breadcrumb-009-bg:transparent;
+--vibeui-breadcrumb-009-pad:0;
+--vibeui-breadcrumb-009-radius:0;
 --vibeui-breadcrumb-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Собственная подложка: крошки — это текст, и на тёмной странице
-   он обязан читаться без правки палитры проекта. */
 [data-vibeui-block="breadcrumb-009"]{
-box-sizing:border-box;padding:0.5rem 0.75rem;
-background:var(--vibeui-breadcrumb-009-surface);
-border:1px solid var(--vibeui-breadcrumb-009-surface-border);border-radius:0.625rem;
+box-sizing:border-box;padding:var(--vibeui-breadcrumb-009-pad);
+background:var(--vibeui-breadcrumb-009-bg);
+border-radius:var(--vibeui-breadcrumb-009-radius);
 font-family:var(--vibeui-breadcrumb-009-font);font-size:0.8125rem;line-height:1.4;
 color:var(--vibeui-breadcrumb-009-muted);
 }
@@ -57,7 +64,7 @@ border:1px solid var(--vibeui-breadcrumb-009-line);
 font-size:0.625rem;font-weight:700;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="breadcrumb-009"] [data-state="done"] [data-part="mark"]{
-border-color:transparent;background:var(--vibeui-breadcrumb-009-done);color:oklch(0.99 0.01 152);
+border-color:transparent;background:var(--vibeui-breadcrumb-009-done);color:var(--vibeui-breadcrumb-009-on-done);
 }
 [data-vibeui-block="breadcrumb-009"] [data-state="current"] [data-part="mark"]{
 border-color:var(--vibeui-breadcrumb-009-accent);color:var(--vibeui-breadcrumb-009-accent);
@@ -80,12 +87,37 @@ const DEFAULT_STEPS: Breadcrumb009Step[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Путь мастера: пройденные шаги кликабельны, будущие — нет.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Breadcrumb009({
   steps = DEFAULT_STEPS,
   current = 2,
+  navLabel = "Шаг {step} из {total}",
+  background = "",
   accent,
   className,
   style,
@@ -93,6 +125,14 @@ export function Breadcrumb009({
 }: Breadcrumb009Props) {
   const palette = {
     ...(accent ? { "--vibeui-breadcrumb-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-breadcrumb-009-bg": background,
+          "--vibeui-breadcrumb-009-pad": "0.5rem 0.75rem",
+          "--vibeui-breadcrumb-009-radius": "0.625rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -104,7 +144,9 @@ export function Breadcrumb009({
       <nav
         {...props}
         data-vibeui-block="breadcrumb-009"
-        aria-label={`Шаг ${current + 1} из ${steps.length}`}
+        aria-label={navLabel
+          .replace("{step}", String(current + 1))
+          .replace("{total}", String(steps.length))}
         className={className}
         style={palette}
       >

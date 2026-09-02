@@ -19,6 +19,14 @@ export type Combobox021Props = Omit<
   emptyLabel?: string
   defaultValue?: string
   onSelect?: (value: string, created: boolean) => void
+  /** Строка итога с выбранным значением; {value} — само значение. */
+  selectedText?: string
+  /** Подсказка, пока запрос заводит новое значение. */
+  createHintText?: string
+  /** Подсказка, пока ничего не выбрано. */
+  noValueText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -29,13 +37,13 @@ export type Combobox021Props = Omit<
 // брать осознанно, стрелкой вниз.
 const STYLES = `
 :where([data-vibeui-block="combobox-021"]){
---vibeui-combobox-021-bg:oklch(1 0 0);
---vibeui-combobox-021-fg:oklch(0.22 0.02 20);
---vibeui-combobox-021-muted:oklch(0.53 0.02 20);
---vibeui-combobox-021-border:oklch(0.9 0.01 20);
---vibeui-combobox-021-field:oklch(0.985 0.004 20);
---vibeui-combobox-021-active:oklch(0.95 0.035 20);
---vibeui-combobox-021-accent:oklch(0.55 0.17 20);
+--vibeui-combobox-021-bg:transparent;
+--vibeui-combobox-021-fg:light-dark(oklch(0.22 0.02 20),oklch(0.94 0.008 20));
+--vibeui-combobox-021-muted:light-dark(oklch(0.53 0.02 20),oklch(0.7 0.014 20));
+--vibeui-combobox-021-border:light-dark(oklch(0.9 0.01 20),oklch(0.35 0.014 20));
+--vibeui-combobox-021-field:light-dark(oklch(0.985 0.004 20),oklch(0.27 0.012 20));
+--vibeui-combobox-021-active:light-dark(oklch(0.95 0.035 20),oklch(0.33 0.045 20));
+--vibeui-combobox-021-accent:light-dark(oklch(0.55 0.17 20),oklch(0.76 0.15 20));
 --vibeui-combobox-021-radius:0.625rem;
 --vibeui-combobox-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -96,6 +104,28 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox с созданием значения первой строкой: Enter по умолчанию заводит
  * новую метку из запроса, существующее совпадение нужно выбирать осознанно.
  */
@@ -108,6 +138,10 @@ export function Combobox021({
   emptyLabel = "Список пуст",
   defaultValue = "",
   onSelect,
+  selectedText = "Выбрано: {value}",
+  createHintText = "Enter создаст новое значение",
+  noValueText = "Ничего не выбрано",
+  background = "",
   accent,
   className,
   style,
@@ -136,6 +170,12 @@ export function Combobox021({
   const rows = canCreate ? [needle, ...matches] : matches
   const palette = {
     ...(accent ? { "--vibeui-combobox-021-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-021-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -261,10 +301,10 @@ export function Combobox021({
         </ul>
         <p data-part="hint" aria-live="polite">
           {value
-            ? `Выбрано: ${value}`
+            ? selectedText.replace("{value}", value)
             : canCreate
-              ? "Enter создаст новое значение"
-              : "Ничего не выбрано"}
+              ? createHintText
+              : noValueText}
         </p>
       </div>
     </>

@@ -12,6 +12,8 @@ export type Buttongroup007Props = Omit<
   actions?: Buttongroup007Action[]
   label?: string
   width?: number
+  /** Пусто — подложки нет, столбец лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,12 +24,12 @@ export type Buttongroup007Props = Omit<
 // правому: так глаз идёт по одной колонке названий, а не по центру.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-007"]){
---vibeui-buttongroup-007-surface:oklch(1 0 0);
---vibeui-buttongroup-007-fg:oklch(0.26 0.016 265);
---vibeui-buttongroup-007-muted:oklch(0.58 0.014 265);
---vibeui-buttongroup-007-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-007-hover:oklch(0.965 0.004 265);
---vibeui-buttongroup-007-accent:oklch(0.55 0.17 265);
+--vibeui-buttongroup-007-surface:transparent;
+--vibeui-buttongroup-007-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-007-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-buttongroup-007-border:light-dark(oklch(0.89 0.008 265),oklch(0.37 0.012 265));
+--vibeui-buttongroup-007-hover:light-dark(oklch(0.965 0.004 265),oklch(0.3 0.012 265));
+--vibeui-buttongroup-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-buttongroup-007-radius:0.75rem;
 --vibeui-buttongroup-007-width:16rem;
 --vibeui-buttongroup-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -86,6 +88,29 @@ const DEFAULT_ACTIONS: Buttongroup007Action[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Вертикальная группа кнопок во всю ширину узкой колонки.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -93,6 +118,7 @@ export function Buttongroup007({
   actions = DEFAULT_ACTIONS,
   label = "Операции с файлом",
   width = 16,
+  background = "",
   accent,
   className,
   style,
@@ -101,6 +127,12 @@ export function Buttongroup007({
   const palette = {
     "--vibeui-buttongroup-007-width": `${width}rem`,
     ...(accent ? { "--vibeui-buttongroup-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-007-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

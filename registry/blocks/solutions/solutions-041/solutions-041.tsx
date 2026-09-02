@@ -15,7 +15,22 @@ export type Solutions041Props = {
   title?: string
   hint?: string
   claims?: Solutions041Claim[]
+  /** Названия стадий: sent, answered, partial, refused. */
+  stageText?: Record<string, string>
+  /** Подписи плиток сводки: claims, total, overdue. */
+  summaryText?: Record<string, string>
+  /** Остаток срока ответа. {days} — число дней. */
+  deadlineLeftText?: string
+  /** Просроченный срок ответа. {days} — число дней. */
+  deadlineOverdueText?: string
+  /** Сноска под доской. */
+  footNote?: string
+  currency?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -29,15 +44,16 @@ export type Solutions041Props = {
 // направленных претензий — по остальным срок ответа уже не идёт.
 const STYLES = `
 :where([data-vibeui-block="solutions-041"]){
---vibeui-solutions-041-bg:oklch(1 0 0);
---vibeui-solutions-041-panel:oklch(0.976 0.004 250);
---vibeui-solutions-041-fg:oklch(0.21 0.014 265);
---vibeui-solutions-041-muted:oklch(0.54 0.014 265);
---vibeui-solutions-041-border:oklch(0.9 0.006 265);
---vibeui-solutions-041-accent:oklch(0.5 0.15 250);
---vibeui-solutions-041-ok:oklch(0.55 0.14 152);
---vibeui-solutions-041-warn:oklch(0.68 0.16 75);
---vibeui-solutions-041-late:oklch(0.57 0.19 25);
+--vibeui-solutions-041-bg:transparent;
+--vibeui-solutions-041-card:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-solutions-041-panel:light-dark(oklch(0.976 0.004 250),oklch(0.27 0.011 265));
+--vibeui-solutions-041-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-041-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-041-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-041-accent:light-dark(oklch(0.5 0.15 250),oklch(0.72 0.14 250));
+--vibeui-solutions-041-ok:light-dark(oklch(0.55 0.14 152),oklch(0.71 0.14 152));
+--vibeui-solutions-041-warn:light-dark(oklch(0.68 0.16 75),oklch(0.79 0.15 75));
+--vibeui-solutions-041-late:light-dark(oklch(0.57 0.19 25),oklch(0.71 0.17 25));
 --vibeui-solutions-041-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-041-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -92,7 +108,7 @@ font-size:0.6875rem;color:var(--vibeui-solutions-041-muted);font-variant-numeric
 list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.5rem;
 }
 [data-vibeui-block="solutions-041"] [data-part="card"]{
-background:var(--vibeui-solutions-041-bg);border:1px solid var(--vibeui-solutions-041-border);
+background:var(--vibeui-solutions-041-card);border:1px solid var(--vibeui-solutions-041-border);
 border-radius:0.625rem;padding:0.5625rem 0.625rem;
 }
 [data-vibeui-block="solutions-041"] [data-part="counterparty"]{
@@ -190,11 +206,39 @@ const STAGE_ORDER: Solutions041Stage[] = [
   "refused",
 ]
 
-const STAGE_LABEL: Record<Solutions041Stage, string> = {
+const STAGE_LABEL: Record<string, string> = {
   sent: "Направлена",
   answered: "Получен ответ",
   partial: "Частично признана",
   refused: "Отказ",
+}
+
+const SUMMARY_LABEL: Record<string, string> = {
+  claims: "претензий в работе",
+  total: "сумма требований",
+  overdue: "просрочен срок ответа",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 function deadlineUrgency(daysLeft: number) {
@@ -212,10 +256,19 @@ export function Solutions041({
   title = "Претензии и разбирательства",
   hint = "Досудебная работа, активные дела",
   claims = DEFAULT_CLAIMS,
+  stageText = STAGE_LABEL,
+  summaryText = SUMMARY_LABEL,
+  deadlineLeftText = "осталось {days} дн. на ответ",
+  deadlineOverdueText = "просрочен ответ на {days} дн.",
+  footNote = "Срок ответа считается от даты направления претензии; просрочка не хранится отдельной меткой.",
+  currency = "₽",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions041Props) {
+  const summary = (key: string) => summaryText[key] ?? SUMMARY_LABEL[key]
   const parseAmount = (amount: string) =>
     Number(amount.replace(/[^\d]/g, "")) || 0
   const totalSum = claims.reduce(
@@ -229,6 +282,12 @@ export function Solutions041({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-041-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-041-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -253,15 +312,17 @@ export function Solutions041({
         <div data-part="summary">
           <p data-part="tile">
             <b>{claims.length}</b>
-            <span>претензий в работе</span>
+            <span>{summary("claims")}</span>
           </p>
           <p data-part="tile">
-            <b>{totalSum.toLocaleString("ru-RU")} ₽</b>
-            <span>сумма требований</span>
+            <b>
+              {totalSum.toLocaleString(locale)} {currency}
+            </b>
+            <span>{summary("total")}</span>
           </p>
           <p data-part="tile" data-tile={overdueCount > 0 ? "late" : undefined}>
             <b>{overdueCount}</b>
-            <span>просрочен срок ответа</span>
+            <span>{summary("overdue")}</span>
           </p>
         </div>
 
@@ -279,10 +340,11 @@ export function Solutions041({
                 <div data-part="column" key={stage}>
                   <div data-part="colhead">
                     <span data-part="colname">
-                      {STAGE_LABEL[stage]} · {stageClaims.length}
+                      {stageText[stage] ?? STAGE_LABEL[stage]} ·{" "}
+                      {stageClaims.length}
                     </span>
                     <span data-part="colsum">
-                      {stageSum.toLocaleString("ru-RU")} ₽
+                      {stageSum.toLocaleString(locale)} {currency}
                     </span>
                   </div>
                   <ol data-part="cards">
@@ -306,8 +368,14 @@ export function Solutions041({
                                     : "✓"}
                               </span>
                               {daysLeft >= 0
-                                ? `осталось ${daysLeft} дн. на ответ`
-                                : `просрочен ответ на ${Math.abs(daysLeft)} дн.`}
+                                ? deadlineLeftText.replace(
+                                    "{days}",
+                                    String(daysLeft),
+                                  )
+                                : deadlineOverdueText.replace(
+                                    "{days}",
+                                    String(Math.abs(daysLeft)),
+                                  )}
                             </span>
                           ) : null}
                         </li>
@@ -320,10 +388,7 @@ export function Solutions041({
           </div>
         </div>
 
-        <p data-part="foot">
-          Срок ответа считается от даты направления претензии; просрочка не
-          хранится отдельной меткой.
-        </p>
+        <p data-part="foot">{footNote}</p>
       </section>
     </>
   )

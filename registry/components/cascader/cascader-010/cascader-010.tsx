@@ -21,6 +21,12 @@ export type Cascader010Unit = {
 export type Cascader010Props = {
   heading?: string
   units?: Cascader010Unit[]
+  /** Подписи лент по ключам unit, team и person. */
+  railText?: Record<string, string>
+  /** Что показать, пока человек не выбран. */
+  placeholderText?: string
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -33,11 +39,12 @@ export type Cascader010Props = {
 // в карточку внизу: одна пилюля не вмещает роль и почту.
 const STYLES = `
 :where([data-vibeui-block="cascader-010"]){
---vibeui-cascader-010-bg:oklch(1 0 0);
---vibeui-cascader-010-fg:oklch(0.23 0.014 300);
---vibeui-cascader-010-muted:oklch(0.55 0.012 300);
---vibeui-cascader-010-border:oklch(0.9 0.006 300);
---vibeui-cascader-010-accent:oklch(0.54 0.18 320);
+--vibeui-cascader-010-bg:transparent;
+--vibeui-cascader-010-fg:light-dark(oklch(0.23 0.014 300),oklch(0.94 0.006 300));
+--vibeui-cascader-010-muted:light-dark(oklch(0.55 0.012 300),oklch(0.71 0.011 300));
+--vibeui-cascader-010-border:light-dark(oklch(0.9 0.006 300),oklch(0.38 0.011 300));
+--vibeui-cascader-010-accent:light-dark(oklch(0.54 0.18 320),oklch(0.75 0.15 320));
+--vibeui-cascader-010-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 320));
 --vibeui-cascader-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="cascader-010"]{
@@ -77,7 +84,7 @@ color:var(--vibeui-cascader-010-fg);border-color:var(--vibeui-cascader-010-accen
 outline:2px solid var(--vibeui-cascader-010-accent);outline-offset:2px;
 }
 [data-vibeui-block="cascader-010"] [data-part="chip"][aria-pressed="true"]{
-color:oklch(1 0 0);font-weight:600;
+color:var(--vibeui-cascader-010-on-accent);font-weight:600;
 background:var(--vibeui-cascader-010-accent);
 border-color:var(--vibeui-cascader-010-accent);
 }
@@ -89,7 +96,7 @@ background:color-mix(in oklab,var(--vibeui-cascader-010-accent) 7%,transparent);
 }
 [data-vibeui-block="cascader-010"] [data-part="initials"]{
 flex:0 0 auto;display:grid;place-items:center;width:2.25rem;height:2.25rem;
-border-radius:50%;background:var(--vibeui-cascader-010-accent);color:oklch(1 0 0);
+border-radius:50%;background:var(--vibeui-cascader-010-accent);color:var(--vibeui-cascader-010-on-accent);
 font-size:0.75rem;font-weight:700;letter-spacing:0.02em;
 }
 [data-vibeui-block="cascader-010"] [data-part="who"]{flex:1 1 auto;min-width:0}
@@ -162,6 +169,34 @@ const DEFAULT_UNITS: Cascader010Unit[] = [
   },
 ]
 
+const RAIL_LABEL: Record<string, string> = {
+  unit: "Отдел",
+  team: "Команда",
+  person: "Человек",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function initialsOf(name: string) {
   return name
     .split(" ")
@@ -177,6 +212,9 @@ function initialsOf(name: string) {
 export function Cascader010({
   heading = "Кому назначить задачу",
   units = DEFAULT_UNITS,
+  railText = RAIL_LABEL,
+  placeholderText = "Выберите человека в третьей ленте",
+  background = "",
   accent,
   className,
   style,
@@ -191,6 +229,12 @@ export function Cascader010({
 
   const palette = {
     ...(accent ? { "--vibeui-cascader-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cascader-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -206,7 +250,7 @@ export function Cascader010({
       >
         <p data-part="heading">{heading}</p>
         <div data-part="rail">
-          <span data-part="rail-name">Отдел</span>
+          <span data-part="rail-name">{railText.unit ?? RAIL_LABEL.unit}</span>
           <ul data-part="chips">
             {units.map((item, index) => (
               <li key={item.label}>
@@ -227,7 +271,7 @@ export function Cascader010({
           </ul>
         </div>
         <div data-part="rail">
-          <span data-part="rail-name">Команда</span>
+          <span data-part="rail-name">{railText.team ?? RAIL_LABEL.team}</span>
           <ul data-part="chips">
             {teams.map((item, index) => (
               <li key={item.label}>
@@ -247,7 +291,9 @@ export function Cascader010({
           </ul>
         </div>
         <div data-part="rail">
-          <span data-part="rail-name">Человек</span>
+          <span data-part="rail-name">
+            {railText.person ?? RAIL_LABEL.person}
+          </span>
           <ul data-part="chips">
             {people.map((item, index) => (
               <li key={item.label}>
@@ -277,7 +323,7 @@ export function Cascader010({
           </div>
         ) : (
           <p data-part="placeholder" aria-live="polite">
-            Выберите человека в третьей ленте
+            {placeholderText}
           </p>
         )}
       </div>

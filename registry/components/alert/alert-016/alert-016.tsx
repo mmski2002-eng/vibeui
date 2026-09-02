@@ -19,19 +19,27 @@ export type Alert016Props = Omit<
   visible?: number
   clearLabel?: string
   onClear?: () => void
+  /** Строка свёрнутого хвоста; {n} заменяется числом скрытых записей. */
+  moreLabel?: string
+  /** Пусто — подложки нет, группа лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: несколько сообщений в одной рамке вместо стопки отдельных
 // алертов. Пять карточек подряд — это стена, которую пролистывают; здесь у
 // них общая рамка, общий заголовок и одна кнопка «очистить». Лишние записи
 // сворачиваются в строку со счётчиком, а не растягивают блок.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-016"]){
---vibeui-alert-016-fg:oklch(0.22 0.014 265);
---vibeui-alert-016-muted:oklch(0.5 0.014 265);
---vibeui-alert-016-bg:oklch(1 0 0);
---vibeui-alert-016-border:oklch(0.9 0.006 265);
---vibeui-alert-016-tone:oklch(0.58 0.18 262);
+--vibeui-alert-016-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.006 265));
+--vibeui-alert-016-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-016-bg:transparent;
+--vibeui-alert-016-head:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.01 265));
+--vibeui-alert-016-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-016-tone:light-dark(oklch(0.58 0.18 262),oklch(0.76 0.15 262));
 --vibeui-alert-016-radius:0.875rem;
 --vibeui-alert-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -46,7 +54,7 @@ font-family:var(--vibeui-alert-016-font);
 [data-vibeui-block="alert-016"] [data-part="head"]{
 display:flex;align-items:center;justify-content:space-between;gap:1rem;
 padding:0.6875rem 1rem;border-bottom:1px solid var(--vibeui-alert-016-border);
-background:oklch(0.985 0.002 265);
+background:var(--vibeui-alert-016-head);
 }
 [data-vibeui-block="alert-016"] [data-part="head-title"]{font-size:0.8125rem;font-weight:650}
 [data-vibeui-block="alert-016"] [data-part="clear"]{
@@ -60,9 +68,9 @@ display:flex;align-items:flex-start;gap:0.625rem;
 padding:0.75rem 1rem;
 }
 [data-vibeui-block="alert-016"] [data-part="entry"] + [data-part="entry"]{border-top:1px solid var(--vibeui-alert-016-border)}
-[data-vibeui-block="alert-016"] [data-part="entry"][data-tone="success"]{--vibeui-alert-016-tone:oklch(0.58 0.15 152)}
-[data-vibeui-block="alert-016"] [data-part="entry"][data-tone="warning"]{--vibeui-alert-016-tone:oklch(0.68 0.15 70)}
-[data-vibeui-block="alert-016"] [data-part="entry"][data-tone="danger"]{--vibeui-alert-016-tone:oklch(0.56 0.19 25)}
+[data-vibeui-block="alert-016"] [data-part="entry"][data-tone="success"]{--vibeui-alert-016-tone:light-dark(oklch(0.58 0.15 152),oklch(0.74 0.16 152))}
+[data-vibeui-block="alert-016"] [data-part="entry"][data-tone="warning"]{--vibeui-alert-016-tone:light-dark(oklch(0.68 0.15 70),oklch(0.8 0.15 70))}
+[data-vibeui-block="alert-016"] [data-part="entry"][data-tone="danger"]{--vibeui-alert-016-tone:light-dark(oklch(0.56 0.19 25),oklch(0.71 0.18 25))}
 [data-vibeui-block="alert-016"] [data-part="dot"]{
 flex:none;width:0.4375rem;height:0.4375rem;margin-top:0.4375rem;
 border-radius:9999px;background:var(--vibeui-alert-016-tone);
@@ -108,6 +116,28 @@ const DEFAULT_ENTRIES: Alert016Entry[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Несколько сообщений в одной рамке: общий заголовок и свёрнутый хвост.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -117,12 +147,23 @@ export function Alert016({
   visible = 3,
   clearLabel = "Очистить",
   onClear,
+  moreLabel = "Ещё {n} — в журнале",
+  background = "",
   className,
   style,
   ...props
 }: Alert016Props) {
   const shown = entries.slice(0, Math.max(1, visible))
   const rest = entries.length - shown.length
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-alert-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -135,7 +176,7 @@ export function Alert016({
         role="status"
         aria-label={title}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="head">
           <span data-part="head-title">
@@ -163,7 +204,9 @@ export function Alert016({
             {entry.time ? <span data-part="time">{entry.time}</span> : null}
           </div>
         ))}
-        {rest > 0 ? <div data-part="more">Ещё {rest} — в журнале</div> : null}
+        {rest > 0 ? (
+          <div data-part="more">{moreLabel.replace("{n}", String(rest))}</div>
+        ) : null}
       </div>
     </>
   )

@@ -17,6 +17,12 @@ export type Sidebar003Props = Omit<
   items?: Sidebar003Item[]
   activeLabel?: string
   collapsedLabel?: string
+  /** Подпись кнопки в свёрнутом состоянии. */
+  expandLabel?: string
+  /** Подпись всей навигации для скринридера. */
+  navLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,11 +33,13 @@ export type Sidebar003Props = Omit<
 // подписи опознаётся не всеми и не сразу.
 const STYLES = `
 :where([data-vibeui-block="sidebar-003"]){
---vibeui-sidebar-003-bg:oklch(0.985 0.002 265);
---vibeui-sidebar-003-fg:oklch(0.25 0.016 265);
---vibeui-sidebar-003-muted:oklch(0.55 0.014 265);
---vibeui-sidebar-003-border:oklch(0.91 0.006 265);
---vibeui-sidebar-003-accent:oklch(0.55 0.19 262);
+--vibeui-sidebar-003-bg:transparent;
+--vibeui-sidebar-003-fg:light-dark(oklch(0.25 0.016 265),oklch(0.93 0.006 265));
+--vibeui-sidebar-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-sidebar-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-sidebar-003-button:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
+--vibeui-sidebar-003-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 11%));
+--vibeui-sidebar-003-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.16 262));
 --vibeui-sidebar-003-width:13rem;
 --vibeui-sidebar-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -51,7 +59,7 @@ appearance:none;cursor:pointer;align-self:flex-end;
 display:inline-flex;align-items:center;justify-content:center;
 width:2rem;height:2rem;padding:0;
 border:1px solid var(--vibeui-sidebar-003-border);border-radius:0.5rem;
-background:oklch(1 0 0);color:var(--vibeui-sidebar-003-muted);
+background:var(--vibeui-sidebar-003-button);color:var(--vibeui-sidebar-003-muted);
 }
 [data-vibeui-block="sidebar-003"] [data-part="toggle"]:hover{color:var(--vibeui-sidebar-003-fg)}
 [data-vibeui-block="sidebar-003"] [data-part="toggle"]:focus-visible{outline:2px solid var(--vibeui-sidebar-003-accent);outline-offset:2px}
@@ -66,7 +74,7 @@ color:var(--vibeui-sidebar-003-muted);text-decoration:none;
 font-size:0.875rem;line-height:1.3;white-space:nowrap;
 transition:background-color .16s ease,color .16s ease;
 }
-[data-vibeui-block="sidebar-003"] a:hover{background:oklch(0.55 0.02 265 / 8%);color:var(--vibeui-sidebar-003-fg)}
+[data-vibeui-block="sidebar-003"] a:hover{background:var(--vibeui-sidebar-003-hover);color:var(--vibeui-sidebar-003-fg)}
 [data-vibeui-block="sidebar-003"] a:focus-visible{outline:2px solid var(--vibeui-sidebar-003-accent);outline-offset:-2px}
 [data-vibeui-block="sidebar-003"] a[aria-current="page"]{
 background:color-mix(in oklab,var(--vibeui-sidebar-003-accent) 12%,transparent);
@@ -101,6 +109,28 @@ const DEFAULT_ITEMS: Sidebar003Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Меню, сворачивающееся в полосу иконок: ширина меняется одной переменной.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -108,6 +138,9 @@ export function Sidebar003({
   items = DEFAULT_ITEMS,
   activeLabel = "Задачи",
   collapsedLabel = "Свернуть меню",
+  expandLabel = "Развернуть меню",
+  navLabel = "Основное меню",
+  background = "",
   accent,
   className,
   style,
@@ -117,6 +150,12 @@ export function Sidebar003({
 
   const palette = {
     ...(accent ? { "--vibeui-sidebar-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-sidebar-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -129,7 +168,7 @@ export function Sidebar003({
         {...props}
         data-vibeui-block="sidebar-003"
         data-collapsed={collapsed}
-        aria-label="Основное меню"
+        aria-label={navLabel}
         className={className}
         style={palette}
       >
@@ -137,7 +176,7 @@ export function Sidebar003({
           type="button"
           data-part="toggle"
           aria-expanded={!collapsed}
-          aria-label={collapsed ? "Развернуть меню" : collapsedLabel}
+          aria-label={collapsed ? expandLabel : collapsedLabel}
           onClick={() => setCollapsed((value) => !value)}
         >
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">

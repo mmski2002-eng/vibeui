@@ -28,6 +28,8 @@
           "summary": "Карточка материала для сетки: обложка на градиентах, надзаголовок, заголовок-ссылка, описание и подвал. Вся площадь кликабельна за счёт ::after у единственной ссылки, поэтому в списке из двадцати карточек не появляется шестидесяти ссылок. Раскладка считается от ширины самой карточки. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-card-001-* и не подменять её токенами вашей темы (bg-card, border-border, text-muted-foreground и подобными)",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "приём с одной ссылкой: position:relative у карточки и ::after у ссылки заголовка — из-за нескольких ссылок карточка станет неудобной для скринридера",
             "focus-within у карточки: фокус приходит на ссылку внутри, а рамку должна показывать вся карточка",
             "@container-запрос вместо медиазапроса: карточка живёт в сетке и обязана считать раскладку от своей ширины, а не от ширины окна",
@@ -38,11 +40,13 @@
           "adapt": [
             "тексты title, description, eyebrow и содержимое footer — в подвал можно положить свой элемент",
             "href — адрес материала; уберите его, и карточка перестанет быть ссылкой",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через проп accent — цвет надзаголовка, обложки и рамки при наведении",
             "обложку: замените градиент в [data-part=\"media\"] на <img> с тем же aspect-ratio",
             "максимальную ширину и внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не добавляйте в карточку вторую ссылку или кнопку поверх ::after: они окажутся под невидимым слоем. Если нужна кнопка — поднимите её через position:relative и z-index.",
             "Не заменяйте заголовок на div: в сетке карточек заголовки формируют структуру страницы.",
             "Не растягивайте карточку на всю ширину экрана: max-width задан намеренно, длинная строка описания читается плохо.",
@@ -83,6 +87,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -92,6 +102,8 @@
               "summary": "A content card for a grid: a gradient cover, an eyebrow, a title link, a description and a footer. The entire surface is clickable through ::after on the one link, so twenty cards do not become sixty links. The layout is measured against the card's own width. Zero dependencies, one file, its own palette.",
               "preserve": [
                 "the local --vibeui-card-001-* palette — do not swap it for your theme tokens (bg-card, border-border, text-muted-foreground and the like)",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the single-link technique: position:relative on the card and ::after on the title link — several links make the card tedious in a screen reader",
                 "focus-within on the card: focus lands on the inner link, but the whole card has to show the ring",
                 "the @container query instead of a media query: the card lives in a grid and must measure against its own width, not the window's",
@@ -102,11 +114,13 @@
               "adapt": [
                 "the title, description and eyebrow copy and the footer content — the footer accepts your own element",
                 "href — the destination; drop it and the card stops being a link",
+                "background — the component background; empty means no background, taking the page colour",
                 "the accent through the accent prop — it colours the eyebrow, the cover and the hover border",
                 "the cover: replace the gradient in [data-part=\"media\"] with an <img> at the same aspect-ratio",
                 "max width and outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not add a second link or a button on top of ::after — they end up under the invisible layer. If you need a button, lift it with position:relative and z-index.",
                 "Do not swap the heading for a div: in a card grid the titles are the page structure.",
                 "Do not stretch the card to full screen width: the max-width is deliberate, a long description line reads poorly.",
@@ -133,11 +147,23 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Content Card"
+            "title": "Content Card",
+            "preview": {
+              "props": {
+                "eyebrow": "Guide",
+                "title": "Build a landing page in an evening",
+                "description": "Assembling a page out of ready-made blocks: what to hand the agent and what to write yourself.",
+                "footer": "8 min read"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -164,6 +190,8 @@
           "summary": "Карточка показателя для дашборда: заголовок, число, изменение со стрелкой и столбики истории без библиотеки графиков. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-card-002-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "историю рядом с числом: одно значение не отличает тренд от случайности",
             "проп goodDirection — рост оттока и рост выручки красятся по-разному",
             "знак и стрелку рядом с цветом: в чёрно-белой печати цвет исчезает",
@@ -174,9 +202,13 @@
             "title, value и change",
             "series — ряд значений для столбиков",
             "period — подпись под карточкой",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "goodDirection — какое направление считать хорошим: up или down",
+            "changeLabel — подписи изменения для скринридера; {value} подставляет число",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Значения приходят готовыми строками: компонент ничего не считает и не форматирует.",
             "Ряд короче шести значений выглядит случайным, длиннее двенадцати — превращается в кашу.",
             "Последний столбик выделен как текущий период: если ряд заканчивается неполной неделей, это стоит подписать.",
@@ -211,6 +243,19 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "goodDirection",
+            "label": "Хорошее направление",
+            "type": "select",
+            "default": "up",
+            "options": ["up", "down"]
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -220,6 +265,8 @@
               "summary": "A dashboard metric card: title, value, signed change with an arrow and history bars drawn without a charting library. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-card-002-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the history beside the number: one value cannot separate a trend from noise",
                 "the goodDirection prop — rising churn and rising revenue must colour differently",
                 "the sign and arrow alongside colour: colour vanishes in print",
@@ -230,9 +277,13 @@
                 "title, value and change",
                 "series — the values behind the bars",
                 "period — the caption below",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "goodDirection — which direction counts as good: up or down",
+                "changeLabel — the screen-reader captions for the change; {value} inserts the number",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Values arrive as ready strings: the component neither computes nor formats.",
                 "Fewer than six points look accidental, more than twelve turn to mush.",
                 "The last bar is marked as the current period: if the series ends mid-week, say so.",
@@ -254,11 +305,30 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "goodDirection": {
+                "label": "Good direction"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Metric Card"
+            "title": "Metric Card",
+            "preview": {
+              "props": {
+                "title": "Revenue this week",
+                "value": "$14,200",
+                "period": "vs. last week",
+                "changeLabel": {
+                  "up": "Change up {value} percent",
+                  "down": "Change down {value} percent",
+                  "flat": "No change"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["change", "goodDirection", "accent", "background"]
       }
     },
     {
@@ -285,6 +355,8 @@
           "summary": "Карточка человека для списка команды: инициалы с цветом из имени, роль, короткое описание, ряд цифр и два действия. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-card-003-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "обрезку описания двумя строками: карточки в сетке обязаны быть одной высоты",
             "цифры в ряд между границами — их сравнивают между карточками",
             "оттенок аватара из имени: один человек всегда одного цвета",
@@ -295,9 +367,11 @@
             "name, role и about",
             "массив stats",
             "actionLabel и secondaryLabel",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше трёх цифр в ряд не помещается: остальное — на странице профиля.",
             "Кнопки ничего не делают: обработчики навешивает вызывающий код.",
             "Если есть фотография, положите <img> внутрь кружка — размеры уже заданы.",
@@ -325,6 +399,25 @@
             "type": "text",
             "default": "Написать",
             "maxLength": 20
+          },
+          {
+            "prop": "secondaryLabel",
+            "label": "Второе действие",
+            "type": "text",
+            "default": "Профиль",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -334,6 +427,8 @@
               "summary": "A person card for a team list: name-derived initials, role, a short bio, a row of figures and two actions. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-card-003-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "clamping the bio to two lines: cards in a grid must share one height",
                 "the figures in a row between rules — they get compared across cards",
                 "the name-derived avatar hue: one person keeps one colour",
@@ -344,9 +439,11 @@
                 "name, role and about",
                 "the stats array",
                 "actionLabel and secondaryLabel",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "More than three figures do not fit the row: the rest belong on the profile page.",
                 "The buttons do nothing: handlers belong to the caller.",
                 "If you have a photo, put an <img> inside the circle — the sizing is ready.",
@@ -366,11 +463,45 @@
               "actionLabel": {
                 "label": "Action",
                 "default": "Message"
+              },
+              "secondaryLabel": {
+                "label": "Secondary action",
+                "default": "Profile"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Person Card"
+            "title": "Person Card",
+            "preview": {
+              "props": {
+                "name": "Maria Gurova",
+                "role": "Product designer",
+                "about": "I run the catalogue and the design system, building interfaces that need no explaining.",
+                "stats": [
+                  {
+                    "label": "Projects",
+                    "value": "14"
+                  },
+                  {
+                    "label": "On the team",
+                    "value": "3 yrs"
+                  },
+                  {
+                    "label": "Reply",
+                    "value": "2 h"
+                  }
+                ],
+                "actionLabel": "Message",
+                "secondaryLabel": "Profile"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -397,6 +528,8 @@
           "summary": "Карточка товара: квадратный кадр, плашка скидки, название в две строки, рейтинг с числом, цена со старой ценой и кнопка в корзину. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-card-004-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "разделение целей: кнопка поверх растянутой ссылки, иначе корзина открывает страницу",
             "рейтинг числом рядом со звездой — закрашенные фигуры точнее не скажут",
             "квадратный кадр: в сетке карточки обязаны быть одной высоты",
@@ -407,9 +540,12 @@
             "title, price, oldPrice и badge",
             "rating и reviews",
             "actionLabel — подпись кнопки",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "ratingLabel — подпись рейтинга для скринридера; {rating} и {reviews} подставляют числа",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Цены — строки: форматируйте их на своей стороне, компонент ничего не считает.",
             "Старая цена без реальной скидки — обман: показывайте её, только если цена действительно была выше.",
             "Кадр пустой: положите <img> внутрь, CSS уже готов.",
@@ -444,6 +580,33 @@
             "type": "text",
             "default": "В корзину",
             "maxLength": 20
+          },
+          {
+            "prop": "oldPrice",
+            "label": "Старая цена",
+            "type": "text",
+            "default": "6 900 ₽",
+            "maxLength": 16
+          },
+          {
+            "prop": "rating",
+            "label": "Рейтинг",
+            "type": "number",
+            "default": 4.7,
+            "min": 0,
+            "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -453,6 +616,8 @@
               "summary": "A product card: a square frame, a discount badge, a two-line title, a numeric rating, price with a struck-through old price and an add-to-cart button. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-card-004-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "keeping the targets apart: the button sits above the stretched link, or the cart opens the page",
                 "the numeric rating beside the star — filled shapes are less precise",
                 "the square frame: cards in a grid must share one height",
@@ -463,9 +628,12 @@
                 "title, price, oldPrice and badge",
                 "rating and reviews",
                 "actionLabel — the button's text",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "ratingLabel — the screen-reader caption for the rating; {rating} and {reviews} insert the numbers",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Prices are strings: format them upstream, the component computes nothing.",
                 "An old price with no real discount is a lie: show it only when the price truly was higher.",
                 "The frame is empty: drop an <img> inside, the CSS is ready.",
@@ -489,11 +657,35 @@
               "actionLabel": {
                 "label": "Button",
                 "default": "Add to cart"
+              },
+              "oldPrice": {
+                "label": "Old price",
+                "default": "$85"
+              },
+              "rating": {
+                "label": "Rating"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Product Card"
+            "title": "Product Card",
+            "preview": {
+              "props": {
+                "title": "Polyot desk lamp, warm light",
+                "price": "$59",
+                "oldPrice": "$85",
+                "badge": "−30%",
+                "actionLabel": "Add to cart",
+                "ratingLabel": "Rated {rating} out of 5, {reviews} reviews"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["rating", "accent", "background"]
       }
     },
     {
@@ -523,6 +715,8 @@
           "summary": "Выбор одного варианта карточками: настоящие radio, вся карточка кликабельна, выбранная отличается рамкой и кружком. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-card-005-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "label вокруг всей карточки: попадать надо в карточку, а не в кружок",
             "настоящие radio: стрелки и объявление «2 из 3» браузер даёт сам",
             "fieldset с legend — у группы выбора обязано быть имя",
@@ -533,9 +727,11 @@
             "массив options: заголовок, описание, цена и примечание",
             "legend — название группы",
             "обработчик onChange",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше четырёх вариантов карточками не читаются: там нужна таблица сравнения.",
             "Примечание вроде «два месяца в подарок» — не место для условий: их пишут рядом с формой.",
             "Компонент не отправляет форму: имя группы генерируется useId, для сервера задайте своё.",
@@ -555,6 +751,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -564,6 +766,8 @@
               "summary": "Single-choice cards: real radios, the whole card clickable, and the selected one marked by a border and a dot. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-card-005-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the label wrapping the whole card: the target is the card, not the circle",
                 "real radios: arrows and \"2 of 3\" come from the browser",
                 "the fieldset with a legend — a choice group must have a name",
@@ -574,9 +778,11 @@
                 "the options array: title, description, price and note",
                 "legend — the group's name",
                 "the onChange handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "More than four options stop reading as cards: that calls for a comparison table.",
                 "A note like \"two months free\" is not the place for terms: those go beside the form.",
                 "The component submits nothing: the group name comes from useId, set your own for a server.",
@@ -591,11 +797,41 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Choice Cards"
+            "title": "Choice Cards",
+            "preview": {
+              "props": {
+                "legend": "How to pay",
+                "options": [
+                  {
+                    "value": "month",
+                    "title": "Monthly",
+                    "description": "Charged once a month, cancel whenever you like.",
+                    "price": "$12"
+                  },
+                  {
+                    "value": "year",
+                    "title": "Yearly",
+                    "description": "One payment instead of twelve, invoiced up front.",
+                    "price": "$120",
+                    "note": "Two months free"
+                  },
+                  {
+                    "value": "team",
+                    "title": "Team",
+                    "description": "Up to ten people, one shared invoice.",
+                    "price": "$290"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -622,6 +858,8 @@
           "summary": "Карточка задачи для доски: плашка статуса, прогресс подзадач числами и процентом, исполнитель и срок. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-card-006-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "числа рядом с полосой: по длине полосы никто не назовёт остаток",
             "role=\"progressbar\" с aria-valuenow — полоса без роли для скринридера невидима",
             "статус словом, а не только цветом плашки",
@@ -632,9 +870,14 @@
             "title, status, done и total",
             "due — срок словами",
             "assignee — исполнитель",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "statusText — подписи статусов",
+            "subtasksText и progressLabel — строка прогресса и подпись полосы; {done} и {total} подставляют числа",
+            "lateWord — слово, по которому срок считается просроченным",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Просрочка определяется по тексту срока только в демонстрации: в проекте передавайте признак отдельно.",
             "Прогресс считается из подзадач: если их нет, полосу лучше не показывать вовсе.",
             "Четыре статуса покрывают простую доску; для своего процесса добавьте правило data-status.",
@@ -671,6 +914,18 @@
             "default": 12,
             "min": 1,
             "max": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -680,6 +935,8 @@
               "summary": "A board task card: a status chip, subtask progress in numbers and percent, an assignee and a due date. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-card-006-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the numbers beside the bar: nobody reads the remainder off a bar's length",
                 "role=\"progressbar\" with aria-valuenow — an unroled bar is invisible to screen readers",
                 "the status as a word, not just a chip colour",
@@ -690,9 +947,14 @@
                 "title, status, done and total",
                 "due — the deadline in words",
                 "assignee — who is on it",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "statusText — the status captions",
+                "subtasksText and progressLabel — the progress line and the bar caption; {done} and {total} insert the numbers",
+                "lateWord — the word that marks a due date as overdue",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Lateness is inferred from the due text only in the demo: pass an explicit flag in a project.",
                 "Progress comes from subtasks: with none, drop the bar entirely.",
                 "Four statuses cover a simple board; add a data-status rule for your own process.",
@@ -713,11 +975,34 @@
               },
               "total": {
                 "label": "Total"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Task Card"
+            "title": "Task Card",
+            "preview": {
+              "props": {
+                "title": "Build the component catalog",
+                "due": "due 20 March",
+                "assignee": "Mark Ilyin",
+                "lateWord": "yesterday",
+                "statusText": {
+                  "todo": "Queued",
+                  "doing": "In progress",
+                  "review": "In review",
+                  "done": "Done"
+                },
+                "subtasksText": "Subtasks: {done} of {total}",
+                "progressLabel": "{done} of {total} subtasks done"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["status", "done", "total", "accent", "background"]
       }
     },
     {
@@ -747,6 +1032,8 @@
           "summary": "Карточка уведомления: отправитель, заголовок, две строки текста и пара действий, которые заменяются отчётом о результате. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-card-007-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "действия внутри карточки: половина уведомлений требует одного нажатия",
             "отчёт вместо исчезновения: пропавшая строка читается как потерянная",
             "role=\"status\" на строке результата — смену состояния надо услышать",
@@ -757,9 +1044,13 @@
             "from, title, body и time",
             "primaryLabel и secondaryLabel",
             "текст отчёта после ответа",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "resultText — отчёт после ответа; {label} подставляет подпись нажатой кнопки",
+            "unreadLabel — подпись точки непрочитанного для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ответ сохраняется только в состоянии компонента: отправку на сервер делает вызывающий код.",
             "Опасные действия (удалить, заблокировать) в уведомлении лучше не давать без подтверждения.",
             "Время — строка вроде «12 мин»: пересчёт «сколько прошло» делайте на своей стороне.",
@@ -794,6 +1085,18 @@
             "type": "text",
             "default": "Отклонить",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -803,6 +1106,8 @@
               "summary": "A notification card: sender, headline, two lines of text and a pair of actions that give way to a result line. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-card-007-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "inline actions: half of all notifications need one tap",
                 "a report instead of disappearing: a vanished row reads as lost",
                 "role=\"status\" on the result line — the change has to be heard",
@@ -813,9 +1118,13 @@
                 "from, title, body and time",
                 "primaryLabel and secondaryLabel",
                 "the report wording after an answer",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "resultText — the report after an answer; {label} inserts the pressed button's caption",
+                "unreadLabel — the screen-reader caption on the unread dot",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The answer lives in component state only: sending it is the caller's job.",
                 "Destructive actions do not belong in a notification without a confirmation.",
                 "Time is a string like \"12 min\": compute the elapsed time upstream.",
@@ -839,11 +1148,33 @@
               "secondaryLabel": {
                 "label": "Secondary action",
                 "default": "Decline"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Notification Card"
+            "title": "Notification Card",
+            "preview": {
+              "props": {
+                "from": "Anna Petrova",
+                "title": "Invites you to the Catalog project",
+                "body": "Wants a second pair of eyes on the product cards and a proofread before release.",
+                "time": "12 min",
+                "primaryLabel": "Accept",
+                "secondaryLabel": "Decline",
+                "unreadLabel": "Unread",
+                "resultText": {
+                  "primary": "{label}: invitation accepted",
+                  "secondary": "{label}: invitation declined"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -870,6 +1201,8 @@
           "summary": "Пустая карточка добавления: пунктирная рамка, плюс и подпись, что появится после нажатия. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-card-008-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачный фон как дизайн-решение: у карточки добавления нет и не должно быть подложки, поэтому пропа background у неё нет",
             "пунктир и прозрачный фон: сплошная карточка читается как ещё один элемент данных",
             "тег button вместо div с onClick — роль и клавиатура достаются даром",
             "подпись, объясняющую результат: «плюс» не говорит, что появится",
@@ -883,6 +1216,7 @@
             "минимальную высоту под свою сетку"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Место в сетке у пустой карточки — последнее: первым идёт то, что уже есть.",
             "Если добавление недоступно по правам, не показывайте карточку вовсе, а не блокируйте её.",
             "Пунктир — признак заготовки: не используйте его для настоящих карточек.",
@@ -918,6 +1252,8 @@
               "summary": "An add card: a dashed border, a plus and a line explaining what appears after the click. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-card-008-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent fill as a design decision: an add card has no surface of its own, which is why it takes no background prop",
                 "the dashed border and transparent fill: a solid card reads as another data item",
                 "a button rather than a div with onClick — role and keyboard come free",
                 "the line explaining the outcome: a plus does not say what appears",
@@ -931,6 +1267,7 @@
                 "the minimum height for your grid"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The empty card belongs last in the grid: existing things come first.",
                 "If permissions forbid adding, hide the card rather than disabling it.",
                 "The dashed border signals a placeholder: never use it on real cards.",
@@ -951,9 +1288,16 @@
                 "label": "Accent"
               }
             },
-            "title": "Add Card"
+            "title": "Add Card",
+            "preview": {
+              "props": {
+                "title": "Add a project",
+                "hint": "An empty project with one page and your theme"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent"]
       }
     },
     {
@@ -985,6 +1329,8 @@
           "summary": "Карточка со сводкой и раскрывающимися подробностями: нативный details, словарь пар «подпись — значение», ноль клиентского кода. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-card-009-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "details/summary вместо кнопки с состоянием: клавиатура и роль достаются даром",
             "главное над катом: статус и суть должны быть видны без раскрытия",
             "словарь dl для пар «подпись — значение» вместо таблицы из div",
@@ -995,9 +1341,12 @@
             "title и summary",
             "массив rows",
             "moreLabel — подпись раскрытия",
-            "defaultOpen — раскрыть сразу"
+            "defaultOpen — раскрыть сразу",
+            "акцент через проп accent — цвет строки раскрытия и обводки фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Числа выравниваются по правому краю: для длинных текстов это выравнивание лучше убрать.",
             "Details не закрывается по внешнему клику: для карточки это и не нужно.",
             "Если подробностей больше семи строк, лучше вести на отдельную страницу.",
@@ -1024,6 +1373,18 @@
             "label": "Раскрыть сразу",
             "type": "boolean",
             "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1033,6 +1394,8 @@
               "summary": "A card with a summary and expandable details: native details, a definition list of label–value pairs, zero client code. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-card-009-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "details/summary instead of a stateful button: keyboard and role come free",
                 "the essentials above the fold: status and gist must read without expanding",
                 "a dl for label–value pairs instead of a grid of divs",
@@ -1043,9 +1406,12 @@
                 "title and summary",
                 "the rows array",
                 "moreLabel — the disclosure text",
-                "defaultOpen — start expanded"
+                "defaultOpen — start expanded",
+                "the accent through the accent prop — it colours the disclosure line and the focus ring",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Values are right-aligned: drop that for long text.",
                 "Details does not close on an outside click, which a card does not need.",
                 "Beyond seven rows, link to a page instead.",
@@ -1064,11 +1430,44 @@
               },
               "defaultOpen": {
                 "label": "Start expanded"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Details Card"
+            "title": "Details Card",
+            "preview": {
+              "props": {
+                "defaultOpen": true,
+                "title": "Order shipped",
+                "summary": "The courier arrives on 18 March between 10:00 and 14:00; payment has already gone through.",
+                "moreLabel": "Order details",
+                "rows": [
+                  {
+                    "label": "Order number",
+                    "value": "No. 42-118"
+                  },
+                  {
+                    "label": "Payment",
+                    "value": "Card •••• 6411"
+                  },
+                  {
+                    "label": "Delivery",
+                    "value": "18 March, courier"
+                  },
+                  {
+                    "label": "Total",
+                    "value": "$148"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultOpen", "accent", "background"]
       }
     },
     {
@@ -1095,6 +1494,8 @@
           "summary": "Заглушка карточки: квадратная обложка и строки, повторяющие метрики настоящей карточки товара. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-card-010-* и не подменять её токенами вашей темы (bg-muted, animate-pulse и подобными)",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "совпадение метрик с настоящей карточкой: иначе при загрузке содержимое прыгает",
             "разную длину строк — одинаковые читаются как таблица",
             "role=\"status\" и aria-busy: без них загрузка для скринридера не существует",
@@ -1105,9 +1506,11 @@
             "label — что именно грузится",
             "lines — сколько строк",
             "media — показывать ли обложку",
-            "ширину под свою сетку"
+            "ширину под свою сетку",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Число заглушек должно совпадать с ожидаемым числом карточек: восемь перед двумя выглядят ошибкой.",
             "Если ответ приходит дольше пары секунд, заглушки мало: покажите прогресс или причину.",
             "Метрики привязаны к card-004: меняя настоящую карточку, поправьте и заглушку.",
@@ -1135,6 +1538,12 @@
             "type": "text",
             "default": "Загружается карточка товара",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1144,6 +1553,8 @@
               "summary": "A card skeleton: a square cover and lines mirroring the metrics of the real product card. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-card-010-* palette — do not swap it for your theme tokens (bg-muted, animate-pulse and the like)",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "matching the real card's metrics: otherwise the content jumps on arrival",
                 "the varying line lengths — equal ones read as a table",
                 "role=\"status\" and aria-busy: without them loading does not exist for a screen reader",
@@ -1154,9 +1565,11 @@
                 "label — what is loading",
                 "lines — how many lines",
                 "media — whether to show the cover",
-                "the width for your grid"
+                "the width for your grid",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The placeholder count should match the expected cards: eight before two reads as a bug.",
                 "If the response takes more than a couple of seconds, a skeleton is not enough: show progress or a reason.",
                 "The metrics are tied to card-004: change the real card and fix the skeleton too.",
@@ -1174,14 +1587,23 @@
               "label": {
                 "label": "Label",
                 "default": "Loading a product card"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Card Skeleton"
+            "title": "Card Skeleton",
+            "preview": {
+              "props": {
+                "label": "Loading a product card"
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["lines", "media", "background"]
       }
     },
     {
@@ -1211,6 +1633,8 @@
           "summary": "Карточка-закладка на внешний материал: буквенный знак источника, домен текстом, заголовок-ссылка на всю площадь и описание в две строки. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-card-011-* и не подменять её токенами вашей темы (bg-card, text-muted-foreground и подобными)",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "домен видимым текстом, а не только буквенным знаком: перед уходом с сайта человек обязан видеть, куда именно он уходит",
             "приём с одной ссылкой: position:relative у карточки и ::after у заголовка — три ссылки на карточку превращают список в кашу для скринридера",
             "визуально скрытое «откроется в новой вкладке»: смена вкладки без предупреждения дезориентирует",
@@ -1221,9 +1645,12 @@
             "тексты title и description",
             "домен через url — он же красит буквенный знак",
             "адрес через href и признак внешней ссылки external",
-            "акцент через проп accent — цвет стрелки и рамки при наведении"
+            "акцент через проп accent — цвет стрелки и рамки при наведении",
+            "externalLabel — скрытое предупреждение о новой вкладке",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Растянутая ссылка ломает выделение текста внутри карточки: это плата за большую цель нажатия.",
             "Вторая ссылка или кнопка окажется под невидимым слоем ::after — поднимайте её через position:relative и z-index.",
             "url — это подпись, а не источник href: компонент ничего из адреса не разбирает.",
@@ -1250,6 +1677,18 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "external",
+            "label": "Внешняя ссылка",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1259,6 +1698,8 @@
               "summary": "A bookmark card for an outside link: a letter mark for the source, the domain in plain text, a title link covering the whole surface and a two-line description. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-card-011-* palette — do not swap it for your theme tokens (bg-card, text-muted-foreground and the like)",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the domain as visible text, not just a letter mark: before leaving the site a reader must see where they are going",
                 "the single-link technique: position:relative on the card and ::after on the title — three links per card turn the list to mush in a screen reader",
                 "the visually hidden \"opens in a new tab\": an unannounced tab switch disorients",
@@ -1269,9 +1710,12 @@
                 "the title and description copy",
                 "the domain through url — it also colours the letter mark",
                 "the destination through href and the external flag",
-                "the accent through the accent prop — the arrow and the hover border"
+                "the accent through the accent prop — the arrow and the hover border",
+                "externalLabel — the hidden \"opens in a new tab\" warning",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A stretched link breaks text selection inside the card: that is the price of a large tap target.",
                 "A second link or button ends up under the invisible ::after layer — lift it with position:relative and z-index.",
                 "url is a caption, not the source of href: the component parses nothing out of the address.",
@@ -1290,11 +1734,26 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "external": {
+                "label": "External link"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Bookmark Card"
+            "title": "Bookmark Card",
+            "preview": {
+              "props": {
+                "title": "What container queries are and when to use them",
+                "description": "A walk-through with examples: why a component measures its layout against its own width rather than the window.",
+                "url": "web.dev",
+                "externalLabel": " (opens in a new tab)"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["external", "accent", "background"]
       }
     },
     {
@@ -1328,15 +1787,18 @@
             "object-fit:cover у вложенного <img>: растянутая по обеим осям картинка выглядит браком",
             "плашку и длительность на непрозрачных подложках — поверх светлого кадра белый текст исчезает",
             "обрезку заголовка и описания двумя строками: в сетке карточки обязаны быть одной высоты",
-            "светлую подложку самой карточки: тёмный текст на тёмном фоне витрины не читается"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты title, description и содержимое meta",
             "соотношение сторон через ratio",
             "плашку badge и подпись duration — обе можно убрать пустой строкой",
-            "акцент через проп accent — цвет градиента-заглушки"
+            "акцент через проп accent — цвет градиента-заглушки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Кадр по умолчанию пустой: передайте <img> или <video> в media, CSS для них уже готов.",
             "Соотношение 1/1 в узкой колонке съедает половину экрана — для мобильной ленты берите 16/9.",
             "Плашка перекрывает верхний левый угол картинки: важное содержимое кадра туда лучше не помещать.",
@@ -1364,6 +1826,25 @@
             "type": "text",
             "default": "12:40",
             "maxLength": 12
+          },
+          {
+            "prop": "badge",
+            "label": "Плашка",
+            "type": "text",
+            "default": "Видео",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1377,15 +1858,18 @@
                 "object-fit:cover on a nested <img>: an image stretched on both axes looks broken",
                 "the badge and duration on opaque backings — white text vanishes over a light frame",
                 "clamping the title and description to two lines: cards in a grid must share one height",
-                "the card's own light surface: dark text on the dark showcase background is unreadable"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the title and description copy and the meta content",
                 "the aspect ratio through ratio",
                 "the badge and the duration caption — both drop out on an empty string",
-                "the accent through the accent prop — the placeholder gradient"
+                "the accent through the accent prop — the placeholder gradient",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The frame is empty by default: pass an <img> or <video> as media, the CSS is ready.",
                 "A 1/1 ratio eats half the screen in a narrow column — use 16/9 for a mobile feed.",
                 "The badge covers the top-left corner of the picture: keep important detail out of it.",
@@ -1404,11 +1888,31 @@
               "duration": {
                 "label": "Duration",
                 "default": "12:40"
+              },
+              "badge": {
+                "label": "Badge",
+                "default": "Video"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Ratio Media Card"
+            "title": "Ratio Media Card",
+            "preview": {
+              "props": {
+                "title": "Building a catalog with container queries",
+                "description": "Why a card has to measure its layout against its own width.",
+                "badge": "Video",
+                "duration": "12:40",
+                "meta": "Published yesterday"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["ratio", "accent", "background"]
       }
     },
     {
@@ -1442,15 +1946,19 @@
             "container-type:inline-size у корня — без него оба запроса просто не выполняются",
             "@container вместо медиазапроса: одна и та же карточка живёт в сайдбаре и в основной колонке, и ширина окна о ней ничего не знает",
             "min-width:0 у текстовой колонки в горизонтальном режиме, иначе длинное слово растянет флекс-строку",
-            "порог в 30rem, привязанный к моменту, когда кадр и три строки текста перестают мешать друг другу"
+            "порог в 30rem, привязанный к моменту, когда кадр и три строки текста перестают мешать друг другу",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты title, description, eyebrow и подпись meta",
             "подпись кнопки через actionLabel",
             "акцент через проп accent — надзаголовок, кадр и кнопка",
-            "пороги @container под свою сетку: 30rem и 44rem — не догма"
+            "пороги @container под свою сетку: 30rem и 44rem — не догма",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Контейнерный запрос считает ширину карточки, а не окна: в узком сайдбаре она останется вертикальной на любом мониторе.",
             "Кадр пустой: положите <img> внутрь [data-part=\"media\"], пропорция и ширина уже заданы.",
             "В горизонтальном режиме кадр тянется на высоту текста — очень длинное описание сделает его вытянутым.",
@@ -1477,6 +1985,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1490,15 +2004,19 @@
                 "container-type:inline-size on the root — without it neither query ever runs",
                 "@container instead of a media query: the same card lives in a sidebar and in the main column, and the window width knows nothing about it",
                 "min-width:0 on the text column in row mode, or one long word stretches the flex line",
-                "the 30rem threshold, tied to the point where the frame and three lines of text stop crowding each other"
+                "the 30rem threshold, tied to the point where the frame and three lines of text stop crowding each other",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the title, description and eyebrow copy and the meta caption",
                 "the button text through actionLabel",
                 "the accent through the accent prop — eyebrow, frame and button",
-                "the @container thresholds for your grid: 30rem and 44rem are not sacred"
+                "the @container thresholds for your grid: 30rem and 44rem are not sacred",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The container query measures the card, not the window: in a narrow sidebar it stays vertical on any monitor.",
                 "The frame is empty: put an <img> inside [data-part=\"media\"], the ratio and width are set.",
                 "In row mode the frame stretches to the text height — a very long description makes it tall and thin.",
@@ -1517,11 +2035,24 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Adaptive Layout Card"
+            "title": "Adaptive Layout Card",
+            "preview": {
+              "props": {
+                "title": "Course: layout without media queries",
+                "description": "Six lessons on container queries, :has() and letting a component fit the place it lands in.",
+                "eyebrow": "Course",
+                "meta": "6 lessons · 3 hours",
+                "actionLabel": "Start"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1555,15 +2086,20 @@
             "знак и стрелку в дополнение к цвету: в чёрно-белой печати и при дальтонизме цвет исчезает",
             "проп invert: рост оттока и рост выручки красятся по-разному, иначе плитка врёт",
             "нейтральный тон при нулевом изменении — зелёный ноль читается как рост",
-            "табличные цифры у значения и дельты, чтобы ряд плиток не дрожал по ширине"
+            "табличные цифры у значения и дельты, чтобы ряд плиток не дрожал по ширине",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты label, value, deltaValue и baseline",
             "величину изменения через delta — знак решает всё остальное",
             "трактовку направления через invert",
-            "акцент через проп accent — цвет положительной дельты"
+            "акцент через проп accent — цвет положительной дельты",
+            "подписи направления через directionText, шаблон процента через deltaTemplate и формат числа через locale",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Значения приходят готовыми строками: компонент ничего не считает и не форматирует, кроме процента.",
             "Процент выводится через toLocaleString('ru-RU') — для другой локали поправьте вызов или передайте готовую строку.",
             "Плитка не показывает историю: если нужен тренд, ставьте рядом карточку со столбиками.",
@@ -1591,6 +2127,18 @@
             "label": "Рост — плохо",
             "type": "boolean",
             "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1604,15 +2152,20 @@
                 "the sign and the arrow alongside colour: in print and for colour-blind readers the colour is gone",
                 "the invert prop: rising churn and rising revenue must colour differently or the tile lies",
                 "the neutral tone at zero change — a green zero reads as growth",
-                "tabular figures on the value and the delta so a row of tiles does not shiver"
+                "tabular figures on the value and the delta so a row of tiles does not shiver",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label, value, deltaValue and baseline copy",
                 "the change through delta — the sign decides everything else",
                 "the reading of direction through invert",
-                "the accent through the accent prop — the colour of a positive delta"
+                "the accent through the accent prop — the colour of a positive delta",
+                "the direction wording through directionText, the percentage template through deltaTemplate and the number format through locale",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Values arrive as ready strings: the component computes and formats nothing but the percent.",
                 "The percent goes through toLocaleString('ru-RU') — change the call or pass a ready string for another locale.",
                 "The tile shows no history: if you need a trend, put a sparkline card beside it.",
@@ -1630,11 +2183,33 @@
               },
               "invert": {
                 "label": "Growth is bad"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Delta Tile"
+            "title": "Delta Tile",
+            "preview": {
+              "props": {
+                "label": "Revenue this week",
+                "value": "$18,420",
+                "deltaValue": "+$2,030",
+                "baseline": "against last week",
+                "directionText": {
+                  "up": "up by ",
+                  "down": "down by ",
+                  "flat": "no change, "
+                },
+                "deltaTemplate": "{sign}{value}%",
+                "locale": "en-US"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["delta", "invert", "accent", "background"]
       }
     },
     {
@@ -1668,15 +2243,20 @@
             "role=\"progressbar\" с aria-valuemax по длине списка — ряд цветных полосок для скринридера иначе не существует",
             "визуально скрытые слова «выполнено» и «не выполнено»: зачёркивание и галочка вслух не читаются",
             "счётчик «3 из 5» рядом с заголовком: по длине заливки никто не назовёт число",
-            "порядок пунктов: чек-лист — это план, а не множество, и перестановка меняет смысл"
+            "порядок пунктов: чек-лист — это план, а не множество, и перестановка меняет смысл",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок через title и подпись meta",
             "массив items — текст пункта и признак done",
             "режим showDone: скрыть выполненное и оставить только то, что впереди",
-            "акцент через проп accent — цвет заливки сегментов и галочек"
+            "акцент через проп accent — цвет заливки сегментов и галочек",
+            "счётчик и подпись прогресса через countTemplate и progressTemplate, приписки скринридера через statusText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Счётчик и сегменты считаются от всего массива items, а не от видимой части: при showDone={false} прогресс остаётся честным.",
             "Больше восьми пунктов превращают карточку в страницу — ведите на отдельный экран задачи.",
             "Пункты не переключаются: чек-лист здесь отображает состояние, а обработку кликов вешает вызывающий код.",
@@ -1702,6 +2282,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1715,15 +2301,20 @@
                 "role=\"progressbar\" with aria-valuemax from the list length — a row of coloured strips does not exist for a screen reader otherwise",
                 "the visually hidden \"done\" and \"not done\": strike-through and a tick are silent",
                 "the \"3 of 5\" counter beside the title: nobody reads a number off a fill length",
-                "the order of the items: a checklist is a plan, not a set, and reordering changes the meaning"
+                "the order of the items: a checklist is a plan, not a set, and reordering changes the meaning",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the heading through title and the meta caption",
                 "the items array — the item text and its done flag",
                 "the showDone mode: hide what is finished and keep only what is ahead",
-                "the accent through the accent prop — the segment fill and the ticks"
+                "the accent through the accent prop — the segment fill and the ticks",
+                "the counter and the progress label through countTemplate and progressTemplate, and the screen-reader suffixes through statusText",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The counter and the segments count the whole items array, not the visible part: with showDone={false} the progress stays honest.",
                 "More than eight items turn the card into a page — link to the task screen instead.",
                 "The items do not toggle: the checklist here shows state, and click handling belongs to the caller.",
@@ -1741,11 +2332,47 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Checklist Card"
+            "title": "Checklist Card",
+            "preview": {
+              "props": {
+                "title": "Catalog card wave",
+                "items": [
+                  {
+                    "text": "Collect the component list",
+                    "done": true
+                  },
+                  {
+                    "text": "Write the metadata and the translation",
+                    "done": true
+                  },
+                  {
+                    "text": "Check the preview at mobile width",
+                    "done": true
+                  },
+                  {
+                    "text": "Run meta:validate and lint"
+                  },
+                  {
+                    "text": "Publish to the catalog"
+                  }
+                ],
+                "meta": "Due Friday · Mark Ilyin",
+                "countTemplate": "{done} of {total}",
+                "progressTemplate": "{done} of {total} items done",
+                "statusText": {
+                  "done": " — done",
+                  "todo": " — not done"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["showDone", "accent", "background"]
       }
     },
     {
@@ -1779,15 +2406,20 @@
             "цвет типа через одну переменную и data-kind — так новый тип добавляется одной строкой CSS",
             "тип, размер и дату одним рядом: в списке из сорока файлов высота строки дороже подробностей",
             "aria-label у кнопки скачивания — голая иконка стрелки вслух не читается",
-            "атрибут title у имени: полное имя обязано быть доступно, когда строка обрезана"
+            "атрибут title у имени: полное имя обязано быть доступно, когда строка обрезана",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя файла через name — из него же берётся расширение для значка",
             "тип через kind, размер через size и дату через updated",
             "подпись кнопки через actionLabel и адрес через href",
-            "акцент через проп accent — он перекрывает цвет типа"
+            "акцент через проп accent — он перекрывает цвет типа",
+            "слова типов через kindText и подпись значка без расширения через extensionFallback",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Размер приходит готовой строкой: перевод байтов в мегабайты делает вызывающий код.",
             "Расширение берётся из name текстом — файл без точки в имени получит подпись «файл».",
             "Кнопка ничего не скачивает: обработчик или ссылку на файл подставляет вызывающий код.",
@@ -1815,6 +2447,18 @@
             "type": "text",
             "default": "2,4 МБ",
             "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1828,15 +2472,20 @@
                 "the type colour through one variable and data-kind — a new type is then one CSS line",
                 "type, size and date on one row: in a list of forty files the row height beats the detail",
                 "the aria-label on the download button — a bare arrow is silent",
-                "the title attribute on the name: the full name must stay reachable when the line is cut"
+                "the title attribute on the name: the full name must stay reachable when the line is cut",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the file name through name — the glyph's extension comes from it too",
                 "the type through kind, the size through size and the date through updated",
                 "the button text through actionLabel and the destination through href",
-                "the accent through the accent prop — it overrides the type colour"
+                "the accent through the accent prop — it overrides the type colour",
+                "the type wording through kindText and the glyph caption for an extension-less name through extensionFallback",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The size arrives as a ready string: turning bytes into megabytes is the caller's job.",
                 "The extension is read out of name as text — a file with no dot gets the caption \"file\".",
                 "The button downloads nothing: the handler or the file link belongs to the caller.",
@@ -1855,11 +2504,35 @@
               "size": {
                 "label": "Size",
                 "default": "2.4 MB"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "File Row Card"
+            "title": "File Row Card",
+            "preview": {
+              "props": {
+                "name": "Component catalog, v4.pdf",
+                "size": "2.4 MB",
+                "updated": "yesterday, 18:40",
+                "actionLabel": "Download file",
+                "kindText": {
+                  "pdf": "PDF document",
+                  "doc": "Text document",
+                  "sheet": "Spreadsheet",
+                  "image": "Image",
+                  "archive": "Archive",
+                  "code": "Source code"
+                },
+                "extensionFallback": "file"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["kind", "accent", "background"]
       }
     },
     {
@@ -1893,15 +2566,20 @@
             "визуально скрытую строку «Оценка N из 5»: закрашенные фигуры вслух не читаются",
             "кавычку псевдоэлементом, а не символом в тексте — иначе скринридер прочитает её вслух как мусор",
             "роль и компанию рядом с именем: отзыв без должности автора ничего не весит",
-            "оттенок кружка из имени: один человек всегда одного цвета в списке отзывов"
+            "оттенок кружка из имени: один человек всегда одного цвета в списке отзывов",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст цитаты через quote, имя через author и должность через role",
             "оценку через rating — ноль убирает ряд звёзд целиком",
             "подпись источника через source",
-            "акцент через проп accent — цвет декоративной кавычки"
+            "акцент через проп accent — цвет декоративной кавычки",
+            "подпись оценки для скринридера через ratingTemplate",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Цитата приходит без кавычек: открывающую рисует CSS, вторая в тексте будет выглядеть ошибкой.",
             "Отзыв длиннее трёх строк перестают читать: сокращайте до одной мысли.",
             "Инициалы собираются из первых двух слов имени — для одного слова получится одна буква.",
@@ -1930,6 +2608,18 @@
             "default": 5,
             "min": 0,
             "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1943,15 +2633,20 @@
                 "the visually hidden \"Rated N out of 5\": filled shapes are silent",
                 "the quote mark as a pseudo-element rather than a character in the text — otherwise a screen reader reads it aloud as noise",
                 "the role and company beside the name: a testimonial without the author's job carries no weight",
-                "the name-derived hue of the circle: one person keeps one colour across a wall of testimonials"
+                "the name-derived hue of the circle: one person keeps one colour across a wall of testimonials",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the quote text through quote, the name through author and the job through role",
                 "the score through rating — zero removes the star row entirely",
                 "the source caption through source",
-                "the accent through the accent prop — the colour of the decorative quote mark"
+                "the accent through the accent prop — the colour of the decorative quote mark",
+                "the screen-reader rating label through ratingTemplate",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The quote arrives without quotation marks: CSS draws the opening one, a second in the text looks like a bug.",
                 "A testimonial longer than three lines stops being read: cut it to one thought.",
                 "Initials come from the first two words of the name — a single word yields a single letter.",
@@ -1970,11 +2665,27 @@
               },
               "rating": {
                 "label": "Rating"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Quote Card"
+            "title": "Quote Card",
+            "preview": {
+              "props": {
+                "quote": "We handed the agent three blocks from the catalog and had a working page by the evening. We only edited the copy — the layout was left alone.",
+                "author": "Olga Terentyeva",
+                "role": "Product lead, Early Bird",
+                "source": "Review on the marketplace",
+                "ratingTemplate": "Rated {rating} out of {max}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["rating", "accent", "background"]
       }
     },
     {
@@ -2008,15 +2719,19 @@
             "три признака выделения сразу — рамка, подложка и кнопка: одну рамку в ряду карточек легко не заметить",
             "светлую подложку у выделенного варианта: тёмная карточка среди светлых читается как отключённая, а не как главная",
             "цену табличными цифрами и период отдельным словом рядом с ней",
-            "строку условий под кнопкой: тариф без ответа на «а как отменить» вызывает недоверие"
+            "строку условий под кнопкой: тариф без ответа на «а как отменить» вызывает недоверие",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "название через name, цену через price и период через period",
             "пояснение через tagline и список features",
             "признак featured и надпись на ленте через ribbon",
-            "подпись кнопки через actionLabel, строку условий через note и акцент через проп accent"
+            "подпись кнопки через actionLabel, строку условий через note и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Выделенным должен быть ровно один тариф в ряду: два «рекомендуем» отменяют друг друга.",
             "Больше пяти пунктов в списке никто не сравнивает — остальное уводите в таблицу под тарифами.",
             "Лента вылезает за верхнюю границу карточки: контейнер с overflow:hidden её обрежет.",
@@ -2043,6 +2758,18 @@
             "label": "Рекомендуем",
             "type": "boolean",
             "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2056,15 +2783,19 @@
                 "all three highlight signals — border, backing and button: a border alone is easy to miss in a row of cards",
                 "the light backing on the featured variant: a dark card among light ones reads as disabled, not as primary",
                 "the price in tabular figures with the period as a separate word beside it",
-                "the terms line under the button: a plan with no answer to \"how do I cancel\" breeds distrust"
+                "the terms line under the button: a plan with no answer to \"how do I cancel\" breeds distrust",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the name through name, the price through price and the period through period",
                 "the explanation through tagline and the features list",
                 "the featured flag and the ribbon wording through ribbon",
-                "the button text through actionLabel, the terms line through note and the accent through the accent prop"
+                "the button text through actionLabel, the terms line through note and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Exactly one plan in a row should be featured: two \"recommended\" cancel each other out.",
                 "Nobody compares more than five bullet points — push the rest into a table below the plans.",
                 "The ribbon overhangs the top edge: a container with overflow:hidden will clip it.",
@@ -2083,11 +2814,35 @@
               },
               "featured": {
                 "label": "Recommended"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Featured Plan Card"
+            "title": "Featured Plan Card",
+            "preview": {
+              "props": {
+                "name": "Team",
+                "price": "$29",
+                "period": "per month",
+                "tagline": "For people who assemble interfaces every week.",
+                "features": [
+                  "The whole component catalog",
+                  "Copy for AI without limits",
+                  "A year of block updates",
+                  "Commercial licence"
+                ],
+                "ribbon": "Most popular",
+                "actionLabel": "Choose plan",
+                "note": "Cancel in one click; the unused month is refunded."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["featured", "accent", "background"]
       }
     },
     {
@@ -2121,15 +2876,19 @@
             "подсказку текстом, а не второй кнопкой — она альтернатива, а не равный путь",
             "объяснение, что появится после нажатия: «пусто» без причины читается как ошибка загрузки",
             "aria-hidden у рисунка: три пустых прямоугольника вслух не значат ничего",
-            "светлую подложку и рамку: тёмный текст на тёмном фоне витрины не читается"
+            "светлую подложку и рамку: тёмный текст на тёмном фоне витрины не читается",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок через title и объяснение через description",
             "подпись кнопки через actionLabel",
             "текст подсказки через hint — его можно убрать пустой строкой",
-            "акцент через проп accent — цвет кнопки и верхнего листа рисунка"
+            "акцент через проп accent — цвет кнопки и верхнего листа рисунка",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пустое состояние из-за прав доступа и пустое состояние из-за отсутствия данных — разные тексты: не подставляйте один на оба случая.",
             "Если данные не пришли из-за ошибки, это не пустое состояние: там нужны причина и повтор запроса.",
             "Рисунок нарисован тремя листами и не масштабируется вместе с текстом: очень крупный кегль его перерастёт.",
@@ -2156,6 +2915,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2169,15 +2934,19 @@
                 "the hint as text rather than a second button — it is an alternative, not an equal path",
                 "the explanation of what appears after the click: \"empty\" with no reason reads as a failed load",
                 "aria-hidden on the drawing: three blank rectangles mean nothing aloud",
-                "the light surface and border: dark text on the dark showcase background is unreadable"
+                "the light surface and border: dark text on the dark showcase background is unreadable",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the heading through title and the explanation through description",
                 "the button text through actionLabel",
                 "the hint copy through hint — an empty string removes it",
-                "the accent through the accent prop — the button and the top sheet of the drawing"
+                "the accent through the accent prop — the button and the top sheet of the drawing",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "An empty state caused by permissions and one caused by no data need different copy: do not reuse one for both.",
                 "If the data failed to load, this is not an empty state: that needs a reason and a retry.",
                 "The drawing is three sheets and does not scale with the text: a very large type size outgrows it.",
@@ -2196,11 +2965,23 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Empty State Card"
+            "title": "Empty State Card",
+            "preview": {
+              "props": {
+                "title": "No projects yet",
+                "description": "A project holds pages, blocks and a shared theme. Create the first one and the rest appears inside it.",
+                "actionLabel": "Create project",
+                "hint": "Or bring an existing one over: importing a folder takes a minute."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2234,15 +3015,20 @@
             "визуально скрытое слово важности перед заголовком — цветной рельс и значок вслух не читаются",
             "три признака важности сразу: рельс, форма значка и слово, потому что цвет теряется при дальтонизме",
             "aria-label у крестика: голая иконка не говорит, что именно она закроет",
-            "одно действие ссылкой: уведомление — это указатель, а решения принимают на странице"
+            "одно действие ссылкой: уведомление — это указатель, а решения принимают на странице",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок через title и текст через message",
             "важность через severity и метку времени через time вместе с dateTime",
             "подпись действия через actionLabel, адрес через href и подпись крестика через dismissLabel",
-            "акцент через проп accent — он перекрывает цвет важности"
+            "акцент через проп accent — он перекрывает цвет важности",
+            "слова важности для скринридера через severityText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент ничего не пересчитывает: «12 мин назад» вычисляет вызывающий код, здесь это просто строка.",
             "Крестик не скрывает карточку: обработчик и состояние списка живут снаружи.",
             "Важность error не заменяет диалог подтверждения: необратимое действие подтверждают до, а не после.",
@@ -2270,6 +3056,18 @@
             "type": "text",
             "default": "12 мин назад",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2283,15 +3081,20 @@
                 "the visually hidden severity word before the heading — a coloured rail and an icon are silent",
                 "all three severity signals: the rail, the icon shape and the word, because colour is lost to colour blindness",
                 "the aria-label on the close button: a bare icon does not say what it closes",
-                "a single action as a link: a notification is a signpost, decisions happen on the page"
+                "a single action as a link: a notification is a signpost, decisions happen on the page",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the heading through title and the body through message",
                 "the severity through severity and the timestamp through time together with dateTime",
                 "the action text through actionLabel, the destination through href and the close label through dismissLabel",
-                "the accent through the accent prop — it overrides the severity colour"
+                "the accent through the accent prop — it overrides the severity colour",
+                "the screen-reader severity wording through severityText",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component computes nothing: \"12 min ago\" is produced by the caller, here it is just a string.",
                 "The close button does not hide the card: the handler and the list state live outside.",
                 "An error severity is no substitute for a confirmation dialog: irreversible actions are confirmed before, not after.",
@@ -2310,11 +3113,33 @@
               "time": {
                 "label": "Time",
                 "default": "12 min ago"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Timed Alert Card"
+            "title": "Timed Alert Card",
+            "preview": {
+              "props": {
+                "title": "Catalog build finished",
+                "message": "354 components built, the registry is updated. The changes are live in the catalog.",
+                "time": "12 min ago",
+                "actionLabel": "Open report",
+                "dismissLabel": "Dismiss notification",
+                "severityText": {
+                  "info": "Notice",
+                  "success": "Success",
+                  "warning": "Warning",
+                  "error": "Error"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["severity", "accent", "background"]
       }
     },
     {
@@ -2348,15 +3173,19 @@
             "role=\"status\" с aria-busy и подписью: без них загрузка для скринридера просто не существует",
             "aria-hidden у самих фигур — иначе скринридер зачитает пустые прямоугольники",
             "разную длину строк: одинаковые читаются как таблица, а не как текст",
-            "совпадение метрик с настоящей строкой ленты: иначе содержимое прыгнет в момент загрузки"
+            "совпадение метрик с настоящей строкой ленты: иначе содержимое прыгнет в момент загрузки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись загрузки через label",
             "число строк через rows — столько же, сколько ожидается данных",
             "кружок аватара через avatar",
-            "акцент через проп accent — базовый тон фигур"
+            "акцент через проп accent — базовый тон фигур",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Число заглушек должно совпадать с ожидаемым числом строк: шесть перед двумя выглядят ошибкой.",
             "rows зажат в диапазоне от одного до шести: задержки блика расписаны ровно на шесть строк.",
             "Если ответ идёт дольше пары секунд, заглушки мало: покажите прогресс или причину задержки.",
@@ -2384,6 +3213,18 @@
             "type": "text",
             "default": "Загружаются комментарии",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2397,15 +3238,19 @@
                 "role=\"status\" with aria-busy and a label: without them loading simply does not exist for a screen reader",
                 "aria-hidden on the shapes themselves — otherwise a screen reader announces empty rectangles",
                 "the varying line lengths: equal ones read as a table, not as text",
-                "matching the metrics of the real feed row: otherwise the content jumps on arrival"
+                "matching the metrics of the real feed row: otherwise the content jumps on arrival",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the loading caption through label",
                 "the number of rows through rows — as many as the data you expect",
                 "the avatar circle through avatar",
-                "the accent through the accent prop — the base tone of the shapes"
+                "the accent through the accent prop — the base tone of the shapes",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The placeholder count should match the expected rows: six before two reads as a bug.",
                 "rows is clamped between one and six: the shimmer delays are written for exactly six rows.",
                 "If the response takes more than a couple of seconds, a skeleton is not enough: show progress or a reason.",
@@ -2423,11 +3268,23 @@
               "label": {
                 "label": "Caption",
                 "default": "Loading comments"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Feed Skeleton"
+            "title": "Feed Skeleton",
+            "preview": {
+              "props": {
+                "label": "Loading comments"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["rows", "avatar", "accent", "background"]
       }
     }
   ]

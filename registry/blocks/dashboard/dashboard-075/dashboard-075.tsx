@@ -17,6 +17,10 @@ export type Dashboard075Props = {
   templates?: Dashboard075Template[]
   newLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Статусы по ключам live, draft и archived. */
+  statusText?: Record<string, string>
   className?: string
   style?: CSSProperties
 }
@@ -30,17 +34,25 @@ export type Dashboard075Props = {
 // надо видеть до отправки. Статус написан словом, а язык — отдельной меткой:
 // у одного письма бывает три языковые версии, и путать их нельзя. Строка «где
 // используется» показывает, что шаблон нельзя просто удалить.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-075"]){
---vibeui-dashboard-075-bg:oklch(0.985 0.003 60);
---vibeui-dashboard-075-card:oklch(1 0 0);
---vibeui-dashboard-075-fg:oklch(0.21 0.014 60);
---vibeui-dashboard-075-muted:oklch(0.54 0.014 60);
---vibeui-dashboard-075-border:oklch(0.91 0.006 60);
---vibeui-dashboard-075-accent:oklch(0.54 0.14 45);
---vibeui-dashboard-075-soft:oklch(0.965 0.02 45);
---vibeui-dashboard-075-live:oklch(0.55 0.13 155);
---vibeui-dashboard-075-draft:oklch(0.68 0.15 72);
+--vibeui-dashboard-075-bg:transparent;
+/* Карточка шаблона и плашка конверта: подложка самого блока прозрачна. */
+--vibeui-dashboard-075-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 60));
+--vibeui-dashboard-075-inset:light-dark(oklch(0.985 0.003 60),oklch(0.22 0.012 60));
+--vibeui-dashboard-075-fg:light-dark(oklch(0.21 0.014 60),oklch(0.94 0.005 60));
+--vibeui-dashboard-075-muted:light-dark(oklch(0.54 0.014 60),oklch(0.72 0.012 60));
+--vibeui-dashboard-075-border:light-dark(oklch(0.91 0.006 60),oklch(0.36 0.012 60));
+--vibeui-dashboard-075-accent:light-dark(oklch(0.54 0.14 45),oklch(0.76 0.13 45));
+--vibeui-dashboard-075-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 45));
+--vibeui-dashboard-075-soft:light-dark(oklch(0.965 0.02 45),oklch(0.3 0.035 45));
+--vibeui-dashboard-075-live:light-dark(oklch(0.5 0.13 155),oklch(0.79 0.13 155));
+--vibeui-dashboard-075-live-bg:light-dark(oklch(0.95 0.03 155),oklch(0.31 0.05 155));
+--vibeui-dashboard-075-draft:light-dark(oklch(0.52 0.11 72),oklch(0.83 0.13 72));
+--vibeui-dashboard-075-draft-bg:light-dark(oklch(0.95 0.04 72),oklch(0.31 0.05 72));
 --vibeui-dashboard-075-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 --vibeui-dashboard-075-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -60,7 +72,7 @@ border:1px solid var(--vibeui-dashboard-075-border);border-radius:1rem;padding:1
 [data-vibeui-block="dashboard-075"] [data-part="new"]{
 margin-left:auto;appearance:none;border:0;cursor:pointer;font:inherit;
 font-size:0.75rem;font-weight:700;padding:0.4375rem 0.875rem;border-radius:0.5625rem;
-background:var(--vibeui-dashboard-075-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-075-accent);color:var(--vibeui-dashboard-075-on-accent);
 }
 [data-vibeui-block="dashboard-075"] [data-part="grid"]{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:0.5rem}
 [data-vibeui-block="dashboard-075"] [data-part="card"]{
@@ -71,7 +83,7 @@ background:var(--vibeui-dashboard-075-card);border:1px solid var(--vibeui-dashbo
 /* Конверт: то, что человек увидит во «Входящих». */
 [data-vibeui-block="dashboard-075"] [data-part="envelope"]{
 padding:0.5625rem 0.6875rem;border-radius:0.6875rem;
-background:var(--vibeui-dashboard-075-bg);
+background:var(--vibeui-dashboard-075-inset);
 border:1px solid var(--vibeui-dashboard-075-border);
 border-left:0.1875rem solid var(--vibeui-dashboard-075-accent);
 }
@@ -90,11 +102,11 @@ padding:0.0625rem 0.375rem;border-radius:0.25rem;background:var(--vibeui-dashboa
 }
 [data-vibeui-block="dashboard-075"] [data-status="live"] [data-part="status"]{
 color:var(--vibeui-dashboard-075-live);
-background:color-mix(in oklab,var(--vibeui-dashboard-075-live) 12%,white);
+background:var(--vibeui-dashboard-075-live-bg);
 }
 [data-vibeui-block="dashboard-075"] [data-status="draft"] [data-part="status"]{
-color:color-mix(in oklab,var(--vibeui-dashboard-075-draft) 78%,black);
-background:color-mix(in oklab,var(--vibeui-dashboard-075-draft) 18%,white);
+color:var(--vibeui-dashboard-075-draft);
+background:var(--vibeui-dashboard-075-draft-bg);
 }
 [data-vibeui-block="dashboard-075"] [data-part="locale"]{
 margin-left:auto;font-family:var(--vibeui-dashboard-075-mono);font-size:0.625rem;font-weight:700;
@@ -107,7 +119,7 @@ margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:0.25rem;
 [data-vibeui-block="dashboard-075"] [data-part="vars"] li{
 font-family:var(--vibeui-dashboard-075-mono);font-size:0.625rem;
 padding:0.0625rem 0.3125rem;border-radius:0.3125rem;
-background:var(--vibeui-dashboard-075-soft);color:color-mix(in oklab,var(--vibeui-dashboard-075-accent) 85%,black);
+background:var(--vibeui-dashboard-075-soft);color:color-mix(in oklab,var(--vibeui-dashboard-075-accent) 85%,light-dark(black,white));
 }
 [data-vibeui-block="dashboard-075"] [data-part="foot"]{
 margin:0;font-size:0.6875rem;color:var(--vibeui-dashboard-075-muted);
@@ -192,10 +204,32 @@ const DEFAULT_TEMPLATES: Dashboard075Template[] = [
   },
 ]
 
-const STATUS_LABELS: Record<Dashboard075Template["status"], string> = {
+const STATUS_TEXT: Record<string, string> = {
   live: "работает",
   draft: "черновик",
   archived: "в архиве",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -209,13 +243,23 @@ export function Dashboard075({
   templates = DEFAULT_TEMPLATES,
   newLabel = "Новый шаблон",
   accent,
+  background = "",
+  statusText = STATUS_TEXT,
   className,
   style,
 }: Dashboard075Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-075-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-075-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const statuses = { ...STATUS_TEXT, ...statusText }
 
   return (
     <>
@@ -246,9 +290,7 @@ export function Dashboard075({
               >
                 <div data-part="top">
                   <h3>{template.name}</h3>
-                  <span data-part="status">
-                    {STATUS_LABELS[template.status]}
-                  </span>
+                  <span data-part="status">{statuses[template.status]}</span>
                   <span data-part="locale">{template.locale}</span>
                 </div>
 

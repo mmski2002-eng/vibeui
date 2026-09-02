@@ -7,6 +7,8 @@ export type Spinner006Props = Omit<
   lines?: number
   media?: boolean
   label?: string
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: заглушка карточки на пульсации, а не на бегущем блике.
@@ -15,15 +17,18 @@ export type Spinner006Props = Omit<
 // стоит почти ничего. Заглушка повторяет метрику будущей карточки, поэтому
 // при подстановке данных ничего не прыгает. Для скринридера это одно
 // сообщение role="status", а не двадцать серых прямоугольников.
+//
+// Тема берётся из color-scheme окружения через light-dark(): плашки светлее
+// тёмного фона и темнее светлого, собственной тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="spinner-006"]){
---vibeui-spinner-006-surface:oklch(1 0 0);
---vibeui-spinner-006-border:oklch(0.91 0.006 265);
---vibeui-spinner-006-base:oklch(0.92 0.005 265);
+--vibeui-spinner-006-surface:transparent;
+--vibeui-spinner-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.32 0.012 265));
+--vibeui-spinner-006-base:light-dark(oklch(0.92 0.005 265),oklch(0.37 0.011 265));
 --vibeui-spinner-006-radius:0.5rem;
 --vibeui-spinner-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: серые плашки на тёмном фоне теряются. */
+/* Подложки нет по умолчанию: плашка появляется только пропом background. */
 [data-vibeui-block="spinner-006"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -67,6 +72,28 @@ animation:vibeui-spinner-006-pulse 1.6s ease-in-out infinite;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Скелетон карточки на пульсации прозрачности вместо бегущего блика.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -74,11 +101,21 @@ export function Spinner006({
   lines = 3,
   media = true,
   label = "Загружаем карточку компонента",
+  background = "",
   className,
   style,
   ...props
 }: Spinner006Props) {
   const count = Math.min(6, Math.max(1, Math.round(lines)))
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-spinner-006-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -92,7 +129,7 @@ export function Spinner006({
         aria-live="polite"
         aria-label={label}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         {media ? <span data-part="media" /> : null}
         <div data-part="head">

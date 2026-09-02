@@ -11,6 +11,16 @@ export type Date007Props = Omit<
   defaultValue?: string
   fromYear?: number
   toYear?: number
+  /** Подписи селектов: компонент несёт русские, проект подставляет свои. */
+  dayLabel?: string
+  monthLabel?: string
+  yearLabel?: string
+  /** Названия месяцев по порядку, двенадцать штук. */
+  months?: string[]
+  /** Строка итога с подстановкой {date}. */
+  chosenText?: string
+  /** Пусто — подложки нет, поля лежат прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,18 +30,21 @@ export type Date007Props = Omit<
 // и так называет вслух. Число дней пересчитывается по месяцу и году, поэтому
 // 31 февраля выбрать нельзя; если день выпал из месяца, он подтягивается к
 // последнему существующему, а не молча обнуляется.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="date-007"]){
---vibeui-date-007-surface:oklch(1 0 0);
---vibeui-date-007-field:oklch(1 0 0);
---vibeui-date-007-shell:oklch(0.9 0.006 265);
---vibeui-date-007-fg:oklch(0.23 0.014 265);
---vibeui-date-007-muted:oklch(0.55 0.014 265);
---vibeui-date-007-border:oklch(0.88 0.008 265);
---vibeui-date-007-accent:oklch(0.53 0.16 25);
+--vibeui-date-007-surface:transparent;
+--vibeui-date-007-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-date-007-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-date-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-date-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-date-007-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-date-007-accent:light-dark(oklch(0.53 0.16 25),oklch(0.76 0.15 25));
 --vibeui-date-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: рамка держит форму, фон приходит со страницы. */
 [data-vibeui-block="date-007"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;margin:0;padding:0.875rem;
@@ -59,6 +72,10 @@ padding:0 0.5rem;appearance:none;
 background:var(--vibeui-date-007-field);color:inherit;
 border:1px solid var(--vibeui-date-007-border);border-radius:0.625rem;
 font:inherit;font-size:0.875rem;font-weight:600;
+}
+/* Список раскрывает браузер: без явных цветов в тёмной теме он остаётся белым. */
+[data-vibeui-block="date-007"] option{
+background:var(--vibeui-date-007-field);color:var(--vibeui-date-007-fg);
 }
 [data-vibeui-block="date-007"] select:focus-visible{
 outline:2px solid var(--vibeui-date-007-accent);outline-offset:1px;border-color:var(--vibeui-date-007-accent);
@@ -90,6 +107,29 @@ function daysInMonth(year: number, month: number) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Дата рождения тремя селектами: день, месяц и год без календаря.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -98,6 +138,12 @@ export function Date007({
   defaultValue = "1987-04-12",
   fromYear = 1940,
   toYear = 2010,
+  dayLabel = "День",
+  monthLabel = "Месяц",
+  yearLabel = "Год",
+  months = MONTHS,
+  chosenText = "Выбрано: {date}",
+  background = "",
   accent,
   className,
   style,
@@ -116,8 +162,17 @@ export function Date007({
     (_, index) => toYear - index,
   )
 
+  // Выбранная дата остаётся внутри <b>, поэтому строка режется по метке.
+  const [beforeDate, afterDate] = chosenText.split("{date}")
+
   const palette = {
     ...(accent ? { "--vibeui-date-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-date-007-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -135,7 +190,7 @@ export function Date007({
         <legend>{legend}</legend>
         <div data-part="row">
           <div data-part="cell" data-role="day">
-            <label htmlFor={`${id}-day`}>День</label>
+            <label htmlFor={`${id}-day`}>{dayLabel}</label>
             <select
               id={`${id}-day`}
               value={safeDay}
@@ -151,13 +206,13 @@ export function Date007({
             </select>
           </div>
           <div data-part="cell" data-role="month">
-            <label htmlFor={`${id}-month`}>Месяц</label>
+            <label htmlFor={`${id}-month`}>{monthLabel}</label>
             <select
               id={`${id}-month`}
               value={month}
               onChange={(event) => setMonth(Number(event.target.value))}
             >
-              {MONTHS.map((name, index) => (
+              {months.map((name, index) => (
                 <option key={name} value={index + 1}>
                   {name}
                 </option>
@@ -165,7 +220,7 @@ export function Date007({
             </select>
           </div>
           <div data-part="cell" data-role="year">
-            <label htmlFor={`${id}-year`}>Год</label>
+            <label htmlFor={`${id}-year`}>{yearLabel}</label>
             <select
               id={`${id}-year`}
               value={year}
@@ -180,10 +235,11 @@ export function Date007({
           </div>
         </div>
         <p data-part="echo" aria-live="polite">
-          Выбрано:{" "}
+          {beforeDate}
           <b>
-            {safeDay} {MONTHS[month - 1]} {year}
+            {safeDay} {months[month - 1]} {year}
           </b>
+          {afterDate}
         </p>
       </fieldset>
     </>

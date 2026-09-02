@@ -22,6 +22,22 @@ export type Dashboard085Props = {
   timeShare?: number
   departments?: Dashboard085Department[]
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Итог отдела. Подставляется {score}. */
+  scoreText?: string
+  /** Вес цели. Подставляется {weight}. */
+  weightText?: string
+  /** Слово между текущим и целевым значением. */
+  ofLabel?: string
+  /** Подпись полосы для читалки. {name}, {current}, {target}, {unit}. */
+  goalLabelText?: string
+  /** Подсказка засечки прошедшего времени. Подставляется {share}. */
+  paceText?: string
+  /** Подпись отставания. Подставляется {points}. */
+  lagText?: string
+  /** Пояснение под таблицей целей. */
+  legendText?: string
   className?: string
   style?: CSSProperties
 }
@@ -36,17 +52,22 @@ export type Dashboard085Props = {
 // считается взвешенно и стоит в шапке отдела — сравнивать отделы по среднему
 // арифметическому целей нечестно. Комментарий владельца лежит прямо под целью:
 // цифра без объяснения провоцирует неверные выводы на встрече.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-085"]){
---vibeui-dashboard-085-bg:oklch(0.985 0.003 300);
---vibeui-dashboard-085-card:oklch(1 0 0);
---vibeui-dashboard-085-fg:oklch(0.21 0.014 300);
---vibeui-dashboard-085-muted:oklch(0.54 0.014 300);
---vibeui-dashboard-085-border:oklch(0.91 0.006 300);
---vibeui-dashboard-085-accent:oklch(0.51 0.16 300);
---vibeui-dashboard-085-soft:oklch(0.965 0.02 300);
---vibeui-dashboard-085-ahead:oklch(0.58 0.13 155);
---vibeui-dashboard-085-behind:oklch(0.57 0.19 25);
+--vibeui-dashboard-085-bg:transparent;
+/* Карточка отдела и жёлоб полосы: подложка самого блока прозрачна. */
+--vibeui-dashboard-085-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 300));
+--vibeui-dashboard-085-inset:light-dark(oklch(0.985 0.003 300),oklch(0.22 0.012 300));
+--vibeui-dashboard-085-fg:light-dark(oklch(0.21 0.014 300),oklch(0.94 0.005 300));
+--vibeui-dashboard-085-muted:light-dark(oklch(0.54 0.014 300),oklch(0.72 0.012 300));
+--vibeui-dashboard-085-border:light-dark(oklch(0.91 0.006 300),oklch(0.36 0.012 300));
+--vibeui-dashboard-085-accent:light-dark(oklch(0.51 0.16 300),oklch(0.74 0.14 300));
+--vibeui-dashboard-085-soft:light-dark(oklch(0.965 0.02 300),oklch(0.3 0.03 300));
+--vibeui-dashboard-085-ahead:light-dark(oklch(0.58 0.13 155),oklch(0.74 0.13 155));
+--vibeui-dashboard-085-behind:light-dark(oklch(0.57 0.19 25),oklch(0.72 0.16 25));
 --vibeui-dashboard-085-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -75,11 +96,11 @@ padding:0.1875rem 0.5rem;border-radius:0.4375rem;background:var(--vibeui-dashboa
 }
 [data-vibeui-block="dashboard-085"] [data-part="score"][data-state="behind"]{
 color:var(--vibeui-dashboard-085-behind);
-background:color-mix(in oklab,var(--vibeui-dashboard-085-behind) 10%,white);
+background:color-mix(in oklab,var(--vibeui-dashboard-085-behind) 12%,light-dark(white,black));
 }
 [data-vibeui-block="dashboard-085"] [data-part="score"][data-state="ahead"]{
 color:var(--vibeui-dashboard-085-ahead);
-background:color-mix(in oklab,var(--vibeui-dashboard-085-ahead) 12%,white);
+background:color-mix(in oklab,var(--vibeui-dashboard-085-ahead) 14%,light-dark(white,black));
 }
 [data-vibeui-block="dashboard-085"] [data-part="goals"]{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.5rem}
 [data-vibeui-block="dashboard-085"] [data-part="goal"]{display:grid;grid-template-columns:1fr;gap:0.1875rem 0.75rem}
@@ -96,7 +117,7 @@ margin-left:auto;font-size:0.75rem;font-weight:700;font-variant-numeric:tabular-
 [data-vibeui-block="dashboard-085"] [data-part="nums"] span{font-weight:400;color:var(--vibeui-dashboard-085-muted)}
 [data-vibeui-block="dashboard-085"] [data-part="track"]{
 position:relative;height:0.5rem;border-radius:9999px;
-background:var(--vibeui-dashboard-085-bg);
+background:var(--vibeui-dashboard-085-inset);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-085-border);
 }
 [data-vibeui-block="dashboard-085"] [data-part="fill"]{
@@ -191,6 +212,28 @@ const DEFAULT_DEPARTMENTS: Dashboard085Department[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Страница целей и KPI по отделам: у каждой цели полоса с засечкой «прошло
  * времени», вес цели числом, взвешенный итог в шапке отдела и комментарий
  * владельца под цифрой. Один файл, ноль зависимостей, клиентского JS нет.
@@ -201,13 +244,30 @@ export function Dashboard085({
   timeShare = 78,
   departments = DEFAULT_DEPARTMENTS,
   accent,
+  background = "",
+  scoreText = "{score} % цели квартала",
+  weightText = "вес {weight} %",
+  ofLabel = "из",
+  goalLabelText = "{name}: {current} из {target} {unit}",
+  paceText = "Прошло {share} % квартала",
+  lagText = "отстаёт от хода времени на {points} п. п.",
+  legendText = "Вертикальная засечка на полосе — доля прошедшего времени квартала. Заливка левее засечки означает отставание, правее — опережение. Итог отдела считается с учётом веса целей, а не как среднее.",
   className,
   style,
 }: Dashboard085Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-085-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-085-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const fill = (template: string, values: Record<string, string>) =>
+    template.replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match)
 
   return (
     <>
@@ -247,7 +307,7 @@ export function Dashboard085({
                   <h3>{department.name}</h3>
                   <span data-part="lead">{department.lead}</span>
                   <span data-part="score" data-state={state}>
-                    {Math.round(weighted)} % цели квартала
+                    {fill(scoreText, { score: String(Math.round(weighted)) })}
                   </span>
                 </div>
 
@@ -272,9 +332,16 @@ export function Dashboard085({
                       >
                         <p data-part="gname">
                           <b>{goal.name}</b>
-                          <span data-part="weight">вес {goal.weight} %</span>
+                          <span data-part="weight">
+                            {fill(weightText, {
+                              weight: String(goal.weight),
+                            })}
+                          </span>
                           <span data-part="nums">
-                            {goal.current} <span>из {goal.target}</span>{" "}
+                            {goal.current}{" "}
+                            <span>
+                              {ofLabel} {goal.target}
+                            </span>{" "}
                             {goal.unit}
                           </span>
                         </p>
@@ -285,7 +352,12 @@ export function Dashboard085({
                           aria-valuenow={goal.current}
                           aria-valuemin={0}
                           aria-valuemax={goal.target}
-                          aria-label={`${goal.name}: ${goal.current} из ${goal.target} ${goal.unit}`}
+                          aria-label={fill(goalLabelText, {
+                            name: goal.name,
+                            current: String(goal.current),
+                            target: String(goal.target),
+                            unit: goal.unit,
+                          })}
                         >
                           <span
                             data-part="fill"
@@ -294,7 +366,9 @@ export function Dashboard085({
                           <span
                             data-part="pace"
                             style={{ left: `${timeShare}%` }}
-                            title={`Прошло ${timeShare} % квартала`}
+                            title={fill(paceText, {
+                              share: String(timeShare),
+                            })}
                           />
                         </div>
 
@@ -303,8 +377,9 @@ export function Dashboard085({
                           <span>{goal.comment}</span>
                           {goalState === "behind" ? (
                             <span data-part="lag">
-                              отстаёт от хода времени на{" "}
-                              {Math.round(timeShare - share)} п. п.
+                              {fill(lagText, {
+                                points: String(Math.round(timeShare - share)),
+                              })}
                             </span>
                           ) : null}
                         </p>
@@ -316,11 +391,7 @@ export function Dashboard085({
             )
           })}
 
-          <p data-part="legend">
-            Вертикальная засечка на полосе — доля прошедшего времени квартала.
-            Заливка левее засечки означает отставание, правее — опережение. Итог
-            отдела считается с учётом веса целей, а не как среднее.
-          </p>
+          <p data-part="legend">{legendText}</p>
         </div>
       </section>
     </>

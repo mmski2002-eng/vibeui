@@ -13,7 +13,15 @@ export type Chart024Props = Omit<
   title?: string
   steps?: Chart024Step[]
   unit?: string
+  /** Подпись под графиком: {unit}. */
+  unitLabel?: string
+  /** Легенда: ключи up, down и total. */
+  keyText?: Record<string, string>
+  /** Накопленный итог в скрытой таблице: {total}. */
+  runningLabel?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: тот же мост между двумя итогами, что и в обычном
@@ -21,16 +29,19 @@ export type Chart024Props = Omit<
 // идёт сверху, а не сбоку, поэтому длинные подписи статей не сжимаются в
 // вертикальный текст. Уголковый коннектор ведёт от конца одной полосы
 // к началу следующей: без него накопленный итог не проследить взглядом.
+//
+// Тема берётся из color-scheme окружения через light-dark(): мост темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="chart-024"]){
---vibeui-chart-024-bg:oklch(1 0 0);
---vibeui-chart-024-fg:oklch(0.22 0.014 265);
---vibeui-chart-024-muted:oklch(0.55 0.014 265);
---vibeui-chart-024-border:oklch(0.91 0.006 265);
---vibeui-chart-024-grid:oklch(0.94 0.005 265);
---vibeui-chart-024-up:oklch(0.6 0.14 155);
---vibeui-chart-024-down:oklch(0.6 0.17 25);
---vibeui-chart-024-total:oklch(0.42 0.03 265);
+--vibeui-chart-024-bg:transparent;
+--vibeui-chart-024-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-024-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-024-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-chart-024-grid:light-dark(oklch(0.94 0.005 265),oklch(0.31 0.01 265));
+--vibeui-chart-024-up:light-dark(oklch(0.6 0.14 155),oklch(0.74 0.14 155));
+--vibeui-chart-024-down:light-dark(oklch(0.6 0.17 25),oklch(0.71 0.16 25));
+--vibeui-chart-024-total:light-dark(oklch(0.42 0.03 265),oklch(0.78 0.025 265));
 --vibeui-chart-024-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="chart-024"]{
@@ -98,6 +109,43 @@ function niceCeil(value: number) {
   return 10 * power
 }
 
+const KEY_TEXT: Record<string, string> = {
+  up: "приход",
+  down: "расход",
+  total: "итог",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+function fillTemplate(
+  template: string,
+  values: Record<string, string | number>,
+) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
 /**
  * Waterfall на боку: статьи бюджета строками, шкала сверху.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -106,7 +154,11 @@ export function Chart024({
   title = "Мост от остатка к остатку",
   steps = DEFAULT_STEPS,
   unit = "тысяч рублей",
+  unitLabel = "Единица измерения: {unit}",
+  keyText = KEY_TEXT,
+  runningLabel = "накопленный итог {total}",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -138,6 +190,12 @@ export function Chart024({
 
   const palette = {
     ...(accent ? { "--vibeui-chart-024-total": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-chart-024-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -216,18 +274,18 @@ export function Chart024({
         <ul data-part="key">
           <li>
             <span data-part="chip" data-kind="up" aria-hidden="true" />
-            приход
+            {keyText.up ?? KEY_TEXT.up}
           </li>
           <li>
             <span data-part="chip" data-kind="down" aria-hidden="true" />
-            расход
+            {keyText.down ?? KEY_TEXT.down}
           </li>
           <li>
             <span data-part="chip" data-kind="total" aria-hidden="true" />
-            итог
+            {keyText.total ?? KEY_TEXT.total}
           </li>
         </ul>
-        <p data-part="unit">Единица измерения: {unit}</p>
+        <p data-part="unit">{fillTemplate(unitLabel, { unit })}</p>
         <table data-part="data">
           <caption>
             {title}, {unit}
@@ -237,7 +295,7 @@ export function Chart024({
               <tr key={bar.step.label}>
                 <th scope="row">{bar.step.label}</th>
                 <td>{bar.step.value}</td>
-                <td>накопленный итог {bar.to}</td>
+                <td>{fillTemplate(runningLabel, { total: bar.to })}</td>
               </tr>
             ))}
           </tbody>

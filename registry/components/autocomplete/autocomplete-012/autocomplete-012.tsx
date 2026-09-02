@@ -15,7 +15,13 @@ export type Autocomplete012Props = Omit<
   placeholder?: string
   options?: string[]
   defaultValue?: string
+  /** Строка о найденном совпадении. {match} выделяется жирным. */
+  matchHint?: string
+  /** Строка, пока совпадения нет. */
+  idleHint?: string
   onChange?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,12 +32,12 @@ export type Autocomplete012Props = Omit<
 // ещё старое значение.
 const STYLES = `
 :where([data-vibeui-block="autocomplete-012"]){
---vibeui-autocomplete-012-bg:oklch(1 0 0);
---vibeui-autocomplete-012-fg:oklch(0.22 0.014 265);
---vibeui-autocomplete-012-muted:oklch(0.52 0.014 265);
---vibeui-autocomplete-012-border:oklch(0.9 0.006 265);
---vibeui-autocomplete-012-field:oklch(0.985 0.002 265);
---vibeui-autocomplete-012-accent:oklch(0.55 0.17 265);
+--vibeui-autocomplete-012-bg:transparent;
+--vibeui-autocomplete-012-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-autocomplete-012-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-autocomplete-012-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-autocomplete-012-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-autocomplete-012-radius:0.625rem;
 --vibeui-autocomplete-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -76,6 +82,28 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поле дописывает совпадение и выделяет хвост, как адресная строка.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -84,7 +112,10 @@ export function Autocomplete012({
   placeholder = "Начните вводить",
   options = DEFAULT_OPTIONS,
   defaultValue = "d",
+  matchHint = "Совпадение {match} — оно подставится с выделенным хвостом",
+  idleHint = "Поле дописывает совпадение и выделяет дописанное",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -104,6 +135,12 @@ export function Autocomplete012({
 
   const palette = {
     ...(accent ? { "--vibeui-autocomplete-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-autocomplete-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -131,6 +168,7 @@ export function Autocomplete012({
   const rest = options.find(
     (option) => value && option.toLowerCase().startsWith(value.toLowerCase()),
   )
+  const [beforeMatch, afterMatch = ""] = matchHint.split("{match}")
 
   return (
     <>
@@ -158,10 +196,12 @@ export function Autocomplete012({
         <span data-part="hint">
           {rest ? (
             <>
-              Совпадение <b>{rest}</b> — оно подставится с выделенным хвостом
+              {beforeMatch}
+              <b>{rest}</b>
+              {afterMatch}
             </>
           ) : (
-            "Поле дописывает совпадение и выделяет дописанное"
+            idleHint
           )}
         </span>
       </div>

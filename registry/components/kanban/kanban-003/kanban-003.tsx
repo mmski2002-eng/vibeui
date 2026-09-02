@@ -24,7 +24,12 @@ export type Kanban003Props = Omit<
   cards?: Kanban003Card[]
   today?: string
   onChange?: (cards: Kanban003Card[]) => void
+  /** Подписи и объявления: шаблоны с {title}, {assignee}, {due}, {name}. */
+  text?: Record<string, string>
+  /** Пусто — подложки нет, доска лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
+  late?: string
 }
 
 // Идея компонента: карточка, которая отвечает на два вопроса до открытия — кто
@@ -35,15 +40,19 @@ export type Kanban003Props = Omit<
 // Просроченный срок помечен словом и знаком, а не только красным цветом.
 // Перенос: мышью — drag, с клавиатуры — стрелки влево и вправо на самой
 // карточке, результат объявляется в живой области.
+//
+// Тема берётся из color-scheme окружения через light-dark(): доска темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="kanban-003"]){
---vibeui-kanban-003-bg:oklch(0.985 0.002 265);
---vibeui-kanban-003-card:oklch(1 0 0);
---vibeui-kanban-003-fg:oklch(0.24 0.014 265);
---vibeui-kanban-003-muted:oklch(0.56 0.014 265);
---vibeui-kanban-003-border:oklch(0.91 0.006 265);
---vibeui-kanban-003-accent:oklch(0.55 0.2 262);
---vibeui-kanban-003-late:oklch(0.58 0.19 27);
+--vibeui-kanban-003-bg:transparent;
+--vibeui-kanban-003-card:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-kanban-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-kanban-003-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-kanban-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-kanban-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.15 262));
+--vibeui-kanban-003-late:light-dark(oklch(0.58 0.19 27),oklch(0.74 0.16 27));
+--vibeui-kanban-003-shadow:light-dark(oklch(0.2 0.02 265 / 6%),oklch(0 0 0 / 32%));
 --vibeui-kanban-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="kanban-003"]{
@@ -74,7 +83,7 @@ color:var(--vibeui-kanban-003-muted);font-size:0.6875rem;font-variant-numeric:ta
 display:grid;gap:0.5rem;padding:0.5rem;border-radius:0.625rem;cursor:grab;
 background:var(--vibeui-kanban-003-card);
 border:1px solid var(--vibeui-kanban-003-border);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 6%);
+box-shadow:0 1px 2px var(--vibeui-kanban-003-shadow);
 font-size:0.75rem;line-height:1.35;
 }
 /* Карточка сама принимает фокус: перенос стрелками не требует лишних кнопок. */
@@ -163,6 +172,44 @@ function shortDate(value: string) {
   return `${day}.${month}`
 }
 
+const DEFAULT_TEXT: Record<string, string> = {
+  moved: "«{title}» перенесена в «{name}».",
+  edge: "«{title}» уже в крайней колонке «{name}».",
+  card: "{title}. Исполнитель {assignee}. Срок {due}{overdue}. Колонка «{name}». Стрелки влево и вправо переносят карточку.",
+  overdue: ", просрочен",
+  due: "до",
+  late: "просрочен",
+}
+
+/** Подстановка значений в шаблон подписи. */
+function fill(template: string, values: Record<string, string>) {
+  return template.replace(/\{(\w+)\}/g, (whole, key: string) =>
+    key in values ? values[key] : whole,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Доска, где карточка называет исполнителя и срок; просрочка помечена словом.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -172,11 +219,15 @@ export function Kanban003({
   cards = DEFAULT_CARDS,
   today = "2026-03-18",
   onChange,
+  text,
+  background = "",
   accent,
+  late,
   className,
   style,
   ...props
 }: Kanban003Props) {
+  const labels = { ...DEFAULT_TEXT, ...text }
   const [board, setBoard] = useState(cards)
   const [dragged, setDragged] = useState<string | null>(null)
   const [over, setOver] = useState<string | null>(null)
@@ -189,7 +240,7 @@ export function Kanban003({
     const next = board.map((row) => (row.id === id ? { ...row, column } : row))
     setBoard(next)
     onChange?.(next)
-    setAnnouncement(`«${card.title}» перенесена в «${column}».`)
+    setAnnouncement(fill(labels.moved, { title: card.title, name: column }))
   }
 
   const shift = (id: string, step: -1 | 1) => {
@@ -199,7 +250,9 @@ export function Kanban003({
     const target = columns[columns.indexOf(card.column) + step]
 
     if (!target) {
-      setAnnouncement(`«${card.title}» уже в крайней колонке «${card.column}».`)
+      setAnnouncement(
+        fill(labels.edge, { title: card.title, name: card.column }),
+      )
       return
     }
 
@@ -221,6 +274,13 @@ export function Kanban003({
 
   const palette = {
     ...(accent ? { "--vibeui-kanban-003-accent": accent } : null),
+    ...(late ? { "--vibeui-kanban-003-late": late } : null),
+    ...(background
+      ? {
+          "--vibeui-kanban-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -257,17 +317,23 @@ export function Kanban003({
               </p>
               <ul>
                 {rows.map((card) => {
-                  const late = card.due < today
+                  const overdue = card.due < today
 
                   return (
                     <li key={card.id}>
                       <article
                         data-part="card"
                         data-dragging={card.id === dragged}
-                        data-late={late}
+                        data-late={overdue}
                         draggable
                         tabIndex={0}
-                        aria-label={`${card.title}. Исполнитель ${card.assignee}. Срок ${shortDate(card.due)}${late ? ", просрочен" : ""}. Колонка «${column}». Стрелки влево и вправо переносят карточку.`}
+                        aria-label={fill(labels.card, {
+                          title: card.title,
+                          assignee: card.assignee,
+                          due: shortDate(card.due),
+                          overdue: overdue ? labels.overdue : "",
+                          name: column,
+                        })}
                         style={
                           {
                             "--vibeui-kanban-003-hue": `oklch(0.62 0.16 ${hue(card.assignee)})`,
@@ -286,7 +352,8 @@ export function Kanban003({
                             {initials(card.assignee)}
                           </span>
                           <span data-part="due" aria-hidden="true">
-                            {late ? "просрочен" : "до"} {shortDate(card.due)}
+                            {overdue ? labels.late : labels.due}{" "}
+                            {shortDate(card.due)}
                           </span>
                         </span>
                       </article>

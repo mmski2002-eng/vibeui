@@ -8,6 +8,10 @@ export type Tooltip009Props = Omit<
   /** Задержка появления в секундах: защита от случайного пролёта курсора. */
   delay?: number
   labels?: string[]
+  /** Пояснение под строкой кнопок: {delay} подставляется числом. */
+  note?: string
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: подсказка появляется с задержкой, а прячется мгновенно.
@@ -15,12 +19,13 @@ export type Tooltip009Props = Omit<
 // поэтому пролёт курсора по строке кнопок не устраивает мигание подсказок.
 const STYLES = `
 :where([data-vibeui-block="tooltip-009"]){
---vibeui-tooltip-009-bg:oklch(1 0 0);
---vibeui-tooltip-009-fg:oklch(0.25 0.014 265);
---vibeui-tooltip-009-muted:oklch(0.55 0.014 265);
---vibeui-tooltip-009-border:oklch(0.9 0.006 265);
---vibeui-tooltip-009-tip:oklch(0.24 0.014 265);
---vibeui-tooltip-009-accent:oklch(0.57 0.17 265);
+--vibeui-tooltip-009-bg:transparent;
+--vibeui-tooltip-009-fg:light-dark(oklch(0.25 0.014 265),oklch(0.93 0.005 265));
+--vibeui-tooltip-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-tooltip-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-tooltip-009-face:light-dark(oklch(0.98 0.003 265),oklch(0.29 0.012 265));
+--vibeui-tooltip-009-tip:light-dark(oklch(0.24 0.014 265),oklch(0.36 0.014 265));
+--vibeui-tooltip-009-accent:light-dark(oklch(0.57 0.17 265),oklch(0.72 0.16 265));
 --vibeui-tooltip-009-delay:0.5s;
 --vibeui-tooltip-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -38,7 +43,7 @@ font-family:var(--vibeui-tooltip-009-font);
 appearance:none;cursor:pointer;
 height:2.125rem;padding:0 0.8125rem;border-radius:0.625rem;
 border:1px solid var(--vibeui-tooltip-009-border);
-background:oklch(0.98 0.003 265);color:inherit;
+background:var(--vibeui-tooltip-009-face);color:inherit;
 font:inherit;font-size:0.8125rem;font-weight:620;
 }
 [data-vibeui-block="tooltip-009"] [data-part="button"]:focus-visible{outline:2px solid var(--vibeui-tooltip-009-accent);outline-offset:2px}
@@ -74,6 +79,28 @@ margin:0;font-size:0.75rem;line-height:1.5;color:var(--vibeui-tooltip-009-muted)
 const DEFAULT_LABELS = ["Копировать", "Дублировать", "Архивировать"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подсказка с задержкой появления и мгновенным скрытием.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -81,12 +108,21 @@ export function Tooltip009({
   tip = "Действие над выбранной строкой",
   delay = 0.5,
   labels = DEFAULT_LABELS,
+  note = "Задержка появления — {delay} с. Проведите курсором по строке: подсказки не мигают, потому что скрытие происходит без задержки.",
+  background = "",
   className,
   style,
   ...props
 }: Tooltip009Props) {
+  const [noteBefore, noteAfter] = note.split("{delay}")
   const palette = {
     "--vibeui-tooltip-009-delay": `${delay}s`,
+    ...(background
+      ? {
+          "--vibeui-tooltip-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -122,9 +158,9 @@ export function Tooltip009({
           ))}
         </div>
         <p data-part="note">
-          Задержка появления — <b>{delay}&nbsp;с</b>. Проведите курсором по
-          строке: подсказки не мигают, потому что скрытие происходит без
-          задержки.
+          {noteBefore}
+          <b>{delay}</b>
+          {noteAfter}
         </p>
       </div>
     </>

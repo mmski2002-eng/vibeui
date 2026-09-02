@@ -13,19 +13,27 @@ export type Alert010Props = Omit<
   "title" | "children"
 > & {
   title?: string
+  /** Заголовок по числу ошибок: {count} заменяется количеством. */
+  titleTemplate?: string
   issues?: Alert010Issue[]
+  /** Пусто — подложки нет, сводка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: сводка ошибок формы над кнопкой отправки. Каждая строка —
 // ссылка на поле: в длинной форме искать глазами то самое поле дороже, чем
 // щёлкнуть. Заголовок называет число, потому что «исправьте ошибки» без
 // количества не говорит, сколько работы впереди.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сводка темнеет
+// вместе с формой и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-010"]){
---vibeui-alert-010-fg:oklch(0.24 0.016 265);
---vibeui-alert-010-muted:oklch(0.5 0.014 265);
---vibeui-alert-010-bg:oklch(1 0 0);
---vibeui-alert-010-danger:oklch(0.56 0.19 25);
+--vibeui-alert-010-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-alert-010-muted:light-dark(oklch(0.5 0.014 265),oklch(0.74 0.012 265));
+--vibeui-alert-010-bg:transparent;
+--vibeui-alert-010-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25));
+--vibeui-alert-010-danger-fg:light-dark(oklch(0.99 0.01 25),oklch(0.19 0.04 25));
 --vibeui-alert-010-radius:0.75rem;
 --vibeui-alert-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -41,7 +49,7 @@ color:var(--vibeui-alert-010-fg);font-family:var(--vibeui-alert-010-font);
 [data-vibeui-block="alert-010"] [data-part="icon"]{
 display:flex;align-items:center;justify-content:center;flex:none;
 width:1.375rem;height:1.375rem;margin-top:0.0625rem;border-radius:9999px;
-background:var(--vibeui-alert-010-danger);color:oklch(0.99 0.01 25);
+background:var(--vibeui-alert-010-danger);color:var(--vibeui-alert-010-danger-fg);
 font-size:0.75rem;font-weight:800;line-height:1;
 }
 [data-vibeui-block="alert-010"] [data-part="text"]{display:flex;flex-direction:column;gap:0.4375rem;flex:1 1 auto;min-width:0}
@@ -80,17 +88,51 @@ const DEFAULT_ISSUES: Alert010Issue[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сводка ошибок формы: число в заголовке, строки-ссылки на поля.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Alert010({
   title,
+  titleTemplate = "Не удалось сохранить: ошибок — {count}",
   issues = DEFAULT_ISSUES,
+  background = "",
   className,
   style,
   ...props
 }: Alert010Props) {
-  const heading = title ?? `Не удалось сохранить: ошибок — ${issues.length}`
+  const heading =
+    title ?? titleTemplate.replace("{count}", String(issues.length))
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-alert-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -102,7 +144,7 @@ export function Alert010({
         data-vibeui-block="alert-010"
         role="alert"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="icon" aria-hidden="true">
           !

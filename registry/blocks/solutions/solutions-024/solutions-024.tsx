@@ -23,7 +23,21 @@ export type Solutions024Props = {
   segments?: Solutions024Segment[]
   subscribers?: Solutions024Subscriber[]
   overlapNote?: string
+  /** Подпись полосы сегмента, {name} — его название. */
+  shareLabelText?: string
+  /** Строка под полосой: {share} и {open} — проценты. */
+  openText?: string
+  /** Заголовок таблицы подписок. */
+  recentTitle?: string
+  /** Шапка таблицы: ключи email, segment, source, joined. */
+  columnText?: Record<string, string>
+  /** Пометка неподтверждённого адреса. */
+  pendingLabel?: string
+  /** Локаль для разрядов в числах. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -39,13 +53,13 @@ export type Solutions024Props = {
 // в общем счётчике её видеть опасно.
 const STYLES = `
 :where([data-vibeui-block="solutions-024"]){
---vibeui-solutions-024-bg:oklch(1 0 0);
---vibeui-solutions-024-panel:oklch(0.975 0.004 160);
---vibeui-solutions-024-fg:oklch(0.21 0.014 170);
---vibeui-solutions-024-muted:oklch(0.53 0.013 170);
---vibeui-solutions-024-border:oklch(0.9 0.006 170);
---vibeui-solutions-024-accent:oklch(0.53 0.14 170);
---vibeui-solutions-024-pending:oklch(0.65 0.16 55);
+--vibeui-solutions-024-bg:transparent;
+--vibeui-solutions-024-panel:light-dark(oklch(0.975 0.004 160),oklch(0.27 0.012 170));
+--vibeui-solutions-024-fg:light-dark(oklch(0.21 0.014 170),oklch(0.94 0.005 170));
+--vibeui-solutions-024-muted:light-dark(oklch(0.53 0.013 170),oklch(0.7 0.012 170));
+--vibeui-solutions-024-border:light-dark(oklch(0.9 0.006 170),oklch(0.36 0.012 170));
+--vibeui-solutions-024-accent:light-dark(oklch(0.53 0.14 170),oklch(0.74 0.13 170));
+--vibeui-solutions-024-pending:light-dark(oklch(0.65 0.16 55),oklch(0.62 0.15 55));
 --vibeui-solutions-024-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-024-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -204,6 +218,35 @@ const DEFAULT_SUBSCRIBERS: Solutions024Subscriber[] = [
   },
 ]
 
+const DEFAULT_COLUMN_TEXT: Record<string, string> = {
+  email: "Почта",
+  segment: "Сегмент",
+  source: "Источник",
+  joined: "Дата",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * База рассылки по сегментам: у каждого сегмента правило, доли пересекаются.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -216,12 +259,25 @@ export function Solutions024({
   segments = DEFAULT_SEGMENTS,
   subscribers = DEFAULT_SUBSCRIBERS,
   overlapNote = "Сумма сегментов больше базы: покупатель одновременно может быть активным читателем. Для рассылки выбирайте сегменты с явным исключением, иначе один человек получит письмо дважды.",
+  shareLabelText = "Доля сегмента «{name}» от базы",
+  openText = "{share}% базы · открываемость {open}%",
+  recentTitle = "Последние подписки",
+  columnText = DEFAULT_COLUMN_TEXT,
+  pendingLabel = "не подтверждён",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions024Props) {
   const palette = {
     ...(accent ? { "--vibeui-solutions-024-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-024-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -242,7 +298,7 @@ export function Solutions024({
             <p data-part="hint">{hint}</p>
           </div>
           <p data-part="base">
-            {baseSize.toLocaleString("ru-RU")}
+            {baseSize.toLocaleString(locale)}
             <span data-part="growth">{growth}</span>
           </p>
         </header>
@@ -256,7 +312,7 @@ export function Solutions024({
                   <span data-part="rule">{segment.rule}</span>
                 </span>
                 <span data-part="people">
-                  {segment.people.toLocaleString("ru-RU")}
+                  {segment.people.toLocaleString(locale)}
                 </span>
               </p>
               <div
@@ -265,7 +321,7 @@ export function Solutions024({
                 aria-valuenow={segment.people}
                 aria-valuemin={0}
                 aria-valuemax={baseSize}
-                aria-label={`Доля сегмента «${segment.name}» от базы`}
+                aria-label={shareLabelText.replace("{name}", segment.name)}
               >
                 <span
                   data-part="fill"
@@ -275,8 +331,12 @@ export function Solutions024({
                 />
               </div>
               <span data-part="open">
-                {Math.round((segment.people / baseSize) * 100)}% базы ·
-                открываемость {segment.openRate}%
+                {openText
+                  .replace(
+                    "{share}",
+                    String(Math.round((segment.people / baseSize) * 100)),
+                  )
+                  .replace("{open}", String(segment.openRate))}
               </span>
             </li>
           ))}
@@ -284,14 +344,15 @@ export function Solutions024({
 
         <p data-part="overlap">{overlapNote}</p>
 
-        <h3>Последние подписки</h3>
+        <h3>{recentTitle}</h3>
         <table>
           <thead>
             <tr>
-              <th scope="col">Почта</th>
-              <th scope="col">Сегмент</th>
-              <th scope="col">Источник</th>
-              <th scope="col">Дата</th>
+              {["email", "segment", "source", "joined"].map((column) => (
+                <th scope="col" key={column}>
+                  {columnText[column] ?? DEFAULT_COLUMN_TEXT[column]}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
@@ -300,7 +361,7 @@ export function Solutions024({
                 <td>
                   <span data-part="email">{subscriber.email}</span>
                   {subscriber.confirmed === false ? (
-                    <span data-part="pending">не подтверждён</span>
+                    <span data-part="pending">{pendingLabel}</span>
                   ) : null}
                 </td>
                 <td>

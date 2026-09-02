@@ -12,7 +12,12 @@ export type Inputgroup002Props = Omit<
   name?: string
   label?: string
   countries?: Inputgroup002Country[]
+  /** Подпись списка кодов для чтения вслух. */
+  codeLabel?: string
+  placeholder?: string
   hint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,16 +27,19 @@ export type Inputgroup002Props = Omit<
 // Ширина select не резиновая: она задана в ch, чтобы номер не прыгал при
 // смене страны. Код и номер уходят двумя полями формы — склеивать их должен
 // сервер, он же знает формат.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-002"]){
---vibeui-inputgroup-002-surface:oklch(1 0 0);
---vibeui-inputgroup-002-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-002-fg:oklch(0.23 0.014 265);
---vibeui-inputgroup-002-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-002-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-002-fixed:oklch(0.965 0.003 265);
---vibeui-inputgroup-002-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-002-accent:oklch(0.53 0.16 200);
+--vibeui-inputgroup-002-surface:transparent;
+--vibeui-inputgroup-002-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-inputgroup-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-inputgroup-002-field:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.013 265));
+--vibeui-inputgroup-002-fixed:light-dark(oklch(0.965 0.003 265),oklch(0.32 0.012 265));
+--vibeui-inputgroup-002-border:light-dark(oklch(0.86 0.008 265),oklch(0.44 0.013 265));
+--vibeui-inputgroup-002-accent:light-dark(oklch(0.53 0.16 200),oklch(0.74 0.14 200));
 --vibeui-inputgroup-002-radius:0.75rem;
 --vibeui-inputgroup-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -90,6 +98,28 @@ const COUNTRIES: Inputgroup002Country[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сцепка «код страны + номер»: нативный select слева, номер справа, рамка одна.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -97,7 +127,10 @@ export function Inputgroup002({
   name = "phone",
   label = "Телефон для связи",
   countries = COUNTRIES,
+  codeLabel = "Код страны",
+  placeholder = "999 000-00-00",
   hint = "Код страны и номер уходят двумя полями — склеит их сервер.",
+  background = "",
   accent,
   className,
   style,
@@ -105,6 +138,12 @@ export function Inputgroup002({
 }: Inputgroup002Props) {
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-002-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -123,7 +162,7 @@ export function Inputgroup002({
         <div data-part="group">
           <select
             name={`${name}-code`}
-            aria-label="Код страны"
+            aria-label={codeLabel}
             defaultValue={countries[0]?.code}
           >
             {countries.map((country) => (
@@ -138,7 +177,7 @@ export function Inputgroup002({
             type="tel"
             inputMode="tel"
             autoComplete="tel-national"
-            placeholder="999 000-00-00"
+            placeholder={placeholder}
             aria-describedby={`${name}-hint`}
           />
         </div>

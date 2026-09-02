@@ -22,7 +22,13 @@ export type Combobox012Props = Omit<
   placeholder?: string
   options?: Combobox012Option[]
   submitLabel?: string
+  /** Строка отправленного. {name} — имя поля, {value} — ушедший код. */
+  payloadText?: string
+  /** Строка под формой, пока ничего не отправлено. */
+  idleText?: string
   onSubmitValue?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -33,13 +39,14 @@ export type Combobox012Props = Omit<
 // нельзя.
 const STYLES = `
 :where([data-vibeui-block="combobox-012"]){
---vibeui-combobox-012-bg:oklch(1 0 0);
---vibeui-combobox-012-fg:oklch(0.23 0.02 130);
---vibeui-combobox-012-muted:oklch(0.53 0.02 130);
---vibeui-combobox-012-border:oklch(0.9 0.01 130);
---vibeui-combobox-012-field:oklch(0.985 0.005 130);
---vibeui-combobox-012-active:oklch(0.95 0.04 130);
---vibeui-combobox-012-accent:oklch(0.48 0.12 130);
+--vibeui-combobox-012-bg:transparent;
+--vibeui-combobox-012-fg:light-dark(oklch(0.23 0.02 130),oklch(0.94 0.008 130));
+--vibeui-combobox-012-muted:light-dark(oklch(0.53 0.02 130),oklch(0.71 0.016 130));
+--vibeui-combobox-012-border:light-dark(oklch(0.9 0.01 130),oklch(0.38 0.016 130));
+--vibeui-combobox-012-field:light-dark(oklch(0.985 0.005 130),oklch(0.3 0.014 130));
+--vibeui-combobox-012-active:light-dark(oklch(0.95 0.04 130),oklch(0.37 0.045 130));
+--vibeui-combobox-012-accent:light-dark(oklch(0.48 0.12 130),oklch(0.75 0.14 130));
+--vibeui-combobox-012-onaccent:light-dark(oklch(1 0 0),oklch(0.2 0.03 130));
 --vibeui-combobox-012-radius:0.625rem;
 --vibeui-combobox-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-combobox-012-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -82,7 +89,7 @@ color:var(--vibeui-combobox-012-muted);
 [data-vibeui-block="combobox-012"] [data-part="submit"]{
 appearance:none;border:0;cursor:pointer;
 height:2.25rem;padding:0 1rem;border-radius:var(--vibeui-combobox-012-radius);
-background:var(--vibeui-combobox-012-accent);color:oklch(1 0 0);
+background:var(--vibeui-combobox-012-accent);color:var(--vibeui-combobox-012-onaccent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 transition:filter .16s ease;
 }
@@ -109,6 +116,28 @@ const DEFAULT_OPTIONS: Combobox012Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая плашка иначе досталась бы тексту
+ * тёмной ветки, потому что light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox в форме: видимая подпись и скрытый input с настоящим name,
  * поэтому форма отправляется обычным submit и попадает в FormData.
  */
@@ -118,7 +147,10 @@ export function Combobox012({
   placeholder = "Найти способ",
   options = DEFAULT_OPTIONS,
   submitLabel = "Отправить",
+  payloadText = "FormData: {name}={value}",
+  idleText = "Форма ещё не отправлена",
   onSubmitValue,
+  background = "",
   accent,
   className,
   style,
@@ -141,6 +173,12 @@ export function Combobox012({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -251,7 +289,9 @@ export function Combobox012({
           </span>
         </div>
         <p data-part="payload" aria-live="polite">
-          {sent ? `FormData: ${name}=${sent}` : "Форма ещё не отправлена"}
+          {sent
+            ? payloadText.replace("{name}", name).replace("{value}", sent)
+            : idleText}
         </p>
       </form>
     </>

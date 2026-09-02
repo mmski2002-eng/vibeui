@@ -14,7 +14,11 @@ export type Ai003Props = {
   steps?: Ai003Step[]
   approveLabel?: string
   stopLabel?: string
+  /** Подпись раскрывающегося лога шага. */
+  detailsLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -29,15 +33,17 @@ export type Ai003Props = {
 // и оформлена нейтрально: она нужна в момент сомнения, а не для украшения.
 const STYLES = `
 :where([data-vibeui-block="ai-003"]){
---vibeui-ai-003-bg:oklch(1 0 0);
---vibeui-ai-003-fg:oklch(0.22 0.014 265);
---vibeui-ai-003-muted:oklch(0.55 0.014 265);
---vibeui-ai-003-border:oklch(0.91 0.006 265);
---vibeui-ai-003-line:oklch(0.9 0.006 265);
---vibeui-ai-003-code:oklch(0.97 0.003 265);
---vibeui-ai-003-accent:oklch(0.55 0.2 262);
---vibeui-ai-003-done:oklch(0.58 0.14 152);
---vibeui-ai-003-fail:oklch(0.57 0.19 25);
+--vibeui-ai-003-bg:transparent;
+--vibeui-ai-003-knockout:light-dark(oklch(1 0 0),oklch(0.19 0.011 265));
+--vibeui-ai-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-ai-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-ai-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-ai-003-line:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.011 265));
+--vibeui-ai-003-code:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.011 265));
+--vibeui-ai-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-ai-003-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-ai-003-done:light-dark(oklch(0.58 0.14 152),oklch(0.62 0.14 152));
+--vibeui-ai-003-fail:light-dark(oklch(0.57 0.19 25),oklch(0.63 0.18 25));
 --vibeui-ai-003-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-ai-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -63,7 +69,7 @@ border-left:2px solid var(--vibeui-ai-003-line);
 position:absolute;left:-0.4375rem;top:0.125rem;
 display:inline-flex;align-items:center;justify-content:center;
 width:0.75rem;height:0.75rem;border-radius:9999px;
-background:var(--vibeui-ai-003-bg);
+background:var(--vibeui-ai-003-knockout);
 box-shadow:inset 0 0 0 2px var(--vibeui-ai-003-line);
 font-size:0.5rem;line-height:1;color:oklch(1 0 0);
 }
@@ -103,7 +109,7 @@ white-space:pre-wrap;overflow-wrap:anywhere;
 appearance:none;cursor:pointer;height:2.125rem;padding:0 0.875rem;
 border-radius:0.625rem;font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="ai-003"] [data-part="approve"]{border:0;background:var(--vibeui-ai-003-accent);color:oklch(1 0 0)}
+[data-vibeui-block="ai-003"] [data-part="approve"]{border:0;background:var(--vibeui-ai-003-accent);color:var(--vibeui-ai-003-on-accent)}
 /* Остановка нейтральна: она нужна в момент сомнения, а не для украшения. */
 [data-vibeui-block="ai-003"] [data-part="stop"]{
 border:1px solid var(--vibeui-ai-003-border);background:none;color:inherit;
@@ -145,6 +151,28 @@ const DEFAULT_STEPS: Ai003Step[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Лента шагов агента: состояние формой значка, подробности в details.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -154,12 +182,22 @@ export function Ai003({
   steps = DEFAULT_STEPS,
   approveLabel = "Продолжить",
   stopLabel = "Остановить",
+  detailsLabel = "Подробности",
   accent,
+  background = "",
   className,
   style,
 }: Ai003Props) {
+  // Значок шага затирает линию собой, поэтому подложка задаётся вместе с фоном.
   const palette = {
     ...(accent ? { "--vibeui-ai-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-ai-003-bg": background,
+          "--vibeui-ai-003-knockout": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -190,7 +228,7 @@ export function Ai003({
                 <details>
                   <summary>
                     <span data-part="caret" aria-hidden="true" />
-                    Подробности
+                    {detailsLabel}
                   </summary>
                   <pre>{step.log.join("\n")}</pre>
                 </details>

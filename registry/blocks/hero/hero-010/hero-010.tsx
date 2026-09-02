@@ -9,6 +9,8 @@ export type Hero010Props = {
   bullets?: string[]
   imageCaption?: string
   accent?: string
+  /** Пусто — подложки нет, секция ложится на фон страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -20,12 +22,12 @@ export type Hero010Props = {
 // прижат к внутреннему краю, а не отцентрован: взгляд идёт по вертикали.
 const STYLES = `
 :where([data-vibeui-block="hero-010"]){
---vibeui-hero-010-bg:oklch(0.98 0.006 240);
---vibeui-hero-010-fg:oklch(0.2 0.014 240);
---vibeui-hero-010-muted:oklch(0.5 0.014 240);
---vibeui-hero-010-line:oklch(0.89 0.008 240);
---vibeui-hero-010-accent:oklch(0.55 0.16 232);
---vibeui-hero-010-accent-fg:oklch(0.99 0 0);
+--vibeui-hero-010-bg:transparent;
+--vibeui-hero-010-fg:light-dark(oklch(0.2 0.014 240),oklch(0.95 0.006 240));
+--vibeui-hero-010-muted:light-dark(oklch(0.5 0.014 240),oklch(0.73 0.012 240));
+--vibeui-hero-010-line:light-dark(oklch(0.89 0.008 240),oklch(0.37 0.011 240));
+--vibeui-hero-010-accent:light-dark(oklch(0.55 0.16 232),oklch(0.74 0.14 232));
+--vibeui-hero-010-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 232));
 --vibeui-hero-010-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -104,6 +106,28 @@ const DEFAULT_BULLETS = [
   "Работает без вашей темы и без Tailwind",
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлый фон достался бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Hero пополам: текст в левой половине, изображение во всю высоту в правой. */
 export function Hero010({
   eyebrow = "Дизайн-система без дизайнера",
@@ -114,11 +138,18 @@ export function Hero010({
   bullets = DEFAULT_BULLETS,
   imageCaption = "Место под ваш кадр",
   accent,
+  background = "",
   className,
   style,
 }: Hero010Props) {
   const palette = {
     ...(accent ? { "--vibeui-hero-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-hero-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

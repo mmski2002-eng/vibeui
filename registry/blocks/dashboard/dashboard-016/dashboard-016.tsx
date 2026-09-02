@@ -21,7 +21,15 @@ export type Dashboard016Props = {
   activeFilter?: string
   columns?: Dashboard016Column[]
   addLabel?: string
+  /** Слова приоритета: компонент несёт русские, проект подставляет свои. */
+  priorityText?: Record<string, string>
+  /** Текст пустой колонки. */
+  emptyText?: string
+  /** Шаблон срока: {due}. */
+  dueText?: string
   accent?: string
+  /** Подложка доски; пусто — цвет из палитры блока. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -36,15 +44,16 @@ export type Dashboard016Props = {
 // переполнение было видно до прокрутки.
 const STYLES = `
 :where([data-vibeui-block="dashboard-016"]){
---vibeui-dashboard-016-bg:oklch(0.985 0.003 265);
---vibeui-dashboard-016-card:oklch(1 0 0);
---vibeui-dashboard-016-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-016-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-016-border:oklch(0.91 0.006 265);
---vibeui-dashboard-016-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-016-high:oklch(0.58 0.18 25);
---vibeui-dashboard-016-normal:oklch(0.68 0.14 75);
---vibeui-dashboard-016-low:oklch(0.72 0.04 265);
+--vibeui-dashboard-016-bg:light-dark(oklch(0.985 0.003 265),oklch(0.21 0.012 265));
+--vibeui-dashboard-016-card:light-dark(oklch(1 0 0),oklch(0.26 0.013 265));
+--vibeui-dashboard-016-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-016-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-dashboard-016-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-016-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.15 262));
+--vibeui-dashboard-016-high:light-dark(oklch(0.58 0.18 25),oklch(0.72 0.16 25));
+--vibeui-dashboard-016-normal:light-dark(oklch(0.68 0.14 75),oklch(0.78 0.13 75));
+--vibeui-dashboard-016-low:light-dark(oklch(0.72 0.04 265),oklch(0.5 0.03 265));
+--vibeui-dashboard-016-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
 --vibeui-dashboard-016-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -76,7 +85,7 @@ no-repeat right 0.5rem center/0.625rem;
 [data-vibeui-block="dashboard-016"] [data-part="add"]{
 appearance:none;border:0;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:650;
 padding:0.4375rem 0.75rem;border-radius:0.5rem;
-background:var(--vibeui-dashboard-016-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-016-accent);color:var(--vibeui-dashboard-016-on-accent);
 }
 [data-vibeui-block="dashboard-016"] [data-part="add"]:focus-visible,
 [data-vibeui-block="dashboard-016"] select:focus-visible{
@@ -192,7 +201,33 @@ const DEFAULT_COLUMNS: Dashboard016Column[] = [
   { title: "Готово", tasks: [] },
 ]
 
-const PRIORITY_WORD = { low: "низкий", normal: "обычный", high: "срочно" }
+const PRIORITY_WORD: Record<string, string> = {
+  low: "низкий",
+  normal: "обычный",
+  high: "срочно",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Доска задач: колонки в горизонтальной прокрутке, приоритет полосой и словом.
@@ -205,12 +240,22 @@ export function Dashboard016({
   activeFilter = "Все",
   columns = DEFAULT_COLUMNS,
   addLabel = "Новая задача",
+  priorityText = PRIORITY_WORD,
+  emptyText = "Пусто — перетащите сюда задачу",
+  dueText = "до {due}",
   accent,
+  background = "",
   className,
   style,
 }: Dashboard016Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -253,7 +298,7 @@ export function Dashboard016({
                   <span data-part="count">{column.tasks.length}</span>
                 </header>
                 {column.tasks.length === 0 ? (
-                  <p data-part="empty">Пусто — перетащите сюда задачу</p>
+                  <p data-part="empty">{emptyText}</p>
                 ) : (
                   <ul>
                     {column.tasks.map((task) => (
@@ -268,9 +313,12 @@ export function Dashboard016({
                             <span data-part="tag">{task.tag}</span>
                           ) : null}
                           {task.assignee ? <span>{task.assignee}</span> : null}
-                          {task.due ? <span>до {task.due}</span> : null}
+                          {task.due ? (
+                            <span>{dueText.replace("{due}", task.due)}</span>
+                          ) : null}
                           <span data-part="prio">
-                            {PRIORITY_WORD[task.priority ?? "low"]}
+                            {priorityText[task.priority ?? "low"] ??
+                              PRIORITY_WORD[task.priority ?? "low"]}
                           </span>
                         </p>
                       </li>

@@ -12,7 +12,12 @@ export type Buttongroup044Props = Omit<
   max?: number
   unit?: string
   label?: string
+  /** Имена кнопок шага: голые значки своего имени не имеют. */
+  decreaseLabel?: string
+  increaseLabel?: string
   onChange?: (quantity: number) => void
+  /** Пусто — заливки нет, счётчик ложится на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,11 +30,12 @@ export type Buttongroup044Props = Omit<
 // в поле с максимумом 20 было бы невозможно — «1» уже упёрлось бы в минимум.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-044"]){
---vibeui-buttongroup-044-surface:oklch(1 0 0);
---vibeui-buttongroup-044-fg:oklch(0.24 0.016 265);
---vibeui-buttongroup-044-muted:oklch(0.56 0.014 265);
---vibeui-buttongroup-044-border:oklch(0.88 0.008 265);
---vibeui-buttongroup-044-accent:oklch(0.5 0.16 265);
+--vibeui-buttongroup-044-surface:transparent;
+--vibeui-buttongroup-044-fg:light-dark(oklch(0.24 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-044-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-044-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.012 265));
+--vibeui-buttongroup-044-hover:light-dark(oklch(0.965 0.005 265),oklch(0.33 0.012 265));
+--vibeui-buttongroup-044-accent:light-dark(oklch(0.5 0.16 265),oklch(0.77 0.13 265));
 --vibeui-buttongroup-044-radius:0.625rem;
 --vibeui-buttongroup-044-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -51,7 +57,7 @@ color:var(--vibeui-buttongroup-044-muted);
 transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="buttongroup-044"] button:hover:not(:disabled){
-background:oklch(0.965 0.005 265);color:var(--vibeui-buttongroup-044-fg);
+background:var(--vibeui-buttongroup-044-hover);color:var(--vibeui-buttongroup-044-fg);
 }
 [data-vibeui-block="buttongroup-044"] button:disabled{opacity:.35;cursor:not-allowed}
 [data-vibeui-block="buttongroup-044"] svg{
@@ -90,6 +96,28 @@ z-index:1;outline:2px solid var(--vibeui-buttongroup-044-accent);outline-offset:
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Количество: кнопки шага вокруг настоящего числового поля.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -99,7 +127,10 @@ export function Buttongroup044({
   max = 20,
   unit = "шт.",
   label = "Количество",
+  decreaseLabel = "Уменьшить количество",
+  increaseLabel = "Увеличить количество",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -117,6 +148,12 @@ export function Buttongroup044({
 
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-044-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-044-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -137,7 +174,7 @@ export function Buttongroup044({
           type="button"
           onClick={() => apply(valid - 1)}
           disabled={valid <= min}
-          aria-label="Уменьшить количество"
+          aria-label={decreaseLabel}
         >
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M5 12h14" />
@@ -160,7 +197,7 @@ export function Buttongroup044({
           type="button"
           onClick={() => apply(valid + 1)}
           disabled={valid >= max}
-          aria-label="Увеличить количество"
+          aria-label={increaseLabel}
         >
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 5v14M5 12h14" />

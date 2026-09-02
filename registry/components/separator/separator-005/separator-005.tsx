@@ -7,17 +7,22 @@ export type Separator005Props = Omit<
   glyph?: string
   tone?: "neutral" | "accent"
   label?: string
+  /** Цвет линий и рамки кружка. Пусто — цвет из палитры компонента. */
+  line?: string
 }
 
 // Идея компонента: разделитель со знаком в центре. Знак сидит в кружке со
 // своей заливкой, поэтому линия не просвечивает сквозь него ни на светлом,
 // ни на тёмном фоне. Знак декоративен и скрыт от скринридера: смысл границы
 // несёт role="separator" с подписью, а «✦» вслух ничего не сообщает.
+//
+// Обе ветки палитры объявлены через light-dark(): кружок темнеет вместе с
+// окружением и остаётся плотнее линии, а не выпадает белой наклейкой.
 const STYLES = `
 :where([data-vibeui-block="separator-005"]){
---vibeui-separator-005-line:oklch(0.87 0.006 265);
---vibeui-separator-005-disc:oklch(1 0 0);
---vibeui-separator-005-fg:oklch(0.45 0.014 265);
+--vibeui-separator-005-line:light-dark(oklch(0.87 0.006 265),oklch(0.37 0.012 265));
+--vibeui-separator-005-disc:light-dark(oklch(1 0 0),oklch(0.26 0.01 265));
+--vibeui-separator-005-fg:light-dark(oklch(0.45 0.014 265),oklch(0.86 0.01 265));
 --vibeui-separator-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="separator-005"]{
@@ -39,9 +44,9 @@ color:var(--vibeui-separator-005-fg);
 font-size:0.75rem;line-height:1;
 }
 [data-vibeui-block="separator-005"][data-tone="accent"]{
---vibeui-separator-005-disc:oklch(0.94 0.05 262);
---vibeui-separator-005-line:oklch(0.85 0.05 262);
---vibeui-separator-005-fg:oklch(0.45 0.16 262);
+--vibeui-separator-005-disc:light-dark(oklch(0.94 0.05 262),oklch(0.31 0.07 262));
+--vibeui-separator-005-line:light-dark(oklch(0.85 0.05 262),oklch(0.47 0.09 262));
+--vibeui-separator-005-fg:light-dark(oklch(0.45 0.16 262),oklch(0.85 0.11 262));
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="separator-005"] *{animation:none!important;transition:none!important}}
 `
@@ -54,10 +59,16 @@ export function Separator005({
   glyph = "✦",
   tone = "neutral",
   label = "Конец раздела",
+  line = "",
   className,
   style,
   ...props
 }: Separator005Props) {
+  const palette = {
+    ...(line ? { "--vibeui-separator-005-line": line } : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-separator-005" precedence="medium">
@@ -70,7 +81,7 @@ export function Separator005({
         role="separator"
         aria-label={label}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="line" />
         <span data-part="disc" aria-hidden="true">

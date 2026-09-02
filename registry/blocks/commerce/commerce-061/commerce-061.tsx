@@ -22,7 +22,11 @@ export type Commerce061Props = {
   newHint?: string
   cta?: string
   note?: string
+  /** Подписи полей нового адреса: city, street, recipient, phone. */
+  fieldLabels?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -36,12 +40,14 @@ export type Commerce061Props = {
 // получатель и телефон — по ним и узнают нужную строку, а не по улице.
 const STYLES = `
 :where([data-vibeui-block="commerce-061"]){
---vibeui-commerce-061-bg:oklch(1 0 0);
---vibeui-commerce-061-fg:oklch(0.21 0.012 255);
---vibeui-commerce-061-muted:oklch(0.53 0.014 255);
---vibeui-commerce-061-border:oklch(0.9 0.006 255);
---vibeui-commerce-061-soft:oklch(0.972 0.004 255);
---vibeui-commerce-061-accent:oklch(0.49 0.14 255);
+--vibeui-commerce-061-bg:transparent;
+--vibeui-commerce-061-surface:light-dark(oklch(1 0 0),oklch(0.21 0.01 255));
+--vibeui-commerce-061-fg:light-dark(oklch(0.21 0.012 255),oklch(0.94 0.006 255));
+--vibeui-commerce-061-muted:light-dark(oklch(0.53 0.014 255),oklch(0.73 0.012 255));
+--vibeui-commerce-061-border:light-dark(oklch(0.9 0.006 255),oklch(0.38 0.012 255));
+--vibeui-commerce-061-soft:light-dark(oklch(0.972 0.004 255),oklch(0.27 0.01 255));
+--vibeui-commerce-061-accent:light-dark(oklch(0.49 0.14 255),oklch(0.74 0.13 255));
+--vibeui-commerce-061-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.04 255));
 --vibeui-commerce-061-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -73,18 +79,18 @@ box-shadow:inset 0 0 0 1px var(--vibeui-commerce-061-accent);
 [data-vibeui-block="commerce-061"] [data-part="card"]>input:focus-visible+[data-part="face"]{outline:2px solid var(--vibeui-commerce-061-accent);outline-offset:2px}
 [data-vibeui-block="commerce-061"] [data-part="dot"]{
 flex:none;width:1.125rem;height:1.125rem;margin-top:0.125rem;border-radius:9999px;
-border:2px solid var(--vibeui-commerce-061-border);background:var(--vibeui-commerce-061-bg);
+border:2px solid var(--vibeui-commerce-061-border);background:var(--vibeui-commerce-061-surface);
 }
 [data-vibeui-block="commerce-061"] [data-part="card"]>input:checked+[data-part="face"] [data-part="dot"]{
 border-color:var(--vibeui-commerce-061-accent);
-box-shadow:inset 0 0 0 3px var(--vibeui-commerce-061-bg),inset 0 0 0 9px var(--vibeui-commerce-061-accent);
+box-shadow:inset 0 0 0 3px var(--vibeui-commerce-061-surface),inset 0 0 0 9px var(--vibeui-commerce-061-accent);
 }
 [data-vibeui-block="commerce-061"] [data-part="texts"]{flex:1;min-width:0}
 [data-vibeui-block="commerce-061"] [data-part="row"]{display:flex;flex-wrap:wrap;align-items:baseline;gap:0.375rem}
 [data-vibeui-block="commerce-061"] [data-part="label"]{font-size:0.9375rem;font-weight:700}
 [data-vibeui-block="commerce-061"] [data-part="main"]{
 display:inline-flex;align-items:center;height:1.25rem;padding:0 0.4375rem;border-radius:0.375rem;
-background:var(--vibeui-commerce-061-accent);color:oklch(0.99 0 0);
+background:var(--vibeui-commerce-061-accent);color:var(--vibeui-commerce-061-onaccent);
 font-size:0.625rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
 }
 [data-vibeui-block="commerce-061"] [data-part="line"]{margin:0.1875rem 0 0;font-size:0.8125rem;line-height:1.45}
@@ -103,7 +109,7 @@ color:var(--vibeui-commerce-061-accent);text-decoration:underline;text-underline
 [data-vibeui-block="commerce-061"] input[type="text"],
 [data-vibeui-block="commerce-061"] input[type="tel"]{
 height:2.5rem;padding:0 0.75rem;border-radius:0.625rem;
-border:1px solid var(--vibeui-commerce-061-border);background:var(--vibeui-commerce-061-bg);
+border:1px solid var(--vibeui-commerce-061-border);background:var(--vibeui-commerce-061-surface);
 font:inherit;font-size:0.875rem;color:inherit;
 }
 [data-vibeui-block="commerce-061"] input[type="text"]:focus-visible,
@@ -111,7 +117,7 @@ font:inherit;font-size:0.875rem;color:inherit;
 [data-vibeui-block="commerce-061"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-commerce-061-accent);outline-offset:2px}
 [data-vibeui-block="commerce-061"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;margin-top:1.25rem;height:2.875rem;padding:0 1.75rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-061-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-061-accent);color:var(--vibeui-commerce-061-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-061"] [data-part="note"]{margin:0.875rem 0 0;max-width:52ch;font-size:0.75rem;line-height:1.5;color:var(--vibeui-commerce-061-muted)}
 [data-vibeui-block="commerce-061"] [data-part="book"]:has(#commerce-061-new:checked) [data-part="form"]{display:grid}
@@ -123,6 +129,35 @@ background:var(--vibeui-commerce-061-accent);color:oklch(0.99 0 0);font:inherit;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-061"] *{animation:none!important;transition:none!important}}
 `
+
+const FIELD_LABEL: Record<string, string> = {
+  city: "Город",
+  street: "Улица, дом, квартира",
+  recipient: "Получатель",
+  phone: "Телефон",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_ADDRESSES: Commerce061Address[] = [
   {
@@ -167,12 +202,23 @@ export function Commerce061({
   newHint = "Добавим его в книгу после оформления заказа.",
   cta = "Продолжить к оплате",
   note = "Адрес нельзя изменить после того, как заказ уехал на склад: это примерно два часа с момента оплаты.",
+  fieldLabels = FIELD_LABEL,
   accent,
+  background = "",
   className,
   style,
 }: Commerce061Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-061-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-061-bg": background,
+          // Точка радиокнопки и поля не должны просвечивать: им нужна
+          // непрозрачная подложка, а она задана тем же цветом.
+          "--vibeui-commerce-061-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -248,15 +294,17 @@ export function Commerce061({
                 </label>
                 <div data-part="form">
                   <label data-part="field" htmlFor="commerce-061-city">
-                    <span>Город</span>
+                    <span>{fieldLabels.city ?? FIELD_LABEL.city}</span>
                     <input id="commerce-061-city" name="city" type="text" />
                   </label>
                   <label data-part="field" htmlFor="commerce-061-street">
-                    <span>Улица, дом, квартира</span>
+                    <span>{fieldLabels.street ?? FIELD_LABEL.street}</span>
                     <input id="commerce-061-street" name="street" type="text" />
                   </label>
                   <label data-part="field" htmlFor="commerce-061-name">
-                    <span>Получатель</span>
+                    <span>
+                      {fieldLabels.recipient ?? FIELD_LABEL.recipient}
+                    </span>
                     <input
                       id="commerce-061-name"
                       name="recipient"
@@ -264,7 +312,7 @@ export function Commerce061({
                     />
                   </label>
                   <label data-part="field" htmlFor="commerce-061-phone">
-                    <span>Телефон</span>
+                    <span>{fieldLabels.phone ?? FIELD_LABEL.phone}</span>
                     <input id="commerce-061-phone" name="phone" type="tel" />
                   </label>
                 </div>

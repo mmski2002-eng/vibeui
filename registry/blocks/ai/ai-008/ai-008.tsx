@@ -17,7 +17,13 @@ export type Ai008Props = {
   chooseLabel?: string
   name?: string
   footnote?: string
+  /** Подпись радиогруппы над колонками. */
+  legend?: string
+  /** Подписи метрик: {value} подставляется значением из варианта. */
+  statText?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -37,12 +43,13 @@ export type Ai008Props = {
 // текста по 30 символов сравнивать невозможно.
 const STYLES = `
 :where([data-vibeui-block="ai-008"]){
---vibeui-ai-008-bg:oklch(0.99 0.002 265);
---vibeui-ai-008-card:oklch(1 0 0);
---vibeui-ai-008-fg:oklch(0.22 0.014 265);
---vibeui-ai-008-muted:oklch(0.53 0.014 265);
---vibeui-ai-008-border:oklch(0.91 0.006 265);
---vibeui-ai-008-accent:oklch(0.52 0.18 254);
+--vibeui-ai-008-bg:transparent;
+--vibeui-ai-008-card:light-dark(oklch(1 0 0),oklch(0.25 0.011 265));
+--vibeui-ai-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-ai-008-muted:light-dark(oklch(0.53 0.014 265),oklch(0.69 0.012 265));
+--vibeui-ai-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-ai-008-accent:light-dark(oklch(0.52 0.18 254),oklch(0.72 0.16 254));
+--vibeui-ai-008-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 254));
 --vibeui-ai-008-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -110,7 +117,7 @@ font-size:0.6875rem;color:var(--vibeui-ai-008-muted);font-variant-numeric:tabula
 [data-vibeui-block="ai-008"] button{
 appearance:none;cursor:pointer;border:0;
 height:2.25rem;padding:0 1rem;border-radius:0.75rem;
-background:var(--vibeui-ai-008-accent);color:oklch(1 0 0);
+background:var(--vibeui-ai-008-accent);color:var(--vibeui-ai-008-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="ai-008"] [data-part="note"]{
@@ -155,6 +162,33 @@ const DEFAULT_VARIANTS: [Ai008Variant, Ai008Variant] = [
   },
 ]
 
+const DEFAULT_STAT_TEXT: Record<string, string> = {
+  latency: "Ответ: {value}",
+  cost: "Расход: {value}",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Сравнение двух ответов модели с выбором лучшего радиогруппой.
  * Один файл, ноль зависимостей, клиентского JS нет.
@@ -166,12 +200,24 @@ export function Ai008({
   chooseLabel = "Сохранить выбор",
   name = "ai-008-answer",
   footnote = "Выбор уходит в обучающую выборку без текста вашего запроса.",
+  legend = "Ответы на один и тот же запрос",
+  statText = DEFAULT_STAT_TEXT,
   accent,
+  background = "",
   className,
   style,
 }: Ai008Props) {
+  const stat = (key: string, value: string) =>
+    (statText[key] ?? DEFAULT_STAT_TEXT[key]).replace("{value}", value)
+
   const palette = {
     ...(accent ? { "--vibeui-ai-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-ai-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -193,7 +239,7 @@ export function Ai008({
           </header>
 
           <fieldset>
-            <legend>Ответы на один и тот же запрос</legend>
+            <legend>{legend}</legend>
             <div data-part="grid">
               {variants.map((variant) => (
                 <label key={variant.id} data-part="option">
@@ -217,9 +263,11 @@ export function Ai008({
                   ) : null}
                   <span data-part="stats">
                     {variant.latency ? (
-                      <span>Ответ: {variant.latency}</span>
+                      <span>{stat("latency", variant.latency)}</span>
                     ) : null}
-                    {variant.cost ? <span>Расход: {variant.cost}</span> : null}
+                    {variant.cost ? (
+                      <span>{stat("cost", variant.cost)}</span>
+                    ) : null}
                   </span>
                 </label>
               ))}

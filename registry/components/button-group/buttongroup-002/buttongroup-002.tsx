@@ -7,6 +7,8 @@ export type Buttongroup002Props = Omit<
   actions?: string[]
   label?: string
   size?: "compact" | "regular"
+  /** Пусто — подложки нет, группа лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,13 +19,13 @@ export type Buttongroup002Props = Omit<
 // overflow:hidden — детям radius задавать не нужно вовсе.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-002"]){
---vibeui-buttongroup-002-surface:oklch(1 0 0);
---vibeui-buttongroup-002-fg:oklch(0.27 0.016 265);
---vibeui-buttongroup-002-muted:oklch(0.52 0.014 265);
---vibeui-buttongroup-002-border:oklch(0.88 0.008 265);
---vibeui-buttongroup-002-hover:oklch(0.965 0.004 265);
---vibeui-buttongroup-002-press:oklch(0.93 0.006 265);
---vibeui-buttongroup-002-accent:oklch(0.55 0.17 265);
+--vibeui-buttongroup-002-surface:transparent;
+--vibeui-buttongroup-002-fg:light-dark(oklch(0.27 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-002-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-buttongroup-002-border:light-dark(oklch(0.88 0.008 265),oklch(0.37 0.012 265));
+--vibeui-buttongroup-002-hover:light-dark(oklch(0.965 0.004 265),oklch(0.3 0.012 265));
+--vibeui-buttongroup-002-press:light-dark(oklch(0.93 0.006 265),oklch(0.35 0.014 265));
+--vibeui-buttongroup-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-buttongroup-002-radius:0.625rem;
 --vibeui-buttongroup-002-height:2.25rem;
 --vibeui-buttongroup-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -79,6 +81,29 @@ color:var(--vibeui-buttongroup-002-fg);
 const DEFAULT_ACTIONS = ["Скопировать", "Продублировать", "Экспорт"]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Группа действий с одной общей рамкой и разделителями внутри.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -86,6 +111,7 @@ export function Buttongroup002({
   actions = DEFAULT_ACTIONS,
   label = "Действия над документом",
   size = "regular",
+  background = "",
   accent,
   className,
   style,
@@ -93,6 +119,12 @@ export function Buttongroup002({
 }: Buttongroup002Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-002-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

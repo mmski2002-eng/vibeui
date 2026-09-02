@@ -10,6 +10,12 @@ export type Pagination002Props = Omit<
   total?: number
   prevHref?: string
   nextHref?: string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labelText?: Record<string, string>
+  /** Строка счёта. {range} — диапазон строк, {total} — всего. */
+  rangeText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,12 +26,12 @@ export type Pagination002Props = Omit<
 // нельзя, иначе строка навигации прыгает.
 const STYLES = `
 :where([data-vibeui-block="pagination-002"]){
---vibeui-pagination-002-bg:oklch(1 0 0);
---vibeui-pagination-002-fg:oklch(0.24 0.014 265);
---vibeui-pagination-002-muted:oklch(0.56 0.014 265);
---vibeui-pagination-002-border:oklch(0.9 0.006 265);
---vibeui-pagination-002-hover:oklch(0.55 0.02 265 / 8%);
---vibeui-pagination-002-accent:oklch(0.55 0.2 262);
+--vibeui-pagination-002-bg:transparent;
+--vibeui-pagination-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-pagination-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.69 0.012 265));
+--vibeui-pagination-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-pagination-002-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.82 0.02 265 / 14%));
+--vibeui-pagination-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.7 0.16 262));
 --vibeui-pagination-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="pagination-002"]{
@@ -63,6 +69,36 @@ border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="pagination-002"] *{animation:none!important;transition:none!important}}
 `
 
+const LABEL: Record<string, string> = {
+  nav: "Навигация по списку",
+  prev: "Назад",
+  next: "Вперёд",
+}
+
+const RANGE_TEXT = "Строки {range} из {total}"
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Курсорная навигация: диапазон строк вместо номеров страниц.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -73,6 +109,9 @@ export function Pagination002({
   total = 214,
   prevHref = "#",
   nextHref = "#",
+  labelText = LABEL,
+  rangeText = RANGE_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -84,6 +123,12 @@ export function Pagination002({
 
   const palette = {
     ...(accent ? { "--vibeui-pagination-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pagination-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -95,16 +140,22 @@ export function Pagination002({
       <nav
         {...props}
         data-vibeui-block="pagination-002"
-        aria-label="Навигация по списку"
+        aria-label={labelText.nav ?? LABEL.nav}
         className={className}
         style={palette}
       >
         <p data-part="range">
-          Строки{" "}
-          <b>
-            {from}–{to}
-          </b>{" "}
-          из {total}
+          {rangeText.split(/({range}|{total})/).map((part, index) =>
+            part === "{range}" ? (
+              <b key={index}>
+                {from}–{to}
+              </b>
+            ) : part === "{total}" ? (
+              String(total)
+            ) : (
+              part
+            ),
+          )}
         </p>
         <div data-part="side">
           <a
@@ -114,7 +165,7 @@ export function Pagination002({
             aria-disabled={atStart || undefined}
           >
             <span data-part="arrow" aria-hidden="true" />
-            Назад
+            {labelText.prev ?? LABEL.prev}
           </a>
           <a
             data-part="step"
@@ -122,7 +173,7 @@ export function Pagination002({
             href={nextHref}
             aria-disabled={atEnd || undefined}
           >
-            Вперёд
+            {labelText.next ?? LABEL.next}
             <span data-part="arrow" aria-hidden="true" />
           </a>
         </div>

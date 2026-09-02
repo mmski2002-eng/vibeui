@@ -19,7 +19,11 @@ export type Combobox028Props = Omit<
   defaultValue?: string
   hotkeyLabel?: string
   triggerKey?: string
+  /** Слово для aria-подписи поля фильтра: «<label>: фильтр». */
+  filterLabel?: string
   onSelect?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,15 +32,20 @@ export type Combobox028Props = Omit<
 // пропускает нажатие, если фокус уже стоит в чужом текстовом поле — иначе
 // сочетание перехватывало бы ввод в любой другой форме. Подсказка сочетания
 // напечатана прямо на кнопке, чтобы не быть секретом.
+//
+// Тема берётся из color-scheme окружения через light-dark(). Клавиша <kbd>
+// красится отдельным токеном key: подложка блока прозрачна, а клавише нужен
+// непрозрачный цвет, иначе она сливается с кнопкой-триггером.
 const STYLES = `
 :where([data-vibeui-block="combobox-028"]){
---vibeui-combobox-028-bg:oklch(1 0 0);
---vibeui-combobox-028-fg:oklch(0.22 0.014 80);
---vibeui-combobox-028-muted:oklch(0.53 0.014 80);
---vibeui-combobox-028-border:oklch(0.9 0.008 80);
---vibeui-combobox-028-field:oklch(0.985 0.004 80);
---vibeui-combobox-028-active:oklch(0.95 0.03 80);
---vibeui-combobox-028-accent:oklch(0.55 0.14 80);
+--vibeui-combobox-028-bg:transparent;
+--vibeui-combobox-028-key:light-dark(oklch(1 0 0),oklch(0.24 0.012 80));
+--vibeui-combobox-028-fg:light-dark(oklch(0.22 0.014 80),oklch(0.94 0.008 80));
+--vibeui-combobox-028-muted:light-dark(oklch(0.53 0.014 80),oklch(0.71 0.012 80));
+--vibeui-combobox-028-border:light-dark(oklch(0.9 0.008 80),oklch(0.36 0.014 80));
+--vibeui-combobox-028-field:light-dark(oklch(0.985 0.004 80),oklch(0.27 0.012 80));
+--vibeui-combobox-028-active:light-dark(oklch(0.95 0.03 80),oklch(0.34 0.04 80));
+--vibeui-combobox-028-accent:light-dark(oklch(0.55 0.14 80),oklch(0.79 0.14 80));
 --vibeui-combobox-028-radius:0.625rem;
 --vibeui-combobox-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -66,7 +75,7 @@ transition:border-color .16s ease;
 [data-vibeui-block="combobox-028"] kbd{
 flex:none;padding:0.1rem 0.4rem;border-radius:0.35rem;
 border:1px solid var(--vibeui-combobox-028-border);
-background:var(--vibeui-combobox-028-bg);
+background:var(--vibeui-combobox-028-key);
 font:inherit;font-size:0.7rem;font-weight:600;color:var(--vibeui-combobox-028-muted);
 }
 [data-vibeui-block="combobox-028"] [data-part="panel"]{
@@ -107,6 +116,28 @@ const DEFAULT_OPTIONS = [
 const TEXT_INPUT_TAGS = new Set(["INPUT", "TEXTAREA"])
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox, который открывается глобальной горячей клавишей: подсказка
  * сочетания напечатана на кнопке, слушатель пропускает набор в чужих полях.
  */
@@ -119,7 +150,9 @@ export function Combobox028({
   defaultValue = "",
   hotkeyLabel = "Ctrl+K",
   triggerKey = "k",
+  filterLabel = "фильтр",
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -177,6 +210,13 @@ export function Combobox028({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-028-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-028-bg": background,
+          "--vibeui-combobox-028-key": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -260,7 +300,7 @@ export function Combobox028({
               role="combobox"
               autoComplete="off"
               placeholder={searchPlaceholder}
-              aria-label={`${label}: фильтр`}
+              aria-label={`${label}: ${filterLabel}`}
               aria-expanded="true"
               aria-controls={`${id}-list`}
               aria-autocomplete="list"

@@ -19,7 +19,11 @@ export type Ai010Props = {
   goal?: string
   columns?: Ai010Column[]
   progressLabel?: string
+  /** Счётчик прогресса: {done}, {total} и {percent} подставляются числами. */
+  progressText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -37,13 +41,14 @@ export type Ai010Props = {
 // столбца по 12 символов нечитаемы, и это решает container query.
 const STYLES = `
 :where([data-vibeui-block="ai-010"]){
---vibeui-ai-010-bg:oklch(0.985 0.003 265);
---vibeui-ai-010-card:oklch(1 0 0);
---vibeui-ai-010-fg:oklch(0.21 0.014 265);
---vibeui-ai-010-muted:oklch(0.53 0.014 265);
---vibeui-ai-010-border:oklch(0.91 0.006 265);
---vibeui-ai-010-accent:oklch(0.55 0.18 45);
---vibeui-ai-010-done:oklch(0.58 0.13 155);
+--vibeui-ai-010-bg:transparent;
+--vibeui-ai-010-card:light-dark(oklch(1 0 0),oklch(0.25 0.011 265));
+--vibeui-ai-010-tint:light-dark(oklch(0.985 0.003 265),oklch(0.22 0.01 265));
+--vibeui-ai-010-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-ai-010-muted:light-dark(oklch(0.53 0.014 265),oklch(0.69 0.012 265));
+--vibeui-ai-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-ai-010-accent:light-dark(oklch(0.55 0.18 45),oklch(0.76 0.15 55));
+--vibeui-ai-010-done:light-dark(oklch(0.58 0.13 155),oklch(0.72 0.13 155));
 --vibeui-ai-010-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-ai-010-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -97,7 +102,7 @@ margin-left:auto;font-size:0.6875rem;color:var(--vibeui-ai-010-muted);font-varia
 [data-vibeui-block="ai-010"] li{
 display:grid;gap:0.25rem;padding:0.5625rem 0.6875rem;border-radius:0.6875rem;
 border:1px solid var(--vibeui-ai-010-border);
-background:color-mix(in oklab,var(--vibeui-ai-010-bg) 60%,var(--vibeui-ai-010-card));
+background:var(--vibeui-ai-010-tint);
 }
 [data-vibeui-block="ai-010"] [data-tone="active"] li{
 border-color:color-mix(in oklab,var(--vibeui-ai-010-accent) 40%,var(--vibeui-ai-010-border));
@@ -170,6 +175,28 @@ const DEFAULT_COLUMNS: Ai010Column[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Доска плана агента: очередь, работа и готовое рядом плюс общий прогресс.
  * Один файл, ноль зависимостей, клиентского JS нет.
  */
@@ -178,12 +205,20 @@ export function Ai010({
   goal = "Собрать лендинг студии из блоков каталога, подставить тексты и прогнать сборку.",
   columns = DEFAULT_COLUMNS,
   progressLabel = "Выполнено задач",
+  progressText = "{done} из {total} · {percent}%",
   accent,
+  background = "",
   className,
   style,
 }: Ai010Props) {
   const palette = {
     ...(accent ? { "--vibeui-ai-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-ai-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -213,7 +248,10 @@ export function Ai010({
             <div data-part="progress-top">
               <span>{progressLabel}</span>
               <span>
-                {done} из {total} · {percent}%
+                {progressText
+                  .replace("{done}", String(done))
+                  .replace("{total}", String(total))
+                  .replace("{percent}", String(percent))}
               </span>
             </div>
             <div

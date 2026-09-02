@@ -9,6 +9,8 @@ export type Hero011Props = {
   secondary?: { label: string; href: string }
   meta?: string[]
   accent?: string
+  /** Пусто — подложки нет, секция ложится на фон страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -20,14 +22,15 @@ export type Hero011Props = {
 // не перехватывает клики, и картинка не участвует в потоке.
 const STYLES = `
 :where([data-vibeui-block="hero-011"]){
---vibeui-hero-011-bg:oklch(0.15 0.02 275);
---vibeui-hero-011-fg:oklch(0.98 0.003 275);
---vibeui-hero-011-muted:oklch(0.72 0.014 275);
---vibeui-hero-011-line:oklch(1 0 0 / 7%);
---vibeui-hero-011-edge:oklch(1 0 0 / 16%);
---vibeui-hero-011-accent:oklch(0.7 0.19 30);
---vibeui-hero-011-accent-fg:oklch(0.16 0.03 30);
---vibeui-hero-011-cool:oklch(0.55 0.2 275);
+--vibeui-hero-011-bg:transparent;
+--vibeui-hero-011-fg:light-dark(oklch(0.19 0.02 275),oklch(0.98 0.003 275));
+--vibeui-hero-011-muted:light-dark(oklch(0.5 0.016 275),oklch(0.72 0.014 275));
+--vibeui-hero-011-line:light-dark(oklch(0.19 0.02 275 / 9%),oklch(1 0 0 / 8%));
+--vibeui-hero-011-edge:light-dark(oklch(0.19 0.02 275 / 18%),oklch(1 0 0 / 18%));
+--vibeui-hero-011-veil:light-dark(oklch(0.19 0.02 275 / 4%),oklch(1 0 0 / 5%));
+--vibeui-hero-011-accent:light-dark(oklch(0.58 0.19 30),oklch(0.72 0.18 30));
+--vibeui-hero-011-accent-fg:light-dark(oklch(0.99 0.005 30),oklch(0.16 0.03 30));
+--vibeui-hero-011-cool:light-dark(oklch(0.55 0.2 275),oklch(0.64 0.19 275));
 --vibeui-hero-011-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -55,7 +58,7 @@ position:relative;max-width:54rem;width:100%;margin:0 auto;padding:4rem 1.25rem;
 }
 [data-vibeui-block="hero-011"] [data-part="kicker"]{
 display:inline-block;margin:0 0 1.25rem;padding:0.3125rem 0.75rem;border-radius:9999px;
-border:1px solid var(--vibeui-hero-011-edge);background:oklch(1 0 0 / 5%);
+border:1px solid var(--vibeui-hero-011-edge);background:var(--vibeui-hero-011-veil);
 font-size:0.75rem;font-weight:600;color:var(--vibeui-hero-011-muted);
 }
 [data-vibeui-block="hero-011"] h1{
@@ -78,7 +81,7 @@ font-size:0.9375rem;font-weight:650;text-decoration:none;transition:opacity .16s
 background:var(--vibeui-hero-011-accent);color:var(--vibeui-hero-011-accent-fg);border:1px solid transparent;
 box-shadow:0 0 2.5rem color-mix(in oklab,var(--vibeui-hero-011-accent) 30%,transparent);
 }
-[data-vibeui-block="hero-011"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-011-edge);color:var(--vibeui-hero-011-fg);background:oklch(1 0 0 / 4%)}
+[data-vibeui-block="hero-011"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-011-edge);color:var(--vibeui-hero-011-fg);background:var(--vibeui-hero-011-veil)}
 [data-vibeui-block="hero-011"] a:hover{opacity:.88}
 [data-vibeui-block="hero-011"] a:focus-visible{outline:2px solid var(--vibeui-hero-011-accent);outline-offset:3px}
 [data-vibeui-block="hero-011"] [data-part="meta"]{
@@ -101,6 +104,28 @@ const DEFAULT_META = [
   "Reduced motion",
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлый фон достался бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Hero на фоновом градиенте и сетке: линии гасятся маской, поверх — два цветных пятна. */
 export function Hero011({
   kicker = "Версия 2.0 уже в каталоге",
@@ -111,11 +136,18 @@ export function Hero011({
   secondary = { label: "Читать документацию", href: "#" },
   meta = DEFAULT_META,
   accent,
+  background = "",
   className,
   style,
 }: Hero011Props) {
   const palette = {
     ...(accent ? { "--vibeui-hero-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-hero-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -17,6 +17,16 @@ export type Dashboard035Props = {
   userMail?: string
   menu?: string[]
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подпись всей шапки для скринридера. */
+  headerLabel?: string
+  /** Шаблон подписи колокольчика: {count}. */
+  bellText?: string
+  /** Подпись меню профиля. */
+  menuLabel?: string
+  /** Подпись строки вкладок. */
+  tabsLabel?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,13 +42,19 @@ export type Dashboard035Props = {
 // они ссылки, чтобы у отфильтрованного экрана был свой адрес.
 const STYLES = `
 :where([data-vibeui-block="dashboard-035"]){
---vibeui-dashboard-035-bg:oklch(1 0 0);
---vibeui-dashboard-035-sub:oklch(0.98 0.003 265);
---vibeui-dashboard-035-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-035-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-035-border:oklch(0.91 0.006 265);
---vibeui-dashboard-035-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-035-alarm:oklch(0.58 0.19 25);
+--vibeui-dashboard-035-bg:transparent;
+/* Поповер и мелкие плашки: подложка шапки прозрачна, и рисовать их ею нечем. */
+--vibeui-dashboard-035-card:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-dashboard-035-sub:light-dark(oklch(0.98 0.003 265),oklch(0.28 0.012 265));
+--vibeui-dashboard-035-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-035-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-035-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-dashboard-035-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-dashboard-035-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
+--vibeui-dashboard-035-face:light-dark(oklch(0.92 0.05 262),oklch(0.34 0.06 262));
+--vibeui-dashboard-035-alarm:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.16 25));
+--vibeui-dashboard-035-on-alarm:light-dark(oklch(1 0 0),oklch(0.18 0.03 25));
+--vibeui-dashboard-035-shadow:light-dark(oklch(0.2 0.02 265 / 12%),oklch(0 0 0 / 45%));
 --vibeui-dashboard-035-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -61,7 +77,7 @@ display:flex;align-items:center;gap:0.5rem;font-weight:750;font-size:0.9375rem;l
 [data-vibeui-block="dashboard-035"] [data-part="mark"]{
 width:1.5rem;height:1.5rem;border-radius:0.5rem;flex:none;
 background:var(--vibeui-dashboard-035-accent);
-color:oklch(1 0 0);font-size:0.75rem;font-weight:800;
+color:var(--vibeui-dashboard-035-on-accent);font-size:0.75rem;font-weight:800;
 display:grid;place-items:center;
 }
 [data-vibeui-block="dashboard-035"] [data-part="crumbs"]{
@@ -94,13 +110,13 @@ background:var(--vibeui-dashboard-035-muted);transform:rotate(45deg);
 position:absolute;right:0.4375rem;top:50%;transform:translateY(-50%);
 font:inherit;font-size:0.625rem;font-weight:650;color:var(--vibeui-dashboard-035-muted);
 padding:0.125rem 0.3125rem;border-radius:0.3125rem;
-border:1px solid var(--vibeui-dashboard-035-border);background:var(--vibeui-dashboard-035-bg);
+border:1px solid var(--vibeui-dashboard-035-border);background:var(--vibeui-dashboard-035-card);
 }
 [data-vibeui-block="dashboard-035"] [data-part="tools"]{display:flex;align-items:center;gap:0.5rem;margin-left:auto}
 [data-vibeui-block="dashboard-035"] [data-part="bell"]{
 position:relative;appearance:none;cursor:pointer;font:inherit;
 width:2rem;height:2rem;border-radius:0.625rem;display:grid;place-items:center;
-border:1px solid var(--vibeui-dashboard-035-border);background:var(--vibeui-dashboard-035-bg);color:inherit;
+border:1px solid var(--vibeui-dashboard-035-border);background:var(--vibeui-dashboard-035-card);color:inherit;
 }
 [data-vibeui-block="dashboard-035"] [data-part="bell"] span[aria-hidden]{
 width:0.6875rem;height:0.6875rem;border:1.5px solid currentColor;
@@ -110,7 +126,7 @@ border-radius:0.4375rem 0.4375rem 0.125rem 0.125rem;
 position:absolute;top:-0.3125rem;right:-0.3125rem;min-width:1.0625rem;
 padding:0 0.25rem;border-radius:9999px;
 font-size:0.5625rem;font-weight:800;line-height:1.0625rem;text-align:center;
-background:var(--vibeui-dashboard-035-alarm);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-035-alarm);color:var(--vibeui-dashboard-035-on-alarm);
 }
 [data-vibeui-block="dashboard-035"] details{position:relative}
 [data-vibeui-block="dashboard-035"] summary{
@@ -122,7 +138,7 @@ border:1px solid var(--vibeui-dashboard-035-border);
 [data-vibeui-block="dashboard-035"] [data-part="face"]{
 width:1.625rem;height:1.625rem;border-radius:50%;flex:none;display:grid;place-items:center;
 font-size:0.625rem;font-weight:800;
-background:color-mix(in oklab,var(--vibeui-dashboard-035-accent) 18%,white);
+background:var(--vibeui-dashboard-035-face);
 color:var(--vibeui-dashboard-035-accent);
 }
 [data-vibeui-block="dashboard-035"] [data-part="who"]{font-size:0.75rem;font-weight:650;white-space:nowrap}
@@ -130,8 +146,8 @@ color:var(--vibeui-dashboard-035-accent);
 position:absolute;right:0;top:calc(100% + 0.375rem);z-index:2;min-width:11rem;
 padding:0.375rem;border-radius:0.75rem;
 border:1px solid var(--vibeui-dashboard-035-border);
-background:var(--vibeui-dashboard-035-bg);
-box-shadow:0 12px 28px oklch(0.2 0.02 265 / 12%);
+background:var(--vibeui-dashboard-035-card);
+box-shadow:0 12px 28px var(--vibeui-dashboard-035-shadow);
 }
 [data-vibeui-block="dashboard-035"] [data-part="mail"]{
 display:block;padding:0.375rem 0.5rem 0.5rem;font-size:0.6875rem;
@@ -158,7 +174,7 @@ color:var(--vibeui-dashboard-035-fg);border-bottom-color:var(--vibeui-dashboard-
 }
 [data-vibeui-block="dashboard-035"] [data-part="pill"]{
 font-size:0.625rem;font-weight:700;padding:0.0625rem 0.3125rem;border-radius:9999px;
-background:var(--vibeui-dashboard-035-bg);border:1px solid var(--vibeui-dashboard-035-border);
+background:var(--vibeui-dashboard-035-card);border:1px solid var(--vibeui-dashboard-035-border);
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="dashboard-035"] :is(a,button,summary,input):focus-visible{
@@ -182,6 +198,28 @@ const DEFAULT_TABS: Dashboard035Tab[] = [
 const DEFAULT_MENU = ["Профиль", "Уведомления", "Горячие клавиши", "Выйти"]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Шапка приложения: бренд, крошки, широкое поле поиска, колокольчик со
  * счётчиком, меню профиля на details и строка вкладок. Один файл, ноль
  * зависимостей, клиентского JS нет.
@@ -198,11 +236,22 @@ export function Dashboard035({
   userMail = "anna@kontur.ru",
   menu = DEFAULT_MENU,
   accent,
+  background = "",
+  headerLabel = "Шапка приложения",
+  bellText = "Уведомления: {count} непрочитанных",
+  menuLabel = "Меню профиля",
+  tabsLabel = "Разделы",
   className,
   style,
 }: Dashboard035Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-035-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-035-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -221,7 +270,7 @@ export function Dashboard035({
         data-vibeui-block="dashboard-035"
         className={className}
         style={palette}
-        aria-label="Шапка приложения"
+        aria-label={headerLabel}
       >
         <div data-part="shell">
           <div data-part="bar">
@@ -261,7 +310,7 @@ export function Dashboard035({
               <button
                 type="button"
                 data-part="bell"
-                aria-label={`Уведомления: ${unread} непрочитанных`}
+                aria-label={bellText.replace("{count}", String(unread))}
               >
                 <span aria-hidden="true" />
                 <span data-part="count" aria-live="polite">
@@ -276,7 +325,7 @@ export function Dashboard035({
                   </span>
                   <span data-part="who">{userName}</span>
                 </summary>
-                <nav data-part="menu" aria-label="Меню профиля">
+                <nav data-part="menu" aria-label={menuLabel}>
                   <span data-part="mail">{userMail}</span>
                   {menu.map((entry) => (
                     <a key={entry} href="#dashboard-035">
@@ -288,7 +337,7 @@ export function Dashboard035({
             </div>
           </div>
 
-          <nav data-part="tabs" aria-label="Разделы">
+          <nav data-part="tabs" aria-label={tabsLabel}>
             {tabs.map((tab) => (
               <a
                 key={tab.label}

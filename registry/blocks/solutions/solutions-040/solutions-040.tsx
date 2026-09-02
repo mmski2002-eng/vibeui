@@ -17,7 +17,25 @@ export type Solutions040Props = {
   hint?: string
   policies?: Solutions040Policy[]
   expiryWarnDays?: number
+  /** Названия типов полисов: osago, kasko, property. */
+  typeText?: Record<string, string>
+  /** Подписи плиток сводки: policies, expiring, expired. */
+  summaryText?: Record<string, string>
+  /** Подписи цифр полиса: premium, coverage. */
+  figureText?: Record<string, string>
+  /** Остаток срока. {days} — число дней. */
+  daysLeftText?: string
+  /** Просроченный срок. {days} — число дней. */
+  daysAgoText?: string
+  /** Подписи под отсчётом: left, expired. */
+  countdownText?: Record<string, string>
+  /** Скрытая подпись полосы срока. {insurer} — страховщик. */
+  termLabel?: string
+  /** Сноска под списком. */
+  footNote?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,15 +48,15 @@ export type Solutions040Props = {
 // хранится меткой отдельно от чисел, которые её обосновывают.
 const STYLES = `
 :where([data-vibeui-block="solutions-040"]){
---vibeui-solutions-040-bg:oklch(1 0 0);
---vibeui-solutions-040-panel:oklch(0.976 0.004 250);
---vibeui-solutions-040-fg:oklch(0.21 0.014 265);
---vibeui-solutions-040-muted:oklch(0.54 0.014 265);
---vibeui-solutions-040-border:oklch(0.9 0.006 265);
---vibeui-solutions-040-accent:oklch(0.5 0.15 250);
---vibeui-solutions-040-ok:oklch(0.55 0.14 152);
---vibeui-solutions-040-warn:oklch(0.68 0.16 75);
---vibeui-solutions-040-late:oklch(0.57 0.19 25);
+--vibeui-solutions-040-bg:transparent;
+--vibeui-solutions-040-panel:light-dark(oklch(0.976 0.004 250),oklch(0.27 0.011 265));
+--vibeui-solutions-040-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-040-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-040-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-040-accent:light-dark(oklch(0.5 0.15 250),oklch(0.72 0.14 250));
+--vibeui-solutions-040-ok:light-dark(oklch(0.55 0.14 152),oklch(0.71 0.14 152));
+--vibeui-solutions-040-warn:light-dark(oklch(0.68 0.16 75),oklch(0.79 0.15 75));
+--vibeui-solutions-040-late:light-dark(oklch(0.57 0.19 25),oklch(0.71 0.17 25));
 --vibeui-solutions-040-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-040-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -183,10 +201,48 @@ const DEFAULT_POLICIES: Solutions040Policy[] = [
   },
 ]
 
-const TYPE_LABEL: Record<Solutions040Policy["type"], string> = {
+const TYPE_LABEL: Record<string, string> = {
   osago: "ОСАГО",
   kasko: "КАСКО",
   property: "Имущество",
+}
+
+const SUMMARY_LABEL: Record<string, string> = {
+  policies: "действующих полисов",
+  expiring: "требуют продления скоро",
+  expired: "срок истёк",
+}
+
+const FIGURE_LABEL: Record<string, string> = {
+  premium: "Премия",
+  coverage: "Покрытие",
+}
+
+const COUNTDOWN_LABEL: Record<string, string> = {
+  left: "до окончания",
+  expired: "истёк",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 function urgency(daysLeft: number, expiryWarnDays: number) {
@@ -205,10 +261,22 @@ export function Solutions040({
   hint = "Автопарк и имущество, 4 действующих договора",
   policies = DEFAULT_POLICIES,
   expiryWarnDays = 30,
+  typeText = TYPE_LABEL,
+  summaryText = SUMMARY_LABEL,
+  figureText = FIGURE_LABEL,
+  daysLeftText = "{days} дн.",
+  daysAgoText = "{days} дн. назад",
+  countdownText = COUNTDOWN_LABEL,
+  termLabel = "{insurer}: срок действия полиса",
+  footNote = "Обратный отсчёт и цвет полосы считаются из срока действия, а не назначаются вручную.",
   accent,
+  background = "",
   className,
   style,
 }: Solutions040Props) {
+  const summary = (key: string) => summaryText[key] ?? SUMMARY_LABEL[key]
+  const figure = (key: string) => figureText[key] ?? FIGURE_LABEL[key]
+  const countdown = (key: string) => countdownText[key] ?? COUNTDOWN_LABEL[key]
   const expiring = policies.filter(
     (policy) => urgency(policy.daysLeft, expiryWarnDays) !== "ok",
   ).length
@@ -216,6 +284,12 @@ export function Solutions040({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-040-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-040-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -240,15 +314,15 @@ export function Solutions040({
         <div data-part="summary">
           <p data-part="tile">
             <b>{policies.length}</b>
-            <span>действующих полисов</span>
+            <span>{summary("policies")}</span>
           </p>
           <p data-part="tile">
             <b>{expiring}</b>
-            <span>требуют продления скоро</span>
+            <span>{summary("expiring")}</span>
           </p>
           <p data-part="tile" data-tile={expired > 0 ? "late" : undefined}>
             <b>{expired}</b>
-            <span>срок истёк</span>
+            <span>{summary("expired")}</span>
           </p>
         </div>
 
@@ -270,29 +344,39 @@ export function Solutions040({
               >
                 <div data-part="row">
                   <div>
-                    <span data-part="type">{TYPE_LABEL[policy.type]}</span>
+                    <span data-part="type">
+                      {typeText[policy.type] ?? TYPE_LABEL[policy.type]}
+                    </span>
                     <span data-part="insurer">{policy.insurer}</span>
                     <span data-part="number">{policy.number}</span>
                   </div>
                   <div data-part="countdown">
                     <span data-part="days">
                       {policy.daysLeft >= 0
-                        ? `${policy.daysLeft} дн.`
-                        : `${Math.abs(policy.daysLeft)} дн. назад`}
+                        ? daysLeftText.replace(
+                            "{days}",
+                            String(policy.daysLeft),
+                          )
+                        : daysAgoText.replace(
+                            "{days}",
+                            String(Math.abs(policy.daysLeft)),
+                          )}
                     </span>
                     <span>
-                      {policy.daysLeft >= 0 ? "до окончания" : "истёк"}
+                      {policy.daysLeft >= 0
+                        ? countdown("left")
+                        : countdown("expired")}
                     </span>
                   </div>
                 </div>
 
                 <dl data-part="figures">
                   <div>
-                    <dt>Премия</dt>
+                    <dt>{figure("premium")}</dt>
                     <dd>{policy.premium}</dd>
                   </div>
                   <div>
-                    <dt>Покрытие</dt>
+                    <dt>{figure("coverage")}</dt>
                     <dd>{policy.coverage}</dd>
                   </div>
                 </dl>
@@ -300,7 +384,7 @@ export function Solutions040({
                 <div
                   data-part="term"
                   role="progressbar"
-                  aria-label={`${policy.insurer}: срок действия полиса`}
+                  aria-label={termLabel.replace("{insurer}", policy.insurer)}
                   aria-valuenow={Math.round(elapsedPct)}
                   aria-valuemin={0}
                   aria-valuemax={100}
@@ -319,10 +403,7 @@ export function Solutions040({
           })}
         </div>
 
-        <p data-part="foot">
-          Обратный отсчёт и цвет полосы считаются из срока действия, а не
-          назначаются вручную.
-        </p>
+        <p data-part="foot">{footNote}</p>
       </section>
     </>
   )

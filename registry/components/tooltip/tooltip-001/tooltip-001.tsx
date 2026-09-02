@@ -11,6 +11,8 @@ export type Tooltip001Props = Omit<
   side?: "top" | "bottom"
   /** Показать подсказку принудительно: онбординг, отладка, витрина. */
   open?: boolean
+  /** Цвет самой подсказки. Пусто — собственный тёмный тон. */
+  background?: string
   /** Идентификатор для aria-describedby у вашего триггера. */
   id?: string
 }
@@ -20,7 +22,7 @@ export type Tooltip001Props = Omit<
 // половине пользователей. Всё держится на :hover и :focus-within, JS не нужен.
 const STYLES = `
 :where([data-vibeui-block="tooltip-001"]){
---vibeui-tooltip-001-fg:oklch(0.97 0.002 265);
+--vibeui-tooltip-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.97 0.002 265));
 --vibeui-tooltip-001-bg:oklch(0.26 0.014 265);
 --vibeui-tooltip-001-radius:0.4375rem;
 --vibeui-tooltip-001-gap:0.5rem;
@@ -29,7 +31,10 @@ const STYLES = `
 [data-vibeui-block="tooltip-001"]{
 position:relative;display:inline-flex;font-family:var(--vibeui-tooltip-001-font);
 }
+/* Подсказка намеренно остаётся тёмной плашкой в обеих темах, поэтому у неё
+   своя ветка темы: цвет текста считается от плашки, а не от страницы. */
 [data-vibeui-block="tooltip-001"] [data-part="tip"]{
+color-scheme:dark;
 position:absolute;left:50%;z-index:20;
 max-width:16rem;width:max-content;
 padding:0.375rem 0.5625rem;
@@ -64,11 +69,34 @@ const DEFAULT_TRIGGER_STYLE = `
 appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;justify-content:center;
 width:2.25rem;height:2.25rem;border-radius:0.5rem;
-border:1px solid oklch(0.88 0.008 265);background:oklch(1 0 0);
-color:oklch(0.35 0.014 265);font:inherit;font-size:0.9375rem;
+border:1px solid light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+background:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+color:light-dark(oklch(0.35 0.014 265),oklch(0.9 0.006 265));font:inherit;font-size:0.9375rem;
 }
-[data-vibeui-block="tooltip-001"] [data-part="sample"]:focus-visible{outline:2px solid oklch(0.55 0.2 262);outline-offset:2px}
+[data-vibeui-block="tooltip-001"] [data-part="sample"]:focus-visible{outline:2px solid light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));outline-offset:2px}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Подсказка, открывающаяся и по наведению, и по фокусу с клавиатуры.
@@ -79,11 +107,17 @@ export function Tooltip001({
   children,
   side = "top",
   open = false,
+  background = "",
   id = "vibeui-tooltip-001",
   className,
   style,
   ...props
 }: Tooltip001Props) {
+  const palette = {
+    ...(background ? { "--vibeui-tooltip-001-bg": background } : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-tooltip-001" precedence="medium">
@@ -95,14 +129,23 @@ export function Tooltip001({
         data-side={side}
         data-open={open || undefined}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         {children ?? (
           <button data-part="sample" type="button" aria-describedby={id}>
             ⧉
           </button>
         )}
-        <span data-part="tip" role="tooltip" id={id}>
+        <span
+          data-part="tip"
+          role="tooltip"
+          id={id}
+          style={
+            background
+              ? { colorScheme: schemeForBackground(background) }
+              : undefined
+          }
+        >
           {tip}
         </span>
       </span>

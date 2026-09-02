@@ -7,7 +7,11 @@ export type Buttongroup009Props = Omit<
   primary?: string
   actions?: string[]
   moreLabel?: string
+  /** Имя кнопки переполнения вслух: {more} подставляется подписью moreLabel. */
+  moreDescription?: string
   label?: string
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,12 +23,14 @@ export type Buttongroup009Props = Omit<
 // уезжают в details/summary, поэтому раскрытие работает без клиентского JS.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-009"]){
---vibeui-buttongroup-009-surface:oklch(1 0 0);
---vibeui-buttongroup-009-fg:oklch(0.26 0.016 265);
---vibeui-buttongroup-009-muted:oklch(0.53 0.014 265);
---vibeui-buttongroup-009-border:oklch(0.88 0.008 265);
---vibeui-buttongroup-009-hover:oklch(0.96 0.004 265);
---vibeui-buttongroup-009-accent:oklch(0.52 0.17 265);
+--vibeui-buttongroup-009-surface:transparent;
+--vibeui-buttongroup-009-sheet:light-dark(oklch(1 0 0),oklch(0.24 0.014 265));
+--vibeui-buttongroup-009-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-009-muted:light-dark(oklch(0.53 0.014 265),oklch(0.7 0.012 265));
+--vibeui-buttongroup-009-border:light-dark(oklch(0.88 0.008 265),oklch(0.37 0.012 265));
+--vibeui-buttongroup-009-hover:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.012 265));
+--vibeui-buttongroup-009-accent:light-dark(oklch(0.52 0.17 265),oklch(0.62 0.17 265));
+--vibeui-buttongroup-009-accent-dark:light-dark(oklch(0.45 0.16 265),oklch(0.55 0.17 265));
 --vibeui-buttongroup-009-on-accent:oklch(0.99 0.005 265);
 --vibeui-buttongroup-009-radius:0.625rem;
 --vibeui-buttongroup-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -69,7 +75,7 @@ border-color:var(--vibeui-buttongroup-009-accent);
 color:var(--vibeui-buttongroup-009-on-accent);
 }
 [data-vibeui-block="buttongroup-009"] [data-part="primary"]:hover{
-background:oklch(0.45 0.16 265);color:var(--vibeui-buttongroup-009-on-accent);
+background:var(--vibeui-buttongroup-009-accent-dark);color:var(--vibeui-buttongroup-009-on-accent);
 }
 /* Узкая ширина — состояние по умолчанию: лишние действия спрятаны,
    а «Ещё» на месте. Широкая раскладка добавляется запросом ниже. */
@@ -83,7 +89,7 @@ position:absolute;inset-inline-end:0;top:calc(100% + 0.375rem);z-index:2;
 display:flex;flex-direction:column;gap:0.125rem;min-width:11rem;padding:0.25rem;
 border:1px solid var(--vibeui-buttongroup-009-border);
 border-radius:var(--vibeui-buttongroup-009-radius);
-background:var(--vibeui-buttongroup-009-surface);
+background:var(--vibeui-buttongroup-009-sheet);
 box-shadow:0 18px 40px -22px oklch(0.2 0.02 265 / 60%);
 }
 [data-vibeui-block="buttongroup-009"] [data-part="sheet"] button{
@@ -105,6 +111,29 @@ width:0.1875rem;height:0.1875rem;border-radius:9999px;background:currentColor;
 const DEFAULT_ACTIONS = ["Предпросмотр", "Запланировать", "В архив"]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Группа действий, которая на узкой ширине прячет лишнее под «Ещё».
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -112,7 +141,9 @@ export function Buttongroup009({
   primary = "Опубликовать",
   actions = DEFAULT_ACTIONS,
   moreLabel = "Ещё",
+  moreDescription = "{more}: скрытые действия",
   label = "Действия над черновиком",
+  background = "",
   accent,
   className,
   style,
@@ -120,6 +151,12 @@ export function Buttongroup009({
 }: Buttongroup009Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-009-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -144,7 +181,7 @@ export function Buttongroup009({
             </button>
           ))}
           <details data-part="more">
-            <summary aria-label={`${moreLabel}: скрытые действия`}>
+            <summary aria-label={moreDescription.replace("{more}", moreLabel)}>
               {moreLabel}
               <span data-part="dots" aria-hidden="true">
                 <i />

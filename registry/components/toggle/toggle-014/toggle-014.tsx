@@ -9,9 +9,15 @@ export type Toggle014Props = Omit<
 > & {
   title?: string
   note?: string
+  /** Заметка в закреплённом состоянии. */
+  pinnedNote?: string
   defaultPressed?: boolean
+  /** Имена действия кнопки: ключи pin и unpin. Компонент несёт русские. */
+  actionText?: Record<string, string>
   onChange?: (pressed: boolean) => void
   accent?: string
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: строка списка с кнопкой булавки. Значок поворачивается
@@ -19,12 +25,12 @@ export type Toggle014Props = Omit<
 // data-pinned на корне — состояние читается по всей строке, не только по кнопке.
 const STYLES = `
 :where([data-vibeui-block="toggle-014"]){
---vibeui-toggle-014-bg:oklch(1 0 0);
---vibeui-toggle-014-fg:oklch(0.22 0.014 265);
---vibeui-toggle-014-muted:oklch(0.55 0.014 265);
---vibeui-toggle-014-border:oklch(0.9 0.006 265);
---vibeui-toggle-014-accent:oklch(0.68 0.17 55);
---vibeui-toggle-014-soft:oklch(0.96 0.03 55);
+--vibeui-toggle-014-bg:transparent;
+--vibeui-toggle-014-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-014-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-toggle-014-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-toggle-014-accent:light-dark(oklch(0.68 0.17 55),oklch(0.79 0.15 55));
+--vibeui-toggle-014-soft:light-dark(oklch(0.96 0.03 55),oklch(0.31 0.045 55));
 --vibeui-toggle-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="toggle-014"]{
@@ -79,6 +85,33 @@ transform:rotate(45deg);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="toggle-014"] *{animation:none!important;transition:none!important}}
 `
 
+const ACTION_TEXT: Record<string, string> = {
+  pin: "Закрепить",
+  unpin: "Открепить",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Строка списка с кнопкой булавки: значок поворачивается на 45°, фон строки
  * подсвечивается. Один файл, ноль зависимостей, собственная палитра.
@@ -86,17 +119,28 @@ transform:rotate(45deg);
 export function Toggle014({
   title = "Ежемесячный отчёт по расходам",
   note = "Обновлён вчера",
+  pinnedNote = "Закреплено вверху списка",
   defaultPressed = false,
+  actionText = ACTION_TEXT,
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Toggle014Props) {
   const [pressed, setPressed] = useState(defaultPressed)
+  const actionKey = pressed ? "unpin" : "pin"
+  const action = actionText[actionKey] ?? ACTION_TEXT[actionKey]
 
   const palette = {
     ...(accent ? { "--vibeui-toggle-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-toggle-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -115,14 +159,14 @@ export function Toggle014({
         <div data-part="text">
           <p data-part="title">{title}</p>
           <p data-part="note" role="status">
-            {pressed ? "Закреплено вверху списка" : note}
+            {pressed ? pinnedNote : note}
           </p>
         </div>
         <button
           type="button"
           aria-pressed={pressed}
-          aria-label={pressed ? "Открепить" : "Закрепить"}
-          title={pressed ? "Открепить" : "Закрепить"}
+          aria-label={action}
+          title={action}
           onClick={() => {
             setPressed(!pressed)
             onChange?.(!pressed)

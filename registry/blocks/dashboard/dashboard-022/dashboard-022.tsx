@@ -15,7 +15,17 @@ export type Dashboard022Props = {
   groups?: string[]
   activeGroup?: string
   items?: Dashboard022Integration[]
+  /** Состояния: ключи on, off и stale. */
+  stateText?: Record<string, string>
+  /** Шаблон строки категории: {group}. */
+  categoryText?: string
+  configureLabel?: string
+  refreshLabel?: string
+  disconnectLabel?: string
+  connectLabel?: string
   accent?: string
+  /** Подложка витрины; пусто — цвет из палитры блока. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,14 +40,15 @@ export type Dashboard022Props = {
 // Значок сервиса нарисован буквой на цветном поле — блок не тянет чужие файлы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-022"]){
---vibeui-dashboard-022-bg:oklch(0.985 0.003 265);
---vibeui-dashboard-022-card:oklch(1 0 0);
---vibeui-dashboard-022-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-022-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-022-border:oklch(0.91 0.006 265);
---vibeui-dashboard-022-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-022-ok:oklch(0.53 0.14 152);
---vibeui-dashboard-022-warn:oklch(0.63 0.15 65);
+--vibeui-dashboard-022-bg:light-dark(oklch(0.985 0.003 265),oklch(0.21 0.012 265));
+--vibeui-dashboard-022-card:light-dark(oklch(1 0 0),oklch(0.26 0.013 265));
+--vibeui-dashboard-022-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-022-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-dashboard-022-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-022-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.15 262));
+--vibeui-dashboard-022-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-dashboard-022-ok:light-dark(oklch(0.53 0.14 152),oklch(0.76 0.13 152));
+--vibeui-dashboard-022-warn:light-dark(oklch(0.63 0.15 65),oklch(0.79 0.13 65));
 --vibeui-dashboard-022-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -63,7 +74,7 @@ background:var(--vibeui-dashboard-022-card);
 border:1px solid var(--vibeui-dashboard-022-border);
 }
 [data-vibeui-block="dashboard-022"] [data-part="chips"] a[aria-current="true"]{
-color:oklch(1 0 0);
+color:var(--vibeui-dashboard-022-on-accent);
 background:var(--vibeui-dashboard-022-accent);
 border-color:var(--vibeui-dashboard-022-accent);
 }
@@ -82,8 +93,8 @@ padding:0.875rem;
 grid-row:span 3;align-self:start;
 width:2.25rem;height:2.25rem;border-radius:0.625rem;
 display:grid;place-items:center;font-size:0.9375rem;font-weight:700;
-background:oklch(0.94 0.04 var(--vibeui-dashboard-022-hue));
-color:oklch(0.36 0.1 var(--vibeui-dashboard-022-hue));
+background:light-dark(oklch(0.94 0.04 var(--vibeui-dashboard-022-hue)),oklch(0.36 0.06 var(--vibeui-dashboard-022-hue)));
+color:light-dark(oklch(0.36 0.1 var(--vibeui-dashboard-022-hue)),oklch(0.9 0.05 var(--vibeui-dashboard-022-hue)));
 }
 [data-vibeui-block="dashboard-022"] [data-part="row"]{
 display:flex;flex-wrap:wrap;align-items:center;gap:0.375rem;
@@ -124,7 +135,7 @@ background:var(--vibeui-dashboard-022-card);color:inherit;
 }
 [data-vibeui-block="dashboard-022"] [data-part="connect"]{
 border-color:var(--vibeui-dashboard-022-accent);
-background:var(--vibeui-dashboard-022-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-022-accent);color:var(--vibeui-dashboard-022-on-accent);
 }
 [data-vibeui-block="dashboard-022"] :is(a,button):focus-visible{
 outline:2px solid var(--vibeui-dashboard-022-accent);outline-offset:2px;
@@ -198,10 +209,32 @@ function state(item: Dashboard022Integration) {
   return item.needsUpdate ? "stale" : "on"
 }
 
-const STATE_WORD = {
+const STATE_WORD: Record<string, string> = {
   on: "подключено",
   off: "не подключено",
   stale: "нужен доступ",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -221,12 +254,25 @@ export function Dashboard022({
   ],
   activeGroup = "Все",
   items = DEFAULT_ITEMS,
+  stateText = STATE_WORD,
+  categoryText = "Категория: {group}",
+  configureLabel = "Настроить",
+  refreshLabel = "Обновить доступ",
+  disconnectLabel = "Отключить",
+  connectLabel = "Подключить",
   accent,
+  background = "",
   className,
   style,
 }: Dashboard022Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-022-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-022-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -277,24 +323,24 @@ export function Dashboard022({
                   <h3>{item.name}</h3>
                   <span data-part="state">
                     <span data-part="mark" aria-hidden="true" />
-                    {STATE_WORD[state(item)]}
+                    {stateText[state(item)] ?? STATE_WORD[state(item)]}
                   </span>
                 </div>
                 <p data-part="text">{item.text}</p>
                 <p data-part="account">
-                  {item.account ?? `Категория: ${item.group}`}
+                  {item.account ?? categoryText.replace("{group}", item.group)}
                 </p>
                 <div data-part="foot">
                   {item.connected ? (
                     <>
                       <button type="button">
-                        {item.needsUpdate ? "Обновить доступ" : "Настроить"}
+                        {item.needsUpdate ? refreshLabel : configureLabel}
                       </button>
-                      <button type="button">Отключить</button>
+                      <button type="button">{disconnectLabel}</button>
                     </>
                   ) : (
                     <button type="button" data-part="connect">
-                      Подключить
+                      {connectLabel}
                     </button>
                   )}
                 </div>

@@ -18,7 +18,21 @@ export type Solutions023Props = {
   weekDays?: string[]
   groups?: Solutions023Group[]
   fullLabel?: string
+  /** Счётчик в шапке, {count} — сколько мест свободно всего. */
+  freeTotalText?: string
+  /** Подпись ряда дней для скринридера, {days} — дни через запятую. */
+  daysLabelText?: string
+  /** Знаменатель набора, {total} — вместимость группы. */
+  seatsText?: string
+  /** Свободные места, {count} — сколько осталось. */
+  freeText?: string
+  /** Подпись полосы набора, {name} — название группы. */
+  enrolLabelText?: string
+  /** Подпись перед датой ближайшего занятия. */
+  nextLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,13 +48,14 @@ export type Solutions023Props = {
 // до открытия карточки.
 const STYLES = `
 :where([data-vibeui-block="solutions-023"]){
---vibeui-solutions-023-bg:oklch(1 0 0);
---vibeui-solutions-023-panel:oklch(0.975 0.005 300);
---vibeui-solutions-023-fg:oklch(0.21 0.014 300);
---vibeui-solutions-023-muted:oklch(0.53 0.013 300);
---vibeui-solutions-023-border:oklch(0.9 0.006 300);
---vibeui-solutions-023-accent:oklch(0.52 0.16 295);
---vibeui-solutions-023-full:oklch(0.6 0.16 35);
+--vibeui-solutions-023-bg:transparent;
+--vibeui-solutions-023-panel:light-dark(oklch(0.975 0.005 300),oklch(0.27 0.012 300));
+--vibeui-solutions-023-fg:light-dark(oklch(0.21 0.014 300),oklch(0.94 0.005 300));
+--vibeui-solutions-023-muted:light-dark(oklch(0.53 0.013 300),oklch(0.7 0.012 300));
+--vibeui-solutions-023-border:light-dark(oklch(0.9 0.006 300),oklch(0.36 0.012 300));
+--vibeui-solutions-023-accent:light-dark(oklch(0.52 0.16 295),oklch(0.74 0.15 295));
+--vibeui-solutions-023-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.012 300));
+--vibeui-solutions-023-full:light-dark(oklch(0.6 0.16 35),oklch(0.76 0.14 35));
 --vibeui-solutions-023-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -93,7 +108,7 @@ font-size:0.5625rem;font-weight:650;text-transform:lowercase;
 background:var(--vibeui-solutions-023-panel);color:var(--vibeui-solutions-023-muted);
 }
 [data-vibeui-block="solutions-023"] [data-part="week"] [data-on="true"]{
-background:var(--vibeui-solutions-023-accent);color:oklch(1 0 0);
+background:var(--vibeui-solutions-023-accent);color:var(--vibeui-solutions-023-on-accent);
 }
 [data-vibeui-block="solutions-023"] [data-part="when"]{
 margin:0.4375rem 0 0;font-size:0.75rem;color:var(--vibeui-solutions-023-muted);
@@ -172,6 +187,28 @@ const DEFAULT_GROUPS: Solutions023Group[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Учебные группы: дни недели клетками, набор дробью и свободные места числом.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -181,12 +218,25 @@ export function Solutions023({
   weekDays = DEFAULT_WEEK,
   groups = DEFAULT_GROUPS,
   fullLabel = "мест нет",
+  freeTotalText = "Свободных мест: {count}",
+  daysLabelText = "Занятия: {days}",
+  seatsText = "из {total} мест",
+  freeText = "свободно {count}",
+  enrolLabelText = "Набор в группу «{name}»",
+  nextLabel = "Ближайшее занятие —",
   accent,
+  background = "",
   className,
   style,
 }: Solutions023Props) {
   const palette = {
     ...(accent ? { "--vibeui-solutions-023-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-023-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -207,10 +257,14 @@ export function Solutions023({
             <p data-part="term">{term}</p>
           </div>
           <p data-part="term">
-            Свободных мест:{" "}
-            {groups.reduce(
-              (sum, group) => sum + (group.capacity - group.enrolled),
-              0,
+            {freeTotalText.replace(
+              "{count}",
+              String(
+                groups.reduce(
+                  (sum, group) => sum + (group.capacity - group.enrolled),
+                  0,
+                ),
+              ),
             )}
           </p>
         </header>
@@ -235,7 +289,10 @@ export function Solutions023({
                 <p
                   data-part="week"
                   role="img"
-                  aria-label={`Занятия: ${group.days.join(", ")}`}
+                  aria-label={daysLabelText.replace(
+                    "{days}",
+                    group.days.join(", "),
+                  )}
                 >
                   {weekDays.map((day) => (
                     <span
@@ -253,10 +310,13 @@ export function Solutions023({
 
                 <p data-part="seats">
                   <span>
-                    <b>{group.enrolled}</b> из {group.capacity} мест
+                    <b>{group.enrolled}</b>{" "}
+                    {seatsText.replace("{total}", String(group.capacity))}
                   </span>
                   <span data-part="left">
-                    {full ? fullLabel : `свободно ${left}`}
+                    {full
+                      ? fullLabel
+                      : freeText.replace("{count}", String(left))}
                   </span>
                 </p>
                 <div
@@ -265,7 +325,7 @@ export function Solutions023({
                   aria-valuenow={group.enrolled}
                   aria-valuemin={0}
                   aria-valuemax={group.capacity}
-                  aria-label={`Набор в группу «${group.name}»`}
+                  aria-label={enrolLabelText.replace("{name}", group.name)}
                 >
                   <span
                     data-part="fill"
@@ -276,7 +336,7 @@ export function Solutions023({
                 </div>
 
                 <p data-part="next">
-                  Ближайшее занятие — <b>{group.nextLesson}</b>
+                  {nextLabel} <b>{group.nextLesson}</b>
                 </p>
               </li>
             )

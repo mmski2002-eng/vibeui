@@ -11,6 +11,8 @@ export type Button013Props = Omit<
   defaultValue?: string
   label?: string
   onChange?: (value: string) => void
+  /** Пусто — подложки нет, дорожка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,12 +22,12 @@ export type Button013Props = Omit<
 // значением, но состояние держит форма, а не анимация.
 const STYLES = `
 :where([data-vibeui-block="button-013"]){
---vibeui-button-013-fg:oklch(0.3 0.014 265);
---vibeui-button-013-muted:oklch(0.5 0.014 265);
---vibeui-button-013-bg:oklch(0.96 0.004 265);
---vibeui-button-013-on:oklch(1 0 0);
---vibeui-button-013-border:oklch(0.9 0.006 265);
---vibeui-button-013-accent:oklch(0.55 0.17 265);
+--vibeui-button-013-fg:light-dark(oklch(0.3 0.014 265),oklch(0.94 0.006 265));
+--vibeui-button-013-muted:light-dark(oklch(0.5 0.014 265),oklch(0.68 0.012 265));
+--vibeui-button-013-bg:transparent;
+--vibeui-button-013-on:light-dark(oklch(1 0 0),oklch(0.34 0.014 265));
+--vibeui-button-013-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-button-013-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-button-013-radius:0.625rem;
 --vibeui-button-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -51,7 +53,7 @@ opacity:0;cursor:pointer;
 }
 [data-vibeui-block="button-013"] label:has(input:checked){
 background:var(--vibeui-button-013-on);color:var(--vibeui-button-013-fg);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 12%);
+box-shadow:0 1px 2px light-dark(oklch(0.2 0.02 265 / 12%),oklch(0 0 0 / 40%));
 }
 [data-vibeui-block="button-013"] label:has(input:focus-visible){outline:2px solid var(--vibeui-button-013-accent);outline-offset:2px}
 [data-vibeui-block="button-013"] label:hover{color:var(--vibeui-button-013-fg)}
@@ -59,6 +61,28 @@ box-shadow:0 1px 2px oklch(0.2 0.02 265 / 12%);
 `
 
 const DEFAULT_OPTIONS = ["День", "Неделя", "Месяц"]
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Сегментированный переключатель на настоящих radio.
@@ -69,6 +93,7 @@ export function Button013({
   defaultValue = "Неделя",
   label = "Период",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -79,6 +104,12 @@ export function Button013({
 
   const palette = {
     ...(accent ? { "--vibeui-button-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

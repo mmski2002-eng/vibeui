@@ -10,6 +10,11 @@ export type Progress006Props = Omit<
   threshold?: number
   limit?: number
   label?: string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  text?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  accent?: string
 }
 
 // Идея компонента: у полосы есть порог, и он нарисован прямо на дорожке
@@ -18,13 +23,16 @@ export type Progress006Props = Omit<
 // Штриховка нужна, потому что «стало красным» не читается без цвета.
 const STYLES = `
 :where([data-vibeui-block="progress-006"]){
---vibeui-progress-006-bg:oklch(1 0 0);
---vibeui-progress-006-fg:oklch(0.25 0.016 265);
---vibeui-progress-006-muted:oklch(0.56 0.014 265);
---vibeui-progress-006-border:oklch(0.9 0.006 265);
---vibeui-progress-006-track:oklch(0.93 0.005 265);
---vibeui-progress-006-accent:oklch(0.58 0.16 155);
---vibeui-progress-006-alarm:oklch(0.58 0.19 28);
+--vibeui-progress-006-bg:transparent;
+--vibeui-progress-006-fg:light-dark(oklch(0.25 0.016 265),oklch(0.94 0.006 265));
+--vibeui-progress-006-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-progress-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-progress-006-track:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.011 265));
+--vibeui-progress-006-accent:light-dark(oklch(0.58 0.16 155),oklch(0.74 0.15 155));
+--vibeui-progress-006-alarm:light-dark(oklch(0.58 0.19 28),oklch(0.7 0.17 28));
+--vibeui-progress-006-alert-bg:light-dark(oklch(0.96 0.03 28),oklch(0.31 0.06 28));
+--vibeui-progress-006-alert-fg:light-dark(oklch(0.44 0.16 28),oklch(0.9 0.05 28));
+--vibeui-progress-006-on-alarm:light-dark(oklch(1 0 0),oklch(0.18 0.03 28));
 --vibeui-progress-006-value:0;
 --vibeui-progress-006-mark:0;
 --vibeui-progress-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -72,20 +80,50 @@ font-variant-numeric:tabular-nums;
 [data-vibeui-block="progress-006"] [data-part="alert"]{
 display:flex;align-items:flex-start;gap:0.5rem;
 padding:0.5rem 0.625rem;border-radius:0.5rem;
-background:oklch(0.96 0.03 28);color:oklch(0.44 0.16 28);
+background:var(--vibeui-progress-006-alert-bg);color:var(--vibeui-progress-006-alert-fg);
 font-size:0.75rem;line-height:1.35;
 }
 [data-vibeui-block="progress-006"] [data-part="alert"] strong{font-weight:700}
 [data-vibeui-block="progress-006"] [data-part="sign"]{
 flex:none;display:grid;place-items:center;
 width:1rem;height:1rem;border-radius:9999px;
-background:var(--vibeui-progress-006-alarm);color:oklch(1 0 0);
+background:var(--vibeui-progress-006-alarm);color:var(--vibeui-progress-006-on-alarm);
 font-size:0.6875rem;font-weight:800;line-height:1;
 }
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="progress-006"] *{animation:none!important;transition:none!important}
 }
 `
+
+const DEFAULT_TEXT: Record<string, string> = {
+  amount: "{value} / {threshold} тыс. запросов",
+  mark: "порог {threshold}",
+  value: "{value} тысяч запросов при пороге {threshold} тысяч",
+  alert:
+    "Порог превышен на {excess} тыс. запросов. Дальнейшие вызовы тарифицируются сверх плана.",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Полоса с порогом на дорожке и предупреждением на превышении.
@@ -96,6 +134,9 @@ export function Progress006({
   threshold = 100,
   limit = 140,
   label = "Расход API-квоты",
+  text = DEFAULT_TEXT,
+  background = "",
+  accent,
   className,
   style,
   ...props
@@ -105,9 +146,22 @@ export function Progress006({
   const percent = Math.min(100, (used / scale) * 100)
   const mark = Math.min(100, Math.max(0, (threshold / scale) * 100))
   const over = used > threshold
+  const say = (key: string) =>
+    (text[key] ?? DEFAULT_TEXT[key])
+      .replace("{value}", String(used))
+      .replace("{threshold}", String(threshold))
+  // Число превышения остаётся отдельным узлом: оно набрано жирным внутри фразы.
+  const [alertBefore, alertAfter] = say("alert").split("{excess}")
   const palette = {
     "--vibeui-progress-006-value": percent,
     "--vibeui-progress-006-mark": mark,
+    ...(accent ? { "--vibeui-progress-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-progress-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -125,9 +179,7 @@ export function Progress006({
       >
         <div data-part="head">
           <span>{label}</span>
-          <span data-part="amount">
-            {used} / {threshold} тыс. запросов
-          </span>
+          <span data-part="amount">{say("amount")}</span>
         </div>
         <div
           data-part="track"
@@ -136,14 +188,14 @@ export function Progress006({
           aria-valuemin={0}
           aria-valuemax={scale}
           aria-valuenow={used}
-          aria-valuetext={`${used} тысяч запросов при пороге ${threshold} тысяч`}
+          aria-valuetext={say("value")}
         >
           <div data-part="bar" />
           <span data-part="mark" aria-hidden="true" />
         </div>
         <div data-part="scale">
           <span>0</span>
-          <span>порог {threshold}</span>
+          <span>{say("mark")}</span>
           <span>{scale}</span>
         </div>
         <p data-part="alert" role="status" hidden={!over}>
@@ -151,9 +203,9 @@ export function Progress006({
             !
           </span>
           <span>
-            Порог превышен на{" "}
-            <strong>{Math.max(0, used - threshold)} тыс.</strong> запросов.
-            Дальнейшие вызовы тарифицируются сверх плана.
+            {alertBefore}
+            <strong>{Math.max(0, used - threshold)}</strong>
+            {alertAfter}
           </span>
         </p>
       </div>

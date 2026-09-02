@@ -12,6 +12,12 @@ export type Collapsible008Props = Omit<
 > & {
   title?: string
   settings?: Collapsible008Setting[]
+  /** Плашка, когда изменений нет. */
+  defaultText?: string
+  /** Плашка со счётчиком. {count} — число изменённых параметров. */
+  changedText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,13 +26,17 @@ export type Collapsible008Props = Omit<
 // количество отличий от значений по умолчанию считается из данных и висит в
 // заголовке. Внутри изменённая строка помечена точкой и жирным значением —
 // глаз ловит отличие раньше, чем читает подпись.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он темнеет вместе со страницей и не носит своей темы.
 const STYLES = `
 :where([data-vibeui-block="collapsible-008"]){
---vibeui-collapsible-008-bg:oklch(1 0 0);
---vibeui-collapsible-008-fg:oklch(0.24 0.014 265);
---vibeui-collapsible-008-muted:oklch(0.56 0.014 265);
---vibeui-collapsible-008-border:oklch(0.9 0.006 265);
---vibeui-collapsible-008-accent:oklch(0.62 0.16 55);
+--vibeui-collapsible-008-bg:transparent;
+--vibeui-collapsible-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-collapsible-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-collapsible-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-collapsible-008-accent:light-dark(oklch(0.62 0.16 55),oklch(0.79 0.14 55));
+--vibeui-collapsible-008-quiet:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.85 0.02 265 / 12%));
 --vibeui-collapsible-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-collapsible-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
@@ -52,7 +62,7 @@ color:var(--vibeui-collapsible-008-accent);
 font-size:0.6875rem;font-weight:700;
 }
 [data-vibeui-block="collapsible-008"] [data-part="tally"][data-clean="true"]{
-background:oklch(0.55 0.02 265 / 10%);color:var(--vibeui-collapsible-008-muted);
+background:var(--vibeui-collapsible-008-quiet);color:var(--vibeui-collapsible-008-muted);
 }
 [data-vibeui-block="collapsible-008"] [data-part="mark"]{
 flex:none;width:0.4375rem;height:0.4375rem;
@@ -103,12 +113,37 @@ const DEFAULT_SETTINGS: Collapsible008Setting[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Свёртка настроек с признаком «изменено»: счётчик отличий в заголовке,
  * точка и жирное значение в строках. Один файл, ноль зависимостей.
  */
 export function Collapsible008({
   title = "Параметры сборки",
   settings = DEFAULT_SETTINGS,
+  defaultText = "по умолчанию",
+  changedText = "{count} изменено",
+  background = "",
   accent,
   className,
   style,
@@ -118,6 +153,12 @@ export function Collapsible008({
 
   const palette = {
     ...(accent ? { "--vibeui-collapsible-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-collapsible-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -135,7 +176,9 @@ export function Collapsible008({
         <summary>
           {title}
           <span data-part="tally" data-clean={changed === 0}>
-            {changed === 0 ? "по умолчанию" : `${changed} изменено`}
+            {changed === 0
+              ? defaultText
+              : changedText.replace("{count}", String(changed))}
           </span>
           <span data-part="mark" aria-hidden="true" />
         </summary>

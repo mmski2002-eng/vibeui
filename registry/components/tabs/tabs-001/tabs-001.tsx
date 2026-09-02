@@ -21,12 +21,15 @@ export type Tabs001Props = {
 // системные. Стрелки переводят выбор, Home и End прыгают к краям, а полоска
 // под активной вкладкой едет за ней — по разметке WAI-ARIA tabs, а не по
 // набору div'ов с onClick.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте линия становится светлее фона, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="tabs-001"]){
---vibeui-tabs-001-fg:oklch(0.24 0.016 265);
---vibeui-tabs-001-muted:oklch(0.52 0.014 265);
---vibeui-tabs-001-border:oklch(0.9 0.006 265);
---vibeui-tabs-001-accent:oklch(0.55 0.2 262);
+--vibeui-tabs-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-tabs-001-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-tabs-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-tabs-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-tabs-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

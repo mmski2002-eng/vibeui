@@ -12,20 +12,25 @@ export type Alert008Props = Omit<
   cancelLabel?: string
   onCancel?: () => void
   accent?: string
+  /** Пусто — подложки нет, алерт лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: алерт о выполняющейся операции. Полоса встроена в нижнюю
 // кромку блока, а не стоит отдельной строкой: сообщение остаётся плотным, а
 // прогресс виден краем глаза. Неизвестная длительность честно показывается
 // бегущим отрезком — выдуманный процент здесь хуже, чем его отсутствие.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-008"]){
---vibeui-alert-008-fg:oklch(0.24 0.016 265);
---vibeui-alert-008-muted:oklch(0.5 0.014 265);
---vibeui-alert-008-bg:oklch(1 0 0);
---vibeui-alert-008-border:oklch(0.9 0.006 265);
---vibeui-alert-008-track:oklch(0.93 0.006 265);
---vibeui-alert-008-accent:oklch(0.55 0.2 262);
+--vibeui-alert-008-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-alert-008-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-008-bg:transparent;
+--vibeui-alert-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-008-track:light-dark(oklch(0.93 0.006 265),oklch(0.3 0.01 265));
+--vibeui-alert-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-alert-008-radius:0.75rem;
 --vibeui-alert-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -85,6 +90,28 @@ animation:vibeui-alert-008-slide 1.4s ease-in-out infinite;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Алерт выполняющейся операции: шаг, процент и полоса в кромке блока.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -95,6 +122,7 @@ export function Alert008({
   cancelLabel = "Отменить",
   onCancel,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -104,6 +132,12 @@ export function Alert008({
   const palette = {
     "--vibeui-alert-008-value": clamped,
     ...(accent ? { "--vibeui-alert-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-alert-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

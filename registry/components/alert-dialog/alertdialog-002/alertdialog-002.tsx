@@ -14,6 +14,11 @@ export type Alertdialog002Props = Omit<
   hint?: string
   confirm?: string
   cancel?: string
+  /** Что исчезнет вместе с целью: список перед кнопками. */
+  losses?: string[]
+  danger?: string
+  /** Подложка окна. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: удаление с подтверждением вводом имени. Ввод — не
@@ -24,12 +29,15 @@ export type Alertdialog002Props = Omit<
 // Последствия перечислены до кнопки, а не после: после уже поздно.
 const STYLES = `
 :where([data-vibeui-block="alertdialog-002"]){
---vibeui-alertdialog-002-bg:oklch(1 0 0);
---vibeui-alertdialog-002-fg:oklch(0.22 0.014 265);
---vibeui-alertdialog-002-muted:oklch(0.55 0.014 265);
---vibeui-alertdialog-002-border:oklch(0.9 0.006 265);
---vibeui-alertdialog-002-danger:oklch(0.55 0.19 25);
---vibeui-alertdialog-002-danger-bg:oklch(0.55 0.19 25 / 8%);
+--vibeui-alertdialog-002-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-alertdialog-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-alertdialog-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-alertdialog-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-alertdialog-002-danger:light-dark(oklch(0.55 0.19 25),oklch(0.72 0.17 25));
+--vibeui-alertdialog-002-danger-bg:light-dark(oklch(0.55 0.19 25 / 8%),oklch(0.72 0.17 25 / 15%));
+--vibeui-alertdialog-002-on-danger:light-dark(oklch(1 0 0),oklch(0.17 0.03 25));
+--vibeui-alertdialog-002-chip:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.85 0.02 265 / 14%));
+--vibeui-alertdialog-002-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.02 0.01 265 / 70%));
 --vibeui-alertdialog-002-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-alertdialog-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -49,10 +57,10 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 margin:auto;width:min(24rem,calc(100vw - 2rem));padding:1.125rem;
 border:1px solid var(--vibeui-alertdialog-002-border);border-radius:0.875rem;
 background:var(--vibeui-alertdialog-002-bg);color:var(--vibeui-alertdialog-002-fg);
-box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 55%);
+box-shadow:0 24px 60px -24px var(--vibeui-alertdialog-002-shadow);
 font-family:var(--vibeui-alertdialog-002-font);
 }
-[data-vibeui-block="alertdialog-002"] dialog::backdrop{background:oklch(0.2 0.02 265 / 45%)}
+[data-vibeui-block="alertdialog-002"] dialog::backdrop{background:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.08 0.014 265 / 62%))}
 [data-vibeui-block="alertdialog-002"] h2{margin:0 0 0.375rem;font-size:1rem;font-weight:700;line-height:1.3}
 [data-vibeui-block="alertdialog-002"] [data-part="text"]{margin:0 0 0.75rem;font-size:0.8125rem;line-height:1.55;color:var(--vibeui-alertdialog-002-muted)}
 /* Последствия перечислены до кнопки: после неё перечислять уже поздно. */
@@ -69,7 +77,7 @@ font-size:0.75rem;line-height:1.45;color:var(--vibeui-alertdialog-002-fg);
 [data-vibeui-block="alertdialog-002"] [data-part="target"]{
 font-family:var(--vibeui-alertdialog-002-mono);
 padding:0.0625rem 0.25rem;border-radius:0.25rem;
-background:oklch(0.55 0.02 265 / 10%);
+background:var(--vibeui-alertdialog-002-chip);
 }
 [data-vibeui-block="alertdialog-002"] input{
 width:100%;height:2.375rem;padding:0 0.75rem;margin-bottom:0.875rem;
@@ -83,7 +91,7 @@ font-family:var(--vibeui-alertdialog-002-mono);font-size:0.875rem;
 flex:1 1 0;appearance:none;cursor:pointer;height:2.375rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="alertdialog-002"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-002-danger);color:oklch(1 0 0)}
+[data-vibeui-block="alertdialog-002"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-002-danger);color:var(--vibeui-alertdialog-002-on-danger)}
 /* Кнопка выключена, пока имя не совпало точно: промах по кнопке не пройдёт. */
 [data-vibeui-block="alertdialog-002"] [data-part="confirm"]:disabled{opacity:.45;cursor:default}
 [data-vibeui-block="alertdialog-002"] [data-part="cancel"]{
@@ -100,6 +108,28 @@ const DEFAULT_LOSSES = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Удаление с подтверждением вводом имени: случайно набрать имя нельзя.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -111,12 +141,26 @@ export function Alertdialog002({
   hint = "Введите имя проекта, чтобы подтвердить",
   confirm = "Удалить навсегда",
   cancel = "Отменить",
+  losses = DEFAULT_LOSSES,
+  danger,
+  background = "",
   className,
   style,
   ...props
 }: Alertdialog002Props) {
   const box = useRef<HTMLDialogElement>(null)
   const [typed, setTyped] = useState("")
+
+  const palette = {
+    ...(danger ? { "--vibeui-alertdialog-002-danger": danger } : null),
+    ...(background
+      ? {
+          "--vibeui-alertdialog-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -127,7 +171,7 @@ export function Alertdialog002({
         {...props}
         data-vibeui-block="alertdialog-002"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <button
           type="button"
@@ -144,7 +188,7 @@ export function Alertdialog002({
           <h2 id="vibeui-alertdialog-002-title">{title}</h2>
           <p data-part="text">{text}</p>
           <ul>
-            {DEFAULT_LOSSES.map((loss) => (
+            {losses.map((loss) => (
               <li key={loss}>
                 <span data-part="dash" aria-hidden="true">
                   —

@@ -7,6 +7,10 @@ export type Badge018Props = ComponentPropsWithoutRef<"span"> & {
   content?: string
   position?: Badge018Position
   label?: string
+  /** Подпись демонстрационного хоста: показывается, когда детей нет. */
+  hostLabel?: string
+  /** Пусто — плашка держит собственную сигнальную заливку. */
+  background?: string
 }
 
 // Идея компонента: слот, который вешает плашку на чужой элемент. Обёртка
@@ -18,11 +22,15 @@ const STYLES = `
 :where([data-vibeui-block="badge-018"]){
 --vibeui-badge-018-offset:38%;
 --vibeui-badge-018-size:1.125rem;
---vibeui-badge-018-bg:oklch(0.57 0.2 25);
---vibeui-badge-018-fg:oklch(0.99 0.01 25);
---vibeui-badge-018-ring:oklch(1 0 0);
---vibeui-badge-018-host-bg:oklch(0.93 0.008 265);
---vibeui-badge-018-host-fg:oklch(0.34 0.016 265);
+/* Сигнальная заливка держится в обеих ветках: счётчик уведомлений обязан
+   оставаться самым громким пятном и на тёмной странице. */
+--vibeui-badge-018-bg:light-dark(oklch(0.57 0.2 25),oklch(0.62 0.19 25));
+--vibeui-badge-018-fg:light-dark(oklch(0.99 0.01 25),oklch(0.17 0.03 25));
+/* Кольцо повторяет фон страницы, а не белый лист: иначе в тёмной теме
+   вокруг плашки светится ободок. */
+--vibeui-badge-018-ring:light-dark(oklch(1 0 0),oklch(0.19 0.008 265));
+--vibeui-badge-018-host-bg:light-dark(oklch(0.93 0.008 265),oklch(0.31 0.012 265));
+--vibeui-badge-018-host-fg:light-dark(oklch(0.34 0.016 265),oklch(0.92 0.008 265));
 --vibeui-badge-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="badge-018"]{
@@ -60,6 +68,28 @@ clip-path:inset(50%);white-space:nowrap;border:0;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Слот: сажает плашку в угол чужого элемента, не ломая раскладку.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -67,11 +97,28 @@ export function Badge018({
   content = "3",
   position = "top-right",
   label = "новых уведомления",
+  hostLabel = "ЕК",
+  background = "",
   className,
   style,
   children,
   ...props
 }: Badge018Props) {
+  // Цифры на плашке контрастны заливке, а не странице, поэтому свой фон
+  // меняет только их цвет: color-scheme остаётся тем, что задало окружение.
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-badge-018-bg": background,
+          "--vibeui-badge-018-fg":
+            schemeForBackground(background) === "light"
+              ? "oklch(0.2 0.03 25)"
+              : "oklch(0.99 0.01 25)",
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-badge-018" precedence="medium">
@@ -82,9 +129,9 @@ export function Badge018({
         data-vibeui-block="badge-018"
         data-position={position}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
-        {children ?? <span data-part="host">ЕК</span>}
+        {children ?? <span data-part="host">{hostLabel}</span>}
         <span data-part="badge" aria-hidden="true">
           {content}
         </span>

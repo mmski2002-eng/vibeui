@@ -11,6 +11,12 @@ export type Drawer001Props = Omit<
   title?: string
   text?: string
   primaryLabel?: string
+  /** Подпись кнопки отмены: компонент несёт русскую, проект подставляет свою. */
+  cancelLabel?: string
+  /** Имя крестика для скринридера. */
+  closeLabel?: string
+  /** Пусто — подложки нет, триггер лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,11 +26,14 @@ export type Drawer001Props = Omit<
 // шириной в 28rem: она перекрывает часть страницы, но не всю.
 const STYLES = `
 :where([data-vibeui-block="drawer-001"]){
---vibeui-drawer-001-bg:oklch(1 0 0);
---vibeui-drawer-001-fg:oklch(0.22 0.014 265);
---vibeui-drawer-001-muted:oklch(0.56 0.014 265);
---vibeui-drawer-001-border:oklch(0.9 0.006 265);
---vibeui-drawer-001-accent:oklch(0.55 0.17 265);
+--vibeui-drawer-001-bg:transparent;
+--vibeui-drawer-001-surface:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
+--vibeui-drawer-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-drawer-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-drawer-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-drawer-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
+--vibeui-drawer-001-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.02 265));
+--vibeui-drawer-001-hover:light-dark(oklch(0.96 0.004 265),oklch(0.29 0.013 265));
 --vibeui-drawer-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="drawer-001"]{
@@ -43,7 +52,7 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 position:fixed;inset:0 0 0 auto;
 width:min(28rem,100vw);max-width:100vw;height:100dvh;max-height:100dvh;
 margin:0;padding:0;border:0;
-background:var(--vibeui-drawer-001-bg);color:inherit;
+background:var(--vibeui-drawer-001-surface);color:inherit;
 box-shadow:-24px 0 60px -30px oklch(0.2 0.02 265 / 55%);
 translate:100% 0;transition:translate .22s ease,overlay .22s allow-discrete,display .22s allow-discrete;
 }
@@ -64,7 +73,7 @@ appearance:none;border:0;cursor:pointer;background:transparent;flex:none;
 display:flex;align-items:center;justify-content:center;
 width:2rem;height:2rem;border-radius:0.5rem;color:var(--vibeui-drawer-001-muted);
 }
-[data-vibeui-block="drawer-001"] [data-part="close"]:hover{background:oklch(0.96 0.004 265);color:var(--vibeui-drawer-001-fg)}
+[data-vibeui-block="drawer-001"] [data-part="close"]:hover{background:var(--vibeui-drawer-001-hover);color:var(--vibeui-drawer-001-fg)}
 [data-vibeui-block="drawer-001"] [data-part="close"]:focus-visible{outline:2px solid var(--vibeui-drawer-001-accent);outline-offset:2px}
 [data-vibeui-block="drawer-001"] [data-part="cross"]{position:relative;width:0.625rem;height:0.625rem}
 [data-vibeui-block="drawer-001"] [data-part="cross"]::before,
@@ -87,12 +96,34 @@ border:1px solid var(--vibeui-drawer-001-border);
 background:transparent;color:inherit;font:inherit;font-size:0.875rem;font-weight:600;
 }
 [data-vibeui-block="drawer-001"] [data-part="foot"] button[data-primary="true"]{
-border-color:transparent;background:var(--vibeui-drawer-001-accent);color:oklch(0.99 0.01 265);
+border-color:transparent;background:var(--vibeui-drawer-001-accent);color:var(--vibeui-drawer-001-on-accent);
 }
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="drawer-001"] dialog{transition:none!important;translate:0 0}
 }
 `
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Боковая панель на нативном dialog: ловушка фокуса и Escape — от браузера.
@@ -103,6 +134,9 @@ export function Drawer001({
   title = "Настройки каталога",
   text = "Что показывать в списке, как сортировать и кому доступен каталог. Изменения применяются сразу.",
   primaryLabel = "Сохранить",
+  cancelLabel = "Отмена",
+  closeLabel = "Закрыть панель",
+  background = "",
   accent,
   className,
   style,
@@ -112,6 +146,13 @@ export function Drawer001({
 
   const palette = {
     ...(accent ? { "--vibeui-drawer-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-drawer-001-bg": background,
+          "--vibeui-drawer-001-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -140,7 +181,7 @@ export function Drawer001({
               <button
                 type="button"
                 data-part="close"
-                aria-label="Закрыть панель"
+                aria-label={closeLabel}
                 onClick={() => panel.current?.close()}
               >
                 <span data-part="cross" aria-hidden="true" />
@@ -149,7 +190,7 @@ export function Drawer001({
             <p data-part="text">{text}</p>
             <div data-part="foot">
               <button type="button" onClick={() => panel.current?.close()}>
-                Отмена
+                {cancelLabel}
               </button>
               <button
                 type="button"

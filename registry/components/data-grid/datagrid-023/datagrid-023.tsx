@@ -17,6 +17,28 @@ export type Datagrid023Props = Omit<
   rows?: Datagrid023Row[]
   caption?: string
   separatorHint?: string
+  /** Текст, с которым поле вставки открывается. */
+  sample?: string
+  /** Подпись поля вставки. */
+  pasteLabel?: string
+  /** Причины отбраковки строки по ключу: fields и quantity. */
+  problemText?: Record<string, string>
+  /** Подпись кнопки добавления. {count} — число строк. */
+  addTemplate?: string
+  /** Подпись кнопки очистки поля. */
+  clearText?: string
+  /** Отчёт разбора: пустое поле, всё разобрано, часть с ошибками. */
+  emptyText?: string
+  okTemplate?: string
+  mixedTemplate?: string
+  /** Заголовок строки-ошибки. {line} — номер строки вставки. */
+  lineTemplate?: string
+  /** Заголовки колонок по ключу: компонент несёт русские. */
+  columnText?: Record<string, string>
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,17 +47,22 @@ export type Datagrid023Props = Omit<
 // текста превращается в предварительную запись, битые строки помечаются
 // с номером и причиной, и добавляются только целые. Так вставка из
 // таблицы или письма не разъезжается молча.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-023"]){
---vibeui-datagrid-023-bg:oklch(1 0 0);
---vibeui-datagrid-023-fg:oklch(0.23 0.014 285);
---vibeui-datagrid-023-muted:oklch(0.55 0.014 285);
---vibeui-datagrid-023-border:oklch(0.92 0.006 285);
---vibeui-datagrid-023-head:oklch(0.975 0.003 285);
---vibeui-datagrid-023-accent:oklch(0.5 0.14 145);
---vibeui-datagrid-023-bad:oklch(0.53 0.19 27);
---vibeui-datagrid-023-badbg:oklch(0.97 0.03 27);
---vibeui-datagrid-023-new:oklch(0.96 0.04 145);
+--vibeui-datagrid-023-bg:transparent;
+--vibeui-datagrid-023-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-023-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-023-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
+--vibeui-datagrid-023-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
+--vibeui-datagrid-023-panel:light-dark(oklch(0.985 0.004 285),oklch(0.26 0.011 285));
+--vibeui-datagrid-023-accent:light-dark(oklch(0.5 0.14 145),oklch(0.76 0.13 145));
+--vibeui-datagrid-023-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.014 285));
+--vibeui-datagrid-023-bad:light-dark(oklch(0.53 0.19 27),oklch(0.77 0.16 27));
+--vibeui-datagrid-023-badbg:light-dark(oklch(0.97 0.03 27),oklch(0.31 0.055 27));
+--vibeui-datagrid-023-new:light-dark(oklch(0.96 0.04 145),oklch(0.31 0.05 145));
 --vibeui-datagrid-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-023"]{
@@ -47,7 +74,7 @@ font-family:var(--vibeui-datagrid-023-font);overflow:hidden;
 [data-vibeui-block="datagrid-023"] *{box-sizing:border-box}
 [data-vibeui-block="datagrid-023"] [data-part="paste"]{
 padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-023-border);
-background:oklch(0.985 0.004 285);
+background:var(--vibeui-datagrid-023-panel);
 }
 [data-vibeui-block="datagrid-023"] [data-part="paste"] label{
 display:block;margin-bottom:0.375rem;font-size:0.75rem;font-weight:600;
@@ -60,7 +87,7 @@ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 display:block;width:100%;min-height:4.5rem;resize:vertical;
 font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:0.75rem;line-height:1.5;color:inherit;
 padding:0.5rem 0.625rem;border-radius:0.5rem;
-border:1px solid var(--vibeui-datagrid-023-border);background:var(--vibeui-datagrid-023-bg);
+border:1px solid var(--vibeui-datagrid-023-border);background:transparent;
 }
 [data-vibeui-block="datagrid-023"] textarea:focus-visible{outline:2px solid var(--vibeui-datagrid-023-accent);outline-offset:1px}
 [data-vibeui-block="datagrid-023"] [data-part="actions"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin-top:0.5rem}
@@ -68,9 +95,9 @@ border:1px solid var(--vibeui-datagrid-023-border);background:var(--vibeui-datag
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:600;
 padding:0.375rem 0.75rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-023-border);
-background:var(--vibeui-datagrid-023-bg);color:var(--vibeui-datagrid-023-fg);
+background:transparent;color:var(--vibeui-datagrid-023-fg);
 }
-[data-vibeui-block="datagrid-023"] [data-part="commit"]{border-color:transparent;background:var(--vibeui-datagrid-023-accent);color:oklch(1 0 0)}
+[data-vibeui-block="datagrid-023"] [data-part="commit"]{border-color:transparent;background:var(--vibeui-datagrid-023-accent);color:var(--vibeui-datagrid-023-on-accent)}
 [data-vibeui-block="datagrid-023"] button:disabled{opacity:.4;cursor:not-allowed}
 [data-vibeui-block="datagrid-023"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-023-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-023"] [data-part="report"]{margin:0;margin-inline-start:auto;font-size:0.75rem;color:var(--vibeui-datagrid-023-muted)}
@@ -109,6 +136,39 @@ const SAMPLE = [
   "FLT-777\tФильтр грубой очистки\t25",
 ].join("\n")
 
+const PROBLEM_TEXT: Record<string, string> = {
+  fields: "Ожидались три поля: артикул, название, количество",
+  quantity: "Количество должно быть положительным числом",
+}
+
+const COLUMN_TEXT: Record<string, string> = {
+  sku: "Артикул",
+  title: "Наименование",
+  quantity: "Количество",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 type Parsed = {
   line: number
   sku: string
@@ -117,7 +177,7 @@ type Parsed = {
   problem: string
 }
 
-function parse(text: string): Parsed[] {
+function parse(text: string, problems: Record<string, string>): Parsed[] {
   return text
     .split(/\r?\n/)
     .map((raw, index) => ({ raw: raw.trim(), index }))
@@ -130,9 +190,9 @@ function parse(text: string): Parsed[] {
       let problem = ""
 
       if (parts.length < 3) {
-        problem = "Ожидались три поля: артикул, название, количество"
+        problem = problems.fields ?? PROBLEM_TEXT.fields
       } else if (quantity === "" || Number.isNaN(number) || number <= 0) {
-        problem = "Количество должно быть положительным числом"
+        problem = problems.quantity ?? PROBLEM_TEXT.quantity
       }
 
       return { line: index + 1, sku, title, quantity: number, problem }
@@ -147,22 +207,60 @@ export function Datagrid023({
   rows = DEFAULT_ROWS,
   caption = "Вставленные строки помечены заливкой до следующей вставки",
   separatorHint = "артикул ⇥ название ⇥ количество",
+  sample = SAMPLE,
+  pasteLabel = "Вставьте строки из таблицы или письма",
+  problemText = PROBLEM_TEXT,
+  addTemplate = "Добавить {count} стр.",
+  clearText = "Очистить поле",
+  emptyText = "Поле пустое",
+  okTemplate = "Разобрано строк: {count}, ошибок нет",
+  mixedTemplate = "Готово {good}, с ошибками {bad}",
+  lineTemplate = "строка {line}",
+  columnText = COLUMN_TEXT,
+  scrollLabel = "Таблица номенклатуры, прокручивается вбок",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Datagrid023Props) {
-  const [table, setTable] = useState(rows)
+  // Добавленные строки и набранный текст живут рядом с пропами, а не
+  // вместо них: смена rows или sample снаружи обязана переставить сетку.
+  const [added, setAdded] = useState<Datagrid023Row[] | null>(null)
+  const [seedRows, setSeedRows] = useState(rows)
   const [pasted, setPasted] = useState<string[]>([])
-  const [text, setText] = useState(SAMPLE)
+  const [typed, setTyped] = useState<string | null>(null)
+  const [seedText, setSeedText] = useState(sample)
+  // Номер вставки, а не время: ключ строки обязан быть предсказуемым и
+  // одинаковым на сервере и в браузере.
+  const [batch, setBatch] = useState(0)
   const areaId = useId()
 
-  const parsed = parse(text)
+  if (seedRows !== rows) {
+    setSeedRows(rows)
+    setAdded(null)
+    setPasted([])
+  }
+
+  if (seedText !== sample) {
+    setSeedText(sample)
+    setTyped(null)
+  }
+
+  const table = added ?? rows
+  const text = typed ?? sample
+  const parsed = parse(text, problemText)
   const good = parsed.filter((item) => item.problem === "")
   const bad = parsed.filter((item) => item.problem !== "")
 
   const palette = {
     ...(accent ? { "--vibeui-datagrid-023-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-023-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -178,13 +276,13 @@ export function Datagrid023({
         style={palette}
       >
         <div data-part="paste">
-          <label htmlFor={areaId}>Вставьте строки из таблицы или письма</label>
+          <label htmlFor={areaId}>{pasteLabel}</label>
           <p data-part="hint">{separatorHint}</p>
           <textarea
             id={areaId}
             value={text}
             spellCheck={false}
-            onChange={(event) => setText(event.target.value)}
+            onChange={(event) => setTyped(event.target.value)}
           />
           <div data-part="actions">
             <button
@@ -192,10 +290,11 @@ export function Datagrid023({
               data-part="commit"
               disabled={good.length === 0}
               onClick={() => {
-                const stamp = Date.now()
+                const stamp = batch + 1
 
-                setTable((current) => [
-                  ...current,
+                setBatch(stamp)
+                setAdded((current) => [
+                  ...(current ?? rows),
                   ...good.map((item, index) => ({
                     id: `p${stamp}-${index}`,
                     sku: item.sku,
@@ -204,13 +303,13 @@ export function Datagrid023({
                   })),
                 ])
                 setPasted(good.map((_, index) => `p${stamp}-${index}`))
-                setText("")
+                setTyped("")
               }}
             >
-              Добавить {good.length} стр.
+              {addTemplate.replace("{count}", String(good.length))}
             </button>
-            <button type="button" onClick={() => setText("")}>
-              Очистить поле
+            <button type="button" onClick={() => setTyped("")}>
+              {clearText}
             </button>
             <p
               data-part="report"
@@ -219,27 +318,29 @@ export function Datagrid023({
               aria-live="polite"
             >
               {parsed.length === 0
-                ? "Поле пустое"
+                ? emptyText
                 : bad.length === 0
-                  ? `Разобрано строк: ${good.length}, ошибок нет`
-                  : `Готово ${good.length}, с ошибками ${bad.length}`}
+                  ? okTemplate.replace("{count}", String(good.length))
+                  : mixedTemplate
+                      .replace("{good}", String(good.length))
+                      .replace("{bad}", String(bad.length))}
             </p>
           </div>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица номенклатуры, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
             <caption>{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Артикул</th>
-                <th scope="col">Наименование</th>
+                <th scope="col">{columnText.sku ?? COLUMN_TEXT.sku}</th>
+                <th scope="col">{columnText.title ?? COLUMN_TEXT.title}</th>
                 <th scope="col" data-align="end">
-                  Количество
+                  {columnText.quantity ?? COLUMN_TEXT.quantity}
                 </th>
               </tr>
             </thead>
@@ -259,7 +360,7 @@ export function Datagrid023({
               {bad.map((item) => (
                 <tr key={`bad-${item.line}`} data-origin="bad">
                   <th scope="row" data-part="sku">
-                    строка {item.line}
+                    {lineTemplate.replace("{line}", String(item.line))}
                   </th>
                   <td colSpan={2} data-part="why">
                     {item.problem}

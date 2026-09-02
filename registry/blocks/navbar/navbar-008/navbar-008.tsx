@@ -19,7 +19,19 @@ export type Navbar008Props = {
   userName?: string
   userEmail?: string
   menu?: Navbar008MenuItem[]
+  /** Буквы в знаке пространства: компонент несёт русские. */
+  workspaceInitials?: string
+  /** Буквы в аватаре: компонент несёт русские. */
+  userInitials?: string
+  /** Подпись навигации для скринридера: компонент несёт русскую. */
+  navLabel?: string
+  /** Подпись колокола; {count} подставляет число уведомлений. */
+  notificationsLabel?: string
+  /** Подпись кнопки аккаунта; {name} подставляет имя. */
+  accountLabel?: string
   id?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -29,15 +41,19 @@ export type Navbar008Props = {
 // тарифом, посередине вкладки разделов с подчёркиванием текущего, справа
 // колокол со счётчиком и аватар. Счётчик уведомлений продублирован текстом
 // для скринридера — цифра в кружке сама по себе ничего не сообщает.
+//
+// Тема берётся из color-scheme окружения через light-dark(): шапка темнеет
+// вместе с контекстом и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="navbar-008"]){
---vibeui-navbar-008-bg:oklch(1 0 0);
---vibeui-navbar-008-ink:oklch(0.24 0.014 265);
---vibeui-navbar-008-muted:oklch(0.55 0.014 265);
---vibeui-navbar-008-border:oklch(0.91 0.005 265);
---vibeui-navbar-008-accent:oklch(0.5 0.19 275);
---vibeui-navbar-008-accent-fg:oklch(0.99 0 0);
---vibeui-navbar-008-badge:oklch(0.6 0.2 25);
+--vibeui-navbar-008-bg:transparent;
+--vibeui-navbar-008-ink:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-navbar-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-navbar-008-border:light-dark(oklch(0.91 0.005 265),oklch(0.34 0.011 265));
+--vibeui-navbar-008-accent:light-dark(oklch(0.5 0.19 275),oklch(0.72 0.16 275));
+--vibeui-navbar-008-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.03 275));
+--vibeui-navbar-008-badge:light-dark(oklch(0.6 0.2 25),oklch(0.66 0.2 25));
+--vibeui-navbar-008-tint:light-dark(oklch(1 0 0),oklch(0.27 0.016 275));
 --vibeui-navbar-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -111,7 +127,7 @@ transition:background-color .16s ease;
 [data-vibeui-block="navbar-008"] [data-part="avatar"]{
 width:1.625rem;height:1.625rem;border-radius:999px;flex:none;
 display:grid;place-items:center;font-size:0.6875rem;font-weight:700;
-background:color-mix(in oklab,var(--vibeui-navbar-008-accent) 16%,white);
+background:color-mix(in oklab,var(--vibeui-navbar-008-accent) 16%,var(--vibeui-navbar-008-tint));
 color:var(--vibeui-navbar-008-accent);
 }
 [data-vibeui-block="navbar-008"] [data-part="user-name"]{display:none;font-size:0.8125rem;font-weight:560}
@@ -119,22 +135,24 @@ color:var(--vibeui-navbar-008-accent);
 [data-vibeui-block="navbar-008"] a:focus-visible{outline:2px solid var(--vibeui-navbar-008-accent);outline-offset:2px}
 [data-vibeui-navbar-008-menu]{
 position:fixed;inset:3.75rem 1rem auto auto;margin:0;padding:0.375rem;min-width:15rem;
-border:1px solid var(--vibeui-navbar-008-border,oklch(0.91 0.005 265));border-radius:0.875rem;
-background:oklch(1 0 0);
+border:1px solid var(--vibeui-navbar-008-border,light-dark(oklch(0.91 0.005 265),oklch(0.34 0.011 265)));
+border-radius:0.875rem;
+background:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.014 265));
 font-family:var(--vibeui-navbar-008-font,ui-sans-serif,system-ui,sans-serif);
-box-shadow:0 26px 60px -32px oklch(0.2 0.03 265 / 55%);
+box-shadow:0 26px 60px -32px light-dark(oklch(0.2 0.03 265 / 55%),oklch(0 0 0 / 65%));
 }
 [data-vibeui-navbar-008-menu] [data-part="who"]{
 padding:0.5rem 0.625rem 0.625rem;margin-bottom:0.25rem;
-border-bottom:1px solid oklch(0.91 0.005 265);
+border-bottom:1px solid light-dark(oklch(0.91 0.005 265),oklch(0.34 0.011 265));
 }
-[data-vibeui-navbar-008-menu] [data-part="who"] strong{display:block;font-size:0.875rem;color:oklch(0.24 0.014 265)}
-[data-vibeui-navbar-008-menu] [data-part="who"] span{display:block;font-size:0.8125rem;color:oklch(0.55 0.014 265)}
+[data-vibeui-navbar-008-menu] [data-part="who"] strong{display:block;font-size:0.875rem;color:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265))}
+[data-vibeui-navbar-008-menu] [data-part="who"] span{display:block;font-size:0.8125rem;color:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265))}
 [data-vibeui-navbar-008-menu] a{
 display:block;padding:0.5rem 0.625rem;border-radius:0.5rem;
-color:oklch(0.24 0.014 265);text-decoration:none;font-size:0.875rem;font-weight:520;
+color:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+text-decoration:none;font-size:0.875rem;font-weight:520;
 }
-[data-vibeui-navbar-008-menu] a:hover{background:oklch(0.55 0.02 265 / 8%)}
+[data-vibeui-navbar-008-menu] a:hover{background:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 12%))}
 @container (min-width: 46rem){
 [data-vibeui-block="navbar-008"] [data-part="shell"]{padding:0.625rem 1.75rem;gap:1.25rem}
 [data-vibeui-block="navbar-008"] [data-part="plan"]{display:inline-block}
@@ -160,6 +178,28 @@ const DEFAULT_MENU: Navbar008MenuItem[] = [
   { label: "Выйти", href: "#logout" },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Шапка приложения: вкладки разделов, счётчик уведомлений, меню аккаунта. */
 export function Navbar008({
   workspace = "Ателье Восход",
@@ -169,13 +209,25 @@ export function Navbar008({
   userName = "Марина К.",
   userEmail = "marina@voskhod.ru",
   menu = DEFAULT_MENU,
+  workspaceInitials = "АВ",
+  userInitials = "МК",
+  navLabel = "Разделы приложения",
+  notificationsLabel = "Уведомления: {count} новых",
+  accountLabel = "Аккаунт: {name}",
   id = "vibeui-navbar-008-menu",
+  background = "",
   accent,
   className,
   style,
 }: Navbar008Props) {
   const palette = {
     ...(accent ? { "--vibeui-navbar-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-navbar-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -192,12 +244,12 @@ export function Navbar008({
         <div data-part="shell">
           <a data-part="workspace" href="#workspace">
             <span data-part="avatar-square" aria-hidden="true">
-              АВ
+              {workspaceInitials}
             </span>
             <span data-part="workspace-name">{workspace}</span>
           </a>
           <span data-part="plan">{plan}</span>
-          <nav data-part="tabs" aria-label="Разделы приложения">
+          <nav data-part="tabs" aria-label={navLabel}>
             {tabs.map((tab) => (
               <a
                 key={tab.href}
@@ -212,7 +264,10 @@ export function Navbar008({
             <button
               data-part="bell"
               type="button"
-              aria-label={`Уведомления: ${notifications} новых`}
+              aria-label={notificationsLabel.replace(
+                "{count}",
+                String(notifications),
+              )}
             >
               <span data-part="count" aria-hidden="true">
                 {notifications}
@@ -222,10 +277,10 @@ export function Navbar008({
               data-part="user"
               type="button"
               popoverTarget={id}
-              aria-label={`Аккаунт: ${userName}`}
+              aria-label={accountLabel.replace("{name}", userName)}
             >
               <span data-part="avatar" aria-hidden="true">
-                МК
+                {userInitials}
               </span>
               <span data-part="user-name">{userName}</span>
             </button>

@@ -9,6 +9,10 @@ export type Buttongroup034Props = Omit<
   actions?: string[]
   primary?: string
   label?: string
+  /** Текст тела карточки: компонент несёт русский. */
+  body?: string
+  /** Пусто — подложка карточки остаётся своей, по теме окружения. */
+  background?: string
   accent?: string
 }
 
@@ -21,12 +25,14 @@ export type Buttongroup034Props = Omit<
 // без поддержки контейнеров шапка останется рабочей, просто в две строки.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-034"]){
---vibeui-buttongroup-034-surface:oklch(1 0 0);
---vibeui-buttongroup-034-fg:oklch(0.24 0.016 265);
---vibeui-buttongroup-034-muted:oklch(0.55 0.014 265);
---vibeui-buttongroup-034-border:oklch(0.9 0.006 265);
---vibeui-buttongroup-034-accent:oklch(0.5 0.16 265);
---vibeui-buttongroup-034-on-accent:oklch(0.99 0.004 265);
+--vibeui-buttongroup-034-surface:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-buttongroup-034-fg:light-dark(oklch(0.24 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-034-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-034-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.012 265));
+--vibeui-buttongroup-034-hover:light-dark(oklch(0.97 0.004 265),oklch(0.33 0.014 265));
+--vibeui-buttongroup-034-accent:light-dark(oklch(0.5 0.16 265),oklch(0.62 0.17 265));
+--vibeui-buttongroup-034-accent-strong:light-dark(oklch(0.45 0.16 265),oklch(0.7 0.16 265));
+--vibeui-buttongroup-034-on-accent:light-dark(oklch(0.99 0.004 265),oklch(0.16 0.02 265));
 --vibeui-buttongroup-034-radius:0.5rem;
 --vibeui-buttongroup-034-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -76,14 +82,14 @@ border-end-start-radius:var(--vibeui-buttongroup-034-radius);
 border-start-end-radius:var(--vibeui-buttongroup-034-radius);
 border-end-end-radius:var(--vibeui-buttongroup-034-radius);
 }
-[data-vibeui-block="buttongroup-034"] button:hover{background:oklch(0.97 0.004 265)}
+[data-vibeui-block="buttongroup-034"] button:hover{background:var(--vibeui-buttongroup-034-hover)}
 [data-vibeui-block="buttongroup-034"] [data-part="primary"]{
 background:var(--vibeui-buttongroup-034-accent);
 border-color:var(--vibeui-buttongroup-034-accent);
 color:var(--vibeui-buttongroup-034-on-accent);
 }
 [data-vibeui-block="buttongroup-034"] [data-part="primary"]:hover{
-background:oklch(0.45 0.16 265);
+background:var(--vibeui-buttongroup-034-accent-strong);
 }
 [data-vibeui-block="buttongroup-034"] button:focus-visible{
 z-index:2;outline:2px solid var(--vibeui-buttongroup-034-accent);outline-offset:1px;
@@ -105,6 +111,31 @@ font-size:0.8125rem;line-height:1.5;
 
 const DEFAULT_ACTIONS = ["Экспорт", "Настроить"]
 
+const DEFAULT_BODY =
+  "За неделю 128 заказов на 1 240 000 ₽. Средний чек вырос на 4 % по сравнению с прошлой неделей."
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Шапка карточки с группой действий, складывающейся по ширине самой карточки.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -115,6 +146,8 @@ export function Buttongroup034({
   actions = DEFAULT_ACTIONS,
   primary = "Обновить",
   label = "Действия над отчётом",
+  body = DEFAULT_BODY,
+  background = "",
   accent,
   className,
   style,
@@ -122,6 +155,12 @@ export function Buttongroup034({
 }: Buttongroup034Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-034-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-034-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -153,10 +192,7 @@ export function Buttongroup034({
           </div>
         </header>
         <div data-part="body">
-          <p>
-            За неделю 128 заказов на 1 240 000 ₽. Средний чек вырос на 4 % по
-            сравнению с прошлой неделей.
-          </p>
+          <p>{body}</p>
         </div>
       </section>
     </>

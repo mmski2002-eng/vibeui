@@ -10,6 +10,10 @@ export type Navbar004Props = {
   links?: Navbar004Link[]
   actionLabel?: string
   actionHref?: string
+  /** Строка под шапкой: компонент несёт русскую. */
+  hint?: string
+  /** Подпись навигации для скринридера: компонент несёт русскую. */
+  navLabel?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -20,6 +24,9 @@ export type Navbar004Props = {
 // привязанная к прогрессу прокрутки страницы (animation-timeline:scroll()).
 // Пока браузер её не поддерживает, шапка просто остаётся развёрнутой:
 // это честная деградация, а не сломанный макет.
+//
+// Палитра намеренно одноцветная: тёмная обложка — сама идея блока, а не
+// тёмная тема, поэтому light-dark() здесь не нужен.
 const STYLES = `
 :where([data-vibeui-block="navbar-004"]){
 --vibeui-navbar-004-ink:oklch(0.98 0.003 265);
@@ -102,6 +109,8 @@ export function Navbar004({
   links = DEFAULT_LINKS,
   actionLabel = "Забронировать",
   actionHref = "#booking",
+  hint = "Шапка лежит поверх обложки и сжимается сама, как только страница уезжает вверх.",
+  navLabel = "Основная навигация",
   accent,
   className,
   style,
@@ -126,7 +135,7 @@ export function Navbar004({
             {brand}
             <span data-part="dot" aria-hidden="true" />
           </a>
-          <nav data-part="links" aria-label="Основная навигация">
+          <nav data-part="links" aria-label={navLabel}>
             {links.map((link) => (
               <a key={link.href} href={link.href}>
                 {link.label}
@@ -137,10 +146,7 @@ export function Navbar004({
             {actionLabel}
           </a>
         </div>
-        <p data-part="hint">
-          Шапка лежит поверх обложки и сжимается сама, как только страница
-          уезжает вверх.
-        </p>
+        <p data-part="hint">{hint}</p>
       </header>
     </>
   )

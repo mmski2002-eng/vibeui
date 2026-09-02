@@ -12,18 +12,23 @@ export type Carousel007Props = Omit<
   shots?: Carousel007Shot[]
   label?: string
   hint?: string
+  /** Пусто — подложка своя; цвет заменяет её целиком. */
+  background?: string
 }
 
 // Идея компонента: галерея-плёнка с подписями под кадрами. Прокрутка
 // горизонтальная, но кадры не занимают всю ширину: видно сразу три, и это
 // превращает ленту в обзор, а не в пролистывание по одному. Подписи стоят
 // под кадром, а не поверх — на светлом снимке текст поверх не читается.
+//
+// Тема берётся из color-scheme окружения через light-dark(): карточка и текст
+// темнеют вместе со страницей, своей тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="carousel-007"]){
---vibeui-carousel-007-bg:oklch(1 0 0);
---vibeui-carousel-007-fg:oklch(0.22 0.014 265);
---vibeui-carousel-007-muted:oklch(0.58 0.014 265);
---vibeui-carousel-007-border:oklch(0.91 0.006 265);
+--vibeui-carousel-007-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-carousel-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-007-muted:light-dark(oklch(0.58 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-carousel-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -76,6 +81,28 @@ const DEFAULT_SHOTS: Carousel007Shot[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Галерея-плёнка: несколько кадров в кадре и подписи под ними.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -83,10 +110,21 @@ export function Carousel007({
   shots = DEFAULT_SHOTS,
   label = "Скриншоты",
   hint = "Прокрутите вбок — всего кадров: 5",
+  background = "",
   className,
   style,
   ...props
 }: Carousel007Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-carousel-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-carousel-007" precedence="medium">
@@ -97,7 +135,7 @@ export function Carousel007({
         data-vibeui-block="carousel-007"
         aria-label={label}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="card">
           <h3 data-part="title">{label}</h3>

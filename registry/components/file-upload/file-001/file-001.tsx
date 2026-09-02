@@ -10,7 +10,11 @@ export type File001Props = Omit<
   label?: string
   hint?: string
   accept?: string
+  /** Строка размера файла: {size} — число килобайт. */
+  sizeText?: string
   onChange?: (names: string[]) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,14 +22,17 @@ export type File001Props = Omit<
 // файл можно только мышью — поэтому внутри настоящий input с типом file и
 // подписью-label: с клавиатуры и с телефона всё работает так же. Список
 // выбранного показывается сразу: без него непонятно, что именно улетело.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у зоны
+// по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="file-001"]){
---vibeui-file-001-bg:oklch(1 0 0);
---vibeui-file-001-fg:oklch(0.22 0.014 265);
---vibeui-file-001-muted:oklch(0.56 0.014 265);
---vibeui-file-001-border:oklch(0.86 0.008 265);
---vibeui-file-001-hover:oklch(0.97 0.003 265);
---vibeui-file-001-accent:oklch(0.55 0.17 265);
+--vibeui-file-001-bg:transparent;
+--vibeui-file-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-file-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-file-001-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-file-001-hover:light-dark(oklch(0.97 0.003 265),oklch(0.28 0.012 265));
+--vibeui-file-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-file-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="file-001"]{
@@ -44,7 +51,7 @@ transition:border-color .16s ease,background-color .16s ease;
 [data-vibeui-block="file-001"] label:hover{background:var(--vibeui-file-001-hover)}
 [data-vibeui-block="file-001"][data-over="true"] label{
 border-color:var(--vibeui-file-001-accent);
-background:color-mix(in oklab,var(--vibeui-file-001-accent) 8%,oklch(1 0 0));
+background:color-mix(in oklab,var(--vibeui-file-001-accent) 10%,transparent);
 }
 [data-vibeui-block="file-001"] label:has(input:focus-visible){outline:2px solid var(--vibeui-file-001-accent);outline-offset:2px}
 [data-vibeui-block="file-001"] input{position:absolute;width:1px;height:1px;opacity:0}
@@ -77,6 +84,28 @@ font-size:0.8125rem;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Зона перетаскивания на настоящем input type="file" с списком выбранного.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -84,7 +113,9 @@ export function File001({
   label = "Перетащите файлы сюда",
   hint = "PNG, JPG или PDF до 10 МБ. Можно выбрать несколько",
   accept = "image/png,image/jpeg,application/pdf",
+  sizeText = "{size} КБ",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -96,6 +127,12 @@ export function File001({
 
   const palette = {
     ...(accent ? { "--vibeui-file-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-file-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -103,7 +140,10 @@ export function File001({
     if (!list) return
     const next = Array.from(list).map((file) => ({
       name: file.name,
-      size: `${Math.max(1, Math.round(file.size / 1024))} КБ`,
+      size: sizeText.replace(
+        "{size}",
+        String(Math.max(1, Math.round(file.size / 1024))),
+      ),
     }))
     setFiles(next)
     onChange?.(next.map((file) => file.name))

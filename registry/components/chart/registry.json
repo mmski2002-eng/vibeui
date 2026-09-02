@@ -34,7 +34,9 @@
             "заливку под линией с низкой непрозрачностью: она удерживает взгляд на области значений",
             "aria-label у svg с диапазоном значений — иначе для скринридера это пустая картинка",
             "разметку figure / figcaption: подпись принадлежит графику, а не соседнему тексту",
-            "блок <style> внутри компонента — в нём вся палитра и геометрия"
+            "блок <style> внутри компонента — в нём вся палитра и геометрия",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив points: подпись и значение каждой точки",
@@ -42,9 +44,13 @@
             "unit — единица у крупного значения справа",
             "markPeak — отмечать ли максимум",
             "акцент через проп accent — цвет линии, заливки и значения",
-            "высоту графика и внешние отступы через className"
+            "высоту графика и внешние отступы через className",
+            "rangeLabel — подпись графика для скринридера: {title}, {min}, {max}, {unit}",
+            "locale — локаль форматирования крупного значения справа",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Наведения и подсказок нет: это статичный график. Интерактивность требует клиентского кода и другого компонента.",
             "Точек больше двадцати линия не выдержит — агрегируйте данные до отрисовки.",
             "Не показывайте одним графиком два ряда: для сравнения нужны две линии и легенда, а это другой компонент.",
@@ -77,6 +83,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -92,7 +104,9 @@
                 "the low-opacity fill under the line: it holds the eye on the value area",
                 "the aria-label on the svg carrying the range — otherwise it is an empty image to a screen reader",
                 "the figure / figcaption markup: the caption belongs to the chart, not to neighbouring text",
-                "the <style> block inside the component — it holds the palette and the geometry"
+                "the <style> block inside the component — it holds the palette and the geometry",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the points array: a label and a value per point",
@@ -100,9 +114,13 @@
                 "unit — the unit beside the large current value",
                 "markPeak — whether to mark the maximum",
                 "the accent through the accent prop — it colours the line, the fill and the value",
-                "chart height and outer spacing through className"
+                "chart height and outer spacing through className",
+                "rangeLabel — the screen-reader label of the chart: {title}, {min}, {max}, {unit}",
+                "locale — the locale used to format the large value on the right",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is no hover or tooltip: this is a static chart. Interactivity needs client code and a different component.",
                 "Beyond twenty points the line stops holding up — aggregate before rendering.",
                 "Do not put two series in one chart: comparison needs two lines and a legend, which is a different component.",
@@ -124,11 +142,52 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Line Chart"
+            "title": "Line Chart",
+            "preview": {
+              "props": {
+                "title": "Visitors this week",
+                "points": [
+                  {
+                    "label": "Mon",
+                    "value": 1240
+                  },
+                  {
+                    "label": "Tue",
+                    "value": 1580
+                  },
+                  {
+                    "label": "Wed",
+                    "value": 1390
+                  },
+                  {
+                    "label": "Thu",
+                    "value": 2180
+                  },
+                  {
+                    "label": "Fri",
+                    "value": 2640
+                  },
+                  {
+                    "label": "Sat",
+                    "value": 1980
+                  },
+                  {
+                    "label": "Sun",
+                    "value": 2310
+                  }
+                ],
+                "rangeLabel": "{title}: from {min}{unit} to {max}{unit}",
+                "locale": "en-US"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["markPeak", "accent", "background"]
       }
     },
     {
@@ -163,7 +222,9 @@
             "сетку фоном области, а не элементами: так она не мешает раскладке столбцов",
             "скрытый текст с подписью и значением внутри каждого столбца и aria-hidden у оси — иначе скринридер прочитает подписи дважды",
             "выделение столбца data-атрибутом, а не отдельным цветом в данных",
-            "блок <style> внутри компонента — в нём вся палитра, сетка и столбцы"
+            "блок <style> внутри компонента — в нём вся палитра, сетка и столбцы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив bars: подпись, значение и флаг highlight",
@@ -171,9 +232,11 @@
             "unit — единица у значений",
             "showValues — показывать ли числа над столбцами",
             "акцент через проп accent — цвет выделенного столбца",
-            "высоту области через переменную --vibeui-chart-002-height и внешние отступы через className"
+            "высоту области через переменную --vibeui-chart-002-height и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше двенадцати столбцов не помещается: подписи начинают наезжать друг на друга.",
             "Ось всегда начинается с нуля — так и должно быть. Обрезанная снизу шкала преувеличивает разницу.",
             "Для сравнения двух рядов нужен другой компонент: сгруппированные столбцы требуют легенды.",
@@ -206,6 +269,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -220,7 +289,9 @@
                 "the grid as a background of the plot area rather than elements: it then stays out of the bars' layout",
                 "the hidden label and value inside each bar together with aria-hidden on the axis — otherwise a screen reader reads the labels twice",
                 "highlighting a bar through a data attribute rather than a colour in the data",
-                "the <style> block inside the component — it holds the palette, the grid and the bars"
+                "the <style> block inside the component — it holds the palette, the grid and the bars",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the bars array: label, value and the highlight flag",
@@ -228,9 +299,11 @@
                 "unit — the unit beside the values",
                 "showValues — whether numbers appear above the bars",
                 "the accent through the accent prop — it colours the highlighted bar",
-                "the plot height through --vibeui-chart-002-height and outer spacing through className"
+                "the plot height through --vibeui-chart-002-height and outer spacing through className",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "More than twelve bars will not fit: the labels start colliding.",
                 "The axis always starts at zero, as it should. A truncated scale exaggerates the difference.",
                 "Comparing two series needs a different component: grouped bars require a legend.",
@@ -252,11 +325,47 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Bar Chart"
+            "title": "Bar Chart",
+            "preview": {
+              "props": {
+                "title": "Component installs by month",
+                "bars": [
+                  {
+                    "label": "Oct",
+                    "value": 42
+                  },
+                  {
+                    "label": "Nov",
+                    "value": 58
+                  },
+                  {
+                    "label": "Dec",
+                    "value": 91
+                  },
+                  {
+                    "label": "Jan",
+                    "value": 74
+                  },
+                  {
+                    "label": "Feb",
+                    "value": 86
+                  },
+                  {
+                    "label": "Mar",
+                    "value": 118,
+                    "highlight": true
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["showValues", "accent", "background"]
       }
     },
     {
@@ -287,15 +396,20 @@
             "conic-gradient вместо SVG с расчётом дуг — меньше кода и разметки",
             "aria-hidden на кольце: смысл несёт легенда, а не картинка",
             "расчёт начала сектора суммой предыдущих, без изменяемого счётчика",
-            "маску для дырки вместо второго круга поверх"
+            "маску для дырки вместо второго круга поверх",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив slices: подпись, значение и оттенок",
             "title и unit",
             "толщину кольца через переменную",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "totalLabel — подпись итога под легендой: {total} и {unit}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше шести долей кольцо не читает: остальное сводите в «прочее».",
             "Проценты округляются до целых и в сумме могут дать 99 или 101 — это нормально для округления.",
             "Кольцо не подходит для сравнения близких величин: для этого горизонтальные полосы chart-004.",
@@ -322,6 +436,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -335,15 +455,20 @@
                 "conic-gradient instead of SVG arc maths — less code and markup",
                 "aria-hidden on the ring: the legend carries the meaning, not the picture",
                 "computing each sector's start as the sum of the previous ones, with no mutable counter",
-                "the mask for the hole instead of a second circle on top"
+                "the mask for the hole instead of a second circle on top",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the slices array: label, value and hue",
                 "title and unit",
                 "the ring thickness through the variable",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "totalLabel — the total line under the legend: {total} and {unit}",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Beyond six slices a donut stops reading: fold the rest into \"other\".",
                 "Percentages are rounded and may total 99 or 101 — that is normal rounding.",
                 "A donut is wrong for comparing close values: use the horizontal bars of chart-004.",
@@ -362,11 +487,44 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Donut Chart"
+            "title": "Donut Chart",
+            "preview": {
+              "props": {
+                "title": "Traffic sources",
+                "slices": [
+                  {
+                    "label": "Direct",
+                    "value": 42,
+                    "hue": 250
+                  },
+                  {
+                    "label": "Search",
+                    "value": 28,
+                    "hue": 150
+                  },
+                  {
+                    "label": "Social",
+                    "value": 18,
+                    "hue": 30
+                  },
+                  {
+                    "label": "Email",
+                    "value": 12,
+                    "hue": 300
+                  }
+                ],
+                "unit": "thousand visits",
+                "totalLabel": "Total: {total} {unit}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -397,15 +555,21 @@
             "числа рядом с полосами — без них видно «кто больше», но не «насколько»",
             "role=\"img\" с подписью на каждой полосе",
             "выделение лидера насыщенностью, а не отдельным цветом",
-            "сетку строки: числа обязаны стоять ровным столбцом"
+            "сетку строки: числа обязаны стоять ровным столбцом",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив rows и порядок строк",
             "title и unit",
             "акцент через проп accent",
-            "высоту полосы"
+            "высоту полосы",
+            "unitLabel — подпись единицы под рейтингом: {unit}",
+            "rowLabel — подпись полосы для скринридера: {label}, {value}, {unit}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Строки не сортируются автоматически: порядок задаёт вызывающий код, и обычно он должен быть по убыванию.",
             "Больше семи строк превращают рейтинг в список: остальное сворачивайте в «прочее».",
             "Доли считаются от максимума, а не от суммы: это рейтинг, а не структура целого.",
@@ -432,6 +596,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -445,15 +615,21 @@
                 "the numbers beside the bars — without them you see who leads, not by how much",
                 "role=\"img\" with a label on every bar",
                 "marking the leader by saturation rather than a separate colour",
-                "the row grid: numbers must line up in a column"
+                "the row grid: numbers must line up in a column",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the rows array and their order",
                 "title and unit",
                 "the accent through the accent prop",
-                "the bar height"
+                "the bar height",
+                "unitLabel — the unit caption under the ranking: {unit}",
+                "rowLabel — the screen-reader label of a bar: {label}, {value}, {unit}",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Rows are not sorted automatically: the caller sets the order, usually descending.",
                 "Beyond seven rows a ranking becomes a list: fold the rest into \"other\".",
                 "Shares are relative to the maximum, not the sum: this is a ranking, not a breakdown.",
@@ -472,11 +648,45 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Ranking Bars"
+            "title": "Ranking Bars",
+            "preview": {
+              "props": {
+                "title": "Views this week",
+                "rows": [
+                  {
+                    "label": "Catalog",
+                    "value": 4820
+                  },
+                  {
+                    "label": "Home",
+                    "value": 3140
+                  },
+                  {
+                    "label": "Component page",
+                    "value": 2260
+                  },
+                  {
+                    "label": "Blocks",
+                    "value": 1180
+                  },
+                  {
+                    "label": "Documentation",
+                    "value": 640
+                  }
+                ],
+                "unit": "visits",
+                "unitLabel": "Unit of measure: {unit}",
+                "rowLabel": "{label}: {value} {unit}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -510,15 +720,20 @@
             "скрытие подписи в узких долях — текст в них всё равно не помещается",
             "легенду со всеми значениями: узкие доли иначе теряются",
             "role=\"img\" с процентом на каждой доле",
-            "светлый разделитель между долями вместо зазора"
+            "светлый разделитель между долями вместо зазора",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив parts: подпись, значение и оттенок",
             "title и total",
             "высоту полосы",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "partLabel — подпись доли для скринридера: {label} и {percent}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Порядок долей задаёт вызывающий код: обычно от большей к меньшей, «прочее» — в конец.",
             "Больше шести долей полоса не читает: цвета перестают различаться.",
             "Проценты округляются: сумма подписей может не совпасть со ста ровно.",
@@ -545,6 +760,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -558,15 +779,20 @@
                 "hiding labels in narrow shares — the text does not fit anyway",
                 "the legend with every value: narrow shares are otherwise lost",
                 "role=\"img\" with the percentage on every share",
-                "the light divider between shares instead of a gap"
+                "the light divider between shares instead of a gap",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the parts array: label, value and hue",
                 "title and total",
                 "the bar height",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "partLabel — the screen-reader label of a share: {label} and {percent}",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The caller sets the order: usually largest first with \"other\" last.",
                 "Beyond six shares the bar stops reading: the colours blur together.",
                 "Percentages are rounded: the labels may not add up to exactly 100.",
@@ -585,11 +811,49 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Stacked Bar"
+            "title": "Stacked Bar",
+            "preview": {
+              "props": {
+                "title": "Monthly spend",
+                "parts": [
+                  {
+                    "label": "Engineering",
+                    "value": 46,
+                    "hue": 250
+                  },
+                  {
+                    "label": "Design",
+                    "value": 24,
+                    "hue": 150
+                  },
+                  {
+                    "label": "Support",
+                    "value": 18,
+                    "hue": 30
+                  },
+                  {
+                    "label": "Infrastructure",
+                    "value": 8,
+                    "hue": 300
+                  },
+                  {
+                    "label": "Other",
+                    "value": 4,
+                    "hue": 200
+                  }
+                ],
+                "total": "$14,200",
+                "partLabel": "{label}: {percent}%"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -623,15 +887,20 @@
             "vector-effect: non-scaling-stroke — иначе линия растягивается вместе с viewBox",
             "три линии сетки: больше превращает график в тетрадь в клетку",
             "role=\"img\" с диапазоном значений у svg",
-            "точку на последнем значении — глаз ищет, где сейчас"
+            "точку на последнем значении — глаз ищет, где сейчас",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив points и подписи labels",
             "title и unit",
             "акцент через проп accent",
-            "высоту графика через viewBox"
+            "высоту графика через viewBox",
+            "rangeLabel — подпись графика для скринридера: {title}, {min}, {max}, {unit}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Точки должны быть равномерны по времени: пропуски дней компонент не заметит и нарисует ровную сетку.",
             "Заливка идёт до низа графика, а не до нуля данных: для рядов с отрицательными значениями это неверно.",
             "Ось подписана только по краям и середине: точные значения — задача таблицы рядом.",
@@ -658,6 +927,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -671,15 +946,20 @@
                 "vector-effect: non-scaling-stroke — otherwise the stroke stretches with the viewBox",
                 "three grid lines: more turns the chart into graph paper",
                 "role=\"img\" with the value range on the svg",
-                "the dot on the last value — the eye looks for \"where are we now\""
+                "the dot on the last value — the eye looks for \"where are we now\"",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the points array and the labels",
                 "title and unit",
                 "the accent through the accent prop",
-                "the chart height through the viewBox"
+                "the chart height through the viewBox",
+                "rangeLabel — the screen-reader label of the chart: {title}, {min}, {max}, {unit}",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Points must be evenly spaced in time: gaps go unnoticed and the grid stays even.",
                 "The fill reaches the bottom of the chart, not the data zero: that is wrong for series with negatives.",
                 "The axis is labelled only at the edges and middle: exact values belong in a table.",
@@ -698,11 +978,32 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Area Chart"
+            "title": "Area Chart",
+            "preview": {
+              "props": {
+                "title": "Component installs",
+                "labels": [
+                  "Mon",
+                  "Tue",
+                  "Wed",
+                  "Thu",
+                  "Fri",
+                  "Sat",
+                  "Sun",
+                  "Mon"
+                ],
+                "unit": "installs per day",
+                "rangeLabel": "{title}: from {min} to {max} {unit}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -733,15 +1034,21 @@
             "риску цели: «74%» без плана не отвечает, хорошо это или плохо",
             "число рядом с дугой — по длине дуги процент не назвать",
             "role=\"img\" со значением и целью у svg",
-            "stroke-dasharray от длины дуги вместо ручного расчёта координат"
+            "stroke-dasharray от длины дуги вместо ручного расчёта координат",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "value, max и target",
             "title и unit",
             "толщину дуги",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "valueLabel — подпись шкалы для скринридера: {title}, {value}, {max}, {target}",
+            "targetLabel — подпись риски цели под шкалой: {target}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Шкала для одного показателя: два значения на одной дуге не читаются.",
             "Значение подрезается диапазоном 0–max: перевыполнение плана дуга не покажет, для этого нужен другой график.",
             "Без цели компонент теряет половину смысла: если плана нет, хватит и обычного числа.",
@@ -771,6 +1078,18 @@
             "type": "text",
             "default": "План продаж",
             "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -784,15 +1103,21 @@
                 "the target tick: \"74%\" without a plan says nothing about good or bad",
                 "the number beside the arc — an arc's length never names a percentage",
                 "role=\"img\" with the value and target on the svg",
-                "stroke-dasharray from the arc length instead of hand-built coordinates"
+                "stroke-dasharray from the arc length instead of hand-built coordinates",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "value, max and target",
                 "title and unit",
                 "the arc thickness",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "valueLabel — the screen-reader label of the gauge: {title}, {value}, {max}, {target}",
+                "targetLabel — the target tick caption under the gauge: {target}",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "One metric per gauge: two values on one arc do not read.",
                 "The value is clamped to 0–max: overshooting the plan is invisible here, use another chart for that.",
                 "Without a target the component loses half its point: with no plan a plain number suffices.",
@@ -810,11 +1135,26 @@
               "title": {
                 "label": "Heading",
                 "default": "Sales plan"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Gauge"
+            "title": "Gauge",
+            "preview": {
+              "props": {
+                "title": "Sales plan",
+                "unit": "percent of plan",
+                "valueLabel": "{title}: {value} of {max}, target {target}",
+                "targetLabel": "Target: {target}%"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["value", "target", "accent", "background"]
       }
     },
     {
@@ -848,15 +1188,21 @@
             "абсолютные числа рядом с долями — падение на 40% от двадцати человек ничего не значит",
             "долю считать от первого шага, а не от предыдущего: иначе воронка врёт о масштабе",
             "role=\"img\" с числом на каждой полосе",
-            "минимальную ширину полосы: нулевая ступень не должна исчезать"
+            "минимальную ширину полосы: нулевая ступень не должна исчезать",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив steps",
             "title и unit",
             "акцент через проп accent",
-            "высоту полос"
+            "высоту полос",
+            "dropText — строка перехода между шагами; {drop} выделяется жирным",
+            "stepLabel — подпись полосы для скринридера: {label}, {value}, {unit}, {share}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Шаги обязаны идти по убыванию: воронка с ростом посередине означает ошибку в данных, а не рост.",
             "Компонент не считает конверсию за период: он показывает один срез.",
             "Больше шести шагов воронка не читает: объединяйте близкие этапы.",
@@ -883,6 +1229,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -896,15 +1248,21 @@
                 "absolute numbers beside the shares — a 40% drop from twenty people means nothing",
                 "measuring shares against the first step, not the previous one: otherwise the funnel lies about scale",
                 "role=\"img\" with the number on every bar",
-                "the minimum bar width: a near-zero step must not vanish"
+                "the minimum bar width: a near-zero step must not vanish",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the steps array",
                 "title and unit",
                 "the accent through the accent prop",
-                "the bar height"
+                "the bar height",
+                "dropText — the step-to-step line; {drop} is set in bold",
+                "stepLabel — the screen-reader label of a bar: {label}, {value}, {unit}, {share}",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Steps must descend: a funnel that grows in the middle means broken data, not growth.",
                 "The component computes no period conversion: it shows one snapshot.",
                 "Beyond six steps a funnel stops reading: merge adjacent stages.",
@@ -923,11 +1281,41 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Funnel"
+            "title": "Funnel",
+            "preview": {
+              "props": {
+                "title": "Path to install",
+                "steps": [
+                  {
+                    "label": "Opened the catalog",
+                    "value": 4820
+                  },
+                  {
+                    "label": "Opened a component",
+                    "value": 2140
+                  },
+                  {
+                    "label": "Copied the command",
+                    "value": 860
+                  },
+                  {
+                    "label": "Installed the component",
+                    "value": 412
+                  }
+                ],
+                "unit": "people per week",
+                "dropText": "{drop} dropped off from the previous step",
+                "stepLabel": "{label}: {value} {unit}, {share}% of the first step"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -961,15 +1349,20 @@
             "общий максимум для обеих серий — иначе периоды несравнимы",
             "приглушённый прошлый период: он фон для нынешнего, а не равная величина",
             "role=\"img\" с обоими значениями на паре",
-            "легенду с именами периодов, а не только с цветами"
+            "легенду с именами периодов, а не только с цветами",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив groups и подписи периодов",
             "title",
             "акцент через проп accent",
-            "высоту области графика"
+            "высоту области графика",
+            "groupLabel — подпись пары для скринридера: {label}, {now}, {before} и подписи периодов",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше семи групп не помещается: недели сравнивают по дням, месяцы — по неделям.",
             "Третью серию сюда добавлять нельзя: тройки столбиков перестают читаться, для этого нужна линия.",
             "Значения не подписаны на столбиках намеренно: подписи на каждой паре превращают график в таблицу.",
@@ -997,6 +1390,18 @@
             "type": "text",
             "default": "Прошлая",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1010,15 +1415,20 @@
                 "a shared maximum for both series — otherwise the periods are incomparable",
                 "the muted previous period: it is the backdrop, not an equal value",
                 "role=\"img\" with both values on the pair",
-                "a legend naming the periods, not just their colours"
+                "a legend naming the periods, not just their colours",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the groups array and the period labels",
                 "title",
                 "the accent through the accent prop",
-                "the plot height"
+                "the plot height",
+                "groupLabel — the screen-reader label of a pair: {label}, {now}, {before} and the period names",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Beyond seven groups it stops fitting: compare weeks by day and months by week.",
                 "Do not add a third series: triples stop reading, that case wants lines.",
                 "Values are deliberately not printed on the bars: labels on every pair turn a chart into a table.",
@@ -1038,11 +1448,53 @@
               "beforeLabel": {
                 "label": "Previous period",
                 "default": "Last week"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Compare Bars"
+            "title": "Compare Bars",
+            "preview": {
+              "props": {
+                "title": "Installs by day",
+                "groups": [
+                  {
+                    "label": "Mon",
+                    "now": 42,
+                    "before": 36
+                  },
+                  {
+                    "label": "Tue",
+                    "now": 55,
+                    "before": 48
+                  },
+                  {
+                    "label": "Wed",
+                    "now": 48,
+                    "before": 52
+                  },
+                  {
+                    "label": "Thu",
+                    "now": 61,
+                    "before": 44
+                  },
+                  {
+                    "label": "Fri",
+                    "now": 72,
+                    "before": 58
+                  }
+                ],
+                "nowLabel": "This week",
+                "beforeLabel": "Last week",
+                "groupLabel": "{label}: {nowLabel} {now}, {beforeLabel} {before}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1076,16 +1528,21 @@
             "начало оси в нуле — обрезанная снизу шкала преувеличивает разницу между столбцами",
             "визуально скрытую таблицу с числами: график без текстовой альтернативы недоступен скринридеру",
             "aria-hidden на svg вместе с этой таблицей — иначе данные будут прочитаны дважды",
-            "табличные цифры у подписей делений: колонка чисел не должна дёргаться от разной ширины знаков"
+            "табличные цифры у подписей делений: колонка чисел не должна дёргаться от разной ширины знаков",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив columns: подпись и значение каждого столбца",
             "title — заголовок диаграммы",
             "unit — единица измерения в подписи под графиком",
             "акцент через проп accent — цвет столбцов и максимума",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "scaleLabel — подпись под графиком: {unit} и {top}, верх округлённой шкалы",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше двенадцати столбцов не помещается: подписи категорий начинают наезжать друг на друга.",
             "Отрицательные значения компонент не рисует: ось идёт от нуля вверх, для приходов и расходов нужен waterfall.",
             "Числа над столбцами не печатаются намеренно — для точных значений есть таблица под графиком.",
@@ -1112,6 +1569,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1125,16 +1588,21 @@
                 "the axis starting at zero — a truncated scale exaggerates the difference between columns",
                 "the visually hidden table of numbers: a chart with no text alternative is inaccessible to a screen reader",
                 "aria-hidden on the svg together with that table — otherwise the data is announced twice",
-                "tabular numerals on the tick labels: a column of numbers must not jitter with glyph width"
+                "tabular numerals on the tick labels: a column of numbers must not jitter with glyph width",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the columns array: a label and a value per column",
                 "title — the chart heading",
                 "unit — the unit named in the caption under the chart",
                 "the accent through the accent prop — it colours the columns and the maximum",
-                "outer spacing through className"
+                "outer spacing through className",
+                "scaleLabel — the caption under the chart: {unit} and {top}, the rounded scale top",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "More than twelve columns will not fit: the category labels start colliding.",
                 "Negative values are not drawn: the axis runs from zero upwards, use a waterfall for inflows and outflows.",
                 "Numbers are deliberately not printed above the columns — the table below carries the exact values.",
@@ -1153,11 +1621,52 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Axis Columns"
+            "title": "Axis Columns",
+            "preview": {
+              "props": {
+                "title": "Installs by day",
+                "columns": [
+                  {
+                    "label": "Mon",
+                    "value": 320
+                  },
+                  {
+                    "label": "Tue",
+                    "value": 410
+                  },
+                  {
+                    "label": "Wed",
+                    "value": 380
+                  },
+                  {
+                    "label": "Thu",
+                    "value": 520
+                  },
+                  {
+                    "label": "Fri",
+                    "value": 470
+                  },
+                  {
+                    "label": "Sat",
+                    "value": 210
+                  },
+                  {
+                    "label": "Sun",
+                    "value": 180
+                  }
+                ],
+                "unit": "installs",
+                "scaleLabel": "Value axis — {unit}, scale up to {top}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1191,16 +1700,21 @@
             "выноску последнего значения: тренд без числа не говорит, сколько сейчас",
             "подрезание выноски краем viewBox — иначе у крайней точки плашка уезжает за границу графика",
             "кружки на всех точках: они показывают, где реальные замеры, а где интерполяция взгляда",
-            "визуально скрытую таблицу вместе с aria-hidden на svg — данные обязаны быть доступны текстом ровно один раз"
+            "визуально скрытую таблицу вместе с aria-hidden на svg — данные обязаны быть доступны текстом ровно один раз",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив points: подпись и значение каждого замера",
             "title — заголовок графика",
             "unit — единица измерения в подписи под графиком",
             "акцент через проп accent — цвет линии и точек",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "unitLabel — подпись под графиком: {unit}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше пятнадцати точек кружки сливаются в пунктир: агрегируйте данные до отрисовки.",
             "Ширина выноски оценивается по числу знаков, поэтому очень длинное значение стоит форматировать до передачи.",
             "Второй ряд сюда добавлять нельзя: для сравнения нужны две линии и легенда, а это другой компонент.",
@@ -1227,6 +1741,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1240,16 +1760,21 @@
                 "the callout on the last value: a trend without a number never says how much",
                 "clamping the callout to the viewBox edge — otherwise the badge of the last point slides outside the chart",
                 "dots on every point: they show where the real readings are rather than where the eye interpolates",
-                "the hidden table together with aria-hidden on the svg — the data must be available as text exactly once"
+                "the hidden table together with aria-hidden on the svg — the data must be available as text exactly once",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the points array: a label and a value per reading",
                 "title — the chart heading",
                 "unit — the unit named in the caption under the chart",
                 "the accent through the accent prop — it colours the line and the dots",
-                "outer spacing through className"
+                "outer spacing through className",
+                "unitLabel — the caption under the chart: {unit}",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Beyond fifteen points the dots merge into a dashed line: aggregate before rendering.",
                 "The callout width is estimated from the digit count, so format very long values before passing them in.",
                 "Do not add a second series here: comparison needs two lines and a legend, which is a different component.",
@@ -1268,11 +1793,48 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Dotted Trend"
+            "title": "Dotted Trend",
+            "preview": {
+              "props": {
+                "title": "Average order",
+                "points": [
+                  {
+                    "label": "Apr",
+                    "value": 18
+                  },
+                  {
+                    "label": "May",
+                    "value": 24
+                  },
+                  {
+                    "label": "Jun",
+                    "value": 21
+                  },
+                  {
+                    "label": "Jul",
+                    "value": 33
+                  },
+                  {
+                    "label": "Aug",
+                    "value": 29
+                  },
+                  {
+                    "label": "Sep",
+                    "value": 42
+                  }
+                ],
+                "unit": "thousand roubles",
+                "unitLabel": "Unit of measure: {unit}. The last value is labelled on the chart."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1306,16 +1868,22 @@
             "линию поверх площади — одна площадь без контура читается как клякса",
             "пунктир среднего с подписью: без точки отсчёта «поднялось» и «опустилось» не с чем сравнивать",
             "визуально скрытую таблицу и aria-hidden на svg — иначе график остаётся пустой картинкой для скринридера",
-            "табличные цифры у крупного значения: оно меняется чаще всего и не должно дёргать заголовок"
+            "табличные цифры у крупного значения: оно меняется чаще всего и не должно дёргать заголовок",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив points: подпись и значение каждого дня",
             "title — заголовок графика",
             "unit — единица измерения в подписи под графиком",
             "showAverage — показывать ли пунктир среднего",
-            "акцент через проп accent — цвет линии, градиента и крупного значения"
+            "акцент через проп accent — цвет линии, градиента и крупного значения",
+            "averageLabel — подпись у пунктира среднего: {value}",
+            "unitLabel — подпись под графиком: {unit} и {max}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Заливка идёт до низа графика, а не до нуля данных: для рядов с отрицательными значениями это неверно.",
             "Точки должны быть равномерны по времени: пропущенные дни компонент не заметит и нарисует ровную сетку.",
             "Идентификатор градиента фиксированный, поэтому две копии компонента на странице делят одно определение — это намеренно и безопасно, определения одинаковые.",
@@ -1342,6 +1910,18 @@
             "label": "Среднее",
             "type": "boolean",
             "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1355,16 +1935,22 @@
                 "the line above the area — an area with no outline reads as a smudge",
                 "the dashed average with its label: without a reference «up» and «down» have nothing to compare against",
                 "the hidden table and aria-hidden on the svg — otherwise the chart is an empty image to a screen reader",
-                "tabular numerals on the large value: it changes most often and must not shift the heading"
+                "tabular numerals on the large value: it changes most often and must not shift the heading",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the points array: a label and a value per day",
                 "title — the chart heading",
                 "unit — the unit named in the caption under the chart",
                 "showAverage — whether the dashed average is drawn",
-                "the accent through the accent prop — it colours the line, the gradient and the large value"
+                "the accent through the accent prop — it colours the line, the gradient and the large value",
+                "averageLabel — the label beside the dashed average: {value}",
+                "unitLabel — the caption under the chart: {unit} and {max}",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The fill reaches the bottom of the chart, not the data zero: that is wrong for series with negatives.",
                 "Points must be evenly spaced in time: missing days go unnoticed and the grid stays even.",
                 "The gradient id is fixed, so two copies on one page share a definition — deliberate and safe, the definitions are identical.",
@@ -1383,11 +1969,26 @@
               },
               "showAverage": {
                 "label": "Average"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Gradient Area"
+            "title": "Gradient Area",
+            "preview": {
+              "props": {
+                "title": "Traffic this month",
+                "unit": "visits per day",
+                "averageLabel": "average {value}",
+                "unitLabel": "Unit of measure: {unit}. Scale maximum — {max}."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["showAverage", "accent", "background"]
       }
     },
     {
@@ -1421,16 +2022,21 @@
             "зазоры между секторами: без них соседние доли сливаются в одну дугу",
             "легенду с числами и процентами — по углу сектора долю не назвать",
             "aria-hidden на кольце: смысл несут центр и легенда, а не картинка",
-            "расчёт начала сектора суммой предыдущих длин, без изменяемого счётчика внутри разметки"
+            "расчёт начала сектора суммой предыдущих длин, без изменяемого счётчика внутри разметки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив slices: подпись, значение и оттенок каждой доли",
             "title — заголовок диаграммы",
             "centerLabel — подпись под итогом в центре",
             "unit — единица измерения в подписи под кольцом",
-            "акцент через проп accent — цвет первой доли"
+            "акцент через проп accent — цвет первой доли",
+            "unitLabel — подпись под кольцом: {unit}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше шести долей кольцо не читает: остальное сводите в «прочее».",
             "Проценты округляются до целых и в сумме могут дать 99 или 101 — это нормально для округления.",
             "Кольцо не подходит для сравнения близких величин: для этого горизонтальные полосы.",
@@ -1458,6 +2064,18 @@
             "type": "text",
             "default": "регистраций за месяц",
             "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1471,16 +2089,21 @@
                 "the gaps between sectors: without them adjacent shares merge into one arc",
                 "the legend with values and percentages — a sector's angle never names its share",
                 "aria-hidden on the ring: the centre and the legend carry the meaning, not the picture",
-                "computing each sector's start as the sum of the previous lengths, with no mutable counter inside the markup"
+                "computing each sector's start as the sum of the previous lengths, with no mutable counter inside the markup",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the slices array: label, value and hue per share",
                 "title — the chart heading",
                 "centerLabel — the caption under the total in the middle",
                 "unit — the unit named in the caption under the ring",
-                "the accent through the accent prop — it colours the first share"
+                "the accent through the accent prop — it colours the first share",
+                "unitLabel — the caption under the ring: {unit}",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Beyond six slices a donut stops reading: fold the rest into «other».",
                 "Percentages are rounded and may total 99 or 101 — that is normal rounding.",
                 "A donut is wrong for comparing close values: use horizontal bars for that.",
@@ -1500,11 +2123,48 @@
               "unit": {
                 "label": "Unit",
                 "default": "signups per month"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Donut Total"
+            "title": "Donut Total",
+            "preview": {
+              "props": {
+                "title": "Signups by channel",
+                "centerLabel": "total",
+                "unit": "signups per month",
+                "unitLabel": "Unit of measure: {unit}",
+                "slices": [
+                  {
+                    "label": "Direct",
+                    "value": 480,
+                    "hue": 265
+                  },
+                  {
+                    "label": "Search",
+                    "value": 320,
+                    "hue": 200
+                  },
+                  {
+                    "label": "Social",
+                    "value": 190,
+                    "hue": 150
+                  },
+                  {
+                    "label": "Newsletter",
+                    "value": 110,
+                    "hue": 40
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1535,16 +2195,21 @@
             "стрелку вместо заполненной дуги: у датчика с зонами важна позиция, а не длина",
             "число рядом с датчиком — по углу стрелки значение не назвать",
             "подписи краёв шкалы (0 и максимум): без них непонятно, из чего вообще считается доля",
-            "role=\"img\" со значением и именем текущей зоны у svg"
+            "role=\"img\" со значением и именем текущей зоны у svg",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "value и max — текущее значение и предел шкалы",
             "массив zones: граница upTo, подпись и тон каждой зоны",
             "title — заголовок датчика",
             "unit — единица измерения рядом с числом",
-            "акцент через проп accent — цвет верхней, «хорошей» зоны"
+            "акцент через проп accent — цвет верхней, «хорошей» зоны",
+            "chartLabel — имя картинки для скринридера: {title}, {value}, {max} и {zone}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Зоны обязаны идти по возрастанию upTo: разорванный порядок нарисует наложенные дуги.",
             "Датчик показывает один показатель: две стрелки на одной шкале не читаются.",
             "Значение подрезается диапазоном 0–max, поэтому перевыполнение стрелка не покажет.",
@@ -1573,6 +2238,18 @@
             "type": "text",
             "default": "баллов из 100",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1586,16 +2263,21 @@
                 "the needle rather than a filled arc: with zones the position matters, not the length",
                 "the number beside the gauge — a needle angle never names a value",
                 "the labels on both ends of the scale: without them the share has no visible basis",
-                "role=\"img\" on the svg with the value and the name of the current zone"
+                "role=\"img\" on the svg with the value and the name of the current zone",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "value and max — the current reading and the ceiling of the scale",
                 "the zones array: the upTo boundary, label and tone of each zone",
                 "title — the gauge heading",
                 "unit — the unit beside the number",
-                "the accent through the accent prop — it colours the top, «good» zone"
+                "the accent through the accent prop — it colours the top, «good» zone",
+                "chartLabel — the accessible name of the picture: {title}, {value}, {max} and {zone}",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Zones must ascend by upTo: a broken order draws overlapping arcs.",
                 "One metric per gauge: two needles on one dial do not read.",
                 "The value is clamped to 0–max, so overshooting stays invisible to the needle.",
@@ -1614,11 +2296,42 @@
               "unit": {
                 "label": "Unit",
                 "default": "points out of 100"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Zoned Gauge"
+            "title": "Zoned Gauge",
+            "preview": {
+              "props": {
+                "title": "Satisfaction index",
+                "unit": "points out of 100",
+                "chartLabel": "{title}: {value} of {max}, zone «{zone}»",
+                "zones": [
+                  {
+                    "upTo": 40,
+                    "label": "low",
+                    "tone": "bad"
+                  },
+                  {
+                    "upTo": 70,
+                    "label": "fine",
+                    "tone": "warn"
+                  },
+                  {
+                    "upTo": 100,
+                    "label": "great",
+                    "tone": "good"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["value", "accent", "background"]
       }
     },
     {
@@ -1652,16 +2365,22 @@
             "распределение слоёв через flex-grow, а не через проценты у каждого слоя — сумма всегда сходится ровно",
             "column-reverse у стека: первая серия обязана оставаться у основания во всех периодах",
             "легенду с именами серий, а не только с цветами: по цвету серию не назвать",
-            "скрытую таблицу с итогом по периоду и aria-hidden на области — данные обязаны читаться текстом"
+            "скрытую таблицу с итогом по периоду и aria-hidden на области — данные обязаны читаться текстом",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив periods и подписи серий в series",
             "title — заголовок диаграммы",
             "unit — единица измерения в подписи под графиком",
             "акцент через проп accent — цвет первой серии",
-            "высоту области через переменную --vibeui-chart-015-height"
+            "высоту области через переменную --vibeui-chart-015-height",
+            "unitLabel — подпись под графиком: {unit} и {max}",
+            "tableText — заголовки скрытой таблицы: ключи period и total",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше четырёх серий в стеке не различить: цвета перестают читаться, а тонкие слои исчезают.",
             "Порядок серий обязан совпадать с порядком чисел в values каждого периода — компонент их не сопоставляет по имени.",
             "Стек отвечает на «из чего целое», но плохо отвечает на «как менялась вторая серия»: для этого нужны отдельные линии.",
@@ -1688,6 +2407,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1701,16 +2426,22 @@
                 "distributing layers by flex-grow rather than per-layer percentages — the sum always adds up exactly",
                 "column-reverse on the stack: the first series must stay at the base across every period",
                 "the legend naming the series, not just their colours: a colour never names a series",
-                "the hidden table with per-period totals and aria-hidden on the plot — the data must be readable as text"
+                "the hidden table with per-period totals and aria-hidden on the plot — the data must be readable as text",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the periods array and the series names",
                 "title — the chart heading",
                 "unit — the unit named in the caption under the chart",
                 "the accent through the accent prop — it colours the first series",
-                "the plot height through --vibeui-chart-015-height"
+                "the plot height through --vibeui-chart-015-height",
+                "unitLabel — the caption under the chart: {unit} and {max}",
+                "tableText — the hidden table headings: the period and total keys",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "More than four series stop being distinguishable: the colours blur and thin layers vanish.",
                 "The series order must match the order of numbers in each period's values — the component does not match them by name.",
                 "A stack answers «what the whole is made of» but not «how did the second series move»: that wants separate lines.",
@@ -1729,11 +2460,49 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Stacked Columns"
+            "title": "Stacked Columns",
+            "preview": {
+              "props": {
+                "title": "Orders by source",
+                "unit": "orders per month",
+                "unitLabel": "Unit of measure: {unit}. Column maximum — {max}.",
+                "tableText": {
+                  "period": "Period",
+                  "total": "Total"
+                },
+                "series": ["New", "Returning", "Partner"],
+                "periods": [
+                  {
+                    "label": "May",
+                    "values": [42, 28, 12]
+                  },
+                  {
+                    "label": "Jun",
+                    "values": [51, 30, 14]
+                  },
+                  {
+                    "label": "Jul",
+                    "values": [46, 36, 18]
+                  },
+                  {
+                    "label": "Aug",
+                    "values": [58, 41, 15]
+                  },
+                  {
+                    "label": "Sep",
+                    "values": [64, 44, 22]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1767,16 +2536,23 @@
             "риску плана отдельным элементом: план — это порог, а не ещё одна полоса",
             "смену цвета факта при достижении плана — перевыполнение обязано читаться без чтения цифр",
             "числа «факт из плана · процент» рядом с дорожкой: полоса отвечает «примерно», текст — «точно»",
-            "качественные диапазоны фоном дорожки, а не отдельными элементами: так они не мешают раскладке"
+            "качественные диапазоны фоном дорожки, а не отдельными элементами: так они не мешают раскладке",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив rows: подпись, факт и план каждого показателя",
             "title — заголовок карточки",
             "unit — пояснение единицы под списком",
             "scaleMax — во сколько раз шкала строки длиннее плана",
-            "акцент через проп accent — цвет полосы факта"
+            "акцент через проп accent — цвет полосы факта",
+            "compareLabel — подпись рядом с фактом: {plan} и {done}",
+            "unitLabel — подпись под списком: {unit}",
+            "keyText — легенда: ключи fact и plan",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Факт длиннее scaleMax обрезается по краю дорожки: подняли план вдвое — поднимите и scaleMax.",
             "План, равный нулю, ломает нормировку: такие строки отфильтруйте до отрисовки.",
             "Больше шести строк карточка превращается в таблицу: тогда честнее взять таблицу.",
@@ -1805,6 +2581,18 @@
             "default": 1.25,
             "min": 1,
             "max": 3
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1818,16 +2606,23 @@
                 "the target as its own element: a plan is a threshold, not another bar",
                 "the fact changing colour once the plan is met — overshooting must read without reading digits",
                 "the «fact of plan · percent» numbers beside the track: the bar says «roughly», the text says «exactly»",
-                "the qualitative ranges as a track background rather than elements: they then stay out of the layout"
+                "the qualitative ranges as a track background rather than elements: they then stay out of the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the rows array: label, fact and plan per metric",
                 "title — the card heading",
                 "unit — the unit note under the list",
                 "scaleMax — how much longer than the plan a row's scale runs",
-                "the accent through the accent prop — it colours the fact bar"
+                "the accent through the accent prop — it colours the fact bar",
+                "compareLabel — the caption beside the fact: {plan} and {done}",
+                "unitLabel — the caption under the list: {unit}",
+                "keyText — the legend: the fact and plan keys",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A fact beyond scaleMax is clipped at the track edge: if the plan doubled, raise scaleMax too.",
                 "A plan of zero breaks the normalisation: filter such rows out before rendering.",
                 "Beyond six rows the card becomes a table: then a table is the honest choice.",
@@ -1846,11 +2641,52 @@
               },
               "scaleMax": {
                 "label": "Scale headroom"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Plan Versus Fact"
+            "title": "Plan Versus Fact",
+            "preview": {
+              "props": {
+                "title": "Quarter plan progress",
+                "unit": "fact against plan",
+                "unitLabel": "Unit of measure: {unit}",
+                "compareLabel": "of {plan} · {done}%",
+                "keyText": {
+                  "fact": "Fact",
+                  "plan": "Plan"
+                },
+                "rows": [
+                  {
+                    "label": "Revenue",
+                    "fact": 8400,
+                    "plan": 9000
+                  },
+                  {
+                    "label": "New customers",
+                    "fact": 320,
+                    "plan": 280
+                  },
+                  {
+                    "label": "Renewals",
+                    "fact": 145,
+                    "plan": 180
+                  },
+                  {
+                    "label": "Average order",
+                    "fact": 26,
+                    "plan": 25
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["scaleMax", "accent", "background"]
       }
     },
     {
@@ -1881,16 +2717,23 @@
             "процент перехода между ступенями — именно он отвечает, где теряются люди",
             "абсолютные числа рядом с процентами: падение на 40% от двадцати человек ничего не значит",
             "нижнюю границу ширины ступени: почти нулевой шаг не должен исчезать с картинки",
-            "скрытую таблицу с долями от первого шага — воронка без текстовой альтернативы недоступна"
+            "скрытую таблицу с долями от первого шага — воронка без текстовой альтернативы недоступна",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив steps: подпись и значение каждого шага",
             "title — заголовок воронки",
             "unit — единица измерения в подписи под воронкой",
             "акцент через проп accent — база цвета ступеней, каждая следующая светлее",
-            "высоту ступени и внешние отступы через className"
+            "высоту ступени и внешние отступы через className",
+            "dropLabel — подпись между ступенями: {rate} и {loss}",
+            "unitLabel — подпись под воронкой: {unit}",
+            "shareLabel — доля в скрытой таблице: {share}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Шаги обязаны идти по убыванию: воронка с ростом посередине означает ошибку в данных, а не рост.",
             "Больше шести шагов воронка не читает: объединяйте близкие этапы.",
             "Компонент показывает один срез и не считает конверсию за период.",
@@ -1917,6 +2760,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1930,16 +2779,23 @@
                 "the pass-through rate between steps — that is what says where people are lost",
                 "absolute numbers beside the percentages: a 40% drop from twenty people means nothing",
                 "the minimum step width: a near-zero step must not vanish from the picture",
-                "the hidden table with shares of the first step — a funnel with no text alternative is inaccessible"
+                "the hidden table with shares of the first step — a funnel with no text alternative is inaccessible",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the steps array: a label and a value per step",
                 "title — the funnel heading",
                 "unit — the unit named in the caption under the funnel",
                 "the accent through the accent prop — the base colour of the steps, each next one lighter",
-                "the step height and outer spacing through className"
+                "the step height and outer spacing through className",
+                "dropLabel — the caption between steps: {rate} and {loss}",
+                "unitLabel — the caption under the funnel: {unit}",
+                "shareLabel — the share in the hidden table: {share}",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Steps must descend: a funnel that grows in the middle means broken data, not growth.",
                 "Beyond six steps a funnel stops reading: merge adjacent stages.",
                 "The component shows one snapshot and computes no period conversion.",
@@ -1958,14 +2814,49 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Conversion Funnel"
+            "title": "Conversion Funnel",
+            "preview": {
+              "props": {
+                "title": "Install funnel",
+                "unit": "people per week",
+                "unitLabel": "Unit of measure: {unit}. Step width is the share of the first step.",
+                "dropLabel": "↓ pass-through {rate}% · lost {loss}",
+                "shareLabel": "{share}% of the first step",
+                "steps": [
+                  {
+                    "label": "Opened the catalog",
+                    "value": 12400
+                  },
+                  {
+                    "label": "Opened a component",
+                    "value": 7150
+                  },
+                  {
+                    "label": "Hit Copy for AI",
+                    "value": 3020
+                  },
+                  {
+                    "label": "Installed",
+                    "value": 1260
+                  },
+                  {
+                    "label": "Came back for a second",
+                    "value": 540
+                  }
+                ]
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1999,16 +2890,23 @@
             "пунктирные перемычки между шагами — без них уровень между столбцами теряется",
             "итоговые столбцы от нуля: они опора всей конструкции, а не ещё одно изменение",
             "знак «+» у приходов: без него плюс и минус различаются только цветом",
-            "скрытую таблицу с накопленным итогом и aria-hidden на svg — данные обязаны читаться текстом"
+            "скрытую таблицу с накопленным итогом и aria-hidden на svg — данные обязаны читаться текстом",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив steps: подпись, значение и флаг total у итоговых столбцов",
             "title — заголовок диаграммы",
             "unit — единица измерения в подписи под графиком",
             "акцент через проп accent — цвет итоговых столбцов",
-            "легенду приходов, расходов и итогов"
+            "легенду приходов, расходов и итогов",
+            "unitLabel — подпись под графиком: {unit}",
+            "keyText — легенда: ключи up, down и total",
+            "runningLabel — накопленный итог в скрытой таблице: {total}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Отрицательный накопленный итог компонент не рисует: шкала идёт от нуля вверх.",
             "Флаг total обязан стоять у первого и последнего шага — иначе конструкция повисает в воздухе.",
             "Больше восьми шагов подписи под столбцами начинают наезжать друг на друга.",
@@ -2035,6 +2933,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2048,16 +2952,23 @@
                 "the dashed connectors between steps — without them the level between bars is lost",
                 "total bars measured from zero: they anchor the whole construction, they are not another change",
                 "the «+» sign on inflows: without it plus and minus differ by colour alone",
-                "the hidden table with the running total and aria-hidden on the svg — the data must be readable as text"
+                "the hidden table with the running total and aria-hidden on the svg — the data must be readable as text",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the steps array: label, value and the total flag on the anchor bars",
                 "title — the chart heading",
                 "unit — the unit named in the caption under the chart",
                 "the accent through the accent prop — it colours the total bars",
-                "the legend of inflows, outflows and totals"
+                "the legend of inflows, outflows and totals",
+                "unitLabel — the caption under the chart: {unit}",
+                "keyText — the legend: the up, down and total keys",
+                "runningLabel — the running total in the hidden table: {total}",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A negative running total is not drawn: the scale runs from zero upwards.",
                 "The total flag must sit on the first and the last step — otherwise the construction floats.",
                 "Beyond eight steps the labels under the bars start colliding.",
@@ -2076,11 +2987,56 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Waterfall Flow"
+            "title": "Waterfall Flow",
+            "preview": {
+              "props": {
+                "title": "Cash movement this quarter",
+                "unit": "thousands",
+                "unitLabel": "Unit of measure: {unit}",
+                "keyText": {
+                  "up": "inflow",
+                  "down": "outflow",
+                  "total": "total"
+                },
+                "runningLabel": "running total {total}",
+                "steps": [
+                  {
+                    "label": "Opening",
+                    "value": 420,
+                    "total": true
+                  },
+                  {
+                    "label": "Sales",
+                    "value": 260
+                  },
+                  {
+                    "label": "Renewals",
+                    "value": 140
+                  },
+                  {
+                    "label": "Refunds",
+                    "value": -90
+                  },
+                  {
+                    "label": "Costs",
+                    "value": -215
+                  },
+                  {
+                    "label": "Closing",
+                    "value": 515,
+                    "total": true
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2114,16 +3070,22 @@
             "подписи осей с единицами — без них облако точек не значит ничего",
             "полупрозрачность точек: без неё наложения превращаются в одну точку и данные теряются",
             "поворот подписи оси Y вдоль оси — горизонтальная съедает треть ширины карточки",
-            "скрытую таблицу с обеими координатами и aria-hidden на svg"
+            "скрытую таблицу с обеими координатами и aria-hidden на svg",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив dots: подпись и пара координат каждой точки",
             "title — заголовок графика",
             "xLabel и yLabel — подписи осей вместе с единицами",
             "акцент через проп accent — цвет точек",
-            "радиус точек и высоту графика через viewBox"
+            "радиус точек и высоту графика через viewBox",
+            "axesLabel — подпись под графиком: {x} и {y}",
+            "rowHeader — заголовок первого столбца скрытой таблицы",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Линия тренда не рисуется намеренно: регрессия требует модели, а компонент показывает только точки.",
             "Больше сорока точек облако превращается в пятно: агрегируйте или добавьте прозрачности.",
             "Точки не подписаны на графике: имена лежат в таблице, иначе подписи наедут друг на друга.",
@@ -2150,6 +3112,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2163,16 +3131,22 @@
                 "axis captions with units — without them a cloud of dots means nothing",
                 "the translucency of the dots: without it overlaps collapse into a single dot and data is lost",
                 "rotating the Y caption along its axis — a horizontal one eats a third of the card width",
-                "the hidden table with both coordinates and aria-hidden on the svg"
+                "the hidden table with both coordinates and aria-hidden on the svg",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the dots array: a label and a coordinate pair per point",
                 "title — the chart heading",
                 "xLabel and yLabel — the axis captions together with their units",
                 "the accent through the accent prop — it colours the dots",
-                "the dot radius and the chart height through the viewBox"
+                "the dot radius and the chart height through the viewBox",
+                "axesLabel — the caption under the chart: {x} and {y}",
+                "rowHeader — the first column heading of the hidden table",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A trend line is deliberately absent: regression needs a model, this component only shows points.",
                 "Beyond forty dots the cloud turns into a blot: aggregate or add transparency.",
                 "Dots are not labelled on the plot: the names live in the table, otherwise the labels collide.",
@@ -2191,11 +3165,71 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Scatter Plot"
+            "title": "Scatter Plot",
+            "preview": {
+              "props": {
+                "title": "Time on page against pages per visit",
+                "xLabel": "seconds on page",
+                "yLabel": "pages per visit",
+                "axesLabel": "X axis — {x}, Y axis — {y}. Both axes start at zero.",
+                "rowHeader": "Page",
+                "dots": [
+                  {
+                    "label": "Catalog",
+                    "x": 12,
+                    "y": 2.4
+                  },
+                  {
+                    "label": "Home",
+                    "x": 26,
+                    "y": 3.1
+                  },
+                  {
+                    "label": "Component",
+                    "x": 34,
+                    "y": 4.6
+                  },
+                  {
+                    "label": "Blocks",
+                    "x": 41,
+                    "y": 4.2
+                  },
+                  {
+                    "label": "Docs",
+                    "x": 48,
+                    "y": 6.1
+                  },
+                  {
+                    "label": "Guides",
+                    "x": 55,
+                    "y": 5.4
+                  },
+                  {
+                    "label": "Changelog",
+                    "x": 63,
+                    "y": 7.2
+                  },
+                  {
+                    "label": "Roadmap",
+                    "x": 71,
+                    "y": 6.8
+                  },
+                  {
+                    "label": "FAQ",
+                    "x": 82,
+                    "y": 8.4
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2229,16 +3263,22 @@
             "абсолютное «значение из предела» рядом с процентом — 80% от пяти и от пятисот это разные новости",
             "подложку под каждой дугой: без неё непонятно, где конец шкалы",
             "поворот на −90°, чтобы дуги начинались сверху, а не справа",
-            "aria-hidden на svg: смысл несёт легенда, а не картинка"
+            "aria-hidden на svg: смысл несёт легенда, а не картинка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив metrics: подпись, значение, предел max и оттенок",
             "title — заголовок карточки",
             "unit — единица измерения в подписи под легендой",
             "акцент через проп accent — цвет внешней дуги",
-            "радиусы и толщину дуг"
+            "радиусы и толщину дуг",
+            "unitLabel — подпись под кольцами: {unit}",
+            "rawLabel — абсолютное значение в легенде: {value} и {max}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше четырёх метрик не помещается: лишние молча отбрасываются, потому что радиусов ровно четыре.",
             "Концентрические дуги нельзя сравнивать по длине: внешняя всегда длиннее при равном проценте, поэтому легенда обязательна.",
             "Значение подрезается диапазоном от нуля до max: перевыполнение дуга не покажет.",
@@ -2265,6 +3305,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2278,16 +3324,22 @@
                 "the absolute «value of ceiling» beside the percentage — 80% of five and of five hundred are different news",
                 "the track behind every arc: without it the end of the scale is invisible",
                 "the −90° rotation so the arcs start at the top rather than on the right",
-                "aria-hidden on the svg: the legend carries the meaning, not the picture"
+                "aria-hidden on the svg: the legend carries the meaning, not the picture",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the metrics array: label, value, the max ceiling and a hue",
                 "title — the card heading",
                 "unit — the unit named in the caption under the legend",
                 "the accent through the accent prop — it colours the outer arc",
-                "the radii and the arc thickness"
+                "the radii and the arc thickness",
+                "unitLabel — the caption under the rings: {unit}",
+                "rawLabel — the absolute value in the legend: {value} and {max}",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "More than four metrics do not fit: the extras are dropped silently because there are exactly four radii.",
                 "Concentric arcs cannot be compared by length: the outer one is always longer at the same percentage, which is why the legend is mandatory.",
                 "The value is clamped between zero and max: overshooting stays invisible to the arc.",
@@ -2306,11 +3358,40 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Radial Metrics"
+            "title": "Radial Metrics",
+            "preview": {
+              "props": {
+                "title": "Release readiness",
+                "unit": "percent of target",
+                "unitLabel": "Unit of measure: {unit}",
+                "rawLabel": "{value} of {max}",
+                "metrics": [
+                  {
+                    "label": "Test coverage",
+                    "value": 82,
+                    "max": 100
+                  },
+                  {
+                    "label": "Sprint readiness",
+                    "value": 64,
+                    "max": 100
+                  },
+                  {
+                    "label": "Automated builds",
+                    "value": 45,
+                    "max": 100
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2344,16 +3425,24 @@
             "шкалу «реже — чаще» под картой: без неё насыщенность не переводится в числа",
             "подписи часов через одну: подписанные все, они наезжают друг на друга на узкой карте",
             "скрытую таблицу день×час и aria-hidden на карте — восемьдесят четыре клетки без текста недоступны",
-            "квадратные клетки через aspect-ratio: вытянутые клетки читаются как разная величина"
+            "квадратные клетки через aspect-ratio: вытянутые клетки читаются как разная величина",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "матрицу matrix и подписи days и hours",
             "title — заголовок карты",
             "unit — единица измерения в подписи под картой",
             "акцент через проп accent — цвет самой насыщенной клетки",
-            "радиус скругления и зазор между клетками"
+            "радиус скругления и зазор между клетками",
+            "unitLabel — подпись под картой: {unit} и {max}",
+            "scaleText — края шкалы насыщенности: ключи less и more",
+            "rowHeader — заголовок первого столбца скрытой таблицы",
+            "hourLabel — час в шапке скрытой таблицы: {hour}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Длина каждой строки matrix обязана совпадать с длиной hours: недостающие клетки считаются нулевыми молча.",
             "Двадцать четыре колонки на узком экране превращаются в полоски: для мобильных берите двухчасовые интервалы.",
             "Насыщенность нормируется на максимум всей матрицы, поэтому один выброс делает остальную карту бледной.",
@@ -2380,6 +3469,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2393,16 +3488,24 @@
                 "the «less — more» scale under the map: without it intensity does not translate into numbers",
                 "labelling every other hour: labelling them all makes them collide on a narrow map",
                 "the hidden day-by-hour table and aria-hidden on the map — eighty-four cells without text are inaccessible",
-                "square cells through aspect-ratio: stretched cells read as different magnitudes"
+                "square cells through aspect-ratio: stretched cells read as different magnitudes",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the matrix together with the days and hours labels",
                 "title — the map heading",
                 "unit — the unit named in the caption under the map",
                 "the accent through the accent prop — it colours the densest cell",
-                "the corner radius and the gap between cells"
+                "the corner radius and the gap between cells",
+                "unitLabel — the caption under the map: {unit} and {max}",
+                "scaleText — the ends of the intensity scale: the less and more keys",
+                "rowHeader — the first column heading of the hidden table",
+                "hourLabel — the hour in the hidden table header: {hour}",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Each matrix row must match the length of hours: missing cells are silently treated as zero.",
                 "Twenty-four columns turn into slivers on a narrow screen: use two-hour buckets on mobile.",
                 "Intensity is normalised against the maximum of the whole matrix, so a single spike pales the rest of the map.",
@@ -2421,11 +3524,29 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Activity Heatmap"
+            "title": "Activity Heatmap",
+            "preview": {
+              "props": {
+                "title": "Activity this week",
+                "unit": "sessions per two-hour bucket",
+                "unitLabel": "Unit of measure: {unit}. Cell maximum — {max}.",
+                "scaleText": {
+                  "less": "less",
+                  "more": "more"
+                },
+                "rowHeader": "Day",
+                "hourLabel": "{hour}:00",
+                "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2456,16 +3577,22 @@
             "движение относительно прошлого замера — без него топ отвечает только «кто сейчас»",
             "обратный знак движения: вверх по рейтингу это уменьшение номера места",
             "текст рядом со стрелкой: направление, заданное только цветом и глифом, теряется на печати",
-            "выделение тройки лидеров через nth-child, а не флагом в данных"
+            "выделение тройки лидеров через nth-child, а не флагом в данных",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив rows: подпись, значение и прошлое место wasRank",
             "title — заголовок рейтинга",
             "unit — единица измерения в подписи под списком",
             "showMoves — показывать ли колонку движения",
-            "акцент через проп accent — цвет полос и номеров лидеров"
+            "акцент через проп accent — цвет полос и номеров лидеров",
+            "unitLabel — подпись под списком: {unit}",
+            "moveText — движение места: ключи up, down и flat, плейсхолдер {shift}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Строки не сортируются автоматически: порядок задаёт вызывающий код, и он обязан быть по убыванию значения.",
             "Без wasRank движение показывается как «без движения», а не скрывается: новую строку так не отличить от неподвижной.",
             "Больше восьми строк рейтинг превращается в список: остальное сворачивайте в «прочее».",
@@ -2492,6 +3619,18 @@
             "label": "Движение",
             "type": "boolean",
             "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2505,16 +3644,22 @@
                 "the move since the previous snapshot — without it a top list only answers «who is here now»",
                 "the inverted sign of the move: climbing the ranking means a smaller place number",
                 "the text beside the arrow: a direction carried by colour and glyph alone dies in print",
-                "highlighting the top three through nth-child rather than a flag in the data"
+                "highlighting the top three through nth-child rather than a flag in the data",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the rows array: label, value and the previous place in wasRank",
                 "title — the ranking heading",
                 "unit — the unit named in the caption under the list",
                 "showMoves — whether the movement column is shown",
-                "the accent through the accent prop — it colours the bars and the leading numbers"
+                "the accent through the accent prop — it colours the bars and the leading numbers",
+                "unitLabel — the caption under the list: {unit}",
+                "moveText — the rank movement: the up, down and flat keys with a {shift} placeholder",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Rows are not sorted automatically: the caller sets the order and it must descend by value.",
                 "Without wasRank the move renders as «no movement» rather than hiding: a new entry is then indistinguishable from a static one.",
                 "Beyond eight rows a ranking becomes a list: fold the rest into «other».",
@@ -2533,11 +3678,62 @@
               },
               "showMoves": {
                 "label": "Movement"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Rank Movers"
+            "title": "Rank Movers",
+            "preview": {
+              "props": {
+                "title": "Top pages this week",
+                "unit": "visits",
+                "unitLabel": "Unit of measure: {unit}. The arrow is the rank change since last week.",
+                "moveText": {
+                  "up": "▲ {shift}",
+                  "down": "▼ {shift}",
+                  "flat": "— no change"
+                },
+                "rows": [
+                  {
+                    "label": "Pricing",
+                    "value": 5240,
+                    "wasRank": 3
+                  },
+                  {
+                    "label": "Catalog",
+                    "value": 4810,
+                    "wasRank": 1
+                  },
+                  {
+                    "label": "Home",
+                    "value": 3960,
+                    "wasRank": 2
+                  },
+                  {
+                    "label": "Docs",
+                    "value": 2180,
+                    "wasRank": 6
+                  },
+                  {
+                    "label": "Blog",
+                    "value": 1640,
+                    "wasRank": 4
+                  },
+                  {
+                    "label": "Careers",
+                    "value": 720,
+                    "wasRank": 5
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["showMoves", "accent", "background"]
       }
     },
     {
@@ -2568,15 +3764,21 @@
             "выносные линии для подписей: текст не помещается внутри узкой нижней полосы",
             "процент перехода у каждого этапа, кроме первого — без него воронка отвечает только «сколько», а не «где теряют»",
             "минимальную долю ширины полосы в 10% от первого этапа — иначе последние этапы схлопываются в точку и пропадают с картинки",
-            "визуально скрытую таблицу с реальными числами рядом со скрытым от скринридеров SVG"
+            "визуально скрытую таблицу с реальными числами рядом со скрытым от скринридеров SVG",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив stages: подпись и значение каждого этапа",
             "title — заголовок воронки",
             "unit — единица измерения в подписи под фигурой",
-            "акцент через проп accent — цвет заливки полос"
+            "акцент через проп accent — цвет заливки полос",
+            "unitLabel — подпись под воронкой: {unit}",
+            "tableText — шапка скрытой таблицы: ключи stage, count и conversion",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Этапы не сортируются: порядок задаёт вызывающий код, и он обязан быть по убыванию значения.",
             "Больше семи этапов подписи справа начинают перекрываться по высоте — сокращайте список.",
             "Полигоны считаются от общего первого значения: замена первого этапа на меньшее число меняет масштаб всей фигуры.",
@@ -2597,6 +3799,18 @@
             "type": "text",
             "default": "сделок за месяц",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2610,15 +3824,21 @@
                 "the leader lines for labels: the text does not fit inside the narrow bottom band",
                 "the conversion drop on every stage but the first — without it a funnel only answers \"how much\", not \"where people are lost\"",
                 "the 10% minimum band width relative to the first stage, or late stages collapse to a point and vanish",
-                "the visually hidden table with the real numbers next to the SVG hidden from screen readers"
+                "the visually hidden table with the real numbers next to the SVG hidden from screen readers",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the stages array: each stage's label and value",
                 "title — the funnel heading",
                 "unit — the unit named under the shape",
-                "the accent through the accent prop — the bands' fill colour"
+                "the accent through the accent prop — the bands' fill colour",
+                "unitLabel — the caption under the funnel: {unit}",
+                "tableText — the hidden table headings: the stage, count and conversion keys",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Stages are not sorted: the caller sets the order and it must descend by value.",
                 "Past seven stages the right-side labels start overlapping vertically — trim the list.",
                 "Polygons are scaled off the first value: swapping it for a smaller number rescales the whole shape.",
@@ -2634,11 +3854,52 @@
               "unit": {
                 "label": "Unit",
                 "default": "deals per month"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Tapered Funnel"
+            "title": "Tapered Funnel",
+            "preview": {
+              "props": {
+                "title": "Sales funnel",
+                "unit": "deals per month",
+                "unitLabel": "Unit of measure: {unit}. The percentages beside a label are the loss against the previous stage.",
+                "tableText": {
+                  "stage": "Stage",
+                  "count": "Count",
+                  "conversion": "From the previous stage"
+                },
+                "stages": [
+                  {
+                    "label": "Leads",
+                    "value": 3400
+                  },
+                  {
+                    "label": "Qualified",
+                    "value": 2050
+                  },
+                  {
+                    "label": "Demo",
+                    "value": 980
+                  },
+                  {
+                    "label": "Proposal",
+                    "value": 520
+                  },
+                  {
+                    "label": "Closed",
+                    "value": 214
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2669,15 +3930,22 @@
             "знак значения красит столбец, а не название статьи — расход нельзя сделать зелёным",
             "пунктирный коннектор между концом одной полосы и началом следующей — без него накопленный итог не проследить взглядом",
             "начальный и конечный остаток отдельным цветом total — они не приход и не расход",
-            "визуально скрытую таблицу с накопленным итогом по каждой строке"
+            "визуально скрытую таблицу с накопленным итогом по каждой строке",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив steps: подпись, значение и флаг total для итоговых строк",
             "title — заголовок графика",
             "unit — единица измерения в подписи под графиком",
-            "акцент через проп accent — цвет итоговых столбцов"
+            "акцент через проп accent — цвет итоговых столбцов",
+            "unitLabel — подпись под графиком: {unit}",
+            "keyText — легенда: ключи up, down и total",
+            "runningLabel — накопленный итог в скрытой таблице: {total}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Первый и последний элемент массива обычно помечают total: true — это остатки, а не движения.",
             "Шкала считается по накопленному максимуму и округляется до круглого числа — не подставляйте её вручную.",
             "Больше восьми строк подписи слева начинают упираться в полосы — сокращайте список статей.",
@@ -2698,6 +3966,18 @@
             "type": "text",
             "default": "тысяч рублей",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2711,15 +3991,22 @@
                 "the value's sign colouring the bar, not the line item's name — an expense can never be made green",
                 "the dashed connector between one bar's end and the next one's start — without it the running total cannot be traced by eye",
                 "the opening and closing balance in their own total colour — they are neither income nor expense",
-                "the visually hidden table with the running total for every row"
+                "the visually hidden table with the running total for every row",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the steps array: label, value and the total flag for balance rows",
                 "title — the chart heading",
                 "unit — the unit named under the chart",
-                "the accent through the accent prop — the total bars' colour"
+                "the accent through the accent prop — the total bars' colour",
+                "unitLabel — the caption under the chart: {unit}",
+                "keyText — the legend: the up, down and total keys",
+                "runningLabel — the running total in the hidden table: {total}",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The first and last entries are usually marked total: true — they are balances, not movements.",
                 "The scale is derived from the running maximum and rounded to a nice number — do not set it by hand.",
                 "Past eight rows the left-side labels start crowding the bars — trim the line-item list.",
@@ -2735,11 +4022,59 @@
               "unit": {
                 "label": "Unit",
                 "default": "thousand rubles"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Budget Bridge"
+            "title": "Budget Bridge",
+            "preview": {
+              "props": {
+                "title": "Balance to balance bridge",
+                "unit": "thousand rubles",
+                "unitLabel": "Unit of measure: {unit}",
+                "keyText": {
+                  "up": "inflow",
+                  "down": "outflow",
+                  "total": "total"
+                },
+                "runningLabel": "running total {total}",
+                "steps": [
+                  {
+                    "label": "Opening balance",
+                    "value": 860,
+                    "total": true
+                  },
+                  {
+                    "label": "Revenue",
+                    "value": 640
+                  },
+                  {
+                    "label": "Cost of sales",
+                    "value": -310
+                  },
+                  {
+                    "label": "Marketing",
+                    "value": -145
+                  },
+                  {
+                    "label": "Rent and payroll",
+                    "value": -220
+                  },
+                  {
+                    "label": "Closing balance",
+                    "value": 825,
+                    "total": true
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2770,15 +4105,20 @@
             "подписи часов через одну-две (каждый третий), иначе цифры сливаются на узкой ширине",
             "минимальный радиус у пустых клеток — точка обязана остаться видимой, а не исчезать совсем",
             "легенду «реже → чаще» кружками растущего размера рядом с подписью",
-            "визуально скрытую таблицу с реальными числами по каждому часу и дню"
+            "визуально скрытую таблицу с реальными числами по каждому часу и дню",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "матрицу matrix, дни days и часы hours",
             "title — заголовок карты",
             "unit — единица измерения в подписи под картой",
-            "акцент через проп accent — цвет кружков"
+            "акцент через проп accent — цвет кружков",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи легенды legendText, строку summaryText под картой и заголовок столбца dayHeader"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "matrix — строки по days, столбцы по hours; несовпадение длин заполняется нулями.",
             "Радиус считается от максимума во всей матрице, а не по строке — сравнение дней остаётся честным.",
             "На 24 часа кружки мельче примерно 12 px в поперечнике: для печати увеличьте max-width блока.",
@@ -2799,6 +4139,18 @@
             "type": "text",
             "default": "событий в час",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2812,15 +4164,20 @@
                 "hour labels every third tick, or the numbers collide on a narrow width",
                 "a minimum radius on empty cells — the dot must stay visible rather than vanish entirely",
                 "the \"rarer → more often\" legend of growing dots next to the label",
-                "the visually hidden table with the real numbers for every hour and day"
+                "the visually hidden table with the real numbers for every hour and day",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the matrix, days and hours",
                 "title — the map heading",
                 "unit — the unit named under the map",
-                "the accent through the accent prop — the dots' colour"
+                "the accent through the accent prop — the dots' colour",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the legendText labels, the summaryText line under the map and the dayHeader column heading"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "matrix rows follow days, columns follow hours; mismatched lengths are padded with zero.",
                 "The radius is scaled off the matrix-wide maximum, not per row — comparing days stays honest.",
                 "At 24 hours the dots are roughly 12 px across — raise the block's max-width for print.",
@@ -2836,11 +4193,31 @@
               "unit": {
                 "label": "Unit",
                 "default": "events per hour"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Punch Card"
+            "title": "Punch Card",
+            "preview": {
+              "props": {
+                "title": "Hourly activity",
+                "unit": "events per hour",
+                "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                "legendText": {
+                  "less": "rarer",
+                  "more": "more often"
+                },
+                "summaryText": "Unit: {unit}. Cell maximum — {max}.",
+                "dayHeader": "Day"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

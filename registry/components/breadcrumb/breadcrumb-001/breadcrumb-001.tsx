@@ -12,27 +12,33 @@ export type Breadcrumb001Props = Omit<
   items?: Breadcrumb001Item[]
   /** Сколько уровней показывать целиком. Середина сворачивается в многоточие. */
   maxVisible?: number
+  /** Подпись навигации: компонент несёт русскую, проект подставляет свою. */
+  navLabel?: string
+  /** Пусто — подложки нет, крошки лежат прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
 // Идея компонента: длинный путь сворачивается посередине, а не обрезается
 // с конца. Первый и последний уровни — самые нужные: откуда пришли и где
 // находимся; их и оставляем, а середину прячем за многоточием.
+//
+// Тема берётся из color-scheme окружения через light-dark(): крошки темнеют
+// вместе со страницей и не выкладывают под себя плашку.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-001"]){
---vibeui-breadcrumb-001-surface:oklch(1 0 0);
---vibeui-breadcrumb-001-surface-border:oklch(0.91 0.006 265);
---vibeui-breadcrumb-001-fg:oklch(0.28 0.016 265);
---vibeui-breadcrumb-001-muted:oklch(0.55 0.014 265);
---vibeui-breadcrumb-001-accent:oklch(0.55 0.2 262);
+--vibeui-breadcrumb-001-fg:light-dark(oklch(0.28 0.016 265),oklch(0.93 0.008 265));
+--vibeui-breadcrumb-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-breadcrumb-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-breadcrumb-001-bg:transparent;
+--vibeui-breadcrumb-001-pad:0;
+--vibeui-breadcrumb-001-radius:0;
 --vibeui-breadcrumb-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Собственная подложка: крошки — это текст, и на тёмной странице
-   он обязан читаться без правки палитры проекта. */
 [data-vibeui-block="breadcrumb-001"]{
-box-sizing:border-box;padding:0.5rem 0.75rem;
-background:var(--vibeui-breadcrumb-001-surface);
-border:1px solid var(--vibeui-breadcrumb-001-surface-border);border-radius:0.625rem;
+box-sizing:border-box;padding:var(--vibeui-breadcrumb-001-pad);
+background:var(--vibeui-breadcrumb-001-bg);
+border-radius:var(--vibeui-breadcrumb-001-radius);
 font-family:var(--vibeui-breadcrumb-001-font);font-size:0.8125rem;line-height:1.4;
 }
 [data-vibeui-block="breadcrumb-001"] ol{
@@ -72,19 +78,54 @@ const DEFAULT_ITEMS: Breadcrumb001Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Хлебные крошки, сворачивающиеся посередине.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Breadcrumb001({
   items = DEFAULT_ITEMS,
   maxVisible = 3,
+  navLabel = "Хлебные крошки",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Breadcrumb001Props) {
+  // Подложка появляется вместе с внутренними отступами: без неё крошки лежат
+  // прямо на странице и поля по бокам им только мешают.
   const palette = {
     ...(accent ? { "--vibeui-breadcrumb-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-breadcrumb-001-bg": background,
+          "--vibeui-breadcrumb-001-pad": "0.5rem 0.75rem",
+          "--vibeui-breadcrumb-001-radius": "0.625rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -102,7 +143,7 @@ export function Breadcrumb001({
       <nav
         {...props}
         data-vibeui-block="breadcrumb-001"
-        aria-label="Хлебные крошки"
+        aria-label={navLabel}
         className={className}
         style={palette}
       >

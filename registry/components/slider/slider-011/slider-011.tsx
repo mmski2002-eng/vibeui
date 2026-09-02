@@ -13,6 +13,14 @@ export type Slider011Props = Omit<
   step?: number
   defaultValue?: number
   currency?: string
+  /** Подпись над полем точного значения. */
+  fieldText?: string
+  /** Имя поля для скринридера. Шаблон: {label} и {currency} подставляются. */
+  exactText?: string
+  /** Локаль форматирования разрядов в заголовке. */
+  locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,15 +29,19 @@ export type Slider011Props = Omit<
 // набирать с любого разряда, не упираясь в нижнюю границу на середине
 // ввода. Заголовок над дорожкой показывает цену с разрядами тысяч —
 // поле ввода остаётся простыми цифрами, разряды не мешают печатать.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="slider-011"]){
---vibeui-slider-011-bg:oklch(1 0 0);
---vibeui-slider-011-fg:oklch(0.22 0.014 265);
---vibeui-slider-011-muted:oklch(0.55 0.014 265);
---vibeui-slider-011-border:oklch(0.9 0.006 265);
---vibeui-slider-011-field:oklch(0.985 0.002 265);
---vibeui-slider-011-track:oklch(0.92 0.006 265);
---vibeui-slider-011-accent:oklch(0.56 0.17 152);
+--vibeui-slider-011-bg:transparent;
+--vibeui-slider-011-surface:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
+--vibeui-slider-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-slider-011-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-slider-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-slider-011-field:light-dark(oklch(0.985 0.002 265),oklch(0.32 0.01 265));
+--vibeui-slider-011-track:light-dark(oklch(0.92 0.006 265),oklch(0.42 0.012 265));
+--vibeui-slider-011-accent:light-dark(oklch(0.56 0.17 152),oklch(0.74 0.15 152));
 --vibeui-slider-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-011-fill:30%;
 }
@@ -61,12 +73,12 @@ background:linear-gradient(to right,var(--vibeui-slider-011-accent) var(--vibeui
 [data-vibeui-block="slider-011"] input[type="range"]::-webkit-slider-thumb{
 appearance:none;margin-top:-0.3125rem;
 width:1rem;height:1rem;border-radius:9999px;
-background:var(--vibeui-slider-011-accent);border:3px solid var(--vibeui-slider-011-bg);
+background:var(--vibeui-slider-011-accent);border:3px solid var(--vibeui-slider-011-surface);
 box-shadow:0 1px 4px oklch(0.2 0.02 265 / 30%);
 }
 [data-vibeui-block="slider-011"] input[type="range"]::-moz-range-thumb{
 width:1rem;height:1rem;border-radius:9999px;box-sizing:border-box;
-background:var(--vibeui-slider-011-accent);border:3px solid var(--vibeui-slider-011-bg);
+background:var(--vibeui-slider-011-accent);border:3px solid var(--vibeui-slider-011-surface);
 }
 [data-vibeui-block="slider-011"] input[type="range"]:focus-visible{outline:2px solid var(--vibeui-slider-011-accent);outline-offset:4px;border-radius:0.5rem}
 [data-vibeui-block="slider-011"] [data-part="scale"]{
@@ -98,6 +110,36 @@ font:inherit;font-size:0.9375rem;font-weight:650;font-variant-numeric:tabular-nu
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="slider-011"] *{animation:none!important;transition:none!important}}
 `
 
+/** Подстановка значений в шаблон подписи. */
+function fillTemplate(template: string, values: Record<string, string>) {
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, key: string) => values[key] ?? match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Ползунок цены с полем ввода: оба входа синхронизируются вживую, без
  * ожидания blur. Один файл, ноль зависимостей, собственная палитра.
@@ -109,6 +151,10 @@ export function Slider011({
   step = 100,
   defaultValue = 12900,
   currency = "₽",
+  fieldText = "Точная цена",
+  exactText = "{label}, точное значение в {currency}",
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -139,11 +185,17 @@ export function Slider011({
     setDraft(String(next))
   }
 
-  const formatted = new Intl.NumberFormat("ru-RU").format(value)
+  const formatted = new Intl.NumberFormat(locale).format(value)
 
   const palette = {
     "--vibeui-slider-011-fill": `${((value - min) / (max - min)) * 100}%`,
     ...(accent ? { "--vibeui-slider-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-slider-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -185,7 +237,7 @@ export function Slider011({
           </span>
         </p>
         <label data-part="field-label" htmlFor={`${id}-number`}>
-          Точная цена
+          {fieldText}
         </label>
         <span data-part="field">
           <span data-part="prefix" aria-hidden="true">
@@ -197,7 +249,7 @@ export function Slider011({
             type="text"
             inputMode="numeric"
             value={draft}
-            aria-label={`${label}, точное значение в ${currency}`}
+            aria-label={fillTemplate(exactText, { label, currency })}
             onChange={(event) => applyDraft(event.target.value)}
             onBlur={() => {
               if (draft === "") {

@@ -17,7 +17,17 @@ export type Commerce033Props = {
   offer?: string
   cta?: string
   legal?: string
+  /** Скрытая подпись группы способов оформления. */
+  waysLegend?: string
+  /** Подписи и значения полей обеих форм. */
+  fieldLabels?: Record<string, string>
+  fieldValues?: Record<string, string>
+  /** Пояснения под формами гостя и входа. */
+  guestNote?: string
+  loginNote?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,17 +41,20 @@ export type Commerce033Props = {
 // почта нужна для чека, телефон — курьеру.
 const STYLES = `
 :where([data-vibeui-block="commerce-033"]){
---vibeui-commerce-033-bg:oklch(1 0 0);
---vibeui-commerce-033-fg:oklch(0.21 0.014 265);
---vibeui-commerce-033-muted:oklch(0.55 0.014 265);
---vibeui-commerce-033-border:oklch(0.91 0.006 265);
---vibeui-commerce-033-soft:oklch(0.975 0.004 265);
---vibeui-commerce-033-accent:oklch(0.55 0.2 262);
+--vibeui-commerce-033-bg:transparent;
+--vibeui-commerce-033-radius:0;
+--vibeui-commerce-033-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-033-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-033-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-commerce-033-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-commerce-033-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-commerce-033-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
 --vibeui-commerce-033-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 [data-vibeui-block="commerce-033"]{
 box-sizing:border-box;background:var(--vibeui-commerce-033-bg);
+border-radius:var(--vibeui-commerce-033-radius);
 color:var(--vibeui-commerce-033-fg);font-family:var(--vibeui-commerce-033-sans);
 }
 [data-vibeui-block="commerce-033"] *{box-sizing:border-box}
@@ -113,7 +126,7 @@ font-size:0.75rem;line-height:1.45;
 [data-vibeui-block="commerce-033"] li span{color:var(--vibeui-commerce-033-muted)}
 [data-vibeui-block="commerce-033"] [data-part="cta"]{
 margin-top:1rem;width:100%;appearance:none;border:0;cursor:pointer;height:3rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-033-accent);color:oklch(1 0 0);font:inherit;font-size:1rem;font-weight:700;
+background:var(--vibeui-commerce-033-accent);color:var(--vibeui-commerce-033-on-accent);font:inherit;font-size:1rem;font-weight:700;
 }
 [data-vibeui-block="commerce-033"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-commerce-033-accent);outline-offset:2px}
 [data-vibeui-block="commerce-033"] [data-part="legal"]{margin:0.625rem 0 0;font-size:0.6875rem;line-height:1.5;color:var(--vibeui-commerce-033-muted)}
@@ -135,6 +148,43 @@ const DEFAULT_PERKS: Commerce033Perk[] = [
   },
 ]
 
+const DEFAULT_FIELD_LABELS: Record<string, string> = {
+  name: "Имя и фамилия",
+  phone: "Телефон",
+  email: "Почта для чека",
+  loginEmail: "Почта",
+  password: "Пароль",
+}
+
+const DEFAULT_FIELD_VALUES: Record<string, string> = {
+  name: "Анна Смирнова",
+  phone: "+7 921 000-11-22",
+  email: "anna@example.com",
+  loginEmail: "anna@example.com",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Гостевой заказ без регистрации: гостевой путь первый, аккаунт предлагается после оплаты.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -151,14 +201,29 @@ export function Commerce033({
   offer = "Создать аккаунт после оплаты — пароль придёт письмом, заказ привяжется автоматически",
   cta = "Продолжить к доставке",
   legal = "Продолжая, вы соглашаетесь с условиями продажи и обработкой персональных данных. Почта нужна для чека, телефон — курьеру.",
+  waysLegend = "Способ оформления",
+  fieldLabels = DEFAULT_FIELD_LABELS,
+  fieldValues = DEFAULT_FIELD_VALUES,
+  guestNote = "Почта нужна только для чека и статуса доставки. Рассылку без отдельного согласия не отправляем.",
+  loginNote = "Забыли пароль? Пришлём ссылку для входа на почту — заказ при этом не потеряется.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce033Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-033-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-033-bg": background,
+          "--vibeui-commerce-033-radius": "1.25rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+  const label = (key: string) => fieldLabels[key] ?? DEFAULT_FIELD_LABELS[key]
+  const value = (key: string) => fieldValues[key] ?? DEFAULT_FIELD_VALUES[key]
 
   return (
     <>
@@ -176,7 +241,7 @@ export function Commerce033({
           <p data-part="lead">{lead}</p>
 
           <fieldset data-part="ways">
-            <legend hidden>Способ оформления</legend>
+            <legend hidden>{waysLegend}</legend>
             <label data-part="way">
               <input
                 type="radio"
@@ -206,22 +271,19 @@ export function Commerce033({
             <div data-part="pane">
               <div data-part="fields">
                 <label data-part="field">
-                  <span>Имя и фамилия</span>
-                  <input type="text" defaultValue="Анна Смирнова" />
+                  <span>{label("name")}</span>
+                  <input type="text" defaultValue={value("name")} />
                 </label>
                 <label data-part="field">
-                  <span>Телефон</span>
-                  <input type="tel" defaultValue="+7 921 000-11-22" />
+                  <span>{label("phone")}</span>
+                  <input type="tel" defaultValue={value("phone")} />
                 </label>
                 <label data-part="field">
-                  <span>Почта для чека</span>
-                  <input type="email" defaultValue="anna@example.com" />
+                  <span>{label("email")}</span>
+                  <input type="email" defaultValue={value("email")} />
                 </label>
               </div>
-              <p data-part="why">
-                Почта нужна только для чека и статуса доставки. Рассылку без
-                отдельного согласия не отправляем.
-              </p>
+              <p data-part="why">{guestNote}</p>
               <label data-part="offer">
                 <input type="checkbox" defaultChecked />
                 <span>{offer}</span>
@@ -233,18 +295,15 @@ export function Commerce033({
             <div data-part="pane">
               <div data-part="fields">
                 <label data-part="field">
-                  <span>Почта</span>
-                  <input type="email" defaultValue="anna@example.com" />
+                  <span>{label("loginEmail")}</span>
+                  <input type="email" defaultValue={value("loginEmail")} />
                 </label>
                 <label data-part="field">
-                  <span>Пароль</span>
+                  <span>{label("password")}</span>
                   <input type="password" defaultValue="" />
                 </label>
               </div>
-              <p data-part="why">
-                Забыли пароль? Пришлём ссылку для входа на почту — заказ при
-                этом не потеряется.
-              </p>
+              <p data-part="why">{loginNote}</p>
             </div>
           </div>
 

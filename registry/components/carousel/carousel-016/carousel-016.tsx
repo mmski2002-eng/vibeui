@@ -17,6 +17,14 @@ export type Carousel016Props = Omit<
   label?: string
   /** Подпись счётчика: «3 из 8» собирается из неё. */
   ofWord?: string
+  /** Роль блока для скринридера: компонент несёт русскую, проект подставит свою. */
+  roleDescription?: string
+  /** Подпись левой кнопки. */
+  prevLabel?: string
+  /** Подпись правой кнопки. */
+  nextLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,13 +33,17 @@ export type Carousel016Props = Omit<
 // отвечают точнее и занимают меньше места. Счётчик объявляется через
 // aria-live: смена кадра иначе остаётся немой. Лента не зациклена, поэтому
 // стрелки гаснут на краях — так видно, что список конечен.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="carousel-016"]){
---vibeui-carousel-016-bg:oklch(1 0 0);
---vibeui-carousel-016-fg:oklch(0.22 0.014 265);
---vibeui-carousel-016-muted:oklch(0.57 0.014 265);
---vibeui-carousel-016-border:oklch(0.91 0.006 265);
---vibeui-carousel-016-accent:oklch(0.55 0.19 262);
+--vibeui-carousel-016-bg:transparent;
+--vibeui-carousel-016-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-016-muted:light-dark(oklch(0.57 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-016-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-carousel-016-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
+--vibeui-carousel-016-accent:light-dark(oklch(0.55 0.19 262),oklch(0.74 0.16 262));
 --vibeui-carousel-016-progress:0%;
 --vibeui-carousel-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -68,7 +80,7 @@ width:2rem;height:2rem;padding:0;
 border:1px solid var(--vibeui-carousel-016-border);border-radius:0.5rem;
 background:var(--vibeui-carousel-016-bg);color:var(--vibeui-carousel-016-fg);
 }
-[data-vibeui-block="carousel-016"] [data-part="bar"] button:hover:not(:disabled){background:oklch(0.96 0.004 265)}
+[data-vibeui-block="carousel-016"] [data-part="bar"] button:hover:not(:disabled){background:var(--vibeui-carousel-016-hover)}
 [data-vibeui-block="carousel-016"] [data-part="bar"] button:focus-visible{outline:2px solid var(--vibeui-carousel-016-accent);outline-offset:2px}
 [data-vibeui-block="carousel-016"] [data-part="bar"] button:disabled{cursor:not-allowed;opacity:.35}
 [data-vibeui-block="carousel-016"] [data-part="bar"] svg{width:0.875rem;height:0.875rem;display:block}
@@ -99,6 +111,28 @@ const DEFAULT_SLIDES: Carousel016Slide[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё на светлой плашке достался бы
+ * текст тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Карусель со счётчиком «N из M», полосой заполнения и стрелками без зацикливания.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -106,6 +140,10 @@ export function Carousel016({
   slides = DEFAULT_SLIDES,
   label = "Квартира",
   ofWord = "из",
+  roleDescription = "карусель",
+  prevLabel = "Предыдущий кадр",
+  nextLabel = "Следующий кадр",
+  background = "",
   accent,
   className,
   style,
@@ -116,6 +154,12 @@ export function Carousel016({
   const palette = {
     "--vibeui-carousel-016-progress": `${((index + 1) / slides.length) * 100}%`,
     ...(accent ? { "--vibeui-carousel-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-carousel-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -127,7 +171,7 @@ export function Carousel016({
       <section
         {...props}
         data-vibeui-block="carousel-016"
-        aria-roledescription="карусель"
+        aria-roledescription={roleDescription}
         aria-label={label}
         className={className}
         style={palette}
@@ -154,7 +198,7 @@ export function Carousel016({
         <div data-part="bar">
           <button
             type="button"
-            aria-label="Предыдущий кадр"
+            aria-label={prevLabel}
             disabled={index === 0}
             onClick={() => setIndex((value) => Math.max(0, value - 1))}
           >
@@ -175,7 +219,7 @@ export function Carousel016({
           </span>
           <button
             type="button"
-            aria-label="Следующий кадр"
+            aria-label={nextLabel}
             disabled={index === slides.length - 1}
             onClick={() =>
               setIndex((value) => Math.min(slides.length - 1, value + 1))

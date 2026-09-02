@@ -6,16 +6,21 @@ export type Separator001Props = Omit<
 > & {
   label?: string
   orientation?: "horizontal" | "vertical"
+  /** Цвет линии. Пусто — цвет из палитры компонента. */
+  line?: string
 }
 
 // Идея компонента: разделитель, который умеет держать подпись. Линия с
 // текстом посередине набирается сеткой из трёх колонок, а не двумя блоками с
 // фоном: тогда она работает на любой подложке. Пустой разделитель помечен
 // role="separator" и aria-hidden не получает — его слышно как границу.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте линия светлее фона, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="separator-001"]){
---vibeui-separator-001-line:oklch(0.9 0.006 265);
---vibeui-separator-001-muted:oklch(0.56 0.014 265);
+--vibeui-separator-001-line:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-separator-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
 --vibeui-separator-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="separator-001"]{
@@ -45,11 +50,16 @@ background:var(--vibeui-separator-001-line);
 export function Separator001({
   label = "или",
   orientation = "horizontal",
+  line = "",
   className,
   style,
   ...props
 }: Separator001Props) {
   const vertical = orientation === "vertical"
+  const palette = {
+    ...(line ? { "--vibeui-separator-001-line": line } : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -65,7 +75,7 @@ export function Separator001({
         aria-orientation={orientation}
         aria-label={label && !vertical ? label : undefined}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         {vertical ? null : (
           <>

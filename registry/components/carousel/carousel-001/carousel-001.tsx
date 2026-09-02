@@ -12,6 +12,18 @@ export type Carousel001Props = Omit<
 > & {
   slides?: Carousel001Slide[]
   label?: string
+  /** Подпись под лентой: компонент несёт русскую, проект подставляет свою. */
+  hint?: string
+  /** Роль секции для скринридера. */
+  roleText?: string
+  /** Роль слайда для скринридера. */
+  slideRoleText?: string
+  /** Шаблон подписи слайда: {index}, {total}, {label}. */
+  slideText?: string
+  /** Шаблон подписи точки: {index}, {total}, {label}. */
+  dotText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,19 +31,27 @@ export type Carousel001Props = Omit<
 // scroll-snap, а точки внизу — обычные якорные ссылки на слайды: браузер сам
 // доедет до нужного и подсветит его через :target. Пролистать можно пальцем,
 // колесом, стрелками и Tab — всё это уже умеет обычная прокрутка.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="carousel-001"]){
---vibeui-carousel-001-bg:oklch(1 0 0);
---vibeui-carousel-001-fg:oklch(0.22 0.014 265);
---vibeui-carousel-001-muted:oklch(0.58 0.014 265);
---vibeui-carousel-001-border:oklch(0.91 0.006 265);
---vibeui-carousel-001-accent:oklch(0.55 0.17 265);
+--vibeui-carousel-001-bg:transparent;
+--vibeui-carousel-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.93 0.006 265));
+--vibeui-carousel-001-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-carousel-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-carousel-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-carousel-001-radius:0.875rem;
+--vibeui-carousel-001-pad:0;
+--vibeui-carousel-001-shell:0;
 --vibeui-carousel-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="carousel-001"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:26rem;box-sizing:border-box;
+padding:var(--vibeui-carousel-001-pad);
+background:var(--vibeui-carousel-001-bg);
+border-radius:var(--vibeui-carousel-001-shell);
 font-family:var(--vibeui-carousel-001-font);color:var(--vibeui-carousel-001-fg);
 }
 /* Вся прокрутка — нативная: палец, колесо, стрелки и Tab работают сами. */
@@ -81,6 +101,35 @@ const DEFAULT_SLIDES: Carousel001Slide[] = [
   { label: "Установка одной командой", hue: 300 },
 ]
 
+/** Подстановка чисел в подпись: перевод остаётся одной строкой. */
+function fill(template: string, values: Record<string, string | number>) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Карусель на scroll-snap и якорных ссылках: без клиентского кода.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -88,14 +137,30 @@ const DEFAULT_SLIDES: Carousel001Slide[] = [
 export function Carousel001({
   slides = DEFAULT_SLIDES,
   label = "Возможности",
+  hint = "Листайте пальцем или переходите по точкам",
+  roleText = "карусель",
+  slideRoleText = "слайд",
+  slideText = "{index} из {total}: {label}",
+  dotText = "Перейти к слайду {index}: {label}",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Carousel001Props) {
   const id = useId().replace(/:/g, "")
+  // Подложка появляется вместе с внутренними отступами: без неё компонент
+  // лежит прямо на странице, и поля по бокам ему только мешают.
   const palette = {
     ...(accent ? { "--vibeui-carousel-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-carousel-001-bg": background,
+          "--vibeui-carousel-001-pad": "0.875rem",
+          "--vibeui-carousel-001-shell": "1.125rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -107,7 +172,7 @@ export function Carousel001({
       <section
         {...props}
         data-vibeui-block="carousel-001"
-        aria-roledescription="карусель"
+        aria-roledescription={roleText}
         aria-label={label}
         className={className}
         style={palette}
@@ -118,8 +183,12 @@ export function Carousel001({
               key={slide.label}
               id={`${id}-slide-${index}`}
               data-part="slide"
-              aria-roledescription="слайд"
-              aria-label={`${index + 1} из ${slides.length}: ${slide.label}`}
+              aria-roledescription={slideRoleText}
+              aria-label={fill(slideText, {
+                index: index + 1,
+                total: slides.length,
+                label: slide.label,
+              })}
               style={
                 {
                   "--vibeui-carousel-001-hue": slide.hue ?? 250,
@@ -136,12 +205,16 @@ export function Carousel001({
               <a
                 data-part="dot"
                 href={`#${id}-slide-${index}`}
-                aria-label={`Перейти к слайду ${index + 1}: ${slide.label}`}
+                aria-label={fill(dotText, {
+                  index: index + 1,
+                  total: slides.length,
+                  label: slide.label,
+                })}
               />
             </li>
           ))}
         </ul>
-        <p data-part="hint">Листайте пальцем или переходите по точкам</p>
+        <p data-part="hint">{hint}</p>
       </section>
     </>
   )

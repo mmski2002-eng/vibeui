@@ -13,6 +13,10 @@ export type Features012Props = {
   title?: string
   lede?: string
   roles?: Features012Role[]
+  /** Подпись ссылки в карточке: компонент несёт русскую. */
+  linkLabel?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -23,14 +27,19 @@ export type Features012Props = {
 // контраст двух состояний объясняет ценность быстрее любого списка. Ниже
 // три конкретные задачи роли. Карточка кликабельна целиком за счёт растянутой
 // псевдоссылки, но в дереве доступности остаётся одна ссылка, а не четыре.
+//
+// Тема берётся из color-scheme окружения через light-dark(): секция темнеет
+// вместе с контекстом и не выкладывает под себя плашку. Тёмная ветка — не
+// инверсия светлой: карточка там светлее фона, рамка светлее карточки, а
+// акцент поднимается по светлоте, чтобы строка «станет» осталась заметной.
 const STYLES = `
 :where([data-vibeui-block="features-012"]){
---vibeui-features-012-bg:oklch(0.97 0.006 300);
---vibeui-features-012-fg:oklch(0.2 0.014 300);
---vibeui-features-012-muted:oklch(0.52 0.014 300);
---vibeui-features-012-card:oklch(1 0 0);
---vibeui-features-012-line:oklch(0.89 0.008 300);
---vibeui-features-012-accent:oklch(0.5 0.17 300);
+--vibeui-features-012-bg:transparent;
+--vibeui-features-012-fg:light-dark(oklch(0.2 0.014 300),oklch(0.95 0.006 300));
+--vibeui-features-012-muted:light-dark(oklch(0.52 0.014 300),oklch(0.72 0.014 300));
+--vibeui-features-012-card:light-dark(oklch(1 0 0),oklch(0.24 0.014 300));
+--vibeui-features-012-line:light-dark(oklch(0.89 0.008 300),oklch(0.35 0.014 300));
+--vibeui-features-012-accent:light-dark(oklch(0.5 0.17 300),oklch(0.76 0.14 300));
 --vibeui-features-012-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -134,18 +143,48 @@ const DEFAULT_ROLES: Features012Role[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Блок «для кого» с ролями: у каждой карточки зачёркнутая боль и акцентный результат. */
 export function Features012({
   eyebrow = "Для кого",
   title = "Три роли, у которых боль разная, а решение общее",
   lede = "Секция объясняет ценность не списком возможностей, а сменой состояния: было — стало.",
   roles = DEFAULT_ROLES,
+  linkLabel = "Сценарий для роли",
+  background = "",
   accent,
   className,
   style,
 }: Features012Props) {
   const palette = {
     ...(accent ? { "--vibeui-features-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-features-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -182,7 +221,7 @@ export function Features012({
                     </li>
                   ))}
                 </ul>
-                <a href={role.href}>Сценарий для роли →</a>
+                <a href={role.href}>{linkLabel} →</a>
               </li>
             ))}
           </ul>

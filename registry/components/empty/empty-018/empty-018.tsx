@@ -9,6 +9,8 @@ export type Empty018Props = Omit<
   status?: string
   actionLabel?: string
   onAction?: () => void
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,11 +20,11 @@ export type Empty018Props = Omit<
 // просто нечего показать, а единственное действие ведёт в их настройку.
 const STYLES = `
 :where([data-vibeui-block="empty-018"]){
---vibeui-empty-018-bg:oklch(1 0 0);
---vibeui-empty-018-fg:oklch(0.21 0.014 265);
---vibeui-empty-018-muted:oklch(0.55 0.014 265);
---vibeui-empty-018-border:oklch(0.91 0.006 265);
---vibeui-empty-018-accent:oklch(0.55 0.17 265);
+--vibeui-empty-018-bg:transparent;
+--vibeui-empty-018-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-empty-018-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-empty-018-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-empty-018-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-empty-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -66,6 +68,29 @@ outline:2px solid var(--vibeui-empty-018-accent);outline-offset:2px;
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Пустой список уведомлений: тихое состояние, статус каналов и
  * действие — перейти в настройку оповещений. Один файл, ноль зависимостей.
  */
@@ -75,6 +100,7 @@ export function Empty018({
   status = "Уведомления включены",
   actionLabel = "Настроить уведомления",
   onAction,
+  background = "",
   accent,
   className,
   style,
@@ -82,6 +108,12 @@ export function Empty018({
 }: Empty018Props) {
   const palette = {
     ...(accent ? { "--vibeui-empty-018-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-empty-018-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

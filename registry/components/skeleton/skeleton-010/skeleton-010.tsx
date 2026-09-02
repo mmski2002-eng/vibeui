@@ -3,6 +3,8 @@ import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 export type Skeleton010Props = ComponentPropsWithoutRef<"div"> & {
   rows?: number
   label?: string
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: заглушка таблицы на настоящей разметке table/thead/tbody,
@@ -11,13 +13,16 @@ export type Skeleton010Props = ComponentPropsWithoutRef<"div"> & {
 // aria-hidden, а текст-заглушка для скринридера живёт в aria-label обёртки.
 // По умолчанию пять строк: это тот размер первой страницы, для которого
 // заглушку и просят чаще всего.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки по
+// умолчанию нет, таблица темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="skeleton-010"]){
---vibeui-skeleton-010-bg:oklch(1 0 0);
---vibeui-skeleton-010-head:oklch(0.975 0.003 265);
---vibeui-skeleton-010-border:oklch(0.9 0.006 265);
---vibeui-skeleton-010-base:oklch(0.93 0.005 265);
---vibeui-skeleton-010-shine:oklch(0.97 0.003 265);
+--vibeui-skeleton-010-bg:transparent;
+--vibeui-skeleton-010-head:light-dark(oklch(0.975 0.003 265),oklch(0.26 0.011 265));
+--vibeui-skeleton-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-skeleton-010-base:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.012 265));
+--vibeui-skeleton-010-shine:light-dark(oklch(0.97 0.003 265),oklch(0.39 0.016 265));
 }
 [data-vibeui-block="skeleton-010"]{
 width:100%;max-width:30rem;box-sizing:border-box;overflow:hidden;
@@ -60,6 +65,28 @@ animation:vibeui-skeleton-010-sweep 1.5s ease-in-out infinite;
 const COLUMNS = ["box", "long", "mid", "short"] as const
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы полосам
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Заглушка таблицы на пять строк с шапкой: настоящая разметка table,
  * помеченная aria-hidden, текст-заглушка живёт в aria-label обёртки.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -67,11 +94,21 @@ const COLUMNS = ["box", "long", "mid", "short"] as const
 export function Skeleton010({
   rows = 5,
   label = "Таблица загружается",
+  background = "",
   className,
   style,
   ...props
 }: Skeleton010Props) {
   const count = Math.min(8, Math.max(3, rows))
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-skeleton-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -85,7 +122,7 @@ export function Skeleton010({
         aria-busy="true"
         aria-label={label}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <table aria-hidden="true">
           <thead>

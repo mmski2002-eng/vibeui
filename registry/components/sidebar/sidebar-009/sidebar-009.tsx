@@ -16,6 +16,14 @@ export type Sidebar009Props = Omit<
   activeLabel?: string
   title?: string
   openLabel?: string
+  /** Подпись кнопки закрытия ящика. */
+  closeLabel?: string
+  /** Название в шапке рядом с бургером. */
+  brand?: string
+  /** Текст страницы под ящиком: он и есть то, что затемняется. */
+  pageText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,14 +32,22 @@ export type Sidebar009Props = Omit<
 // ящик — на телефоне это главный способ выйти. Закрытый ящик помечен inert,
 // поэтому таб не проваливается в невидимые ссылки, а при открытии фокус
 // уезжает на кнопку закрытия, чтобы Escape и Tab работали сразу.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// становится тёмным там, где тёмный контекст, и не носит собственного фона.
+// Сам ящик и кнопки — исключение: их подложка непрозрачная, иначе сквозь
+// выехавшую панель просвечивает страница.
 const STYLES = `
 :where([data-vibeui-block="sidebar-009"]){
---vibeui-sidebar-009-bg:oklch(1 0 0);
---vibeui-sidebar-009-fg:oklch(0.25 0.016 265);
---vibeui-sidebar-009-muted:oklch(0.55 0.014 265);
---vibeui-sidebar-009-border:oklch(0.91 0.006 265);
---vibeui-sidebar-009-accent:oklch(0.55 0.19 262);
---vibeui-sidebar-009-scrim:oklch(0.2 0.02 265 / 45%);
+--vibeui-sidebar-009-bg:transparent;
+--vibeui-sidebar-009-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-sidebar-009-fg:light-dark(oklch(0.25 0.016 265),oklch(0.93 0.006 265));
+--vibeui-sidebar-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-sidebar-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-sidebar-009-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 11%));
+--vibeui-sidebar-009-shadow:light-dark(oklch(0.2 0.02 265 / 18%),oklch(0 0 0 / 55%));
+--vibeui-sidebar-009-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.16 262));
+--vibeui-sidebar-009-scrim:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.08 0.01 265 / 62%));
 --vibeui-sidebar-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="sidebar-009"]{
@@ -52,7 +68,7 @@ appearance:none;cursor:pointer;flex:none;
 display:inline-flex;align-items:center;justify-content:center;
 width:2rem;height:2rem;padding:0;
 border:1px solid var(--vibeui-sidebar-009-border);border-radius:0.5rem;
-background:var(--vibeui-sidebar-009-bg);color:var(--vibeui-sidebar-009-fg);
+background:var(--vibeui-sidebar-009-panel);color:var(--vibeui-sidebar-009-fg);
 }
 [data-vibeui-block="sidebar-009"] [data-part="burger"]:focus-visible,
 [data-vibeui-block="sidebar-009"] [data-part="close"]:focus-visible{outline:2px solid var(--vibeui-sidebar-009-accent);outline-offset:2px}
@@ -73,9 +89,9 @@ opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease;
 position:absolute;inset:0 auto 0 0;z-index:2;
 display:flex;flex-direction:column;gap:0.625rem;
 width:12rem;box-sizing:border-box;padding:0.625rem;
-background:var(--vibeui-sidebar-009-bg);
+background:var(--vibeui-sidebar-009-panel);
 border-right:1px solid var(--vibeui-sidebar-009-border);
-box-shadow:0 0 24px oklch(0.2 0.02 265 / 18%);
+box-shadow:0 0 24px var(--vibeui-sidebar-009-shadow);
 transform:translateX(-100%);transition:transform .22s ease;
 }
 [data-vibeui-block="sidebar-009"][data-open="true"] [data-part="drawer"]{transform:translateX(0)}
@@ -86,7 +102,7 @@ transform:translateX(-100%);transition:transform .22s ease;
 display:block;padding:0.4375rem 0.5rem;border-radius:0.5rem;
 color:var(--vibeui-sidebar-009-muted);text-decoration:none;font-size:0.875rem;line-height:1.3;
 }
-[data-vibeui-block="sidebar-009"] [data-part="drawer"] a:hover{background:oklch(0.55 0.02 265 / 8%);color:var(--vibeui-sidebar-009-fg)}
+[data-vibeui-block="sidebar-009"] [data-part="drawer"] a:hover{background:var(--vibeui-sidebar-009-hover);color:var(--vibeui-sidebar-009-fg)}
 [data-vibeui-block="sidebar-009"] [data-part="drawer"] a:focus-visible{outline:2px solid var(--vibeui-sidebar-009-accent);outline-offset:-2px}
 [data-vibeui-block="sidebar-009"] [data-part="drawer"] a[aria-current="page"]{
 background:color-mix(in oklab,var(--vibeui-sidebar-009-accent) 14%,transparent);
@@ -104,6 +120,28 @@ const DEFAULT_ITEMS: Sidebar009Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Мобильное меню-ящик: выезжает слева, затемнение закрывает по нажатию мимо.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -112,6 +150,10 @@ export function Sidebar009({
   activeLabel = "Заказы",
   title = "Меню",
   openLabel = "Открыть меню",
+  closeLabel = "Закрыть меню",
+  brand = "Северный порт",
+  pageText = "Содержимое страницы. Ящик выезжает поверх него и затемняет всё, что под ним, — нажатие по затемнению закрывает меню.",
+  background = "",
   accent,
   className,
   style,
@@ -127,6 +169,13 @@ export function Sidebar009({
 
   const palette = {
     ...(accent ? { "--vibeui-sidebar-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-sidebar-009-bg": background,
+          "--vibeui-sidebar-009-panel": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -167,12 +216,9 @@ export function Sidebar009({
               />
             </svg>
           </button>
-          <span data-part="brand">Северный порт</span>
+          <span data-part="brand">{brand}</span>
         </div>
-        <p data-part="page">
-          Содержимое страницы. Ящик выезжает поверх него и затемняет всё, что
-          под ним, — нажатие по затемнению закрывает меню.
-        </p>
+        <p data-part="page">{pageText}</p>
         <button
           type="button"
           data-part="scrim"
@@ -187,7 +233,7 @@ export function Sidebar009({
               type="button"
               data-part="close"
               ref={closeButton}
-              aria-label="Закрыть меню"
+              aria-label={closeLabel}
               onClick={close}
             >
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">

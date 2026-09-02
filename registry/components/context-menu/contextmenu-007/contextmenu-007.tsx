@@ -9,6 +9,18 @@ export type Contextmenu007Props = Omit<
 > & {
   caption?: string
   columns?: string[]
+  /** Ячейки по имени колонки: компонент несёт русские, проект подставляет свои. */
+  cells?: Record<string, string[]>
+  /** Подпись кнопки вызова; {count} — число видимых колонок. */
+  buttonText?: string
+  /** Доступное имя меню. */
+  menuLabel?: string
+  /** Заголовок внутри меню. */
+  menuTitle?: string
+  /** Пояснение, почему последняя колонка не выключается. */
+  lockNote?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,12 +31,15 @@ export type Contextmenu007Props = Omit<
 // Кнопка «Колонки» дублирует вызов: правого клика на телефоне нет.
 const STYLES = `
 :where([data-vibeui-block="contextmenu-007"]){
---vibeui-contextmenu-007-bg:oklch(1 0 0);
---vibeui-contextmenu-007-fg:oklch(0.24 0.014 265);
---vibeui-contextmenu-007-muted:oklch(0.55 0.014 265);
---vibeui-contextmenu-007-border:oklch(0.9 0.006 265);
---vibeui-contextmenu-007-hover:oklch(0.97 0.003 265);
---vibeui-contextmenu-007-accent:oklch(0.56 0.15 195);
+--vibeui-contextmenu-007-bg:transparent;
+--vibeui-contextmenu-007-surface:light-dark(oklch(1 0 0),oklch(0.24 0.013 265));
+--vibeui-contextmenu-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-contextmenu-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-contextmenu-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-contextmenu-007-hover:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.014 265));
+--vibeui-contextmenu-007-accent:light-dark(oklch(0.56 0.15 195),oklch(0.76 0.12 195));
+--vibeui-contextmenu-007-oncheck:light-dark(oklch(1 0 0),oklch(0.19 0.02 195));
+--vibeui-contextmenu-007-shadow:light-dark(oklch(0.2 0.03 265 / 50%),oklch(0 0 0 / 72%));
 --vibeui-contextmenu-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-contextmenu-007-x:50%;
 --vibeui-contextmenu-007-y:50%;
@@ -45,7 +60,7 @@ border-bottom:1px solid var(--vibeui-contextmenu-007-border);
 appearance:none;cursor:pointer;
 height:1.875rem;padding:0 0.75rem;
 border:1px solid var(--vibeui-contextmenu-007-border);border-radius:0.5rem;
-background:var(--vibeui-contextmenu-007-bg);color:inherit;font:inherit;font-size:0.75rem;font-weight:600;
+background:none;color:inherit;font:inherit;font-size:0.75rem;font-weight:600;
 }
 [data-vibeui-block="contextmenu-007"] [data-part="button"]:hover{background:var(--vibeui-contextmenu-007-hover)}
 [data-vibeui-block="contextmenu-007"] [data-part="button"]:focus-visible{outline:2px solid var(--vibeui-contextmenu-007-accent);outline-offset:2px}
@@ -65,9 +80,9 @@ padding:0.5rem 0.875rem;border-bottom:1px solid var(--vibeui-contextmenu-007-bor
 position:fixed;margin:0;padding:0.3125rem;
 top:var(--vibeui-contextmenu-007-y);left:var(--vibeui-contextmenu-007-x);
 min-width:12.5rem;box-sizing:border-box;
-background:var(--vibeui-contextmenu-007-bg);color:var(--vibeui-contextmenu-007-fg);
+background:var(--vibeui-contextmenu-007-surface);color:var(--vibeui-contextmenu-007-fg);
 border:1px solid var(--vibeui-contextmenu-007-border);border-radius:0.75rem;
-box-shadow:0 18px 40px -20px oklch(0.2 0.03 265 / 50%);
+box-shadow:0 18px 40px -20px var(--vibeui-contextmenu-007-shadow);
 font-family:var(--vibeui-contextmenu-007-font);
 }
 [data-vibeui-block="contextmenu-007"] [data-part="head"]{
@@ -96,7 +111,7 @@ transition:background-color .14s ease,border-color .14s ease;
 [data-vibeui-block="contextmenu-007"] [data-part="item"][aria-checked="true"] [data-part="box"]{
 background:var(--vibeui-contextmenu-007-accent);border-color:var(--vibeui-contextmenu-007-accent);
 }
-[data-vibeui-block="contextmenu-007"] [data-part="box"] svg{width:0.75rem;height:0.75rem;opacity:0;color:oklch(1 0 0)}
+[data-vibeui-block="contextmenu-007"] [data-part="box"] svg{width:0.75rem;height:0.75rem;opacity:0;color:var(--vibeui-contextmenu-007-oncheck)}
 [data-vibeui-block="contextmenu-007"] [data-part="item"][aria-checked="true"] [data-part="box"] svg{opacity:1}
 [data-vibeui-block="contextmenu-007"] [data-part="note"]{
 padding:0.375rem 0.5rem 0.1875rem;margin-top:0.3125rem;
@@ -108,11 +123,33 @@ font-size:0.6875rem;color:var(--vibeui-contextmenu-007-muted);
 
 const DEFAULT_COLUMNS = ["Задача", "Статус", "Автор", "Срок"]
 
-const CELLS: Record<string, string[]> = {
+const DEFAULT_CELLS: Record<string, string[]> = {
   Задача: ["Свести отчёт", "Обновить прайс", "Проверить оплату"],
   Статус: ["В работе", "Готово", "Ждёт"],
   Автор: ["Вера", "Игорь", "Аня"],
   Срок: ["12.03", "14.03", "18.03"],
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -122,6 +159,12 @@ const CELLS: Record<string, string[]> = {
 export function Contextmenu007({
   caption = "План недели",
   columns = DEFAULT_COLUMNS,
+  cells = DEFAULT_CELLS,
+  buttonText = "Колонки: {count}",
+  menuLabel = "Видимость колонок",
+  menuTitle = "Колонки",
+  lockNote = "Последнюю колонку скрыть нельзя",
+  background = "",
   accent,
   className,
   style,
@@ -155,6 +198,12 @@ export function Contextmenu007({
 
   const palette = {
     ...(accent ? { "--vibeui-contextmenu-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-contextmenu-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...(spot
       ? {
           "--vibeui-contextmenu-007-x": spot.x,
@@ -187,7 +236,7 @@ export function Contextmenu007({
               openAt(box.left - 80, box.bottom + 6)
             }}
           >
-            Колонки: {shown.length}
+            {buttonText.replace("{count}", String(shown.length))}
           </button>
         </div>
         <table>
@@ -209,7 +258,7 @@ export function Contextmenu007({
             {[0, 1, 2].map((index) => (
               <tr key={index}>
                 {shown.map((column) => (
-                  <td key={column}>{CELLS[column]?.[index] ?? "—"}</td>
+                  <td key={column}>{cells[column]?.[index] ?? "—"}</td>
                 ))}
               </tr>
             ))}
@@ -220,7 +269,7 @@ export function Contextmenu007({
           data-part="menu"
           popover="auto"
           role="menu"
-          aria-label="Видимость колонок"
+          aria-label={menuLabel}
           onKeyDown={(event) => {
             if (event.key !== "ArrowDown" && event.key !== "ArrowUp") {
               return
@@ -242,7 +291,7 @@ export function Contextmenu007({
             items[(from + delta + items.length) % items.length].focus()
           }}
         >
-          <div data-part="head">Колонки</div>
+          <div data-part="head">{menuTitle}</div>
           {columns.map((column) => {
             const checked = shown.includes(column)
             const locked = checked && shown.length === 1
@@ -272,7 +321,7 @@ export function Contextmenu007({
               </button>
             )
           })}
-          <p data-part="note">Последнюю колонку скрыть нельзя</p>
+          <p data-part="note">{lockNote}</p>
         </div>
       </section>
     </>

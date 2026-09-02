@@ -8,6 +8,8 @@ export type Iconstack001Props = Omit<
   max?: number
   label?: string
   size?: "sm" | "md" | "lg"
+  /** Пусто — подложки нет, стопка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: стопка участников с перекрытием. Порядок наложения задан
@@ -19,14 +21,15 @@ const STYLES = `
 :where([data-vibeui-block="iconstack-001"]){
 --vibeui-iconstack-001-size:2rem;
 --vibeui-iconstack-001-overlap:0.625rem;
---vibeui-iconstack-001-ring:oklch(1 0 0);
---vibeui-iconstack-001-more-bg:oklch(0.93 0.006 265);
---vibeui-iconstack-001-more-fg:oklch(0.4 0.014 265);
---vibeui-iconstack-001-surface:oklch(1 0 0);
---vibeui-iconstack-001-shell:oklch(0.91 0.006 265);
+--vibeui-iconstack-001-ring:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-iconstack-001-more-bg:light-dark(oklch(0.93 0.006 265),oklch(0.34 0.012 265));
+--vibeui-iconstack-001-more-fg:light-dark(oklch(0.4 0.014 265),oklch(0.8 0.012 265));
+--vibeui-iconstack-001-surface:transparent;
+--vibeui-iconstack-001-shell:light-dark(oklch(0.91 0.006 265),oklch(0.4 0.012 265));
 --vibeui-iconstack-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: стопку показывают поверх любого фона. */
+/* Подложки по умолчанию нет: пилюля лежит на фоне страницы, а обводка кружка
+   повторяет тот же фон. */
 [data-vibeui-block="iconstack-001"]{
 display:inline-flex;align-items:center;gap:0.625rem;
 box-sizing:border-box;padding:0.5rem 0.875rem 0.5rem 0.625rem;
@@ -95,6 +98,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Стопка участников: перекрытие обратным флексом и остаток в «+N».
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -103,12 +128,25 @@ export function Iconstack001({
   max = 4,
   label = "работают над проектом",
   size = "md",
+  background = "",
   className,
   style,
   ...props
 }: Iconstack001Props) {
   const shown = names.slice(0, max)
   const rest = names.length - shown.length
+  // Обводка кружка равна подложке: заданный фон красит и её, иначе вокруг
+  // стопки останется белый контур от прежнего фона.
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-iconstack-001-surface": background,
+          "--vibeui-iconstack-001-ring": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -120,7 +158,7 @@ export function Iconstack001({
         data-vibeui-block="iconstack-001"
         data-size={size}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="stack" aria-hidden="true">
           {rest > 0 ? <span data-part="more">+{rest}</span> : null}

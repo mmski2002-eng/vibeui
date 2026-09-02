@@ -13,6 +13,14 @@ export type Navbar013Props = {
   subsections?: Navbar013Link[]
   actionLabel?: string
   actionHref?: string
+  /** Подпись служебной полосы для скринридера: компонент несёт русскую. */
+  utilitiesLabel?: string
+  /** Подпись ряда основных разделов для скринридера: компонент несёт русскую. */
+  sectionsLabel?: string
+  /** Подпись ряда подразделов для скринридера: компонент несёт русскую. */
+  subsectionsLabel?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -22,15 +30,18 @@ export type Navbar013Props = {
 // служебная полоса (для кого сайт, вход, язык), снизу основные разделы и
 // подразделы текущего. Третий ряд появляется только тогда, когда у раздела
 // действительно есть подразделы — пустая полоса выглядит как ошибка вёрстки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): шапка темнеет
+// вместе с контекстом и не выкладывает под себя собственную плашку.
 const STYLES = `
 :where([data-vibeui-block="navbar-013"]){
---vibeui-navbar-013-bg:oklch(1 0 0);
---vibeui-navbar-013-strip:oklch(0.97 0.004 245);
---vibeui-navbar-013-ink:oklch(0.22 0.014 245);
---vibeui-navbar-013-muted:oklch(0.53 0.014 245);
---vibeui-navbar-013-border:oklch(0.9 0.006 245);
---vibeui-navbar-013-accent:oklch(0.45 0.15 250);
---vibeui-navbar-013-accent-fg:oklch(0.99 0 0);
+--vibeui-navbar-013-bg:transparent;
+--vibeui-navbar-013-strip:light-dark(oklch(0.97 0.004 245),oklch(0.26 0.014 245));
+--vibeui-navbar-013-ink:light-dark(oklch(0.22 0.014 245),oklch(0.94 0.006 245));
+--vibeui-navbar-013-muted:light-dark(oklch(0.53 0.014 245),oklch(0.71 0.012 245));
+--vibeui-navbar-013-border:light-dark(oklch(0.9 0.006 245),oklch(0.36 0.012 245));
+--vibeui-navbar-013-accent:light-dark(oklch(0.45 0.15 250),oklch(0.75 0.13 250));
+--vibeui-navbar-013-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.19 0.04 250));
 --vibeui-navbar-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -138,6 +149,28 @@ const DEFAULT_SUBSECTIONS: Navbar013Link[] = [
   { label: "Расписание", href: "#schedule" },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Двухуровневая шапка: служебная полоса, разделы и подразделы текущего. */
 export function Navbar013({
   brand = "Институт связи",
@@ -146,12 +179,22 @@ export function Navbar013({
   subsections = DEFAULT_SUBSECTIONS,
   actionLabel = "Подать заявку",
   actionHref = "#apply",
+  utilitiesLabel = "Служебные разделы",
+  sectionsLabel = "Основные разделы",
+  subsectionsLabel = "Подразделы текущего раздела",
+  background = "",
   accent,
   className,
   style,
 }: Navbar013Props) {
   const palette = {
     ...(accent ? { "--vibeui-navbar-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-navbar-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -166,7 +209,7 @@ export function Navbar013({
         style={palette}
       >
         <div data-part="top">
-          <nav data-part="top-inner" aria-label="Служебные разделы">
+          <nav data-part="top-inner" aria-label={utilitiesLabel}>
             {utilities.map((link) => (
               <a key={link.href} href={link.href}>
                 {link.label}
@@ -179,7 +222,7 @@ export function Navbar013({
             <span data-part="mark" aria-hidden="true" />
             {brand}
           </a>
-          <nav data-part="sections" aria-label="Основные разделы">
+          <nav data-part="sections" aria-label={sectionsLabel}>
             {sections.map((link) => (
               <a
                 key={link.href}
@@ -196,7 +239,7 @@ export function Navbar013({
         </div>
         {subsections.length > 0 ? (
           <div data-part="sub">
-            <nav data-part="sub-inner" aria-label="Подразделы текущего раздела">
+            <nav data-part="sub-inner" aria-label={subsectionsLabel}>
               {subsections.map((link) => (
                 <a
                   key={link.href}

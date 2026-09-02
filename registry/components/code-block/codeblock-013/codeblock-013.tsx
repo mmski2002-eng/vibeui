@@ -7,6 +7,12 @@ export type Codeblock013Props = {
   title?: string
   lines?: string[]
   showNumbers?: boolean
+  /** Подпись кнопки копирования, {n} — номер строки. */
+  copyLabel?: string
+  /** Подпись кнопки после копирования, {n} — номер строки. */
+  copiedLabel?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -14,15 +20,21 @@ export type Codeblock013Props = {
 // Идея компонента: копировать не весь блок, а одну строку. У каждой строки
 // своя кнопка: она проявляется при наведении и при фокусе с клавиатуры,
 // поэтому копирование доступно и без мыши, а не только по hover.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, он ложится на фон страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="codeblock-013"]){
---vibeui-codeblock-013-bg:oklch(0.2 0.006 265);
---vibeui-codeblock-013-head:oklch(0.24 0.008 265);
---vibeui-codeblock-013-fg:oklch(0.93 0.005 265);
---vibeui-codeblock-013-muted:oklch(0.67 0.012 265);
---vibeui-codeblock-013-gutter:oklch(0.5 0.014 265);
---vibeui-codeblock-013-border:oklch(1 0 0 / 13%);
---vibeui-codeblock-013-ok:oklch(0.84 0.14 152);
+--vibeui-codeblock-013-bg:transparent;
+--vibeui-codeblock-013-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
+--vibeui-codeblock-013-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.005 265));
+--vibeui-codeblock-013-muted:light-dark(oklch(0.5 0.016 265),oklch(0.67 0.012 265));
+--vibeui-codeblock-013-gutter:light-dark(oklch(0.63 0.014 265),oklch(0.55 0.014 265));
+--vibeui-codeblock-013-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 13%));
+--vibeui-codeblock-013-row:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 6%));
+--vibeui-codeblock-013-mark:light-dark(oklch(0.72 0.14 152 / 24%),oklch(0.6 0.14 152 / 18%));
+--vibeui-codeblock-013-key:light-dark(oklch(0 0 0 / 6%),oklch(1 0 0 / 10%));
+--vibeui-codeblock-013-ok:light-dark(oklch(0.48 0.15 152),oklch(0.84 0.14 152));
 --vibeui-codeblock-013-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -56,8 +68,8 @@ font-family:var(--vibeui-codeblock-013-mono);font-size:0.75rem;
 color:var(--vibeui-codeblock-013-gutter);font-variant-numeric:tabular-nums;
 user-select:none;-webkit-user-select:none;
 }
-[data-vibeui-block="codeblock-013"] li:hover{background:oklch(1 0 0 / 6%)}
-[data-vibeui-block="codeblock-013"] li[data-copied="true"]{background:oklch(0.6 0.14 152 / 18%)}
+[data-vibeui-block="codeblock-013"] li:hover{background:var(--vibeui-codeblock-013-row)}
+[data-vibeui-block="codeblock-013"] li[data-copied="true"]{background:var(--vibeui-codeblock-013-mark)}
 /* Строка режется многоточием, а не прокручивается: своя полоса прокрутки на
    каждой строке превращает блок в лестницу, а кнопка копирования уезжает за
    край. Целиком строка всё равно уходит в буфер. */
@@ -71,7 +83,7 @@ white-space:pre;overflow:hidden;text-overflow:ellipsis;
 appearance:none;border:0;cursor:pointer;flex:none;
 width:1.5rem;height:1.5rem;border-radius:0.375rem;
 display:inline-flex;align-items:center;justify-content:center;
-background:oklch(1 0 0 / 10%);color:var(--vibeui-codeblock-013-muted);
+background:var(--vibeui-codeblock-013-key);color:var(--vibeui-codeblock-013-muted);
 opacity:0;transition:opacity .16s ease,color .16s ease;
 }
 [data-vibeui-block="codeblock-013"] li:hover button,
@@ -91,11 +103,36 @@ const LINES = [
   "git push --force-with-lease",
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Список строк, каждую можно скопировать отдельной кнопкой. */
 export function Codeblock013({
   title = "Обновление форка",
   lines = LINES,
   showNumbers = true,
+  copyLabel = "Скопировать строку {n}",
+  copiedLabel = "Строка {n} скопирована",
+  background = "",
   className,
   style,
 }: Codeblock013Props) {
@@ -121,6 +158,16 @@ export function Codeblock013({
     timer.current = setTimeout(() => setCopied(-1), 1400)
   }
 
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-codeblock-013" precedence="medium">
@@ -129,7 +176,7 @@ export function Codeblock013({
       <figure
         data-vibeui-block="codeblock-013"
         className={className}
-        style={style}
+        style={palette}
       >
         <figcaption>{title}</figcaption>
         <ol>
@@ -144,11 +191,10 @@ export function Codeblock013({
                 type="button"
                 data-copied={copied === index || undefined}
                 onClick={() => copy(line, index)}
-                aria-label={
-                  copied === index
-                    ? `Строка ${index + 1} скопирована`
-                    : `Скопировать строку ${index + 1}`
-                }
+                aria-label={(copied === index
+                  ? copiedLabel
+                  : copyLabel
+                ).replace("{n}", String(index + 1))}
               >
                 {copied === index ? (
                   <svg viewBox="0 0 12 12" aria-hidden="true">

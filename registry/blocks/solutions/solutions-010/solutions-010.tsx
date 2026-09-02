@@ -19,7 +19,13 @@ export type Solutions010Props = {
   segments?: Solutions010Segment[]
   months?: Solutions010Month[]
   unit?: string
+  /** Шапка таблицы: ключи segment, revenue, share. */
+  columnText?: Record<string, string>
+  /** Подпись графика, {period} и {total} — период и итог. */
+  chartLabelText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -35,15 +41,18 @@ export type Solutions010Props = {
 // столбик отвечает на «как менялось», таблица — на «сколько именно».
 const STYLES = `
 :where([data-vibeui-block="solutions-010"]){
---vibeui-solutions-010-bg:oklch(1 0 0);
---vibeui-solutions-010-panel:oklch(0.98 0.003 250);
---vibeui-solutions-010-fg:oklch(0.21 0.014 265);
---vibeui-solutions-010-muted:oklch(0.55 0.014 265);
---vibeui-solutions-010-border:oklch(0.9 0.006 265);
---vibeui-solutions-010-accent:oklch(0.5 0.19 275);
---vibeui-solutions-010-s2:oklch(0.63 0.15 200);
---vibeui-solutions-010-s3:oklch(0.72 0.13 145);
---vibeui-solutions-010-s4:oklch(0.8 0.07 265);
+--vibeui-solutions-010-bg:transparent;
+--vibeui-solutions-010-panel:light-dark(oklch(0.98 0.003 250),oklch(0.27 0.011 255));
+--vibeui-solutions-010-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-solutions-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-solutions-010-accent:light-dark(oklch(0.5 0.19 275),oklch(0.68 0.17 275));
+--vibeui-solutions-010-s2:light-dark(oklch(0.63 0.15 200),oklch(0.7 0.13 200));
+--vibeui-solutions-010-s3:light-dark(oklch(0.72 0.13 145),oklch(0.76 0.12 145));
+--vibeui-solutions-010-s4:light-dark(oklch(0.8 0.07 265),oklch(0.66 0.07 265));
+--vibeui-solutions-010-hatch-a:light-dark(oklch(1 0 0 / 22%),oklch(0.16 0.012 265 / 30%));
+--vibeui-solutions-010-hatch-b:light-dark(oklch(1 0 0 / 30%),oklch(0.16 0.012 265 / 34%));
+--vibeui-solutions-010-hatch-c:light-dark(oklch(1 0 0 / 40%),oklch(0.16 0.012 265 / 40%));
 --vibeui-solutions-010-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -85,15 +94,15 @@ border-radius:0.375rem;overflow:hidden;background:var(--vibeui-solutions-010-pan
 /* Штриховка вместо одного цвета: стек обязан читаться и в чёрно-белой печати. */
 [data-vibeui-block="solutions-010"] [data-seg="1"]{
 background:var(--vibeui-solutions-010-s2);
-background-image:repeating-linear-gradient(45deg,oklch(1 0 0 / 22%) 0 3px,transparent 3px 6px);
+background-image:repeating-linear-gradient(45deg,var(--vibeui-solutions-010-hatch-a) 0 3px,transparent 3px 6px);
 }
 [data-vibeui-block="solutions-010"] [data-seg="2"]{
 background:var(--vibeui-solutions-010-s3);
-background-image:repeating-linear-gradient(-45deg,oklch(1 0 0 / 30%) 0 2px,transparent 2px 5px);
+background-image:repeating-linear-gradient(-45deg,var(--vibeui-solutions-010-hatch-b) 0 2px,transparent 2px 5px);
 }
 [data-vibeui-block="solutions-010"] [data-seg="3"]{
 background:var(--vibeui-solutions-010-s4);
-background-image:repeating-linear-gradient(90deg,oklch(1 0 0 / 40%) 0 1px,transparent 1px 4px);
+background-image:repeating-linear-gradient(90deg,var(--vibeui-solutions-010-hatch-c) 0 1px,transparent 1px 4px);
 }
 [data-vibeui-block="solutions-010"] [data-part="tick"]{
 text-align:center;font-size:0.625rem;color:var(--vibeui-solutions-010-muted);font-variant-numeric:tabular-nums;
@@ -140,6 +149,34 @@ const DEFAULT_SEGMENTS: Solutions010Segment[] = [
   { name: "Обучение", total: "2,4 млн ₽", share: 12 },
 ]
 
+const DEFAULT_COLUMN_TEXT: Record<string, string> = {
+  segment: "Направление",
+  revenue: "Выручка",
+  share: "Доля",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Отчёт по выручке: столбики месяцев собраны из сегментов, разбивка — таблицей.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -152,7 +189,10 @@ export function Solutions010({
   segments = DEFAULT_SEGMENTS,
   months = DEFAULT_MONTHS,
   unit = "тыс. ₽",
+  columnText = DEFAULT_COLUMN_TEXT,
+  chartLabelText = "Выручка по месяцам за период {period}: итог {total}",
   accent,
+  background = "",
   className,
   style,
 }: Solutions010Props) {
@@ -163,6 +203,12 @@ export function Solutions010({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -193,7 +239,9 @@ export function Solutions010({
         <div
           data-part="chart"
           role="img"
-          aria-label={`Выручка по месяцам за период ${period}: итог ${total}`}
+          aria-label={chartLabelText
+            .replace("{period}", period)
+            .replace("{total}", total)}
         >
           {months.map((month, index) => {
             const sum = sums[index]
@@ -222,12 +270,14 @@ export function Solutions010({
         <table>
           <thead>
             <tr>
-              <th scope="col">Направление</th>
-              <th scope="col" data-align="end">
-                Выручка
+              <th scope="col">
+                {columnText.segment ?? DEFAULT_COLUMN_TEXT.segment}
               </th>
               <th scope="col" data-align="end">
-                Доля
+                {columnText.revenue ?? DEFAULT_COLUMN_TEXT.revenue}
+              </th>
+              <th scope="col" data-align="end">
+                {columnText.share ?? DEFAULT_COLUMN_TEXT.share}
               </th>
             </tr>
           </thead>

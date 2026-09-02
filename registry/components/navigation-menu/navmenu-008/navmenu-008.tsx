@@ -5,6 +5,16 @@ export type Navmenu008Props = {
   placeholder?: string
   suggestions?: string[]
   recent?: string[]
+  /** Обычные ссылки полосы слева от кнопки поиска. */
+  barLinks?: string[]
+  /** Подпись кнопки отправки формы. */
+  submitLabel?: string
+  /** Заголовок над списком недавних запросов. */
+  recentTitle?: string
+  /** Подпись навигации для скринридера. */
+  label?: string
+  /** Подложка полосы и панели. Пусто — своя палитра компонента. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -16,13 +26,15 @@ export type Navmenu008Props = {
 // остаётся работоспособным до гидратации. Панель — HTML popover.
 const STYLES = `
 :where([data-vibeui-block="navmenu-008"]){
---vibeui-navmenu-008-bg:oklch(1 0 0);
---vibeui-navmenu-008-field:oklch(0.97 0.003 265);
---vibeui-navmenu-008-fg:oklch(0.22 0.014 265);
---vibeui-navmenu-008-muted:oklch(0.55 0.014 265);
---vibeui-navmenu-008-border:oklch(0.91 0.006 265);
---vibeui-navmenu-008-hover:oklch(0.55 0.02 265 / 8%);
---vibeui-navmenu-008-accent:oklch(0.55 0.2 262);
+--vibeui-navmenu-008-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
+--vibeui-navmenu-008-field:light-dark(oklch(0.97 0.003 265),oklch(0.28 0.012 265));
+--vibeui-navmenu-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-navmenu-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-navmenu-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-navmenu-008-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 12%));
+--vibeui-navmenu-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-navmenu-008-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-navmenu-008-shadow:light-dark(oklch(0.2 0.03 265 / 40%),oklch(0 0 0 / 70%));
 --vibeui-navmenu-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="navmenu-008"]{
@@ -61,7 +73,7 @@ width:min(30rem,92vw);padding:0.625rem;box-sizing:border-box;
 background:var(--vibeui-navmenu-008-bg);color:var(--vibeui-navmenu-008-fg);
 border:1px solid var(--vibeui-navmenu-008-border);border-radius:0.875rem;
 font-family:var(--vibeui-navmenu-008-font);
-box-shadow:0 24px 48px -24px oklch(0.2 0.03 265 / 40%);
+box-shadow:0 24px 48px -24px var(--vibeui-navmenu-008-shadow);
 }
 @supports (anchor-name: --a){
 [data-vibeui-block="navmenu-008"] [data-part="panel"]{
@@ -83,7 +95,7 @@ font:inherit;font-size:0.875rem;
 [data-vibeui-block="navmenu-008"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;
 height:2.375rem;padding:0 0.875rem;border-radius:0.625rem;
-background:var(--vibeui-navmenu-008-accent);color:oklch(1 0 0);
+background:var(--vibeui-navmenu-008-accent);color:var(--vibeui-navmenu-008-on-accent);
 font:inherit;font-size:0.875rem;font-weight:600;
 }
 [data-vibeui-block="navmenu-008"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-navmenu-008-accent);outline-offset:2px}
@@ -124,6 +136,29 @@ const DEFAULT_SUGGESTIONS = [
 const DEFAULT_RECENT = ["Как подключить домен", "Экспорт статистики"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Навигация с панелью, которая начинается со строки поиска.
  * Один файл, ноль зависимостей, собственная палитра, клиентского JS нет.
  */
@@ -132,12 +167,23 @@ export function Navmenu008({
   placeholder = "Что ищем в справке?",
   suggestions = DEFAULT_SUGGESTIONS,
   recent = DEFAULT_RECENT,
+  barLinks = ["Справка", "Сообщество"],
+  submitLabel = "Найти",
+  recentTitle = "Недавнее",
+  label = "Основная навигация",
+  background = "",
   accent,
   className,
   style,
 }: Navmenu008Props) {
   const palette = {
     ...(accent ? { "--vibeui-navmenu-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-navmenu-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -148,17 +194,16 @@ export function Navmenu008({
       </style>
       <nav
         data-vibeui-block="navmenu-008"
-        aria-label="Основная навигация"
+        aria-label={label}
         className={className}
         style={palette}
       >
         <div data-part="bar">
-          <a data-part="plain" href="#">
-            Справка
-          </a>
-          <a data-part="plain" href="#">
-            Сообщество
-          </a>
+          {barLinks.map((entry) => (
+            <a key={entry} data-part="plain" href="#">
+              {entry}
+            </a>
+          ))}
           <button
             type="button"
             data-part="trigger"
@@ -184,7 +229,7 @@ export function Navmenu008({
               aria-label={placeholder}
             />
             <button type="submit" data-part="go">
-              Найти
+              {submitLabel}
             </button>
           </form>
           <ul data-part="chips">
@@ -196,7 +241,7 @@ export function Navmenu008({
               </li>
             ))}
           </ul>
-          <p data-part="title">Недавнее</p>
+          <p data-part="title">{recentTitle}</p>
           <ul data-part="list">
             {recent.map((item) => (
               <li key={item}>

@@ -22,6 +22,16 @@ export type Dashboard081Props = {
   popular?: Dashboard081Article[]
   popularTitle?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Хлебные крошки по ключам root и current. */
+  crumbsText?: Record<string, string>
+  /** Кнопка поиска. */
+  searchButtonLabel?: string
+  /** Заголовок колонки разделов. */
+  sectionsTitle?: string
+  /** Счётчик статей раздела: {articles}. */
+  articlesText?: string
   className?: string
   style?: CSSProperties
 }
@@ -36,16 +46,22 @@ export type Dashboard081Props = {
 // заподозрить. В колонке популярного рядом со статьёй стоит доля «помогло»:
 // статья с тысячей просмотров и оценкой 31 % — это не популярная статья,
 // а нерешённая проблема, и её помечают отдельно.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-081"]){
---vibeui-dashboard-081-bg:oklch(0.985 0.003 235);
---vibeui-dashboard-081-card:oklch(1 0 0);
---vibeui-dashboard-081-fg:oklch(0.21 0.014 235);
---vibeui-dashboard-081-muted:oklch(0.54 0.014 235);
---vibeui-dashboard-081-border:oklch(0.91 0.006 235);
---vibeui-dashboard-081-accent:oklch(0.5 0.14 235);
---vibeui-dashboard-081-soft:oklch(0.965 0.02 235);
---vibeui-dashboard-081-warn:oklch(0.66 0.15 60);
+--vibeui-dashboard-081-bg:transparent;
+/* Карточка раздела и строка статьи: подложка самого блока прозрачна. */
+--vibeui-dashboard-081-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 235));
+--vibeui-dashboard-081-fg:light-dark(oklch(0.21 0.014 235),oklch(0.94 0.005 235));
+--vibeui-dashboard-081-muted:light-dark(oklch(0.54 0.014 235),oklch(0.72 0.012 235));
+--vibeui-dashboard-081-border:light-dark(oklch(0.91 0.006 235),oklch(0.36 0.012 235));
+--vibeui-dashboard-081-accent:light-dark(oklch(0.5 0.14 235),oklch(0.74 0.13 235));
+--vibeui-dashboard-081-accent-line:light-dark(oklch(0.78 0.07 235),oklch(0.54 0.1 235));
+--vibeui-dashboard-081-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 235));
+--vibeui-dashboard-081-soft:light-dark(oklch(0.965 0.02 235),oklch(0.3 0.035 235));
+--vibeui-dashboard-081-warn:light-dark(oklch(0.52 0.12 60),oklch(0.82 0.13 60));
 --vibeui-dashboard-081-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -65,7 +81,7 @@ display:flex;gap:0.4375rem;align-items:center;
 padding:0.5rem 0.625rem;border-radius:0.75rem;
 background:var(--vibeui-dashboard-081-card);border:1px solid var(--vibeui-dashboard-081-border);
 }
-[data-vibeui-block="dashboard-081"] [data-part="search"]:focus-within{border-color:color-mix(in oklab,var(--vibeui-dashboard-081-accent) 50%,white)}
+[data-vibeui-block="dashboard-081"] [data-part="search"]:focus-within{border-color:var(--vibeui-dashboard-081-accent-line)}
 [data-vibeui-block="dashboard-081"] input[type="search"]{
 flex:1 1 auto;min-width:0;font:inherit;font-size:0.875rem;border:0;outline:none;
 background:transparent;color:inherit;padding:0.1875rem;
@@ -73,7 +89,7 @@ background:transparent;color:inherit;padding:0.1875rem;
 [data-vibeui-block="dashboard-081"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:700;
 padding:0.375rem 0.8125rem;border-radius:0.5rem;
-background:var(--vibeui-dashboard-081-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-081-accent);color:var(--vibeui-dashboard-081-on-accent);
 }
 [data-vibeui-block="dashboard-081"] [data-part="cols"]{display:grid;grid-template-columns:1fr;gap:0.875rem;align-items:start}
 [data-vibeui-block="dashboard-081"] [data-part="sections"]{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:0.5rem}
@@ -82,7 +98,7 @@ display:flex;flex-direction:column;gap:0.1875rem;text-decoration:none;color:inhe
 padding:0.75rem;border-radius:0.875rem;height:100%;
 background:var(--vibeui-dashboard-081-card);border:1px solid var(--vibeui-dashboard-081-border);
 }
-[data-vibeui-block="dashboard-081"] [data-part="sections"] a:hover{border-color:color-mix(in oklab,var(--vibeui-dashboard-081-accent) 45%,white)}
+[data-vibeui-block="dashboard-081"] [data-part="sections"] a:hover{border-color:var(--vibeui-dashboard-081-accent-line)}
 [data-vibeui-block="dashboard-081"] [data-part="sections"] b{font-size:0.875rem;font-weight:750}
 [data-vibeui-block="dashboard-081"] [data-part="sections"] p{margin:0;font-size:0.75rem;color:var(--vibeui-dashboard-081-muted);line-height:1.4}
 [data-vibeui-block="dashboard-081"] [data-part="smeta"]{
@@ -91,7 +107,7 @@ font-size:0.625rem;color:var(--vibeui-dashboard-081-muted);
 }
 [data-vibeui-block="dashboard-081"] [data-part="count"]{
 font-weight:750;padding:0.0625rem 0.3125rem;border-radius:0.25rem;
-background:var(--vibeui-dashboard-081-soft);color:color-mix(in oklab,var(--vibeui-dashboard-081-accent) 85%,black);
+background:var(--vibeui-dashboard-081-soft);color:color-mix(in oklab,var(--vibeui-dashboard-081-accent) 85%,light-dark(black,white));
 }
 [data-vibeui-block="dashboard-081"] [data-part="popular"]{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.3125rem}
 [data-vibeui-block="dashboard-081"] [data-part="popular"] a{
@@ -105,7 +121,7 @@ background:var(--vibeui-dashboard-081-card);border:1px solid var(--vibeui-dashbo
 display:flex;flex-wrap:wrap;gap:0.25rem 0.625rem;margin-top:0.1875rem;
 font-size:0.625rem;color:var(--vibeui-dashboard-081-muted);
 }
-[data-vibeui-block="dashboard-081"] [data-part="bad"]{color:color-mix(in oklab,var(--vibeui-dashboard-081-warn) 80%,black);font-weight:700}
+[data-vibeui-block="dashboard-081"] [data-part="bad"]{color:var(--vibeui-dashboard-081-warn);font-weight:700}
 [data-vibeui-block="dashboard-081"] [data-part="crumbs"]{
 margin:0;display:flex;flex-wrap:wrap;gap:0.25rem;font-size:0.6875rem;color:var(--vibeui-dashboard-081-muted);
 }
@@ -199,6 +215,33 @@ const DEFAULT_POPULAR: Dashboard081Article[] = [
   },
 ]
 
+const CRUMBS_TEXT: Record<string, string> = {
+  root: "Поддержка",
+  current: "База знаний",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Страница базы знаний с разделами: поиск, карточки разделов с описанием
  * содержимого и датой обновления, колонка популярных статей с долей «помогло».
@@ -211,13 +254,26 @@ export function Dashboard081({
   popular = DEFAULT_POPULAR,
   popularTitle = "Чаще всего читают",
   accent,
+  background = "",
+  crumbsText = CRUMBS_TEXT,
+  searchButtonLabel = "Найти",
+  sectionsTitle = "Разделы",
+  articlesText = "{articles} статей",
   className,
   style,
 }: Dashboard081Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-081-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-081-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const crumbs = { ...CRUMBS_TEXT, ...crumbsText }
 
   return (
     <>
@@ -233,9 +289,9 @@ export function Dashboard081({
         <div data-part="shell">
           <div>
             <p data-part="crumbs">
-              <a href="#dashboard-081">Поддержка</a>
+              <a href="#dashboard-081">{crumbs.root}</a>
               <span aria-hidden="true">/</span>
-              <span>База знаний</span>
+              <span>{crumbs.current}</span>
             </p>
             <h2>{title}</h2>
           </div>
@@ -247,13 +303,13 @@ export function Dashboard081({
               aria-label={searchLabel}
             />
             <button type="submit" data-part="go">
-              Найти
+              {searchButtonLabel}
             </button>
           </form>
 
           <div data-part="cols">
             <div>
-              <h3>Разделы</h3>
+              <h3>{sectionsTitle}</h3>
               <ul data-part="sections">
                 {sections.map((section) => (
                   <li key={section.name}>
@@ -261,7 +317,12 @@ export function Dashboard081({
                       <b>{section.name}</b>
                       <p>{section.summary}</p>
                       <span data-part="smeta">
-                        <span data-part="count">{section.articles} статей</span>
+                        <span data-part="count">
+                          {articlesText.replace(
+                            "{articles}",
+                            String(section.articles),
+                          )}
+                        </span>
                         <span>{section.updated}</span>
                       </span>
                     </a>

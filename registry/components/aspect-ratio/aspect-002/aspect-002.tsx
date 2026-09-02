@@ -9,6 +9,10 @@ export type Aspect002Props = Omit<
   duration?: string
   /** Ссылка на видео. Кадр становится ссылкой целиком. */
   href?: string
+  /** Подпись ссылки для скринридера: {title} подставляется названием ролика. */
+  watchLabel?: string
+  /** Подпись ссылки, когда названия нет. */
+  watchFallbackLabel?: string
   accent?: string
 }
 
@@ -16,6 +20,10 @@ export type Aspect002Props = Omit<
 // Сам ролик не грузится: тяжёлый iframe плеера подключают по клику, а до
 // клика на его месте стоит лёгкий кадр. Треугольник нарисован границами —
 // иконочная библиотека ради одного знака не нужна.
+//
+// Кадр намеренно тёмный в обеих темах: это постер ролика, а не панель
+// интерфейса. Светлеть вместе со страницей ему нечем — под ним стоит
+// обложка, и светлая заливка сделала бы подпись нечитаемой.
 const STYLES = `
 :where([data-vibeui-block="aspect-002"]){
 --vibeui-aspect-002-bg:oklch(0.28 0.02 265);
@@ -79,6 +87,8 @@ export function Aspect002({
   title = "Как собрать лендинг за вечер",
   duration = "12:04",
   href = "#",
+  watchLabel = "Смотреть: {title}",
+  watchFallbackLabel = "Смотреть видео",
   accent,
   className,
   style,
@@ -108,7 +118,9 @@ export function Aspect002({
           href={href}
           className={className}
           style={palette}
-          aria-label={title ? `Смотреть: ${title}` : "Смотреть видео"}
+          aria-label={
+            title ? watchLabel.replace("{title}", title) : watchFallbackLabel
+          }
         >
           {content}
         </a>

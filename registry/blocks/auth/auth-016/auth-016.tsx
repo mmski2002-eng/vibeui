@@ -15,6 +15,22 @@ export type Auth016Props = {
   account?: string
   workspaces?: Auth016Workspace[]
   submit?: string
+  /** Пояснение под заголовком; {account} подставляется из пропа account. */
+  leadText?: string
+  /** Подпись и подсказка поля поиска: блок несёт русские. */
+  searchLabel?: string
+  searchPlaceholder?: string
+  /** Заголовок группы переключателей. */
+  legendText?: string
+  /** Строка под названием; {role} и {people} подставляются из пространства. */
+  metaText?: string
+  /** Текст, когда поиск ничего не нашёл. */
+  emptyText?: string
+  /** Подвал: вопрос и подпись ссылки. */
+  footText?: string
+  footLink?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -40,15 +56,22 @@ function hue(name: string) {
 // Список — radiogroup из настоящих input'ов: стрелки клавиатуры работают
 // без единой строки JS, а поиск нужен начиная примерно с семи пространств.
 //
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не носит собственной подложки. Цвет плитки считается
+// из хеша названия и читается в обеих темах.
+//
 // Демонстрация интерфейса: выбор никуда не отправляется.
 const STYLES = `
 :where([data-vibeui-block="auth-016"]){
---vibeui-auth-016-bg:oklch(0.96 0.006 285);
---vibeui-auth-016-card:oklch(1 0 0);
---vibeui-auth-016-fg:oklch(0.22 0.014 285);
---vibeui-auth-016-muted:oklch(0.54 0.014 285);
---vibeui-auth-016-border:oklch(0.9 0.006 285);
---vibeui-auth-016-accent:oklch(0.52 0.17 285);
+--vibeui-auth-016-bg:transparent;
+--vibeui-auth-016-card:light-dark(oklch(1 0 0),oklch(0.22 0.013 285));
+--vibeui-auth-016-fg:light-dark(oklch(0.22 0.014 285),oklch(0.94 0.006 285));
+--vibeui-auth-016-muted:light-dark(oklch(0.54 0.014 285),oklch(0.7 0.012 285));
+--vibeui-auth-016-border:light-dark(oklch(0.9 0.006 285),oklch(0.35 0.012 285));
+--vibeui-auth-016-accent:light-dark(oklch(0.52 0.17 285),oklch(0.76 0.14 285));
+--vibeui-auth-016-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 285));
+--vibeui-auth-016-pick:light-dark(oklch(0.52 0.17 285 / 7%),oklch(0.76 0.14 285 / 14%));
+--vibeui-auth-016-chip:light-dark(oklch(0.55 0.02 285 / 10%),oklch(0.85 0.02 285 / 14%));
 --vibeui-auth-016-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -90,7 +113,7 @@ transition:border-color .16s ease,background-color .16s ease;
 }
 [data-vibeui-block="auth-016"] [data-part="option"]:hover{border-color:var(--vibeui-auth-016-accent)}
 [data-vibeui-block="auth-016"] [data-part="option"]:has(input:checked){
-border-color:var(--vibeui-auth-016-accent);background:oklch(0.52 0.17 285 / 7%);
+border-color:var(--vibeui-auth-016-accent);background:var(--vibeui-auth-016-pick);
 }
 [data-vibeui-block="auth-016"] [data-part="option"]:has(input:focus-visible){outline:2px solid var(--vibeui-auth-016-accent);outline-offset:2px}
 [data-vibeui-block="auth-016"] [data-part="option"] input{flex:none;width:1.0625rem;height:1.0625rem;accent-color:var(--vibeui-auth-016-accent)}
@@ -106,13 +129,13 @@ font-size:0.75rem;font-weight:700;
 [data-vibeui-block="auth-016"] [data-part="meta"]{font-size:0.75rem;color:var(--vibeui-auth-016-muted)}
 [data-vibeui-block="auth-016"] [data-part="plan"]{
 margin-left:auto;flex:none;padding:0.125rem 0.4375rem;border-radius:9999px;
-background:oklch(0.55 0.02 285 / 10%);font-size:0.6875rem;font-weight:650;
+background:var(--vibeui-auth-016-chip);font-size:0.6875rem;font-weight:650;
 }
 [data-vibeui-block="auth-016"] [data-part="empty"]{margin:0 0 1rem;font-size:0.8125rem;color:var(--vibeui-auth-016-muted)}
 [data-vibeui-block="auth-016"] [data-part="submit"]{
 width:100%;appearance:none;cursor:pointer;height:2.625rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-016-accent);color:oklch(1 0 0);
+background:var(--vibeui-auth-016-accent);color:var(--vibeui-auth-016-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="auth-016"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-auth-016-accent);outline-offset:2px}
@@ -129,6 +152,28 @@ const DEFAULT_WORKSPACES: Auth016Workspace[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор рабочего пространства после входа: radiogroup с ролью
  * под каждым названием и поиском. Один файл, ноль зависимостей.
  */
@@ -137,6 +182,15 @@ export function Auth016({
   account = "anna@vibeui.ru",
   workspaces = DEFAULT_WORKSPACES,
   submit = "Продолжить",
+  leadText = "Вы вошли как {account}. Аккаунт один, пространств несколько — выберите нужное.",
+  searchLabel = "Поиск по пространствам",
+  searchPlaceholder = "Поиск по названию",
+  legendText = "Пространства",
+  metaText = "{role} · {people} участников",
+  emptyText = "Ничего не нашлось. Проверьте название или попросите администратора выслать приглашение.",
+  footText = "Нужного нет?",
+  footLink = "Создать пространство",
+  background = "",
   accent,
   className,
   style,
@@ -148,8 +202,16 @@ export function Auth016({
     workspace.name.toLowerCase().includes(query.trim().toLowerCase()),
   )
 
+  const [leadBefore, leadAfter = ""] = leadText.split("{account}")
+
   const palette = {
     ...(accent ? { "--vibeui-auth-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -167,16 +229,17 @@ export function Auth016({
         <div data-part="shell">
           <h2>{title}</h2>
           <p data-part="lead">
-            Вы вошли как <b>{account}</b>. Аккаунт один, пространств несколько —
-            выберите нужное.
+            {leadBefore}
+            <b>{account}</b>
+            {leadAfter}
           </p>
 
           <input
             data-part="search"
             type="search"
             value={query}
-            aria-label="Поиск по пространствам"
-            placeholder="Поиск по названию"
+            aria-label={searchLabel}
+            placeholder={searchPlaceholder}
             onChange={(event) => setQuery(event.target.value)}
           />
 
@@ -186,7 +249,7 @@ export function Auth016({
             }}
           >
             <fieldset>
-              <legend>Пространства</legend>
+              <legend>{legendText}</legend>
               <div data-part="list">
                 {shown.map((workspace) => (
                   <label
@@ -211,7 +274,9 @@ export function Auth016({
                     <span data-part="body">
                       <span data-part="name">{workspace.name}</span>
                       <span data-part="meta">
-                        {workspace.role} · {workspace.people} участников
+                        {metaText
+                          .replace("{role}", workspace.role)
+                          .replace("{people}", String(workspace.people))}
                       </span>
                     </span>
                     {workspace.plan ? (
@@ -222,12 +287,7 @@ export function Auth016({
               </div>
             </fieldset>
 
-            {shown.length === 0 ? (
-              <p data-part="empty">
-                Ничего не нашлось. Проверьте название или попросите
-                администратора выслать приглашение.
-              </p>
-            ) : null}
+            {shown.length === 0 ? <p data-part="empty">{emptyText}</p> : null}
 
             <button type="submit" data-part="submit">
               {submit}
@@ -235,7 +295,7 @@ export function Auth016({
           </form>
 
           <p data-part="foot">
-            Нужного нет? <a href="#">Создать пространство</a>
+            {footText} <a href="#">{footLink}</a>
           </p>
         </div>
       </section>

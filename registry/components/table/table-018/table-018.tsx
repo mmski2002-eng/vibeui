@@ -18,6 +18,12 @@ export type Table018Props = Omit<
   caption?: string
   /** Плотность строк: "comfortable" — обычная, "compact" — для длинных списков. */
   density?: "comfortable" | "compact"
+  /** Заголовки колонок: ключи service, status, region, latency и updated. */
+  columnText?: Record<string, string>
+  /** Подписи состояний: ключи ok, warn, error и off. */
+  statusText?: Record<string, string>
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,18 +31,21 @@ export type Table018Props = Omit<
 // inset-тенью первой ячейки — обычный border-left при border-collapse
 // схлопывается, — но цвет не единственный носитель смысла: рядом стоит
 // подпись словом, поэтому таблица читается и в чёрно-белой печати.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-018"]){
---vibeui-table-018-bg:oklch(1 0 0);
---vibeui-table-018-fg:oklch(0.24 0.014 265);
---vibeui-table-018-muted:oklch(0.56 0.014 265);
---vibeui-table-018-border:oklch(0.92 0.006 265);
---vibeui-table-018-head:oklch(0.975 0.003 265);
---vibeui-table-018-accent:oklch(0.55 0.2 262);
---vibeui-table-018-ok:oklch(0.55 0.14 155);
---vibeui-table-018-warn:oklch(0.68 0.15 75);
---vibeui-table-018-error:oklch(0.55 0.19 27);
---vibeui-table-018-off:oklch(0.72 0.01 265);
+--vibeui-table-018-bg:transparent;
+--vibeui-table-018-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-018-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-table-018-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
+--vibeui-table-018-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-018-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
+--vibeui-table-018-ok:light-dark(oklch(0.55 0.14 155),oklch(0.75 0.13 155));
+--vibeui-table-018-warn:light-dark(oklch(0.68 0.15 75),oklch(0.82 0.14 75));
+--vibeui-table-018-error:light-dark(oklch(0.55 0.19 27),oklch(0.74 0.16 27));
+--vibeui-table-018-off:light-dark(oklch(0.72 0.01 265),oklch(0.6 0.01 265));
 --vibeui-table-018-pad:0.5625rem;
 --vibeui-table-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -84,7 +93,7 @@ background:color-mix(in oklab,var(--vibeui-table-018-error) 5%,transparent);
 display:inline-flex;align-items:center;gap:0.3125rem;
 padding:0.0625rem 0.4375rem 0.0625rem 0.3125rem;border-radius:9999px;
 border:1px solid color-mix(in oklab,var(--vibeui-table-018-edge) 45%,transparent);
-background:color-mix(in oklab,var(--vibeui-table-018-edge) 10%,oklch(1 0 0));
+background:color-mix(in oklab,var(--vibeui-table-018-edge) 12%,transparent);
 font-size:0.6875rem;font-weight:600;white-space:nowrap;
 }
 [data-vibeui-block="table-018"] [data-part="dot"]{
@@ -99,6 +108,14 @@ const LABELS: Record<Table018Status, string> = {
   warn: "Внимание",
   error: "Сбой",
   off: "Отключено",
+}
+
+const DEFAULT_COLUMN_TEXT: Record<string, string> = {
+  service: "Сервис",
+  status: "Состояние",
+  region: "Регион",
+  latency: "Отклик",
+  updated: "Проверка",
 }
 
 const DEFAULT_ROWS: Table018Row[] = [
@@ -140,6 +157,28 @@ const DEFAULT_ROWS: Table018Row[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: light-dark() смотрит на color-scheme, а не
+ * на цвет подложки, поэтому светлую плашку приходится объявлять светлой.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Таблица со статусом строки на левой кромке и подписью словом.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -147,6 +186,9 @@ export function Table018({
   rows = DEFAULT_ROWS,
   caption = "Состояние сервисов",
   density = "comfortable",
+  columnText = DEFAULT_COLUMN_TEXT,
+  statusText = LABELS,
+  background = "",
   accent,
   className,
   style,
@@ -154,6 +196,12 @@ export function Table018({
 }: Table018Props) {
   const palette = {
     ...(accent ? { "--vibeui-table-018-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-table-018-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -180,14 +228,20 @@ export function Table018({
               <caption>{caption}</caption>
               <thead>
                 <tr>
-                  <th scope="col">Сервис</th>
-                  <th scope="col">Состояние</th>
-                  <th scope="col">Регион</th>
-                  <th scope="col" data-align="end">
-                    Отклик
+                  <th scope="col">
+                    {columnText.service ?? DEFAULT_COLUMN_TEXT.service}
+                  </th>
+                  <th scope="col">
+                    {columnText.status ?? DEFAULT_COLUMN_TEXT.status}
+                  </th>
+                  <th scope="col">
+                    {columnText.region ?? DEFAULT_COLUMN_TEXT.region}
                   </th>
                   <th scope="col" data-align="end">
-                    Проверка
+                    {columnText.latency ?? DEFAULT_COLUMN_TEXT.latency}
+                  </th>
+                  <th scope="col" data-align="end">
+                    {columnText.updated ?? DEFAULT_COLUMN_TEXT.updated}
                   </th>
                 </tr>
               </thead>
@@ -198,7 +252,7 @@ export function Table018({
                     <td>
                       <span data-part="chip">
                         <span data-part="dot" aria-hidden="true" />
-                        {LABELS[row.status]}
+                        {statusText[row.status] ?? LABELS[row.status]}
                       </span>
                     </td>
                     <td>{row.region}</td>

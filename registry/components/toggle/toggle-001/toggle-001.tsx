@@ -12,6 +12,8 @@ export type Toggle001Props = Omit<
   defaultPressed?: boolean
   onChange?: (pressed: boolean) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: показать toggle рядом с тем, чем он управляет. Кнопка
@@ -20,13 +22,13 @@ export type Toggle001Props = Omit<
 // через aria-pressed, потому что чекбокс здесь означал бы поле формы.
 const STYLES = `
 :where([data-vibeui-block="toggle-001"]){
---vibeui-toggle-001-bg:oklch(1 0 0);
---vibeui-toggle-001-fg:oklch(0.22 0.014 265);
---vibeui-toggle-001-muted:oklch(0.55 0.014 265);
---vibeui-toggle-001-border:oklch(0.9 0.006 265);
---vibeui-toggle-001-hover:oklch(0.97 0.004 265);
---vibeui-toggle-001-accent:oklch(0.5 0.02 265);
---vibeui-toggle-001-on:oklch(0.99 0 0);
+--vibeui-toggle-001-bg:transparent;
+--vibeui-toggle-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-toggle-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-toggle-001-hover:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.01 265));
+--vibeui-toggle-001-accent:light-dark(oklch(0.5 0.02 265),oklch(0.82 0.02 265));
+--vibeui-toggle-001-on:light-dark(oklch(0.99 0 0),oklch(0.2 0.014 265));
 --vibeui-toggle-001-radius:0.5rem;
 --vibeui-toggle-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -75,6 +77,28 @@ font-size:0.9375rem;line-height:1.5;font-weight:400;
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кнопка начертания над образцом текста: нажатие меняет образец сразу.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -84,6 +108,7 @@ export function Toggle001({
   defaultPressed = false,
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -92,6 +117,12 @@ export function Toggle001({
 
   const palette = {
     ...(accent ? { "--vibeui-toggle-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-toggle-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

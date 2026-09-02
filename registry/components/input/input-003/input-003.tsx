@@ -10,6 +10,12 @@ export type Input003Props = Omit<
   label?: string
   placeholder?: string
   hint?: string
+  /** Вердикты по ступеням оценки: пусто, слабый, средний, хороший. */
+  levelText?: string[]
+  /** Подписи кнопки показа: компонент несёт русские, проект подставляет свои. */
+  text?: Record<string, string>
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   onChange?: (value: string) => void
   accent?: string
 }
@@ -20,24 +26,29 @@ export type Input003Props = Omit<
 // подписи не отвечает, что именно исправить.
 const STYLES = `
 :where([data-vibeui-block="input-003"]){
---vibeui-input-003-bg:oklch(1 0 0);
---vibeui-input-003-fg:oklch(0.22 0.014 265);
---vibeui-input-003-muted:oklch(0.56 0.014 265);
---vibeui-input-003-border:oklch(0.9 0.006 265);
---vibeui-input-003-field:oklch(0.985 0.002 265);
---vibeui-input-003-track:oklch(0.92 0.005 265);
---vibeui-input-003-accent:oklch(0.55 0.17 265);
---vibeui-input-003-weak:oklch(0.58 0.19 25);
---vibeui-input-003-fair:oklch(0.72 0.16 75);
---vibeui-input-003-good:oklch(0.58 0.15 152);
+--vibeui-input-003-bg:transparent;
+--vibeui-input-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-003-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-input-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.014 265));
+--vibeui-input-003-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-input-003-track:light-dark(oklch(0.92 0.005 265),oklch(0.34 0.012 265));
+--vibeui-input-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-input-003-weak:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.16 25));
+--vibeui-input-003-fair:light-dark(oklch(0.72 0.16 75),oklch(0.8 0.14 75));
+--vibeui-input-003-good:light-dark(oklch(0.58 0.15 152),oklch(0.76 0.14 152));
 --vibeui-input-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-003"]{
 display:flex;flex-direction:column;gap:0.375rem;
-width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:20rem;box-sizing:border-box;
+font-family:var(--vibeui-input-003-font);color:var(--vibeui-input-003-fg);
+}
+/* Подложка появляется только вместе с пропом background: без него поле
+   лежит прямо на фоне страницы. */
+[data-vibeui-block="input-003"][data-surface="on"]{
+padding:0.875rem;
 background:var(--vibeui-input-003-bg);
 border:1px solid var(--vibeui-input-003-border);border-radius:0.875rem;
-font-family:var(--vibeui-input-003-font);color:var(--vibeui-input-003-fg);
 }
 [data-vibeui-block="input-003"] label{font-size:0.8125rem;font-weight:600}
 [data-vibeui-block="input-003"] [data-part="field"]{position:relative;display:block}
@@ -77,6 +88,13 @@ const LEVELS = [
   "Хороший пароль",
 ]
 
+const TEXT = {
+  show: "Показать",
+  hide: "Скрыть",
+  showLabel: "Показать пароль",
+  hideLabel: "Скрыть пароль",
+}
+
 // Оценка по длине и разнообразию: три ступени, потому что больше человек всё
 // равно не различает, а «очень сильный» ничего не меняет в поведении.
 function score(value: string) {
@@ -92,6 +110,28 @@ function score(value: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Пароль с показом и оценкой словами, а не только полоской.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -99,6 +139,9 @@ export function Input003({
   label = "Пароль",
   placeholder = "Не короче восьми символов",
   hint,
+  levelText = LEVELS,
+  text,
+  background = "",
   onChange,
   accent,
   className,
@@ -109,9 +152,16 @@ export function Input003({
   const [value, setValue] = useState("")
   const [shown, setShown] = useState(false)
   const level = score(value)
+  const copy = { ...TEXT, ...text }
 
   const palette = {
     ...(accent ? { "--vibeui-input-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -124,6 +174,7 @@ export function Input003({
         {...props}
         data-vibeui-block="input-003"
         data-score={level}
+        data-surface={background ? "on" : undefined}
         className={className}
         style={palette}
       >
@@ -144,10 +195,10 @@ export function Input003({
           <button
             type="button"
             aria-pressed={shown}
-            aria-label={shown ? "Скрыть пароль" : "Показать пароль"}
+            aria-label={shown ? copy.hideLabel : copy.showLabel}
             onClick={() => setShown(!shown)}
           >
-            {shown ? "Скрыть" : "Показать"}
+            {shown ? copy.hide : copy.show}
           </button>
         </span>
         <span data-part="meter" aria-hidden="true">
@@ -156,7 +207,7 @@ export function Input003({
           <span data-part="bar" />
         </span>
         <span data-part="hint" id={`${id}-hint`}>
-          {hint ?? LEVELS[level]}
+          {hint ?? levelText[level] ?? LEVELS[level]}
         </span>
       </div>
     </>

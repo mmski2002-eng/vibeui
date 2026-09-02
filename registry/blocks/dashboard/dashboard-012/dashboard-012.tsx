@@ -12,6 +12,17 @@ export type Dashboard012Props = {
   errorsTitle?: string
   submitLabel?: string
   cancelLabel?: string
+  /** Шапка сводки: {title} — заголовок, {count} — число ошибок. */
+  errorsText?: string
+  /**
+   * Подписи формы по ключам legend, name, email, domain, phone, about,
+   * required и phoneNote.
+   */
+  fieldText?: Record<string, string>
+  /** Значения полей по ключам name, email, domain, phone и about. */
+  values?: Record<string, string>
+  /** Пусто — подложки нет, форма ложится на фон страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -25,15 +36,21 @@ export type Dashboard012Props = {
 // неудачной отправки. Ошибка повторена у самого поля, потому что к моменту
 // исправления шапка уже уехала вверх. Обязательность подписана словом, а не
 // одной звёздочкой, и поля помечены aria-invalid, а не только красной рамкой.
+//
+// Тема берётся из color-scheme окружения через light-dark(): собственной
+// подложки у формы нет, поля держат свою поверхность.
 const STYLES = `
 :where([data-vibeui-block="dashboard-012"]){
---vibeui-dashboard-012-bg:oklch(1 0 0);
---vibeui-dashboard-012-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-012-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-012-border:oklch(0.91 0.006 265);
---vibeui-dashboard-012-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-012-danger:oklch(0.55 0.19 25);
---vibeui-dashboard-012-danger-bg:oklch(0.55 0.19 25 / 8%);
+--vibeui-dashboard-012-bg:transparent;
+--vibeui-dashboard-012-field:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-dashboard-012-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-dashboard-012-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-012-border:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.012 265));
+--vibeui-dashboard-012-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-dashboard-012-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
+--vibeui-dashboard-012-danger:light-dark(oklch(0.55 0.19 25),oklch(0.75 0.16 25));
+--vibeui-dashboard-012-on-danger:light-dark(oklch(1 0 0),oklch(0.2 0.04 25));
+--vibeui-dashboard-012-danger-bg:light-dark(oklch(0.55 0.19 25 / 8%),oklch(0.75 0.16 25 / 16%));
 --vibeui-dashboard-012-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -59,7 +76,7 @@ font-size:0.8125rem;font-weight:650;color:var(--vibeui-dashboard-012-danger);
 [data-vibeui-block="dashboard-012"] [data-part="emark"]{
 display:inline-flex;align-items:center;justify-content:center;
 width:1rem;height:1rem;border-radius:9999px;
-background:var(--vibeui-dashboard-012-danger);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-012-danger);color:var(--vibeui-dashboard-012-on-danger);
 font-size:0.625rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="dashboard-012"] [data-part="errors"] ul{margin:0;padding-left:1.375rem;font-size:0.75rem;line-height:1.6}
@@ -76,7 +93,7 @@ font-size:0.625rem;font-weight:700;line-height:1;
 [data-vibeui-block="dashboard-012"] textarea{
 width:100%;padding:0.5rem 0.625rem;
 border:1px solid var(--vibeui-dashboard-012-border);border-radius:0.5rem;
-background:var(--vibeui-dashboard-012-bg);color:inherit;
+background:var(--vibeui-dashboard-012-field);color:inherit;
 font:inherit;font-size:0.8125rem;
 }
 [data-vibeui-block="dashboard-012"] textarea{min-height:4.5rem;resize:vertical}
@@ -96,7 +113,7 @@ font-size:0.6875rem;color:var(--vibeui-dashboard-012-danger);
 appearance:none;cursor:pointer;height:2.25rem;padding:0 0.875rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="dashboard-012"] [data-part="save"]{border:0;background:var(--vibeui-dashboard-012-accent);color:oklch(1 0 0)}
+[data-vibeui-block="dashboard-012"] [data-part="save"]{border:0;background:var(--vibeui-dashboard-012-accent);color:var(--vibeui-dashboard-012-on-accent)}
 [data-vibeui-block="dashboard-012"] [data-part="cancel"]{
 border:1px solid var(--vibeui-dashboard-012-border);background:none;color:inherit;
 }
@@ -109,6 +126,47 @@ const DEFAULT_ERRORS: Dashboard012Error[] = [
   { field: "domain", text: "Адрес занят другим проектом" },
 ]
 
+const DEFAULT_FIELD_TEXT: Record<string, string> = {
+  legend: "Реквизиты",
+  name: "Название",
+  email: "Почта для счетов",
+  domain: "Адрес проекта",
+  phone: "Телефон",
+  about: "Описание",
+  required: "· обязательно",
+  phoneNote: "Виден только участникам проекта.",
+}
+
+const DEFAULT_VALUES: Record<string, string> = {
+  name: "ООО «Полёт»",
+  email: "buh@polet",
+  domain: "polet",
+  phone: "+7 999 123-45-67",
+  about: "Студия предметного дизайна: свет, мебель и малые серии.",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Форма с разбором ошибок: список ссылок на поля и повтор ошибки у поля.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -120,15 +178,27 @@ export function Dashboard012({
   errorsTitle = "Не удалось сохранить",
   submitLabel = "Сохранить",
   cancelLabel = "Отменить",
+  errorsText = "{title}: {count}",
+  fieldText = DEFAULT_FIELD_TEXT,
+  values = DEFAULT_VALUES,
+  background = "",
   accent,
   className,
   style,
 }: Dashboard012Props) {
   const errorOf = (field: string) =>
     errors.find((error) => error.field === field)?.text
+  const caption = (key: string) => fieldText[key] ?? DEFAULT_FIELD_TEXT[key]
+  const valueOf = (key: string) => values[key] ?? DEFAULT_VALUES[key]
 
   const palette = {
     ...(accent ? { "--vibeui-dashboard-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -152,7 +222,9 @@ export function Dashboard012({
               <span data-part="emark" aria-hidden="true">
                 !
               </span>
-              {errorsTitle}: {errors.length}
+              {errorsText
+                .replace("{title}", errorsTitle)
+                .replace("{count}", String(errors.length))}
             </p>
             <ul>
               {errors.map((error) => (
@@ -168,30 +240,30 @@ export function Dashboard012({
 
         <form>
           <fieldset>
-            <legend>Реквизиты</legend>
+            <legend>{caption("legend")}</legend>
             <div data-part="fields">
               <div data-part="field">
                 <label htmlFor="vibeui-dashboard-012-name">
-                  Название
-                  <span data-part="req">· обязательно</span>
+                  {caption("name")}
+                  <span data-part="req">{caption("required")}</span>
                 </label>
                 <input
                   id="vibeui-dashboard-012-name"
                   type="text"
-                  defaultValue="ООО «Полёт»"
+                  defaultValue={valueOf("name")}
                   required
                 />
               </div>
 
               <div data-part="field">
                 <label htmlFor="vibeui-dashboard-012-email">
-                  Почта для счетов
-                  <span data-part="req">· обязательно</span>
+                  {caption("email")}
+                  <span data-part="req">{caption("required")}</span>
                 </label>
                 <input
                   id="vibeui-dashboard-012-email"
                   type="text"
-                  defaultValue="buh@polet"
+                  defaultValue={valueOf("email")}
                   required
                   aria-invalid={errorOf("email") ? true : undefined}
                   aria-describedby={
@@ -212,12 +284,12 @@ export function Dashboard012({
 
               <div data-part="field">
                 <label htmlFor="vibeui-dashboard-012-domain">
-                  Адрес проекта
+                  {caption("domain")}
                 </label>
                 <input
                   id="vibeui-dashboard-012-domain"
                   type="text"
-                  defaultValue="polet"
+                  defaultValue={valueOf("domain")}
                   aria-invalid={errorOf("domain") ? true : undefined}
                   aria-describedby={
                     errorOf("domain")
@@ -236,20 +308,24 @@ export function Dashboard012({
               </div>
 
               <div data-part="field">
-                <label htmlFor="vibeui-dashboard-012-phone">Телефон</label>
+                <label htmlFor="vibeui-dashboard-012-phone">
+                  {caption("phone")}
+                </label>
                 <input
                   id="vibeui-dashboard-012-phone"
                   type="text"
-                  defaultValue="+7 999 123-45-67"
+                  defaultValue={valueOf("phone")}
                 />
-                <p data-part="note">Виден только участникам проекта.</p>
+                <p data-part="note">{caption("phoneNote")}</p>
               </div>
 
               <div data-part="field" data-wide="true">
-                <label htmlFor="vibeui-dashboard-012-about">Описание</label>
+                <label htmlFor="vibeui-dashboard-012-about">
+                  {caption("about")}
+                </label>
                 <textarea
                   id="vibeui-dashboard-012-about"
-                  defaultValue="Студия предметного дизайна: свет, мебель и малые серии."
+                  defaultValue={valueOf("about")}
                 />
               </div>
             </div>

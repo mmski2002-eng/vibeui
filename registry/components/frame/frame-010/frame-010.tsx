@@ -8,6 +8,10 @@ export type Frame010Props = Omit<
   middle?: ReactNode
   front?: ReactNode
   caption?: string
+  /** Шаблон заглушки кадра: {index} подставляется номером. */
+  stubText?: string
+  /** Пусто — остаётся собственная бумага кадров; сюда задают свой цвет. */
+  background?: string
 }
 
 // Идея компонента: коллаж из трёх кадров внахлёст — приём для обложек и
@@ -18,10 +22,10 @@ export type Frame010Props = Omit<
 // z-index — так порядок наложения не зависит от порядка в разметке.
 const STYLES = `
 :where([data-vibeui-block="frame-010"]){
---vibeui-frame-010-bg:oklch(1 0 0);
---vibeui-frame-010-fg:oklch(0.24 0.014 265);
---vibeui-frame-010-muted:oklch(0.55 0.014 265);
---vibeui-frame-010-border:oklch(0.9 0.006 265);
+--vibeui-frame-010-bg:light-dark(oklch(1 0 0),oklch(0.28 0.008 265));
+--vibeui-frame-010-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.005 265));
+--vibeui-frame-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-frame-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.42 0.011 265));
 --vibeui-frame-010-radius:0.75rem;
 --vibeui-frame-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -75,6 +79,28 @@ color:var(--vibeui-frame-010-muted);text-align:center;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Коллаж из трёх кадров внахлёст: смещения и повороты в процентах от
  * собственной ширины. Один файл, ноль зависимостей, собственная палитра.
  */
@@ -83,10 +109,22 @@ export function Frame010({
   middle,
   front,
   caption = "Три кадра внахлёст: коллаж для обложки",
+  stubText = "Кадр {index}",
+  background = "",
   className,
   style,
   ...props
 }: Frame010Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-frame-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-frame-010" precedence="medium">
@@ -96,17 +134,23 @@ export function Frame010({
         {...props}
         data-vibeui-block="frame-010"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="stage">
           <div data-part="card" data-role="back">
-            {back ?? <div data-part="stub">Кадр 1</div>}
+            {back ?? (
+              <div data-part="stub">{stubText.replace("{index}", "1")}</div>
+            )}
           </div>
           <div data-part="card" data-role="middle">
-            {middle ?? <div data-part="stub">Кадр 2</div>}
+            {middle ?? (
+              <div data-part="stub">{stubText.replace("{index}", "2")}</div>
+            )}
           </div>
           <div data-part="card" data-role="front">
-            {front ?? <div data-part="stub">Кадр 3</div>}
+            {front ?? (
+              <div data-part="stub">{stubText.replace("{index}", "3")}</div>
+            )}
           </div>
         </div>
         {caption ? <figcaption>{caption}</figcaption> : null}

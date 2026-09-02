@@ -11,6 +11,16 @@ export type Drawer006Props = Omit<
   title?: string
   warning?: string
   saveLabel?: string
+  /** Подписи полей по ключам name, email, about: русские по умолчанию. */
+  fieldLabels?: Record<string, string>
+  /** Стартовое содержимое тех же полей. */
+  fieldValues?: Record<string, string>
+  dirtyLabel?: string
+  leaveLabel?: string
+  stayLabel?: string
+  cancelLabel?: string
+  /** Пусто — подложки нет, триггер лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,13 +30,15 @@ export type Drawer006Props = Omit<
 // предупреждения с явным выбором: уйти без сохранения или остаться.
 const STYLES = `
 :where([data-vibeui-block="drawer-006"]){
---vibeui-drawer-006-bg:oklch(1 0 0);
---vibeui-drawer-006-fg:oklch(0.21 0.014 265);
---vibeui-drawer-006-muted:oklch(0.55 0.014 265);
---vibeui-drawer-006-border:oklch(0.91 0.006 265);
---vibeui-drawer-006-accent:oklch(0.55 0.17 265);
---vibeui-drawer-006-warn:oklch(0.62 0.15 65);
---vibeui-drawer-006-warn-bg:oklch(0.96 0.04 85);
+--vibeui-drawer-006-bg:transparent;
+--vibeui-drawer-006-surface:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
+--vibeui-drawer-006-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-drawer-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-drawer-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-drawer-006-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
+--vibeui-drawer-006-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.02 265));
+--vibeui-drawer-006-warn:light-dark(oklch(0.62 0.15 65),oklch(0.81 0.13 75));
+--vibeui-drawer-006-warn-bg:light-dark(oklch(0.96 0.04 85),oklch(0.32 0.05 75));
 --vibeui-drawer-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="drawer-006"]{
@@ -42,7 +54,7 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 [data-vibeui-block="drawer-006"] dialog{
 position:fixed;inset:0 0 0 auto;margin:0;
 width:min(25rem,100vw);max-width:100vw;height:100dvh;max-height:100dvh;
-padding:0;border:0;background:var(--vibeui-drawer-006-bg);color:inherit;
+padding:0;border:0;background:var(--vibeui-drawer-006-surface);color:inherit;
 box-shadow:-24px 0 60px -30px oklch(0.2 0.02 265 / 55%);
 translate:100% 0;transition:translate .22s ease,overlay .22s allow-discrete,display .22s allow-discrete;
 }
@@ -70,7 +82,7 @@ display:flex;flex-direction:column;gap:0.875rem;
 [data-vibeui-block="drawer-006"] textarea{
 box-sizing:border-box;width:100%;
 border:1px solid var(--vibeui-drawer-006-border);border-radius:0.625rem;
-background:var(--vibeui-drawer-006-bg);color:inherit;
+background:var(--vibeui-drawer-006-surface);color:inherit;
 font:inherit;font-size:0.875rem;padding:0.5rem 0.6875rem;
 }
 [data-vibeui-block="drawer-006"] input{height:2.375rem}
@@ -103,7 +115,7 @@ border:1px solid var(--vibeui-drawer-006-border);background:transparent;color:in
 font:inherit;font-size:0.875rem;font-weight:600;
 }
 [data-vibeui-block="drawer-006"] [data-part="foot"] button[data-primary="true"]{
-border-color:transparent;background:var(--vibeui-drawer-006-accent);color:oklch(0.99 0.01 265);
+border-color:transparent;background:var(--vibeui-drawer-006-accent);color:var(--vibeui-drawer-006-on-accent);
 }
 [data-vibeui-block="drawer-006"] [data-part="foot"] button:focus-visible{outline:2px solid var(--vibeui-drawer-006-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){
@@ -111,6 +123,40 @@ border-color:transparent;background:var(--vibeui-drawer-006-accent);color:oklch(
 [data-vibeui-block="drawer-006"] dialog{translate:0 0}
 }
 `
+
+const FIELD_LABELS: Record<string, string> = {
+  name: "Отображаемое имя",
+  email: "Почта для уведомлений",
+  about: "О себе",
+}
+
+const FIELD_VALUES: Record<string, string> = {
+  name: "Анна Ковалёва",
+  email: "anna@studio.ru",
+  about: "Собираю интерфейсы и веду каталог компонентов.",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Ящик с формой и защитой от случайного закрытия: Escape сначала спрашивает.
@@ -121,6 +167,13 @@ export function Drawer006({
   title = "Профиль",
   warning = "Изменения не сохранены. Закрыть панель и потерять их?",
   saveLabel = "Сохранить",
+  fieldLabels = FIELD_LABELS,
+  fieldValues = FIELD_VALUES,
+  dirtyLabel = "Не сохранено",
+  leaveLabel = "Уйти без сохранения",
+  stayLabel = "Остаться",
+  cancelLabel = "Отмена",
+  background = "",
   accent,
   className,
   style,
@@ -132,6 +185,13 @@ export function Drawer006({
 
   const palette = {
     ...(accent ? { "--vibeui-drawer-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-drawer-006-bg": background,
+          "--vibeui-drawer-006-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -187,26 +247,35 @@ export function Drawer006({
           >
             <div data-part="head">
               <h2 data-part="title">{title}</h2>
-              {dirty ? <span data-part="mark">Не сохранено</span> : null}
+              {dirty ? <span data-part="mark">{dirtyLabel}</span> : null}
             </div>
             <div data-part="body">
               <label data-part="field">
-                <span data-part="label">Отображаемое имя</span>
-                <input name="name" defaultValue="Анна Ковалёва" />
-              </label>
-              <label data-part="field">
-                <span data-part="label">Почта для уведомлений</span>
+                <span data-part="label">
+                  {fieldLabels.name ?? FIELD_LABELS.name}
+                </span>
                 <input
-                  name="email"
-                  type="email"
-                  defaultValue="anna@studio.ru"
+                  name="name"
+                  defaultValue={fieldValues.name ?? FIELD_VALUES.name}
                 />
               </label>
               <label data-part="field">
-                <span data-part="label">О себе</span>
+                <span data-part="label">
+                  {fieldLabels.email ?? FIELD_LABELS.email}
+                </span>
+                <input
+                  name="email"
+                  type="email"
+                  defaultValue={fieldValues.email ?? FIELD_VALUES.email}
+                />
+              </label>
+              <label data-part="field">
+                <span data-part="label">
+                  {fieldLabels.about ?? FIELD_LABELS.about}
+                </span>
                 <textarea
                   name="about"
-                  defaultValue="Собираю интерфейсы и веду каталог компонентов."
+                  defaultValue={fieldValues.about ?? FIELD_VALUES.about}
                 />
               </label>
             </div>
@@ -214,16 +283,16 @@ export function Drawer006({
               <div data-part="warning" role="alert">
                 <p>{warning}</p>
                 <button type="button" data-role="leave" onClick={leave}>
-                  Уйти без сохранения
+                  {leaveLabel}
                 </button>
                 <button type="button" onClick={() => setAsking(false)}>
-                  Остаться
+                  {stayLabel}
                 </button>
               </div>
             ) : null}
             <div data-part="foot">
               <button type="button" onClick={request}>
-                Отмена
+                {cancelLabel}
               </button>
               <button type="submit" data-primary="true">
                 {saveLabel}

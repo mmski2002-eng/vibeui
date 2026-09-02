@@ -22,6 +22,8 @@ export type Pricing015Props = {
   action?: { label: string; href: string }
   footer?: string
   accent?: string
+  /** Пусто — подложки нет, чек лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,13 +36,13 @@ export type Pricing015Props = {
 // строками до итога, потому что «включая НДС» мелким шрифтом порождает споры.
 const STYLES = `
 :where([data-vibeui-block="pricing-015"]){
---vibeui-pricing-015-bg:oklch(0.94 0.006 100);
---vibeui-pricing-015-paper:oklch(0.995 0.004 100);
---vibeui-pricing-015-fg:oklch(0.2 0.01 100);
---vibeui-pricing-015-muted:oklch(0.5 0.012 100);
---vibeui-pricing-015-line:oklch(0.86 0.01 100);
---vibeui-pricing-015-accent:oklch(0.45 0.13 145);
---vibeui-pricing-015-accent-fg:oklch(0.99 0 0);
+--vibeui-pricing-015-bg:transparent;
+--vibeui-pricing-015-paper:light-dark(oklch(0.995 0.004 100),oklch(0.24 0.008 100));
+--vibeui-pricing-015-fg:light-dark(oklch(0.2 0.01 100),oklch(0.94 0.006 100));
+--vibeui-pricing-015-muted:light-dark(oklch(0.5 0.012 100),oklch(0.7 0.012 100));
+--vibeui-pricing-015-line:light-dark(oklch(0.86 0.01 100),oklch(0.38 0.012 100));
+--vibeui-pricing-015-accent:light-dark(oklch(0.45 0.13 145),oklch(0.75 0.14 145));
+--vibeui-pricing-015-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 145));
 --vibeui-pricing-015-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-pricing-015-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -112,6 +114,28 @@ const DEFAULT_LINES: Pricing015Line[] = [
   { title: "Секции под бренд", detail: "разовая работа", amount: "4 900,00 ₽" },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Чек с итогом и налогом: моноширинные суммы, перфорация краёв нарисована маской. */
 export function Pricing015({
   merchant = "VIBEUI",
@@ -129,11 +153,18 @@ export function Pricing015({
   action = { label: "Оплатить счёт", href: "#" },
   footer = "Закрывающие документы придут на почту в течение суток после оплаты.",
   accent,
+  background = "",
   className,
   style,
 }: Pricing015Props) {
   const palette = {
     ...(accent ? { "--vibeui-pricing-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pricing-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -17,6 +17,8 @@ export type Contact005Props = {
   fallbackTitle?: string
   fallbackText?: string
   fallbackEmail?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -37,12 +39,12 @@ export type Contact005Props = {
 // ответа набрано tabular-nums, поэтому колонка не прыгает.
 const STYLES = `
 :where([data-vibeui-block="contact-005"]){
---vibeui-contact-005-bg:oklch(0.99 0.002 265);
---vibeui-contact-005-card:oklch(1 0 0);
---vibeui-contact-005-fg:oklch(0.2 0.014 265);
---vibeui-contact-005-muted:oklch(0.52 0.014 265);
---vibeui-contact-005-border:oklch(0.9 0.006 265);
---vibeui-contact-005-accent:oklch(0.5 0.16 165);
+--vibeui-contact-005-bg:transparent;
+--vibeui-contact-005-card:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-contact-005-fg:light-dark(oklch(0.2 0.014 265),oklch(0.94 0.005 265));
+--vibeui-contact-005-muted:light-dark(oklch(0.52 0.014 265),oklch(0.72 0.012 265));
+--vibeui-contact-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-contact-005-accent:light-dark(oklch(0.5 0.16 165),oklch(0.76 0.13 165));
 --vibeui-contact-005-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -154,6 +156,28 @@ const DEFAULT_DEPARTMENTS: Contact005Department[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Контакты отделов списком: назначение, адрес, телефон и время ответа.
  * Один файл, ноль зависимостей, клиентского JS нет.
  */
@@ -165,12 +189,19 @@ export function Contact005({
   fallbackTitle = "Не уверены, кому писать?",
   fallbackText = "Отправьте на общий адрес: обращение прочитают и передадут в нужный отдел в тот же день. Дублировать письмо в остальные ящики не нужно.",
   fallbackEmail = "hello@studio.ru",
+  background = "",
   accent,
   className,
   style,
 }: Contact005Props) {
   const palette = {
     ...(accent ? { "--vibeui-contact-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-contact-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

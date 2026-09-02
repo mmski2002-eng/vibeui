@@ -5,7 +5,11 @@ export type Spinner008Props = Omit<
   "children"
 > & {
   label?: string
+  /** Строка под полосой: она и объясняет, почему процента нет. */
+  hint?: string
   height?: number
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: полоса неопределённого прогресса без отдельного бегущего
@@ -13,18 +17,21 @@ export type Spinner008Props = Omit<
 // диагональными полосами и движется целиком через background-position —
 // «полосатый конвейер», а не бегунок. aria-valuenow по-прежнему не ставим:
 // без него скринридер не назовёт процент, которого никто не считал.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="spinner-008"]){
 --vibeui-spinner-008-height:6px;
---vibeui-spinner-008-surface:oklch(1 0 0);
---vibeui-spinner-008-border:oklch(0.9 0.006 265);
---vibeui-spinner-008-fg:oklch(0.26 0.014 265);
---vibeui-spinner-008-muted:oklch(0.55 0.014 265);
---vibeui-spinner-008-track:oklch(0.93 0.006 265);
---vibeui-spinner-008-accent:oklch(0.55 0.17 262);
+--vibeui-spinner-008-surface:transparent;
+--vibeui-spinner-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.32 0.012 265));
+--vibeui-spinner-008-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
+--vibeui-spinner-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-spinner-008-track:light-dark(oklch(0.93 0.006 265),oklch(0.34 0.012 265));
+--vibeui-spinner-008-accent:light-dark(oklch(0.55 0.17 262),oklch(0.72 0.16 262));
 --vibeui-spinner-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: подпись и подсказка тёмные. */
+/* Подложки нет по умолчанию: плашка появляется только пропом background. */
 [data-vibeui-block="spinner-008"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem 1rem;
@@ -60,18 +67,48 @@ animation:vibeui-spinner-008-drift 1s linear infinite;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Полоса неопределённого прогресса из движущихся диагональных полос.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Spinner008({
   label = "Проверяем соединение",
+  hint = "Доля неизвестна, работа продолжается",
   height = 6,
+  background = "",
   className,
   style,
   ...props
 }: Spinner008Props) {
   const palette = {
     "--vibeui-spinner-008-height": `${height}px`,
+    ...(background
+      ? {
+          "--vibeui-spinner-008-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -93,7 +130,7 @@ export function Spinner008({
           aria-label={label}
           aria-busy="true"
         />
-        <span data-part="hint">Доля неизвестна, работа продолжается</span>
+        {hint ? <span data-part="hint">{hint}</span> : null}
       </div>
     </>
   )

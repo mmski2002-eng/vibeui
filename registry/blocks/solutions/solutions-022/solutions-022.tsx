@@ -18,7 +18,15 @@ export type Solutions022Props = {
   day?: string
   visits?: Solutions022Visit[]
   gapLabel?: string
+  /** Счётчик в шапке, {count} — сколько пациентов ждёт. */
+  waitingText?: string
+  /** Подписи статусов: ключи done, now, waiting, cancelled. */
+  stateText?: Record<string, string>
+  /** Пометка первичного пациента. */
+  firstLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,14 +42,14 @@ export type Solutions022Props = {
 // первичного длиннее, и это меняет план дня.
 const STYLES = `
 :where([data-vibeui-block="solutions-022"]){
---vibeui-solutions-022-bg:oklch(1 0 0);
---vibeui-solutions-022-panel:oklch(0.975 0.005 195);
---vibeui-solutions-022-fg:oklch(0.21 0.014 210);
---vibeui-solutions-022-muted:oklch(0.53 0.013 210);
---vibeui-solutions-022-border:oklch(0.9 0.006 210);
---vibeui-solutions-022-accent:oklch(0.52 0.13 195);
---vibeui-solutions-022-now:oklch(0.55 0.15 150);
---vibeui-solutions-022-off:oklch(0.6 0.16 30);
+--vibeui-solutions-022-bg:transparent;
+--vibeui-solutions-022-panel:light-dark(oklch(0.975 0.005 195),oklch(0.27 0.012 210));
+--vibeui-solutions-022-fg:light-dark(oklch(0.21 0.014 210),oklch(0.94 0.005 210));
+--vibeui-solutions-022-muted:light-dark(oklch(0.53 0.013 210),oklch(0.7 0.012 210));
+--vibeui-solutions-022-border:light-dark(oklch(0.9 0.006 210),oklch(0.36 0.012 210));
+--vibeui-solutions-022-accent:light-dark(oklch(0.52 0.13 195),oklch(0.74 0.12 195));
+--vibeui-solutions-022-now:light-dark(oklch(0.55 0.15 150),oklch(0.74 0.14 150));
+--vibeui-solutions-022-off:light-dark(oklch(0.6 0.16 30),oklch(0.76 0.14 30));
 --vibeui-solutions-022-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-022-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -184,12 +192,34 @@ const DEFAULT_VISITS: Solutions022Visit[] = [
   },
 ]
 
-const STATE_LABEL = {
+const DEFAULT_STATE_TEXT: Record<string, string> = {
   done: "принят",
   now: "идёт приём",
   waiting: "ожидает",
   cancelled: "отменён",
-} as const
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Расписание приёма врача: время колонкой, окна названы, отменённые видны.
@@ -201,7 +231,11 @@ export function Solutions022({
   day = "Четверг, 14 марта · кабинет 212",
   visits = DEFAULT_VISITS,
   gapLabel = "окно",
+  waitingText = "Ожидают приёма: {count}",
+  stateText = DEFAULT_STATE_TEXT,
+  firstLabel = "первичный",
   accent,
+  background = "",
   className,
   style,
 }: Solutions022Props) {
@@ -209,6 +243,12 @@ export function Solutions022({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-022-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-022-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -230,7 +270,9 @@ export function Solutions022({
               {doctor} · {day}
             </p>
           </div>
-          <p data-part="who">Ожидают приёма: {waiting}</p>
+          <p data-part="who">
+            {waitingText.replace("{count}", String(waiting))}
+          </p>
         </header>
 
         <ol>
@@ -250,14 +292,14 @@ export function Solutions022({
                   <span data-part="patient">
                     {visit.patient} <span data-part="age">{visit.age}</span>
                     {visit.first ? (
-                      <span data-part="first">первичный</span>
+                      <span data-part="first">{firstLabel}</span>
                     ) : null}
                   </span>
                   <span data-part="reason">{visit.reason}</span>
                 </span>
                 <span data-part="state">
                   <span data-part="dot" aria-hidden="true" />
-                  {STATE_LABEL[visit.state]}
+                  {stateText[visit.state] ?? DEFAULT_STATE_TEXT[visit.state]}
                 </span>
               </li>
             )

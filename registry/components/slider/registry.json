@@ -16,7 +16,7 @@
           "target": "@components/vibeui/slider-001.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-slider-001-*. Клиентский: \"use client\" ради значения. Пройденная часть дорожки закрашена градиентом по проценту, процент передаётся переменной --vibeui-slider-001-fill. Идентификатор берётся из useId, поэтому два ползунка на странице не путают подписи.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-slider-001-*. Клиентский: \"use client\" ради значения. Пройденная часть дорожки закрашена градиентом по проценту, процент передаётся переменной --vibeui-slider-001-fill. Идентификатор берётся из useId, поэтому два ползунка на странице не путают подписи. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней. Проп background включает собственную плашку, и тогда ветка темы считается по её светлоте.",
       "meta": {
         "tags": ["slider", "range", "value", "form"],
         "ai": {
@@ -29,15 +29,19 @@
             "цифру рядом с подписью — позиция ручки читается хуже числа",
             "закрашенную часть дорожки: она показывает долю без подсчёта",
             "табличные цифры, чтобы число не дёргало подпись при изменении",
-            "useId вместо жёсткого id: иначе два ползунка делят одну подпись"
+            "useId вместо жёсткого id: иначе два ползунка делят одну подпись",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "label, min, max, step и defaultValue",
             "unit — единицу измерения",
             "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "ширину блока"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Точное значение ползунком не выставляют: рядом с большим диапазоном оставьте поле ввода.",
             "Стилизация ручки идёт через префиксы: правила ::-webkit- и ::-moz- нельзя объединять в один селектор.",
             "Компонент неуправляемый снаружи: чтобы поднять значение наверх, добавьте свой onChange.",
@@ -53,12 +57,31 @@
             "maxLength": 24
           },
           {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": " тыс. ₽",
+            "maxLength": 12
+          },
+          {
             "prop": "defaultValue",
             "label": "Значение",
             "type": "number",
             "default": 80,
             "min": 10,
             "max": 200
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -72,15 +95,19 @@
                 "the number next to the label — a handle position reads worse than a figure",
                 "the filled part of the track: it shows the share without arithmetic",
                 "tabular figures so the changing number does not shift the label",
-                "useId instead of a hard-coded id: otherwise two sliders share one label"
+                "useId instead of a hard-coded id: otherwise two sliders share one label",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "label, min, max, step and defaultValue",
                 "unit — the unit of measure",
                 "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the block width"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A slider is not for exact values: pair a wide range with a number input.",
                 "Thumb styling is vendor-prefixed: ::-webkit- and ::-moz- rules cannot share a selector.",
                 "The component is self-contained: add your own onChange to lift the value up.",
@@ -93,13 +120,30 @@
                 "label": "Label",
                 "default": "Project budget"
               },
+              "unit": {
+                "label": "Unit",
+                "default": " k₽"
+              },
               "defaultValue": {
                 "label": "Value"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Value Slider"
+            "title": "Value Slider",
+            "preview": {
+              "props": {
+                "label": "Project budget",
+                "unit": " k₽"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -117,7 +161,7 @@
           "target": "@components/vibeui/slider-002.tsx"
         }
       ],
-      "docs": "Клиентский компонент: useState хранит значение, из него считаются две переменные — процент заливки и та же доля числом. Пузырь позиционируется по проценту, а сдвиг поправлен на половину ширины ручки через calc с долей: без поправки на 0% и 100% он висит мимо ручки. Хвостик пузыря — квадрат под 45°. Заливка дорожки — линейный градиент по проценту. Палитра в --vibeui-slider-002-*.",
+      "docs": "Клиентский компонент: useState хранит значение, из него считаются две переменные — процент заливки и та же доля числом. Пузырь позиционируется по проценту, а сдвиг поправлен на половину ширины ручки через calc с долей: без поправки на 0% и 100% он висит мимо ручки. Хвостик пузыря — квадрат под 45°. Заливка дорожки — линейный градиент по проценту. Палитра в --vibeui-slider-002-*. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Проп background включает собственную плашку, и тогда ветка темы считается по её светлоте.",
       "meta": {
         "tags": ["slider", "range", "bubble", "value"],
         "preview": {
@@ -133,15 +177,20 @@
             "нативный input[type=range]: перетаскивание, касания и клавиатуру браузер умеет сам",
             "элемент <output> для значения — он объявляет результат, а не просто рисует число",
             "заливку дорожки градиентом по проценту: она показывает величину, даже когда пузырь перекрыт пальцем",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "контрастную пару accent и on-accent у пузыря: цифра на цветной таблетке должна читаться в обеих темах",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись через label и границы через min и max",
             "начальное значение через defaultValue",
             "приписку к числу через suffix",
-            "акцентный цвет через accent"
+            "подписи концов шкалы через minText и maxText",
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пузырь занимает место сверху постоянно: убрать отступ — значит подвинуть его на соседний текст.",
             "На узкой колонке длинная приписка в suffix может вылезти за край карточки — держать её короткой.",
             "Дробный шаг требует форматирования: сейчас число выводится как есть.",
@@ -149,6 +198,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Острота блюда",
+            "maxLength": 24
+          },
           {
             "prop": "defaultValue",
             "label": "Значение",
@@ -163,6 +219,32 @@
             "type": "text",
             "default": " из 10",
             "maxLength": 12
+          },
+          {
+            "prop": "minText",
+            "label": "Левый конец",
+            "type": "text",
+            "default": "мягко",
+            "maxLength": 16
+          },
+          {
+            "prop": "maxText",
+            "label": "Правый конец",
+            "type": "text",
+            "default": "огонь",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -176,15 +258,20 @@
                 "the native input[type=range]: dragging, touch and keyboard are handled by the browser",
                 "the <output> element for the value — it announces a result rather than merely drawing a number",
                 "the gradient fill on the track: it shows the amount even when a finger covers the bubble",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "the contrasting accent / on-accent pair on the bubble: the number on a coloured pill has to stay legible in both themes",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption through label and the bounds through min and max",
                 "the initial value through defaultValue",
                 "the text appended to the number through suffix",
-                "the accent colour through accent"
+                "the scale end captions through minText and maxText",
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The bubble reserves space above at all times: removing that padding pushes it onto neighbouring text.",
                 "In a narrow column a long suffix can spill past the card edge — keep it short.",
                 "A fractional step needs formatting: the number is printed as-is right now.",
@@ -193,6 +280,10 @@
               "usage": "<Slider002\n  label=\"Spice level\"\n  defaultValue={7}\n  suffix=\" of 10\"\n/>"
             },
             "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Spice level"
+              },
               "defaultValue": {
                 "label": "Value",
                 "default": 4
@@ -200,11 +291,34 @@
               "suffix": {
                 "label": "Suffix",
                 "default": " of 10"
+              },
+              "minText": {
+                "label": "Left end",
+                "default": "mild"
+              },
+              "maxText": {
+                "label": "Right end",
+                "default": "fire"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Value Bubble Slider"
+            "title": "Value Bubble Slider",
+            "preview": {
+              "props": {
+                "label": "Spice level",
+                "suffix": " of 10",
+                "minText": "mild",
+                "maxText": "fire"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -222,7 +336,7 @@
           "target": "@components/vibeui/slider-003.tsx"
         }
       ],
-      "docs": "Серверный компонент: состояние не нужно, значение читает форма. Деления — repeating-linear-gradient по ширине дорожки, поэтому лишних узлов нет, а количество штрихов задаётся переменной steps. Подписи разложены в grid с равными колонками по числу ступеней: крайние прижаты к краям, средние центрированы. Значение объявлено через aria-valuetext, потому что цифра шкалы ничего не значит. Палитра в --vibeui-slider-003-*.",
+      "docs": "Серверный компонент: состояние не нужно, значение читает форма. Деления — repeating-linear-gradient по ширине дорожки, поэтому лишних узлов нет, а количество штрихов задаётся переменной steps. Подписи разложены в grid с равными колонками по числу ступеней: крайние прижаты к краям, средние центрированы. Значение объявлено через aria-valuetext, потому что цифра шкалы ничего не значит. Палитра в --vibeui-slider-003-*. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Проп background включает собственную плашку, и тогда ветка темы считается по её светлоте.",
       "meta": {
         "tags": ["slider", "ticks", "steps", "native"],
         "preview": {
@@ -238,15 +352,19 @@
             "две разные переменные для штрихов и подписей — их количество отличается на единицу, и это легко перепутать",
             "aria-valuetext: без него скринридер прочитает «2», а не «раз в неделю»",
             "прозрачные дорожки у самого input'а — фон рисует отдельный слой с делениями",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "отдельный токен surface под обводку ручки: он остаётся плотным, даже когда подложки у компонента нет",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись через label",
             "набор ступеней через ticks",
             "начальную ступень через defaultValue",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Дорожка не закрашивается по мере движения: закраска потребовала бы клиентского состояния, а здесь его сознательно нет.",
             "Больше пяти подписей на узкой карточке не помещаются — длинные формулировки придётся сокращать.",
             "aria-valuetext здесь статичен: при интерактивном сценарии его обновляет владелец значения.",
@@ -268,6 +386,18 @@
             "default": 2,
             "min": 0,
             "max": 3
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -281,15 +411,19 @@
                 "the two separate variables for ticks and captions — their counts differ by one and are easy to confuse",
                 "aria-valuetext: without it a screen reader says \"2\" instead of \"once a week\"",
                 "the transparent tracks on the input itself — the ticks are painted by a separate layer",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "the separate surface token behind the thumb ring: it stays opaque even when the component has no surface of its own",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption through label",
                 "the set of steps through ticks",
                 "the starting step through defaultValue",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The track is not filled as the thumb moves: filling would need client state, deliberately absent here.",
                 "More than five captions will not fit a narrow card — long wording has to be shortened.",
                 "aria-valuetext is static here: in an interactive scenario the value owner keeps it updated.",
@@ -305,11 +439,24 @@
               "defaultValue": {
                 "label": "Step",
                 "default": 2
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Labelled Ticks Slider"
+            "title": "Labelled Ticks Slider",
+            "preview": {
+              "props": {
+                "label": "Digest frequency",
+                "ticks": ["Never", "Monthly", "Weekly", "Every day"]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -327,7 +474,7 @@
           "target": "@components/vibeui/slider-004.tsx"
         }
       ],
-      "docs": "Клиентский компонент: useState на нижнюю и верхнюю границу, каждая ограничивает соседнюю на шаг при вводе. Дорожка нарисована один раз отдельным слоем — иначе на пересечении видно две полосы. Оба input'а прозрачны и получают pointer-events:none, а обратно события включаются только на псевдоэлементах ручек: без этого верхний input перекрывал бы нижний по всей ширине. Палитра в --vibeui-slider-004-*.",
+      "docs": "Клиентский компонент: useState на нижнюю и верхнюю границу, каждая ограничивает соседнюю на шаг при вводе. Дорожка нарисована один раз отдельным слоем — иначе на пересечении видно две полосы. Оба input'а прозрачны и получают pointer-events:none, а обратно события включаются только на псевдоэлементах ручек: без этого верхний input перекрывал бы нижний по всей ширине. Палитра в --vibeui-slider-004-*. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Проп background включает собственную плашку, и тогда ветка темы считается по её светлоте.",
       "meta": {
         "tags": ["slider", "range", "filter", "price"],
         "preview": {
@@ -343,15 +490,21 @@
             "ограничение значений друг другом на шаг — иначе границы меняются местами и диапазон становится отрицательным",
             "одну общую дорожку отдельным слоем: две собственные дорожки дают двойную полосу на пересечении",
             "разные aria-label у двух ручек: «от» и «до» должны различаться на слух",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "отдельный токен surface внутри ручек: они остаются плотными кружками и на прозрачной подложке",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись через label и границы шкалы через min и max",
             "начальный диапазон через defaultFrom и defaultTo",
             "единицу измерения через unit",
-            "шаг изменения через step"
+            "шаг изменения через step",
+            "подписи ручек для скринридера через fromText и toText",
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ручки нельзя свести вплотную: минимальный зазор равен шагу, иначе они слипаются и не разъезжаются.",
             "На касании ручки перекрываются в середине шкалы — увеличить их размер, если компонент рассчитан на телефон.",
             "Диапазон отправляется двумя полями формы: серверу нужно проверить порядок значений ещё раз.",
@@ -359,6 +512,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Цена",
+            "maxLength": 24
+          },
           {
             "prop": "defaultFrom",
             "label": "Нижняя граница",
@@ -374,6 +534,25 @@
             "default": 14000,
             "min": 1000,
             "max": 20000
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": " ₽",
+            "maxLength": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -382,20 +561,26 @@
             "ai": {
               "summary": "A range built from two native inputs on a shared track with a filled span. One file, zero dependencies, a client component.",
               "preserve": [
-                "pointer events restricted to the thumbs: otherwise the upper input covers the lower one and the second thumb is uncatchable",
                 "the local --vibeui-slider-004-* palette — do not swap it for your theme tokens",
+                "pointer events restricted to the thumbs: otherwise the upper input covers the lower one and the second thumb is uncatchable",
                 "the values clamping each other by one step — otherwise the bounds swap and the range goes negative",
                 "the single shared track as its own layer: two native tracks show a double stripe where they overlap",
                 "distinct aria-labels on the two thumbs: \"from\" and \"to\" have to differ by ear",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "the separate surface token inside the thumbs: they stay solid discs even on a transparent surface",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption through label and the scale bounds through min and max",
                 "the initial span through defaultFrom and defaultTo",
                 "the unit of measure through unit",
-                "the increment through step"
+                "the increment through step",
+                "the screen-reader thumb captions through fromText and toText",
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The thumbs cannot touch: the minimum gap equals the step, otherwise they stick together and never part.",
                 "On touch the thumbs overlap in the middle of the scale — enlarge them if the component targets phones.",
                 "The range is submitted as two form fields: the server still has to re-check their order.",
@@ -404,6 +589,10 @@
               "usage": "<Slider004\n  label=\"Price\"\n  defaultFrom={4000}\n  defaultTo={14000}\n/>"
             },
             "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Price"
+              },
               "defaultFrom": {
                 "label": "Lower bound",
                 "default": 4000
@@ -411,11 +600,29 @@
               "defaultTo": {
                 "label": "Upper bound",
                 "default": 14000
+              },
+              "unit": {
+                "label": "Unit",
+                "default": " ₽"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Dual Range Slider"
+            "title": "Dual Range Slider",
+            "preview": {
+              "props": {
+                "label": "Price",
+                "fromText": "from",
+                "toText": "to"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultFrom", "defaultTo", "accent", "background"]
       }
     },
     {
@@ -433,7 +640,7 @@
           "target": "@components/vibeui/slider-005.tsx"
         }
       ],
-      "docs": "Клиентский компонент: useState на текущий уровень и на запомненный перед выключением. Уровень сводится к трём ступеням и кладётся в data-level на корне, откуда CSS гасит волны. Динамик вырезан clip-path, волны — дуги из кругов с прозрачными гранями, выбираются соседним комбинатором, а не nth-of-type: тип у всех узлов один и тот же span. Кнопка объявлена aria-pressed. Палитра в --vibeui-slider-005-*.",
+      "docs": "Клиентский компонент: useState на текущий уровень и на запомненный перед выключением. Уровень сводится к трём ступеням и кладётся в data-level на корне, откуда CSS гасит волны. Динамик вырезан clip-path, волны — дуги из кругов с прозрачными гранями, выбираются соседним комбинатором, а не nth-of-type: тип у всех узлов один и тот же span. Кнопка объявлена aria-pressed. Палитра в --vibeui-slider-005-*. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Проп background включает собственную плашку, и тогда ветка темы считается по её светлоте.",
       "meta": {
         "tags": ["slider", "volume", "media", "icon"],
         "preview": {
@@ -449,15 +656,19 @@
             "aria-pressed на кнопке — состояние «звук выключен» обязано объявляться, а не только рисоваться",
             "выбор волн соседним комбинатором: nth-of-type здесь считает все span'ы подряд и промахивается",
             "иконку на clip-path и рамках: иконочный пакет сломал бы правило одного файла без зависимостей",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "отдельный токен surface вокруг ручки: обводка остаётся плотной и на прозрачной подложке",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "доступное имя ползунка через label",
             "начальный уровень через defaultValue",
             "подпись кнопки через muteText",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ступеней громкости три: половина шкалы и ноль — если нужна другая логика, правится вычисление level.",
             "Компонент ничего не воспроизводит: он только отражает уровень, звук подключает владелец плеера.",
             "Кнопка выключения — единственный элемент с фиксированным размером: не уменьшать её ниже цели нажатия.",
@@ -465,6 +676,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Громкость",
+            "maxLength": 24
+          },
           {
             "prop": "defaultValue",
             "label": "Уровень",
@@ -479,6 +697,18 @@
             "type": "text",
             "default": "Выключить звук",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -492,15 +722,19 @@
                 "aria-pressed on the button — the muted state has to be announced, not merely drawn",
                 "selecting the waves with an adjacent combinator: nth-of-type counts every span here and misses",
                 "the icon built from clip-path and borders: an icon package would break the one-file, zero-dependency rule",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "the separate surface token around the thumb: its ring stays opaque even on a transparent surface",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the slider's accessible name through label",
                 "the starting level through defaultValue",
                 "the button caption through muteText",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There are three volume steps: half the scale and zero — change the level computation for other logic.",
                 "The component plays nothing: it only reflects a level, the player owner wires the sound.",
                 "The mute button is the one fixed-size element: do not shrink it below the tap target.",
@@ -509,6 +743,10 @@
               "usage": "<Slider005\n  label=\"Volume\"\n  defaultValue={35}\n/>"
             },
             "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Volume"
+              },
               "defaultValue": {
                 "label": "Level",
                 "default": 60
@@ -516,11 +754,24 @@
               "muteText": {
                 "label": "Button",
                 "default": "Mute"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Volume Slider"
+            "title": "Volume Slider",
+            "preview": {
+              "props": {
+                "label": "Volume",
+                "muteText": "Mute"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -538,7 +789,7 @@
           "target": "@components/vibeui/slider-006.tsx"
         }
       ],
-      "docs": "Клиентский компонент: useState на значение, кнопки прибавляют и убавляют шаг с зажимом по границам и выключаются на краях шкалы. Знаки «−» и «+» нарисованы полосками на псевдоэлементах, поэтому не зависят от шрифта и не скачут по базовой линии. Значение объявляется через aria-valuetext вместе с единицей. Заливка дорожки — градиент по проценту. Палитра в --vibeui-slider-006-*.",
+      "docs": "Клиентский компонент: useState на значение, кнопки прибавляют и убавляют шаг с зажимом по границам и выключаются на краях шкалы. Знаки «−» и «+» нарисованы полосками на псевдоэлементах, поэтому не зависят от шрифта и не скачут по базовой линии. Значение объявляется через aria-valuetext вместе с единицей. Заливка дорожки — градиент по проценту. Палитра в --vibeui-slider-006-*. Подписи кнопок и строка шага — шаблоны с {step} и {unit}, поэтому перевод не требует правки разметки. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Проп background включает собственную плашку, и тогда ветка темы считается по её светлоте.",
       "meta": {
         "tags": ["slider", "stepper", "units", "precision"],
         "preview": {
@@ -554,15 +805,21 @@
             "выключение кнопок на краях шкалы — нажатие, которое ничего не меняет, выглядит как поломка",
             "единицу рядом с числом: «18» и «18 °C» несут разное количество информации",
             "aria-valuetext с единицей — иначе скринридер прочитает голое число",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "шаблоны подписей с {step} и {unit}: перевод меняет строку, а не разметку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись через label и границы через min и max",
             "величину шага через step",
             "начальное значение через defaultValue",
-            "единицу измерения через unit"
+            "единицу измерения через unit",
+            "подписи кнопок через decreaseText и increaseText, строку под дорожкой через stepText",
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Дробный шаг накапливает погрешность чисел с плавающей точкой: для сотых долей значение стоит округлять.",
             "Ширина колонки со значением фиксирована — при трёхзначных числах её придётся увеличить.",
             "Кнопки не повторяют действие при удержании: для длинных шкал нужен интервал по mousedown.",
@@ -570,6 +827,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Температура в спальне",
+            "maxLength": 32
+          },
           {
             "prop": "defaultValue",
             "label": "Значение",
@@ -584,6 +848,25 @@
             "type": "text",
             "default": "°C",
             "maxLength": 10
+          },
+          {
+            "prop": "stepText",
+            "label": "Строка шага",
+            "type": "text",
+            "default": "шаг {step}",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -597,15 +880,21 @@
                 "disabling the buttons at the ends of the scale — a press that changes nothing looks like a bug",
                 "the unit beside the number: \"18\" and \"18 °C\" carry different amounts of information",
                 "aria-valuetext with the unit — otherwise a screen reader reads a bare number",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "the caption templates with {step} and {unit}: translation changes a string, not the markup",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption through label and the bounds through min and max",
                 "the increment through step",
                 "the starting value through defaultValue",
-                "the unit of measure through unit"
+                "the unit of measure through unit",
+                "the button captions through decreaseText and increaseText, the line under the track through stepText",
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A fractional step accumulates floating-point error: round the value if you need hundredths.",
                 "The value column has a fixed width — three-digit numbers require widening it.",
                 "The buttons do not repeat on hold: long scales need an interval started on mousedown.",
@@ -614,6 +903,10 @@
               "usage": "<Slider006\n  label=\"Bedroom temperature\"\n  defaultValue={22}\n  step={0.5}\n  unit=\"°C\"\n/>"
             },
             "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Bedroom temperature"
+              },
               "defaultValue": {
                 "label": "Value",
                 "default": 21
@@ -621,11 +914,30 @@
               "unit": {
                 "label": "Unit",
                 "default": "°C"
+              },
+              "stepText": {
+                "label": "Step line",
+                "default": "step {step}"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Stepper Slider"
+            "title": "Stepper Slider",
+            "preview": {
+              "props": {
+                "label": "Bedroom temperature",
+                "decreaseText": "Decrease by {step} {unit}",
+                "increaseText": "Increase by {step} {unit}",
+                "stepText": "step {step}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -643,7 +955,7 @@
           "target": "@components/vibeui/slider-007.tsx"
         }
       ],
-      "docs": "Клиентский компонент: useState держит значение, из него считается доля заливки. Вертикальность задана writing-mode:vertical-lr вместе с direction:rtl, а не трансформом: повёрнутый rotate элемент остаётся горизонтальным для раскладки и накрывает соседей своей коробкой. Заливка идёт градиентом to top. Шкала стоит столбиком рядом и подписана сверху вниз. Значение объявляется через aria-valuetext. Палитра в --vibeui-slider-007-*.",
+      "docs": "Клиентский компонент: useState держит значение, из него считается доля заливки. Вертикальность задана writing-mode:vertical-lr вместе с direction:rtl, а не трансформом: повёрнутый rotate элемент остаётся горизонтальным для раскладки и накрывает соседей своей коробкой. Заливка идёт градиентом to top. Шкала стоит столбиком рядом и подписана сверху вниз. Значение объявляется через aria-valuetext. Палитра в --vibeui-slider-007-*. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Проп background включает собственную плашку, и тогда ветка темы считается по её светлоте.",
       "meta": {
         "tags": ["slider", "vertical", "range", "writing-mode"],
         "preview": {
@@ -659,15 +971,20 @@
             "direction:rtl — без него стрелка вверх уменьшает значение, что противоречит виду шкалы",
             "градиент to top: заливка обязана расти снизу вверх вслед за ручкой",
             "aria-valuetext с единицей — процент без знака читается как безразмерное число",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "отдельный токен surface внутри ручки: кружок остаётся плотным и на прозрачной подложке",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись через label и границы через min и max",
             "начальное значение через defaultValue",
             "единицу измерения через unit",
-            "высоту дорожки в CSS блока"
+            "высоту дорожки в CSS блока",
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Вертикальный range на writing-mode поддерживается современными браузерами; в старых сборках он ляжет горизонтально, но останется рабочим.",
             "Вертикальная форма плохо переносится на телефон: жест вверх-вниз конфликтует с прокруткой страницы.",
             "Шкала подписана всего тремя значениями: больше на такой высоте не читается.",
@@ -675,6 +992,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Яркость лампы",
+            "maxLength": 24
+          },
           {
             "prop": "defaultValue",
             "label": "Значение",
@@ -689,6 +1013,18 @@
             "type": "text",
             "default": "%",
             "maxLength": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -702,15 +1038,20 @@
                 "direction:rtl — without it the up arrow decreases the value, contradicting the visible scale",
                 "the to-top gradient: the fill has to grow upwards along with the thumb",
                 "aria-valuetext with the unit — a percentage without its sign reads as a dimensionless number",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "the separate surface token inside the thumb: the disc stays solid even on a transparent surface",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption through label and the bounds through min and max",
                 "the starting value through defaultValue",
                 "the unit of measure through unit",
-                "the track height in the block CSS"
+                "the track height in the block CSS",
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A vertical range on writing-mode is supported by modern browsers; on old builds it lays out horizontally but keeps working.",
                 "The vertical form travels badly to phones: an up-down gesture competes with page scrolling.",
                 "The scale carries only three captions: more will not read at this height.",
@@ -719,6 +1060,10 @@
               "usage": "<Slider007\n  label=\"Lamp brightness\"\n  defaultValue={40}\n/>"
             },
             "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Lamp brightness"
+              },
               "defaultValue": {
                 "label": "Value",
                 "default": 65
@@ -726,11 +1071,23 @@
               "unit": {
                 "label": "Unit",
                 "default": "%"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Vertical Slider"
+            "title": "Vertical Slider",
+            "preview": {
+              "props": {
+                "label": "Lamp brightness"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -748,7 +1105,7 @@
           "target": "@components/vibeui/slider-008.tsx"
         }
       ],
-      "docs": "Клиентский компонент: useState на значение и отдельно на строку ввода. Поле не приводится к диапазону на каждом нажатии — иначе «10» невозможно набрать, когда минимум равен 100; зажим по границам происходит на blur и по Enter. Стрелки числового поля убраны вендорными псевдоэлементами, цифры табличные, ширина фиксирована. Заливка дорожки — градиент по проценту. Палитра в --vibeui-slider-008-*.",
+      "docs": "Клиентский компонент: useState на значение и отдельно на строку ввода. Поле не приводится к диапазону на каждом нажатии — иначе «10» невозможно набрать, когда минимум равен 100; зажим по границам происходит на blur и по Enter. Стрелки числового поля убраны вендорными псевдоэлементами, цифры табличные, ширина фиксирована. Заливка дорожки — градиент по проценту. Палитра в --vibeui-slider-008-*. Подпись поля и строка подсказки — шаблоны с {label}, {min}, {max}, {unit} и {step}, поэтому перевод не требует правки разметки. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Проп background включает собственную плашку, и тогда ветка темы считается по её светлоте.",
       "meta": {
         "tags": ["slider", "number", "input", "form"],
         "preview": {
@@ -764,15 +1121,21 @@
             "отдельную строку черновика ввода — она и позволяет полю пережить незаконченный ввод",
             "собственное доступное имя у числового поля: два входа в одно значение не должны звучать одинаково",
             "табличные цифры и фиксированную ширину поля — иначе оно дёргается на каждом разряде",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "отдельный токен field под коробку ввода: она обязана отличаться от подложки в обеих темах",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись через label и границы через min и max",
             "начальное значение через defaultValue",
             "единицу измерения через unit",
-            "величину шага через step"
+            "величину шага через step",
+            "подпись поля через exactText и строку подсказки через hintText",
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ввод текста не подгоняется к шагу: значение вне сетки шага останется как есть, если это важно — округлять в commit.",
             "Стрелки числового поля скрыты намеренно; для клавиатуры остаются стрелки вверх и вниз.",
             "Пустое поле при потере фокуса возвращает прежнее значение, а не ноль: обнулять бюджет случайно нельзя.",
@@ -780,6 +1143,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Бюджет на рекламу",
+            "maxLength": 32
+          },
           {
             "prop": "defaultValue",
             "label": "Значение",
@@ -794,6 +1164,25 @@
             "type": "text",
             "default": "тыс. ₽",
             "maxLength": 12
+          },
+          {
+            "prop": "hintText",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "от {min} до {max} {unit}, шаг {step}",
+            "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -807,15 +1196,21 @@
                 "the separate draft string — it is what lets the field survive an unfinished entry",
                 "a distinct accessible name on the number field: two doors into one value must not sound identical",
                 "tabular figures and the fixed field width — otherwise it twitches on every digit",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "the separate field token behind the input box: it has to read apart from the surface in both themes",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption through label and the bounds through min and max",
                 "the starting value through defaultValue",
                 "the unit of measure through unit",
-                "the increment through step"
+                "the increment through step",
+                "the field caption through exactText and the hint line through hintText",
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Typed input is not snapped to the step: an off-grid value stays as typed, so round it in commit if that matters.",
                 "The number spinners are hidden on purpose; the up and down arrow keys still work.",
                 "An empty field restores the previous value on blur rather than zero: a budget must not drop to nothing by accident.",
@@ -824,6 +1219,10 @@
               "usage": "<Slider008\n  label=\"Advertising budget\"\n  defaultValue={120}\n  unit=\"k ₽\"\n/>"
             },
             "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Advertising budget"
+              },
               "defaultValue": {
                 "label": "Value",
                 "default": 60
@@ -831,11 +1230,30 @@
               "unit": {
                 "label": "Unit",
                 "default": "k ₽"
+              },
+              "hintText": {
+                "label": "Hint",
+                "default": "from {min} to {max} {unit}, step {step}"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Slider With Number"
+            "title": "Slider With Number",
+            "preview": {
+              "props": {
+                "label": "Advertising budget",
+                "unit": "k ₽",
+                "exactText": "{label}, exact value",
+                "hintText": "from {min} to {max} {unit}, step {step}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -853,7 +1271,7 @@
           "target": "@components/vibeui/slider-009.tsx"
         }
       ],
-      "docs": "Клиентский компонент: useState на значение, пузырь считает сдвиг по проценту с поправкой на половину своей ширины — как в Value Bubble Slider. Значки по краям статичны и не реагируют на перетаскивание: они лишь подписывают направление шкалы столбиками возрастающей высоты, без иконочного пакета. Палитра в --vibeui-slider-009-*.",
+      "docs": "Клиентский компонент: useState на значение, пузырь считает сдвиг по проценту с поправкой на половину своей ширины — как в Value Bubble Slider. Значки по краям статичны и не реагируют на перетаскивание: они лишь подписывают направление шкалы столбиками возрастающей высоты, без иконочного пакета. Палитра в --vibeui-slider-009-*. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Проп background включает собственную плашку, и тогда ветка темы считается по её светлоте.",
       "meta": {
         "tags": ["slider", "volume", "icon", "bubble"],
         "preview": {
@@ -868,20 +1286,31 @@
             "поправку на половину ширины пузыря в translateX — без неё на краях шкалы подпись съезжает мимо ручки",
             "статичность значков по краям: это подписи концов шкалы, а не кнопки, кликабельным остаётся только ползунок",
             "aria-hidden на обоих значках и на пузыре: доступное имя ползунка целиком несёт label",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "контрастную пару accent и on-accent у пузыря: процент на цветной таблетке должен читаться в обеих темах",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "доступное имя ползунка через label",
             "начальный уровень через defaultValue",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Диапазон фиксирован 0–100: под проценты рассчитаны и значки, и подпись пузыря.",
             "Компонент ничего не воспроизводит: он только отражает уровень, звук подключает владелец плеера.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
           ]
         },
         "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Громкость звонка",
+            "maxLength": 40
+          },
           {
             "prop": "defaultValue",
             "label": "Уровень",
@@ -891,11 +1320,16 @@
             "max": 100
           },
           {
-            "prop": "label",
-            "label": "Подпись",
-            "type": "text",
-            "default": "Громкость звонка",
-            "maxLength": 40
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -908,14 +1342,18 @@
                 "the half-bubble-width correction in translateX — without it the caption drifts past the thumb at the edges",
                 "the static edge icons: they label the ends of the scale, not buttons — only the slider itself is interactive",
                 "aria-hidden on both icons and on the bubble: the slider's accessible name comes entirely from label",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "the contrasting accent / on-accent pair on the bubble: the percentage on a coloured pill has to stay legible in both themes",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the slider's accessible name through label",
                 "the starting level through defaultValue",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The range is fixed at 0–100: both the icons and the bubble caption are tuned to percentages.",
                 "The component plays nothing: it only reflects a level, the player owner wires the sound.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -923,18 +1361,30 @@
               "usage": "<Slider009\n  label=\"Ringer volume\"\n  defaultValue={45}\n/>"
             },
             "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Ringer volume"
+              },
               "defaultValue": {
                 "label": "Level",
                 "default": 60
               },
-              "label": {
-                "label": "Caption",
-                "default": "Ringer volume"
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Framed Volume Slider"
+            "title": "Framed Volume Slider",
+            "preview": {
+              "props": {
+                "label": "Ringer volume"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -952,7 +1402,7 @@
           "target": "@components/vibeui/slider-010.tsx"
         }
       ],
-      "docs": "Клиентский компонент: useState на значение, деления и подписи под ними позиционируются в процентах от диапазона через inline style, а не грид-колонками — так шкала с неравномерным шагом (6, 12, 24…) остаётся точной. Деления рисуются отдельным слоем поверх дорожки с pointer-events:none, ручка при этом свободно едет между ними. Палитра в --vibeui-slider-010-*.",
+      "docs": "Клиентский компонент: useState на значение, деления и подписи под ними позиционируются в процентах от диапазона через inline style, а не грид-колонками — так шкала с неравномерным шагом (6, 12, 24…) остаётся точной. Деления рисуются отдельным слоем поверх дорожки с pointer-events:none, ручка при этом свободно едет между ними. Палитра в --vibeui-slider-010-*. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Проп background включает собственную плашку, и тогда ветка темы считается по её светлоте.",
       "meta": {
         "tags": ["slider", "ticks", "marks", "range"],
         "preview": {
@@ -967,21 +1417,33 @@
             "процентное позиционирование делений и подписей — грид-колонки не подходят, если шаг между метками неравномерный",
             "pointer-events:none на слое делений — иначе он перехватывает клики и перетаскивание с ползунка",
             "aria-valuetext на input — он должен читать значение с единицей, а не голое число",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "отдельный токен mark у делений: они обязаны отличаться от дорожки и в светлой, и в тёмной теме",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись через label и границы через min и max",
             "набор делений и их подписи через marks",
             "начальное значение через defaultValue",
-            "единицу измерения через unit"
+            "единицу измерения через unit",
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Деления — ориентиры, а не ограничители: ручка едет непрерывно по step, а не перепрыгивает от метки к метке.",
             "Больше семи-восьми меток на узкой карточке налезают друг на друга — подписи придётся сокращать.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
           ]
         },
         "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Срок кредита",
+            "maxLength": 24
+          },
           {
             "prop": "defaultValue",
             "label": "Значение",
@@ -996,6 +1458,18 @@
             "type": "text",
             "default": " мес.",
             "maxLength": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1008,15 +1482,20 @@
                 "the percentage-based placement of ticks and captions — grid columns break down when the gap between marks is uneven",
                 "pointer-events:none on the tick layer — otherwise it steals clicks and dragging from the slider",
                 "aria-valuetext on the input — it must read the value with its unit, not a bare number",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "the separate mark token on the ticks: they have to read apart from the track in both light and dark",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption through label and the bounds through min and max",
                 "the set of ticks and their captions through marks",
                 "the starting value through defaultValue",
-                "the unit of measure through unit"
+                "the unit of measure through unit",
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Ticks are reference points, not stops: the thumb moves continuously by step rather than jumping mark to mark.",
                 "More than seven or eight marks overlap on a narrow card — shorten the captions.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1024,6 +1503,10 @@
               "usage": "<Slider010\n  label=\"Loan term\"\n  defaultValue={24}\n/>"
             },
             "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Loan term"
+              },
               "defaultValue": {
                 "label": "Value",
                 "default": 24
@@ -1031,11 +1514,24 @@
               "unit": {
                 "label": "Unit",
                 "default": " mo."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Ruler Slider"
+            "title": "Ruler Slider",
+            "preview": {
+              "props": {
+                "label": "Loan term",
+                "unit": " mo."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1053,7 +1549,7 @@
           "target": "@components/vibeui/slider-011.tsx"
         }
       ],
-      "docs": "Клиентский компонент: useState на значение и на строку черновика поля. В отличие от отложенного зажима, здесь синхронизация мгновенная на каждое нажатие — минимум цены равен нулю, поэтому число набирается с любого разряда без конфликта с нижней границей. Заголовок форматирует цену разрядами тысяч через Intl.NumberFormat, поле ввода остаётся простыми цифрами. Палитра в --vibeui-slider-011-*.",
+      "docs": "Клиентский компонент: useState на значение и на строку черновика поля. В отличие от отложенного зажима, здесь синхронизация мгновенная на каждое нажатие — минимум цены равен нулю, поэтому число набирается с любого разряда без конфликта с нижней границей. Заголовок форматирует цену разрядами тысяч через Intl.NumberFormat, поле ввода остаётся простыми цифрами. Палитра в --vibeui-slider-011-*. Локаль форматирования вынесена в проп locale, подписи поля — в fieldText и шаблон exactText. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Проп background включает собственную плашку, и тогда ветка темы считается по её светлоте.",
       "meta": {
         "tags": ["slider", "price", "input", "form"],
         "preview": {
@@ -1068,21 +1564,34 @@
             "мгновенную двустороннюю синхронизацию без отложенного зажима на blur — минимум цены равен нулю специально ради этого",
             "форматирование заголовка через Intl.NumberFormat, при этом само поле ввода остаётся простыми цифрами",
             "отдельный доступный текст у числового поля через aria-label — второй вход в то же значение не должен звучать как первый",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "отдельный токен field под коробку ввода: она обязана отличаться от подложки в обеих темах",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись через label и границы через min и max",
             "начальное значение через defaultValue",
             "величину шага через step",
-            "символ валюты через currency"
+            "символ валюты через currency",
+            "подпись поля через fieldText, доступное имя через exactText и разряды через locale",
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Если понадобится минимум больше нуля, живую синхронизацию стоит вернуть к отложенному зажиму, как в Slider With Number.",
             "Пустое поле при потере фокуса возвращает минимум, а не прежнее значение — при min больше нуля это стоит пересмотреть.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
           ]
         },
         "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Цена товара",
+            "maxLength": 24
+          },
           {
             "prop": "defaultValue",
             "label": "Цена",
@@ -1097,6 +1606,25 @@
             "type": "text",
             "default": "₽",
             "maxLength": 4
+          },
+          {
+            "prop": "fieldText",
+            "label": "Подпись поля",
+            "type": "text",
+            "default": "Точная цена",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1109,15 +1637,21 @@
                 "the instant two-way sync with no deferred blur clamp — the price minimum is zero specifically to allow this",
                 "the Intl.NumberFormat header formatting, while the field itself stays plain digits",
                 "the number field's own aria-label — a second door into the same value must not sound like the first",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "the separate field token behind the input box: it has to read apart from the surface in both themes",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption through label and the bounds through min and max",
                 "the starting value through defaultValue",
                 "the increment through step",
-                "the currency symbol through currency"
+                "the currency symbol through currency",
+                "the field caption through fieldText, its accessible name through exactText and the digit grouping through locale",
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "If a minimum above zero is ever needed, switch the live sync back to a deferred blur clamp, as in Slider With Number.",
                 "An empty field restores the minimum on blur, not the previous value — reconsider that if min is above zero.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1125,6 +1659,10 @@
               "usage": "<Slider011\n  label=\"Product price\"\n  defaultValue={8900}\n  currency=\"$\"\n/>"
             },
             "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Product price"
+              },
               "defaultValue": {
                 "label": "Price",
                 "default": 12900
@@ -1132,11 +1670,31 @@
               "currency": {
                 "label": "Currency",
                 "default": "$"
+              },
+              "fieldText": {
+                "label": "Field caption",
+                "default": "Exact price"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Live Price Slider"
+            "title": "Live Price Slider",
+            "preview": {
+              "props": {
+                "label": "Product price",
+                "currency": "$",
+                "fieldText": "Exact price",
+                "exactText": "{label}, exact value in {currency}",
+                "locale": "en-US"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1154,7 +1712,7 @@
           "target": "@components/vibeui/slider-012.tsx"
         }
       ],
-      "docs": "Клиентский компонент: useState на значение, дорожка закрашена фиксированным трёхцветным градиентом — это карта всей шкалы, а не индикатор заполнения, поэтому её фон не зависит от value. Зона считается по трети диапазона и кладётся в data-zone на корне, откуда CSS переключает цвет таблетки и рамки ручки одним атрибутом. Палитра в --vibeui-slider-012-*.",
+      "docs": "Клиентский компонент: useState на значение, дорожка закрашена фиксированным трёхцветным градиентом — это карта всей шкалы, а не индикатор заполнения, поэтому её фон не зависит от value. Зона считается по трети диапазона и кладётся в data-zone на корне, откуда CSS переключает цвет таблетки и рамки ручки одним атрибутом. Палитра в --vibeui-slider-012-*. Таблетка зоны разбавляется собственным токеном zone-blend, а не белым, поэтому в тёмной теме она темнеет вместе с окружением. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы. Проп background включает собственную плашку, и тогда ветка темы считается по её светлоте.",
       "meta": {
         "tags": ["slider", "gradient", "zone", "status"],
         "preview": {
@@ -1169,21 +1727,33 @@
             "неизменность градиента дорожки от значения: это карта шкалы целиком, а не индикатор заполнения",
             "переключение зоны одним data-zone на корне, а не тремя условными классами на разных узлах",
             "role=status на таблетке зоны — смена текста должна долетать до скринридера без лишнего фокуса",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "разбавление таблетки токеном zone-blend вместо white: подмешанное белое выбелило бы её в тёмной теме",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись через label и границы через min и max",
             "начальное значение через defaultValue",
             "названия зон через zones",
-            "единицу измерения через unit"
+            "единицу измерения через unit",
+            "объявление значения для скринридера через zoneText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Границы зон фиксированы на трети диапазона; под другие пороги функцию zoneIndex нужно переписать.",
             "Порядок zones обязан идти от низкой зоны к высокой — иначе таблетка и цвет разойдутся по смыслу.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
           ]
         },
         "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Уровень нагрузки",
+            "maxLength": 40
+          },
           {
             "prop": "defaultValue",
             "label": "Значение",
@@ -1193,11 +1763,17 @@
             "max": 100
           },
           {
-            "prop": "label",
-            "label": "Подпись",
+            "prop": "unit",
+            "label": "Единица",
             "type": "text",
-            "default": "Уровень нагрузки",
-            "maxLength": 40
+            "default": "%",
+            "maxLength": 8
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1210,15 +1786,20 @@
                 "the track gradient staying constant regardless of value: it's a map of the whole scale, not a fill indicator",
                 "switching the zone through a single data-zone on the root instead of three conditional classes on separate nodes",
                 "role=status on the zone pill — the text change must reach a screen reader without stealing focus",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "mixing the pill with the zone-blend token instead of white: mixing in white would bleach it in a dark theme",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption through label and the bounds through min and max",
                 "the starting value through defaultValue",
                 "the zone names through zones",
-                "the unit of measure through unit"
+                "the unit of measure through unit",
+                "the screen-reader value announcement through zoneText",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Zone boundaries are fixed at a third of the range each; rewrite zoneIndex for different thresholds.",
                 "The zones order must run from low to high — otherwise the pill and the colour disagree.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -1226,18 +1807,33 @@
               "usage": "<Slider012\n  label=\"Load level\"\n  defaultValue={72}\n/>"
             },
             "controls": {
+              "label": {
+                "label": "Caption",
+                "default": "Load level"
+              },
               "defaultValue": {
                 "label": "Value",
                 "default": 50
               },
-              "label": {
-                "label": "Caption",
-                "default": "Load level"
+              "unit": {
+                "label": "Unit",
+                "default": "%"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Zone Gradient Slider"
+            "title": "Zone Gradient Slider",
+            "preview": {
+              "props": {
+                "label": "Load level",
+                "zones": ["low", "medium", "high"],
+                "zoneText": "{value}{unit}, zone: {zone}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "background"]
       }
     }
   ]

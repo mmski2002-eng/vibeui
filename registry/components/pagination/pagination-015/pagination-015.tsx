@@ -7,6 +7,24 @@ export type Pagination015Props = {
   page?: number
   total?: number
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  navLabel?: string
+  prevText?: string
+  nextText?: string
+  prevLabel?: string
+  nextLabel?: string
+  /** Слово перед номером страницы. */
+  readoutLabel?: string
+  /** Хвост счётчика, {total} — общее число страниц. */
+  totalLabel?: string
+  /** Подпись поля ввода, {total} — общее число страниц. */
+  inputLabel?: string
+  /** Подпись номера-кнопки: {page} и {total}. */
+  editLabel?: string
+  /** Сообщение о неверном номере, {total} — общее число страниц. */
+  errorText?: string
   className?: string
   style?: CSSProperties
 }
@@ -17,14 +35,14 @@ export type Pagination015Props = {
 // без следа. Ряд не растёт вторым этажом ради одной цифры.
 const STYLES = `
 :where([data-vibeui-block="pagination-015"]){
---vibeui-pagination-015-bg:oklch(1 0 0);
---vibeui-pagination-015-fg:oklch(0.24 0.014 265);
---vibeui-pagination-015-muted:oklch(0.55 0.014 265);
---vibeui-pagination-015-border:oklch(0.91 0.006 265);
---vibeui-pagination-015-field:oklch(0.97 0.003 265);
---vibeui-pagination-015-hover:oklch(0.55 0.02 265 / 8%);
---vibeui-pagination-015-bad:oklch(0.58 0.19 26);
---vibeui-pagination-015-accent:oklch(0.55 0.2 262);
+--vibeui-pagination-015-bg:transparent;
+--vibeui-pagination-015-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-pagination-015-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-pagination-015-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-pagination-015-field:light-dark(oklch(0.97 0.003 265),oklch(0.29 0.012 265));
+--vibeui-pagination-015-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.86 0.02 265 / 14%));
+--vibeui-pagination-015-bad:light-dark(oklch(0.58 0.19 26),oklch(0.74 0.16 26));
+--vibeui-pagination-015-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
 --vibeui-pagination-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="pagination-015"]{
@@ -73,6 +91,28 @@ margin:0;font-size:0.75rem;color:var(--vibeui-pagination-015-bad);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Пагинация с номером страницы, который сам становится полем ввода.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -80,6 +120,17 @@ export function Pagination015({
   page: initialPage = 12,
   total = 48,
   accent,
+  background = "",
+  navLabel = "Страницы",
+  prevText = "← Назад",
+  nextText = "Вперёд →",
+  prevLabel = "Предыдущая страница",
+  nextLabel = "Следующая страница",
+  readoutLabel = "Страница",
+  totalLabel = "из {total}",
+  inputLabel = "Номер страницы, от 1 до {total}",
+  editLabel = "Текущая страница {page} из {total}, изменить номер",
+  errorText = "Введите номер от 1 до {total}",
   className,
   style,
 }: Pagination015Props) {
@@ -91,6 +142,12 @@ export function Pagination015({
 
   const palette = {
     ...(accent ? { "--vibeui-pagination-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pagination-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -143,7 +200,7 @@ export function Pagination015({
       </style>
       <nav
         data-vibeui-block="pagination-015"
-        aria-label="Страницы"
+        aria-label={navLabel}
         className={className}
         style={palette}
       >
@@ -152,13 +209,13 @@ export function Pagination015({
             type="button"
             data-part="step"
             disabled={page === 1}
-            aria-label="Предыдущая страница"
+            aria-label={prevLabel}
             onClick={() => setPage(Math.max(page - 1, 1))}
           >
-            ← Назад
+            {prevText}
           </button>
           <p data-part="readout">
-            Страница
+            {readoutLabel}
             {editing ? (
               <input
                 ref={inputRef}
@@ -167,7 +224,7 @@ export function Pagination015({
                 min={1}
                 max={total}
                 value={draft}
-                aria-label={`Номер страницы, от 1 до ${total}`}
+                aria-label={inputLabel.replace("{total}", String(total))}
                 aria-invalid={bad || undefined}
                 aria-describedby={
                   bad ? "vibeui-pagination-015-error" : undefined
@@ -184,27 +241,29 @@ export function Pagination015({
                 type="button"
                 data-part="edit"
                 aria-current="page"
-                aria-label={`Текущая страница ${page} из ${total}, изменить номер`}
+                aria-label={editLabel
+                  .replace("{page}", String(page))
+                  .replace("{total}", String(total))}
                 onClick={startEdit}
               >
                 {page}
               </button>
             )}
-            из {total}
+            {totalLabel.replace("{total}", String(total))}
           </p>
           <button
             type="button"
             data-part="step"
             disabled={page === total}
-            aria-label="Следующая страница"
+            aria-label={nextLabel}
             onClick={() => setPage(Math.min(page + 1, total))}
           >
-            Вперёд →
+            {nextText}
           </button>
         </div>
         {bad ? (
           <p id="vibeui-pagination-015-error" data-part="error" role="alert">
-            Введите номер от 1 до {total}
+            {errorText.replace("{total}", String(total))}
           </p>
         ) : null}
       </nav>

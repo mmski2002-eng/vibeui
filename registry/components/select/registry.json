@@ -30,16 +30,20 @@
             "стрелку из двух граней с поворотом на 45° и её перекраску при фокусе — иконочная библиотека для этого не нужна",
             "кольцо фокуса box-shadow и смену цвета рамки: список открывается с клавиатуры, фокус обязан быть виден",
             "заглушку первым вариантом с пустым value и атрибутом disabled — иначе её можно отправить как значение",
-            "блок <style> внутри компонента — в нём вся палитра, размеры и стрелка"
+            "блок <style> внутри компонента — в нём вся палитра, размеры и стрелка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив options и тексты в нём, а также label и placeholder",
             "size: md для формы, lg для одиночного поля",
             "акцент через проп accent — цвет рамки, кольца и стрелки при фокусе",
             "любые нативные пропсы select: name, value, defaultValue, onChange, required, multiple, disabled",
-            "ширину и внешние отступы через className — по умолчанию поле занимает всю ширину родителя"
+            "ширину и внешние отступы через className — по умолчанию поле занимает всю ширину родителя",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не превращайте это в комбобокс с поиском: у нативного select нет фильтра. Поиску нужен отдельный компонент.",
             "Внешний вид открытого списка задаёт операционная система, и он не стилизуется — это цена нативного поведения.",
             "id связывает подпись с полем. Без него клик по подписи не открывает список.",
@@ -79,6 +83,12 @@
             "label": "Выключено",
             "type": "boolean",
             "default": false
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -93,16 +103,20 @@
                 "the arrow made of two borders rotated 45° and its colour change on focus — no icon library is needed for it",
                 "the box-shadow focus ring and the border colour change: the list opens from the keyboard, so focus must be visible",
                 "the placeholder as the first option with an empty value and the disabled attribute — otherwise it can be submitted as a value",
-                "the <style> block inside the component — it holds the palette, the sizes and the arrow"
+                "the <style> block inside the component — it holds the palette, the sizes and the arrow",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the options array and its copy, plus the label and placeholder",
                 "size: md inside a form, lg for a field standing on its own",
                 "the accent through the accent prop — it colours the border, ring and arrow on focus",
                 "any native select props: name, value, defaultValue, onChange, required, multiple, disabled",
-                "width and outer spacing through className — by default the field fills its parent"
+                "width and outer spacing through className — by default the field fills its parent",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not turn this into a searchable combobox: a native select has no filter. Search needs its own component.",
                 "The open list is drawn by the operating system and cannot be styled — that is the price of native behaviour.",
                 "id is what links the label to the field. Without it, clicking the label does not open the list.",
@@ -127,14 +141,42 @@
               },
               "disabled": {
                 "label": "Disabled"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Native Select"
+            "title": "Native Select",
+            "preview": {
+              "props": {
+                "label": "Project type",
+                "placeholder": "Pick one",
+                "options": [
+                  {
+                    "value": "landing",
+                    "label": "Landing page"
+                  },
+                  {
+                    "value": "dashboard",
+                    "label": "Customer account"
+                  },
+                  {
+                    "value": "shop",
+                    "label": "Online store"
+                  },
+                  {
+                    "value": "blog",
+                    "label": "Blog"
+                  }
+                ]
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["size", "disabled", "accent", "background"]
       }
     },
     {
@@ -167,16 +209,20 @@
             "настоящие <optgroup>: самодельные заголовки-строки нельзя пропустить клавиатурой и они выбираются как варианты",
             "заглушку с пустым value и disabled — иначе форма отправит первый вариант, которого никто не выбирал",
             "appearance:none вместе с нарисованной стрелкой: без стрелки поле перестаёт читаться как список",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице",
-            "видимый фокус на select: рамка и тень — единственный признак, что поле активно"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "видимый фокус на select: рамка и тень — единственный признак, что поле активно",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "текст подсказки под полем через hint",
             "первую строку списка через placeholder",
-            "состав разделов и вариантов через groups"
+            "состав разделов и вариантов через groups",
+            "цвет фокуса и рамки через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Оформить сам выпадающий список нельзя: его рисует операционная система, и это плата за нативное поведение.",
             "Вес и цвет optgroup поддерживают не все браузеры — раздел должен читаться и без них, по формулировке.",
             "Заглушка остаётся в списке после выбора: если она мешает, её убирают пустой строкой в placeholder.",
@@ -184,6 +230,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Город команды",
+            "maxLength": 40
+          },
           {
             "prop": "hint",
             "label": "Подсказка",
@@ -197,6 +250,18 @@
             "type": "text",
             "default": "Выберите город",
             "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -209,16 +274,20 @@
                 "real <optgroup> elements: hand-made heading rows cannot be skipped by keyboard and get picked as options",
                 "the placeholder option with an empty value and disabled — otherwise the form submits a value nobody chose",
                 "appearance:none together with the drawn arrow: without the arrow the field stops reading as a list",
-                "the component's own light surface — without it the dark text disappears on a dark page",
-                "the visible focus ring on the select: the border and shadow are the only sign the field is active"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the visible focus ring on the select: the border and shadow are the only sign the field is active",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the helper line under the field through hint",
                 "the first row of the list through placeholder",
-                "the sections and options through groups"
+                "the sections and options through groups",
+                "the focus and border colour through accent",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The dropdown list itself cannot be styled: the operating system draws it, and that is the price of native behaviour.",
                 "Weight and colour on optgroup are not supported everywhere — a section must read from its wording alone.",
                 "The placeholder stays in the list after a choice is made: pass an empty placeholder to drop it.",
@@ -234,11 +303,78 @@
               "placeholder": {
                 "label": "Placeholder",
                 "default": "Pick a city"
+              },
+              "label": {
+                "label": "Label",
+                "default": "Team city"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Grouped Native Select"
+            "title": "Grouped Native Select",
+            "preview": {
+              "props": {
+                "label": "Team city",
+                "hint": "Sections match the regions in the contract.",
+                "placeholder": "Pick a city",
+                "groups": [
+                  {
+                    "label": "Europe",
+                    "options": [
+                      {
+                        "value": "berlin",
+                        "label": "Berlin"
+                      },
+                      {
+                        "value": "lisbon",
+                        "label": "Lisbon"
+                      },
+                      {
+                        "value": "warsaw",
+                        "label": "Warsaw"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Asia",
+                    "options": [
+                      {
+                        "value": "almaty",
+                        "label": "Almaty"
+                      },
+                      {
+                        "value": "tbilisi",
+                        "label": "Tbilisi"
+                      },
+                      {
+                        "value": "bangkok",
+                        "label": "Bangkok"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Americas",
+                    "options": [
+                      {
+                        "value": "austin",
+                        "label": "Austin"
+                      },
+                      {
+                        "value": "toronto",
+                        "label": "Toronto"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -271,16 +407,19 @@
             "прозрачный select поверх кнопки: он и есть механика — самодельное меню теряет клавиатуру и системный список на телефоне",
             "aria-hidden на триггере: иначе скринридер прочитает текст дважды — с кнопки и с самого select",
             "подсветку по select:focus: без неё кнопка выглядит одинаково в фокусе и вне его",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице",
-            "порядок узлов select → триггер → стрелка: соседний комбинатор в CSS держится именно на нём"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "порядок узлов select → триггер → стрелка: соседний комбинатор в CSS держится именно на нём",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "набор вариантов и их иконки через options",
             "начальное значение через defaultValue",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Иконка — символ в тексте: если нужны рисунки, вместо строки в options подставляется свой узел, но файл должен остаться самодостаточным.",
             "Прозрачный select ловит все клики по кнопке — не вешать на триггер собственные обработчики, они не сработают.",
             "Длинная подпись обрезается многоточием: колонка кнопки фиксирована, чтобы плитка не растягивалась.",
@@ -301,6 +440,18 @@
             "type": "select",
             "default": "card",
             "options": ["card", "invoice", "crypto", "cash"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -313,16 +464,19 @@
                 "the transparent select over the trigger: it is the mechanism — a hand-made menu loses the keyboard and the system list on phones",
                 "aria-hidden on the trigger: otherwise a screen reader reads the text twice, from the button and from the select",
                 "the highlight driven by select:focus: without it the trigger looks the same focused and not",
-                "the component's own light surface — without it the dark text disappears on a dark page",
-                "the node order select → trigger → arrow: the adjacent combinator in the CSS depends on it"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the node order select → trigger → arrow: the adjacent combinator in the CSS depends on it",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the set of choices and their icons through options",
                 "the initial value through defaultValue",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The icon is a character in text: for real artwork replace the string in options with your own node, but keep the file self-contained.",
                 "The transparent select catches every click on the trigger — do not attach handlers to the trigger, they will not fire.",
                 "A long caption is cut with an ellipsis: the trigger column is fixed so the tile does not stretch.",
@@ -338,11 +492,45 @@
               "defaultValue": {
                 "label": "Value",
                 "default": "card"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Icon Trigger Select"
+            "title": "Icon Trigger Select",
+            "preview": {
+              "props": {
+                "label": "Payment method",
+                "options": [
+                  {
+                    "value": "card",
+                    "label": "Bank card",
+                    "icon": "💳"
+                  },
+                  {
+                    "value": "invoice",
+                    "label": "Invoice for a company",
+                    "icon": "🧾"
+                  },
+                  {
+                    "value": "crypto",
+                    "label": "Crypto wallet",
+                    "icon": "🪙"
+                  },
+                  {
+                    "value": "cash",
+                    "label": "Cash on delivery",
+                    "icon": "💵"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -375,16 +563,20 @@
             "нативный multiple вместо списка чекбоксов: он один даёт клавиатурный диапазон Shift и отправку массива значений формой",
             "правило option:checked: без него выбранные строки видны только системной подсветкой, разной в каждой ОС",
             "видимую подсказку про Ctrl и ⌘ — множественный выбор мышью неочевиден и без неё теряется",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице",
-            "видимый фокус на списке: рамка обводит всё поле, а не отдельную строку"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "видимый фокус на списке: рамка обводит всё поле, а не отдельную строку",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "текст подсказки под списком через hint",
             "высоту списка в строках через rows",
-            "состав вариантов через options"
+            "состав вариантов через options",
+            "цвет выбранных строк и фокуса через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Оформление option ограничено: цвет и вес работают, а вот отступы и радиус применяются не во всех браузерах.",
             "На телефоне список выглядит как обычный многострочный select — проверить, что высота rows не съедает экран.",
             "Сброс выбора мышью делается кликом без Ctrl: это поведение системы, его не переопределить без JS.",
@@ -406,6 +598,18 @@
             "type": "text",
             "default": "Несколько — с зажатой клавишей",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -418,16 +622,20 @@
                 "the native multiple instead of a checkbox list: only it gives Shift range selection and submits an array of values",
                 "the option:checked rule: without it the chosen rows show only in the system highlight, which differs per OS",
                 "the visible Ctrl and ⌘ hint — multiple selection with a mouse is not obvious and gets lost without it",
-                "the component's own light surface — without it the dark text disappears on a dark page",
-                "the visible focus ring on the list: it outlines the whole field, not a single row"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the visible focus ring on the list: it outlines the whole field, not a single row",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the helper line under the list through hint",
                 "the visible height in rows through rows",
-                "the set of options through options"
+                "the set of options through options",
+                "the colour of chosen rows and focus through accent",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Styling of option is limited: colour and weight work, but padding and radius are not applied in every browser.",
                 "On phones the list looks like an ordinary multi-line select — check that rows does not eat the screen.",
                 "Clearing the selection is a click without Ctrl: that is system behaviour and cannot be overridden without JS.",
@@ -443,11 +651,50 @@
               "hint": {
                 "label": "Hint",
                 "default": "Several — hold the key"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Multiple List Select"
+            "title": "Multiple List Select",
+            "preview": {
+              "props": {
+                "label": "Areas of work",
+                "hint": "Several — hold the key",
+                "options": [
+                  {
+                    "value": "design",
+                    "label": "Design"
+                  },
+                  {
+                    "value": "frontend",
+                    "label": "Frontend"
+                  },
+                  {
+                    "value": "backend",
+                    "label": "Backend"
+                  },
+                  {
+                    "value": "analytics",
+                    "label": "Analytics"
+                  },
+                  {
+                    "value": "content",
+                    "label": "Content"
+                  },
+                  {
+                    "value": "qa",
+                    "label": "QA"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["rows", "accent", "background"]
       }
     },
     {
@@ -480,16 +727,19 @@
             "связку aria-describedby с абзацем пояснения: иначе объяснение не достанется скринридеру",
             "role=\"status\" на пояснении: смена текста объявляется без кражи фокуса у поля",
             "пояснение отдельным узлом, а не внутри option — системный список не умеет рисовать вторую строку",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице",
-            "видимый фокус на select: рамка и тень — единственный признак, что поле активно"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "видимый фокус на select: рамка и тень — единственный признак, что поле активно",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "варианты вместе с их описаниями через options",
             "начальное значение через defaultValue",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Описание держать в одну-две строки: скачок высоты при переключении заметнее, чем кажется в макете.",
             "Если вариантов больше десятка, описание перестаёт помогать — тогда нужен поиск, а не пояснение.",
             "role=\"status\" объявляет текст мягко: для критичных предупреждений нужен role=\"alert\".",
@@ -510,6 +760,18 @@
             "type": "select",
             "default": "editor",
             "options": ["viewer", "editor", "admin"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -522,16 +784,19 @@
                 "the aria-describedby link to the explanation paragraph: otherwise a screen reader never gets it",
                 "role=\"status\" on the explanation: the text change is announced without stealing focus from the field",
                 "the explanation as a separate node rather than inside option — the system list cannot draw a second line",
-                "the component's own light surface — without it the dark text disappears on a dark page",
-                "the visible focus ring on the select: the border and shadow are the only sign the field is active"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the visible focus ring on the select: the border and shadow are the only sign the field is active",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the options together with their descriptions through options",
                 "the initial value through defaultValue",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Keep the description to one or two lines: the height jump on switching is more noticeable than it looks in a mockup.",
                 "Past a dozen options an explanation stops helping — you need search, not prose.",
                 "role=\"status\" announces politely: critical warnings need role=\"alert\" instead.",
@@ -547,11 +812,40 @@
               "defaultValue": {
                 "label": "Value",
                 "default": "editor"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Described Select"
+            "title": "Described Select",
+            "preview": {
+              "props": {
+                "label": "Project role",
+                "options": [
+                  {
+                    "value": "viewer",
+                    "label": "Viewer",
+                    "description": "Sees the project and comments but changes nothing."
+                  },
+                  {
+                    "value": "editor",
+                    "label": "Editor",
+                    "description": "Edits and publishes content but invites nobody."
+                  },
+                  {
+                    "value": "admin",
+                    "label": "Administrator",
+                    "description": "Runs access and billing, and can delete the project."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -585,15 +879,19 @@
             "собственный разделитель разрядов вместо toLocaleString: локальный формат сервера и браузера различается и ломает гидрацию",
             "распроданный размер с disabled, а не скрытый: исчезнувший вариант читается как ошибка каталога",
             "табличные цифры в сумме: при пересчёте число не должно менять ширину",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "название товара через title",
             "базовую цену через price",
             "состав размеров, надбавки и наличие через sizes",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "подписи колонок через sizeLabel и quantityLabel, приписку распроданного размера через soldOutText, знак валюты через currency",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент считает сумму на клиенте: настоящую цену всё равно обязан подтвердить сервер.",
             "Список количества фиксирован пятью позициями — для оптовых заказов нужно поле ввода, а не select.",
             "Надбавка за размер прибавляется к цене единицы, а не к итогу: при изменении логики поправить обе строки.",
@@ -615,6 +913,25 @@
             "default": 4900,
             "min": 100,
             "max": 99000
+          },
+          {
+            "prop": "currency",
+            "label": "Валюта",
+            "type": "text",
+            "default": "₽",
+            "maxLength": 6
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -628,15 +945,19 @@
                 "the own thousands separator instead of toLocaleString: server and browser formats differ and break hydration",
                 "the sold-out size kept disabled rather than hidden: a vanished option reads as a catalogue bug",
                 "tabular figures in the total: the number must not change width while it is recalculated",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the product name through title",
                 "the base price through price",
                 "the sizes, their surcharges and availability through sizes",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "the column captions through sizeLabel and quantityLabel, the sold-out suffix through soldOutText, the currency sign through currency",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component computes the total on the client: the real price still has to be confirmed by the server.",
                 "The quantity list is fixed at five entries — wholesale orders need a number field, not a select.",
                 "The size surcharge is added to the unit price, not to the total: change both lines if you rework the maths.",
@@ -652,11 +973,52 @@
               "price": {
                 "label": "Price",
                 "default": 4900
+              },
+              "currency": {
+                "label": "Currency",
+                "default": "$"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Order Line Select"
+            "title": "Order Line Select",
+            "preview": {
+              "props": {
+                "title": "Night Shift hoodie",
+                "sizeLabel": "Size",
+                "quantityLabel": "Qty",
+                "soldOutText": "sold out",
+                "currency": "$",
+                "sizes": [
+                  {
+                    "value": "s",
+                    "label": "S · 44"
+                  },
+                  {
+                    "value": "m",
+                    "label": "M · 46"
+                  },
+                  {
+                    "value": "l",
+                    "label": "L · 48",
+                    "extra": 300
+                  },
+                  {
+                    "value": "xl",
+                    "label": "XL · 50",
+                    "extra": 300,
+                    "soldOut": true
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["price", "accent", "background"]
       }
     },
     {
@@ -690,15 +1052,19 @@
             "текст рядом со спиннером: одно крутящееся кольцо не говорит, чего именно ждать",
             "правило prefers-reduced-motion — две бесконечные анимации обязаны выключаться",
             "спиннер на conic-gradient с mask: он рисуется CSS и не тянет иконочную библиотеку",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "состояние ожидания через loading",
             "текст ожидания через loadingText",
-            "состав списка через options"
+            "состав списка через options",
+            "первую строку готового списка через placeholder и цвет спиннера и фокуса через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не грузит данные сам: loading переключает тот, кто владеет запросом.",
             "Долгую загрузку стоит ограничивать таймаутом — вечный спиннер хуже честной ошибки.",
             "Высота поля одинакова в обоих состояниях: подмена списка не должна сдвигать форму.",
@@ -718,6 +1084,25 @@
             "type": "text",
             "default": "Загружаем список городов",
             "maxLength": 40
+          },
+          {
+            "prop": "placeholder",
+            "label": "Заглушка",
+            "type": "text",
+            "default": "Выберите город",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -731,15 +1116,19 @@
                 "the text beside the spinner: a spinning ring alone never says what is being waited for",
                 "the prefers-reduced-motion rule — two infinite animations must be switchable off",
                 "the conic-gradient spinner with a mask: it is drawn in CSS and pulls in no icon library",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the waiting state through loading",
                 "the waiting text through loadingText",
-                "the contents of the list through options"
+                "the contents of the list through options",
+                "the first row of the loaded list through placeholder and the spinner and focus colour through accent",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not fetch anything: loading is flipped by whoever owns the request.",
                 "Cap a long load with a timeout — an endless spinner is worse than an honest error.",
                 "The field keeps the same height in both states: swapping the list must not shift the form.",
@@ -755,11 +1144,36 @@
               "loadingText": {
                 "label": "Waiting text",
                 "default": "Loading the list of cities"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Pick a city"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Loading Select"
+            "title": "Loading Select",
+            "preview": {
+              "props": {
+                "label": "Delivery city",
+                "loadingText": "Loading the list of cities",
+                "placeholder": "Pick a city",
+                "options": [
+                  "Moscow",
+                  "Saint Petersburg",
+                  "Kazan",
+                  "Novosibirsk",
+                  "Yekaterinburg"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["loading", "accent", "background"]
       }
     },
     {
@@ -793,15 +1207,19 @@
             "aria-invalid на поле и role=\"alert\" на сообщении: без них ошибка не доходит до скринридера",
             "снятие ошибки при первом верном выборе — висящая ошибка после исправления читается как обвинение",
             "aria-describedby, указывающий на один и тот же id в обоих состояниях: связь не должна рваться",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "текст ошибки через error",
             "первую строку списка через placeholder",
-            "состав вариантов через options"
+            "состав вариантов через options",
+            "строку на месте ошибки через hint и цвет фокуса через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Проверка здесь показательная: настоящая валидация живёт в форме и на сервере.",
             "Ошибка показана сразу для витрины — в живой форме её включают после первой попытки отправки.",
             "Текст ошибки должен говорить, что сделать, а не что случилось: «выберите форму» лучше, чем «поле пустое».",
@@ -822,6 +1240,25 @@
             "type": "text",
             "default": "Не выбрано",
             "maxLength": 24
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Реквизиты подставим автоматически.",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -835,15 +1272,19 @@
                 "aria-invalid on the field and role=\"alert\" on the message: without them the error never reaches a screen reader",
                 "clearing the error on the first valid choice — an error that lingers after a fix reads as an accusation",
                 "aria-describedby pointing at the same id in both states: the link must not break",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the message text through error",
                 "the first row of the list through placeholder",
-                "the set of options through options"
+                "the set of options through options",
+                "the line that replaces the error through hint and the focus colour through accent",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The check here is illustrative: real validation lives in the form and on the server.",
                 "The error is shown immediately for the showcase — in a live form you switch it on after the first submit.",
                 "Error text should say what to do, not what happened: \"pick a legal form\" beats \"field is empty\".",
@@ -859,11 +1300,36 @@
               "placeholder": {
                 "label": "Placeholder",
                 "default": "Not chosen"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "We will fill in the details for you."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Invalid Select"
+            "title": "Invalid Select",
+            "preview": {
+              "props": {
+                "label": "Legal form",
+                "error": "We cannot issue an invoice without this",
+                "placeholder": "Not chosen",
+                "hint": "We will fill in the details for you.",
+                "options": [
+                  "Sole proprietor",
+                  "Limited liability company",
+                  "Self-employed",
+                  "Private individual"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -897,15 +1363,19 @@
             ":user-invalid вместо :invalid для рамки — иначе форма краснеет ещё до первого касания",
             "звёздочку с aria-hidden: обязательность уже объявляет сам атрибут required",
             "связку :has(select:valid) на корне — она и переключает вид подсказки без JS",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "текст заглушки через placeholder",
             "поясняющую строку через hint",
-            "состав вариантов через options"
+            "состав вариантов через options",
+            "цвет фокуса и заполненной подсказки через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Поддержка :user-invalid широкая, но в старых сборках рамка просто не появится — базовая валидация формы при этом работает.",
             "Заглушка обязана быть первой в списке: браузер выбирает первый вариант, если ни один не отмечен.",
             "Своё сообщение об ошибке браузер покажет системным всплывающим окном — оформить его нельзя.",
@@ -926,6 +1396,18 @@
             "type": "text",
             "default": "Поле обязательное: курьер приедет в это окно.",
             "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -939,15 +1421,19 @@
                 ":user-invalid rather than :invalid for the border — otherwise the form turns red before it is even touched",
                 "the asterisk with aria-hidden: the required attribute already announces the obligation",
                 "the :has(select:valid) hook on the root — it is what switches the hint without JS",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the placeholder text through placeholder",
                 "the helper line through hint",
-                "the set of options through options"
+                "the set of options through options",
+                "the focus and filled-hint colour through accent",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Support for :user-invalid is broad, but on old builds the border simply will not appear — basic form validation still works.",
                 "The placeholder must come first: the browser selects the first option when none is marked.",
                 "The browser shows its own validation bubble on submit and that bubble cannot be styled.",
@@ -963,11 +1449,30 @@
               "hint": {
                 "label": "Hint",
                 "default": "Required: the courier arrives in this window."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Required Select"
+            "title": "Required Select",
+            "preview": {
+              "props": {
+                "label": "Delivery window",
+                "placeholder": "Pick a time",
+                "hint": "Required: the courier arrives in this window.",
+                "options": [
+                  "Morning, 9:00 — 12:00",
+                  "Afternoon, 12:00 — 16:00",
+                  "Evening, 16:00 — 21:00"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1001,16 +1506,21 @@
             "закрытие панели по клику вне компонента и обработчик onMouseDown с preventDefault на вариантах — иначе клик по строке теряется из-за blur поля",
             "поведение клавиатуры: ArrowDown/ArrowUp двигают подсветку, Enter выбирает подсвеченный вариант, Escape закрывает и возвращает подпись выбранного",
             "скрытый input с реальным value, когда передан name: видимый инпут несёт только текст поиска, а не значение для отправки формы",
-            "блок <style> внутри компонента — в нём вся палитра, отступы и стрелка"
+            "блок <style> внутри компонента — в нём вся палитра, отступы и стрелка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "непрозрачную панель списка в обеих ветках темы: она перекрывает страницу, и сквозь неё не должно просвечивать содержимое"
           ],
           "adapt": [
             "массив options и тексты в нём",
             "подпись поля через label, плейсхолдер через placeholder, текст пустого результата через emptyText",
             "акцент через проп accent — цвет рамки, кольца фокуса и подсветки активного варианта",
             "имя поля для формы через name и начальное значение через defaultValue",
-            "ширину и внешние отступы через className"
+            "ширину и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это не автодополнение адресов и не запрос к серверу: options — статичный массив, фильтрация идёт на клиенте.",
             "Если вариантов немного, обычный select003 или select001 проще и не требует клиентского JS.",
             "Скрытый input с name нужен, только если форма отправляется как обычный HTML-submit; для controlled-состояния значение уже доступно снаружи через собственный стейт формы.",
@@ -1044,6 +1554,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1057,16 +1573,21 @@
                 "closing the panel on an outside click and the onMouseDown preventDefault handler on options — otherwise a row click is lost to the input's blur",
                 "the keyboard behaviour: ArrowDown/ArrowUp move the highlight, Enter picks the highlighted option, Escape closes and restores the selected label",
                 "the hidden input carrying the real value when name is passed: the visible input only holds the search text, not the form value",
-                "the <style> block inside the component — it holds the palette, spacing and arrow"
+                "the <style> block inside the component — it holds the palette, spacing and arrow",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the opaque list panel in both theme branches: it covers the page and nothing underneath may show through"
               ],
               "adapt": [
                 "the options array and its copy",
                 "the field caption through label, the placeholder through placeholder, the empty-result text through emptyText",
                 "the accent through the accent prop — it colours the border, focus ring and the active option highlight",
                 "the form field name through name and the initial value through defaultValue",
-                "width and outer spacing through className"
+                "width and outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is not an address autocomplete or a server request: options is a static array, filtering happens on the client.",
                 "For a short list, the plain select-003 or select-001 is simpler and needs no client JS.",
                 "The hidden input with name only matters for a plain HTML form submit; for controlled state the value is already available through your own form state.",
@@ -1089,11 +1610,56 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Search Select"
+            "title": "Search Select",
+            "preview": {
+              "props": {
+                "label": "Assignee",
+                "placeholder": "Search a name",
+                "emptyText": "No matches",
+                "options": [
+                  {
+                    "value": "anna",
+                    "label": "Anna Volkova"
+                  },
+                  {
+                    "value": "boris",
+                    "label": "Boris Titov"
+                  },
+                  {
+                    "value": "irina",
+                    "label": "Irina Sokolova"
+                  },
+                  {
+                    "value": "kirill",
+                    "label": "Kirill Orlov"
+                  },
+                  {
+                    "value": "marina",
+                    "label": "Marina Egorova"
+                  },
+                  {
+                    "value": "pavel",
+                    "label": "Pavel Grinyov"
+                  },
+                  {
+                    "value": "sofia",
+                    "label": "Sofia Kim"
+                  },
+                  {
+                    "value": "timur",
+                    "label": "Timur Baynazarov"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1127,15 +1693,19 @@
             "aria-hidden на триггере: иначе скринридер прочитает текст дважды — с плитки и с самого select",
             "цвет точки через data-tone и переменные --vibeui-select-011-tone-*: тон — часть данных варианта, а не инлайновый цвет",
             "подсветку по select:focus на соседнем триггере: без неё плитка выглядит одинаково в фокусе и вне его",
-            "порядок узлов select → триггер → стрелка: соседний комбинатор в CSS держится именно на нём"
+            "порядок узлов select → триггер → стрелка: соседний комбинатор в CSS держится именно на нём",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "набор статусов, их подписи и тон точки через options",
             "начальное значение через defaultValue",
-            "акцентный цвет кольца фокуса через accent"
+            "акцентный цвет кольца фокуса через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Тонов четыре (open/progress/review/done); свой добавляют новой переменной --vibeui-select-011-tone-* и веткой в CSS по data-tone.",
             "Точка — единственный несловесный сигнал статуса, поэтому подпись рядом обязательна: убрать текст и оставить только цвет нельзя.",
             "Прозрачный select ловит все клики по плитке — не вешать на триггер собственные обработчики, они не сработают.",
@@ -1162,6 +1732,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1175,15 +1751,19 @@
                 "aria-hidden on the trigger: otherwise a screen reader reads the text twice, from the tile and from the select",
                 "the dot colour driven by data-tone and the --vibeui-select-011-tone-* variables: tone is part of the option data, not an inline colour",
                 "the highlight driven by select:focus on the adjacent trigger: without it the tile looks the same focused and not",
-                "the node order select → trigger → arrow: the adjacent combinator in the CSS depends on it"
+                "the node order select → trigger → arrow: the adjacent combinator in the CSS depends on it",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the set of statuses, their labels and dot tone through options",
                 "the initial value through defaultValue",
-                "the focus ring accent through accent"
+                "the focus ring accent through accent",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There are four tones (open/progress/review/done); add your own with a new --vibeui-select-011-tone-* variable and a data-tone branch in the CSS.",
                 "The dot is the only non-text status signal, so the label next to it is mandatory: colour alone cannot replace the text.",
                 "The transparent select catches every click on the tile — do not attach handlers to the trigger, they will not fire.",
@@ -1202,11 +1782,42 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Status Dot Select"
+            "title": "Status Dot Select",
+            "preview": {
+              "props": {
+                "label": "Task status",
+                "options": [
+                  {
+                    "value": "open",
+                    "label": "Open",
+                    "tone": "open"
+                  },
+                  {
+                    "value": "progress",
+                    "label": "In progress",
+                    "tone": "progress"
+                  },
+                  {
+                    "value": "review",
+                    "label": "In review",
+                    "tone": "review"
+                  },
+                  {
+                    "value": "done",
+                    "label": "Closed",
+                    "tone": "done"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1240,15 +1851,19 @@
             "флаг как символ emoji в тексте, а не картинку: не требует ни иконочного пакета, ни спрайта флагов",
             "текст нативных <option> с флагом, названием и кодом целиком — скринридер и системный список должны показывать всю информацию, а не только название",
             "aria-hidden на триггере: иначе скринридер прочитает текст дважды — с плитки и с самого select",
-            "порядок узлов select → триггер → стрелка: соседний комбинатор в CSS держится именно на нём"
+            "порядок узлов select → триггер → стрелка: соседний комбинатор в CSS держится именно на нём",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "набор стран, их флаг, название и телефонный код через options",
             "начальное значение через defaultValue",
-            "акцентный цвет кольца фокуса через accent"
+            "акцентный цвет кольца фокуса через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Флаги-эмодзи рендерятся системным шрифтом; на части линуксов без цветных emoji-шрифтов они показываются как двухбуквенный код страны.",
             "Компонент выбирает код страны, а не вводит сам номер телефона — числовое поле для номера подключается рядом отдельно.",
             "Прозрачный select ловит все клики по плитке — не вешать на триггер собственные обработчики, они не сработают.",
@@ -1275,6 +1890,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1288,15 +1909,19 @@
                 "the flag as an emoji character rather than an image: no icon package or flag sprite required",
                 "the full native <option> text with flag, name and code together — the screen reader and system list must show all of it, not just the name",
                 "aria-hidden on the trigger: otherwise a screen reader reads the text twice, from the tile and from the select",
-                "the node order select → trigger → arrow: the adjacent combinator in the CSS depends on it"
+                "the node order select → trigger → arrow: the adjacent combinator in the CSS depends on it",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the set of countries, their flag, name and phone code through options",
                 "the initial value through defaultValue",
-                "the focus ring accent through accent"
+                "the focus ring accent through accent",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Emoji flags render through the system font; on some Linux setups without colour emoji fonts they show as a two-letter country code instead.",
                 "The component picks a country code, it does not collect the phone number itself — wire a separate number field next to it.",
                 "The transparent select catches every click on the tile — do not attach handlers to the trigger, they will not fire.",
@@ -1315,11 +1940,58 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Country Code Select"
+            "title": "Country Code Select",
+            "preview": {
+              "props": {
+                "label": "Country code",
+                "options": [
+                  {
+                    "value": "ru",
+                    "label": "Russia",
+                    "flag": "🇷🇺",
+                    "code": "+7"
+                  },
+                  {
+                    "value": "kz",
+                    "label": "Kazakhstan",
+                    "flag": "🇰🇿",
+                    "code": "+7"
+                  },
+                  {
+                    "value": "de",
+                    "label": "Germany",
+                    "flag": "🇩🇪",
+                    "code": "+49"
+                  },
+                  {
+                    "value": "us",
+                    "label": "United States",
+                    "flag": "🇺🇸",
+                    "code": "+1"
+                  },
+                  {
+                    "value": "in",
+                    "label": "India",
+                    "flag": "🇮🇳",
+                    "code": "+91"
+                  },
+                  {
+                    "value": "br",
+                    "label": "Brazil",
+                    "flag": "🇧🇷",
+                    "code": "+55"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1353,16 +2025,21 @@
             "role=listbox с aria-multiselectable=true на панели и aria-selected на каждом role=option — без них множественность выбора не считывается вспомогательными технологиями",
             "обработчик onMouseDown с preventDefault на вариантах — иначе клик по строке теряется из-за blur кнопки-триггера",
             "aria-label на кнопке удаления вида «Убрать «Название»» — иконка-крестик сама по себе не читается",
-            "клавиатуру на триггере: ArrowDown/ArrowUp двигают подсветку, Enter/Space переключают вариант, Escape закрывает панель"
+            "клавиатуру на триггере: ArrowDown/ArrowUp двигают подсветку, Enter/Space переключают вариант, Escape закрывает панель",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив options и тексты в нём",
             "подпись через label, текст кнопки-триггера через addLabel, текст пустого набора через emptyText",
+            "подпись кнопки удаления чипа через removeLabel — {label} подставляет название метки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через проп accent — цвет чипов, чекбоксов и кольца фокуса",
             "имя поля для формы через name (каждое значение уходит отдельным скрытым input) и начальный набор через defaultValue",
             "ширину и внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это не select[multiple]: список открывается и закрывается по клику на кнопку, а не остаётся раскрытым списком строк, как в select-004.",
             "Удаление чипа кнопкой возвращает фокус на кнопку-триггер — так фокус не теряется после исчезновения чипа.",
             "Порядок чипов — это порядок options, а не порядок выбора: пункт «поднимается» в позицию своего варианта в списке.",
@@ -1392,6 +2069,19 @@
             "maxLength": 40
           },
           {
+            "prop": "removeLabel",
+            "label": "Подпись удаления",
+            "type": "text",
+            "default": "Убрать «{label}»",
+            "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -1409,16 +2099,21 @@
                 "role=listbox with aria-multiselectable=true on the panel and aria-selected on every role=option — without them assistive tech cannot tell the selection is multiple",
                 "the onMouseDown preventDefault handler on options — otherwise a row click is lost to the trigger button's blur",
                 "the aria-label on the remove button, phrased as \"Remove «Name»\" — a cross icon alone reads as nothing",
-                "the trigger's keyboard behaviour: ArrowDown/ArrowUp move the highlight, Enter/Space toggle an option, Escape closes the panel"
+                "the trigger's keyboard behaviour: ArrowDown/ArrowUp move the highlight, Enter/Space toggle an option, Escape closes the panel",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the options array and its copy",
                 "the caption through label, the trigger button text through addLabel, the empty-state text through emptyText",
+                "the chip remove-button label through removeLabel — {label} is replaced by the tag name",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the accent through the accent prop — it colours the chips, checkboxes and focus ring",
                 "the form field name through name (each value goes out as its own hidden input) and the initial set through defaultValue",
                 "width and outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is not select[multiple]: the list opens and closes on a button click instead of staying an expanded row list like select-004.",
                 "Removing a chip with its button returns focus to the trigger button, so focus is not lost when the chip disappears.",
                 "Chip order follows the order of options, not the order of selection: a picked item moves into its slot from the list.",
@@ -1441,11 +2136,54 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "removeLabel": {
+                "label": "Remove label",
+                "default": "Remove «{label}»"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Chip Multi Select"
+            "title": "Chip Multi Select",
+            "preview": {
+              "props": {
+                "label": "Article tags",
+                "addLabel": "Add a tag",
+                "emptyText": "Nothing picked yet",
+                "removeLabel": "Remove «{label}»",
+                "options": [
+                  {
+                    "value": "design",
+                    "label": "Design"
+                  },
+                  {
+                    "value": "tech",
+                    "label": "Technology"
+                  },
+                  {
+                    "value": "business",
+                    "label": "Business"
+                  },
+                  {
+                    "value": "opinion",
+                    "label": "Opinion"
+                  },
+                  {
+                    "value": "case",
+                    "label": "Case study"
+                  },
+                  {
+                    "value": "news",
+                    "label": "News"
+                  }
+                ],
+                "defaultValue": ["design", "case"]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1479,16 +2217,20 @@
             "функцию hue: оттенок аватара считается из имени, а не задаётся вручную — новый человек в списке сразу получает различимый цвет",
             "обработчик onMouseDown с preventDefault на вариантах — иначе клик по строке теряется из-за blur кнопки-триггера",
             "aria-hidden на кружке с инициалами: доступное имя несёт текстовая пара имя + роль рядом, а не аватар",
-            "клавиатуру на триггере: ArrowDown/ArrowUp двигают подсветку, Enter/Space выбирают вариант и закрывают панель, Escape закрывает без выбора"
+            "клавиатуру на триггере: ArrowDown/ArrowUp двигают подсветку, Enter/Space выбирают вариант и закрывают панель, Escape закрывает без выбора",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив people (value, name, role) и тексты в нём",
             "подпись поля через label",
             "начальное значение через defaultValue",
             "имя поля для формы через name",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Аватар — инициалы на цветном круге, а не фотография: список исполнителей не тянет за собой загрузку картинок.",
             "Двенадцать оттенков круга различимы на глаз; своя палитра аватаров потребует замены функции hue, а не одной переменной.",
             "Подпись роли — часть данных варианта (role), а не второй проп: добавить человека значит дописать один объект в people.",
@@ -1515,6 +2257,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1528,16 +2276,20 @@
                 "the hue function: the avatar tint is derived from the name rather than set by hand — a new person in the list gets a distinguishable colour automatically",
                 "the onMouseDown preventDefault handler on options — otherwise a row click is lost to the trigger button's blur",
                 "aria-hidden on the initials circle: the accessible name comes from the name + role text next to it, not from the avatar",
-                "the trigger's keyboard behaviour: ArrowDown/ArrowUp move the highlight, Enter/Space pick an option and close the panel, Escape closes without picking"
+                "the trigger's keyboard behaviour: ArrowDown/ArrowUp move the highlight, Enter/Space pick an option and close the panel, Escape closes without picking",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the people array (value, name, role) and its copy",
                 "the field caption through label",
                 "the initial value through defaultValue",
                 "the form field name through name",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The avatar is initials on a coloured circle, not a photo: an assignee list does not drag in image loading.",
                 "The twelve wheel hues are visually distinct; a custom avatar palette needs a change to the hue function, not a single variable.",
                 "The role caption is part of the option data (role), not a second prop: adding a person means adding one object to people.",
@@ -1556,11 +2308,43 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Assignee Avatar Select"
+            "title": "Assignee Avatar Select",
+            "preview": {
+              "props": {
+                "label": "Assignee",
+                "people": [
+                  {
+                    "value": "anna",
+                    "name": "Anna Petrova",
+                    "role": "Designer"
+                  },
+                  {
+                    "value": "oleg",
+                    "name": "Oleg Drozdov",
+                    "role": "Backend developer"
+                  },
+                  {
+                    "value": "irina",
+                    "name": "Irina Kim",
+                    "role": "Product manager"
+                  },
+                  {
+                    "value": "mark",
+                    "name": "Mark Ilyin",
+                    "role": "Frontend developer"
+                  }
+                ],
+                "defaultValue": "oleg"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1594,16 +2378,20 @@
             "пояснение внутри самого option, а не под полем: system select не умеет рисовать вторую строку, отсюда собственная панель",
             "обработчик onMouseDown с preventDefault на вариантах — иначе клик по строке теряется из-за blur кнопки-триггера",
             "короткий текст в триггере после выбора: пояснение — инструмент сравнения при открытой панели, а не постоянная подпись",
-            "клавиатуру на триггере: ArrowDown/ArrowUp двигают подсветку, Enter/Space выбирают вариант и закрывают панель, Escape закрывает без выбора"
+            "клавиатуру на триггере: ArrowDown/ArrowUp двигают подсветку, Enter/Space выбирают вариант и закрывают панель, Escape закрывает без выбора",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив options (value, label, description) и тексты в нём",
             "подпись поля через label",
             "начальное значение через defaultValue",
             "имя поля для формы через name",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Описание держать в одну строку: перенос на два ряда в каждом пункте раздувает высоту панели быстрее, чем кажется в макете.",
             "Это не select-005 — там пояснение живёт под полем и относится только к текущему значению; здесь оно у каждого варианта сразу в списке.",
             "На узкой ширине описания скрываются через @container: остаются только заголовки, список не становится нечитаемо длинным.",
@@ -1630,6 +2418,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1643,16 +2437,20 @@
                 "the description living inside the option itself, not under the field: a native select cannot render a second line, hence the custom panel",
                 "the onMouseDown preventDefault handler on options — otherwise a row click is lost to the trigger button's blur",
                 "the short trigger text after a pick: the description is a comparison tool for the open panel, not a permanent caption",
-                "the trigger's keyboard behaviour: ArrowDown/ArrowUp move the highlight, Enter/Space pick an option and close the panel, Escape closes without picking"
+                "the trigger's keyboard behaviour: ArrowDown/ArrowUp move the highlight, Enter/Space pick an option and close the panel, Escape closes without picking",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the options array (value, label, description) and its copy",
                 "the field caption through label",
                 "the initial value through defaultValue",
                 "the form field name through name",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Keep the description to one line: wrapping to two rows per item inflates the panel height faster than a mock-up suggests.",
                 "This is not select-005 — there the explanation sits under the field and covers only the current value; here every option carries its own in the list.",
                 "Descriptions hide via @container at narrow widths, leaving only titles so the list never turns unreadably long.",
@@ -1671,11 +2469,43 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Two-Line Option Select"
+            "title": "Two-Line Option Select",
+            "preview": {
+              "props": {
+                "label": "Notification frequency",
+                "options": [
+                  {
+                    "value": "instant",
+                    "label": "Instantly",
+                    "description": "The notification arrives right after the event"
+                  },
+                  {
+                    "value": "daily",
+                    "label": "Daily",
+                    "description": "One digest email every morning at 9:00"
+                  },
+                  {
+                    "value": "weekly",
+                    "label": "Weekly",
+                    "description": "A Monday digest, without the daily noise"
+                  },
+                  {
+                    "value": "off",
+                    "label": "Off",
+                    "description": "No notifications; the history stays in the feed"
+                  }
+                ],
+                "defaultValue": "daily"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1709,16 +2539,21 @@
             "отложенный первый тик через setTimeout(0) в эффекте вместо синхронного setState — иначе эффект каскадно перерендеривает компонент при монтировании",
             "начальное состояние времени null и заглушку «--:--» до первого тика — Date на сервере и на клиенте расходятся, и рендерить его до гидратации нельзя",
             "role=listbox на панели и aria-selected на каждом role=option — без этого выбор не считывается вспомогательными технологиями",
-            "очистку интервала и таймера в cleanup-функции эффекта — иначе часы продолжают тикать после размонтирования"
+            "очистку интервала и таймера в cleanup-функции эффекта — иначе часы продолжают тикать после размонтирования",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив zones (value, label, timeZone) и тексты в нём",
             "подпись поля через label",
             "начальное значение через defaultValue",
             "имя поля для формы через name",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "локаль форматирования часов через locale — по умолчанию ru-RU",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Тик раз в секунду — сознательный выбор для «живого» ощущения; для десятков одновременных инстансов на странице стоит удлинить интервал.",
             "Список часовых поясов — не полный список IANA, а витрина на несколько городов; для полного охвата нужно добавить свои zones.",
             "Клик по варианту ловится на onMouseDown с preventDefault, чтобы не терять его из-за blur кнопки-триггера.",
@@ -1745,6 +2580,19 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "locale",
+            "label": "Локаль часов",
+            "type": "text",
+            "default": "ru-RU",
+            "maxLength": 12
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1758,16 +2606,21 @@
                 "the deferred first tick via setTimeout(0) inside the effect instead of a synchronous setState — otherwise the effect cascades a re-render right on mount",
                 "the initial null time state and the \"--:--\" placeholder before the first tick — Date differs between server and client, and cannot render before hydration",
                 "role=listbox on the panel and aria-selected on every role=option — without them the selection is not exposed to assistive tech",
-                "clearing the interval and timeout in the effect's cleanup — otherwise the clock keeps ticking after unmount"
+                "clearing the interval and timeout in the effect's cleanup — otherwise the clock keeps ticking after unmount",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the zones array (value, label, timeZone) and its copy",
                 "the field caption through label",
                 "the initial value through defaultValue",
                 "the form field name through name",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "the clock formatting locale through locale — ru-RU by default",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A one-second tick is a deliberate choice for a \"live\" feel; for dozens of instances on one page, lengthen the interval.",
                 "The zone list is not the full IANA list, just a showcase of a few cities — add your own zones for full coverage.",
                 "A click on an option is caught on onMouseDown with preventDefault, so it is not lost to the trigger button's blur.",
@@ -1786,11 +2639,53 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "locale": {
+                "label": "Clock locale",
+                "default": "en-GB"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Timezone Clock Select"
+            "title": "Timezone Clock Select",
+            "preview": {
+              "props": {
+                "label": "Timezone",
+                "locale": "en-GB",
+                "zones": [
+                  {
+                    "value": "moscow",
+                    "label": "Moscow",
+                    "timeZone": "Europe/Moscow"
+                  },
+                  {
+                    "value": "london",
+                    "label": "London",
+                    "timeZone": "Europe/London"
+                  },
+                  {
+                    "value": "newyork",
+                    "label": "New York",
+                    "timeZone": "America/New_York"
+                  },
+                  {
+                    "value": "tokyo",
+                    "label": "Tokyo",
+                    "timeZone": "Asia/Tokyo"
+                  },
+                  {
+                    "value": "sydney",
+                    "label": "Sydney",
+                    "timeZone": "Australia/Sydney"
+                  }
+                ],
+                "defaultValue": "london"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1824,16 +2719,20 @@
             "role=alert на параграфе с ошибкой — в отличие от role=status в select-007, ошибку нужно объявлять настойчиво, а не мягко",
             "aria-invalid на select в статусе ошибки и aria-describedby, указывающий на параграф с текстом ошибки",
             "кнопку «Повторить» как обычную кнопку рядом с текстом ошибки, а не внутри select — она просто переводит статус обратно в loading",
-            "правило prefers-reduced-motion — спиннер и полоса-скелет обязаны выключаться"
+            "правило prefers-reduced-motion — спиннер и полоса-скелет обязаны выключаться",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "состав списка через options",
             "стартовое состояние через defaultStatus",
-            "тексты состояний через loadingText, errorText и retryLabel",
-            "акцентный цвет через accent"
+            "тексты состояний через loadingText, errorText, retryLabel и placeholderText",
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не делает реальных запросов: первая загрузка нарочно проваливается через 900мс, чтобы демонстрация сама прошла все три состояния.",
             "Если стартовать сразу со статуса error, повтор считается первой настоящей попыткой и сразу заканчивается успехом.",
             "Высота поля одинакова во всех трёх состояниях: смена статуса не должна сдвигать форму вокруг.",
@@ -1860,6 +2759,19 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "placeholderText",
+            "label": "Текст пустого варианта",
+            "type": "text",
+            "default": "Выберите вариант",
+            "maxLength": 30
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1873,16 +2785,20 @@
                 "role=alert on the error paragraph — unlike role=status in select-007, an error needs to be announced assertively, not gently",
                 "aria-invalid on the select in the error state and aria-describedby pointing at the error paragraph",
                 "the \"Retry\" button as a plain button next to the error text, not inside the select — it simply flips the status back to loading",
-                "the prefers-reduced-motion rule — the spinner and skeleton bar must turn off"
+                "the prefers-reduced-motion rule — the spinner and skeleton bar must turn off",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the option list through options",
                 "the starting state through defaultStatus",
-                "the state texts through loadingText, errorText and retryLabel",
-                "the accent colour through accent"
+                "the state texts through loadingText, errorText, retryLabel and placeholderText",
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component makes no real request: the first load deliberately fails after 900ms so the demo walks through all three states on its own.",
                 "Starting straight in the error state makes the retry count as the first real attempt, so it succeeds right away.",
                 "The field height is the same across all three states: a status change must not shift the surrounding form.",
@@ -1901,11 +2817,29 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "placeholderText": {
+                "label": "Placeholder text",
+                "default": "Pick an option"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Loading Error Retry Select"
+            "title": "Loading Error Retry Select",
+            "preview": {
+              "props": {
+                "label": "Delivery method",
+                "options": ["Standard", "Express", "Overnight", "Pickup"],
+                "loadingText": "Loading delivery options",
+                "errorText": "Could not load delivery options",
+                "retryLabel": "Retry",
+                "placeholderText": "Pick an option"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultStatus", "accent", "background"]
       }
     },
     {
@@ -1938,15 +2872,19 @@
             "прозрачный select поверх плитки: он и есть механика — самодельное меню теряет клавиатуру и системный список на телефоне",
             "код языка отдельным блоком data-part=code, а не частью имени: так его можно спрятать первым при сжатии ширины",
             "подсветку по select:focus на соседнем триггере: без неё плитка выглядит одинаково в фокусе и вне его",
-            "aria-hidden на триггере: иначе скринридер прочитает текст дважды — с плитки и с самого select"
+            "aria-hidden на триггере: иначе скринридер прочитает текст дважды — с плитки и с самого select",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "набор языков, их имена и коды через languages",
             "начальное значение через defaultValue",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Прозрачный select ловит все клики по плитке — не вешать на триггер собственные обработчики, они не сработают.",
             "Код языка обязан быть коротким: два-три символа, иначе он не поместится в узкой плитке.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
@@ -1972,6 +2910,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1984,16 +2928,20 @@
                 "the transparent select over the trigger: it is the mechanism — a hand-made menu loses the keyboard and the system list on phones",
                 "the language code as its own data-part=code block, not part of the name: that lets it collapse first when the width tightens",
                 "the highlight driven by the adjacent select:focus: without it the trigger looks the same focused and not",
-                "aria-hidden on the trigger: otherwise a screen reader reads the text twice, from the tile and from the select itself"
+                "aria-hidden on the trigger: otherwise a screen reader reads the text twice, from the tile and from the select itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the set of languages, their names and codes through languages",
                 "the initial value through defaultValue",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "usage": "<Select018\n  label=\"Interface language\"\n  defaultValue=\"en\"\n/>",
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The transparent select catches every click on the tile — do not attach handlers to it, they will not fire.",
                 "Keep the language code short: two or three characters, or it will not fit in the narrow tile.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -2006,15 +2954,25 @@
               },
               "defaultValue": {
                 "label": "Value",
-                "default": "ru"
+                "default": "en"
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Interface Language Select"
+            "title": "Interface Language Select",
+            "preview": {
+              "props": {
+                "label": "Interface language",
+                "defaultValue": "en"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -2047,15 +3005,20 @@
             "прозрачный select поверх плитки: он и есть механика — самодельное меню теряет клавиатуру и системный список на телефоне",
             "строку курса, связанную с полем через aria-describedby и объявленную role=status — смена курса читается вслух без перевода фокуса",
             "собственный разделитель разрядов вместо toLocaleString для больших сумм — локальный формат сервера и браузера расходится и ломает гидрацию",
-            "aria-hidden на триггере: иначе скринридер прочитает текст дважды — с плитки и с самого select"
+            "aria-hidden на триггере: иначе скринридер прочитает текст дважды — с плитки и с самого select",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "состав валют, знаки и курсы через currencies",
             "начальное значение через defaultValue",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "строку курса через rateText — {code} подставляет код валюты, {rate} — курс, и locale задаёт формат числа",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Курс здесь статичен и лежит в данных компонента — за живым курсом всё равно обязан следить сервер.",
             "Прозрачный select ловит все клики по плитке — не вешать на триггер собственные обработчики, они не сработают.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
@@ -2081,6 +3044,19 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "rateText",
+            "label": "Строка курса",
+            "type": "text",
+            "default": "1 {code} = {rate} ₽",
+            "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2093,16 +3069,21 @@
                 "the transparent select over the trigger: it is the mechanism — a hand-made menu loses the keyboard and the system list on phones",
                 "the rate line linked to the field via aria-describedby and announced with role=status — a rate change is read aloud without stealing focus",
                 "the component's own thousands formatting instead of toLocaleString for large sums — server and browser locale formats differ and break hydration",
-                "aria-hidden on the trigger: otherwise a screen reader reads the text twice, from the tile and from the select itself"
+                "aria-hidden on the trigger: otherwise a screen reader reads the text twice, from the tile and from the select itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the set of currencies, their signs and rates through currencies",
                 "the initial value through defaultValue",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "the rate line through rateText — {code} is the currency code, {rate} the rate, and locale sets the number format",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "usage": "<Select019\n  label=\"Settlement currency\"\n  defaultValue=\"eur\"\n/>",
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The rate here is static data on the component — a real live rate still has to be tracked by the server.",
                 "The transparent select catches every click on the tile — do not attach handlers to it, they will not fire.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -2119,11 +3100,53 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "rateText": {
+                "label": "Rate line",
+                "default": "1 {code} = {rate} RUB"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Currency Rate Select"
+            "title": "Currency Rate Select",
+            "preview": {
+              "props": {
+                "label": "Settlement currency",
+                "currencies": [
+                  {
+                    "value": "usd",
+                    "label": "US dollar",
+                    "sign": "$",
+                    "rate": 82.4
+                  },
+                  {
+                    "value": "eur",
+                    "label": "Euro",
+                    "sign": "€",
+                    "rate": 89.7
+                  },
+                  {
+                    "value": "rub",
+                    "label": "Russian rouble",
+                    "sign": "₽",
+                    "rate": 1
+                  },
+                  {
+                    "value": "cny",
+                    "label": "Chinese yuan",
+                    "sign": "¥",
+                    "rate": 11.3
+                  }
+                ],
+                "defaultValue": "usd",
+                "rateText": "1 {code} = {rate} RUB",
+                "locale": "en-GB"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -2156,16 +3179,21 @@
             "«Свой диапазон» последним пунктом списка, а не отдельной кнопкой — выбор периода остаётся одним полем",
             "поля дат отключёнными и вне таб-порядка, пока не выбран «Свой диапазон» — скрытые controls не должны ловить фокус",
             "aria-expanded и aria-controls на select, указывающие на блок с датами — связь должна быть машиночитаемой, а не только визуальной",
-            "анимацию раскрытия через grid-template-rows, а не через height: auto — это единственный способ анимировать раскрытие блока неизвестной высоты"
+            "анимацию раскрытия через grid-template-rows, а не через height: auto — это единственный способ анимировать раскрытие блока неизвестной высоты",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
+            "состав пресетов через presets и подписи через customLabel, fromLabel и toLabel",
             "начальное значение через defaultValue",
             "начальные даты диапазона через defaultFrom и defaultTo",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
-            "Пресеты зашиты списком: если периодов больше пяти, список стоит группировать через optgroup (см. select-002).",
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Пункт «свой диапазон» всегда идёт последним и добавляется самим компонентом: presets задаёт только готовые периоды.",
             "Поля дат — обычный input[type=date]: их внешний вид системный, как и у нативного select.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
           ]
@@ -2190,6 +3218,19 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "customLabel",
+            "label": "Пункт своего диапазона",
+            "type": "text",
+            "default": "Свой диапазон",
+            "maxLength": 30
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2202,17 +3243,22 @@
                 "\"Custom range\" as the last list entry, not a separate button — the period choice stays a single field",
                 "the date fields kept disabled and out of tab order until \"Custom range\" is picked — hidden controls must not catch focus",
                 "aria-expanded and aria-controls on the select pointing at the date block — the link must be machine-readable, not just visual",
-                "the reveal animation built on grid-template-rows rather than height: auto — it is the only way to animate a block of unknown height"
+                "the reveal animation built on grid-template-rows rather than height: auto — it is the only way to animate a block of unknown height",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
+                "the preset list through presets and the captions through customLabel, fromLabel and toLabel",
                 "the initial value through defaultValue",
                 "the initial range dates through defaultFrom and defaultTo",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "usage": "<Select020\n  label=\"Report period\"\n  defaultValue=\"month\"\n/>",
               "notes": [
-                "The presets are a fixed list: past five entries, group them with optgroup (see select-002).",
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The custom-range entry always comes last and is added by the component itself: presets only lists the ready-made periods.",
                 "The date fields are plain input[type=date]: their look is native, same as the select itself.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ]
@@ -2228,11 +3274,46 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "customLabel": {
+                "label": "Custom range item",
+                "default": "Custom range"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Period Range Select"
+            "title": "Period Range Select",
+            "preview": {
+              "props": {
+                "label": "Period",
+                "presets": [
+                  {
+                    "value": "today",
+                    "label": "Today"
+                  },
+                  {
+                    "value": "week",
+                    "label": "Last 7 days"
+                  },
+                  {
+                    "value": "month",
+                    "label": "Last 30 days"
+                  },
+                  {
+                    "value": "quarter",
+                    "label": "Last quarter"
+                  }
+                ],
+                "customLabel": "Custom range",
+                "fromLabel": "From date",
+                "toLabel": "To date",
+                "defaultValue": "week"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -2265,15 +3346,19 @@
             "настоящий <select> без оверлея: иконка — часть текста option, а не отдельный слой поверх поля, как в select-003 или select-011",
             "appearance:none вместе с правым отступом под стрелку: без отступа значение уедет под неё",
             "иконку символом в самом тексте option: так её видно и в закрытом поле, и в открытом системном списке одинаково",
-            "видимый фокус на select: рамка и тень — единственный признак, что поле активно"
+            "видимый фокус на select: рамка и тень — единственный признак, что поле активно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "состав вариантов, их подписи и символы через options",
             "начальное значение через defaultValue",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Иконка — обычный символ в тексте: для настоящей графики нужен другой компонент с оверлеем, как select-003.",
             "Поддержка эмодзи как иконок зависит от системного шрифта — на части устройств вид символа немного отличается.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
@@ -2299,6 +3384,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2311,16 +3402,20 @@
                 "the genuine <select> with no overlay: the icon is part of the option text, not a separate layer on top of the field, unlike select-003 or select-011",
                 "appearance:none together with the right padding that reserves room for the arrow: without it the value slides underneath",
                 "the icon as a character inside the option text itself: it shows the same way in the closed field and in the open system list",
-                "the visible focus ring on the select: the border and shadow are the only sign the field is active"
+                "the visible focus ring on the select: the border and shadow are the only sign the field is active",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the set of options, their labels and icon characters through options",
                 "the initial value through defaultValue",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "usage": "<Select021\n  label=\"Contact method\"\n  defaultValue=\"telegram\"\n/>",
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The icon is a plain character in the text: for real artwork you need a different, overlay-based component like select-003.",
                 "Emoji-as-icon support depends on the system font — the glyph looks slightly different across devices.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -2337,11 +3432,43 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Native Icon Option Select"
+            "title": "Native Icon Option Select",
+            "preview": {
+              "props": {
+                "label": "Contact method",
+                "options": [
+                  {
+                    "value": "email",
+                    "label": "Email",
+                    "icon": "✉"
+                  },
+                  {
+                    "value": "phone",
+                    "label": "Phone",
+                    "icon": "☎"
+                  },
+                  {
+                    "value": "telegram",
+                    "label": "Telegram",
+                    "icon": "✈"
+                  },
+                  {
+                    "value": "whatsapp",
+                    "label": "WhatsApp",
+                    "icon": "💬"
+                  }
+                ],
+                "defaultValue": "email"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -2374,7 +3501,9 @@
             "aria-label на select: без видимой подписи скринридеру больше неоткуда взять имя поля",
             "field-sizing:content для ширины по тексту варианта — без него длинные варианты обрежутся или растянут строку",
             "пунктирное подчёркивание и заливку как единственный визуальный признак поля: рамка и тень сломали бы вид строки текста",
-            "видимый контур при фокусе: без рамки поля это единственный сигнал, что элемент активен"
+            "видимый контур при фокусе: без рамки поля это единственный сигнал, что элемент активен",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "посадку в строку текста без собственной подложки: компонент — часть абзаца, плашки и рамки поля у него нет по замыслу"
           ],
           "adapt": [
             "текст до поля через before и текст после через after",
@@ -2383,6 +3512,7 @@
             "акцентный цвет через accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "field-sizing:content — молодое CSS-свойство; там, где оно не поддержано, поле остаётся на min-width и просто не подгоняется под текст.",
             "Предложение вокруг select — обычный текст: перенос строки на узкой ширине браузер расставит сам.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
@@ -2427,7 +3557,9 @@
                 "aria-label on the select: with no visible caption a screen reader has nowhere else to get the field's name",
                 "field-sizing:content for width driven by the current option's text — without it long options get clipped or stretch the line",
                 "the dashed underline and tint as the only visual sign of a field: a border or box would break the look of a text line",
-                "the visible focus outline: with no field border it is the only signal the element is active"
+                "the visible focus outline: with no field border it is the only signal the element is active",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the inline placement with no surface of its own: the component is part of a paragraph, and the missing panel and field border are the design"
               ],
               "adapt": [
                 "the text before the field through before and the text after it through after",
@@ -2437,6 +3569,7 @@
               ],
               "usage": "<Select022\n  before=\"Show\"\n  after=\"cards per page.\"\n  defaultValue=\"25\"\n/>",
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "field-sizing:content is a young CSS property; where it is unsupported the field just keeps its min-width instead of fitting the text.",
                 "The sentence around the select is plain text: the browser wraps it on its own at narrow widths.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -2453,15 +3586,42 @@
               },
               "defaultValue": {
                 "label": "Value",
-                "default": "10"
+                "default": "25"
               },
               "accent": {
                 "label": "Accent"
               }
             },
-            "title": "Inline Sentence Select"
+            "title": "Inline Sentence Select",
+            "preview": {
+              "props": {
+                "before": "Show",
+                "after": "cards per page.",
+                "label": "Cards per page",
+                "options": [
+                  {
+                    "value": "10",
+                    "label": "10"
+                  },
+                  {
+                    "value": "25",
+                    "label": "25"
+                  },
+                  {
+                    "value": "50",
+                    "label": "50"
+                  },
+                  {
+                    "value": "100",
+                    "label": "100"
+                  }
+                ],
+                "defaultValue": "25"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent"]
       }
     },
     {
@@ -2494,15 +3654,20 @@
             "подсказку отдельным постоянным абзацем, а не текстом, зависящим от выбора (сравни с select-005) или ошибкой (сравни с select-008)",
             "appearance:none вместе с правым отступом под стрелку: без отступа значение уедет под неё",
             "иконку-маркер подсказки как декоративную (aria-hidden): смысл несёт сам текст рядом",
-            "видимый фокус на select: рамка и тень — единственный признак, что поле активно"
+            "видимый фокус на select: рамка и тень — единственный признак, что поле активно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "состав размеров через sizes",
+            "начальный размер через defaultValue",
             "текст постоянной подсказки через hint",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Подсказка не читает выбранный вариант: для реакции на конкретное значение нужен select-005, а не этот компонент.",
             "Пустой hint убирает абзац целиком — компонент не оставляет пустое место под полем.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
@@ -2528,6 +3693,19 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Значение",
+            "type": "select",
+            "default": "s",
+            "options": ["s", "m", "l", "xl"]
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2540,16 +3718,21 @@
                 "the hint as a separate, permanent paragraph rather than text that depends on the choice (compare select-005) or an error (compare select-008)",
                 "appearance:none together with the right padding that reserves room for the arrow: without it the value slides underneath",
                 "the hint's marker icon as purely decorative (aria-hidden): the meaning is carried by the text beside it",
-                "the visible focus ring on the select: the border and shadow are the only sign the field is active"
+                "the visible focus ring on the select: the border and shadow are the only sign the field is active",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the set of sizes through sizes",
+                "the initial size through defaultValue",
                 "the permanent hint text through hint",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "usage": "<Select023\n  label=\"Size\"\n  hint=\"When in doubt, size up.\"\n/>",
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The hint does not read the chosen option: for text that reacts to a specific value, use select-005 instead of this component.",
                 "An empty hint removes the paragraph entirely — the component leaves no empty gap under the field.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -2566,11 +3749,44 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "defaultValue": {
+                "label": "Value",
+                "default": "m"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Size Select With Hint"
+            "title": "Size Select With Hint",
+            "preview": {
+              "props": {
+                "label": "Size",
+                "sizes": [
+                  {
+                    "value": "s",
+                    "label": "S — UK 8-10"
+                  },
+                  {
+                    "value": "m",
+                    "label": "M — UK 12-14"
+                  },
+                  {
+                    "value": "l",
+                    "label": "L — UK 16-18"
+                  },
+                  {
+                    "value": "xl",
+                    "label": "XL — UK 20-22"
+                  }
+                ],
+                "hint": "This fit runs slim: when in doubt, size up.",
+                "defaultValue": "m"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -2603,15 +3819,19 @@
             "disabled-вариант в списке, а не скрытый: исчезнувший вариант читается как ошибка каталога, а не как временная недоступность",
             "причину внутри текста option, а не только в атрибуте title: title не доходит до скринридера и до тачскрина",
             "список причин под полем, связанный через aria-describedby: он остаётся доступен, даже когда список select закрыт",
-            "видимый фокус на select: рамка и тень — единственный признак, что поле активно"
+            "видимый фокус на select: рамка и тень — единственный признак, что поле активно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "состав вариантов, их disabled и reason через options",
             "заглушку списка через placeholder",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Список причин строится из тех же options — отдельный проп для него не нужен, источник данных один.",
             "title на option — не лишний: на десктопе он даёт подсказку при наведении, просто не единственный источник причины.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
@@ -2637,6 +3857,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2649,16 +3875,20 @@
                 "the disabled option staying in the list rather than hidden: a vanished option reads as a catalogue bug, not temporary unavailability",
                 "the reason inside the option's own text, not only in the title attribute: title never reaches a screen reader or a touchscreen",
                 "the reasons list under the field, linked through aria-describedby: it stays available even while the select list is closed",
-                "the visible focus ring on the select: the border and shadow are the only sign the field is active"
+                "the visible focus ring on the select: the border and shadow are the only sign the field is active",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the set of options, their disabled flag and reason through options",
                 "the list placeholder through placeholder",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "usage": "<Select024\n  label=\"Size\"\n  options={[\n    { value: \"s\", label: \"S\" },\n    { value: \"m\", label: \"M\", disabled: true, reason: \"out of stock\" },\n  ]}\n/>",
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The reasons list is built from the same options — no separate prop is needed, there is one source of data.",
                 "title on the option is not wasted: on desktop it gives a hover tooltip, it simply is not the only source of the reason.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -2675,11 +3905,47 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Disabled Reason Select"
+            "title": "Disabled Reason Select",
+            "preview": {
+              "props": {
+                "label": "Size",
+                "placeholder": "Pick a size",
+                "options": [
+                  {
+                    "value": "s",
+                    "label": "S"
+                  },
+                  {
+                    "value": "m",
+                    "label": "M"
+                  },
+                  {
+                    "value": "l",
+                    "label": "L",
+                    "disabled": true,
+                    "reason": "out of stock"
+                  },
+                  {
+                    "value": "xl",
+                    "label": "XL"
+                  },
+                  {
+                    "value": "xxl",
+                    "label": "XXL",
+                    "disabled": true,
+                    "reason": "discontinued"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2712,15 +3978,19 @@
             "сброс значения второго select на первый пункт новой группы при каждой смене категории — иначе в поле останется значение, которого больше нет в списке",
             "disabled на втором select, когда в группе нет вариантов — пустой открытый список хуже честно недоступного поля",
             "appearance:none вместе с правым отступом под стрелку на обоих select: без отступа значение уедет под неё",
-            "видимый фокус на select: рамка и тень — единственный признак, что поле активно"
+            "видимый фокус на select: рамка и тень — единственный признак, что поле активно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подписи полей через categoryLabel и itemLabel",
             "состав категорий и вложенных товаров через groups",
             "начальную категорию через defaultCategory",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Два уровня вложенности — не предел компонента, но третий select потребует уже своей логики сброса.",
             "name у первого select собирается как `${name}Category`: при отправке формы категория и товар — два разных поля.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
@@ -2753,6 +4023,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2765,16 +4041,20 @@
                 "resetting the second select to the new group's first entry on every category change — otherwise the field keeps a value no longer in the list",
                 "disabling the second select when its group has no options — an empty open list is worse than an honestly disabled field",
                 "appearance:none together with the right padding reserved for the arrow on both selects: without it the value slides underneath",
-                "the visible focus ring on the select: the border and shadow are the only sign the field is active"
+                "the visible focus ring on the select: the border and shadow are the only sign the field is active",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field captions through categoryLabel and itemLabel",
                 "the categories and their nested items through groups",
                 "the initial category through defaultCategory",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "usage": "<Select025\n  categoryLabel=\"Category\"\n  itemLabel=\"Item\"\n  defaultCategory=\"shoes\"\n/>",
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Two levels of nesting is not a hard limit, but a third select would need its own reset logic.",
                 "The first select's name is built as `${name}Category`: on submit the category and the item are two separate fields.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -2795,11 +4075,73 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Dependent Category Select"
+            "title": "Dependent Category Select",
+            "preview": {
+              "props": {
+                "categoryLabel": "Category",
+                "itemLabel": "Item",
+                "groups": [
+                  {
+                    "value": "clothes",
+                    "label": "Clothing",
+                    "items": [
+                      {
+                        "value": "hoodie",
+                        "label": "Hoodie"
+                      },
+                      {
+                        "value": "tshirt",
+                        "label": "T-shirt"
+                      },
+                      {
+                        "value": "jacket",
+                        "label": "Jacket"
+                      }
+                    ]
+                  },
+                  {
+                    "value": "shoes",
+                    "label": "Shoes",
+                    "items": [
+                      {
+                        "value": "sneakers",
+                        "label": "Sneakers"
+                      },
+                      {
+                        "value": "boots",
+                        "label": "Boots"
+                      }
+                    ]
+                  },
+                  {
+                    "value": "accessories",
+                    "label": "Accessories",
+                    "items": [
+                      {
+                        "value": "cap",
+                        "label": "Cap"
+                      },
+                      {
+                        "value": "bag",
+                        "label": "Bag"
+                      },
+                      {
+                        "value": "belt",
+                        "label": "Belt"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultCategory", "accent", "background"]
       }
     },
     {
@@ -2832,16 +4174,21 @@
             "список вариантов, обрезанный остатком: варианты выше stock не рисуются вовсе, а не просто выключены",
             "смену тона подписи при остатке ниже lowStockThreshold и при нуле — единственный сигнал о срочности решения",
             "role=\"status\" на подписи под полем: изменение остатка объявляется без кражи фокуса у select",
-            "disabled на select и заглушку «—», когда остаток равен нулю — иначе форма отправит несуществующее количество"
+            "disabled на select и заглушку «—», когда остаток равен нулю — иначе форма отправит несуществующее количество",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "остаток на складе через stock",
             "верхнюю границу списка через maxOption",
             "порог низкого остатка через lowStockThreshold",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "подписи остатка через outOfStockText, lowStockText и inStockText — {count} подставляет число штук",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не проверяет остаток на сервере: перед оформлением заказа его обязана подтвердить бэкенд-логика.",
             "maxOption ограничивает длину списка отдельно от stock — на складе может быть 500 штук, а в select не нужно 500 строк.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
@@ -2868,6 +4215,28 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "maxOption",
+            "label": "Потолок списка",
+            "type": "number",
+            "default": 10,
+            "min": 1,
+            "max": 20
+          },
+          {
+            "prop": "lowStockThreshold",
+            "label": "Порог низкого остатка",
+            "type": "number",
+            "default": 3,
+            "min": 0,
+            "max": 10
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2880,16 +4249,21 @@
                 "the option list capped by the stock count: options above stock are never rendered, not merely disabled",
                 "the caption tone change below lowStockThreshold and at zero — the only signal that the choice is urgent",
                 "role=\"status\" on the caption below the field: the stock change is announced without stealing focus from the select",
-                "the disabled select and the single «—» placeholder when stock is zero — otherwise the form could submit a quantity that does not exist"
+                "the disabled select and the single «—» placeholder when stock is zero — otherwise the form could submit a quantity that does not exist",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the warehouse stock through stock",
                 "the upper bound of the list through maxOption",
                 "the low-stock threshold through lowStockThreshold",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "the stock captions through outOfStockText, lowStockText and inStockText — {count} is replaced with the number of units",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not verify stock on the server: your backend still has to confirm it before the order is placed.",
                 "maxOption caps the list length independently of stock — a warehouse can hold 500 units without the select needing 500 rows.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -2906,11 +4280,36 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "maxOption": {
+                "label": "List cap"
+              },
+              "lowStockThreshold": {
+                "label": "Low-stock threshold"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Stock-Limited Quantity Select"
+            "title": "Stock-Limited Quantity Select",
+            "preview": {
+              "props": {
+                "label": "Quantity",
+                "outOfStockText": "Out of stock",
+                "lowStockText": "Only {count} left",
+                "inStockText": "In stock: {count}",
+                "emptyOptionText": "—"
+              }
+            }
           }
-        }
+        },
+        "cardControls": [
+          "stock",
+          "maxOption",
+          "lowStockThreshold",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2943,15 +4342,20 @@
             "настоящие <optgroup>, собранные из options по первой букве — самодельные заголовки-строки не пропустить клавиатурой",
             "кнопки-буквы как реальные <button> в обычном порядке табуляции, а не декоративные элементы: это второй способ добраться до варианта, а не украшение",
             "aria-label «Перейти к букве …» и aria-pressed на активной букве — иначе кнопка из одного символа ничего не говорит скринридеру",
-            "перевод фокуса на select после клика по букве: следующий шаг пользователя — открыть список или пролистать стрелками"
+            "перевод фокуса на select после клика по букве: следующий шаг пользователя — открыть список или пролистать стрелками",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "состав вариантов через options",
             "начальное значение через defaultValue",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "подпись кнопки-буквы через letterHintText — {letter} подставляет саму букву",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Группировка строится на лету из options — свой порядок букв задавать не нужно, компонент сортирует их сам.",
             "Быстрый переход ставит первый вариант буквы, а не открывает список принудительно: браузер решает, показывать ли меню.",
             "Для очень коротких списков (до пяти-семи пунктов) буквенная навигация не нужна — подойдёт обычный select-001.",
@@ -2971,6 +4375,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2983,15 +4393,20 @@
                 "real <optgroup> elements built from options by first letter — hand-made heading rows cannot be skipped by keyboard",
                 "the letter buttons as real <button> elements in normal tab order, not decorative markup: they are a second way to reach an option, not an ornament",
                 "the aria-label \"Jump to letter …\" and aria-pressed on the active letter — otherwise a single-character button says nothing to a screen reader",
-                "moving focus to the select after a letter click: the user's next step is opening the list or paging it with arrow keys"
+                "moving focus to the select after a letter click: the user's next step is opening the list or paging it with arrow keys",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the set of options through options",
                 "the initial value through defaultValue",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "the letter button's screen-reader label through letterHintText — {letter} is replaced with the letter itself",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Grouping is built on the fly from options — there is no need to supply your own letter order, the component sorts it itself.",
                 "The jump sets the letter's first option rather than forcing the list open: the browser decides whether to show the menu.",
                 "For very short lists (five to seven entries) letter navigation is not worth it — plain select-001 is simpler.",
@@ -3006,11 +4421,103 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Alphabetical Jump Select"
+            "title": "Alphabetical Jump Select",
+            "preview": {
+              "props": {
+                "label": "City",
+                "letterHintText": "Jump to letter {letter}",
+                "options": [
+                  {
+                    "value": "almaty",
+                    "label": "Almaty"
+                  },
+                  {
+                    "value": "arkhangelsk",
+                    "label": "Arkhangelsk"
+                  },
+                  {
+                    "value": "barnaul",
+                    "label": "Barnaul"
+                  },
+                  {
+                    "value": "vladimir",
+                    "label": "Vladimir"
+                  },
+                  {
+                    "value": "voronezh",
+                    "label": "Voronezh"
+                  },
+                  {
+                    "value": "grodno",
+                    "label": "Grodno"
+                  },
+                  {
+                    "value": "ekaterinburg",
+                    "label": "Yekaterinburg"
+                  },
+                  {
+                    "value": "izhevsk",
+                    "label": "Izhevsk"
+                  },
+                  {
+                    "value": "kazan",
+                    "label": "Kazan"
+                  },
+                  {
+                    "value": "krasnodar",
+                    "label": "Krasnodar"
+                  },
+                  {
+                    "value": "minsk",
+                    "label": "Minsk"
+                  },
+                  {
+                    "value": "moscow",
+                    "label": "Moscow"
+                  },
+                  {
+                    "value": "novosibirsk",
+                    "label": "Novosibirsk"
+                  },
+                  {
+                    "value": "omsk",
+                    "label": "Omsk"
+                  },
+                  {
+                    "value": "perm",
+                    "label": "Perm"
+                  },
+                  {
+                    "value": "samara",
+                    "label": "Samara"
+                  },
+                  {
+                    "value": "tomsk",
+                    "label": "Tomsk"
+                  },
+                  {
+                    "value": "ufa",
+                    "label": "Ufa"
+                  },
+                  {
+                    "value": "chelyabinsk",
+                    "label": "Chelyabinsk"
+                  },
+                  {
+                    "value": "yaroslavl",
+                    "label": "Yaroslavl"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -3044,15 +4551,20 @@
             "aria-hidden на триггере: иначе скринридер прочитает текст дважды — с плитки и с самого select",
             "цвет метки через data-tone и переменные --vibeui-select-028-tone-*: тон — часть данных варианта, а не инлайновый цвет",
             "aria-describedby, связывающий select с подписью-пояснением, и role=\"status\" на самой подписи — смена приоритета объявляется без кражи фокуса",
-            "метку не только цветом, но и текстом внутри неё — цвет один не читается при дальтонизме"
+            "метку не только цветом, но и текстом внутри неё — цвет один не читается при дальтонизме",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "набор приоритетов, их метку, тон и пояснение через options",
             "начальное значение через defaultValue",
-            "акцентный цвет кольца фокуса через accent"
+            "акцентный цвет кольца фокуса через accent",
+            "строку рядом с меткой через currentText — {label} подставляет подпись выбранного приоритета",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Уровней приоритета четыре (low/medium/high/critical); свой добавляют новым тоном и веткой CSS по data-tone.",
             "Пояснение держать в одну строку: скачок высоты при переключении приоритета заметнее, чем кажется в макете.",
             "Прозрачный select ловит все клики по плитке — не вешать на триггер собственные обработчики, они не сработают.",
@@ -3079,6 +4591,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -3092,15 +4610,20 @@
                 "aria-hidden on the trigger: otherwise a screen reader reads the text twice, from the tile and from the select",
                 "the badge colour driven by data-tone and the --vibeui-select-028-tone-* variables: tone is part of the option data, not an inline colour",
                 "the aria-describedby link from the select to the caption, and role=\"status\" on the caption itself — a priority change is announced without stealing focus",
-                "the badge carried by text as well as colour — colour alone fails for colour-blind users"
+                "the badge carried by text as well as colour — colour alone fails for colour-blind users",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the set of priorities, their label, tone and explanation through options",
                 "the initial value through defaultValue",
-                "the focus ring accent through accent"
+                "the focus ring accent through accent",
+                "the line next to the badge through currentText — {label} is replaced with the selected priority's label",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There are four priority levels (low/medium/high/critical); add your own with a new tone and a data-tone branch in the CSS.",
                 "Keep the explanation to one line: the height jump on switching priority is more noticeable than it looks in a mockup.",
                 "The transparent select catches every click on the tile — do not attach handlers to the trigger, they will not fire.",
@@ -3119,11 +4642,47 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Priority Badge Select"
+            "title": "Priority Badge Select",
+            "preview": {
+              "props": {
+                "label": "Task priority",
+                "currentText": "{label} priority",
+                "options": [
+                  {
+                    "value": "low",
+                    "label": "Low",
+                    "tone": "low",
+                    "caption": "You can come back to the task any time, the deadline is not burning."
+                  },
+                  {
+                    "value": "medium",
+                    "label": "Medium",
+                    "tone": "medium",
+                    "caption": "Worth doing this week, but not worth dropping everything for."
+                  },
+                  {
+                    "value": "high",
+                    "label": "High",
+                    "tone": "high",
+                    "caption": "The task blocks others — it is picked up today."
+                  },
+                  {
+                    "value": "critical",
+                    "label": "Critical",
+                    "tone": "critical",
+                    "caption": "An incident: the team switches to the task immediately."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -3156,15 +4715,19 @@
             "миниатюру на CSS-гриде, а не картинку: схема рисуется блоками из data-layout, без запроса изображения и без иконочного пакета",
             "aria-hidden на миниатюре: она дублирует то, что уже названо текстом варианта в select, и не несёт отдельного смысла",
             "связку select → row → thumb: миниатюра обновляется по тому же value, что и сам select, а не по отдельному состоянию",
-            "скрытие миниатюры в узком контейнере через @container, а не её сжатие до нечитаемого пятна"
+            "скрытие миниатюры в узком контейнере через @container, а не её сжатие до нечитаемого пятна",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "состав шаблонов, их подписи и раскладку миниатюры через templates",
             "начальное значение через defaultValue",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Схем раскладки четыре (header-side/grid/stack/hero); своя добавляется веткой CSS по data-layout и, если нужно, третьим блоком в разметке.",
             "Миниатюра — не настоящий предпросмотр шаблона, а обобщённая схема; для точного превью нужен отдельный компонент с реальным рендером.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
@@ -3190,6 +4753,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -3202,15 +4771,19 @@
                 "the CSS-grid thumbnail rather than an image: the diagram is drawn from data-layout blocks, with no image request and no icon package",
                 "aria-hidden on the thumbnail: it duplicates what the select's option text already names and carries no separate meaning",
                 "the select → row → thumb link: the thumbnail updates from the same value as the select itself, not from separate state",
-                "hiding the thumbnail in a narrow container through @container, rather than shrinking it to an unreadable smudge"
+                "hiding the thumbnail in a narrow container through @container, rather than shrinking it to an unreadable smudge",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the set of templates, their labels and thumbnail layout through templates",
                 "the initial value through defaultValue",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There are four layout schemas (header-side/grid/stack/hero); add your own with a data-layout CSS branch and, if needed, a third block in the markup.",
                 "The thumbnail is a generalised diagram, not a real template preview; an accurate preview needs a separate component with real rendering.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -3228,11 +4801,42 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Template Thumbnail Select"
+            "title": "Template Thumbnail Select",
+            "preview": {
+              "props": {
+                "label": "Page template",
+                "templates": [
+                  {
+                    "value": "header-side",
+                    "label": "Header + sidebar",
+                    "layout": "header-side"
+                  },
+                  {
+                    "value": "grid",
+                    "label": "Tiled grid",
+                    "layout": "grid"
+                  },
+                  {
+                    "value": "stack",
+                    "label": "Single column",
+                    "layout": "stack"
+                  },
+                  {
+                    "value": "hero",
+                    "label": "Large banner",
+                    "layout": "hero"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -3265,15 +4869,19 @@
             "разметку fieldset + legend: группа полей — это одна смысловая единица, а не набор случайно стоящих рядом select'ов",
             "независимость полей друг от друга: смена одного select не должна сбрасывать или менять другие, в отличие от select-025",
             "перенос полей в столбец на узком контейнере через @container — плотная строка на телефоне превращается в нечитаемую кашу",
-            "подпись над каждым select, а не только плейсхолдер: короткое поле без подписи не объясняет, что именно оно фильтрует"
+            "подпись над каждым select, а не только плейсхолдер: короткое поле без подписи не объясняет, что именно оно фильтрует",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок панели через legend",
             "состав, подписи и опции полей через fields",
             "значения по умолчанию через defaultValues",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент хранит значения фильтров в своём состоянии, но ничего не отправляет: подписку на изменения делает вызывающий код через value полей формы.",
             "Число полей не ограничено логикой компонента, но больше пяти-шести в одной строке уже стоит переносить в отдельную панель с раскрытием.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
@@ -3292,6 +4900,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -3304,15 +4918,19 @@
                 "the fieldset + legend markup: the group of fields is one semantic unit, not selects that merely happen to sit next to each other",
                 "the independence of the fields: changing one select must not reset or change the others, unlike select-025",
                 "wrapping the fields into a column on a narrow container through @container — a dense row on a phone turns into unreadable mush",
-                "the caption above every select rather than a placeholder alone: a short field with no caption does not say what it filters"
+                "the caption above every select rather than a placeholder alone: a short field with no caption does not say what it filters",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the panel heading through legend",
                 "the set, captions and options of the fields through fields",
                 "the initial values through defaultValues",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component keeps the filter values in its own state but submits nothing: watching for changes is up to the caller through the fields' form values.",
                 "The component places no hard limit on field count, but past five or six in one row it is worth a separate collapsible panel.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -3326,11 +4944,76 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Compact Filter Row Select"
+            "title": "Compact Filter Row Select",
+            "preview": {
+              "props": {
+                "legend": "Filters",
+                "fields": [
+                  {
+                    "key": "category",
+                    "label": "Category",
+                    "options": [
+                      {
+                        "value": "all",
+                        "label": "All"
+                      },
+                      {
+                        "value": "clothes",
+                        "label": "Clothing"
+                      },
+                      {
+                        "value": "shoes",
+                        "label": "Shoes"
+                      }
+                    ]
+                  },
+                  {
+                    "key": "status",
+                    "label": "Status",
+                    "options": [
+                      {
+                        "value": "all",
+                        "label": "Any"
+                      },
+                      {
+                        "value": "active",
+                        "label": "On sale"
+                      },
+                      {
+                        "value": "archived",
+                        "label": "Archived"
+                      }
+                    ]
+                  },
+                  {
+                    "key": "sort",
+                    "label": "Sorting",
+                    "options": [
+                      {
+                        "value": "new",
+                        "label": "Newest first"
+                      },
+                      {
+                        "value": "price-asc",
+                        "label": "Cheaper first"
+                      },
+                      {
+                        "value": "price-desc",
+                        "label": "Pricier first"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -3363,16 +5046,21 @@
             "запись в localStorage только внутри try/catch: приватный режим браузера или заполненная квота не должны ронять компонент",
             "чтение localStorage в useEffect с отложенным вызовом setState, а не синхронно при рендере — начальный клиентский рендер обязан совпасть с серверным",
             "чип «Недавнее» как отдельную кнопку, а не автоподстановку значения — пользователь сам решает, повторить выбор или начать заново",
-            "скрытие чипа, когда недавнее значение совпадает с уже выбранным — предлагать нечего, если оно и так стоит в поле"
+            "скрытие чипа, когда недавнее значение совпадает с уже выбранным — предлагать нечего, если оно и так стоит в поле",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "состав вариантов через options",
             "ключ хранения через storageKey",
             "начальное значение через defaultValue",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "метку чипа с прошлым выбором через recentText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "На сервере компонент рендерится без чипа: localStorage недоступен при серверном рендере, и это ожидаемое поведение, а не баг гидрации.",
             "storageKey стоит делать уникальным на странице — общий ключ для двух разных select'ов перепутает их «недавние» значения.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
@@ -3391,6 +5079,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -3403,16 +5097,21 @@
                 "writing to localStorage only inside try/catch: a private browsing mode or a full quota must not crash the component",
                 "reading localStorage inside useEffect with a deferred setState call rather than synchronously during render — the first client render has to match the server one",
                 "the \"Recent\" chip as a separate button rather than an automatic default — the user decides whether to repeat the choice or start over",
-                "hiding the chip when the recent value already equals the current one — there is nothing to offer once it is already in the field"
+                "hiding the chip when the recent value already equals the current one — there is nothing to offer once it is already in the field",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the set of options through options",
                 "the storage key through storageKey",
                 "the initial value through defaultValue",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "the recent-choice chip's tag through recentText",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component renders with no chip on the server: localStorage is unavailable during server rendering, and that is expected, not a hydration bug.",
                 "Give storageKey a unique value per page — a shared key between two different selects would mix up their \"recent\" values.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -3426,11 +5125,39 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Recent Value Select"
+            "title": "Recent Value Select",
+            "preview": {
+              "props": {
+                "label": "Payment method",
+                "recentText": "Recent",
+                "options": [
+                  {
+                    "value": "card",
+                    "label": "Card online"
+                  },
+                  {
+                    "value": "invoice",
+                    "label": "By invoice"
+                  },
+                  {
+                    "value": "cash",
+                    "label": "Cash on delivery"
+                  },
+                  {
+                    "value": "crypto",
+                    "label": "Cryptocurrency"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -3464,16 +5191,21 @@
             "role=\"alertdialog\" и aria-label на панели подтверждения — иначе скринридер не объявит её как требующую решения",
             "перевод фокуса на кнопку «Подтвердить» при открытии панели и обратно на select при закрытии — фокус не должен теряться в пустоте",
             "закрытие панели по Escape с возвратом к применённому значению — как у любого диалога отмены",
-            "текст вопроса с названиями старого и нового варианта, а не общую фразу «изменить значение?» — конкретика снижает случайные подтверждения"
+            "текст вопроса с названиями старого и нового варианта, а не общую фразу «изменить значение?» — конкретика снижает случайные подтверждения",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "состав вариантов через options",
             "текст предупреждения о последствиях через warningText",
             "начальное значение через defaultValue",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "надписи панели через confirmQuestionText ({from} и {to}), confirmDialogText, cancelText и applyText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пока панель открыта, select визуально показывает предложенный вариант, но применённым остаётся прежний — так пользователь видит, что именно подтверждает.",
             "Это не модальное окно поверх страницы: панель — обычный блок под select, доступный клавиатурой без ловушки фокуса.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
@@ -3499,6 +5231,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -3512,16 +5250,21 @@
                 "role=\"alertdialog\" and aria-label on the confirmation panel — otherwise a screen reader never announces it as requiring a decision",
                 "moving focus to the \"Confirm\" button when the panel opens, and back to the select when it closes — focus must never be dropped into empty space",
                 "closing the panel on Escape and reverting to the applied value — like any cancel dialog",
-                "the question text naming the old and new option rather than a generic \"change the value?\" — specifics cut down accidental confirmations"
+                "the question text naming the old and new option rather than a generic \"change the value?\" — specifics cut down accidental confirmations",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the set of options through options",
                 "the consequence warning text through warningText",
                 "the initial value through defaultValue",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "the panel's wording through confirmQuestionText ({from} and {to}), confirmDialogText, cancelText and applyText",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "While the panel is open, the select visually shows the proposed option, but the applied value stays the previous one — so the user sees exactly what they are confirming.",
                 "This is not a modal over the page: the panel is a plain block under the select, reachable by keyboard with no focus trap.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -3539,11 +5282,43 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Confirm Change Select"
+            "title": "Confirm Change Select",
+            "preview": {
+              "props": {
+                "label": "Publication status",
+                "warningText": "Unsaved edits for the current status will be lost.",
+                "confirmQuestionText": "Change «{from}» to «{to}»?",
+                "confirmDialogText": "Confirm the value change",
+                "cancelText": "Cancel",
+                "applyText": "Confirm",
+                "options": [
+                  {
+                    "value": "draft",
+                    "label": "Draft"
+                  },
+                  {
+                    "value": "review",
+                    "label": "In review"
+                  },
+                  {
+                    "value": "published",
+                    "label": "Published"
+                  },
+                  {
+                    "value": "archived",
+                    "label": "Archived"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -3576,15 +5351,19 @@
             "расчёт ширины от длины текста вариантов в ch, а не фиксированное значение — при смене options ширина обязана пересчитаться сама",
             "потолок maxWidthCh: без него один длинный вариант в списке растягивает поле на всю строку",
             "min(100%, …) в ширине select: расчётная ширина не должна вылезать за пределы узкого родителя",
-            "appearance:none вместе с правым отступом под стрелку: без отступа значение уедет под неё"
+            "appearance:none вместе с правым отступом под стрелку: без отступа значение уедет под неё",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label",
             "состав вариантов через options",
             "потолок ширины в символах через maxWidthCh",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Расчёт в ch приблизительный: реальная ширина символа зависит от шрифта, поэтому небольшой запас в 3rem уже заложен в формулу.",
             "Компонент — серверный: расчёт ширины идёт по длине строки на этапе рендера, без клиентского JS и без риска дрожания layout при гидрации.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
@@ -3611,6 +5390,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -3623,15 +5408,19 @@
                 "the width computed from the options' text length in ch, not a fixed value — the width must recompute itself whenever options changes",
                 "the maxWidthCh cap: without it a single long option stretches the field across the whole row",
                 "the min(100%, …) wrapper on the select's width: the computed width must never overflow a narrow parent",
-                "appearance:none together with the right padding reserved for the arrow: without it the value slides underneath"
+                "appearance:none together with the right padding reserved for the arrow: without it the value slides underneath",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label",
                 "the set of options through options",
                 "the width cap in characters through maxWidthCh",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The ch calculation is approximate: a character's real width depends on the font, so the formula already bakes in a 3rem allowance.",
                 "The component is a server component: the width is computed from string length at render time, with no client JS and no layout shift on hydration.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -3648,11 +5437,38 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Content-Width Select"
+            "title": "Content-Width Select",
+            "preview": {
+              "props": {
+                "label": "Country",
+                "options": [
+                  {
+                    "value": "ru",
+                    "label": "Russia"
+                  },
+                  {
+                    "value": "kz",
+                    "label": "Kazakhstan"
+                  },
+                  {
+                    "value": "am",
+                    "label": "Armenia"
+                  },
+                  {
+                    "value": "uz",
+                    "label": "Uzbekistan"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["maxWidthCh", "accent", "background"]
       }
     }
   ]

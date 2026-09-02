@@ -10,6 +10,12 @@ export type Number007Props = Omit<
   label?: string
   defaultValue?: number
   max?: number
+  /** Слова вердикта по тону: компонент несёт русские. */
+  verdictText?: Record<string, string>
+  /** Подсказка под шкалой. */
+  hint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,21 +24,24 @@ export type Number007Props = Omit<
 // числовой, с шагом 0.1, а рядом — шкала из десяти делений: цифру уточняют
 // клавиатурой, а порядок величины считывают глазом. Цвет берётся от значения,
 // поэтому «слабо» и «отлично» различимы до чтения подписи.
+//
+// Тема берётся из color-scheme окружения через light-dark(): поле темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="number-007"]){
---vibeui-number-007-surface:oklch(1 0 0);
---vibeui-number-007-shell:oklch(0.9 0.006 265);
---vibeui-number-007-fg:oklch(0.23 0.014 265);
---vibeui-number-007-muted:oklch(0.55 0.014 265);
---vibeui-number-007-border:oklch(0.88 0.008 265);
---vibeui-number-007-track:oklch(0.93 0.006 265);
---vibeui-number-007-low:oklch(0.58 0.19 25);
---vibeui-number-007-mid:oklch(0.72 0.15 75);
---vibeui-number-007-high:oklch(0.6 0.16 150);
+--vibeui-number-007-surface:transparent;
+--vibeui-number-007-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-number-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-number-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-number-007-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-number-007-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.011 265));
+--vibeui-number-007-low:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.16 25));
+--vibeui-number-007-mid:light-dark(oklch(0.72 0.15 75),oklch(0.82 0.14 75));
+--vibeui-number-007-high:light-dark(oklch(0.6 0.16 150),oklch(0.76 0.14 150));
 --vibeui-number-007-accent:var(--vibeui-number-007-high);
 --vibeui-number-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="number-007"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:18rem;box-sizing:border-box;padding:0.875rem;
@@ -84,10 +93,38 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-number-007-muted);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="number-007"] *{animation:none!important;transition:none!important}}
 `
 
+const VERDICT_TEXT: Record<string, string> = {
+  low: "слабо",
+  mid: "средне",
+  high: "отлично",
+}
+
 function verdictOf(value: number) {
-  if (value < 5) return { tone: "low", text: "слабо" }
-  if (value < 7.5) return { tone: "mid", text: "средне" }
-  return { tone: "high", text: "отлично" }
+  if (value < 5) return "low"
+  if (value < 7.5) return "mid"
+  return "high"
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -98,6 +135,9 @@ export function Number007({
   label = "Ваша оценка",
   defaultValue = 8.4,
   max = 10,
+  verdictText = VERDICT_TEXT,
+  hint = "Шаг 0.1 — стрелки вверх и вниз меняют оценку на одну десятую.",
+  background = "",
   accent,
   className,
   style,
@@ -105,11 +145,17 @@ export function Number007({
 }: Number007Props) {
   const id = useId()
   const [value, setValue] = useState(defaultValue)
-  const verdict = verdictOf(value)
+  const tone = verdictOf(value)
   const ticks = Array.from({ length: max }, (_, index) => index + 1)
 
   const palette = {
     ...(accent ? { "--vibeui-number-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-number-007-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -121,7 +167,7 @@ export function Number007({
       <div
         {...props}
         data-vibeui-block="number-007"
-        data-tone={verdict.tone}
+        data-tone={tone}
         className={className}
         style={palette}
       >
@@ -144,7 +190,7 @@ export function Number007({
           />
           <span data-part="scale">/ {max}</span>
           <span data-part="verdict" aria-live="polite">
-            {verdict.text}
+            {verdictText[tone] ?? VERDICT_TEXT[tone]}
           </span>
         </div>
         <div data-part="meter" aria-hidden="true">
@@ -153,7 +199,7 @@ export function Number007({
           ))}
         </div>
         <p id={`${id}-hint`} data-part="hint">
-          Шаг 0.1 — стрелки вверх и вниз меняют оценку на одну десятую.
+          {hint}
         </p>
       </div>
     </>

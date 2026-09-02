@@ -9,6 +9,10 @@ export type Input009Props = Omit<
 > & {
   placeholder?: string
   shortcut?: string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  text?: Record<string, string>
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   onChange?: (value: string) => void
   accent?: string
 }
@@ -20,21 +24,29 @@ export type Input009Props = Omit<
 // не нужен и мешает читать набранное.
 const STYLES = `
 :where([data-vibeui-block="input-009"]){
---vibeui-input-009-surface:oklch(1 0 0);
---vibeui-input-009-shell:oklch(0.91 0.006 265);
---vibeui-input-009-fg:oklch(0.23 0.014 265);
---vibeui-input-009-muted:oklch(0.55 0.014 265);
---vibeui-input-009-field:oklch(0.98 0.002 265);
---vibeui-input-009-border:oklch(0.89 0.008 265);
---vibeui-input-009-accent:oklch(0.55 0.17 265);
+--vibeui-input-009-surface:transparent;
+/* Клавиша и поле в фокусе поднимаются над подложкой, поэтому их цвет
+   непрозрачный и живёт отдельно от surface. */
+--vibeui-input-009-panel:light-dark(oklch(1 0 0),oklch(0.31 0.012 265));
+--vibeui-input-009-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-input-009-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-input-009-field:light-dark(oklch(0.98 0.002 265),oklch(0.26 0.012 265));
+--vibeui-input-009-border:light-dark(oklch(0.89 0.008 265),oklch(0.42 0.014 265));
+--vibeui-input-009-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-input-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-009"]{
 display:flex;flex-direction:column;gap:0.4375rem;
-width:100%;max-width:23rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:23rem;box-sizing:border-box;
+font-family:var(--vibeui-input-009-font);color:var(--vibeui-input-009-fg);
+}
+/* Подложка появляется только вместе с пропом background: без него поле
+   лежит прямо на фоне страницы. */
+[data-vibeui-block="input-009"][data-surface="on"]{
+padding:0.875rem;
 background:var(--vibeui-input-009-surface);
 border:1px solid var(--vibeui-input-009-shell);border-radius:0.875rem;
-font-family:var(--vibeui-input-009-font);color:var(--vibeui-input-009-fg);
 }
 [data-vibeui-block="input-009"] *{box-sizing:border-box}
 [data-vibeui-block="input-009"] [data-part="frame"]{
@@ -45,7 +57,7 @@ border:1px solid var(--vibeui-input-009-border);border-radius:999px;
 transition:border-color .16s ease,box-shadow .16s ease,background-color .16s ease;
 }
 [data-vibeui-block="input-009"] [data-part="frame"]:focus-within{
-background:var(--vibeui-input-009-surface);
+background:var(--vibeui-input-009-panel);
 border-color:var(--vibeui-input-009-accent);
 box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-input-009-accent) 16%,transparent);
 }
@@ -62,7 +74,7 @@ flex:none;display:inline-flex;align-items:center;gap:0.0625rem;
 height:1.375rem;padding:0 0.4375rem;border-radius:0.4375rem;
 border:1px solid var(--vibeui-input-009-border);
 border-bottom-width:2px;
-background:var(--vibeui-input-009-surface);
+background:var(--vibeui-input-009-panel);
 font-family:inherit;font-size:0.6875rem;font-weight:600;
 color:var(--vibeui-input-009-muted);
 }
@@ -90,10 +102,38 @@ height:1.125rem;padding:0 0.3125rem;font-size:0.625rem;border-bottom-width:1px;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="input-009"] *{animation:none!important;transition:none!important}}
 `
 
+const TEXT = {
+  clear: "Очистить запрос",
+  escape: "Esc",
+  hint: "Нажмите {key} откуда угодно, {esc} — очистить.",
+}
+
 // Платформа не меняется, поэтому подписка пустая: нужен только снимок.
 const watchPlatform = () => () => {}
 const isApple = () => /Mac|iPhone|iPad/.test(navigator.platform)
 const isServer = () => false
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Поиск с рабочим сочетанием клавиш: подсказка в поле действительно нажимается.
@@ -102,6 +142,8 @@ const isServer = () => false
 export function Input009({
   placeholder = "Поиск по компонентам",
   shortcut = "K",
+  text,
+  background = "",
   onChange,
   accent,
   className,
@@ -131,8 +173,17 @@ export function Input009({
     return () => document.removeEventListener("keydown", onKeyDown)
   }, [shortcut])
 
+  const copy = { ...TEXT, ...text }
+  const combo = `${apple ? "⌘" : "Ctrl"} ${shortcut}`
+
   const palette = {
     ...(accent ? { "--vibeui-input-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-009-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -149,6 +200,7 @@ export function Input009({
       <div
         {...props}
         data-vibeui-block="input-009"
+        data-surface={background ? "on" : undefined}
         className={className}
         style={palette}
       >
@@ -185,7 +237,7 @@ export function Input009({
             <button
               type="button"
               data-part="clear"
-              aria-label="Очистить запрос"
+              aria-label={copy.clear}
               onClick={() => {
                 push("")
                 field.current?.focus()
@@ -201,17 +253,15 @@ export function Input009({
               </svg>
             </button>
           ) : (
-            <kbd aria-hidden="true">
-              {apple ? "⌘" : "Ctrl"} {shortcut}
-            </kbd>
+            <kbd aria-hidden="true">{combo}</kbd>
           )}
         </div>
         <p data-part="note" id={`${id}-note`}>
-          Нажмите{" "}
-          <kbd>
-            {apple ? "⌘" : "Ctrl"} {shortcut}
-          </kbd>{" "}
-          откуда угодно, <kbd>Esc</kbd> — очистить.
+          {copy.hint.split(/(\{key\}|\{esc\})/).map((part, index) => {
+            if (part === "{key}") return <kbd key={index}>{combo}</kbd>
+            if (part === "{esc}") return <kbd key={index}>{copy.escape}</kbd>
+            return part
+          })}
         </p>
       </div>
     </>

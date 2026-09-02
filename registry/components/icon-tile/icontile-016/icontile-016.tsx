@@ -14,6 +14,8 @@ export type Icontile016Props = Omit<
   hotkeyAriaLabel?: string
   icon?: "search" | "add" | "command"
   tone?: "neutral" | "accent" | "success" | "warning" | "danger"
+  /** Пусто — подложки нет, плитка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 function SearchIcon() {
@@ -84,15 +86,21 @@ const ICONS: Record<
 // помечена aria-hidden целиком, потому что для скринридера сочетание уже
 // объявлено стандартным атрибутом, и повторное прочтение символов вроде «⌘»
 // по буквам было бы шумом поверх осмысленного названия действия.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
+// граница и клавиши светлее фона, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="icontile-016"]){
 container-type:inline-size;
 --vibeui-icontile-016-hue:262;
 --vibeui-icontile-016-chroma:0.05;
---vibeui-icontile-016-fg:oklch(0.26 0.014 265);
---vibeui-icontile-016-muted:oklch(0.52 0.014 265);
---vibeui-icontile-016-border:oklch(0.88 0.006 265);
---vibeui-icontile-016-surface:oklch(1 0 0);
+--vibeui-icontile-016-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.006 265));
+--vibeui-icontile-016-muted:light-dark(oklch(0.52 0.014 265),oklch(0.71 0.012 265));
+--vibeui-icontile-016-border:light-dark(oklch(0.88 0.006 265),oklch(0.35 0.011 265));
+--vibeui-icontile-016-key:light-dark(oklch(0.97 0.006 265),oklch(0.29 0.011 265));
+--vibeui-icontile-016-accent:light-dark(oklch(0.55 0.18 var(--vibeui-icontile-016-hue)),oklch(0.74 0.15 var(--vibeui-icontile-016-hue)));
+--vibeui-icontile-016-hover:light-dark(oklch(0.75 0.05 var(--vibeui-icontile-016-hue)),oklch(0.52 0.07 var(--vibeui-icontile-016-hue)));
+--vibeui-icontile-016-surface:transparent;
 --vibeui-icontile-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="icontile-016"]{
@@ -104,10 +112,10 @@ font:inherit;font-family:var(--vibeui-icontile-016-font);color:inherit;text-alig
 transition:border-color 0.15s ease;
 }
 [data-vibeui-block="icontile-016"]:hover{
-border-color:oklch(0.75 0.05 var(--vibeui-icontile-016-hue));
+border-color:var(--vibeui-icontile-016-hover);
 }
 [data-vibeui-block="icontile-016"]:focus-visible{
-outline:2px solid oklch(0.55 0.18 var(--vibeui-icontile-016-hue));outline-offset:2px;
+outline:2px solid var(--vibeui-icontile-016-accent);outline-offset:2px;
 }
 [data-vibeui-block="icontile-016"] [data-part="icon"]{
 display:grid;place-items:center;flex:none;width:2.25rem;height:2.25rem;
@@ -122,7 +130,7 @@ position:absolute;top:0.75rem;right:0.75rem;display:flex;gap:0.1875rem;
 [data-vibeui-block="icontile-016"] [data-part="key"]{
 display:grid;place-items:center;min-width:1.25rem;height:1.25rem;padding:0 0.3125rem;
 box-sizing:border-box;border-radius:0.375rem;border:1px solid var(--vibeui-icontile-016-border);
-background:oklch(0.97 0.006 265);
+background:var(--vibeui-icontile-016-key);
 font-family:inherit;font-size:0.6875rem;font-weight:650;line-height:1;
 color:var(--vibeui-icontile-016-muted);
 }
@@ -147,6 +155,29 @@ color:var(--vibeui-icontile-016-muted);white-space:nowrap;overflow:hidden;text-o
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Плитка-действие с горячей клавишей: сочетание показано плашкой в углу и
  * продублировано атрибутом aria-keyshortcuts на кнопке.
  * Один файл, ноль зависимостей, клиентского JS нет.
@@ -158,12 +189,22 @@ export function Icontile016({
   hotkeyAriaLabel = "Meta+K",
   icon = "search",
   tone = "accent",
+  background = "",
   className,
   style,
   type,
   ...props
 }: Icontile016Props) {
   const Icon = ICONS[icon]
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-icontile-016-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -177,7 +218,7 @@ export function Icontile016({
         data-tone={tone}
         aria-keyshortcuts={hotkeyAriaLabel}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="icon" aria-hidden="true">
           <Icon />

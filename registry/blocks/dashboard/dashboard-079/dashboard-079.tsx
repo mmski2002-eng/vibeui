@@ -21,6 +21,26 @@ export type Dashboard079Props = {
   buckets?: Dashboard079Bucket[]
   budgetNote?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Заголовок панели маршрутов. */
+  routesTitle?: string
+  /** Заголовок панели распределения. */
+  histTitle?: string
+  /** Число вызовов: {calls}. */
+  callsText?: string
+  /** Расшифровка дорожки: {path}, {p50}, {p95}, {p99}, {budget}, {unit}. */
+  laneAriaText?: string
+  /** Подписи перцентилей по ключам p50, p95 и p99. */
+  percentileText?: Record<string, string>
+  /** Единица времени. */
+  unitText?: string
+  /** Деление оси: {value}. */
+  axisText?: string
+  /** Доля бакета: {share}. */
+  shareText?: string
+  /** Локаль форматирования чисел. */
+  numberLocale?: string
   className?: string
   style?: CSSProperties
 }
@@ -35,16 +55,21 @@ export type Dashboard079Props = {
 // для всех строк, иначе отрезки несравнимы; её предел подписан. Ниже —
 // распределение запросов по бакетам времени: оно объясняет, сколько людей
 // вообще живёт в этом хвосте.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-079"]){
---vibeui-dashboard-079-bg:oklch(0.985 0.003 265);
---vibeui-dashboard-079-card:oklch(1 0 0);
---vibeui-dashboard-079-fg:oklch(0.21 0.014 265);
---vibeui-dashboard-079-muted:oklch(0.54 0.014 265);
---vibeui-dashboard-079-border:oklch(0.91 0.006 265);
---vibeui-dashboard-079-accent:oklch(0.52 0.15 265);
---vibeui-dashboard-079-soft:oklch(0.965 0.02 265);
---vibeui-dashboard-079-over:oklch(0.57 0.19 25);
+--vibeui-dashboard-079-bg:transparent;
+/* Панель и жёлоб дорожки: подложка самого блока прозрачна. */
+--vibeui-dashboard-079-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-dashboard-079-inset:light-dark(oklch(0.985 0.003 265),oklch(0.22 0.012 265));
+--vibeui-dashboard-079-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-079-muted:light-dark(oklch(0.54 0.014 265),oklch(0.72 0.012 265));
+--vibeui-dashboard-079-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-079-accent:light-dark(oklch(0.52 0.15 265),oklch(0.74 0.13 265));
+--vibeui-dashboard-079-soft:light-dark(oklch(0.965 0.02 265),oklch(0.3 0.035 265));
+--vibeui-dashboard-079-over:light-dark(oklch(0.57 0.19 25),oklch(0.74 0.16 25));
 --vibeui-dashboard-079-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 --vibeui-dashboard-079-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -78,15 +103,15 @@ color:var(--vibeui-dashboard-079-muted);
 }
 [data-vibeui-block="dashboard-079"] [data-part="lane"]{
 position:relative;height:1.375rem;border-radius:0.375rem;
-background:var(--vibeui-dashboard-079-bg);
+background:var(--vibeui-dashboard-079-inset);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-079-border);
 }
 [data-vibeui-block="dashboard-079"] [data-part="span"]{
 position:absolute;top:50%;height:0.3125rem;transform:translateY(-50%);border-radius:9999px;
-background:color-mix(in oklab,var(--vibeui-dashboard-079-accent) 32%,white);
+background:color-mix(in oklab,var(--vibeui-dashboard-079-accent) 32%,var(--vibeui-dashboard-079-card));
 }
 [data-vibeui-block="dashboard-079"] [data-over="true"] [data-part="span"]{
-background:color-mix(in oklab,var(--vibeui-dashboard-079-over) 30%,white);
+background:color-mix(in oklab,var(--vibeui-dashboard-079-over) 30%,var(--vibeui-dashboard-079-card));
 }
 [data-vibeui-block="dashboard-079"] [data-part="p"]{
 position:absolute;top:50%;transform:translate(-50%,-50%);border-radius:50%;
@@ -185,6 +210,34 @@ const DEFAULT_BUCKETS: Dashboard079Bucket[] = [
   { label: "> 3 с", share: 1 },
 ]
 
+const PERCENTILE_TEXT: Record<string, string> = {
+  p50: "p50",
+  p95: "p95",
+  p99: "p99",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Страница производительности: у каждого маршрута отрезок от p50 до p99 с
  * точками перцентилей на общей шкале и засечкой бюджета, ниже — распределение
@@ -197,14 +250,31 @@ export function Dashboard079({
   buckets = DEFAULT_BUCKETS,
   budgetNote = "Бюджет — это обещание пользователю, а не среднее по больнице: маршрут считается нарушившим, когда за границу выходит p95, а не среднее время.",
   accent,
+  background = "",
+  routesTitle = "Маршруты: разброс времени ответа",
+  histTitle = "Сколько запросов сколько ждало",
+  callsText = "{calls} вызовов",
+  laneAriaText = "{path}: p50 {p50} {unit}, p95 {p95} {unit}, p99 {p99} {unit}, бюджет {budget} {unit}",
+  percentileText = PERCENTILE_TEXT,
+  unitText = "мс",
+  axisText = "{value} мс",
+  shareText = "{share} %",
+  numberLocale = "ru-RU",
   className,
   style,
 }: Dashboard079Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-079-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-079-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
+  const percentiles = { ...PERCENTILE_TEXT, ...percentileText }
   const scale = Math.max(...routes.map((route) => route.p99)) * 1.05
   const at = (value: number) => Math.min(100, (value / scale) * 100)
   const peak = Math.max(...buckets.map((bucket) => bucket.share))
@@ -227,7 +297,7 @@ export function Dashboard079({
           </div>
 
           <div data-part="panel">
-            <h3>Маршруты: разброс времени ответа</h3>
+            <h3>{routesTitle}</h3>
             <ul data-part="rows">
               {routes.map((route) => {
                 const over = route.p95 > route.budget
@@ -236,13 +306,24 @@ export function Dashboard079({
                   <li key={route.path} data-part="row" data-over={over}>
                     <p data-part="path">
                       {route.path}
-                      <span>{route.calls.toLocaleString("ru-RU")} вызовов</span>
+                      <span>
+                        {callsText.replace(
+                          "{calls}",
+                          route.calls.toLocaleString(numberLocale),
+                        )}
+                      </span>
                     </p>
 
                     <div
                       data-part="lane"
                       role="img"
-                      aria-label={`${route.path}: p50 ${route.p50} мс, p95 ${route.p95} мс, p99 ${route.p99} мс, бюджет ${route.budget} мс`}
+                      aria-label={laneAriaText
+                        .replace("{path}", route.path)
+                        .replace("{p50}", String(route.p50))
+                        .replace("{p95}", String(route.p95))
+                        .replace("{p99}", String(route.p99))
+                        .replace("{budget}", String(route.budget))
+                        .replaceAll("{unit}", unitText)}
                     >
                       <span
                         data-part="span"
@@ -274,13 +355,13 @@ export function Dashboard079({
 
                     <p data-part="nums">
                       <span>
-                        p50 <b>{route.p50}</b>
+                        {percentiles.p50} <b>{route.p50}</b>
                       </span>
                       <span data-part="bad">
-                        p95 <b>{route.p95}</b>
+                        {percentiles.p95} <b>{route.p95}</b>
                       </span>
                       <span>
-                        p99 <b>{route.p99}</b> мс
+                        {percentiles.p99} <b>{route.p99}</b> {unitText}
                       </span>
                     </p>
                   </li>
@@ -289,18 +370,22 @@ export function Dashboard079({
             </ul>
 
             <div data-part="axis">
-              <span>0 мс</span>
-              <span>{Math.round(scale / 2)} мс</span>
-              <span>{Math.round(scale)} мс</span>
+              <span>{axisText.replace("{value}", "0")}</span>
+              <span>
+                {axisText.replace("{value}", String(Math.round(scale / 2)))}
+              </span>
+              <span>
+                {axisText.replace("{value}", String(Math.round(scale)))}
+              </span>
             </div>
           </div>
 
           <div data-part="panel">
-            <h3>Сколько запросов сколько ждало</h3>
+            <h3>{histTitle}</h3>
             <div data-part="hist">
               {buckets.map((bucket) => (
                 <div key={bucket.label} data-part="bar">
-                  <b>{bucket.share} %</b>
+                  <b>{shareText.replace("{share}", String(bucket.share))}</b>
                   <i style={{ height: `${(bucket.share / peak) * 100}%` }} />
                 </div>
               ))}

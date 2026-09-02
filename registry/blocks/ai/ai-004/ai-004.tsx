@@ -16,8 +16,17 @@ export type Ai004Props = {
   contextItems?: string[]
   entries?: Ai004Entry[]
   placeholder?: string
+  /** Подпись автора реплики: блок несёт русские, проект подставляет свои. */
+  roleText?: Record<string, string>
+  /** Подписи действий над ответом: retry, copy, task. */
+  toolText?: Record<string, string>
+  /** Название ленты для скринридера. */
+  logLabel?: string
+  sendText?: string
   onSend?: (text: string) => void
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,13 +43,15 @@ export type Ai004Props = {
 // от собственной ширины блока через container query.
 const STYLES = `
 :where([data-vibeui-block="ai-004"]){
---vibeui-ai-004-bg:oklch(0.99 0.002 265);
---vibeui-ai-004-card:oklch(1 0 0);
---vibeui-ai-004-fg:oklch(0.22 0.014 265);
---vibeui-ai-004-muted:oklch(0.54 0.014 265);
---vibeui-ai-004-border:oklch(0.91 0.006 265);
---vibeui-ai-004-bubble:oklch(0.97 0.003 265);
---vibeui-ai-004-accent:oklch(0.53 0.17 276);
+--vibeui-ai-004-bg:transparent;
+--vibeui-ai-004-card:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
+--vibeui-ai-004-field:light-dark(oklch(0.99 0.002 265),oklch(0.2 0.01 265));
+--vibeui-ai-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-ai-004-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-ai-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-ai-004-bubble:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.012 265));
+--vibeui-ai-004-accent:light-dark(oklch(0.53 0.17 276),oklch(0.74 0.15 276));
+--vibeui-ai-004-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 276));
 --vibeui-ai-004-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -119,13 +130,13 @@ background:var(--vibeui-ai-004-card);
 flex:1 1 auto;min-width:0;resize:none;field-sizing:content;
 min-height:2.375rem;max-height:7rem;padding:0.5625rem 0.75rem;
 border:1px solid var(--vibeui-ai-004-border);border-radius:0.75rem;
-background:var(--vibeui-ai-004-bg);color:inherit;
+background:var(--vibeui-ai-004-field);color:inherit;
 font:inherit;font-size:0.8125rem;line-height:1.45;
 }
 [data-vibeui-block="ai-004"] [data-part="send"]{
 appearance:none;cursor:pointer;flex:none;border:0;
 height:2.375rem;padding:0 1rem;border-radius:0.75rem;
-background:var(--vibeui-ai-004-accent);color:oklch(1 0 0);
+background:var(--vibeui-ai-004-accent);color:var(--vibeui-ai-004-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="ai-004"] [data-part="send"]:disabled{opacity:.45;cursor:default}
@@ -173,6 +184,41 @@ const DEFAULT_ENTRIES: Ai004Entry[] = [
   },
 ]
 
+const DEFAULT_ROLE_TEXT: Record<string, string> = {
+  user: "Вы",
+  assistant: "Ассистент",
+}
+
+const TOOL_KEYS = ["retry", "copy", "task"] as const
+
+const DEFAULT_TOOL_TEXT: Record<string, string> = {
+  retry: "Повторить",
+  copy: "Скопировать",
+  task: "В задачу",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Рабочее окно диалога: закреплённый контекст, дни-разделители и действия
  * над репликой. Один файл, ноль зависимостей, собственная палитра.
@@ -183,8 +229,13 @@ export function Ai004({
   contextItems = DEFAULT_CONTEXT,
   entries = DEFAULT_ENTRIES,
   placeholder = "Уточните задачу или попросите переделать ответ",
+  roleText = DEFAULT_ROLE_TEXT,
+  toolText = DEFAULT_TOOL_TEXT,
+  logLabel = "Переписка",
+  sendText = "Отправить",
   onSend,
   accent,
+  background = "",
   className,
   style,
 }: Ai004Props) {
@@ -205,6 +256,12 @@ export function Ai004({
 
   const palette = {
     ...(accent ? { "--vibeui-ai-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-ai-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -237,7 +294,7 @@ export function Ai004({
             data-part="thread"
             role="log"
             aria-live="polite"
-            aria-label="Переписка"
+            aria-label={logLabel}
           >
             {entries.map((entry, index) => (
               <div key={`${entry.time}-${entry.text}`}>
@@ -246,15 +303,17 @@ export function Ai004({
                 ) : null}
                 <article data-role={entry.role}>
                   <span data-part="who">
-                    {entry.role === "user" ? "Вы" : "Ассистент"}
+                    {roleText[entry.role] ?? DEFAULT_ROLE_TEXT[entry.role]}
                     {entry.time ? ` · ${entry.time}` : ""}
                   </span>
                   <p data-part="text">{entry.text}</p>
                   {entry.role === "assistant" ? (
                     <div data-part="tools">
-                      <button type="button">Повторить</button>
-                      <button type="button">Скопировать</button>
-                      <button type="button">В задачу</button>
+                      {TOOL_KEYS.map((key) => (
+                        <button key={key} type="button">
+                          {toolText[key] ?? DEFAULT_TOOL_TEXT[key]}
+                        </button>
+                      ))}
                     </div>
                   ) : null}
                 </article>
@@ -277,7 +336,7 @@ export function Ai004({
               disabled={draft.trim() === ""}
               onClick={send}
             >
-              Отправить
+              {sendText}
             </button>
           </div>
         </div>

@@ -18,6 +18,10 @@ export type Navbar003Props = {
   plainHref?: string
   actionLabel?: string
   actionHref?: string
+  /** Подпись навигации для скринридера: компонент несёт русскую. */
+  navLabel?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -27,15 +31,18 @@ export type Navbar003Props = {
 // :focus-within, поэтому она одинаково доступна мышью и с клавиатуры —
 // табуляция по ссылкам внутри панели держит её открытой. Каждый пункт несёт
 // поясняющую строку: разделы верхнего уровня редко объясняют сами себя.
+//
+// Тема берётся из color-scheme окружения через light-dark(): шапка темнеет
+// вместе с контекстом и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="navbar-003"]){
---vibeui-navbar-003-bg:oklch(1 0 0);
---vibeui-navbar-003-ink:oklch(0.23 0.014 265);
---vibeui-navbar-003-muted:oklch(0.53 0.014 265);
---vibeui-navbar-003-border:oklch(0.91 0.005 265);
---vibeui-navbar-003-panel:oklch(0.99 0.002 265);
---vibeui-navbar-003-accent:oklch(0.53 0.2 292);
---vibeui-navbar-003-accent-fg:oklch(0.99 0 0);
+--vibeui-navbar-003-bg:transparent;
+--vibeui-navbar-003-ink:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-navbar-003-muted:light-dark(oklch(0.53 0.014 265),oklch(0.7 0.012 265));
+--vibeui-navbar-003-border:light-dark(oklch(0.91 0.005 265),oklch(0.34 0.011 265));
+--vibeui-navbar-003-panel:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.014 265));
+--vibeui-navbar-003-accent:light-dark(oklch(0.53 0.2 292),oklch(0.74 0.15 292));
+--vibeui-navbar-003-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 292));
 --vibeui-navbar-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -84,7 +91,7 @@ position:absolute;top:calc(100% + 0.5rem);left:0;z-index:30;
 width:min(24rem,80cqi);padding:0.5rem;
 border:1px solid var(--vibeui-navbar-003-border);border-radius:0.875rem;
 background:var(--vibeui-navbar-003-panel);
-box-shadow:0 26px 60px -32px oklch(0.2 0.03 265 / 55%);
+box-shadow:0 26px 60px -32px light-dark(oklch(0.2 0.03 265 / 55%),oklch(0 0 0 / 65%));
 opacity:0;visibility:hidden;transform:translateY(-0.375rem);
 transition:opacity .18s ease,transform .18s ease,visibility .18s;
 }
@@ -166,6 +173,28 @@ const DEFAULT_SECTIONS: Navbar003Section[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Шапка с выпадающими разделами: панель держится на :hover и :focus-within. */
 export function Navbar003({
   brand = "Слой",
@@ -174,12 +203,20 @@ export function Navbar003({
   plainHref = "#pricing",
   actionLabel = "Попробовать",
   actionHref = "#start",
+  navLabel = "Основная навигация",
+  background = "",
   accent,
   className,
   style,
 }: Navbar003Props) {
   const palette = {
     ...(accent ? { "--vibeui-navbar-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-navbar-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -198,7 +235,7 @@ export function Navbar003({
             <span data-part="mark" aria-hidden="true" />
             {brand}
           </a>
-          <nav aria-label="Основная навигация">
+          <nav aria-label={navLabel}>
             <ul data-part="menu">
               {sections.map((section) => (
                 <li key={section.label} data-part="section">

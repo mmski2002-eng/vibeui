@@ -16,7 +16,27 @@ export type Dashboard020Props = {
   sessions?: Dashboard020Session[]
   passwordChanged?: string
   saveLabel?: string
+  /** Сколько всего запасных кодов выдаётся. */
+  recoveryTotal?: number
+  twoFactorTitle?: string
+  /** Состояние второго фактора: ключи on и off. */
+  stateText?: Record<string, string>
+  configureLabel?: string
+  enableLabel?: string
+  /** Шаблон остатка кодов: {left} и {total}. */
+  codesText?: string
+  passwordTitle?: string
+  currentPasswordLabel?: string
+  newPasswordLabel?: string
+  /** Требования к паролю списком. */
+  rules?: string[]
+  sessionsTitle?: string
+  currentDeviceLabel?: string
+  dropLabel?: string
+  dropAllLabel?: string
   accent?: string
+  /** Подложка карточки; пусто — цвет из палитры блока. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,14 +51,15 @@ export type Dashboard020Props = {
 // остальные» стоит отдельно и оформлена как опасное действие.
 const STYLES = `
 :where([data-vibeui-block="dashboard-020"]){
---vibeui-dashboard-020-bg:oklch(1 0 0);
---vibeui-dashboard-020-panel:oklch(0.985 0.003 265);
---vibeui-dashboard-020-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-020-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-020-border:oklch(0.91 0.006 265);
---vibeui-dashboard-020-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-020-ok:oklch(0.53 0.14 152);
---vibeui-dashboard-020-risk:oklch(0.55 0.18 25);
+--vibeui-dashboard-020-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
+--vibeui-dashboard-020-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.013 265));
+--vibeui-dashboard-020-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-020-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-dashboard-020-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-020-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.15 262));
+--vibeui-dashboard-020-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-dashboard-020-ok:light-dark(oklch(0.53 0.14 152),oklch(0.76 0.13 152));
+--vibeui-dashboard-020-risk:light-dark(oklch(0.55 0.18 25),oklch(0.74 0.15 25));
 --vibeui-dashboard-020-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-dashboard-020-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -130,7 +151,7 @@ background:var(--vibeui-dashboard-020-bg);color:inherit;
 [data-vibeui-block="dashboard-020"] [data-part="primary"]{
 appearance:none;border:0;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:650;
 padding:0.5rem 0.875rem;border-radius:0.5rem;
-background:var(--vibeui-dashboard-020-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-020-accent);color:var(--vibeui-dashboard-020-on-accent);
 }
 [data-vibeui-block="dashboard-020"] [data-part="dropall"]{
 margin-top:0.75rem;
@@ -168,6 +189,39 @@ const DEFAULT_SESSIONS: Dashboard020Session[] = [
   },
 ]
 
+const STATE_WORD: Record<string, string> = {
+  on: "включена",
+  off: "выключена",
+}
+
+const DEFAULT_RULES = [
+  "не короче 12 символов;",
+  "не совпадает с прошлыми тремя;",
+  "не содержит адрес почты.",
+]
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Безопасность аккаунта: смена пароля, двухфакторка и список сеансов
  * с завершением. Один файл, ноль зависимостей, собственная палитра.
@@ -181,12 +235,33 @@ export function Dashboard020({
   sessions = DEFAULT_SESSIONS,
   passwordChanged = "Пароль менялся 21 января",
   saveLabel = "Сменить пароль",
+  recoveryTotal = 10,
+  twoFactorTitle = "Двухфакторная защита",
+  stateText = STATE_WORD,
+  configureLabel = "Настроить",
+  enableLabel = "Включить",
+  codesText = "Запасных кодов осталось: {left} из {total}",
+  passwordTitle = "Пароль",
+  currentPasswordLabel = "Текущий пароль",
+  newPasswordLabel = "Новый пароль",
+  rules = DEFAULT_RULES,
+  sessionsTitle = "Активные сеансы",
+  currentDeviceLabel = "это устройство",
+  dropLabel = "Завершить",
+  dropAllLabel = "Завершить все, кроме текущего",
   accent,
+  background = "",
   className,
   style,
 }: Dashboard020Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-020-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-020-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -210,39 +285,43 @@ export function Dashboard020({
           <section
             data-part="card"
             data-on={twoFactorOn ? "true" : "false"}
-            aria-label="Двухфакторная защита"
+            aria-label={twoFactorTitle}
           >
             <div data-part="tworow">
-              <h3>Двухфакторная защита</h3>
+              <h3>{twoFactorTitle}</h3>
               <span data-part="state">
                 <span data-part="lamp" aria-hidden="true" />
-                {twoFactorOn ? "включена" : "выключена"}
+                {twoFactorOn
+                  ? (stateText.on ?? STATE_WORD.on)
+                  : (stateText.off ?? STATE_WORD.off)}
               </span>
               <button type="button" data-part="drop">
-                {twoFactorOn ? "Настроить" : "Включить"}
+                {twoFactorOn ? configureLabel : enableLabel}
               </button>
             </div>
             <p data-part="twohint">{twoFactorHint}</p>
             <p data-part="codes">
-              Запасных кодов осталось: {recoveryLeft} из 10
+              {codesText
+                .replace("{left}", String(recoveryLeft))
+                .replace("{total}", String(recoveryTotal))}
             </p>
           </section>
 
           <div data-part="grid">
-            <section data-part="card" aria-label="Смена пароля">
-              <h3>Пароль</h3>
+            <section data-part="card" aria-label={passwordTitle}>
+              <h3>{passwordTitle}</h3>
               <label data-part="field">
-                <span data-part="fieldlabel">Текущий пароль</span>
+                <span data-part="fieldlabel">{currentPasswordLabel}</span>
                 <input type="password" autoComplete="current-password" />
               </label>
               <label data-part="field">
-                <span data-part="fieldlabel">Новый пароль</span>
+                <span data-part="fieldlabel">{newPasswordLabel}</span>
                 <input type="password" autoComplete="new-password" />
               </label>
               <ul data-part="rule">
-                <li>не короче 12 символов;</li>
-                <li>не совпадает с прошлыми тремя;</li>
-                <li>не содержит адрес почты.</li>
+                {rules.map((rule) => (
+                  <li key={rule}>{rule}</li>
+                ))}
               </ul>
               <button type="button" data-part="primary">
                 {saveLabel}
@@ -250,17 +329,17 @@ export function Dashboard020({
               <p data-part="codes">{passwordChanged}</p>
             </section>
 
-            <section data-part="card" aria-label="Активные сеансы">
-              <h3>Активные сеансы</h3>
+            <section data-part="card" aria-label={sessionsTitle}>
+              <h3>{sessionsTitle}</h3>
               <ul data-part="sessions">
                 {sessions.map((session) => (
                   <li key={session.device} data-part="session">
                     <p data-part="device">{session.device}</p>
                     {session.current ? (
-                      <span data-part="now">это устройство</span>
+                      <span data-part="now">{currentDeviceLabel}</span>
                     ) : (
                       <button type="button" data-part="drop">
-                        Завершить
+                        {dropLabel}
                       </button>
                     )}
                     <p data-part="where">
@@ -270,7 +349,7 @@ export function Dashboard020({
                 ))}
               </ul>
               <button type="button" data-part="dropall">
-                Завершить все, кроме текущего
+                {dropAllLabel}
               </button>
             </section>
           </div>

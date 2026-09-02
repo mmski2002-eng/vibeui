@@ -13,8 +13,12 @@ export type Alertdialog007Props = Omit<
   optionLabel?: string
   optionHint?: string
   confirm?: string
+  /** Подпись кнопки при включённой галочке: {action} подставляет confirm. */
+  confirmWithOption?: string
   cancel?: string
   accent?: string
+  /** Подложка окна и кнопки открытия. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: подтверждение с побочным решением. Галочка «уведомить
@@ -25,12 +29,14 @@ export type Alertdialog007Props = Omit<
 // что именно произойдёт, а не только «Подтвердить».
 const STYLES = `
 :where([data-vibeui-block="alertdialog-007"]){
---vibeui-alertdialog-007-bg:oklch(1 0 0);
---vibeui-alertdialog-007-panel:oklch(0.97 0.003 265);
---vibeui-alertdialog-007-fg:oklch(0.22 0.014 265);
---vibeui-alertdialog-007-muted:oklch(0.55 0.014 265);
---vibeui-alertdialog-007-border:oklch(0.9 0.006 265);
---vibeui-alertdialog-007-accent:oklch(0.55 0.2 262);
+--vibeui-alertdialog-007-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-alertdialog-007-panel:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.01 265));
+--vibeui-alertdialog-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-alertdialog-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-alertdialog-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-alertdialog-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
+--vibeui-alertdialog-007-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0.03 262));
+--vibeui-alertdialog-007-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.02 0.01 265 / 70%));
 --vibeui-alertdialog-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="alertdialog-007"]{
@@ -49,10 +55,10 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 margin:auto;width:min(23rem,calc(100vw - 2rem));padding:1.125rem;
 border:1px solid var(--vibeui-alertdialog-007-border);border-radius:0.875rem;
 background:var(--vibeui-alertdialog-007-bg);color:var(--vibeui-alertdialog-007-fg);
-box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 55%);
+box-shadow:0 24px 60px -24px var(--vibeui-alertdialog-007-shadow);
 font-family:var(--vibeui-alertdialog-007-font);
 }
-[data-vibeui-block="alertdialog-007"] dialog::backdrop{background:oklch(0.2 0.02 265 / 45%)}
+[data-vibeui-block="alertdialog-007"] dialog::backdrop{background:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.08 0.014 265 / 62%))}
 [data-vibeui-block="alertdialog-007"] h2{margin:0 0 0.375rem;font-size:1rem;font-weight:700;line-height:1.3}
 [data-vibeui-block="alertdialog-007"] [data-part="text"]{margin:0 0 0.875rem;font-size:0.8125rem;line-height:1.55;color:var(--vibeui-alertdialog-007-muted)}
 /* Побочное решение здесь же: его принимают один раз и в этот момент. */
@@ -73,7 +79,7 @@ background:var(--vibeui-alertdialog-007-accent);border-color:var(--vibeui-alertd
 [data-vibeui-block="alertdialog-007"] input:checked::after{
 content:"";position:absolute;left:0.3rem;top:0.1rem;
 width:0.2rem;height:0.45rem;
-border:solid oklch(1 0 0);border-width:0 2px 2px 0;transform:rotate(45deg);
+border:solid var(--vibeui-alertdialog-007-on-accent);border-width:0 2px 2px 0;transform:rotate(45deg);
 }
 [data-vibeui-block="alertdialog-007"] input:focus-visible{outline:2px solid var(--vibeui-alertdialog-007-accent);outline-offset:2px}
 [data-vibeui-block="alertdialog-007"] [data-part="olabel"]{display:flex;flex-direction:column;gap:0.125rem;font-size:0.8125rem;font-weight:600}
@@ -83,13 +89,35 @@ border:solid oklch(1 0 0);border-width:0 2px 2px 0;transform:rotate(45deg);
 flex:1 1 0;appearance:none;cursor:pointer;height:2.375rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="alertdialog-007"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-007-accent);color:oklch(1 0 0)}
+[data-vibeui-block="alertdialog-007"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-007-accent);color:var(--vibeui-alertdialog-007-on-accent)}
 [data-vibeui-block="alertdialog-007"] [data-part="cancel"]{
 border:1px solid var(--vibeui-alertdialog-007-border);background:var(--vibeui-alertdialog-007-bg);color:inherit;
 }
 [data-vibeui-block="alertdialog-007"] dialog button:focus-visible{outline:2px solid var(--vibeui-alertdialog-007-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="alertdialog-007"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Подтверждение с побочным решением: галочка меняет и подпись главной кнопки.
@@ -102,8 +130,10 @@ export function Alertdialog007({
   optionLabel = "Сообщить участникам",
   optionHint = "Письмо о новой версии получат 4 участника проекта",
   confirm = "Опубликовать",
+  confirmWithOption = "{action} и сообщить",
   cancel = "Отменить",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -114,6 +144,12 @@ export function Alertdialog007({
 
   const palette = {
     ...(accent ? { "--vibeui-alertdialog-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-alertdialog-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -158,7 +194,9 @@ export function Alertdialog007({
               data-part="confirm"
               onClick={() => box.current?.close()}
             >
-              {notify ? `${confirm} и сообщить` : confirm}
+              {notify
+                ? confirmWithOption.replace("{action}", confirm)
+                : confirm}
             </button>
             <button
               type="button"

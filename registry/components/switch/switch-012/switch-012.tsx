@@ -16,6 +16,10 @@ export type Switch012Props = Omit<
   legend?: string
   masterLabel?: string
   items?: Switch012Item[]
+  /** Счётчик под общим тумблером: {on} и {total} подставляются числами. */
+  statusText?: string
+  /** Пусто — подложки нет, карточка держится рамкой на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,14 +30,14 @@ export type Switch012Props = Omit<
 // tri-state у роли switch формально не описан спецификацией ARIA.
 const STYLES = `
 :where([data-vibeui-block="switch-012"]){
---vibeui-switch-012-bg:oklch(1 0 0);
---vibeui-switch-012-fg:oklch(0.22 0.014 265);
---vibeui-switch-012-muted:oklch(0.55 0.014 265);
---vibeui-switch-012-border:oklch(0.91 0.006 265);
---vibeui-switch-012-track:oklch(0.88 0.008 265);
---vibeui-switch-012-thumb:oklch(1 0 0);
---vibeui-switch-012-accent:oklch(0.55 0.19 262);
---vibeui-switch-012-hover:oklch(0.55 0.02 265 / 6%);
+--vibeui-switch-012-bg:transparent;
+--vibeui-switch-012-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-switch-012-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-switch-012-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-switch-012-track:light-dark(oklch(0.88 0.008 265),oklch(0.43 0.014 265));
+--vibeui-switch-012-thumb:light-dark(oklch(1 0 0),oklch(0.93 0.004 265));
+--vibeui-switch-012-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.16 262));
+--vibeui-switch-012-hover:light-dark(oklch(0.55 0.02 265 / 6%),oklch(0.88 0.02 265 / 10%));
 --vibeui-switch-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="switch-012"]{
@@ -98,6 +102,28 @@ const DEFAULT_ITEMS: Switch012Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Группа переключателей с общим тумблером «включить всё»: индетерминированное
  * состояние и текстовый статус вместо гадания по цвету.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -106,6 +132,8 @@ export function Switch012({
   legend = "Каналы уведомлений",
   masterLabel = "Включить всё",
   items = DEFAULT_ITEMS,
+  statusText = "Включено {on} из {total}",
+  background = "",
   accent,
   className,
   style,
@@ -135,6 +163,12 @@ export function Switch012({
 
   const palette = {
     ...(accent ? { "--vibeui-switch-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-switch-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -154,7 +188,9 @@ export function Switch012({
           <span data-part="master-text">
             <span data-part="master-title">{masterLabel}</span>
             <span data-part="master-status" role="status">
-              Включено {onCount} из {total}
+              {statusText
+                .replace("{on}", String(onCount))
+                .replace("{total}", String(total))}
             </span>
           </span>
           <span data-part="track">

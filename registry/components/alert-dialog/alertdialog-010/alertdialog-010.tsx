@@ -13,9 +13,16 @@ export type Alertdialog010Props = Omit<
   toPlan?: string
   losses?: string[]
   keeps?: string[]
+  /** Заголовок колонки потерь. */
+  lossesTitle?: string
+  /** Заголовок колонки сохранённого. */
+  keepsTitle?: string
   when?: string
   confirm?: string
   cancel?: string
+  accent?: string
+  /** Подложка окна и кнопки открытия. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: понижение тарифа. Здесь важнее не «вы уверены», а что
@@ -26,14 +33,17 @@ export type Alertdialog010Props = Omit<
 // оплаченного периода, а не сейчас.
 const STYLES = `
 :where([data-vibeui-block="alertdialog-010"]){
---vibeui-alertdialog-010-bg:oklch(1 0 0);
---vibeui-alertdialog-010-panel:oklch(0.97 0.003 265);
---vibeui-alertdialog-010-fg:oklch(0.22 0.014 265);
---vibeui-alertdialog-010-muted:oklch(0.55 0.014 265);
---vibeui-alertdialog-010-border:oklch(0.9 0.006 265);
---vibeui-alertdialog-010-accent:oklch(0.55 0.2 262);
---vibeui-alertdialog-010-loss:oklch(0.57 0.19 25);
---vibeui-alertdialog-010-keep:oklch(0.58 0.14 152);
+--vibeui-alertdialog-010-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-alertdialog-010-panel:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.01 265));
+--vibeui-alertdialog-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-alertdialog-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-alertdialog-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-alertdialog-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
+--vibeui-alertdialog-010-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0.03 262));
+--vibeui-alertdialog-010-loss:light-dark(oklch(0.57 0.19 25),oklch(0.74 0.17 25));
+--vibeui-alertdialog-010-keep:light-dark(oklch(0.52 0.14 152),oklch(0.76 0.14 152));
+--vibeui-alertdialog-010-when-bg:light-dark(oklch(0.55 0.2 262 / 8%),oklch(0.72 0.18 262 / 14%));
+--vibeui-alertdialog-010-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.02 0.01 265 / 70%));
 --vibeui-alertdialog-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -53,10 +63,10 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 margin:auto;width:min(26rem,calc(100vw - 2rem));padding:1.125rem;
 border:1px solid var(--vibeui-alertdialog-010-border);border-radius:0.875rem;
 background:var(--vibeui-alertdialog-010-bg);color:var(--vibeui-alertdialog-010-fg);
-box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 55%);
+box-shadow:0 24px 60px -24px var(--vibeui-alertdialog-010-shadow);
 font-family:var(--vibeui-alertdialog-010-font);
 }
-[data-vibeui-block="alertdialog-010"] dialog::backdrop{background:oklch(0.2 0.02 265 / 45%)}
+[data-vibeui-block="alertdialog-010"] dialog::backdrop{background:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.08 0.014 265 / 62%))}
 [data-vibeui-block="alertdialog-010"] h2{margin:0 0 0.375rem;font-size:1rem;font-weight:700;line-height:1.3}
 [data-vibeui-block="alertdialog-010"] [data-part="move"]{
 display:flex;align-items:center;gap:0.5rem;margin:0 0 0.875rem;
@@ -86,7 +96,7 @@ margin:0 0 0.375rem;font-size:0.6875rem;font-weight:700;letter-spacing:0.03em;te
 /* Дата перехода: понижение вступает в силу в конце оплаченного периода. */
 [data-vibeui-block="alertdialog-010"] [data-part="when"]{
 margin:0 0 0.875rem;padding:0.5rem 0.625rem;border-radius:0.5rem;
-background:oklch(0.55 0.2 262 / 8%);
+background:var(--vibeui-alertdialog-010-when-bg);
 font-size:0.75rem;line-height:1.45;
 }
 [data-vibeui-block="alertdialog-010"] [data-part="actions"]{display:flex;flex-direction:row-reverse;gap:0.5rem}
@@ -94,7 +104,7 @@ font-size:0.75rem;line-height:1.45;
 flex:1 1 0;appearance:none;cursor:pointer;height:2.375rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="alertdialog-010"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-010-accent);color:oklch(1 0 0)}
+[data-vibeui-block="alertdialog-010"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-010-accent);color:var(--vibeui-alertdialog-010-on-accent)}
 [data-vibeui-block="alertdialog-010"] [data-part="cancel"]{
 border:1px solid var(--vibeui-alertdialog-010-border);background:var(--vibeui-alertdialog-010-bg);color:inherit;
 }
@@ -115,6 +125,28 @@ const DEFAULT_KEEPS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Понижение тарифа: что исчезнет и что останется, двумя списками рядом.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -125,14 +157,29 @@ export function Alertdialog010({
   toPlan = "Старт",
   losses = DEFAULT_LOSSES,
   keeps = DEFAULT_KEEPS,
+  lossesTitle = "Пропадёт",
+  keepsTitle = "Останется",
   when = "Тариф сменится 1 апреля, когда закончится оплаченный период. До этой даты всё работает как раньше, а деньги за остаток не сгорают.",
   confirm = "Понизить тариф",
   cancel = "Оставить как есть",
+  accent,
+  background = "",
   className,
   style,
   ...props
 }: Alertdialog010Props) {
   const box = useRef<HTMLDialogElement>(null)
+
+  const palette = {
+    ...(accent ? { "--vibeui-alertdialog-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-alertdialog-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -143,7 +190,7 @@ export function Alertdialog010({
         {...props}
         data-vibeui-block="alertdialog-010"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <button
           type="button"
@@ -163,7 +210,7 @@ export function Alertdialog010({
 
           <div data-part="lists">
             <div data-part="col" data-kind="loss">
-              <p data-part="ctitle">Пропадёт</p>
+              <p data-part="ctitle">{lossesTitle}</p>
               <ul>
                 {losses.map((loss) => (
                   <li key={loss}>
@@ -176,7 +223,7 @@ export function Alertdialog010({
               </ul>
             </div>
             <div data-part="col" data-kind="keep">
-              <p data-part="ctitle">Останется</p>
+              <p data-part="ctitle">{keepsTitle}</p>
               <ul>
                 {keeps.map((keep) => (
                   <li key={keep}>

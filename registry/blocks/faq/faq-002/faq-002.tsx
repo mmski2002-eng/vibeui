@@ -9,6 +9,8 @@ export type Faq002Props = {
   title?: string
   description?: string
   items?: Faq002Item[]
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -18,14 +20,17 @@ export type Faq002Props = {
 // grid: так порядок вопросов остаётся вертикальным — читают сверху вниз
 // левую колонку, потом правую, и нумерация не путается. break-inside
 // запрещает разрывать карточку между колонками.
+//
+// Тема приходит из color-scheme окружения через light-dark(): подложки у
+// секции по умолчанию нет, она темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="faq-002"]){
---vibeui-faq-002-bg:oklch(1 0 0);
---vibeui-faq-002-card:oklch(0.98 0.004 255);
---vibeui-faq-002-ink:oklch(0.22 0.014 255);
---vibeui-faq-002-muted:oklch(0.5 0.014 255);
---vibeui-faq-002-border:oklch(0.91 0.006 255);
---vibeui-faq-002-accent:oklch(0.5 0.17 262);
+--vibeui-faq-002-bg:transparent;
+--vibeui-faq-002-card:light-dark(oklch(0.98 0.004 255),oklch(0.25 0.012 255));
+--vibeui-faq-002-ink:light-dark(oklch(0.22 0.014 255),oklch(0.95 0.005 255));
+--vibeui-faq-002-muted:light-dark(oklch(0.5 0.014 255),oklch(0.72 0.012 255));
+--vibeui-faq-002-border:light-dark(oklch(0.91 0.006 255),oklch(0.35 0.012 255));
+--vibeui-faq-002-accent:light-dark(oklch(0.5 0.17 262),oklch(0.74 0.14 262));
 --vibeui-faq-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -115,17 +120,47 @@ const DEFAULT_ITEMS: Faq002Item[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Вопросы в две колонки: порядок вертикальный, карточки не рвутся. */
 export function Faq002({
   title = "Вопросы, которые задают до оплаты",
   description = "Собрали то, о чём чаще всего спрашивают в чате поддержки. Если вашего вопроса тут нет — напишите, мы добавим.",
   items = DEFAULT_ITEMS,
+  background = "",
   accent,
   className,
   style,
 }: Faq002Props) {
   const palette = {
     ...(accent ? { "--vibeui-faq-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-faq-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

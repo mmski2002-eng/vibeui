@@ -11,7 +11,23 @@ export type Ai011Props = {
   maxTokens?: number
   resetLabel?: string
   applyLabel?: string
+  /** Подпись ползунка температуры. */
+  temperatureLabel?: string
+  /** Подпись ползунка длины ответа. */
+  lengthLabel?: string
+  /** Подпись радиогруппы режимов. */
+  modeLabel?: string
+  /** Значение длины: {value} подставляется числом токенов. */
+  lengthText?: string
+  /** Следствия температуры по ключам low, mid, high. */
+  temperatureText?: Record<string, string>
+  /** Следствия длины ответа по ключам low, mid, high. */
+  lengthEffectText?: Record<string, string>
+  /** Десятичный разделитель в подписи температуры. */
+  decimalSeparator?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -29,12 +45,13 @@ export type Ai011Props = {
 // все варианты, а не прячет их в select.
 const STYLES = `
 :where([data-vibeui-block="ai-011"]){
---vibeui-ai-011-bg:oklch(1 0 0);
---vibeui-ai-011-soft:oklch(0.975 0.004 265);
---vibeui-ai-011-fg:oklch(0.21 0.014 265);
---vibeui-ai-011-muted:oklch(0.53 0.014 265);
---vibeui-ai-011-border:oklch(0.91 0.006 265);
---vibeui-ai-011-accent:oklch(0.53 0.16 285);
+--vibeui-ai-011-bg:transparent;
+--vibeui-ai-011-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-ai-011-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-ai-011-muted:light-dark(oklch(0.53 0.014 265),oklch(0.69 0.012 265));
+--vibeui-ai-011-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-ai-011-accent:light-dark(oklch(0.53 0.16 285),oklch(0.76 0.14 285));
+--vibeui-ai-011-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 285));
 --vibeui-ai-011-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -89,7 +106,7 @@ border-top:1px solid var(--vibeui-ai-011-border);
 appearance:none;cursor:pointer;height:2.25rem;padding:0 1rem;border-radius:0.75rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="ai-011"] [data-part="apply"]{border:0;background:var(--vibeui-ai-011-accent);color:oklch(1 0 0)}
+[data-vibeui-block="ai-011"] [data-part="apply"]{border:0;background:var(--vibeui-ai-011-accent);color:var(--vibeui-ai-011-on-accent)}
 [data-vibeui-block="ai-011"] [data-part="reset"]{
 border:1px solid var(--vibeui-ai-011-border);background:none;color:inherit;margin-left:auto;
 }
@@ -103,20 +120,50 @@ border:1px solid var(--vibeui-ai-011-border);background:none;color:inherit;margi
 
 const DEFAULT_MODES = ["Точный", "Сбалансированный", "Свободный"]
 
-function temperatureEffect(value: number) {
-  if (value <= 0.3)
-    return "Почти всегда один и тот же ответ. Хорошо для фактов и кода."
-  if (value <= 0.8)
-    return "Формулировки меняются, суть держится. Обычный режим для текстов."
-  return "Заметный разброс: два запуска дадут разные ответы. Для идей и вариантов."
+const DEFAULT_TEMPERATURE_TEXT: Record<string, string> = {
+  low: "Почти всегда один и тот же ответ. Хорошо для фактов и кода.",
+  mid: "Формулировки меняются, суть держится. Обычный режим для текстов.",
+  high: "Заметный разброс: два запуска дадут разные ответы. Для идей и вариантов.",
 }
 
-function lengthEffect(value: number) {
-  if (value <= 400)
-    return "Короткий ответ: пара абзацев, длинное перечисление не поместится."
-  if (value <= 1200)
-    return "Средний ответ: разбор на несколько абзацев со списком."
-  return "Длинный ответ: развёрнутый разбор. Дольше ждать и дороже по расходу."
+const DEFAULT_LENGTH_TEXT: Record<string, string> = {
+  low: "Короткий ответ: пара абзацев, длинное перечисление не поместится.",
+  mid: "Средний ответ: разбор на несколько абзацев со списком.",
+  high: "Длинный ответ: развёрнутый разбор. Дольше ждать и дороже по расходу.",
+}
+
+function temperatureStep(value: number) {
+  if (value <= 0.3) return "low"
+  if (value <= 0.8) return "mid"
+  return "high"
+}
+
+function lengthStep(value: number) {
+  if (value <= 400) return "low"
+  if (value <= 1200) return "mid"
+  return "high"
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -131,15 +178,32 @@ export function Ai011({
   maxTokens = 900,
   resetLabel = "Вернуть по умолчанию",
   applyLabel = "Применить",
+  temperatureLabel = "Температура",
+  lengthLabel = "Длина ответа",
+  modeLabel = "Режим",
+  lengthText = "{value} токенов",
+  temperatureText = DEFAULT_TEMPERATURE_TEXT,
+  lengthEffectText = DEFAULT_LENGTH_TEXT,
+  decimalSeparator = ",",
   accent,
+  background = "",
   className,
   style,
 }: Ai011Props) {
   const [heat, setHeat] = useState(temperature)
   const [length, setLength] = useState(maxTokens)
 
+  const heatStep = temperatureStep(heat)
+  const sizeStep = lengthStep(length)
+
   const palette = {
     ...(accent ? { "--vibeui-ai-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-ai-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -163,9 +227,9 @@ export function Ai011({
           <div data-part="grid">
             <div data-part="row">
               <div data-part="row-top">
-                <label htmlFor="ai-011-temperature">Температура</label>
+                <label htmlFor="ai-011-temperature">{temperatureLabel}</label>
                 <output htmlFor="ai-011-temperature">
-                  {heat.toFixed(1).replace(".", ",")}
+                  {heat.toFixed(1).replace(".", decimalSeparator)}
                 </output>
               </div>
               <input
@@ -177,13 +241,18 @@ export function Ai011({
                 value={heat}
                 onChange={(event) => setHeat(Number(event.target.value))}
               />
-              <p data-part="effect">{temperatureEffect(heat)}</p>
+              <p data-part="effect">
+                {temperatureText[heatStep] ??
+                  DEFAULT_TEMPERATURE_TEXT[heatStep]}
+              </p>
             </div>
 
             <div data-part="row">
               <div data-part="row-top">
-                <label htmlFor="ai-011-length">Длина ответа</label>
-                <output htmlFor="ai-011-length">{length} токенов</output>
+                <label htmlFor="ai-011-length">{lengthLabel}</label>
+                <output htmlFor="ai-011-length">
+                  {lengthText.replace("{value}", String(length))}
+                </output>
               </div>
               <input
                 id="ai-011-length"
@@ -194,12 +263,14 @@ export function Ai011({
                 value={length}
                 onChange={(event) => setLength(Number(event.target.value))}
               />
-              <p data-part="effect">{lengthEffect(length)}</p>
+              <p data-part="effect">
+                {lengthEffectText[sizeStep] ?? DEFAULT_LENGTH_TEXT[sizeStep]}
+              </p>
             </div>
           </div>
 
           <fieldset>
-            <legend>Режим</legend>
+            <legend>{modeLabel}</legend>
             <div data-part="modes">
               {modes.map((mode, index) => (
                 <label key={mode} data-part="mode">

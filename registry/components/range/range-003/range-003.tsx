@@ -12,6 +12,14 @@ export type Range003Props = Omit<
   days?: number
   defaultFrom?: number
   defaultTo?: number
+  /** Подписи ручек для скринридера: компонент несёт русские. */
+  handleText?: Record<string, string>
+  /** Формы слова «ночь» по категориям Intl.PluralRules выбранной локали. */
+  nightsText?: Record<string, string>
+  /** Локаль подписей дат и выбора формы слова. */
+  locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,20 +29,25 @@ export type Range003Props = Omit<
 // Внутри двигаются номера дней от базовой даты: целые числа сравниваются и
 // шагают без арифметики с датами. Даты собираются через Date.UTC и печатаются
 // в UTC — иначе на минусовых поясах подпись съедет на день назад.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// фильтра по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="range-003"]){
---vibeui-range-003-surface:oklch(1 0 0);
---vibeui-range-003-shell:oklch(0.9 0.006 265);
---vibeui-range-003-fg:oklch(0.23 0.014 265);
---vibeui-range-003-muted:oklch(0.55 0.014 265);
---vibeui-range-003-track:oklch(0.93 0.006 265);
---vibeui-range-003-accent:oklch(0.52 0.16 210);
---vibeui-range-003-soft:oklch(0.52 0.16 210 / 12%);
+--vibeui-range-003-surface:transparent;
+--vibeui-range-003-knob:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-range-003-shell:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.011 265));
+--vibeui-range-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-range-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-range-003-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
+--vibeui-range-003-accent:light-dark(oklch(0.52 0.16 210),oklch(0.78 0.12 210));
+--vibeui-range-003-soft:light-dark(oklch(0.52 0.16 210 / 12%),oklch(0.78 0.12 210 / 20%));
+--vibeui-range-003-shadow:light-dark(oklch(0.2 0.02 265 / 25%),oklch(0 0 0 / 45%));
 --vibeui-range-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-range-003-from:0%;
 --vibeui-range-003-to:100%;
 }
-/* Своя светлая подложка: фильтр показывают поверх любого фона. */
+/* Подложки по умолчанию нет: фильтр ложится на фон страницы, плашку включает проп background. */
 [data-vibeui-block="range-003"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -72,13 +85,13 @@ appearance:none;background:none;pointer-events:none;
 [data-vibeui-block="range-003"] input::-webkit-slider-thumb{
 appearance:none;pointer-events:auto;cursor:pointer;margin-top:-0.3125rem;
 width:1rem;height:1rem;border-radius:9999px;
-background:var(--vibeui-range-003-surface);border:2px solid var(--vibeui-range-003-accent);
-box-shadow:0 1px 3px oklch(0.2 0.02 265 / 25%);
+background:var(--vibeui-range-003-knob);border:2px solid var(--vibeui-range-003-accent);
+box-shadow:0 1px 3px var(--vibeui-range-003-shadow);
 }
 [data-vibeui-block="range-003"] input::-moz-range-thumb{
 pointer-events:auto;cursor:pointer;box-sizing:border-box;
 width:1rem;height:1rem;border-radius:9999px;
-background:var(--vibeui-range-003-surface);border:2px solid var(--vibeui-range-003-accent);
+background:var(--vibeui-range-003-knob);border:2px solid var(--vibeui-range-003-accent);
 }
 [data-vibeui-block="range-003"] input:focus-visible{outline:2px solid var(--vibeui-range-003-accent);outline-offset:4px;border-radius:0.5rem}
 [data-vibeui-block="range-003"] [data-part="scale"]{
@@ -88,25 +101,61 @@ font-size:0.6875rem;color:var(--vibeui-range-003-muted);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="range-003"] *{animation:none!important;transition:none!important}}
 `
 
+const HANDLE_TEXT: Record<string, string> = {
+  from: "Дата заезда",
+  to: "Дата выезда",
+}
+
+const NIGHTS_TEXT: Record<string, string> = {
+  one: "ночь",
+  few: "ночи",
+  many: "ночей",
+  other: "ночей",
+}
+
 // Дата собирается в UTC и печатается в UTC: иначе на минусовых поясах подпись
 // съезжает на день назад.
-function dayLabel(startDate: string, offset: number) {
+function dayLabel(startDate: string, offset: number, locale: string) {
   const [year, month, day] = startDate.split("-").map(Number)
   const date = new Date(Date.UTC(year, month - 1, day + offset))
-  return date.toLocaleDateString("ru-RU", {
+  return date.toLocaleDateString(locale, {
     day: "numeric",
     month: "short",
     timeZone: "UTC",
   })
 }
 
-function nightsWord(count: number) {
-  const tail = count % 10
-  const teen = count % 100
-  if (teen > 10 && teen < 20) return "ночей"
-  if (tail === 1) return "ночь"
-  if (tail > 1 && tail < 5) return "ночи"
-  return "ночей"
+// Форму слова выбирает Intl по локали: в русском их три, и своя таблица
+// правил сломалась бы на любом другом языке.
+function nightsWord(
+  count: number,
+  locale: string,
+  nightsText: Record<string, string>,
+) {
+  const rule = new Intl.PluralRules(locale).select(count)
+  return nightsText[rule] ?? nightsText.other ?? NIGHTS_TEXT.other
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -119,6 +168,10 @@ export function Range003({
   days = 60,
   defaultFrom = 12,
   defaultTo = 19,
+  handleText = HANDLE_TEXT,
+  nightsText = NIGHTS_TEXT,
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -132,6 +185,12 @@ export function Range003({
     "--vibeui-range-003-from": percent(from),
     "--vibeui-range-003-to": percent(to),
     ...(accent ? { "--vibeui-range-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-range-003-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -148,11 +207,11 @@ export function Range003({
       >
         <p data-part="label">{label}</p>
         <p data-part="dates" aria-live="polite">
-          <span data-part="date">{dayLabel(startDate, from)}</span>
+          <span data-part="date">{dayLabel(startDate, from, locale)}</span>
           <span data-part="nights">
-            {to - from} {nightsWord(to - from)}
+            {to - from} {nightsWord(to - from, locale, nightsText)}
           </span>
-          <span data-part="date">{dayLabel(startDate, to)}</span>
+          <span data-part="date">{dayLabel(startDate, to, locale)}</span>
         </p>
         <div data-part="rail">
           <input
@@ -161,8 +220,8 @@ export function Range003({
             max={days}
             step={1}
             value={from}
-            aria-label="Дата заезда"
-            aria-valuetext={dayLabel(startDate, from)}
+            aria-label={handleText.from ?? HANDLE_TEXT.from}
+            aria-valuetext={dayLabel(startDate, from, locale)}
             onChange={(event) =>
               setFrom(Math.min(Number(event.target.value), to - 1))
             }
@@ -173,16 +232,16 @@ export function Range003({
             max={days}
             step={1}
             value={to}
-            aria-label="Дата выезда"
-            aria-valuetext={dayLabel(startDate, to)}
+            aria-label={handleText.to ?? HANDLE_TEXT.to}
+            aria-valuetext={dayLabel(startDate, to, locale)}
             onChange={(event) =>
               setTo(Math.max(Number(event.target.value), from + 1))
             }
           />
         </div>
         <p data-part="scale">
-          <span>{dayLabel(startDate, 0)}</span>
-          <span>{dayLabel(startDate, days)}</span>
+          <span>{dayLabel(startDate, 0, locale)}</span>
+          <span>{dayLabel(startDate, days, locale)}</span>
         </p>
       </div>
     </>

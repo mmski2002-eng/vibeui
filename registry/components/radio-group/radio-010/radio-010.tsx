@@ -15,6 +15,8 @@ export type Radio010Props = Omit<
   options?: Radio010Option[]
   name?: string
   defaultValue?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,15 +24,17 @@ export type Radio010Props = Omit<
 // без единой подложки, которая переезжает между сегментами. Каждый сегмент
 // красится сам по себе через :has(input:checked), поэтому раскладка не
 // завязана на порядок и количество вариантов, как это нужно у подложки.
+//
+// Тема берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="radio-010"]){
---vibeui-radio-010-bg:oklch(1 0 0);
---vibeui-radio-010-fg:oklch(0.22 0.014 265);
---vibeui-radio-010-muted:oklch(0.5 0.014 265);
---vibeui-radio-010-border:oklch(0.91 0.006 265);
---vibeui-radio-010-rail:oklch(0.97 0.003 265);
---vibeui-radio-010-accent:oklch(0.52 0.17 235);
---vibeui-radio-010-on-accent:oklch(1 0 0);
+--vibeui-radio-010-bg:transparent;
+--vibeui-radio-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-010-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-radio-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-radio-010-rail:light-dark(oklch(0.97 0.003 265),oklch(0.29 0.008 265));
+--vibeui-radio-010-accent:light-dark(oklch(0.52 0.17 235),oklch(0.66 0.15 235));
+--vibeui-radio-010-on-accent:light-dark(oklch(1 0 0),oklch(0.15 0.02 235));
 --vibeui-radio-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-radio-010-count:3;
 }
@@ -94,6 +98,28 @@ const DEFAULT_OPTIONS: Radio010Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сегментированный переключатель вида с иконками: заливка сегмента по
  * :has(), без общей подложки. Один файл, ноль зависимостей, своя палитра.
  */
@@ -102,6 +128,7 @@ export function Radio010({
   options = DEFAULT_OPTIONS,
   name = "vibeui-radio-010",
   defaultValue = "grid",
+  background = "",
   accent,
   className,
   style,
@@ -110,6 +137,12 @@ export function Radio010({
   const palette = {
     "--vibeui-radio-010-count": String(options.length),
     ...(accent ? { "--vibeui-radio-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-radio-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

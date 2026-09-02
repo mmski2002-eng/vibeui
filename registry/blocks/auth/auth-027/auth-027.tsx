@@ -14,6 +14,32 @@ export type Auth027Props = {
   needed?: string
   admins?: Auth027Admin[]
   submit?: string
+  /** Учётная запись, под которой вошли. */
+  account?: string
+  /** Пояснение под заголовком; {account} подставляется учётной записью. */
+  lead?: string
+  /** Текущая роль вошедшего. */
+  role?: string
+  /** Заголовок таблицы фактов. */
+  factsTitle?: string
+  /** Подпись строки с адресом страницы. */
+  resourceLabel?: string
+  /** Подпись строки с требуемым правом. */
+  neededLabel?: string
+  /** Подпись строки с текущей ролью. */
+  roleLabel?: string
+  /** Заголовок списка администраторов. */
+  adminsTitle?: string
+  /** Подпись поля причины. */
+  reasonLabel?: string
+  /** Подсказка в поле причины. */
+  reasonPlaceholder?: string
+  /** Сообщение после отправки запроса. */
+  sentText?: string
+  /** Ссылка на общий каталог. */
+  backText?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -40,17 +66,24 @@ function hue(name: string) {
 // запрос ушёл, — так человек видит, что его действие сработало, и не жмёт
 // кнопку повторно.
 //
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не носит собственной подложки.
+//
 // Демонстрация интерфейса: запрос никуда не отправляется, права проверяет сервер.
 const STYLES = `
 :where([data-vibeui-block="auth-027"]){
---vibeui-auth-027-bg:oklch(0.96 0.004 265);
---vibeui-auth-027-card:oklch(1 0 0);
---vibeui-auth-027-fg:oklch(0.22 0.014 265);
---vibeui-auth-027-muted:oklch(0.54 0.014 265);
---vibeui-auth-027-border:oklch(0.9 0.006 265);
---vibeui-auth-027-accent:oklch(0.5 0.13 250);
---vibeui-auth-027-warn:oklch(0.6 0.15 70);
---vibeui-auth-027-ok:oklch(0.55 0.13 152);
+--vibeui-auth-027-bg:transparent;
+--vibeui-auth-027-card:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
+--vibeui-auth-027-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-auth-027-muted:light-dark(oklch(0.54 0.014 265),oklch(0.71 0.012 265));
+--vibeui-auth-027-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-auth-027-accent:light-dark(oklch(0.5 0.13 250),oklch(0.76 0.12 252));
+--vibeui-auth-027-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 252));
+--vibeui-auth-027-warn:light-dark(oklch(0.6 0.15 70),oklch(0.81 0.13 75));
+--vibeui-auth-027-warn-soft:light-dark(oklch(0.6 0.15 70 / 14%),oklch(0.81 0.13 75 / 18%));
+--vibeui-auth-027-ok:light-dark(oklch(0.55 0.13 152),oklch(0.78 0.12 152));
+--vibeui-auth-027-ok-soft:light-dark(oklch(0.55 0.13 152 / 10%),oklch(0.78 0.12 152 / 16%));
+--vibeui-auth-027-soft:light-dark(oklch(0.55 0.02 265 / 5%),oklch(0.82 0.02 265 / 8%));
 --vibeui-auth-027-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -73,7 +106,7 @@ border:1px solid var(--vibeui-auth-027-border);border-radius:1rem;
 [data-vibeui-block="auth-027"] [data-part="glyph"]{
 flex:none;display:inline-flex;align-items:center;justify-content:center;
 width:2.5rem;height:2.5rem;border-radius:0.75rem;
-background:oklch(0.6 0.15 70 / 14%);color:var(--vibeui-auth-027-warn);
+background:var(--vibeui-auth-027-warn-soft);color:var(--vibeui-auth-027-warn);
 font-size:1.125rem;line-height:1;
 }
 [data-vibeui-block="auth-027"] h2{margin:0 0 0.25rem;font-size:1.25rem;font-weight:700;letter-spacing:-0.015em}
@@ -83,7 +116,7 @@ font-size:1.125rem;line-height:1;
 [data-vibeui-block="auth-027"] [data-part="fact"]{
 display:flex;justify-content:space-between;gap:0.75rem;
 padding:0.5rem 0.6875rem;border-radius:0.625rem;
-background:oklch(0.55 0.02 265 / 5%);font-size:0.8125rem;
+background:var(--vibeui-auth-027-soft);font-size:0.8125rem;
 }
 [data-vibeui-block="auth-027"] [data-part="fkey"]{color:var(--vibeui-auth-027-muted)}
 [data-vibeui-block="auth-027"] [data-part="fval"]{font-weight:650;text-align:right}
@@ -108,7 +141,7 @@ background:var(--vibeui-auth-027-card);color:inherit;font:inherit;font-size:0.87
 [data-vibeui-block="auth-027"] [data-part="submit"]{
 width:100%;margin-top:0.75rem;appearance:none;cursor:pointer;height:2.625rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-027-accent);color:oklch(1 0 0);
+background:var(--vibeui-auth-027-accent);color:var(--vibeui-auth-027-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 transition:opacity .16s ease;
 }
@@ -116,7 +149,7 @@ transition:opacity .16s ease;
 [data-vibeui-block="auth-027"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-auth-027-accent);outline-offset:2px}
 [data-vibeui-block="auth-027"] [data-part="sent"]{
 margin:0;padding:0.875rem;border-radius:0.75rem;
-background:oklch(0.55 0.13 152 / 10%);color:var(--vibeui-auth-027-ok);
+background:var(--vibeui-auth-027-ok-soft);color:var(--vibeui-auth-027-ok);
 font-size:0.8125rem;line-height:1.5;font-weight:600;
 }
 [data-vibeui-block="auth-027"] [data-part="back"]{display:inline-block;margin-top:1rem;font-size:0.8125rem;color:var(--vibeui-auth-027-accent)}
@@ -129,6 +162,28 @@ const DEFAULT_ADMINS: Auth027Admin[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Экран «нет доступа» с запросом прав: что закрыто, какое право нужно,
  * кто его выдаёт и поле «зачем». Один файл, ноль зависимостей.
  */
@@ -138,6 +193,19 @@ export function Auth027({
   needed = "Право «Читатель приватных блоков»",
   admins = DEFAULT_ADMINS,
   submit = "Запросить доступ",
+  account = "anna@vibeui.ru",
+  lead = "Вы вошли как {account}, но у этой учётной записи нет прав на страницу. Это не ошибка входа — аккаунт в порядке.",
+  role = "Читатель",
+  factsTitle = "Что закрыто",
+  resourceLabel = "Страница",
+  neededLabel = "Нужно право",
+  roleLabel = "Ваша роль сейчас",
+  adminsTitle = "Кто выдаёт",
+  reasonLabel = "Зачем нужен доступ",
+  reasonPlaceholder = "Например: собираю лендинг для клиента, нужны приватные блоки студии.",
+  sentText = "Запрос отправлен обоим администраторам. Обычно отвечают в течение рабочего дня — придёт письмо, повторять не нужно.",
+  backText = "Вернуться в общий каталог",
+  background = "",
   accent,
   className,
   style,
@@ -147,6 +215,12 @@ export function Auth027({
 
   const palette = {
     ...(accent ? { "--vibeui-auth-027-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-027-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -168,32 +242,29 @@ export function Auth027({
             </span>
             <div>
               <h2>{title}</h2>
-              <p data-part="lead">
-                Вы вошли как anna@vibeui.ru, но у этой учётной записи нет прав
-                на страницу. Это не ошибка входа — аккаунт в порядке.
-              </p>
+              <p data-part="lead">{lead.replace("{account}", account)}</p>
             </div>
           </div>
 
           <div data-part="cols">
             <div>
-              <h3>Что закрыто</h3>
+              <h3>{factsTitle}</h3>
               <ul data-part="facts">
                 <li data-part="fact">
-                  <span data-part="fkey">Страница</span>
+                  <span data-part="fkey">{resourceLabel}</span>
                   <span data-part="fval">{resource}</span>
                 </li>
                 <li data-part="fact">
-                  <span data-part="fkey">Нужно право</span>
+                  <span data-part="fkey">{neededLabel}</span>
                   <span data-part="fval">{needed}</span>
                 </li>
                 <li data-part="fact">
-                  <span data-part="fkey">Ваша роль сейчас</span>
-                  <span data-part="fval">Читатель</span>
+                  <span data-part="fkey">{roleLabel}</span>
+                  <span data-part="fval">{role}</span>
                 </li>
               </ul>
 
-              <h3>Кто выдаёт</h3>
+              <h3>{adminsTitle}</h3>
               <ul data-part="admins">
                 {admins.map((admin) => (
                   <li
@@ -223,8 +294,7 @@ export function Auth027({
             <div>
               {sent ? (
                 <p data-part="sent" role="status">
-                  Запрос отправлен обоим администраторам. Обычно отвечают в
-                  течение рабочего дня — придёт письмо, повторять не нужно.
+                  {sentText}
                 </p>
               ) : (
                 <form
@@ -233,13 +303,11 @@ export function Auth027({
                     setSent(true)
                   }}
                 >
-                  <label htmlFor="vibeui-auth-027-reason">
-                    Зачем нужен доступ
-                  </label>
+                  <label htmlFor="vibeui-auth-027-reason">{reasonLabel}</label>
                   <textarea
                     id="vibeui-auth-027-reason"
                     name="reason"
-                    placeholder="Например: собираю лендинг для клиента, нужны приватные блоки студии."
+                    placeholder={reasonPlaceholder}
                     value={reason}
                     onChange={(event) => setReason(event.target.value)}
                   />
@@ -254,7 +322,7 @@ export function Auth027({
               )}
 
               <a data-part="back" href="#">
-                Вернуться в общий каталог
+                {backText}
               </a>
             </div>
           </div>

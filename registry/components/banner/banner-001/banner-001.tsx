@@ -11,19 +11,29 @@ export type Banner001Props = Omit<
   actionHref?: string
   /** Кнопка закрытия. Без обработчика полосу закрывать нечем. */
   onDismiss?: () => void
+  /** Подпись кнопки закрытия для скринридера. */
+  dismissLabel?: string
+  /** Имя области, когда метка пустая: полосу должно быть слышно. */
+  regionLabel?: string
   children?: ReactNode
   accent?: string
+  /** Подложка полосы. Пусто — остаётся собственная тёмная. */
+  background?: string
 }
 
 // Идея компонента: объявление на всю ширину, которое не притворяется
 // уведомлением об ошибке. Полоса тёмная и спокойная, действие — обычная
 // ссылка, а на узкой ширине она уходит на вторую строку, а не сжимает текст.
+//
+// Тёмная полоса — это дизайн, а не тема. Но на тёмной странице подложка 0.24
+// сливается с фоном, поэтому в тёмной ветке light-dark() она светлее: цвет
+// следует окружению, идея остаётся прежней.
 const STYLES = `
 :where([data-vibeui-block="banner-001"]){
---vibeui-banner-001-fg:oklch(0.96 0.003 265);
---vibeui-banner-001-muted:oklch(0.78 0.01 265);
---vibeui-banner-001-bg:oklch(0.24 0.016 265);
---vibeui-banner-001-accent:oklch(0.72 0.15 200);
+--vibeui-banner-001-fg:light-dark(oklch(0.96 0.003 265),oklch(0.95 0.004 265));
+--vibeui-banner-001-muted:light-dark(oklch(0.78 0.01 265),oklch(0.74 0.012 265));
+--vibeui-banner-001-bg:light-dark(oklch(0.24 0.016 265),oklch(0.31 0.014 265));
+--vibeui-banner-001-accent:light-dark(oklch(0.72 0.15 200),oklch(0.78 0.13 200));
 --vibeui-banner-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -81,14 +91,18 @@ export function Banner001({
   actionLabel = "Посмотреть",
   actionHref = "#",
   onDismiss,
+  dismissLabel = "Скрыть объявление",
+  regionLabel = "Объявление",
   children,
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Banner001Props) {
   const palette = {
     ...(accent ? { "--vibeui-banner-001-accent": accent } : null),
+    ...(background ? { "--vibeui-banner-001-bg": background } : null),
     ...style,
   } as CSSProperties
 
@@ -101,7 +115,7 @@ export function Banner001({
         {...props}
         data-vibeui-block="banner-001"
         role="region"
-        aria-label={tag || "Объявление"}
+        aria-label={tag || regionLabel}
         className={className}
         style={palette}
       >
@@ -117,7 +131,7 @@ export function Banner001({
             data-part="close"
             type="button"
             onClick={onDismiss}
-            aria-label="Скрыть объявление"
+            aria-label={dismissLabel}
           >
             ×
           </button>

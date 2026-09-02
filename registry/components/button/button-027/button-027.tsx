@@ -13,6 +13,8 @@ export type Button027Props = Omit<
   /** Пауза до разблокировки, секунды. */
   seconds?: number
   onResend?: () => void
+  /** Пусто — подложки нет, кнопка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,11 +25,11 @@ export type Button027Props = Omit<
 // нажатие запускает отсчёт заново.
 const STYLES = `
 :where([data-vibeui-block="button-027"]){
---vibeui-button-027-bg:oklch(1 0 0);
---vibeui-button-027-fg:oklch(0.26 0.016 265);
---vibeui-button-027-muted:oklch(0.56 0.014 265);
---vibeui-button-027-border:oklch(0.9 0.006 265);
---vibeui-button-027-accent:oklch(0.55 0.17 265);
+--vibeui-button-027-bg:transparent;
+--vibeui-button-027-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-button-027-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-button-027-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-button-027-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-button-027-left:1;
 --vibeui-button-027-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -54,6 +56,28 @@ mask:radial-gradient(closest-side,transparent 58%,#000 60%);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="button-027"] *{animation:none!important;transition:none!important}}
 `
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function clock(total: number) {
   const minutes = Math.floor(total / 60)
   const rest = total % 60
@@ -70,6 +94,7 @@ export function Button027({
   waitingLabel = "Повторно через",
   seconds = 30,
   onResend,
+  background = "",
   accent,
   type = "button",
   className,
@@ -91,6 +116,12 @@ export function Button027({
   const palette = {
     "--vibeui-button-027-left": String(seconds > 0 ? left / seconds : 0),
     ...(accent ? { "--vibeui-button-027-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-027-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

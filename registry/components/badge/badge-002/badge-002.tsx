@@ -15,8 +15,8 @@ const STYLES = `
 :where([data-vibeui-block="badge-002"]){
 --vibeui-badge-002-hue:265;
 --vibeui-badge-002-chroma:0.03;
---vibeui-badge-002-bg:oklch(0.93 var(--vibeui-badge-002-chroma) var(--vibeui-badge-002-hue));
---vibeui-badge-002-fg:oklch(0.36 calc(var(--vibeui-badge-002-chroma) * 2.2) var(--vibeui-badge-002-hue));
+--vibeui-badge-002-bg:light-dark(oklch(0.93 var(--vibeui-badge-002-chroma) var(--vibeui-badge-002-hue)),oklch(0.31 calc(var(--vibeui-badge-002-chroma) * 1.6) var(--vibeui-badge-002-hue)));
+--vibeui-badge-002-fg:light-dark(oklch(0.36 calc(var(--vibeui-badge-002-chroma) * 2.2) var(--vibeui-badge-002-hue)),oklch(0.9 calc(var(--vibeui-badge-002-chroma) * 1.4) var(--vibeui-badge-002-hue)));
 --vibeui-badge-002-radius:0.4375rem;
 --vibeui-badge-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

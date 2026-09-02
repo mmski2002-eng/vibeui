@@ -18,7 +18,15 @@ export type Autocomplete006Props = Omit<
   placeholder?: string
   items?: Autocomplete006Item[]
   defaultQuery?: string
+  /** Остаток на складе. {count} — число штук. */
+  stockText?: string
+  /** Подпись нулевого остатка. */
+  outOfStockLabel?: string
+  /** Строка вместо списка, когда ничего не нашлось. */
+  emptyLabel?: string
   onSelect?: (title: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,14 +36,15 @@ export type Autocomplete006Props = Omit<
 // подсвечен — его нельзя продать, но можно заказать.
 const STYLES = `
 :where([data-vibeui-block="autocomplete-006"]){
---vibeui-autocomplete-006-bg:oklch(1 0 0);
---vibeui-autocomplete-006-fg:oklch(0.22 0.014 265);
---vibeui-autocomplete-006-muted:oklch(0.52 0.014 265);
---vibeui-autocomplete-006-border:oklch(0.9 0.006 265);
---vibeui-autocomplete-006-field:oklch(0.985 0.002 265);
---vibeui-autocomplete-006-active:oklch(0.95 0.02 265);
---vibeui-autocomplete-006-accent:oklch(0.55 0.17 265);
---vibeui-autocomplete-006-warn:oklch(0.58 0.17 30);
+--vibeui-autocomplete-006-bg:transparent;
+--vibeui-autocomplete-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-autocomplete-006-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-autocomplete-006-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-autocomplete-006-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
+--vibeui-autocomplete-006-active:light-dark(oklch(0.95 0.02 265),oklch(0.33 0.028 265));
+--vibeui-autocomplete-006-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-autocomplete-006-warn:light-dark(oklch(0.58 0.17 30),oklch(0.75 0.15 30));
 --vibeui-autocomplete-006-radius:0.625rem;
 --vibeui-autocomplete-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -64,7 +73,7 @@ outline:2px solid var(--vibeui-autocomplete-006-accent);outline-offset:1px;borde
 margin:0;padding:0.25rem;list-style:none;max-height:14rem;overflow-y:auto;
 border:1px solid var(--vibeui-autocomplete-006-border);
 border-radius:var(--vibeui-autocomplete-006-radius);
-background:var(--vibeui-autocomplete-006-bg);
+background:var(--vibeui-autocomplete-006-panel);
 }
 /* Строка в две колонки: слева название и артикул, справа цена и остаток. */
 [data-vibeui-block="autocomplete-006"] [data-part="option"]{
@@ -109,6 +118,28 @@ const DEFAULT_ITEMS: Autocomplete006Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подсказка карточкой: название, артикул, цена и остаток в одной строке.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -117,7 +148,11 @@ export function Autocomplete006({
   placeholder = "Название или артикул",
   items = DEFAULT_ITEMS,
   defaultQuery = "кабель",
+  stockText = "{count} шт",
+  outOfStockLabel = "нет в наличии",
+  emptyLabel = "По запросу ничего не нашлось",
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -136,6 +171,12 @@ export function Autocomplete006({
 
   const palette = {
     ...(accent ? { "--vibeui-autocomplete-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-autocomplete-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -185,13 +226,15 @@ export function Autocomplete006({
               <span data-part="price">{item.price}</span>
               <span data-part="meta">{item.meta}</span>
               <span data-part="stock" data-empty={item.stock === 0}>
-                {item.stock === 0 ? "нет в наличии" : `${item.stock} шт`}
+                {item.stock === 0
+                  ? outOfStockLabel
+                  : stockText.replace("{count}", String(item.stock))}
               </span>
             </li>
           ))}
           {matches.length === 0 ? (
             <li data-part="empty" role="presentation">
-              По запросу ничего не нашлось
+              {emptyLabel}
             </li>
           ) : null}
         </ul>

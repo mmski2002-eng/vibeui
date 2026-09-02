@@ -13,19 +13,26 @@ export type Alert005Props = Omit<
   footnote?: ReactNode
   /** Без обработчика крестик не рисуется: кнопка, которая ничего не делает, обманывает. */
   onDismiss?: () => void
+  /** Подпись крестика для скринридера: компонент несёт русскую. */
+  closeLabel?: string
+  /** Пусто — подложки нет, сообщение лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: закрываемое сообщение. Крестик появляется только вместе с
 // обработчиком, а под текстом остаётся место для строки вроде «больше не
 // показывать» — потому что закрыть один раз и закрыть навсегда это разные
 // решения, и второе нельзя прятать в тот же крестик.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-005"]){
---vibeui-alert-005-fg:oklch(0.24 0.016 265);
---vibeui-alert-005-muted:oklch(0.5 0.014 265);
---vibeui-alert-005-bg:oklch(1 0 0);
---vibeui-alert-005-border:oklch(0.9 0.006 265);
---vibeui-alert-005-tone:oklch(0.58 0.18 262);
+--vibeui-alert-005-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-alert-005-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-005-bg:transparent;
+--vibeui-alert-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-005-tone:light-dark(oklch(0.58 0.18 262),oklch(0.74 0.16 262));
 --vibeui-alert-005-radius:0.75rem;
 --vibeui-alert-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -38,9 +45,9 @@ border-radius:var(--vibeui-alert-005-radius);
 background:var(--vibeui-alert-005-bg);color:var(--vibeui-alert-005-fg);
 font-family:var(--vibeui-alert-005-font);
 }
-[data-vibeui-block="alert-005"][data-tone="success"]{--vibeui-alert-005-tone:oklch(0.58 0.15 152)}
-[data-vibeui-block="alert-005"][data-tone="warning"]{--vibeui-alert-005-tone:oklch(0.68 0.15 70)}
-[data-vibeui-block="alert-005"][data-tone="danger"]{--vibeui-alert-005-tone:oklch(0.56 0.19 25)}
+[data-vibeui-block="alert-005"][data-tone="success"]{--vibeui-alert-005-tone:light-dark(oklch(0.58 0.15 152),oklch(0.75 0.14 152))}
+[data-vibeui-block="alert-005"][data-tone="warning"]{--vibeui-alert-005-tone:light-dark(oklch(0.68 0.15 70),oklch(0.81 0.14 75))}
+[data-vibeui-block="alert-005"][data-tone="danger"]{--vibeui-alert-005-tone:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25))}
 [data-vibeui-block="alert-005"] [data-part="rail"]{
 flex:none;width:0.25rem;align-self:stretch;border-radius:9999px;
 background:var(--vibeui-alert-005-tone);
@@ -79,6 +86,28 @@ outline:2px solid var(--vibeui-alert-005-tone);outline-offset:2px;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Закрываемое сообщение: крестик и строка «больше не показывать».
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -88,10 +117,22 @@ export function Alert005({
   description = "Изменения записываются каждые несколько секунд. Опубликовать их нужно отдельно — кнопкой в шапке проекта.",
   footnote = "Больше не показывать",
   onDismiss,
+  closeLabel = "Закрыть сообщение",
+  background = "",
   className,
   style,
   ...props
 }: Alert005Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-alert-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-alert-005" precedence="medium">
@@ -103,7 +144,7 @@ export function Alert005({
         data-tone={tone}
         role={tone === "danger" ? "alert" : "status"}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="rail" aria-hidden="true" />
         <span data-part="text">
@@ -118,7 +159,7 @@ export function Alert005({
             data-part="close"
             type="button"
             onClick={onDismiss}
-            aria-label="Закрыть сообщение"
+            aria-label={closeLabel}
           >
             ×
           </button>

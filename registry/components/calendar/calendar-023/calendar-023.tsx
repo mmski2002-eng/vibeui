@@ -1,7 +1,7 @@
 "use client"
 
-import { useMemo, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { Fragment, useMemo, useState } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
 
 export type Calendar023Props = Omit<
   ComponentPropsWithoutRef<"section">,
@@ -17,8 +17,18 @@ export type Calendar023Props = Omit<
   officeTo?: number
   locale?: string
   defaultHour?: number
+  /** Заголовок карточки. */
+  titleText?: string
+  /** Приписка к чужому времени вне рабочего дня; рисуется в ::after. */
+  offHoursText?: string
+  /** Строка итога. {home} и {away} выделяются жирным, остальное подставляется. */
+  summaryText?: string
+  /** Строка, когда слот не выбран. */
+  emptyText?: string
   onSelect?: (hour: number) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: созвон с другим городом срывается не из-за календаря,
@@ -27,14 +37,15 @@ export type Calendar023Props = Omit<
 // решение принимают глазами, не считая разницу.
 const STYLES = `
 :where([data-vibeui-block="calendar-023"]){
---vibeui-calendar-023-bg:oklch(1 0 0);
---vibeui-calendar-023-fg:oklch(0.23 0.014 285);
---vibeui-calendar-023-muted:oklch(0.57 0.014 285);
---vibeui-calendar-023-border:oklch(0.91 0.006 285);
---vibeui-calendar-023-soft:oklch(0.97 0.006 285);
---vibeui-calendar-023-accent:oklch(0.5 0.14 285);
---vibeui-calendar-023-accentsoft:oklch(0.95 0.04 285);
---vibeui-calendar-023-warn:oklch(0.58 0.13 55);
+--vibeui-calendar-023-bg:transparent;
+--vibeui-calendar-023-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.008 285));
+--vibeui-calendar-023-muted:light-dark(oklch(0.57 0.014 285),oklch(0.68 0.014 285));
+--vibeui-calendar-023-border:light-dark(oklch(0.91 0.006 285),oklch(0.35 0.012 285));
+--vibeui-calendar-023-soft:light-dark(oklch(0.97 0.006 285),oklch(0.29 0.012 285));
+--vibeui-calendar-023-accent:light-dark(oklch(0.5 0.14 285),oklch(0.72 0.13 285));
+--vibeui-calendar-023-accentsoft:light-dark(oklch(0.95 0.04 285),oklch(0.34 0.05 285));
+--vibeui-calendar-023-warn:light-dark(oklch(0.58 0.13 55),oklch(0.78 0.12 55));
+--vibeui-calendar-023-offhours:" вне часов";
 --vibeui-calendar-023-radius:0.75rem;
 --vibeui-calendar-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -93,7 +104,7 @@ text-align:right;font-size:0.9rem;font-weight:600;color:var(--vibeui-calendar-02
 color:var(--vibeui-calendar-023-warn);
 }
 [data-vibeui-block="calendar-023"] [data-part="slot"][data-offhours="true"] [data-part="away"]::after{
-content:" вне часов";font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.03em;
+content:var(--vibeui-calendar-023-offhours);font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.03em;
 }
 [data-vibeui-block="calendar-023"] [data-part="foot"]{
 margin:0;padding-top:0.6rem;border-top:1px solid var(--vibeui-calendar-023-border);
@@ -146,6 +157,28 @@ function cityOf(zone: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор слота созвона с двумя часовыми поясами в одной строке.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -159,8 +192,13 @@ export function Calendar023({
   officeTo = 19,
   locale = "ru-RU",
   defaultHour = 17,
+  titleText = "Слот созвона",
+  offHoursText = " вне часов",
+  summaryText = "{home} в городе {homeCity} — это {away}, {awayDate} в городе {awayCity}",
+  emptyText = "Слот не выбран",
   onSelect,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -222,8 +260,25 @@ export function Calendar023({
     month: "long",
   }).format(new Date(`${date}T12:00:00`))
 
+  const summaryPieces: Record<string, ReactNode> = picked
+    ? {
+        "{home}": <b>{picked.home}</b>,
+        "{away}": <b>{picked.away}</b>,
+        "{homeCity}": homeLabel ?? cityOf(homeZone),
+        "{awayCity}": awayLabel ?? cityOf(awayZone),
+        "{awayDate}": clock.awayDay.format(picked.instant),
+      }
+    : {}
+
   const palette = {
+    "--vibeui-calendar-023-offhours": `"${offHoursText}"`,
     ...(accent ? { "--vibeui-calendar-023-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-023-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -239,7 +294,7 @@ export function Calendar023({
         style={palette}
       >
         <header>
-          <h3 data-part="title">Слот созвона</h3>
+          <h3 data-part="title">{titleText}</h3>
           <p data-part="when">{heading}</p>
         </header>
         <div data-part="cols" aria-hidden="true">
@@ -270,15 +325,17 @@ export function Calendar023({
           ))}
         </ul>
         <p data-part="foot" aria-live="polite">
-          {picked ? (
-            <>
-              <b>{picked.home}</b> в городе {homeLabel ?? cityOf(homeZone)} —
-              это <b>{picked.away}</b>, {clock.awayDay.format(picked.instant)} в
-              городе {awayLabel ?? cityOf(awayZone)}
-            </>
-          ) : (
-            "Слот не выбран"
-          )}
+          {picked
+            ? summaryText
+                .split(
+                  /(\{home\}|\{away\}|\{homeCity\}|\{awayCity\}|\{awayDate\})/,
+                )
+                .map((piece, index) => (
+                  <Fragment key={index}>
+                    {summaryPieces[piece] ?? piece}
+                  </Fragment>
+                ))
+            : emptyText}
         </p>
       </section>
     </>

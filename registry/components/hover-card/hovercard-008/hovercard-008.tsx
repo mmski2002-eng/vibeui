@@ -13,6 +13,19 @@ export type Hovercard008Props = Omit<
   openIssues?: string
   lastCommit?: string
   license?: string
+  /** Текст строки до пилюли-ссылки. */
+  leadText?: string
+  /** Текст строки после пилюли-ссылки. */
+  tailText?: string
+  /** Подпись о последнем коммите: {commit} подставляется временем. */
+  commitText?: string
+  /** Подпись у счётчика звёзд. */
+  starsLabel?: string
+  /** Строка об открытых issue: {count} подставляется числом. */
+  issuesText?: string
+  accent?: string
+  /** Подложка всплывающей карточки. Пусто — цвет по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: не строчная упоминалка, а полноценный снимок репозитория —
@@ -20,17 +33,20 @@ export type Hovercard008Props = Omit<
 // хватает: когда был последний коммит и сколько открыто issue. Триггер —
 // компактная пилюля, а не подчёркнутая ссылка в тексте: так её видно сразу,
 // а не только при чтении абзаца целиком.
+//
+// Тема берётся из color-scheme окружения через light-dark(): собственной
+// тёмной темы у компонента нет, он следует за страницей.
 const STYLES = `
 :where([data-vibeui-block="hovercard-008"]){
---vibeui-hovercard-008-bg:oklch(1 0 0);
---vibeui-hovercard-008-fg:oklch(0.22 0.014 265);
---vibeui-hovercard-008-muted:oklch(0.53 0.014 265);
---vibeui-hovercard-008-border:oklch(0.9 0.006 265);
---vibeui-hovercard-008-fill:oklch(0.975 0.004 265);
---vibeui-hovercard-008-accent:oklch(0.5 0.16 260);
+--vibeui-hovercard-008-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-hovercard-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-hovercard-008-muted:light-dark(oklch(0.53 0.014 265),oklch(0.71 0.012 265));
+--vibeui-hovercard-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-hovercard-008-fill:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.012 265));
+--vibeui-hovercard-008-accent:light-dark(oklch(0.5 0.16 260),oklch(0.76 0.13 260));
 --vibeui-hovercard-008-lang:oklch(0.72 0.15 85);
---vibeui-hovercard-008-ok:oklch(0.5 0.13 155);
---vibeui-hovercard-008-warn:oklch(0.56 0.16 55);
+--vibeui-hovercard-008-ok:light-dark(oklch(0.5 0.13 155),oklch(0.75 0.14 155));
+--vibeui-hovercard-008-warn:light-dark(oklch(0.56 0.16 55),oklch(0.79 0.14 60));
 --vibeui-hovercard-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-hovercard-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
@@ -103,6 +119,28 @@ border:1px solid var(--vibeui-hovercard-008-border);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Снимок репозитория по наведению на пилюлю-ссылку: описание, язык, звёзды,
  * открытые issue и время последнего коммита. Раскрывается по hover и фокусу.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -117,12 +155,26 @@ export function Hovercard008({
   openIssues = "12",
   lastCommit = "3 часа назад",
   license = "MIT",
+  leadText = "Зависимость собрана на основе ",
+  tailText = ".",
+  commitText = "коммит {commit}",
+  starsLabel = "звёзд",
+  issuesText = "{count} открытых issue",
+  accent,
+  background = "",
   className,
   style,
   ...props
 }: Hovercard008Props) {
   const palette = {
     "--vibeui-hovercard-008-lang": languageColor,
+    ...(accent ? { "--vibeui-hovercard-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-hovercard-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -138,7 +190,7 @@ export function Hovercard008({
         style={palette}
       >
         <p data-part="lede">
-          Зависимость собрана на основе{" "}
+          {leadText}
           <span data-part="host">
             <a
               data-part="trigger"
@@ -158,7 +210,9 @@ export function Hovercard008({
                   <span data-part="owner">{owner}/</span>
                   <span data-part="repo">{repo}</span>
                 </span>
-                <span data-part="commit">коммит {lastCommit}</span>
+                <span data-part="commit">
+                  {commitText.replace("{commit}", lastCommit)}
+                </span>
               </span>
               <span data-part="about">{about}</span>
               <span data-part="stats">
@@ -167,16 +221,18 @@ export function Hovercard008({
                   {language}
                 </span>
                 <span data-part="stat">
-                  <span aria-hidden="true">★</span> <b>{stars}</b> звёзд
+                  <span aria-hidden="true">★</span> <b>{stars}</b> {starsLabel}
                 </span>
               </span>
               <span data-part="foot">
-                <span data-part="issues">{openIssues} открытых issue</span>
+                <span data-part="issues">
+                  {issuesText.replace("{count}", openIssues)}
+                </span>
                 <span data-part="license">{license}</span>
               </span>
             </span>
           </span>
-          .
+          {tailText}
         </p>
       </div>
     </>

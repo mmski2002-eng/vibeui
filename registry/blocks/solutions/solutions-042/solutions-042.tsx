@@ -23,7 +23,27 @@ export type Solutions042Props = {
   soonInDays?: number
   cases?: Solutions042Case[]
   foot?: string
+  /** Названия инстанций по ключу из поля instance. */
+  instanceText?: Record<string, string>
+  /** Чип инстанции. {instance} — название инстанции. */
+  instanceLabel?: string
+  /** Названия событий: filed, hearing, ruling, appeal. */
+  kindText?: Record<string, string>
+  /** Подписи плиток: cases, soon, appeals, total; {days} — окно «скоро». */
+  summaryText?: Record<string, string>
+  /** Подписи реквизитов: plaintiff, defendant, instance, claim. */
+  factText?: Record<string, string>
+  /** Стороны в свёрнутой карточке. {plaintiff} и {defendant}. */
+  partiesText?: string
+  /** Заголовок ленты событий. */
+  feedTitle?: string
+  /** Прошедшее событие. {days} — число дней. */
+  eventPastText?: string
+  /** Будущее событие. {days} — число дней. */
+  eventFutureText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -39,14 +59,14 @@ export type Solutions042Props = {
 // компоненте, поэтому просрочка и «сегодня» не разъезжаются с чипом.
 const STYLES = `
 :where([data-vibeui-block="solutions-042"]){
---vibeui-solutions-042-bg:oklch(1 0 0);
---vibeui-solutions-042-panel:oklch(0.976 0.004 260);
---vibeui-solutions-042-fg:oklch(0.21 0.014 265);
---vibeui-solutions-042-muted:oklch(0.54 0.014 265);
---vibeui-solutions-042-border:oklch(0.9 0.006 265);
---vibeui-solutions-042-accent:oklch(0.48 0.15 265);
---vibeui-solutions-042-urgent:oklch(0.57 0.19 25);
---vibeui-solutions-042-soon:oklch(0.65 0.15 75);
+--vibeui-solutions-042-bg:transparent;
+--vibeui-solutions-042-panel:light-dark(oklch(0.976 0.004 260),oklch(0.27 0.011 265));
+--vibeui-solutions-042-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-042-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-042-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-042-accent:light-dark(oklch(0.48 0.15 265),oklch(0.72 0.14 265));
+--vibeui-solutions-042-urgent:light-dark(oklch(0.57 0.19 25),oklch(0.71 0.17 25));
+--vibeui-solutions-042-soon:light-dark(oklch(0.65 0.15 75),oklch(0.78 0.14 75));
 --vibeui-solutions-042-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-042-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -155,11 +175,53 @@ margin:0;padding:0 1rem 1rem;font-size:0.75rem;color:var(--vibeui-solutions-042-
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="solutions-042"] *{animation:none!important;transition:none!important}}
 `
 
-const KIND_LABEL: Record<Solutions042Event["kind"], string> = {
+const KIND_LABEL: Record<string, string> = {
   filed: "подано",
   hearing: "заседание",
   ruling: "решение",
   appeal: "жалоба",
+}
+
+const INSTANCE_LABEL: Record<string, string> = {
+  первая: "первая",
+  апелляция: "апелляция",
+  кассация: "кассация",
+}
+
+const SUMMARY_LABEL: Record<string, string> = {
+  cases: "дел в производстве",
+  soon: "заседаний в ближайшие {days} дн.",
+  appeals: "в апелляции или кассации",
+  total: "всего дел в реестре",
+}
+
+const FACT_LABEL: Record<string, string> = {
+  plaintiff: "Истец",
+  defendant: "Ответчик",
+  instance: "Инстанция",
+  claim: "Сумма иска",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 const DEFAULT_CASES: Solutions042Case[] = [
@@ -260,10 +322,23 @@ export function Solutions042({
   soonInDays = 3,
   cases = DEFAULT_CASES,
   foot = "Раскройте дело, чтобы увидеть полные реквизиты и ленту процессуальных событий.",
+  instanceText = INSTANCE_LABEL,
+  instanceLabel = "{instance} инстанция",
+  kindText = KIND_LABEL,
+  summaryText = SUMMARY_LABEL,
+  factText = FACT_LABEL,
+  partiesText = "{plaintiff} против {defendant}",
+  feedTitle = "Лента событий",
+  eventPastText = "{days} дн. назад",
+  eventFutureText = "через {days} дн.",
   accent,
+  background = "",
   className,
   style,
 }: Solutions042Props) {
+  const summary = (key: string) => summaryText[key] ?? SUMMARY_LABEL[key]
+  const fact = (key: string) => factText[key] ?? FACT_LABEL[key]
+  const instance = (key: string) => instanceText[key] ?? key
   const inProgress = cases.length
   const appeals = cases.filter(
     (item) => item.instance === "апелляция" || item.instance === "кассация",
@@ -275,6 +350,12 @@ export function Solutions042({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-042-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-042-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -299,19 +380,19 @@ export function Solutions042({
         <div data-part="stats">
           <p data-part="tile">
             <b>{inProgress}</b>
-            <span>дел в производстве</span>
+            <span>{summary("cases")}</span>
           </p>
           <p data-part="tile">
             <b>{soon}</b>
-            <span>заседаний в ближайшие {soonInDays} дн.</span>
+            <span>{summary("soon").replace("{days}", String(soonInDays))}</span>
           </p>
           <p data-part="tile">
             <b>{appeals}</b>
-            <span>в апелляции или кассации</span>
+            <span>{summary("appeals")}</span>
           </p>
           <p data-part="tile">
             <b>{totalClaim}</b>
-            <span>всего дел в реестре</span>
+            <span>{summary("total")}</span>
           </p>
         </div>
 
@@ -324,9 +405,16 @@ export function Solutions042({
                   <summary data-part="case-summary">
                     <span data-part="number">{item.number}</span>
                     <span data-part="parties">
-                      {item.plaintiff} против {item.defendant}
+                      {partiesText
+                        .replace("{plaintiff}", item.plaintiff)
+                        .replace("{defendant}", item.defendant)}
                     </span>
-                    <span data-part="instance">{item.instance} инстанция</span>
+                    <span data-part="instance">
+                      {instanceLabel.replace(
+                        "{instance}",
+                        instance(item.instance),
+                      )}
+                    </span>
                     <span data-part="urgency" data-urgency={urgency}>
                       <span data-part="dot" aria-hidden="true" />
                       {item.hearing}
@@ -336,23 +424,23 @@ export function Solutions042({
                   <div data-part="body">
                     <dl data-part="facts">
                       <div>
-                        <dt>Истец</dt>
+                        <dt>{fact("plaintiff")}</dt>
                         <dd>{item.plaintiff}</dd>
                       </div>
                       <div>
-                        <dt>Ответчик</dt>
+                        <dt>{fact("defendant")}</dt>
                         <dd>{item.defendant}</dd>
                       </div>
                       <div>
-                        <dt>Инстанция</dt>
-                        <dd>{item.instance}</dd>
+                        <dt>{fact("instance")}</dt>
+                        <dd>{instance(item.instance)}</dd>
                       </div>
                       <div>
-                        <dt>Сумма иска</dt>
+                        <dt>{fact("claim")}</dt>
                         <dd>{item.claim}</dd>
                       </div>
                     </dl>
-                    <h3 data-part="feed-title">Лента событий</h3>
+                    <h3 data-part="feed-title">{feedTitle}</h3>
                     <ol data-part="feed">
                       {item.events.map((event) => (
                         <li
@@ -362,11 +450,17 @@ export function Solutions042({
                         >
                           <span data-part="event-day">
                             {event.day <= 0
-                              ? `${Math.abs(event.day)} дн. назад`
-                              : `через ${event.day} дн.`}
+                              ? eventPastText.replace(
+                                  "{days}",
+                                  String(Math.abs(event.day)),
+                                )
+                              : eventFutureText.replace(
+                                  "{days}",
+                                  String(event.day),
+                                )}
                           </span>
                           <span data-part="event-kind">
-                            {KIND_LABEL[event.kind]}
+                            {kindText[event.kind] ?? KIND_LABEL[event.kind]}
                           </span>
                           {event.label}
                         </li>

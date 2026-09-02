@@ -11,6 +11,15 @@ export type Tree005Node = {
 export type Tree005Props = {
   nodes?: Tree005Node[]
   label?: string
+  /** Подпись кнопки раскрытия; {name} — имя ветки. */
+  expandText?: string
+  /** Подпись кнопки сворачивания; {name} — имя ветки. */
+  collapseText?: string
+  /** Итог внизу; {checked} — выбрано, {total} — всего. */
+  totalText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  accent?: string
   className?: string
   style?: CSSProperties
 }
@@ -20,14 +29,18 @@ export type Tree005Props = {
 // родителя рано или поздно разойдутся. Третье состояние чекбокса в разметке
 // объявить нельзя: свойство indeterminate ставится узлу в эффекте, поэтому
 // ветка с частичным выбором не выглядит ни пустой, ни полной.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="tree-005"]){
---vibeui-tree-005-bg:oklch(1 0 0);
---vibeui-tree-005-fg:oklch(0.24 0.014 265);
---vibeui-tree-005-muted:oklch(0.56 0.014 265);
---vibeui-tree-005-border:oklch(0.9 0.006 265);
---vibeui-tree-005-hover:oklch(0.97 0.004 265);
---vibeui-tree-005-accent:oklch(0.53 0.19 265);
+--vibeui-tree-005-bg:transparent;
+--vibeui-tree-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-tree-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.67 0.012 265));
+--vibeui-tree-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-tree-005-hover:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.01 265));
+--vibeui-tree-005-panel:light-dark(oklch(0.97 0.004 265),oklch(0.28 0.01 265));
+--vibeui-tree-005-accent:light-dark(oklch(0.53 0.19 265),oklch(0.7 0.17 265));
 --vibeui-tree-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="tree-005"]{
@@ -79,7 +92,7 @@ font-weight:650;
 }
 [data-vibeui-block="tree-005"] [data-part="total"]{
 margin:0;padding:0.375rem 0.5rem;border-radius:0.5rem;
-background:oklch(0.97 0.004 265);
+background:var(--vibeui-tree-005-panel);
 font-size:0.6875rem;color:var(--vibeui-tree-005-muted);
 font-variant-numeric:tabular-nums;
 }
@@ -125,12 +138,39 @@ function leavesOf(node: Tree005Node, parent: string): string[] {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Дерево чекбоксов с честным третьим состоянием у частично выбранных веток.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tree005({
   nodes = DEFAULT_NODES,
   label = "Что присылать на почту",
+  expandText = "Развернуть «{name}»",
+  collapseText = "Свернуть «{name}»",
+  totalText = "Выбрано {checked} из {total}",
+  background = "",
+  accent,
   className,
   style,
 }: Tree005Props) {
@@ -210,11 +250,10 @@ export function Tree005({
                   <button
                     type="button"
                     data-part="caret"
-                    aria-label={
-                      expanded
-                        ? `Свернуть «${node.name}»`
-                        : `Развернуть «${node.name}»`
-                    }
+                    aria-label={(expanded ? collapseText : expandText).replace(
+                      "{name}",
+                      node.name,
+                    )}
                     onClick={() => toggleOpen(id)}
                   >
                     ▶
@@ -260,15 +299,29 @@ export function Tree005({
     }
   })
 
+  const [beforeCount, afterCount = ""] = totalText.split("{checked}")
+  const palette = {
+    ...(accent ? { "--vibeui-tree-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tree-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-tree-005" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="tree-005" className={className} style={style}>
+      <div data-vibeui-block="tree-005" className={className} style={palette}>
         {tree}
         <p data-part="total" role="status">
-          Выбрано <strong>{checked.size}</strong> из {allLeaves.length}
+          {beforeCount}
+          <strong>{checked.size}</strong>
+          {afterCount.replace("{total}", String(allLeaves.length))}
         </p>
       </div>
     </>

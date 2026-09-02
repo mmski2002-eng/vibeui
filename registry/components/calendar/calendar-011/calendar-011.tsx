@@ -9,6 +9,12 @@ export type Calendar011Props = Omit<
   marks?: string[]
   locale?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  /** Итог в шапке. {count} — число, {word} — форма слова из countWords. */
+  totalText?: string
+  /** Три формы слова: одна дата, две даты, пять дат. */
+  countWords?: [string, string, string]
 }
 
 // Идея компонента: год целиком — двенадцать миниатюр месяцев на одной
@@ -16,11 +22,12 @@ export type Calendar011Props = Omit<
 // год нужен, чтобы увидеть, где густо и где пусто, а не чтобы прочитать дату.
 const STYLES = `
 :where([data-vibeui-block="calendar-011"]){
---vibeui-calendar-011-bg:oklch(1 0 0);
---vibeui-calendar-011-fg:oklch(0.24 0.014 265);
---vibeui-calendar-011-muted:oklch(0.62 0.014 265);
---vibeui-calendar-011-border:oklch(0.91 0.006 265);
---vibeui-calendar-011-accent:oklch(0.55 0.17 265);
+--vibeui-calendar-011-bg:transparent;
+--vibeui-calendar-011-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-calendar-011-muted:light-dark(oklch(0.62 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-011-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-calendar-011-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-calendar-011-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.19 0.03 265));
 --vibeui-calendar-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="calendar-011"]{
@@ -71,7 +78,7 @@ color:var(--vibeui-calendar-011-muted);
 /* Отметка — заливка целой клетки, а не точка: на миниатюре точка в шесть
    пикселей теряется, а плотность месяца перестаёт читаться. */
 [data-vibeui-block="calendar-011"] [data-part="day"][data-mark="true"]{
-background:var(--vibeui-calendar-011-accent);color:oklch(0.99 0.01 265);font-weight:650;
+background:var(--vibeui-calendar-011-accent);color:var(--vibeui-calendar-011-on-accent);font-weight:650;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-011"] *{animation:none!important;transition:none!important}}
 `
@@ -119,6 +126,28 @@ function pluralize(count: number, forms: [string, string, string]) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Год двенадцатью миниатюрами месяцев с заливкой отмеченных дней.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -127,6 +156,9 @@ export function Calendar011({
   marks = DEFAULT_MARKS,
   locale = "ru-RU",
   accent,
+  background = "",
+  totalText = "{count} {word} отмечено",
+  countWords = ["дата", "даты", "дат"],
   className,
   style,
   ...props
@@ -145,6 +177,12 @@ export function Calendar011({
 
   const palette = {
     ...(accent ? { "--vibeui-calendar-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -164,7 +202,9 @@ export function Calendar011({
         <header data-part="head">
           <p data-part="year">{year}</p>
           <p data-part="total">
-            {total} {pluralize(total, ["дата", "даты", "дат"])} отмечено
+            {totalText
+              .replace("{count}", String(total))
+              .replace("{word}", pluralize(total, countWords))}
           </p>
         </header>
         <div data-part="shell">

@@ -13,7 +13,17 @@ export type Cascader015Props = Omit<
   tree?: Cascader015Node[]
   defaultPath?: string[]
   levelLabels?: string[]
+  /** Первый вариант списка, когда уровень заполнен. */
+  placeholderText?: string
+  /** Первый вариант списка, когда у категории нет этого уровня. */
+  emptyLevelText?: string
+  /** Итог, {path} — собранный путь по рубрикам. */
+  readyText?: string
+  /** Итог, пока рубрика не выбрана до конца. */
+  hintText?: string
   onChange?: (path: string[]) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,13 +35,13 @@ export type Cascader015Props = Omit<
 // которой в новом разделе нет.
 const STYLES = `
 :where([data-vibeui-block="cascader-015"]){
---vibeui-cascader-015-bg:oklch(1 0 0);
---vibeui-cascader-015-fg:oklch(0.22 0.014 60);
---vibeui-cascader-015-muted:oklch(0.55 0.014 60);
---vibeui-cascader-015-border:oklch(0.9 0.008 60);
---vibeui-cascader-015-field:oklch(0.985 0.004 60);
---vibeui-cascader-015-accent:oklch(0.55 0.13 60);
---vibeui-cascader-015-accentsoft:oklch(0.95 0.05 60);
+--vibeui-cascader-015-bg:transparent;
+--vibeui-cascader-015-fg:light-dark(oklch(0.22 0.014 60),oklch(0.94 0.006 60));
+--vibeui-cascader-015-muted:light-dark(oklch(0.55 0.014 60),oklch(0.72 0.012 60));
+--vibeui-cascader-015-border:light-dark(oklch(0.9 0.008 60),oklch(0.36 0.012 60));
+--vibeui-cascader-015-field:light-dark(oklch(0.985 0.004 60),oklch(0.27 0.012 60));
+--vibeui-cascader-015-accent:light-dark(oklch(0.55 0.13 60),oklch(0.8 0.13 60));
+--vibeui-cascader-015-accentsoft:light-dark(oklch(0.95 0.05 60),oklch(0.33 0.05 60));
 --vibeui-cascader-015-radius:0.625rem;
 --vibeui-cascader-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -117,6 +127,28 @@ const RUBRICS: Cascader015Node[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Рубрика объявления тремя нативными списками с каскадным сбросом.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -125,7 +157,12 @@ export function Cascader015({
   tree = RUBRICS,
   defaultPath = ["Транспорт", "Автомобили", "С пробегом"],
   levelLabels = ["Раздел", "Категория", "Подрубрика"],
+  placeholderText = "не выбрано",
+  emptyLevelText = "уровень не нужен",
+  readyText = "Объявление уйдёт в рубрику {path}",
+  hintText = "Выберите рубрику до конца — от неё зависят поля объявления",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -149,8 +186,16 @@ export function Cascader015({
 
   const ready = third.length === 0 ? Boolean(path[1]) : Boolean(path[2])
 
+  const [readyBefore, readyAfter] = readyText.split("{path}")
+
   const palette = {
     ...(accent ? { "--vibeui-cascader-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cascader-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -176,7 +221,7 @@ export function Cascader015({
               onChange={(event) => change(depth, event.target.value)}
             >
               <option value="">
-                {options.length === 0 ? "уровень не нужен" : "не выбрано"}
+                {options.length === 0 ? emptyLevelText : placeholderText}
               </option>
               {options.map((node) => (
                 <option key={node.name} value={node.name}>
@@ -189,10 +234,12 @@ export function Cascader015({
         <p data-part="path" data-ready={ready} aria-live="polite">
           {ready ? (
             <>
-              Объявление уйдёт в рубрику <b>{path.join(" / ")}</b>
+              {readyBefore}
+              <b>{path.join(" / ")}</b>
+              {readyAfter}
             </>
           ) : (
-            "Выберите рубрику до конца — от неё зависят поля объявления"
+            hintText
           )}
         </p>
       </fieldset>

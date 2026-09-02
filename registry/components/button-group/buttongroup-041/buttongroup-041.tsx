@@ -16,7 +16,11 @@ export type Buttongroup041Props = Omit<
   reactions?: Buttongroup041Reaction[]
   mine?: string[]
   label?: string
+  /** Доступное имя кнопки выбора эмодзи: голый плюс его не имеет. */
+  addLabel?: string
   onChange?: (name: string, active: boolean) => void
+  /** Пусто — заливки нет, пилюли ложатся на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -29,12 +33,13 @@ export type Buttongroup041Props = Omit<
 // больше, и фиксированная строка рано или поздно выедет за карточку.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-041"]){
---vibeui-buttongroup-041-surface:oklch(1 0 0);
---vibeui-buttongroup-041-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-041-muted:oklch(0.55 0.014 265);
---vibeui-buttongroup-041-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-041-on:oklch(0.95 0.045 250);
---vibeui-buttongroup-041-accent:oklch(0.5 0.16 250);
+--vibeui-buttongroup-041-surface:transparent;
+--vibeui-buttongroup-041-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-041-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-041-border:light-dark(oklch(0.89 0.008 265),oklch(0.42 0.012 265));
+--vibeui-buttongroup-041-line:light-dark(oklch(0.8 0.01 265),oklch(0.56 0.014 265));
+--vibeui-buttongroup-041-on:light-dark(oklch(0.95 0.045 250),oklch(0.33 0.06 250));
+--vibeui-buttongroup-041-accent:light-dark(oklch(0.5 0.16 250),oklch(0.78 0.13 250));
 --vibeui-buttongroup-041-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="buttongroup-041"]{
@@ -63,7 +68,7 @@ min-width:0.875rem;text-align:center;font-variant-numeric:tabular-nums;
 position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);
 }
 [data-vibeui-block="buttongroup-041"] button:hover{
-border-color:oklch(0.8 0.01 265);color:var(--vibeui-buttongroup-041-fg);
+border-color:var(--vibeui-buttongroup-041-line);color:var(--vibeui-buttongroup-041-fg);
 }
 [data-vibeui-block="buttongroup-041"] button[aria-pressed="true"]{
 background:var(--vibeui-buttongroup-041-on);
@@ -92,6 +97,28 @@ const DEFAULT_REACTIONS: Buttongroup041Reaction[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Реакции со счётчиками: независимые тумблеры с aria-pressed и переносом строк.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -99,7 +126,9 @@ export function Buttongroup041({
   reactions = DEFAULT_REACTIONS,
   mine = ["нравится"],
   label = "Реакции на запись",
+  addLabel = "Добавить реакцию",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -109,6 +138,12 @@ export function Buttongroup041({
 
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-041-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-041-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -152,7 +187,7 @@ export function Buttongroup041({
             </button>
           )
         })}
-        <button type="button" data-part="add" aria-label="Добавить реакцию">
+        <button type="button" data-part="add" aria-label={addLabel}>
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 5v14M5 12h14" />
           </svg>

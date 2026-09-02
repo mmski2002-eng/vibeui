@@ -15,7 +15,14 @@ export type Toast019Props = Omit<
   exportingLabel?: string
   readyLabel?: string
   cancelLabel?: string
+  cancelledLabel?: string
+  progressLabel?: string
+  downloadLabel?: string
   closeLabel?: string
+  /** Цвет полосы прогресса. Пусто — штатная палитра. */
+  tone?: string
+  /** Подложка карточки. Пусто — штатная палитра. */
+  background?: string
   /** Сколько мс идёт демонстрационная выгрузка. */
   durationMs?: number
   onReady?: () => void
@@ -26,15 +33,22 @@ export type Toast019Props = Omit<
 // когда результат готов. Полоса прогресса и процент — на время выгрузки,
 // а после завершения карточка не исчезает, а превращается в ссылку
 // «Скачать»: результат остаётся доступным, пока пользователь его не заберёт.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
+// подложка светлее фона страницы, граница светлее подложки, а дорожка полосы
+// темнее подложки — иначе пустая часть полосы читалась бы как заполненная.
 const STYLES = `
 :where([data-vibeui-block="toast-019"]){
---vibeui-toast-019-bg:oklch(0.99 0.002 265);
---vibeui-toast-019-fg:oklch(0.22 0.014 265);
---vibeui-toast-019-muted:oklch(0.56 0.014 265);
---vibeui-toast-019-border:oklch(0.9 0.006 265);
---vibeui-toast-019-track:oklch(0.92 0.006 265);
---vibeui-toast-019-tone:oklch(0.58 0.16 260);
---vibeui-toast-019-success:oklch(0.58 0.15 152);
+--vibeui-toast-019-bg:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.014 265));
+--vibeui-toast-019-fg:light-dark(oklch(0.22 0.014 265),oklch(0.96 0.003 265));
+--vibeui-toast-019-muted:light-dark(oklch(0.56 0.014 265),oklch(0.76 0.01 265));
+--vibeui-toast-019-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
+--vibeui-toast-019-track:light-dark(oklch(0.92 0.006 265),oklch(0.33 0.012 265));
+--vibeui-toast-019-hover:light-dark(oklch(0.2 0.02 265 / 7%),oklch(1 0 0 / 12%));
+--vibeui-toast-019-shadow:light-dark(oklch(0.18 0.02 265 / 55%),oklch(0.05 0.01 265 / 70%));
+--vibeui-toast-019-tone:light-dark(oklch(0.55 0.16 260),oklch(0.72 0.15 260));
+--vibeui-toast-019-success:light-dark(oklch(0.55 0.15 152),oklch(0.73 0.15 152));
+--vibeui-toast-019-on-success:light-dark(oklch(0.99 0.004 265),oklch(0.18 0.03 152));
 --vibeui-toast-019-percent:0;
 --vibeui-toast-019-radius:0.875rem;
 --vibeui-toast-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -46,7 +60,7 @@ padding:0.875rem;border-radius:var(--vibeui-toast-019-radius);
 border:1px solid var(--vibeui-toast-019-border);
 background:var(--vibeui-toast-019-bg);color:var(--vibeui-toast-019-fg);
 font-family:var(--vibeui-toast-019-font);
-box-shadow:0 16px 34px -24px oklch(0.18 0.02 265 / 55%);
+box-shadow:0 16px 34px -24px var(--vibeui-toast-019-shadow);
 }
 [data-vibeui-block="toast-019"] [data-part="glyph"]{
 flex:none;display:flex;align-items:center;justify-content:center;
@@ -91,7 +105,7 @@ display:flex;align-items:center;gap:0.5rem;margin-top:0.5rem;
 appearance:none;text-decoration:none;cursor:pointer;
 display:inline-flex;align-items:center;gap:0.375rem;
 padding:0.375rem 0.75rem;border-radius:0.5rem;border:0;
-background:var(--vibeui-toast-019-success);color:oklch(0.99 0.004 265);
+background:var(--vibeui-toast-019-success);color:var(--vibeui-toast-019-on-success);
 font:inherit;font-size:0.8125rem;font-weight:700;
 }
 [data-vibeui-block="toast-019"] [data-part="download"]:hover{filter:brightness(1.05)}
@@ -101,7 +115,7 @@ appearance:none;cursor:pointer;border:0;background:transparent;
 padding:0.375rem 0.5rem;border-radius:0.5rem;
 font:inherit;font-size:0.8125rem;font-weight:600;color:var(--vibeui-toast-019-muted);
 }
-[data-vibeui-block="toast-019"] [data-part="cancel"]:hover{background:oklch(0 0 0 / 6%);color:var(--vibeui-toast-019-fg)}
+[data-vibeui-block="toast-019"] [data-part="cancel"]:hover{background:var(--vibeui-toast-019-hover);color:var(--vibeui-toast-019-fg)}
 [data-vibeui-block="toast-019"] [data-part="cancel"]:focus-visible{outline:2px solid var(--vibeui-toast-019-tone);outline-offset:2px}
 [data-vibeui-block="toast-019"] [data-part="close"]{
 appearance:none;border:0;cursor:pointer;background:transparent;flex:none;
@@ -109,10 +123,32 @@ display:flex;align-items:center;justify-content:center;
 width:1.5rem;height:1.5rem;padding:0;border-radius:9999px;margin-top:0.0625rem;
 color:var(--vibeui-toast-019-muted);font-size:0.9375rem;line-height:1;
 }
-[data-vibeui-block="toast-019"] [data-part="close"]:hover{background:oklch(0 0 0 / 6%);color:var(--vibeui-toast-019-fg)}
+[data-vibeui-block="toast-019"] [data-part="close"]:hover{background:var(--vibeui-toast-019-hover);color:var(--vibeui-toast-019-fg)}
 [data-vibeui-block="toast-019"] [data-part="close"]:focus-visible{outline:2px solid var(--vibeui-toast-019-tone);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="toast-019"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Фоновая выгрузка файла: полоса прогресса переходит в ссылку «Скачать»
@@ -125,7 +161,12 @@ export function Toast019({
   exportingLabel = "Готовим файл к скачиванию…",
   readyLabel = "Файл готов",
   cancelLabel = "Отмена",
+  cancelledLabel = "Выгрузка отменена",
+  progressLabel = "Идёт подготовка",
+  downloadLabel = "Скачать",
   closeLabel = "Закрыть",
+  tone = "",
+  background = "",
   durationMs = 2400,
   onReady,
   onCancel,
@@ -161,6 +202,18 @@ export function Toast019({
 
   if (!visible) return null
 
+  const palette = {
+    "--vibeui-toast-019-percent": percent,
+    ...(tone ? { "--vibeui-toast-019-tone": tone } : null),
+    ...(background
+      ? {
+          "--vibeui-toast-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-toast-019" precedence="medium">
@@ -173,9 +226,7 @@ export function Toast019({
         role="status"
         aria-live="polite"
         className={className}
-        style={
-          { "--vibeui-toast-019-percent": percent, ...style } as CSSProperties
-        }
+        style={palette}
       >
         <span data-part="glyph" aria-hidden="true">
           {status === "ready" ? "✓" : status === "cancelled" ? "–" : "↓"}
@@ -185,7 +236,7 @@ export function Toast019({
             {status === "ready"
               ? readyLabel
               : status === "cancelled"
-                ? "Выгрузка отменена"
+                ? cancelledLabel
                 : exportingLabel}
           </span>
           <span data-part="name">
@@ -198,7 +249,7 @@ export function Toast019({
                 <span data-part="fill" />
               </span>
               <span data-part="meta">
-                <span>Идёт подготовка</span>
+                <span>{progressLabel}</span>
                 <span>{Math.round(percent)}%</span>
               </span>
               <span data-part="row">
@@ -219,7 +270,7 @@ export function Toast019({
           {status === "ready" ? (
             <span data-part="row">
               <a data-part="download" href={downloadHref} download={fileName}>
-                Скачать
+                {downloadLabel}
               </a>
             </span>
           ) : null}

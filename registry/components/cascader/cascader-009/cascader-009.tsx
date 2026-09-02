@@ -14,6 +14,24 @@ export type Cascader009Props = {
   fileName?: string
   actionLabel?: string
   tree?: Cascader009Folder[]
+  /** aria-подпись группы: {file}. */
+  groupText?: string
+  /** Заголовок диалога перед именем файла. */
+  titleText?: string
+  /** Как назван корень дерева. */
+  rootText?: string
+  /** Подпись строки возврата на уровень выше. */
+  upText?: string
+  /** Приписка у заблокированной папки. */
+  lockedText?: string
+  /** Приписка со счётчиком файлов: {count}. */
+  filesText?: string
+  /** Подпись кнопки отмены. */
+  cancelText?: string
+  /** Подпись кнопки действия: {action} и {folder}. */
+  moveText?: string
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -27,12 +45,13 @@ export type Cascader009Props = {
 // файл туда, где он уже лежит, — пустое действие с непонятным результатом.
 const STYLES = `
 :where([data-vibeui-block="cascader-009"]){
---vibeui-cascader-009-bg:oklch(1 0 0);
---vibeui-cascader-009-panel:oklch(0.975 0.004 250);
---vibeui-cascader-009-fg:oklch(0.23 0.014 250);
---vibeui-cascader-009-muted:oklch(0.55 0.012 250);
---vibeui-cascader-009-border:oklch(0.9 0.006 250);
---vibeui-cascader-009-accent:oklch(0.55 0.18 255);
+--vibeui-cascader-009-bg:transparent;
+--vibeui-cascader-009-panel:light-dark(oklch(0.975 0.004 250),oklch(0.27 0.012 250));
+--vibeui-cascader-009-fg:light-dark(oklch(0.23 0.014 250),oklch(0.94 0.006 250));
+--vibeui-cascader-009-muted:light-dark(oklch(0.55 0.012 250),oklch(0.71 0.011 250));
+--vibeui-cascader-009-border:light-dark(oklch(0.9 0.006 250),oklch(0.38 0.011 250));
+--vibeui-cascader-009-accent:light-dark(oklch(0.55 0.18 255),oklch(0.75 0.15 255));
+--vibeui-cascader-009-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 255));
 --vibeui-cascader-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="cascader-009"]{
@@ -110,11 +129,11 @@ cursor:pointer;transition:opacity .14s ease,border-color .14s ease;
 }
 [data-vibeui-block="cascader-009"] [data-part="cancel"]{
 border:1px solid var(--vibeui-cascader-009-border);
-background:var(--vibeui-cascader-009-bg);color:var(--vibeui-cascader-009-muted);
+background:var(--vibeui-cascader-009-panel);color:var(--vibeui-cascader-009-muted);
 }
 [data-vibeui-block="cascader-009"] [data-part="move"]{
 flex:1 1 auto;min-width:0;border:0;font-weight:600;
-background:var(--vibeui-cascader-009-accent);color:oklch(1 0 0);
+background:var(--vibeui-cascader-009-accent);color:var(--vibeui-cascader-009-on-accent);
 overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 [data-vibeui-block="cascader-009"] [data-part="move"]:disabled{opacity:.45;cursor:not-allowed}
@@ -158,6 +177,28 @@ const DEFAULT_TREE: Cascader009Folder[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function foldersAt(tree: Cascader009Folder[], path: string[]) {
   let nodes = tree
 
@@ -182,16 +223,33 @@ export function Cascader009({
   fileName = "отчёт-за-квартал.pdf",
   actionLabel = "Переместить в",
   tree = DEFAULT_TREE,
+  groupText = "Перемещение файла {file}",
+  titleText = "Переместить",
+  rootText = "Корень диска",
+  upText = "Наверх",
+  lockedText = "источник",
+  filesText = "{count} файлов",
+  cancelText = "Отмена",
+  moveText = "{action} «{folder}»",
+  background = "",
   accent,
   className,
   style,
 }: Cascader009Props) {
-  const [path, setPath] = useState<string[]>(["Проекты"])
+  const [path, setPath] = useState<string[]>(() =>
+    tree[0]?.children?.length ? [tree[0].label] : [],
+  )
   const folders = foldersAt(tree, path)
-  const here = path.length ? path[path.length - 1] : "Корень диска"
+  const here = path.length ? path[path.length - 1] : rootText
 
   const palette = {
     ...(accent ? { "--vibeui-cascader-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cascader-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -205,13 +263,13 @@ export function Cascader009({
         className={className}
         style={palette}
         role="group"
-        aria-label={`Перемещение файла ${fileName}`}
+        aria-label={groupText.replace("{file}", fileName)}
       >
         <p data-part="title">
-          Переместить <em>{fileName}</em>
+          {titleText} <em>{fileName}</em>
         </p>
         <p data-part="where" aria-live="polite">
-          {["Корень диска", ...path].join(" / ")}
+          {[rootText, ...path].join(" / ")}
         </p>
         <ul data-part="list">
           {path.length ? (
@@ -222,7 +280,7 @@ export function Cascader009({
                 onClick={() => setPath(path.slice(0, -1))}
               >
                 <i data-part="up-icon" aria-hidden="true" />
-                <span data-part="up">Наверх</span>
+                <span data-part="up">{upText}</span>
               </button>
             </li>
           ) : null}
@@ -237,7 +295,9 @@ export function Cascader009({
                 <i data-part="icon" aria-hidden="true" />
                 <span>{folder.label}</span>
                 <span data-part="count">
-                  {folder.locked ? "источник" : `${folder.files ?? 0} файлов`}
+                  {folder.locked
+                    ? lockedText
+                    : filesText.replace("{count}", String(folder.files ?? 0))}
                 </span>
               </button>
             </li>
@@ -245,10 +305,12 @@ export function Cascader009({
         </ul>
         <div data-part="foot">
           <button data-part="cancel" type="button">
-            Отмена
+            {cancelText}
           </button>
           <button data-part="move" type="button">
-            {actionLabel} «{here}»
+            {moveText
+              .replace("{action}", actionLabel)
+              .replace("{folder}", here)}
           </button>
         </div>
       </div>

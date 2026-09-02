@@ -14,6 +14,16 @@ export type Tags005Props = Omit<
 > & {
   label?: string
   defaultValue?: string[]
+  /** Подпись крестика: {tag} — имя тега. */
+  removeText?: string
+  /** Плейсхолдер поля ввода. */
+  placeholderText?: string
+  /** Итог вставки: {count} — сколько адресов разобрано. */
+  pastedText?: string
+  /** Пояснение рядом с клавишами-разделителями. */
+  legendText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,21 +33,25 @@ export type Tags005Props = Omit<
 // Вставка из буфера разбирается тем же правилом: список адресов, скопированный
 // из письма, превращается в готовые чипы за одну вставку, а не в один
 // гигантский тег со всем текстом внутри.
+//
+// Тема берётся из color-scheme окружения через light-dark(): поле темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="tags-005"]){
---vibeui-tags-005-surface:oklch(1 0 0);
---vibeui-tags-005-field:oklch(1 0 0);
---vibeui-tags-005-shell:oklch(0.9 0.006 265);
---vibeui-tags-005-fg:oklch(0.23 0.014 265);
---vibeui-tags-005-muted:oklch(0.55 0.014 265);
---vibeui-tags-005-border:oklch(0.88 0.008 265);
---vibeui-tags-005-chip:oklch(0.55 0.15 145 / 14%);
---vibeui-tags-005-accent:oklch(0.48 0.15 145);
---vibeui-tags-005-key:oklch(0.96 0.004 265);
+--vibeui-tags-005-surface:transparent;
+--vibeui-tags-005-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-tags-005-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.01 265));
+--vibeui-tags-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tags-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-tags-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-tags-005-chip:light-dark(oklch(0.55 0.15 145 / 14%),oklch(0.75 0.15 145 / 22%));
+--vibeui-tags-005-accent:light-dark(oklch(0.48 0.15 145),oklch(0.78 0.14 145));
+--vibeui-tags-005-ring:light-dark(oklch(0.48 0.15 145 / 18%),oklch(0.78 0.14 145 / 28%));
+--vibeui-tags-005-key:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.012 265));
 --vibeui-tags-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-tags-005-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложка по умолчанию прозрачная: поле ложится на фон страницы. */
 [data-vibeui-block="tags-005"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:23rem;box-sizing:border-box;padding:0.875rem;
@@ -54,7 +68,7 @@ border:1px solid var(--vibeui-tags-005-border);border-radius:0.625rem;
 }
 [data-vibeui-block="tags-005"] [data-part="field"]:focus-within{
 border-color:var(--vibeui-tags-005-accent);
-box-shadow:0 0 0 2px oklch(0.48 0.15 145 / 18%);
+box-shadow:0 0 0 2px var(--vibeui-tags-005-ring);
 }
 [data-vibeui-block="tags-005"] [data-part="chip"]{
 display:inline-flex;align-items:center;gap:0.25rem;
@@ -99,12 +113,39 @@ function split(value: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Теги по Enter, запятой и точке с запятой, со вставкой целого списка из буфера.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tags005({
   label = "Кому отправить",
   defaultValue = ["anna@example.com"],
+  removeText = "Убрать {tag}",
+  placeholderText = "Введите или вставьте список…",
+  pastedText = "Из вставки добавлено сразу {count} адресов",
+  legendText = "заканчивают тег, вставка списка разбирается целиком",
+  background = "",
   accent,
   className,
   style,
@@ -145,6 +186,12 @@ export function Tags005({
 
   const palette = {
     ...(accent ? { "--vibeui-tags-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tags-005-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -166,7 +213,7 @@ export function Tags005({
               <span data-part="text">{tag}</span>
               <button
                 type="button"
-                aria-label={`Убрать ${tag}`}
+                aria-label={removeText.replace("{tag}", tag)}
                 onClick={() => setTags(tags.filter((item) => item !== tag))}
               >
                 ×
@@ -177,7 +224,7 @@ export function Tags005({
             id={id}
             type="text"
             value={draft}
-            placeholder="Введите или вставьте список…"
+            placeholder={placeholderText}
             aria-describedby={`${id}-legend`}
             onChange={(event) => setDraft(event.target.value)}
             onKeyDown={onKeyDown}
@@ -190,13 +237,13 @@ export function Tags005({
         </div>
         <p id={`${id}-legend`} data-part="legend" aria-live="polite">
           {added > 1 ? (
-            <span>Из вставки добавлено сразу {added} адресов</span>
+            <span>{pastedText.replace("{count}", String(added))}</span>
           ) : (
             <>
               <kbd>Enter</kbd>
               <kbd>,</kbd>
               <kbd>;</kbd>
-              <span>заканчивают тег, вставка списка разбирается целиком</span>
+              <span>{legendText}</span>
             </>
           )}
         </p>

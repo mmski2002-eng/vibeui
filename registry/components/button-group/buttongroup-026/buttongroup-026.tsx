@@ -13,6 +13,8 @@ export type Buttongroup026Props = Omit<
   defaultValue?: string
   label?: string
   name?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,12 +27,13 @@ export type Buttongroup026Props = Omit<
 // раскрыть, и оно остаётся в доступном дереве только у выбранного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-026"]){
---vibeui-buttongroup-026-surface:oklch(1 0 0);
---vibeui-buttongroup-026-track:oklch(0.96 0.004 265);
---vibeui-buttongroup-026-fg:oklch(0.24 0.016 265);
---vibeui-buttongroup-026-muted:oklch(0.55 0.014 265);
---vibeui-buttongroup-026-border:oklch(0.9 0.006 265);
---vibeui-buttongroup-026-accent:oklch(0.45 0.13 305);
+--vibeui-buttongroup-026-bg:transparent;
+--vibeui-buttongroup-026-surface:light-dark(oklch(1 0 0),oklch(0.3 0.014 265));
+--vibeui-buttongroup-026-track:light-dark(oklch(0.96 0.004 265),oklch(0.24 0.012 265));
+--vibeui-buttongroup-026-fg:light-dark(oklch(0.24 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-026-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-026-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-buttongroup-026-accent:light-dark(oklch(0.45 0.13 305),oklch(0.8 0.13 305));
 --vibeui-buttongroup-026-radius:0.5rem;
 --vibeui-buttongroup-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -38,7 +41,7 @@ const STYLES = `
 box-sizing:border-box;display:block;width:100%;max-width:22rem;
 margin:0;padding:0.375rem;border:1px solid var(--vibeui-buttongroup-026-border);
 border-radius:0.875rem;
-background:var(--vibeui-buttongroup-026-surface);
+background:var(--vibeui-buttongroup-026-bg);
 font-family:var(--vibeui-buttongroup-026-font);
 }
 [data-vibeui-block="buttongroup-026"] *{box-sizing:border-box}
@@ -94,6 +97,28 @@ const DEFAULT_SPEEDS: Buttongroup026Speed[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Скорость воспроизведения: выбранный сегмент раздвигается и поясняет себя.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -102,6 +127,7 @@ export function Buttongroup026({
   defaultValue = "1×",
   label = "Скорость воспроизведения",
   name = "buttongroup-026",
+  background = "",
   accent,
   className,
   style,
@@ -109,6 +135,12 @@ export function Buttongroup026({
 }: Buttongroup026Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-026-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-026-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

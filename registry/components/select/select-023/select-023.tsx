@@ -12,6 +12,8 @@ export type Select023Props = Omit<
   label?: string
   sizes?: Select023Size[]
   hint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,13 +23,13 @@ export type Select023Props = Omit<
 // (в отличие от select-009). Это постоянная памятка, а не реакция на выбор.
 const STYLES = `
 :where([data-vibeui-block="select-023"]){
---vibeui-select-023-surface:oklch(1 0 0);
---vibeui-select-023-surface-border:oklch(0.91 0.006 265);
---vibeui-select-023-fg:oklch(0.23 0.016 265);
---vibeui-select-023-muted:oklch(0.55 0.014 265);
---vibeui-select-023-field:oklch(0.985 0.002 265);
---vibeui-select-023-border:oklch(0.87 0.008 265);
---vibeui-select-023-accent:oklch(0.55 0.19 262);
+--vibeui-select-023-surface:transparent;
+--vibeui-select-023-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-select-023-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-023-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-023-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-select-023-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.012 265));
+--vibeui-select-023-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
 --vibeui-select-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="select-023"]{
@@ -83,6 +85,28 @@ const DEFAULT_SIZES: Select023Size[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Select размера с постоянной подсказкой под полем: совет не зависит от
  * выбранного варианта и не меняется при выборе. Один файл, ноль
  * зависимостей, серверный компонент.
@@ -91,6 +115,7 @@ export function Select023({
   label = "Размер",
   sizes = DEFAULT_SIZES,
   hint = "Модель приталенная: при сомнении берите размер больше.",
+  background = "",
   accent,
   id,
   className,
@@ -100,6 +125,12 @@ export function Select023({
 }: Select023Props) {
   const palette = {
     ...(accent ? { "--vibeui-select-023-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-select-023-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

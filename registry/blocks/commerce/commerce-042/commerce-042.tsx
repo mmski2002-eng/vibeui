@@ -19,7 +19,26 @@ export type Commerce042Props = {
   progress?: number
   rules?: Commerce042Rule[]
   cta?: string
+  /** Слово «баллов» рядом с числами. */
+  pointsText?: string
+  /** Курс: {amount} — баланс в валюте. */
+  rateText?: string
+  /** До следующего уровня: {level} и {amount}. */
+  toNextText?: string
+  /** Концы шкалы уровня: ключи start и end. */
+  scaleText?: Record<string, string>
+  /** Подпись начисления: {order} — сумма заказа. */
+  earnLabel?: string
+  earnNote?: string
+  spendLabel?: string
+  spendNote?: string
+  useText?: string
+  rulesTitle?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -33,12 +52,12 @@ export type Commerce042Props = {
 // прямо в блоке: без него «1 200 баллов» ничего не сообщают.
 const STYLES = `
 :where([data-vibeui-block="commerce-042"]){
---vibeui-commerce-042-bg:oklch(1 0 0);
---vibeui-commerce-042-fg:oklch(0.21 0.014 265);
---vibeui-commerce-042-muted:oklch(0.55 0.014 265);
---vibeui-commerce-042-border:oklch(0.91 0.006 265);
---vibeui-commerce-042-soft:oklch(0.975 0.004 265);
---vibeui-commerce-042-accent:oklch(0.6 0.16 55);
+--vibeui-commerce-042-bg:transparent;
+--vibeui-commerce-042-fg:light-dark(oklch(0.21 0.014 265),oklch(0.93 0.006 265));
+--vibeui-commerce-042-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-commerce-042-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-042-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.009 265));
+--vibeui-commerce-042-accent:light-dark(oklch(0.6 0.16 55),oklch(0.78 0.15 60));
 --vibeui-commerce-042-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -137,6 +156,33 @@ const DEFAULT_RULES: Commerce042Rule[] = [
   },
 ]
 
+const DEFAULT_SCALE: Record<string, string> = {
+  start: "текущий",
+  end: "следующий",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Бонусные баллы при покупке: баланс, срок сгорания, предел списания и уровень.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -154,12 +200,30 @@ export function Commerce042({
   progress = 64,
   rules = DEFAULT_RULES,
   cta = "Списать баллы в этом заказе",
+  pointsText = "баллов",
+  rateText = "Это {amount} ₽ при списании: курс один к одному",
+  toNextText = "До уровня {level} осталось потратить {amount} ₽",
+  scaleText = DEFAULT_SCALE,
+  earnLabel = "Начислим за этот заказ на {order}",
+  earnNote = "придут через 14 дней после доставки",
+  spendLabel = "Можно списать прямо сейчас",
+  spendNote = "не больше 30% от суммы заказа",
+  useText = "Спишем максимум и уменьшим сумму к оплате. Начисление за заказ при этом сохранится — баллы за покупку не отменяются.",
+  rulesTitle = "Как это работает",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Commerce042Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-042-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-042-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -184,59 +248,56 @@ export function Commerce042({
             <div>
               <h2>{title}</h2>
               <p data-part="balance">
-                {balance.toLocaleString("ru-RU")}
-                <small>баллов</small>
+                {balance.toLocaleString(locale)}
+                <small>{pointsText}</small>
               </p>
               <p data-part="rate">
-                Это {balance.toLocaleString("ru-RU")} ₽ при списании: курс один
-                к одному
+                {rateText.replace("{amount}", balance.toLocaleString(locale))}
               </p>
               <p data-part="expiring">{expiring}</p>
             </div>
             <div data-part="level">
               <p data-part="levelName">{level}</p>
               <p data-part="toNext">
-                До уровня {nextLevel} осталось потратить{" "}
-                {toNext.toLocaleString("ru-RU")} ₽
+                {toNextText
+                  .replace("{level}", nextLevel)
+                  .replace("{amount}", toNext.toLocaleString(locale))}
               </p>
               <div data-part="track" aria-hidden="true">
                 <i />
               </div>
               <p data-part="scale">
-                <span>текущий</span>
-                <span>следующий</span>
+                <span>{scaleText.start ?? DEFAULT_SCALE.start}</span>
+                <span>{scaleText.end ?? DEFAULT_SCALE.end}</span>
               </p>
             </div>
           </div>
 
           <dl data-part="order">
             <div data-part="cell">
-              <dt>Начислим за этот заказ на {order}</dt>
+              <dt>{earnLabel.replace("{order}", order)}</dt>
               <dd>
-                <b>+{earn.toLocaleString("ru-RU")}</b> баллов{" "}
-                <span>придут через 14 дней после доставки</span>
+                <b>+{earn.toLocaleString(locale)}</b> {pointsText}{" "}
+                <span>{earnNote}</span>
               </dd>
             </div>
             <div data-part="cell">
-              <dt>Можно списать прямо сейчас</dt>
+              <dt>{spendLabel}</dt>
               <dd>
-                {spendMax.toLocaleString("ru-RU")} баллов{" "}
-                <span>не больше 30% от суммы заказа</span>
+                {spendMax.toLocaleString(locale)} {pointsText}{" "}
+                <span>{spendNote}</span>
               </dd>
             </div>
           </dl>
 
           <div data-part="use">
-            <p>
-              Спишем максимум и уменьшим сумму к оплате. Начисление за заказ при
-              этом сохранится — баллы за покупку не отменяются.
-            </p>
+            <p>{useText}</p>
             <button type="button" data-part="cta">
               {cta}
             </button>
           </div>
 
-          <h3>Как это работает</h3>
+          <h3>{rulesTitle}</h3>
           <ul>
             {rules.map((rule) => (
               <li key={rule.id}>

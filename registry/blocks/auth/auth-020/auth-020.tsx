@@ -16,6 +16,22 @@ export type Auth020Props = {
   lead?: string
   sessions?: Auth020Session[]
   submit?: string
+  /** Пометка текущего сеанса: блок несёт русскую. */
+  hereText?: string
+  /** Вторая строка сеанса; {client} и {place} подставляются из сеанса. */
+  whereText?: string
+  /** Жирное начало предупреждения. */
+  dangerLead?: string
+  /** Предупреждение; {count} — сколько чужих сеансов будет закрыто. */
+  dangerText?: string
+  /** Подпись подтверждения; {count} — сколько сеансов закроется. */
+  confirmText?: string
+  /** Подпись отмены. */
+  cancelText?: string
+  /** Сообщение после завершения сеансов. */
+  doneText?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -33,17 +49,25 @@ export type Auth020Props = {
 // Опасное действие спрятано за вторым нажатием: список длинный, промах по
 // кнопке стоит всем открытым вкладкам в команде.
 //
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не носит собственной подложки.
+//
 // Демонстрация интерфейса: сеансы завершает сервер, здесь только разметка.
 const STYLES = `
 :where([data-vibeui-block="auth-020"]){
---vibeui-auth-020-bg:oklch(0.96 0.005 240);
---vibeui-auth-020-card:oklch(1 0 0);
---vibeui-auth-020-fg:oklch(0.22 0.014 240);
---vibeui-auth-020-muted:oklch(0.54 0.014 240);
---vibeui-auth-020-border:oklch(0.9 0.006 240);
---vibeui-auth-020-accent:oklch(0.52 0.15 250);
---vibeui-auth-020-danger:oklch(0.55 0.19 25);
---vibeui-auth-020-ok:oklch(0.55 0.13 152);
+--vibeui-auth-020-bg:transparent;
+--vibeui-auth-020-card:light-dark(oklch(1 0 0),oklch(0.22 0.013 240));
+--vibeui-auth-020-fg:light-dark(oklch(0.22 0.014 240),oklch(0.94 0.006 240));
+--vibeui-auth-020-muted:light-dark(oklch(0.54 0.014 240),oklch(0.7 0.012 240));
+--vibeui-auth-020-border:light-dark(oklch(0.9 0.006 240),oklch(0.35 0.012 240));
+--vibeui-auth-020-accent:light-dark(oklch(0.52 0.15 250),oklch(0.75 0.13 250));
+--vibeui-auth-020-danger:light-dark(oklch(0.55 0.19 25),oklch(0.75 0.16 25));
+--vibeui-auth-020-on-danger:light-dark(oklch(1 0 0),oklch(0.2 0.02 25));
+--vibeui-auth-020-danger-line:light-dark(oklch(0.55 0.19 25 / 25%),oklch(0.75 0.16 25 / 32%));
+--vibeui-auth-020-danger-bg:light-dark(oklch(0.55 0.19 25 / 6%),oklch(0.75 0.16 25 / 10%));
+--vibeui-auth-020-ok:light-dark(oklch(0.55 0.13 152),oklch(0.76 0.12 152));
+--vibeui-auth-020-ok-soft:light-dark(oklch(0.55 0.13 152 / 14%),oklch(0.76 0.12 152 / 18%));
+--vibeui-auth-020-ok-bg:light-dark(oklch(0.55 0.13 152 / 10%),oklch(0.76 0.12 152 / 14%));
 --vibeui-auth-020-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -81,7 +105,7 @@ background:var(--vibeui-auth-020-border);
 [data-vibeui-block="auth-020"] [data-part="device"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.375rem;font-size:0.875rem;font-weight:650}
 [data-vibeui-block="auth-020"] [data-part="here"]{
 padding:0.0625rem 0.375rem;border-radius:9999px;
-background:oklch(0.55 0.13 152 / 14%);color:var(--vibeui-auth-020-ok);
+background:var(--vibeui-auth-020-ok-soft);color:var(--vibeui-auth-020-ok);
 font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;
 }
 [data-vibeui-block="auth-020"] [data-part="where"]{font-size:0.75rem;line-height:1.4;color:var(--vibeui-auth-020-muted)}
@@ -89,14 +113,14 @@ font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04e
 [data-vibeui-block="auth-020"] [data-part="danger"]{
 display:flex;flex-direction:column;gap:0.75rem;
 padding:0.875rem;border-radius:0.75rem;
-border:1px solid oklch(0.55 0.19 25 / 25%);background:oklch(0.55 0.19 25 / 6%);
+border:1px solid var(--vibeui-auth-020-danger-line);background:var(--vibeui-auth-020-danger-bg);
 }
 [data-vibeui-block="auth-020"] [data-part="dangertext"]{margin:0;font-size:0.75rem;line-height:1.45;color:var(--vibeui-auth-020-muted)}
 [data-vibeui-block="auth-020"] [data-part="dangertext"] b{color:var(--vibeui-auth-020-danger)}
 [data-vibeui-block="auth-020"] [data-part="kill"]{
 flex:none;appearance:none;cursor:pointer;height:2.5rem;padding:0 1rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-020-danger);color:oklch(1 0 0);
+background:var(--vibeui-auth-020-danger);color:var(--vibeui-auth-020-on-danger);
 font:inherit;font-size:0.8125rem;font-weight:650;white-space:nowrap;
 }
 [data-vibeui-block="auth-020"] [data-part="kill"]:focus-visible{outline:2px solid var(--vibeui-auth-020-danger);outline-offset:2px}
@@ -109,7 +133,7 @@ background:var(--vibeui-auth-020-card);color:inherit;font:inherit;font-size:0.81
 [data-vibeui-block="auth-020"] [data-part="row"]{display:flex;gap:0.5rem;flex-wrap:wrap}
 [data-vibeui-block="auth-020"] [data-part="done"]{
 margin:0;padding:0.75rem 0.875rem;border-radius:0.75rem;
-background:oklch(0.55 0.13 152 / 10%);color:var(--vibeui-auth-020-ok);
+background:var(--vibeui-auth-020-ok-bg);color:var(--vibeui-auth-020-ok);
 font-size:0.8125rem;line-height:1.45;font-weight:600;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="auth-020"] *{animation:none!important;transition:none!important}}
@@ -144,6 +168,28 @@ const DEFAULT_SESSIONS: Auth020Session[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выход со всех устройств: список сеансов с местом и временем,
  * общий выход за вторым нажатием. Один файл, ноль зависимостей.
  */
@@ -152,6 +198,14 @@ export function Auth020({
   lead = "Здесь всё, где сейчас открыт ваш аккаунт. Незнакомый город или устройство — повод завершить всё разом и сменить пароль.",
   sessions = DEFAULT_SESSIONS,
   submit = "Завершить все, кроме текущего",
+  hereText = "это устройство",
+  whereText = "{client} · {place}",
+  dangerLead = "Осторожно:",
+  dangerText = "завершатся {count} сеанса на других устройствах. Несохранённые черновики там пропадут.",
+  confirmText = "Да, завершить {count}",
+  cancelText = "Отмена",
+  doneText = "Остальные сеансы завершены. На тех устройствах попросят войти заново.",
+  background = "",
   accent,
   className,
   style,
@@ -164,6 +218,12 @@ export function Auth020({
 
   const palette = {
     ...(accent ? { "--vibeui-auth-020-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-020-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -191,11 +251,13 @@ export function Auth020({
                     <span data-part="device">
                       {session.device}
                       {session.current ? (
-                        <span data-part="here">это устройство</span>
+                        <span data-part="here">{hereText}</span>
                       ) : null}
                     </span>
                     <span data-part="where">
-                      {session.client} · {session.place}
+                      {whereText
+                        .replace("{client}", session.client)
+                        .replace("{place}", session.place)}
                     </span>
                   </span>
                   <span data-part="seen">{session.seen}</span>
@@ -206,14 +268,13 @@ export function Auth020({
 
           {done ? (
             <p data-part="done" role="status">
-              Остальные сеансы завершены. На тех устройствах попросят войти
-              заново.
+              {doneText}
             </p>
           ) : (
             <div data-part="danger">
               <p data-part="dangertext">
-                <b>Осторожно:</b> завершатся {others} сеанса на других
-                устройствах. Несохранённые черновики там пропадут.
+                <b>{dangerLead}</b>{" "}
+                {dangerText.replace("{count}", String(others))}
               </p>
               {asking ? (
                 <span data-part="row">
@@ -222,14 +283,14 @@ export function Auth020({
                     data-part="kill"
                     onClick={() => setDone(true)}
                   >
-                    Да, завершить {others}
+                    {confirmText.replace("{count}", String(others))}
                   </button>
                   <button
                     type="button"
                     data-part="cancel"
                     onClick={() => setAsking(false)}
                   >
-                    Отмена
+                    {cancelText}
                   </button>
                 </span>
               ) : (

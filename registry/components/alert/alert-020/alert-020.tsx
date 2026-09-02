@@ -14,19 +14,26 @@ export type Alert020Props = Omit<
   confirmLabel?: string
   cancelLabel?: string
   onCancel?: () => void
+  /** Пусто — подложки нет, подтверждение лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: подтверждение необратимого действия. Кнопка «Удалить»
 // выключена, пока не введено точное имя объекта — та самая пауза, которая
 // отделяет случайный клик от решения. Перечисление того, что исчезнет,
 // стоит выше поля: человек должен прочитать список до того, как начнёт печатать.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-020"]){
---vibeui-alert-020-fg:oklch(0.22 0.014 265);
---vibeui-alert-020-muted:oklch(0.5 0.014 265);
---vibeui-alert-020-bg:oklch(1 0 0);
---vibeui-alert-020-border:oklch(0.9 0.006 265);
---vibeui-alert-020-danger:oklch(0.56 0.19 25);
+--vibeui-alert-020-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.006 265));
+--vibeui-alert-020-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-020-bg:transparent;
+--vibeui-alert-020-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-alert-020-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-020-danger:light-dark(oklch(0.56 0.19 25),oklch(0.71 0.18 25));
+--vibeui-alert-020-danger-fg:light-dark(oklch(0.99 0.01 25),oklch(0.16 0.02 25));
 --vibeui-alert-020-radius:0.875rem;
 --vibeui-alert-020-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-alert-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -60,7 +67,7 @@ font-family:var(--vibeui-alert-020-mono);font-weight:650;color:var(--vibeui-aler
 [data-vibeui-block="alert-020"] input{
 width:100%;box-sizing:border-box;margin:0;height:2.25rem;padding:0 0.75rem;
 border:1px solid var(--vibeui-alert-020-border);border-radius:0.5rem;
-background:oklch(1 0 0);color:inherit;
+background:var(--vibeui-alert-020-field);color:inherit;
 font-family:var(--vibeui-alert-020-mono);font-size:0.875rem;
 transition:border-color .16s ease,box-shadow .16s ease;
 }
@@ -77,7 +84,7 @@ font-size:0.8125rem;font-weight:600;
 transition:background-color .16s ease,border-color .16s ease;
 }
 [data-vibeui-block="alert-020"] [data-part="confirm"]{
-background:var(--vibeui-alert-020-danger);color:oklch(0.99 0.01 25);
+background:var(--vibeui-alert-020-danger);color:var(--vibeui-alert-020-danger-fg);
 }
 /* Кнопка выключена, пока слово не совпало: проверку делает :placeholder-shown
    у поля — сравнение значения без JS невозможно, поэтому форма требует
@@ -108,6 +115,28 @@ const DEFAULT_LOSSES = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подтверждение необратимого действия: список потерь и ввод имени.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -120,10 +149,21 @@ export function Alert020({
   confirmLabel = "Удалить навсегда",
   cancelLabel = "Отмена",
   onCancel,
+  background = "",
   className,
   style,
   ...props
 }: Alert020Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-alert-020-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-alert-020" precedence="medium">
@@ -135,7 +175,7 @@ export function Alert020({
         role="alertdialog"
         aria-label={title}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="title">{title}</span>
         {description ? <p data-part="description">{description}</p> : null}

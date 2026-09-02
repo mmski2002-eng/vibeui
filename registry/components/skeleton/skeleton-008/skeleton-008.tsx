@@ -5,19 +5,24 @@ export type Skeleton008Props = ComponentPropsWithoutRef<"div"> & {
   bars?: number[]
   height?: string
   label?: string
+  /** Пусто — подложки нет, график лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: заглушка графика держит поле фиксированной высоты и рисует
 // линии сетки — без них серые столбики читаются как список, а не как график.
 // Высоты столбиков заданы явным массивом, а не случайными числами: случайные
 // разъехались бы между сервером и клиентом при гидратации.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки по
+// умолчанию нет, график темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="skeleton-008"]){
---vibeui-skeleton-008-bg:oklch(1 0 0);
---vibeui-skeleton-008-border:oklch(0.9 0.006 265);
---vibeui-skeleton-008-grid:oklch(0.94 0.004 265);
---vibeui-skeleton-008-base:oklch(0.93 0.005 265);
---vibeui-skeleton-008-shine:oklch(0.97 0.003 265);
+--vibeui-skeleton-008-bg:transparent;
+--vibeui-skeleton-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-skeleton-008-grid:light-dark(oklch(0.94 0.004 265),oklch(0.32 0.01 265));
+--vibeui-skeleton-008-base:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.012 265));
+--vibeui-skeleton-008-shine:light-dark(oklch(0.97 0.003 265),oklch(0.39 0.016 265));
 --vibeui-skeleton-008-height:8.5rem;
 --vibeui-skeleton-008-bar:0;
 --vibeui-skeleton-008-delay:0s;
@@ -85,6 +90,28 @@ animation:vibeui-skeleton-008-sweep 1.5s ease-in-out infinite;
 const DEFAULT_BARS = [42, 68, 55, 88, 34, 72, 61]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы столбикам
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Заглушка столбчатого графика с полем, сеткой и подписями оси.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -92,12 +119,19 @@ export function Skeleton008({
   bars = DEFAULT_BARS,
   height = "8.5rem",
   label = "График загружается",
+  background = "",
   className,
   style,
   ...props
 }: Skeleton008Props) {
   const palette = {
     "--vibeui-skeleton-008-height": height,
+    ...(background
+      ? {
+          "--vibeui-skeleton-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

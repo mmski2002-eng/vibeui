@@ -16,7 +16,22 @@ export type Datagrid015Props = Omit<
 > & {
   rows?: Datagrid015Row[]
   caption?: string
+  /** Объявление о перемещении. {step}, {position}, {total} — подстановки. */
   liveTemplate?: string
+  /** Заголовок панели над таблицей. */
+  heading?: string
+  /** Строка панели до первого перемещения. {count} — число шагов. */
+  stepsTemplate?: string
+  /** Подпись ручки захвата. {step}, {position}, {total} — подстановки. */
+  moveLabel?: string
+  /** Заголовки колонок по ключу: компонент несёт русские. */
+  columnText?: Record<string, string>
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Подсказка о клавишах под таблицей. */
+  hintText?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,15 +40,18 @@ export type Datagrid015Props = Omit<
 // двигают строку на шаг, Home и End отправляют её в начало и конец.
 // Каждое перемещение объявляется через aria-live, иначе для скринридера
 // строка просто исчезает с прежнего места.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-015"]){
---vibeui-datagrid-015-bg:oklch(1 0 0);
---vibeui-datagrid-015-fg:oklch(0.23 0.014 285);
---vibeui-datagrid-015-muted:oklch(0.55 0.014 285);
---vibeui-datagrid-015-border:oklch(0.92 0.006 285);
---vibeui-datagrid-015-head:oklch(0.975 0.003 285);
---vibeui-datagrid-015-accent:oklch(0.53 0.16 300);
---vibeui-datagrid-015-drop:oklch(0.96 0.03 300);
+--vibeui-datagrid-015-bg:transparent;
+--vibeui-datagrid-015-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-015-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-015-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
+--vibeui-datagrid-015-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
+--vibeui-datagrid-015-accent:light-dark(oklch(0.53 0.16 300),oklch(0.78 0.13 300));
+--vibeui-datagrid-015-drop:light-dark(oklch(0.96 0.03 300),oklch(0.31 0.04 300));
 --vibeui-datagrid-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-015"]{
@@ -69,7 +87,7 @@ width:2.5rem;text-align:center;font-variant-numeric:tabular-nums;color:var(--vib
 appearance:none;cursor:grab;font:inherit;line-height:1;
 width:1.75rem;height:1.75rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-015-border);
-background:var(--vibeui-datagrid-015-bg);color:var(--vibeui-datagrid-015-muted);
+background:transparent;color:var(--vibeui-datagrid-015-muted);
 transition:color .15s ease,border-color .15s ease;
 }
 [data-vibeui-block="datagrid-015"] [data-part="handle"]:hover{color:var(--vibeui-datagrid-015-accent);border-color:var(--vibeui-datagrid-015-accent)}
@@ -86,6 +104,14 @@ border-top:1px solid var(--vibeui-datagrid-015-border);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-015"] *{animation:none!important;transition:none!important}}
 `
+
+const COLUMN_TEXT: Record<string, string> = {
+  handle: "Перемещение",
+  rank: "№",
+  step: "Шаг",
+  owner: "Ответственный",
+  duration: "Срок",
+}
 
 const DEFAULT_ROWS: Datagrid015Row[] = [
   { id: "s1", step: "Заявка принята", owner: "Приёмка", duration: "10 мин" },
@@ -114,13 +140,42 @@ function moveItem<T>(list: T[], from: number, to: number) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сетка с перестановкой строк перетаскиванием и стрелками с клавиатуры:
  * порядок шагов задаёт сам читатель. Один файл, ноль зависимостей.
  */
 export function Datagrid015({
   rows = DEFAULT_ROWS,
   caption = "Тяните ручку слева или наведите на неё фокус и жмите стрелки",
-  liveTemplate = "«{шаг}» теперь на позиции {позиция} из {всего}",
+  liveTemplate = "«{step}» теперь на позиции {position} из {total}",
+  heading = "Маршрут обработки заявки",
+  stepsTemplate = "Шагов в маршруте: {count}",
+  moveLabel = "Переместить шаг «{step}», сейчас позиция {position} из {total}",
+  columnText = COLUMN_TEXT,
+  scrollLabel = "Таблица шагов маршрута, прокручивается вбок",
+  hintText = "Стрелки — на шаг, Home и End — в начало и конец списка.",
+  background = "",
   accent,
   className,
   style,
@@ -133,6 +188,12 @@ export function Datagrid015({
 
   const palette = {
     ...(accent ? { "--vibeui-datagrid-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -141,9 +202,9 @@ export function Datagrid015({
 
     setMessage(
       liveTemplate
-        .replace("{шаг}", list[index].step)
-        .replace("{позиция}", String(index + 1))
-        .replace("{всего}", String(list.length)),
+        .replace("{step}", list[index].step)
+        .replace("{position}", String(index + 1))
+        .replace("{total}", String(list.length)),
     )
   }
 
@@ -169,15 +230,15 @@ export function Datagrid015({
         style={palette}
       >
         <div data-part="bar">
-          <h3 data-part="title">Маршрут обработки заявки</h3>
+          <h3 data-part="title">{heading}</h3>
           <p data-part="live" role="status" aria-live="polite">
-            {message || `Шагов в маршруте: ${order.length}`}
+            {message || stepsTemplate.replace("{count}", String(order.length))}
           </p>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица шагов маршрута, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
@@ -186,14 +247,16 @@ export function Datagrid015({
               <tr>
                 <th scope="col" data-part="handle-cell">
                   <span aria-hidden="true">⇅</span>
-                  <span hidden>Перемещение</span>
+                  <span hidden>{columnText.handle ?? COLUMN_TEXT.handle}</span>
                 </th>
                 <th scope="col" data-part="rank">
-                  №
+                  {columnText.rank ?? COLUMN_TEXT.rank}
                 </th>
-                <th scope="col">Шаг</th>
-                <th scope="col">Ответственный</th>
-                <th scope="col">Срок</th>
+                <th scope="col">{columnText.step ?? COLUMN_TEXT.step}</th>
+                <th scope="col">{columnText.owner ?? COLUMN_TEXT.owner}</th>
+                <th scope="col">
+                  {columnText.duration ?? COLUMN_TEXT.duration}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -224,7 +287,10 @@ export function Datagrid015({
                       type="button"
                       data-part="handle"
                       draggable
-                      aria-label={`Переместить шаг «${row.step}», сейчас позиция ${index + 1} из ${order.length}`}
+                      aria-label={moveLabel
+                        .replace("{step}", row.step)
+                        .replace("{position}", String(index + 1))
+                        .replace("{total}", String(order.length))}
                       onDragStart={() => setDragging(row.id)}
                       onDragEnd={() => {
                         setDragging(null)
@@ -264,9 +330,7 @@ export function Datagrid015({
             </tbody>
           </table>
         </div>
-        <p data-part="hint">
-          Стрелки — на шаг, Home и End — в начало и конец списка.
-        </p>
+        <p data-part="hint">{hintText}</p>
       </section>
     </>
   )

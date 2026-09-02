@@ -23,6 +23,14 @@ export type Dashboard029Props = {
   fileText?: string
   facts?: Dashboard029Fact[]
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подпись дерева для скринридера. */
+  treeLabel?: string
+  /** Шаблон подписи предпросмотра: {name}. */
+  previewAriaText?: string
+  /** Подпись кнопки скачивания. */
+  downloadText?: string
   className?: string
   style?: CSSProperties
 }
@@ -37,13 +45,16 @@ export type Dashboard029Props = {
 // размер и дату, потому что «этот ли файл» решают по ним, а не по тексту.
 const STYLES = `
 :where([data-vibeui-block="dashboard-029"]){
---vibeui-dashboard-029-bg:oklch(1 0 0);
---vibeui-dashboard-029-panel:oklch(0.985 0.003 265);
---vibeui-dashboard-029-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-029-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-029-border:oklch(0.91 0.006 265);
---vibeui-dashboard-029-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-029-pick:oklch(0.96 0.02 262);
+--vibeui-dashboard-029-bg:transparent;
+--vibeui-dashboard-029-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.012 265));
+/* Подсветка строки под курсором: подложка бывает прозрачной, и подсветить
+   строку фоном блока тогда нечем. */
+--vibeui-dashboard-029-hover:light-dark(oklch(1 0 0),oklch(0.33 0.012 265));
+--vibeui-dashboard-029-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-029-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-029-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.011 265));
+--vibeui-dashboard-029-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-dashboard-029-pick:light-dark(oklch(0.96 0.02 262),oklch(0.36 0.055 262));
 --vibeui-dashboard-029-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-dashboard-029-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;
@@ -85,7 +96,7 @@ font-size:0.75rem;list-style:none;cursor:pointer;
 }
 [data-vibeui-block="dashboard-029"] summary::-webkit-details-marker{display:none}
 [data-vibeui-block="dashboard-029"] summary:hover,
-[data-vibeui-block="dashboard-029"] [data-part="file"]:hover{background:var(--vibeui-dashboard-029-bg)}
+[data-vibeui-block="dashboard-029"] [data-part="file"]:hover{background:var(--vibeui-dashboard-029-hover)}
 [data-vibeui-block="dashboard-029"] [data-active="true"]{
 background:var(--vibeui-dashboard-029-pick);font-weight:650;
 }
@@ -120,7 +131,7 @@ overflow-wrap:anywhere;
 margin-left:auto;appearance:none;cursor:pointer;font:inherit;font-size:0.6875rem;font-weight:650;
 padding:0.3125rem 0.625rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-dashboard-029-border);
-background:var(--vibeui-dashboard-029-bg);color:inherit;
+background:var(--vibeui-dashboard-029-hover);color:inherit;
 }
 [data-vibeui-block="dashboard-029"] pre{
 margin:0;padding:0.75rem;max-height:12rem;overflow:auto;
@@ -200,6 +211,28 @@ const DEFAULT_TEXT = `{
   ]
 }`
 
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function renderNode(node: Dashboard029Node, key: string) {
   if (node.kind === "file") {
     return (
@@ -243,11 +276,21 @@ export function Dashboard029({
   fileText = DEFAULT_TEXT,
   facts = DEFAULT_FACTS,
   accent,
+  background = "",
+  treeLabel = "Дерево файлов",
+  previewAriaText = "Предпросмотр {name}",
+  downloadText = "Скачать",
   className,
   style,
 }: Dashboard029Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-029-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-029-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -268,15 +311,18 @@ export function Dashboard029({
             <p data-part="path">{path}</p>
           </div>
 
-          <nav data-part="tree" aria-label="Дерево файлов">
+          <nav data-part="tree" aria-label={treeLabel}>
             <ul>{tree.map((node) => renderNode(node, node.name))}</ul>
           </nav>
 
-          <article data-part="view" aria-label={`Предпросмотр ${fileName}`}>
+          <article
+            data-part="view"
+            aria-label={previewAriaText.replace("{name}", fileName)}
+          >
             <header data-part="viewhead">
               <h3>{fileName}</h3>
               <button type="button" data-part="download">
-                Скачать
+                {downloadText}
               </button>
             </header>
             <pre>{fileText}</pre>

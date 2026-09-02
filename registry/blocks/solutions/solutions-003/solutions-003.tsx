@@ -21,7 +21,11 @@ export type Solutions003Props = {
   stages?: Solutions003Stage[]
   deals?: Solutions003Deal[]
   cta?: string
+  /** Шапка таблицы: ключи company, stage, age, amount. */
+  columnText?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -36,14 +40,16 @@ export type Solutions003Props = {
 // превращаются в кашу, а воронка без списка бесполезна.
 const STYLES = `
 :where([data-vibeui-block="solutions-003"]){
---vibeui-solutions-003-bg:oklch(1 0 0);
---vibeui-solutions-003-panel:oklch(0.985 0.002 265);
---vibeui-solutions-003-fg:oklch(0.22 0.014 265);
---vibeui-solutions-003-muted:oklch(0.55 0.014 265);
---vibeui-solutions-003-border:oklch(0.91 0.006 265);
---vibeui-solutions-003-accent:oklch(0.55 0.2 262);
---vibeui-solutions-003-hot:oklch(0.6 0.18 30);
---vibeui-solutions-003-cold:oklch(0.6 0.05 250);
+--vibeui-solutions-003-bg:transparent;
+--vibeui-solutions-003-panel:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-solutions-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-solutions-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-solutions-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-solutions-003-bar:light-dark(oklch(0.55 0.2 262 / 16%),oklch(0.72 0.17 262 / 26%));
+--vibeui-solutions-003-onaccent:light-dark(oklch(1 0 0),oklch(0.17 0.012 265));
+--vibeui-solutions-003-hot:light-dark(oklch(0.6 0.18 30),oklch(0.75 0.16 33));
+--vibeui-solutions-003-cold:light-dark(oklch(0.6 0.05 250),oklch(0.68 0.045 250));
 --vibeui-solutions-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -63,7 +69,7 @@ gap:0.5rem;margin-bottom:0.875rem;
 [data-vibeui-block="solutions-003"] [data-part="cta"]{
 appearance:none;cursor:pointer;height:2.125rem;padding:0 0.875rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-solutions-003-accent);color:oklch(1 0 0);
+background:var(--vibeui-solutions-003-accent);color:var(--vibeui-solutions-003-onaccent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="solutions-003"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-solutions-003-accent);outline-offset:2px}
@@ -75,7 +81,7 @@ font-size:0.75rem;
 }
 [data-vibeui-block="solutions-003"] [data-part="bar"]{
 height:1.5rem;border-radius:0.375rem;
-background:oklch(0.55 0.2 262 / 16%);
+background:var(--vibeui-solutions-003-bar);
 width:var(--vibeui-solutions-003-width,100%);
 }
 [data-vibeui-block="solutions-003"] [data-part="sum"]{font-weight:650;font-variant-numeric:tabular-nums}
@@ -142,6 +148,35 @@ const DEFAULT_DEALS: Solutions003Deal[] = [
   },
 ]
 
+const DEFAULT_COLUMN_TEXT: Record<string, string> = {
+  company: "Компания",
+  stage: "Этап",
+  age: "Возраст",
+  amount: "Сумма",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Воронка сделок: ширина ступени от первой, возраст сделки словами и тоном.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -152,7 +187,9 @@ export function Solutions003({
   stages = DEFAULT_STAGES,
   deals = DEFAULT_DEALS,
   cta = "Добавить сделку",
+  columnText = DEFAULT_COLUMN_TEXT,
   accent,
+  background = "",
   className,
   style,
 }: Solutions003Props) {
@@ -160,6 +197,12 @@ export function Solutions003({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -208,11 +251,15 @@ export function Solutions003({
         <table>
           <thead>
             <tr>
-              <th scope="col">Компания</th>
-              <th scope="col">Этап</th>
-              <th scope="col">Возраст</th>
+              <th scope="col">
+                {columnText.company ?? DEFAULT_COLUMN_TEXT.company}
+              </th>
+              <th scope="col">
+                {columnText.stage ?? DEFAULT_COLUMN_TEXT.stage}
+              </th>
+              <th scope="col">{columnText.age ?? DEFAULT_COLUMN_TEXT.age}</th>
               <th scope="col" data-align="end">
-                Сумма
+                {columnText.amount ?? DEFAULT_COLUMN_TEXT.amount}
               </th>
             </tr>
           </thead>

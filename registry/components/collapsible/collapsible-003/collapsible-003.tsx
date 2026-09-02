@@ -10,6 +10,12 @@ export type Collapsible003Props = Omit<
   title?: string
   text?: string
   lines?: number
+  /** Подпись кнопки в свёрнутом состоянии. */
+  moreText?: string
+  /** Подпись кнопки в раскрытом состоянии. */
+  lessText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,14 +23,19 @@ export type Collapsible003Props = Omit<
 // line-clamp по числу строк, а не фиксированной высотой в пикселях: при другом
 // кегле или межстрочном интервале обрез остаётся на границе строки. Градиент
 // поверх последней строки лежит в ::after и растворяется в фоне карточки —
-// поэтому фон подложки берётся из той же переменной, что и весь блок.
+// поэтому конечный цвет градиента вынесен в отдельную переменную: подложка
+// блока прозрачна, а растворяться градиенту нужно в цвете страницы.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он темнеет вместе со страницей и не носит своей темы.
 const STYLES = `
 :where([data-vibeui-block="collapsible-003"]){
---vibeui-collapsible-003-bg:oklch(1 0 0);
---vibeui-collapsible-003-fg:oklch(0.24 0.014 265);
---vibeui-collapsible-003-muted:oklch(0.5 0.014 265);
---vibeui-collapsible-003-border:oklch(0.9 0.006 265);
---vibeui-collapsible-003-accent:oklch(0.55 0.19 28);
+--vibeui-collapsible-003-bg:transparent;
+--vibeui-collapsible-003-fade:light-dark(oklch(1 0 0),oklch(0.19 0.013 265));
+--vibeui-collapsible-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-collapsible-003-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-collapsible-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-collapsible-003-accent:light-dark(oklch(0.55 0.19 28),oklch(0.76 0.15 28));
 --vibeui-collapsible-003-lines:4;
 --vibeui-collapsible-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -47,7 +58,7 @@ display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:var(--vibeui-
 }
 [data-vibeui-block="collapsible-003"] [data-part="clip"][data-open="false"]::after{
 content:"";position:absolute;inset:auto 0 0;height:2.75rem;pointer-events:none;
-background:linear-gradient(to bottom,transparent,var(--vibeui-collapsible-003-bg) 88%);
+background:linear-gradient(to bottom,transparent,var(--vibeui-collapsible-003-fade) 88%);
 }
 [data-vibeui-block="collapsible-003"] [data-part="more"]{
 display:inline-flex;align-items:center;gap:0.375rem;margin-top:0.625rem;
@@ -69,6 +80,28 @@ const DEFAULT_TEXT =
   "VibeUI отдаёт компонент целиком: разметку, стили и палитру в одном файле. Ничего не тянется из темы проекта, поэтому после установки блок выглядит ровно так, как в превью каталога, — та же типографика, те же отступы, то же поведение при сужении. Правки делаются прямо в файле: он ваш, обновлять его из реестра никто не будет, и конфликтов с вашим дизайн-токеном тоже не случится."
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Свёртка длинного текста: обрез по строкам, градиент вместо резкой границы
  * и кнопка «Показать ещё». Один файл, ноль зависимостей.
  */
@@ -76,6 +109,9 @@ export function Collapsible003({
   title = "Почему компонент отдаётся одним файлом",
   text = DEFAULT_TEXT,
   lines = 4,
+  moreText = "Показать ещё",
+  lessText = "Свернуть",
+  background = "",
   accent,
   className,
   style,
@@ -84,9 +120,18 @@ export function Collapsible003({
   const [open, setOpen] = useState(false)
   const bodyId = useId()
 
+  // Градиент растворяется в цвете подложки: задали фон — он же становится
+  // конечным цветом, иначе полоса будет видна.
   const palette = {
     "--vibeui-collapsible-003-lines": String(lines),
     ...(accent ? { "--vibeui-collapsible-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-collapsible-003-bg": background,
+          "--vibeui-collapsible-003-fade": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -114,7 +159,7 @@ export function Collapsible003({
           aria-controls={bodyId}
           onClick={() => setOpen((value) => !value)}
         >
-          {open ? "Свернуть" : "Показать ещё"}
+          {open ? lessText : moreText}
           <span data-part="mark" aria-hidden="true" />
         </button>
       </section>

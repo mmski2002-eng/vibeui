@@ -12,6 +12,8 @@ export type Input001Props = Omit<
   /** Текст ошибки. Непустая строка переводит поле в невалидное состояние. */
   error?: string
   size?: Input001Size
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,26 +23,29 @@ export type Input001Props = Omit<
 // Всё держится на :placeholder-shown, поэтому JS не нужен.
 const STYLES = `
 :where([data-vibeui-block="input-001"]){
---vibeui-input-001-surface:oklch(1 0 0);
---vibeui-input-001-surface-border:oklch(0.91 0.006 265);
---vibeui-input-001-fg:oklch(0.24 0.016 265);
---vibeui-input-001-muted:oklch(0.55 0.014 265);
---vibeui-input-001-bg:oklch(1 0 0);
---vibeui-input-001-border:oklch(0.87 0.008 265);
---vibeui-input-001-accent:oklch(0.55 0.2 262);
---vibeui-input-001-danger:oklch(0.55 0.19 25);
+--vibeui-input-001-surface:transparent;
+--vibeui-input-001-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-input-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-input-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-input-001-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-input-001-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-input-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-input-001-danger:light-dark(oklch(0.55 0.19 25),oklch(0.74 0.16 25));
 --vibeui-input-001-radius:0.625rem;
 --vibeui-input-001-height:3.5rem;
 --vibeui-input-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Собственная подложка: подпись поля — это текст, и на тёмной странице
-   он обязан читаться без правки палитры проекта. */
 [data-vibeui-block="input-001"]{
-box-sizing:border-box;padding:0.875rem;
-background:var(--vibeui-input-001-surface);
-border:1px solid var(--vibeui-input-001-surface-border);border-radius:0.875rem;
+box-sizing:border-box;
 display:flex;flex-direction:column;gap:0.375rem;
 font-family:var(--vibeui-input-001-font);color:var(--vibeui-input-001-fg);
+}
+/* Подложка появляется только вместе с пропом background: без него поле
+   лежит прямо на фоне страницы и рамка вокруг пустоты ему не нужна. */
+[data-vibeui-block="input-001"][data-surface="on"]{
+padding:0.875rem;
+background:var(--vibeui-input-001-surface);
+border:1px solid var(--vibeui-input-001-surface-border);border-radius:0.875rem;
 }
 [data-vibeui-block="input-001"][data-size="lg"]{--vibeui-input-001-height:4rem}
 [data-vibeui-block="input-001"] [data-part="field"]{
@@ -91,6 +96,28 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-input-001-danger) 22%,trans
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Текстовое поле с подписью, которая уезжает внутрь рамки при вводе.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -99,6 +126,7 @@ export function Input001({
   hint,
   error,
   size = "md",
+  background = "",
   accent,
   id,
   className,
@@ -107,6 +135,12 @@ export function Input001({
 }: Input001Props) {
   const palette = {
     ...(accent ? { "--vibeui-input-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-001-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -122,6 +156,7 @@ export function Input001({
       <div
         data-vibeui-block="input-001"
         data-size={size}
+        data-surface={background ? "on" : undefined}
         data-invalid={invalid || undefined}
         className={className}
         style={palette}

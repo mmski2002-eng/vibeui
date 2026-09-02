@@ -33,7 +33,13 @@ export type Commerce059Props = {
   cta?: string
   note?: string
   countLabel?: string
+  /** Срок доставки: {date} подставляется датой продавца. */
+  etaTemplate?: string
+  subtotalLabel?: string
+  summaryTitle?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -48,13 +54,14 @@ export type Commerce059Props = {
 // стоит столько.
 const STYLES = `
 :where([data-vibeui-block="commerce-059"]){
---vibeui-commerce-059-bg:oklch(1 0 0);
---vibeui-commerce-059-fg:oklch(0.21 0.012 265);
---vibeui-commerce-059-muted:oklch(0.53 0.014 265);
---vibeui-commerce-059-border:oklch(0.91 0.006 265);
---vibeui-commerce-059-soft:oklch(0.972 0.004 265);
---vibeui-commerce-059-accent:oklch(0.5 0.15 260);
---vibeui-commerce-059-warn:oklch(0.55 0.14 60);
+--vibeui-commerce-059-bg:transparent;
+--vibeui-commerce-059-fg:light-dark(oklch(0.21 0.012 265),oklch(0.94 0.006 265));
+--vibeui-commerce-059-muted:light-dark(oklch(0.53 0.014 265),oklch(0.73 0.012 265));
+--vibeui-commerce-059-border:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.012 265));
+--vibeui-commerce-059-soft:light-dark(oklch(0.972 0.004 265),oklch(0.27 0.01 265));
+--vibeui-commerce-059-accent:light-dark(oklch(0.5 0.15 260),oklch(0.74 0.13 260));
+--vibeui-commerce-059-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.04 260));
+--vibeui-commerce-059-warn:light-dark(oklch(0.55 0.14 60),oklch(0.8 0.13 70));
 --vibeui-commerce-059-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -112,7 +119,7 @@ padding-top:0.75rem;border-top:1px solid var(--vibeui-commerce-059-border);
 [data-vibeui-block="commerce-059"] [data-part="sum"]{font-size:1.5rem;font-weight:750;font-variant-numeric:tabular-nums}
 [data-vibeui-block="commerce-059"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;width:100%;height:2.875rem;margin-top:0.875rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-059-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-059-accent);color:var(--vibeui-commerce-059-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-059"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-commerce-059-accent);outline-offset:2px}
 [data-vibeui-block="commerce-059"] [data-part="note"]{margin:0.75rem 0 0;font-size:0.75rem;line-height:1.5;color:var(--vibeui-commerce-059-muted)}
@@ -124,6 +131,28 @@ background:var(--vibeui-commerce-059-accent);color:oklch(0.99 0 0);font:inherit;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-059"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_SELLERS: Commerce059Seller[] = [
   {
@@ -209,12 +238,22 @@ export function Commerce059({
   cta = "Перейти к оформлению",
   note = "Возврат оформляется отдельно у каждого продавца: единой кнопки «вернуть весь заказ» не существует.",
   countLabel = "шт.",
+  etaTemplate = "Приедет {date}",
+  subtotalLabel = "Итого у продавца",
+  summaryTitle = "Общий итог",
   accent,
+  background = "",
   className,
   style,
 }: Commerce059Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-059-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-059-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -244,7 +283,7 @@ export function Commerce059({
                     </div>
                     <p data-part="terms">
                       <strong>{seller.shipping}</strong>
-                      Приедет {seller.eta}
+                      {etaTemplate.replace("{date}", seller.eta)}
                     </p>
                   </div>
                   <ul data-part="lines">
@@ -271,7 +310,7 @@ export function Commerce059({
                     ))}
                   </ul>
                   <div data-part="foot">
-                    <span>Итого у продавца</span>
+                    <span>{subtotalLabel}</span>
                     <strong>{seller.subtotal}</strong>
                   </div>
                   {seller.warning ? (
@@ -283,7 +322,7 @@ export function Commerce059({
           </div>
 
           <aside data-part="panel">
-            <h4>Общий итог</h4>
+            <h4>{summaryTitle}</h4>
             <dl>
               <div data-part="pair">
                 <dt>{itemsLabel}</dt>

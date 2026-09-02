@@ -14,6 +14,10 @@ export type Table008Props = Omit<
 > & {
   rows?: Table008Row[]
   caption?: string
+  /** Заголовки колонок: компонент несёт русские, проект подставляет свои. */
+  columnText?: Record<string, string>
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,16 +25,19 @@ export type Table008Props = Omit<
 // выравнивают адреса и коды в столбик, поэтому отличие в одном символе видно
 // без чтения. Код ответа помечен точкой, а не только цветом: строки просматривают
 // глазами по краю, и красный текст в потоке серого теряется.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-008"]){
---vibeui-table-008-bg:oklch(1 0 0);
---vibeui-table-008-fg:oklch(0.24 0.014 265);
---vibeui-table-008-muted:oklch(0.56 0.014 265);
---vibeui-table-008-border:oklch(0.93 0.005 265);
---vibeui-table-008-head:oklch(0.975 0.003 265);
---vibeui-table-008-ok:oklch(0.62 0.15 152);
---vibeui-table-008-warn:oklch(0.72 0.15 75);
---vibeui-table-008-fail:oklch(0.58 0.19 25);
+--vibeui-table-008-bg:transparent;
+--vibeui-table-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-table-008-border:light-dark(oklch(0.93 0.005 265),oklch(0.36 0.011 265));
+--vibeui-table-008-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-008-ok:light-dark(oklch(0.62 0.15 152),oklch(0.76 0.14 152));
+--vibeui-table-008-warn:light-dark(oklch(0.72 0.15 75),oklch(0.82 0.14 75));
+--vibeui-table-008-fail:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.17 25));
 --vibeui-table-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-table-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -104,6 +111,36 @@ const DEFAULT_ROWS: Table008Row[] = [
   { time: "10:41:22", method: "GET", path: "/c/hero-001", code: 200, ms: 51 },
 ]
 
+const COLUMN_TEXT: Record<string, string> = {
+  time: "Время",
+  method: "Метод",
+  path: "Адрес",
+  code: "Код",
+  ms: "мс",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function tone(code: number) {
   if (code >= 400) return "fail"
   if (code >= 300) return "warn"
@@ -117,6 +154,8 @@ function tone(code: number) {
 export function Table008({
   rows = DEFAULT_ROWS,
   caption = "Последние запросы",
+  columnText = COLUMN_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -124,6 +163,12 @@ export function Table008({
 }: Table008Props) {
   const palette = {
     ...(accent ? { "--vibeui-table-008-ok": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-table-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -142,12 +187,12 @@ export function Table008({
           <caption>{caption}</caption>
           <thead>
             <tr>
-              <th scope="col">Время</th>
-              <th scope="col">Метод</th>
-              <th scope="col">Адрес</th>
-              <th scope="col">Код</th>
+              <th scope="col">{columnText.time ?? COLUMN_TEXT.time}</th>
+              <th scope="col">{columnText.method ?? COLUMN_TEXT.method}</th>
+              <th scope="col">{columnText.path ?? COLUMN_TEXT.path}</th>
+              <th scope="col">{columnText.code ?? COLUMN_TEXT.code}</th>
               <th scope="col" data-align="end">
-                мс
+                {columnText.ms ?? COLUMN_TEXT.ms}
               </th>
             </tr>
           </thead>

@@ -11,6 +11,10 @@ export type Button019Props = Omit<
   count?: number
   defaultPressed?: boolean
   onChange?: (pressed: boolean) => void
+  /** Имя кнопки для скринридера. {label} — подпись, {count} — число отметок. */
+  countLabel?: string
+  /** Пусто — подложки нет, кнопка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,11 +24,11 @@ export type Button019Props = Omit<
 // ответа сервера: реакция — дешёвое действие, и ждать её незачем.
 const STYLES = `
 :where([data-vibeui-block="button-019"]){
---vibeui-button-019-fg:oklch(0.32 0.014 265);
---vibeui-button-019-bg:oklch(1 0 0);
---vibeui-button-019-border:oklch(0.9 0.006 265);
---vibeui-button-019-hover:oklch(0.96 0.004 265);
---vibeui-button-019-accent:oklch(0.58 0.19 25);
+--vibeui-button-019-fg:light-dark(oklch(0.32 0.014 265),oklch(0.93 0.006 265));
+--vibeui-button-019-bg:transparent;
+--vibeui-button-019-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-button-019-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
+--vibeui-button-019-accent:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.17 25));
 --vibeui-button-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-019"]{
@@ -41,8 +45,8 @@ transition:color .16s ease,border-color .16s ease;
 /* Нажатое состояние: цвет плюс заливка сердца — не только цвет. */
 [data-vibeui-block="button-019"][aria-pressed="true"]{
 color:var(--vibeui-button-019-accent);
-border-color:color-mix(in oklab,var(--vibeui-button-019-accent) 40%,oklch(1 0 0));
-background:color-mix(in oklab,var(--vibeui-button-019-accent) 8%,oklch(1 0 0));
+border-color:color-mix(in oklab,var(--vibeui-button-019-accent) 50%,transparent);
+background:color-mix(in oklab,var(--vibeui-button-019-accent) 12%,transparent);
 }
 /* Сердце: повёрнутый квадрат и два круга, без иконочного пакета. В покое
    оно бледнее и мельче, в нажатом — плотнее и крупнее: состояние читается
@@ -69,6 +73,28 @@ border-radius:9999px;background:currentColor;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кнопка-реакция со счётчиком: состояние в aria-pressed.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -77,6 +103,8 @@ export function Button019({
   count = 128,
   defaultPressed = false,
   onChange,
+  countLabel = "{label}, отметок: {count}",
+  background = "",
   accent,
   type = "button",
   className,
@@ -87,6 +115,12 @@ export function Button019({
 
   const palette = {
     ...(accent ? { "--vibeui-button-019-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -104,7 +138,9 @@ export function Button019({
         className={className}
         style={palette}
         aria-pressed={pressed}
-        aria-label={`${label}, отметок: ${total}`}
+        aria-label={countLabel
+          .replace("{label}", label)
+          .replace("{count}", String(total))}
         onClick={() => {
           setPressed(!pressed)
           onChange?.(!pressed)

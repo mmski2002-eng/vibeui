@@ -15,6 +15,12 @@ export type Table019Props = Omit<
   caption?: string
   /** Подпись итоговой строки: она же объясняет, что именно просуммировано. */
   totalLabel?: string
+  /** Приписка к итогу; {count} — число строк, {unit} — единицы. */
+  totalHint?: string
+  /** Заголовки колонок: ключи title, value и share. */
+  columnText?: Record<string, string>
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,15 +28,18 @@ export type Table019Props = Omit<
 // Доля каждой строки считается от итога и рисуется полоской прямо в ячейке,
 // поэтому «412» и «41%» стоят рядом. Полоска — оформление, число рядом с ней
 // остаётся текстом, иначе доля пропадёт для скринридера.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-019"]){
---vibeui-table-019-bg:oklch(1 0 0);
---vibeui-table-019-fg:oklch(0.24 0.014 265);
---vibeui-table-019-muted:oklch(0.56 0.014 265);
---vibeui-table-019-border:oklch(0.92 0.006 265);
---vibeui-table-019-head:oklch(0.975 0.003 265);
---vibeui-table-019-accent:oklch(0.55 0.2 262);
---vibeui-table-019-track:oklch(0.93 0.008 265);
+--vibeui-table-019-bg:transparent;
+--vibeui-table-019-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-019-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-table-019-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
+--vibeui-table-019-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-019-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
+--vibeui-table-019-track:light-dark(oklch(0.93 0.008 265),oklch(0.4 0.012 265));
 --vibeui-table-019-fill:0%;
 --vibeui-table-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -98,10 +107,38 @@ const DEFAULT_ROWS: Table019Row[] = [
   { title: "Партнёры", hint: "интеграции", value: 470 },
 ]
 
+const DEFAULT_COLUMN_TEXT: Record<string, string> = {
+  title: "Источник",
+  value: "Значение",
+  share: "Доля",
+}
+
 function group(value: number) {
   return Math.round(value)
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+}
+
+/**
+ * Ветка темы для заданного фона: light-dark() смотрит на color-scheme, а не
+ * на цвет подложки, поэтому светлую плашку приходится объявлять светлой.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -113,6 +150,9 @@ export function Table019({
   unit = "визитов",
   caption = "Источники трафика за неделю",
   totalLabel = "Итого",
+  totalHint = "по {count} источникам, {unit}",
+  columnText = DEFAULT_COLUMN_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -120,6 +160,12 @@ export function Table019({
 }: Table019Props) {
   const palette = {
     ...(accent ? { "--vibeui-table-019-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-table-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -147,9 +193,15 @@ export function Table019({
               <caption>{caption}</caption>
               <thead>
                 <tr>
-                  <th scope="col">Источник</th>
-                  <th scope="col">Значение</th>
-                  <th scope="col">Доля</th>
+                  <th scope="col">
+                    {columnText.title ?? DEFAULT_COLUMN_TEXT.title}
+                  </th>
+                  <th scope="col">
+                    {columnText.value ?? DEFAULT_COLUMN_TEXT.value}
+                  </th>
+                  <th scope="col">
+                    {columnText.share ?? DEFAULT_COLUMN_TEXT.share}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -192,7 +244,9 @@ export function Table019({
                   <th scope="row">
                     {totalLabel}
                     <span data-part="hint">
-                      по {rows.length} источникам, {unit}
+                      {totalHint
+                        .replace("{count}", String(rows.length))
+                        .replace("{unit}", unit)}
                     </span>
                   </th>
                   <td data-align="end">{group(total)}</td>

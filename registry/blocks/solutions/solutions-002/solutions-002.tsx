@@ -19,7 +19,23 @@ export type Solutions002Props = {
   card?: string
   primary?: string
   secondary?: string
+  /** Название тарифа в шапке, {plan} — значение пропа plan. */
+  planNameText?: string
+  /** Расход и лимит, {used} и {limit} — отформатированные числа. */
+  usageValueText?: string
+  /** Строка превышения, {over} — насколько лимит перебран. */
+  overText?: string
+  /** Итоговая строка счёта, {date} — дата списания. */
+  dueRowText?: string
+  /** Сумма в итоговой строке счёта. */
+  dueAmount?: string
+  /** Подписи боковой панели: ключи region и next. */
+  sideText?: Record<string, string>
+  /** Локаль форматирования чисел. */
+  numberLocale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,14 +50,15 @@ export type Solutions002Props = {
 // по ним, а способ оплаты вынесен вниз: его меняют раз в год.
 const STYLES = `
 :where([data-vibeui-block="solutions-002"]){
---vibeui-solutions-002-bg:oklch(1 0 0);
---vibeui-solutions-002-panel:oklch(0.985 0.002 265);
---vibeui-solutions-002-fg:oklch(0.22 0.014 265);
---vibeui-solutions-002-muted:oklch(0.55 0.014 265);
---vibeui-solutions-002-border:oklch(0.91 0.006 265);
---vibeui-solutions-002-track:oklch(0.93 0.005 265);
---vibeui-solutions-002-accent:oklch(0.55 0.2 262);
---vibeui-solutions-002-over:oklch(0.62 0.17 40);
+--vibeui-solutions-002-bg:transparent;
+--vibeui-solutions-002-panel:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-solutions-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-solutions-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-solutions-002-track:light-dark(oklch(0.93 0.005 265),oklch(0.33 0.01 265));
+--vibeui-solutions-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.7 0.17 262));
+--vibeui-solutions-002-over:light-dark(oklch(0.62 0.17 40),oklch(0.76 0.15 45));
+--vibeui-solutions-002-onaccent:light-dark(oklch(1 0 0),oklch(0.17 0.012 265));
 --vibeui-solutions-002-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -113,7 +130,7 @@ background:var(--vibeui-solutions-002-track);
 width:100%;appearance:none;cursor:pointer;height:2.25rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="solutions-002"] [data-part="primary"]{border:0;background:var(--vibeui-solutions-002-accent);color:oklch(1 0 0);margin-bottom:0.5rem}
+[data-vibeui-block="solutions-002"] [data-part="primary"]{border:0;background:var(--vibeui-solutions-002-accent);color:var(--vibeui-solutions-002-onaccent);margin-bottom:0.5rem}
 [data-vibeui-block="solutions-002"] [data-part="secondary"]{
 border:1px solid var(--vibeui-solutions-002-border);background:none;color:inherit;
 }
@@ -135,6 +152,33 @@ const DEFAULT_LINES: Solutions002Line[] = [
   },
 ]
 
+const DEFAULT_SIDE_TEXT: Record<string, string> = {
+  region: "Способ оплаты",
+  next: "Следующее списание",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Биллинг: расход полосой и цифрами, превышение лимита названо явно.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -152,16 +196,33 @@ export function Solutions002({
   card = "Visa · 6411",
   primary = "Оплатить сейчас",
   secondary = "Сменить тариф",
+  planNameText = "Тариф «{plan}»",
+  usageValueText = "{used} из {limit}",
+  overText = "Лимит превышен на {over} — перерасход попадёт в следующий счёт",
+  dueRowText = "К списанию {date}",
+  dueAmount = "13 380 ₽",
+  sideText = DEFAULT_SIDE_TEXT,
+  numberLocale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions002Props) {
   const over = used > limit
   const fill = `${Math.min(100, (used / Math.max(limit, 1)) * 100)}%`
+  const usageValue = usageValueText
+    .replace("{used}", used.toLocaleString(numberLocale))
+    .replace("{limit}", limit.toLocaleString(numberLocale))
 
   const palette = {
     "--vibeui-solutions-002-used": fill,
     ...(accent ? { "--vibeui-solutions-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -182,7 +243,9 @@ export function Solutions002({
           <div>
             <div data-part="plan">
               <div>
-                <p data-part="planname">Тариф «{plan}»</p>
+                <p data-part="planname">
+                  {planNameText.replace("{plan}", plan)}
+                </p>
                 <p data-part="planhint">{planHint}</p>
               </div>
               <span data-part="amount">{amount}</span>
@@ -191,10 +254,7 @@ export function Solutions002({
             <div data-part="usage" data-over={over ? "true" : "false"}>
               <p data-part="usageline">
                 {usageLabel}
-                <span data-part="usagevalue">
-                  {used.toLocaleString("ru-RU")} из{" "}
-                  {limit.toLocaleString("ru-RU")}
-                </span>
+                <span data-part="usagevalue">{usageValue}</span>
               </p>
               <div
                 data-part="track"
@@ -208,8 +268,10 @@ export function Solutions002({
               </div>
               {over ? (
                 <p data-part="overnote">
-                  Лимит превышен на {(used - limit).toLocaleString("ru-RU")} —
-                  перерасход попадёт в следующий счёт
+                  {overText.replace(
+                    "{over}",
+                    (used - limit).toLocaleString(numberLocale),
+                  )}
                 </p>
               ) : null}
             </div>
@@ -228,15 +290,18 @@ export function Solutions002({
               </tbody>
               <tfoot>
                 <tr>
-                  <td>К списанию {dueDate}</td>
-                  <td data-align="end">13 380 ₽</td>
+                  <td>{dueRowText.replace("{date}", dueDate)}</td>
+                  <td data-align="end">{dueAmount}</td>
                 </tr>
               </tfoot>
             </table>
           </div>
 
-          <aside data-part="side" aria-label="Способ оплаты">
-            <p data-part="due">Следующее списание</p>
+          <aside
+            data-part="side"
+            aria-label={sideText.region ?? DEFAULT_SIDE_TEXT.region}
+          >
+            <p data-part="due">{sideText.next ?? DEFAULT_SIDE_TEXT.next}</p>
             <p data-part="duevalue">{dueDate}</p>
             <p data-part="card">
               <span data-part="chip" aria-hidden="true" />

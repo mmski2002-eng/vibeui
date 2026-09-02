@@ -9,6 +9,10 @@ export type Tooltip004Props = Omit<
   actions?: Tooltip004Action[]
   /** С какой стороны панели всплывают подсказки. */
   side?: "top" | "bottom"
+  /** Имя панели для скринридера. */
+  toolbarLabel?: string
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: панель иконок, где подсказка — не украшение, а единственная
@@ -16,12 +20,12 @@ export type Tooltip004Props = Omit<
 // к своей ячейке, поэтому соседние подсказки не перекрывают друг друга.
 const STYLES = `
 :where([data-vibeui-block="tooltip-004"]){
---vibeui-tooltip-004-bg:oklch(1 0 0);
---vibeui-tooltip-004-fg:oklch(0.26 0.014 265);
---vibeui-tooltip-004-border:oklch(0.9 0.006 265);
---vibeui-tooltip-004-hover:oklch(0.95 0.004 265);
---vibeui-tooltip-004-tip:oklch(0.24 0.014 265);
---vibeui-tooltip-004-accent:oklch(0.57 0.17 265);
+--vibeui-tooltip-004-bg:transparent;
+--vibeui-tooltip-004-fg:light-dark(oklch(0.26 0.014 265),oklch(0.92 0.006 265));
+--vibeui-tooltip-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-tooltip-004-hover:light-dark(oklch(0.95 0.004 265),oklch(0.32 0.012 265));
+--vibeui-tooltip-004-tip:light-dark(oklch(0.24 0.014 265),oklch(0.35 0.014 265));
+--vibeui-tooltip-004-accent:light-dark(oklch(0.57 0.17 265),oklch(0.72 0.16 265));
 --vibeui-tooltip-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="tooltip-004"]{
@@ -71,16 +75,50 @@ const DEFAULT_ACTIONS: Tooltip004Action[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Панель иконок-кнопок, где подсказка служит единственной подписью.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tooltip004({
   actions = DEFAULT_ACTIONS,
   side = "top",
+  toolbarLabel = "Действия над слоем",
+  background = "",
   className,
   style,
   ...props
 }: Tooltip004Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-tooltip-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-tooltip-004" precedence="medium">
@@ -91,9 +129,9 @@ export function Tooltip004({
         data-vibeui-block="tooltip-004"
         data-side={side}
         role="toolbar"
-        aria-label="Действия над слоем"
+        aria-label={toolbarLabel}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         {actions.map((action, index) => (
           <span data-part="item" key={action.label}>

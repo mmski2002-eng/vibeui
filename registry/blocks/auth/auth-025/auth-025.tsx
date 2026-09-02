@@ -16,6 +16,32 @@ export type Auth025Props = {
   plans?: Auth025Plan[]
   submit?: string
   yearlyOff?: number
+  /** Подпись группы переключателей периода для скринридера. */
+  periodLabel?: string
+  /** Вкладка помесячной оплаты. */
+  monthlyText?: string
+  /** Вкладка годовой оплаты; {off} подставляется скидкой. */
+  yearlyText?: string
+  /** Метка самого популярного тарифа. */
+  bestText?: string
+  /** Цена; {price} подставляется числом. */
+  priceText?: string
+  /** Период под ценой. */
+  perText?: string
+  /** Хвост периода при годовой оплате. */
+  perYearText?: string
+  /** Подпись поля почты. */
+  emailLabel?: string
+  /** Подсказка в поле почты. */
+  emailPlaceholder?: string
+  /** Подпись поля пароля. */
+  passwordLabel?: string
+  /** Хвост кнопки; {plan} подставляется названием тарифа. */
+  planSuffix?: string
+  /** Строка под кнопкой: главный страх этого шага. */
+  footText?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -32,15 +58,21 @@ export type Auth025Props = {
 // подсветка выбранной держится на :has(). Под кнопкой написано, что карта
 // не нужна на бесплатном тарифе: это снимает главный страх этого шага.
 //
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не носит собственной подложки.
+//
 // Демонстрация интерфейса: оплата и подписка — за вызывающим кодом.
 const STYLES = `
 :where([data-vibeui-block="auth-025"]){
---vibeui-auth-025-bg:oklch(0.96 0.008 95);
---vibeui-auth-025-card:oklch(1 0 0);
---vibeui-auth-025-fg:oklch(0.23 0.016 90);
---vibeui-auth-025-muted:oklch(0.53 0.014 90);
---vibeui-auth-025-border:oklch(0.89 0.01 90);
---vibeui-auth-025-accent:oklch(0.52 0.14 130);
+--vibeui-auth-025-bg:transparent;
+--vibeui-auth-025-card:light-dark(oklch(1 0 0),oklch(0.23 0.012 120));
+--vibeui-auth-025-fg:light-dark(oklch(0.23 0.016 90),oklch(0.94 0.006 120));
+--vibeui-auth-025-muted:light-dark(oklch(0.53 0.014 90),oklch(0.71 0.012 120));
+--vibeui-auth-025-border:light-dark(oklch(0.89 0.01 90),oklch(0.36 0.012 120));
+--vibeui-auth-025-accent:light-dark(oklch(0.52 0.14 130),oklch(0.76 0.14 135));
+--vibeui-auth-025-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 135));
+--vibeui-auth-025-track:light-dark(oklch(0.55 0.02 90 / 10%),oklch(0.82 0.02 120 / 14%));
+--vibeui-auth-025-tint:light-dark(oklch(0.52 0.14 130 / 14%),oklch(0.76 0.14 135 / 20%));
 --vibeui-auth-025-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -63,7 +95,7 @@ font-family:var(--vibeui-auth-025-sans);
 [data-vibeui-block="auth-025"] h2{margin:0;font-size:1.375rem;font-weight:700;line-height:1.2;letter-spacing:-0.02em}
 [data-vibeui-block="auth-025"] [data-part="period"]{
 display:flex;gap:0.125rem;margin-left:auto;padding:0.1875rem;
-border-radius:9999px;background:oklch(0.55 0.02 90 / 10%);
+border-radius:9999px;background:var(--vibeui-auth-025-track);
 }
 [data-vibeui-block="auth-025"] [data-part="tab"]{
 appearance:none;border:0;cursor:pointer;
@@ -89,7 +121,7 @@ border-color:var(--vibeui-auth-025-accent);box-shadow:inset 0 0 0 1px var(--vibe
 [data-vibeui-block="auth-025"] [data-part="pname"]{display:flex;align-items:center;gap:0.375rem;font-size:0.9375rem;font-weight:700}
 [data-vibeui-block="auth-025"] [data-part="best"]{
 padding:0.0625rem 0.375rem;border-radius:9999px;
-background:oklch(0.52 0.14 130 / 14%);color:var(--vibeui-auth-025-accent);
+background:var(--vibeui-auth-025-tint);color:var(--vibeui-auth-025-accent);
 font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;
 }
 [data-vibeui-block="auth-025"] [data-part="price"]{display:block;margin:0.25rem 0;font-size:1.25rem;font-weight:700;letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
@@ -114,7 +146,7 @@ background:var(--vibeui-auth-025-card);color:inherit;font:inherit;font-size:0.87
 [data-vibeui-block="auth-025"] [data-part="submit"]{
 width:100%;appearance:none;cursor:pointer;height:2.75rem;
 border:0;border-radius:0.75rem;
-background:var(--vibeui-auth-025-accent);color:oklch(1 0 0);
+background:var(--vibeui-auth-025-accent);color:var(--vibeui-auth-025-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="auth-025"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-auth-025-accent);outline-offset:2px}
@@ -145,6 +177,28 @@ const DEFAULT_PLANS: Auth025Plan[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор тарифа прямо в регистрации: цена пересчитывается при смене
  * периода, бесплатный выбран по умолчанию. Один файл, ноль зависимостей.
  */
@@ -153,6 +207,19 @@ export function Auth025({
   plans = DEFAULT_PLANS,
   submit = "Создать аккаунт",
   yearlyOff = 20,
+  periodLabel = "Период оплаты",
+  monthlyText = "Помесячно",
+  yearlyText = "За год — дешевле на {off}%",
+  bestText = "чаще всего",
+  priceText = "{price} ₽",
+  perText = "в месяц",
+  perYearText = ", при оплате за год",
+  emailLabel = "Рабочая почта",
+  emailPlaceholder = "name@company.ru",
+  passwordLabel = "Пароль",
+  planSuffix = " — тариф «{plan}»",
+  footText = "На свободном тарифе карта не нужна. Платный можно включить позже — прогресс и проекты сохранятся.",
+  background = "",
   accent,
   className,
   style,
@@ -162,6 +229,12 @@ export function Auth025({
 
   const palette = {
     ...(accent ? { "--vibeui-auth-025-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-025-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -179,14 +252,14 @@ export function Auth025({
         <div data-part="shell">
           <div data-part="top">
             <h2>{title}</h2>
-            <div data-part="period" role="group" aria-label="Период оплаты">
+            <div data-part="period" role="group" aria-label={periodLabel}>
               <button
                 type="button"
                 data-part="tab"
                 aria-pressed={!yearly}
                 onClick={() => setYearly(false)}
               >
-                Помесячно
+                {monthlyText}
               </button>
               <button
                 type="button"
@@ -194,7 +267,7 @@ export function Auth025({
                 aria-pressed={yearly}
                 onClick={() => setYearly(true)}
               >
-                За год — дешевле на {yearlyOff}%
+                {yearlyText.replace("{off}", String(yearlyOff))}
               </button>
             </div>
           </div>
@@ -219,13 +292,14 @@ export function Auth025({
                       <span data-part="pname">
                         {plan.name}
                         {plan.best ? (
-                          <span data-part="best">чаще всего</span>
+                          <span data-part="best">{bestText}</span>
                         ) : null}
                       </span>
                       <span data-part="price">
-                        {price} ₽{" "}
+                        {priceText.replace("{price}", String(price))}{" "}
                         <span data-part="per">
-                          в месяц{yearly ? ", при оплате за год" : ""}
+                          {perText}
+                          {yearly ? perYearText : ""}
                         </span>
                       </span>
                       <span data-part="note">{plan.note}</span>
@@ -253,18 +327,18 @@ export function Auth025({
             }}
           >
             <div data-part="field">
-              <label htmlFor="vibeui-auth-025-email">Рабочая почта</label>
+              <label htmlFor="vibeui-auth-025-email">{emailLabel}</label>
               <input
                 id="vibeui-auth-025-email"
                 name="email"
                 type="email"
                 autoComplete="username"
-                placeholder="name@company.ru"
+                placeholder={emailPlaceholder}
                 required
               />
             </div>
             <div data-part="field">
-              <label htmlFor="vibeui-auth-025-password">Пароль</label>
+              <label htmlFor="vibeui-auth-025-password">{passwordLabel}</label>
               <input
                 id="vibeui-auth-025-password"
                 name="password"
@@ -275,14 +349,12 @@ export function Auth025({
               />
             </div>
             <button type="submit" data-part="submit">
-              {submit} — тариф «{chosen}»
+              {submit}
+              {planSuffix.replace("{plan}", chosen)}
             </button>
           </form>
 
-          <p data-part="foot">
-            На свободном тарифе карта не нужна. Платный можно включить позже —
-            прогресс и проекты сохранятся.
-          </p>
+          <p data-part="foot">{footText}</p>
         </div>
       </section>
     </>

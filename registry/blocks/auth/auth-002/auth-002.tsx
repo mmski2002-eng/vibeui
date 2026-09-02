@@ -10,6 +10,21 @@ export type Auth002Props = {
   terms?: string
   switchText?: string
   switchLink?: string
+  nameLabel?: string
+  nameValue?: string
+  emailLabel?: string
+  emailPlaceholder?: string
+  passwordLabel?: string
+  showLabel?: string
+  hideLabel?: string
+  /** Четыре оценки по возрастанию: компонент несёт русские. */
+  verdicts?: string[]
+  /** Строка вердикта; {verdict} подставляется из verdicts. */
+  verdictTemplate?: string
+  /** Три требования в том же порядке, что и проверки в score. */
+  ruleLabels?: string[]
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -23,17 +38,21 @@ export type Auth002Props = {
 // выскакивают после ошибки: список видно до первого нажатия. Поле повтора
 // пароля намеренно отсутствует — оно не ловит опечатки, а мешает менеджерам
 // паролей; вместо него есть показ введённого.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="auth-002"]){
---vibeui-auth-002-bg:oklch(1 0 0);
---vibeui-auth-002-fg:oklch(0.22 0.014 265);
---vibeui-auth-002-muted:oklch(0.55 0.014 265);
---vibeui-auth-002-border:oklch(0.9 0.006 265);
---vibeui-auth-002-track:oklch(0.93 0.005 265);
---vibeui-auth-002-accent:oklch(0.55 0.2 262);
---vibeui-auth-002-weak:oklch(0.6 0.19 25);
---vibeui-auth-002-mid:oklch(0.72 0.15 75);
---vibeui-auth-002-good:oklch(0.58 0.14 152);
+--vibeui-auth-002-bg:transparent;
+--vibeui-auth-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-auth-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.013 265));
+--vibeui-auth-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265));
+--vibeui-auth-002-track:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.009 265));
+--vibeui-auth-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-auth-002-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-auth-002-weak:light-dark(oklch(0.6 0.19 25),oklch(0.71 0.16 25));
+--vibeui-auth-002-mid:light-dark(oklch(0.72 0.15 75),oklch(0.79 0.13 75));
+--vibeui-auth-002-good:light-dark(oklch(0.58 0.14 152),oklch(0.72 0.13 152));
 --vibeui-auth-002-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -92,13 +111,13 @@ box-shadow:inset 0 0 0 1.5px var(--vibeui-auth-002-border);
 font-size:0.5625rem;line-height:1;
 }
 [data-vibeui-block="auth-002"] [data-ok="true"] [data-part="mark"]{
-background:var(--vibeui-auth-002-good);color:oklch(1 0 0);box-shadow:none;
+background:var(--vibeui-auth-002-good);color:var(--vibeui-auth-002-on-accent);box-shadow:none;
 }
 [data-vibeui-block="auth-002"] [data-ok="true"]{color:var(--vibeui-auth-002-fg)}
 [data-vibeui-block="auth-002"] [data-part="submit"]{
 width:100%;margin-top:0.875rem;appearance:none;cursor:pointer;height:2.625rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-002-accent);color:oklch(1 0 0);
+background:var(--vibeui-auth-002-accent);color:var(--vibeui-auth-002-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="auth-002"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-auth-002-accent);outline-offset:2px}
@@ -114,12 +133,36 @@ margin:0.75rem 0 0;text-align:center;font-size:0.8125rem;color:var(--vibeui-auth
 
 const VERDICTS = ["слишком простой", "простой", "сойдёт", "надёжный"]
 
+const RULE_LABELS = ["от 10 символов", "буквы и цифры", "знак или 16+"]
+
 function score(value: string) {
   let points = 0
   if (value.length >= 10) points += 1
   if (/[a-zа-яё]/i.test(value) && /\d/.test(value)) points += 1
   if (/[^\wа-яё]/i.test(value) || value.length >= 16) points += 1
   return points
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -133,6 +176,17 @@ export function Auth002({
   terms = "Создавая аккаунт, вы соглашаетесь с условиями сервиса и политикой обработки данных.",
   switchText = "Уже есть аккаунт?",
   switchLink = "Войти",
+  nameLabel = "Имя",
+  nameValue = "Анна Реброва",
+  emailLabel = "Рабочая почта",
+  emailPlaceholder = "name@company.ru",
+  passwordLabel = "Пароль",
+  showLabel = "Показать",
+  hideLabel = "Скрыть",
+  verdicts = VERDICTS,
+  verdictTemplate = "Пароль {verdict}",
+  ruleLabels = RULE_LABELS,
+  background = "",
   accent,
   className,
   style,
@@ -142,19 +196,19 @@ export function Auth002({
   const points = score(password)
 
   const rules = [
-    { text: "от 10 символов", ok: password.length >= 10 },
-    {
-      text: "буквы и цифры",
-      ok: /[a-zа-яё]/i.test(password) && /\d/.test(password),
-    },
-    {
-      text: "знак или 16+",
-      ok: /[^\wа-яё]/i.test(password) || password.length >= 16,
-    },
-  ]
+    password.length >= 10,
+    /[a-zа-яё]/i.test(password) && /\d/.test(password),
+    /[^\wа-яё]/i.test(password) || password.length >= 16,
+  ].map((ok, index) => ({ text: ruleLabels[index] ?? RULE_LABELS[index], ok }))
 
   const palette = {
     ...(accent ? { "--vibeui-auth-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -174,30 +228,31 @@ export function Auth002({
 
         <form>
           <div data-part="field">
-            <label htmlFor="vibeui-auth-002-name">Имя</label>
+            <label htmlFor="vibeui-auth-002-name">{nameLabel}</label>
             <input
+              key={nameValue}
               id="vibeui-auth-002-name"
               name="name"
               type="text"
               autoComplete="name"
-              defaultValue="Анна Реброва"
+              defaultValue={nameValue}
             />
           </div>
 
           <div data-part="field">
-            <label htmlFor="vibeui-auth-002-email">Рабочая почта</label>
+            <label htmlFor="vibeui-auth-002-email">{emailLabel}</label>
             <input
               id="vibeui-auth-002-email"
               name="email"
               type="email"
               autoComplete="username"
-              placeholder="name@company.ru"
+              placeholder={emailPlaceholder}
               required
             />
           </div>
 
           <div data-part="field" data-score={points}>
-            <label htmlFor="vibeui-auth-002-password">Пароль</label>
+            <label htmlFor="vibeui-auth-002-password">{passwordLabel}</label>
             <span data-part="pass">
               <input
                 id="vibeui-auth-002-password"
@@ -214,7 +269,7 @@ export function Auth002({
                 data-part="peek"
                 onClick={() => setShown((current) => !current)}
               >
-                {shown ? "Скрыть" : "Показать"}
+                {shown ? hideLabel : showLabel}
               </button>
             </span>
 
@@ -228,7 +283,10 @@ export function Auth002({
               data-part="verdict"
               aria-live="polite"
             >
-              Пароль {VERDICTS[points]}
+              {verdictTemplate.replace(
+                "{verdict}",
+                verdicts[points] ?? VERDICTS[points],
+              )}
             </p>
 
             <ul>

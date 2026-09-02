@@ -4,6 +4,8 @@ export type Button041Props = ComponentPropsWithoutRef<"button"> & {
   accent?: string
   /** Второй цвет градиента: рамка собирается из пары. */
   accentEnd?: string
+  /** Бумага внутри рамки. Пусто — своя, из палитры. */
+  background?: string
 }
 
 // Идея компонента: градиент живёт в рамке, а не в заливке. Он собран из двух
@@ -13,10 +15,10 @@ export type Button041Props = ComponentPropsWithoutRef<"button"> & {
 // отдельным box-shadow-кольцом плюс outline с отступом.
 const STYLES = `
 :where([data-vibeui-block="button-041"]){
---vibeui-button-041-paper:oklch(1 0 0);
---vibeui-button-041-accent:oklch(0.6 0.2 25);
---vibeui-button-041-accent-end:oklch(0.55 0.2 300);
---vibeui-button-041-ink:oklch(0.26 0.02 285);
+--vibeui-button-041-paper:light-dark(oklch(1 0 0),oklch(0.23 0.015 285));
+--vibeui-button-041-accent:light-dark(oklch(0.6 0.2 25),oklch(0.7 0.19 25));
+--vibeui-button-041-accent-end:light-dark(oklch(0.55 0.2 300),oklch(0.7 0.18 300));
+--vibeui-button-041-ink:light-dark(oklch(0.26 0.02 285),oklch(0.93 0.008 285));
 --vibeui-button-041-radius:0.75rem;
 --vibeui-button-041-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -53,12 +55,36 @@ clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)
 `
 
 /**
+ * Ветка темы для заданной бумаги. Без неё светлая середина досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кнопка с градиентной рамкой и не сломанным фокусом.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Button041({
   accent,
   accentEnd,
+  background = "",
   type = "button",
   className,
   style,
@@ -68,6 +94,12 @@ export function Button041({
   const palette = {
     ...(accent ? { "--vibeui-button-041-accent": accent } : null),
     ...(accentEnd ? { "--vibeui-button-041-accent-end": accentEnd } : null),
+    ...(background
+      ? {
+          "--vibeui-button-041-paper": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -17,6 +17,14 @@ export type Dashboard074Props = {
   recipes?: Dashboard074Recipe[]
   newLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подписи тумблера по ключам on и off. */
+  stateText?: Record<string, string>
+  /** Заголовки шагов по ключам when, if и then. */
+  stepText?: Record<string, string>
+  /** Счётчик срабатываний: {runs}. */
+  runsText?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,19 +39,27 @@ export type Dashboard074Props = {
 // и время последнего запуска стоят рядом с тумблером: включённый сценарий,
 // не сработавший ни разу, — это либо мёртвое условие, либо ошибка, и её
 // подписывают прямо в карточке.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-074"]){
---vibeui-dashboard-074-bg:oklch(0.985 0.003 200);
---vibeui-dashboard-074-card:oklch(1 0 0);
---vibeui-dashboard-074-fg:oklch(0.21 0.014 200);
---vibeui-dashboard-074-muted:oklch(0.54 0.014 200);
---vibeui-dashboard-074-border:oklch(0.91 0.006 200);
---vibeui-dashboard-074-accent:oklch(0.5 0.13 200);
---vibeui-dashboard-074-soft:oklch(0.965 0.02 200);
---vibeui-dashboard-074-when:oklch(0.55 0.14 265);
---vibeui-dashboard-074-if:oklch(0.62 0.13 85);
---vibeui-dashboard-074-then:oklch(0.55 0.13 155);
---vibeui-dashboard-074-fail:oklch(0.57 0.19 25);
+--vibeui-dashboard-074-bg:transparent;
+/* Карточка сценария и плашка шага: подложка самого блока прозрачна. */
+--vibeui-dashboard-074-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 200));
+--vibeui-dashboard-074-inset:light-dark(oklch(0.985 0.003 200),oklch(0.22 0.012 200));
+--vibeui-dashboard-074-fg:light-dark(oklch(0.21 0.014 200),oklch(0.94 0.005 200));
+--vibeui-dashboard-074-muted:light-dark(oklch(0.54 0.014 200),oklch(0.72 0.012 200));
+--vibeui-dashboard-074-border:light-dark(oklch(0.91 0.006 200),oklch(0.36 0.012 200));
+--vibeui-dashboard-074-accent:light-dark(oklch(0.5 0.13 200),oklch(0.74 0.12 200));
+--vibeui-dashboard-074-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 200));
+--vibeui-dashboard-074-knob:light-dark(oklch(1 0 0),oklch(0.93 0.004 200));
+--vibeui-dashboard-074-soft:light-dark(oklch(0.965 0.02 200),oklch(0.3 0.035 200));
+--vibeui-dashboard-074-when:light-dark(oklch(0.55 0.14 265),oklch(0.76 0.13 265));
+--vibeui-dashboard-074-if:light-dark(oklch(0.52 0.11 85),oklch(0.8 0.12 85));
+--vibeui-dashboard-074-then:light-dark(oklch(0.5 0.13 155),oklch(0.76 0.13 155));
+--vibeui-dashboard-074-fail:light-dark(oklch(0.57 0.19 25),oklch(0.75 0.16 25));
+--vibeui-dashboard-074-fail-line:light-dark(oklch(0.82 0.08 25),oklch(0.5 0.11 25));
 --vibeui-dashboard-074-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -62,7 +78,7 @@ border:1px solid var(--vibeui-dashboard-074-border);border-radius:1rem;padding:1
 [data-vibeui-block="dashboard-074"] [data-part="new"]{
 margin-left:auto;appearance:none;border:0;cursor:pointer;font:inherit;
 font-size:0.75rem;font-weight:700;padding:0.4375rem 0.875rem;border-radius:0.5625rem;
-background:var(--vibeui-dashboard-074-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-074-accent);color:var(--vibeui-dashboard-074-on-accent);
 }
 [data-vibeui-block="dashboard-074"] [data-part="list"]{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.5rem}
 [data-vibeui-block="dashboard-074"] [data-part="card"]{
@@ -70,7 +86,7 @@ display:flex;flex-direction:column;gap:0.5rem;padding:0.8125rem;border-radius:0.
 background:var(--vibeui-dashboard-074-card);border:1px solid var(--vibeui-dashboard-074-border);
 }
 [data-vibeui-block="dashboard-074"] [data-part="card"][data-enabled="false"] [data-part="flow"]{opacity:0.5}
-[data-vibeui-block="dashboard-074"] [data-part="card"][data-failing="true"]{border-color:color-mix(in oklab,var(--vibeui-dashboard-074-fail) 40%,white)}
+[data-vibeui-block="dashboard-074"] [data-part="card"][data-failing="true"]{border-color:var(--vibeui-dashboard-074-fail-line)}
 [data-vibeui-block="dashboard-074"] [data-part="top"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.375rem 0.625rem}
 [data-vibeui-block="dashboard-074"] h3{margin:0;font-size:0.875rem;font-weight:750}
 [data-vibeui-block="dashboard-074"] [data-part="switch"]{
@@ -83,20 +99,20 @@ background:var(--vibeui-dashboard-074-border);transition:background 0.15s ease;
 }
 [data-vibeui-block="dashboard-074"] [data-part="switch"] input::after{
 content:"";position:absolute;top:0.1875rem;left:0.1875rem;width:0.75rem;height:0.75rem;
-border-radius:50%;background:oklch(1 0 0);transition:transform 0.15s ease;
+border-radius:50%;background:var(--vibeui-dashboard-074-knob);transition:transform 0.15s ease;
 }
 [data-vibeui-block="dashboard-074"] [data-part="switch"] input:checked{background:var(--vibeui-dashboard-074-accent)}
 [data-vibeui-block="dashboard-074"] [data-part="switch"] input:checked::after{transform:translateX(0.875rem)}
 [data-vibeui-block="dashboard-074"] [data-part="flow"]{display:grid;grid-template-columns:1fr;gap:0.375rem;align-items:stretch}
 [data-vibeui-block="dashboard-074"] [data-part="step"]{
 display:flex;flex-direction:column;gap:0.1875rem;padding:0.5625rem 0.6875rem;border-radius:0.6875rem;
-background:var(--vibeui-dashboard-074-bg);border:1px solid var(--vibeui-dashboard-074-border);
+background:var(--vibeui-dashboard-074-inset);border:1px solid var(--vibeui-dashboard-074-border);
 }
 [data-vibeui-block="dashboard-074"] [data-part="step"] b{
 font-size:0.5625rem;font-weight:750;text-transform:uppercase;letter-spacing:0.07em;
 }
 [data-vibeui-block="dashboard-074"] [data-step="when"] b{color:var(--vibeui-dashboard-074-when)}
-[data-vibeui-block="dashboard-074"] [data-step="if"] b{color:color-mix(in oklab,var(--vibeui-dashboard-074-if) 80%,black)}
+[data-vibeui-block="dashboard-074"] [data-step="if"] b{color:var(--vibeui-dashboard-074-if)}
 [data-vibeui-block="dashboard-074"] [data-step="then"] b{color:var(--vibeui-dashboard-074-then)}
 [data-vibeui-block="dashboard-074"] [data-part="step"] span{font-size:0.75rem;line-height:1.4}
 [data-vibeui-block="dashboard-074"] [data-part="step"] ul{margin:0;padding-left:0.9375rem;display:flex;flex-direction:column;gap:0.125rem}
@@ -170,6 +186,39 @@ const DEFAULT_RECIPES: Dashboard074Recipe[] = [
   },
 ]
 
+const STATE_TEXT: Record<string, string> = {
+  on: "включён",
+  off: "выключен",
+}
+
+const STEP_TEXT: Record<string, string> = {
+  when: "Когда",
+  if: "Если",
+  then: "То",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Экран сценариев автоматизации: каждый сценарий читается как «когда — если —
  * то» тремя шагами со стрелками, действия перечислены полностью, рядом
@@ -181,13 +230,28 @@ export function Dashboard074({
   recipes = DEFAULT_RECIPES,
   newLabel = "Новый сценарий",
   accent,
+  background = "",
+  stateText = STATE_TEXT,
+  stepText = STEP_TEXT,
+  runsText = "срабатываний за 30 дней: {runs}",
   className,
   style,
 }: Dashboard074Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-074-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-074-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const state = { ...STATE_TEXT, ...stateText }
+  const step = { ...STEP_TEXT, ...stepText }
+  // Число срабатываний выделено жирным, поэтому шаблон разрезается по метке.
+  const [runsBefore, runsAfter = ""] = runsText.split("{runs}")
 
   return (
     <>
@@ -221,27 +285,27 @@ export function Dashboard074({
                   <h3>{recipe.name}</h3>
                   <label data-part="switch">
                     <input type="checkbox" defaultChecked={recipe.enabled} />
-                    {recipe.enabled ? "включён" : "выключен"}
+                    {recipe.enabled ? state.on : state.off}
                   </label>
                 </div>
 
                 <div data-part="flow">
                   <div data-part="step" data-step="when">
-                    <b>Когда</b>
+                    <b>{step.when}</b>
                     <span>{recipe.when}</span>
                   </div>
                   <span data-part="arrow" aria-hidden="true">
                     →
                   </span>
                   <div data-part="step" data-step="if">
-                    <b>Если</b>
+                    <b>{step.if}</b>
                     <span>{recipe.ifText}</span>
                   </div>
                   <span data-part="arrow" aria-hidden="true">
                     →
                   </span>
                   <div data-part="step" data-step="then">
-                    <b>То</b>
+                    <b>{step.then}</b>
                     <ul>
                       {recipe.then.map((action) => (
                         <li key={action}>{action}</li>
@@ -252,7 +316,9 @@ export function Dashboard074({
 
                 <p data-part="foot">
                   <span>
-                    срабатываний за 30 дней: <b>{recipe.runs}</b>
+                    {runsBefore}
+                    <b>{recipe.runs}</b>
+                    {runsAfter}
                   </span>
                   <span>{recipe.lastRun}</span>
                   {recipe.failing ? (

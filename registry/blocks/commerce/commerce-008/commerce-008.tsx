@@ -15,9 +15,13 @@ export type Commerce008Props = {
   shots?: string[]
   stock?: string
   cta?: string
+  /** Подписи блока: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
   className?: string
   style?: CSSProperties
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Весь CSS блока живёт здесь, а не в globals.css проекта.
@@ -28,15 +32,22 @@ export type Commerce008Props = {
 // Вариант товара выбирается образцами цвета, но у каждого образца есть
 // подпись словами: цветом одним нельзя называть вариант — его не прочитает
 // ни скринридер, ни человек с дальтонизмом.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="commerce-008"]){
---vibeui-commerce-008-bg:oklch(1 0 0);
---vibeui-commerce-008-fg:oklch(0.21 0.014 265);
---vibeui-commerce-008-muted:oklch(0.55 0.014 265);
---vibeui-commerce-008-border:oklch(0.91 0.006 265);
---vibeui-commerce-008-soft:oklch(0.97 0.004 265);
---vibeui-commerce-008-accent:oklch(0.55 0.2 262);
---vibeui-commerce-008-ok:oklch(0.58 0.14 152);
+--vibeui-commerce-008-bg:transparent;
+--vibeui-commerce-008-field:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-commerce-008-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-commerce-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-008-soft:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.01 265));
+--vibeui-commerce-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-commerce-008-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
+--vibeui-commerce-008-shot-fg:light-dark(oklch(0.24 0.02 265),oklch(0.95 0.01 265));
+--vibeui-commerce-008-ring:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 18%));
+--vibeui-commerce-008-ok:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
 --vibeui-commerce-008-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -60,14 +71,14 @@ border:1px solid var(--vibeui-commerce-008-border);
 [data-vibeui-block="commerce-008"] [data-part="stage"] span{
 position:absolute;inset:0;opacity:0;transition:opacity .2s ease;
 display:flex;align-items:flex-end;padding:0.75rem;
-font-size:0.6875rem;color:oklch(0.24 0.02 265);
-background:linear-gradient(140deg,oklch(0.94 0.05 var(--vibeui-commerce-008-hue,262)),oklch(0.84 0.1 var(--vibeui-commerce-008-hue,262)));
+font-size:0.6875rem;color:var(--vibeui-commerce-008-shot-fg);
+background:linear-gradient(140deg,light-dark(oklch(0.94 0.05 var(--vibeui-commerce-008-hue,262)),oklch(0.42 0.06 var(--vibeui-commerce-008-hue,262))),light-dark(oklch(0.84 0.1 var(--vibeui-commerce-008-hue,262)),oklch(0.3 0.07 var(--vibeui-commerce-008-hue,262))));
 }
 [data-vibeui-block="commerce-008"] [data-part="thumbs"]{display:flex;gap:0.5rem;margin-top:0.5rem}
 [data-vibeui-block="commerce-008"] [data-part="thumbs"] label{
 flex:1;aspect-ratio:1;border-radius:0.625rem;cursor:pointer;
 border:2px solid var(--vibeui-commerce-008-border);
-background:linear-gradient(140deg,oklch(0.95 0.04 var(--vibeui-commerce-008-hue,262)),oklch(0.87 0.08 var(--vibeui-commerce-008-hue,262)));
+background:linear-gradient(140deg,light-dark(oklch(0.95 0.04 var(--vibeui-commerce-008-hue,262)),oklch(0.43 0.05 var(--vibeui-commerce-008-hue,262))),light-dark(oklch(0.87 0.08 var(--vibeui-commerce-008-hue,262)),oklch(0.33 0.06 var(--vibeui-commerce-008-hue,262))));
 }
 /* Кадр выбирается радиокнопкой: галерея живёт без JS и без гидрации. */
 [data-vibeui-block="commerce-008"] #commerce-008-shot-1:checked ~ [data-part="stage"] [data-slide="1"],
@@ -96,7 +107,7 @@ border:1px solid var(--vibeui-commerce-008-border);font-size:0.75rem;
 [data-vibeui-block="commerce-008"] [data-part="swatch"] input{position:absolute;opacity:0;width:1px;height:1px}
 [data-vibeui-block="commerce-008"] [data-part="dot"]{
 width:1.125rem;height:1.125rem;border-radius:9999px;
-box-shadow:inset 0 0 0 1px oklch(0 0 0 / 12%);
+box-shadow:inset 0 0 0 1px var(--vibeui-commerce-008-ring);
 background:oklch(0.72 0.15 var(--vibeui-commerce-008-dot,262));
 }
 [data-vibeui-block="commerce-008"] [data-part="swatch"]:has(input:checked){border-color:var(--vibeui-commerce-008-accent);background:var(--vibeui-commerce-008-soft)}
@@ -105,7 +116,7 @@ background:oklch(0.72 0.15 var(--vibeui-commerce-008-dot,262));
 [data-vibeui-block="commerce-008"] select{
 appearance:none;font:inherit;font-size:0.8125rem;color:inherit;height:2.5rem;
 padding:0 1.75rem 0 0.75rem;border-radius:0.625rem;
-border:1px solid var(--vibeui-commerce-008-border);background:var(--vibeui-commerce-008-bg);
+border:1px solid var(--vibeui-commerce-008-border);background:var(--vibeui-commerce-008-field);
 background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
 background-position:calc(100% - 1rem) 55%,calc(100% - 0.75rem) 55%;
 background-size:0.25rem 0.25rem,0.25rem 0.25rem;background-repeat:no-repeat;
@@ -113,7 +124,7 @@ background-size:0.25rem 0.25rem,0.25rem 0.25rem;background-repeat:no-repeat;
 [data-vibeui-block="commerce-008"] select:focus-visible{outline:2px solid var(--vibeui-commerce-008-accent);outline-offset:2px}
 [data-vibeui-block="commerce-008"] [data-part="buy"]{
 flex:1;min-width:10rem;appearance:none;border:0;cursor:pointer;height:2.5rem;border-radius:0.625rem;
-background:var(--vibeui-commerce-008-accent);color:oklch(1 0 0);font:inherit;font-size:0.875rem;font-weight:650;
+background:var(--vibeui-commerce-008-accent);color:var(--vibeui-commerce-008-on-accent);font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-008"] [data-part="buy"]:focus-visible{outline:2px solid var(--vibeui-commerce-008-accent);outline-offset:2px}
 [data-vibeui-block="commerce-008"] [data-part="stock"]{
@@ -132,6 +143,34 @@ const DEFAULT_VARIANTS: Commerce008Variant[] = [
 
 const DEFAULT_SHOTS = ["Общий вид", "Спинка", "Ткань вблизи", "В интерьере"]
 
+/** Русские подписи по умолчанию: установленный файл не меняет язык сам. */
+const LABELS: Record<string, string> = {
+  color: "Цвет обивки",
+  count: "Количество",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Товар с галереей на радиокнопках и выбором варианта образцами цвета.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -144,14 +183,23 @@ export function Commerce008({
   shots = DEFAULT_SHOTS,
   stock = "На складе 6 штук — отгружаем сегодня",
   cta = "Добавить в корзину",
+  labels = LABELS,
   accent,
+  background = "",
   className,
   style,
 }: Commerce008Props) {
   const frames = shots.slice(0, 4)
+  const text = { ...LABELS, ...labels }
 
   const palette = {
     ...(accent ? { "--vibeui-commerce-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -217,7 +265,7 @@ export function Commerce008({
             <p data-part="price">{price}</p>
 
             <fieldset>
-              <legend>Цвет обивки</legend>
+              <legend>{text.color}</legend>
               <div data-part="swatches">
                 {variants.map((variant, index) => (
                   <label key={variant.value} data-part="swatch">
@@ -245,7 +293,7 @@ export function Commerce008({
 
             <div data-part="row">
               <label htmlFor="commerce-008-count" data-part="brand">
-                Количество
+                {text.count}
               </label>
               <select id="commerce-008-count" defaultValue="1">
                 <option>1</option>

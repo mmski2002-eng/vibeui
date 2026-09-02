@@ -11,6 +11,8 @@ export type Features007Props = {
   title?: string
   steps?: Features007Step[]
   action?: { label: string; href: string }
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -22,15 +24,20 @@ export type Features007Props = {
 // ширине направляющая становится вертикальной — тот же приём, другая ось.
 // Шаги — <ol>, а не набор карточек: порядок важен, и он должен читаться
 // голосом скринридера, а не только глазами.
+//
+// Тема берётся из color-scheme окружения через light-dark(): секция темнеет
+// вместе с контекстом и не выкладывает под себя плашку. Тёмная ветка — не
+// инверсия светлой: направляющая и рамка детали там светлее фона, акцент
+// светлеет, а текст на нём становится тёмным.
 const STYLES = `
 :where([data-vibeui-block="features-007"]){
---vibeui-features-007-bg:oklch(0.97 0.005 285);
---vibeui-features-007-fg:oklch(0.2 0.014 285);
---vibeui-features-007-muted:oklch(0.51 0.014 285);
---vibeui-features-007-card:oklch(1 0 0);
---vibeui-features-007-line:oklch(0.88 0.008 285);
---vibeui-features-007-accent:oklch(0.52 0.18 290);
---vibeui-features-007-accent-fg:oklch(0.99 0 0);
+--vibeui-features-007-bg:transparent;
+--vibeui-features-007-fg:light-dark(oklch(0.2 0.014 285),oklch(0.95 0.006 285));
+--vibeui-features-007-muted:light-dark(oklch(0.51 0.014 285),oklch(0.72 0.014 285));
+--vibeui-features-007-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 285));
+--vibeui-features-007-line:light-dark(oklch(0.88 0.008 285),oklch(0.36 0.014 285));
+--vibeui-features-007-accent:light-dark(oklch(0.52 0.18 290),oklch(0.72 0.16 290));
+--vibeui-features-007-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 290));
 --vibeui-features-007-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -80,7 +87,7 @@ display:inline-flex;align-items:center;justify-content:center;height:2.75rem;pad
 background:var(--vibeui-features-007-accent);color:var(--vibeui-features-007-accent-fg);
 font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color .16s ease;
 }
-[data-vibeui-block="features-007"] a:hover{background:color-mix(in oklab,var(--vibeui-features-007-accent) 86%,black)}
+[data-vibeui-block="features-007"] a:hover{background:light-dark(color-mix(in oklab,var(--vibeui-features-007-accent) 86%,black),color-mix(in oklab,var(--vibeui-features-007-accent) 86%,white))}
 [data-vibeui-block="features-007"] a:focus-visible{outline:2px solid var(--vibeui-features-007-accent);outline-offset:3px}
 @container (min-width: 34rem){
 [data-vibeui-block="features-007"] [data-part="shell"]{padding:5rem 2rem}
@@ -115,18 +122,47 @@ const DEFAULT_STEPS: Features007Step[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Блок «как это работает» в три шага: номера на соединительной линии. */
 export function Features007({
   eyebrow = "Как это работает",
   title = "От каталога до страницы — три шага",
   steps = DEFAULT_STEPS,
   action = { label: "Попробовать на своём проекте", href: "#" },
+  background = "",
   accent,
   className,
   style,
 }: Features007Props) {
   const palette = {
     ...(accent ? { "--vibeui-features-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-features-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

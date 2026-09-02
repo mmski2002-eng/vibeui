@@ -1,5 +1,10 @@
 import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
+export type Buttongroup027Row = {
+  title: string
+  date: string
+}
+
 export type Buttongroup027Props = Omit<
   ComponentPropsWithoutRef<"fieldset">,
   "children"
@@ -9,7 +14,11 @@ export type Buttongroup027Props = Omit<
   roomyLabel?: string
   defaultValue?: string
   label?: string
+  /** Строки образца: компонент несёт русские, проект подставляет свои. */
+  sample?: Buttongroup027Row[]
   name?: string
+  /** Пусто — заливки нет, сегменты ложатся на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,12 +30,13 @@ export type Buttongroup027Props = Omit<
 // что и в образце: подпись, образец и значок говорят об одном.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-027"]){
---vibeui-buttongroup-027-surface:oklch(1 0 0);
---vibeui-buttongroup-027-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-027-muted:oklch(0.57 0.014 265);
---vibeui-buttongroup-027-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-027-on:oklch(0.96 0.03 215);
---vibeui-buttongroup-027-accent:oklch(0.48 0.13 215);
+--vibeui-buttongroup-027-surface:transparent;
+--vibeui-buttongroup-027-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-027-muted:light-dark(oklch(0.57 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-027-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.012 265));
+--vibeui-buttongroup-027-rule:light-dark(oklch(0.94 0.005 265),oklch(0.35 0.01 265));
+--vibeui-buttongroup-027-on:light-dark(oklch(0.96 0.03 215),oklch(0.36 0.05 215));
+--vibeui-buttongroup-027-accent:light-dark(oklch(0.48 0.13 215),oklch(0.8 0.11 215));
 --vibeui-buttongroup-027-radius:0.625rem;
 --vibeui-buttongroup-027-row:1.75rem;
 --vibeui-buttongroup-027-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -102,7 +112,7 @@ font-size:0.75rem;line-height:1;
 transition:height .2s ease;
 }
 [data-vibeui-block="buttongroup-027"] [data-part="line"] + [data-part="line"]{
-border-top:1px solid oklch(0.94 0.005 265);
+border-top:1px solid var(--vibeui-buttongroup-027-rule);
 }
 [data-vibeui-block="buttongroup-027"] [data-part="line"] span:first-child{
 flex:1 1 auto;color:var(--vibeui-buttongroup-027-fg);font-weight:600;
@@ -111,11 +121,33 @@ flex:1 1 auto;color:var(--vibeui-buttongroup-027-fg);font-weight:600;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="buttongroup-027"] *{animation:none!important;transition:none!important}}
 `
 
-const SAMPLE = [
-  ["Договор № 118", "12.04"],
-  ["Акт сверки", "09.04"],
-  ["Счёт на оплату", "02.04"],
+const SAMPLE: Buttongroup027Row[] = [
+  { title: "Договор № 118", date: "12.04" },
+  { title: "Акт сверки", date: "09.04" },
+  { title: "Счёт на оплату", date: "02.04" },
 ]
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Плотность таблицы с живым образцом строк под сцепкой, без JS.
@@ -127,7 +159,9 @@ export function Buttongroup027({
   roomyLabel = "Свободно",
   defaultValue = "regular",
   label = "Плотность таблицы",
+  sample = SAMPLE,
   name = "buttongroup-027",
+  background = "",
   accent,
   className,
   style,
@@ -141,6 +175,12 @@ export function Buttongroup027({
 
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-027-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-027-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -179,10 +219,10 @@ export function Buttongroup027({
           ))}
         </div>
         <div data-part="sample" aria-hidden="true">
-          {SAMPLE.map(([title, date]) => (
-            <div key={title} data-part="line">
-              <span>{title}</span>
-              <span>{date}</span>
+          {sample.map((row) => (
+            <div key={row.title} data-part="line">
+              <span>{row.title}</span>
+              <span>{row.date}</span>
             </div>
           ))}
         </div>

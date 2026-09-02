@@ -13,6 +13,8 @@ export type Dialog001Props = Omit<
   cancelLabel?: string
   /** Собственное содержимое вместо описания. */
   children?: ReactNode
+  /** Подложка окна. Пусто — цвет из палитры компонента. */
+  background?: string
   accent?: string
 }
 
@@ -22,12 +24,12 @@ export type Dialog001Props = Omit<
 // в котором окно не зависит от overflow и z-index родителей.
 const STYLES = `
 :where([data-vibeui-block="dialog-001"]){
---vibeui-dialog-001-fg:oklch(0.22 0.016 265);
---vibeui-dialog-001-muted:oklch(0.5 0.014 265);
---vibeui-dialog-001-bg:oklch(1 0 0);
---vibeui-dialog-001-border:oklch(0.9 0.006 265);
---vibeui-dialog-001-accent:oklch(0.55 0.2 262);
---vibeui-dialog-001-accent-fg:oklch(1 0 0);
+--vibeui-dialog-001-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
+--vibeui-dialog-001-muted:light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dialog-001-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-dialog-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-dialog-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
+--vibeui-dialog-001-accent-fg:light-dark(oklch(1 0 0),oklch(0.17 0.02 265));
 --vibeui-dialog-001-radius:1rem;
 --vibeui-dialog-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -66,10 +68,10 @@ outline:2px solid var(--vibeui-dialog-001-accent);outline-offset:2px;
 /* inset:0 вместе с margin:auto центрирует окно в верхнем слое. */
 position:fixed;inset:0;margin:auto;height:fit-content;
 width:min(26rem,calc(100vw - 2rem));box-sizing:border-box;
-padding:1.375rem;border:1px solid var(--vibeui-dialog-001-border,oklch(0.9 0.006 265));
+padding:1.375rem;border:1px solid var(--vibeui-dialog-001-border,light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265)));
 border-radius:var(--vibeui-dialog-001-radius,1rem);
-background:var(--vibeui-dialog-001-bg,oklch(1 0 0));
-color:var(--vibeui-dialog-001-fg,oklch(0.22 0.016 265));
+background:var(--vibeui-dialog-001-bg,light-dark(oklch(1 0 0),oklch(0.24 0.012 265)));
+color:var(--vibeui-dialog-001-fg,light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265)));
 font-family:var(--vibeui-dialog-001-font,ui-sans-serif,system-ui,sans-serif);
 box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 45%);
 opacity:0;transform:translateY(0.5rem) scale(0.98);
@@ -81,13 +83,36 @@ transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,ove
 background:oklch(0.18 0.02 265 / 45%);backdrop-filter:blur(2px);
 }
 [data-vibeui-dialog-001-window] [data-part="title"]{margin:0 0 0.375rem;font-size:1.0625rem;font-weight:600;line-height:1.35}
-[data-vibeui-dialog-001-window] [data-part="body"]{margin:0;font-size:0.875rem;line-height:1.55;color:var(--vibeui-dialog-001-muted,oklch(0.5 0.014 265))}
+[data-vibeui-dialog-001-window] [data-part="body"]{margin:0;font-size:0.875rem;line-height:1.55;color:var(--vibeui-dialog-001-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)))}
 [data-vibeui-dialog-001-window] [data-part="actions"]{display:flex;justify-content:flex-end;gap:0.5rem;margin-top:1.125rem}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-001"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-001-window]{transition:none!important;opacity:1;transform:none}
 }
 `
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлый фон достался бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Модальное окно на HTML popover: открытие, Esc и клик мимо — без JS.
@@ -101,6 +126,7 @@ export function Dialog001({
   confirmLabel = "Удалить",
   cancelLabel = "Отмена",
   children,
+  background = "",
   accent,
   className,
   style,
@@ -108,6 +134,12 @@ export function Dialog001({
 }: Dialog001Props) {
   const palette = {
     ...(accent ? { "--vibeui-dialog-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dialog-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -25,7 +25,17 @@ export type Commerce044Props = {
   askPlaceholder?: string
   askHint?: string
   cta?: string
+  /** Ярлык роли: ключи seller и buyer. */
+  roleText?: Record<string, string>
+  /** Число ответов: ключи one и many, внутри — {count}. */
+  answersText?: Record<string, string>
+  /** Кнопка полезности: {count} — сколько отметили. */
+  voteText?: string
+  /** Подпись кнопки для читалки: {author} — автор ответа. */
+  voteAriaText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -39,13 +49,15 @@ export type Commerce044Props = {
 // Открытым оставлен первый — иначе экран выглядит пустым списком строк.
 const STYLES = `
 :where([data-vibeui-block="commerce-044"]){
---vibeui-commerce-044-bg:oklch(1 0 0);
---vibeui-commerce-044-fg:oklch(0.21 0.014 265);
---vibeui-commerce-044-muted:oklch(0.55 0.014 265);
---vibeui-commerce-044-border:oklch(0.91 0.006 265);
---vibeui-commerce-044-soft:oklch(0.975 0.004 265);
---vibeui-commerce-044-accent:oklch(0.5 0.14 265);
---vibeui-commerce-044-seller:oklch(0.5 0.13 155);
+--vibeui-commerce-044-bg:transparent;
+--vibeui-commerce-044-fg:light-dark(oklch(0.21 0.014 265),oklch(0.93 0.006 265));
+--vibeui-commerce-044-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-commerce-044-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-044-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.009 265));
+--vibeui-commerce-044-accent:light-dark(oklch(0.5 0.14 265),oklch(0.74 0.13 265));
+--vibeui-commerce-044-onaccent:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
+--vibeui-commerce-044-seller:light-dark(oklch(0.5 0.13 155),oklch(0.76 0.13 155));
+--vibeui-commerce-044-onseller:light-dark(oklch(1 0 0),oklch(0.18 0.02 155));
 --vibeui-commerce-044-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -97,7 +109,7 @@ margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:0.4375rem;font-size:
 [data-vibeui-block="commerce-044"] [data-part="who"] b{font-weight:650}
 [data-vibeui-block="commerce-044"] [data-part="badge"]{
 padding:0.0625rem 0.375rem;border-radius:0.375rem;font-size:0.625rem;font-weight:700;
-background:var(--vibeui-commerce-044-seller);color:oklch(1 0 0);
+background:var(--vibeui-commerce-044-seller);color:var(--vibeui-commerce-044-onseller);
 }
 [data-vibeui-block="commerce-044"] [data-part="badge"][data-role="buyer"]{
 background:var(--vibeui-commerce-044-border);color:var(--vibeui-commerce-044-muted);
@@ -126,7 +138,7 @@ margin-top:0.625rem;display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;j
 [data-vibeui-block="commerce-044"] [data-part="hint"]{margin:0;max-width:24rem;font-size:0.6875rem;line-height:1.5;color:var(--vibeui-commerce-044-muted)}
 [data-vibeui-block="commerce-044"] [data-part="cta"]{
 appearance:none;border:0;cursor:pointer;height:2.5rem;padding:0 1.25rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-044-accent);color:oklch(1 0 0);font:inherit;font-size:0.875rem;font-weight:650;
+background:var(--vibeui-commerce-044-accent);color:var(--vibeui-commerce-044-onaccent);font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-044"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-commerce-044-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-044"] *{animation:none!important;transition:none!important}}
@@ -188,6 +200,38 @@ const DEFAULT_QUESTIONS: Commerce044Question[] = [
   },
 ]
 
+const DEFAULT_ROLE: Record<string, string> = {
+  seller: "продавец",
+  buyer: "купил товар",
+}
+
+const DEFAULT_ANSWERS_TEXT: Record<string, string> = {
+  one: "{count} ответ",
+  many: "{count} ответа",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Вопросы о товаре: ответы продавца и покупателей помечены по-разному, ветки в details.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -200,12 +244,23 @@ export function Commerce044({
   askPlaceholder = "Например: пролезет ли в дверной проём 70 см в собранном виде?",
   askHint = "Вопросы о сроках доставки и статусе заказа быстрее решает поддержка — здесь отвечают только о самом товаре.",
   cta = "Отправить вопрос",
+  roleText = DEFAULT_ROLE,
+  answersText = DEFAULT_ANSWERS_TEXT,
+  voteText = "Полезно · {count}",
+  voteAriaText = "Отметить ответ {author} полезным",
   accent,
+  background = "",
   className,
   style,
 }: Commerce044Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-044-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-044-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -237,8 +292,10 @@ export function Commerce044({
                       <span>{question.author}</span>
                       <span>{question.date}</span>
                       <span data-part="count">
-                        {question.answers.length}{" "}
-                        {question.answers.length === 1 ? "ответ" : "ответа"}
+                        {(question.answers.length === 1
+                          ? (answersText.one ?? DEFAULT_ANSWERS_TEXT.one)
+                          : (answersText.many ?? DEFAULT_ANSWERS_TEXT.many)
+                        ).replace("{count}", String(question.answers.length))}
                       </span>
                     </span>
                   </summary>
@@ -252,9 +309,7 @@ export function Commerce044({
                         <p data-part="who">
                           <b>{answer.author}</b>
                           <span data-part="badge" data-role={answer.role}>
-                            {answer.role === "seller"
-                              ? "продавец"
-                              : "купил товар"}
+                            {roleText[answer.role] ?? DEFAULT_ROLE[answer.role]}
                           </span>
                           <span data-part="when">{answer.date}</span>
                         </p>
@@ -262,9 +317,12 @@ export function Commerce044({
                         <button
                           type="button"
                           data-part="vote"
-                          aria-label={`Отметить ответ ${answer.author} полезным`}
+                          aria-label={voteAriaText.replace(
+                            "{author}",
+                            answer.author,
+                          )}
                         >
-                          Полезно · {answer.helpful}
+                          {voteText.replace("{count}", String(answer.helpful))}
                         </button>
                       </div>
                     ))}

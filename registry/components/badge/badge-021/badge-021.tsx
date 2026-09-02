@@ -13,9 +13,9 @@ export type Badge021Props = ComponentPropsWithoutRef<"span"> & {
 // остаётся: перепутанное окружение стоит дороже любой другой ошибки метки.
 const STYLES = `
 :where([data-vibeui-block="badge-021"]){
---vibeui-badge-021-bg:oklch(0.97 0.004 265);
---vibeui-badge-021-fg:oklch(0.36 0.014 265);
---vibeui-badge-021-border:oklch(0.86 0.008 265);
+--vibeui-badge-021-bg:light-dark(oklch(0.97 0.004 265),oklch(0.26 0.009 265));
+--vibeui-badge-021-fg:light-dark(oklch(0.36 0.014 265),oklch(0.9 0.007 265));
+--vibeui-badge-021-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.012 265));
 --vibeui-badge-021-font:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
 }
 [data-vibeui-block="badge-021"]{
@@ -26,7 +26,9 @@ background:var(--vibeui-badge-021-bg);color:var(--vibeui-badge-021-fg);
 font-family:var(--vibeui-badge-021-font);font-size:0.6875rem;font-weight:700;line-height:1;
 letter-spacing:0.09em;text-transform:uppercase;vertical-align:middle;
 }
-/* Боевое: скошенный ярлык. Рамки нет — clip-path срезал бы её вместе с углом. */
+/* Боевое: скошенный ярлык. Рамки нет — clip-path срезал бы её вместе с углом.
+   Красная заливка одинакова в обеих темах намеренно: сигнал «это боевое»
+   не имеет права слабеть от того, что страница потемнела. */
 [data-vibeui-block="badge-021"][data-env="prod"]{
 --vibeui-badge-021-bg:oklch(0.5 0.18 25);
 --vibeui-badge-021-fg:oklch(0.99 0.01 25);
@@ -35,15 +37,15 @@ clip-path:polygon(0.4rem 0,100% 0,calc(100% - 0.4rem) 100%,0 100%);
 }
 /* Предпродакшен: обычная пилюля — промежуточная форма между двумя крайними. */
 [data-vibeui-block="badge-021"][data-env="stage"]{
---vibeui-badge-021-bg:oklch(0.96 0.05 80);
---vibeui-badge-021-fg:oklch(0.42 0.09 70);
---vibeui-badge-021-border:oklch(0.85 0.09 80);
+--vibeui-badge-021-bg:light-dark(oklch(0.96 0.05 80),oklch(0.32 0.06 78));
+--vibeui-badge-021-fg:light-dark(oklch(0.42 0.09 70),oklch(0.9 0.08 82));
+--vibeui-badge-021-border:light-dark(oklch(0.85 0.09 80),oklch(0.5 0.09 80));
 border-radius:9999px;
 }
 /* Разработка: пунктир, «ещё не настоящее». */
 [data-vibeui-block="badge-021"][data-env="dev"]{
---vibeui-badge-021-bg:oklch(0.98 0.003 265);
---vibeui-badge-021-fg:oklch(0.48 0.014 265);
+--vibeui-badge-021-bg:light-dark(oklch(0.98 0.003 265),oklch(0.23 0.008 265));
+--vibeui-badge-021-fg:light-dark(oklch(0.48 0.014 265),oklch(0.78 0.01 265));
 border-style:dashed;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="badge-021"] *{animation:none!important;transition:none!important}}

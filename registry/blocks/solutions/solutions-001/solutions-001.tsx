@@ -15,7 +15,17 @@ export type Solutions001Props = {
   totalDelta?: string
   points?: number[]
   rows?: Solutions001Row[]
+  /** Шапка таблицы: ключи source, visits, share, trend. */
+  columnText?: Record<string, string>
+  /** Подписи краёв оси: начало и конец периода. */
+  axisText?: string[]
+  /** Строка итога: ключи label, share, delta. */
+  totalRowText?: Record<string, string>
+  /** Подпись графика для скринридера, {from} и {to} — крайние точки. */
+  chartLabelText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,15 +40,15 @@ export type Solutions001Props = {
 // расходится с таблицей после первой правки данных.
 const STYLES = `
 :where([data-vibeui-block="solutions-001"]){
---vibeui-solutions-001-bg:oklch(1 0 0);
---vibeui-solutions-001-panel:oklch(0.985 0.002 265);
---vibeui-solutions-001-fg:oklch(0.22 0.014 265);
---vibeui-solutions-001-muted:oklch(0.55 0.014 265);
---vibeui-solutions-001-border:oklch(0.91 0.006 265);
---vibeui-solutions-001-accent:oklch(0.55 0.2 262);
---vibeui-solutions-001-up:oklch(0.58 0.14 152);
---vibeui-solutions-001-down:oklch(0.57 0.19 25);
---vibeui-solutions-001-bar:oklch(0.55 0.2 262 / 14%);
+--vibeui-solutions-001-bg:transparent;
+--vibeui-solutions-001-panel:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-solutions-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-solutions-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-solutions-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.17 262));
+--vibeui-solutions-001-up:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
+--vibeui-solutions-001-down:light-dark(oklch(0.57 0.19 25),oklch(0.73 0.16 25));
+--vibeui-solutions-001-bar:light-dark(oklch(0.55 0.2 262 / 14%),oklch(0.73 0.17 262 / 22%));
 --vibeui-solutions-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -126,6 +136,43 @@ const DEFAULT_ROWS: Solutions001Row[] = [
   },
 ]
 
+const DEFAULT_COLUMN_TEXT: Record<string, string> = {
+  source: "Источник",
+  visits: "Визиты",
+  share: "Доля",
+  trend: "Динамика",
+}
+
+const DEFAULT_AXIS_TEXT = ["8 марта", "14 марта"]
+
+const DEFAULT_TOTAL_ROW_TEXT: Record<string, string> = {
+  label: "Всего",
+  share: "100 %",
+  delta: "+14 %",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function shape(points: number[]) {
   const max = Math.max(...points, 1)
   const step = 100 / Math.max(points.length - 1, 1)
@@ -148,14 +195,28 @@ export function Solutions001({
   totalDelta = "+14 % к прошлой неделе",
   points = DEFAULT_POINTS,
   rows = DEFAULT_ROWS,
+  columnText = DEFAULT_COLUMN_TEXT,
+  axisText = DEFAULT_AXIS_TEXT,
+  totalRowText = DEFAULT_TOTAL_ROW_TEXT,
+  chartLabelText = "Посещения по дням: от {from} до {to}",
   accent,
+  background = "",
   className,
   style,
 }: Solutions001Props) {
   const line = shape(points)
+  const chartLabel = chartLabelText
+    .replace("{from}", String(points[0]))
+    .replace("{to}", String(points[points.length - 1]))
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -184,28 +245,31 @@ export function Solutions001({
           viewBox="0 0 100 100"
           preserveAspectRatio="none"
           role="img"
-          aria-label={`Посещения по дням: от ${points[0]} до ${points[points.length - 1]}`}
+          aria-label={chartLabel}
         >
           <polygon data-part="area" points={`0,100 ${line} 100,100`} />
           <polyline data-part="line" points={line} />
         </svg>
         <p data-part="axis">
-          <span>8 марта</span>
-          <span>14 марта</span>
+          {axisText.map((label) => (
+            <span key={label}>{label}</span>
+          ))}
         </p>
 
         <table>
           <thead>
             <tr>
-              <th scope="col">Источник</th>
-              <th scope="col" data-align="end">
-                Визиты
+              <th scope="col">
+                {columnText.source ?? DEFAULT_COLUMN_TEXT.source}
               </th>
               <th scope="col" data-align="end">
-                Доля
+                {columnText.visits ?? DEFAULT_COLUMN_TEXT.visits}
               </th>
               <th scope="col" data-align="end">
-                Динамика
+                {columnText.share ?? DEFAULT_COLUMN_TEXT.share}
+              </th>
+              <th scope="col" data-align="end">
+                {columnText.trend ?? DEFAULT_COLUMN_TEXT.trend}
               </th>
             </tr>
           </thead>
@@ -233,11 +297,13 @@ export function Solutions001({
           </tbody>
           <tfoot>
             <tr>
-              <td>Всего</td>
+              <td>{totalRowText.label ?? DEFAULT_TOTAL_ROW_TEXT.label}</td>
               <td data-align="end">{total}</td>
-              <td data-align="end">100 %</td>
+              <td data-align="end">
+                {totalRowText.share ?? DEFAULT_TOTAL_ROW_TEXT.share}
+              </td>
               <td data-align="end" data-trend="up">
-                +14 %
+                {totalRowText.delta ?? DEFAULT_TOTAL_ROW_TEXT.delta}
               </td>
             </tr>
           </tfoot>

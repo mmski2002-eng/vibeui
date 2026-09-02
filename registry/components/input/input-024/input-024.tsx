@@ -15,6 +15,14 @@ export type Input024Props = Omit<
   defaultValue?: string
   domains?: string[]
   onChange?: (value: string) => void
+  /** Подсказка в пустом поле. */
+  placeholder?: string
+  /** Примечание, пока подсказки нет. */
+  idleText?: string
+  /** Примечание с подсказкой: {key} — клавиша, {value} — итоговый адрес. */
+  hintText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,13 +36,13 @@ export type Input024Props = Omit<
 // подсказанный хвост показан — так буквы совпадают по ширине без замеров.
 const STYLES = `
 :where([data-vibeui-block="input-024"]){
---vibeui-input-024-surface:oklch(1 0 0);
---vibeui-input-024-shell:oklch(0.91 0.006 265);
---vibeui-input-024-fg:oklch(0.23 0.014 265);
---vibeui-input-024-muted:oklch(0.56 0.014 265);
---vibeui-input-024-field:oklch(0.985 0.002 265);
---vibeui-input-024-border:oklch(0.88 0.008 265);
---vibeui-input-024-accent:oklch(0.55 0.17 265);
+--vibeui-input-024-surface:transparent;
+--vibeui-input-024-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-input-024-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-024-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-input-024-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.011 265));
+--vibeui-input-024-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.013 265));
+--vibeui-input-024-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-input-024-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-024"]{
@@ -93,6 +101,28 @@ const DOMAINS = [
   "bk.ru",
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 // Подсказка ищется по началу домена после @, короче двух символов не
 // предлагается — иначе на пустом хвосте подставится первый попавшийся домен.
 function suggest(value: string, domains: string[]) {
@@ -123,6 +153,10 @@ export function Input024({
   defaultValue = "",
   domains = DOMAINS,
   onChange,
+  placeholder = "you@gmail.com",
+  idleText = "Начните вводить домен после @ — подскажем окончание.",
+  hintText = "{key} — дополнить до {value}",
+  background = "",
   accent,
   className,
   style,
@@ -133,10 +167,17 @@ export function Input024({
 
   const palette = {
     ...(accent ? { "--vibeui-input-024-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-024-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
   const hint = suggest(value, domains)
+  const [hintBefore, hintAfter = ""] = hintText.split("{key}")
 
   const commit = (next: string) => {
     setValue(next)
@@ -176,7 +217,7 @@ export function Input024({
             autoComplete="off"
             autoCapitalize="off"
             spellCheck={false}
-            placeholder="you@gmail.com"
+            placeholder={placeholder}
             value={value}
             aria-describedby={`${id}-note`}
             onChange={(event) => commit(event.target.value)}
@@ -186,10 +227,12 @@ export function Input024({
         <p data-part="note" id={`${id}-note`} aria-live="polite">
           {hint ? (
             <>
-              <kbd>Tab</kbd> — дополнить до {hint.typed + hint.suffix}
+              {hintBefore}
+              <kbd>Tab</kbd>
+              {hintAfter.replace("{value}", hint.typed + hint.suffix)}
             </>
           ) : (
-            "Начните вводить домен после @ — подскажем окончание."
+            idleText
           )}
         </p>
       </div>

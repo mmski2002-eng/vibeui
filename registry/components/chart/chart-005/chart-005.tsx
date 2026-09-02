@@ -13,19 +13,27 @@ export type Chart005Props = Omit<
   title?: string
   parts?: Chart005Part[]
   total?: string
+  /** Подпись доли для скринридера: {label} и {percent}. */
+  partLabel?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: одна полоса, разложенная на доли. Она отвечает на вопрос
 // «из чего состоит целое» и занимает одну строку — там, где кольцо съело бы
 // треть карточки. Доли меньше пяти процентов не подписываются внутри: текст
 // в них всё равно не помещается, для них есть легенда.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подписи и рамка
+// темнеют вместе со страницей, оттенки долей читаются в обеих темах.
 const STYLES = `
 :where([data-vibeui-block="chart-005"]){
---vibeui-chart-005-bg:oklch(1 0 0);
---vibeui-chart-005-fg:oklch(0.22 0.014 265);
---vibeui-chart-005-muted:oklch(0.56 0.014 265);
---vibeui-chart-005-border:oklch(0.91 0.006 265);
+--vibeui-chart-005-bg:transparent;
+--vibeui-chart-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-chart-005-accent:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
 --vibeui-chart-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="chart-005"]{
@@ -37,7 +45,10 @@ color:var(--vibeui-chart-005-fg);font-family:var(--vibeui-chart-005-font);
 }
 [data-vibeui-block="chart-005"] [data-part="head"]{display:flex;align-items:baseline;justify-content:space-between;gap:0.75rem}
 [data-vibeui-block="chart-005"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
-[data-vibeui-block="chart-005"] [data-part="total"]{font-size:0.875rem;font-weight:680;font-variant-numeric:tabular-nums}
+[data-vibeui-block="chart-005"] [data-part="total"]{
+font-size:0.875rem;font-weight:680;font-variant-numeric:tabular-nums;
+color:var(--vibeui-chart-005-accent);
+}
 /* Полоса — флекс с долями: ширина каждой части задаётся её значением. */
 [data-vibeui-block="chart-005"] [data-part="bar"]{
 display:flex;height:1.5rem;overflow:hidden;border-radius:0.5rem;
@@ -70,6 +81,37 @@ const DEFAULT_PARTS: Chart005Part[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+function fillTemplate(
+  template: string,
+  values: Record<string, string | number>,
+) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
+/**
  * Полоса, разложенная на доли: «из чего состоит целое» в одну строку.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -77,7 +119,9 @@ export function Chart005({
   title = "Расходы месяца",
   parts = DEFAULT_PARTS,
   total = "1 240 000 ₽",
+  partLabel = "{label}: {percent}%",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -86,6 +130,12 @@ export function Chart005({
 
   const palette = {
     ...(accent ? { "--vibeui-chart-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-chart-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -114,7 +164,10 @@ export function Chart005({
                 data-part="part"
                 data-narrow={percent < 8}
                 role="img"
-                aria-label={`${part.label}: ${percent}%`}
+                aria-label={fillTemplate(partLabel, {
+                  label: part.label,
+                  percent,
+                })}
                 style={
                   {
                     "--vibeui-chart-005-hue": part.hue ?? 250,

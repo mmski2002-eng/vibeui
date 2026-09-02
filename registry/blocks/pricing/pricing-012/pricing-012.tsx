@@ -12,8 +12,32 @@ export type Pricing012Props = {
   action?: { label: string; href: string }
   terms?: string
   accent?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 // Идея блока: гарантия возврата, изложенная как процедура, а не как штамп.
@@ -24,13 +48,14 @@ export type Pricing012Props = {
 // шестым кеглем: спрятанные условия читаются как подвох.
 const STYLES = `
 :where([data-vibeui-block="pricing-012"]){
---vibeui-pricing-012-bg:oklch(0.97 0.008 60);
---vibeui-pricing-012-fg:oklch(0.19 0.014 55);
---vibeui-pricing-012-muted:oklch(0.5 0.016 55);
---vibeui-pricing-012-card:oklch(1 0 0);
---vibeui-pricing-012-line:oklch(0.87 0.012 55);
---vibeui-pricing-012-accent:oklch(0.5 0.14 50);
---vibeui-pricing-012-accent-fg:oklch(0.99 0 0);
+--vibeui-pricing-012-bg:transparent;
+--vibeui-pricing-012-fg:light-dark(oklch(0.19 0.014 55),oklch(0.95 0.006 55));
+--vibeui-pricing-012-muted:light-dark(oklch(0.5 0.016 55),oklch(0.71 0.014 55));
+--vibeui-pricing-012-card:light-dark(oklch(1 0 0),oklch(0.22 0.016 55));
+--vibeui-pricing-012-line:light-dark(oklch(0.87 0.012 55),oklch(0.34 0.016 55));
+--vibeui-pricing-012-accent:light-dark(oklch(0.5 0.14 50),oklch(0.75 0.13 50));
+--vibeui-pricing-012-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.03 50));
+--vibeui-pricing-012-sealring:light-dark(oklch(1 0 0 / 55%),oklch(0 0 0 / 32%));
 --vibeui-pricing-012-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -51,7 +76,7 @@ background:conic-gradient(from 0deg,var(--vibeui-pricing-012-accent),color-mix(i
 color:var(--vibeui-pricing-012-accent-fg);
 }
 [data-vibeui-block="pricing-012"] [data-part="seal"]::before{
-content:"";position:absolute;inset:0.4375rem;border-radius:9999px;border:1px dashed oklch(1 0 0 / 55%);
+content:"";position:absolute;inset:0.4375rem;border-radius:9999px;border:1px dashed var(--vibeui-pricing-012-sealring);
 }
 [data-vibeui-block="pricing-012"] [data-part="sealnum"]{position:relative;font-size:2.75rem;line-height:1;font-weight:700;letter-spacing:-0.05em;font-variant-numeric:tabular-nums}
 [data-vibeui-block="pricing-012"] [data-part="seallabel"]{position:relative;margin-top:0.25rem;font-size:0.75rem;font-weight:650;letter-spacing:0.06em;text-transform:uppercase}
@@ -127,11 +152,18 @@ export function Pricing012({
   action = { label: "Оформить подписку", href: "#" },
   terms = "Гарантия действует на первую оплату каждого тарифа. Возврат по годовой подписке считается пропорционально неиспользованным месяцам.",
   accent,
+  background = "",
   className,
   style,
 }: Pricing012Props) {
   const palette = {
     ...(accent ? { "--vibeui-pricing-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pricing-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

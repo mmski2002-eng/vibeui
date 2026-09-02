@@ -32,15 +32,19 @@
             ":focus-within на карточке — иначе при клавиатурном обходе не видно, где вы находитесь",
             "обложку из градиента: она снимает требование рисовать баннер к каждой заметке",
             "обрезку анонса тремя строками, иначе карточки в ряду разной высоты",
-            "тег <time> у даты: её понимают агрегаторы и поиск"
+            "тег <time> у даты: её понимают агрегаторы и поиск",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив posts и поле hue у отдельной статьи",
             "eyebrow, title и description над сеткой",
             "moreLabel и ссылку moreHref",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Оттенок обложки считается из названия рубрики: переименование рубрики поменяет цвет всех её карточек.",
             "Ключом списка служит заголовок — две статьи с одинаковым названием сломают отрисовку.",
             "Обложка декоративна и помечена aria-hidden: смысловую иллюстрацию так подавать нельзя.",
@@ -61,6 +65,18 @@
             "type": "text",
             "default": "Журнал",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -74,15 +90,19 @@
                 ":focus-within on the card — otherwise keyboard navigation gives no sense of place",
                 "the gradient cover: it removes the need to draw a banner for every post",
                 "clamping the excerpt to three lines, or cards in a row end up uneven",
-                "the <time> tag on the date: aggregators and search understand it"
+                "the <time> tag on the date: aggregators and search understand it",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the posts array and a per-article hue field",
                 "eyebrow, title and description above the grid",
                 "moreLabel and the moreHref link",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The cover hue is derived from the topic name: renaming a topic recolours all of its cards.",
                 "The list key is the title — two articles with the same name break rendering.",
                 "The cover is decorative and aria-hidden: a meaningful illustration cannot be delivered this way.",
@@ -98,11 +118,52 @@
               "eyebrow": {
                 "label": "Overline",
                 "default": "Journal"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Article Grid"
+            "title": "Article Grid",
+            "preview": {
+              "props": {
+                "description": "Post-mortems on decisions, mistakes and rewrites. We only write about what already runs in production.",
+                "moreLabel": "All articles",
+                "posts": [
+                  {
+                    "title": "Why we dropped the icon library",
+                    "excerpt": "Two hundred kilobytes for eight icons is a bad deal. How we moved to inline SVG and what broke along the way.",
+                    "topic": "Engineering",
+                    "date": "12 March 2025",
+                    "readingTime": "7 min",
+                    "author": "Anna Sokolova"
+                  },
+                  {
+                    "title": "Container queries over breakpoints",
+                    "excerpt": "A component should know its own width, not the window's. What that changes in card layouts and what to do with the old media queries.",
+                    "topic": "CSS",
+                    "date": "4 March 2025",
+                    "readingTime": "11 min",
+                    "author": "Kirill Dyomin"
+                  },
+                  {
+                    "title": "A form people actually finish",
+                    "excerpt": "Seven fields instead of eighteen, readable errors and not a single asterisk. What we changed in the request form and how drop-off answered.",
+                    "topic": "Product",
+                    "date": "26 February 2025",
+                    "readingTime": "6 min",
+                    "author": "Marina Lebedeva"
+                  }
+                ],
+                "eyebrow": "Journal",
+                "title": "How we build interfaces"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -136,15 +197,19 @@
             "scroll-margin-top у заголовков — без него якорь прилипает к кромке окна",
             "сворачивание оглавления на узком блоке: липкая колонка на телефоне съедает экран",
             "ширину текста в ch, а не в пикселях: мера строки зависит от кегля, а не от разрешения",
-            "тег <time> в подписи и указание времени чтения до начала текста"
+            "тег <time> в подписи и указание времени чтения до начала текста",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив sections: заголовки, абзацы и врезки",
             "title, lede и topic в шапке",
             "author, role, date и readingTime",
-            "tocTitle и акцент через проп accent"
+            "tocTitle и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Идентификаторы секций приходят из данных: следите за уникальностью, иначе якоря столкнутся.",
             "Подсветка текущего раздела в оглавлении не делается — для неё нужен наблюдатель пересечений.",
             "Абзац рендерится как обычный текст: разметка внутри строки не разбирается.",
@@ -165,6 +230,18 @@
             "type": "text",
             "default": "В статье",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -178,15 +255,19 @@
                 "scroll-margin-top on the headings — without it the anchor sticks to the window edge",
                 "collapsing the contents on a narrow block: a sticky column eats a phone screen",
                 "the text measure in ch, not pixels: line length should follow the font size, not the resolution",
-                "the <time> tag in the byline and the reading time before the text starts"
+                "the <time> tag in the byline and the reading time before the text starts",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the sections array: headings, paragraphs and callouts",
                 "title, lede and topic in the header",
                 "author, role, date and readingTime",
-                "tocTitle and the accent through the accent prop"
+                "tocTitle and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Section ids come from the data: keep them unique or the anchors collide.",
                 "The current section is not highlighted in the contents — that needs an intersection observer.",
                 "A paragraph renders as plain text: inline markup is not parsed.",
@@ -202,11 +283,57 @@
               "tocTitle": {
                 "label": "Contents heading",
                 "default": "In this article"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Article Reader"
+            "title": "Article Reader",
+            "preview": {
+              "props": {
+                "topic": "CSS",
+                "lede": "A component should know its own width, not the window's. We go through what that changes in card layouts and where the old media queries end up.",
+                "author": "Kirill Dyomin",
+                "role": "front-end developer",
+                "date": "4 March 2025",
+                "readingTime": "11 minutes",
+                "sections": [
+                  {
+                    "id": "blog-002-why",
+                    "heading": "Why breakpoints let you down",
+                    "paragraphs": [
+                      "A media query only knows the window width. A card that takes a third of the page and the full width of a modal gets the same set of rules, and looks like a compromise in both places.",
+                      "We treated that with modifier classes for a long time: the card learned about its surroundings from a prop. Every new place needed a new modifier, and by the fortieth component nobody could keep track."
+                    ]
+                  },
+                  {
+                    "id": "blog-002-how",
+                    "heading": "How a container query works",
+                    "paragraphs": [
+                      "An element declares itself a container through container-type: inline-size, and its descendants gain access to its width. The rest works like a media query, except the reference point is the nearest container rather than the window.",
+                      "One subtlety matters: a rule inside @container does not apply to the container itself. The layout has to live on an inner wrapper, otherwise the query silently does nothing — and only your eyes will catch it."
+                    ],
+                    "callout": "The cqi unit is a percentage of the container width. With it the heading size stops depending on the screen resolution and starts depending on the slot the block was put into."
+                  },
+                  {
+                    "id": "blog-002-result",
+                    "heading": "What changed in the project",
+                    "paragraphs": [
+                      "Props like compact and wide left the components: a card picks its own layout. The catalogue stopped lying — the thumbnail shows exactly what a reader gets on their own page.",
+                      "Media queries stayed where they belong: print, dark theme and the padding of the page itself. Everything about a component is now measured from the component."
+                    ]
+                  }
+                ],
+                "title": "Container queries over breakpoints",
+                "tocTitle": "In this article"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -240,15 +367,19 @@
             "растянутую ссылку с заголовком в качестве текста — «читать далее» в списке ссылок бесполезно",
             ":focus-within на карточке: при клавиатурном обходе обводка должна быть у всего анонса",
             "обложку из градиентов — анонс не должен ждать иллюстратора",
-            "ограничение заголовка в 22 символа строки: длинная строка в крупном кегле не читается"
+            "ограничение заголовка в 22 символа строки: длинная строка в крупном кегле не читается",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title, excerpt и topic анонса",
             "badge, coverLabel и значение hue",
             "author, role, date, readingTime и words",
-            "ctaLabel, href и акцент через проп accent"
+            "ctaLabel, href и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Значение hue — угол в градусах: 0 и 360 дадут один и тот же цвет.",
             "Кнопка призыва нарисована как часть карточки и не является отдельной ссылкой — работает растянутая ссылка заголовка.",
             "Инициал автора берётся первой буквой имени: для инициалов из двух букв поменяйте разметку.",
@@ -270,6 +401,18 @@
             "default": 300,
             "min": 0,
             "max": 360
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -283,15 +426,19 @@
                 "the stretched link with the heading as its text — «read more» is useless in a link list",
                 ":focus-within on the card: keyboard navigation should ring the whole announcement",
                 "the gradient cover — an announcement should not wait for an illustrator",
-                "the 22-character measure on the heading: a long line at a large size stops being readable"
+                "the 22-character measure on the heading: a long line at a large size stops being readable",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title, excerpt and the topic of the announcement",
                 "badge, coverLabel and the hue value",
                 "author, role, date, readingTime and words",
-                "ctaLabel, href and the accent through the accent prop"
+                "ctaLabel, href and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The hue value is an angle in degrees: 0 and 360 give the same colour.",
                 "The call to action is drawn as part of the card and is not a separate link — the stretched heading link does the work.",
                 "The author initial is the first letter of the name: change the markup for two-letter initials.",
@@ -306,11 +453,33 @@
               },
               "hue": {
                 "label": "Cover hue"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Featured Post"
+            "title": "Featured Post",
+            "preview": {
+              "props": {
+                "topic": "Engineering",
+                "title": "Why we dropped the icon library",
+                "excerpt": "Two hundred kilobytes for eight icons is a bad deal. How we moved to inline SVG, what broke along the way and why the bundle ended up half the size.",
+                "author": "Anna Sokolova",
+                "role": "front-end lead",
+                "date": "12 March 2025",
+                "readingTime": "7 minutes",
+                "words": "1,400 words",
+                "ctaLabel": "Read the article",
+                "coverLabel": "Issue №14",
+                "badge": "New"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -344,7 +513,8 @@
             "текст ошибки в разметке всегда: появившийся из ниоткуда узел скринридер не найдёт",
             "три пункта о содержимом: «полезные материалы» — это не обещание",
             "периодичность рядом с кнопкой: неизвестная частота писем и есть причина не подписываться",
-            "обязательный чекбокс согласия и упоминание отписки в его тексте"
+            "обязательный чекбокс согласия и упоминание отписки в его тексте",
+            "тёмную подложку блока: это дизайн-решение, а не тема — секция подписки обязана читаться как отдельная плашка и на светлой странице, поэтому light-dark() здесь намеренно не применяется"
           ],
           "adapt": [
             "массив bullets — обещание рассылки",
@@ -353,6 +523,7 @@
             "submitLabel, consentLabel и акцент через проп accent"
           ],
           "notes": [
+            "Блок остаётся тёмным в любой теме страницы: цвета здесь не следуют color-scheme, потому что тёмная плашка и есть дизайн секции.",
             "Отправку, проверку на сервере и защиту от ботов реализует вызывающий код: блок несёт только разметку.",
             "Нативная проверка почты ловит опечатки в структуре адреса, но не существование ящика.",
             "Идентификаторы поля и ошибки фиксированы: два таких блока на странице дадут дублирующиеся id.",
@@ -373,6 +544,12 @@
             "type": "text",
             "default": "Подписаться",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -386,7 +563,8 @@
                 "the error text always present in the markup: a node appearing from nowhere is not found by a screen reader",
                 "the three lines on the content: «useful materials» is not a promise",
                 "the cadence next to the button: an unknown sending frequency is exactly why people do not subscribe",
-                "the required consent checkbox and the unsubscribe note inside it"
+                "the required consent checkbox and the unsubscribe note inside it",
+                "the dark ground of the block: it is a design decision rather than a theme — the signup section has to read as a separate panel on a light page too, which is why light-dark() is deliberately not used here"
               ],
               "adapt": [
                 "the bullets array — the newsletter promise",
@@ -395,6 +573,7 @@
                 "submitLabel, consentLabel and the accent through the accent prop"
               ],
               "notes": [
+                "The block stays dark under any page theme: the colours here do not follow color-scheme, because the dark panel is the design of the section.",
                 "Submission, server-side validation and bot protection belong to the caller: the block is markup only.",
                 "Native email validation catches structural typos, not whether the mailbox exists.",
                 "The field and error ids are fixed: two of these blocks on one page produce duplicate ids.",
@@ -410,11 +589,33 @@
               "submitLabel": {
                 "label": "Button caption",
                 "default": "Subscribe"
+              },
+              "accent": {
+                "label": "Accent"
               }
             },
-            "title": "Newsletter Signup"
+            "title": "Newsletter Signup",
+            "preview": {
+              "props": {
+                "eyebrow": "Newsletter",
+                "description": "No «interesting things on the web» digests. Only what we built or took apart ourselves.",
+                "bullets": [
+                  "One walkthrough of a real decision: what we did and how it turned out",
+                  "The catalogue changes of the last two weeks — not a changelog retelling",
+                  "One find from someone else's product, with why it works"
+                ],
+                "emailLabel": "Email address",
+                "consentLabel": "I agree to my address being processed. Every letter carries an unsubscribe link.",
+                "proof": "4,200 subscribers",
+                "frequency": "Two letters a month",
+                "errorText": "That address looks like a typo. Check the @ sign and the domain.",
+                "title": "A letter every two weeks",
+                "submitLabel": "Subscribe"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent"]
       }
     },
     {
@@ -448,15 +649,19 @@
             "счётчики у рубрик — они показывают объём до нажатия",
             "aria-live у списка: смена фильтра иначе проходит незамеченной",
             "строки вместо плиток: плитка врёт про объём архива, на экран влезает шесть карточек",
-            "aria-pressed у кнопок фильтра — активная рубрика не должна отличаться только цветом"
+            "aria-pressed у кнопок фильтра — активная рубрика не должна отличаться только цветом",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив entries и их рубрики",
             "title и eyebrow над фильтром",
             "allLabel — подпись рубрики «все»",
-            "emptyLabel, countLabel и акцент через проп accent"
+            "emptyLabel, countLabel с меткой {count}, filtersLabel и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Порядок рубрик берётся из порядка записей: блок не сортирует их по алфавиту.",
             "Записи не сортируются по дате — приходят в том порядке, в каком лежат в массиве.",
             "Фильтр живёт в состоянии блока: связать его с адресом страницы должен вызывающий код.",
@@ -477,6 +682,18 @@
             "type": "text",
             "default": "Все",
             "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -490,15 +707,19 @@
                 "the counters on the topics — they show the volume before a click",
                 "aria-live on the list: otherwise filtering passes unnoticed",
                 "rows instead of tiles: a tile grid lies about the archive size, six cards fill a screen",
-                "aria-pressed on the filter buttons — the active topic must not differ by colour alone"
+                "aria-pressed on the filter buttons — the active topic must not differ by colour alone",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the entries array and their topics",
                 "title and eyebrow above the filter",
                 "allLabel — the caption of the «all» topic",
-                "emptyLabel, countLabel and the accent through the accent prop"
+                "emptyLabel, countLabel with its {count} placeholder, filtersLabel and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Topic order follows the order of entries: the block does not sort alphabetically.",
                 "Entries are not sorted by date — they render in array order.",
                 "The filter lives in block state: wiring it to the page URL is the caller's job.",
@@ -514,11 +735,72 @@
               "allLabel": {
                 "label": "«All» caption",
                 "default": "All"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Topic Feed"
+            "title": "Topic Feed",
+            "preview": {
+              "props": {
+                "eyebrow": "Archive",
+                "emptyLabel": "Nothing in this topic yet. Try the one next door.",
+                "countLabel": "{count} articles",
+                "filtersLabel": "Topics",
+                "entries": [
+                  {
+                    "title": "Container queries over breakpoints",
+                    "excerpt": "A component should know its own width, not the window's. What that changes in cards and where the old media queries end up.",
+                    "topic": "CSS",
+                    "date": "4 March 2025",
+                    "readingTime": "11 min"
+                  },
+                  {
+                    "title": "Why we dropped the icon library",
+                    "excerpt": "Two hundred kilobytes for eight icons. How we moved to inline SVG and what broke along the way.",
+                    "topic": "Engineering",
+                    "date": "12 March 2025",
+                    "readingTime": "7 min"
+                  },
+                  {
+                    "title": "A form people actually finish",
+                    "excerpt": "Seven fields instead of eighteen and not a single asterisk. What we changed in the request form and how drop-off answered.",
+                    "topic": "Product",
+                    "date": "26 February 2025",
+                    "readingTime": "6 min"
+                  },
+                  {
+                    "title": "Focus you can actually see",
+                    "excerpt": "We removed the outline and lost the keyboard. One CSS rule that made the site impassable without a mouse.",
+                    "topic": "Accessibility",
+                    "date": "19 February 2025",
+                    "readingTime": "5 min"
+                  },
+                  {
+                    "title": "A dark theme without a second set of colours",
+                    "excerpt": "How to boil the palette down to ten variables and stop maintaining two themes by hand.",
+                    "topic": "CSS",
+                    "date": "11 February 2025",
+                    "readingTime": "9 min"
+                  },
+                  {
+                    "title": "We stopped writing storybooks",
+                    "excerpt": "And what we put in their place: live previews right inside the component catalogue.",
+                    "topic": "Engineering",
+                    "date": "3 February 2025",
+                    "readingTime": "8 min"
+                  }
+                ],
+                "title": "All articles by topic",
+                "allLabel": "All"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -552,15 +834,19 @@
             "<aside> с aria-label — это дополнение к статье, а не равный ей раздел",
             "порядковую подпись на месте рубрики: дочитавший чаще ищет продолжение",
             "приглушённый фон и меньший кегль — блок не должен спорить с самой статьёй",
-            "растянутую ссылку на заголовке и обводку по :focus-within"
+            "растянутую ссылку на заголовке и обводку по :focus-within",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items и текст причины у каждой статьи",
-            "title и afterTitle с названием прочитанного материала",
+            "title, afterTitle и шаблон afterLabel с меткой {title} — название прочитанного материала",
             "allLabel и ссылку allHref",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Подбор статей блок не делает: он показывает то, что передал вызывающий код.",
             "Порядковая подпись необязательна — без неё карточка выглядит как обычная рекомендация.",
             "Три карточки — предел: четвёртая ломает ряд и превращает блок в ещё одну ленту.",
@@ -581,6 +867,18 @@
             "type": "text",
             "default": "Контейнерные запросы вместо брейкпоинтов",
             "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -594,15 +892,19 @@
                 "the <aside> with aria-label — this supplements the article, it is not its equal",
                 "the sequence caption in place of the topic: a reader who finished usually wants the follow-up",
                 "the muted background and smaller type — the block must not compete with the article",
-                "the stretched heading link and the :focus-within ring"
+                "the stretched heading link and the :focus-within ring",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array and the reason text per article",
-                "title and afterTitle naming the piece just read",
+                "title, afterTitle and the afterLabel template with its {title} placeholder — the piece just read",
                 "allLabel and the allHref link",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The block does not pick the articles: it renders whatever the caller passes.",
                 "The sequence caption is optional — without it the card reads as an ordinary recommendation.",
                 "Three cards is the limit: a fourth breaks the row and turns the block into another feed.",
@@ -618,11 +920,47 @@
               "afterTitle": {
                 "label": "Article just read",
                 "default": "Container queries over breakpoints"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Related Posts"
+            "title": "Related Posts",
+            "preview": {
+              "props": {
+                "afterLabel": "After the article «{title}»",
+                "allLabel": "The whole «CSS» archive",
+                "items": [
+                  {
+                    "title": "The cqi unit and text that knows its place",
+                    "reason": "A follow-up to this piece: the same mechanics, but for font size rather than layout.",
+                    "topic": "CSS",
+                    "readingTime": "6 min",
+                    "order": "Part 2 of 3"
+                  },
+                  {
+                    "title": "We brought back two media queries — and we do not regret it",
+                    "reason": "The opposite conclusion from the same data: where the container query turned out to be needless.",
+                    "topic": "CSS",
+                    "readingTime": "8 min"
+                  },
+                  {
+                    "title": "A component catalogue that does not lie",
+                    "reason": "The same trick in another job: the thumbnail shows the real layout of a block.",
+                    "topic": "Product",
+                    "readingTime": "5 min"
+                  }
+                ],
+                "title": "What to read next",
+                "afterTitle": "Container queries over breakpoints"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

@@ -8,9 +8,18 @@ export type Toast013Props = Omit<
   "children"
 > & {
   message?: string
+  /** Текст после возврата: компонент несёт русский, проект подставляет свой. */
+  returnedMessage?: string
   returnLabel?: string
+  expiredText?: string
+  /** Шаблон обратного отсчёта, {seconds} — оставшиеся секунды. */
+  countdownText?: string
   /** Сколько секунд можно передумать. */
   seconds?: number
+  /** Цвет кольца и кнопки. Пусто — штатная палитра. */
+  tone?: string
+  /** Подложка карточки. Пусто — штатная палитра. */
+  background?: string
   onReturn?: () => void
   onExpire?: () => void
 }
@@ -18,13 +27,21 @@ export type Toast013Props = Omit<
 // Идея компонента: пачечное действие с отменой, у которой видно не полосу,
 // а число. Кольцо тает по кругу и в центре считает секунды — так понятно,
 // сколько ещё есть времени, не отвлекаясь на линию где-то с краю карточки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
+// подложка светлее фона страницы, а граница светлее подложки — иначе карточка
+// растворилась бы в тёмной странице.
 const STYLES = `
 :where([data-vibeui-block="toast-013"]){
---vibeui-toast-013-bg:oklch(0.24 0.02 265);
---vibeui-toast-013-fg:oklch(0.98 0.004 265);
---vibeui-toast-013-muted:oklch(0.82 0.012 265);
---vibeui-toast-013-track:oklch(1 0 0 / 18%);
---vibeui-toast-013-tone:oklch(0.78 0.14 195);
+--vibeui-toast-013-bg:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.014 265));
+--vibeui-toast-013-fg:light-dark(oklch(0.24 0.014 265),oklch(0.97 0.002 265));
+--vibeui-toast-013-muted:light-dark(oklch(0.52 0.012 265),oklch(0.78 0.008 265));
+--vibeui-toast-013-line:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
+--vibeui-toast-013-track:light-dark(oklch(0.2 0.02 265 / 14%),oklch(1 0 0 / 20%));
+--vibeui-toast-013-key:light-dark(oklch(0.2 0.02 265 / 7%),oklch(1 0 0 / 12%));
+--vibeui-toast-013-key-hover:light-dark(oklch(0.2 0.02 265 / 12%),oklch(1 0 0 / 18%));
+--vibeui-toast-013-shadow:light-dark(oklch(0.55 0.02 265 / 20%),oklch(0.12 0.02 265 / 62%));
+--vibeui-toast-013-tone:light-dark(oklch(0.5 0.12 195),oklch(0.78 0.14 195));
 --vibeui-toast-013-percent:100;
 --vibeui-toast-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -32,9 +49,10 @@ const STYLES = `
 display:flex;align-items:center;gap:0.75rem;
 width:100%;max-width:23rem;box-sizing:border-box;
 padding:0.75rem 0.875rem;border-radius:0.75rem;
+border:1px solid var(--vibeui-toast-013-line);
 background:var(--vibeui-toast-013-bg);color:var(--vibeui-toast-013-fg);
 font-family:var(--vibeui-toast-013-font);
-box-shadow:0 18px 40px -22px oklch(0.2 0.02 265 / 65%);
+box-shadow:0 18px 40px -22px var(--vibeui-toast-013-shadow);
 }
 /* Кольцо-таймер: конический градиент по проценту, число — поверх него. */
 [data-vibeui-block="toast-013"] [data-part="ring"]{
@@ -59,13 +77,35 @@ font-size:0.6875rem;font-weight:700;font-variant-numeric:tabular-nums;
 [data-vibeui-block="toast-013"] button{
 appearance:none;cursor:pointer;flex:none;
 height:2rem;padding:0 0.75rem;border:0;border-radius:0.5rem;
-background:oklch(1 0 0 / 12%);color:var(--vibeui-toast-013-tone);
+background:var(--vibeui-toast-013-key);color:var(--vibeui-toast-013-tone);
 font:inherit;font-size:0.8125rem;font-weight:700;
 }
-[data-vibeui-block="toast-013"] button:hover{background:oklch(1 0 0 / 18%)}
+[data-vibeui-block="toast-013"] button:hover{background:var(--vibeui-toast-013-key-hover)}
 [data-vibeui-block="toast-013"] button:focus-visible{outline:2px solid var(--vibeui-toast-013-tone);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="toast-013"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Пачечная отмена: кольцевой таймер с числом секунд и кнопка «Вернуть».
@@ -73,8 +113,13 @@ font:inherit;font-size:0.8125rem;font-weight:700;
  */
 export function Toast013({
   message = "5 писем перемещены в архив",
+  returnedMessage = "Письма возвращены из архива",
   returnLabel = "Вернуть",
+  expiredText = "Время вышло",
+  countdownText = "Отменить можно ещё {seconds} с",
   seconds = 6,
+  tone = "",
+  background = "",
   onReturn,
   onExpire,
   className,
@@ -112,6 +157,13 @@ export function Toast013({
 
   const palette = {
     "--vibeui-toast-013-percent": percent,
+    ...(tone ? { "--vibeui-toast-013-tone": tone } : null),
+    ...(background
+      ? {
+          "--vibeui-toast-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -146,10 +198,12 @@ export function Toast013({
           </span>
         </span>
         <span data-part="text">
-          {returned ? "Письма возвращены из архива" : message}
+          {returned ? returnedMessage : message}
           {!returned ? (
             <span data-part="sub">
-              {expired ? "Время вышло" : `Отменить можно ещё ${secondsLeft} с`}
+              {expired
+                ? expiredText
+                : countdownText.replace("{seconds}", String(secondsLeft))}
             </span>
           ) : null}
         </span>

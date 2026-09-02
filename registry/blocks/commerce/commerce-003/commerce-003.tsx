@@ -18,7 +18,15 @@ export type Commerce003Props = {
   shipping?: number
   freeFrom?: number
   cta?: string
+  /** Подписи корзины: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
+  /** Шаблон суммы: {value} — отформатированное число. */
+  priceText?: string
+  /** Локаль форматирования сумм. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,15 +38,20 @@ export type Commerce003Props = {
 // доставки» — не украшение, а причина добрать товар, поэтому она стоит над
 // кнопкой и исчезает, когда порог пройден. Удаление названо товаром, а не
 // «удалить»: без имени в списке из пяти строк непонятно, что именно уйдёт.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="commerce-003"]){
---vibeui-commerce-003-bg:oklch(1 0 0);
---vibeui-commerce-003-fg:oklch(0.22 0.014 265);
---vibeui-commerce-003-muted:oklch(0.55 0.014 265);
---vibeui-commerce-003-border:oklch(0.91 0.006 265);
---vibeui-commerce-003-track:oklch(0.94 0.005 265);
---vibeui-commerce-003-accent:oklch(0.55 0.2 262);
---vibeui-commerce-003-ok:oklch(0.58 0.14 152);
+--vibeui-commerce-003-bg:transparent;
+--vibeui-commerce-003-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-commerce-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-commerce-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-003-track:light-dark(oklch(0.94 0.005 265),oklch(0.32 0.01 265));
+--vibeui-commerce-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-commerce-003-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
+--vibeui-commerce-003-ok:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
 --vibeui-commerce-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -61,7 +74,7 @@ border:1px solid var(--vibeui-commerce-003-border);
 }
 [data-vibeui-block="commerce-003"] [data-part="shot"]{
 width:3rem;height:3rem;border-radius:0.5rem;
-background:oklch(0.94 0.05 var(--vibeui-commerce-003-hue,262));
+background:light-dark(oklch(0.94 0.05 var(--vibeui-commerce-003-hue,262)),oklch(0.4 0.06 var(--vibeui-commerce-003-hue,262)));
 }
 [data-vibeui-block="commerce-003"] [data-part="name"]{margin:0;font-size:0.8125rem;font-weight:600;line-height:1.3}
 [data-vibeui-block="commerce-003"] [data-part="option"]{margin:0.0625rem 0 0;font-size:0.6875rem;color:var(--vibeui-commerce-003-muted)}
@@ -88,7 +101,7 @@ padding:0;color:var(--vibeui-commerce-003-muted);font:inherit;font-size:0.6875re
 [data-vibeui-block="commerce-003"] [data-part="total"]{
 padding:0.875rem;border-radius:0.875rem;
 border:1px solid var(--vibeui-commerce-003-border);
-background:var(--vibeui-commerce-003-bg);
+background:var(--vibeui-commerce-003-panel);
 }
 [data-vibeui-block="commerce-003"] dl{display:grid;grid-template-columns:1fr auto;gap:0.375rem 0.75rem;margin:0 0 0.625rem;font-size:0.8125rem}
 [data-vibeui-block="commerce-003"] dt{color:var(--vibeui-commerce-003-muted)}
@@ -108,7 +121,7 @@ background:var(--vibeui-commerce-003-ok);
 [data-vibeui-block="commerce-003"] [data-part="pay"]{
 width:100%;appearance:none;cursor:pointer;height:2.5rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-commerce-003-accent);color:oklch(1 0 0);
+background:var(--vibeui-commerce-003-accent);color:var(--vibeui-commerce-003-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-003"] [data-part="pay"]:focus-visible{outline:2px solid var(--vibeui-commerce-003-accent);outline-offset:2px}
@@ -137,7 +150,40 @@ const DEFAULT_LINES: Commerce003Line[] = [
   },
 ]
 
-const money = (value: number) => `${value.toLocaleString("ru-RU")} ₽`
+/** Русские подписи по умолчанию: установленный файл не меняет язык сам. */
+const LABELS: Record<string, string> = {
+  goods: "Товары",
+  shipping: "Доставка",
+  free: "бесплатно",
+  total: "Итого",
+  less: "Меньше: {title}",
+  more: "Больше: {title}",
+  remove: "Убрать «{title}»",
+  freeLeft: "До бесплатной доставки {sum}",
+  empty: "Корзина пуста. Товары из каталога появятся здесь.",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Корзина: итог считается из строк, полоса до бесплатной доставки над кнопкой.
@@ -149,11 +195,18 @@ export function Commerce003({
   shipping = 490,
   freeFrom = 15000,
   cta = "Оформить заказ",
+  labels = LABELS,
+  priceText = "{value} ₽",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Commerce003Props) {
   const [cart, setCart] = useState(lines)
+  const text = { ...LABELS, ...labels }
+  const money = (value: number) =>
+    priceText.replace("{value}", value.toLocaleString(locale))
 
   // Итог считается из строк: отдельное число врёт после первой правки.
   const goods = cart.reduce((sum, line) => sum + line.price * line.count, 0)
@@ -174,6 +227,12 @@ export function Commerce003({
   const palette = {
     "--vibeui-commerce-003-progress": progress,
     ...(accent ? { "--vibeui-commerce-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -194,9 +253,7 @@ export function Commerce003({
         <div data-part="layout">
           <div>
             {cart.length === 0 ? (
-              <p data-part="empty">
-                Корзина пуста. Товары из каталога появятся здесь.
-              </p>
+              <p data-part="empty">{text.empty}</p>
             ) : (
               <ul>
                 {cart.map((line) => (
@@ -224,7 +281,7 @@ export function Commerce003({
                         <button
                           type="button"
                           disabled={line.count <= 1}
-                          aria-label={`Меньше: ${line.title}`}
+                          aria-label={text.less.replace("{title}", line.title)}
                           onClick={() => setCount(line.id, -1)}
                         >
                           −
@@ -232,7 +289,7 @@ export function Commerce003({
                         <span data-part="value">{line.count}</span>
                         <button
                           type="button"
-                          aria-label={`Больше: ${line.title}`}
+                          aria-label={text.more.replace("{title}", line.title)}
                           onClick={() => setCount(line.id, 1)}
                         >
                           +
@@ -247,7 +304,7 @@ export function Commerce003({
                           )
                         }
                       >
-                        Убрать «{line.title}»
+                        {text.remove.replace("{title}", line.title)}
                       </button>
                     </div>
                   </li>
@@ -258,16 +315,16 @@ export function Commerce003({
 
           <div data-part="total">
             <dl>
-              <dt>Товары</dt>
+              <dt>{text.goods}</dt>
               <dd>{money(goods)}</dd>
-              <dt>Доставка</dt>
-              <dd>{free ? "бесплатно" : money(delivery)}</dd>
-              <dt data-part="grand">Итого</dt>
+              <dt>{text.shipping}</dt>
+              <dd>{free ? text.free : money(delivery)}</dd>
+              <dt data-part="grand">{text.total}</dt>
               <dd data-part="grand">{money(goods + delivery)}</dd>
             </dl>
             {!free ? (
               <p data-part="free">
-                До бесплатной доставки {money(left)}
+                {text.freeLeft.replace("{sum}", money(left))}
                 <span data-part="track" aria-hidden="true">
                   <span data-part="fill" />
                 </span>

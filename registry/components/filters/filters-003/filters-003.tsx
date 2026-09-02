@@ -18,6 +18,8 @@ export type Filters003Props = Omit<
 > & {
   title?: string
   groups?: Filters003Group[]
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,15 +30,17 @@ export type Filters003Props = Omit<
 // Группы — настоящие fieldset с legend, раскрытие держит <details> без JS.
 const STYLES = `
 :where([data-vibeui-block="filters-003"]){
---vibeui-filters-003-surface:oklch(1 0 0);
---vibeui-filters-003-fg:oklch(0.23 0.014 265);
---vibeui-filters-003-muted:oklch(0.56 0.014 265);
---vibeui-filters-003-border:oklch(0.9 0.006 265);
---vibeui-filters-003-shell:oklch(0.91 0.006 265);
---vibeui-filters-003-accent:oklch(0.53 0.18 250);
+--vibeui-filters-003-surface:transparent;
+--vibeui-filters-003-box:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
+--vibeui-filters-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-filters-003-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-filters-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.014 265));
+--vibeui-filters-003-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-filters-003-accent:light-dark(oklch(0.53 0.18 250),oklch(0.74 0.15 250));
+--vibeui-filters-003-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 250));
 --vibeui-filters-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: панель показывают поверх любого фона. */
+/* Подложки по умолчанию нет: панель ложится на фон страницы. */
 [data-vibeui-block="filters-003"]{
 display:flex;flex-direction:column;
 width:100%;max-width:16rem;box-sizing:border-box;padding:0.875rem;
@@ -74,7 +78,7 @@ padding:0.25rem 0;cursor:pointer;font-size:0.8125rem;
 appearance:none;flex:none;margin:0;cursor:pointer;
 width:1rem;height:1rem;border-radius:0.3125rem;
 border:1.5px solid var(--vibeui-filters-003-border);
-background:oklch(1 0 0);position:relative;
+background:var(--vibeui-filters-003-box);position:relative;
 transition:background-color .16s ease,border-color .16s ease;
 }
 [data-vibeui-block="filters-003"] input:checked{
@@ -84,7 +88,8 @@ border-color:var(--vibeui-filters-003-accent);
 [data-vibeui-block="filters-003"] input:checked::after{
 content:"";position:absolute;left:0.3125rem;top:0.0625rem;
 width:0.25rem;height:0.5rem;transform:rotate(42deg);
-border-right:2px solid oklch(1 0 0);border-bottom:2px solid oklch(1 0 0);
+border-right:2px solid var(--vibeui-filters-003-on-accent);
+border-bottom:2px solid var(--vibeui-filters-003-on-accent);
 }
 [data-vibeui-block="filters-003"] input:focus-visible{outline:2px solid var(--vibeui-filters-003-accent);outline-offset:2px}
 [data-vibeui-block="filters-003"] [data-part="value"]{
@@ -121,12 +126,35 @@ const DEFAULT_GROUPS: Filters003Group[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Боковая панель фильтров со счётчиками у каждого значения.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Filters003({
   title = "Фильтры",
   groups = DEFAULT_GROUPS,
+  background = "",
   accent,
   className,
   style,
@@ -134,6 +162,12 @@ export function Filters003({
 }: Filters003Props) {
   const palette = {
     ...(accent ? { "--vibeui-filters-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-filters-003-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

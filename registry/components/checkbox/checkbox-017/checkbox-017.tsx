@@ -17,7 +17,21 @@ export type Checkbox017Props = Omit<
   caption?: string
   rows?: Checkbox017Row[]
   defaultValue?: string[]
+  /** Заголовки колонок по ключам name, email, role. */
+  columnText?: Record<string, string>
+  /** Доступное имя чекбокса в шапке. */
+  selectAllLabel?: string
+  /** Доступное имя чекбокса строки. {name} — имя из строки. */
+  rowLabel?: string
+  /** Счётчик внизу. {count} — выбрано, {total} — всего. */
+  countText?: string
+  /** Подпись клавиши в подсказке. */
+  shiftKeyLabel?: string
+  /** Текст подсказки после клавиши. */
+  rangeHint?: string
   onChange?: (value: string[]) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,15 +40,19 @@ export type Checkbox017Props = Omit<
 // выбираются двумя движениями, а не двадцатью. Чекбокс шапки показывает
 // промежуточное состояние, подсказка про Shift написана явно: скрытый жест
 // не существует.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="checkbox-017"]){
---vibeui-checkbox-017-bg:oklch(1 0 0);
---vibeui-checkbox-017-fg:oklch(0.22 0.014 265);
---vibeui-checkbox-017-muted:oklch(0.56 0.014 265);
---vibeui-checkbox-017-border:oklch(0.91 0.006 265);
---vibeui-checkbox-017-head:oklch(0.975 0.003 265);
---vibeui-checkbox-017-accent:oklch(0.52 0.16 275);
---vibeui-checkbox-017-picked:oklch(0.96 0.025 275);
+--vibeui-checkbox-017-bg:transparent;
+--vibeui-checkbox-017-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-checkbox-017-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-017-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-checkbox-017-head:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.009 265));
+--vibeui-checkbox-017-accent:light-dark(oklch(0.52 0.16 275),oklch(0.66 0.16 275));
+--vibeui-checkbox-017-picked:light-dark(oklch(0.96 0.025 275),oklch(0.31 0.045 275));
+--vibeui-checkbox-017-on-accent:oklch(0.99 0.01 275);
 --vibeui-checkbox-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="checkbox-017"]{
@@ -78,13 +96,13 @@ border-color:transparent;background:var(--vibeui-checkbox-017-accent);
 [data-vibeui-block="checkbox-017"] input:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;
-border-right:2px solid oklch(0.99 0.01 275);border-bottom:2px solid oklch(0.99 0.01 275);
+border-right:2px solid var(--vibeui-checkbox-017-on-accent);border-bottom:2px solid var(--vibeui-checkbox-017-on-accent);
 transform:rotate(45deg);
 }
 [data-vibeui-block="checkbox-017"] input:indeterminate::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.5rem;height:2px;margin:-1px 0 0 -0.25rem;border-radius:1px;
-background:oklch(0.99 0.01 275);
+background:var(--vibeui-checkbox-017-on-accent);
 }
 [data-vibeui-block="checkbox-017"] input:focus-visible{outline:2px solid var(--vibeui-checkbox-017-accent);outline-offset:2px}
 [data-vibeui-block="checkbox-017"] [data-part="foot"]{
@@ -111,6 +129,34 @@ const DEFAULT_ROWS: Checkbox017Row[] = [
   { id: "5", name: "Лена Аскарова", email: "lena@studio.io", role: "Читатель" },
 ]
 
+const DEFAULT_COLUMNS: Record<string, string> = {
+  name: "Имя",
+  email: "Почта",
+  role: "Роль",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Выбор строк таблицы диапазоном: Shift отмечает всё от прошлой отметки
  * до текущей. Один файл, ноль зависимостей, собственная палитра.
@@ -119,7 +165,14 @@ export function Checkbox017({
   caption = "Участники проекта",
   rows = DEFAULT_ROWS,
   defaultValue = [],
+  columnText = DEFAULT_COLUMNS,
+  selectAllLabel = "Выбрать все строки на странице",
+  rowLabel = "Выбрать {name}",
+  countText = "Выбрано {count} из {total}",
+  shiftKeyLabel = "Shift",
+  rangeHint = "+ клик — диапазон",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -131,6 +184,12 @@ export function Checkbox017({
 
   const palette = {
     ...(accent ? { "--vibeui-checkbox-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-checkbox-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -191,15 +250,15 @@ export function Checkbox017({
                     ref={headRef}
                     type="checkbox"
                     checked={all}
-                    aria-label="Выбрать все строки на странице"
+                    aria-label={selectAllLabel}
                     onChange={() =>
                       update(all ? [] : rows.map((row) => row.id))
                     }
                   />
                 </th>
-                <th scope="col">Имя</th>
-                <th scope="col">Почта</th>
-                <th scope="col">Роль</th>
+                <th scope="col">{columnText.name ?? DEFAULT_COLUMNS.name}</th>
+                <th scope="col">{columnText.email ?? DEFAULT_COLUMNS.email}</th>
+                <th scope="col">{columnText.role ?? DEFAULT_COLUMNS.role}</th>
               </tr>
             </thead>
             <tbody>
@@ -209,7 +268,7 @@ export function Checkbox017({
                     <input
                       type="checkbox"
                       checked={value.includes(row.id)}
-                      aria-label={`Выбрать ${row.name}`}
+                      aria-label={rowLabel.replace("{name}", row.name)}
                       onChange={() => undefined}
                       onClick={(event) => pick(index, event.shiftKey)}
                     />
@@ -224,10 +283,12 @@ export function Checkbox017({
         </div>
         <p data-part="foot">
           <span role="status">
-            Выбрано {value.length} из {rows.length}
+            {countText
+              .replace("{count}", String(value.length))
+              .replace("{total}", String(rows.length))}
           </span>
           <span>
-            <kbd>Shift</kbd> + клик — диапазон
+            <kbd>{shiftKeyLabel}</kbd> {rangeHint}
           </span>
         </p>
       </div>

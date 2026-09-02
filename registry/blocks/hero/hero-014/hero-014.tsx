@@ -8,6 +8,8 @@ export type Hero014Props = {
   dateTime?: string
   place?: string
   countdown?: { value: string; label: string }[]
+  /** Подпись списка отсчёта для скринридера: без неё это набор голых чисел. */
+  countdownLabel?: string
   primary?: { label: string; href: string }
   secondary?: { label: string; href: string }
   seats?: string
@@ -112,6 +114,7 @@ export function Hero014({
   dateTime = "2026-09-26T11:00:00+03:00",
   place = "Онлайн, запись остаётся",
   countdown = DEFAULT_COUNTDOWN,
+  countdownLabel = "До начала осталось",
   primary = { label: "Забрать место", href: "#" },
   secondary = { label: "Программа дня", href: "#" },
   seats = "Осталось 128 мест из 500",
@@ -154,7 +157,7 @@ export function Hero014({
             {seats ? <p data-part="seats">{seats}</p> : null}
           </div>
 
-          <ul data-part="countdown" aria-label="До начала осталось">
+          <ul data-part="countdown" aria-label={countdownLabel}>
             {countdown.slice(0, 4).map((cell) => (
               <li key={cell.label}>
                 <span data-part="num">{cell.value}</span>

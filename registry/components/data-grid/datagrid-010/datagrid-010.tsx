@@ -18,6 +18,26 @@ export type Datagrid010Props = Omit<
   rows?: Datagrid010Row[]
   caption?: string
   pageSize?: number
+  /** Заголовок шапки над таблицей. */
+  heading?: string
+  /** Подпись выбора размера страницы. */
+  pageSizeLabel?: string
+  /** Названия колонок: person, role, city, score. */
+  columnText?: Record<string, string>
+  /** Диапазон записей. {from}, {to} и {total} подставляются. */
+  rangeText?: string
+  /** Подпись навигации по страницам. */
+  pagesLabel?: string
+  /** Подпись кнопки «назад». */
+  previousLabel?: string
+  /** Подпись кнопки «вперёд». */
+  nextLabel?: string
+  /** Подпись кнопки страницы. {number} — её номер. */
+  pageLabel?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,14 +46,19 @@ export type Datagrid010Props = Omit<
 // страница помечена aria-current, а не только цветом. Диапазон «21–23 из 23»
 // пересчитывается от размера страницы: без него после смены размера
 // непонятно, куда уехали строки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-010"]){
---vibeui-datagrid-010-bg:oklch(1 0 0);
---vibeui-datagrid-010-fg:oklch(0.23 0.014 20);
---vibeui-datagrid-010-muted:oklch(0.55 0.014 20);
---vibeui-datagrid-010-border:oklch(0.92 0.006 20);
---vibeui-datagrid-010-head:oklch(0.975 0.004 20);
---vibeui-datagrid-010-accent:oklch(0.55 0.17 25);
+--vibeui-datagrid-010-bg:transparent;
+--vibeui-datagrid-010-fg:light-dark(oklch(0.23 0.014 20),oklch(0.93 0.006 20));
+--vibeui-datagrid-010-muted:light-dark(oklch(0.55 0.014 20),oklch(0.68 0.012 20));
+--vibeui-datagrid-010-border:light-dark(oklch(0.92 0.006 20),oklch(0.34 0.012 20));
+--vibeui-datagrid-010-head:light-dark(oklch(0.975 0.004 20),oklch(0.27 0.012 20));
+--vibeui-datagrid-010-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 20));
+--vibeui-datagrid-010-accent:light-dark(oklch(0.55 0.17 25),oklch(0.75 0.15 25));
+--vibeui-datagrid-010-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.02 25));
 --vibeui-datagrid-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-010"]{
@@ -55,7 +80,7 @@ font-size:0.75rem;color:var(--vibeui-datagrid-010-muted);
 [data-vibeui-block="datagrid-010"] select{
 font:inherit;font-size:0.75rem;color:var(--vibeui-datagrid-010-fg);
 padding:0.25rem 0.5rem;border-radius:0.375rem;
-border:1px solid var(--vibeui-datagrid-010-border);background:var(--vibeui-datagrid-010-bg);
+border:1px solid var(--vibeui-datagrid-010-border);background:var(--vibeui-datagrid-010-field);
 }
 [data-vibeui-block="datagrid-010"] select:focus-visible{outline:2px solid var(--vibeui-datagrid-010-accent);outline-offset:1px}
 [data-vibeui-block="datagrid-010"] [data-part="scroll"]{overflow-x:auto}
@@ -89,11 +114,11 @@ margin:0;padding:0;list-style:none;
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
 min-width:1.875rem;height:1.875rem;padding:0 0.5rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-010-border);
-background:var(--vibeui-datagrid-010-bg);color:var(--vibeui-datagrid-010-fg);
+background:var(--vibeui-datagrid-010-field);color:var(--vibeui-datagrid-010-fg);
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="datagrid-010"] [data-part="pages"] button[aria-current="page"]{
-border-color:transparent;background:var(--vibeui-datagrid-010-accent);color:oklch(1 0 0);font-weight:650;
+border-color:transparent;background:var(--vibeui-datagrid-010-accent);color:var(--vibeui-datagrid-010-on-accent);font-weight:650;
 }
 [data-vibeui-block="datagrid-010"] [data-part="pages"] button:disabled{opacity:.4;cursor:not-allowed}
 [data-vibeui-block="datagrid-010"] [data-part="pages"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-010-accent);outline-offset:2px}
@@ -139,6 +164,35 @@ const DEFAULT_ROWS: Datagrid010Row[] = NAMES.map((person, index) => ({
 
 const SIZES = [5, 10, 20]
 
+const COLUMN_LABEL: Record<string, string> = {
+  person: "Участник",
+  role: "Роль",
+  city: "Город",
+  score: "Балл",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Сетка с пагинацией и выбором размера страницы: диапазон записей,
  * номера страниц с aria-current и навигация в nav. Один файл.
@@ -147,6 +201,16 @@ export function Datagrid010({
   rows = DEFAULT_ROWS,
   caption = "Список участников программы",
   pageSize = 5,
+  heading = "Участники",
+  pageSizeLabel = "Строк на странице",
+  columnText = COLUMN_LABEL,
+  rangeText = "Показано {from}–{to} из {total}",
+  pagesLabel = "Страницы таблицы",
+  previousLabel = "Предыдущая страница",
+  nextLabel = "Следующая страница",
+  pageLabel = "Страница {number}",
+  scrollLabel = "Таблица участников, прокручивается вбок",
+  background = "",
   accent,
   className,
   style,
@@ -160,8 +224,16 @@ export function Datagrid010({
   const from = (safe - 1) * size
   const slice = rows.slice(from, from + size)
 
+  const label = (column: string) => columnText[column] ?? COLUMN_LABEL[column]
+
   const palette = {
     ...(accent ? { "--vibeui-datagrid-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -177,9 +249,9 @@ export function Datagrid010({
         style={palette}
       >
         <div data-part="head">
-          <h3 data-part="title">Участники</h3>
+          <h3 data-part="title">{heading}</h3>
           <label>
-            Строк на странице
+            {pageSizeLabel}
             <select
               value={size}
               onChange={(event) => {
@@ -198,18 +270,18 @@ export function Datagrid010({
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица участников, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
             <caption>{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Участник</th>
-                <th scope="col">Роль</th>
-                <th scope="col">Город</th>
+                <th scope="col">{label("person")}</th>
+                <th scope="col">{label("role")}</th>
+                <th scope="col">{label("city")}</th>
                 <th scope="col" data-align="end">
-                  Балл
+                  {label("score")}
                 </th>
               </tr>
             </thead>
@@ -227,15 +299,18 @@ export function Datagrid010({
         </div>
         <div data-part="foot">
           <p data-part="range" aria-live="polite">
-            Показано {from + 1}–{from + slice.length} из {rows.length}
+            {rangeText
+              .replace("{from}", String(from + 1))
+              .replace("{to}", String(from + slice.length))
+              .replace("{total}", String(rows.length))}
           </p>
-          <nav aria-label="Страницы таблицы">
+          <nav aria-label={pagesLabel}>
             <ul data-part="pages">
               <li>
                 <button
                   type="button"
                   disabled={safe === 1}
-                  aria-label="Предыдущая страница"
+                  aria-label={previousLabel}
                   onClick={() => setPage(safe - 1)}
                 >
                   ←
@@ -247,7 +322,7 @@ export function Datagrid010({
                     <button
                       type="button"
                       aria-current={number === safe ? "page" : undefined}
-                      aria-label={`Страница ${number}`}
+                      aria-label={pageLabel.replace("{number}", String(number))}
                       onClick={() => setPage(number)}
                     >
                       {number}
@@ -259,7 +334,7 @@ export function Datagrid010({
                 <button
                   type="button"
                   disabled={safe === pages}
-                  aria-label="Следующая страница"
+                  aria-label={nextLabel}
                   onClick={() => setPage(safe + 1)}
                 >
                   →

@@ -12,6 +12,17 @@ export type Dashboard002Props = {
   user?: string
   nav?: { title?: string; links: Dashboard002Link[] }[]
   activeLabel?: string
+  /** Подпись поля поиска: она же placeholder, она же aria-label. */
+  searchText?: string
+  /** Подпись свёрнутой навигации на узкой ширине. */
+  menuText?: string
+  /** Название навигации для скринридера. */
+  navText?: string
+  hint?: string
+  /** Текст в пустой области контента. */
+  slotText?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -24,16 +35,20 @@ export type Dashboard002Props = {
 // сетке, поэтому колонка не «плавает» и не требует отступа-компенсации.
 // На узкой ширине сайдбар уезжает в раскрывающийся список на details: своё
 // выдвижное меню потребовало бы состояния, а здесь его держит браузер.
+//
+// Тема берётся из color-scheme окружения через light-dark(): собственной
+// подложки у каркаса нет, панели внутри держат свою поверхность.
 const STYLES = `
 :where([data-vibeui-block="dashboard-002"]){
---vibeui-dashboard-002-bg:oklch(0.985 0.002 265);
---vibeui-dashboard-002-panel:oklch(1 0 0);
---vibeui-dashboard-002-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-002-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-002-border:oklch(0.91 0.006 265);
---vibeui-dashboard-002-hover:oklch(0.55 0.02 265 / 8%);
---vibeui-dashboard-002-active:oklch(0.55 0.2 262 / 12%);
---vibeui-dashboard-002-accent:oklch(0.55 0.2 262);
+--vibeui-dashboard-002-bg:transparent;
+--vibeui-dashboard-002-panel:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-dashboard-002-field:light-dark(oklch(0.975 0.002 265),oklch(0.3 0.012 265));
+--vibeui-dashboard-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-dashboard-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-002-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 12%));
+--vibeui-dashboard-002-active:light-dark(oklch(0.55 0.2 262 / 12%),oklch(0.74 0.16 262 / 22%));
+--vibeui-dashboard-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.76 0.15 262));
 --vibeui-dashboard-002-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -54,7 +69,7 @@ border-bottom:1px solid var(--vibeui-dashboard-002-border);
 [data-vibeui-block="dashboard-002"] [data-part="search"]{
 flex:1 1 auto;min-width:0;height:2rem;padding:0 0.625rem;
 border:1px solid var(--vibeui-dashboard-002-border);border-radius:0.5rem;
-background:var(--vibeui-dashboard-002-bg);color:inherit;font:inherit;font-size:0.8125rem;
+background:var(--vibeui-dashboard-002-field);color:inherit;font:inherit;font-size:0.8125rem;
 }
 [data-vibeui-block="dashboard-002"] [data-part="search"]:focus-visible{outline:2px solid var(--vibeui-dashboard-002-accent);outline-offset:1px}
 [data-vibeui-block="dashboard-002"] [data-part="user"]{
@@ -143,6 +158,28 @@ const DEFAULT_NAV: Dashboard002Props["nav"] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Каркас приложения: шапка, боковая навигация на гриде и область контента.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -152,12 +189,24 @@ export function Dashboard002({
   user = "АР",
   nav = DEFAULT_NAV,
   activeLabel = "Компоненты",
+  searchText = "Поиск по проекту",
+  menuText = "Разделы",
+  navText = "Разделы приложения",
+  hint = "Каркас задаёт только раскладку: содержимое раздела вставляется сюда.",
+  slotText = "Место под таблицу, карточки или форму",
+  background = "",
   accent,
   className,
   style,
 }: Dashboard002Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -177,8 +226,8 @@ export function Dashboard002({
           <input
             data-part="search"
             type="search"
-            placeholder="Поиск по проекту"
-            aria-label="Поиск по проекту"
+            placeholder={searchText}
+            aria-label={searchText}
           />
           <span data-part="user" aria-hidden="true">
             {user}
@@ -190,9 +239,9 @@ export function Dashboard002({
             <details>
               <summary>
                 <span data-part="bars" aria-hidden="true" />
-                Разделы
+                {menuText}
               </summary>
-              <nav data-part="nav" aria-label="Разделы приложения">
+              <nav data-part="nav" aria-label={navText}>
                 {nav?.map((group) => (
                   <div key={group.title ?? group.links[0].label}>
                     {group.title ? (
@@ -221,11 +270,8 @@ export function Dashboard002({
 
           <main data-part="main">
             <h2>{section}</h2>
-            <p data-part="hint">
-              Каркас задаёт только раскладку: содержимое раздела вставляется
-              сюда.
-            </p>
-            <div data-part="slot">Место под таблицу, карточки или форму</div>
+            <p data-part="hint">{hint}</p>
+            <div data-part="slot">{slotText}</div>
           </main>
         </div>
       </section>

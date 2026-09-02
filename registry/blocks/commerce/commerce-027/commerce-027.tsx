@@ -16,6 +16,11 @@ export type Commerce027Item = {
   hue?: number
 }
 
+export type Commerce027Fact = {
+  value: string
+  label: string
+}
+
 export type Commerce027Props = {
   kicker?: string
   headline?: string
@@ -27,7 +32,13 @@ export type Commerce027Props = {
   deals?: Commerce027Deal[]
   gridTitle?: string
   items?: Commerce027Item[]
+  /** Плашки с цифрами акции в баннере. */
+  facts?: Commerce027Fact[]
+  /** Скрытая подпись перед зачёркнутой ценой. */
+  oldPriceLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -41,18 +52,20 @@ export type Commerce027Props = {
 // витрина одинаково собирается и в узкой колонке, и на широком экране.
 const STYLES = `
 :where([data-vibeui-block="commerce-027"]){
---vibeui-commerce-027-bg:oklch(1 0 0);
---vibeui-commerce-027-fg:oklch(0.21 0.014 265);
---vibeui-commerce-027-muted:oklch(0.55 0.014 265);
---vibeui-commerce-027-border:oklch(0.91 0.006 265);
---vibeui-commerce-027-soft:oklch(0.975 0.004 265);
---vibeui-commerce-027-accent:oklch(0.55 0.2 262);
---vibeui-commerce-027-sale:oklch(0.56 0.19 25);
+--vibeui-commerce-027-bg:transparent;
+--vibeui-commerce-027-radius:0;
+--vibeui-commerce-027-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-027-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-027-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-commerce-027-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-commerce-027-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-commerce-027-sale:light-dark(oklch(0.56 0.19 25),oklch(0.63 0.18 25));
 --vibeui-commerce-027-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 [data-vibeui-block="commerce-027"]{
 box-sizing:border-box;background:var(--vibeui-commerce-027-bg);
+border-radius:var(--vibeui-commerce-027-radius);
 color:var(--vibeui-commerce-027-fg);font-family:var(--vibeui-commerce-027-sans);
 }
 [data-vibeui-block="commerce-027"] *{box-sizing:border-box}
@@ -187,6 +200,35 @@ const DEFAULT_ITEMS: Commerce027Item[] = [
   { id: "5", title: "Полка «Полдень»", price: "11 300 ₽", hue: 200 },
 ]
 
+const DEFAULT_FACTS: Commerce027Fact[] = [
+  { value: "−40%", label: "максимальная скидка" },
+  { value: "412", label: "товара в акции" },
+  { value: "0 ₽", label: "доставка от 5 000 ₽" },
+  { value: "14 дней", label: "на возврат без причины" },
+]
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Главная витрины: баннер акции, ряд подборок и сетка товаров.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -202,12 +244,22 @@ export function Commerce027({
   deals = DEFAULT_DEALS,
   gridTitle = "Разбирают на этой неделе",
   items = DEFAULT_ITEMS,
+  facts = DEFAULT_FACTS,
+  oldPriceLabel = "Старая цена ",
   accent,
+  background = "",
   className,
   style,
 }: Commerce027Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-027-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-027-bg": background,
+          "--vibeui-commerce-027-radius": "1.25rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -239,22 +291,12 @@ export function Commerce027({
               <p data-part="deadline">{deadline}</p>
             </div>
             <div data-part="stack" aria-hidden="true">
-              <div data-part="chip">
-                <b>−40%</b>
-                <span>максимальная скидка</span>
-              </div>
-              <div data-part="chip">
-                <b>412</b>
-                <span>товара в акции</span>
-              </div>
-              <div data-part="chip">
-                <b>0 ₽</b>
-                <span>доставка от 5 000 ₽</span>
-              </div>
-              <div data-part="chip">
-                <b>14 дней</b>
-                <span>на возврат без причины</span>
-              </div>
+              {facts.map((fact) => (
+                <div key={fact.label} data-part="chip">
+                  <b>{fact.value}</b>
+                  <span>{fact.label}</span>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -304,7 +346,7 @@ export function Commerce027({
                       <b>{item.price}</b>
                       {item.old ? (
                         <s>
-                          <span data-part="sr">Старая цена </span>
+                          <span data-part="sr">{oldPriceLabel}</span>
                           {item.old}
                         </s>
                       ) : null}

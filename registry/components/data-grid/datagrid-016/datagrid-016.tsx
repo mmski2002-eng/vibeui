@@ -19,6 +19,26 @@ export type Datagrid016Props = Omit<
   rows?: Datagrid016Row[]
   caption?: string
   aggregate?: "sum" | "avg" | "min" | "max"
+  /** Заголовок панели над таблицей. */
+  heading?: string
+  /** Подпись переключателя свёртки. */
+  pickerText?: string
+  /** Названия функций свёртки в списке: компонент несёт русские. */
+  aggregateText?: Record<string, string>
+  /** Названия свёрток в строке итога. */
+  summaryText?: Record<string, string>
+  /** Строка итога. {fold} — название свёртки, {count} — число строк. */
+  summaryTemplate?: string
+  /** Строка итога, когда ничего не отмечено. */
+  emptyText?: string
+  /** Заголовки колонок по ключу: компонент несёт русские. */
+  columnText?: Record<string, string>
+  /** Подпись флажка строки. {campaign} — название кампании. */
+  pickLabel?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,15 +46,18 @@ export type Datagrid016Props = Omit<
 // строкам, и функцию свёртки выбирает читатель — сумма, среднее, минимум
 // или максимум. Строка итога живёт в tfoot и меняет подпись вместе с
 // выбранной функцией: «Итого» под средним значением врало бы.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-016"]){
---vibeui-datagrid-016-bg:oklch(1 0 0);
---vibeui-datagrid-016-fg:oklch(0.23 0.014 285);
---vibeui-datagrid-016-muted:oklch(0.55 0.014 285);
---vibeui-datagrid-016-border:oklch(0.92 0.006 285);
---vibeui-datagrid-016-head:oklch(0.975 0.003 285);
---vibeui-datagrid-016-accent:oklch(0.5 0.15 160);
---vibeui-datagrid-016-pick:oklch(0.97 0.03 160);
+--vibeui-datagrid-016-bg:transparent;
+--vibeui-datagrid-016-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-016-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-016-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
+--vibeui-datagrid-016-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
+--vibeui-datagrid-016-accent:light-dark(oklch(0.5 0.15 160),oklch(0.78 0.13 160));
+--vibeui-datagrid-016-pick:light-dark(oklch(0.97 0.03 160),oklch(0.3 0.04 160));
 --vibeui-datagrid-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-016"]{
@@ -55,7 +78,7 @@ display:inline-flex;align-items:center;gap:0.375rem;font-size:0.75rem;color:var(
 [data-vibeui-block="datagrid-016"] select{
 font:inherit;font-size:0.75rem;color:inherit;padding:0.25rem 0.4375rem;
 border:1px solid var(--vibeui-datagrid-016-border);border-radius:0.4375rem;
-background:var(--vibeui-datagrid-016-bg);
+background:transparent;
 }
 [data-vibeui-block="datagrid-016"] select:focus-visible{outline:2px solid var(--vibeui-datagrid-016-accent);outline-offset:1px}
 [data-vibeui-block="datagrid-016"] [data-part="scroll"]{overflow-x:auto}
@@ -132,14 +155,34 @@ const DEFAULT_ROWS: Datagrid016Row[] = [
   },
 ]
 
-const AGGREGATES = {
-  sum: { label: "Сумма", short: "Сумма по выделенным" },
-  avg: { label: "Среднее", short: "Среднее по выделенным" },
-  min: { label: "Минимум", short: "Минимум по выделенным" },
-  max: { label: "Максимум", short: "Максимум по выделенным" },
-} as const
+const AGGREGATES = ["sum", "avg", "min", "max"] as const
 
-function fold(values: number[], mode: keyof typeof AGGREGATES) {
+type Aggregate = (typeof AGGREGATES)[number]
+
+const AGGREGATE_TEXT: Record<string, string> = {
+  sum: "Сумма",
+  avg: "Среднее",
+  min: "Минимум",
+  max: "Максимум",
+}
+
+const SUMMARY_TEXT: Record<string, string> = {
+  sum: "Сумма по выделенным",
+  avg: "Среднее по выделенным",
+  min: "Минимум по выделенным",
+  max: "Максимум по выделенным",
+}
+
+const COLUMN_TEXT: Record<string, string> = {
+  check: "Выбор",
+  campaign: "Кампания",
+  channel: "Канал",
+  spend: "Расход, ₽",
+  leads: "Лидов",
+  cpl: "Цена лида, ₽",
+}
+
+function fold(values: number[], mode: Aggregate) {
   if (values.length === 0) {
     return 0
   }
@@ -156,6 +199,28 @@ function fold(values: number[], mode: keyof typeof AGGREGATES) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сетка со строкой-итогом по выделенным строкам: функция свёртки
  * переключается на месте. Один файл, ноль зависимостей.
  */
@@ -163,13 +228,33 @@ export function Datagrid016({
   rows = DEFAULT_ROWS,
   caption = "Итог в подвале считается только по отмеченным строкам",
   aggregate = "sum",
+  heading = "Кампании квартала",
+  pickerText = "Свёртка",
+  aggregateText = AGGREGATE_TEXT,
+  summaryText = SUMMARY_TEXT,
+  summaryTemplate = "{fold}: {count}",
+  emptyText = "Ни одна строка не отмечена — итог пуст",
+  columnText = COLUMN_TEXT,
+  pickLabel = "Учитывать кампанию «{campaign}» в итоге",
+  scrollLabel = "Таблица кампаний, прокручивается вбок",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Datagrid016Props) {
   const [picked, setPicked] = useState<string[]>(["c1", "c2"])
-  const [mode, setMode] = useState<keyof typeof AGGREGATES>(aggregate)
+  // Выбор читателя живёт рядом с пропом, а не вместо него: смена aggregate
+  // снаружи обязана переставить свёртку, иначе проп работал бы один раз.
+  const [chosen, setChosen] = useState<Aggregate | null>(null)
+  const [source, setSource] = useState<Aggregate>(aggregate)
+
+  if (source !== aggregate) {
+    setSource(aggregate)
+    setChosen(null)
+  }
+
+  const mode = chosen ?? aggregate
 
   const selected = rows.filter((row) => picked.includes(row.id))
   const spend = fold(
@@ -187,6 +272,12 @@ export function Datagrid016({
 
   const palette = {
     ...(accent ? { "--vibeui-datagrid-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -202,18 +293,16 @@ export function Datagrid016({
         style={palette}
       >
         <div data-part="bar">
-          <h3 data-part="title">Кампании квартала</h3>
+          <h3 data-part="title">{heading}</h3>
           <label data-part="pickerLabel">
-            Свёртка
+            {pickerText}
             <select
               value={mode}
-              onChange={(event) =>
-                setMode(event.target.value as keyof typeof AGGREGATES)
-              }
+              onChange={(event) => setChosen(event.target.value as Aggregate)}
             >
-              {Object.entries(AGGREGATES).map(([value, item]) => (
+              {AGGREGATES.map((value) => (
                 <option key={value} value={value}>
-                  {item.label}
+                  {aggregateText[value] ?? AGGREGATE_TEXT[value]}
                 </option>
               ))}
             </select>
@@ -222,7 +311,7 @@ export function Datagrid016({
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица кампаний, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
@@ -230,18 +319,20 @@ export function Datagrid016({
             <thead>
               <tr>
                 <th scope="col" data-part="check">
-                  <span hidden>Выбор</span>
+                  <span hidden>{columnText.check ?? COLUMN_TEXT.check}</span>
                 </th>
-                <th scope="col">Кампания</th>
-                <th scope="col">Канал</th>
+                <th scope="col">
+                  {columnText.campaign ?? COLUMN_TEXT.campaign}
+                </th>
+                <th scope="col">{columnText.channel ?? COLUMN_TEXT.channel}</th>
                 <th scope="col" data-align="end">
-                  Расход, ₽
+                  {columnText.spend ?? COLUMN_TEXT.spend}
                 </th>
                 <th scope="col" data-align="end">
-                  Лидов
+                  {columnText.leads ?? COLUMN_TEXT.leads}
                 </th>
                 <th scope="col" data-align="end">
-                  Цена лида, ₽
+                  {columnText.cpl ?? COLUMN_TEXT.cpl}
                 </th>
               </tr>
             </thead>
@@ -255,7 +346,10 @@ export function Datagrid016({
                       <input
                         type="checkbox"
                         checked={on}
-                        aria-label={`Учитывать кампанию «${row.campaign}» в итоге`}
+                        aria-label={pickLabel.replace(
+                          "{campaign}",
+                          row.campaign,
+                        )}
                         onChange={() =>
                           setPicked((current) =>
                             current.includes(row.id)
@@ -283,11 +377,14 @@ export function Datagrid016({
                 <td data-part="check" />
                 <th scope="row" colSpan={2} aria-live="polite">
                   {selected.length === 0 ? (
-                    <span data-part="none">
-                      Ни одна строка не отмечена — итог пуст
-                    </span>
+                    <span data-part="none">{emptyText}</span>
                   ) : (
-                    `${AGGREGATES[mode].short}: ${selected.length}`
+                    summaryTemplate
+                      .replace(
+                        "{fold}",
+                        summaryText[mode] ?? SUMMARY_TEXT[mode],
+                      )
+                      .replace("{count}", String(selected.length))
                   )}
                 </th>
                 <td data-align="end">

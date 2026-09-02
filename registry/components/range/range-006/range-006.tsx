@@ -14,6 +14,20 @@ export type Range006Props = Omit<
   defaultFrom?: number
   defaultTo?: number
   unit?: string
+  /** Подписи ручек для скринридера: компонент несёт русские. */
+  boundText?: Record<string, string>
+  /** Левая плашка; {value} — число, {unit} — единица. */
+  fromText?: string
+  /** Правая плашка на закрытом верхе; {value} и {unit}. */
+  toText?: string
+  /** Правая плашка на открытом верхе; {value} и {unit}. */
+  openText?: string
+  /** Пояснение под шкалой на открытом верхе. */
+  openNote?: string
+  /** Пояснение под шкалой на закрытом верхе; {step} и {unit}. */
+  stepNote?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,20 +37,25 @@ export type Range006Props = Omit<
 // чём написано словами и сказано через aria-valuetext. Единица подписана у
 // каждого края, а не один раз в заголовке: числа на дорожке читают отдельно от
 // подписи, и «40 — 120» без «м²» превращается в загадку.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// фильтра по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="range-006"]){
---vibeui-range-006-surface:oklch(1 0 0);
---vibeui-range-006-shell:oklch(0.9 0.006 265);
---vibeui-range-006-fg:oklch(0.23 0.014 265);
---vibeui-range-006-muted:oklch(0.55 0.014 265);
---vibeui-range-006-track:oklch(0.93 0.006 265);
---vibeui-range-006-accent:oklch(0.52 0.14 180);
---vibeui-range-006-soft:oklch(0.52 0.14 180 / 12%);
+--vibeui-range-006-surface:transparent;
+--vibeui-range-006-knob:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-range-006-shell:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.011 265));
+--vibeui-range-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-range-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-range-006-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
+--vibeui-range-006-accent:light-dark(oklch(0.52 0.14 180),oklch(0.79 0.11 180));
+--vibeui-range-006-soft:light-dark(oklch(0.52 0.14 180 / 12%),oklch(0.79 0.11 180 / 20%));
+--vibeui-range-006-shadow:light-dark(oklch(0.2 0.02 265 / 25%),oklch(0 0 0 / 45%));
 --vibeui-range-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-range-006-from:0%;
 --vibeui-range-006-to:100%;
 }
-/* Своя светлая подложка: фильтр показывают поверх любого фона. */
+/* Подложки по умолчанию нет: фильтр ложится на фон страницы, плашку включает проп background. */
 [data-vibeui-block="range-006"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
@@ -74,13 +93,13 @@ appearance:none;background:none;pointer-events:none;
 [data-vibeui-block="range-006"] input::-webkit-slider-thumb{
 appearance:none;pointer-events:auto;cursor:pointer;margin-top:-0.3125rem;
 width:1rem;height:1rem;border-radius:9999px;
-background:var(--vibeui-range-006-surface);border:2px solid var(--vibeui-range-006-accent);
-box-shadow:0 1px 3px oklch(0.2 0.02 265 / 25%);
+background:var(--vibeui-range-006-knob);border:2px solid var(--vibeui-range-006-accent);
+box-shadow:0 1px 3px var(--vibeui-range-006-shadow);
 }
 [data-vibeui-block="range-006"] input::-moz-range-thumb{
 pointer-events:auto;cursor:pointer;box-sizing:border-box;
 width:1rem;height:1rem;border-radius:9999px;
-background:var(--vibeui-range-006-surface);border:2px solid var(--vibeui-range-006-accent);
+background:var(--vibeui-range-006-knob);border:2px solid var(--vibeui-range-006-accent);
 }
 [data-vibeui-block="range-006"] input:focus-visible{outline:2px solid var(--vibeui-range-006-accent);outline-offset:4px;border-radius:0.5rem}
 [data-vibeui-block="range-006"] [data-part="note"]{
@@ -88,6 +107,43 @@ margin:0;font-size:0.6875rem;line-height:1.4;color:var(--vibeui-range-006-muted)
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="range-006"] *{animation:none!important;transition:none!important}}
 `
+
+const BOUND_TEXT: Record<string, string> = { from: "от", to: "до" }
+const FROM_TEXT = "от {value} {unit}"
+const TO_TEXT = "{value} {unit}"
+const OPEN_TEXT = "{value} {unit} и больше"
+const OPEN_NOTE =
+  "Верхняя граница снята: в выдачу попадут и самые большие дома."
+const STEP_NOTE =
+  "Шаг {step} {unit}. Доведите правую ручку до края, чтобы снять верхнюю границу."
+
+function fill(template: string, values: Record<string, string | number>) {
+  return template.replace(/\{(\w+)\}/g, (match, key) =>
+    values[key] === undefined ? match : String(values[key]),
+  )
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Диапазон площади с единицами и открытым верхом: максимум значит «и больше».
@@ -101,6 +157,13 @@ export function Range006({
   defaultFrom = 40,
   defaultTo = 120,
   unit = "м²",
+  boundText = BOUND_TEXT,
+  fromText = FROM_TEXT,
+  toText = TO_TEXT,
+  openText = OPEN_TEXT,
+  openNote = OPEN_NOTE,
+  stepNote = STEP_NOTE,
+  background = "",
   accent,
   className,
   style,
@@ -111,12 +174,20 @@ export function Range006({
   const percent = (value: number) => `${((value - min) / (max - min)) * 100}%`
   // Верх шкалы означает «и больше»: иначе фильтр тихо отсекает крупные дома.
   const openEnded = to >= max
-  const topText = openEnded ? `${max} ${unit} и больше` : `${to} ${unit}`
+  const topText = openEnded
+    ? fill(openText, { value: max, unit })
+    : fill(toText, { value: to, unit })
 
   const palette = {
     "--vibeui-range-006-from": percent(from),
     "--vibeui-range-006-to": percent(to),
     ...(accent ? { "--vibeui-range-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-range-006-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -133,9 +204,7 @@ export function Range006({
       >
         <p data-part="label">{label}</p>
         <p data-part="values" aria-live="polite">
-          <span data-part="chip">
-            от {from} {unit}
-          </span>
+          <span data-part="chip">{fill(fromText, { value: from, unit })}</span>
           <span data-part="dash" aria-hidden="true" />
           <span data-part="chip">{topText}</span>
         </p>
@@ -146,8 +215,8 @@ export function Range006({
             max={max}
             step={step}
             value={from}
-            aria-label={`${label}: от`}
-            aria-valuetext={`от ${from} ${unit}`}
+            aria-label={`${label}: ${boundText.from ?? BOUND_TEXT.from}`}
+            aria-valuetext={fill(fromText, { value: from, unit })}
             onChange={(event) =>
               setFrom(Math.min(Number(event.target.value), to - step))
             }
@@ -158,7 +227,7 @@ export function Range006({
             max={max}
             step={step}
             value={to}
-            aria-label={`${label}: до`}
+            aria-label={`${label}: ${boundText.to ?? BOUND_TEXT.to}`}
             aria-valuetext={topText}
             onChange={(event) =>
               setTo(Math.max(Number(event.target.value), from + step))
@@ -166,9 +235,7 @@ export function Range006({
           />
         </div>
         <p data-part="note">
-          {openEnded
-            ? "Верхняя граница снята: в выдачу попадут и самые большие дома."
-            : `Шаг ${step} ${unit}. Доведите правую ручку до края, чтобы снять верхнюю границу.`}
+          {openEnded ? openNote : fill(stepNote, { step, unit })}
         </p>
       </div>
     </>

@@ -8,6 +8,8 @@ export type Icontile007Props = Omit<
   title?: string
   description?: string
   tone?: "neutral" | "accent" | "success" | "warning" | "danger"
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: подпись и описание живут в одну строку рядом с плиткой,
@@ -21,10 +23,12 @@ container-type:inline-size;
 --vibeui-icontile-007-hue:262;
 --vibeui-icontile-007-chroma:0.05;
 --vibeui-icontile-007-size:2.75rem;
---vibeui-icontile-007-fg:oklch(0.26 0.014 265);
---vibeui-icontile-007-muted:oklch(0.52 0.014 265);
---vibeui-icontile-007-border:oklch(0.9 0.006 265);
---vibeui-icontile-007-surface:oklch(1 0 0);
+--vibeui-icontile-007-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.006 265));
+--vibeui-icontile-007-muted:light-dark(oklch(0.52 0.014 265),oklch(0.71 0.012 265));
+--vibeui-icontile-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.008 265));
+--vibeui-icontile-007-surface:transparent;
+--vibeui-icontile-007-fill:light-dark(oklch(0.93 var(--vibeui-icontile-007-chroma) var(--vibeui-icontile-007-hue)),oklch(0.34 calc(var(--vibeui-icontile-007-chroma) * 1.2) var(--vibeui-icontile-007-hue)));
+--vibeui-icontile-007-mark:light-dark(oklch(0.44 calc(var(--vibeui-icontile-007-chroma) * 4) var(--vibeui-icontile-007-hue)),oklch(0.87 calc(var(--vibeui-icontile-007-chroma) * 2.2) var(--vibeui-icontile-007-hue)));
 --vibeui-icontile-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="icontile-007"]{
@@ -38,8 +42,8 @@ font-family:var(--vibeui-icontile-007-font);
 display:grid;place-items:center;flex:none;
 width:var(--vibeui-icontile-007-size);height:var(--vibeui-icontile-007-size);
 border-radius:0.75rem;
-background:oklch(0.93 var(--vibeui-icontile-007-chroma) var(--vibeui-icontile-007-hue));
-color:oklch(0.44 calc(var(--vibeui-icontile-007-chroma) * 4) var(--vibeui-icontile-007-hue));
+background:var(--vibeui-icontile-007-fill);
+color:var(--vibeui-icontile-007-mark);
 }
 [data-vibeui-block="icontile-007"] [data-part="tile"] svg{width:52%;height:52%}
 [data-vibeui-block="icontile-007"] [data-part="text"]{
@@ -102,6 +106,28 @@ function Icontile007Icon({
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Плитка с подписью и описанием в одну строку: описание обрезается
  * многоточием, а на узком контейнере прячется совсем.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -111,10 +137,21 @@ export function Icontile007({
   title = "Быстрый старт",
   description = "Установите пакет и подключите провайдер темы за одну команду",
   tone = "accent",
+  background = "",
   className,
   style,
   ...props
 }: Icontile007Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-icontile-007-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-icontile-007" precedence="medium">
@@ -125,7 +162,7 @@ export function Icontile007({
         data-vibeui-block="icontile-007"
         data-tone={tone}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="tile">
           <Icontile007Icon icon={icon} />

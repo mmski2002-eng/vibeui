@@ -14,6 +14,8 @@ export type Blog003Props = {
   href?: string
   coverLabel?: string
   hue?: number
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -32,12 +34,16 @@ export type Blog003Props = {
 // ссылки остаётся заголовком: «читать далее» в списке ссылок бесполезно.
 const STYLES = `
 :where([data-vibeui-block="blog-003"]){
---vibeui-blog-003-bg:oklch(0.99 0.002 265);
---vibeui-blog-003-card:oklch(1 0 0);
---vibeui-blog-003-fg:oklch(0.2 0.014 265);
---vibeui-blog-003-muted:oklch(0.51 0.014 265);
---vibeui-blog-003-border:oklch(0.91 0.006 265);
---vibeui-blog-003-accent:oklch(0.52 0.18 300);
+--vibeui-blog-003-bg:transparent;
+--vibeui-blog-003-card:light-dark(oklch(1 0 0),oklch(0.245 0.014 300));
+--vibeui-blog-003-fg:light-dark(oklch(0.2 0.014 265),oklch(0.95 0.005 265));
+--vibeui-blog-003-muted:light-dark(oklch(0.51 0.014 265),oklch(0.72 0.012 265));
+--vibeui-blog-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.014 300));
+--vibeui-blog-003-accent:light-dark(oklch(0.52 0.18 300),oklch(0.76 0.15 300));
+--vibeui-blog-003-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.035 300));
+/* Плашка лежит на цветной обложке, а не на фоне блока: у неё своя пара. */
+--vibeui-blog-003-chip:light-dark(oklch(1 0 0 / 88%),oklch(0.22 0.02 300 / 88%));
+--vibeui-blog-003-chip-fg:light-dark(oklch(0.2 0.014 265),oklch(0.95 0.005 265));
 --vibeui-blog-003-serif:ui-serif,Georgia,"Times New Roman",serif;
 --vibeui-blog-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -68,14 +74,14 @@ radial-gradient(70% 70% at 85% 90%,oklch(0 0 0 / 22%),transparent 70%);
 [data-vibeui-block="blog-003"] [data-part="cover-label"]{
 position:relative;z-index:1;
 padding:0.25rem 0.625rem;border-radius:9999px;
-background:oklch(1 0 0 / 88%);color:var(--vibeui-blog-003-fg);
+background:var(--vibeui-blog-003-chip);color:var(--vibeui-blog-003-chip-fg);
 font-size:0.6875rem;font-weight:660;letter-spacing:0.03em;
 }
 [data-vibeui-block="blog-003"] [data-part="body"]{display:grid;gap:0.75rem;align-content:center;padding:1.375rem 1.25rem 1.5rem}
 [data-vibeui-block="blog-003"] [data-part="tags"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.4375rem}
 [data-vibeui-block="blog-003"] [data-part="badge"]{
 padding:0.1875rem 0.5625rem;border-radius:9999px;
-background:var(--vibeui-blog-003-accent);color:oklch(1 0 0);
+background:var(--vibeui-blog-003-accent);color:var(--vibeui-blog-003-on-accent);
 font-size:0.625rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;
 }
 [data-vibeui-block="blog-003"] [data-part="topic"]{
@@ -117,7 +123,7 @@ font-size:0.75rem;font-variant-numeric:tabular-nums;
 [data-vibeui-block="blog-003"] [data-part="cta"]{
 justify-self:start;display:inline-flex;align-items:center;gap:0.4375rem;
 height:2.5rem;padding:0 1.125rem;border-radius:0.75rem;
-background:var(--vibeui-blog-003-accent);color:oklch(1 0 0);
+background:var(--vibeui-blog-003-accent);color:var(--vibeui-blog-003-on-accent);
 font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="blog-003"] [data-part="arrow"]{
@@ -133,6 +139,28 @@ transform:rotate(45deg);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="blog-003"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Крупный анонс статьи: обложка-градиент, автор, время чтения и объём.
@@ -152,12 +180,19 @@ export function Blog003({
   href = "#",
   coverLabel = "Выпуск №14",
   hue = 300,
+  background = "",
   accent,
   className,
   style,
 }: Blog003Props) {
   const palette = {
     ...(accent ? { "--vibeui-blog-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-blog-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

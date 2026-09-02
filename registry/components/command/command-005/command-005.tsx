@@ -19,6 +19,20 @@ export type Command005Props = Omit<
 > & {
   items?: Command005Result[]
   placeholder?: string
+  /** Подписи типов: ключ остаётся машинным, меняется только видимый текст. */
+  kindText?: Record<string, string>
+  /** Заголовок группы; {kind} — тип, {count} — число строк. */
+  groupText?: string
+  /** Подвал; {found} — найдено, {total} — всего. */
+  footText?: string
+  /** Имя панели для скринридера. */
+  label?: string
+  /** Имя списка результатов для скринридера. */
+  listLabel?: string
+  /** Ответ, когда ничего не нашлось. */
+  emptyText?: string
+  /** Подложка панели. Пусто — цвет по умолчанию из палитры. */
+  background?: string
   accent?: string
 }
 
@@ -27,13 +41,17 @@ export type Command005Props = Omit<
 // каждой строки есть значок-квадрат с типом и приглушённая вторая строка с
 // путём или контекстом. Группировка идёт по типу и считается из данных, а не
 // задаётся руками: добавили новый тип — появилась новая группа.
+//
+// Тема берётся из color-scheme окружения через light-dark(): у значков типов
+// своя пара светлот в каждой ветке, чтобы буква читалась на своей заливке.
 const STYLES = `
 :where([data-vibeui-block="command-005"]){
---vibeui-command-005-bg:oklch(1 0 0);
---vibeui-command-005-fg:oklch(0.23 0.014 265);
---vibeui-command-005-muted:oklch(0.57 0.014 265);
---vibeui-command-005-border:oklch(0.9 0.006 265);
---vibeui-command-005-accent:oklch(0.55 0.19 262);
+--vibeui-command-005-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-command-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-command-005-muted:light-dark(oklch(0.57 0.014 265),oklch(0.68 0.012 265));
+--vibeui-command-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-command-005-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.15 262));
+--vibeui-command-005-shadow:light-dark(oklch(0.2 0.03 265 / 60%),oklch(0.04 0.015 265 / 70%));
 --vibeui-command-005-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-command-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -41,7 +59,7 @@ const STYLES = `
 display:block;box-sizing:border-box;width:100%;max-width:25rem;overflow:hidden;
 background:var(--vibeui-command-005-bg);color:var(--vibeui-command-005-fg);
 border:1px solid var(--vibeui-command-005-border);border-radius:0.875rem;
-box-shadow:0 18px 40px -28px oklch(0.2 0.03 265 / 60%);
+box-shadow:0 18px 40px -28px var(--vibeui-command-005-shadow);
 font-family:var(--vibeui-command-005-font);
 }
 [data-vibeui-block="command-005"] input{
@@ -75,9 +93,9 @@ background:color-mix(in oklab,var(--vibeui-command-005-accent) 14%,transparent);
 color:var(--vibeui-command-005-accent);
 font-size:0.6875rem;font-weight:800;
 }
-[data-vibeui-block="command-005"] [data-part="row"][data-kind="Настройка"] [data-part="kind"]{background:oklch(0.62 0.16 55 / 18%);color:oklch(0.52 0.16 55)}
-[data-vibeui-block="command-005"] [data-part="row"][data-kind="Символ"] [data-part="kind"]{background:oklch(0.55 0.2 300 / 16%);color:oklch(0.5 0.2 300)}
-[data-vibeui-block="command-005"] [data-part="row"][data-kind="Документ"] [data-part="kind"]{background:oklch(0.56 0.15 165 / 18%);color:oklch(0.46 0.13 165)}
+[data-vibeui-block="command-005"] [data-part="row"][data-kind="Настройка"] [data-part="kind"]{background:light-dark(oklch(0.62 0.16 55 / 18%),oklch(0.72 0.15 55 / 26%));color:light-dark(oklch(0.52 0.16 55),oklch(0.82 0.12 55))}
+[data-vibeui-block="command-005"] [data-part="row"][data-kind="Символ"] [data-part="kind"]{background:light-dark(oklch(0.55 0.2 300 / 16%),oklch(0.7 0.17 300 / 26%));color:light-dark(oklch(0.5 0.2 300),oklch(0.81 0.13 300))}
+[data-vibeui-block="command-005"] [data-part="row"][data-kind="Документ"] [data-part="kind"]{background:light-dark(oklch(0.56 0.15 165 / 18%),oklch(0.7 0.13 165 / 26%));color:light-dark(oklch(0.46 0.13 165),oklch(0.8 0.11 165))}
 [data-vibeui-block="command-005"] [data-part="text"]{display:flex;flex-direction:column;min-width:0}
 [data-vibeui-block="command-005"] [data-part="label"]{font-size:0.875rem;line-height:1.25}
 [data-vibeui-block="command-005"] [data-part="detail"]{
@@ -121,6 +139,35 @@ const DEFAULT_RESULTS: Command005Result[] = [
   { label: "Конвейер сборки", kind: "Документ", detail: "docs/PIPELINE.md" },
 ]
 
+const KIND_LABEL: Record<string, string> = {
+  Файл: "Файл",
+  Символ: "Символ",
+  Настройка: "Настройка",
+  Документ: "Документ",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Поиск по проекту: файлы, символы, настройки и документы в одном списке,
  * группировка по типу. Один файл, ноль зависимостей.
@@ -128,6 +175,13 @@ const DEFAULT_RESULTS: Command005Result[] = [
 export function Command005({
   items = DEFAULT_RESULTS,
   placeholder = "Поиск по проекту…",
+  kindText = KIND_LABEL,
+  groupText = "{kind} · {count}",
+  footText = "Найдено {found} из {total}",
+  label = "Поиск по проекту",
+  listLabel = "Результаты",
+  emptyText = "По запросу ничего не найдено.",
+  background = "",
   accent,
   className,
   style,
@@ -174,6 +228,12 @@ export function Command005({
 
   const paletteStyle = {
     ...(accent ? { "--vibeui-command-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-command-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -188,7 +248,7 @@ export function Command005({
         className={className}
         style={paletteStyle}
         role="dialog"
-        aria-label="Поиск по проекту"
+        aria-label={label}
       >
         <input
           type="text"
@@ -209,20 +269,26 @@ export function Command005({
           onKeyDown={onKeyDown}
         />
         {ordered.length === 0 ? (
-          <p data-part="empty">По запросу ничего не найдено.</p>
+          <p data-part="empty">{emptyText}</p>
         ) : (
           <ul
             id={listId}
             data-part="list"
             role="listbox"
-            aria-label="Результаты"
+            aria-label={listLabel}
           >
             {Object.entries(groups).map(([kind, rows]) => (
               <li key={kind} role="presentation">
                 <p data-part="group">
-                  {kind} · {rows.length}
+                  {groupText
+                    .replace("{kind}", kindText[kind] ?? kind)
+                    .replace("{count}", String(rows.length))}
                 </p>
-                <ul data-part="list" role="group" aria-label={kind}>
+                <ul
+                  data-part="list"
+                  role="group"
+                  aria-label={kindText[kind] ?? kind}
+                >
                   {rows.map((result) => (
                     <li
                       key={`${result.kind}-${result.label}`}
@@ -234,7 +300,7 @@ export function Command005({
                       onClick={() => setActive(ordered.indexOf(result))}
                     >
                       <span data-part="kind" aria-hidden="true">
-                        {result.kind.charAt(0)}
+                        {(kindText[result.kind] ?? result.kind).charAt(0)}
                       </span>
                       <span data-part="text">
                         <span data-part="label">{result.label}</span>
@@ -248,7 +314,9 @@ export function Command005({
           </ul>
         )}
         <p data-part="foot">
-          Найдено {ordered.length} из {items.length}
+          {footText
+            .replace("{found}", String(ordered.length))
+            .replace("{total}", String(items.length))}
         </p>
       </div>
     </>

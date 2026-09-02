@@ -9,6 +9,10 @@ export type Cascader003Props = {
   id?: string
   heading?: string
   tree?: Cascader003Node[]
+  /** Шаблон aria-подписи кнопки ветки: {label}. */
+  branchText?: string
+  /** Пусто — подложки нет, меню лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -35,11 +39,12 @@ const ANCHORS = Array.from(
 // второго, поэтому браузер считает панели вложенными и не гасит родителя.
 const STYLES = `
 :where([data-vibeui-block="cascader-003"]){
---vibeui-cascader-003-bg:oklch(1 0 0);
---vibeui-cascader-003-fg:oklch(0.23 0.015 285);
---vibeui-cascader-003-muted:oklch(0.55 0.014 285);
---vibeui-cascader-003-border:oklch(0.9 0.006 285);
---vibeui-cascader-003-accent:oklch(0.56 0.17 300);
+--vibeui-cascader-003-bg:transparent;
+--vibeui-cascader-003-surface:light-dark(oklch(1 0 0),oklch(0.26 0.014 285));
+--vibeui-cascader-003-fg:light-dark(oklch(0.23 0.015 285),oklch(0.94 0.006 285));
+--vibeui-cascader-003-muted:light-dark(oklch(0.55 0.014 285),oklch(0.71 0.012 285));
+--vibeui-cascader-003-border:light-dark(oklch(0.9 0.006 285),oklch(0.38 0.012 285));
+--vibeui-cascader-003-accent:light-dark(oklch(0.56 0.17 300),oklch(0.76 0.14 300));
 --vibeui-cascader-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="cascader-003"]{
@@ -95,7 +100,7 @@ background:color-mix(in oklab,var(--vibeui-cascader-003-accent) 55%,transparent)
 position:fixed;inset:auto;top:50%;left:50%;translate:-50% -50%;
 margin:0;padding:0.3125rem;min-width:11rem;max-width:14rem;list-style:none;
 border:1px solid var(--vibeui-cascader-003-border);border-radius:0.75rem;
-background:var(--vibeui-cascader-003-bg);color:var(--vibeui-cascader-003-fg);
+background:var(--vibeui-cascader-003-surface);color:var(--vibeui-cascader-003-fg);
 box-shadow:0 20px 44px -22px oklch(0.2 0.03 285 / 50%);
 opacity:0;
 transition:opacity .14s ease,display .14s allow-discrete,overlay .14s allow-discrete;
@@ -117,6 +122,28 @@ ${ANCHORS}
 [data-vibeui-block="cascader-003"] [data-part="flyout"]{transition:none!important}
 }
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_TREE: Cascader003Node[] = [
   {
@@ -166,6 +193,8 @@ export function Cascader003({
   id = "vibeui-cascader-003",
   heading = "Настройки рабочего пространства",
   tree = DEFAULT_TREE,
+  branchText = "{label}: открыть вложенный список",
+  background = "",
   accent,
   className,
   style,
@@ -196,7 +225,7 @@ export function Cascader003({
             data-anchor={slot}
             type="button"
             popoverTarget={key}
-            aria-label={`${node.label}: открыть вложенный список`}
+            aria-label={branchText.replace("{label}", node.label)}
           >
             <span>{node.label}</span>
             <i data-part="chevron" aria-hidden="true" />
@@ -216,6 +245,12 @@ export function Cascader003({
 
   const palette = {
     ...(accent ? { "--vibeui-cascader-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cascader-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

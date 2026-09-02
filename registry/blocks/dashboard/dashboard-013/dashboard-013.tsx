@@ -12,7 +12,10 @@ export type Dashboard013Props = {
   primary?: string
   secondary?: string
   closeLabel?: string
+  historyLabel?: string
   accent?: string
+  /** Подложка панели; пусто — цвет из палитры блока. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -28,11 +31,14 @@ export type Dashboard013Props = {
 // неё добираются раньше содержимого.
 const STYLES = `
 :where([data-vibeui-block="dashboard-013"]){
---vibeui-dashboard-013-bg:oklch(1 0 0);
---vibeui-dashboard-013-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-013-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-013-border:oklch(0.91 0.006 265);
---vibeui-dashboard-013-accent:oklch(0.55 0.2 262);
+--vibeui-dashboard-013-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
+--vibeui-dashboard-013-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-013-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-dashboard-013-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-dashboard-013-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.15 262));
+--vibeui-dashboard-013-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-dashboard-013-scrim:light-dark(oklch(0.2 0.02 265 / 40%),oklch(0.1 0.015 265 / 62%));
+--vibeui-dashboard-013-shadow:light-dark(oklch(0.2 0.03 265 / 45%),oklch(0.04 0.01 265 / 72%));
 --vibeui-dashboard-013-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="dashboard-013"]{
@@ -43,7 +49,7 @@ font-family:var(--vibeui-dashboard-013-sans);color:var(--vibeui-dashboard-013-fg
 [data-vibeui-block="dashboard-013"] [data-part="open"]{
 appearance:none;cursor:pointer;height:2.25rem;padding:0 0.875rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-dashboard-013-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-013-accent);color:var(--vibeui-dashboard-013-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="dashboard-013"] [data-part="open"]:focus-visible{outline:2px solid var(--vibeui-dashboard-013-accent);outline-offset:2px}
@@ -52,13 +58,13 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 width:min(22rem,100vw);max-width:none;height:100dvh;max-height:none;
 margin:0 0 0 auto;padding:0;border:0;
 background:var(--vibeui-dashboard-013-bg);color:var(--vibeui-dashboard-013-fg);
-box-shadow:-24px 0 60px -30px oklch(0.2 0.03 265 / 45%);
+box-shadow:-24px 0 60px -30px var(--vibeui-dashboard-013-shadow);
 opacity:0;translate:1.5rem 0;
 transition:opacity .18s ease,translate .18s ease,display .18s allow-discrete,overlay .18s allow-discrete;
 }
 [data-vibeui-block="dashboard-013"] dialog[open]{opacity:1;translate:0 0}
 @starting-style{[data-vibeui-block="dashboard-013"] dialog[open]{opacity:0;translate:1.5rem 0}}
-[data-vibeui-block="dashboard-013"] dialog::backdrop{background:oklch(0.2 0.02 265 / 40%)}
+[data-vibeui-block="dashboard-013"] dialog::backdrop{background:var(--vibeui-dashboard-013-scrim)}
 [data-vibeui-block="dashboard-013"] [data-part="panel"]{display:flex;flex-direction:column;height:100%}
 [data-vibeui-block="dashboard-013"] [data-part="head"]{
 display:flex;align-items:flex-start;gap:0.75rem;
@@ -93,7 +99,7 @@ border-top:1px solid var(--vibeui-dashboard-013-border);
 flex:1 1 0;appearance:none;cursor:pointer;height:2.25rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="dashboard-013"] [data-part="primary"]{border:0;background:var(--vibeui-dashboard-013-accent);color:oklch(1 0 0)}
+[data-vibeui-block="dashboard-013"] [data-part="primary"]{border:0;background:var(--vibeui-dashboard-013-accent);color:var(--vibeui-dashboard-013-on-accent)}
 [data-vibeui-block="dashboard-013"] [data-part="secondary"]{
 border:1px solid var(--vibeui-dashboard-013-border);background:none;color:inherit;
 }
@@ -117,6 +123,28 @@ const DEFAULT_EVENTS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Панель подробностей справа на нативном dialog: фокус и Escape от браузера.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -129,7 +157,9 @@ export function Dashboard013({
   primary = "Отправить повторно",
   secondary = "Скачать PDF",
   closeLabel = "Закрыть",
+  historyLabel = "История",
   accent,
+  background = "",
   className,
   style,
 }: Dashboard013Props) {
@@ -137,6 +167,12 @@ export function Dashboard013({
 
   const palette = {
     ...(accent ? { "--vibeui-dashboard-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -184,7 +220,7 @@ export function Dashboard013({
                   </div>
                 ))}
               </dl>
-              <h3>История</h3>
+              <h3>{historyLabel}</h3>
               <ul>
                 {events.map((event) => (
                   <li key={event.time}>

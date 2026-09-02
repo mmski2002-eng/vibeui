@@ -18,7 +18,11 @@ export type Ai012Props = {
   files?: Ai012File[]
   budgetLabel?: string
   budgetUsed?: number
+  /** Подпись полосы файла для скринридера: {name} — имя файла. */
+  fileProgressLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -36,14 +40,16 @@ export type Ai012Props = {
 // с причиной, иначе человек не понимает, почему ответ неполный.
 const STYLES = `
 :where([data-vibeui-block="ai-012"]){
---vibeui-ai-012-bg:oklch(1 0 0);
---vibeui-ai-012-soft:oklch(0.975 0.004 265);
---vibeui-ai-012-fg:oklch(0.21 0.014 265);
---vibeui-ai-012-muted:oklch(0.53 0.014 265);
---vibeui-ai-012-border:oklch(0.91 0.006 265);
---vibeui-ai-012-accent:oklch(0.52 0.16 258);
---vibeui-ai-012-ok:oklch(0.57 0.13 155);
---vibeui-ai-012-fail:oklch(0.57 0.19 25);
+--vibeui-ai-012-bg:transparent;
+--vibeui-ai-012-chip:light-dark(oklch(1 0 0),oklch(0.22 0.01 265));
+--vibeui-ai-012-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-ai-012-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-ai-012-muted:light-dark(oklch(0.53 0.014 265),oklch(0.69 0.012 265));
+--vibeui-ai-012-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-ai-012-accent:light-dark(oklch(0.52 0.16 258),oklch(0.73 0.14 258));
+--vibeui-ai-012-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 258));
+--vibeui-ai-012-ok:light-dark(oklch(0.57 0.13 155),oklch(0.72 0.13 155));
+--vibeui-ai-012-fail:light-dark(oklch(0.57 0.19 25),oklch(0.7 0.17 25));
 --vibeui-ai-012-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -75,7 +81,7 @@ background:color-mix(in oklab,var(--vibeui-ai-012-accent) 8%,var(--vibeui-ai-012
 [data-vibeui-block="ai-012"] [data-part="glyph"]{
 display:inline-flex;align-items:center;justify-content:center;
 width:2.125rem;height:2.125rem;border-radius:0.75rem;
-background:var(--vibeui-ai-012-accent);color:oklch(1 0 0);font-size:1rem;font-weight:700;
+background:var(--vibeui-ai-012-accent);color:var(--vibeui-ai-012-on-accent);font-size:1rem;font-weight:700;
 }
 [data-vibeui-block="ai-012"] [data-part="drop-title"]{font-size:0.875rem;font-weight:650}
 [data-vibeui-block="ai-012"] [data-part="drop-hint"]{font-size:0.75rem;color:var(--vibeui-ai-012-muted)}
@@ -90,7 +96,7 @@ border-color:color-mix(in oklab,var(--vibeui-ai-012-fail) 45%,var(--vibeui-ai-01
 [data-vibeui-block="ai-012"] [data-part="file-top"]{display:flex;align-items:center;gap:0.5rem}
 [data-vibeui-block="ai-012"] [data-part="kind"]{
 flex:none;padding:0.0625rem 0.375rem;border-radius:0.375rem;
-background:var(--vibeui-ai-012-bg);border:1px solid var(--vibeui-ai-012-border);
+background:var(--vibeui-ai-012-chip);border:1px solid var(--vibeui-ai-012-border);
 font-size:0.5625rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
 color:var(--vibeui-ai-012-muted);
 }
@@ -164,6 +170,28 @@ const DEFAULT_FILES: Ai012File[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сбор контекста файлами: зона перетаскивания, стадии индексации и бюджет.
  * Один файл, ноль зависимостей, клиентского JS нет.
  */
@@ -176,12 +204,21 @@ export function Ai012({
   files = DEFAULT_FILES,
   budgetLabel = "Занято в окне контекста",
   budgetUsed = 46,
+  fileProgressLabel = "Обработка файла {name}",
   accent,
+  background = "",
   className,
   style,
 }: Ai012Props) {
   const palette = {
     ...(accent ? { "--vibeui-ai-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-ai-012-bg": background,
+          "--vibeui-ai-012-chip": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -225,7 +262,7 @@ export function Ai012({
                   aria-valuemin={0}
                   aria-valuemax={100}
                   aria-valuenow={file.progress ?? 0}
-                  aria-label={`Обработка файла ${file.name}`}
+                  aria-label={fileProgressLabel.replace("{name}", file.name)}
                 >
                   <span
                     data-part="fill"

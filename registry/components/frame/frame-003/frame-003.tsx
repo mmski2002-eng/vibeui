@@ -6,6 +6,8 @@ export type Frame003Props = Omit<
 > & {
   url?: string
   tab?: string
+  /** Пусто — тело окна прозрачно, сквозь рамку виден фон страницы. */
+  background?: string
   children?: ReactNode
 }
 
@@ -16,12 +18,12 @@ export type Frame003Props = Omit<
 // и ломает раскладку на телефоне.
 const STYLES = `
 :where([data-vibeui-block="frame-003"]){
---vibeui-frame-003-bg:oklch(1 0 0);
---vibeui-frame-003-chrome:oklch(0.95 0.004 265);
---vibeui-frame-003-tab:oklch(0.99 0.002 265);
---vibeui-frame-003-fg:oklch(0.24 0.014 265);
---vibeui-frame-003-muted:oklch(0.55 0.014 265);
---vibeui-frame-003-border:oklch(0.89 0.006 265);
+--vibeui-frame-003-bg:transparent;
+--vibeui-frame-003-chrome:light-dark(oklch(0.95 0.004 265),oklch(0.24 0.009 265));
+--vibeui-frame-003-tab:light-dark(oklch(0.99 0.002 265),oklch(0.3 0.009 265));
+--vibeui-frame-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.005 265));
+--vibeui-frame-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-frame-003-border:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.011 265));
 --vibeui-frame-003-radius:0.875rem;
 --vibeui-frame-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -103,17 +105,50 @@ width:9rem;height:0.5rem;border-radius:9999px;background:var(--vibeui-frame-003-
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Окно браузера с вкладкой и адресной строкой вокруг слота.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Frame003({
   url = "vibeui.ru/components/frame-003",
   tab = "VibeUI — каталог компонентов",
+  background = "",
   children,
   className,
   style,
   ...props
 }: Frame003Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-frame-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-frame-003" precedence="medium">
@@ -123,7 +158,7 @@ export function Frame003({
         {...props}
         data-vibeui-block="frame-003"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="shell">
           <div data-part="tabs" aria-hidden="true">

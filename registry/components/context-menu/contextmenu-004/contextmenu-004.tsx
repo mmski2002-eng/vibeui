@@ -9,6 +9,24 @@ export type Contextmenu004Props = Omit<
 > & {
   title?: string
   cards?: string[]
+  /** Подписи пунктов правки: компонент несёт русские, проект подставляет свои. */
+  actionText?: Record<"cut" | "copy" | "paste", string>
+  /** Подпись кнопки вызова меню на карточке. */
+  menuButtonLabel?: string
+  /** Имя кнопки для скринридера; {card} — название карточки. */
+  cardMenuLabel?: string
+  /** Имя открытого меню; {card} — название карточки. */
+  menuLabel?: string
+  /** Имя меню, когда цель ещё не выбрана. */
+  menuTitle?: string
+  bufferLabel?: string
+  bufferEmpty?: string
+  /** Подсказка у выключенной вставки. */
+  pasteDisabledHint?: string
+  /** Имя копии; {name} — исходное название карточки. */
+  copyText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,12 +37,14 @@ export type Contextmenu004Props = Omit<
 // карточка исчезает из списка — вставка возвращает её на новое место.
 const STYLES = `
 :where([data-vibeui-block="contextmenu-004"]){
---vibeui-contextmenu-004-bg:oklch(1 0 0);
---vibeui-contextmenu-004-fg:oklch(0.24 0.014 265);
---vibeui-contextmenu-004-muted:oklch(0.55 0.014 265);
---vibeui-contextmenu-004-border:oklch(0.9 0.006 265);
---vibeui-contextmenu-004-hover:oklch(0.96 0.004 265);
---vibeui-contextmenu-004-accent:oklch(0.58 0.17 300);
+--vibeui-contextmenu-004-bg:transparent;
+--vibeui-contextmenu-004-surface:light-dark(oklch(1 0 0),oklch(0.24 0.013 265));
+--vibeui-contextmenu-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-contextmenu-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-contextmenu-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-contextmenu-004-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.014 265));
+--vibeui-contextmenu-004-accent:light-dark(oklch(0.58 0.17 300),oklch(0.76 0.14 300));
+--vibeui-contextmenu-004-shadow:light-dark(oklch(0.2 0.03 265 / 50%),oklch(0 0 0 / 72%));
 --vibeui-contextmenu-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-contextmenu-004-x:50%;
 --vibeui-contextmenu-004-y:50%;
@@ -73,9 +93,9 @@ font-weight:600;
 position:fixed;margin:0;padding:0.3125rem;
 top:var(--vibeui-contextmenu-004-y);left:var(--vibeui-contextmenu-004-x);
 min-width:12.5rem;box-sizing:border-box;
-background:var(--vibeui-contextmenu-004-bg);color:var(--vibeui-contextmenu-004-fg);
+background:var(--vibeui-contextmenu-004-surface);color:var(--vibeui-contextmenu-004-fg);
 border:1px solid var(--vibeui-contextmenu-004-border);border-radius:0.75rem;
-box-shadow:0 18px 40px -20px oklch(0.2 0.03 265 / 50%);
+box-shadow:0 18px 40px -20px var(--vibeui-contextmenu-004-shadow);
 font-family:var(--vibeui-contextmenu-004-font);
 }
 [data-vibeui-block="contextmenu-004"] [data-part="head"]{
@@ -105,6 +125,34 @@ color:var(--vibeui-contextmenu-004-muted);cursor:not-allowed;
 
 const DEFAULT_CARDS = ["Бриф клиента", "Сценарий ролика", "Смета на съёмку"]
 
+const DEFAULT_ACTION_TEXT: Record<"cut" | "copy" | "paste", string> = {
+  cut: "Вырезать",
+  copy: "Копировать",
+  paste: "Вставить",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Контекстное меню буфера обмена: вырезать, копировать и вставить с состоянием.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -112,6 +160,16 @@ const DEFAULT_CARDS = ["Бриф клиента", "Сценарий ролика
 export function Contextmenu004({
   title = "Доска",
   cards = DEFAULT_CARDS,
+  actionText = DEFAULT_ACTION_TEXT,
+  menuButtonLabel = "меню",
+  cardMenuLabel = "Меню: {card}",
+  menuLabel = "Правка: {card}",
+  menuTitle = "Правка",
+  bufferLabel = "Буфер:",
+  bufferEmpty = "пуст",
+  pasteDisabledHint = "буфер пуст",
+  copyText = "{name} — копия",
+  background = "",
   accent,
   className,
   style,
@@ -156,7 +214,7 @@ export function Contextmenu004({
     setList((current) => {
       const at = current.indexOf(target)
       const next = [...current]
-      next.splice(at + 1, 0, `${buffer} — копия`)
+      next.splice(at + 1, 0, copyText.replace("{name}", buffer))
       return next
     })
     close()
@@ -164,6 +222,12 @@ export function Contextmenu004({
 
   const palette = {
     ...(accent ? { "--vibeui-contextmenu-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-contextmenu-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...(spot
       ? {
           "--vibeui-contextmenu-004-x": spot.x,
@@ -203,27 +267,27 @@ export function Contextmenu004({
                 type="button"
                 data-part="menu-button"
                 aria-haspopup="menu"
-                aria-label={`Меню: ${card}`}
+                aria-label={cardMenuLabel.replace("{card}", card)}
                 onClick={(event) => {
                   const box = event.currentTarget.getBoundingClientRect()
                   openAt(box.left, box.bottom + 4, card)
                 }}
               >
-                меню
+                {menuButtonLabel}
               </button>
             </li>
           ))}
         </ul>
         <p data-part="buffer" role="status">
-          Буфер:
-          <span data-part="chip">{buffer ?? "пуст"}</span>
+          {bufferLabel}
+          <span data-part="chip">{buffer ?? bufferEmpty}</span>
         </p>
         <div
           ref={menu}
           data-part="menu"
           popover="auto"
           role="menu"
-          aria-label={target ? `Правка: ${target}` : "Правка"}
+          aria-label={target ? menuLabel.replace("{card}", target) : menuTitle}
           onKeyDown={(event) => {
             if (event.key !== "ArrowDown" && event.key !== "ArrowUp") {
               return
@@ -247,11 +311,11 @@ export function Contextmenu004({
         >
           <div data-part="head">{target}</div>
           <button type="button" role="menuitem" data-part="item" onClick={cut}>
-            Вырезать
+            {actionText.cut}
             <span data-part="keys">⌘X</span>
           </button>
           <button type="button" role="menuitem" data-part="item" onClick={copy}>
-            Копировать
+            {actionText.copy}
             <span data-part="keys">⌘C</span>
           </button>
           <button
@@ -261,9 +325,9 @@ export function Contextmenu004({
             aria-disabled={buffer === null}
             onClick={paste}
           >
-            Вставить
+            {actionText.paste}
             <span data-part="keys">
-              {buffer === null ? "буфер пуст" : "⌘V"}
+              {buffer === null ? pasteDisabledHint : "⌘V"}
             </span>
           </button>
         </div>

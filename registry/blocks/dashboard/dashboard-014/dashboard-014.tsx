@@ -18,7 +18,11 @@ export type Dashboard014Props = {
   hint?: string
   groups?: Dashboard014Group[]
   more?: string
+  /** Подпись ленты для скринридера. */
+  feedLabel?: string
   accent?: string
+  /** Подложка карточки; пусто — цвет из палитры блока. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,14 +38,14 @@ export type Dashboard014Props = {
 // занят тоном события.
 const STYLES = `
 :where([data-vibeui-block="dashboard-014"]){
---vibeui-dashboard-014-bg:oklch(1 0 0);
---vibeui-dashboard-014-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-014-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-014-border:oklch(0.91 0.006 265);
---vibeui-dashboard-014-line:oklch(0.93 0.005 265);
---vibeui-dashboard-014-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-014-ok:oklch(0.58 0.14 152);
---vibeui-dashboard-014-warn:oklch(0.7 0.15 75);
+--vibeui-dashboard-014-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
+--vibeui-dashboard-014-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-014-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-dashboard-014-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-dashboard-014-line:light-dark(oklch(0.93 0.005 265),oklch(0.32 0.011 265));
+--vibeui-dashboard-014-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.15 262));
+--vibeui-dashboard-014-ok:light-dark(oklch(0.58 0.14 152),oklch(0.75 0.13 152));
+--vibeui-dashboard-014-warn:light-dark(oklch(0.66 0.15 75),oklch(0.8 0.14 75));
 --vibeui-dashboard-014-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -146,6 +150,28 @@ const DEFAULT_GROUPS: Dashboard014Group[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Лента событий по дням: липкий заголовок дня и тон события формой точки.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -154,12 +180,20 @@ export function Dashboard014({
   hint = "События проекта за последние дни",
   groups = DEFAULT_GROUPS,
   more = "Показать всю историю",
+  feedLabel = "Лента событий",
   accent,
+  background = "",
   className,
   style,
 }: Dashboard014Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -179,12 +213,7 @@ export function Dashboard014({
           <p data-part="hint">{hint}</p>
         </header>
 
-        <div
-          data-part="feed"
-          tabIndex={0}
-          role="group"
-          aria-label="Лента событий"
-        >
+        <div data-part="feed" tabIndex={0} role="group" aria-label={feedLabel}>
           {groups.map((group) => (
             <section key={group.day} aria-label={group.day}>
               <p data-part="day">{group.day}</p>

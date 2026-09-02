@@ -20,6 +20,11 @@ export type Alertdialog009Props = Omit<
   sessions?: Alertdialog009Session[]
   confirm?: string
   cancel?: string
+  /** Пометка текущей сессии рядом с названием устройства. */
+  currentLabel?: string
+  danger?: string
+  /** Подложка окна и кнопки открытия. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: выход со всех устройств. Список сессий обязателен: без него
@@ -30,13 +35,16 @@ export type Alertdialog009Props = Omit<
 // браузера.
 const STYLES = `
 :where([data-vibeui-block="alertdialog-009"]){
---vibeui-alertdialog-009-bg:oklch(1 0 0);
---vibeui-alertdialog-009-panel:oklch(0.97 0.003 265);
---vibeui-alertdialog-009-fg:oklch(0.22 0.014 265);
---vibeui-alertdialog-009-muted:oklch(0.55 0.014 265);
---vibeui-alertdialog-009-border:oklch(0.9 0.006 265);
---vibeui-alertdialog-009-accent:oklch(0.55 0.2 262);
---vibeui-alertdialog-009-danger:oklch(0.55 0.19 25);
+--vibeui-alertdialog-009-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-alertdialog-009-panel:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.01 265));
+--vibeui-alertdialog-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-alertdialog-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-alertdialog-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-alertdialog-009-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
+--vibeui-alertdialog-009-badge-bg:light-dark(oklch(0.55 0.2 262 / 12%),oklch(0.72 0.18 262 / 18%));
+--vibeui-alertdialog-009-danger:light-dark(oklch(0.55 0.19 25),oklch(0.72 0.17 25));
+--vibeui-alertdialog-009-on-danger:light-dark(oklch(1 0 0),oklch(0.17 0.03 25));
+--vibeui-alertdialog-009-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.02 0.01 265 / 70%));
 --vibeui-alertdialog-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="alertdialog-009"]{
@@ -55,10 +63,10 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 margin:auto;width:min(24rem,calc(100vw - 2rem));padding:1.125rem;
 border:1px solid var(--vibeui-alertdialog-009-border);border-radius:0.875rem;
 background:var(--vibeui-alertdialog-009-bg);color:var(--vibeui-alertdialog-009-fg);
-box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 55%);
+box-shadow:0 24px 60px -24px var(--vibeui-alertdialog-009-shadow);
 font-family:var(--vibeui-alertdialog-009-font);
 }
-[data-vibeui-block="alertdialog-009"] dialog::backdrop{background:oklch(0.2 0.02 265 / 45%)}
+[data-vibeui-block="alertdialog-009"] dialog::backdrop{background:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.08 0.014 265 / 62%))}
 [data-vibeui-block="alertdialog-009"] h2{margin:0 0 0.375rem;font-size:1rem;font-weight:700;line-height:1.3}
 [data-vibeui-block="alertdialog-009"] [data-part="text"]{margin:0 0 0.75rem;font-size:0.8125rem;line-height:1.55;color:var(--vibeui-alertdialog-009-muted)}
 /* Список сессий: без него неясно, что именно потеряется вместе с чужим входом. */
@@ -85,7 +93,7 @@ box-shadow:inset 0 0 0 1px var(--vibeui-alertdialog-009-accent);
 }
 [data-vibeui-block="alertdialog-009"] [data-part="badge"]{
 margin-left:0.375rem;padding:0 0.3125rem;border-radius:0.3125rem;
-background:oklch(0.55 0.2 262 / 12%);color:var(--vibeui-alertdialog-009-accent);
+background:var(--vibeui-alertdialog-009-badge-bg);color:var(--vibeui-alertdialog-009-accent);
 font-size:0.625rem;font-weight:700;
 }
 [data-vibeui-block="alertdialog-009"] [data-part="actions"]{display:flex;flex-direction:row-reverse;gap:0.5rem}
@@ -93,7 +101,7 @@ font-size:0.625rem;font-weight:700;
 flex:1 1 0;appearance:none;cursor:pointer;height:2.375rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="alertdialog-009"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-009-danger);color:oklch(1 0 0)}
+[data-vibeui-block="alertdialog-009"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-009-danger);color:var(--vibeui-alertdialog-009-on-danger)}
 [data-vibeui-block="alertdialog-009"] [data-part="cancel"]{
 border:1px solid var(--vibeui-alertdialog-009-border);background:var(--vibeui-alertdialog-009-bg);color:inherit;
 }
@@ -121,6 +129,28 @@ const DEFAULT_SESSIONS: Alertdialog009Session[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выход со всех устройств: список сессий и явная пометка текущей.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -131,11 +161,25 @@ export function Alertdialog009({
   sessions = DEFAULT_SESSIONS,
   confirm = "Завершить все",
   cancel = "Отменить",
+  currentLabel = "это устройство",
+  danger,
+  background = "",
   className,
   style,
   ...props
 }: Alertdialog009Props) {
   const box = useRef<HTMLDialogElement>(null)
+
+  const palette = {
+    ...(danger ? { "--vibeui-alertdialog-009-danger": danger } : null),
+    ...(background
+      ? {
+          "--vibeui-alertdialog-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -146,7 +190,7 @@ export function Alertdialog009({
         {...props}
         data-vibeui-block="alertdialog-009"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <button
           type="button"
@@ -168,7 +212,7 @@ export function Alertdialog009({
                 <span data-part="device">
                   {session.device}
                   {session.current ? (
-                    <span data-part="badge">это устройство</span>
+                    <span data-part="badge">{currentLabel}</span>
                   ) : null}
                 </span>
                 <span data-part="seen">{session.seen}</span>

@@ -9,8 +9,19 @@ export type Otp006Props = Omit<
 > & {
   label?: string
   length?: number
+  /** Подпись под полем. */
+  hint?: string
+  /** Подписи кнопки показа: ключи show и hide. */
+  peekText?: Record<string, string>
   onChange?: (code: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
+}
+
+const PEEK_LABEL: Record<string, string> = {
+  show: "Показать",
+  hide: "Скрыть",
 }
 
 // Идея компонента: одно поле вместо клеток. Клетки красивы, но ломают
@@ -21,20 +32,20 @@ export type Otp006Props = Omit<
 // реже, чем ошибаются в нём.
 const STYLES = `
 :where([data-vibeui-block="otp-006"]){
---vibeui-otp-006-surface:oklch(1 0 0);
---vibeui-otp-006-shell:oklch(0.91 0.006 265);
---vibeui-otp-006-fg:oklch(0.21 0.014 265);
---vibeui-otp-006-muted:oklch(0.56 0.014 265);
---vibeui-otp-006-field:oklch(0.98 0.002 265);
---vibeui-otp-006-border:oklch(0.87 0.008 265);
---vibeui-otp-006-accent:oklch(0.5 0.17 300);
+--vibeui-otp-006-bg:transparent;
+--vibeui-otp-006-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-otp-006-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-otp-006-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-otp-006-field:light-dark(oklch(0.98 0.002 265),oklch(0.26 0.014 265));
+--vibeui-otp-006-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-otp-006-accent:light-dark(oklch(0.5 0.17 300),oklch(0.75 0.15 300));
 --vibeui-otp-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-otp-006-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
 }
 [data-vibeui-block="otp-006"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
-background:var(--vibeui-otp-006-surface);
+background:var(--vibeui-otp-006-bg);
 border:1px solid var(--vibeui-otp-006-shell);border-radius:0.875rem;
 font-family:var(--vibeui-otp-006-font);color:var(--vibeui-otp-006-fg);
 }
@@ -94,13 +105,38 @@ font-variant-numeric:tabular-nums;font-weight:650;color:var(--vibeui-otp-006-fg)
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Код подтверждения одной строкой: моноширинная разрядка вместо клеток.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Otp006({
   label = "Код подтверждения",
   length = 6,
+  hint = "Вставка целиком работает — это обычное поле.",
+  peekText = PEEK_LABEL,
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -113,8 +149,16 @@ export function Otp006({
 
   const palette = {
     ...(accent ? { "--vibeui-otp-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-otp-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const peekKey = shown ? "hide" : "show"
 
   return (
     <>
@@ -156,11 +200,11 @@ export function Otp006({
             aria-pressed={shown}
             onClick={() => setShown((was) => !was)}
           >
-            {shown ? "Скрыть" : "Показать"}
+            {peekText[peekKey] ?? PEEK_LABEL[peekKey]}
           </button>
         </div>
         <p data-part="foot" id={`${id}-foot`}>
-          <span>Вставка целиком работает — это обычное поле.</span>
+          <span>{hint}</span>
           <b>
             {code.length}/{size}
           </b>

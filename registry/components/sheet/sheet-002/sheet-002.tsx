@@ -15,20 +15,31 @@ export type Sheet002Props = Omit<
   triggerLabel?: string
   title?: string
   groups?: Sheet002Group[]
+  /** Имя кнопки закрытия для скринридера: русское по умолчанию. */
+  closeLabel?: string
   accent?: string
+  /** Подложка листа и кнопки открытия. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: лист настроек, который не отрывается от края экрана, а
 // висит рядом с ним карточкой с отступом — так видно, что страница под ним
 // на месте. Переключатели применяются сразу и кнопки «Сохранить» здесь нет:
 // у настроек-тумблеров подтверждение только мешает.
+//
+// Тема берётся из color-scheme окружения через light-dark(): лист темнеет
+// там, где тёмный контекст, и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="sheet-002"]){
---vibeui-sheet-002-bg:oklch(1 0 0);
---vibeui-sheet-002-fg:oklch(0.21 0.014 265);
---vibeui-sheet-002-muted:oklch(0.55 0.014 265);
---vibeui-sheet-002-border:oklch(0.91 0.006 265);
---vibeui-sheet-002-accent:oklch(0.55 0.17 265);
+--vibeui-sheet-002-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-sheet-002-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-sheet-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-sheet-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-sheet-002-hover:light-dark(oklch(0.96 0.004 265),oklch(0.29 0.012 265));
+--vibeui-sheet-002-knob:light-dark(oklch(1 0 0),oklch(0.94 0.006 265));
+--vibeui-sheet-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.16 265));
+--vibeui-sheet-002-shadow:light-dark(oklch(0.2 0.02 265 / 65%),oklch(0.02 0.01 265 / 78%));
+--vibeui-sheet-002-scrim:light-dark(oklch(0.19 0.02 265 / 40%),oklch(0.08 0.014 265 / 58%));
 --vibeui-sheet-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="sheet-002"]{
@@ -47,8 +58,8 @@ position:fixed;inset:0.625rem 0.625rem 0.625rem auto;margin:0;
 width:min(23rem,calc(100vw - 1.25rem));max-width:100vw;
 height:auto;max-height:calc(100dvh - 1.25rem);
 padding:0;border:0;border-radius:1.125rem;overflow:hidden;
-background:var(--vibeui-sheet-002-bg);color:inherit;
-box-shadow:0 30px 70px -35px oklch(0.2 0.02 265 / 65%);
+background:var(--vibeui-sheet-002-bg);color:var(--vibeui-sheet-002-fg);
+box-shadow:0 30px 70px -35px var(--vibeui-sheet-002-shadow);
 translate:calc(100% + 0.625rem) 0;
 transition:translate .24s ease,overlay .24s allow-discrete,display .24s allow-discrete;
 }
@@ -56,7 +67,7 @@ transition:translate .24s ease,overlay .24s allow-discrete,display .24s allow-di
 @starting-style{
 [data-vibeui-block="sheet-002"] dialog[open]{translate:calc(100% + 0.625rem) 0}
 }
-[data-vibeui-block="sheet-002"] dialog::backdrop{background:oklch(0.19 0.02 265 / 40%)}
+[data-vibeui-block="sheet-002"] dialog::backdrop{background:var(--vibeui-sheet-002-scrim)}
 [data-vibeui-block="sheet-002"] [data-part="panel"]{display:flex;flex-direction:column;max-height:calc(100dvh - 1.25rem)}
 [data-vibeui-block="sheet-002"] [data-part="head"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
@@ -68,7 +79,7 @@ appearance:none;border:0;cursor:pointer;background:transparent;flex:none;
 display:flex;align-items:center;justify-content:center;
 width:2rem;height:2rem;border-radius:0.5rem;color:var(--vibeui-sheet-002-muted);
 }
-[data-vibeui-block="sheet-002"] [data-part="close"]:hover{background:oklch(0.96 0.004 265);color:var(--vibeui-sheet-002-fg)}
+[data-vibeui-block="sheet-002"] [data-part="close"]:hover{background:var(--vibeui-sheet-002-hover);color:var(--vibeui-sheet-002-fg)}
 [data-vibeui-block="sheet-002"] [data-part="close"]:focus-visible{outline:2px solid var(--vibeui-sheet-002-accent);outline-offset:2px}
 [data-vibeui-block="sheet-002"] [data-part="cross"]{position:relative;width:0.625rem;height:0.625rem}
 [data-vibeui-block="sheet-002"] [data-part="cross"]::before,
@@ -101,8 +112,8 @@ transition:background-color .16s ease;
 }
 [data-vibeui-block="sheet-002"] [data-part="row"] input::after{
 content:"";position:absolute;top:0.1875rem;left:0.1875rem;
-width:0.9375rem;height:0.9375rem;border-radius:9999px;background:oklch(1 0 0);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 35%);
+width:0.9375rem;height:0.9375rem;border-radius:9999px;background:var(--vibeui-sheet-002-knob);
+box-shadow:0 1px 2px var(--vibeui-sheet-002-shadow);
 transition:translate .16s ease;
 }
 [data-vibeui-block="sheet-002"] [data-part="row"] input:checked{background:var(--vibeui-sheet-002-accent)}
@@ -141,6 +152,28 @@ const DEFAULT_GROUPS: Sheet002Group[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Лист настроек справа: тумблеры применяются сразу, кнопки сохранения нет.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -148,7 +181,9 @@ export function Sheet002({
   triggerLabel = "Настройки",
   title = "Настройки",
   groups = DEFAULT_GROUPS,
+  closeLabel = "Закрыть настройки",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -157,6 +192,12 @@ export function Sheet002({
 
   const palette = {
     ...(accent ? { "--vibeui-sheet-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-sheet-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -193,7 +234,7 @@ export function Sheet002({
               <button
                 type="button"
                 data-part="close"
-                aria-label="Закрыть настройки"
+                aria-label={closeLabel}
                 onClick={() => sheet.current?.close()}
               >
                 <span data-part="cross" aria-hidden="true" />

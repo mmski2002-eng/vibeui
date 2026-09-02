@@ -10,6 +10,15 @@ export type Input017Props = Omit<
   label?: string
   placeholder?: string
   onChange?: (value: string) => void
+  /**
+   * Строка под полем: ключи idle, loading, found, empty.
+   * В loading подставляется {query}, в found — {count}.
+   */
+  statusText?: Record<string, string>
+  /** Подпись кнопки очистки для скринридера. */
+  clearLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,13 +29,14 @@ export type Input017Props = Omit<
 // после honest паузы, а не мгновенно вместе с набором.
 const STYLES = `
 :where([data-vibeui-block="input-017"]){
---vibeui-input-017-bg:oklch(1 0 0);
---vibeui-input-017-fg:oklch(0.22 0.014 265);
---vibeui-input-017-muted:oklch(0.56 0.014 265);
---vibeui-input-017-border:oklch(0.9 0.006 265);
---vibeui-input-017-field:oklch(0.985 0.002 265);
---vibeui-input-017-accent:oklch(0.55 0.17 265);
---vibeui-input-017-ring:oklch(0.9 0.006 265);
+--vibeui-input-017-bg:transparent;
+--vibeui-input-017-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-017-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-input-017-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-input-017-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-input-017-hover:light-dark(oklch(0.94 0.005 265),oklch(0.33 0.011 265));
+--vibeui-input-017-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-input-017-ring:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.012 265));
 --vibeui-input-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-017"]{
@@ -75,7 +85,7 @@ display:flex;align-items:center;justify-content:center;
 width:1.5rem;height:1.5rem;padding:0;border-radius:9999px;
 color:var(--vibeui-input-017-muted);
 }
-[data-vibeui-block="input-017"] [data-part="clear"]:hover{background:oklch(0.94 0.005 265);color:var(--vibeui-input-017-fg)}
+[data-vibeui-block="input-017"] [data-part="clear"]:hover{background:var(--vibeui-input-017-hover);color:var(--vibeui-input-017-fg)}
 [data-vibeui-block="input-017"] [data-part="clear"]:focus-visible{outline:2px solid var(--vibeui-input-017-accent);outline-offset:1px}
 [data-vibeui-block="input-017"] [data-part="cross"]{position:relative;width:0.5rem;height:0.5rem}
 [data-vibeui-block="input-017"] [data-part="cross"]::before,
@@ -106,6 +116,35 @@ function fakeCount(value: string) {
   return hash % 24
 }
 
+const STATUS: Record<string, string> = {
+  idle: "Начните вводить запрос",
+  loading: "Ищем «{query}»…",
+  found: "Найдено результатов: {count}",
+  empty: "Ничего не найдено",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Поле поиска с честным состоянием загрузки: кольцо вместо лупы, пауза перед
  * ответом, счётчик результатов через aria-live. Один файл, ноль зависимостей.
@@ -114,6 +153,9 @@ export function Input017({
   label = "Поиск по заказам",
   placeholder = "Номер заказа или имя клиента",
   onChange,
+  statusText = STATUS,
+  clearLabel = "Очистить поиск",
+  background = "",
   accent,
   id,
   className,
@@ -142,6 +184,12 @@ export function Input017({
 
   const palette = {
     ...(accent ? { "--vibeui-input-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -155,14 +203,17 @@ export function Input017({
     : value === settled.value
       ? "done"
       : "loading"
-  const status =
+  const statusKey =
     phase === "idle"
-      ? "Начните вводить запрос"
+      ? "idle"
       : phase === "loading"
-        ? `Ищем «${value}»…`
+        ? "loading"
         : settled.count > 0
-          ? `Найдено результатов: ${settled.count}`
-          : "Ничего не найдено"
+          ? "found"
+          : "empty"
+  const status = (statusText[statusKey] ?? STATUS[statusKey])
+    .replace("{query}", value)
+    .replace("{count}", String(settled.count))
 
   return (
     <>
@@ -196,7 +247,7 @@ export function Input017({
             <button
               type="button"
               data-part="clear"
-              aria-label="Очистить поиск"
+              aria-label={clearLabel}
               onClick={() => {
                 update("")
                 field.current?.focus()

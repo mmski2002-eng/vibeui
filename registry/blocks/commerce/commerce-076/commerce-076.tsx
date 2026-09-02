@@ -25,6 +25,8 @@ export type Commerce076Props = {
   columnSave?: string
   columnPack?: string
   currentLabel?: string
+  tableCaption?: string
+  nextTitle?: string
   nextStep?: string
   termsTitle?: string
   terms?: Commerce076Term[]
@@ -32,6 +34,8 @@ export type Commerce076Props = {
   secondary?: string
   note?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -44,12 +48,14 @@ export type Commerce076Props = {
 // не считает. Текущий уровень помечен словом и рамкой, а не только фоном.
 const STYLES = `
 :where([data-vibeui-block="commerce-076"]){
---vibeui-commerce-076-bg:oklch(1 0 0);
---vibeui-commerce-076-fg:oklch(0.21 0.012 230);
---vibeui-commerce-076-muted:oklch(0.53 0.014 230);
---vibeui-commerce-076-border:oklch(0.9 0.008 230);
---vibeui-commerce-076-soft:oklch(0.972 0.006 230);
---vibeui-commerce-076-accent:oklch(0.44 0.13 230);
+--vibeui-commerce-076-bg:transparent;
+--vibeui-commerce-076-surface:light-dark(oklch(1 0 0),oklch(0.22 0.012 230));
+--vibeui-commerce-076-fg:light-dark(oklch(0.21 0.012 230),oklch(0.94 0.006 230));
+--vibeui-commerce-076-muted:light-dark(oklch(0.53 0.014 230),oklch(0.73 0.012 230));
+--vibeui-commerce-076-border:light-dark(oklch(0.9 0.008 230),oklch(0.38 0.014 230));
+--vibeui-commerce-076-soft:light-dark(oklch(0.972 0.006 230),oklch(0.27 0.016 230));
+--vibeui-commerce-076-accent:light-dark(oklch(0.44 0.13 230),oklch(0.76 0.13 230));
+--vibeui-commerce-076-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.04 230));
 --vibeui-commerce-076-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -81,7 +87,7 @@ text-transform:uppercase;color:var(--vibeui-commerce-076-muted);font-weight:700;
 [data-vibeui-block="commerce-076"] [data-part="row"][data-current]{background:var(--vibeui-commerce-076-soft);box-shadow:inset 3px 0 0 var(--vibeui-commerce-076-accent)}
 [data-vibeui-block="commerce-076"] [data-part="now"]{
 display:inline-block;margin-left:0.4375rem;padding:0.0625rem 0.375rem;border-radius:0.3125rem;
-background:var(--vibeui-commerce-076-accent);color:oklch(0.99 0 0);font-size:0.625rem;font-weight:700;
+background:var(--vibeui-commerce-076-accent);color:var(--vibeui-commerce-076-onaccent);font-size:0.625rem;font-weight:700;
 letter-spacing:0.04em;text-transform:uppercase;vertical-align:1px;
 }
 [data-vibeui-block="commerce-076"] [data-part="price"]{font-weight:750}
@@ -101,11 +107,11 @@ padding:0.875rem 1rem;border-radius:0.875rem;background:var(--vibeui-commerce-07
 [data-vibeui-block="commerce-076"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.5rem}
 [data-vibeui-block="commerce-076"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;height:2.875rem;padding:0 1.625rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-076-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-076-accent);color:var(--vibeui-commerce-076-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-076"] [data-part="alt"]{
 appearance:none;cursor:pointer;height:2.875rem;padding:0 1.25rem;border-radius:0.875rem;
-border:1px solid var(--vibeui-commerce-076-border);background:var(--vibeui-commerce-076-bg);
+border:1px solid var(--vibeui-commerce-076-border);background:var(--vibeui-commerce-076-surface);
 color:inherit;font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="commerce-076"] [data-part="go"]:focus-visible,
@@ -116,6 +122,28 @@ color:inherit;font:inherit;font-size:0.9375rem;font-weight:650;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-076"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_TIERS: Commerce076Tier[] = [
   {
@@ -175,6 +203,8 @@ export function Commerce076({
   columnSave = "Выгода",
   columnPack = "Стоимость партии",
   currentLabel = "Ваш уровень",
+  tableCaption = "Оптовый прайс по количеству в одном заказе",
+  nextTitle = "Следующий уровень ближе, чем кажется.",
   nextStep = "Добавьте ещё 38 штук — цена упадёт до 1 290 ₽, и партия из 50 штук выйдет на 5 100 ₽ дешевле, чем 48 штук по текущей цене.",
   termsTitle = "Условия работы",
   terms = DEFAULT_TERMS,
@@ -182,11 +212,21 @@ export function Commerce076({
   secondary = "Запросить коммерческое предложение",
   note = "Цены действуют для заказов с оплатой по счёту от юридического лица. Для розничного заказа применяется обычная цена каталога.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce076Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-076-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-076-bg": background,
+          // Кнопка запроса не должна просвечивать: ей нужна непрозрачная
+          // подложка, и это тот же цвет.
+          "--vibeui-commerce-076-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -208,7 +248,7 @@ export function Commerce076({
 
           <div data-part="scroll" tabIndex={0} role="group" aria-label={title}>
             <table>
-              <caption>Оптовый прайс по количеству в одном заказе</caption>
+              <caption>{tableCaption}</caption>
               <thead>
                 <tr>
                   <th scope="col">{columnFrom}</th>
@@ -240,7 +280,7 @@ export function Commerce076({
           </div>
 
           <p data-part="next">
-            <strong>Следующий уровень ближе, чем кажется.</strong> {nextStep}
+            <strong>{nextTitle}</strong> {nextStep}
           </p>
 
           <h3>{termsTitle}</h3>

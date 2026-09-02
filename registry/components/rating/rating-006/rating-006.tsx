@@ -10,6 +10,20 @@ export type Rating006Props = Omit<
   legend?: string
   threshold?: number
   minLength?: number
+  /** Подпись звезды для скринридера. {value} — номер звезды. */
+  starLabel?: string
+  /** Подпись поля комментария. */
+  reasonLabel?: string
+  /** Подсказка внутри поля комментария. */
+  reasonPlaceholder?: string
+  /** Счётчик, пока символов не хватает. {left} — сколько осталось. */
+  counterText?: string
+  /** Счётчик, когда символов уже достаточно. */
+  counterDoneText?: string
+  /** Подпись кнопки отправки. */
+  submitText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,20 +33,24 @@ export type Rating006Props = Omit<
 // минимума символов. Поле появляется только при низкой оценке: требовать текст
 // от довольного человека — верный способ потерять и оценку тоже. Счётчик
 // символов показывает, сколько осталось, а не сколько написано: важен порог.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="rating-006"]){
---vibeui-rating-006-surface:oklch(1 0 0);
---vibeui-rating-006-field:oklch(0.985 0.002 265);
---vibeui-rating-006-shell:oklch(0.9 0.006 265);
---vibeui-rating-006-fg:oklch(0.23 0.014 265);
---vibeui-rating-006-muted:oklch(0.55 0.014 265);
---vibeui-rating-006-border:oklch(0.88 0.008 265);
---vibeui-rating-006-empty:oklch(0.88 0.008 265);
---vibeui-rating-006-star:oklch(0.75 0.16 78);
---vibeui-rating-006-accent:oklch(0.55 0.17 265);
+--vibeui-rating-006-surface:transparent;
+--vibeui-rating-006-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.01 265));
+--vibeui-rating-006-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-rating-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-rating-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-rating-006-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-rating-006-empty:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-rating-006-star:light-dark(oklch(0.75 0.16 78),oklch(0.84 0.15 80));
+--vibeui-rating-006-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-rating-006-on:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
 --vibeui-rating-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: форму показывают поверх любого фона. */
+/* Подложки по умолчанию нет: форма ложится на фон страницы. */
 [data-vibeui-block="rating-006"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
@@ -69,7 +87,7 @@ margin:0;font-size:0.6875rem;color:var(--vibeui-rating-006-muted);font-variant-n
 [data-vibeui-block="rating-006"] [data-part="submit"]{
 appearance:none;border:0;cursor:pointer;
 height:2.5rem;border-radius:0.625rem;
-background:var(--vibeui-rating-006-accent);color:oklch(1 0 0);
+background:var(--vibeui-rating-006-accent);color:var(--vibeui-rating-006-on);
 font:inherit;font-size:0.8125rem;font-weight:650;
 transition:opacity .14s ease;
 }
@@ -80,6 +98,28 @@ transition:opacity .14s ease;
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Оценка звёздами, требующая комментарий, если оценка ниже порога.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -87,6 +127,13 @@ export function Rating006({
   legend = "Оцените доставку",
   threshold = 3,
   minLength = 20,
+  starLabel = "{value} из 5",
+  reasonLabel = "Что пошло не так? Без этого оценку не отправить",
+  reasonPlaceholder = "Курьер приехал на два часа позже окна…",
+  counterText = "Ещё {left} символов до отправки",
+  counterDoneText = "Достаточно, можно отправлять",
+  submitText = "Отправить оценку",
+  background = "",
   accent,
   className,
   style,
@@ -101,6 +148,12 @@ export function Rating006({
 
   const palette = {
     ...(accent ? { "--vibeui-rating-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-rating-006-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -129,7 +182,7 @@ export function Rating006({
               type="button"
               role="radio"
               aria-checked={score === star}
-              aria-label={`${star} из 5`}
+              aria-label={starLabel.replace("{value}", String(star))}
               tabIndex={score === star || (score === 0 && star === 1) ? 0 : -1}
               data-on={star <= score}
               onClick={() => setScore(star)}
@@ -140,26 +193,24 @@ export function Rating006({
         </div>
         {needsReason ? (
           <div data-part="reason">
-            <label htmlFor={`${id}-reason`}>
-              Что пошло не так? Без этого оценку не отправить
-            </label>
+            <label htmlFor={`${id}-reason`}>{reasonLabel}</label>
             <textarea
               id={`${id}-reason`}
               value={reason}
               required
               aria-describedby={`${id}-counter`}
-              placeholder="Курьер приехал на два часа позже окна…"
+              placeholder={reasonPlaceholder}
               onChange={(event) => setReason(event.target.value)}
             />
             <p id={`${id}-counter`} data-part="counter" aria-live="polite">
               {left > 0
-                ? `Ещё ${left} символов до отправки`
-                : "Достаточно, можно отправлять"}
+                ? counterText.replace("{left}", String(left))
+                : counterDoneText}
             </p>
           </div>
         ) : null}
         <button type="button" data-part="submit" disabled={!ready}>
-          Отправить оценку
+          {submitText}
         </button>
       </div>
     </>

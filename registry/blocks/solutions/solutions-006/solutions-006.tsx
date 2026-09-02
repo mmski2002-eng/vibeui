@@ -15,7 +15,11 @@ export type Solutions006Props = {
   legendHeld?: string
   legendBusy?: string
   cta?: string
+  /** Счётчик свободных, {free} и {total} — числа слотов. */
+  freeText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,13 +34,15 @@ export type Solutions006Props = {
 // без него бронь на 14:00 значит разное для двух сторон.
 const STYLES = `
 :where([data-vibeui-block="solutions-006"]){
---vibeui-solutions-006-bg:oklch(1 0 0);
---vibeui-solutions-006-panel:oklch(0.985 0.002 265);
---vibeui-solutions-006-fg:oklch(0.22 0.014 265);
---vibeui-solutions-006-muted:oklch(0.55 0.014 265);
---vibeui-solutions-006-border:oklch(0.91 0.006 265);
---vibeui-solutions-006-accent:oklch(0.55 0.2 262);
---vibeui-solutions-006-held:oklch(0.72 0.15 75);
+--vibeui-solutions-006-bg:transparent;
+--vibeui-solutions-006-panel:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-solutions-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-solutions-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-solutions-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-solutions-006-onaccent:light-dark(oklch(1 0 0),oklch(0.17 0.012 265));
+--vibeui-solutions-006-held:light-dark(oklch(0.72 0.15 75),oklch(0.8 0.13 78));
+--vibeui-solutions-006-heldsoft:light-dark(oklch(0.72 0.15 75 / 18%),oklch(0.8 0.13 78 / 22%));
 --vibeui-solutions-006-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -66,7 +72,7 @@ background:var(--vibeui-solutions-006-bg);
 }
 [data-vibeui-block="solutions-006"] [data-chip="held"]{
 border-color:var(--vibeui-solutions-006-held);
-background:oklch(0.72 0.15 75 / 18%);
+background:var(--vibeui-solutions-006-heldsoft);
 }
 [data-vibeui-block="solutions-006"] [data-chip="busy"]{
 border-color:var(--vibeui-solutions-006-border);
@@ -100,7 +106,7 @@ font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="solutions-006"] [data-state="held"]{
 border-color:var(--vibeui-solutions-006-held);
-background:oklch(0.72 0.15 75 / 12%);
+background:var(--vibeui-solutions-006-heldsoft);
 }
 /* Занятый слот подписан именем: исчезнувший читается как ошибка загрузки. */
 [data-vibeui-block="solutions-006"] [data-part="who"]{
@@ -110,7 +116,7 @@ max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 [data-vibeui-block="solutions-006"] [data-part="cta"]{
 width:100%;appearance:none;cursor:pointer;height:2.375rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-solutions-006-accent);color:oklch(1 0 0);
+background:var(--vibeui-solutions-006-accent);color:var(--vibeui-solutions-006-onaccent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="solutions-006"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-solutions-006-accent);outline-offset:2px}
@@ -133,6 +139,28 @@ const DEFAULT_SLOTS: Solutions006Slot[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сетка слотов на день: занятые видны и подписаны, свободные — кнопки.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -145,7 +173,9 @@ export function Solutions006({
   legendHeld = "удерживается",
   legendBusy = "занято",
   cta = "Подтвердить запись",
+  freeText = "Свободно {free} из {total}",
   accent,
+  background = "",
   className,
   style,
 }: Solutions006Props) {
@@ -153,6 +183,12 @@ export function Solutions006({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -175,7 +211,9 @@ export function Solutions006({
             </p>
           </div>
           <p data-part="day">
-            Свободно {free} из {slots.length}
+            {freeText
+              .replace("{free}", String(free))
+              .replace("{total}", String(slots.length))}
           </p>
         </header>
 

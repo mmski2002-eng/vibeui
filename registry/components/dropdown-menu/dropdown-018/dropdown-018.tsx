@@ -14,7 +14,19 @@ export type Dropdown018Props = Omit<
   placeholder?: string
   people?: string[]
   onChange?: (value: string) => void
+  /** Строка слева. Плейсхолдер {name}. */
+  assignedTemplate?: string
+  /** Строка слева, когда никто не назначен. */
+  unassignedText?: string
+  /** Доступное имя кнопки при выбранном исполнителе. Плейсхолдер {name}. */
+  changeLabelTemplate?: string
+  /** Доступное имя кнопки и меню, когда никто не назначен. */
+  assignLabel?: string
+  /** Строка на месте пустой выборки. */
+  emptyText?: string
   accent?: string
+  /** Подложка плашки и меню. Пусто — собственный фон по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: назначение исполнителя через поиск по имени. В отличие
@@ -23,14 +35,19 @@ export type Dropdown018Props = Omit<
 // занято другими значками. Фокус после открытия уходит в поле поиска на
 // событии toggle, список — role=menuitemradio, выбор закрывает меню и
 // возвращает фокус на кнопку.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте плашка светлее фона страницы, а её граница светлее плашки.
 const STYLES = `
 :where([data-vibeui-block="dropdown-018"]){
---vibeui-dropdown-018-bg:oklch(1 0 0);
---vibeui-dropdown-018-fg:oklch(0.24 0.014 275);
---vibeui-dropdown-018-muted:oklch(0.56 0.014 275);
---vibeui-dropdown-018-border:oklch(0.9 0.006 275);
---vibeui-dropdown-018-hover:oklch(0.96 0.004 275);
---vibeui-dropdown-018-accent:oklch(0.56 0.18 275);
+--vibeui-dropdown-018-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 275));
+--vibeui-dropdown-018-fg:light-dark(oklch(0.24 0.014 275),oklch(0.94 0.006 275));
+--vibeui-dropdown-018-muted:light-dark(oklch(0.56 0.014 275),oklch(0.7 0.012 275));
+--vibeui-dropdown-018-border:light-dark(oklch(0.9 0.006 275),oklch(0.37 0.012 275));
+--vibeui-dropdown-018-hover:light-dark(oklch(0.96 0.004 275),oklch(0.32 0.014 275));
+--vibeui-dropdown-018-accent:light-dark(oklch(0.56 0.18 275),oklch(0.76 0.14 275));
+--vibeui-dropdown-018-chip:light-dark(oklch(0.92 0.05 275),oklch(0.42 0.09 275));
+--vibeui-dropdown-018-chip-fg:light-dark(oklch(0.38 0.09 275),oklch(0.93 0.04 275));
 --vibeui-dropdown-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="dropdown-018"]{
@@ -54,7 +71,7 @@ transition:background-color .16s ease,color .16s ease;
 [data-vibeui-block="dropdown-018"] [data-part="trigger"]:hover{background:var(--vibeui-dropdown-018-hover);color:var(--vibeui-dropdown-018-fg)}
 [data-vibeui-block="dropdown-018"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-dropdown-018-accent);outline-offset:2px}
 [data-vibeui-block="dropdown-018"] [data-part="trigger"][data-picked="true"]{
-border-style:solid;background:oklch(0.92 0.05 275);color:oklch(0.38 0.09 275);
+border-style:solid;background:var(--vibeui-dropdown-018-chip);color:var(--vibeui-dropdown-018-chip-fg);
 }
 [data-vibeui-block="dropdown-018"] [data-part="menu"]{
 position:fixed;margin:0;padding:0.375rem;min-width:15rem;box-sizing:border-box;
@@ -122,6 +139,28 @@ const DEFAULT_PEOPLE = [
   "Женя Осипов",
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function hue(name: string) {
   let hash = 2166136261
 
@@ -166,7 +205,13 @@ export function Dropdown018({
   placeholder = "Поиск по имени",
   people = DEFAULT_PEOPLE,
   onChange,
+  assignedTemplate = "Исполнитель: {name}",
+  unassignedText = "Исполнитель не назначен",
+  changeLabelTemplate = "Сменить исполнителя: {name}",
+  assignLabel = "Назначить исполнителя",
+  emptyText = "Никого не нашлось",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -192,6 +237,12 @@ export function Dropdown018({
 
   const palette = {
     ...(accent ? { "--vibeui-dropdown-018-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dropdown-018-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -207,7 +258,7 @@ export function Dropdown018({
         style={palette}
       >
         <span data-part="current">
-          {picked ? `Исполнитель: ${picked}` : "Исполнитель не назначен"}
+          {picked ? assignedTemplate.replace("{name}", picked) : unassignedText}
         </span>
         <button
           ref={trigger}
@@ -218,7 +269,7 @@ export function Dropdown018({
           aria-haspopup="menu"
           aria-expanded={open}
           aria-label={
-            picked ? `Сменить исполнителя: ${picked}` : "Назначить исполнителя"
+            picked ? changeLabelTemplate.replace("{name}", picked) : assignLabel
           }
         >
           {picked ? initials(picked) : "+"}
@@ -228,7 +279,7 @@ export function Dropdown018({
           ref={menu}
           popover="auto"
           role="menu"
-          aria-label="Назначить исполнителя"
+          aria-label={assignLabel}
           data-part="menu"
           onToggle={(event) => {
             setOpen(event.newState === "open")
@@ -260,7 +311,7 @@ export function Dropdown018({
           />
           <div data-part="list">
             {shown.length === 0 ? (
-              <p data-part="empty">Никого не нашлось</p>
+              <p data-part="empty">{emptyText}</p>
             ) : (
               shown.map((person) => (
                 <button

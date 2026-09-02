@@ -18,7 +18,21 @@ export type Dashboard024Props = {
   freshNote?: string
   keys?: Dashboard024Key[]
   createLabel?: string
+  /** Подпись формы создания для скринридера. */
+  createSectionLabel?: string
+  nameLabel?: string
+  namePlaceholder?: string
+  scopeLabel?: string
+  copyLabel?: string
+  /** Заголовки колонок таблицы ключей. */
+  columns?: string[]
+  revokedLabel?: string
+  revokeLabel?: string
+  /** Шаблон подписи кнопки отзыва: {name}. */
+  revokeForLabel?: string
   accent?: string
+  /** Подложка карточки; пусто — цвет из палитры блока. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -33,15 +47,16 @@ export type Dashboard024Props = {
 // читается как «его никогда не было» и рушит разбор инцидента.
 const STYLES = `
 :where([data-vibeui-block="dashboard-024"]){
---vibeui-dashboard-024-bg:oklch(1 0 0);
---vibeui-dashboard-024-panel:oklch(0.985 0.003 265);
---vibeui-dashboard-024-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-024-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-024-border:oklch(0.91 0.006 265);
---vibeui-dashboard-024-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-024-warn:oklch(0.62 0.15 65);
---vibeui-dashboard-024-warnbg:oklch(0.975 0.03 85);
---vibeui-dashboard-024-risk:oklch(0.55 0.18 25);
+--vibeui-dashboard-024-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
+--vibeui-dashboard-024-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.013 265));
+--vibeui-dashboard-024-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-024-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-dashboard-024-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-024-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.15 262));
+--vibeui-dashboard-024-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-dashboard-024-warn:light-dark(oklch(0.62 0.15 65),oklch(0.82 0.13 65));
+--vibeui-dashboard-024-warnbg:light-dark(oklch(0.975 0.03 85),oklch(0.29 0.04 75));
+--vibeui-dashboard-024-risk:light-dark(oklch(0.55 0.18 25),oklch(0.74 0.15 25));
 --vibeui-dashboard-024-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-dashboard-024-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;
@@ -82,7 +97,7 @@ background-repeat:no-repeat;background-position:right 0.5rem center;background-s
 [data-vibeui-block="dashboard-024"] [data-part="make"]{
 appearance:none;border:0;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:650;
 padding:0.5rem 0.875rem;border-radius:0.5rem;white-space:nowrap;
-background:var(--vibeui-dashboard-024-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-024-accent);color:var(--vibeui-dashboard-024-on-accent);
 }
 /* Ключ виден один раз: в рамке рядом с предупреждением, а не в таблице. */
 [data-vibeui-block="dashboard-024"] [data-part="fresh"]{
@@ -184,6 +199,37 @@ const DEFAULT_KEYS: Dashboard024Key[] = [
   },
 ]
 
+const DEFAULT_COLUMNS = [
+  "Название",
+  "Префикс",
+  "Права",
+  "Создан",
+  "Последний вызов",
+  "Действие",
+]
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Ключи API: создание, показ секрета один раз и отзыв без удаления строки.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -197,12 +243,28 @@ export function Dashboard024({
   freshNote = "Ключ показан один раз. Закроете страницу — восстановить будет нечем.",
   keys = DEFAULT_KEYS,
   createLabel = "Создать ключ",
+  createSectionLabel = "Создание ключа",
+  nameLabel = "Название ключа",
+  namePlaceholder = "Например, «CI на GitHub»",
+  scopeLabel = "Права",
+  copyLabel = "Скопировать",
+  columns = DEFAULT_COLUMNS,
+  revokedLabel = "отозван",
+  revokeLabel = "Отозвать",
+  revokeForLabel = "Отозвать ключ {name}",
   accent,
+  background = "",
   className,
   style,
 }: Dashboard024Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-024-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-024-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -221,13 +283,13 @@ export function Dashboard024({
           <h2>{title}</h2>
           <p data-part="hint">{hint}</p>
 
-          <div data-part="create" role="group" aria-label="Создание ключа">
+          <div data-part="create" role="group" aria-label={createSectionLabel}>
             <label>
-              <span data-part="fieldlabel">Название ключа</span>
-              <input placeholder="Например, «CI на GitHub»" />
+              <span data-part="fieldlabel">{nameLabel}</span>
+              <input placeholder={namePlaceholder} />
             </label>
             <label>
-              <span data-part="fieldlabel">Права</span>
+              <span data-part="fieldlabel">{scopeLabel}</span>
               <select defaultValue={newScope}>
                 {scopes.map((scope) => (
                   <option key={scope}>{scope}</option>
@@ -244,7 +306,7 @@ export function Dashboard024({
             <p data-part="secret">
               <code>{freshKey}</code>
               <button type="button" data-part="copy">
-                Скопировать
+                {copyLabel}
               </button>
             </p>
           </div>
@@ -253,14 +315,11 @@ export function Dashboard024({
             <table>
               <thead>
                 <tr>
-                  <th scope="col">Название</th>
-                  <th scope="col">Префикс</th>
-                  <th scope="col">Права</th>
-                  <th scope="col">Создан</th>
-                  <th scope="col">Последний вызов</th>
-                  <th scope="col">
-                    <span>Действие</span>
-                  </th>
+                  {columns.map((column) => (
+                    <th key={column} scope="col">
+                      {column}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
@@ -278,14 +337,17 @@ export function Dashboard024({
                     <td>{key.lastUsed ?? "—"}</td>
                     <td>
                       {key.revoked ? (
-                        <span data-part="dead">отозван</span>
+                        <span data-part="dead">{revokedLabel}</span>
                       ) : (
                         <button
                           type="button"
                           data-part="revoke"
-                          aria-label={`Отозвать ключ ${key.name}`}
+                          aria-label={revokeForLabel.replace(
+                            "{name}",
+                            key.name,
+                          )}
                         >
-                          Отозвать
+                          {revokeLabel}
                         </button>
                       )}
                     </td>

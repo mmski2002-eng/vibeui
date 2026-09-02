@@ -19,7 +19,11 @@ export type Dropdown002Props = Omit<
   trigger?: string
   align?: "left" | "right"
   sections?: Dropdown002Section[]
+  /** Подпись слева от кнопки: чем именно управляет это меню. */
+  caption?: string
   accent?: string
+  /** Подложка карточки и меню. Пусто — собственный фон по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: длинное меню, разложенное по разделам с видимыми
@@ -27,14 +31,17 @@ export type Dropdown002Props = Omit<
 // заголовок группы отвечает на вопрос «где искать» до чтения самих пунктов.
 // Открытие и слой держит HTML popover, положение — CSS anchor positioning,
 // стрелки водят фокус по пунктам, заголовки при этом пропускаются.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте панель светлее фона страницы, а её граница светлее панели.
 const STYLES = `
 :where([data-vibeui-block="dropdown-002"]){
---vibeui-dropdown-002-bg:oklch(1 0 0);
---vibeui-dropdown-002-fg:oklch(0.24 0.014 265);
---vibeui-dropdown-002-muted:oklch(0.55 0.014 265);
---vibeui-dropdown-002-border:oklch(0.9 0.006 265);
---vibeui-dropdown-002-hover:oklch(0.96 0.004 265);
---vibeui-dropdown-002-accent:oklch(0.55 0.17 265);
+--vibeui-dropdown-002-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-dropdown-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-dropdown-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dropdown-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-dropdown-002-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
+--vibeui-dropdown-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-dropdown-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="dropdown-002"]{
@@ -131,6 +138,28 @@ function stepFocus(menu: HTMLElement | null, delta: number) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Меню с разделами: видимые заголовки групп, разделители, навигация стрелками.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -138,7 +167,9 @@ export function Dropdown002({
   trigger = "Действия",
   align = "right",
   sections = DEFAULT_SECTIONS,
+  caption = "Годовой отчёт",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -174,6 +205,12 @@ export function Dropdown002({
 
   const palette = {
     ...(accent ? { "--vibeui-dropdown-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dropdown-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -189,7 +226,7 @@ export function Dropdown002({
         className={className}
         style={palette}
       >
-        <span data-part="caption">Годовой отчёт</span>
+        <span data-part="caption">{caption}</span>
         <button
           type="button"
           data-part="trigger"

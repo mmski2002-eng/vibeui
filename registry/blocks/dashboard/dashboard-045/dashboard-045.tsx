@@ -25,6 +25,26 @@ export type Dashboard045Props = {
   restoreLabel?: string
   runLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Заголовок таблицы точек восстановления. */
+  pointsTitle?: string
+  /** Заголовок панели расписаний. */
+  plansTitle?: string
+  /** Подпись полосы занятого места. */
+  storageLabel?: string
+  /** Шаблон дроби хранилища: {used} и {quota}. */
+  usedText?: string
+  /** Шаблон подписи полосы: {value}. */
+  quotaAriaText?: string
+  /** Шаблон подписи переключателя: {name}. */
+  planAriaText?: string
+  /** Заголовки колонок таблицы по ключам. */
+  columnsText?: Record<string, string>
+  /** Подписи типов копии: ключ — значение kind. */
+  kindText?: Record<string, string>
+  /** Подписи состояний: ключ — значение state. */
+  stateText?: Record<string, string>
   className?: string
   style?: CSSProperties
 }
@@ -40,14 +60,17 @@ export type Dashboard045Props = {
 // а не в общем меню.
 const STYLES = `
 :where([data-vibeui-block="dashboard-045"]){
---vibeui-dashboard-045-bg:oklch(0.985 0.003 230);
---vibeui-dashboard-045-card:oklch(1 0 0);
---vibeui-dashboard-045-fg:oklch(0.22 0.014 230);
---vibeui-dashboard-045-muted:oklch(0.55 0.014 230);
---vibeui-dashboard-045-border:oklch(0.91 0.006 230);
---vibeui-dashboard-045-accent:oklch(0.5 0.14 230);
---vibeui-dashboard-045-soft:oklch(0.96 0.02 230);
---vibeui-dashboard-045-bad:oklch(0.58 0.19 25);
+--vibeui-dashboard-045-bg:transparent;
+/* Панели и жёлоб полосы: подложка блока прозрачна, и рисовать их ею нечем. */
+--vibeui-dashboard-045-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 230));
+--vibeui-dashboard-045-track:light-dark(oklch(0.96 0.005 230),oklch(0.21 0.012 230));
+--vibeui-dashboard-045-fg:light-dark(oklch(0.22 0.014 230),oklch(0.94 0.005 230));
+--vibeui-dashboard-045-muted:light-dark(oklch(0.55 0.014 230),oklch(0.72 0.012 230));
+--vibeui-dashboard-045-border:light-dark(oklch(0.91 0.006 230),oklch(0.36 0.012 230));
+--vibeui-dashboard-045-accent:light-dark(oklch(0.5 0.14 230),oklch(0.74 0.13 230));
+--vibeui-dashboard-045-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 230));
+--vibeui-dashboard-045-soft:light-dark(oklch(0.96 0.02 230),oklch(0.32 0.045 230));
+--vibeui-dashboard-045-bad:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.17 25));
 --vibeui-dashboard-045-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-dashboard-045-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;
@@ -71,7 +94,7 @@ margin:0;font-size:0.75rem;color:var(--vibeui-dashboard-045-muted);
 [data-vibeui-block="dashboard-045"] [data-part="run"]{
 appearance:none;border:0;cursor:pointer;font:inherit;margin-left:auto;
 font-size:0.8125rem;font-weight:700;padding:0.5rem 0.9375rem;border-radius:0.625rem;
-background:var(--vibeui-dashboard-045-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-045-accent);color:var(--vibeui-dashboard-045-on-accent);
 }
 [data-vibeui-block="dashboard-045"] [data-part="quota"]{
 grid-column:1/-1;display:grid;gap:0.3125rem;padding:0.75rem 0.875rem;border-radius:0.875rem;
@@ -87,7 +110,7 @@ color:var(--vibeui-dashboard-045-muted);font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="dashboard-045"] [data-part="track"]{
 height:0.4375rem;border-radius:9999px;overflow:hidden;
-background:var(--vibeui-dashboard-045-bg);
+background:var(--vibeui-dashboard-045-track);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-045-border);
 }
 [data-vibeui-block="dashboard-045"] [data-part="fill"]{
@@ -238,6 +261,47 @@ const DEFAULT_POINTS: Dashboard045Point[] = [
   },
 ]
 
+const COLUMN_LABEL: Record<string, string> = {
+  when: "Когда",
+  kind: "Тип",
+  size: "Размер",
+  state: "Состояние",
+  action: "Действие",
+}
+
+const KIND_LABEL: Record<string, string> = {
+  Полный: "Полный",
+  Разностный: "Разностный",
+}
+
+const STATE_LABEL: Record<string, string> = {
+  Готов: "Готов",
+  Проверяется: "Проверяется",
+  "С ошибкой": "С ошибкой",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Экран резервных копий: расписания переключателями, занятое место полосой и
  * таблица точек восстановления с действием в строке. Один файл, ноль
@@ -253,11 +317,27 @@ export function Dashboard045({
   restoreLabel = "Восстановить",
   runLabel = "Сделать копию сейчас",
   accent,
+  background = "",
+  pointsTitle = "Точки восстановления",
+  plansTitle = "Расписание",
+  storageLabel = "Занято в хранилище",
+  usedText = "{used} из {quota} ГБ",
+  quotaAriaText = "Хранилище занято на {value} процентов",
+  planAriaText = "Расписание «{name}»",
+  columnsText = COLUMN_LABEL,
+  kindText = KIND_LABEL,
+  stateText = STATE_LABEL,
   className,
   style,
 }: Dashboard045Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-045-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-045-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -285,9 +365,11 @@ export function Dashboard045({
 
           <div data-part="quota">
             <p data-part="cap">
-              <span>Занято в хранилище</span>
+              <span>{storageLabel}</span>
               <span>
-                {usedGb} из {quotaGb} ГБ
+                {usedText
+                  .replace("{used}", String(usedGb))
+                  .replace("{quota}", String(quotaGb))}
               </span>
             </p>
             <div
@@ -296,25 +378,29 @@ export function Dashboard045({
               aria-valuenow={share}
               aria-valuemin={0}
               aria-valuemax={100}
-              aria-label={`Хранилище занято на ${share} процентов`}
+              aria-label={quotaAriaText.replace("{value}", String(share))}
             >
               <span data-part="fill" style={{ width: `${share}%` }} />
             </div>
           </div>
 
           <div data-part="panel">
-            <h3>Точки восстановления</h3>
+            <h3>{pointsTitle}</h3>
             <div data-part="scroll">
               <table>
-                <caption hidden>Точки восстановления</caption>
+                <caption hidden>{pointsTitle}</caption>
                 <thead>
                   <tr>
-                    <th scope="col">Когда</th>
-                    <th scope="col">Тип</th>
-                    <th scope="col">Размер</th>
-                    <th scope="col">Состояние</th>
+                    <th scope="col">{columnsText.when ?? COLUMN_LABEL.when}</th>
+                    <th scope="col">{columnsText.kind ?? COLUMN_LABEL.kind}</th>
+                    <th scope="col">{columnsText.size ?? COLUMN_LABEL.size}</th>
                     <th scope="col">
-                      <span hidden>Действие</span>
+                      {columnsText.state ?? COLUMN_LABEL.state}
+                    </th>
+                    <th scope="col">
+                      <span hidden>
+                        {columnsText.action ?? COLUMN_LABEL.action}
+                      </span>
                     </th>
                   </tr>
                 </thead>
@@ -323,13 +409,17 @@ export function Dashboard045({
                     <tr key={point.stamp} data-state={point.state}>
                       <td data-part="stamp">{point.stamp}</td>
                       <td>
-                        <span data-part="kind">{point.kind}</span>
+                        <span data-part="kind">
+                          {kindText[point.kind] ?? point.kind}
+                        </span>
                       </td>
                       <td data-part="size">
                         {point.size} · {point.spent}
                       </td>
                       <td>
-                        <span data-part="state">{point.state}</span>
+                        <span data-part="state">
+                          {stateText[point.state] ?? point.state}
+                        </span>
                       </td>
                       <td>
                         <button
@@ -348,7 +438,7 @@ export function Dashboard045({
           </div>
 
           <div data-part="side">
-            <h3>Расписание</h3>
+            <h3>{plansTitle}</h3>
             {plans.map((plan) => (
               <div key={plan.name} data-part="plan">
                 <span data-part="pname">{plan.name}</span>
@@ -359,7 +449,7 @@ export function Dashboard045({
                   <input
                     type="checkbox"
                     defaultChecked={plan.on}
-                    aria-label={`Расписание «${plan.name}»`}
+                    aria-label={planAriaText.replace("{name}", plan.name)}
                   />
                   <span data-part="knob" aria-hidden="true" />
                 </span>

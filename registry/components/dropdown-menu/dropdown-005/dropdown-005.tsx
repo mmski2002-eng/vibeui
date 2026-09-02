@@ -15,7 +15,13 @@ export type Dropdown005Props = Omit<
   value?: string
   themes?: string[]
   onChange?: (value: string) => void
+  /** Подпись слева от кнопки. */
+  caption?: string
+  /** Заголовок радиогруппы внутри меню. */
+  groupLabel?: string
   accent?: string
+  /** Подложка панели и меню. Пусто — собственный фон по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: внутри меню живёт радиогруппа — выбор одного из
@@ -23,14 +29,18 @@ export type Dropdown005Props = Omit<
 // menuitemradio, обёртка помечена group, и меню закрывается сразу после
 // выбора: второй вариант выбирать уже нечего. Каждая тема несёт крошечный
 // образец из двух полос — словами «светлая» и «системная» не различаются.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте панель светлее фона страницы, а её граница светлее панели.
+// Полосы образца — исключение: они изображают сами темы и потому постоянны.
 const STYLES = `
 :where([data-vibeui-block="dropdown-005"]){
---vibeui-dropdown-005-bg:oklch(1 0 0);
---vibeui-dropdown-005-fg:oklch(0.24 0.014 285);
---vibeui-dropdown-005-muted:oklch(0.56 0.014 285);
---vibeui-dropdown-005-border:oklch(0.9 0.006 285);
---vibeui-dropdown-005-hover:oklch(0.96 0.004 285);
---vibeui-dropdown-005-accent:oklch(0.6 0.16 155);
+--vibeui-dropdown-005-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 285));
+--vibeui-dropdown-005-fg:light-dark(oklch(0.24 0.014 285),oklch(0.94 0.006 285));
+--vibeui-dropdown-005-muted:light-dark(oklch(0.56 0.014 285),oklch(0.7 0.012 285));
+--vibeui-dropdown-005-border:light-dark(oklch(0.9 0.006 285),oklch(0.37 0.012 285));
+--vibeui-dropdown-005-hover:light-dark(oklch(0.96 0.004 285),oklch(0.32 0.014 285));
+--vibeui-dropdown-005-accent:light-dark(oklch(0.6 0.16 155),oklch(0.74 0.14 155));
 --vibeui-dropdown-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="dropdown-005"]{
@@ -128,6 +138,28 @@ function stepFocus(menu: HTMLElement | null, delta: number) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Меню с радиогруппой внутри: один выбранный вариант, образцы вместо слов.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -136,7 +168,10 @@ export function Dropdown005({
   value = "Как в системе",
   themes = DEFAULT_THEMES,
   onChange,
+  caption = "Внешний вид",
+  groupLabel = "Тема",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -153,6 +188,12 @@ export function Dropdown005({
 
   const palette = {
     ...(accent ? { "--vibeui-dropdown-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dropdown-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -167,7 +208,7 @@ export function Dropdown005({
         className={className}
         style={palette}
       >
-        <span data-part="caption">Внешний вид</span>
+        <span data-part="caption">{caption}</span>
         <button
           type="button"
           data-part="trigger"
@@ -212,7 +253,7 @@ export function Dropdown005({
           }}
         >
           <div data-part="title" id={`${id}-title`}>
-            Тема
+            {groupLabel}
           </div>
           <div role="group" aria-labelledby={`${id}-title`}>
             {themes.map((theme, index) => (

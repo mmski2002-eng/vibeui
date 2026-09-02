@@ -9,7 +9,13 @@ export type Dropdown014Props = Omit<
 > & {
   row?: string
   meta?: string
+  /** Доступное имя кнопки и меню. Плейсхолдер {row}. */
+  actionsLabelTemplate?: string
+  /** Пункты меню: ключи open, rename, duplicate, download, remove. */
+  itemsText?: Record<string, string>
   accent?: string
+  /** Подложка строки и меню. Пусто — собственный фон по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: контекстное меню одной строки таблицы. Кнопка «⋯» стоит
@@ -17,15 +23,18 @@ export type Dropdown014Props = Omit<
 // иначе десять одинаковых кнопок «Действия» неразличимы для скринридера.
 // Опасный пункт не прячется в отдельную зону, как в Danger Zone: здесь
 // достаточно линии и цвета текста внизу списка, без второго шага подтверждения.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте строка светлее фона страницы, а её граница светлее строки.
 const STYLES = `
 :where([data-vibeui-block="dropdown-014"]){
---vibeui-dropdown-014-bg:oklch(1 0 0);
---vibeui-dropdown-014-fg:oklch(0.24 0.014 240);
---vibeui-dropdown-014-muted:oklch(0.56 0.014 240);
---vibeui-dropdown-014-border:oklch(0.9 0.006 240);
---vibeui-dropdown-014-hover:oklch(0.96 0.004 240);
---vibeui-dropdown-014-danger:oklch(0.56 0.19 25);
---vibeui-dropdown-014-accent:oklch(0.55 0.16 240);
+--vibeui-dropdown-014-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 240));
+--vibeui-dropdown-014-fg:light-dark(oklch(0.24 0.014 240),oklch(0.94 0.006 240));
+--vibeui-dropdown-014-muted:light-dark(oklch(0.56 0.014 240),oklch(0.7 0.012 240));
+--vibeui-dropdown-014-border:light-dark(oklch(0.9 0.006 240),oklch(0.37 0.012 240));
+--vibeui-dropdown-014-hover:light-dark(oklch(0.96 0.004 240),oklch(0.32 0.014 240));
+--vibeui-dropdown-014-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25));
+--vibeui-dropdown-014-accent:light-dark(oklch(0.55 0.16 240),oklch(0.75 0.13 240));
 --vibeui-dropdown-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="dropdown-014"]{
@@ -97,6 +106,36 @@ height:1px;margin:0.3125rem 0.25rem;background:var(--vibeui-dropdown-014-border)
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="dropdown-014"] *{animation:none!important;transition:none!important}}
 `
 
+const DEFAULT_ITEMS: Record<string, string> = {
+  open: "Открыть",
+  rename: "Переименовать",
+  duplicate: "Дублировать",
+  download: "Скачать",
+  remove: "Удалить строку",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function stepFocus(menu: HTMLElement | null, delta: number) {
   if (!menu) {
     return
@@ -121,7 +160,10 @@ function stepFocus(menu: HTMLElement | null, delta: number) {
 export function Dropdown014({
   row = "Отчёт по продажам.xlsx",
   meta = "Изменён вчера в 14:02",
+  actionsLabelTemplate = "Действия со строкой: {row}",
+  itemsText = DEFAULT_ITEMS,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -136,8 +178,17 @@ export function Dropdown014({
     trigger.current?.focus()
   }
 
+  const actionsLabel = actionsLabelTemplate.replace("{row}", row)
+  const item = (key: string) => itemsText[key] ?? DEFAULT_ITEMS[key]
+
   const palette = {
     ...(accent ? { "--vibeui-dropdown-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dropdown-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -163,7 +214,7 @@ export function Dropdown014({
           popoverTarget={`${id}-menu`}
           aria-haspopup="menu"
           aria-expanded={open}
-          aria-label={`Действия со строкой: ${row}`}
+          aria-label={actionsLabel}
           onKeyDown={(event) => {
             if (event.key === "ArrowDown") {
               event.preventDefault()
@@ -194,7 +245,7 @@ export function Dropdown014({
           ref={menu}
           popover="auto"
           role="menu"
-          aria-label={`Действия со строкой: ${row}`}
+          aria-label={actionsLabel}
           data-part="menu"
           onToggle={(event) => setOpen(event.newState === "open")}
           onKeyDown={(event) => {
@@ -213,7 +264,7 @@ export function Dropdown014({
             data-part="item"
             onClick={close}
           >
-            Открыть
+            {item("open")}
           </button>
           <button
             type="button"
@@ -221,7 +272,7 @@ export function Dropdown014({
             data-part="item"
             onClick={close}
           >
-            Переименовать
+            {item("rename")}
           </button>
           <button
             type="button"
@@ -229,7 +280,7 @@ export function Dropdown014({
             data-part="item"
             onClick={close}
           >
-            Дублировать
+            {item("duplicate")}
           </button>
           <button
             type="button"
@@ -237,7 +288,7 @@ export function Dropdown014({
             data-part="item"
             onClick={close}
           >
-            Скачать
+            {item("download")}
           </button>
           <div data-part="rule" role="separator" />
           <button
@@ -247,7 +298,7 @@ export function Dropdown014({
             data-danger="true"
             onClick={close}
           >
-            Удалить строку
+            {item("remove")}
           </button>
         </div>
       </div>

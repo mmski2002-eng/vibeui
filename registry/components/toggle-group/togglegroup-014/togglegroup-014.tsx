@@ -13,7 +13,13 @@ export type Togglegroup014Props = Omit<
 > & {
   label?: string
   defaultValue?: string
+  /** Подписи приоритетов: компонент несёт русские, проект подставляет свои. */
+  optionText?: Record<string, string>
+  /** Строка статуса; {label} — подпись выбранного приоритета. */
+  currentText?: string
   onChange?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,16 +27,21 @@ export type Togglegroup014Props = Omit<
 // собственная всплывающая подсказка. Подсказка — это не title браузера:
 // она рисуется span'ом с role="tooltip", связана с кнопкой через
 // aria-describedby и появляется по наведению и по фокусу одинаково.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="togglegroup-014"]){
---vibeui-togglegroup-014-bg:oklch(1 0 0);
---vibeui-togglegroup-014-fg:oklch(0.22 0.014 265);
---vibeui-togglegroup-014-muted:oklch(0.55 0.014 265);
---vibeui-togglegroup-014-border:oklch(0.9 0.006 265);
---vibeui-togglegroup-014-surface:oklch(0.97 0.004 265);
---vibeui-togglegroup-014-accent:oklch(0.6 0.19 40);
---vibeui-togglegroup-014-tip-bg:oklch(0.22 0.014 265);
---vibeui-togglegroup-014-tip-fg:oklch(0.98 0 0);
+--vibeui-togglegroup-014-bg:transparent;
+--vibeui-togglegroup-014-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-togglegroup-014-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-togglegroup-014-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-togglegroup-014-surface:light-dark(oklch(0.97 0.004 265),oklch(0.27 0.011 265));
+--vibeui-togglegroup-014-raised:light-dark(oklch(1 0 0),oklch(0.36 0.014 265));
+--vibeui-togglegroup-014-shade:light-dark(oklch(0.2 0.02 265 / 16%),oklch(0 0 0 / 38%));
+--vibeui-togglegroup-014-accent:light-dark(oklch(0.6 0.19 40),oklch(0.76 0.15 45));
+--vibeui-togglegroup-014-tip-bg:light-dark(oklch(0.22 0.014 265),oklch(0.9 0.008 265));
+--vibeui-togglegroup-014-tip-fg:light-dark(oklch(0.98 0 0),oklch(0.2 0.014 265));
 --vibeui-togglegroup-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="togglegroup-014"]{
@@ -60,8 +71,8 @@ transition:background-color .15s ease,color .15s ease;
 outline:2px solid var(--vibeui-togglegroup-014-accent);outline-offset:1px;
 }
 [data-vibeui-block="togglegroup-014"] button[aria-pressed="true"]{
-background:var(--vibeui-togglegroup-014-bg);color:var(--vibeui-togglegroup-014-accent);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 16%);
+background:var(--vibeui-togglegroup-014-raised);color:var(--vibeui-togglegroup-014-accent);
+box-shadow:0 1px 2px var(--vibeui-togglegroup-014-shade);
 }
 [data-vibeui-block="togglegroup-014"] [data-part="tip"]{
 position:absolute;bottom:calc(100% + 0.5rem);left:50%;transform:translateX(-50%);
@@ -81,11 +92,40 @@ margin:0;font-size:0.8125rem;color:var(--vibeui-togglegroup-014-muted);
 `
 
 const OPTIONS = [
-  { id: "low", label: "Низкий", d: "M3 11h10M6 8h4M8 5h.01" },
-  { id: "medium", label: "Средний", d: "M3 11h10M5 8h6M8 5h.01" },
-  { id: "high", label: "Высокий", d: "M3 11h10M4.5 8h7M6.5 5h3" },
-  { id: "urgent", label: "Срочно", d: "M8 3v6M8 12h.01" },
+  { id: "low", d: "M3 11h10M6 8h4M8 5h.01" },
+  { id: "medium", d: "M3 11h10M5 8h6M8 5h.01" },
+  { id: "high", d: "M3 11h10M4.5 8h7M6.5 5h3" },
+  { id: "urgent", d: "M8 3v6M8 12h.01" },
 ]
+
+const OPTION_LABEL: Record<string, string> = {
+  low: "Низкий",
+  medium: "Средний",
+  high: "Высокий",
+  urgent: "Срочно",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Одиночный выбор приоритета значками с собственными всплывающими
@@ -94,7 +134,10 @@ const OPTIONS = [
 export function Togglegroup014({
   label = "Приоритет",
   defaultValue = "medium",
+  optionText = OPTION_LABEL,
+  currentText = "Выбран приоритет: {label}.",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -107,8 +150,16 @@ export function Togglegroup014({
 
   const palette = {
     ...(accent ? { "--vibeui-togglegroup-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-togglegroup-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const labelFor = (id: string) => optionText[id] ?? OPTION_LABEL[id] ?? id
 
   const focusAt = (index: number) => {
     const last = OPTIONS.length - 1
@@ -167,7 +218,7 @@ export function Togglegroup014({
                   }}
                   type="button"
                   aria-pressed={value === option.id}
-                  aria-label={option.label}
+                  aria-label={labelFor(option.id)}
                   aria-describedby={open ? tipId : undefined}
                   tabIndex={value === option.id ? 0 : -1}
                   onKeyDown={(event) => onKeyDown(event, index)}
@@ -191,7 +242,7 @@ export function Togglegroup014({
                 </button>
                 {open ? (
                   <span data-part="tip" role="tooltip" id={tipId}>
-                    {option.label}
+                    {labelFor(option.id)}
                   </span>
                 ) : null}
               </span>
@@ -199,7 +250,7 @@ export function Togglegroup014({
           })}
         </div>
         <p data-part="current" role="status">
-          Выбран приоритет: {current.label}.
+          {currentText.replace("{label}", labelFor(current.id))}
         </p>
       </section>
     </>

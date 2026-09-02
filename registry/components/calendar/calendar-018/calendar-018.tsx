@@ -13,9 +13,15 @@ export type Calendar018Props = Omit<
   /** Сколько дат можно выбрать одновременно. */
   max?: number
   emptyHint?: string
+  /** Подпись сетки для скринридера. */
+  groupLabel?: string
+  /** Подпись чипа снятия. {date} подставляется. */
+  removeLabelText?: string
   locale?: string
   onChange?: (dates: string[]) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: выбор нескольких несмежных дат. Диапазон здесь не
@@ -24,12 +30,13 @@ export type Calendar018Props = Omit<
 // труднее, чем в коротком списке под ней.
 const STYLES = `
 :where([data-vibeui-block="calendar-018"]){
---vibeui-calendar-018-bg:oklch(1 0 0);
---vibeui-calendar-018-fg:oklch(0.24 0.014 265);
---vibeui-calendar-018-muted:oklch(0.62 0.014 265);
---vibeui-calendar-018-border:oklch(0.91 0.006 265);
---vibeui-calendar-018-hover:oklch(0.96 0.004 265);
---vibeui-calendar-018-accent:oklch(0.52 0.16 300);
+--vibeui-calendar-018-bg:transparent;
+--vibeui-calendar-018-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-calendar-018-muted:light-dark(oklch(0.62 0.014 265),oklch(0.67 0.013 265));
+--vibeui-calendar-018-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-calendar-018-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-calendar-018-accent:light-dark(oklch(0.52 0.16 300),oklch(0.74 0.14 300));
+--vibeui-calendar-018-on-accent:light-dark(oklch(0.99 0.01 300),oklch(0.2 0.04 300));
 --vibeui-calendar-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="calendar-018"]{
@@ -70,7 +77,7 @@ transition:background-color .14s ease;
 [data-vibeui-block="calendar-018"] [data-part="grid"] button:hover:not([aria-disabled="true"]){background:var(--vibeui-calendar-018-hover)}
 [data-vibeui-block="calendar-018"] [data-part="grid"] button:focus-visible{outline:2px solid var(--vibeui-calendar-018-accent);outline-offset:-2px}
 [data-vibeui-block="calendar-018"] [data-part="grid"] button[aria-pressed="true"]{
-background:var(--vibeui-calendar-018-accent);color:oklch(0.99 0.01 300);font-weight:700;
+background:var(--vibeui-calendar-018-accent);color:var(--vibeui-calendar-018-on-accent);font-weight:700;
 }
 /* Лимит не прячет кнопку: она остаётся видимой и приглушённой, иначе
    исчезающие клетки читаются как ошибка вёрстки. */
@@ -110,6 +117,35 @@ function iso(year: number, month: number, day: number) {
   return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`
 }
 
+function fillText(template: string, values: Record<string, string | number>) {
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, key) => `${values[key] ?? match}`,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Мультивыбор несмежных дат: сетка месяца плюс чипы со снятием.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -120,9 +156,12 @@ export function Calendar018({
   month = 3,
   max = 5,
   emptyHint = "Отметьте дни смен — подряд идти не обязано",
+  groupLabel = "Выбор нескольких дат",
+  removeLabelText = "Убрать {date}",
   locale = "ru-RU",
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -149,6 +188,12 @@ export function Calendar018({
 
   const palette = {
     ...(accent ? { "--vibeui-calendar-018-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-018-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -182,7 +227,7 @@ export function Calendar018({
             {selected.length} / {max}
           </span>
         </div>
-        <div data-part="grid" role="group" aria-label="Выбор нескольких дат">
+        <div data-part="grid" role="group" aria-label={groupLabel}>
           {weekdays.map((label) => (
             <span key={label} data-part="wd" aria-hidden="true">
               {label}
@@ -218,7 +263,9 @@ export function Calendar018({
                   type="button"
                   data-part="chip"
                   onClick={() => toggle(value)}
-                  aria-label={`Убрать ${long.format(new Date(`${value}T00:00:00`))}`}
+                  aria-label={fillText(removeLabelText, {
+                    date: long.format(new Date(`${value}T00:00:00`)),
+                  })}
                 >
                   {chipLabel.format(new Date(`${value}T00:00:00`))}
                   <i aria-hidden="true" />

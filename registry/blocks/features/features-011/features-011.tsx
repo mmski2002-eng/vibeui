@@ -11,6 +11,8 @@ export type Features011Props = {
     action: { label: string; href: string }
   }
   minor?: { title: string; description: string }[]
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   accentForeground?: string
   className?: string
@@ -23,13 +25,19 @@ export type Features011Props = {
 // четыре узкие колонки нейтральным текстом: они поддерживают главное, а не
 // конкурируют с ним. Кнопка на залитой полосе инвертирована в цвет фона
 // секции — на плотном фоне это единственный способ удержать контраст.
+//
+// Тема берётся из color-scheme окружения через light-dark(): секция темнеет
+// вместе с контекстом и не выкладывает под себя плашку. Кнопка на полосе
+// инвертирована в accent-fg, а не в фон секции: фон по умолчанию прозрачный,
+// и на залитой полосе кнопка иначе исчезла бы. Полоса остаётся плотной в обеих
+// темах — светлеет она ровно настолько, чтобы не проваливаться в тёмный фон.
 const STYLES = `
 :where([data-vibeui-block="features-011"]){
---vibeui-features-011-bg:oklch(0.99 0.003 20);
---vibeui-features-011-fg:oklch(0.2 0.014 20);
---vibeui-features-011-muted:oklch(0.51 0.014 20);
---vibeui-features-011-line:oklch(0.89 0.008 20);
---vibeui-features-011-accent:oklch(0.5 0.17 22);
+--vibeui-features-011-bg:transparent;
+--vibeui-features-011-fg:light-dark(oklch(0.2 0.014 20),oklch(0.95 0.006 20));
+--vibeui-features-011-muted:light-dark(oklch(0.51 0.014 20),oklch(0.72 0.014 20));
+--vibeui-features-011-line:light-dark(oklch(0.89 0.008 20),oklch(0.35 0.012 20));
+--vibeui-features-011-accent:light-dark(oklch(0.5 0.17 22),oklch(0.56 0.18 22));
 --vibeui-features-011-accent-fg:oklch(0.99 0.004 20);
 --vibeui-features-011-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -58,11 +66,11 @@ margin:0.875rem 0 0;max-width:38rem;font-size:0.9375rem;line-height:1.6;opacity:
 }
 [data-vibeui-block="features-011"] a{
 display:inline-flex;align-items:center;justify-content:center;margin-top:1.5rem;height:2.75rem;padding:0 1.5rem;
-border-radius:0.625rem;background:var(--vibeui-features-011-bg);color:var(--vibeui-features-011-accent);
+border-radius:0.625rem;background:var(--vibeui-features-011-accent-fg);color:var(--vibeui-features-011-accent);
 font-size:0.9375rem;font-weight:650;text-decoration:none;transition:opacity .16s ease;
 }
 [data-vibeui-block="features-011"] a:hover{opacity:.9}
-[data-vibeui-block="features-011"] a:focus-visible{outline:2px solid var(--vibeui-features-011-bg);outline-offset:3px}
+[data-vibeui-block="features-011"] a:focus-visible{outline:2px solid var(--vibeui-features-011-accent-fg);outline-offset:3px}
 [data-vibeui-block="features-011"] [data-part="metricbox"]{
 display:flex;flex-direction:column;justify-content:center;padding-top:1.5rem;
 border-top:1px solid color-mix(in oklab,var(--vibeui-features-011-accent-fg) 30%,transparent);
@@ -123,12 +131,35 @@ const DEFAULT_MINOR = [
   },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Преимущества с акцентом на главном: залитая полоса сверху, четыре второстепенных снизу. */
 export function Features011({
   eyebrow = "Почему это работает",
   headline = "Одно преимущество важнее остальных четырёх вместе взятых",
   main = DEFAULT_MAIN,
   minor = DEFAULT_MINOR,
+  background = "",
   accent,
   accentForeground,
   className,
@@ -138,6 +169,12 @@ export function Features011({
     ...(accent ? { "--vibeui-features-011-accent": accent } : null),
     ...(accentForeground
       ? { "--vibeui-features-011-accent-fg": accentForeground }
+      : null),
+    ...(background
+      ? {
+          "--vibeui-features-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
       : null),
     ...style,
   } as CSSProperties

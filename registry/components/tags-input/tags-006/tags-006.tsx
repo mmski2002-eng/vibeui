@@ -14,6 +14,16 @@ export type Tags006Props = Omit<
   label?: string
   groups?: string[]
   defaultValue?: { text: string; group: string }[]
+  /** Подпись крестика: {tag} — метка, {group} — её категория. */
+  removeText?: string
+  /** Подпись выбора категории для скринридера. */
+  groupText?: string
+  /** Плейсхолдер поля ввода. */
+  placeholderText?: string
+  /** Пояснение под полем. */
+  hintText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,19 +33,23 @@ export type Tags006Props = Omit<
 // «команда» и «срочность» различимы до чтения. Оттенок не выбирается вручную,
 // а считается из названия категории хеш-функцией: новая категория сразу
 // получает свой стабильный цвет, и палитру не нужно вести отдельным списком.
+//
+// Тема берётся из color-scheme окружения через light-dark(). Цвета чипа
+// считаются из оттенка и читаются в обеих темах, поэтому парой их не задают.
 const STYLES = `
 :where([data-vibeui-block="tags-006"]){
---vibeui-tags-006-surface:oklch(1 0 0);
---vibeui-tags-006-field:oklch(1 0 0);
---vibeui-tags-006-shell:oklch(0.9 0.006 265);
---vibeui-tags-006-fg:oklch(0.23 0.014 265);
---vibeui-tags-006-muted:oklch(0.55 0.014 265);
---vibeui-tags-006-border:oklch(0.88 0.008 265);
---vibeui-tags-006-accent:oklch(0.5 0.15 265);
+--vibeui-tags-006-surface:transparent;
+--vibeui-tags-006-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-tags-006-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.01 265));
+--vibeui-tags-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tags-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-tags-006-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-tags-006-accent:light-dark(oklch(0.5 0.15 265),oklch(0.76 0.14 265));
+--vibeui-tags-006-ring:light-dark(oklch(0.5 0.15 265 / 18%),oklch(0.76 0.14 265 / 28%));
 --vibeui-tags-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-tags-006-hue:265;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложка по умолчанию прозрачная: поле ложится на фон страницы. */
 [data-vibeui-block="tags-006"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:23rem;box-sizing:border-box;padding:0.875rem;
@@ -52,7 +66,7 @@ border:1px solid var(--vibeui-tags-006-border);border-radius:0.625rem;
 }
 [data-vibeui-block="tags-006"] [data-part="field"]:focus-within{
 border-color:var(--vibeui-tags-006-accent);
-box-shadow:0 0 0 2px oklch(0.5 0.15 265 / 18%);
+box-shadow:0 0 0 2px var(--vibeui-tags-006-ring);
 }
 /* Цвет считается из названия категории: палитру не надо вести отдельно. */
 [data-vibeui-block="tags-006"] [data-part="chip"]{
@@ -113,6 +127,28 @@ function hue(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Теги с цветными категориями: оттенок считается из названия категории.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -120,6 +156,11 @@ export function Tags006({
   label = "Метки задачи",
   groups = DEFAULT_GROUPS,
   defaultValue = DEFAULT_TAGS,
+  removeText = "Убрать {tag} из категории {group}",
+  groupText = "Категория тега",
+  placeholderText = "Новая метка…",
+  hintText = "Категория задаётся до ввода — цвет метки берётся из её названия",
+  background = "",
   accent,
   className,
   style,
@@ -145,6 +186,12 @@ export function Tags006({
 
   const palette = {
     ...(accent ? { "--vibeui-tags-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tags-006-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -173,7 +220,9 @@ export function Tags006({
               {tag.text}
               <button
                 type="button"
-                aria-label={`Убрать ${tag.text} из категории ${tag.group}`}
+                aria-label={removeText
+                  .replace("{tag}", tag.text)
+                  .replace("{group}", tag.group)}
                 onClick={() =>
                   setTags(tags.filter((item) => item.text !== tag.text))
                 }
@@ -189,7 +238,7 @@ export function Tags006({
         >
           <select
             value={group}
-            aria-label="Категория тега"
+            aria-label={groupText}
             onChange={(event) => setGroup(event.target.value)}
           >
             {groups.map((item) => (
@@ -202,14 +251,14 @@ export function Tags006({
             id={id}
             type="text"
             value={draft}
-            placeholder="Новая метка…"
+            placeholder={placeholderText}
             aria-describedby={`${id}-hint`}
             onChange={(event) => setDraft(event.target.value)}
             onKeyDown={onKeyDown}
           />
         </div>
         <p id={`${id}-hint`} data-part="hint">
-          Категория задаётся до ввода — цвет метки берётся из её названия
+          {hintText}
         </p>
       </div>
     </>

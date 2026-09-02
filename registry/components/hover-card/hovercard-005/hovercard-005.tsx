@@ -12,18 +12,31 @@ export type Hovercard005Props = Omit<
   category?: string
   /** Смежные термины: подсказка ведёт к соседним статьям словаря. */
   related?: string[]
+  /** Текст строки до сокращения. */
+  leadText?: string
+  /** Текст строки после сокращения. */
+  tailText?: string
+  /** Подпись перед списком смежных терминов. */
+  relatedLabel?: string
+  accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: словарная статья у сокращения в тексте. От подсказки она
 // отличается структурой: расшифровка, раздел, определение и смежные термины —
 // это карточка справочника, а не короткая реплика.
+//
+// Тема берётся из color-scheme окружения через light-dark(): собственной
+// тёмной темы у компонента нет, он следует за страницей.
 const STYLES = `
 :where([data-vibeui-block="hovercard-005"]){
---vibeui-hovercard-005-bg:oklch(0.995 0.004 90);
---vibeui-hovercard-005-fg:oklch(0.24 0.014 265);
---vibeui-hovercard-005-muted:oklch(0.52 0.014 265);
---vibeui-hovercard-005-border:oklch(0.89 0.01 90);
---vibeui-hovercard-005-accent:oklch(0.48 0.13 45);
+--vibeui-hovercard-005-bg:transparent;
+--vibeui-hovercard-005-card:light-dark(oklch(0.995 0.004 90),oklch(0.26 0.012 70));
+--vibeui-hovercard-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 90));
+--vibeui-hovercard-005-muted:light-dark(oklch(0.52 0.014 265),oklch(0.73 0.012 90));
+--vibeui-hovercard-005-border:light-dark(oklch(0.89 0.01 90),oklch(0.37 0.014 70));
+--vibeui-hovercard-005-accent:light-dark(oklch(0.48 0.13 45),oklch(0.79 0.13 55));
 --vibeui-hovercard-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="hovercard-005"]{
@@ -50,7 +63,7 @@ width:19rem;box-sizing:border-box;padding:0.875rem;
 border:1px solid var(--vibeui-hovercard-005-border);
 border-left:3px solid var(--vibeui-hovercard-005-accent);
 border-radius:0.75rem;
-background:var(--vibeui-hovercard-005-bg);
+background:var(--vibeui-hovercard-005-card);
 box-shadow:0 22px 46px -28px oklch(0.25 0.03 60 / 55%);
 opacity:0;visibility:hidden;translate:0 -0.25rem;
 transition:opacity .15s ease,translate .15s ease,visibility .15s;
@@ -78,6 +91,28 @@ font-size:0.75rem;color:var(--vibeui-hovercard-005-muted);
 const DEFAULT_RELATED = ["TTFB", "кеш на краю", "прогрев"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Карточка термина глоссария: расшифровка, раздел, определение и смежные слова.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -87,10 +122,26 @@ export function Hovercard005({
   definition = "Сеть серверов, раздающих статические файлы из точки, ближайшей к посетителю. Сокращает задержку и снимает нагрузку с основного сервера.",
   category = "инфраструктура",
   related = DEFAULT_RELATED,
+  leadText = "Статику мы раздаём через ",
+  tailText = ", поэтому первая загрузка идёт из ближайшего города.",
+  relatedLabel = "см. также: ",
+  accent,
+  background = "",
   className,
   style,
   ...props
 }: Hovercard005Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-hovercard-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-hovercard-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-hovercard-005" precedence="medium">
@@ -100,10 +151,10 @@ export function Hovercard005({
         {...props}
         data-vibeui-block="hovercard-005"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <p data-part="line">
-          Статику мы раздаём через{" "}
+          {leadText}
           <span data-part="host">
             <span
               data-part="term"
@@ -124,12 +175,13 @@ export function Hovercard005({
               <span data-part="definition">{definition}</span>
               {related.length > 0 ? (
                 <span data-part="related">
-                  см. также: <b>{related.join(", ")}</b>
+                  {relatedLabel}
+                  <b>{related.join(", ")}</b>
                 </span>
               ) : null}
             </span>
           </span>
-          , поэтому первая загрузка идёт из ближайшего города.
+          {tailText}
         </p>
       </div>
     </>

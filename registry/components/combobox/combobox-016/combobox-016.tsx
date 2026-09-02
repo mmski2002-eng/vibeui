@@ -13,6 +13,18 @@ export type Combobox016Props = Omit<
   defaultValue?: string[]
   maxItems?: number
   onChange?: (values: string[]) => void
+  /** Заголовок списка фишек для скринридера. */
+  chipsLabel?: string
+  /** Подпись кнопки снятия; {item} — название значения. */
+  removeText?: string
+  /** Подпись на пределе; {max} — сам потолок. */
+  fullText?: string
+  /** Подпись с остатком; {count} — число, {noun} — слово из itemForms. */
+  leftText?: string
+  /** Три формы слова для счёта: 1 навык, 2 навыка, 5 навыков. */
+  itemForms?: string[]
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,15 +34,16 @@ export type Combobox016Props = Omit<
 // списка, а не как красный текст постфактум.
 const STYLES = `
 :where([data-vibeui-block="combobox-016"]){
---vibeui-combobox-016-bg:oklch(1 0 0);
---vibeui-combobox-016-fg:oklch(0.22 0.014 145);
---vibeui-combobox-016-muted:oklch(0.55 0.014 145);
---vibeui-combobox-016-border:oklch(0.9 0.008 145);
---vibeui-combobox-016-field:oklch(0.985 0.004 145);
---vibeui-combobox-016-soft:oklch(0.96 0.008 145);
---vibeui-combobox-016-accent:oklch(0.47 0.11 145);
---vibeui-combobox-016-accentsoft:oklch(0.93 0.05 145);
---vibeui-combobox-016-warn:oklch(0.55 0.13 55);
+--vibeui-combobox-016-bg:transparent;
+--vibeui-combobox-016-fg:light-dark(oklch(0.22 0.014 145),oklch(0.94 0.006 145));
+--vibeui-combobox-016-muted:light-dark(oklch(0.55 0.014 145),oklch(0.7 0.012 145));
+--vibeui-combobox-016-border:light-dark(oklch(0.9 0.008 145),oklch(0.35 0.012 145));
+--vibeui-combobox-016-field:light-dark(oklch(0.985 0.004 145),oklch(0.27 0.012 145));
+--vibeui-combobox-016-soft:light-dark(oklch(0.96 0.008 145),oklch(0.31 0.014 145));
+--vibeui-combobox-016-accent:light-dark(oklch(0.47 0.11 145),oklch(0.74 0.12 145));
+--vibeui-combobox-016-accentsoft:light-dark(oklch(0.93 0.05 145),oklch(0.35 0.05 145));
+--vibeui-combobox-016-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.02 145));
+--vibeui-combobox-016-warn:light-dark(oklch(0.55 0.13 55),oklch(0.78 0.13 55));
 --vibeui-combobox-016-radius:0.625rem;
 --vibeui-combobox-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -66,7 +79,7 @@ appearance:none;cursor:pointer;font:inherit;border:0;background:transparent;colo
 display:inline-flex;align-items:center;justify-content:center;
 width:1.1rem;height:1.1rem;border-radius:999px;font-size:0.85rem;line-height:1;
 }
-[data-vibeui-block="combobox-016"] [data-part="drop"]:hover{background:var(--vibeui-combobox-016-bg)}
+[data-vibeui-block="combobox-016"] [data-part="drop"]:hover{background:var(--vibeui-combobox-016-field)}
 [data-vibeui-block="combobox-016"] [data-part="drop"]:focus-visible{
 outline:2px solid var(--vibeui-combobox-016-accent);outline-offset:1px;
 }
@@ -104,12 +117,12 @@ outline:2px solid var(--vibeui-combobox-016-accent);outline-offset:-2px;
 display:flex;align-items:center;justify-content:center;flex:none;
 width:1.05rem;height:1.05rem;border-radius:0.3rem;
 border:1px solid var(--vibeui-combobox-016-border);
-background:var(--vibeui-combobox-016-bg);
+background:var(--vibeui-combobox-016-field);
 font-size:0.7rem;line-height:1;color:transparent;
 }
 [data-vibeui-block="combobox-016"] [data-part="option"][aria-selected="true"] [data-part="box"]{
 background:var(--vibeui-combobox-016-accent);border-color:transparent;
-color:var(--vibeui-combobox-016-bg);
+color:var(--vibeui-combobox-016-onaccent);
 }
 [data-vibeui-block="combobox-016"] [data-part="note"]{
 margin:0;font-size:0.78rem;color:var(--vibeui-combobox-016-muted);
@@ -131,7 +144,10 @@ const SKILLS = [
   "Figma",
 ]
 
-function pluralize(count: number, forms: [string, string, string]) {
+const ITEM_FORMS = ["навык", "навыка", "навыков"]
+
+/** Три формы слова: русский счёт требует их, английскому хватит двух. */
+function pluralize(count: number, forms: string[]) {
   const tens = count % 100
   const ones = count % 10
 
@@ -140,6 +156,28 @@ function pluralize(count: number, forms: [string, string, string]) {
   if (ones > 1 && ones < 5) return forms[1]
 
   return forms[2]
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -153,6 +191,12 @@ export function Combobox016({
   defaultValue = ["TypeScript", "React"],
   maxItems = 5,
   onChange,
+  chipsLabel = "Выбранные навыки",
+  removeText = "Убрать {item}",
+  fullText = "Предел {max}: снимите один навык, чтобы добавить другой",
+  leftText = "Можно добавить ещё {count} {noun}",
+  itemForms = ITEM_FORMS,
+  background = "",
   accent,
   className,
   style,
@@ -185,6 +229,12 @@ export function Combobox016({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -207,14 +257,14 @@ export function Combobox016({
           </span>
         </div>
         {values.length > 0 ? (
-          <ul data-part="chips" aria-label="Выбранные навыки">
+          <ul data-part="chips" aria-label={chipsLabel}>
             {values.map((entry) => (
               <li key={entry} data-part="chip">
                 {entry}
                 <button
                   type="button"
                   data-part="drop"
-                  aria-label={`Убрать ${entry}`}
+                  aria-label={removeText.replace("{item}", entry)}
                   onClick={() => toggle(entry)}
                 >
                   ×
@@ -267,8 +317,10 @@ export function Combobox016({
         </ul>
         <p id={`${id}-note`} data-part="note" aria-live="polite">
           {full
-            ? `Предел ${maxItems}: снимите один навык, чтобы добавить другой`
-            : `Можно добавить ещё ${left} ${pluralize(left, ["навык", "навыка", "навыков"])}`}
+            ? fullText.replace("{max}", String(maxItems))
+            : leftText
+                .replace("{count}", String(left))
+                .replace("{noun}", pluralize(left, itemForms))}
         </p>
       </div>
     </>

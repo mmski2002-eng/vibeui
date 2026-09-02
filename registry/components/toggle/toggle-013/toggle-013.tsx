@@ -10,8 +10,16 @@ export type Toggle013Props = Omit<
   fieldLabel?: string
   defaultValue?: string
   defaultPressed?: boolean
+  /** Подписи кнопки: ключи show и hide. Компонент несёт русские. */
+  buttonText?: Record<string, string>
+  /** Имена действия для скринридера: ключи show и hide. */
+  actionText?: Record<string, string>
+  /** Строка исхода: ключи visible и hidden. */
+  statusText?: Record<string, string>
   onChange?: (visible: boolean) => void
   accent?: string
+  /** Пусто — подложки у поля нет, оно лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: кнопка «показать пароль» стоит внутри поля, рядом с
@@ -19,12 +27,12 @@ export type Toggle013Props = Omit<
 // живая строка снаружи объявляет исход для тех, кто не видит текст на экране.
 const STYLES = `
 :where([data-vibeui-block="toggle-013"]){
---vibeui-toggle-013-bg:oklch(1 0 0);
---vibeui-toggle-013-fg:oklch(0.22 0.014 265);
---vibeui-toggle-013-muted:oklch(0.55 0.014 265);
---vibeui-toggle-013-border:oklch(0.82 0.006 265);
---vibeui-toggle-013-accent:oklch(0.56 0.16 255);
---vibeui-toggle-013-hover:oklch(0.96 0.004 265);
+--vibeui-toggle-013-bg:transparent;
+--vibeui-toggle-013-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-013-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-toggle-013-border:light-dark(oklch(0.82 0.006 265),oklch(0.42 0.014 265));
+--vibeui-toggle-013-accent:light-dark(oklch(0.56 0.16 255),oklch(0.74 0.15 255));
+--vibeui-toggle-013-hover:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.01 265));
 --vibeui-toggle-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="toggle-013"]{
@@ -72,6 +80,43 @@ margin:0;font-size:0.75rem;color:var(--vibeui-toggle-013-muted);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="toggle-013"] *{animation:none!important;transition:none!important}}
 `
 
+const BUTTON_TEXT: Record<string, string> = {
+  show: "Показать",
+  hide: "Скрыть",
+}
+
+const ACTION_TEXT: Record<string, string> = {
+  show: "Показать пароль",
+  hide: "Скрыть пароль",
+}
+
+const STATUS_TEXT: Record<string, string> = {
+  visible: "Пароль виден",
+  hidden: "Пароль скрыт",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Поле пароля с кнопкой видимости внутри поля: aria-controls связывает
  * кнопку с input, живая строка объявляет исход. Один файл, ноль зависимостей.
@@ -80,17 +125,29 @@ export function Toggle013({
   fieldLabel = "Пароль",
   defaultValue = "SuperSecret123",
   defaultPressed = false,
+  buttonText = BUTTON_TEXT,
+  actionText = ACTION_TEXT,
+  statusText = STATUS_TEXT,
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Toggle013Props) {
   const [visible, setVisible] = useState(defaultPressed)
   const id = useId()
+  const actionKey = visible ? "hide" : "show"
+  const statusKey = visible ? "visible" : "hidden"
 
   const palette = {
     ...(accent ? { "--vibeui-toggle-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-toggle-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -117,7 +174,7 @@ export function Toggle013({
             type="button"
             aria-pressed={visible}
             aria-controls={id}
-            aria-label={visible ? "Скрыть пароль" : "Показать пароль"}
+            aria-label={actionText[actionKey] ?? ACTION_TEXT[actionKey]}
             onClick={() => {
               setVisible(!visible)
               onChange?.(!visible)
@@ -133,11 +190,11 @@ export function Toggle013({
                 <circle cx="10" cy="10" r="2.2" />
               </svg>
             )}
-            {visible ? "Скрыть" : "Показать"}
+            {buttonText[actionKey] ?? BUTTON_TEXT[actionKey]}
           </button>
         </div>
         <p data-part="hint" role="status">
-          {visible ? "Пароль виден" : "Пароль скрыт"}
+          {statusText[statusKey] ?? STATUS_TEXT[statusKey]}
         </p>
       </div>
     </>

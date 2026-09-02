@@ -6,6 +6,14 @@ export type Badge020Props = Omit<
 > & {
   days?: number
   warnAt?: number
+  /** Формулировки состояний: {days} подставляется числом со словом. */
+  stateText?: Record<string, string>
+  /** Формы слова «день» по ключам Intl.PluralRules. */
+  dayForms?: Record<string, string>
+  /** Локаль склонения и форматирования числа. */
+  locale?: string
+  /** Пусто — плашка держит собственную заливку состояния. */
+  background?: string
 }
 
 // Идея компонента: срок, у которого меняется не только тон, но и формулировка.
@@ -17,10 +25,10 @@ const STYLES = `
 :where([data-vibeui-block="badge-020"]){
 --vibeui-badge-020-hue:265;
 --vibeui-badge-020-chroma:0.02;
---vibeui-badge-020-bg:oklch(0.97 calc(var(--vibeui-badge-020-chroma) * 0.4) var(--vibeui-badge-020-hue));
---vibeui-badge-020-fg:oklch(0.36 var(--vibeui-badge-020-chroma) var(--vibeui-badge-020-hue));
---vibeui-badge-020-border:oklch(0.89 calc(var(--vibeui-badge-020-chroma) * 0.6) var(--vibeui-badge-020-hue));
---vibeui-badge-020-mark:oklch(0.55 calc(var(--vibeui-badge-020-chroma) * 1.4) var(--vibeui-badge-020-hue));
+--vibeui-badge-020-bg:light-dark(oklch(0.97 calc(var(--vibeui-badge-020-chroma) * 0.4) var(--vibeui-badge-020-hue)),oklch(0.28 calc(var(--vibeui-badge-020-chroma) * 0.7) var(--vibeui-badge-020-hue)));
+--vibeui-badge-020-fg:light-dark(oklch(0.36 var(--vibeui-badge-020-chroma) var(--vibeui-badge-020-hue)),oklch(0.92 calc(var(--vibeui-badge-020-chroma) * 0.5) var(--vibeui-badge-020-hue)));
+--vibeui-badge-020-border:light-dark(oklch(0.89 calc(var(--vibeui-badge-020-chroma) * 0.6) var(--vibeui-badge-020-hue)),oklch(0.42 calc(var(--vibeui-badge-020-chroma) * 0.9) var(--vibeui-badge-020-hue)));
+--vibeui-badge-020-mark:light-dark(oklch(0.55 calc(var(--vibeui-badge-020-chroma) * 1.4) var(--vibeui-badge-020-hue)),oklch(0.76 calc(var(--vibeui-badge-020-chroma) * 1.1) var(--vibeui-badge-020-hue)));
 --vibeui-badge-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="badge-020"]{
@@ -40,24 +48,42 @@ width:0.875rem;height:0.875rem;flex:none;color:var(--vibeui-badge-020-mark);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="badge-020"] *{animation:none!important;transition:none!important}}
 `
 
-/** Русское склонение: 1 день, 3 дня, 11 дней. */
-function plural(count: number) {
-  const rest100 = count % 100
-  const rest10 = count % 10
+/** Формулировки по умолчанию — русские: установленный файл не меняет язык. */
+const STATE_TEXT: Record<string, string> = {
+  expired: "Просрочено на {days}",
+  today: "Истекает сегодня",
+  soon: "Истекает через {days}",
+  calm: "Ещё {days}",
+}
 
-  if (rest100 >= 11 && rest100 <= 14) {
-    return "дней"
+/** Склонение считает Intl: правила языка не зашиты в компонент. */
+const DAY_FORMS: Record<string, string> = {
+  one: "день",
+  few: "дня",
+  many: "дней",
+  other: "дня",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
   }
 
-  if (rest10 === 1) {
-    return "день"
-  }
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
 
-  if (rest10 >= 2 && rest10 <= 4) {
-    return "дня"
-  }
-
-  return "дней"
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -67,6 +93,10 @@ function plural(count: number) {
 export function Badge020({
   days = 3,
   warnAt = 7,
+  stateText = STATE_TEXT,
+  dayForms = DAY_FORMS,
+  locale = "ru",
+  background = "",
   className,
   style,
   ...props
@@ -83,14 +113,20 @@ export function Badge020({
           ? "soon"
           : "calm"
 
-  const text =
-    state === "expired"
-      ? `Просрочено на ${overdue} ${plural(overdue)}`
-      : state === "today"
-        ? "Истекает сегодня"
-        : state === "soon"
-          ? `Истекает через ${left} ${plural(left)}`
-          : `Ещё ${left} ${plural(left)}`
+  const rule = new Intl.PluralRules(locale).select(overdue)
+  const counted = `${overdue} ${dayForms[rule] ?? dayForms.other ?? ""}`.trim()
+  const template = stateText[state] ?? STATE_TEXT[state]
+  const text = template.replace("{days}", counted)
+
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-badge-020-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -102,7 +138,7 @@ export function Badge020({
         data-vibeui-block="badge-020"
         data-state={state}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <svg
           data-part="icon"

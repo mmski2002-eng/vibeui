@@ -23,6 +23,20 @@ export type Dashboard051Props = {
   raiseLabel?: string
   ratesTitle?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
+  /** Шаблон предела рядом с расходом: {limit}. */
+  ofText?: string
+  /** Подписи зон: ok, warn, over. */
+  zoneText?: Record<string, string>
+  /** Шаблон строки под полосой: {share}, {unit} и {warn}. */
+  metaText?: string
+  /** Шаблон подписи полосы: {name} и {value}. */
+  usageAriaText?: string
+  /** Шаблон подсказки засечки: {value}. */
+  notchTitleText?: string
   className?: string
   style?: CSSProperties
 }
@@ -37,15 +51,18 @@ export type Dashboard051Props = {
 // вынесены отдельным списком: их не расходуют, они просто действуют.
 const STYLES = `
 :where([data-vibeui-block="dashboard-051"]){
---vibeui-dashboard-051-bg:oklch(0.985 0.003 275);
---vibeui-dashboard-051-card:oklch(1 0 0);
---vibeui-dashboard-051-fg:oklch(0.22 0.014 275);
---vibeui-dashboard-051-muted:oklch(0.55 0.014 275);
---vibeui-dashboard-051-border:oklch(0.91 0.006 275);
---vibeui-dashboard-051-accent:oklch(0.52 0.16 275);
---vibeui-dashboard-051-soft:oklch(0.96 0.02 275);
---vibeui-dashboard-051-warn:oklch(0.68 0.15 70);
---vibeui-dashboard-051-over:oklch(0.58 0.19 25);
+--vibeui-dashboard-051-bg:transparent;
+/* Карточки и жёлоб полосы: подложка блока прозрачна, и рисовать их ею нечем. */
+--vibeui-dashboard-051-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 275));
+--vibeui-dashboard-051-track:light-dark(oklch(0.96 0.005 275),oklch(0.21 0.012 275));
+--vibeui-dashboard-051-fg:light-dark(oklch(0.22 0.014 275),oklch(0.94 0.005 275));
+--vibeui-dashboard-051-muted:light-dark(oklch(0.55 0.014 275),oklch(0.72 0.012 275));
+--vibeui-dashboard-051-border:light-dark(oklch(0.91 0.006 275),oklch(0.36 0.012 275));
+--vibeui-dashboard-051-accent:light-dark(oklch(0.52 0.16 275),oklch(0.75 0.14 275));
+--vibeui-dashboard-051-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 275));
+--vibeui-dashboard-051-soft:light-dark(oklch(0.96 0.02 275),oklch(0.32 0.045 275));
+--vibeui-dashboard-051-warn:light-dark(oklch(0.68 0.15 70),oklch(0.82 0.13 70));
+--vibeui-dashboard-051-over:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.17 25));
 --vibeui-dashboard-051-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -64,7 +81,7 @@ border:1px solid var(--vibeui-dashboard-051-border);border-radius:1rem;padding:1
 [data-vibeui-block="dashboard-051"] [data-part="raise"]{
 appearance:none;border:0;cursor:pointer;font:inherit;margin-left:auto;
 font-size:0.8125rem;font-weight:700;padding:0.5rem 0.9375rem;border-radius:0.625rem;
-background:var(--vibeui-dashboard-051-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-051-accent);color:var(--vibeui-dashboard-051-on-accent);
 }
 [data-vibeui-block="dashboard-051"] [data-part="grid"]{display:grid;grid-template-columns:1fr;gap:0.625rem}
 [data-vibeui-block="dashboard-051"] article{
@@ -73,7 +90,7 @@ background:var(--vibeui-dashboard-051-card);
 border:1px solid var(--vibeui-dashboard-051-border);border-radius:0.875rem;
 }
 [data-vibeui-block="dashboard-051"] article[data-zone="over"]{
-border-color:color-mix(in oklab,var(--vibeui-dashboard-051-over) 50%,white);
+border-color:color-mix(in oklab,var(--vibeui-dashboard-051-over) 50%,var(--vibeui-dashboard-051-card));
 }
 [data-vibeui-block="dashboard-051"] [data-part="top"]{
 display:flex;flex-wrap:wrap;align-items:baseline;gap:0.25rem 0.5rem;
@@ -87,7 +104,7 @@ font-weight:400;color:var(--vibeui-dashboard-051-muted);
 }
 [data-vibeui-block="dashboard-051"] [data-part="track"]{
 position:relative;height:0.5rem;border-radius:9999px;
-background:var(--vibeui-dashboard-051-bg);
+background:var(--vibeui-dashboard-051-track);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-051-border);overflow:hidden;
 }
 [data-vibeui-block="dashboard-051"] [data-part="fill"]{
@@ -202,6 +219,34 @@ const DEFAULT_RATES: Dashboard051Rate[] = [
   },
 ]
 
+const ZONE_LABEL: Record<string, string> = {
+  ok: "в пределах нормы",
+  warn: "порог пройден",
+  over: "лимит превышен",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Экран лимитов и квот: расход полосой с засечкой порога предупреждения,
  * последствие превышения текстом и список жёстких ограничений. Один файл,
@@ -215,11 +260,24 @@ export function Dashboard051({
   raiseLabel = "Увеличить лимиты",
   ratesTitle = "Жёсткие ограничения",
   accent,
+  background = "",
+  locale = "ru-RU",
+  ofText = "из {limit}",
+  zoneText = ZONE_LABEL,
+  metaText = "{share} % · {unit} · порог {warn} %",
+  usageAriaText = "{name}: израсходовано {value} процентов",
+  notchTitleText = "Порог предупреждения: {value} %",
   className,
   style,
 }: Dashboard051Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-051-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-051-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -254,8 +312,13 @@ export function Dashboard051({
                   <div data-part="top">
                     <h3>{quota.name}</h3>
                     <span data-part="nums">
-                      {quota.used.toLocaleString("ru-RU")}{" "}
-                      <span>из {quota.limit.toLocaleString("ru-RU")}</span>
+                      {quota.used.toLocaleString(locale)}{" "}
+                      <span>
+                        {ofText.replace(
+                          "{limit}",
+                          quota.limit.toLocaleString(locale),
+                        )}
+                      </span>
                     </span>
                   </div>
 
@@ -265,7 +328,9 @@ export function Dashboard051({
                     aria-valuenow={quota.used}
                     aria-valuemin={0}
                     aria-valuemax={quota.limit}
-                    aria-label={`${quota.name}: израсходовано ${share} процентов`}
+                    aria-label={usageAriaText
+                      .replace("{name}", quota.name)
+                      .replace("{value}", String(share))}
                   >
                     <span
                       data-part="fill"
@@ -274,20 +339,22 @@ export function Dashboard051({
                     <span
                       data-part="notch"
                       style={{ left: `${quota.warnAt}%` }}
-                      title={`Порог предупреждения: ${quota.warnAt} %`}
+                      title={notchTitleText.replace(
+                        "{value}",
+                        String(quota.warnAt),
+                      )}
                     />
                   </div>
 
                   <p data-part="foot">
                     <span data-part="zone">
-                      {zone === "over"
-                        ? "лимит превышен"
-                        : zone === "warn"
-                          ? "порог пройден"
-                          : "в пределах нормы"}
+                      {zoneText[zone] ?? ZONE_LABEL[zone]}
                     </span>
                     <span>
-                      {share} % · {quota.unit} · порог {quota.warnAt} %
+                      {metaText
+                        .replace("{share}", String(share))
+                        .replace("{unit}", quota.unit)
+                        .replace("{warn}", String(quota.warnAt))}
                     </span>
                   </p>
 

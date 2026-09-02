@@ -8,6 +8,13 @@ export type Inputgroup005Props = Omit<
   label?: string
   scopes?: string[]
   placeholder?: string
+  /** Подпись кнопки отправки. */
+  action?: string
+  /** Подпись списка областей для чтения вслух. */
+  scopeLabel?: string
+  hint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -16,16 +23,20 @@ export type Inputgroup005Props = Omit<
 // элемента в одной рамке. Такой порядок не случаен: сначала «где», потом
 // «что», потом «найти» — сцепка читается как фраза. Форма настоящая, поэтому
 // Enter в поле отправляет запрос без единого обработчика клавиш.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-005"]){
---vibeui-inputgroup-005-surface:oklch(1 0 0);
---vibeui-inputgroup-005-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-005-fg:oklch(0.23 0.014 265);
---vibeui-inputgroup-005-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-005-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-005-fixed:oklch(0.955 0.004 265);
---vibeui-inputgroup-005-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-005-accent:oklch(0.5 0.18 275);
+--vibeui-inputgroup-005-surface:transparent;
+--vibeui-inputgroup-005-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-inputgroup-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-inputgroup-005-field:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.013 265));
+--vibeui-inputgroup-005-fixed:light-dark(oklch(0.955 0.004 265),oklch(0.32 0.012 265));
+--vibeui-inputgroup-005-border:light-dark(oklch(0.86 0.008 265),oklch(0.44 0.013 265));
+--vibeui-inputgroup-005-accent:light-dark(oklch(0.5 0.18 275),oklch(0.7 0.16 275));
+--vibeui-inputgroup-005-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 275));
 --vibeui-inputgroup-005-radius:999px;
 --vibeui-inputgroup-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -77,7 +88,7 @@ appearance:none;flex:none;cursor:pointer;
 display:inline-flex;align-items:center;gap:0.375rem;padding:0 1.125rem;
 background:var(--vibeui-inputgroup-005-accent);
 border-color:var(--vibeui-inputgroup-005-accent);
-color:oklch(1 0 0);font-weight:650;
+color:var(--vibeui-inputgroup-005-on-accent);font-weight:650;
 transition:filter .16s ease;
 }
 [data-vibeui-block="inputgroup-005"] button:hover{filter:brightness(1.08)}
@@ -89,6 +100,28 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-inputgroup-005-mut
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поиск с выбором области: select, поле и кнопка в одной сцепке.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -97,6 +130,10 @@ export function Inputgroup005({
   label = "Поиск по базе знаний",
   scopes = ["Везде", "В статьях", "В людях", "В задачах"],
   placeholder = "Что ищем?",
+  action = "Найти",
+  scopeLabel = "Где искать",
+  hint = "Область уходит вместе с запросом — ссылку на результат можно сохранить.",
+  background = "",
   accent,
   className,
   style,
@@ -104,6 +141,12 @@ export function Inputgroup005({
 }: Inputgroup005Props) {
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-005-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -125,7 +168,7 @@ export function Inputgroup005({
         <div data-part="group">
           <select
             name={`${name}-scope`}
-            aria-label="Где искать"
+            aria-label={scopeLabel}
             defaultValue={scopes[0]}
           >
             {scopes.map((scope) => (
@@ -152,12 +195,11 @@ export function Inputgroup005({
               <circle cx="7" cy="7" r="4.5" />
               <path d="m10.5 10.5 3 3" strokeLinecap="round" />
             </svg>
-            Найти
+            {action}
           </button>
         </div>
         <p data-part="hint" id={`${name}-hint`}>
-          Область уходит вместе с запросом — ссылку на результат можно
-          сохранить.
+          {hint}
         </p>
       </form>
     </>

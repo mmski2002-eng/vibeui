@@ -10,7 +10,14 @@ export type File006Props = Omit<
   label?: string
   formats?: string[]
   maxSizeMb?: number
+  /**
+   * Подписи поля: {formats} подставляет список расширений, {max} — предел
+   * в мегабайтах. Компонент несёт русские, проект подставляет свои.
+   */
+  text?: Record<string, string>
   onChange?: (name: string | null) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,19 +26,22 @@ export type File006Props = Omit<
 // проверяет вовсе. Поэтому условия выписаны списком заранее, а сообщение об
 // отказе говорит, что именно не подошло и каким был предел, — «неверный файл»
 // не помогает выбрать правильный со второй попытки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у поля
+// по умолчанию нет, оно лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="file-006"]){
---vibeui-file-006-surface:oklch(1 0 0);
---vibeui-file-006-tile:oklch(0.975 0.004 265);
---vibeui-file-006-fg:oklch(0.23 0.014 265);
---vibeui-file-006-muted:oklch(0.55 0.014 265);
---vibeui-file-006-border:oklch(0.88 0.008 265);
---vibeui-file-006-shell:oklch(0.91 0.006 265);
---vibeui-file-006-accent:oklch(0.52 0.16 145);
---vibeui-file-006-danger:oklch(0.55 0.19 25);
+--vibeui-file-006-surface:transparent;
+--vibeui-file-006-tile:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.012 265));
+--vibeui-file-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-file-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-file-006-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-file-006-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-file-006-accent:light-dark(oklch(0.52 0.16 145),oklch(0.76 0.15 145));
+--vibeui-file-006-danger:light-dark(oklch(0.55 0.19 25),oklch(0.72 0.17 25));
 --vibeui-file-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Панель без собственной заливки: рамка очерчивает поле на любом фоне. */
 [data-vibeui-block="file-006"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -86,14 +96,14 @@ border-radius:9999px;background:var(--vibeui-file-006-border);
 [data-vibeui-block="file-006"] [data-part="reject"]{
 display:flex;align-items:flex-start;gap:0.375rem;margin:0;
 padding:0.4375rem 0.5rem;border-radius:0.5rem;
-background:color-mix(in oklab,var(--vibeui-file-006-danger) 8%,oklch(1 0 0));
+background:color-mix(in oklab,var(--vibeui-file-006-danger) 12%,transparent);
 color:var(--vibeui-file-006-danger);
 font-size:0.75rem;line-height:1.4;font-weight:600;
 }
 [data-vibeui-block="file-006"] [data-part="mark"]{
 flex:none;display:grid;place-items:center;
 width:0.875rem;height:0.875rem;margin-top:0.0625rem;border-radius:9999px;
-background:var(--vibeui-file-006-danger);color:oklch(1 0 0);
+background:var(--vibeui-file-006-danger);color:light-dark(oklch(1 0 0),oklch(0.18 0.02 25));
 font-size:0.625rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="file-006"] [data-part="ok"]{
@@ -104,6 +114,41 @@ margin:0;font-size:0.75rem;font-weight:600;color:var(--vibeui-file-006-accent);
 
 const DEFAULT_FORMATS = ["pdf", "docx", "rtf"]
 
+const TEXT: Record<string, string> = {
+  badge: "ФАЙЛ",
+  pick: "Выбрать файл",
+  replace: "Заменить файл",
+  summary: "{formats} · до {max} МБ",
+  formatRule: "Формат: {formats}",
+  sizeRule: "Размер: не больше {max} МБ",
+  formatReject:
+    "Такой формат не принимаем. Подойдут {formats} — пересохраните и попробуйте снова.",
+  sizeReject: "Файл тяжелее {max} МБ. Сожмите его или выберите версию полегче.",
+  accepted: "Файл принят — правила соблюдены.",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Загрузка с проверкой типа и размера и понятным текстом отказа.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -112,7 +157,9 @@ export function File006({
   label = "Резюме",
   formats = DEFAULT_FORMATS,
   maxSizeMb = 5,
+  text = TEXT,
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -124,6 +171,12 @@ export function File006({
 
   const palette = {
     ...(accent ? { "--vibeui-file-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-file-006-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -153,6 +206,10 @@ export function File006({
   }
 
   const list = formats.join(", ")
+  const say = (key: string) =>
+    (text[key] ?? TEXT[key])
+      .replace("{formats}", list)
+      .replace("{max}", String(maxSizeMb))
 
   return (
     <>
@@ -169,11 +226,11 @@ export function File006({
         <span data-part="title">{label}</span>
         <label htmlFor={id}>
           <span data-part="badge" aria-hidden="true">
-            {formats[0]?.toUpperCase() ?? "ФАЙЛ"}
+            {formats[0]?.toUpperCase() ?? say("badge")}
           </span>
           <span data-part="pick">
-            <b>{accepted ? "Заменить файл" : "Выбрать файл"}</b>
-            <span>{accepted ?? `${list} · до ${maxSizeMb} МБ`}</span>
+            <b>{accepted ? say("replace") : say("pick")}</b>
+            <span>{accepted ?? say("summary")}</span>
           </span>
           <input
             id={id}
@@ -185,10 +242,10 @@ export function File006({
 
         <ul>
           <li data-broken={reject === "format" ? "true" : undefined}>
-            Формат: {list}
+            {say("formatRule")}
           </li>
           <li data-broken={reject === "size" ? "true" : undefined}>
-            Размер: не больше {maxSizeMb} МБ
+            {say("sizeRule")}
           </li>
         </ul>
 
@@ -197,13 +254,11 @@ export function File006({
             <span data-part="mark" aria-hidden="true">
               !
             </span>
-            {reject === "format"
-              ? `Такой формат не принимаем. Подойдут ${list} — пересохраните и попробуйте снова.`
-              : `Файл тяжелее ${maxSizeMb} МБ. Сожмите его или выберите версию полегче.`}
+            {reject === "format" ? say("formatReject") : say("sizeReject")}
           </p>
         ) : accepted ? (
           <p data-part="ok" role="status">
-            Файл принят — правила соблюдены.
+            {say("accepted")}
           </p>
         ) : null}
       </div>

@@ -18,7 +18,13 @@ export type Solutions025Props = {
   approveLabel?: string
   hideLabel?: string
   banLabel?: string
+  /** Итог очереди. {total} — всего карточек, {urgent} — срочных. */
+  queueSummary?: string
+  /** Счётчик жалоб на карточке. {count} — их число. */
+  reportsText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,14 +40,14 @@ export type Solutions025Props = {
 // кнопки в ряд с разным весом, безвозвратное действие визуально последнее.
 const STYLES = `
 :where([data-vibeui-block="solutions-025"]){
---vibeui-solutions-025-bg:oklch(1 0 0);
---vibeui-solutions-025-panel:oklch(0.975 0.004 265);
---vibeui-solutions-025-fg:oklch(0.21 0.014 265);
---vibeui-solutions-025-muted:oklch(0.54 0.014 265);
---vibeui-solutions-025-border:oklch(0.9 0.006 265);
---vibeui-solutions-025-accent:oklch(0.53 0.15 250);
---vibeui-solutions-025-ok:oklch(0.55 0.14 150);
---vibeui-solutions-025-danger:oklch(0.57 0.19 25);
+--vibeui-solutions-025-bg:transparent;
+--vibeui-solutions-025-panel:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-solutions-025-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-025-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-025-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-025-accent:light-dark(oklch(0.53 0.15 250),oklch(0.74 0.13 250));
+--vibeui-solutions-025-ok:light-dark(oklch(0.55 0.14 150),oklch(0.62 0.15 150));
+--vibeui-solutions-025-danger:light-dark(oklch(0.57 0.19 25),oklch(0.71 0.16 25));
 --vibeui-solutions-025-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -173,6 +179,28 @@ const DEFAULT_ITEMS: Solutions025Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Очередь модерации: цитата целиком, срок ожидания и три решения в ряд.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -183,14 +211,26 @@ export function Solutions025({
   approveLabel = "Опубликовать",
   hideLabel = "Скрыть",
   banLabel = "Заблокировать автора",
+  queueSummary = "В очереди {total} · срочных {urgent}",
+  reportsText = "{count} жалоб",
   accent,
+  background = "",
   className,
   style,
 }: Solutions025Props) {
   const urgent = items.filter((item) => item.severity === "high").length
+  const summary = queueSummary
+    .replace("{total}", String(items.length))
+    .replace("{urgent}", String(urgent))
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-025-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-025-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -210,9 +250,7 @@ export function Solutions025({
             <h2>{title}</h2>
             <p data-part="note">{queueNote}</p>
           </div>
-          <p data-part="note">
-            В очереди {items.length} · срочных {urgent}
-          </p>
+          <p data-part="note">{summary}</p>
         </header>
 
         <div data-part="list">
@@ -230,7 +268,9 @@ export function Solutions025({
 
               <p data-part="why">
                 <span data-part="reason">{item.reason}</span>
-                <span data-part="reports">{item.reports} жалоб</span>
+                <span data-part="reports">
+                  {reportsText.replace("{count}", String(item.reports))}
+                </span>
                 <span>· {item.posted}</span>
               </p>
 

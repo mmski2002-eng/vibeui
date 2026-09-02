@@ -11,6 +11,10 @@ export type Breadcrumb003Props = Omit<
 > & {
   items?: Breadcrumb003Item[]
   homeLabel?: string
+  /** Подпись навигации: компонент несёт русскую, проект подставляет свою. */
+  navLabel?: string
+  /** Пусто — подложки нет, крошки лежат прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,22 +22,24 @@ export type Breadcrumb003Props = Omit<
 // Домик — не картинка: домик и шеврон нарисованы бордюрами, поэтому путь
 // весит столько же, сколько текст. У домика есть подпись для скринридера:
 // иконка без имени в навигации — тупик.
+//
+// Тема берётся из color-scheme окружения через light-dark(): крошки темнеют
+// вместе со страницей и не выкладывают под себя плашку.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-003"]){
---vibeui-breadcrumb-003-surface:oklch(1 0 0);
---vibeui-breadcrumb-003-surface-border:oklch(0.91 0.006 265);
---vibeui-breadcrumb-003-fg:oklch(0.28 0.016 265);
---vibeui-breadcrumb-003-muted:oklch(0.56 0.014 265);
---vibeui-breadcrumb-003-line:oklch(0.78 0.01 265);
---vibeui-breadcrumb-003-accent:oklch(0.55 0.17 265);
+--vibeui-breadcrumb-003-fg:light-dark(oklch(0.28 0.016 265),oklch(0.93 0.008 265));
+--vibeui-breadcrumb-003-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-breadcrumb-003-line:light-dark(oklch(0.78 0.01 265),oklch(0.52 0.012 265));
+--vibeui-breadcrumb-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-breadcrumb-003-bg:transparent;
+--vibeui-breadcrumb-003-pad:0;
+--vibeui-breadcrumb-003-radius:0;
 --vibeui-breadcrumb-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Собственная подложка: крошки — это текст, и на тёмной странице
-   он обязан читаться без правки палитры проекта. */
 [data-vibeui-block="breadcrumb-003"]{
-box-sizing:border-box;padding:0.5rem 0.75rem;
-background:var(--vibeui-breadcrumb-003-surface);
-border:1px solid var(--vibeui-breadcrumb-003-surface-border);border-radius:0.625rem;
+box-sizing:border-box;padding:var(--vibeui-breadcrumb-003-pad);
+background:var(--vibeui-breadcrumb-003-bg);
+border-radius:var(--vibeui-breadcrumb-003-radius);
 font-family:var(--vibeui-breadcrumb-003-font);font-size:0.8125rem;line-height:1.4;
 color:var(--vibeui-breadcrumb-003-muted);
 }
@@ -78,12 +84,37 @@ const DEFAULT_ITEMS: Breadcrumb003Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Путь с домиком и шевронами, нарисованными бордюрами.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Breadcrumb003({
   items = DEFAULT_ITEMS,
   homeLabel = "На главную",
+  navLabel = "Хлебные крошки",
+  background = "",
   accent,
   className,
   style,
@@ -91,6 +122,14 @@ export function Breadcrumb003({
 }: Breadcrumb003Props) {
   const palette = {
     ...(accent ? { "--vibeui-breadcrumb-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-breadcrumb-003-bg": background,
+          "--vibeui-breadcrumb-003-pad": "0.5rem 0.75rem",
+          "--vibeui-breadcrumb-003-radius": "0.625rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -102,7 +141,7 @@ export function Breadcrumb003({
       <nav
         {...props}
         data-vibeui-block="breadcrumb-003"
-        aria-label="Хлебные крошки"
+        aria-label={navLabel}
         className={className}
         style={palette}
       >

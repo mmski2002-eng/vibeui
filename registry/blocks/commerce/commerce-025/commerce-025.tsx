@@ -14,9 +14,23 @@ export type Commerce025Props = {
   min?: number
   max?: number
   found?: number
+  /** Подпись кнопки: {count} подставляет число найденных товаров. */
   cta?: string
   reset?: string
+  /** Заголовок группы с диапазоном цены. */
+  priceTitle?: string
+  /** Скрытые подписи полей диапазона. */
+  priceFromLabel?: string
+  priceToLabel?: string
+  /** Подпись списка выбранных фильтров для скринридера. */
+  chipsLabel?: string
+  /** Подпись крестика на чипе: {chip} подставляет название фильтра. */
+  removeText?: string
+  /** Локаль форматирования чисел в полях цены. */
+  numberLocale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,18 +44,22 @@ export type Commerce025Props = {
 // три группы человек перестаёт помнить, что уже отметил.
 const STYLES = `
 :where([data-vibeui-block="commerce-025"]){
---vibeui-commerce-025-bg:oklch(1 0 0);
---vibeui-commerce-025-fg:oklch(0.21 0.014 265);
---vibeui-commerce-025-muted:oklch(0.55 0.014 265);
---vibeui-commerce-025-border:oklch(0.91 0.006 265);
---vibeui-commerce-025-soft:oklch(0.975 0.004 265);
---vibeui-commerce-025-accent:oklch(0.55 0.2 262);
+--vibeui-commerce-025-bg:transparent;
+--vibeui-commerce-025-radius:0;
+--vibeui-commerce-025-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-025-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-025-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-commerce-025-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-commerce-025-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-commerce-025-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
+--vibeui-commerce-025-ring:light-dark(oklch(0 0 0 / 15%),oklch(1 0 0 / 24%));
 --vibeui-commerce-025-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 [data-vibeui-block="commerce-025"]{
 box-sizing:border-box;
 background:var(--vibeui-commerce-025-bg);
+border-radius:var(--vibeui-commerce-025-radius);
 font-family:var(--vibeui-commerce-025-sans);color:var(--vibeui-commerce-025-fg);
 }
 [data-vibeui-block="commerce-025"] *{box-sizing:border-box}
@@ -88,7 +106,7 @@ display:flex;align-items:center;gap:0.5rem;cursor:pointer;font-size:0.8125rem;li
 [data-vibeui-block="commerce-025"] [data-part="num"]{margin-left:auto;font-size:0.6875rem;color:var(--vibeui-commerce-025-muted);font-variant-numeric:tabular-nums}
 [data-vibeui-block="commerce-025"] [data-part="dot"]{
 width:1rem;height:1rem;border-radius:9999px;flex:none;
-box-shadow:inset 0 0 0 1px oklch(0 0 0 / 15%);
+box-shadow:inset 0 0 0 1px var(--vibeui-commerce-025-ring);
 background:oklch(0.72 0.14 var(--vibeui-commerce-025-hue,262));
 }
 [data-vibeui-block="commerce-025"] [data-part="range"]{display:flex;align-items:center;gap:0.5rem;margin-top:0.5rem}
@@ -102,7 +120,7 @@ font-variant-numeric:tabular-nums;
 [data-vibeui-block="commerce-025"] [data-part="apply"]{
 position:sticky;bottom:0;width:100%;margin-top:0.875rem;appearance:none;border:0;cursor:pointer;
 height:2.5rem;border-radius:0.75rem;
-background:var(--vibeui-commerce-025-accent);color:oklch(1 0 0);font:inherit;font-size:0.875rem;font-weight:650;
+background:var(--vibeui-commerce-025-accent);color:var(--vibeui-commerce-025-on-accent);font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-025"] [data-part="apply"]:focus-visible{outline:2px solid var(--vibeui-commerce-025-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-025"] *{animation:none!important;transition:none!important}}
@@ -150,6 +168,28 @@ const DEFAULT_GROUPS: Commerce025Group[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Боковые фильтры каталога: числа у значений, группы в details, чипы наверху.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -160,14 +200,28 @@ export function Commerce025({
   min = 5000,
   max = 60000,
   found = 128,
-  cta = "Показать",
+  cta = "Показать {count} товаров",
   reset = "Сбросить",
+  priceTitle = "Цена, ₽",
+  priceFromLabel = "Цена от",
+  priceToLabel = "Цена до",
+  chipsLabel = "Выбранные фильтры",
+  removeText = "Снять фильтр «{chip}»",
+  numberLocale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Commerce025Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-025-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-025-bg": background,
+          "--vibeui-commerce-025-radius": "0.875rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -191,11 +245,14 @@ export function Commerce025({
           </div>
 
           {chips.length > 0 ? (
-            <ul data-part="chips" aria-label="Выбранные фильтры">
+            <ul data-part="chips" aria-label={chipsLabel}>
               {chips.map((chip) => (
                 <li key={chip} data-part="chip">
                   {chip}
-                  <button type="button" aria-label={`Снять фильтр «${chip}»`}>
+                  <button
+                    type="button"
+                    aria-label={removeText.replace("{chip}", chip)}
+                  >
                     ✕
                   </button>
                 </li>
@@ -204,28 +261,28 @@ export function Commerce025({
           ) : null}
 
           <details open>
-            <summary>Цена, ₽</summary>
+            <summary>{priceTitle}</summary>
             <div data-part="range">
               <label htmlFor="commerce-025-min" data-part="vh">
-                Цена от
+                {priceFromLabel}
               </label>
               <input
                 id="commerce-025-min"
                 type="text"
                 inputMode="numeric"
-                defaultValue={min.toLocaleString("ru-RU")}
+                defaultValue={min.toLocaleString(numberLocale)}
               />
               <span data-part="dash" aria-hidden="true">
                 —
               </span>
               <label htmlFor="commerce-025-max" data-part="vh">
-                Цена до
+                {priceToLabel}
               </label>
               <input
                 id="commerce-025-max"
                 type="text"
                 inputMode="numeric"
-                defaultValue={max.toLocaleString("ru-RU")}
+                defaultValue={max.toLocaleString(numberLocale)}
               />
             </div>
           </details>
@@ -269,7 +326,7 @@ export function Commerce025({
           ))}
 
           <button type="button" data-part="apply">
-            {cta} {found} товаров
+            {cta.replace("{count}", String(found))}
           </button>
         </div>
       </aside>

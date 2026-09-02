@@ -3,15 +3,27 @@
 import { useId, useState } from "react"
 import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
+export type Select020Preset = {
+  value: string
+  label: string
+}
+
 export type Select020Props = Omit<
   ComponentPropsWithoutRef<"div">,
   "children"
 > & {
   label?: string
   name?: string
+  /** Готовые периоды; последним пунктом список всегда добавляет свой диапазон. */
+  presets?: Select020Preset[]
+  customLabel?: string
+  fromLabel?: string
+  toLabel?: string
   defaultValue?: string
   defaultFrom?: string
   defaultTo?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,13 +32,13 @@ export type Select020Props = Omit<
 // "показать два поля дат"; сама дата хранится отдельно от выбора периода.
 const STYLES = `
 :where([data-vibeui-block="select-020"]){
---vibeui-select-020-surface:oklch(1 0 0);
---vibeui-select-020-surface-border:oklch(0.91 0.006 265);
---vibeui-select-020-fg:oklch(0.23 0.016 265);
---vibeui-select-020-muted:oklch(0.55 0.014 265);
---vibeui-select-020-field:oklch(0.985 0.002 265);
---vibeui-select-020-border:oklch(0.87 0.008 265);
---vibeui-select-020-accent:oklch(0.55 0.19 262);
+--vibeui-select-020-surface:transparent;
+--vibeui-select-020-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-select-020-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-020-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-020-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-select-020-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.012 265));
+--vibeui-select-020-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
 --vibeui-select-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="select-020"]{
@@ -89,7 +101,7 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-select-020-accent) 22%,tran
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="select-020"] *{animation:none!important;transition:none!important}}
 `
 
-const PRESETS = [
+const PRESETS: Select020Preset[] = [
   { value: "today", label: "Сегодня" },
   { value: "week", label: "Последние 7 дней" },
   { value: "month", label: "Последние 30 дней" },
@@ -99,6 +111,28 @@ const PRESETS = [
 const CUSTOM_VALUE = "custom"
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Select периода: обычные пресеты плюс пункт «Свой диапазон», который
  * раскрывает два поля дат. Один файл, ноль зависимостей, собственная
  * палитра.
@@ -106,9 +140,14 @@ const CUSTOM_VALUE = "custom"
 export function Select020({
   label = "Период",
   name,
+  presets = PRESETS,
+  customLabel = "Свой диапазон",
+  fromLabel = "С даты",
+  toLabel = "По дату",
   defaultValue = PRESETS[1].value,
   defaultFrom,
   defaultTo,
+  background = "",
   accent,
   id,
   className,
@@ -127,6 +166,12 @@ export function Select020({
 
   const palette = {
     ...(accent ? { "--vibeui-select-020-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-select-020-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -153,12 +198,12 @@ export function Select020({
             aria-expanded={isCustom}
             onChange={(event) => setValue(event.target.value)}
           >
-            {PRESETS.map((preset) => (
+            {presets.map((preset) => (
               <option key={preset.value} value={preset.value}>
                 {preset.label}
               </option>
             ))}
-            <option value={CUSTOM_VALUE}>Свой диапазон</option>
+            <option value={CUSTOM_VALUE}>{customLabel}</option>
           </select>
           <span data-part="arrow" aria-hidden="true" />
         </span>
@@ -166,7 +211,7 @@ export function Select020({
           <div data-part="range-inner">
             <span data-part="date-group">
               <label data-part="date-label" htmlFor={fromId}>
-                С даты
+                {fromLabel}
               </label>
               <input
                 id={fromId}
@@ -180,7 +225,7 @@ export function Select020({
             </span>
             <span data-part="date-group">
               <label data-part="date-label" htmlFor={toId}>
-                По дату
+                {toLabel}
               </label>
               <input
                 id={toId}

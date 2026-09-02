@@ -32,15 +32,21 @@
             "переключение открытого меню наведением на соседний заголовок",
             "возврат фокуса на заголовок после Escape",
             "role=\"menubar\" с именем и aria-expanded на заголовках",
-            "верхний слой у списка: меню обязано перекрывать содержимое"
+            "верхний слой у списка: меню обязано перекрывать содержимое",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив menus и их пункты",
             "обработчики выбора",
             "акцент через проп accent",
-            "высоту заголовков"
+            "высоту заголовков",
+            "menubarLabel — имя строки меню для скринридера",
+            "hint — подсказку под строкой",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Строка меню — настольный образец: на телефоне вместо неё нужен другой способ, обычно лист снизу.",
             "Вложенные подменю здесь не поддержаны: для них нужна рекурсия и своя клавиатурная модель.",
             "Пункты ничего не делают: обработчики навешивает вызывающий код.",
@@ -53,6 +59,19 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Стрелки ходят по разделам, стрелка вниз открывает список",
+            "maxLength": 64
           }
         ],
         "i18n": {
@@ -66,15 +85,21 @@
                 "switching the open menu by hovering a neighbouring title",
                 "returning focus to the title after Escape",
                 "role=\"menubar\" with a name and aria-expanded on the titles",
-                "the top layer on the list: a menu must overlap content"
+                "the top layer on the list: a menu must overlap content",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the menus array and their items",
                 "the selection handlers",
                 "the accent through the accent prop",
-                "the title height"
+                "the title height",
+                "menubarLabel — the menubar name for screen readers",
+                "hint — the line under the bar",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A menubar is a desktop pattern: phones need something else, usually a bottom sheet.",
                 "Nested submenus are out of scope: they need recursion and their own keyboard model.",
                 "The items do nothing: handlers belong to the caller.",
@@ -85,11 +110,43 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "Arrows move between sections, the down arrow opens the list"
               }
             },
-            "title": "Menubar"
+            "title": "Menubar",
+            "preview": {
+              "props": {
+                "menubarLabel": "Main menu",
+                "hint": "Arrows move between sections, the down arrow opens the list",
+                "menus": [
+                  {
+                    "label": "File",
+                    "items": ["New", "Open", "Save", "Export"]
+                  },
+                  {
+                    "label": "Edit",
+                    "items": ["Undo", "Redo", "Find and replace"]
+                  },
+                  {
+                    "label": "View",
+                    "items": ["Grid", "Rulers", "Dark theme"]
+                  },
+                  {
+                    "label": "Help",
+                    "items": ["Documentation", "Shortcuts"]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -120,15 +177,20 @@
             "уникальное имя якоря на пару кнопка-меню — иначе все меню встанут под первой кнопкой",
             "подсветку кнопки, пока её меню открыто",
             "сочетания клавиш справа от пункта, а не в его тексте",
-            "disabled вместо скрытия недоступного пункта: исчезающие пункты ломают память о меню"
+            "disabled вместо скрытия недоступного пункта: исчезающие пункты ломают память о меню",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив menus и их пункты",
             "обработчики пунктов",
             "акцент через проп accent",
-            "высоту строки меню"
+            "высоту строки меню",
+            "menubarLabel — имя строки меню для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Без поддержки anchor positioning меню открывается в центре экрана: проверьте целевые браузеры.",
             "Стрелки между разделами компонент не обрабатывает — переход идёт по Tab.",
             "Строка меню уместна в приложении, а не на лендинге: на сайте достаточно шапки и ссылок.",
@@ -139,6 +201,12 @@
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -154,15 +222,20 @@
                 "a unique anchor name per button-menu pair — otherwise every menu lands under the first button",
                 "the button staying highlighted while its menu is open",
                 "the shortcut to the right of the item rather than inside its text",
-                "disabled instead of hiding an unavailable item: vanishing items break the memory of a menu"
+                "disabled instead of hiding an unavailable item: vanishing items break the memory of a menu",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the menus array and their items",
                 "the item handlers",
                 "the accent through the accent prop",
-                "the menubar height"
+                "the menubar height",
+                "menubarLabel — the menubar name for screen readers",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Without anchor positioning support the menu opens centred: check your target browsers.",
                 "The component does not handle arrow keys between sections — Tab moves between them.",
                 "A menubar belongs in an application, not on a landing page: a header with links is enough there.",
@@ -173,11 +246,75 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "App Menubar"
+            "title": "App Menubar",
+            "preview": {
+              "props": {
+                "menubarLabel": "Application menu",
+                "menus": [
+                  {
+                    "label": "File",
+                    "items": [
+                      {
+                        "label": "New project",
+                        "keys": "⌘N"
+                      },
+                      {
+                        "label": "Open…",
+                        "keys": "⌘O"
+                      },
+                      {
+                        "label": "Save",
+                        "keys": "⌘S"
+                      },
+                      {
+                        "label": "Restore version",
+                        "disabled": true
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Edit",
+                    "items": [
+                      {
+                        "label": "Undo",
+                        "keys": "⌘Z"
+                      },
+                      {
+                        "label": "Redo",
+                        "keys": "⇧⌘Z"
+                      },
+                      {
+                        "label": "Find in project",
+                        "keys": "⌘F"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "View",
+                    "items": [
+                      {
+                        "label": "Show grid"
+                      },
+                      {
+                        "label": "Dark theme"
+                      },
+                      {
+                        "label": "Full screen",
+                        "keys": "F11"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -211,15 +348,21 @@
             "возврат фокуса на кнопку раздела при закрытии по Escape: без него фокус проваливается в начало документа",
             "aria-expanded на кнопке раздела: по нему скринридер понимает, раскрыт список или нет",
             "перенос фокуса вместе со сменой раздела — выбор без фокуса рассинхронизирует клавиатуру и глаз",
-            "слушатель pointerdown, закрывающий меню по клику мимо, и его снятие при закрытии — иначе он копится на каждом открытии"
+            "слушатель pointerdown, закрывающий меню по клику мимо, и его снятие при закрытии — иначе он копится на каждом открытии",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив menus: разделы, пункты, сочетания клавиш и признак disabled",
             "обработчики пунктов: сейчас клик только закрывает меню",
             "акцент через проп accent — цвет кольца фокуса",
-            "высоту строки меню и ширину выпадающих списков"
+            "высоту строки меню и ширину выпадающих списков",
+            "menubarLabel — имя строки меню для скринридера",
+            "hint — подсказку в правом краю строки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент клиентский: \"use client\" нужен ради состояния и обработки клавиш.",
             "Меню позиционируется абсолютно внутри своей обёртки: если строка меню лежит в контейнере с overflow:hidden, список обрежется.",
             "Первые буквы пунктов компонент не обрабатывает — в системных меню это привычный способ выбора, добавьте его при необходимости.",
@@ -232,6 +375,19 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "← → между разделами",
+            "maxLength": 32
           }
         ],
         "i18n": {
@@ -245,15 +401,21 @@
                 "returning focus to the section button when Escape closes the menu: without it focus falls back to the start of the document",
                 "aria-expanded on the section button: it is how a screen reader knows whether the list is open",
                 "moving focus together with the section change — a selection without focus splits the keyboard from the eye",
-                "the pointerdown listener that closes the menu on an outside click, and its removal on close — otherwise it piles up with every opening"
+                "the pointerdown listener that closes the menu on an outside click, and its removal on close — otherwise it piles up with every opening",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the menus array: sections, items, shortcuts and the disabled flag",
                 "the item handlers: a click currently only closes the menu",
                 "the accent through the accent prop — it colours the focus ring",
-                "the menubar height and the width of the drop-down lists"
+                "the menubar height and the width of the drop-down lists",
+                "menubarLabel — the menubar name for screen readers",
+                "hint — the note at the right end of the bar",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component is a client one: \"use client\" is there for the state and the key handling.",
                 "The menu is positioned absolutely inside its own wrapper: in a container with overflow:hidden the list gets clipped.",
                 "Type-ahead on item initials is not handled — it is a familiar shortcut in system menus, add it if you need it.",
@@ -264,11 +426,80 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "← → between sections"
               }
             },
-            "title": "Arrow Menubar"
+            "title": "Arrow Menubar",
+            "preview": {
+              "props": {
+                "menubarLabel": "Application menu",
+                "hint": "← → between sections",
+                "menus": [
+                  {
+                    "label": "File",
+                    "items": [
+                      {
+                        "label": "New project",
+                        "keys": "⌘N"
+                      },
+                      {
+                        "label": "Open…",
+                        "keys": "⌘O"
+                      },
+                      {
+                        "label": "Save",
+                        "keys": "⌘S"
+                      },
+                      {
+                        "label": "Restore version",
+                        "disabled": true
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Edit",
+                    "items": [
+                      {
+                        "label": "Undo",
+                        "keys": "⌘Z"
+                      },
+                      {
+                        "label": "Redo",
+                        "keys": "⇧⌘Z"
+                      },
+                      {
+                        "label": "Find in project",
+                        "keys": "⌘F"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "View",
+                    "items": [
+                      {
+                        "label": "Show grid"
+                      },
+                      {
+                        "label": "Show rulers"
+                      },
+                      {
+                        "label": "Full screen",
+                        "keys": "F11"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -302,15 +533,20 @@
             "сетку из двух колонок в пункте: сочетание должно стоять в общей колонке, иначе взгляд не находит его сверху вниз",
             "запись сочетания через Mod вместо жёстко вписанного ⌘: на Windows символ ⌘ ничего не значит",
             "каждую клавишу отдельным <kbd> — это семантика клавиши, а не украшение",
-            "disabled вместо скрытия недоступного пункта: исчезающие пункты ломают память о меню"
+            "disabled вместо скрытия недоступного пункта: исчезающие пункты ломают память о меню",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив menus и записи сочетаний в поле keys",
             "platform — под какую платформу разворачивать Mod",
             "акцент через проп accent — цвет кольца фокуса",
-            "оформление <kbd>: рамку, фон и размер"
+            "оформление <kbd>: рамку, фон и размер",
+            "menubarLabel — имя строки меню для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сами сочетания компонент не вешает: подпись в меню — это напоминание, обработчик за вами.",
             "Escape не закрывает <details>: это поведение элемента, а не ошибка. Нужна реакция на Escape — берите вариант на popover.",
             "Открытый раздел перекрывает содержимое под собой: строка меню должна лежать выше по слою.",
@@ -330,6 +566,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -343,15 +585,20 @@
                 "the two-column grid inside an item: the shortcut has to sit in a shared column or the eye cannot scan it downwards",
                 "writing shortcuts with Mod instead of a hardcoded ⌘: on Windows the ⌘ symbol means nothing",
                 "each key in its own <kbd> — that is key semantics, not decoration",
-                "disabled instead of hiding an unavailable item: vanishing items break the memory of a menu"
+                "disabled instead of hiding an unavailable item: vanishing items break the memory of a menu",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the menus array and the shortcut strings in the keys field",
                 "platform — which platform Mod expands for",
                 "the accent through the accent prop — it colours the focus ring",
-                "the <kbd> styling: border, background and size"
+                "the <kbd> styling: border, background and size",
+                "menubarLabel — the menubar name for screen readers",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not bind the shortcuts: the label is a reminder, the handler is yours.",
                 "Escape does not close a <details>: that is the element's behaviour, not a bug. If you need Escape, take the popover-based variant.",
                 "An open section overlaps whatever is beneath it: the menubar has to sit higher in the stacking order.",
@@ -365,11 +612,81 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Shortcut Menubar"
+            "title": "Shortcut Menubar",
+            "preview": {
+              "props": {
+                "menubarLabel": "Application menu",
+                "menus": [
+                  {
+                    "label": "File",
+                    "items": [
+                      {
+                        "label": "New project",
+                        "keys": "Mod N"
+                      },
+                      {
+                        "label": "Open…",
+                        "keys": "Mod O"
+                      },
+                      {
+                        "label": "Save",
+                        "keys": "Mod S"
+                      },
+                      {
+                        "label": "Export",
+                        "keys": "Mod Shift E"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Edit",
+                    "items": [
+                      {
+                        "label": "Undo",
+                        "keys": "Mod Z"
+                      },
+                      {
+                        "label": "Redo",
+                        "keys": "Mod Shift Z"
+                      },
+                      {
+                        "label": "Replace",
+                        "keys": "Mod R"
+                      },
+                      {
+                        "label": "Paste history",
+                        "disabled": true
+                      }
+                    ]
+                  },
+                  {
+                    "label": "View",
+                    "items": [
+                      {
+                        "label": "Command palette",
+                        "keys": "Mod K"
+                      },
+                      {
+                        "label": "Sidebar",
+                        "keys": "Mod B"
+                      },
+                      {
+                        "label": "Full screen",
+                        "keys": "F11"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["platform", "accent", "background"]
       }
     },
     {
@@ -400,15 +717,21 @@
             "колонку отметки фиксированной ширины: если рисовать галочку на месте текста, подписи прыгают при каждом переключении",
             "popover=\"auto\": клик внутри не закрывает меню, а Escape и клик мимо закрывают — ровно то поведение, которое нужно настройкам",
             "разные знаки для переключателя и варианта: галочка означает «включено», точка — «выбрано из набора»",
-            "заголовки групп над пунктами — по ним понятно, где независимые настройки, а где один выбор из нескольких"
+            "заголовки групп над пунктами — по ним понятно, где независимые настройки, а где один выбор из нескольких",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массивы toggles и choices: подписи, идентификаторы и сочетания клавиш",
             "начальное состояние через defaultOn и defaultChoice",
             "акцент через проп accent — цвет галочки, точки и кольца фокуса",
-            "текст сводки справа от кнопки раздела"
+            "текст сводки справа от кнопки раздела",
+            "подписи меню: triggerLabel, togglesTitle, choicesTitle и menubarLabel",
+            "stateText — строку состояния; {count} — сколько включено, {choice} — выбранный вариант",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Состояние живёт внутри компонента: чтобы поднять его наверх, замените useState на пропсы со своими обработчиками.",
             "Настройки не сохраняются между перезагрузками: хранение — за вызывающим кодом.",
             "Без поддержки anchor positioning меню открывается по центру экрана: проверьте целевые браузеры.",
@@ -424,8 +747,21 @@
             "options": ["compact", "cozy", "wide"]
           },
           {
+            "prop": "triggerLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Вид",
+            "maxLength": 16
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -441,15 +777,21 @@
                 "the fixed-width mark column: drawing the check in place of the text makes the labels jump on every toggle",
                 "popover=\"auto\": a click inside does not close the menu while Escape and an outside click do — exactly what settings need",
                 "different marks for a toggle and an option: a check means \"on\", a dot means \"chosen from a set\"",
-                "the group headings above the items — they tell independent settings apart from a single choice"
+                "the group headings above the items — they tell independent settings apart from a single choice",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the toggles and choices arrays: labels, ids and shortcuts",
                 "the initial state through defaultOn and defaultChoice",
                 "the accent through the accent prop — it colours the check, the dot and the focus ring",
-                "the summary text beside the section button"
+                "the summary text beside the section button",
+                "the menu labels: triggerLabel, togglesTitle, choicesTitle and menubarLabel",
+                "stateText — the state line; {count} is how many are on, {choice} is the selected option",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The state lives inside the component: to lift it up, replace useState with props and your own handlers.",
                 "Settings are not persisted across reloads: storing them is the caller's job.",
                 "Without anchor positioning support the menu opens centred: check your target browsers.",
@@ -461,13 +803,60 @@
               "defaultChoice": {
                 "label": "Density"
               },
+              "triggerLabel": {
+                "label": "Button",
+                "default": "View"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Checkable Menubar"
+            "title": "Checkable Menubar",
+            "preview": {
+              "props": {
+                "menubarLabel": "Application menu",
+                "triggerLabel": "View",
+                "togglesTitle": "Show",
+                "choicesTitle": "Density",
+                "stateText": "on: {count} · {choice}",
+                "toggles": [
+                  {
+                    "id": "grid",
+                    "label": "Grid",
+                    "keys": "⌘'"
+                  },
+                  {
+                    "id": "rulers",
+                    "label": "Rulers",
+                    "keys": "⌘R"
+                  },
+                  {
+                    "id": "outlines",
+                    "label": "Block outlines"
+                  }
+                ],
+                "choices": [
+                  {
+                    "id": "compact",
+                    "label": "Compact"
+                  },
+                  {
+                    "id": "cozy",
+                    "label": "Cozy"
+                  },
+                  {
+                    "id": "wide",
+                    "label": "Roomy"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultChoice", "accent", "background"]
       }
     },
     {
@@ -501,15 +890,20 @@
             "правило раскладки на внутреннем [data-part=\"shell\"], а не на корне: @container не действует на сам контейнер",
             "display:none у скрытого вида: спрятанный через прозрачность ряд остаётся в порядке табуляции и в дереве доступности",
             "общий атрибут name у <details> в широком виде — им разделы закрывают друг друга",
-            "заголовки разделов внутри бургера: без них список превращается в две дюжины одинаковых строк"
+            "заголовки разделов внутри бургера: без них список превращается в две дюжины одинаковых строк",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив menus: разделы и их пункты",
             "burgerLabel — подпись кнопки в свёрнутом виде",
             "порог переключения в контейнерном запросе",
-            "акцент через проп accent — цвет кольца фокуса"
+            "акцент через проп accent — цвет кольца фокуса",
+            "menubarLabel — имя строки меню для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Оба вида есть в разметке, поэтому пункты меню перечислены дважды: при очень длинном меню это заметно в размере страницы.",
             "Escape не закрывает <details>: это поведение элемента, а не ошибка.",
             "Порог в 30rem подобран под подписи из примера: свои названия длиннее — сдвиньте порог.",
@@ -529,6 +923,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -542,15 +942,20 @@
                 "the layout rule on the inner [data-part=\"shell\"] rather than the root: @container does not apply to the container itself",
                 "display:none on the hidden face: a row hidden with opacity stays in the tab order and in the accessibility tree",
                 "the shared name attribute on the wide view's <details> — it is how sections close one another",
-                "the section headings inside the burger: without them the list becomes two dozen identical rows"
+                "the section headings inside the burger: without them the list becomes two dozen identical rows",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the menus array: sections and their items",
                 "burgerLabel — the collapsed button's caption",
                 "the switching threshold in the container query",
-                "the accent through the accent prop — it colours the focus ring"
+                "the accent through the accent prop — it colours the focus ring",
+                "menubarLabel — the menubar name for screen readers",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Both faces live in the markup, so the items are listed twice: with a very long menu that shows up in page weight.",
                 "Escape does not close a <details>: that is the element's behaviour, not a bug.",
                 "The 30rem threshold is tuned to the sample labels: longer names need a larger threshold.",
@@ -565,11 +970,39 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Collapsing Menubar"
+            "title": "Collapsing Menubar",
+            "preview": {
+              "props": {
+                "menubarLabel": "Application menu",
+                "burgerLabel": "Menu",
+                "menus": [
+                  {
+                    "label": "File",
+                    "items": ["New project", "Open…", "Save", "Export"]
+                  },
+                  {
+                    "label": "Edit",
+                    "items": ["Undo", "Redo", "Find in project"]
+                  },
+                  {
+                    "label": "View",
+                    "items": ["Grid", "Sidebar", "Full screen"]
+                  },
+                  {
+                    "label": "Help",
+                    "items": ["Shortcuts", "Documentation"]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -603,15 +1036,20 @@
             "aria-current=\"page\" у активного раздела: это то, по чему его находит скринридер",
             "две строки вместо выпадающего списка: подраздел виден сразу, а не после клика, и ничего не перекрывает содержимое",
             "по <nav> с собственной подписью на каждую строку — иначе скринридер объявит две одинаковые «навигации»",
-            "табличные цифры у счётчиков, иначе правый край строки дёргается при смене чисел"
+            "табличные цифры у счётчиков, иначе правый край строки дёргается при смене чисел",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив sections: разделы, их страницы, адреса и счётчики",
             "activeLabel — текущий раздел; в приложении подставляйте его из роутера",
             "акцент через проп accent — цвет полосы под активным разделом",
-            "фон второй строки и высоту обеих строк"
+            "фон второй строки и высоту обеих строк",
+            "подписи строк: sectionsLabel и pagesLabel, где {section} — открытый раздел",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не знает про маршруты: активный раздел задаёт вызывающий код.",
             "Вторая строка рассчитана на пять-шесть страниц: длиннее — и она переносится в два ряда.",
             "Счётчик — это то, что требует внимания: черновики, ошибки. Общее число элементов там не нужно.",
@@ -631,6 +1069,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -644,15 +1088,20 @@
                 "aria-current=\"page\" on the active section: it is how a screen reader finds it",
                 "two rows instead of a drop-down: the subsection is visible immediately rather than after a click, and nothing covers the content",
                 "one <nav> with its own label per row — otherwise a screen reader announces two identical \"navigations\"",
-                "tabular figures on the counters, or the right edge jitters as the numbers change"
+                "tabular figures on the counters, or the right edge jitters as the numbers change",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the sections array: sections, their pages, hrefs and counters",
                 "activeLabel — the current section; in an app feed it from the router",
                 "the accent through the accent prop — it colours the bar under the active section",
-                "the second row's background and the height of both rows"
+                "the second row's background and the height of both rows",
+                "the row names: sectionsLabel and pagesLabel, where {section} is the open section",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component knows nothing about routes: the caller decides the active section.",
                 "The second row is sized for five or six pages: beyond that it wraps onto two lines.",
                 "A counter means something needing attention — drafts, failures. A total item count does not belong there.",
@@ -662,15 +1111,88 @@
             },
             "controls": {
               "activeLabel": {
-                "label": "Active section"
+                "label": "Active section",
+                "default": "Content"
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Section Menubar"
+            "title": "Section Menubar",
+            "preview": {
+              "props": {
+                "activeLabel": "Content",
+                "sectionsLabel": "Sections",
+                "pagesLabel": "«{section}» section",
+                "sections": [
+                  {
+                    "label": "Overview",
+                    "pages": [
+                      {
+                        "label": "Summary"
+                      },
+                      {
+                        "label": "Activity"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Content",
+                    "pages": [
+                      {
+                        "label": "Pages",
+                        "count": 24
+                      },
+                      {
+                        "label": "Posts",
+                        "count": 138
+                      },
+                      {
+                        "label": "Media"
+                      },
+                      {
+                        "label": "Drafts",
+                        "count": 3
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Appearance",
+                    "pages": [
+                      {
+                        "label": "Themes"
+                      },
+                      {
+                        "label": "Fonts"
+                      },
+                      {
+                        "label": "Colours"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Settings",
+                    "pages": [
+                      {
+                        "label": "General"
+                      },
+                      {
+                        "label": "Domains"
+                      },
+                      {
+                        "label": "Access"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["activeLabel", "accent", "background"]
       }
     },
     {
@@ -701,15 +1223,20 @@
             "aria-haspopup=\"menu\" у пункта с продолжением — иначе скринридер объявит его обычной командой",
             "стрелку справа у пункта с подменю: без неё вложенность не видна до наведения",
             "общий атрибут name у <details>: им разделы закрывают друг друга",
-            "положение подменю от строки пункта (left:100%), а не от края меню — иначе оно уезжает от своего родителя"
+            "положение подменю от строки пункта (left:100%), а не от края меню — иначе оно уезжает от своего родителя",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив menus и вложенные items у пунктов",
             "обработчики конечных пунктов",
             "акцент через проп accent — цвет кольца фокуса",
-            "ширину меню и подменю"
+            "ширину меню и подменю",
+            "menubarLabel — имя строки меню для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Глубже двух уровней не уходите: третий уровень мышью почти непопадаем.",
             "У правого края экрана подменю выйдет за границу: добавьте зеркальное раскрытие влево под свой макет.",
             "Escape не закрывает <details>: это поведение элемента, а не ошибка.",
@@ -720,6 +1247,12 @@
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -735,15 +1268,20 @@
                 "aria-haspopup=\"menu\" on the parent item — otherwise a screen reader announces it as a plain command",
                 "the arrow on the right of a parent item: without it the nesting is invisible until you hover",
                 "the shared name attribute on <details>: it is how sections close one another",
-                "positioning the submenu from the item row (left:100%) rather than the menu edge — otherwise it drifts away from its parent"
+                "positioning the submenu from the item row (left:100%) rather than the menu edge — otherwise it drifts away from its parent",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the menus array and the nested items on each entry",
                 "the handlers on the leaf items",
                 "the accent through the accent prop — it colours the focus ring",
-                "the width of the menu and the submenu"
+                "the width of the menu and the submenu",
+                "menubarLabel — the menubar name for screen readers",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not go deeper than two levels: a third level is nearly impossible to hit with a mouse.",
                 "Near the right edge of the screen the submenu overflows: add a mirrored left-hand opening for your layout.",
                 "Escape does not close a <details>: that is the element's behaviour, not a bug.",
@@ -754,11 +1292,84 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Nested Menubar"
+            "title": "Nested Menubar",
+            "preview": {
+              "props": {
+                "menubarLabel": "Application menu",
+                "menus": [
+                  {
+                    "label": "File",
+                    "items": [
+                      {
+                        "label": "New project",
+                        "keys": "⌘N"
+                      },
+                      {
+                        "label": "Open recent",
+                        "items": [
+                          {
+                            "label": "Studio landing"
+                          },
+                          {
+                            "label": "Documentation"
+                          },
+                          {
+                            "label": "Yarn shop"
+                          }
+                        ]
+                      },
+                      {
+                        "label": "Export",
+                        "items": [
+                          {
+                            "label": "To PDF"
+                          },
+                          {
+                            "label": "To PNG",
+                            "keys": "⌘E"
+                          },
+                          {
+                            "label": "To archive"
+                          }
+                        ]
+                      },
+                      {
+                        "label": "Save",
+                        "keys": "⌘S"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Edit",
+                    "items": [
+                      {
+                        "label": "Undo",
+                        "keys": "⌘Z"
+                      },
+                      {
+                        "label": "Transform",
+                        "items": [
+                          {
+                            "label": "To uppercase"
+                          },
+                          {
+                            "label": "To lowercase"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -792,15 +1403,23 @@
             "число непрочитанных в aria-label кнопки, а сам значок aria-hidden — иначе скринридер прочитает голую цифру",
             "margin-left:auto у правой группы вместо распорок: при добавлении раздела ничего не придётся пересчитывать",
             "popover=\"auto\": Escape, клик мимо и закрытие соседнего меню достаются от браузера",
-            "контейнерный запрос, прячущий имя в узком блоке: иначе правая группа выдавливает разделы"
+            "контейнерный запрос, прячущий имя в узком блоке: иначе правая группа выдавливает разделы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "белый текст на кружке уведомлений и на аватаре: это контраст к заливке, а не цвет темы — он остаётся белым в обеих ветках"
           ],
           "adapt": [
             "массив menus: разделы и их пункты",
             "userName и unread — имя в профиле и число непрочитанных",
             "акцент через проп accent — цвет кружка с инициалами и колец фокуса",
-            "состав меню профиля и списка уведомлений"
+            "состав меню профиля и списка уведомлений",
+            "accent — цвет кружка профиля и обводки фокуса",
+            "подписи: menubarLabel, notificationsTitle, notifications и profileItems",
+            "notificationsLabel — имя кнопки уведомлений; {count} — число непрочитанных",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Инициалы считаются из первых букв слов имени: для одного слова их будет одна, для трёх — только две первые.",
             "Значок уведомлений нарисован символом: подставьте свою иконку, сохранив размер кнопки.",
             "Без поддержки anchor positioning меню открывается по центру экрана: проверьте целевые браузеры.",
@@ -822,6 +1441,18 @@
             "default": 4,
             "min": 0,
             "max": 99
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -835,15 +1466,23 @@
                 "the unread count in the button's aria-label with the badge itself aria-hidden — otherwise a screen reader reads a bare number",
                 "margin-left:auto on the right group instead of spacers: adding a section then costs no recalculation",
                 "popover=\"auto\": Escape, outside clicks and closing a neighbouring menu come from the browser",
-                "the container query that hides the name in a narrow block: otherwise the right group squeezes out the sections"
+                "the container query that hides the name in a narrow block: otherwise the right group squeezes out the sections",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the white text on the notification badge and the avatar: it is contrast against the fill, not a theme colour, and stays white in both branches"
               ],
               "adapt": [
                 "the menus array: sections and their items",
                 "userName and unread — the profile name and the unread count",
                 "the accent through the accent prop — it colours the initials circle and the focus rings",
-                "the contents of the profile menu and the notification list"
+                "the contents of the profile menu and the notification list",
+                "accent — the colour of the profile circle and the focus ring",
+                "the labels: menubarLabel, notificationsTitle, notifications and profileItems",
+                "notificationsLabel — the notifications button name; {count} is the unread count",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Initials are taken from the first letters of the name's words: one word gives one letter, three give only the first two.",
                 "The notification glyph is a character: swap in your icon, keeping the button size.",
                 "Without anchor positioning support the menu opens centred: check your target browsers.",
@@ -858,11 +1497,46 @@
               },
               "unread": {
                 "label": "Unread"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Menubar With Actions"
+            "title": "Menubar With Actions",
+            "preview": {
+              "props": {
+                "menubarLabel": "Application menu",
+                "userName": "Anna Krylova",
+                "notificationsLabel": "Notifications, {count} unread",
+                "notificationsTitle": "Unread",
+                "notifications": [
+                  "Build passed",
+                  "Comment on a page",
+                  "Domain verified"
+                ],
+                "profileItems": ["Profile", "Workspace", "Sign out"],
+                "menus": [
+                  {
+                    "label": "File",
+                    "items": ["New project", "Open…", "Save"]
+                  },
+                  {
+                    "label": "Edit",
+                    "items": ["Undo", "Redo", "Find"]
+                  },
+                  {
+                    "label": "View",
+                    "items": ["Grid", "Sidebar"]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["unread", "accent", "background"]
       }
     }
   ]

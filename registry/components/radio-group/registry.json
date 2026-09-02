@@ -29,15 +29,19 @@
             "fieldset с legend — так вопрос объявляется перед вариантами",
             "float у легенды: без него она садится на рамку и обрезается",
             "рамку и заливку выбранной карточки, а не один закрашенный кружок",
-            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера"
+            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив options с ценами и пояснениями",
             "legend, name и defaultValue",
             "акцент через проп accent",
-            "ширину карточек"
+            "ширину карточек",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Уникальный name на группу обязателен: два блока с одним именем сольются в одну группу.",
             "Выбранный вариант должен быть всегда: группа без defaultValue заставляет угадывать.",
             "Больше пяти карточек не ставьте — на выбор уходит больше времени, чем на саму задачу.",
@@ -58,6 +62,18 @@
             "type": "select",
             "default": "year",
             "options": ["month", "year", "team"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -71,15 +87,19 @@
                 "the fieldset with a legend — the question gets announced before the options",
                 "the float on the legend: without it it sits on the border and gets clipped",
                 "the border and tint on the selected card, not just a filled circle",
-                "native radio buttons: single selection and keyboard support come from the browser"
+                "native radio buttons: single selection and keyboard support come from the browser",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the options array with prices and notes",
                 "legend, name and defaultValue",
                 "the accent through the accent prop",
-                "the card width"
+                "the card width",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A unique name per group is mandatory: two blocks sharing one merge into a single group.",
                 "There should always be a selected option: a group without defaultValue forces guessing.",
                 "Do not go past five cards — choosing then costs more than the task itself.",
@@ -94,11 +114,43 @@
               },
               "defaultValue": {
                 "label": "Selected"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Radio Cards"
+            "title": "Radio Cards",
+            "preview": {
+              "props": {
+                "legend": "Plan",
+                "options": [
+                  {
+                    "value": "month",
+                    "label": "Monthly",
+                    "hint": "Cancel any time, no commitment.",
+                    "price": "$7"
+                  },
+                  {
+                    "value": "year",
+                    "label": "Yearly",
+                    "hint": "Two months free, billed once a year.",
+                    "price": "$69"
+                  },
+                  {
+                    "value": "team",
+                    "label": "Team",
+                    "hint": "Up to ten members and shared access to projects.",
+                    "price": "$145"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -116,7 +168,7 @@
           "target": "@components/vibeui/radio-002.tsx"
         }
       ],
-      "docs": "Серверный компонент на fieldset с legend: скринридер объявляет вопрос перед вариантами. Кружок собран из appearance:none и рамки, отметка — две внутренние тени, наложенные друг на друга, поэтому лишнего span не нужно и точка не съезжает при изменении размера шрифта. Легенда прижата float:left, список получает clear:both. Палитра в --vibeui-radio-002-*, зависимостей нет.",
+      "docs": "Серверный компонент на fieldset с legend: скринридер объявляет вопрос перед вариантами. Кружок собран из appearance:none и рамки, отметка — радиальный градиент в фоне самого input'а, поэтому лишнего span не нужно и точка не съезжает при изменении размера шрифта. Легенда прижата float:left, список получает clear:both. Палитра в --vibeui-radio-002-* переведена на light-dark(): компонент следует color-scheme страницы, собственной подложки по умолчанию не выкладывает. Зависимостей нет.",
       "meta": {
         "tags": ["radio", "group", "form", "minimal"],
         "preview": {
@@ -130,18 +182,21 @@
             "локальную палитру --vibeui-radio-002-* — не заменять её токенами темы проекта",
             "fieldset с legend: без них варианты не объявляются как ответы на один вопрос",
             "общий name у всех input'ов — без него радио перестают быть группой и выбираются по отдельности",
-            "точку из внутренней тени: отдельный узел съезжает при изменении размера шрифта",
+            "точку из фона кружка: отдельный узел съезжает при изменении размера шрифта",
             "float:left у легенды вместе с clear:both у списка — иначе строки обтекают легенду",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "вопрос через legend",
             "варианты через options",
             "выбранный по умолчанию через defaultValue",
-            "имя поля формы через name"
+            "имя поля формы через name",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
-            "Тень отметки завязана на цвет фона: на цветной подложке кружок придётся перекрасить вместе с ней.",
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Для длинных формулировок кружок стоит поднять к первой строке — сейчас он выровнен по центру короткой строки.",
             "Больше пяти вариантов лучше показывать списком с описаниями: голые подписи перестают помогать.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
@@ -165,6 +220,18 @@
               "Телефонный звонок",
               "Сообщение в мессенджер"
             ]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -176,18 +243,21 @@
                 "the local --vibeui-radio-002-* palette — do not swap it for your theme tokens",
                 "the fieldset with a legend: without them the options are not announced as answers to one question",
                 "the shared name on every input — without it the radios stop being a group and are picked independently",
-                "the dot made of an inset shadow: a separate node drifts when the font size changes",
+                "the dot painted by the circle's own background: a separate node drifts when the font size changes",
                 "float:left on the legend together with clear:both on the list — otherwise the rows wrap around the legend",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the question through legend",
                 "the choices through options",
                 "the preselected answer through defaultValue",
-                "the form field name through name"
+                "the form field name through name",
+                "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
-                "The mark's shadow depends on the background colour: on a tinted surface the circle has to be repainted with it.",
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "For long wording lift the circle to the first line — right now it is centred on a single-line option.",
                 "Beyond five options a list with descriptions works better: bare captions stop helping.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -202,11 +272,25 @@
               "defaultValue": {
                 "label": "Selected",
                 "default": "Phone call"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Plain Radio Group"
+            "title": "Plain Radio Group",
+            "preview": {
+              "props": {
+                "legend": "How should we reach you",
+                "options": ["Email", "Phone call", "Instant message"],
+                "defaultValue": "Phone call"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -240,15 +324,19 @@
             "галочку, переключаемую через :has(input:checked) — она единственный признак выбора после того, как кружок убрали",
             "span'ы вместо ul в списке возможностей: содержимое label ограничено фразовым контентом",
             "grid с auto-fit — раскладка обязана считаться от собственной ширины блока, а не от окна",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок группы через legend",
             "состав тарифов, цены и возможности через plans",
             "выбранный по умолчанию через defaultValue",
-            "имя поля формы через name"
+            "имя поля формы через name",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Скрытое радио требует видимого фокуса на плитке: удалите правило :has(input:focus-visible) — и клавиатурный путь исчезнет с экрана.",
             "Больше трёх тарифов в ряд не помещается: четвёртый уедет на вторую строку сетки.",
             "Цена — строка, а не число: форматирование остаётся на стороне данных.",
@@ -269,6 +357,18 @@
             "type": "select",
             "default": "pro",
             "options": ["solo", "pro", "studio"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -282,15 +382,19 @@
                 "the tick driven by :has(input:checked) — it is the only sign of selection once the circle is gone",
                 "spans instead of a ul in the feature list: label content is limited to phrasing content",
                 "the auto-fit grid — the layout has to derive from the block's own width, not the viewport",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group heading through legend",
                 "the plans, prices and features through plans",
                 "the preselected plan through defaultValue",
-                "the form field name through name"
+                "the form field name through name",
+                "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A hidden radio demands a visible focus ring on the tile: drop the :has(input:focus-visible) rule and the keyboard path vanishes.",
                 "More than three plans will not fit in one row: the fourth wraps to a second grid line.",
                 "The price is a string, not a number: formatting stays on the data side.",
@@ -306,11 +410,51 @@
               "defaultValue": {
                 "label": "Selected plan",
                 "default": "pro"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Plan Choice Cards"
+            "title": "Plan Choice Cards",
+            "preview": {
+              "props": {
+                "legend": "Pricing plan",
+                "plans": [
+                  {
+                    "value": "solo",
+                    "name": "Solo",
+                    "price": "$0",
+                    "period": "forever",
+                    "features": ["3 projects", "7-day history"]
+                  },
+                  {
+                    "value": "pro",
+                    "name": "Pro",
+                    "price": "$9",
+                    "period": "per month",
+                    "features": [
+                      "Unlimited projects",
+                      "Figma export",
+                      "Priority queue"
+                    ],
+                    "badge": "Team pick"
+                  },
+                  {
+                    "value": "studio",
+                    "name": "Studio",
+                    "price": "$34",
+                    "period": "per month",
+                    "features": ["Up to 20 members", "Shared billing"]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -328,7 +472,7 @@
           "target": "@components/vibeui/radio-004.tsx"
         }
       ],
-      "docs": "Серверный компонент на fieldset с legend. Карточек нет: строки разделены inset-тенью соседнего правила, а выбранная получает заливку и полосу из псевдоэлемента — рамка вокруг разбила бы сплошной список. Отметка кружка сделана двумя внутренними тенями. Легенда прижата float:left, список получает clear:both. Палитра в --vibeui-radio-004-*, зависимостей нет.",
+      "docs": "Серверный компонент на fieldset с legend. Карточек нет: строки разделены inset-тенью соседнего правила, а выбранная получает заливку и полосу из псевдоэлемента — рамка вокруг разбила бы сплошной список. Отметка кружка нарисована радиальным градиентом в его фоне. Легенда прижата float:left, список получает clear:both. Палитра в --vibeui-radio-004-* переведена на light-dark(): компонент следует color-scheme страницы и подложки по умолчанию не выкладывает. Зависимостей нет.",
       "meta": {
         "tags": ["radio", "description", "settings", "list"],
         "preview": {
@@ -344,15 +488,19 @@
             "полосу слева вместо рамки вокруг — рамка разбивает сплошной список на отдельные карточки",
             "fieldset с legend и общий name: без них строки не объявляются как один вопрос",
             "выравнивание кружка по первой строке текста — при описании в две строки центрирование уводит его в середину",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок группы через legend",
             "варианты с описаниями и метками через options",
             "выбранный по умолчанию через defaultValue",
-            "имя поля формы через name"
+            "имя поля формы через name",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Метка справа рассчитана на одно-два слова: длинная фраза сожмёт заголовок варианта.",
             "Описание участвует в клике по строке — держать его в границах label, иначе часть текста перестанет переключать вариант.",
             "Разделитель нарисован тенью, поэтому у первой строки линии нет: так и задумано.",
@@ -373,6 +521,18 @@
             "type": "select",
             "default": "link",
             "options": ["private", "link", "public"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -386,15 +546,19 @@
                 "the bar on the left instead of a frame around — a frame breaks a continuous list into separate cards",
                 "the fieldset with a legend and the shared name: without them the rows are not announced as one question",
                 "aligning the circle to the first line of text — with a two-line description centring drags it to the middle",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group heading through legend",
                 "the options with their descriptions and tags through options",
                 "the preselected option through defaultValue",
-                "the form field name through name"
+                "the form field name through name",
+                "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The tag on the right is sized for one or two words: a long phrase squeezes the option title.",
                 "The description takes part in the row click — keep it inside the label or part of the text stops selecting the option.",
                 "The divider is a shadow, so the first row has no line above it: that is intentional.",
@@ -410,11 +574,41 @@
               "defaultValue": {
                 "label": "Selected",
                 "default": "link"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Explained Radio List"
+            "title": "Explained Radio List",
+            "preview": {
+              "props": {
+                "legend": "Project access",
+                "options": [
+                  {
+                    "value": "private",
+                    "label": "Only me",
+                    "description": "The project is visible to nobody; the link does not work even at the direct address.",
+                    "meta": "default"
+                  },
+                  {
+                    "value": "link",
+                    "label": "Anyone with the link",
+                    "description": "Opens for everyone who has the link, but stays out of search results."
+                  },
+                  {
+                    "value": "public",
+                    "label": "Public",
+                    "description": "Goes into the shared gallery and can be found by search engines."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -448,15 +642,19 @@
             "правила :has(label:nth-of-type(n) input:checked) — они и есть механика сдвига, а нумерация ограничена пятью сегментами",
             "спрятанное clip-path'ом, но не выключенное радио: стрелки клавиатуры обязаны переключать группу",
             "видимый фокус на сегменте — сам input скрыт, и без этого правила клавиатурный путь исчезает",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок группы через legend",
             "названия сегментов через options",
             "выбранный по умолчанию через defaultValue",
-            "имя поля формы через name"
+            "имя поля формы через name",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сегментов не больше пяти: под каждый номер в CSS заведено отдельное правило сдвига.",
             "Длинные названия ломают ритм — сегмент рассчитан на одно слово.",
             "Плашка едет transform'ом, поэтому переезд выключается вместе с prefers-reduced-motion и выбор остаётся видимым мгновенно.",
@@ -477,6 +675,18 @@
             "type": "select",
             "default": "Неделя",
             "options": ["День", "Неделя", "Месяц"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -490,15 +700,19 @@
                 "the :has(label:nth-of-type(n) input:checked) rules — they are the sliding mechanism, and the numbering caps at five segments",
                 "the radio hidden by clip-path but not disabled: arrow keys must still switch the group",
                 "the visible focus ring on the segment — the input is hidden and without this rule the keyboard path disappears",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group heading through legend",
                 "the segment captions through options",
                 "the preselected segment through defaultValue",
-                "the form field name through name"
+                "the form field name through name",
+                "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "No more than five segments: each index has its own offset rule in the CSS.",
                 "Long captions break the rhythm — a segment is sized for a single word.",
                 "The pill moves with transform, so the travel is switched off by prefers-reduced-motion and the choice stays instantly visible.",
@@ -514,11 +728,25 @@
               "defaultValue": {
                 "label": "Selected segment",
                 "default": "Week"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Segmented Radio"
+            "title": "Segmented Radio",
+            "preview": {
+              "props": {
+                "legend": "Report period",
+                "options": ["Day", "Week", "Month"],
+                "defaultValue": "Week"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -552,15 +780,19 @@
             "подпись под каждой иконкой — иконка без слова угадывается неверно чаще, чем кажется",
             "aria-hidden на svg: доступное имя даёт текстовая подпись, а не рисунок",
             "спрятанное clip-path'ом, но не выключенное радио вместе с видимым фокусом на плитке",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок группы через legend",
             "набор плиток, подписи и пути иконок через options",
             "выбранный по умолчанию через defaultValue",
-            "имя поля формы через name"
+            "имя поля формы через name",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Иконки заданы путями в системе координат 24×24: чужой путь из другой сетки придётся масштабировать.",
             "Толщина обводки фиксирована 1.6 — при крупной иконке её стоит увеличить, иначе рисунок выглядит бледным.",
             "Плитки одинаковой высоты только при коротких подписях: перенос строки растянет всю строку сетки.",
@@ -581,6 +813,18 @@
             "type": "select",
             "default": "laptop",
             "options": ["phone", "tablet", "laptop", "tv"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -594,15 +838,19 @@
                 "the caption under every icon — an icon without a word is misread more often than you would expect",
                 "aria-hidden on the svg: the accessible name comes from the text caption, not the drawing",
                 "the radio hidden by clip-path but not disabled, together with the visible focus ring on the tile",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group heading through legend",
                 "the tiles, captions and icon paths through options",
                 "the preselected tile through defaultValue",
-                "the form field name through name"
+                "the form field name through name",
+                "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Icons are paths in a 24×24 coordinate system: a path from another grid has to be rescaled.",
                 "The stroke width is fixed at 1.6 — increase it for larger icons or the drawing looks washed out.",
                 "Tiles stay equal in height only with short captions: a wrapped line stretches the whole grid row.",
@@ -618,11 +866,45 @@
               "defaultValue": {
                 "label": "Selected",
                 "default": "laptop"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Icon Radio Tiles"
+            "title": "Icon Radio Tiles",
+            "preview": {
+              "props": {
+                "legend": "Primary device",
+                "options": [
+                  {
+                    "value": "phone",
+                    "label": "Phone",
+                    "path": "M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm3 17h4"
+                  },
+                  {
+                    "value": "tablet",
+                    "label": "Tablet",
+                    "path": "M5 2h14a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm6 17h2"
+                  },
+                  {
+                    "value": "laptop",
+                    "label": "Laptop",
+                    "path": "M4 5h16v11H4zM2 19h20"
+                  },
+                  {
+                    "value": "tv",
+                    "label": "TV",
+                    "path": "M3 6h18v12H3zM8 21h8M12 18v3"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -640,7 +922,7 @@
           "target": "@components/vibeui/radio-007.tsx"
         }
       ],
-      "docs": "Серверный компонент на fieldset с legend. Цена вынесена в отдельную колонку с font-variant-numeric:tabular-nums, поэтому три строки сравниваются вертикально без чтения предложений. Бесплатная доставка подсвечена отдельной переменной, а недоступный способ помечен disabled на input'е и приглушён правилом :has(input:disabled). Отметка кружка сделана внутренними тенями. Палитра в --vibeui-radio-007-*.",
+      "docs": "Серверный компонент на fieldset с legend. Цена вынесена в отдельную колонку с font-variant-numeric:tabular-nums, поэтому три строки сравниваются вертикально без чтения предложений. Бесплатная доставка подсвечена отдельной переменной, а недоступный способ помечен disabled на input'е и приглушён правилом :has(input:disabled). Отметка кружка нарисована радиальным градиентом в его фоне. Палитра в --vibeui-radio-007-* переведена на light-dark(): компонент следует color-scheme страницы и подложки по умолчанию не выкладывает.",
       "meta": {
         "tags": ["radio", "delivery", "price", "checkout"],
         "preview": {
@@ -656,18 +938,23 @@
             "недоступный способ на месте, но с disabled — исчезнувший вариант читается как ошибка каталога",
             "срок рядом с названием: без даты цена ничего не решает",
             "fieldset с legend и общий name — иначе строки не объявляются как один вопрос",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок группы через legend",
             "состав способов, сроки и цены через methods",
             "выбранный по умолчанию через defaultValue",
-            "имя поля формы через name"
+            "имя поля формы через name",
+            "подписи freeLabel, footnote и stepLabel — по умолчанию русские",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Цена — строка, а не число: форматирование и валюта остаются на стороне данных.",
             "Выключенный вариант не получает фокус — если причина важна, её нужно написать в строке срока.",
-            "Слово «бесплатно» подставляется вместо цены по флагу free: убрав флаг, вернёте нулевую сумму цифрами.",
+            "Вместо цены у бесплатного способа подставляется freeLabel по флагу free: убрав флаг, вернёте нулевую сумму цифрами.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
           ]
         },
@@ -685,6 +972,18 @@
             "type": "select",
             "default": "courier",
             "options": ["pickup", "courier", "express"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -698,18 +997,23 @@
                 "the unavailable method kept in place but disabled — a vanished option reads as a catalogue bug",
                 "the ETA beside the name: without a date the price decides nothing",
                 "the fieldset with a legend and the shared name — otherwise the rows are not announced as one question",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the group heading through legend",
                 "the methods, their ETAs and prices through methods",
                 "the preselected method through defaultValue",
-                "the form field name through name"
+                "the form field name through name",
+                "the freeLabel, footnote and stepLabel captions — Russian by default",
+                "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The price is a string, not a number: formatting and currency stay on the data side.",
                 "A disabled option takes no focus — if the reason matters, put it into the ETA line.",
-                "The word \"free\" replaces the price via the free flag: drop the flag to show a zero amount in figures.",
+                "For a free method the price is replaced by freeLabel via the free flag: drop the flag to show a zero amount in figures.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Radio007\n  legend=\"Delivery method\"\n  defaultValue=\"express\"\n/>"
@@ -722,11 +1026,54 @@
               "defaultValue": {
                 "label": "Selected",
                 "default": "courier"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Delivery Method Radio"
+            "title": "Delivery Method Radio",
+            "preview": {
+              "props": {
+                "legend": "Delivery method",
+                "freeLabel": "free",
+                "footnote": "Delivery is added to the order total",
+                "stepLabel": "step 2 of 3",
+                "methods": [
+                  {
+                    "value": "pickup",
+                    "name": "Pickup point",
+                    "eta": "Tomorrow after 2 pm",
+                    "price": "$0",
+                    "free": true
+                  },
+                  {
+                    "value": "courier",
+                    "name": "City courier",
+                    "eta": "In two days, 3-hour window",
+                    "price": "$4"
+                  },
+                  {
+                    "value": "express",
+                    "name": "Express in 2 hours",
+                    "eta": "Today before 9 pm",
+                    "price": "$9"
+                  },
+                  {
+                    "value": "post",
+                    "name": "Postal service",
+                    "eta": "Not available for this address",
+                    "price": "—",
+                    "disabled": true
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -744,7 +1091,7 @@
           "target": "@components/vibeui/radio-008.tsx"
         }
       ],
-      "docs": "Клиентский компонент: useState хранит выбранный вариант и текст своего ответа. Поле не прячется, а выключается — исчезающее поле дёргает форму и скрывает саму возможность ответить словами; disabled заодно убирает его из обхода по Tab и не даёт отправить пустую строку. Счётчик символов появляется только при активном поле. Отметка кружка сделана внутренними тенями. Палитра в --vibeui-radio-008-*.",
+      "docs": "Клиентский компонент: useState хранит выбранный вариант и текст своего ответа. Поле не прячется, а выключается — исчезающее поле дёргает форму и скрывает саму возможность ответить словами; disabled заодно убирает его из обхода по Tab и не даёт отправить пустую строку. Счётчик символов появляется только при активном поле. Отметка кружка нарисована радиальным градиентом в его фоне. Палитра в --vibeui-radio-008-* переведена на light-dark(): компонент следует color-scheme страницы и подложки по умолчанию не выкладывает.",
       "meta": {
         "tags": ["radio", "other", "form", "input"],
         "preview": {
@@ -760,15 +1107,20 @@
             "disabled на неактивном поле — оно не должно ловить Tab и отправлять пустую строку",
             "собственное доступное имя у поля: без него оно звучит как продолжение подписи «другое»",
             "общий name у радио вместе с отдельным именем текстового поля — это два разных ответа",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "вопрос через legend и готовые варианты через options",
             "подпись последнего пункта через otherLabel",
             "текст-заглушку поля через placeholder",
-            "имя поля формы через name"
+            "имя поля формы через name",
+            "доступное имя поля через otherFieldLabel — {label} подставляет подпись варианта",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ограничение в шестьдесят символов задано в коде константой: свободный ответ не должен превращаться в сочинение.",
             "Фокус в поле после выбора «другое» не переносится: автоматический перевод фокуса ломает клавиатурный проход по группе.",
             "Значение поля не очищается при возврате к готовому варианту — набранный текст сохраняется на случай возврата.",
@@ -789,6 +1141,18 @@
             "type": "text",
             "default": "Расскажите своими словами",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -802,15 +1166,20 @@
                 "disabled on the inactive field — it must not catch Tab or submit an empty string",
                 "its own accessible name on the field: without it the field sounds like a continuation of the \"other\" caption",
                 "the shared name on the radios together with a separate name for the text field — these are two different answers",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the question through legend and the ready-made choices through options",
                 "the caption of the last option through otherLabel",
                 "the field placeholder through placeholder",
-                "the form field name through name"
+                "the form field name through name",
+                "the field's accessible name through otherFieldLabel — {label} inserts the option caption",
+                "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The sixty-character limit is a constant in the code: a free answer should not turn into an essay.",
                 "Focus is not moved into the field when \"other\" is picked: auto-focus breaks the keyboard walk through the group.",
                 "The field value is not cleared when going back to a ready-made option — the typed text survives in case of a return.",
@@ -826,11 +1195,28 @@
               "placeholder": {
                 "label": "Field placeholder",
                 "default": "Tell us in your own words"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Other Option Radio"
+            "title": "Other Option Radio",
+            "preview": {
+              "props": {
+                "legend": "How did you hear about us",
+                "options": ["Through friends", "Social media ad", "Web search"],
+                "otherLabel": "Other",
+                "placeholder": "Tell us in your own words",
+                "otherFieldLabel": "{label}: your own answer",
+                "defaultValue": "Through friends"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -861,15 +1247,19 @@
             "бейдж экономии в углу карточки, а не в тексте цены",
             "fieldset с legend — так вопрос объявляется перед вариантами",
             "цену за штуку отдельной строкой под общей суммой",
-            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера"
+            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив bundles с количеством, суммой, ценой за штуку и экономией",
             "legend, name и defaultValue",
             "акцент через проп accent",
-            "число карточек в наборе"
+            "число карточек в наборе",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Уникальный name на группу обязателен: два блока с одним именем сольются в одну группу.",
             "Бейдж save оставляйте только на одном варианте — на всех сразу он теряет смысл сравнения.",
             "Выбранный вариант должен быть всегда: группа без defaultValue заставляет угадывать.",
@@ -890,6 +1280,18 @@
             "type": "select",
             "default": "3",
             "options": ["1", "3", "6"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -903,15 +1305,19 @@
                 "the savings badge in the card corner, not inside the price text",
                 "the fieldset with a legend — the question gets announced before the options",
                 "the per-unit price on its own line under the total",
-                "native radio buttons: single selection and keyboard support come from the browser"
+                "native radio buttons: single selection and keyboard support come from the browser",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the bundles array with quantity, total, per-unit price and savings",
                 "legend, name and defaultValue",
                 "the accent through the accent prop",
-                "the number of bundle cards"
+                "the number of bundle cards",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A unique name per group is mandatory: two blocks sharing one merge into a single group.",
                 "Keep the save badge on a single option — on every card it loses its comparative point.",
                 "There should always be a selected option: a group without defaultValue forces guessing.",
@@ -926,11 +1332,45 @@
               },
               "defaultValue": {
                 "label": "Selected bundle"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Bundle Pricing Cards"
+            "title": "Bundle Pricing Cards",
+            "preview": {
+              "props": {
+                "legend": "How many packs",
+                "bundles": [
+                  {
+                    "value": "1",
+                    "qty": "1 pack",
+                    "price": "$9.90",
+                    "perUnit": "$9.90 / pack"
+                  },
+                  {
+                    "value": "3",
+                    "qty": "3 packs",
+                    "price": "$25.90",
+                    "perUnit": "$8.63 / pack",
+                    "save": "-13%"
+                  },
+                  {
+                    "value": "6",
+                    "qty": "6 packs",
+                    "price": "$47.40",
+                    "perUnit": "$7.90 / pack",
+                    "save": "-20%"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -961,15 +1401,19 @@
             "заливку сегмента через :has(input:checked), а не общую подложку с transform",
             "fieldset с legend в верхнем регистре мелким кеглем",
             "спрятанный визуально input: фокус и клавиатура остаются нативными",
-            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера"
+            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив options с иконкой, подписью и значением",
             "legend, name и defaultValue",
             "акцент через проп accent",
-            "число сегментов в группе"
+            "число сегментов в группе",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Уникальный name на группу обязателен: два блока с одним именем сольются в одну группу.",
             "Больше четырёх-пяти сегментов не ставьте — рельс станет тесным на узкой ширине.",
             "Выбранный вариант должен быть всегда: группа без defaultValue заставляет угадывать.",
@@ -990,6 +1434,18 @@
             "type": "select",
             "default": "grid",
             "options": ["list", "grid", "table"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1003,15 +1459,19 @@
                 "the segment fill via :has(input:checked), not a shared transform-driven plate",
                 "the fieldset with an uppercase, small-caption legend",
                 "the visually hidden input: focus and keyboard support stay native",
-                "native radio buttons: single selection and keyboard support come from the browser"
+                "native radio buttons: single selection and keyboard support come from the browser",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the options array with an icon, label and value",
                 "legend, name and defaultValue",
                 "the accent through the accent prop",
-                "the number of segments in the group"
+                "the number of segments in the group",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A unique name per group is mandatory: two blocks sharing one merge into a single group.",
                 "Keep it to four or five segments — the rail gets cramped at narrow widths past that.",
                 "There should always be a selected option: a group without defaultValue forces guessing.",
@@ -1026,11 +1486,40 @@
               },
               "defaultValue": {
                 "label": "Selected view"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Segmented View Switcher"
+            "title": "Segmented View Switcher",
+            "preview": {
+              "props": {
+                "legend": "List view",
+                "options": [
+                  {
+                    "value": "list",
+                    "label": "List",
+                    "path": "M4 6h16M4 12h16M4 18h16"
+                  },
+                  {
+                    "value": "grid",
+                    "label": "Grid",
+                    "path": "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"
+                  },
+                  {
+                    "value": "table",
+                    "label": "Table",
+                    "path": "M3 5h18v14H3zM3 10h18M9 5v14"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1061,15 +1550,20 @@
             "общий name у всех слотов всех дней — это одна radio-группа, а не несколько",
             "fieldset с legend — так вопрос объявляется перед вариантами",
             "недоступный слот видимым и погашенным, а не скрытым",
-            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера"
+            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив slots с днём, временем, ценой и флагом disabled",
             "legend, name и defaultValue",
+            "подпись занятого слота через busyLabel",
             "акцент через проп accent",
-            "число дней и слотов в каждом"
+            "число дней и слотов в каждом",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Уникальный name на группу обязателен: два блока с одним именем сольются в одну группу.",
             "Значение value у каждого слота должно быть уникальным по всему массиву, а не только в пределах дня.",
             "Выбранный вариант должен быть всегда: группа без defaultValue заставляет угадывать.",
@@ -1090,6 +1584,18 @@
             "type": "select",
             "default": "tomorrow-1",
             "options": ["today-1", "today-2", "tomorrow-1", "later-1"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1103,15 +1609,20 @@
                 "one shared name across every day's slots — it is a single radio group, not several",
                 "the fieldset with a legend — the question gets announced before the options",
                 "an unavailable slot staying visible and dimmed, not hidden",
-                "native radio buttons: single selection and keyboard support come from the browser"
+                "native radio buttons: single selection and keyboard support come from the browser",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the slots array with day, time, price and the disabled flag",
                 "legend, name and defaultValue",
+                "the busy-slot caption through busyLabel",
                 "the accent through the accent prop",
-                "the number of days and slots per day"
+                "the number of days and slots per day",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A unique name per group is mandatory: two blocks sharing one merge into a single group.",
                 "Each slot's value must be unique across the whole array, not just within its day.",
                 "There should always be a selected option: a group without defaultValue forces guessing.",
@@ -1126,11 +1637,57 @@
               },
               "defaultValue": {
                 "label": "Selected slot"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Delivery Slot Radio"
+            "title": "Delivery Slot Radio",
+            "preview": {
+              "props": {
+                "legend": "Delivery time",
+                "busyLabel": "taken",
+                "slots": [
+                  {
+                    "value": "today-1",
+                    "day": "Today",
+                    "time": "6–8 PM",
+                    "price": "$4"
+                  },
+                  {
+                    "value": "today-2",
+                    "day": "Today",
+                    "time": "8–10 PM",
+                    "price": "$6"
+                  },
+                  {
+                    "value": "tomorrow-1",
+                    "day": "Tomorrow",
+                    "time": "10 AM–12 PM",
+                    "price": "$2"
+                  },
+                  {
+                    "value": "tomorrow-2",
+                    "day": "Tomorrow",
+                    "time": "6–8 PM",
+                    "price": "$2",
+                    "disabled": true
+                  },
+                  {
+                    "value": "later-1",
+                    "day": "In two days",
+                    "time": "10 AM–12 PM",
+                    "price": "$0"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1161,15 +1718,19 @@
             "инлайн-стиль для цвета образца — единственный оправданный случай динамического значения",
             "fieldset с legend — так вопрос объявляется перед вариантами",
             "подпись цвета текстом под образцом для доступности и для тех, кто не различает оттенки",
-            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера"
+            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив options с цветом, подписью и значением",
             "legend, name и defaultValue",
             "акцент кольца через проп accent",
-            "число образцов и колонок сетки"
+            "число образцов и колонок сетки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Уникальный name на группу обязателен: два блока с одним именем сольются в одну группу.",
             "Не заменяйте текстовую подпись цвета одним образцом — без неё выбор недоступен со скринридером.",
             "Выбранный вариант должен быть всегда: группа без defaultValue заставляет угадывать.",
@@ -1190,6 +1751,18 @@
             "type": "select",
             "default": "blue",
             "options": ["black", "white", "blue", "olive", "terracotta"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1203,15 +1776,19 @@
                 "the inline style for the swatch color — the one justified case of a dynamic value",
                 "the fieldset with a legend — the question gets announced before the options",
                 "the text color name under the swatch, for accessibility and for anyone who can't tell shades apart",
-                "native radio buttons: single selection and keyboard support come from the browser"
+                "native radio buttons: single selection and keyboard support come from the browser",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the options array with a color, label and value",
                 "legend, name and defaultValue",
                 "the ring accent through the accent prop",
-                "the number of swatches and grid columns"
+                "the number of swatches and grid columns",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A unique name per group is mandatory: two blocks sharing one merge into a single group.",
                 "Do not drop the text color name for a swatch alone — without it the choice is unreachable by screen reader.",
                 "There should always be a selected option: a group without defaultValue forces guessing.",
@@ -1226,11 +1803,50 @@
               },
               "defaultValue": {
                 "label": "Selected color"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Color Swatch Radio"
+            "title": "Color Swatch Radio",
+            "preview": {
+              "props": {
+                "legend": "Colour",
+                "options": [
+                  {
+                    "value": "black",
+                    "label": "Black",
+                    "color": "#18181b"
+                  },
+                  {
+                    "value": "white",
+                    "label": "White",
+                    "color": "#f5f5f4"
+                  },
+                  {
+                    "value": "blue",
+                    "label": "Blue",
+                    "color": "#2563eb"
+                  },
+                  {
+                    "value": "olive",
+                    "label": "Olive",
+                    "color": "#4d7c0f"
+                  },
+                  {
+                    "value": "terracotta",
+                    "label": "Terracotta",
+                    "color": "#c2410c"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1261,15 +1877,20 @@
             "aria-label с номером и общим числом делений на каждой радиокнопке",
             "fieldset с legend — так вопрос объявляется перед вариантами",
             "равную ширину всех пяти кружков через grid, а не произвольные отступы",
-            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера"
+            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "legend с текстом вопроса",
             "lowLabel и highLabel — подписи полюсов шкалы",
+            "optionLabel — шаблон accessible-имени деления с подстановками {value} и {total}",
             "name и defaultValue",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Уникальный name на группу обязателен: два блока с одним именем сольются в одну группу.",
             "Не добавляйте подписи к средним делениям — три-пять слов у полюсов достаточно для шкалы такого размера.",
             "Выбранный вариант должен быть всегда: группа без defaultValue заставляет угадывать.",
@@ -1290,6 +1911,18 @@
             "type": "select",
             "default": "4",
             "options": ["1", "2", "3", "4", "5"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1303,15 +1936,20 @@
                 "the aria-label with the number and the scale's total on every radio button",
                 "the fieldset with a legend — the question gets announced before the options",
                 "the equal width of all five circles via grid, not arbitrary spacing",
-                "native radio buttons: single selection and keyboard support come from the browser"
+                "native radio buttons: single selection and keyboard support come from the browser",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the legend with the question text",
                 "lowLabel and highLabel — the scale's pole labels",
+                "optionLabel — the template for a mark's accessible name, with {value} and {total} placeholders",
                 "name and defaultValue",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A unique name per group is mandatory: two blocks sharing one merge into a single group.",
                 "Do not label the middle marks — three to five words on the poles is enough for a scale this size.",
                 "There should always be a selected option: a group without defaultValue forces guessing.",
@@ -1326,11 +1964,26 @@
               },
               "defaultValue": {
                 "label": "Selected rating"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Rating Scale Radio"
+            "title": "Rating Scale Radio",
+            "preview": {
+              "props": {
+                "legend": "How happy are you with the service?",
+                "lowLabel": "Poor",
+                "highLabel": "Excellent",
+                "optionLabel": "Rating {value} of {total}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1360,15 +2013,20 @@
             "логотип-заглушку как код в рамке — не заменять реальным лого платёжной системы",
             "дату списания отдельной строкой под названием способа",
             "fieldset с legend — так вопрос объявляется перед вариантами",
-            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера"
+            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "точку выбранной кнопки радиальным градиентом, а не внутренней тенью: тень пришлось бы закрашивать цветом подложки, которой по умолчанию нет"
           ],
           "adapt": [
             "массив methods с брендом, названием и датой списания",
             "legend, name и defaultValue",
             "акцент через проп accent",
-            "признак disabled у недоступного способа"
+            "признак disabled у недоступного способа",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Уникальный name на группу обязателен: два блока с одним именем сольются в одну группу.",
             "Логотип — заглушка: короткий код бренда, а не векторная иконка платёжной системы.",
             "Выбранный способ должен быть всегда: группа без defaultValue заставляет угадывать.",
@@ -1389,6 +2047,18 @@
             "type": "select",
             "default": "visa",
             "options": ["visa", "mir", "sbp", "invoice"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1401,15 +2071,20 @@
                 "the stand-in logo as a coded box — do not replace it with a real payment-system icon",
                 "the charge date on its own line under the method name",
                 "the fieldset with a legend — the question gets announced before the options",
-                "native radio buttons: single selection and keyboard support come from the browser"
+                "native radio buttons: single selection and keyboard support come from the browser",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the selected dot as a radial gradient rather than an inset shadow: a shadow would have to paint the gap in the surface colour, and there is no surface by default"
               ],
               "adapt": [
                 "the methods array with brand, name and charge date",
                 "legend, name and defaultValue",
                 "the accent through the accent prop",
-                "the disabled flag on an unavailable method"
+                "the disabled flag on an unavailable method",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A unique name per group is mandatory: two blocks sharing one merge into a single group.",
                 "The logo is a stand-in: a short brand code, not a vector payment-system icon.",
                 "There should always be a selected method: a group without defaultValue forces guessing.",
@@ -1424,11 +2099,50 @@
               },
               "defaultValue": {
                 "label": "Selected method"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Payment Method Radio"
+            "title": "Payment Method Radio",
+            "preview": {
+              "props": {
+                "legend": "Payment method",
+                "methods": [
+                  {
+                    "value": "visa",
+                    "brand": "VISA",
+                    "name": "Card •••• 4412",
+                    "chargeDate": "Charges on 5 September"
+                  },
+                  {
+                    "value": "mir",
+                    "brand": "MIR",
+                    "name": "Card •••• 0071",
+                    "chargeDate": "Charges on 5 September"
+                  },
+                  {
+                    "value": "sbp",
+                    "brand": "SBP",
+                    "name": "Pay by phone number",
+                    "chargeDate": "Charges right after confirmation"
+                  },
+                  {
+                    "value": "invoice",
+                    "brand": "BILL",
+                    "name": "Invoice for a company",
+                    "chargeDate": "Not available on this plan",
+                    "disabled": true
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1458,14 +2172,19 @@
             "миниатюру как CSS-раскладку из полоски шапки и строк — не заменять фотографией или иконкой",
             "разделённую пополам миниатюру у системной темы — это единственный честный способ показать «обе сразу»",
             "fieldset с legend — так вопрос объявляется перед вариантами",
-            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера"
+            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "фиксированные цвета миниатюр --vibeui-radio-015-thumb-*: они намеренно не следуют теме окружения, потому что показывают светлую и тёмную тему как картинку выбора"
           ],
           "adapt": [
             "options со значениями light/dark/system и своей подписью",
             "legend, name и defaultValue",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Уникальный name на группу обязателен: два блока с одним именем сольются в одну группу.",
             "Не добавляйте четвёртый вариант без миниатюры под него: тип Radio015Variant ограничен тремя значениями.",
             "Выбранный вариант должен быть всегда: группа без defaultValue заставляет угадывать.",
@@ -1486,6 +2205,18 @@
             "type": "select",
             "default": "system",
             "options": ["light", "dark", "system"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1498,14 +2229,19 @@
                 "the thumbnail as a CSS mock-up of a header bar and lines — do not replace it with a photo or an icon",
                 "the half-split thumbnail on the system option — it is the only honest way to show \"both at once\"",
                 "the fieldset with a legend — the question gets announced before the options",
-                "native radio buttons: single selection and keyboard support come from the browser"
+                "native radio buttons: single selection and keyboard support come from the browser",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the fixed --vibeui-radio-015-thumb-* colours: they deliberately do not follow the surrounding theme, because they picture the light and the dark theme as the choice itself"
               ],
               "adapt": [
                 "the options array with light/dark/system values and their labels",
                 "legend, name and defaultValue",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A unique name per group is mandatory: two blocks sharing one merge into a single group.",
                 "Do not add a fourth option without a thumbnail for it: the Radio015Variant type is limited to three values.",
                 "There should always be a selected option: a group without defaultValue forces guessing.",
@@ -1520,11 +2256,37 @@
               },
               "defaultValue": {
                 "label": "Selected theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Theme Thumbnail Radio"
+            "title": "Theme Thumbnail Radio",
+            "preview": {
+              "props": {
+                "legend": "Appearance theme",
+                "options": [
+                  {
+                    "value": "light",
+                    "label": "Light"
+                  },
+                  {
+                    "value": "dark",
+                    "label": "Dark"
+                  },
+                  {
+                    "value": "system",
+                    "label": "System"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1555,15 +2317,22 @@
             "метку recommendedLabel только на одном плане — на всех сразу сравнение теряет смысл",
             "fieldset с legend — так вопрос объявляется перед вариантами",
             "галочку и тире как признак включённой и невключённой возможности, а не текст «да/нет»",
-            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера"
+            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "aria-label у галочки и тире из valueText — без него ячейка сравнения читается скринридером как один символ"
           ],
           "adapt": [
             "массив plans с ценой, периодом и recommended",
             "массив features со строками values по индексу плана",
             "legend, name, defaultValue и recommendedLabel",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "cornerLabel — подпись угловой ячейки над списком возможностей",
+            "valueText — подписи «включено» и «не включено» для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Уникальный name на группу обязателен: два блока с одним именем сольются в одну группу.",
             "Длина values в каждом feature должна совпадать с числом планов — иначе колонка останется пустой.",
             "Выбранный план должен быть всегда: группа без defaultValue заставляет угадывать.",
@@ -1591,6 +2360,18 @@
             "type": "text",
             "default": "Советуем",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1604,15 +2385,22 @@
                 "the recommendedLabel badge on a single plan only — on every column the comparison loses its point",
                 "the fieldset with a legend — the question gets announced before the options",
                 "the checkmark and dash as the included/not-included mark, not \"yes/no\" text",
-                "native radio buttons: single selection and keyboard support come from the browser"
+                "native radio buttons: single selection and keyboard support come from the browser",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the aria-label from valueText on the checkmark and the dash — without it a comparison cell reads to a screen reader as a bare glyph"
               ],
               "adapt": [
                 "the plans array with price, period and recommended",
                 "the features array with a values row per plan index",
                 "legend, name, defaultValue and recommendedLabel",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "cornerLabel — the corner cell caption above the feature list",
+                "valueText — the included and not-included labels for screen readers",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A unique name per group is mandatory: two blocks sharing one merge into a single group.",
                 "Each feature's values length must match the number of plans, or a column stays empty.",
                 "There should always be a selected plan: a group without defaultValue forces guessing.",
@@ -1631,11 +2419,62 @@
               "recommendedLabel": {
                 "label": "Recommended badge",
                 "default": "We recommend"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Plan Comparison Radio"
+            "title": "Plan Comparison Radio",
+            "preview": {
+              "props": {
+                "legend": "Choose a plan",
+                "recommendedLabel": "We recommend",
+                "cornerLabel": "What's included",
+                "valueText": {
+                  "included": "Included",
+                  "excluded": "Not included"
+                },
+                "plans": [
+                  {
+                    "value": "basic",
+                    "name": "Basic",
+                    "price": "$9",
+                    "period": "per month"
+                  },
+                  {
+                    "value": "pro",
+                    "name": "Advanced",
+                    "price": "$19",
+                    "period": "per month",
+                    "recommended": true
+                  }
+                ],
+                "features": [
+                  {
+                    "label": "Up to 5 projects",
+                    "values": [true, true]
+                  },
+                  {
+                    "label": "Team collaboration",
+                    "values": [false, true]
+                  },
+                  {
+                    "label": "PDF export",
+                    "values": [false, true]
+                  },
+                  {
+                    "label": "Priority support",
+                    "values": [false, true]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -1666,15 +2505,22 @@
             "disabled на неактивном поле — оно не должно ловить Tab и отправлять пустую строку",
             "fieldset с legend — так вопрос объявляется перед вариантами",
             "общий name у радио вместе с отдельным именем текстового поля — это два разных ответа",
-            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера"
+            "нативные радиокнопки: выбор одного варианта и клавиатура достаются от браузера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "собственную заливку textarea --vibeui-radio-017-field: поле обязано отличаться от фона формы в обеих темах"
           ],
           "adapt": [
             "готовые причины через массив reasons",
             "подпись последнего пункта через otherLabel и заглушку поля через placeholder",
             "пояснение под списком через footnote",
-            "legend, name и defaultValue"
+            "legend, name и defaultValue",
+            "otherFieldLabel — шаблон accessible-имени поля с подстановкой {label}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "акцент через проп accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ограничение в двести сорок символов задано в коде константой: причина не должна превращаться в сочинение.",
             "Значение textarea не очищается при возврате к готовой причине — набранный текст сохраняется на случай возврата.",
             "Уникальный name на группу обязателен: два блока с одним именем сольются в одну группу.",
@@ -1695,6 +2541,25 @@
             "type": "text",
             "default": "Опишите, что пошло не так",
             "maxLength": 40
+          },
+          {
+            "prop": "otherLabel",
+            "label": "Пункт «другое»",
+            "type": "text",
+            "default": "Другая причина",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1708,15 +2573,22 @@
                 "disabled on the inactive field — it must not catch Tab or submit an empty string",
                 "the fieldset with a legend — the question gets announced before the options",
                 "the shared name on the radios together with a separate name for the text field — these are two different answers",
-                "native radio buttons: single selection and keyboard support come from the browser"
+                "native radio buttons: single selection and keyboard support come from the browser",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the textarea's own fill --vibeui-radio-017-field: the field has to stay distinct from the form background in both themes"
               ],
               "adapt": [
                 "the ready-made reasons through the reasons array",
                 "the caption of the last option through otherLabel and the field placeholder through placeholder",
                 "the note under the list through footnote",
-                "legend, name and defaultValue"
+                "legend, name and defaultValue",
+                "otherFieldLabel — the template for the field's accessible name, with a {label} placeholder",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the accent through the accent prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The two-hundred-forty-character limit is a constant in the code: a reason should not turn into an essay.",
                 "The textarea value is not cleared when going back to a ready-made reason — the typed text survives in case of a return.",
                 "A unique name per group is mandatory: two blocks sharing one merge into a single group.",
@@ -1732,11 +2604,38 @@
               "placeholder": {
                 "label": "Field placeholder",
                 "default": "Tell us what went wrong"
+              },
+              "otherLabel": {
+                "label": "\"Other\" option",
+                "default": "Another reason"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Cancellation Reason Radio"
+            "title": "Cancellation Reason Radio",
+            "preview": {
+              "props": {
+                "legend": "Why are you cancelling your subscription?",
+                "reasons": [
+                  "Too expensive",
+                  "Missing the features I need",
+                  "Moved to another service",
+                  "I rarely use it"
+                ],
+                "otherLabel": "Another reason",
+                "placeholder": "Tell us what went wrong",
+                "footnote": "Your answer helps us improve — the field is optional.",
+                "otherFieldLabel": "{label}: the reason in your own words",
+                "defaultValue": "Too expensive"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

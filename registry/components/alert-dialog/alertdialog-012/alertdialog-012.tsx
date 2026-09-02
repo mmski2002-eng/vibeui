@@ -13,9 +13,13 @@ export type Alertdialog012Props = Omit<
   card?: string
   lines?: { label: string; value: string }[]
   note?: string
+  /** Строка о способе оплаты: {card} подставляет название карты. */
+  cardText?: string
   confirm?: string
   cancel?: string
   accent?: string
+  /** Подложка окна. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: подтверждение списания. Сумма вынесена крупно и повторена в
@@ -26,12 +30,14 @@ export type Alertdialog012Props = Omit<
 // кнопки, а не в письме после.
 const STYLES = `
 :where([data-vibeui-block="alertdialog-012"]){
---vibeui-alertdialog-012-bg:oklch(1 0 0);
---vibeui-alertdialog-012-panel:oklch(0.97 0.003 265);
---vibeui-alertdialog-012-fg:oklch(0.22 0.014 265);
---vibeui-alertdialog-012-muted:oklch(0.55 0.014 265);
---vibeui-alertdialog-012-border:oklch(0.9 0.006 265);
---vibeui-alertdialog-012-accent:oklch(0.55 0.2 262);
+--vibeui-alertdialog-012-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-alertdialog-012-panel:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.01 265));
+--vibeui-alertdialog-012-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-alertdialog-012-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-alertdialog-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-alertdialog-012-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
+--vibeui-alertdialog-012-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0.03 262));
+--vibeui-alertdialog-012-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.02 0.01 265 / 70%));
 --vibeui-alertdialog-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="alertdialog-012"]{
@@ -41,7 +47,7 @@ font-family:var(--vibeui-alertdialog-012-font);color:var(--vibeui-alertdialog-01
 [data-vibeui-block="alertdialog-012"] [data-part="open"]{
 appearance:none;cursor:pointer;height:2.25rem;padding:0 0.875rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-alertdialog-012-accent);color:oklch(1 0 0);
+background:var(--vibeui-alertdialog-012-accent);color:var(--vibeui-alertdialog-012-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="alertdialog-012"] [data-part="open"]:focus-visible{outline:2px solid var(--vibeui-alertdialog-012-accent);outline-offset:2px}
@@ -50,10 +56,10 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 margin:auto;width:min(23rem,calc(100vw - 2rem));padding:1.125rem;
 border:1px solid var(--vibeui-alertdialog-012-border);border-radius:0.875rem;
 background:var(--vibeui-alertdialog-012-bg);color:var(--vibeui-alertdialog-012-fg);
-box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 55%);
+box-shadow:0 24px 60px -24px var(--vibeui-alertdialog-012-shadow);
 font-family:var(--vibeui-alertdialog-012-font);
 }
-[data-vibeui-block="alertdialog-012"] dialog::backdrop{background:oklch(0.2 0.02 265 / 45%)}
+[data-vibeui-block="alertdialog-012"] dialog::backdrop{background:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.08 0.014 265 / 62%))}
 [data-vibeui-block="alertdialog-012"] h2{margin:0 0 0.625rem;font-size:1rem;font-weight:700;line-height:1.3}
 /* Сумма крупно: на шаге списания её сверяют, а не читают описание. */
 [data-vibeui-block="alertdialog-012"] [data-part="amount"]{
@@ -87,7 +93,7 @@ margin:0 0 0.875rem;font-size:0.6875rem;line-height:1.45;color:var(--vibeui-aler
 flex:1 1 0;appearance:none;cursor:pointer;height:2.5rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;font-variant-numeric:tabular-nums;
 }
-[data-vibeui-block="alertdialog-012"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-012-accent);color:oklch(1 0 0)}
+[data-vibeui-block="alertdialog-012"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-012-accent);color:var(--vibeui-alertdialog-012-on-accent)}
 [data-vibeui-block="alertdialog-012"] [data-part="cancel"]{
 border:1px solid var(--vibeui-alertdialog-012-border);background:var(--vibeui-alertdialog-012-bg);color:inherit;
 }
@@ -102,6 +108,28 @@ const DEFAULT_LINES = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подтверждение списания: сумма крупно и в кнопке, способ оплаты назван здесь.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -112,9 +140,11 @@ export function Alertdialog012({
   card = "Visa · 6411",
   lines = DEFAULT_LINES,
   note = "Вернуть деньги можно в течение 14 дней: напишите в поддержку, возврат придёт на ту же карту.",
+  cardText = "Спишем с карты {card}",
   confirm = "Списать",
   cancel = "Отменить",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -123,6 +153,12 @@ export function Alertdialog012({
 
   const palette = {
     ...(accent ? { "--vibeui-alertdialog-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-alertdialog-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -160,7 +196,7 @@ export function Alertdialog012({
 
           <p data-part="card">
             <span data-part="chip" aria-hidden="true" />
-            Спишем с карты {card}
+            {cardText.replace("{card}", card)}
           </p>
           <p data-part="note">{note}</p>
 

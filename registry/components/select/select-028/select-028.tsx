@@ -19,6 +19,10 @@ export type Select028Props = Omit<
   label?: string
   options?: Select028Option[]
   defaultValue?: string
+  /** Строка рядом с меткой, {label} — подпись выбранного приоритета. */
+  currentText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,16 +32,16 @@ export type Select028Props = Omit<
 // вместе и про задачи, а не про статус или роль.
 const STYLES = `
 :where([data-vibeui-block="select-028"]){
---vibeui-select-028-surface:oklch(1 0 0);
---vibeui-select-028-surface-border:oklch(0.91 0.006 265);
---vibeui-select-028-fg:oklch(0.22 0.014 265);
---vibeui-select-028-muted:oklch(0.55 0.014 265);
---vibeui-select-028-border:oklch(0.87 0.008 265);
---vibeui-select-028-accent:oklch(0.55 0.19 262);
---vibeui-select-028-tone-low:oklch(0.62 0.13 200);
---vibeui-select-028-tone-medium:oklch(0.75 0.16 85);
---vibeui-select-028-tone-high:oklch(0.62 0.19 45);
---vibeui-select-028-tone-critical:oklch(0.55 0.21 25);
+--vibeui-select-028-surface:transparent;
+--vibeui-select-028-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-select-028-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-select-028-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-028-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.012 265));
+--vibeui-select-028-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
+--vibeui-select-028-tone-low:light-dark(oklch(0.62 0.13 200),oklch(0.78 0.12 200));
+--vibeui-select-028-tone-medium:light-dark(oklch(0.75 0.16 85),oklch(0.83 0.14 88));
+--vibeui-select-028-tone-high:light-dark(oklch(0.62 0.19 45),oklch(0.79 0.15 55));
+--vibeui-select-028-tone-critical:light-dark(oklch(0.55 0.21 25),oklch(0.72 0.17 25));
 --vibeui-select-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="select-028"]{
@@ -128,6 +132,28 @@ const DEFAULT_OPTIONS: Select028Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Select приоритета задачи: цветная метка в триггере и живая подпись под
  * полем с объяснением, что приоритет значит на практике. Один файл, ноль
  * зависимостей, клиентский компонент.
@@ -136,6 +162,8 @@ export function Select028({
   label = "Приоритет задачи",
   options = DEFAULT_OPTIONS,
   defaultValue = options[1]?.value ?? options[0]?.value,
+  currentText = "{label} приоритет",
+  background = "",
   accent,
   id,
   className,
@@ -150,6 +178,12 @@ export function Select028({
 
   const palette = {
     ...(accent ? { "--vibeui-select-028-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-select-028-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -184,7 +218,9 @@ export function Select028({
             <span data-part="badge" data-tone={current?.tone}>
               {current?.label}
             </span>
-            <span data-part="name">{current?.label} приоритет</span>
+            <span data-part="name">
+              {currentText.replace("{label}", current?.label ?? "")}
+            </span>
           </span>
         </span>
         <p data-part="caption" id={captionId} role="status">

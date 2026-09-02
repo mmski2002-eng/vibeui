@@ -17,11 +17,14 @@ export type Alert002Props = Omit<
 // единственного случая, когда сообщение нельзя пропустить: сервис лежит,
 // оплата не прошла, данные вот-вот удалятся. Заливка тоном по всей площади
 // сознательно кричит, поэтому такой алерт на экране должен быть один.
+//
+// Подложка здесь и есть тон, поэтому пропа background у компонента нет: цвет
+// меняется тоном. Но светлота заливки у тёмной темы своя — через light-dark().
 const STYLES = `
 :where([data-vibeui-block="alert-002"]){
---vibeui-alert-002-bg:oklch(0.55 0.19 25);
---vibeui-alert-002-fg:oklch(0.99 0.01 25);
---vibeui-alert-002-muted:oklch(0.93 0.03 25);
+--vibeui-alert-002-bg:light-dark(oklch(0.55 0.19 25),oklch(0.47 0.16 25));
+--vibeui-alert-002-fg:light-dark(oklch(0.99 0.01 25),oklch(0.97 0.02 25));
+--vibeui-alert-002-muted:light-dark(oklch(0.93 0.03 25),oklch(0.87 0.05 25));
 --vibeui-alert-002-radius:0.75rem;
 --vibeui-alert-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -36,9 +39,9 @@ padding:0.875rem 1rem;border-radius:var(--vibeui-alert-002-radius);
 background:var(--vibeui-alert-002-bg);color:var(--vibeui-alert-002-fg);
 font-family:var(--vibeui-alert-002-font);
 }
-[data-vibeui-block="alert-002"][data-tone="info"]{--vibeui-alert-002-bg:oklch(0.5 0.18 262);--vibeui-alert-002-fg:oklch(0.99 0.01 262);--vibeui-alert-002-muted:oklch(0.9 0.04 262)}
-[data-vibeui-block="alert-002"][data-tone="success"]{--vibeui-alert-002-bg:oklch(0.5 0.14 152);--vibeui-alert-002-fg:oklch(0.99 0.01 152);--vibeui-alert-002-muted:oklch(0.9 0.04 152)}
-[data-vibeui-block="alert-002"][data-tone="warning"]{--vibeui-alert-002-bg:oklch(0.62 0.15 70);--vibeui-alert-002-fg:oklch(0.99 0.01 70);--vibeui-alert-002-muted:oklch(0.94 0.04 70)}
+[data-vibeui-block="alert-002"][data-tone="info"]{--vibeui-alert-002-bg:light-dark(oklch(0.5 0.18 262),oklch(0.43 0.15 262));--vibeui-alert-002-fg:light-dark(oklch(0.99 0.01 262),oklch(0.97 0.02 262));--vibeui-alert-002-muted:light-dark(oklch(0.9 0.04 262),oklch(0.85 0.05 262))}
+[data-vibeui-block="alert-002"][data-tone="success"]{--vibeui-alert-002-bg:light-dark(oklch(0.5 0.14 152),oklch(0.42 0.12 152));--vibeui-alert-002-fg:light-dark(oklch(0.99 0.01 152),oklch(0.97 0.02 152));--vibeui-alert-002-muted:light-dark(oklch(0.9 0.04 152),oklch(0.85 0.05 152))}
+[data-vibeui-block="alert-002"][data-tone="warning"]{--vibeui-alert-002-bg:light-dark(oklch(0.62 0.15 70),oklch(0.53 0.13 70));--vibeui-alert-002-fg:light-dark(oklch(0.99 0.01 70),oklch(0.98 0.02 70));--vibeui-alert-002-muted:light-dark(oklch(0.94 0.04 70),oklch(0.89 0.05 70))}
 /* Значок на просвете заливки: обводка вместо второго цвета. */
 [data-vibeui-block="alert-002"] [data-part="icon"]{
 display:flex;align-items:center;justify-content:center;flex:none;

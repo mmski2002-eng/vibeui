@@ -13,6 +13,10 @@ export type Progress005Props = Omit<
   /** Ёмкость, к которой считаются доли. Ноль — берём сумму строк. */
   capacity?: number
   unit?: string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  text?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: расход по категориям читается не одной полосой, а
@@ -22,11 +26,11 @@ export type Progress005Props = Omit<
 // не выдавая цвета руками.
 const STYLES = `
 :where([data-vibeui-block="progress-005"]){
---vibeui-progress-005-bg:oklch(1 0 0);
---vibeui-progress-005-fg:oklch(0.25 0.016 265);
---vibeui-progress-005-muted:oklch(0.56 0.014 265);
---vibeui-progress-005-border:oklch(0.9 0.006 265);
---vibeui-progress-005-track:oklch(0.94 0.004 265);
+--vibeui-progress-005-bg:transparent;
+--vibeui-progress-005-fg:light-dark(oklch(0.25 0.016 265),oklch(0.94 0.006 265));
+--vibeui-progress-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-progress-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-progress-005-track:light-dark(oklch(0.94 0.004 265),oklch(0.3 0.011 265));
 --vibeui-progress-005-hue:262;
 --vibeui-progress-005-value:0;
 --vibeui-progress-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -87,6 +91,34 @@ const DEFAULT_ROWS: Progress005Row[] = [
   { label: "Кэш приложений", value: 21 },
 ]
 
+const DEFAULT_TEXT: Record<string, string> = {
+  used: "Занято {used} {unit}",
+  free: "свободно {free} {unit}",
+  value: "{name}: {value} {unit} из {total} {unit}",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function hue(name: string) {
   let hash = 2166136261
 
@@ -106,12 +138,24 @@ export function Progress005({
   rows = DEFAULT_ROWS,
   capacity = 512,
   unit = "ГБ",
+  text = DEFAULT_TEXT,
+  background = "",
   className,
   style,
   ...props
 }: Progress005Props) {
   const used = rows.reduce((sum, row) => sum + Math.max(0, row.value), 0)
   const scale = capacity > 0 ? capacity : used || 1
+  const say = (key: string) => text[key] ?? DEFAULT_TEXT[key]
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-progress-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -122,14 +166,18 @@ export function Progress005({
         {...props}
         data-vibeui-block="progress-005"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="total">
           <span>
-            Занято {used} {unit}
+            {say("used")
+              .replace("{used}", String(used))
+              .replace("{unit}", unit)}
           </span>
           <span data-part="free">
-            свободно {Math.max(0, scale - used)} {unit}
+            {say("free")
+              .replace("{free}", String(Math.max(0, scale - used)))
+              .replace("{unit}", unit)}
           </span>
         </div>
         <ul>
@@ -163,7 +211,12 @@ export function Progress005({
                   aria-valuemin={0}
                   aria-valuemax={scale}
                   aria-valuenow={row.value}
-                  aria-valuetext={`${row.label}: ${row.value} ${unit} из ${scale} ${unit}`}
+                  aria-valuetext={say("value")
+                    .replace("{name}", row.label)
+                    .replace("{value}", String(row.value))
+                    .replace("{total}", String(scale))
+                    .split("{unit}")
+                    .join(unit)}
                 >
                   <div data-part="bar" />
                 </div>

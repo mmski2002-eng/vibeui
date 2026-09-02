@@ -19,7 +19,15 @@ export type Eventcalendar002Props = Omit<
   dayFrom?: number
   dayTo?: number
   heading?: string
+  /** Подсказка под заголовком. {from} и {to} — границы рабочего дня. */
+  hintText?: string
+  /** Подпись столбца событий на весь день. */
+  allDayText?: string
+  /** Имя области прокрутки для читалки. {heading} — заголовок. */
+  scrollLabel?: string
   locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -31,15 +39,16 @@ export type Eventcalendar002Props = Omit<
 // на всю колонку было бы враньём.
 const STYLES = `
 :where([data-vibeui-block="eventcalendar-002"]){
---vibeui-eventcalendar-002-bg:oklch(1 0 0);
---vibeui-eventcalendar-002-fg:oklch(0.24 0.014 265);
---vibeui-eventcalendar-002-muted:oklch(0.6 0.014 265);
---vibeui-eventcalendar-002-border:oklch(0.91 0.006 265);
---vibeui-eventcalendar-002-line:oklch(0.95 0.004 265);
---vibeui-eventcalendar-002-accent:oklch(0.55 0.16 262);
---vibeui-eventcalendar-002-focus:oklch(0.58 0.14 152);
---vibeui-eventcalendar-002-away:oklch(0.62 0.02 265);
---vibeui-eventcalendar-002-now:oklch(0.58 0.19 25);
+--vibeui-eventcalendar-002-bg:transparent;
+--vibeui-eventcalendar-002-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
+--vibeui-eventcalendar-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-eventcalendar-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-eventcalendar-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-eventcalendar-002-line:light-dark(oklch(0.95 0.004 265),oklch(0.31 0.01 265));
+--vibeui-eventcalendar-002-accent:light-dark(oklch(0.55 0.16 262),oklch(0.74 0.15 262));
+--vibeui-eventcalendar-002-focus:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.13 152));
+--vibeui-eventcalendar-002-away:light-dark(oklch(0.62 0.02 265),oklch(0.72 0.02 265));
+--vibeui-eventcalendar-002-now:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.18 25));
 --vibeui-eventcalendar-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="eventcalendar-002"]{
@@ -126,7 +135,7 @@ position:absolute;left:0.1875rem;right:0.1875rem;
 display:flex;flex-direction:column;gap:0.0625rem;overflow:hidden;
 padding:0.1875rem 0.3125rem;border-radius:0.375rem;
 border-left:3px solid var(--vibeui-eventcalendar-002-accent);
-background:color-mix(in oklab,var(--vibeui-eventcalendar-002-accent) 14%,var(--vibeui-eventcalendar-002-bg));
+background:color-mix(in oklab,var(--vibeui-eventcalendar-002-accent) 14%,var(--vibeui-eventcalendar-002-panel));
 font-size:0.625rem;line-height:1.25;
 }
 [data-vibeui-block="eventcalendar-002"] [data-part="event"] b{font-weight:650}
@@ -135,13 +144,13 @@ font-variant-numeric:tabular-nums;color:var(--vibeui-eventcalendar-002-muted);
 }
 [data-vibeui-block="eventcalendar-002"] [data-tone="focus"]{
 border-left-color:var(--vibeui-eventcalendar-002-focus);
-background:color-mix(in oklab,var(--vibeui-eventcalendar-002-focus) 14%,var(--vibeui-eventcalendar-002-bg));
+background:color-mix(in oklab,var(--vibeui-eventcalendar-002-focus) 14%,var(--vibeui-eventcalendar-002-panel));
 }
 [data-vibeui-block="eventcalendar-002"] [data-tone="away"]{
 border-left-color:var(--vibeui-eventcalendar-002-away);border-left-style:dashed;
 background:repeating-linear-gradient(135deg,
-color-mix(in oklab,var(--vibeui-eventcalendar-002-away) 16%,var(--vibeui-eventcalendar-002-bg)) 0 4px,
-var(--vibeui-eventcalendar-002-bg) 4px 8px);
+color-mix(in oklab,var(--vibeui-eventcalendar-002-away) 16%,var(--vibeui-eventcalendar-002-panel)) 0 4px,
+var(--vibeui-eventcalendar-002-panel) 4px 8px);
 }
 [data-vibeui-block="eventcalendar-002"] [data-part="chip"]{
 padding:0.0625rem 0.25rem;border-radius:0.25rem;
@@ -184,6 +193,28 @@ function minutes(value: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Неделя колонками дней: события стоят по времени в процентах от рабочего
  * дня, события на весь день — отдельной строкой. Один файл, ноль зависимостей.
  */
@@ -193,7 +224,11 @@ export function Eventcalendar002({
   dayFrom = 8,
   dayTo = 19,
   heading = "Неделя",
+  hintText = "рабочий день {from}:00 — {to}:00, красная черта — сейчас",
+  allDayText = "весь день",
+  scrollLabel = "{heading}: расписание по дням",
   locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -228,6 +263,13 @@ export function Eventcalendar002({
     "--vibeui-eventcalendar-002-days": days,
     "--vibeui-eventcalendar-002-hours": hours.length,
     ...(accent ? { "--vibeui-eventcalendar-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-eventcalendar-002-bg": background,
+          "--vibeui-eventcalendar-002-panel": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -246,7 +288,9 @@ export function Eventcalendar002({
         <header data-part="head">
           <h3 data-part="heading">{heading}</h3>
           <p data-part="hint">
-            рабочий день {dayFrom}:00 — {dayTo}:00, красная черта — сейчас
+            {hintText
+              .replace("{from}", String(dayFrom))
+              .replace("{to}", String(dayTo))}
           </p>
         </header>
 
@@ -254,7 +298,7 @@ export function Eventcalendar002({
           data-part="scroll"
           tabIndex={0}
           role="group"
-          aria-label={`${heading}: расписание по дням`}
+          aria-label={scrollLabel.replace("{heading}", heading)}
         >
           <div data-part="shell">
             <div data-part="row">
@@ -272,7 +316,7 @@ export function Eventcalendar002({
             </div>
 
             <div data-part="row" data-allday="true">
-              <span data-part="corner">весь день</span>
+              <span data-part="corner">{allDayText}</span>
               {columns.map((column) => (
                 <div key={column.key} data-part="allslot">
                   {column.allDay.map((event) => (

@@ -11,6 +11,12 @@ export type Breadcrumb010Props = Omit<
   "children"
 > & {
   items?: Breadcrumb010Item[]
+  /** Подпись навигации: компонент несёт русскую, проект подставляет свою. */
+  navLabel?: string
+  /** Подпись счётчика для скринридера; {count} заменяется числом. */
+  countLabel?: string
+  /** Пусто — подложки нет, крошки лежат прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,22 +24,25 @@ export type Breadcrumb010Props = Omit<
 // на вопрос «стоит ли туда возвращаться»: раздел с тремя товарами и раздел
 // с тысячей — разные решения. Оно приписано к уровню, а не висит отдельной
 // плашкой, и уходит скринридеру словами, а не голой цифрой.
+//
+// Тема берётся из color-scheme окружения через light-dark(): крошки темнеют
+// вместе со страницей и не выкладывают под себя плашку.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-010"]){
---vibeui-breadcrumb-010-surface:oklch(1 0 0);
---vibeui-breadcrumb-010-surface-border:oklch(0.91 0.006 265);
---vibeui-breadcrumb-010-fg:oklch(0.26 0.016 265);
---vibeui-breadcrumb-010-muted:oklch(0.56 0.014 265);
---vibeui-breadcrumb-010-chip:oklch(0.95 0.005 265);
---vibeui-breadcrumb-010-accent:oklch(0.55 0.17 265);
+--vibeui-breadcrumb-010-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.008 265));
+--vibeui-breadcrumb-010-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-breadcrumb-010-line:light-dark(oklch(0.78 0.01 265),oklch(0.5 0.012 265));
+--vibeui-breadcrumb-010-chip:light-dark(oklch(0.95 0.005 265),oklch(0.32 0.012 265));
+--vibeui-breadcrumb-010-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-breadcrumb-010-bg:transparent;
+--vibeui-breadcrumb-010-pad:0;
+--vibeui-breadcrumb-010-radius:0;
 --vibeui-breadcrumb-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Собственная подложка: крошки — это текст, и на тёмной странице
-   он обязан читаться без правки палитры проекта. */
 [data-vibeui-block="breadcrumb-010"]{
-box-sizing:border-box;padding:0.5rem 0.75rem;
-background:var(--vibeui-breadcrumb-010-surface);
-border:1px solid var(--vibeui-breadcrumb-010-surface-border);border-radius:0.625rem;
+box-sizing:border-box;padding:var(--vibeui-breadcrumb-010-pad);
+background:var(--vibeui-breadcrumb-010-bg);
+border-radius:var(--vibeui-breadcrumb-010-radius);
 font-family:var(--vibeui-breadcrumb-010-font);font-size:0.8125rem;line-height:1.4;
 color:var(--vibeui-breadcrumb-010-muted);
 }
@@ -44,8 +53,8 @@ margin:0;padding:0;list-style:none;
 [data-vibeui-block="breadcrumb-010"] li{display:inline-flex;align-items:center;gap:0.4375rem}
 [data-vibeui-block="breadcrumb-010"] li + li::before{
 content:"";width:0.3125rem;height:0.3125rem;
-border-top:1.5px solid oklch(0.78 0.01 265);
-border-right:1.5px solid oklch(0.78 0.01 265);
+border-top:1.5px solid var(--vibeui-breadcrumb-010-line);
+border-right:1.5px solid var(--vibeui-breadcrumb-010-line);
 transform:rotate(45deg);
 }
 [data-vibeui-block="breadcrumb-010"] a,
@@ -73,11 +82,37 @@ const DEFAULT_ITEMS: Breadcrumb010Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Путь с числом записей на каждом уровне.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Breadcrumb010({
   items = DEFAULT_ITEMS,
+  navLabel = "Хлебные крошки",
+  countLabel = "{count} записей в разделе",
+  background = "",
   accent,
   className,
   style,
@@ -85,6 +120,14 @@ export function Breadcrumb010({
 }: Breadcrumb010Props) {
   const palette = {
     ...(accent ? { "--vibeui-breadcrumb-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-breadcrumb-010-bg": background,
+          "--vibeui-breadcrumb-010-pad": "0.5rem 0.75rem",
+          "--vibeui-breadcrumb-010-radius": "0.625rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -96,7 +139,7 @@ export function Breadcrumb010({
       <nav
         {...props}
         data-vibeui-block="breadcrumb-010"
-        aria-label="Хлебные крошки"
+        aria-label={navLabel}
         className={className}
         style={palette}
       >
@@ -107,7 +150,7 @@ export function Breadcrumb010({
               item.count === undefined ? null : (
                 <span
                   data-part="count"
-                  aria-label={`${item.count} записей в разделе`}
+                  aria-label={countLabel.replace("{count}", String(item.count))}
                 >
                   {item.count}
                 </span>

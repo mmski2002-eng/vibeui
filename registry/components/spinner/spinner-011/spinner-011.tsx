@@ -8,6 +8,10 @@ export type Spinner011Props = Omit<
   label?: string
   segments?: number
   size?: "sm" | "md" | "lg"
+  /** Вторая строка: {value} заменяется текущим значением. */
+  hintTemplate?: string
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: круговой индикатор процента, собранный из отдельных
@@ -15,18 +19,21 @@ export type Spinner011Props = Omit<
 // повёрнутый на свой угол; доля определяет, сколько делений закрашено.
 // Такой циферблат читается как измерительный прибор, а не как заливка —
 // это осознанная альтернатива гладкой дуге conic-gradient.
+//
+// Тема берётся из color-scheme окружения через light-dark(): незакрашенные
+// деления в тёмной ветке светлее фона, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="spinner-011"]){
 --vibeui-spinner-011-size:4.5rem;
---vibeui-spinner-011-surface:oklch(1 0 0);
---vibeui-spinner-011-border:oklch(0.9 0.006 265);
---vibeui-spinner-011-fg:oklch(0.24 0.014 265);
---vibeui-spinner-011-muted:oklch(0.55 0.014 265);
---vibeui-spinner-011-track:oklch(0.85 0.006 265);
---vibeui-spinner-011-accent:oklch(0.55 0.17 262);
+--vibeui-spinner-011-surface:transparent;
+--vibeui-spinner-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.32 0.012 265));
+--vibeui-spinner-011-fg:light-dark(oklch(0.24 0.014 265),oklch(0.95 0.005 265));
+--vibeui-spinner-011-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-spinner-011-track:light-dark(oklch(0.85 0.006 265),oklch(0.4 0.012 265));
+--vibeui-spinner-011-accent:light-dark(oklch(0.55 0.17 262),oklch(0.74 0.15 262));
 --vibeui-spinner-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: число и подписи тёмные. */
+/* Подложки нет по умолчанию: плашка появляется только пропом background. */
 [data-vibeui-block="spinner-011"]{
 display:inline-flex;align-items:center;gap:0.875rem;
 box-sizing:border-box;padding:0.875rem 1.125rem 0.875rem 0.875rem;
@@ -65,6 +72,28 @@ display:flex;flex-direction:column;gap:0.125rem;min-width:0;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сегментированный циферблат с процентом внутри: деления вместо дуги.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -73,6 +102,8 @@ export function Spinner011({
   label = "Обрабатываем видео",
   segments = 24,
   size = "md",
+  hintTemplate = "Готово {value} из 100",
+  background = "",
   className,
   style,
   ...props
@@ -80,6 +111,15 @@ export function Spinner011({
   const safe = Math.min(100, Math.max(0, Math.round(value)))
   const total = Math.min(60, Math.max(8, Math.round(segments)))
   const activeCount = Math.round((safe / 100) * total)
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-spinner-011-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -91,7 +131,7 @@ export function Spinner011({
         data-vibeui-block="spinner-011"
         data-size={size}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div
           data-part="dial"
@@ -123,7 +163,9 @@ export function Spinner011({
         </div>
         <span data-part="text">
           <span data-part="label">{label}</span>
-          <span data-part="hint">Готово {safe} из 100</span>
+          <span data-part="hint">
+            {hintTemplate.replace("{value}", String(safe))}
+          </span>
         </span>
       </div>
     </>

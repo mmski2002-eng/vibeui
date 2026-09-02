@@ -6,6 +6,16 @@ export type Auth021Props = {
   effects?: string[]
   submit?: string
   cancel?: string
+  /** Строка под заголовком; {target} подставляется из пропа target. */
+  targetText?: string
+  /** Подпись поля пароля: блок несёт русскую. */
+  passwordLabel?: string
+  /** Объяснение, почему пароль спрашивают повторно. */
+  whyText?: string
+  /** Сноска про журнал безопасности. */
+  footText?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -23,16 +33,23 @@ export type Auth021Props = {
 // Кнопка подтверждения покрашена в опасный цвет и не является первой в
 // разметке: отмена стоит рядом такой же по весу, а не ссылкой в углу.
 //
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не носит собственной подложки.
+//
 // Демонстрация интерфейса: пароль не проверяется, повторную проверку
 // обязан выполнять сервер прямо перед выполнением действия.
 const STYLES = `
 :where([data-vibeui-block="auth-021"]){
---vibeui-auth-021-bg:oklch(0.95 0.008 20);
---vibeui-auth-021-card:oklch(1 0 0);
---vibeui-auth-021-fg:oklch(0.23 0.016 20);
---vibeui-auth-021-muted:oklch(0.54 0.014 20);
---vibeui-auth-021-border:oklch(0.9 0.008 20);
---vibeui-auth-021-accent:oklch(0.55 0.19 25);
+--vibeui-auth-021-bg:transparent;
+--vibeui-auth-021-card:light-dark(oklch(1 0 0),oklch(0.22 0.014 20));
+--vibeui-auth-021-fg:light-dark(oklch(0.23 0.016 20),oklch(0.94 0.006 20));
+--vibeui-auth-021-muted:light-dark(oklch(0.54 0.014 20),oklch(0.71 0.012 20));
+--vibeui-auth-021-border:light-dark(oklch(0.9 0.008 20),oklch(0.35 0.014 20));
+--vibeui-auth-021-accent:light-dark(oklch(0.55 0.19 25),oklch(0.76 0.15 25));
+--vibeui-auth-021-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.02 20));
+--vibeui-auth-021-tint:light-dark(oklch(0.55 0.19 25 / 12%),oklch(0.76 0.15 25 / 18%));
+--vibeui-auth-021-sheet:light-dark(oklch(0.55 0.19 25 / 6%),oklch(0.76 0.15 25 / 10%));
+--vibeui-auth-021-shadow:light-dark(oklch(0.2 0.02 20 / 10%),oklch(0 0 0 / 40%));
 --vibeui-auth-021-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -46,7 +63,7 @@ font-family:var(--vibeui-auth-021-sans);
 width:100%;max-width:24rem;margin:0 auto;padding:1.5rem;
 background:var(--vibeui-auth-021-card);
 border:1px solid var(--vibeui-auth-021-border);border-radius:1rem;
-box-shadow:0 0.75rem 2rem oklch(0.2 0.02 20 / 10%);
+box-shadow:0 0.75rem 2rem var(--vibeui-auth-021-shadow);
 }
 @container (min-width: 42rem){
 [data-vibeui-block="auth-021"] [data-part="shell"]{max-width:27rem;padding:2rem}
@@ -58,7 +75,7 @@ box-shadow:0 0.75rem 2rem oklch(0.2 0.02 20 / 10%);
 [data-vibeui-block="auth-021"] [data-part="glyph"]{
 flex:none;display:inline-flex;align-items:center;justify-content:center;
 width:2.25rem;height:2.25rem;border-radius:0.625rem;
-background:oklch(0.55 0.19 25 / 12%);color:var(--vibeui-auth-021-accent);
+background:var(--vibeui-auth-021-tint);color:var(--vibeui-auth-021-accent);
 font-size:1rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="auth-021"] h2{margin:0 0 0.1875rem;font-size:1.125rem;font-weight:700;line-height:1.25;letter-spacing:-0.01em}
@@ -66,7 +83,7 @@ font-size:1rem;font-weight:700;line-height:1;
 [data-vibeui-block="auth-021"] [data-part="target"] b{color:var(--vibeui-auth-021-fg);font-weight:650}
 [data-vibeui-block="auth-021"] [data-part="effects"]{
 list-style:none;margin:0 0 1.125rem;padding:0.875rem;
-border-radius:0.75rem;background:oklch(0.55 0.19 25 / 6%);
+border-radius:0.75rem;background:var(--vibeui-auth-021-sheet);
 display:flex;flex-direction:column;gap:0.5rem;
 }
 [data-vibeui-block="auth-021"] [data-part="effect"]{display:flex;gap:0.5rem;font-size:0.8125rem;line-height:1.45}
@@ -85,7 +102,7 @@ background:var(--vibeui-auth-021-card);color:inherit;font:inherit;font-size:0.87
 appearance:none;cursor:pointer;height:2.625rem;padding:0 1rem;
 border-radius:0.625rem;font:inherit;font-size:0.875rem;font-weight:650;
 }
-[data-vibeui-block="auth-021"] [data-part="confirm"]{border:0;background:var(--vibeui-auth-021-accent);color:oklch(1 0 0)}
+[data-vibeui-block="auth-021"] [data-part="confirm"]{border:0;background:var(--vibeui-auth-021-accent);color:var(--vibeui-auth-021-on-accent)}
 [data-vibeui-block="auth-021"] [data-part="cancel"]{border:1px solid var(--vibeui-auth-021-border);background:none;color:inherit}
 [data-vibeui-block="auth-021"] [data-part="confirm"]:focus-visible,
 [data-vibeui-block="auth-021"] [data-part="cancel"]:focus-visible{outline:2px solid var(--vibeui-auth-021-accent);outline-offset:2px}
@@ -100,6 +117,28 @@ const DEFAULT_EFFECTS = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подтверждение личности перед опасным действием: последствия списком,
  * затем пароль. Один файл, ноль зависимостей.
  */
@@ -109,12 +148,25 @@ export function Auth021({
   effects = DEFAULT_EFFECTS,
   submit = "Подтвердить и передать",
   cancel = "Отмена",
+  targetText = "Объект: {target}",
+  passwordLabel = "Введите пароль от аккаунта",
+  whyText = "Спрашиваем повторно, потому что действие необратимо, а сессия открыта уже больше часа.",
+  footText = "Событие попадёт в журнал безопасности проекта с указанием времени и устройства.",
+  background = "",
   accent,
   className,
   style,
 }: Auth021Props) {
+  const [targetBefore, targetAfter = ""] = targetText.split("{target}")
+
   const palette = {
     ...(accent ? { "--vibeui-auth-021-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-021-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -137,7 +189,9 @@ export function Auth021({
             <div>
               <h2>{action}</h2>
               <p data-part="target">
-                Объект: <b>{target}</b>
+                {targetBefore}
+                <b>{target}</b>
+                {targetAfter}
               </p>
             </div>
           </div>
@@ -154,9 +208,7 @@ export function Auth021({
           </ul>
 
           <form>
-            <label htmlFor="vibeui-auth-021-password">
-              Введите пароль от аккаунта
-            </label>
+            <label htmlFor="vibeui-auth-021-password">{passwordLabel}</label>
             <input
               id="vibeui-auth-021-password"
               name="password"
@@ -164,10 +216,7 @@ export function Auth021({
               autoComplete="current-password"
               required
             />
-            <p data-part="why">
-              Спрашиваем повторно, потому что действие необратимо, а сессия
-              открыта уже больше часа.
-            </p>
+            <p data-part="why">{whyText}</p>
 
             <div data-part="actions">
               <button type="submit" data-part="confirm">
@@ -179,10 +228,7 @@ export function Auth021({
             </div>
           </form>
 
-          <p data-part="foot">
-            Событие попадёт в журнал безопасности проекта с указанием времени и
-            устройства.
-          </p>
+          <p data-part="foot">{footText}</p>
         </div>
       </section>
     </>

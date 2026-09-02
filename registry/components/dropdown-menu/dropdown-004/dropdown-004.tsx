@@ -15,7 +15,15 @@ export type Dropdown004Props = Omit<
   mark?: "check" | "dot"
   columns?: string[]
   initial?: string[]
+  /** Подпись над кнопкой: чем управляет это меню. */
+  caption?: string
+  /** Строка подвала; {shown} и {total} подставляются числами. */
+  countText?: string
+  /** Подпись кнопки сброса к начальному набору. */
+  resetLabel?: string
   accent?: string
+  /** Подложка панели и меню. Пусто — собственный фон по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: меню-переключатели. Отличие от обычного списка команд в
@@ -23,14 +31,17 @@ export type Dropdown004Props = Omit<
 // захлопывающийся список заставил бы открыть его пять раз. Состояние видно
 // дважды — галочкой в строке и счётчиком в кнопке, потому что после закрытия
 // меню счётчик остаётся единственным следом выбора.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте панель светлее фона страницы, а её граница светлее панели.
 const STYLES = `
 :where([data-vibeui-block="dropdown-004"]){
---vibeui-dropdown-004-bg:oklch(1 0 0);
---vibeui-dropdown-004-fg:oklch(0.24 0.014 250);
---vibeui-dropdown-004-muted:oklch(0.56 0.014 250);
---vibeui-dropdown-004-border:oklch(0.9 0.006 250);
---vibeui-dropdown-004-hover:oklch(0.96 0.004 250);
---vibeui-dropdown-004-accent:oklch(0.58 0.15 200);
+--vibeui-dropdown-004-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 250));
+--vibeui-dropdown-004-fg:light-dark(oklch(0.24 0.014 250),oklch(0.94 0.006 250));
+--vibeui-dropdown-004-muted:light-dark(oklch(0.56 0.014 250),oklch(0.7 0.012 250));
+--vibeui-dropdown-004-border:light-dark(oklch(0.9 0.006 250),oklch(0.37 0.012 250));
+--vibeui-dropdown-004-hover:light-dark(oklch(0.96 0.004 250),oklch(0.32 0.014 250));
+--vibeui-dropdown-004-accent:light-dark(oklch(0.58 0.15 200),oklch(0.72 0.13 200));
 --vibeui-dropdown-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="dropdown-004"]{
@@ -102,7 +113,7 @@ transition:background-color .14s ease,border-color .14s ease;
 background:var(--vibeui-dropdown-004-accent);border-color:var(--vibeui-dropdown-004-accent);
 }
 [data-vibeui-block="dropdown-004"] [data-part="box"] svg{width:0.75rem;height:0.75rem;opacity:0}
-[data-vibeui-block="dropdown-004"] [data-part="item"][aria-checked="true"] [data-part="box"] svg{opacity:1;color:oklch(1 0 0)}
+[data-vibeui-block="dropdown-004"] [data-part="item"][aria-checked="true"] [data-part="box"] svg{opacity:1;color:light-dark(oklch(1 0 0),oklch(0.2 0.012 250))}
 [data-vibeui-block="dropdown-004"][data-mark="dot"] [data-part="box"]{border-radius:9999px}
 [data-vibeui-block="dropdown-004"][data-mark="dot"] [data-part="box"] svg{display:none}
 [data-vibeui-block="dropdown-004"][data-mark="dot"] [data-part="item"][aria-checked="true"] [data-part="box"]{
@@ -143,6 +154,28 @@ function stepFocus(menu: HTMLElement | null, delta: number) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Меню-переключатели: меню не закрывается при нажатии, счётчик живёт в кнопке.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -151,7 +184,11 @@ export function Dropdown004({
   mark = "check",
   columns = DEFAULT_COLUMNS,
   initial = DEFAULT_INITIAL,
+  caption = "Таблица задач",
+  countText = "Показано {shown} из {total}",
+  resetLabel = "Сбросить",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -169,6 +206,12 @@ export function Dropdown004({
 
   const palette = {
     ...(accent ? { "--vibeui-dropdown-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dropdown-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -184,7 +227,7 @@ export function Dropdown004({
         className={className}
         style={palette}
       >
-        <span data-part="caption">Таблица задач</span>
+        <span data-part="caption">{caption}</span>
         <button
           type="button"
           data-part="trigger"
@@ -254,14 +297,16 @@ export function Dropdown004({
           ))}
           <div data-part="foot">
             <span>
-              Показано {on.length} из {columns.length}
+              {countText
+                .replace("{shown}", String(on.length))
+                .replace("{total}", String(columns.length))}
             </span>
             <button
               type="button"
               data-part="reset"
               onClick={() => setOn(initial)}
             >
-              Сбросить
+              {resetLabel}
             </button>
           </div>
         </div>

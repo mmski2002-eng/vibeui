@@ -10,8 +10,14 @@ export type Navbar001Props = {
   links?: Navbar001Link[]
   actionLabel?: string
   actionHref?: string
+  /** Подпись навигации для скринридера: компонент несёт русскую. */
+  navLabel?: string
+  /** Подпись кнопки меню для скринридера. */
+  menuLabel?: string
   /** Идентификатор мобильного меню: связывает кнопку и панель. */
   id?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -25,14 +31,17 @@ export type Navbar001Props = {
 //
 // Мобильное меню — HTML popover: кнопка объявляет цель через popovertarget,
 // браузер сам даёт закрытие по Esc и клику мимо. Ни строки JS, ни состояния.
+//
+// Тема берётся из color-scheme окружения через light-dark(): шапка темнеет
+// вместе с контекстом и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="navbar-001"]){
---vibeui-navbar-001-bg:oklch(1 0 0 / 82%);
---vibeui-navbar-001-ink:oklch(0.22 0.014 265);
---vibeui-navbar-001-muted:oklch(0.5 0.014 265);
---vibeui-navbar-001-border:oklch(0.9 0.006 265);
---vibeui-navbar-001-accent:oklch(0.52 0.19 265);
---vibeui-navbar-001-accent-fg:oklch(0.99 0 0);
+--vibeui-navbar-001-bg:transparent;
+--vibeui-navbar-001-ink:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-navbar-001-muted:light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265));
+--vibeui-navbar-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265));
+--vibeui-navbar-001-accent:light-dark(oklch(0.52 0.19 265),oklch(0.72 0.16 265));
+--vibeui-navbar-001-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.02 265));
 --vibeui-navbar-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -85,10 +94,12 @@ background:transparent;
 /* Мобильная панель живёт в верхнем слое, поэтому стилизуется по атрибуту. */
 [data-vibeui-navbar-001-menu]{
 position:fixed;inset:auto 0.75rem 0.75rem;margin:0;
-padding:0.625rem;border:1px solid var(--vibeui-navbar-001-border,oklch(0.9 0.006 265));
-border-radius:1rem;background:oklch(1 0 0);
+padding:0.625rem;
+border:1px solid var(--vibeui-navbar-001-border,light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265)));
+border-radius:1rem;
+background:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.014 265));
 font-family:var(--vibeui-navbar-001-sans,ui-sans-serif,system-ui,sans-serif);
-box-shadow:0 24px 60px -28px oklch(0.2 0.03 265 / 50%);
+box-shadow:0 24px 60px -28px light-dark(oklch(0.2 0.03 265 / 50%),oklch(0 0 0 / 70%));
 opacity:0;transform:translateY(0.75rem);
 transition:opacity .2s ease,transform .2s ease,display .2s allow-discrete,overlay .2s allow-discrete;
 }
@@ -96,13 +107,14 @@ transition:opacity .2s ease,transform .2s ease,display .2s allow-discrete,overla
 @starting-style{[data-vibeui-navbar-001-menu]:popover-open{opacity:0;transform:translateY(0.75rem)}}
 [data-vibeui-navbar-001-menu] a{
 display:block;padding:0.625rem 0.75rem;border-radius:0.625rem;
-color:oklch(0.22 0.014 265);text-decoration:none;font-size:0.9375rem;font-weight:500;
+color:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+text-decoration:none;font-size:0.9375rem;font-weight:500;
 }
-[data-vibeui-navbar-001-menu] a:hover{background:oklch(0.55 0.02 265 / 8%)}
+[data-vibeui-navbar-001-menu] a:hover{background:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 12%))}
 [data-vibeui-navbar-001-menu] [data-part="action"]{
 display:flex;justify-content:center;margin-top:0.375rem;
-background:var(--vibeui-navbar-001-accent,oklch(0.52 0.19 265));
-color:var(--vibeui-navbar-001-accent-fg,oklch(0.99 0 0));
+background:var(--vibeui-navbar-001-accent,light-dark(oklch(0.52 0.19 265),oklch(0.72 0.16 265)));
+color:var(--vibeui-navbar-001-accent-fg,light-dark(oklch(0.99 0 0),oklch(0.18 0.02 265)));
 }
 /* От 52rem собственной ширины — десктопная шапка. */
 @container (min-width: 52rem){
@@ -125,6 +137,28 @@ const DEFAULT_LINKS: Navbar001Link[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Шапка сайта: раскладка от собственной ширины, мобильное меню без JS.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -133,13 +167,22 @@ export function Navbar001({
   links = DEFAULT_LINKS,
   actionLabel = "Начать бесплатно",
   actionHref = "#start",
+  navLabel = "Основная навигация",
+  menuLabel = "Открыть меню",
   id = "vibeui-navbar-001-menu",
+  background = "",
   accent,
   className,
   style,
 }: Navbar001Props) {
   const palette = {
     ...(accent ? { "--vibeui-navbar-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-navbar-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -158,7 +201,7 @@ export function Navbar001({
             <span data-part="mark" aria-hidden="true" />
             {brand}
           </a>
-          <nav data-part="links" aria-label="Основная навигация">
+          <nav data-part="links" aria-label={navLabel}>
             {links.map((link) => (
               <a key={link.href} href={link.href}>
                 {link.label}
@@ -172,7 +215,7 @@ export function Navbar001({
             data-part="burger"
             type="button"
             popoverTarget={id}
-            aria-label="Открыть меню"
+            aria-label={menuLabel}
           >
             <span />
             <span />

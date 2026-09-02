@@ -12,6 +12,10 @@ export type Collapsible010Props = Omit<
 > & {
   title?: string
   sections?: Collapsible010Section[]
+  /** Счётчик в шапке. {count} — общее число элементов во всех разделах. */
+  totalText?: string
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,13 +24,19 @@ export type Collapsible010Props = Omit<
 // наверх и непонятно, что читаешь. Поэтому summary липнет к верху скролл-
 // контейнера через position:sticky — прокрутка идёт у карточки, а не у окна,
 // и заголовок остаётся на месте, пока не придёт следующий.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// карточки по умолчанию нет, она темнеет вместе со страницей. Липкому
+// заголовку непрозрачность нужна всегда, поэтому его фон живёт отдельной
+// переменной — сквозь него не должны просвечивать строки списка.
 const STYLES = `
 :where([data-vibeui-block="collapsible-010"]){
---vibeui-collapsible-010-bg:oklch(1 0 0);
---vibeui-collapsible-010-fg:oklch(0.24 0.014 265);
---vibeui-collapsible-010-muted:oklch(0.56 0.014 265);
---vibeui-collapsible-010-border:oklch(0.9 0.006 265);
---vibeui-collapsible-010-accent:oklch(0.55 0.2 300);
+--vibeui-collapsible-010-bg:transparent;
+--vibeui-collapsible-010-sticky:light-dark(oklch(1 0 0),oklch(0.19 0.013 265));
+--vibeui-collapsible-010-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-collapsible-010-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-collapsible-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-collapsible-010-accent:light-dark(oklch(0.55 0.2 300),oklch(0.77 0.16 300));
 --vibeui-collapsible-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="collapsible-010"]{
@@ -52,7 +62,7 @@ max-height:15rem;overflow-y:auto;overscroll-behavior:contain;
 position:sticky;top:0;z-index:1;
 display:flex;align-items:center;gap:0.5rem;
 padding:0.5rem 0.875rem;cursor:pointer;list-style:none;
-background:var(--vibeui-collapsible-010-bg);
+background:var(--vibeui-collapsible-010-sticky);
 border-bottom:1px solid var(--vibeui-collapsible-010-border);
 font-size:0.75rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
 color:var(--vibeui-collapsible-010-muted);
@@ -93,12 +103,36 @@ const DEFAULT_SECTIONS: Collapsible010Section[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Свёртки внутри карточки с прокруткой: заголовок раздела липнет к верху
  * скролл-контейнера. Один файл, ноль зависимостей, клиентского кода нет.
  */
 export function Collapsible010({
   title = "Библиотека",
   sections = DEFAULT_SECTIONS,
+  totalText = "{count} компонентов",
+  background = "",
   accent,
   className,
   style,
@@ -106,8 +140,17 @@ export function Collapsible010({
 }: Collapsible010Props) {
   const total = sections.reduce((sum, section) => sum + section.items.length, 0)
 
+  // Липкий заголовок красится в ту же подложку: иначе сквозь него поедут
+  // строки списка.
   const palette = {
     ...(accent ? { "--vibeui-collapsible-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-collapsible-010-bg": background,
+          "--vibeui-collapsible-010-sticky": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -124,7 +167,9 @@ export function Collapsible010({
       >
         <header data-part="head">
           {title}
-          <span data-part="total">{total} компонентов</span>
+          <span data-part="total">
+            {totalText.replace("{count}", String(total))}
+          </span>
         </header>
         <div data-part="scroll">
           {sections.map((section) => (

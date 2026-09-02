@@ -21,7 +21,11 @@ export type Footer005Props = {
   groups?: Footer005Group[]
   locales?: Footer005Locale[]
   currentLocale?: string
+  /** Подпись ряда языковых версий для скринридера. */
+  localesLabel?: string
   legal?: string
+  /** Пусто — подложки нет, подвал лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -32,13 +36,17 @@ export type Footer005Props = {
 // сайта длиной со страницу, а на широкой раскладке заголовок становится
 // инертным (pointer-events:none) и стрелка прячется — группы просто стоят
 // колонками. Разметка при этом одна и та же, без дублирования узлов.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подвал темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="footer-005"]){
---vibeui-footer-005-bg:oklch(0.98 0.003 240);
---vibeui-footer-005-ink:oklch(0.21 0.014 240);
---vibeui-footer-005-muted:oklch(0.51 0.014 240);
---vibeui-footer-005-border:oklch(0.9 0.007 240);
---vibeui-footer-005-accent:oklch(0.47 0.15 240);
+--vibeui-footer-005-bg:transparent;
+--vibeui-footer-005-ink:light-dark(oklch(0.21 0.014 240),oklch(0.94 0.006 240));
+--vibeui-footer-005-muted:light-dark(oklch(0.51 0.014 240),oklch(0.71 0.012 240));
+--vibeui-footer-005-border:light-dark(oklch(0.9 0.007 240),oklch(0.35 0.014 240));
+--vibeui-footer-005-accent:light-dark(oklch(0.47 0.15 240),oklch(0.73 0.13 240));
+--vibeui-footer-005-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.03 240));
 --vibeui-footer-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -87,7 +95,7 @@ transition:border-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="footer-005"] [data-part="lang"]:hover{color:var(--vibeui-footer-005-ink);border-color:var(--vibeui-footer-005-accent)}
 [data-vibeui-block="footer-005"] [data-part="lang"][aria-current="true"]{
-background:var(--vibeui-footer-005-accent);border-color:var(--vibeui-footer-005-accent);color:oklch(0.99 0 0);
+background:var(--vibeui-footer-005-accent);border-color:var(--vibeui-footer-005-accent);color:var(--vibeui-footer-005-accent-fg);
 }
 [data-vibeui-block="footer-005"] [data-part="bottom"]{
 display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem 1rem;
@@ -168,19 +176,49 @@ const DEFAULT_LOCALES: Footer005Locale[] = [
   { code: "KK", label: "Қазақша", href: "/kk" },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Подвал-карта сайта: шесть групп и выбор языка; на телефоне группы свёрнуты. */
 export function Footer005({
   brand = "Ориентир",
   groups = DEFAULT_GROUPS,
   locales = DEFAULT_LOCALES,
   currentLocale = "RU",
+  localesLabel = "Язык сайта",
   legal = "© 2026 ООО «Ориентир». ИНН 7700000000",
+  background = "",
   accent,
   className,
   style,
 }: Footer005Props) {
   const palette = {
     ...(accent ? { "--vibeui-footer-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-footer-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -209,7 +247,7 @@ export function Footer005({
               </details>
             ))}
           </div>
-          <nav data-part="langs" aria-label="Язык сайта">
+          <nav data-part="langs" aria-label={localesLabel}>
             {locales.map((locale) => (
               <a
                 key={locale.code}

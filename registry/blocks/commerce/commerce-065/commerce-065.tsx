@@ -14,6 +14,7 @@ export type Commerce065Props = {
   method?: string
   rows?: Commerce065Row[]
   receiptTitle?: string
+  numberLabel?: string
   receiptNumber?: string
   fiscalHint?: string
   download?: string
@@ -21,6 +22,8 @@ export type Commerce065Props = {
   mailHint?: string
   back?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,12 +37,13 @@ export type Commerce065Props = {
 // скачивания стоит рядом с отправкой на почту: письмо иногда не доходит.
 const STYLES = `
 :where([data-vibeui-block="commerce-065"]){
---vibeui-commerce-065-bg:oklch(0.98 0.008 155);
---vibeui-commerce-065-card:oklch(1 0 0);
---vibeui-commerce-065-fg:oklch(0.2 0.014 155);
---vibeui-commerce-065-muted:oklch(0.52 0.016 155);
---vibeui-commerce-065-border:oklch(0.9 0.008 155);
---vibeui-commerce-065-accent:oklch(0.5 0.13 152);
+--vibeui-commerce-065-bg:transparent;
+--vibeui-commerce-065-card:light-dark(oklch(1 0 0),oklch(0.23 0.016 155));
+--vibeui-commerce-065-fg:light-dark(oklch(0.2 0.014 155),oklch(0.94 0.007 155));
+--vibeui-commerce-065-muted:light-dark(oklch(0.52 0.016 155),oklch(0.73 0.014 155));
+--vibeui-commerce-065-border:light-dark(oklch(0.9 0.008 155),oklch(0.39 0.016 155));
+--vibeui-commerce-065-accent:light-dark(oklch(0.5 0.13 152),oklch(0.76 0.14 152));
+--vibeui-commerce-065-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.03 152));
 --vibeui-commerce-065-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-commerce-065-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -53,7 +57,7 @@ color:var(--vibeui-commerce-065-fg);font-family:var(--vibeui-commerce-065-sans);
 [data-vibeui-block="commerce-065"] [data-part="tick"]{
 width:3.5rem;height:3.5rem;margin:0 auto 0.875rem;border-radius:9999px;
 background:var(--vibeui-commerce-065-accent);display:flex;align-items:center;justify-content:center;
-color:oklch(0.99 0 0);font-size:1.5rem;font-weight:800;
+color:var(--vibeui-commerce-065-onaccent);font-size:1.5rem;font-weight:800;
 }
 [data-vibeui-block="commerce-065"] h2{margin:0 0 0.25rem;font-size:1.25rem;font-weight:700;letter-spacing:-0.02em}
 [data-vibeui-block="commerce-065"] [data-part="amount"]{margin:0;font-size:clamp(1.875rem,8cqi,2.75rem);font-weight:750;line-height:1.05;letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
@@ -88,7 +92,7 @@ color:var(--vibeui-commerce-065-fg);user-select:all;
 [data-vibeui-block="commerce-065"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin-top:1.25rem}
 [data-vibeui-block="commerce-065"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;height:2.75rem;padding:0 1.375rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-065-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-065-accent);color:var(--vibeui-commerce-065-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-065"] [data-part="alt"]{
 appearance:none;cursor:pointer;height:2.75rem;padding:0 1.25rem;border-radius:0.875rem;
@@ -108,6 +112,28 @@ text-decoration:underline;text-underline-offset:2px;border-radius:0.25rem;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-065"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_ROWS: Commerce065Row[] = [
   { id: "1", term: "Заказ", value: "№ 2024-1187" },
@@ -129,6 +155,7 @@ export function Commerce065({
   method = "Мир •• 4821",
   rows = DEFAULT_ROWS,
   receiptTitle = "Чек",
+  numberLabel = "Номер операции",
   receiptNumber = "OP-8842-113705",
   fiscalHint = "Фискальный чек отправлен оператору данных и появится в приложении налоговой в течение суток.",
   download = "Скачать чек",
@@ -136,11 +163,21 @@ export function Commerce065({
   mailHint = "Копия ушла на a.remizova@example.com. Если письма нет через десять минут — проверьте папку «Спам» и нажмите «Отправить на почту» ещё раз.",
   back = "Вернуться к заказу",
   accent,
+  background = "",
   className,
   style,
 }: Commerce065Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-065-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-065-bg": background,
+          // Чек и вторая кнопка не должны просвечивать: им нужна непрозрачная
+          // подложка, а она задана тем же цветом.
+          "--vibeui-commerce-065-card": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -176,7 +213,7 @@ export function Commerce065({
               ))}
             </dl>
             <p data-part="number">
-              Номер операции
+              {numberLabel}
               <br />
               <code>{receiptNumber}</code>
             </p>

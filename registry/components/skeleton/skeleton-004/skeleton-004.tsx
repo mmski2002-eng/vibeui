@@ -5,19 +5,24 @@ export type Skeleton004Props = ComponentPropsWithoutRef<"div"> & {
   /** Раскладка колонок в терминах grid-template-columns. */
   columns?: string
   label?: string
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: заглушка таблицы обязана держать ширины колонок будущей
 // таблицы, иначе при подстановке данных всё разъезжается. Ширины заданы одной
 // переменной grid-template-columns, поэтому шапка и строки не могут разойтись:
 // у них буквально одна и та же сетка.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки по
+// умолчанию нет, таблица темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="skeleton-004"]){
---vibeui-skeleton-004-bg:oklch(1 0 0);
---vibeui-skeleton-004-head:oklch(0.975 0.003 265);
---vibeui-skeleton-004-border:oklch(0.9 0.006 265);
---vibeui-skeleton-004-base:oklch(0.93 0.005 265);
---vibeui-skeleton-004-shine:oklch(0.97 0.003 265);
+--vibeui-skeleton-004-bg:transparent;
+--vibeui-skeleton-004-head:light-dark(oklch(0.975 0.003 265),oklch(0.26 0.011 265));
+--vibeui-skeleton-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-skeleton-004-base:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.012 265));
+--vibeui-skeleton-004-shine:light-dark(oklch(0.97 0.003 265),oklch(0.39 0.016 265));
 --vibeui-skeleton-004-columns:1.5rem 2fr 1fr 1fr 4rem;
 }
 [data-vibeui-block="skeleton-004"]{
@@ -70,6 +75,28 @@ height:0.875rem;border-radius:0.1875rem;
 const FILLS = ["box", "long", "mid", "short", "short"] as const
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы полосам
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Заглушка таблицы: шапка и строки на одной сетке колонок.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -77,6 +104,7 @@ export function Skeleton004({
   rows = 5,
   columns = "1.5rem 2fr 1fr 1fr 4rem",
   label = "Таблица загружается",
+  background = "",
   className,
   style,
   ...props
@@ -84,6 +112,12 @@ export function Skeleton004({
   const count = Math.min(20, Math.max(1, rows))
   const palette = {
     "--vibeui-skeleton-004-columns": columns,
+    ...(background
+      ? {
+          "--vibeui-skeleton-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

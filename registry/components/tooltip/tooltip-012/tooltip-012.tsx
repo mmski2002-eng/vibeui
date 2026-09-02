@@ -8,6 +8,8 @@ export type Tooltip012Props = Omit<
   heading?: string
   /** Вторая строка: развёрнутое пояснение в одно предложение. */
   detail?: string
+  /** Цвет самой подсказки. Пусто — собственный тёмный тон. */
+  background?: string
 }
 
 // Идея компонента: круглая иконка-вопрос без подписи рядом. Подсказка внутри
@@ -16,10 +18,12 @@ export type Tooltip012Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="tooltip-012"]){
 --vibeui-tooltip-012-bg:oklch(0.24 0.014 265);
---vibeui-tooltip-012-fg:oklch(0.97 0.002 265);
---vibeui-tooltip-012-muted:oklch(0.78 0.006 265);
---vibeui-tooltip-012-mark:oklch(0.55 0.014 265);
---vibeui-tooltip-012-accent:oklch(0.6 0.16 265);
+--vibeui-tooltip-012-fg:light-dark(oklch(0.24 0.014 265),oklch(0.97 0.002 265));
+--vibeui-tooltip-012-muted:light-dark(oklch(0.46 0.012 265),oklch(0.78 0.006 265));
+--vibeui-tooltip-012-mark:light-dark(oklch(0.55 0.014 265),oklch(0.84 0.008 265));
+--vibeui-tooltip-012-face:light-dark(oklch(0.95 0.004 265),oklch(0.3 0.012 265));
+--vibeui-tooltip-012-line:light-dark(oklch(0.82 0.008 265),oklch(0.44 0.012 265));
+--vibeui-tooltip-012-accent:light-dark(oklch(0.6 0.16 265),oklch(0.74 0.15 265));
 --vibeui-tooltip-012-width:13.5rem;
 --vibeui-tooltip-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -30,12 +34,15 @@ position:relative;display:inline-flex;font-family:var(--vibeui-tooltip-012-font)
 appearance:none;cursor:help;padding:0;
 display:inline-flex;align-items:center;justify-content:center;
 width:1.25rem;height:1.25rem;border-radius:9999px;
-border:1px solid oklch(0.82 0.008 265);background:oklch(0.95 0.004 265);
+border:1px solid var(--vibeui-tooltip-012-line);background:var(--vibeui-tooltip-012-face);
 color:var(--vibeui-tooltip-012-mark);font:inherit;font-size:0.6875rem;font-weight:800;
 }
 [data-vibeui-block="tooltip-012"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-tooltip-012-accent);outline-offset:2px}
-/* Ширина фиксирована узко, поэтому пояснение занимает вторую строку само. */
+/* Ширина фиксирована узко, поэтому пояснение занимает вторую строку само.
+   Плашка намеренно тёмная в обеих темах, поэтому у неё своя ветка
+   color-scheme: цвет текста считается от плашки, а не от страницы. */
 [data-vibeui-block="tooltip-012"] [data-part="tip"]{
+color-scheme:dark;
 position:absolute;bottom:calc(100% + 0.5625rem);left:50%;z-index:20;
 display:flex;flex-direction:column;gap:0.1875rem;
 width:var(--vibeui-tooltip-012-width);box-sizing:border-box;
@@ -61,16 +68,44 @@ opacity:1;transform:translate(-50%,0);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Иконка-вопрос с подсказкой из двух строк: заголовок и пояснение под ним.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tooltip012({
   heading = "Пробный период",
   detail = "14 дней с полным доступом. Карта не требуется, отменить можно в любой момент.",
+  background = "",
   className,
   style,
   ...props
 }: Tooltip012Props) {
+  const palette = {
+    ...(background ? { "--vibeui-tooltip-012-bg": background } : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-tooltip-012" precedence="medium">
@@ -80,7 +115,7 @@ export function Tooltip012({
         {...props}
         data-vibeui-block="tooltip-012"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <button
           data-part="trigger"
@@ -89,7 +124,16 @@ export function Tooltip012({
         >
           ?
         </button>
-        <span data-part="tip" role="tooltip" id="vibeui-tooltip-012-tip">
+        <span
+          data-part="tip"
+          role="tooltip"
+          id="vibeui-tooltip-012-tip"
+          style={
+            background
+              ? { colorScheme: schemeForBackground(background) }
+              : undefined
+          }
+        >
           <span data-part="heading">{heading}</span>
           <span data-part="detail">{detail}</span>
         </span>

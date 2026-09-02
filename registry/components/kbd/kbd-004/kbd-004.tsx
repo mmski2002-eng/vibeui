@@ -6,6 +6,8 @@ export type Kbd004Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
   hints?: Kbd004Hint[]
   align?: "start" | "center" | "between"
   size?: "sm" | "md"
+  /** Пусто — подложки нет, полоса лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: строка подсказок внизу окна или списка. Она читается
@@ -13,17 +15,19 @@ export type Kbd004Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
 // рамками: рамка вокруг каждой пары превращает служебную полосу в панель
 // кнопок. Полоса переносится целыми подсказками, а сама пара «клавиша —
 // действие» переноса не допускает: разорванная подсказка бесполезна.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки по
+// умолчанию нет, полоса лежит на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="kbd-004"]){
---vibeui-kbd-004-surface:oklch(1 0 0);
---vibeui-kbd-004-fg:oklch(0.3 0.014 265);
---vibeui-kbd-004-muted:oklch(0.56 0.014 265);
---vibeui-kbd-004-border:oklch(0.89 0.008 265);
---vibeui-kbd-004-key:oklch(0.97 0.003 265);
+--vibeui-kbd-004-surface:transparent;
+--vibeui-kbd-004-fg:light-dark(oklch(0.3 0.014 265),oklch(0.91 0.006 265));
+--vibeui-kbd-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-kbd-004-border:light-dark(oklch(0.89 0.008 265),oklch(0.38 0.012 265));
+--vibeui-kbd-004-key:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.012 265));
 --vibeui-kbd-004-gap:0.875rem;
 --vibeui-kbd-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: полоса подсказок набрана тёмным. */
 [data-vibeui-block="kbd-004"]{
 display:flex;align-items:center;flex-wrap:wrap;
 gap:0.375rem var(--vibeui-kbd-004-gap);
@@ -60,6 +64,28 @@ const DEFAULT_HINTS: Kbd004Hint[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Ряд подсказок горячих клавиш для нижней служебной полосы.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -67,10 +93,21 @@ export function Kbd004({
   hints = DEFAULT_HINTS,
   align = "start",
   size = "sm",
+  background = "",
   className,
   style,
   ...props
 }: Kbd004Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-kbd-004-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-kbd-004" precedence="medium">
@@ -82,7 +119,7 @@ export function Kbd004({
         data-align={align}
         data-size={size}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         {hints.map((hint) => (
           <span key={hint.action} data-part="hint">

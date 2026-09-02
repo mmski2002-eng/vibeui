@@ -16,7 +16,22 @@ export type Solutions043Props = {
   openingBalance?: number
   operations?: Solutions043Operation[]
   foot?: string
+  /** Подпись счёта. {account} — номер счёта. */
+  accountLabel?: string
+  /** Подписи плиток: opening, closing, pending. */
+  balanceText?: Record<string, string>
+  /** Подписи оборотов: in, out. */
+  turnoverText?: Record<string, string>
+  /** Заголовки колонок: date, counterparty, purpose, in, out. */
+  columnText?: Record<string, string>
+  /** Пометка непроведённой операции. */
+  pendingText?: string
+  currency?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,14 +46,14 @@ export type Solutions043Props = {
 // входят в остаток и помечены словом и пунктирной рамкой, а не только цветом.
 const STYLES = `
 :where([data-vibeui-block="solutions-043"]){
---vibeui-solutions-043-bg:oklch(1 0 0);
---vibeui-solutions-043-panel:oklch(0.977 0.004 250);
---vibeui-solutions-043-fg:oklch(0.21 0.014 265);
---vibeui-solutions-043-muted:oklch(0.55 0.014 265);
---vibeui-solutions-043-border:oklch(0.9 0.006 265);
---vibeui-solutions-043-accent:oklch(0.5 0.16 265);
---vibeui-solutions-043-in:oklch(0.55 0.14 152);
---vibeui-solutions-043-out:oklch(0.56 0.17 25);
+--vibeui-solutions-043-bg:transparent;
+--vibeui-solutions-043-panel:light-dark(oklch(0.977 0.004 250),oklch(0.27 0.011 265));
+--vibeui-solutions-043-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-043-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-043-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-043-accent:light-dark(oklch(0.5 0.16 265),oklch(0.72 0.14 265));
+--vibeui-solutions-043-in:light-dark(oklch(0.55 0.14 152),oklch(0.71 0.14 152));
+--vibeui-solutions-043-out:light-dark(oklch(0.56 0.17 25),oklch(0.71 0.16 25));
 --vibeui-solutions-043-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-043-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -168,8 +183,45 @@ const DEFAULT_OPERATIONS: Solutions043Operation[] = [
   },
 ]
 
-function money(amount: number): string {
-  return `${amount.toLocaleString("ru-RU")} ₽`
+const BALANCE_LABEL: Record<string, string> = {
+  opening: "входящий остаток",
+  closing: "исходящий остаток",
+  pending: "непроведённых операций",
+}
+
+const TURNOVER_LABEL: Record<string, string> = {
+  in: "Приход:",
+  out: "Расход:",
+}
+
+const COLUMN_LABEL: Record<string, string> = {
+  date: "Дата",
+  counterparty: "Контрагент",
+  purpose: "Назначение платежа",
+  in: "Приход",
+  out: "Расход",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -184,10 +236,23 @@ export function Solutions043({
   openingBalance = 1284600,
   operations = DEFAULT_OPERATIONS,
   foot = "Непроведённые операции показаны пунктиром и не входят в исходящий остаток.",
+  accountLabel = "Счёт {account}",
+  balanceText = BALANCE_LABEL,
+  turnoverText = TURNOVER_LABEL,
+  columnText = COLUMN_LABEL,
+  pendingText = "не проведено",
+  currency = "₽",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions043Props) {
+  const money = (amount: number) =>
+    `${amount.toLocaleString(locale)} ${currency}`
+  const balance = (key: string) => balanceText[key] ?? BALANCE_LABEL[key]
+  const turnover = (key: string) => turnoverText[key] ?? TURNOVER_LABEL[key]
+  const column = (key: string) => columnText[key] ?? COLUMN_LABEL[key]
   const posted = operations.filter((operation) => operation.posted)
   const totalIn = posted
     .filter((operation) => operation.direction === "in")
@@ -200,6 +265,12 @@ export function Solutions043({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-043-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-043-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -217,7 +288,9 @@ export function Solutions043({
         <header data-part="head">
           <div>
             <h2>{title}</h2>
-            <p data-part="account">Счёт {account}</p>
+            <p data-part="account">
+              {accountLabel.replace("{account}", account)}
+            </p>
           </div>
           <p data-part="period">{period}</p>
         </header>
@@ -225,24 +298,24 @@ export function Solutions043({
         <div data-part="balances">
           <p data-part="tile">
             <b>{money(openingBalance)}</b>
-            <span>входящий остаток</span>
+            <span>{balance("opening")}</span>
           </p>
           <p data-part="tile">
             <b>{money(closingBalance)}</b>
-            <span>исходящий остаток</span>
+            <span>{balance("closing")}</span>
           </p>
           <p data-part="tile">
             <b>{pendingCount}</b>
-            <span>непроведённых операций</span>
+            <span>{balance("pending")}</span>
           </p>
         </div>
 
         <p data-part="turnover">
           <span data-flow="in">
-            Приход: <b>{money(totalIn)}</b>
+            {turnover("in")} <b>{money(totalIn)}</b>
           </span>
           <span data-flow="out">
-            Расход: <b>{money(totalOut)}</b>
+            {turnover("out")} <b>{money(totalOut)}</b>
           </span>
         </p>
 
@@ -250,11 +323,11 @@ export function Solutions043({
           <table>
             <thead>
               <tr>
-                <th scope="col">Дата</th>
-                <th scope="col">Контрагент</th>
-                <th scope="col">Назначение платежа</th>
-                <th scope="col">Приход</th>
-                <th scope="col">Расход</th>
+                <th scope="col">{column("date")}</th>
+                <th scope="col">{column("counterparty")}</th>
+                <th scope="col">{column("purpose")}</th>
+                <th scope="col">{column("in")}</th>
+                <th scope="col">{column("out")}</th>
               </tr>
             </thead>
             <tbody>
@@ -267,7 +340,7 @@ export function Solutions043({
                   <td>
                     {operation.counterparty}
                     {!operation.posted ? (
-                      <span data-part="pending">не проведено</span>
+                      <span data-part="pending">{pendingText}</span>
                     ) : null}
                   </td>
                   <td data-part="purpose">{operation.purpose}</td>

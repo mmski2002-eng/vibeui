@@ -8,6 +8,11 @@ export type Frame013Props = Omit<
   pageTitle?: string
   navItems?: string[]
   activeIndex?: number
+  /** Подпись навигации для вспомогательных технологий: компонент несёт русскую. */
+  navLabel?: string
+  accent?: string
+  /** Пусто — подложки нет, кадр ложится на фон страницы. */
+  background?: string
   children?: ReactNode
 }
 
@@ -20,12 +25,13 @@ export type Frame013Props = Omit<
 // столбец точек без смысла.
 const STYLES = `
 :where([data-vibeui-block="frame-013"]){
---vibeui-frame-013-bg:oklch(1 0 0);
---vibeui-frame-013-panel:oklch(0.97 0.004 265);
---vibeui-frame-013-fg:oklch(0.24 0.014 265);
---vibeui-frame-013-muted:oklch(0.55 0.014 265);
---vibeui-frame-013-border:oklch(0.89 0.006 265);
---vibeui-frame-013-accent:oklch(0.55 0.14 260);
+--vibeui-frame-013-bg:transparent;
+--vibeui-frame-013-panel:light-dark(oklch(0.97 0.004 265),oklch(0.27 0.012 265));
+--vibeui-frame-013-surface:light-dark(oklch(1 0 0),oklch(0.34 0.013 265));
+--vibeui-frame-013-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-frame-013-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-frame-013-border:light-dark(oklch(0.89 0.006 265),oklch(0.4 0.011 265));
+--vibeui-frame-013-accent:light-dark(oklch(0.55 0.14 260),oklch(0.72 0.14 260));
 --vibeui-frame-013-radius:0.875rem;
 --vibeui-frame-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -73,7 +79,7 @@ font-size:0.75rem;color:var(--vibeui-frame-013-muted);
 flex:none;width:0.5rem;height:0.5rem;border-radius:9999px;background:currentColor;opacity:0.5;
 }
 [data-vibeui-block="frame-013"] [data-part="item"][aria-current="page"]{
-background:var(--vibeui-frame-013-bg);color:var(--vibeui-frame-013-fg);font-weight:600;
+background:var(--vibeui-frame-013-surface);color:var(--vibeui-frame-013-fg);font-weight:600;
 box-shadow:inset 0 0 0 1px var(--vibeui-frame-013-border);
 }
 [data-vibeui-block="frame-013"] [data-part="item"][aria-current="page"] i{background:var(--vibeui-frame-013-accent);opacity:1}
@@ -113,6 +119,28 @@ border:1px solid var(--vibeui-frame-013-border);
 const DEFAULT_NAV_ITEMS = ["Обзор", "Проекты", "Команда", "Настройки"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кадр приложения: боковая панель навигации и шапка над рабочей областью.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -121,11 +149,25 @@ export function Frame013({
   pageTitle = "Обзор",
   navItems = DEFAULT_NAV_ITEMS,
   activeIndex = 0,
+  navLabel = "Основная навигация",
+  accent,
+  background = "",
   children,
   className,
   style,
   ...props
 }: Frame013Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-frame-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-frame-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-frame-013" precedence="medium">
@@ -135,7 +177,7 @@ export function Frame013({
         {...props}
         data-vibeui-block="frame-013"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="shell">
           <aside data-part="sidebar">
@@ -143,7 +185,7 @@ export function Frame013({
               <span data-part="mark" aria-hidden="true" />
               <span data-part="brand-name">{appName}</span>
             </div>
-            <nav aria-label="Основная навигация">
+            <nav aria-label={navLabel}>
               <ul data-part="nav">
                 {navItems.map((item, index) => (
                   <li

@@ -8,6 +8,12 @@ export type Stepper013Props = Omit<
   /** Номер текущего шага, считая с нуля. */
   current?: number
   label?: string
+  /** Шаблон счётчика: {current} — номер шага, {total} — сколько их всего. */
+  countText?: string
+  /** Состояния шагов для скринридера: компонент несёт русские подписи. */
+  stateText?: Record<string, string>
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -15,14 +21,16 @@ export type Stepper013Props = Omit<
 // сейчас и сколько их всего — и одна непрерывная полоса прогресса. Список
 // названий остаётся, но только для скринридера: подписи заняли бы больше
 // места, чем есть.
+//
+// Тема берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="stepper-013"]){
---vibeui-stepper-013-bg:oklch(1 0 0);
---vibeui-stepper-013-fg:oklch(0.24 0.016 265);
---vibeui-stepper-013-muted:oklch(0.56 0.014 265);
---vibeui-stepper-013-border:oklch(0.92 0.006 265);
---vibeui-stepper-013-track:oklch(0.93 0.008 265);
---vibeui-stepper-013-accent:oklch(0.55 0.2 262);
+--vibeui-stepper-013-bg:transparent;
+--vibeui-stepper-013-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-stepper-013-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.013 265));
+--vibeui-stepper-013-border:light-dark(oklch(0.92 0.006 265),oklch(0.35 0.012 265));
+--vibeui-stepper-013-track:light-dark(oklch(0.93 0.008 265),oklch(0.32 0.014 265));
+--vibeui-stepper-013-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-stepper-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="stepper-013"]{
@@ -65,6 +73,36 @@ position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);whit
 
 const DEFAULT_STEPS = ["Аккаунт", "Компания", "Команда", "Тариф", "Готово"]
 
+const COUNT_TEXT = "Шаг {current} из {total}"
+
+const STATE_TEXT: Record<string, string> = {
+  done: "пройден",
+  current: "текущий шаг",
+  todo: "впереди",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Числовой индикатор «Шаг N из M» с полосой прогресса.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -73,6 +111,9 @@ export function Stepper013({
   steps = DEFAULT_STEPS,
   current = 1,
   label = "Регистрация",
+  countText = COUNT_TEXT,
+  stateText = STATE_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -80,11 +121,22 @@ export function Stepper013({
 }: Stepper013Props) {
   const palette = {
     ...(accent ? { "--vibeui-stepper-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-stepper-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
   const index = Math.min(Math.max(current, 0), steps.length - 1)
   const percent = Math.round(((index + 1) / steps.length) * 100)
+  // Номер шага набран крупнее остального счётчика, поэтому шаблон
+  // разрезается по {current} и число попадает в собственный <b>.
+  const countParts = countText
+    .replace("{total}", String(steps.length))
+    .split("{current}")
 
   return (
     <>
@@ -101,7 +153,9 @@ export function Stepper013({
         <div data-part="shell">
           <p data-part="top">
             <span data-part="count">
-              Шаг <b>{index + 1}</b> из {steps.length}
+              {countParts[0]}
+              <b>{index + 1}</b>
+              {countParts[1] ?? ""}
             </span>
             <span data-part="percent">{percent}%</span>
           </p>
@@ -124,11 +178,7 @@ export function Stepper013({
                   aria-current={state === "current" ? "step" : undefined}
                 >
                   {step}
-                  {state === "done"
-                    ? " — пройден"
-                    : state === "current"
-                      ? " — текущий шаг"
-                      : " — впереди"}
+                  {` — ${stateText[state] ?? STATE_TEXT[state]}`}
                 </li>
               )
             })}

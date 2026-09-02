@@ -10,9 +10,15 @@ export type Toggle007Props = Omit<
   label?: string
   scale?: number
   text?: string
+  /** Заголовок образца. */
+  heading?: string
+  /** Строка масштаба; {scale} подставляется числом. */
+  valueText?: string
   defaultPressed?: boolean
   onChange?: (pressed: boolean) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: toggle размерной шкалы. Нажатие меняет один множитель, от
@@ -20,12 +26,12 @@ export type Toggle007Props = Omit<
 // пропорции, а увеличивает их целиком. Шкала показана самой кнопкой: две «A».
 const STYLES = `
 :where([data-vibeui-block="toggle-007"]){
---vibeui-toggle-007-bg:oklch(1 0 0);
---vibeui-toggle-007-fg:oklch(0.22 0.014 265);
---vibeui-toggle-007-muted:oklch(0.55 0.014 265);
---vibeui-toggle-007-border:oklch(0.9 0.006 265);
---vibeui-toggle-007-accent:oklch(0.54 0.16 320);
---vibeui-toggle-007-hover:oklch(0.97 0.004 265);
+--vibeui-toggle-007-bg:transparent;
+--vibeui-toggle-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-toggle-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-toggle-007-accent:light-dark(oklch(0.54 0.16 320),oklch(0.76 0.13 320));
+--vibeui-toggle-007-hover:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.01 265));
 --vibeui-toggle-007-scale:1;
 --vibeui-toggle-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -55,7 +61,7 @@ outline:2px solid var(--vibeui-toggle-007-accent);outline-offset:2px;
 }
 [data-vibeui-block="toggle-007"] button[aria-pressed="true"]{
 border-color:var(--vibeui-toggle-007-accent);color:var(--vibeui-toggle-007-accent);
-background:color-mix(in oklab,var(--vibeui-toggle-007-accent) 8%,white);
+background:color-mix(in oklab,var(--vibeui-toggle-007-accent) 12%,transparent);
 }
 [data-vibeui-block="toggle-007"] [data-part="small"]{font-size:0.75rem;font-weight:700}
 [data-vibeui-block="toggle-007"] [data-part="big"]{font-size:1.0625rem;font-weight:700}
@@ -84,6 +90,28 @@ transition:font-size .18s ease;
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Toggle размерной шкалы: один множитель увеличивает весь образец целиком.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -91,9 +119,12 @@ export function Toggle007({
   label = "Крупный текст",
   scale = 125,
   text = "Размер меняется одним множителем, поэтому заголовок, абзац и отступы растут вместе.",
+  heading = "Размерная шкала",
+  valueText = "Масштаб {scale}%",
   defaultPressed = false,
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -103,6 +134,12 @@ export function Toggle007({
   const palette = {
     "--vibeui-toggle-007-scale": String(pressed ? scale / 100 : 1),
     ...(accent ? { "--vibeui-toggle-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-toggle-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -135,11 +172,11 @@ export function Toggle007({
             </span>
           </button>
           <p data-part="value" role="status">
-            Масштаб {pressed ? scale : 100}%
+            {valueText.replace("{scale}", String(pressed ? scale : 100))}
           </p>
         </div>
         <div data-part="sample">
-          <h3>Размерная шкала</h3>
+          <h3>{heading}</h3>
           <p>{text}</p>
         </div>
       </section>

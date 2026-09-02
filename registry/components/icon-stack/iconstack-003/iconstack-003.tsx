@@ -7,6 +7,8 @@ export type Iconstack003Props = Omit<
   names?: string[]
   max?: number
   label?: string
+  /** Пусто — подложки нет, стопка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: «+N» не тупик, а вход в полный список. Стопка лежит
@@ -18,14 +20,17 @@ const STYLES = `
 :where([data-vibeui-block="iconstack-003"]){
 --vibeui-iconstack-003-size:1.875rem;
 --vibeui-iconstack-003-overlap:0.5625rem;
---vibeui-iconstack-003-surface:oklch(1 0 0);
---vibeui-iconstack-003-border:oklch(0.9 0.006 265);
---vibeui-iconstack-003-fg:oklch(0.26 0.014 265);
---vibeui-iconstack-003-muted:oklch(0.55 0.014 265);
---vibeui-iconstack-003-ring:oklch(0.55 0.17 262 / 60%);
+--vibeui-iconstack-003-surface:transparent;
+--vibeui-iconstack-003-ring:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-iconstack-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.01 265));
+--vibeui-iconstack-003-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
+--vibeui-iconstack-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-iconstack-003-more-bg:light-dark(oklch(0.28 0.014 265),oklch(0.86 0.01 265));
+--vibeui-iconstack-003-more-fg:light-dark(oklch(0.99 0 0),oklch(0.2 0.014 265));
+--vibeui-iconstack-003-focus:light-dark(oklch(0.55 0.17 262 / 60%),oklch(0.76 0.15 262 / 70%));
 --vibeui-iconstack-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: имена в раскрытом списке тёмные. */
+/* Подложки по умолчанию нет: карточка лежит на фоне страницы. */
 [data-vibeui-block="iconstack-003"]{
 display:inline-block;box-sizing:border-box;
 min-width:14rem;padding:0.5rem 0.75rem;
@@ -38,7 +43,7 @@ display:flex;align-items:center;gap:0.625rem;cursor:pointer;list-style:none;
 padding:0.25rem;margin:-0.25rem;border-radius:0.625rem;
 }
 [data-vibeui-block="iconstack-003"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="iconstack-003"] summary:focus-visible{outline:2px solid var(--vibeui-iconstack-003-ring);outline-offset:2px}
+[data-vibeui-block="iconstack-003"] summary:focus-visible{outline:2px solid var(--vibeui-iconstack-003-focus);outline-offset:2px}
 [data-vibeui-block="iconstack-003"] [data-part="stack"]{
 display:inline-flex;flex-direction:row-reverse;justify-content:flex-end;flex:none;
 }
@@ -50,7 +55,7 @@ margin-right:calc(var(--vibeui-iconstack-003-overlap) * -1);
 [data-vibeui-block="iconstack-003"] [data-part="more"]{
 display:inline-flex;align-items:center;justify-content:center;flex:none;box-sizing:border-box;
 width:var(--vibeui-iconstack-003-size);height:var(--vibeui-iconstack-003-size);
-border-radius:9999px;border:2px solid var(--vibeui-iconstack-003-surface);
+border-radius:9999px;border:2px solid var(--vibeui-iconstack-003-ring);
 font-size:0.625rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="iconstack-003"] [data-part="face"]{
@@ -59,7 +64,7 @@ color:oklch(0.36 0.12 var(--vibeui-iconstack-003-hue,265));
 }
 /* Счётчик слева от стопки: справа он читается как ещё один участник. */
 [data-vibeui-block="iconstack-003"] [data-part="more"]{
-background:oklch(0.28 0.014 265);color:oklch(0.99 0 0);
+background:var(--vibeui-iconstack-003-more-bg);color:var(--vibeui-iconstack-003-more-fg);
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="iconstack-003"] [data-part="summary-text"]{
@@ -107,6 +112,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Стопка со счётчиком «+N», раскрывающая полный список на details.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -114,12 +141,25 @@ export function Iconstack003({
   names = DEFAULT_NAMES,
   max = 4,
   label = "участников",
+  background = "",
   className,
   style,
   ...props
 }: Iconstack003Props) {
   const shown = names.slice(0, max)
   const rest = names.length - shown.length
+  // Обводка кружка равна подложке: заданный фон красит и её, иначе стопка
+  // останется в контуре прежнего фона.
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-iconstack-003-surface": background,
+          "--vibeui-iconstack-003-ring": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -130,7 +170,7 @@ export function Iconstack003({
         {...props}
         data-vibeui-block="iconstack-003"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <summary>
           <span data-part="stack" aria-hidden="true">

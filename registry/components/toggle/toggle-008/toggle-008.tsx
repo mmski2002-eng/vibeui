@@ -10,9 +10,13 @@ export type Toggle008Props = Omit<
   label?: string
   onHint?: string
   offHint?: string
+  /** Пояснение под кнопкой. */
+  note?: string
   defaultPressed?: boolean
   onChange?: (pressed: boolean) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: toggle с подсказкой о текущем состоянии. Подсказка живёт
@@ -21,12 +25,14 @@ export type Toggle008Props = Omit<
 // фокусу: подсказка, доступная одной мыши, — это подсказка для половины людей.
 const STYLES = `
 :where([data-vibeui-block="toggle-008"]){
---vibeui-toggle-008-bg:oklch(1 0 0);
---vibeui-toggle-008-fg:oklch(0.22 0.014 265);
---vibeui-toggle-008-muted:oklch(0.55 0.014 265);
---vibeui-toggle-008-border:oklch(0.9 0.006 265);
---vibeui-toggle-008-accent:oklch(0.55 0.16 25);
---vibeui-toggle-008-tip:oklch(0.24 0.02 265);
+--vibeui-toggle-008-bg:transparent;
+--vibeui-toggle-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-toggle-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-toggle-008-accent:light-dark(oklch(0.55 0.16 25),oklch(0.72 0.15 25));
+--vibeui-toggle-008-on:light-dark(oklch(0.99 0 0),oklch(0.18 0.014 265));
+--vibeui-toggle-008-tip:light-dark(oklch(0.24 0.02 265),oklch(0.9 0.008 265));
+--vibeui-toggle-008-tip-fg:light-dark(oklch(0.98 0 0),oklch(0.2 0.014 265));
 --vibeui-toggle-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="toggle-008"]{
@@ -52,19 +58,19 @@ outline:2px solid var(--vibeui-toggle-008-accent);outline-offset:2px;
 }
 [data-vibeui-block="toggle-008"] button[aria-pressed="true"]{
 background:var(--vibeui-toggle-008-accent);border-color:var(--vibeui-toggle-008-accent);
-color:oklch(0.99 0 0);
+color:var(--vibeui-toggle-008-on);
 }
 [data-vibeui-block="toggle-008"] [data-part="dot"]{
 width:0.5rem;height:0.5rem;border-radius:50%;flex:none;
 background:var(--vibeui-toggle-008-muted);
 }
-[data-vibeui-block="toggle-008"] button[aria-pressed="true"] [data-part="dot"]{background:oklch(0.99 0 0)}
+[data-vibeui-block="toggle-008"] button[aria-pressed="true"] [data-part="dot"]{background:var(--vibeui-toggle-008-on)}
 /* Подсказка лежит в потоке разметки и просто прячется: вынести её в title
    значило бы отдать текст браузеру — с клавиатуры он не показывается. */
 [data-vibeui-block="toggle-008"] [data-part="tip"]{
 position:absolute;bottom:calc(100% + 0.5rem);left:0;
 max-width:15rem;padding:0.375rem 0.5rem;border-radius:0.5rem;
-background:var(--vibeui-toggle-008-tip);color:oklch(0.98 0 0);
+background:var(--vibeui-toggle-008-tip);color:var(--vibeui-toggle-008-tip-fg);
 font-size:0.75rem;line-height:1.35;white-space:normal;
 opacity:0;visibility:hidden;transform:translateY(0.25rem);
 transition:opacity .14s ease,transform .14s ease,visibility .14s;
@@ -84,6 +90,28 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-toggle-008-muted);
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Toggle с подсказкой о текущем состоянии: она привязана через
  * aria-describedby и всплывает по наведению и по фокусу. Один файл.
  */
@@ -91,9 +119,11 @@ export function Toggle008({
   label = "Не беспокоить",
   onHint = "Сейчас уведомления скрыты до утра",
   offHint = "Сейчас уведомления приходят как обычно",
+  note = "Подсказка объясняет состояние, а подпись кнопки не меняется.",
   defaultPressed = true,
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -103,6 +133,12 @@ export function Toggle008({
 
   const palette = {
     ...(accent ? { "--vibeui-toggle-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-toggle-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -134,9 +170,7 @@ export function Toggle008({
             {pressed ? onHint : offHint}
           </span>
         </span>
-        <p data-part="note">
-          Подсказка объясняет состояние, а подпись кнопки не меняется.
-        </p>
+        <p data-part="note">{note}</p>
       </div>
     </>
   )

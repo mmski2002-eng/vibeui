@@ -13,6 +13,10 @@ export type Dialog007Props = {
   description?: string
   actions?: Dialog007Action[]
   cancelLabel?: string
+  /** Подложка окна. Пусто — цвет из палитры компонента. */
+  background?: string
+  /** Акцент: кольцо фокуса на листе и на кнопке. */
+  accent?: string
   children?: ReactNode
   className?: string
   style?: CSSProperties
@@ -25,12 +29,12 @@ export type Dialog007Props = {
 // позиционируется относительно экрана, а не родителя.
 const STYLES = `
 :where([data-vibeui-block="dialog-007"]){
---vibeui-dialog-007-fg:oklch(0.22 0.016 265);
---vibeui-dialog-007-muted:oklch(0.5 0.014 265);
---vibeui-dialog-007-bg:oklch(1 0 0);
---vibeui-dialog-007-border:oklch(0.9 0.006 265);
---vibeui-dialog-007-danger:oklch(0.56 0.19 25);
---vibeui-dialog-007-accent:oklch(0.55 0.2 262);
+--vibeui-dialog-007-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
+--vibeui-dialog-007-muted:light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dialog-007-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-dialog-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-dialog-007-danger:light-dark(oklch(0.56 0.19 25),oklch(0.7 0.17 25));
+--vibeui-dialog-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-dialog-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="dialog-007"]{display:inline-flex;font-family:var(--vibeui-dialog-007-font)}
@@ -47,8 +51,8 @@ background:var(--vibeui-dialog-007-bg);color:var(--vibeui-dialog-007-fg);
 position:fixed;inset:auto 0 0;margin:0;
 width:100%;box-sizing:border-box;padding:0.75rem 0.75rem 1rem;
 border:0;border-radius:1.25rem 1.25rem 0 0;
-background:var(--vibeui-dialog-007-bg,oklch(1 0 0));
-color:var(--vibeui-dialog-007-fg,oklch(0.22 0.016 265));
+background:var(--vibeui-dialog-007-bg,light-dark(oklch(1 0 0),oklch(0.24 0.012 265)));
+color:var(--vibeui-dialog-007-fg,light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265)));
 font-family:var(--vibeui-dialog-007-font,ui-sans-serif,system-ui,sans-serif);
 box-shadow:0 -12px 40px -20px oklch(0.2 0.03 265 / 45%);
 translate:0 100%;
@@ -60,11 +64,11 @@ transition:translate .24s cubic-bezier(.32,.72,0,1),display .24s allow-discrete,
 /* Полоска-ручка: сообщает, что лист пришёл снизу и туда же уйдёт. */
 [data-vibeui-dialog-007-sheet] [data-part="grip"]{
 display:block;width:2.25rem;height:0.25rem;margin:0 auto 0.75rem;
-border-radius:9999px;background:var(--vibeui-dialog-007-border,oklch(0.9 0.006 265));
+border-radius:9999px;background:var(--vibeui-dialog-007-border,light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265)));
 }
 [data-vibeui-dialog-007-sheet] [data-part="head"]{padding:0 0.5rem 0.625rem}
 [data-vibeui-dialog-007-sheet] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:620;line-height:1.35}
-[data-vibeui-dialog-007-sheet] [data-part="description"]{margin:0.125rem 0 0;font-size:0.8125rem;line-height:1.45;color:var(--vibeui-dialog-007-muted,oklch(0.5 0.014 265))}
+[data-vibeui-dialog-007-sheet] [data-part="description"]{margin:0.125rem 0 0;font-size:0.8125rem;line-height:1.45;color:var(--vibeui-dialog-007-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)))}
 [data-vibeui-dialog-007-sheet] [data-part="list"]{display:flex;flex-direction:column;gap:0.125rem}
 [data-vibeui-dialog-007-sheet] [data-part="action"]{
 display:flex;align-items:center;width:100%;box-sizing:border-box;
@@ -73,19 +77,19 @@ background:transparent;color:inherit;text-decoration:none;
 font:inherit;font-size:0.9375rem;cursor:pointer;text-align:left;
 transition:background-color .16s ease;
 }
-[data-vibeui-dialog-007-sheet] [data-part="action"]:hover{background:color-mix(in oklab,var(--vibeui-dialog-007-border,oklch(0.9 0.006 265)) 35%,transparent)}
-[data-vibeui-dialog-007-sheet] [data-part="action"][data-danger="true"]{color:var(--vibeui-dialog-007-danger,oklch(0.56 0.19 25))}
+[data-vibeui-dialog-007-sheet] [data-part="action"]:hover{background:color-mix(in oklab,var(--vibeui-dialog-007-border,light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265))) 35%,transparent)}
+[data-vibeui-dialog-007-sheet] [data-part="action"][data-danger="true"]{color:var(--vibeui-dialog-007-danger,light-dark(oklch(0.56 0.19 25),oklch(0.7 0.17 25)))}
 [data-vibeui-dialog-007-sheet] [data-cancel="true"]{
 margin-top:0.5rem;justify-content:center;font-weight:600;
-background:color-mix(in oklab,var(--vibeui-dialog-007-border,oklch(0.9 0.006 265)) 35%,transparent);
+background:color-mix(in oklab,var(--vibeui-dialog-007-border,light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265))) 35%,transparent);
 }
-[data-vibeui-dialog-007-sheet] :focus-visible{outline:2px solid var(--vibeui-dialog-007-accent,oklch(0.55 0.2 262));outline-offset:-2px}
+[data-vibeui-dialog-007-sheet] :focus-visible{outline:2px solid var(--vibeui-dialog-007-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:-2px}
 /* От 40rem ширины окна лист становится обычным окном по центру. */
 @media (min-width: 40rem){
 [data-vibeui-dialog-007-sheet]{
 inset:0;margin:auto;height:fit-content;
 width:min(22rem,calc(100vw - 2rem));
-border:1px solid var(--vibeui-dialog-007-border,oklch(0.9 0.006 265));
+border:1px solid var(--vibeui-dialog-007-border,light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265)));
 border-radius:1rem;padding:1rem;
 translate:0 0;opacity:0;transform:scale(0.97);
 transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,overlay .18s allow-discrete;
@@ -108,6 +112,29 @@ const DEFAULT_ACTIONS: Dialog007Action[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлый фон достался бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Лист действий снизу на телефоне и обычное окно на широком экране.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -118,16 +145,29 @@ export function Dialog007({
   description = "Опубликован 12 марта",
   actions = DEFAULT_ACTIONS,
   cancelLabel = "Отмена",
+  background = "",
+  accent,
   children,
   className,
   style,
 }: Dialog007Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-dialog-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dialog-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-dialog-007" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="dialog-007" className={className} style={style}>
+      <div data-vibeui-block="dialog-007" className={className} style={palette}>
         <button data-part="trigger" type="button" popoverTarget={id}>
           {trigger}
         </button>
@@ -137,7 +177,7 @@ export function Dialog007({
           data-vibeui-dialog-007-sheet=""
           role="dialog"
           aria-labelledby={`${id}-title`}
-          style={style}
+          style={palette}
         >
           <span data-part="grip" aria-hidden="true" />
           <div data-part="head">

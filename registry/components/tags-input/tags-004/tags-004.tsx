@@ -13,6 +13,16 @@ export type Tags004Props = Omit<
 > & {
   label?: string
   defaultValue?: string[]
+  /** Подпись крестика: {tag} — имя тега. */
+  removeText?: string
+  /** Плейсхолдер поля ввода. */
+  placeholderText?: string
+  /** Сообщение о повторе: {tag} — уже существующий тег. */
+  duplicateText?: string
+  /** Пояснение под полем, пока повтора не было. */
+  hintText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,20 +33,25 @@ export type Tags004Props = Omit<
 // идёт по приведённому виду — нижний регистр, схлопнутые пробелы, снятая
 // пунктуация по краям, — поэтому «Ремонт», «ремонт» и «ремонт.» считаются одним
 // тегом, а показывается тот вариант, который сохранён первым.
+//
+// Тема берётся из color-scheme окружения через light-dark(): поле темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="tags-004"]){
---vibeui-tags-004-surface:oklch(1 0 0);
---vibeui-tags-004-field:oklch(1 0 0);
---vibeui-tags-004-shell:oklch(0.9 0.006 265);
---vibeui-tags-004-fg:oklch(0.23 0.014 265);
---vibeui-tags-004-muted:oklch(0.55 0.014 265);
---vibeui-tags-004-border:oklch(0.88 0.008 265);
---vibeui-tags-004-chip:oklch(0.96 0.004 265);
---vibeui-tags-004-accent:oklch(0.52 0.15 190);
---vibeui-tags-004-warn:oklch(0.58 0.18 30);
+--vibeui-tags-004-surface:transparent;
+--vibeui-tags-004-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-tags-004-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.01 265));
+--vibeui-tags-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tags-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-tags-004-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-tags-004-chip:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.012 265));
+--vibeui-tags-004-accent:light-dark(oklch(0.52 0.15 190),oklch(0.76 0.13 190));
+--vibeui-tags-004-ring:light-dark(oklch(0.52 0.15 190 / 18%),oklch(0.76 0.13 190 / 28%));
+--vibeui-tags-004-warn:light-dark(oklch(0.58 0.18 30),oklch(0.78 0.16 30));
+--vibeui-tags-004-flash:light-dark(oklch(0.58 0.18 30 / 18%),oklch(0.78 0.16 30 / 24%));
 --vibeui-tags-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложка по умолчанию прозрачная: поле ложится на фон страницы. */
 [data-vibeui-block="tags-004"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -53,7 +68,7 @@ border:1px solid var(--vibeui-tags-004-border);border-radius:0.625rem;
 }
 [data-vibeui-block="tags-004"] [data-part="field"]:focus-within{
 border-color:var(--vibeui-tags-004-accent);
-box-shadow:0 0 0 2px oklch(0.52 0.15 190 / 18%);
+box-shadow:0 0 0 2px var(--vibeui-tags-004-ring);
 }
 [data-vibeui-block="tags-004"] [data-part="chip"]{
 display:inline-flex;align-items:center;gap:0.25rem;
@@ -66,7 +81,7 @@ animation:vibeui-tags-004-flash .7s ease;
 }
 @keyframes vibeui-tags-004-flash{
 0%,100%{background:var(--vibeui-tags-004-chip);color:var(--vibeui-tags-004-fg)}
-20%,60%{background:oklch(0.58 0.18 30 / 18%);color:var(--vibeui-tags-004-warn)}
+20%,60%{background:var(--vibeui-tags-004-flash);color:var(--vibeui-tags-004-warn)}
 }
 [data-vibeui-block="tags-004"] [data-part="chip"] button{
 appearance:none;border:0;background:none;cursor:pointer;
@@ -96,12 +111,39 @@ function normalize(value: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поле тегов с проверкой дубликатов: повтор подсвечивает уже существующий тег.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tags004({
   label = "Теги объявления",
   defaultValue = ["ремонт", "своими руками"],
+  removeText = "Убрать {tag}",
+  placeholderText = "Новый тег…",
+  duplicateText = "Тег «{tag}» уже добавлен — он подсвечен выше.",
+  hintText = "Регистр и точки не считаются: «Ремонт» и «ремонт.» — один тег.",
+  background = "",
   accent,
   className,
   style,
@@ -133,6 +175,12 @@ export function Tags004({
 
   const palette = {
     ...(accent ? { "--vibeui-tags-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tags-004-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -160,7 +208,7 @@ export function Tags004({
               {tag}
               <button
                 type="button"
-                aria-label={`Убрать ${tag}`}
+                aria-label={removeText.replace("{tag}", tag)}
                 onClick={() => setTags(tags.filter((item) => item !== tag))}
               >
                 ×
@@ -171,7 +219,7 @@ export function Tags004({
             id={id}
             type="text"
             value={draft}
-            placeholder="Новый тег…"
+            placeholder={placeholderText}
             aria-describedby={`${id}-note`}
             onChange={(event) => {
               setDraft(event.target.value)
@@ -186,9 +234,7 @@ export function Tags004({
           data-warn={hit !== null}
           aria-live="assertive"
         >
-          {hit
-            ? `Тег «${hit}» уже добавлен — он подсвечен выше.`
-            : "Регистр и точки не считаются: «Ремонт» и «ремонт.» — один тег."}
+          {hit ? duplicateText.replace("{tag}", hit) : hintText}
         </p>
       </div>
     </>

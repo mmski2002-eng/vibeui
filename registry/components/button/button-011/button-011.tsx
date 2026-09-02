@@ -9,10 +9,14 @@ export type Button011Props = ComponentPropsWithoutRef<"button"> & {
 // Подчёркивание не нарисовано постоянно: оно прочерчивается слева направо
 // на наведении и фокусе, стрелка в это время уезжает вперёд. Ни фона,
 // ни рамки, ни высоты — кнопка живёт внутри строки текста.
+//
+// Тема берётся из color-scheme окружения через light-dark(): кнопка стоит
+// в строке текста и обязана менять цвет вместе с ней, поэтому и подпись,
+// и акцент наведения объявлены парой светлот.
 const STYLES = `
 :where([data-vibeui-block="button-011"]){
---vibeui-button-011-fg:oklch(0.35 0.015 265);
---vibeui-button-011-accent:oklch(0.55 0.16 258);
+--vibeui-button-011-fg:light-dark(oklch(0.35 0.015 265),oklch(0.88 0.008 265));
+--vibeui-button-011-accent:light-dark(oklch(0.55 0.16 258),oklch(0.74 0.14 258));
 --vibeui-button-011-ring:color-mix(in oklab, var(--vibeui-button-011-accent) 65%, transparent);
 --vibeui-button-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

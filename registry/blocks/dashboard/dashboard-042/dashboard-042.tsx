@@ -18,6 +18,20 @@ export type Dashboard042Props = {
   continueLabel?: string
   catalogLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Шаблон счётчика уроков: {done} и {total}. */
+  lessonsText?: string
+  /** Шаблон подписи общей полосы: {label} и {value}. */
+  overallAriaText?: string
+  /** Шаблон строки курса: {topic}, {done} и {total}. */
+  topicText?: string
+  /** Подпись перед следующим уроком. */
+  nextLabel?: string
+  /** Пометка обязательного курса. */
+  requiredLabel?: string
+  /** Кнопка на пройденном курсе. */
+  certificateLabel?: string
   className?: string
   style?: CSSProperties
 }
@@ -33,14 +47,18 @@ export type Dashboard042Props = {
 // рамкой, срок назван датой рядом с ним.
 const STYLES = `
 :where([data-vibeui-block="dashboard-042"]){
---vibeui-dashboard-042-bg:oklch(0.985 0.004 300);
---vibeui-dashboard-042-card:oklch(1 0 0);
---vibeui-dashboard-042-fg:oklch(0.22 0.014 300);
---vibeui-dashboard-042-muted:oklch(0.55 0.014 300);
---vibeui-dashboard-042-border:oklch(0.91 0.007 300);
---vibeui-dashboard-042-accent:oklch(0.55 0.18 300);
---vibeui-dashboard-042-soft:oklch(0.96 0.025 300);
---vibeui-dashboard-042-must:oklch(0.6 0.16 40);
+--vibeui-dashboard-042-bg:transparent;
+/* Карточки и жёлоб программы: подложка блока прозрачна, и рисовать их ею нечем. */
+--vibeui-dashboard-042-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 300));
+--vibeui-dashboard-042-track:light-dark(oklch(0.96 0.005 300),oklch(0.21 0.012 300));
+--vibeui-dashboard-042-fg:light-dark(oklch(0.22 0.014 300),oklch(0.94 0.005 300));
+--vibeui-dashboard-042-muted:light-dark(oklch(0.55 0.014 300),oklch(0.71 0.012 300));
+--vibeui-dashboard-042-border:light-dark(oklch(0.91 0.007 300),oklch(0.36 0.012 300));
+--vibeui-dashboard-042-accent:light-dark(oklch(0.55 0.18 300),oklch(0.75 0.15 300));
+--vibeui-dashboard-042-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 300));
+--vibeui-dashboard-042-soft:light-dark(oklch(0.96 0.025 300),oklch(0.32 0.05 300));
+--vibeui-dashboard-042-must:light-dark(oklch(0.6 0.16 40),oklch(0.77 0.14 40));
+--vibeui-dashboard-042-mustline:light-dark(oklch(0.82 0.08 40),oklch(0.48 0.09 40));
 --vibeui-dashboard-042-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -71,7 +89,7 @@ font-size:0.6875rem;font-weight:650;color:var(--vibeui-dashboard-042-muted);
 }
 [data-vibeui-block="dashboard-042"] [data-part="track"]{
 height:0.4375rem;border-radius:9999px;overflow:hidden;
-background:var(--vibeui-dashboard-042-bg);
+background:var(--vibeui-dashboard-042-track);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-042-border);
 }
 [data-vibeui-block="dashboard-042"] [data-part="fill"]{
@@ -90,7 +108,7 @@ background:var(--vibeui-dashboard-042-card);
 border:1px solid var(--vibeui-dashboard-042-border);border-radius:0.875rem;
 }
 [data-vibeui-block="dashboard-042"] article[data-must="yes"]{
-border-color:color-mix(in oklab,var(--vibeui-dashboard-042-must) 45%,white);
+border-color:var(--vibeui-dashboard-042-mustline);
 }
 /* Кольцо прогресса: conic-gradient + mask вместо SVG и внешней библиотеки. */
 [data-vibeui-block="dashboard-042"] [data-part="ring"]{
@@ -124,7 +142,7 @@ font-size:0.6875rem;color:var(--vibeui-dashboard-042-muted);
 [data-vibeui-block="dashboard-042"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;font:inherit;margin-left:auto;
 font-size:0.75rem;font-weight:700;padding:0.4375rem 0.8125rem;border-radius:0.5rem;
-background:var(--vibeui-dashboard-042-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-042-accent);color:var(--vibeui-dashboard-042-on-accent);
 }
 [data-vibeui-block="dashboard-042"] :is(a,button):focus-visible{
 outline:2px solid var(--vibeui-dashboard-042-accent);outline-offset:2px;
@@ -172,6 +190,28 @@ const DEFAULT_COURSES: Dashboard042Course[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Страница обучения: общий прогресс сверху и карточки курсов с кольцом
  * прогресса, следующим уроком и сроком. Один файл, ноль зависимостей,
  * клиентского JS нет.
@@ -184,11 +224,24 @@ export function Dashboard042({
   continueLabel = "Продолжить",
   catalogLabel = "Каталог курсов",
   accent,
+  background = "",
+  lessonsText = "{done} из {total} уроков",
+  overallAriaText = "{label}: {value} процентов",
+  topicText = "{topic} · пройдено {done} из {total}",
+  nextLabel = "Дальше:",
+  requiredLabel = "обязательный",
+  certificateLabel = "Сертификат",
   className,
   style,
 }: Dashboard042Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-042-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-042-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -218,7 +271,9 @@ export function Dashboard042({
               <span data-part="cap">
                 <span>{overallLabel}</span>
                 <span>
-                  {done} из {total} уроков
+                  {lessonsText
+                    .replace("{done}", String(done))
+                    .replace("{total}", String(total))}
                 </span>
               </span>
               <div
@@ -227,7 +282,9 @@ export function Dashboard042({
                 aria-valuenow={overall}
                 aria-valuemin={0}
                 aria-valuemax={100}
-                aria-label={`${overallLabel}: ${overall} процентов`}
+                aria-label={overallAriaText
+                  .replace("{label}", overallLabel)
+                  .replace("{value}", String(overall))}
               >
                 <span data-part="fill" style={{ width: `${overall}%` }} />
               </div>
@@ -262,21 +319,24 @@ export function Dashboard042({
                   <h3>
                     {course.name}
                     {course.required ? (
-                      <span data-part="must">обязательный</span>
+                      <span data-part="must">{requiredLabel}</span>
                     ) : null}
                   </h3>
                   <span data-part="topic">
-                    {course.topic} · пройдено {course.done} из {course.total}
+                    {topicText
+                      .replace("{topic}", course.topic)
+                      .replace("{done}", String(course.done))
+                      .replace("{total}", String(course.total))}
                   </span>
                   <p data-part="next">
-                    Дальше: <b>{course.next}</b>
+                    {nextLabel} <b>{course.next}</b>
                   </p>
 
                   <div data-part="foot">
                     <span data-part="due">{course.due}</span>
                     <button type="button" data-part="go">
                       {course.done === course.total
-                        ? "Сертификат"
+                        ? certificateLabel
                         : continueLabel}
                     </button>
                   </div>

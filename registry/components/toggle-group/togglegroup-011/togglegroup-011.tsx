@@ -13,7 +13,13 @@ export type Togglegroup011Props = Omit<
 > & {
   label?: string
   defaultValue?: string
+  /** Имена кнопок по идентификатору выравнивания. */
+  optionText?: Record<string, string>
+  /** Подпись карточки на сцене. */
+  chipText?: string
   onChange?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,14 +27,19 @@ export type Togglegroup011Props = Omit<
 // самой сцены, а не text-align абзаца. Карточка внутри сцены держит свою
 // высоту содержимым, поэтому "растянуть" — это отдельное, четвёртое состояние,
 // а не просто "прижать к какому-то краю".
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте панель темнеет, а границы становятся светлее фона.
 const STYLES = `
 :where([data-vibeui-block="togglegroup-011"]){
---vibeui-togglegroup-011-bg:oklch(1 0 0);
---vibeui-togglegroup-011-fg:oklch(0.22 0.014 265);
---vibeui-togglegroup-011-muted:oklch(0.55 0.014 265);
---vibeui-togglegroup-011-border:oklch(0.9 0.006 265);
---vibeui-togglegroup-011-surface:oklch(0.97 0.004 265);
---vibeui-togglegroup-011-accent:oklch(0.56 0.16 255);
+--vibeui-togglegroup-011-bg:transparent;
+--vibeui-togglegroup-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-togglegroup-011-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-togglegroup-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-togglegroup-011-surface:light-dark(oklch(0.97 0.004 265),oklch(0.25 0.01 265));
+--vibeui-togglegroup-011-raised:light-dark(oklch(1 0 0),oklch(0.33 0.012 265));
+--vibeui-togglegroup-011-shadow:light-dark(oklch(0.2 0.02 265 / 16%),oklch(0 0 0 / 45%));
+--vibeui-togglegroup-011-accent:light-dark(oklch(0.56 0.16 255),oklch(0.76 0.14 255));
 --vibeui-togglegroup-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="togglegroup-011"]{
@@ -57,8 +68,8 @@ transition:background-color .15s ease,color .15s ease,box-shadow .15s ease;
 outline:2px solid var(--vibeui-togglegroup-011-accent);outline-offset:1px;
 }
 [data-vibeui-block="togglegroup-011"] button[aria-pressed="true"]{
-background:var(--vibeui-togglegroup-011-bg);color:var(--vibeui-togglegroup-011-accent);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 16%);
+background:var(--vibeui-togglegroup-011-raised);color:var(--vibeui-togglegroup-011-accent);
+box-shadow:0 1px 2px var(--vibeui-togglegroup-011-shadow);
 }
 [data-vibeui-block="togglegroup-011"] [data-part="stage"]{
 display:flex;height:7rem;padding:0.75rem;border-radius:0.625rem;
@@ -68,7 +79,7 @@ background:var(--vibeui-togglegroup-011-surface);
 display:inline-flex;align-items:center;gap:0.5rem;
 padding:0.5rem 0.75rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-togglegroup-011-border);
-background:var(--vibeui-togglegroup-011-bg);
+background:var(--vibeui-togglegroup-011-raised);
 font-size:0.8125rem;line-height:1.3;
 }
 [data-vibeui-block="togglegroup-011"][data-align="top"] [data-part="stage"]{align-items:flex-start}
@@ -80,15 +91,43 @@ font-size:0.8125rem;line-height:1.3;
 `
 
 const OPTIONS = [
-  { id: "top", label: "По верхнему краю", d: "M2.5 3h11M4.5 5.5h7v7h-7z" },
-  { id: "middle", label: "По центру", d: "M2.5 8h11M4.5 4.5h7v7h-7z" },
-  { id: "bottom", label: "По нижнему краю", d: "M2.5 13h11M4.5 3.5h7v7h-7z" },
+  { id: "top", d: "M2.5 3h11M4.5 5.5h7v7h-7z" },
+  { id: "middle", d: "M2.5 8h11M4.5 4.5h7v7h-7z" },
+  { id: "bottom", d: "M2.5 13h11M4.5 3.5h7v7h-7z" },
   {
     id: "stretch",
-    label: "Растянуть",
     d: "M4.5 3h7M4.5 13h7M4.5 3v10M11.5 3v10",
   },
 ]
+
+const OPTION_TEXT: Record<string, string> = {
+  top: "По верхнему краю",
+  middle: "По центру",
+  bottom: "По нижнему краю",
+  stretch: "Растянуть",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Одиночный выбор вертикального выравнивания с roving tabindex: сцена
@@ -97,7 +136,10 @@ const OPTIONS = [
 export function Togglegroup011({
   label = "Вертикальное выравнивание",
   defaultValue = "middle",
+  optionText = OPTION_TEXT,
+  chipText = "Карточка",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -108,6 +150,12 @@ export function Togglegroup011({
 
   const palette = {
     ...(accent ? { "--vibeui-togglegroup-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-togglegroup-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -163,8 +211,8 @@ export function Togglegroup011({
               }}
               type="button"
               aria-pressed={value === option.id}
-              aria-label={option.label}
-              title={option.label}
+              aria-label={optionText[option.id] ?? OPTION_TEXT[option.id]}
+              title={optionText[option.id] ?? OPTION_TEXT[option.id]}
               tabIndex={value === option.id ? 0 : -1}
               onKeyDown={(event) => onKeyDown(event, index)}
               onClick={() => {
@@ -184,7 +232,7 @@ export function Togglegroup011({
           ))}
         </div>
         <div data-part="stage">
-          <span data-part="chip">Карточка</span>
+          <span data-part="chip">{chipText}</span>
         </div>
       </section>
     </>

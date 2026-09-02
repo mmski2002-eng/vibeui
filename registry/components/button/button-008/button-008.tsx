@@ -9,15 +9,19 @@ export type Button008Props = ComponentPropsWithoutRef<"button"> & {
 // Идея компонента: кнопка сразу учит горячей клавише. Справа — настоящие
 // клавиши с объёмом (нижняя грань и внутренняя подсветка), а не текстовый
 // хвост. На наведении клавиши «нажимаются»: грань уходит, они опускаются.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте клавиша светлее пятна кнопки — объём держится разницей светлот,
+// а не тем, что клавиша всегда белая.
 const STYLES = `
 :where([data-vibeui-block="button-008"]){
---vibeui-button-008-bg:oklch(0.98 0.002 265);
---vibeui-button-008-fg:oklch(0.3 0.014 265);
---vibeui-button-008-border:oklch(0.55 0.02 265 / 26%);
---vibeui-button-008-key-bg:oklch(1 0 0);
---vibeui-button-008-key-fg:oklch(0.45 0.015 265);
---vibeui-button-008-key-edge:oklch(0.55 0.02 265 / 34%);
---vibeui-button-008-ring:oklch(0.55 0.02 265 / 60%);
+--vibeui-button-008-bg:light-dark(oklch(0.98 0.002 265),oklch(0.26 0.012 265));
+--vibeui-button-008-fg:light-dark(oklch(0.3 0.014 265),oklch(0.93 0.006 265));
+--vibeui-button-008-border:light-dark(oklch(0.55 0.02 265 / 26%),oklch(0.82 0.02 265 / 28%));
+--vibeui-button-008-key-bg:light-dark(oklch(1 0 0),oklch(0.36 0.014 265));
+--vibeui-button-008-key-fg:light-dark(oklch(0.45 0.015 265),oklch(0.86 0.01 265));
+--vibeui-button-008-key-edge:light-dark(oklch(0.55 0.02 265 / 34%),oklch(0.88 0.02 265 / 30%));
+--vibeui-button-008-ring:light-dark(oklch(0.55 0.02 265 / 60%),oklch(0.82 0.02 265 / 60%));
 --vibeui-button-008-radius:0.625rem;
 --vibeui-button-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-button-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;

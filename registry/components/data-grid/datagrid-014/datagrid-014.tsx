@@ -21,6 +21,24 @@ export type Datagrid014Props = Omit<
   rows?: Datagrid014Row[]
   caption?: string
   maxPinned?: number
+  /** Заголовок панели над таблицей. */
+  heading?: string
+  /** Названия колонок по ключу: компонент несёт русские. */
+  columnText?: Record<string, string>
+  /** Строка панели, когда закреплённых колонок нет. */
+  emptyPinText?: string
+  /** Счётчик закреплений. {count} и {max} — числа. */
+  pinnedTemplate?: string
+  /** Подпись кнопки снятия закрепления. */
+  clearText?: string
+  /** Подпись булавки на закрепление. {column} — название колонки. */
+  pinLabel?: string
+  /** Подпись булавки на открепление. {column} — название колонки. */
+  unpinLabel?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -29,16 +47,19 @@ export type Datagrid014Props = Omit<
 // получает position:sticky со смещением, посчитанным из ширин уже
 // закреплённых соседей. Ширины фиксированы через table-layout:fixed —
 // без этого смещение слева пришлось бы мерить в браузере.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-014"]){
---vibeui-datagrid-014-bg:oklch(1 0 0);
---vibeui-datagrid-014-fg:oklch(0.23 0.014 285);
---vibeui-datagrid-014-muted:oklch(0.55 0.014 285);
---vibeui-datagrid-014-border:oklch(0.92 0.006 285);
---vibeui-datagrid-014-head:oklch(0.975 0.003 285);
---vibeui-datagrid-014-accent:oklch(0.5 0.15 195);
---vibeui-datagrid-014-pinbg:oklch(0.97 0.02 195);
---vibeui-datagrid-014-shadow:oklch(0.23 0.014 285 / 12%);
+--vibeui-datagrid-014-bg:transparent;
+--vibeui-datagrid-014-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-014-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-014-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
+--vibeui-datagrid-014-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
+--vibeui-datagrid-014-accent:light-dark(oklch(0.5 0.15 195),oklch(0.78 0.13 195));
+--vibeui-datagrid-014-pinbg:light-dark(oklch(0.97 0.02 195),oklch(0.29 0.035 195));
+--vibeui-datagrid-014-shadow:light-dark(oklch(0.23 0.014 285 / 12%),oklch(0 0 0 / 55%));
 --vibeui-datagrid-014-col:11rem;
 --vibeui-datagrid-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -101,7 +122,7 @@ color:var(--vibeui-datagrid-014-accent);border-color:var(--vibeui-datagrid-014-a
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
 padding:0.3125rem 0.625rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-014-border);
-background:var(--vibeui-datagrid-014-bg);color:var(--vibeui-datagrid-014-fg);
+background:transparent;color:var(--vibeui-datagrid-014-fg);
 }
 [data-vibeui-block="datagrid-014"] [data-part="clear"]:disabled{opacity:.45;cursor:not-allowed}
 [data-vibeui-block="datagrid-014"] [data-part="clear"]:focus-visible{outline:2px solid var(--vibeui-datagrid-014-accent);outline-offset:2px}
@@ -111,15 +132,25 @@ background:var(--vibeui-datagrid-014-bg);color:var(--vibeui-datagrid-014-fg);
 type ColumnKey =
   "city" | "manager" | "plan" | "fact" | "deals" | "churn" | "nps"
 
-const COLUMNS: { key: ColumnKey; label: string; numeric: boolean }[] = [
-  { key: "city", label: "Город", numeric: false },
-  { key: "manager", label: "Руководитель", numeric: false },
-  { key: "plan", label: "План", numeric: true },
-  { key: "fact", label: "Факт", numeric: true },
-  { key: "deals", label: "Сделок", numeric: true },
-  { key: "churn", label: "Отток, %", numeric: true },
-  { key: "nps", label: "NPS", numeric: true },
+const COLUMNS: { key: ColumnKey; numeric: boolean }[] = [
+  { key: "city", numeric: false },
+  { key: "manager", numeric: false },
+  { key: "plan", numeric: true },
+  { key: "fact", numeric: true },
+  { key: "deals", numeric: true },
+  { key: "churn", numeric: true },
+  { key: "nps", numeric: true },
 ]
+
+const COLUMN_TEXT: Record<string, string> = {
+  city: "Город",
+  manager: "Руководитель",
+  plan: "План",
+  fact: "Факт",
+  deals: "Сделок",
+  churn: "Отток, %",
+  nps: "NPS",
+}
 
 const DEFAULT_ROWS: Datagrid014Row[] = [
   {
@@ -187,6 +218,28 @@ function display(row: Datagrid014Row, key: ColumnKey) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сетка, где закрепить колонку решает читатель: булавка в заголовке
  * переводит столбец в position:sticky. Один файл, ноль зависимостей.
  */
@@ -194,6 +247,15 @@ export function Datagrid014({
   rows = DEFAULT_ROWS,
   caption = "Нажмите булавку в заголовке, чтобы закрепить колонку слева",
   maxPinned = 2,
+  heading = "Продажи по филиалам",
+  columnText = COLUMN_TEXT,
+  emptyPinText = "Закреплённых колонок нет",
+  pinnedTemplate = "Закреплено: {count} из {max}",
+  clearText = "Снять закрепление",
+  pinLabel = "Закрепить колонку «{column}» слева",
+  unpinLabel = "Открепить колонку «{column}»",
+  scrollLabel = "Таблица филиалов, прокручивается вбок",
+  background = "",
   accent,
   className,
   style,
@@ -209,6 +271,12 @@ export function Datagrid014({
 
   const palette = {
     ...(accent ? { "--vibeui-datagrid-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -234,11 +302,13 @@ export function Datagrid014({
         style={palette}
       >
         <div data-part="bar">
-          <h3 data-part="title">Продажи по филиалам</h3>
+          <h3 data-part="title">{heading}</h3>
           <p data-part="state" aria-live="polite">
             {ordered.length === 0
-              ? "Закреплённых колонок нет"
-              : `Закреплено: ${ordered.length} из ${maxPinned}`}
+              ? emptyPinText
+              : pinnedTemplate
+                  .replace("{count}", String(ordered.length))
+                  .replace("{max}", String(maxPinned))}
           </p>
           <button
             type="button"
@@ -246,13 +316,13 @@ export function Datagrid014({
             disabled={ordered.length === 0}
             onClick={() => setPinned([])}
           >
-            Снять закрепление
+            {clearText}
           </button>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица филиалов, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
@@ -263,6 +333,8 @@ export function Datagrid014({
                   const isPinned = ordered.includes(column.key)
                   const isEdge =
                     isPinned && ordered[ordered.length - 1] === column.key
+                  const label =
+                    columnText[column.key] ?? COLUMN_TEXT[column.key]
 
                   return (
                     <th
@@ -274,16 +346,15 @@ export function Datagrid014({
                       style={offsetFor(column.key)}
                     >
                       <span data-part="head-inner">
-                        {column.label}
+                        {label}
                         <button
                           type="button"
                           data-part="pin"
                           aria-pressed={isPinned}
-                          aria-label={
-                            isPinned
-                              ? `Открепить колонку «${column.label}»`
-                              : `Закрепить колонку «${column.label}» слева`
-                          }
+                          aria-label={(isPinned
+                            ? unpinLabel
+                            : pinLabel
+                          ).replace("{column}", label)}
                           disabled={!isPinned && ordered.length >= maxPinned}
                           onClick={() =>
                             setPinned((current) =>

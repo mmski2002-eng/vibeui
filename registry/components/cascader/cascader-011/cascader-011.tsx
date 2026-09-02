@@ -13,6 +13,20 @@ export type Cascader011Props = {
   heading?: string
   unit?: string
   tree?: Cascader011Node[]
+  /** Как назван верхний уровень в строке пути. */
+  rootText?: string
+  /** Приписка под суммой уровня: {unit}. */
+  sumText?: string
+  /** Подпись кнопки возврата. */
+  upText?: string
+  /** Приписка у строки без вложенности. */
+  leafText?: string
+  /** Шаблон aria-подписи строки: {label}, {count} и {unit}. */
+  rowText?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -25,12 +39,12 @@ export type Cascader011Props = {
 // иначе на глубине все полосы схлопываются в ниточки.
 const STYLES = `
 :where([data-vibeui-block="cascader-011"]){
---vibeui-cascader-011-bg:oklch(1 0 0);
---vibeui-cascader-011-fg:oklch(0.23 0.014 240);
---vibeui-cascader-011-muted:oklch(0.55 0.012 240);
---vibeui-cascader-011-border:oklch(0.9 0.006 240);
---vibeui-cascader-011-track:oklch(0.94 0.005 240);
---vibeui-cascader-011-accent:oklch(0.55 0.16 215);
+--vibeui-cascader-011-bg:transparent;
+--vibeui-cascader-011-fg:light-dark(oklch(0.23 0.014 240),oklch(0.94 0.006 240));
+--vibeui-cascader-011-muted:light-dark(oklch(0.55 0.012 240),oklch(0.71 0.011 240));
+--vibeui-cascader-011-border:light-dark(oklch(0.9 0.006 240),oklch(0.38 0.011 240));
+--vibeui-cascader-011-track:light-dark(oklch(0.94 0.005 240),oklch(0.32 0.01 240));
+--vibeui-cascader-011-accent:light-dark(oklch(0.55 0.16 215),oklch(0.76 0.13 215));
 --vibeui-cascader-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="cascader-011"]{
@@ -154,6 +168,28 @@ const DEFAULT_TREE: Cascader011Node[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function nodesAt(tree: Cascader011Node[], path: string[]) {
   let nodes = tree
 
@@ -178,16 +214,31 @@ export function Cascader011({
   heading = "Разбор обращений",
   unit = "обращений",
   tree = DEFAULT_TREE,
+  rootText = "все источники",
+  sumText = "{unit} на уровне",
+  upText = "← На уровень выше",
+  leafText = "последний уровень",
+  rowText = "{label}: {count} {unit}",
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
 }: Cascader011Props) {
-  const [path, setPath] = useState<string[]>(["Обращения клиентов"])
+  const [path, setPath] = useState<string[]>(() =>
+    tree[0]?.children?.length ? [tree[0].label] : [],
+  )
   const nodes = nodesAt(tree, path)
   const total = nodes.reduce((sum, node) => sum + node.count, 0)
 
   const palette = {
     ...(accent ? { "--vibeui-cascader-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cascader-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -205,12 +256,12 @@ export function Cascader011({
           <span data-part="titles">
             <strong data-part="heading">{heading}</strong>
             <span data-part="trail">
-              {path.length ? path.join(" › ") : "все источники"}
+              {path.length ? path.join(" › ") : rootText}
             </span>
           </span>
           <span data-part="sum" aria-live="polite">
-            <b>{total.toLocaleString("ru-RU")}</b>
-            <small>{unit} на уровне</small>
+            <b>{total.toLocaleString(locale)}</b>
+            <small>{sumText.replace("{unit}", unit)}</small>
           </span>
         </div>
         <button
@@ -219,7 +270,7 @@ export function Cascader011({
           onClick={() => setPath(path.slice(0, -1))}
           disabled={path.length === 0}
         >
-          ← На уровень выше
+          {upText}
         </button>
         <ul data-part="rows">
           {nodes.map((node) => (
@@ -230,11 +281,14 @@ export function Cascader011({
                 onClick={() =>
                   node.children?.length ? setPath([...path, node.label]) : null
                 }
-                aria-label={`${node.label}: ${node.count} ${unit}`}
+                aria-label={rowText
+                  .replace("{label}", node.label)
+                  .replace("{count}", String(node.count))
+                  .replace("{unit}", unit)}
               >
                 <span data-part="name">{node.label}</span>
                 <span data-part="value">
-                  {node.count.toLocaleString("ru-RU")}
+                  {node.count.toLocaleString(locale)}
                 </span>
                 <span data-part="bar">
                   <span
@@ -247,7 +301,7 @@ export function Cascader011({
                   />
                 </span>
                 {node.children?.length ? null : (
-                  <span data-part="leafmark">последний уровень</span>
+                  <span data-part="leafmark">{leafText}</span>
                 )}
               </button>
             </li>

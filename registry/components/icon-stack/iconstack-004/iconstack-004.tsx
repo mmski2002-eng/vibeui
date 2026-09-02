@@ -7,6 +7,8 @@ export type Iconstack004Props = Omit<
   names?: string[]
   size?: "sm" | "md" | "lg"
   label?: string
+  /** Пусто — подложки нет, стопка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: вертикальная стопка для узкой колонки. Горизонтальная
@@ -18,13 +20,14 @@ const STYLES = `
 :where([data-vibeui-block="iconstack-004"]){
 --vibeui-iconstack-004-size:2.25rem;
 --vibeui-iconstack-004-overlap:0.75rem;
---vibeui-iconstack-004-surface:oklch(1 0 0);
---vibeui-iconstack-004-border:oklch(0.9 0.006 265);
---vibeui-iconstack-004-fg:oklch(0.26 0.014 265);
---vibeui-iconstack-004-muted:oklch(0.55 0.014 265);
+--vibeui-iconstack-004-surface:transparent;
+--vibeui-iconstack-004-ring:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-iconstack-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.01 265));
+--vibeui-iconstack-004-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
+--vibeui-iconstack-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
 --vibeui-iconstack-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: подпись под стопкой тёмная. */
+/* Подложки по умолчанию нет: колонка лежит на фоне страницы. */
 [data-vibeui-block="iconstack-004"]{
 display:inline-flex;flex-direction:column;align-items:center;gap:0.625rem;
 box-sizing:border-box;padding:0.875rem 0.75rem;
@@ -43,7 +46,7 @@ margin-bottom:calc(var(--vibeui-iconstack-004-overlap) * -1);
 [data-vibeui-block="iconstack-004"] [data-part="face"]{
 display:inline-flex;align-items:center;justify-content:center;flex:none;box-sizing:border-box;
 width:var(--vibeui-iconstack-004-size);height:var(--vibeui-iconstack-004-size);
-border-radius:9999px;border:2px solid var(--vibeui-iconstack-004-surface);
+border-radius:9999px;border:2px solid var(--vibeui-iconstack-004-ring);
 background:oklch(0.9 0.06 var(--vibeui-iconstack-004-hue,265));
 color:oklch(0.36 0.12 var(--vibeui-iconstack-004-hue,265));
 font-size:calc(var(--vibeui-iconstack-004-size) * 0.34);
@@ -82,6 +85,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Вертикальная стопка участников для узкой колонки.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -89,10 +114,24 @@ export function Iconstack004({
   names = DEFAULT_NAMES,
   size = "md",
   label = "на смене",
+  background = "",
   className,
   style,
   ...props
 }: Iconstack004Props) {
+  // Обводка кружка равна подложке: заданный фон красит и её, иначе стопка
+  // останется в контуре прежнего фона.
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-iconstack-004-surface": background,
+          "--vibeui-iconstack-004-ring": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-iconstack-004" precedence="medium">
@@ -103,7 +142,7 @@ export function Iconstack004({
         data-vibeui-block="iconstack-004"
         data-size={size}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="stack" aria-hidden="true">
           {[...names].reverse().map((name) => (

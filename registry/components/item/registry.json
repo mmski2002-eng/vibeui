@@ -32,15 +32,19 @@
             "обводку фокуса на строке через :has(a:focus-visible)",
             "табличные цифры у значения — по нему сравнивают строки",
             "тег li: строки живут в списке, а не в наборе div",
-            "сетку из двух колонок: значение и статус всегда справа"
+            "сетку из двух колонок: значение и статус всегда справа",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title, meta, value и status",
             "href — адрес строки",
             "акцент через проп accent",
-            "ширину строки"
+            "ширину строки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Внутри строки не должно быть второй ссылки: растянутая перекроет её.",
             "Если действий несколько, растягивать ссылку нельзя — сделайте кнопку отдельной целью, как в card-004.",
             "Оберните строки в <ul>: одиночный li без списка невалиден.",
@@ -68,6 +72,18 @@
             "type": "text",
             "default": "Ожидает оплаты",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -81,15 +97,19 @@
                 "the focus ring on the row via :has(a:focus-visible)",
                 "tabular figures on the value — that is what rows get compared by",
                 "the li element: rows belong in a list, not a pile of divs",
-                "the two-column grid keeping value and status on the right"
+                "the two-column grid keeping value and status on the right",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title, meta, value and status",
                 "href — the row's target",
                 "the accent through the accent prop",
-                "the row width"
+                "the row width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "No second link inside the row: the stretched one would cover it.",
                 "With several actions do not stretch the link — make the button its own target, as in card-004.",
                 "Wrap the rows in a <ul>: a lone li outside a list is invalid.",
@@ -109,11 +129,26 @@
               "status": {
                 "label": "Status",
                 "default": "Awaiting payment"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "List Row"
+            "title": "List Row",
+            "preview": {
+              "props": {
+                "title": "Invoice 300 · Polyot Ltd",
+                "meta": "Issued 12 March, due 20 March",
+                "value": "$240",
+                "status": "Awaiting payment"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -147,15 +182,19 @@
             "вычисление фона и цвета знака из одного оттенка через color-mix — иначе пара разъезжается",
             "aria-hidden на плитке: знак дублирует название и в озвучке лишний",
             "обрезку названия многоточием: перенос на вторую строку меняет высоту в плотном списке",
-            "тег li: строки живут в списке, а не в наборе div"
+            "тег li: строки живут в списке, а не в наборе div",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title и meta — название строки и вторичный текст",
             "glyph — одна или две буквы на плитке",
             "оттенок плитки через проп tint",
-            "ширину строки и радиус скругления"
+            "ширину строки и радиус скругления",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Плитка рассчитана на одну-две буквы: три уже не помещаются в квадрат.",
             "Оберните строки в <ul>: одиночный li без списка невалиден.",
             "Для строки со ссылкой на всю площадь берите item-001 или item-004.",
@@ -176,6 +215,18 @@
             "type": "text",
             "default": "ПД",
             "maxLength": 4
+          },
+          {
+            "prop": "tint",
+            "label": "Оттенок",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -189,15 +240,19 @@
                 "deriving the tile fill and glyph colour from one tint through color-mix — otherwise the pair drifts apart",
                 "aria-hidden on the tile: the glyph repeats the title and is noise in speech",
                 "the ellipsis on the title: wrapping to a second line changes row height in a dense list",
-                "the li element: rows belong in a list, not a pile of divs"
+                "the li element: rows belong in a list, not a pile of divs",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title and meta — the row title and the secondary text",
                 "glyph — one or two letters on the tile",
                 "the tile tint through the tint prop",
-                "the row width and corner radius"
+                "the row width and corner radius",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The tile fits one or two letters: three no longer fit the square.",
                 "Wrap the rows in a <ul>: a lone li outside a list is invalid.",
                 "For a row that is one big link use item-001 or item-004.",
@@ -213,11 +268,25 @@
               "glyph": {
                 "label": "Glyph",
                 "default": "PD"
+              },
+              "tint": {
+                "label": "Tint"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Icon Lead Row"
+            "title": "Icon Lead Row",
+            "preview": {
+              "props": {
+                "title": "Project documents",
+                "meta": "14 files · updated yesterday",
+                "glyph": "PD"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["tint", "background"]
       }
     },
     {
@@ -251,15 +320,19 @@
             "aria-label кнопки с названием строки — иначе в списке десять кнопок «Пригласить» неразличимы",
             "flex:none у кнопки: сжатая подпись действия читается хуже обрезанного описания",
             "видимую обводку фокуса на кнопке — она единственная интерактивная цель строки",
-            "тег li: строки живут в списке, а не в наборе div"
+            "тег li: строки живут в списке, а не в наборе div",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title и meta — название и вторичный текст",
             "action — подпись кнопки",
             "акцент через проп accent",
-            "ширину строки"
+            "ширину строки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Обработчик кнопки не входит в компонент: передайте onClick вызывающим кодом.",
             "Двух и более действий строка не предполагает — для меню действий нужен свой блок.",
             "Оберните строки в <ul>: одиночный li без списка невалиден.",
@@ -280,6 +353,18 @@
             "type": "text",
             "default": "Пригласить",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -293,15 +378,19 @@
                 "the button aria-label carrying the row title — otherwise ten \"Invite\" buttons are indistinguishable",
                 "flex:none on the button: a squeezed action label reads worse than a clipped description",
                 "the visible focus ring on the button — it is the only interactive target in the row",
-                "the li element: rows belong in a list, not a pile of divs"
+                "the li element: rows belong in a list, not a pile of divs",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title and meta — the title and the secondary text",
                 "action — the button label",
                 "the accent through the accent prop",
-                "the row width"
+                "the row width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The button handler is not part of the component: pass onClick from the caller.",
                 "The row does not assume two or more actions — an action menu needs its own block.",
                 "Wrap the rows in a <ul>: a lone li outside a list is invalid.",
@@ -317,11 +406,25 @@
               "action": {
                 "label": "Action",
                 "default": "Invite"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Row With Action"
+            "title": "Row With Action",
+            "preview": {
+              "props": {
+                "title": "Maria Kovaleva",
+                "meta": "maria@studio.ru · viewer",
+                "action": "Invite"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -355,15 +458,19 @@
             "общее правило для :hover и :focus-visible — состояние клавиатуры не должно быть беднее мышиного",
             "стрелку под aria-hidden: «стрелка вправо» в озвучке ничего не добавляет",
             "видимую обводку фокуса на всей строке, а не на одном названии",
-            "смену цвета рамки вместе с фоном: одного фона мало на светлой подложке"
+            "смену цвета рамки вместе с фоном: одного фона мало на светлой подложке",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title и meta — название и пояснение",
             "hint — счётчик или короткая приписка справа",
             "href — адрес строки и акцент через проп accent",
-            "ширину строки"
+            "ширину строки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Внутрь строки нельзя класть вторую ссылку или кнопку: вложенные интерактивные элементы невалидны.",
             "Для строки с кнопкой действия берите item-003.",
             "Строки-ссылки кладите в <nav> или <ul> — набор ссылок подряд без контейнера читается хуже.",
@@ -384,6 +491,18 @@
             "type": "text",
             "default": "12",
             "maxLength": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -397,15 +516,19 @@
                 "the shared rule for :hover and :focus-visible — the keyboard state must not be poorer than the mouse one",
                 "aria-hidden on the arrow: \"right arrow\" adds nothing in speech",
                 "the visible focus ring on the whole row, not on the title alone",
-                "changing the border colour together with the background: the fill alone is too weak on a light surface"
+                "changing the border colour together with the background: the fill alone is too weak on a light surface",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title and meta — the title and the description",
                 "hint — the counter or a short note on the right",
                 "href — the row target, and the accent through the accent prop",
-                "the row width"
+                "the row width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "No second link or button may go inside: nested interactive elements are invalid.",
                 "For a row with an action button use item-003.",
                 "Put link rows inside a <nav> or a <ul> — a bare run of links reads worse.",
@@ -421,11 +544,25 @@
               "hint": {
                 "label": "Note",
                 "default": "12"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Linked Nav Row"
+            "title": "Linked Nav Row",
+            "preview": {
+              "props": {
+                "title": "Notification settings",
+                "meta": "Email, Telegram and the weekly digest",
+                "hint": "12"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -459,15 +596,19 @@
             "градиентную заглушку: пустое место той же высоты честнее, чем схлопнувшаяся строка",
             "дубль длительности текстом: подпись поверх картинки скринридеру не видна",
             "alt=\"\" у картинки — она декоративна, смысл несёт название рядом",
-            "обрезку названия двумя строками: третья ломает ритм списка"
+            "обрезку названия двумя строками: третья ломает ритм списка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title и meta — название и строку автора с датой",
             "badge — длительность или другую короткую метку",
             "image — адрес картинки, акцент через проп accent",
-            "ширину превью и ширину строки"
+            "ширину превью и ширину строки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент рендерит обычный тег img: next/image сюда не подставляйте, блок обязан работать вне Next.",
             "Без пропа image остаётся градиент — это штатное состояние, а не ошибка.",
             "Оберните строки в <ul>: одиночный li без списка невалиден.",
@@ -488,6 +629,18 @@
             "type": "text",
             "default": "12:40",
             "maxLength": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -501,15 +654,19 @@
                 "the gradient placeholder: empty space of the same height is more honest than a collapsed row",
                 "the duration repeated as text: a caption drawn over the image is invisible to a screen reader",
                 "alt=\"\" on the image — it is decorative, the meaning sits in the title next to it",
-                "clamping the title to two lines: a third one breaks the rhythm of the list"
+                "clamping the title to two lines: a third one breaks the rhythm of the list",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title and meta — the title and the author-and-date line",
                 "badge — the duration or another short marker",
                 "image — the picture URL, and the accent through the accent prop",
-                "the thumbnail width and the row width"
+                "the thumbnail width and the row width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component renders a plain img tag: do not swap in next/image, the block must work outside Next.",
                 "Without the image prop the gradient stays — that is a normal state, not an error.",
                 "Wrap the rows in a <ul>: a lone li outside a list is invalid.",
@@ -525,11 +682,25 @@
               "badge": {
                 "label": "Duration",
                 "default": "12:40"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Media Preview Row"
+            "title": "Media Preview Row",
+            "preview": {
+              "props": {
+                "title": "Building a component catalogue in one evening",
+                "meta": "Roman Tishchenko · 3 days ago",
+                "badge": "12:40"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -563,15 +734,19 @@
             "пары dt/dd — подпись и значение обязаны быть связаны разметкой, а не соседством",
             "container-type:inline-size на корне: раскладка считается от ширины строки, а не от вьюпорта",
             "табличные цифры у значений — колонку сравнивают взглядом сверху вниз",
-            "тег li: строки живут в списке, а не в наборе div"
+            "тег li: строки живут в списке, а не в наборе div",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title — название записи",
             "массив cells: подписи и значения ячеек",
             "акцент через проп accent и порог контейнерного запроса",
-            "ширину строки"
+            "ширину строки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Три ячейки — расчётный максимум: четвёртая ломает ритм в узкой колонке.",
             "Контейнерные запросы требуют современного браузера; в старых строка останется в один столбец.",
             "Оберните строки в <ul>: одиночный li без списка невалиден.",
@@ -591,6 +766,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -604,15 +785,19 @@
                 "the dt/dd pairs — label and value must be tied by markup, not by proximity",
                 "container-type:inline-size on the root: the layout follows the row width, not the viewport",
                 "tabular figures on the values — the column gets compared top to bottom",
-                "the li element: rows belong in a list, not a pile of divs"
+                "the li element: rows belong in a list, not a pile of divs",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title — the record title",
                 "the cells array: cell labels and values",
                 "the accent through the accent prop and the container query breakpoint",
-                "the row width"
+                "the row width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Three cells is the designed maximum: a fourth breaks the rhythm in a narrow column.",
                 "Container queries need a modern browser; in older ones the row simply stays single-column.",
                 "Wrap the rows in a <ul>: a lone li outside a list is invalid.",
@@ -627,11 +812,34 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Three Column Meta"
+            "title": "Three Column Meta",
+            "preview": {
+              "props": {
+                "title": "Stage two estimate",
+                "cells": [
+                  {
+                    "label": "Owner",
+                    "value": "Irina Lapteva"
+                  },
+                  {
+                    "label": "Updated",
+                    "value": "14 March"
+                  },
+                  {
+                    "label": "Size",
+                    "value": "2.4 MB"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -665,15 +873,19 @@
             "прозрачный растянутый input — display:none выкинул бы его из последовательности фокуса",
             "обводку фокуса на строке через :has(input:focus-visible)",
             "смену фона, рамки и квадратика вместе: один цвет не читается при дальтонизме",
-            "корень-label: клик по всей строке обязан переключать выбор"
+            "корень-label: клик по всей строке обязан переключать выбор",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title и meta — название и пояснение",
             "name — имя поля в форме, defaultChecked — начальное состояние",
             "акцент через проп accent",
-            "ширину строки"
+            "ширину строки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Состояние неуправляемое: чтобы читать выбор в React, добавьте checked и onChange и сделайте компонент клиентским.",
             "Для набора взаимоисключающих вариантов замените type на radio и дайте строкам общий name.",
             "Селектор :has() нужен современному браузеру: в старых пропадёт подсветка выбранной строки, но выбор работает.",
@@ -693,6 +905,18 @@
             "label": "Отмечено",
             "type": "boolean",
             "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -706,15 +930,19 @@
                 "the transparent stretched input — display:none would drop it out of the focus order",
                 "the focus ring on the row via :has(input:focus-visible)",
                 "changing background, border and box together: a single colour fails for colour blindness",
-                "the label root: clicking anywhere on the row must toggle the choice"
+                "the label root: clicking anywhere on the row must toggle the choice",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title and meta — the title and the description",
                 "name — the form field name, defaultChecked — the initial state",
                 "the accent through the accent prop",
-                "the row width"
+                "the row width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The state is uncontrolled: to read the choice in React add checked and onChange and make the component client-side.",
                 "For mutually exclusive options switch the type to radio and give the rows a shared name.",
                 "The :has() selector needs a modern browser: older ones lose the selected highlight but keep the choice working.",
@@ -729,11 +957,24 @@
               },
               "defaultChecked": {
                 "label": "Checked"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Selectable Row"
+            "title": "Selectable Row",
+            "preview": {
+              "props": {
+                "title": "Custom domain",
+                "meta": "Connects in five minutes · $6 a month"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultChecked", "accent", "background"]
       }
     },
     {
@@ -767,15 +1008,20 @@
             "живую область role=status: сдвиг строки виден глазами, но не слышен",
             "позицию в подписи ручки — «3 из 8» слышно, а порядок нет",
             "Escape как выход из режима переноса: без отмены захват превращается в ловушку",
-            "поднятый вид строки тенью и рамкой, а не одним оттенком"
+            "поднятый вид строки тенью и рамкой, а не одним оттенком",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title и meta — название строки и пояснение",
             "position и total — номер строки и длину списка",
             "обработчик onMove, акцент через проп accent",
-            "ширину строки"
+            "ширину строки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "handleLabel и announceText — подпись ручки и реплики живой области; {title}, {position}, {total} и {target} подставляются"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Порядком владеет список: строка сообщает направление через onMove и сама ничего не переставляет.",
             "Нативный drag не работает на сенсорных экранах — клавиатурный путь закрывает и этот случай.",
             "Готовый список с сортировкой целиком — sortable-002, здесь только одна строка.",
@@ -797,6 +1043,26 @@
             "default": 8,
             "min": 2,
             "max": 20
+          },
+          {
+            "prop": "position",
+            "label": "Позиция",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -810,15 +1076,20 @@
                 "the role=status live region: a row shifting is visible but not audible",
                 "the position in the handle label — \"3 of 8\" is audible, order is not",
                 "Escape as the way out of move mode: without a cancel the pick-up becomes a trap",
-                "the lifted look via shadow and border, not a single tint"
+                "the lifted look via shadow and border, not a single tint",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title and meta — the row title and the description",
                 "position and total — the row number and the list length",
                 "the onMove handler and the accent through the accent prop",
-                "the row width"
+                "the row width",
+                "background — the component background; empty means no background, taking the page colour",
+                "handleLabel and announceText — the handle label and the live-region phrases; {title}, {position}, {total} and {target} are substituted in place"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The list owns the order: the row reports a direction through onMove and moves nothing itself.",
                 "Native dragging does not work on touch screens — the keyboard path covers that case too.",
                 "For a whole sortable list use sortable-002; this is a single row.",
@@ -833,11 +1104,35 @@
               },
               "total": {
                 "label": "Rows total"
+              },
+              "position": {
+                "label": "Position"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Reorder Handle Row"
+            "title": "Reorder Handle Row",
+            "preview": {
+              "props": {
+                "title": "Pricing block",
+                "meta": "A landing page section",
+                "handleLabel": "Move “{title}”, position {position} of {total}",
+                "announceText": {
+                  "grabbed": "“{title}” picked up, position {position} of {total}. Arrows move it, space drops it.",
+                  "dropped": "“{title}” dropped at position {position} of {total}.",
+                  "cancelled": "Moving “{title}” cancelled.",
+                  "edge": "“{title}” is already at the end of the list, position {position} of {total}.",
+                  "moved": "“{title}” moved to position {target} of {total}."
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["position", "total", "background"]
       }
     },
     {
@@ -871,15 +1166,20 @@
             "слово состояния текстом в разметке — оно нужно и скринридеру, и поиску по странице",
             "вывод фона, рамки и текста метки из одного тона через color-mix",
             "aria-hidden на маркере: форма дублирует слово рядом",
-            "тег li: строки живут в списке, а не в наборе div"
+            "тег li: строки живут в списке, а не в наборе div",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title и meta — название объекта и строку подробностей",
             "state — одно из четырёх состояний",
             "label — слово состояния, если стандартное не подходит",
-            "цвета состояний и ширину строки"
+            "цвета состояний и ширину строки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "stateText — словарь слов состояний целиком, когда нужен другой язык"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Состояний ровно четыре: пятой формы, различимой на маркере в 8 пикселей, уже не остаётся.",
             "Не заменяйте слово состояния только цветной точкой — метка перестанет читаться на печати.",
             "Оберните строки в <ul>: одиночный li без списка невалиден.",
@@ -900,6 +1200,12 @@
             "type": "text",
             "default": "api.vibeui.ru",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -913,15 +1219,20 @@
                 "the status word as real text — it is needed both by a screen reader and by page search",
                 "deriving the badge fill, border and text from a single tone through color-mix",
                 "aria-hidden on the marker: the shape repeats the word beside it",
-                "the li element: rows belong in a list, not a pile of divs"
+                "the li element: rows belong in a list, not a pile of divs",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title and meta — the object name and the details line",
                 "state — one of the four states",
                 "label — the status word when the built-in one does not fit",
-                "the state colours and the row width"
+                "the state colours and the row width",
+                "background — the component background; empty means no background, taking the page colour",
+                "stateText — the whole dictionary of status words when another language is needed"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There are exactly four states: a fifth shape readable at eight pixels no longer exists.",
                 "Do not replace the status word with a coloured dot — the badge stops working in print.",
                 "Wrap the rows in a <ul>: a lone li outside a list is invalid.",
@@ -936,11 +1247,27 @@
               "title": {
                 "label": "Title",
                 "default": "api.vibeui.ru"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Status Marker Row"
+            "title": "Status Marker Row",
+            "preview": {
+              "props": {
+                "title": "api.vibeui.ru",
+                "meta": "Production · last checked 40 seconds ago",
+                "stateText": {
+                  "ok": "Running",
+                  "wait": "Deploying",
+                  "fail": "Failed",
+                  "off": "Disabled"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["state", "background"]
       }
     },
     {
@@ -974,15 +1301,19 @@
             "разделитель внутренней тенью — рамка у каждой строки даёт двойную линию на стыке",
             "табличные цифры в правой колонке: столбец сравнивают взглядом сверху вниз",
             "обрезку названия многоточием вместо переноса — иначе строки станут разной высоты",
-            "теги ul и li: плотный список остаётся списком, а не сеткой из div"
+            "теги ul и li: плотный список остаётся списком, а не сеткой из div",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив rows: артикул, название и значение",
             "density — одна из трёх ступеней плотности",
             "акцент через проп accent",
-            "ширину списка и набор колонок"
+            "ширину списка и набор колонок",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Для сортируемых колонок и заголовков берите таблицу: это список, а не table.",
             "На ступени tight строка ниже 24 пикселей — проверьте, что цель нажатия не нужна на телефоне.",
             "Ключом строк служит артикул: он обязан быть уникальным.",
@@ -1002,6 +1333,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1015,15 +1352,19 @@
                 "the inset-shadow separator — a border on every row doubles up at the seams",
                 "tabular figures in the right column: the column gets compared top to bottom",
                 "clipping the title with an ellipsis instead of wrapping — otherwise rows differ in height",
-                "the ul and li elements: a dense list is still a list, not a grid of divs"
+                "the ul and li elements: a dense list is still a list, not a grid of divs",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the rows array: code, title and value",
                 "density — one of the three density steps",
                 "the accent through the accent prop",
-                "the list width and the set of columns"
+                "the list width and the set of columns",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "For sortable columns and headers use a table: this is a list, not a table.",
                 "At the tight step a row is under 24 pixels — check you do not need a tap target on phones.",
                 "The row key is the code: it has to be unique.",
@@ -1037,11 +1378,56 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Dense List Rows"
+            "title": "Dense List Rows",
+            "preview": {
+              "props": {
+                "rows": [
+                  {
+                    "code": "AL-118",
+                    "title": "Power cable, 2 m",
+                    "value": "412"
+                  },
+                  {
+                    "code": "AL-119",
+                    "title": "Power cable, 5 m",
+                    "value": "96"
+                  },
+                  {
+                    "code": "BR-204",
+                    "title": "Wall bracket",
+                    "value": "1,240"
+                  },
+                  {
+                    "code": "BR-207",
+                    "title": "Ceiling bracket",
+                    "value": "38"
+                  },
+                  {
+                    "code": "CM-330",
+                    "title": "RS-485 comms module",
+                    "value": "7"
+                  },
+                  {
+                    "code": "CM-331",
+                    "title": "Ethernet comms module",
+                    "value": "0"
+                  },
+                  {
+                    "code": "DX-402",
+                    "title": "Leak sensor",
+                    "value": "615"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["density", "accent", "background"]
       }
     },
     {
@@ -1075,15 +1461,19 @@
             "прозрачный растянутый input внутри метки — display:none выкинул бы его из последовательности фокуса",
             "зачёркивание названия через :has(input:checked) как главный сигнал выполнения, а не только цвет чекбокса",
             "aria-label с полным именем на плитке исполнителя — инициалы одни ничего не говорят скринридеру",
-            "тег li: строки живут в списке, а не в наборе div"
+            "тег li: строки живут в списке, а не в наборе div",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title и due — название задачи и срок",
             "assignee и assigneeName — инициалы и полное имя исполнителя",
             "name — имя поля в форме, defaultChecked — начальное состояние",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Состояние неуправляемое: чтобы читать выполнение в React, добавьте checked и onChange и сделайте компонент клиентским.",
             "Селектор :has() нужен современному браузеру: в старых пропадёт зачёркивание, но чекбокс работает.",
             "Плитка исполнителя рассчитана на одну-две буквы: три уже не помещаются в круг.",
@@ -1110,6 +1500,18 @@
             "label": "Выполнено",
             "type": "boolean",
             "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1123,15 +1525,19 @@
                 "the transparent stretched input inside the label — display:none would drop it out of the focus order",
                 "the title strikethrough via :has(input:checked) as the main completion signal, not just the checkbox colour",
                 "the full-name aria-label on the assignee tile — initials alone say nothing to a screen reader",
-                "the li element: rows belong in a list, not a pile of divs"
+                "the li element: rows belong in a list, not a pile of divs",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title and due — the task title and the due date",
                 "assignee and assigneeName — the initials and the full name of the assignee",
                 "name — the form field name, defaultChecked — the initial state",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The state is uncontrolled: to read completion in React add checked and onChange and make the component client-side.",
                 "The :has() selector needs a modern browser: older ones lose the strikethrough but the checkbox still works.",
                 "The assignee tile fits one or two letters: three no longer fit the circle.",
@@ -1150,11 +1556,26 @@
               },
               "defaultChecked": {
                 "label": "Done"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Task Checklist Row"
+            "title": "Task Checklist Row",
+            "preview": {
+              "props": {
+                "title": "Approve the stage two budget",
+                "due": "Mar 12",
+                "assignee": "MK",
+                "assigneeName": "Maria Kovaleva"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultChecked", "accent", "background"]
       }
     },
     {
@@ -1188,15 +1609,20 @@
             "скрытый текст «Непрочитано» в разметке вместо одной лишь aria-hidden точки",
             "видимость точки через visibility, а не через условный рендер — точка не должна сдвигать соседние строки",
             "табличные цифры у времени, если формат содержит цифры подряд",
-            "тег li: строки живут в списке, а не в наборе div"
+            "тег li: строки живут в списке, а не в наборе div",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title и meta — название уведомления и его текст",
             "time — метка времени",
             "unread — непрочитанное состояние",
-            "цвет точки и заливки через переменную --vibeui-item-012-accent"
+            "акцент через проп accent — цвет точки и заливки строки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "unreadText — скрытая подпись непрочитанного для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не кликабелен: для перехода к уведомлению оберните строку ссылкой или добавьте обработчик снаружи.",
             "visibility:hidden оставляет точке место в раскладке — так прочитанные и непрочитанные строки не съезжают по высоте.",
             "Время — обычный текст, не time-элемент: при необходимости оберните его в <time> самостоятельно.",
@@ -1223,6 +1649,18 @@
             "label": "Непрочитано",
             "type": "boolean",
             "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1236,15 +1674,20 @@
                 "the hidden \"Unread\" text in the markup instead of relying on the aria-hidden dot alone",
                 "the dot's visibility toggled via visibility rather than conditional rendering — it must not shift neighbouring rows",
                 "tabular figures on the time when the format is digits in a row",
-                "the li element: rows belong in a list, not a pile of divs"
+                "the li element: rows belong in a list, not a pile of divs",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title and meta — the notification title and its text",
                 "time — the timestamp",
                 "unread — the unread state",
-                "the dot and tint colour through the --vibeui-item-012-accent variable"
+                "the accent through the accent prop — the dot and the row tint",
+                "background — the component background; empty means no background, taking the page colour",
+                "unreadText — the hidden unread label for a screen reader"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component is not clickable: wrap the row in a link or add a handler outside it to navigate.",
                 "visibility:hidden keeps the dot's space in the layout — read and unread rows stay the same height.",
                 "The time is plain text, not a time element: wrap it in <time> yourself if you need one.",
@@ -1263,11 +1706,26 @@
               },
               "unread": {
                 "label": "Unread"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Notification Row"
+            "title": "Notification Row",
+            "preview": {
+              "props": {
+                "title": "Igor left a comment on the budget",
+                "meta": "“Please check the numbers in section three”",
+                "time": "2:32 PM",
+                "unreadText": "Unread."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["unread", "accent", "background"]
       }
     }
   ]

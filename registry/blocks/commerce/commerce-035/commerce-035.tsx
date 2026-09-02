@@ -20,7 +20,18 @@ export type Commerce035Props = {
   hideHint?: string
   price?: string
   cta?: string
+  /** Подпись группы вариантов упаковки. */
+  wrapsLegend?: string
+  /** Подпись под полем: {limit} подставляет число символов. */
+  limitText?: string
+  /** Заголовок превью и надпись на самой открытке. */
+  previewTitle?: string
+  cardHead?: string
+  /** Пояснение под ценой упаковки. */
+  priceNote?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -35,18 +46,24 @@ export type Commerce035Props = {
 // отдельно от упаковки: это разные решения, и их часто путают.
 const STYLES = `
 :where([data-vibeui-block="commerce-035"]){
---vibeui-commerce-035-bg:oklch(1 0 0);
---vibeui-commerce-035-fg:oklch(0.21 0.014 265);
---vibeui-commerce-035-muted:oklch(0.55 0.014 265);
---vibeui-commerce-035-border:oklch(0.91 0.006 265);
---vibeui-commerce-035-soft:oklch(0.975 0.004 265);
---vibeui-commerce-035-accent:oklch(0.53 0.17 15);
+--vibeui-commerce-035-bg:transparent;
+--vibeui-commerce-035-radius:0;
+--vibeui-commerce-035-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-035-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-035-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-commerce-035-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-commerce-035-accent:light-dark(oklch(0.53 0.17 15),oklch(0.75 0.15 15));
+--vibeui-commerce-035-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 15));
+--vibeui-commerce-035-paper-top:light-dark(oklch(0.98 0.012 85),oklch(0.3 0.021 85));
+--vibeui-commerce-035-paper-bottom:light-dark(oklch(0.99 0.008 85),oklch(0.33 0.017 85));
+--vibeui-commerce-035-shadow:light-dark(oklch(0.2 0.02 265 / 8%),oklch(0 0 0 / 45%));
 --vibeui-commerce-035-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-commerce-035-hand:ui-rounded,"Segoe UI",system-ui,sans-serif;
 container-type:inline-size;
 }
 [data-vibeui-block="commerce-035"]{
 box-sizing:border-box;background:var(--vibeui-commerce-035-bg);
+border-radius:var(--vibeui-commerce-035-radius);
 color:var(--vibeui-commerce-035-fg);font-family:var(--vibeui-commerce-035-sans);
 }
 [data-vibeui-block="commerce-035"] *{box-sizing:border-box}
@@ -111,9 +128,9 @@ color:inherit;font-family:var(--vibeui-commerce-035-hand);font-size:0.9375rem;li
 [data-vibeui-block="commerce-035"] [data-part="card"]{
 position:relative;padding:1rem 1.125rem;border-radius:0.875rem;min-height:7rem;
 background:
-linear-gradient(oklch(0.98 0.012 85),oklch(0.99 0.008 85));
+linear-gradient(var(--vibeui-commerce-035-paper-top),var(--vibeui-commerce-035-paper-bottom));
 border:1px solid var(--vibeui-commerce-035-border);
-box-shadow:0 6px 18px oklch(0.2 0.02 265 / 8%);
+box-shadow:0 6px 18px var(--vibeui-commerce-035-shadow);
 font-family:var(--vibeui-commerce-035-hand);font-size:0.9375rem;line-height:1.6;
 }
 [data-vibeui-block="commerce-035"] [data-part="card"]::before{
@@ -140,7 +157,7 @@ padding-top:0.875rem;border-top:1px solid var(--vibeui-commerce-035-border);
 [data-vibeui-block="commerce-035"] [data-part="total"] span{display:block;font-size:0.6875rem;font-weight:500;color:var(--vibeui-commerce-035-muted)}
 [data-vibeui-block="commerce-035"] [data-part="cta"]{
 appearance:none;border:0;cursor:pointer;height:2.75rem;padding:0 1.5rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-035-accent);color:oklch(1 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-035-accent);color:var(--vibeui-commerce-035-on-accent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-035"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-commerce-035-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-035"] *{animation:none!important;transition:none!important}}
@@ -152,6 +169,28 @@ const DEFAULT_WRAPS: Commerce035Wrap[] = [
   { id: "linen", label: "Лён и лента", price: "290 ₽", hue: 200, ribbon: 85 },
   { id: "red", label: "Праздничная", price: "390 ₽", hue: 15, ribbon: 95 },
 ]
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Подарочная упаковка и открытка: образцы нарисованы CSS, текст виден как открытка.
@@ -169,12 +208,25 @@ export function Commerce035({
   hideHint = "В коробку положим накладную без сумм, чек придёт вам на почту.",
   price = "290 ₽",
   cta = "Добавить упаковку",
+  wrapsLegend = "Упаковка",
+  limitText = "До {limit} символов — столько помещается на открытке. Текст перепишут от руки чёрными чернилами.",
+  previewTitle = "Так это будет выглядеть",
+  cardHead = "Открытка в коробке",
+  priceNote = "упаковка и открытка, добавится к заказу",
   accent,
+  background = "",
   className,
   style,
 }: Commerce035Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-035-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-035-bg": background,
+          "--vibeui-commerce-035-radius": "1.25rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -194,7 +246,7 @@ export function Commerce035({
           <p data-part="lead">{lead}</p>
 
           <fieldset>
-            <legend>Упаковка</legend>
+            <legend>{wrapsLegend}</legend>
             <div data-part="wraps">
               {wraps.map((wrap, index) => (
                 <label data-part="wrap" key={wrap.id}>
@@ -236,14 +288,13 @@ export function Commerce035({
                 defaultValue={cardValue}
               />
               <p data-part="limit">
-                До {limit} символов — столько помещается на открытке. Текст
-                перепишут от руки чёрными чернилами.
+                {limitText.replace("{limit}", String(limit))}
               </p>
             </div>
             <div>
-              <h3>Так это будет выглядеть</h3>
+              <h3>{previewTitle}</h3>
               <div data-part="card">
-                <p data-part="cardhead">Открытка в коробке</p>
+                <p data-part="cardhead">{cardHead}</p>
                 {cardValue}
               </div>
             </div>
@@ -260,7 +311,7 @@ export function Commerce035({
           <div data-part="foot">
             <p data-part="total">
               {price}
-              <span>упаковка и открытка, добавится к заказу</span>
+              <span>{priceNote}</span>
             </p>
             <button type="button" data-part="cta">
               {cta}

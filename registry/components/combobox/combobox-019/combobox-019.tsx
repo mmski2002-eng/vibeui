@@ -20,6 +20,20 @@ export type Combobox019Props = Omit<
   requestLabel?: string
   onSelect?: (value: string) => void
   onRequest?: (value: string) => void
+  /** Озвучка закрытого варианта; {item} — название, {reason} — причина. */
+  lockedText?: string
+  /** Озвучка кнопки запроса; {action} — requestLabel, {item} — название. */
+  requestAriaText?: string
+  /** Подпись на месте кнопки после отправленного запроса. */
+  sentText?: string
+  /** Подпись строки итога перед выбранным значением. */
+  summaryLabel?: string
+  /** Что стоит в итоге, пока ничего не выбрано. */
+  emptyValueText?: string
+  /** Хвост строки итога; {count} — число закрытых вариантов. */
+  lockedCountText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -30,15 +44,15 @@ export type Combobox019Props = Omit<
 // заблокирован нативным disabled.
 const STYLES = `
 :where([data-vibeui-block="combobox-019"]){
---vibeui-combobox-019-bg:oklch(1 0 0);
---vibeui-combobox-019-fg:oklch(0.22 0.014 320);
---vibeui-combobox-019-muted:oklch(0.55 0.014 320);
---vibeui-combobox-019-faint:oklch(0.72 0.01 320);
---vibeui-combobox-019-border:oklch(0.9 0.008 320);
---vibeui-combobox-019-field:oklch(0.985 0.004 320);
---vibeui-combobox-019-soft:oklch(0.96 0.008 320);
---vibeui-combobox-019-accent:oklch(0.5 0.13 320);
---vibeui-combobox-019-accentsoft:oklch(0.94 0.04 320);
+--vibeui-combobox-019-bg:transparent;
+--vibeui-combobox-019-fg:light-dark(oklch(0.22 0.014 320),oklch(0.94 0.006 320));
+--vibeui-combobox-019-muted:light-dark(oklch(0.55 0.014 320),oklch(0.7 0.012 320));
+--vibeui-combobox-019-faint:light-dark(oklch(0.72 0.01 320),oklch(0.52 0.012 320));
+--vibeui-combobox-019-border:light-dark(oklch(0.9 0.008 320),oklch(0.35 0.012 320));
+--vibeui-combobox-019-field:light-dark(oklch(0.985 0.004 320),oklch(0.27 0.012 320));
+--vibeui-combobox-019-soft:light-dark(oklch(0.96 0.008 320),oklch(0.31 0.014 320));
+--vibeui-combobox-019-accent:light-dark(oklch(0.5 0.13 320),oklch(0.74 0.13 320));
+--vibeui-combobox-019-accentsoft:light-dark(oklch(0.94 0.04 320),oklch(0.36 0.06 320));
 --vibeui-combobox-019-radius:0.625rem;
 --vibeui-combobox-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -138,6 +152,28 @@ const SPACES: Combobox019Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор, где закрытые варианты видны, объяснены и допускают запрос доступа.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -149,6 +185,13 @@ export function Combobox019({
   requestLabel = "Запросить",
   onSelect,
   onRequest,
+  lockedText = "{item}: нет доступа, {reason}",
+  requestAriaText = "{action} доступ к «{item}»",
+  sentText = "Запрошено",
+  summaryLabel = "Выбрано",
+  emptyValueText = "ничего",
+  lockedCountText = "закрыто вариантов: {count}",
+  background = "",
   accent,
   className,
   style,
@@ -171,6 +214,12 @@ export function Combobox019({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-019-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -215,7 +264,9 @@ export function Combobox019({
                   disabled={option.locked}
                   aria-label={
                     option.locked
-                      ? `${option.name}: нет доступа, ${option.reason ?? ""}`
+                      ? lockedText
+                          .replace("{item}", option.name)
+                          .replace("{reason}", option.reason ?? "")
                       : option.name
                   }
                   onClick={() => {
@@ -237,12 +288,14 @@ export function Combobox019({
                 </button>
                 {option.locked ? (
                   asked.includes(option.name) ? (
-                    <span data-part="sent">Запрошено</span>
+                    <span data-part="sent">{sentText}</span>
                   ) : (
                     <button
                       type="button"
                       data-part="ask"
-                      aria-label={`${requestLabel} доступ к «${option.name}»`}
+                      aria-label={requestAriaText
+                        .replace("{action}", requestLabel)
+                        .replace("{item}", option.name)}
                       onClick={() => {
                         setAsked([...asked, option.name])
                         onRequest?.(option.name)
@@ -257,8 +310,10 @@ export function Combobox019({
           ))}
         </ul>
         <p data-part="foot" aria-live="polite">
-          Выбрано: <b>{value || "ничего"}</b>
-          {locked > 0 ? ` · закрыто вариантов: ${locked}` : ""}
+          {summaryLabel}: <b>{value || emptyValueText}</b>
+          {locked > 0
+            ? ` · ${lockedCountText.replace("{count}", String(locked))}`
+            : ""}
         </p>
       </div>
     </>

@@ -18,6 +18,20 @@ export type Dashboard039Props = {
   orderLabel?: string
   lowLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Заголовки колонок: pick, item, stock, gauge, state. */
+  columnsText?: Record<string, string>
+  /** Шаблон подписи чекбокса: {name}. */
+  pickText?: string
+  /** Шаблон подсказки засечки: {value}. */
+  reorderTitle?: string
+  /** Шаблон строки под полосой: {reorder} и {max}. */
+  underText?: string
+  /** Состояние позиции, когда запаса хватает. */
+  okLabel?: string
+  /** Шаблон текста нижней панели: {count}. */
+  barText?: string
   className?: string
   style?: CSSProperties
 }
@@ -33,14 +47,20 @@ export type Dashboard039Props = {
 // нижней панели, чтобы не терялась при длинном списке.
 const STYLES = `
 :where([data-vibeui-block="dashboard-039"]){
---vibeui-dashboard-039-bg:oklch(0.985 0.004 95);
---vibeui-dashboard-039-card:oklch(1 0 0);
---vibeui-dashboard-039-fg:oklch(0.23 0.012 95);
---vibeui-dashboard-039-muted:oklch(0.55 0.012 95);
---vibeui-dashboard-039-border:oklch(0.9 0.008 95);
---vibeui-dashboard-039-accent:oklch(0.52 0.13 155);
---vibeui-dashboard-039-low:oklch(0.6 0.18 35);
---vibeui-dashboard-039-soft:oklch(0.96 0.03 155);
+--vibeui-dashboard-039-bg:transparent;
+/* Таблица, жёлоб и подсветка нехватки: подложка блока прозрачна, и рисовать их ею нечем. */
+--vibeui-dashboard-039-card:light-dark(oklch(1 0 0),oklch(0.26 0.01 95));
+--vibeui-dashboard-039-track:light-dark(oklch(0.96 0.005 95),oklch(0.21 0.01 95));
+--vibeui-dashboard-039-fg:light-dark(oklch(0.23 0.012 95),oklch(0.94 0.005 95));
+--vibeui-dashboard-039-muted:light-dark(oklch(0.55 0.012 95),oklch(0.71 0.01 95));
+--vibeui-dashboard-039-border:light-dark(oklch(0.9 0.008 95),oklch(0.36 0.01 95));
+--vibeui-dashboard-039-accent:light-dark(oklch(0.52 0.13 155),oklch(0.74 0.13 155));
+--vibeui-dashboard-039-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 155));
+--vibeui-dashboard-039-low:light-dark(oklch(0.6 0.18 35),oklch(0.75 0.15 35));
+--vibeui-dashboard-039-lowline:light-dark(oklch(0.84 0.07 35),oklch(0.46 0.09 35));
+--vibeui-dashboard-039-lowsoft:light-dark(oklch(0.97 0.02 35),oklch(0.31 0.04 35));
+--vibeui-dashboard-039-lowrow:light-dark(oklch(0.985 0.01 35),oklch(0.29 0.03 35));
+--vibeui-dashboard-039-soft:light-dark(oklch(0.96 0.03 155),oklch(0.31 0.05 155));
 --vibeui-dashboard-039-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -59,8 +79,8 @@ border:1px solid var(--vibeui-dashboard-039-border);border-radius:1rem;padding:1
 [data-vibeui-block="dashboard-039"] [data-part="alarm"]{
 margin-left:auto;font-size:0.75rem;font-weight:700;padding:0.25rem 0.625rem;border-radius:9999px;
 color:var(--vibeui-dashboard-039-low);
-border:1px solid color-mix(in oklab,var(--vibeui-dashboard-039-low) 40%,white);
-background:color-mix(in oklab,var(--vibeui-dashboard-039-low) 10%,white);
+border:1px solid var(--vibeui-dashboard-039-lowline);
+background:var(--vibeui-dashboard-039-lowsoft);
 }
 [data-vibeui-block="dashboard-039"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="dashboard-039"] table{
@@ -84,7 +104,7 @@ border-bottom:1px solid var(--vibeui-dashboard-039-border);
 [data-vibeui-block="dashboard-039"] tbody tr[data-low="yes"] td:first-child{
 box-shadow:inset 0.1875rem 0 0 var(--vibeui-dashboard-039-low);
 }
-[data-vibeui-block="dashboard-039"] tbody tr[data-low="yes"]{background:color-mix(in oklab,var(--vibeui-dashboard-039-low) 5%,white)}
+[data-vibeui-block="dashboard-039"] tbody tr[data-low="yes"]{background:var(--vibeui-dashboard-039-lowrow)}
 [data-vibeui-block="dashboard-039"] input[type="checkbox"]{
 width:0.9375rem;height:0.9375rem;margin:0;accent-color:var(--vibeui-dashboard-039-accent);
 }
@@ -94,7 +114,7 @@ display:block;margin-top:0.125rem;font-size:0.6875rem;color:var(--vibeui-dashboa
 }
 [data-vibeui-block="dashboard-039"] [data-part="gauge"]{
 display:block;position:relative;width:100%;min-width:6rem;height:0.5rem;border-radius:9999px;
-background:var(--vibeui-dashboard-039-bg);
+background:var(--vibeui-dashboard-039-track);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-039-border);overflow:hidden;
 }
 [data-vibeui-block="dashboard-039"] [data-part="fill"]{
@@ -131,7 +151,7 @@ border:1px solid var(--vibeui-dashboard-039-border);
 [data-vibeui-block="dashboard-039"] [data-part="order"]{
 appearance:none;border:0;cursor:pointer;font:inherit;margin-left:auto;
 font-size:0.8125rem;font-weight:700;padding:0.5rem 0.9375rem;border-radius:0.625rem;
-background:var(--vibeui-dashboard-039-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-039-accent);color:var(--vibeui-dashboard-039-on-accent);
 }
 [data-vibeui-block="dashboard-039"] :is(button,input):focus-visible{
 outline:2px solid var(--vibeui-dashboard-039-accent);outline-offset:2px;
@@ -190,6 +210,36 @@ const DEFAULT_ITEMS: Dashboard039Item[] = [
   },
 ]
 
+const DEFAULT_COLUMNS: Record<string, string> = {
+  pick: "Отбор",
+  item: "Позиция",
+  stock: "Остаток",
+  gauge: "Запас и точка заказа",
+  state: "Состояние",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Экран инвентаря: остатки с отметкой точки заказа внутри полосы, отбор
  * позиций чекбоксами и липкая панель заказа. Один файл, ноль зависимостей,
@@ -202,11 +252,25 @@ export function Dashboard039({
   orderLabel = "Заказать у поставщика",
   lowLabel = "ниже точки заказа",
   accent,
+  background = "",
+  columnsText = DEFAULT_COLUMNS,
+  pickText = "Добавить {name} в заказ",
+  reorderTitle = "Точка заказа: {value}",
+  underText = "точка заказа {reorder} · максимум {max}",
+  okLabel = "запас в норме",
+  barText = "Отмечено позиций: {count}. Заказ уйдёт поставщику по умолчанию из карточки товара.",
   className,
   style,
 }: Dashboard039Props) {
+  const column = (key: string) => columnsText[key] ?? DEFAULT_COLUMNS[key]
   const palette = {
     ...(accent ? { "--vibeui-dashboard-039-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-039-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -238,14 +302,14 @@ export function Dashboard039({
               <thead>
                 <tr>
                   <th scope="col">
-                    <span hidden>Отбор</span>
+                    <span hidden>{column("pick")}</span>
                   </th>
-                  <th scope="col">Позиция</th>
+                  <th scope="col">{column("item")}</th>
                   <th scope="col" data-num="">
-                    Остаток
+                    {column("stock")}
                   </th>
-                  <th scope="col">Запас и точка заказа</th>
-                  <th scope="col">Состояние</th>
+                  <th scope="col">{column("gauge")}</th>
+                  <th scope="col">{column("state")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -260,7 +324,7 @@ export function Dashboard039({
                         <input
                           type="checkbox"
                           defaultChecked={isLow}
-                          aria-label={`Добавить ${item.name} в заказ`}
+                          aria-label={pickText.replace("{name}", item.name)}
                         />
                       </td>
                       <td>
@@ -281,17 +345,22 @@ export function Dashboard039({
                           <span
                             data-part="mark"
                             style={{ left: `${mark}%` }}
-                            title={`Точка заказа: ${item.reorder}`}
+                            title={reorderTitle.replace(
+                              "{value}",
+                              String(item.reorder),
+                            )}
                           />
                         </span>
                         <span data-part="under">
-                          точка заказа {item.reorder} · максимум {item.max}
+                          {underText
+                            .replace("{reorder}", String(item.reorder))
+                            .replace("{max}", String(item.max))}
                           {item.incoming ? ` · ${item.incoming}` : ""}
                         </span>
                       </td>
                       <td>
                         <span data-part="state">
-                          {isLow ? `! ${lowLabel}` : "запас в норме"}
+                          {isLow ? `! ${lowLabel}` : okLabel}
                         </span>
                       </td>
                     </tr>
@@ -302,10 +371,7 @@ export function Dashboard039({
           </div>
 
           <div data-part="bar">
-            <p>
-              Отмечено позиций: {low.length}. Заказ уйдёт поставщику по
-              умолчанию из карточки товара.
-            </p>
+            <p>{barText.replace("{count}", String(low.length))}</p>
             <button type="button" data-part="order">
               {orderLabel}
             </button>

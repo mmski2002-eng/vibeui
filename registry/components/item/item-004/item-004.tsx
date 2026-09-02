@@ -7,6 +7,8 @@ export type Item004Props = Omit<
   title?: string
   meta?: string
   hint?: string
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -15,14 +17,17 @@ export type Item004Props = Omit<
 // поэтому цель не нужно эмулировать: её знает браузер, и она попадает в список
 // ссылок страницы с полным текстом. Стрелка сдвигается на наведении и фокусе
 // одинаково — состояние клавиатуры не должно выглядеть беднее мышиного.
+//
+// Тема берётся из color-scheme окружения через light-dark(): строка темнеет
+// там, где тёмный контекст, и не выкладывает под себя белую плашку.
 const STYLES = `
 :where([data-vibeui-block="item-004"]){
---vibeui-item-004-bg:oklch(1 0 0);
---vibeui-item-004-fg:oklch(0.23 0.014 265);
---vibeui-item-004-muted:oklch(0.56 0.014 265);
---vibeui-item-004-border:oklch(0.9 0.006 265);
---vibeui-item-004-hover:oklch(0.975 0.003 265);
---vibeui-item-004-accent:oklch(0.55 0.19 262);
+--vibeui-item-004-bg:transparent;
+--vibeui-item-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-item-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-item-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-item-004-hover:color-mix(in oklab,var(--vibeui-item-004-fg) 6%,var(--vibeui-item-004-bg));
+--vibeui-item-004-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.16 262));
 --vibeui-item-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="item-004"]{
@@ -57,6 +62,28 @@ transition:transform .15s ease;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Строка-ссылка: корень блока сам является тегом a.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -65,6 +92,7 @@ export function Item004({
   meta = "Почта, телеграм и еженедельная сводка",
   hint = "12",
   href = "#",
+  background = "",
   accent,
   className,
   style,
@@ -72,6 +100,12 @@ export function Item004({
 }: Item004Props) {
   const palette = {
     ...(accent ? { "--vibeui-item-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-item-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

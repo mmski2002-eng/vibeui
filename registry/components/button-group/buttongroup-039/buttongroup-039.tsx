@@ -12,6 +12,12 @@ export type Buttongroup039Props = Omit<
   delay?: number
   warning?: string
   label?: string
+  /** Объявление отсчёта; {seconds} подставляется числом оставшихся секунд. */
+  waitingText?: string
+  readyText?: string
+  /** Пусто — заливки нет, карточка ложится на фон страницы. */
+  background?: string
+  danger?: string
   accent?: string
 }
 
@@ -25,12 +31,17 @@ export type Buttongroup039Props = Omit<
 // действительно не нажимается и не ловит Enter.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-039"]){
---vibeui-buttongroup-039-surface:oklch(1 0 0);
---vibeui-buttongroup-039-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-039-muted:oklch(0.56 0.014 265);
---vibeui-buttongroup-039-border:oklch(0.88 0.008 265);
---vibeui-buttongroup-039-danger:oklch(0.53 0.19 27);
---vibeui-buttongroup-039-accent:oklch(0.5 0.15 265);
+--vibeui-buttongroup-039-surface:transparent;
+--vibeui-buttongroup-039-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-039-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-039-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.012 265));
+--vibeui-buttongroup-039-hover:light-dark(oklch(0.97 0.004 265),oklch(0.33 0.012 265));
+--vibeui-buttongroup-039-danger:light-dark(oklch(0.53 0.19 27),oklch(0.62 0.18 27));
+--vibeui-buttongroup-039-on-danger:light-dark(oklch(0.99 0.006 27),oklch(0.98 0.008 27));
+--vibeui-buttongroup-039-locked:light-dark(oklch(0.97 0.01 27),oklch(0.3 0.03 27));
+--vibeui-buttongroup-039-locked-fg:light-dark(oklch(0.62 0.08 27),oklch(0.63 0.06 27));
+--vibeui-buttongroup-039-rest:light-dark(oklch(0.86 0.02 27),oklch(0.45 0.04 27));
+--vibeui-buttongroup-039-accent:light-dark(oklch(0.5 0.15 265),oklch(0.72 0.15 265));
 --vibeui-buttongroup-039-radius:0.625rem;
 --vibeui-buttongroup-039-progress:0;
 --vibeui-buttongroup-039-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -59,18 +70,18 @@ color:var(--vibeui-buttongroup-039-fg);
 font-size:0.8125rem;font-weight:650;line-height:1;white-space:nowrap;
 transition:background-color .16s ease,color .16s ease,border-color .16s ease;
 }
-[data-vibeui-block="buttongroup-039"] button:hover:not(:disabled){background:oklch(0.97 0.004 265)}
+[data-vibeui-block="buttongroup-039"] button:hover:not(:disabled){background:var(--vibeui-buttongroup-039-hover)}
 [data-vibeui-block="buttongroup-039"] [data-part="danger"]{
 border-color:var(--vibeui-buttongroup-039-danger);
 background:var(--vibeui-buttongroup-039-danger);
-color:oklch(0.99 0.006 27);
+color:var(--vibeui-buttongroup-039-on-danger);
 }
-[data-vibeui-block="buttongroup-039"] [data-part="danger"]:hover:not(:disabled){background:oklch(0.48 0.19 27)}
+[data-vibeui-block="buttongroup-039"] [data-part="danger"]:hover:not(:disabled){background:color-mix(in oklab,var(--vibeui-buttongroup-039-danger) 88%,black)}
 [data-vibeui-block="buttongroup-039"] [data-part="danger"]:disabled{
 cursor:not-allowed;
 border-color:var(--vibeui-buttongroup-039-border);
-background:oklch(0.97 0.01 27);
-color:oklch(0.62 0.08 27);
+background:var(--vibeui-buttongroup-039-locked);
+color:var(--vibeui-buttongroup-039-locked-fg);
 }
 [data-vibeui-block="buttongroup-039"] button:focus-visible{
 outline:2px solid var(--vibeui-buttongroup-039-accent);outline-offset:2px;
@@ -78,7 +89,7 @@ outline:2px solid var(--vibeui-buttongroup-039-accent);outline-offset:2px;
 /* Кольцо обратного отсчёта: conic-gradient плюс маска, без SVG. */
 [data-vibeui-block="buttongroup-039"] [data-part="ring"]{
 flex:none;width:1.0625rem;height:1.0625rem;border-radius:9999px;
-background:conic-gradient(currentColor calc(var(--vibeui-buttongroup-039-progress) * 1turn),oklch(0.86 0.02 27) 0);
+background:conic-gradient(currentColor calc(var(--vibeui-buttongroup-039-progress) * 1turn),var(--vibeui-buttongroup-039-rest) 0);
 mask:radial-gradient(circle,transparent 54%,#000 56%);
 transition:background .3s linear;
 }
@@ -92,6 +103,28 @@ position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Опасное действие, которое становится доступным только через несколько секунд.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -101,6 +134,10 @@ export function Buttongroup039({
   delay = 5,
   warning = "Проект и все его сборки будут удалены без возможности вернуть.",
   label = "Подтверждение удаления",
+  waitingText = "Удаление станет доступно через {seconds} с",
+  readyText = "Удаление доступно",
+  background = "",
+  danger,
   accent,
   className,
   style,
@@ -127,6 +164,13 @@ export function Buttongroup039({
   const palette = {
     "--vibeui-buttongroup-039-progress": delay > 0 ? (delay - left) / delay : 1,
     ...(accent ? { "--vibeui-buttongroup-039-accent": accent } : null),
+    ...(danger ? { "--vibeui-buttongroup-039-danger": danger } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-039-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -167,8 +211,8 @@ export function Buttongroup039({
         </div>
         <p data-part="status" role="status">
           {left > 0
-            ? `Удаление станет доступно через ${left} с`
-            : "Удаление доступно"}
+            ? waitingText.replace("{seconds}", String(left))
+            : readyText}
         </p>
       </div>
     </>

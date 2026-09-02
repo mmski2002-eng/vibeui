@@ -16,6 +16,20 @@ export type Gantt005Props = Omit<
   heading?: string
   weeks?: string[]
   tasks?: Gantt005Task[]
+  /** Строка под заголовком: {people} — людей, {tasks} — задач. */
+  hintText?: string
+  /** Подпись области прокрутки: {heading} — заголовок плана. */
+  scrollText?: string
+  /** Сводка группы: {count} — задач, {load} — недель работы. */
+  loadText?: string
+  /** Срок внутри полосы: {from} и {to} — подписи первой и последней недели. */
+  rangeText?: string
+  /** Подпись раскрывающейся таблицы точных сроков. */
+  tableText?: string
+  /** Заголовки таблицы по ключам owner, task, start, end. */
+  columnText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,17 +38,21 @@ export type Gantt005Props = Omit<
 // сгруппированы, а заголовок группы несёт сводку: сколько задач и сколько
 // недель работы. Пересечения внутри одной группы подписаны словом: две
 // полосы на соседних строках одного человека — это два дела одновременно.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="gantt-005"]){
---vibeui-gantt-005-bg:oklch(1 0 0);
---vibeui-gantt-005-fg:oklch(0.23 0.014 265);
---vibeui-gantt-005-muted:oklch(0.6 0.014 265);
---vibeui-gantt-005-border:oklch(0.91 0.006 265);
---vibeui-gantt-005-line:oklch(0.955 0.004 265);
---vibeui-gantt-005-group:oklch(0.97 0.004 265);
---vibeui-gantt-005-accent:oklch(0.54 0.15 285);
---vibeui-gantt-005-risk:oklch(0.62 0.16 45);
---vibeui-gantt-005-done:oklch(0.6 0.12 165);
+--vibeui-gantt-005-bg:transparent;
+--vibeui-gantt-005-sticky:light-dark(oklch(0.995 0.001 265),oklch(0.19 0.008 265));
+--vibeui-gantt-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-gantt-005-muted:light-dark(oklch(0.6 0.014 265),oklch(0.7 0.012 265));
+--vibeui-gantt-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-gantt-005-line:light-dark(oklch(0.955 0.004 265),oklch(0.3 0.01 265));
+--vibeui-gantt-005-group:light-dark(oklch(0.97 0.004 265),oklch(0.25 0.01 265));
+--vibeui-gantt-005-accent:light-dark(oklch(0.54 0.15 285),oklch(0.74 0.14 285));
+--vibeui-gantt-005-risk:light-dark(oklch(0.62 0.16 45),oklch(0.76 0.15 55));
+--vibeui-gantt-005-done:light-dark(oklch(0.6 0.12 165),oklch(0.76 0.12 165));
 --vibeui-gantt-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="gantt-005"]{
@@ -65,7 +83,7 @@ display:grid;min-width:34rem;
 grid-template-columns:10.5rem repeat(var(--vibeui-gantt-005-weeks,10),minmax(2.5rem,1fr));
 }
 [data-vibeui-block="gantt-005"] [data-part="corner"]{
-position:sticky;left:0;z-index:3;background:var(--vibeui-gantt-005-bg);
+position:sticky;left:0;z-index:3;background:var(--vibeui-gantt-005-sticky);
 border-right:1px solid var(--vibeui-gantt-005-border);
 border-bottom:1px solid var(--vibeui-gantt-005-border);
 }
@@ -87,7 +105,7 @@ font-size:0.75rem;font-weight:700;
 [data-vibeui-block="gantt-005"] [data-part="badge"]{
 flex:none;display:grid;place-items:center;
 width:1.375rem;height:1.375rem;border-radius:9999px;
-background:color-mix(in oklab,var(--vibeui-gantt-005-accent) 20%,var(--vibeui-gantt-005-bg));
+background:color-mix(in oklab,var(--vibeui-gantt-005-accent) 22%,transparent);
 color:var(--vibeui-gantt-005-accent);
 font-size:0.5625rem;font-weight:700;letter-spacing:0.02em;
 }
@@ -102,7 +120,7 @@ color:var(--vibeui-gantt-005-risk);font-weight:700;
 position:sticky;left:0;z-index:1;
 display:flex;align-items:center;min-height:2rem;
 padding:0.25rem 0.625rem 0.25rem 1.5rem;
-background:var(--vibeui-gantt-005-bg);
+background:var(--vibeui-gantt-005-sticky);
 border-right:1px solid var(--vibeui-gantt-005-border);
 border-top:1px solid var(--vibeui-gantt-005-line);
 font-size:0.75rem;
@@ -116,17 +134,17 @@ align-self:center;z-index:1;margin:0 0.1875rem;
 display:flex;align-items:center;height:1.125rem;padding:0 0.4375rem;
 border-radius:9999px;
 border:1px solid var(--vibeui-gantt-005-accent);
-background:color-mix(in oklab,var(--vibeui-gantt-005-accent) 18%,var(--vibeui-gantt-005-bg));
+background:color-mix(in oklab,var(--vibeui-gantt-005-accent) 18%,transparent);
 font-size:0.5625rem;line-height:1;white-space:nowrap;overflow:hidden;
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="gantt-005"] [data-tone="risk"]{
 border-color:var(--vibeui-gantt-005-risk);border-style:dashed;
-background:color-mix(in oklab,var(--vibeui-gantt-005-risk) 16%,var(--vibeui-gantt-005-bg));
+background:color-mix(in oklab,var(--vibeui-gantt-005-risk) 16%,transparent);
 }
 [data-vibeui-block="gantt-005"] [data-tone="done"]{
 border-color:var(--vibeui-gantt-005-done);
-background:color-mix(in oklab,var(--vibeui-gantt-005-done) 18%,var(--vibeui-gantt-005-bg));
+background:color-mix(in oklab,var(--vibeui-gantt-005-done) 18%,transparent);
 }
 [data-vibeui-block="gantt-005"] [data-part="table"]{margin:0.75rem 0 0}
 [data-vibeui-block="gantt-005"] summary{
@@ -173,6 +191,35 @@ const DEFAULT_TASKS: Gantt005Task[] = [
   { title: "Тесты сборки", owner: "Пётр Гай", start: 4, weeks: 4 },
 ]
 
+const DEFAULT_COLUMNS: Record<string, string> = {
+  owner: "Исполнитель",
+  task: "Задача",
+  start: "Начало",
+  end: "Конец",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function initials(name: string) {
   return name
     .split(" ")
@@ -189,6 +236,13 @@ export function Gantt005({
   heading = "План по исполнителям",
   weeks = DEFAULT_WEEKS,
   tasks = DEFAULT_TASKS,
+  hintText = "{people} человека, {tasks} задач",
+  scrollText = "{heading}: диаграмма, прокручивается вбок",
+  loadText = "{count} задач · {load} недель",
+  rangeText = "{from}–{to}",
+  tableText = "Те же сроки таблицей",
+  columnText = DEFAULT_COLUMNS,
+  background = "",
   accent,
   className,
   style,
@@ -216,6 +270,13 @@ export function Gantt005({
   const palette = {
     "--vibeui-gantt-005-weeks": weeks.length,
     ...(accent ? { "--vibeui-gantt-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-gantt-005-bg": background,
+          "--vibeui-gantt-005-sticky": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -234,7 +295,9 @@ export function Gantt005({
         <header data-part="head">
           <h3 data-part="heading">{heading}</h3>
           <p data-part="hint">
-            {owners.length} человека, {tasks.length} задач
+            {hintText
+              .replace("{people}", String(owners.length))
+              .replace("{tasks}", String(tasks.length))}
           </p>
         </header>
 
@@ -242,7 +305,7 @@ export function Gantt005({
           data-part="scroll"
           tabIndex={0}
           role="group"
-          aria-label={`${heading}: диаграмма, прокручивается вбок`}
+          aria-label={scrollText.replace("{heading}", heading)}
         >
           <div data-part="grid">
             <span data-part="corner" />
@@ -264,7 +327,9 @@ export function Gantt005({
                   </span>
                   {row.owner}
                   <span data-part="load" data-heavy={String(row.load > 6)}>
-                    {row.count} задач · {row.load} недель
+                    {loadText
+                      .replace("{count}", String(row.count))
+                      .replace("{load}", String(row.load))}
                   </span>
                 </h4>
               ) : (
@@ -308,8 +373,12 @@ export function Gantt005({
                     } as CSSProperties
                   }
                 >
-                  {weeks[row.task.start - 1]}–
-                  {weeks[row.task.start + row.task.weeks - 2]}
+                  {rangeText
+                    .replace("{from}", weeks[row.task.start - 1] ?? "")
+                    .replace(
+                      "{to}",
+                      weeks[row.task.start + row.task.weeks - 2] ?? "",
+                    )}
                 </span>
               ) : null,
             )}
@@ -317,14 +386,14 @@ export function Gantt005({
         </div>
 
         <details data-part="table">
-          <summary>Те же сроки таблицей</summary>
+          <summary>{tableText}</summary>
           <table>
             <thead>
               <tr>
-                <th scope="col">Исполнитель</th>
-                <th scope="col">Задача</th>
-                <th scope="col">Начало</th>
-                <th scope="col">Конец</th>
+                <th scope="col">{columnText.owner ?? DEFAULT_COLUMNS.owner}</th>
+                <th scope="col">{columnText.task ?? DEFAULT_COLUMNS.task}</th>
+                <th scope="col">{columnText.start ?? DEFAULT_COLUMNS.start}</th>
+                <th scope="col">{columnText.end ?? DEFAULT_COLUMNS.end}</th>
               </tr>
             </thead>
             <tbody>

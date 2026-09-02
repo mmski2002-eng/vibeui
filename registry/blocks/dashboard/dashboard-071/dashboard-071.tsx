@@ -18,6 +18,18 @@ export type Dashboard071Props = {
   envs?: string[]
   activeEnv?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подпись включённого флага. */
+  onLabel?: string
+  /** Подпись выключенного флага. */
+  offLabel?: string
+  /** Доля выката: {rollout}. */
+  pctText?: string
+  /** Расшифровка полосы: {title} и {rollout}. */
+  rolloutAriaText?: string
+  /** Пометка забытого флага. */
+  staleText?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,15 +46,21 @@ export type Dashboard071Props = {
 // живёт по-разному, и смешивать их в одном списке нельзя.
 const STYLES = `
 :where([data-vibeui-block="dashboard-071"]){
---vibeui-dashboard-071-bg:oklch(0.985 0.003 95);
---vibeui-dashboard-071-card:oklch(1 0 0);
---vibeui-dashboard-071-fg:oklch(0.21 0.014 95);
---vibeui-dashboard-071-muted:oklch(0.54 0.014 95);
---vibeui-dashboard-071-border:oklch(0.91 0.006 95);
---vibeui-dashboard-071-accent:oklch(0.52 0.14 145);
---vibeui-dashboard-071-soft:oklch(0.965 0.02 145);
---vibeui-dashboard-071-stale:oklch(0.68 0.15 72);
---vibeui-dashboard-071-off:oklch(0.6 0.01 95);
+--vibeui-dashboard-071-bg:transparent;
+/* Карточки флагов, чип ключа и жёлоб полосы: подложка блока прозрачна. */
+--vibeui-dashboard-071-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 95));
+--vibeui-dashboard-071-inset:light-dark(oklch(0.985 0.003 95),oklch(0.22 0.012 95));
+--vibeui-dashboard-071-fg:light-dark(oklch(0.21 0.014 95),oklch(0.94 0.005 95));
+--vibeui-dashboard-071-muted:light-dark(oklch(0.54 0.014 95),oklch(0.72 0.012 95));
+--vibeui-dashboard-071-border:light-dark(oklch(0.91 0.006 95),oklch(0.36 0.012 95));
+--vibeui-dashboard-071-accent:light-dark(oklch(0.52 0.14 145),oklch(0.72 0.13 145));
+--vibeui-dashboard-071-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 145));
+--vibeui-dashboard-071-knob:light-dark(oklch(1 0 0),oklch(0.97 0.004 95));
+--vibeui-dashboard-071-soft:light-dark(oklch(0.965 0.02 145),oklch(0.3 0.035 145));
+--vibeui-dashboard-071-stale:light-dark(oklch(0.68 0.15 72),oklch(0.8 0.14 72));
+--vibeui-dashboard-071-stale-line:light-dark(oklch(0.83 0.09 72),oklch(0.53 0.11 72));
+--vibeui-dashboard-071-stale-ink:light-dark(oklch(0.5 0.11 72),oklch(0.85 0.12 72));
+--vibeui-dashboard-071-off:light-dark(oklch(0.6 0.01 95),oklch(0.52 0.01 95));
 --vibeui-dashboard-071-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 --vibeui-dashboard-071-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -66,7 +84,7 @@ padding:0.3125rem 0.6875rem;border-radius:0.5rem;background:var(--vibeui-dashboa
 color:inherit;border:1px solid var(--vibeui-dashboard-071-border);
 }
 [data-vibeui-block="dashboard-071"] [data-part="env"][aria-pressed="true"]{
-background:var(--vibeui-dashboard-071-accent);color:oklch(1 0 0);border-color:transparent;
+background:var(--vibeui-dashboard-071-accent);color:var(--vibeui-dashboard-071-on-accent);border-color:transparent;
 }
 [data-vibeui-block="dashboard-071"] [data-part="list"]{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.375rem}
 [data-vibeui-block="dashboard-071"] [data-part="flag"]{
@@ -75,14 +93,14 @@ padding:0.6875rem 0.8125rem;border-radius:0.8125rem;
 background:var(--vibeui-dashboard-071-card);border:1px solid var(--vibeui-dashboard-071-border);
 }
 [data-vibeui-block="dashboard-071"] [data-part="flag"][data-stale="true"]{
-border-color:color-mix(in oklab,var(--vibeui-dashboard-071-stale) 42%,white);
+border-color:var(--vibeui-dashboard-071-stale-line);
 }
 [data-vibeui-block="dashboard-071"] [data-part="name"]{display:flex;flex-wrap:wrap;align-items:baseline;gap:0.25rem 0.5rem;min-width:0}
 [data-vibeui-block="dashboard-071"] [data-part="name"] b{font-size:0.8125rem;font-weight:750}
 [data-vibeui-block="dashboard-071"] [data-part="key"]{
 font-family:var(--vibeui-dashboard-071-mono);font-size:0.6875rem;
 padding:0.0625rem 0.3125rem;border-radius:0.3125rem;
-background:var(--vibeui-dashboard-071-bg);color:var(--vibeui-dashboard-071-muted);
+background:var(--vibeui-dashboard-071-inset);color:var(--vibeui-dashboard-071-muted);
 border:1px solid var(--vibeui-dashboard-071-border);overflow-wrap:anywhere;
 }
 [data-vibeui-block="dashboard-071"] [data-part="switch"]{
@@ -95,7 +113,7 @@ background:var(--vibeui-dashboard-071-border);transition:background 0.15s ease;
 }
 [data-vibeui-block="dashboard-071"] [data-part="switch"] input::after{
 content:"";position:absolute;top:0.1875rem;left:0.1875rem;width:0.8125rem;height:0.8125rem;
-border-radius:50%;background:oklch(1 0 0);transition:transform 0.15s ease;
+border-radius:50%;background:var(--vibeui-dashboard-071-knob);transition:transform 0.15s ease;
 }
 [data-vibeui-block="dashboard-071"] [data-part="switch"] input:checked{background:var(--vibeui-dashboard-071-accent)}
 [data-vibeui-block="dashboard-071"] [data-part="switch"] input:checked::after{transform:translateX(0.9375rem)}
@@ -105,7 +123,7 @@ font-size:0.6875rem;color:var(--vibeui-dashboard-071-muted);
 }
 [data-vibeui-block="dashboard-071"] [data-part="bar"]{
 flex:0 1 8rem;min-width:5rem;height:0.3125rem;border-radius:9999px;position:relative;overflow:hidden;
-background:var(--vibeui-dashboard-071-bg);
+background:var(--vibeui-dashboard-071-inset);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-071-border);
 }
 [data-vibeui-block="dashboard-071"] [data-part="bar"] span{
@@ -117,7 +135,7 @@ position:absolute;inset:0 auto 0 0;background:var(--vibeui-dashboard-071-accent)
 grid-column:1 / -1;margin:0;display:flex;flex-wrap:wrap;gap:0.25rem 0.75rem;
 font-size:0.6875rem;color:var(--vibeui-dashboard-071-muted);
 }
-[data-vibeui-block="dashboard-071"] [data-part="warn"]{color:color-mix(in oklab,var(--vibeui-dashboard-071-stale) 78%,black);font-weight:700}
+[data-vibeui-block="dashboard-071"] [data-part="warn"]{color:var(--vibeui-dashboard-071-stale-ink);font-weight:700}
 [data-vibeui-block="dashboard-071"] :is(a,button,input,label):focus-visible{
 outline:2px solid var(--vibeui-dashboard-071-accent);outline-offset:2px;
 }
@@ -174,6 +192,28 @@ const DEFAULT_FLAGS: Dashboard071Flag[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Страница фич-флагов: тумблер, доля выката числом и полосой, словесное
  * описание аудитории и отметка забытого флага. Один файл, ноль зависимостей,
  * клиентского JS нет.
@@ -185,11 +225,23 @@ export function Dashboard071({
   envs = ["prod", "stage", "dev"],
   activeEnv = "prod",
   accent,
+  background = "",
+  onLabel = "включён",
+  offLabel = "выключен",
+  pctText = "{rollout} %",
+  rolloutAriaText = "{title}: выкат {rollout} процентов",
+  staleText = "флаг не трогали 8 месяцев — пора выпилить из кода",
   className,
   style,
 }: Dashboard071Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-071-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-071-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -238,7 +290,7 @@ export function Dashboard071({
 
                 <label data-part="switch">
                   <input type="checkbox" defaultChecked={flag.enabled} />
-                  {flag.enabled ? "включён" : "выключен"}
+                  {flag.enabled ? onLabel : offLabel}
                 </label>
 
                 <p data-part="roll">
@@ -248,20 +300,22 @@ export function Dashboard071({
                     aria-valuenow={flag.rollout}
                     aria-valuemin={0}
                     aria-valuemax={100}
-                    aria-label={`${flag.title}: выкат ${flag.rollout} процентов`}
+                    aria-label={rolloutAriaText
+                      .replace("{title}", flag.title)
+                      .replace("{rollout}", String(flag.rollout))}
                   >
                     <span style={{ width: `${flag.rollout}%` }} />
                   </span>
-                  <span data-part="pct">{flag.rollout} %</span>
+                  <span data-part="pct">
+                    {pctText.replace("{rollout}", String(flag.rollout))}
+                  </span>
                   <span>{flag.audience}</span>
                 </p>
 
                 <p data-part="meta">
                   <span>{flag.changed}</span>
                   {flag.stale ? (
-                    <span data-part="warn">
-                      флаг не трогали 8 месяцев — пора выпилить из кода
-                    </span>
+                    <span data-part="warn">{staleText}</span>
                   ) : null}
                 </p>
               </li>

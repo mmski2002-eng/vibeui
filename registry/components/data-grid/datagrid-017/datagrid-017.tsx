@@ -18,6 +18,30 @@ export type Datagrid017Props = Omit<
   rows?: Datagrid017Row[]
   caption?: string
   exportLabel?: string
+  /** Заголовок панели над таблицей. */
+  heading?: string
+  /** Счётчик отмеченных строк. {count} и {total} — числа. */
+  statusTemplate?: string
+  /** Строка после выгрузки. {count} — число строк, {format} — формат. */
+  doneTemplate?: string
+  /** Заголовки колонок по ключу: компонент несёт русские. */
+  columnText?: Record<string, string>
+  /** Подпись флажка строки. {contract} — номер договора. */
+  pickLabel?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Заголовок диалога. {count} — число строк. */
+  dialogTitleTemplate?: string
+  /** Текст диалога. {amount} — сумма, {size} — размер файла. */
+  dialogTextTemplate?: string
+  /** Заголовок группы форматов. */
+  formatsText?: string
+  /** Подпись кнопки отмены. */
+  cancelText?: string
+  /** Подпись кнопки подтверждения. */
+  confirmText?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,16 +50,22 @@ export type Datagrid017Props = Omit<
 // строк, формат и оценочный размер. Диалог нативный: showModal сам
 // ловит фокус, закрывает по Escape и рисует ::backdrop. Ему обязательно
 // нужен margin:auto — иначе он липнет к левому верхнему углу.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-017"]){
---vibeui-datagrid-017-bg:oklch(1 0 0);
---vibeui-datagrid-017-fg:oklch(0.23 0.014 285);
---vibeui-datagrid-017-muted:oklch(0.55 0.014 285);
---vibeui-datagrid-017-border:oklch(0.92 0.006 285);
---vibeui-datagrid-017-head:oklch(0.975 0.003 285);
---vibeui-datagrid-017-accent:oklch(0.5 0.16 255);
---vibeui-datagrid-017-pick:oklch(0.97 0.025 255);
---vibeui-datagrid-017-shadow:oklch(0.23 0.014 285 / 24%);
+--vibeui-datagrid-017-bg:transparent;
+--vibeui-datagrid-017-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-017-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-017-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
+--vibeui-datagrid-017-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
+--vibeui-datagrid-017-panel:light-dark(oklch(1 0 0),oklch(0.24 0.014 285));
+--vibeui-datagrid-017-accent:light-dark(oklch(0.5 0.16 255),oklch(0.72 0.15 255));
+--vibeui-datagrid-017-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.014 285));
+--vibeui-datagrid-017-pick:light-dark(oklch(0.97 0.025 255),oklch(0.3 0.04 255));
+--vibeui-datagrid-017-shadow:light-dark(oklch(0.23 0.014 285 / 24%),oklch(0 0 0 / 60%));
+--vibeui-datagrid-017-veil:light-dark(oklch(0.23 0.014 285 / 45%),oklch(0.1 0.01 285 / 65%));
 --vibeui-datagrid-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-017"]{
@@ -54,7 +84,7 @@ padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-017-borde
 [data-vibeui-block="datagrid-017"] [data-part="go"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:600;
 padding:0.375rem 0.75rem;border-radius:0.5rem;border:1px solid transparent;
-background:var(--vibeui-datagrid-017-accent);color:oklch(1 0 0);
+background:var(--vibeui-datagrid-017-accent);color:var(--vibeui-datagrid-017-on-accent);
 }
 [data-vibeui-block="datagrid-017"] [data-part="go"]:disabled{opacity:.4;cursor:not-allowed}
 [data-vibeui-block="datagrid-017"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-datagrid-017-accent);outline-offset:2px}
@@ -83,10 +113,10 @@ width:0.9375rem;height:0.9375rem;margin:0;accent-color:var(--vibeui-datagrid-017
 [data-vibeui-block="datagrid-017"] dialog{
 margin:auto;width:min(24rem,calc(100vw - 2rem));padding:1rem 1.125rem 1.125rem;
 border:1px solid var(--vibeui-datagrid-017-border);border-radius:0.875rem;
-background:var(--vibeui-datagrid-017-bg);color:var(--vibeui-datagrid-017-fg);
+background:var(--vibeui-datagrid-017-panel);color:var(--vibeui-datagrid-017-fg);
 font-family:var(--vibeui-datagrid-017-font);box-shadow:0 24px 60px var(--vibeui-datagrid-017-shadow);
 }
-[data-vibeui-block="datagrid-017"] dialog::backdrop{background:oklch(0.23 0.014 285 / 45%)}
+[data-vibeui-block="datagrid-017"] dialog::backdrop{background:var(--vibeui-datagrid-017-veil)}
 [data-vibeui-block="datagrid-017"] [data-part="dialog-title"]{margin:0 0 0.375rem;font-size:0.9375rem;font-weight:650}
 [data-vibeui-block="datagrid-017"] [data-part="dialog-text"]{margin:0 0 0.75rem;font-size:0.8125rem;color:var(--vibeui-datagrid-017-muted);line-height:1.45}
 [data-vibeui-block="datagrid-017"] [data-part="formats"]{border:0;margin:0 0 0.875rem;padding:0;display:flex;gap:0.5rem;flex-wrap:wrap}
@@ -100,10 +130,10 @@ font-family:var(--vibeui-datagrid-017-font);box-shadow:0 24px 60px var(--vibeui-
 [data-vibeui-block="datagrid-017"] [data-part="confirm"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:600;
 padding:0.4375rem 0.875rem;border-radius:0.5rem;border:1px solid var(--vibeui-datagrid-017-border);
-background:var(--vibeui-datagrid-017-bg);color:var(--vibeui-datagrid-017-fg);
+background:transparent;color:var(--vibeui-datagrid-017-fg);
 }
 [data-vibeui-block="datagrid-017"] [data-part="confirm"]{
-border-color:transparent;background:var(--vibeui-datagrid-017-accent);color:oklch(1 0 0);
+border-color:transparent;background:var(--vibeui-datagrid-017-accent);color:var(--vibeui-datagrid-017-on-accent);
 }
 [data-vibeui-block="datagrid-017"] [data-part="cancel"]:focus-visible,
 [data-vibeui-block="datagrid-017"] [data-part="confirm"]:focus-visible{outline:2px solid var(--vibeui-datagrid-017-accent);outline-offset:2px}
@@ -148,11 +178,41 @@ const DEFAULT_ROWS: Datagrid017Row[] = [
   },
 ]
 
+const COLUMN_TEXT: Record<string, string> = {
+  check: "Выбор",
+  contract: "Договор",
+  counterparty: "Контрагент",
+  signed: "Подписан",
+  amount: "Сумма, ₽",
+}
+
 const FORMATS = [
   { value: "csv", label: "CSV", bytes: 140 },
   { value: "json", label: "JSON", bytes: 320 },
   { value: "xlsx", label: "XLSX", bytes: 620 },
 ]
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Сетка с выгрузкой отмеченных строк через подтверждение в нативном
@@ -162,6 +222,18 @@ export function Datagrid017({
   rows = DEFAULT_ROWS,
   caption = "Отметьте договоры и нажмите «Экспортировать»",
   exportLabel = "Экспортировать",
+  heading = "Договоры",
+  statusTemplate = "Отмечено: {count} из {total}",
+  doneTemplate = "Выгружено {count} стр. в формате {format}",
+  columnText = COLUMN_TEXT,
+  pickLabel = "Включить договор {contract} в выгрузку",
+  scrollLabel = "Таблица договоров, прокручивается вбок",
+  dialogTitleTemplate = "Выгрузить {count} стр.?",
+  dialogTextTemplate = "В файл попадут только отмеченные договоры на сумму {amount} ₽. Ориентировочный размер — около {size} КБ.",
+  formatsText = "Формат файла",
+  cancelText = "Отмена",
+  confirmText = "Выгрузить",
+  background = "",
   accent,
   className,
   style,
@@ -177,6 +249,12 @@ export function Datagrid017({
 
   const palette = {
     ...(accent ? { "--vibeui-datagrid-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -192,9 +270,12 @@ export function Datagrid017({
         style={palette}
       >
         <div data-part="bar">
-          <h3 data-part="title">Договоры</h3>
+          <h3 data-part="title">{heading}</h3>
           <p data-part="status" role="status" aria-live="polite">
-            {done || `Отмечено: ${selected.length} из ${rows.length}`}
+            {done ||
+              statusTemplate
+                .replace("{count}", String(selected.length))
+                .replace("{total}", String(rows.length))}
           </p>
           <button
             type="button"
@@ -211,7 +292,7 @@ export function Datagrid017({
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица договоров, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
@@ -219,13 +300,17 @@ export function Datagrid017({
             <thead>
               <tr>
                 <th scope="col" data-part="check">
-                  <span hidden>Выбор</span>
+                  <span hidden>{columnText.check ?? COLUMN_TEXT.check}</span>
                 </th>
-                <th scope="col">Договор</th>
-                <th scope="col">Контрагент</th>
-                <th scope="col">Подписан</th>
+                <th scope="col">
+                  {columnText.contract ?? COLUMN_TEXT.contract}
+                </th>
+                <th scope="col">
+                  {columnText.counterparty ?? COLUMN_TEXT.counterparty}
+                </th>
+                <th scope="col">{columnText.signed ?? COLUMN_TEXT.signed}</th>
                 <th scope="col" data-align="end">
-                  Сумма, ₽
+                  {columnText.amount ?? COLUMN_TEXT.amount}
                 </th>
               </tr>
             </thead>
@@ -239,7 +324,10 @@ export function Datagrid017({
                       <input
                         type="checkbox"
                         checked={on}
-                        aria-label={`Включить договор ${row.contract} в выгрузку`}
+                        aria-label={pickLabel.replace(
+                          "{contract}",
+                          row.contract,
+                        )}
                         onChange={() =>
                           setPicked((current) =>
                             current.includes(row.id)
@@ -265,18 +353,25 @@ export function Datagrid017({
         </div>
         <dialog ref={dialogRef} aria-labelledby="vibeui-datagrid-017-heading">
           <h4 data-part="dialog-title" id="vibeui-datagrid-017-heading">
-            Выгрузить {selected.length} стр.?
+            {dialogTitleTemplate.replace("{count}", String(selected.length))}
           </h4>
           <p data-part="dialog-text">
-            В файл попадут только отмеченные договоры на сумму{" "}
-            {selected
-              .reduce((total, row) => total + row.amount, 0)
-              .toLocaleString("ru-RU")}{" "}
-            ₽. Ориентировочный размер — около{" "}
-            {Math.max(1, Math.round((selected.length * size) / 100) / 10)} КБ.
+            {dialogTextTemplate
+              .replace(
+                "{amount}",
+                selected
+                  .reduce((total, row) => total + row.amount, 0)
+                  .toLocaleString("ru-RU"),
+              )
+              .replace(
+                "{size}",
+                String(
+                  Math.max(1, Math.round((selected.length * size) / 100) / 10),
+                ),
+              )}
           </p>
           <fieldset data-part="formats">
-            <legend>Формат файла</legend>
+            <legend>{formatsText}</legend>
             {FORMATS.map((item) => (
               <label key={item.value}>
                 <input
@@ -296,19 +391,21 @@ export function Datagrid017({
               data-part="cancel"
               onClick={() => dialogRef.current?.close()}
             >
-              Отмена
+              {cancelText}
             </button>
             <button
               type="button"
               data-part="confirm"
               onClick={() => {
                 setDone(
-                  `Выгружено ${selected.length} стр. в формате ${format.toUpperCase()}`,
+                  doneTemplate
+                    .replace("{count}", String(selected.length))
+                    .replace("{format}", format.toUpperCase()),
                 )
                 dialogRef.current?.close()
               }}
             >
-              Выгрузить
+              {confirmText}
             </button>
           </div>
         </dialog>

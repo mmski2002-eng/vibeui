@@ -18,7 +18,11 @@ export type Footer006Props = {
   hours?: string
   contacts?: Footer006Contact[]
   socials?: Footer006Social[]
+  /** Подпись группы соцсетей для скринридера. */
+  socialsLabel?: string
   legal?: string
+  /** Пусто — подложки нет, подвал лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -28,19 +32,23 @@ export type Footer006Props = {
 // tel: и mailto: с видимым значением: подвал чаще всего открывают именно
 // ради них, и «Связаться с нами» вместо номера отнимает лишний шаг.
 // Значки соцсетей — буквенные плашки, чтобы блок не тянул иконочный набор.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подвал темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="footer-006"]){
---vibeui-footer-006-bg:oklch(0.22 0.024 200);
---vibeui-footer-006-ink:oklch(0.97 0.006 200);
---vibeui-footer-006-muted:oklch(0.75 0.02 200);
---vibeui-footer-006-border:oklch(0.32 0.026 200);
---vibeui-footer-006-accent:oklch(0.76 0.13 190);
---vibeui-footer-006-accent-fg:oklch(0.2 0.05 190);
+--vibeui-footer-006-bg:transparent;
+--vibeui-footer-006-ink:light-dark(oklch(0.22 0.02 200),oklch(0.95 0.006 200));
+--vibeui-footer-006-muted:light-dark(oklch(0.5 0.02 200),oklch(0.73 0.018 200));
+--vibeui-footer-006-border:light-dark(oklch(0.89 0.01 200),oklch(0.34 0.024 200));
+--vibeui-footer-006-accent:light-dark(oklch(0.52 0.12 190),oklch(0.78 0.13 190));
+--vibeui-footer-006-accent-fg:light-dark(oklch(0.99 0.005 190),oklch(0.2 0.05 190));
 --vibeui-footer-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 [data-vibeui-block="footer-006"]{
 display:block;background:var(--vibeui-footer-006-bg);color:var(--vibeui-footer-006-ink);
+border-top:1px solid var(--vibeui-footer-006-border);
 font-family:var(--vibeui-footer-006-font);
 }
 [data-vibeui-block="footer-006"] [data-part="shell"]{
@@ -121,6 +129,28 @@ const DEFAULT_SOCIALS: Footer006Social[] = [
   { label: "Дзен", short: "DZ", href: "#dzen" },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Подвал с контактами и соцсетями: телефон и почта — настоящие ссылки. */
 export function Footer006({
   brand = "Ясная",
@@ -128,13 +158,21 @@ export function Footer006({
   hours = "Пн–Пт, 9:00–19:00",
   contacts = DEFAULT_CONTACTS,
   socials = DEFAULT_SOCIALS,
+  socialsLabel = "Мы в социальных сетях",
   legal = "© 2026 Клиника «Ясная». Лицензия ЛО-77-01-000000",
+  background = "",
   accent,
   className,
   style,
 }: Footer006Props) {
   const palette = {
     ...(accent ? { "--vibeui-footer-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-footer-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -164,7 +202,7 @@ export function Footer006({
               </div>
             ))}
           </dl>
-          <nav data-part="socials" aria-label="Мы в социальных сетях">
+          <nav data-part="socials" aria-label={socialsLabel}>
             {socials.map((social) => (
               <a
                 key={social.href}

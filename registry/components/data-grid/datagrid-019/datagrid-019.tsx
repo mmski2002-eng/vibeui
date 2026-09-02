@@ -11,6 +11,13 @@ export type Datagrid019Row = {
   overdue: number
 }
 
+export type Datagrid019Rule = {
+  id: number
+  field: "name" | "region" | "revenue" | "overdue"
+  operator: string
+  value: string
+}
+
 export type Datagrid019Props = Omit<
   ComponentPropsWithoutRef<"section">,
   "children"
@@ -18,6 +25,39 @@ export type Datagrid019Props = Omit<
   rows?: Datagrid019Row[]
   caption?: string
   joiner?: "and" | "or"
+  /** Условия, с которыми конструктор открывается. */
+  defaultRules?: Datagrid019Rule[]
+  /** Заголовок конструктора условий. */
+  legendText?: string
+  /** Названия полей по ключу: компонент несёт русские. */
+  fieldText?: Record<string, string>
+  /** Названия операторов по ключу: компонент несёт русские. */
+  operatorText?: Record<string, string>
+  /** Связка между строками условий: and и or. */
+  joinerText?: Record<string, string>
+  /** Названия связок в списке: and и or. */
+  joinerOptionText?: Record<string, string>
+  /** Скрытая подпись у связки между условиями. */
+  joinerHint?: string
+  /** Подпись списка связок. */
+  joinerLabel?: string
+  /** Подписи полей условия. {index} — номер условия. */
+  fieldLabel?: string
+  operatorLabel?: string
+  valueLabel?: string
+  removeLabel?: string
+  /** Подпись кнопки добавления условия. */
+  addText?: string
+  /** Счётчик подошедших строк. {count} и {total} — числа. */
+  summaryTemplate?: string
+  /** Строка, когда набор условий не пропустил ничего. */
+  emptyText?: string
+  /** Заголовки колонок по ключу: компонент несёт русские. */
+  columnText?: Record<string, string>
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,15 +66,19 @@ export type Datagrid019Props = Omit<
 // «и/или» одна на весь набор и стоит между строками условий, чтобы её
 // нельзя было прочитать как часть соседнего условия. Набор живёт внутри
 // fieldset с legend: для скринридера это одна группа, а не россыпь полей.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-019"]){
---vibeui-datagrid-019-bg:oklch(1 0 0);
---vibeui-datagrid-019-fg:oklch(0.23 0.014 285);
---vibeui-datagrid-019-muted:oklch(0.55 0.014 285);
---vibeui-datagrid-019-border:oklch(0.92 0.006 285);
---vibeui-datagrid-019-head:oklch(0.975 0.003 285);
---vibeui-datagrid-019-accent:oklch(0.5 0.14 230);
---vibeui-datagrid-019-panel:oklch(0.985 0.004 285);
+--vibeui-datagrid-019-bg:transparent;
+--vibeui-datagrid-019-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-019-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-019-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
+--vibeui-datagrid-019-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
+--vibeui-datagrid-019-accent:light-dark(oklch(0.5 0.14 230),oklch(0.76 0.13 230));
+--vibeui-datagrid-019-danger:light-dark(oklch(0.55 0.17 28),oklch(0.76 0.15 28));
+--vibeui-datagrid-019-panel:light-dark(oklch(0.985 0.004 285),oklch(0.26 0.011 285));
 --vibeui-datagrid-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-019"]{
@@ -63,7 +107,7 @@ font-size:0.6875rem;font-weight:600;letter-spacing:0.04em;text-transform:upperca
 [data-vibeui-block="datagrid-019"] [data-part="value"]{
 font:inherit;font-size:0.75rem;color:inherit;padding:0.3125rem 0.5rem;
 border:1px solid var(--vibeui-datagrid-019-border);border-radius:0.4375rem;
-background:var(--vibeui-datagrid-019-bg);
+background:transparent;
 }
 [data-vibeui-block="datagrid-019"] [data-part="value"]{width:8rem;min-width:0}
 [data-vibeui-block="datagrid-019"] select:focus-visible,
@@ -72,9 +116,9 @@ background:var(--vibeui-datagrid-019-bg);
 appearance:none;cursor:pointer;font:inherit;font-size:0.875rem;line-height:1;
 width:1.75rem;height:1.75rem;border-radius:0.4375rem;
 border:1px solid var(--vibeui-datagrid-019-border);
-background:var(--vibeui-datagrid-019-bg);color:var(--vibeui-datagrid-019-muted);
+background:transparent;color:var(--vibeui-datagrid-019-muted);
 }
-[data-vibeui-block="datagrid-019"] [data-part="drop"]:hover{color:oklch(0.55 0.17 28);border-color:oklch(0.55 0.17 28)}
+[data-vibeui-block="datagrid-019"] [data-part="drop"]:hover{color:var(--vibeui-datagrid-019-danger);border-color:var(--vibeui-datagrid-019-danger)}
 [data-vibeui-block="datagrid-019"] [data-part="drop"]:focus-visible{outline:2px solid var(--vibeui-datagrid-019-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-019"] [data-part="add"]{
 clear:both;appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:600;
@@ -99,7 +143,7 @@ border-top:1px solid var(--vibeui-datagrid-019-border);
 }
 [data-vibeui-block="datagrid-019"] thead th{background:var(--vibeui-datagrid-019-head);font-weight:600}
 [data-vibeui-block="datagrid-019"] [data-align="end"]{text-align:right;font-variant-numeric:tabular-nums}
-[data-vibeui-block="datagrid-019"] [data-late="true"]{color:oklch(0.55 0.17 28);font-weight:600}
+[data-vibeui-block="datagrid-019"] [data-late="true"]{color:var(--vibeui-datagrid-019-danger);font-weight:600}
 [data-vibeui-block="datagrid-019"] [data-part="none"]{padding:1.5rem 0.875rem;text-align:center;color:var(--vibeui-datagrid-019-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-019"] *{animation:none!important;transition:none!important}}
 `
@@ -144,30 +188,52 @@ const DEFAULT_ROWS: Datagrid019Row[] = [
 ]
 
 const FIELDS = [
-  { key: "name", label: "Название", numeric: false },
-  { key: "region", label: "Регион", numeric: false },
-  { key: "revenue", label: "Выручка, тыс.", numeric: true },
-  { key: "overdue", label: "Просрочка, дн.", numeric: true },
+  { key: "name", numeric: false },
+  { key: "region", numeric: false },
+  { key: "revenue", numeric: true },
+  { key: "overdue", numeric: true },
 ] as const
 
-const TEXT_OPS = [
-  { key: "contains", label: "содержит" },
-  { key: "equals", label: "равно" },
-  { key: "starts", label: "начинается с" },
-] as const
+const TEXT_OPS = ["contains", "equals", "starts"] as const
 
-const NUMBER_OPS = [
-  { key: "gt", label: "больше" },
-  { key: "lt", label: "меньше" },
-  { key: "eq", label: "равно" },
-] as const
+const NUMBER_OPS = ["gt", "lt", "eq"] as const
 
-type Rule = {
-  id: number
-  field: (typeof FIELDS)[number]["key"]
-  operator: string
-  value: string
+const FIELD_TEXT: Record<string, string> = {
+  name: "Название",
+  region: "Регион",
+  revenue: "Выручка, тыс.",
+  overdue: "Просрочка, дн.",
 }
+
+const OPERATOR_TEXT: Record<string, string> = {
+  contains: "содержит",
+  equals: "равно",
+  starts: "начинается с",
+  gt: "больше",
+  lt: "меньше",
+  eq: "равно",
+}
+
+const JOINER_TEXT: Record<string, string> = { and: "и", or: "или" }
+
+const JOINER_OPTION_TEXT: Record<string, string> = {
+  and: "все условия (и)",
+  or: "любое условие (или)",
+}
+
+const COLUMN_TEXT: Record<string, string> = {
+  name: "Контрагент",
+  region: "Регион",
+  revenue: "Выручка, тыс. ₽",
+  overdue: "Просрочка, дн.",
+}
+
+type Rule = Datagrid019Rule
+
+const DEFAULT_RULES: Datagrid019Rule[] = [
+  { id: 1, field: "region", operator: "contains", value: "Урал" },
+  { id: 2, field: "overdue", operator: "gt", value: "10" },
+]
 
 function test(row: Datagrid019Row, rule: Rule) {
   const field = FIELDS.find((item) => item.key === rule.field)
@@ -214,6 +280,28 @@ function test(row: Datagrid019Row, rule: Rule) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сетка с конструктором условий: поле, оператор и значение в каждой
  * строке, одна связка «и/или» на весь набор. Один файл, ноль зависимостей.
  */
@@ -221,16 +309,52 @@ export function Datagrid019({
   rows = DEFAULT_ROWS,
   caption = "Строки отбираются набором условий из конструктора",
   joiner = "and",
+  defaultRules = DEFAULT_RULES,
+  legendText = "Условия отбора",
+  fieldText = FIELD_TEXT,
+  operatorText = OPERATOR_TEXT,
+  joinerText = JOINER_TEXT,
+  joinerOptionText = JOINER_OPTION_TEXT,
+  joinerHint = "связка условий",
+  joinerLabel = "Связка между условиями",
+  fieldLabel = "Поле условия {index}",
+  operatorLabel = "Оператор условия {index}",
+  valueLabel = "Значение условия {index}",
+  removeLabel = "Удалить условие {index}",
+  addText = "+ Добавить условие",
+  summaryTemplate = "Подошло строк: {count} из {total}",
+  emptyText = "Набор условий не пропустил ни одной строки",
+  columnText = COLUMN_TEXT,
+  scrollLabel = "Таблица контрагентов, прокручивается вбок",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Datagrid019Props) {
-  const [join, setJoin] = useState<"and" | "or">(joiner)
-  const [rules, setRules] = useState<Rule[]>([
-    { id: 1, field: "region", operator: "contains", value: "Урал" },
-    { id: 2, field: "overdue", operator: "gt", value: "10" },
-  ])
+  // Выбор читателя живёт рядом с пропом, а не вместо него: смена joiner
+  // снаружи обязана переставить связку, иначе проп сработал бы один раз.
+  const [chosen, setChosen] = useState<"and" | "or" | null>(null)
+  const [source, setSource] = useState<"and" | "or">(joiner)
+  const [edited, setEdited] = useState<Rule[] | null>(null)
+  const [seed, setSeed] = useState<Rule[]>(defaultRules)
+
+  if (source !== joiner) {
+    setSource(joiner)
+    setChosen(null)
+  }
+
+  if (seed !== defaultRules) {
+    setSeed(defaultRules)
+    setEdited(null)
+  }
+
+  const join = chosen ?? joiner
+  const rules = edited ?? defaultRules
+
+  function setRules(next: (current: Rule[]) => Rule[]) {
+    setEdited((current) => next(current ?? defaultRules))
+  }
 
   const filtered = rows.filter((row) => {
     if (rules.length === 0) {
@@ -244,6 +368,12 @@ export function Datagrid019({
 
   const palette = {
     ...(accent ? { "--vibeui-datagrid-019-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -265,7 +395,7 @@ export function Datagrid019({
         style={palette}
       >
         <fieldset data-part="builder">
-          <legend>Условия отбора</legend>
+          <legend>{legendText}</legend>
           {rules.map((rule, index) => {
             const field = FIELDS.find((item) => item.key === rule.field)
             const operators = field?.numeric ? NUMBER_OPS : TEXT_OPS
@@ -274,14 +404,17 @@ export function Datagrid019({
               <div key={rule.id}>
                 {index > 0 ? (
                   <p data-part="joiner">
-                    {join === "and" ? "и" : "или"}
-                    <span hidden>связка условий</span>
+                    {joinerText[join] ?? JOINER_TEXT[join]}
+                    <span hidden>{joinerHint}</span>
                   </p>
                 ) : null}
                 <div data-part="rule">
                   <select
                     value={rule.field}
-                    aria-label={`Поле условия ${index + 1}`}
+                    aria-label={fieldLabel.replace(
+                      "{index}",
+                      String(index + 1),
+                    )}
                     onChange={(event) => {
                       const next = FIELDS.find(
                         (item) => item.key === event.target.value,
@@ -296,20 +429,23 @@ export function Datagrid019({
                   >
                     {FIELDS.map((item) => (
                       <option key={item.key} value={item.key}>
-                        {item.label}
+                        {fieldText[item.key] ?? FIELD_TEXT[item.key]}
                       </option>
                     ))}
                   </select>
                   <select
                     value={rule.operator}
-                    aria-label={`Оператор условия ${index + 1}`}
+                    aria-label={operatorLabel.replace(
+                      "{index}",
+                      String(index + 1),
+                    )}
                     onChange={(event) =>
                       patch(rule.id, { operator: event.target.value })
                     }
                   >
                     {operators.map((item) => (
-                      <option key={item.key} value={item.key}>
-                        {item.label}
+                      <option key={item} value={item}>
+                        {operatorText[item] ?? OPERATOR_TEXT[item]}
                       </option>
                     ))}
                   </select>
@@ -317,7 +453,10 @@ export function Datagrid019({
                     data-part="value"
                     type={field?.numeric ? "number" : "text"}
                     value={rule.value}
-                    aria-label={`Значение условия ${index + 1}`}
+                    aria-label={valueLabel.replace(
+                      "{index}",
+                      String(index + 1),
+                    )}
                     onChange={(event) =>
                       patch(rule.id, { value: event.target.value })
                     }
@@ -325,7 +464,10 @@ export function Datagrid019({
                   <button
                     type="button"
                     data-part="drop"
-                    aria-label={`Удалить условие ${index + 1}`}
+                    aria-label={removeLabel.replace(
+                      "{index}",
+                      String(index + 1),
+                    )}
                     onClick={() =>
                       setRules((current) =>
                         current.filter((item) => item.id !== rule.id),
@@ -337,13 +479,17 @@ export function Datagrid019({
                   {index === 0 ? (
                     <select
                       value={join}
-                      aria-label="Связка между условиями"
+                      aria-label={joinerLabel}
                       onChange={(event) =>
-                        setJoin(event.target.value as "and" | "or")
+                        setChosen(event.target.value as "and" | "or")
                       }
                     >
-                      <option value="and">все условия (и)</option>
-                      <option value="or">любое условие (или)</option>
+                      <option value="and">
+                        {joinerOptionText.and ?? JOINER_OPTION_TEXT.and}
+                      </option>
+                      <option value="or">
+                        {joinerOptionText.or ?? JOINER_OPTION_TEXT.or}
+                      </option>
                     </select>
                   ) : null}
                 </div>
@@ -366,29 +512,31 @@ export function Datagrid019({
               ])
             }
           >
-            + Добавить условие
+            {addText}
           </button>
           <p data-part="summary" role="status" aria-live="polite">
-            Подошло строк: {filtered.length} из {rows.length}
+            {summaryTemplate
+              .replace("{count}", String(filtered.length))
+              .replace("{total}", String(rows.length))}
           </p>
         </fieldset>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица контрагентов, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
             <caption>{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Контрагент</th>
-                <th scope="col">Регион</th>
+                <th scope="col">{columnText.name ?? COLUMN_TEXT.name}</th>
+                <th scope="col">{columnText.region ?? COLUMN_TEXT.region}</th>
                 <th scope="col" data-align="end">
-                  Выручка, тыс. ₽
+                  {columnText.revenue ?? COLUMN_TEXT.revenue}
                 </th>
                 <th scope="col" data-align="end">
-                  Просрочка, дн.
+                  {columnText.overdue ?? COLUMN_TEXT.overdue}
                 </th>
               </tr>
             </thead>
@@ -411,7 +559,7 @@ export function Datagrid019({
               {filtered.length === 0 ? (
                 <tr>
                   <td colSpan={4} data-part="none">
-                    Набор условий не пропустил ни одной строки
+                    {emptyText}
                   </td>
                 </tr>
               ) : null}

@@ -21,7 +21,18 @@ export type Commerce043Props = {
   cta?: string
   note?: string
   currency?: string
+  sortLabel?: string
+  /** Число оценок: {count} — сколько их. */
+  votesText?: string
+  shippingLabel?: string
+  freeShippingText?: string
+  /** Платная доставка: {amount} и {currency}. */
+  shippingCostText?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -35,13 +46,15 @@ export type Commerce043Props = {
 // «быстрее всех» это разные победители.
 const STYLES = `
 :where([data-vibeui-block="commerce-043"]){
---vibeui-commerce-043-bg:oklch(1 0 0);
---vibeui-commerce-043-fg:oklch(0.21 0.014 265);
---vibeui-commerce-043-muted:oklch(0.55 0.014 265);
---vibeui-commerce-043-border:oklch(0.91 0.006 265);
---vibeui-commerce-043-soft:oklch(0.975 0.004 265);
---vibeui-commerce-043-accent:oklch(0.5 0.14 210);
---vibeui-commerce-043-star:oklch(0.72 0.15 80);
+--vibeui-commerce-043-bg:transparent;
+--vibeui-commerce-043-fg:light-dark(oklch(0.21 0.014 265),oklch(0.93 0.006 265));
+--vibeui-commerce-043-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-commerce-043-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-043-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.009 265));
+--vibeui-commerce-043-accent:light-dark(oklch(0.5 0.14 210),oklch(0.72 0.13 215));
+--vibeui-commerce-043-onaccent:light-dark(oklch(1 0 0),oklch(0.18 0.02 215));
+--vibeui-commerce-043-free:light-dark(oklch(0.5 0.13 150),oklch(0.76 0.13 155));
+--vibeui-commerce-043-star:light-dark(oklch(0.72 0.15 80),oklch(0.82 0.15 80));
 --vibeui-commerce-043-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -77,7 +90,7 @@ border-color:var(--vibeui-commerce-043-accent);box-shadow:inset 0 0 0 1px var(--
 /* Ярлык объясняет, чем предложение лучшее: дешевле и быстрее — разные победители. */
 [data-vibeui-block="commerce-043"] [data-part="flag"]{
 position:absolute;top:-0.6875rem;left:0.875rem;padding:0.1875rem 0.5rem;border-radius:0.5rem;
-background:var(--vibeui-commerce-043-accent);color:oklch(1 0 0);font-size:0.625rem;font-weight:700;
+background:var(--vibeui-commerce-043-accent);color:var(--vibeui-commerce-043-onaccent);font-size:0.625rem;font-weight:700;
 }
 [data-vibeui-block="commerce-043"] [data-part="seller"]{margin:0;font-size:0.9375rem;font-weight:650}
 [data-vibeui-block="commerce-043"] [data-part="meta"]{
@@ -94,10 +107,10 @@ display:inline-flex;align-items:center;gap:0.25rem;font-weight:650;color:var(--v
 margin:0;font-size:1.25rem;font-weight:750;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="commerce-043"] [data-part="parts"]{margin:0;font-size:0.6875rem;color:var(--vibeui-commerce-043-muted);font-variant-numeric:tabular-nums}
-[data-vibeui-block="commerce-043"] [data-part="free"]{color:oklch(0.5 0.13 150);font-weight:650}
+[data-vibeui-block="commerce-043"] [data-part="free"]{color:var(--vibeui-commerce-043-free);font-weight:650}
 [data-vibeui-block="commerce-043"] [data-part="buy"]{
 appearance:none;border:0;cursor:pointer;width:100%;height:2.625rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-043-accent);color:oklch(1 0 0);font:inherit;font-size:0.875rem;font-weight:700;
+background:var(--vibeui-commerce-043-accent);color:var(--vibeui-commerce-043-onaccent);font:inherit;font-size:0.875rem;font-weight:700;
 }
 [data-vibeui-block="commerce-043"] [data-part="offer"][data-best="no"] [data-part="buy"]{
 background:var(--vibeui-commerce-043-bg);color:var(--vibeui-commerce-043-fg);
@@ -155,6 +168,28 @@ const DEFAULT_OFFERS: Commerce043Offer[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сравнение предложений продавцов: сумма с доставкой считается в блоке.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -166,12 +201,25 @@ export function Commerce043({
   cta = "Выбрать продавца",
   note = "Цена сравнивается вместе с доставкой в ваш город. Условия возврата у продавцов разные: у фирменного магазина — 14 дней без причины, у остальных смотрите карточку продавца.",
   currency = "₽",
+  sortLabel = "Порядок",
+  votesText = "{count} оценок",
+  shippingLabel = "Доставка",
+  freeShippingText = "бесплатная доставка",
+  shippingCostText = "{amount} {currency} доставка",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Commerce043Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-043-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-043-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -193,7 +241,7 @@ export function Commerce043({
               <p data-part="product">{product}</p>
             </div>
             <div data-part="sort">
-              <label htmlFor="commerce-043-sort">Порядок</label>
+              <label htmlFor="commerce-043-sort">{sortLabel}</label>
               <select id="commerce-043-sort" defaultValue={sorts[0]}>
                 {sorts.map((sort) => (
                   <option key={sort} value={sort}>
@@ -217,26 +265,36 @@ export function Commerce043({
                   <p data-part="meta">
                     <span data-part="rating">
                       <i aria-hidden="true">★</i>
-                      {offer.rating.toLocaleString("ru-RU")}
+                      {offer.rating.toLocaleString(locale)}
                     </span>
-                    <span>{offer.votes.toLocaleString("ru-RU")} оценок</span>
+                    <span>
+                      {votesText.replace(
+                        "{count}",
+                        offer.votes.toLocaleString(locale),
+                      )}
+                    </span>
                     {offer.years ? <span>{offer.years}</span> : null}
                   </p>
                   <p data-part="eta">
-                    Доставка <b>{offer.eta}</b> · {offer.stock}
+                    {shippingLabel} <b>{offer.eta}</b> · {offer.stock}
                   </p>
                 </div>
                 <div data-part="money">
                   <p data-part="sum">
-                    {(offer.price + offer.shipping).toLocaleString("ru-RU")}{" "}
+                    {(offer.price + offer.shipping).toLocaleString(locale)}{" "}
                     {currency}
                   </p>
                   <p data-part="parts">
-                    {offer.price.toLocaleString("ru-RU")} {currency} +{" "}
+                    {offer.price.toLocaleString(locale)} {currency} +{" "}
                     {offer.shipping === 0 ? (
-                      <span data-part="free">бесплатная доставка</span>
+                      <span data-part="free">{freeShippingText}</span>
                     ) : (
-                      `${offer.shipping.toLocaleString("ru-RU")} ${currency} доставка`
+                      shippingCostText
+                        .replace(
+                          "{amount}",
+                          offer.shipping.toLocaleString(locale),
+                        )
+                        .replace("{currency}", currency)
                     )}
                   </p>
                 </div>

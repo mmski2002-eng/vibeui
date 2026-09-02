@@ -9,6 +9,8 @@ export type Icontile003Props = Omit<
 > & {
   status?: Icontile003Status
   label?: string
+  /** Пусто — подложки нет, плашка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: статус кодируется формой, а не только цветом. Круг,
@@ -20,12 +22,12 @@ const STYLES = `
 :where([data-vibeui-block="icontile-003"]){
 --vibeui-icontile-003-size:1.75rem;
 --vibeui-icontile-003-hue:152;
---vibeui-icontile-003-surface:oklch(1 0 0);
---vibeui-icontile-003-border:oklch(0.9 0.006 265);
---vibeui-icontile-003-fg:oklch(0.26 0.014 265);
+--vibeui-icontile-003-surface:transparent;
+--vibeui-icontile-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.008 265));
+--vibeui-icontile-003-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.006 265));
 --vibeui-icontile-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: подпись тёмная, а статус показывают поверх всего. */
+/* Подложки по умолчанию нет: плашку держит рамка, а цвет берётся у страницы. */
 [data-vibeui-block="icontile-003"]{
 display:inline-flex;align-items:center;gap:0.5rem;
 box-sizing:border-box;padding:0.375rem 0.75rem 0.375rem 0.375rem;
@@ -57,8 +59,8 @@ border-radius:0;clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100
 [data-vibeui-block="icontile-003"][data-status="info"]{--vibeui-icontile-003-hue:255}
 [data-vibeui-block="icontile-003"][data-status="pending"]{--vibeui-icontile-003-hue:265}
 [data-vibeui-block="icontile-003"][data-status="pending"] [data-part="tile"]{
-background:oklch(0.9 0.01 var(--vibeui-icontile-003-hue));
-color:oklch(0.42 0.02 var(--vibeui-icontile-003-hue));
+background:light-dark(oklch(0.9 0.01 var(--vibeui-icontile-003-hue)),oklch(0.38 0.014 var(--vibeui-icontile-003-hue)));
+color:light-dark(oklch(0.42 0.02 var(--vibeui-icontile-003-hue)),oklch(0.9 0.014 var(--vibeui-icontile-003-hue)));
 clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);border-radius:0;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="icontile-003"] *{animation:none!important;transition:none!important}}
@@ -73,16 +75,49 @@ const GLYPHS: Record<Icontile003Status, string> = {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Статусная плитка: смысл несёт форма, цвет только усиливает её.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Icontile003({
   status = "success",
   label = "Проверка пройдена",
+  background = "",
   className,
   style,
   ...props
 }: Icontile003Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-icontile-003-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-icontile-003" precedence="medium">
@@ -93,7 +128,7 @@ export function Icontile003({
         data-vibeui-block="icontile-003"
         data-status={status}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="tile" aria-hidden="true">
           {GLYPHS[status]}

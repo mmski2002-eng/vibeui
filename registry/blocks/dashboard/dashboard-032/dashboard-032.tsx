@@ -17,6 +17,20 @@ export type Dashboard032Props = {
   activePreset?: string
   rows?: Dashboard032Row[]
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подпись списка баз сравнения для скринридера. */
+  compareLabel?: string
+  /** Подписи карточек периодов: now, was. */
+  periodsText?: Record<string, string>
+  /** Заголовки таблицы: metric, change, deviation. */
+  columnsText?: Record<string, string>
+  /** Слова направления: up, down. */
+  directionText?: Record<string, string>
+  /** Шаблон подписи полосы: {label}, {direction}, {value}. */
+  deltaAriaText?: string
+  /** Пояснение под таблицей. */
+  legendText?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,14 +45,14 @@ export type Dashboard032Props = {
 // при любой ширине блока и любом наборе значений.
 const STYLES = `
 :where([data-vibeui-block="dashboard-032"]){
---vibeui-dashboard-032-bg:oklch(1 0 0);
---vibeui-dashboard-032-panel:oklch(0.985 0.003 265);
---vibeui-dashboard-032-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-032-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-032-border:oklch(0.91 0.006 265);
---vibeui-dashboard-032-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-032-good:oklch(0.55 0.14 152);
---vibeui-dashboard-032-bad:oklch(0.56 0.18 25);
+--vibeui-dashboard-032-bg:transparent;
+--vibeui-dashboard-032-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.012 265));
+--vibeui-dashboard-032-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-032-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-032-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-dashboard-032-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-dashboard-032-good:light-dark(oklch(0.55 0.14 152),oklch(0.76 0.14 152));
+--vibeui-dashboard-032-bad:light-dark(oklch(0.56 0.18 25),oklch(0.73 0.16 25));
 --vibeui-dashboard-032-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -170,6 +184,44 @@ const DEFAULT_ROWS: Dashboard032Row[] = [
   },
 ]
 
+const DEFAULT_PERIODS: Record<string, string> = {
+  now: "Текущий период",
+  was: "Период сравнения",
+}
+
+const DEFAULT_COLUMNS: Record<string, string> = {
+  metric: "Показатель",
+  change: "Изменение",
+  deviation: "Отклонение",
+}
+
+const DEFAULT_DIRECTIONS: Record<string, string> = {
+  up: "рост",
+  down: "снижение",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function verdict(row: Dashboard032Row) {
   if (row.delta === 0) {
     return "flat"
@@ -197,11 +249,25 @@ export function Dashboard032({
   activePreset = "С прошлым периодом",
   rows = DEFAULT_ROWS,
   accent,
+  background = "",
+  compareLabel = "Что с чем сравнить",
+  periodsText = DEFAULT_PERIODS,
+  columnsText = DEFAULT_COLUMNS,
+  directionText = DEFAULT_DIRECTIONS,
+  deltaAriaText = "{label}: {direction} на {value} процентов",
+  legendText = "Зелёный — изменение в нужную сторону, красный — в обратную. Направление задаётся у каждого показателя отдельно.",
   className,
   style,
 }: Dashboard032Props) {
+  const column = (key: string) => columnsText[key] ?? DEFAULT_COLUMNS[key]
   const palette = {
     ...(accent ? { "--vibeui-dashboard-032-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-032-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -221,7 +287,11 @@ export function Dashboard032({
         <div data-part="shell">
           <header data-part="head">
             <h2>{title}</h2>
-            <select defaultValue={activePreset} aria-label="Что с чем сравнить">
+            <select
+              key={activePreset}
+              defaultValue={activePreset}
+              aria-label={compareLabel}
+            >
               {presets.map((preset) => (
                 <option key={preset}>{preset}</option>
               ))}
@@ -230,11 +300,15 @@ export function Dashboard032({
 
           <ul data-part="periods">
             <li>
-              <span data-part="plabel">Текущий период</span>
+              <span data-part="plabel">
+                {periodsText.now ?? DEFAULT_PERIODS.now}
+              </span>
               <span data-part="pvalue">{nowPeriod}</span>
             </li>
             <li>
-              <span data-part="plabel">Период сравнения</span>
+              <span data-part="plabel">
+                {periodsText.was ?? DEFAULT_PERIODS.was}
+              </span>
               <span data-part="pvalue">{wasPeriod}</span>
             </li>
           </ul>
@@ -243,11 +317,11 @@ export function Dashboard032({
             <table>
               <thead>
                 <tr>
-                  <th scope="col">Показатель</th>
+                  <th scope="col">{column("metric")}</th>
                   <th scope="col">{nowPeriod}</th>
                   <th scope="col">{wasPeriod}</th>
-                  <th scope="col">Изменение</th>
-                  <th scope="col">Отклонение</th>
+                  <th scope="col">{column("change")}</th>
+                  <th scope="col">{column("deviation")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -274,7 +348,16 @@ export function Dashboard032({
                         <span
                           data-part="diverge"
                           role="img"
-                          aria-label={`${row.label}: ${row.delta > 0 ? "рост" : "снижение"} на ${Math.abs(row.delta)} процентов`}
+                          aria-label={deltaAriaText
+                            .replace("{label}", row.label)
+                            .replace(
+                              "{direction}",
+                              row.delta > 0
+                                ? (directionText.up ?? DEFAULT_DIRECTIONS.up)
+                                : (directionText.down ??
+                                    DEFAULT_DIRECTIONS.down),
+                            )
+                            .replace("{value}", String(Math.abs(row.delta)))}
                           style={
                             {
                               "--vibeui-dashboard-032-w": width,
@@ -296,10 +379,7 @@ export function Dashboard032({
             </table>
           </div>
 
-          <p data-part="legend">
-            Зелёный — изменение в нужную сторону, красный — в обратную.
-            Направление задаётся у каждого показателя отдельно.
-          </p>
+          <p data-part="legend">{legendText}</p>
         </div>
       </section>
     </>

@@ -26,7 +26,13 @@ export type Commerce057Props = {
   takenHint?: string
   cta?: string
   policy?: string
+  durationLabel?: string
+  priceLabel?: string
+  takenSrLabel?: string
+  masterTitle?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -39,12 +45,13 @@ export type Commerce057Props = {
 // две радиогруппы, сетку нужного дня показывает :has() без JS.
 const STYLES = `
 :where([data-vibeui-block="commerce-057"]){
---vibeui-commerce-057-bg:oklch(1 0 0);
---vibeui-commerce-057-fg:oklch(0.21 0.014 20);
---vibeui-commerce-057-muted:oklch(0.53 0.016 20);
---vibeui-commerce-057-border:oklch(0.9 0.008 20);
---vibeui-commerce-057-soft:oklch(0.975 0.008 30);
---vibeui-commerce-057-accent:oklch(0.5 0.15 15);
+--vibeui-commerce-057-bg:transparent;
+--vibeui-commerce-057-fg:light-dark(oklch(0.21 0.014 20),oklch(0.94 0.006 20));
+--vibeui-commerce-057-muted:light-dark(oklch(0.53 0.016 20),oklch(0.73 0.013 20));
+--vibeui-commerce-057-border:light-dark(oklch(0.9 0.008 20),oklch(0.38 0.014 20));
+--vibeui-commerce-057-soft:light-dark(oklch(0.975 0.008 30),oklch(0.27 0.012 25));
+--vibeui-commerce-057-accent:light-dark(oklch(0.5 0.15 15),oklch(0.72 0.15 20));
+--vibeui-commerce-057-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.04 20));
 --vibeui-commerce-057-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -77,7 +84,7 @@ border:1px solid var(--vibeui-commerce-057-border);
 transition:border-color .14s ease,background-color .14s ease;
 }
 [data-vibeui-block="commerce-057"] [data-part="day"] input:checked+[data-part="dface"]{
-border-color:var(--vibeui-commerce-057-accent);background:var(--vibeui-commerce-057-accent);color:oklch(0.99 0 0);
+border-color:var(--vibeui-commerce-057-accent);background:var(--vibeui-commerce-057-accent);color:var(--vibeui-commerce-057-onaccent);
 }
 [data-vibeui-block="commerce-057"] [data-part="day"] input:focus-visible+[data-part="dface"]{outline:2px solid var(--vibeui-commerce-057-accent);outline-offset:2px}
 [data-vibeui-block="commerce-057"] [data-part="weekday"]{display:block;font-size:0.6875rem;letter-spacing:0.06em;text-transform:uppercase;opacity:0.8}
@@ -92,7 +99,7 @@ border:1px solid var(--vibeui-commerce-057-border);font-size:0.875rem;font-weigh
 transition:border-color .14s ease,background-color .14s ease;
 }
 [data-vibeui-block="commerce-057"] [data-part="slot"] input:checked+[data-part="sface"]{
-border-color:var(--vibeui-commerce-057-accent);background:var(--vibeui-commerce-057-accent);color:oklch(0.99 0 0);
+border-color:var(--vibeui-commerce-057-accent);background:var(--vibeui-commerce-057-accent);color:var(--vibeui-commerce-057-onaccent);
 }
 [data-vibeui-block="commerce-057"] [data-part="slot"] input:focus-visible+[data-part="sface"]{outline:2px solid var(--vibeui-commerce-057-accent);outline-offset:2px}
 [data-vibeui-block="commerce-057"] [data-part="slot"] input:disabled+[data-part="sface"]{
@@ -114,7 +121,7 @@ background:linear-gradient(140deg,oklch(0.9 0.06 20),oklch(0.78 0.11 30));
 [data-vibeui-block="commerce-057"] [data-part="mrole"]{margin:0.0625rem 0 0;font-size:0.75rem;color:var(--vibeui-commerce-057-muted)}
 [data-vibeui-block="commerce-057"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;width:100%;height:2.875rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-057-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-057-accent);color:var(--vibeui-commerce-057-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-057"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-commerce-057-accent);outline-offset:2px}
 [data-vibeui-block="commerce-057"] [data-part="policy"]{margin:0.75rem 0 0;font-size:0.75rem;line-height:1.5;color:var(--vibeui-commerce-057-muted)}
@@ -130,6 +137,28 @@ background:var(--vibeui-commerce-057-accent);color:oklch(0.99 0 0);font:inherit;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-057"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_DAYS: Commerce057Day[] = [
   {
@@ -204,12 +233,23 @@ export function Commerce057({
   takenHint = "Перечёркнутое время уже занято другим заказом.",
   cta = "Записаться",
   policy = "Перенести или отменить запись можно бесплатно за 12 часов. Позже удерживается стоимость выезда — 900 ₽.",
+  durationLabel = "Длительность",
+  priceLabel = "Стоимость",
+  takenSrLabel = "занято",
+  masterTitle = "Кто приедет",
   accent,
+  background = "",
   className,
   style,
 }: Commerce057Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-057-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-057-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -231,11 +271,11 @@ export function Commerce057({
             <p data-part="lead">{lead}</p>
             <ul data-part="facts">
               <li>
-                <span>Длительность</span>
+                <span>{durationLabel}</span>
                 <strong>{duration}</strong>
               </li>
               <li>
-                <span>Стоимость</span>
+                <span>{priceLabel}</span>
                 <strong>{price}</strong>
               </li>
             </ul>
@@ -284,7 +324,7 @@ export function Commerce057({
                         <span data-part="sface">
                           {slot.at}
                           {slot.taken ? (
-                            <span data-part="sr"> занято</span>
+                            <span data-part="sr"> {takenSrLabel}</span>
                           ) : null}
                         </span>
                       </label>
@@ -297,7 +337,7 @@ export function Commerce057({
           </div>
 
           <aside data-part="panel">
-            <h3>Кто приедет</h3>
+            <h3>{masterTitle}</h3>
             <div data-part="master">
               <span data-part="avatar" aria-hidden="true" />
               <div>

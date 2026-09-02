@@ -10,6 +10,8 @@ export type Codeblock024Props = {
   beforeLabel?: string
   afterLabel?: string
   rows?: Codeblock024Row[]
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -17,19 +19,22 @@ export type Codeblock024Props = {
 // Идея компонента: две версии файла рядом, строка напротив строки. Пустые
 // места слева и справа — это не пропуск, а явная заглушка, поэтому глаз ведёт
 // по одной горизонтали; на узкой ширине панели встают друг под друга.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, оттенки удаления и добавления подобраны для каждой ветки отдельно.
 const STYLES = `
 :where([data-vibeui-block="codeblock-024"]){
---vibeui-codeblock-024-bg:oklch(0.19 0.014 265);
---vibeui-codeblock-024-head:oklch(0.23 0.018 265);
---vibeui-codeblock-024-fg:oklch(0.93 0.008 265);
---vibeui-codeblock-024-muted:oklch(0.66 0.016 265);
---vibeui-codeblock-024-gutter:oklch(0.5 0.02 265);
---vibeui-codeblock-024-border:oklch(1 0 0 / 12%);
---vibeui-codeblock-024-del:oklch(0.78 0.16 25);
---vibeui-codeblock-024-del-bg:oklch(0.5 0.16 25 / 18%);
---vibeui-codeblock-024-add:oklch(0.82 0.15 152);
---vibeui-codeblock-024-add-bg:oklch(0.5 0.14 152 / 18%);
---vibeui-codeblock-024-void:oklch(1 0 0 / 4%);
+--vibeui-codeblock-024-bg:transparent;
+--vibeui-codeblock-024-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
+--vibeui-codeblock-024-fg:light-dark(oklch(0.26 0.016 265),oklch(0.93 0.008 265));
+--vibeui-codeblock-024-muted:light-dark(oklch(0.5 0.016 265),oklch(0.66 0.016 265));
+--vibeui-codeblock-024-gutter:light-dark(oklch(0.63 0.02 265),oklch(0.5 0.02 265));
+--vibeui-codeblock-024-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
+--vibeui-codeblock-024-del:light-dark(oklch(0.5 0.19 25),oklch(0.78 0.16 25));
+--vibeui-codeblock-024-del-bg:light-dark(oklch(0.72 0.17 25 / 22%),oklch(0.5 0.16 25 / 18%));
+--vibeui-codeblock-024-add:light-dark(oklch(0.47 0.15 152),oklch(0.82 0.15 152));
+--vibeui-codeblock-024-add-bg:light-dark(oklch(0.74 0.14 152 / 24%),oklch(0.5 0.14 152 / 18%));
+--vibeui-codeblock-024-void:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 4%));
 --vibeui-codeblock-024-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-024-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -121,12 +126,35 @@ const ROWS: Codeblock024Row[] = [
   { before: "}", after: "}" },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Две версии файла рядом: было слева, стало справа, строка напротив строки. */
 export function Codeblock024({
   path = "lib/total.ts",
   beforeLabel = "Было",
   afterLabel = "Стало",
   rows = ROWS,
+  background = "",
   className,
   style,
 }: Codeblock024Props) {
@@ -134,6 +162,15 @@ export function Codeblock024({
     { side: "before" as const, label: beforeLabel },
     { side: "after" as const, label: afterLabel },
   ]
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-024-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -143,7 +180,7 @@ export function Codeblock024({
       <figure
         data-vibeui-block="codeblock-024"
         className={className}
-        style={style}
+        style={palette}
       >
         <figcaption data-part="head">{path}</figcaption>
         <div data-part="shell">

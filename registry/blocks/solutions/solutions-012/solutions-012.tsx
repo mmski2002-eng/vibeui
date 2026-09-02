@@ -18,7 +18,19 @@ export type Solutions012Props = {
   paidSum?: string
   invoices?: Solutions012Invoice[]
   cta?: string
+  /** Подписи плиток итогов: ключи overdue, waiting, paid. */
+  summaryText?: Record<string, string>
+  /** Шапка таблицы: ключи number, client, issued, due, amount, status. */
+  columnText?: Record<string, string>
+  /** Пометка просрочки, {days} — число дней. */
+  overdueText?: string
+  /** Названия статусов: ключи paid, sent, draft, overdue. */
+  statusText?: Record<string, string>
+  /** Буквы статусов на кружке: те же ключи. */
+  statusLetterText?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -33,14 +45,15 @@ export type Solutions012Props = {
 // «до 2 марта» само по себе не говорит, что срок прошёл.
 const STYLES = `
 :where([data-vibeui-block="solutions-012"]){
---vibeui-solutions-012-bg:oklch(1 0 0);
---vibeui-solutions-012-panel:oklch(0.978 0.003 250);
---vibeui-solutions-012-fg:oklch(0.21 0.014 265);
---vibeui-solutions-012-muted:oklch(0.55 0.014 265);
---vibeui-solutions-012-border:oklch(0.9 0.006 265);
---vibeui-solutions-012-accent:oklch(0.5 0.17 265);
---vibeui-solutions-012-paid:oklch(0.55 0.14 152);
---vibeui-solutions-012-late:oklch(0.57 0.19 25);
+--vibeui-solutions-012-bg:transparent;
+--vibeui-solutions-012-panel:light-dark(oklch(0.978 0.003 250),oklch(0.27 0.011 255));
+--vibeui-solutions-012-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-012-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-solutions-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-solutions-012-accent:light-dark(oklch(0.5 0.17 265),oklch(0.71 0.16 265));
+--vibeui-solutions-012-paid:light-dark(oklch(0.55 0.14 152),oklch(0.74 0.14 152));
+--vibeui-solutions-012-late:light-dark(oklch(0.57 0.19 25),oklch(0.72 0.16 25));
+--vibeui-solutions-012-onaccent:light-dark(oklch(1 0 0),oklch(0.17 0.012 265));
 --vibeui-solutions-012-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-012-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -60,7 +73,7 @@ padding:0.875rem 1rem 0.75rem;
 [data-vibeui-block="solutions-012"] [data-part="hint"]{margin:0;font-size:0.75rem;color:var(--vibeui-solutions-012-muted)}
 [data-vibeui-block="solutions-012"] [data-part="cta"]{
 appearance:none;cursor:pointer;height:2.125rem;padding:0 0.875rem;border:0;border-radius:0.625rem;
-background:var(--vibeui-solutions-012-accent);color:oklch(1 0 0);
+background:var(--vibeui-solutions-012-accent);color:var(--vibeui-solutions-012-onaccent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="solutions-012"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-solutions-012-accent);outline-offset:2px}
@@ -75,7 +88,7 @@ border:1px solid var(--vibeui-solutions-012-border);
 }
 [data-vibeui-block="solutions-012"] [data-tile="late"]{
 border-color:color-mix(in oklab,var(--vibeui-solutions-012-late) 45%,transparent);
-background:color-mix(in oklab,var(--vibeui-solutions-012-late) 8%,var(--vibeui-solutions-012-bg));
+background:color-mix(in oklab,var(--vibeui-solutions-012-late) 10%,transparent);
 }
 [data-vibeui-block="solutions-012"] [data-part="tile"] b{
 display:block;font-size:1rem;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-0.015em;
@@ -125,14 +138,14 @@ color:var(--vibeui-solutions-012-paid);
 border-color:color-mix(in oklab,var(--vibeui-solutions-012-paid) 50%,transparent);
 }
 [data-vibeui-block="solutions-012"] [data-status="paid"] [data-part="letter"]{
-background:var(--vibeui-solutions-012-paid);color:oklch(1 0 0);
+background:var(--vibeui-solutions-012-paid);color:var(--vibeui-solutions-012-onaccent);
 }
 [data-vibeui-block="solutions-012"] [data-status="overdue"] [data-part="status"]{
 color:var(--vibeui-solutions-012-late);
 border-color:color-mix(in oklab,var(--vibeui-solutions-012-late) 50%,transparent);
 }
 [data-vibeui-block="solutions-012"] [data-status="overdue"] [data-part="letter"]{
-background:var(--vibeui-solutions-012-late);color:oklch(1 0 0);
+background:var(--vibeui-solutions-012-late);color:var(--vibeui-solutions-012-onaccent);
 }
 [data-vibeui-block="solutions-012"] [data-status="sent"] [data-part="status"]{color:var(--vibeui-solutions-012-accent)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="solutions-012"] *{animation:none!important;transition:none!important}}
@@ -182,12 +195,56 @@ const DEFAULT_INVOICES: Solutions012Invoice[] = [
   },
 ]
 
-const STATUS = {
-  paid: { letter: "О", label: "оплачен" },
-  sent: { letter: "В", label: "выставлен" },
-  draft: { letter: "Ч", label: "черновик" },
-  overdue: { letter: "!", label: "просрочен" },
-} as const
+const STATUS_LETTER: Record<string, string> = {
+  paid: "О",
+  sent: "В",
+  draft: "Ч",
+  overdue: "!",
+}
+
+const STATUS_LABEL: Record<string, string> = {
+  paid: "оплачен",
+  sent: "выставлен",
+  draft: "черновик",
+  overdue: "просрочен",
+}
+
+const DEFAULT_SUMMARY_TEXT: Record<string, string> = {
+  overdue: "просрочено",
+  waiting: "ждём оплату",
+  paid: "оплачено в марте",
+}
+
+const DEFAULT_COLUMN_TEXT: Record<string, string> = {
+  number: "Счёт",
+  client: "Клиент",
+  issued: "Выставлен",
+  due: "Оплатить до",
+  amount: "Сумма",
+  status: "Статус",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Реестр счетов: итоги по статусам сверху, просрочка помечена полосой и днями.
@@ -201,12 +258,24 @@ export function Solutions012({
   paidSum = "96 000 ₽",
   invoices = DEFAULT_INVOICES,
   cta = "Выставить счёт",
+  summaryText = DEFAULT_SUMMARY_TEXT,
+  columnText = DEFAULT_COLUMN_TEXT,
+  overdueText = "просрочка {days} дн.",
+  statusText = STATUS_LABEL,
+  statusLetterText = STATUS_LETTER,
   accent,
+  background = "",
   className,
   style,
 }: Solutions012Props) {
   const palette = {
     ...(accent ? { "--vibeui-solutions-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -234,15 +303,15 @@ export function Solutions012({
         <div data-part="summary">
           <p data-part="tile" data-tile="late">
             <b>{overdueSum}</b>
-            <span>просрочено</span>
+            <span>{summaryText.overdue ?? DEFAULT_SUMMARY_TEXT.overdue}</span>
           </p>
           <p data-part="tile">
             <b>{waitingSum}</b>
-            <span>ждём оплату</span>
+            <span>{summaryText.waiting ?? DEFAULT_SUMMARY_TEXT.waiting}</span>
           </p>
           <p data-part="tile">
             <b>{paidSum}</b>
-            <span>оплачено в марте</span>
+            <span>{summaryText.paid ?? DEFAULT_SUMMARY_TEXT.paid}</span>
           </p>
         </div>
 
@@ -250,14 +319,22 @@ export function Solutions012({
           <table>
             <thead>
               <tr>
-                <th scope="col">Счёт</th>
-                <th scope="col">Клиент</th>
-                <th scope="col">Выставлен</th>
-                <th scope="col">Оплатить до</th>
-                <th scope="col" data-align="end">
-                  Сумма
+                <th scope="col">
+                  {columnText.number ?? DEFAULT_COLUMN_TEXT.number}
                 </th>
-                <th scope="col">Статус</th>
+                <th scope="col">
+                  {columnText.client ?? DEFAULT_COLUMN_TEXT.client}
+                </th>
+                <th scope="col">
+                  {columnText.issued ?? DEFAULT_COLUMN_TEXT.issued}
+                </th>
+                <th scope="col">{columnText.due ?? DEFAULT_COLUMN_TEXT.due}</th>
+                <th scope="col" data-align="end">
+                  {columnText.amount ?? DEFAULT_COLUMN_TEXT.amount}
+                </th>
+                <th scope="col">
+                  {columnText.status ?? DEFAULT_COLUMN_TEXT.status}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -272,7 +349,10 @@ export function Solutions012({
                     {invoice.due}
                     {invoice.overdueDays ? (
                       <span data-part="late">
-                        просрочка {invoice.overdueDays} дн.
+                        {overdueText.replace(
+                          "{days}",
+                          String(invoice.overdueDays),
+                        )}
                       </span>
                     ) : null}
                   </td>
@@ -280,9 +360,11 @@ export function Solutions012({
                   <td>
                     <span data-part="status">
                       <span data-part="letter" aria-hidden="true">
-                        {STATUS[invoice.status].letter}
+                        {statusLetterText[invoice.status] ??
+                          STATUS_LETTER[invoice.status]}
                       </span>
-                      {STATUS[invoice.status].label}
+                      {statusText[invoice.status] ??
+                        STATUS_LABEL[invoice.status]}
                     </span>
                   </td>
                 </tr>

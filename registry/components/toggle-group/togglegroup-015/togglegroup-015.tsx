@@ -16,7 +16,15 @@ export type Togglegroup015Props = Omit<
   label?: string
   defaultValue?: string
   tasks?: Togglegroup015Task[]
+  /** Подписи фильтров: компонент несёт русские, проект подставляет свои. */
+  filterText?: Record<string, string>
+  /** Подписи статусов задач. */
+  statusText?: Record<Togglegroup015Task["status"], string>
+  /** Строка на месте пустого списка. */
+  emptyText?: string
   onChange?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,14 +32,18 @@ export type Togglegroup015Props = Omit<
 // есть счётчик. Число не зашито отдельно — оно всегда считается от того же
 // набора задач, что и сам список ниже, поэтому цифра на сегменте и то, что
 // покажет список после клика, никогда не разойдутся.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="togglegroup-015"]){
---vibeui-togglegroup-015-bg:oklch(1 0 0);
---vibeui-togglegroup-015-fg:oklch(0.22 0.014 265);
---vibeui-togglegroup-015-muted:oklch(0.55 0.014 265);
---vibeui-togglegroup-015-border:oklch(0.9 0.006 265);
---vibeui-togglegroup-015-surface:oklch(0.97 0.004 265);
---vibeui-togglegroup-015-accent:oklch(0.55 0.15 265);
+--vibeui-togglegroup-015-bg:transparent;
+--vibeui-togglegroup-015-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-togglegroup-015-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-togglegroup-015-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-togglegroup-015-surface:light-dark(oklch(0.97 0.004 265),oklch(0.28 0.011 265));
+--vibeui-togglegroup-015-accent:light-dark(oklch(0.55 0.15 265),oklch(0.73 0.13 265));
+--vibeui-togglegroup-015-on-accent:light-dark(oklch(0.99 0 0),oklch(0.18 0.012 265));
 --vibeui-togglegroup-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="togglegroup-015"]{
@@ -50,7 +62,7 @@ appearance:none;cursor:pointer;font:inherit;
 display:inline-flex;align-items:center;gap:0.375rem;
 height:2rem;padding:0 0.625rem 0 0.75rem;
 border:1px solid var(--vibeui-togglegroup-015-border);border-radius:9999px;
-background:var(--vibeui-togglegroup-015-bg);color:var(--vibeui-togglegroup-015-muted);
+background:transparent;color:var(--vibeui-togglegroup-015-muted);
 font-size:0.8125rem;font-weight:600;line-height:1;
 transition:background-color .15s ease,color .15s ease,border-color .15s ease;
 }
@@ -59,7 +71,7 @@ outline:2px solid var(--vibeui-togglegroup-015-accent);outline-offset:2px;
 }
 [data-vibeui-block="togglegroup-015"] button[aria-pressed="true"]{
 background:var(--vibeui-togglegroup-015-accent);border-color:var(--vibeui-togglegroup-015-accent);
-color:oklch(0.99 0 0);
+color:var(--vibeui-togglegroup-015-on-accent);
 }
 [data-vibeui-block="togglegroup-015"] [data-part="count"]{
 display:inline-flex;align-items:center;justify-content:center;
@@ -68,7 +80,8 @@ background:var(--vibeui-togglegroup-015-surface);color:var(--vibeui-togglegroup-
 font-size:0.6875rem;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="togglegroup-015"] button[aria-pressed="true"] [data-part="count"]{
-background:oklch(1 0 0 / 24%);color:oklch(0.99 0 0);
+background:color-mix(in oklab,var(--vibeui-togglegroup-015-on-accent) 22%,transparent);
+color:var(--vibeui-togglegroup-015-on-accent);
 }
 [data-vibeui-block="togglegroup-015"] ul{list-style:none;margin:0;padding:0;display:grid;gap:0.375rem}
 [data-vibeui-block="togglegroup-015"] li{
@@ -98,12 +111,36 @@ const DEFAULT_TASKS: Togglegroup015Task[] = [
   { id: "6", name: "Оплатить хостинг", status: "active" },
 ]
 
-const FILTERS: { id: string; label: string }[] = [
-  { id: "all", label: "Все" },
-  { id: "active", label: "Активные" },
-  { id: "done", label: "Завершённые" },
-  { id: "overdue", label: "Просроченные" },
-]
+const FILTERS = ["all", "active", "done", "overdue"]
+
+const FILTER_LABEL: Record<string, string> = {
+  all: "Все",
+  active: "Активные",
+  done: "Завершённые",
+  overdue: "Просроченные",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Фильтр-сегмент одиночным выбором со счётчиком в каждой кнопке: цифра
@@ -114,7 +151,11 @@ export function Togglegroup015({
   label = "Задачи",
   defaultValue = "all",
   tasks = DEFAULT_TASKS,
+  filterText = FILTER_LABEL,
+  statusText = STATUS_LABEL,
+  emptyText = "В этой категории пока пусто.",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -125,6 +166,12 @@ export function Togglegroup015({
 
   const palette = {
     ...(accent ? { "--vibeui-togglegroup-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-togglegroup-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -149,21 +196,22 @@ export function Togglegroup015({
       >
         <div data-part="group" role="group" aria-label={label}>
           {FILTERS.map((filter) => {
-            const count = countFor(filter.id)
+            const count = countFor(filter)
+            const caption = filterText[filter] ?? FILTER_LABEL[filter] ?? filter
 
             return (
               <button
-                key={filter.id}
+                key={filter}
                 type="button"
-                aria-pressed={value === filter.id}
-                aria-label={`${filter.label}, ${count}`}
+                aria-pressed={value === filter}
+                aria-label={`${caption}, ${count}`}
                 aria-controls={listId}
                 onClick={() => {
-                  setValue(filter.id)
-                  onChange?.(filter.id)
+                  setValue(filter)
+                  onChange?.(filter)
                 }}
               >
-                <span aria-hidden="true">{filter.label}</span>
+                <span aria-hidden="true">{caption}</span>
                 <span data-part="count" aria-hidden="true">
                   {count}
                 </span>
@@ -173,13 +221,14 @@ export function Togglegroup015({
         </div>
         {shown.length === 0 ? (
           <p data-part="empty" id={listId}>
-            В этой категории пока пусто.
+            {emptyText}
           </p>
         ) : (
           <ul id={listId}>
             {shown.map((task) => (
               <li key={task.id}>
-                {task.name} — {STATUS_LABEL[task.status]}
+                {task.name} —{" "}
+                {statusText[task.status] ?? STATUS_LABEL[task.status]}
               </li>
             ))}
           </ul>

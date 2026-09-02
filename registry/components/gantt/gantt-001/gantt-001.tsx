@@ -15,6 +15,10 @@ export type Gantt001Props = Omit<
   title?: string
   weeks?: string[]
   tasks?: Gantt001Task[]
+  /** Срок внутри полосы: {from} и {to} — подписи первой и последней недели. */
+  rangeText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,15 +28,19 @@ export type Gantt001Props = Omit<
 // при прокрутке вправо: план читают по строкам, а не по датам. Состояние
 // различается заливкой и рамкой одновременно — на печати и при дальтонизме
 // одного цвета мало. Сроки продублированы текстом внутри строки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="gantt-001"]){
---vibeui-gantt-001-bg:oklch(1 0 0);
---vibeui-gantt-001-fg:oklch(0.24 0.014 265);
---vibeui-gantt-001-muted:oklch(0.56 0.014 265);
---vibeui-gantt-001-border:oklch(0.92 0.006 265);
---vibeui-gantt-001-line:oklch(0.96 0.004 265);
---vibeui-gantt-001-accent:oklch(0.55 0.2 262);
---vibeui-gantt-001-done:oklch(0.58 0.14 152);
+--vibeui-gantt-001-bg:transparent;
+--vibeui-gantt-001-sticky:light-dark(oklch(0.995 0.001 265),oklch(0.19 0.008 265));
+--vibeui-gantt-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-gantt-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-gantt-001-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.012 265));
+--vibeui-gantt-001-line:light-dark(oklch(0.96 0.004 265),oklch(0.29 0.01 265));
+--vibeui-gantt-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
+--vibeui-gantt-001-done:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.13 152));
 --vibeui-gantt-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="gantt-001"]{
@@ -59,7 +67,7 @@ font-size:0.6875rem;color:var(--vibeui-gantt-001-muted);
 position:sticky;left:0;z-index:1;
 display:flex;flex-direction:column;gap:0.0625rem;justify-content:center;
 padding:0.375rem 0.625rem;
-background:var(--vibeui-gantt-001-bg);
+background:var(--vibeui-gantt-001-sticky);
 border-top:1px solid var(--vibeui-gantt-001-line);
 font-size:0.75rem;font-weight:600;
 }
@@ -73,17 +81,19 @@ min-height:2.25rem;
 [data-vibeui-block="gantt-001"] [data-part="bar"]{
 align-self:center;margin:0.25rem;padding:0.1875rem 0.5rem;
 border-radius:9999px;
-background:oklch(0.55 0.2 262 / 14%);
+background:color-mix(in oklab,var(--vibeui-gantt-001-accent) 16%,transparent);
 border:1px solid var(--vibeui-gantt-001-accent);
 color:var(--vibeui-gantt-001-fg);
 font-size:0.625rem;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="gantt-001"] [data-tone="plan"]{
-background:oklch(0.55 0.02 265 / 8%);border-style:dashed;border-color:var(--vibeui-gantt-001-muted);
+background:color-mix(in oklab,var(--vibeui-gantt-001-muted) 12%,transparent);
+border-style:dashed;border-color:var(--vibeui-gantt-001-muted);
 }
 [data-vibeui-block="gantt-001"] [data-tone="done"]{
-background:oklch(0.58 0.14 152 / 16%);border-color:var(--vibeui-gantt-001-done);
+background:color-mix(in oklab,var(--vibeui-gantt-001-done) 18%,transparent);
+border-color:var(--vibeui-gantt-001-done);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="gantt-001"] *{animation:none!important;transition:none!important}}
 `
@@ -111,6 +121,28 @@ const DEFAULT_TASKS: Gantt001Task[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * План работ полосами по неделям: длительность задаётся колонками грида.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -118,14 +150,25 @@ export function Gantt001({
   title = "План работ",
   weeks = DEFAULT_WEEKS,
   tasks = DEFAULT_TASKS,
+  rangeText = "{from} — {to}",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Gantt001Props) {
+  // Липкая колонка названий закрывает собой ячейки при прокрутке, поэтому
+  // её подложка едет вместе с фоном компонента.
   const palette = {
     "--vibeui-gantt-001-weeks": weeks.length,
     ...(accent ? { "--vibeui-gantt-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-gantt-001-bg": background,
+          "--vibeui-gantt-001-sticky": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -186,7 +229,9 @@ export function Gantt001({
                 } as CSSProperties
               }
             >
-              {weeks[task.start - 1]} — {weeks[task.start + task.span - 2]}
+              {rangeText
+                .replace("{from}", weeks[task.start - 1] ?? "")
+                .replace("{to}", weeks[task.start + task.span - 2] ?? "")}
             </span>
           ))}
         </div>

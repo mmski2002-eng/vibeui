@@ -8,13 +8,23 @@ import type {
   KeyboardEvent,
 } from "react"
 
+export type Sortable002Announcement =
+  "picked" | "dropped" | "moved" | "edge" | "cancelled" | "dragged"
+
 export type Sortable002Props = Omit<
   ComponentPropsWithoutRef<"div">,
   "children" | "onChange"
 > & {
   title?: string
+  hint?: string
   items?: string[]
   onChange?: (items: string[]) => void
+  /** Подпись ручки: {item} — строка, {position} — номер, {total} — всего. */
+  gripLabel?: string
+  /** Реплики живой области: те же подстановки, ключи из Sortable002Announcement. */
+  announcements?: Record<Sortable002Announcement, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,12 +37,13 @@ export type Sortable002Props = Omit<
 // области: без озвучки перенос вслепую невозможен.
 const STYLES = `
 :where([data-vibeui-block="sortable-002"]){
---vibeui-sortable-002-bg:oklch(1 0 0);
---vibeui-sortable-002-row:oklch(0.99 0.002 265);
---vibeui-sortable-002-fg:oklch(0.24 0.014 265);
---vibeui-sortable-002-muted:oklch(0.56 0.014 265);
---vibeui-sortable-002-border:oklch(0.9 0.006 265);
---vibeui-sortable-002-accent:oklch(0.55 0.2 262);
+--vibeui-sortable-002-bg:transparent;
+--vibeui-sortable-002-row:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.011 265));
+--vibeui-sortable-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-sortable-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-sortable-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-sortable-002-shadow:light-dark(oklch(0.2 0.02 265 / 16%),oklch(0 0 0 / 46%));
+--vibeui-sortable-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
 --vibeui-sortable-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="sortable-002"]{
@@ -56,7 +67,7 @@ transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;
 /* Поднятая строка отличается тенью и сдвигом: цвет рамки один не читается. */
 [data-vibeui-block="sortable-002"] li[data-held="true"]{
 border-color:var(--vibeui-sortable-002-accent);
-box-shadow:0 8px 18px oklch(0.2 0.02 265 / 16%);
+box-shadow:0 8px 18px var(--vibeui-sortable-002-shadow);
 transform:translateY(-1px);
 }
 [data-vibeui-block="sortable-002"] li[data-dragging="true"]{opacity:.45}
@@ -84,6 +95,38 @@ clip-path:inset(50%);white-space:nowrap;border:0;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="sortable-002"] *{animation:none!important;transition:none!important}}
 `
 
+const DEFAULT_ANNOUNCEMENTS: Record<Sortable002Announcement, string> = {
+  picked:
+    "«{item}» взята, позиция {position} из {total}. Стрелки вверх и вниз несут строку.",
+  dropped: "«{item}» положена на позицию {position} из {total}.",
+  moved: "«{item}» на позиции {position} из {total}.",
+  edge: "Край списка, «{item}» на позиции {position} из {total}.",
+  cancelled: "Перенос отменён, «{item}» вернулась на позицию {position}.",
+  dragged: "«{item}» перенесена на позицию {position} из {total}.",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 const DEFAULT_ITEMS = [
   "Обложка",
   "Описание объекта",
@@ -98,8 +141,12 @@ const DEFAULT_ITEMS = [
  */
 export function Sortable002({
   title = "Порядок разделов",
+  hint = "Мышью — за ручку. С клавиатуры: пробел берёт строку, стрелки несут, пробел кладёт, Escape отменяет.",
   items = DEFAULT_ITEMS,
   onChange,
+  gripLabel = "Перенести «{item}», позиция {position} из {total}",
+  announcements = DEFAULT_ANNOUNCEMENTS,
+  background = "",
   accent,
   className,
   style,
@@ -117,6 +164,17 @@ export function Sortable002({
     onChange?.(next)
   }
 
+  const say = (
+    key: Sortable002Announcement,
+    row: string,
+    position: number,
+    total: number,
+  ) =>
+    (announcements[key] ?? DEFAULT_ANNOUNCEMENTS[key])
+      .replace("{item}", row)
+      .replace("{position}", String(position))
+      .replace("{total}", String(total))
+
   const move = (from: number, to: number) => {
     const next = [...order]
     const [row] = next.splice(from, 1)
@@ -133,15 +191,11 @@ export function Sortable002({
 
       if (held === row) {
         setHeld(null)
-        setAnnouncement(
-          `«${row}» положена на позицию ${index + 1} из ${order.length}.`,
-        )
+        setAnnouncement(say("dropped", row, index + 1, order.length))
       } else {
         setHeld(row)
         setSnapshot(order)
-        setAnnouncement(
-          `«${row}» взята, позиция ${index + 1} из ${order.length}. Стрелки вверх и вниз несут строку.`,
-        )
+        setAnnouncement(say("picked", row, index + 1, order.length))
       }
 
       return
@@ -152,7 +206,7 @@ export function Sortable002({
       apply(snapshot)
       setHeld(null)
       setAnnouncement(
-        `Перенос отменён, «${row}» вернулась на позицию ${snapshot.indexOf(row) + 1}.`,
+        say("cancelled", row, snapshot.indexOf(row) + 1, snapshot.length),
       )
       return
     }
@@ -164,14 +218,12 @@ export function Sortable002({
       const to = index + (event.key === "ArrowUp" ? -1 : 1)
 
       if (to < 0 || to >= order.length) {
-        setAnnouncement(
-          `Край списка, «${row}» на позиции ${index + 1} из ${order.length}.`,
-        )
+        setAnnouncement(say("edge", row, index + 1, order.length))
         return
       }
 
       move(index, to)
-      setAnnouncement(`«${row}» на позиции ${to + 1} из ${order.length}.`)
+      setAnnouncement(say("moved", row, to + 1, order.length))
     }
   }
 
@@ -182,13 +234,19 @@ export function Sortable002({
 
     const next = move(order.indexOf(dragged), order.indexOf(target))
     setAnnouncement(
-      `«${dragged}» перенесена на позицию ${next.indexOf(dragged) + 1} из ${next.length}.`,
+      say("dragged", dragged, next.indexOf(dragged) + 1, next.length),
     )
     setDragged(null)
   }
 
   const palette = {
     ...(accent ? { "--vibeui-sortable-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-sortable-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -204,10 +262,7 @@ export function Sortable002({
         style={palette}
       >
         <h3>{title}</h3>
-        <p data-part="hint">
-          Мышью — за ручку. С клавиатуры: пробел берёт строку, стрелки несут,
-          пробел кладёт, Escape отменяет.
-        </p>
+        <p data-part="hint">{hint}</p>
         <ol>
           {order.map((row, index) => (
             <li
@@ -231,7 +286,10 @@ export function Sortable002({
                 type="button"
                 data-part="grip"
                 aria-pressed={row === held}
-                aria-label={`Перенести «${row}», позиция ${index + 1} из ${order.length}`}
+                aria-label={gripLabel
+                  .replace("{item}", row)
+                  .replace("{position}", String(index + 1))
+                  .replace("{total}", String(order.length))}
                 onKeyDown={(event) => handleKey(event, row)}
                 onBlur={() => {
                   if (held === row) setHeld(null)

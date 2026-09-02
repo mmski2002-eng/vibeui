@@ -9,6 +9,10 @@ export type Scrollarea007Props = Omit<
   height?: string
   /** Ширина полосы прокрутки в запасном варианте на WebKit. */
   barWidth?: string
+  /** Подпись в подвале. */
+  note?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: тонкая полоса прокрутки объявлена дважды. Сначала
@@ -16,16 +20,19 @@ export type Scrollarea007Props = Omit<
 // свежие Chrome с Safari. Потом, под @supports not, тот же вид собирается
 // псевдоэлементами ::-webkit-scrollbar для старых сборок. Полосу не прячем:
 // без неё исчезает и признак прокрутки, и возможность тащить её мышью.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, а бегунок и дорожка получают свои пары.
 const STYLES = `
 :where([data-vibeui-block="scrollarea-007"]){
---vibeui-scrollarea-007-bg:oklch(1 0 0);
---vibeui-scrollarea-007-fg:oklch(0.26 0.014 265);
---vibeui-scrollarea-007-muted:oklch(0.55 0.014 265);
---vibeui-scrollarea-007-border:oklch(0.9 0.006 265);
---vibeui-scrollarea-007-thumb:oklch(0.78 0.02 265);
---vibeui-scrollarea-007-thumb-hover:oklch(0.66 0.03 265);
---vibeui-scrollarea-007-track:oklch(0.96 0.004 265);
---vibeui-scrollarea-007-accent:oklch(0.55 0.17 265);
+--vibeui-scrollarea-007-bg:transparent;
+--vibeui-scrollarea-007-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.006 265));
+--vibeui-scrollarea-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-scrollarea-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.33 0.012 265));
+--vibeui-scrollarea-007-thumb:light-dark(oklch(0.78 0.02 265),oklch(0.45 0.02 265));
+--vibeui-scrollarea-007-thumb-hover:light-dark(oklch(0.66 0.03 265),oklch(0.58 0.03 265));
+--vibeui-scrollarea-007-track:light-dark(oklch(0.96 0.004 265),oklch(0.26 0.01 265));
+--vibeui-scrollarea-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-scrollarea-007-height:12rem;
 --vibeui-scrollarea-007-bar:0.5rem;
 --vibeui-scrollarea-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -93,6 +100,28 @@ const DEFAULT_TEXT = [
 ].join("\n\n")
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Область с тонкой стилизованной полосой прокрутки и запасным вариантом.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -101,6 +130,8 @@ export function Scrollarea007({
   text = DEFAULT_TEXT,
   height = "12rem",
   barWidth = "0.5rem",
+  note = "Полоса прокрутки остаётся видимой",
+  background = "",
   className,
   style,
   ...props
@@ -109,6 +140,12 @@ export function Scrollarea007({
   const palette = {
     "--vibeui-scrollarea-007-height": height,
     "--vibeui-scrollarea-007-bar": barWidth,
+    ...(background
+      ? {
+          "--vibeui-scrollarea-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -131,7 +168,7 @@ export function Scrollarea007({
             ))}
           </div>
         </div>
-        <div data-part="foot">Полоса прокрутки остаётся видимой</div>
+        <div data-part="foot">{note}</div>
       </div>
     </>
   )

@@ -8,6 +8,8 @@ export type Aspect001Props = Omit<
   ratio?: string
   /** Подпись поверх подложки, пока содержимого нет. */
   label?: string
+  /** Пусто — подложки нет, рамка лежит прямо на фоне страницы. */
+  background?: string
   children?: ReactNode
 }
 
@@ -15,12 +17,15 @@ export type Aspect001Props = Omit<
 // до загрузки содержимого. Соотношение приходит переменной, а не классом:
 // «16 / 9» и «4 / 3» — это данные, а плодить класс на каждую пропорцию значит
 // заранее решать за пользователя, какие ему понадобятся.
+//
+// Тема берётся из color-scheme окружения через light-dark(): рамка темнеет
+// вместе со страницей и не выкладывает под себя плашку.
 const STYLES = `
 :where([data-vibeui-block="aspect-001"]){
 --vibeui-aspect-001-ratio:16 / 9;
---vibeui-aspect-001-bg:oklch(0.955 0.005 265);
---vibeui-aspect-001-fg:oklch(0.5 0.014 265);
---vibeui-aspect-001-border:oklch(0.9 0.006 265);
+--vibeui-aspect-001-bg:transparent;
+--vibeui-aspect-001-fg:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-aspect-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-aspect-001-radius:0.75rem;
 --vibeui-aspect-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -53,12 +58,35 @@ opacity:.5;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Рамка заданного соотношения: держит место до загрузки содержимого.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Aspect001({
   ratio = "16 / 9",
   label = "16 / 9",
+  background = "",
   children,
   className,
   style,
@@ -66,6 +94,12 @@ export function Aspect001({
 }: Aspect001Props) {
   const palette = {
     "--vibeui-aspect-001-ratio": ratio,
+    ...(background
+      ? {
+          "--vibeui-aspect-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

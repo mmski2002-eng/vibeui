@@ -17,6 +17,10 @@ export type Drawer007Props = Omit<
   sections?: Drawer007Section[]
   agreeLabel?: string
   acceptLabel?: string
+  /** Имя крестика для скринридера. */
+  closeLabel?: string
+  /** Пусто — подложки нет, триггер лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,11 +30,14 @@ export type Drawer007Props = Omit<
 // конца документа, и видно, в каком разделе сейчас находишься.
 const STYLES = `
 :where([data-vibeui-block="drawer-007"]){
---vibeui-drawer-007-bg:oklch(1 0 0);
---vibeui-drawer-007-fg:oklch(0.21 0.014 265);
---vibeui-drawer-007-muted:oklch(0.55 0.014 265);
---vibeui-drawer-007-border:oklch(0.91 0.006 265);
---vibeui-drawer-007-accent:oklch(0.55 0.17 265);
+--vibeui-drawer-007-bg:transparent;
+--vibeui-drawer-007-surface:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
+--vibeui-drawer-007-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-drawer-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-drawer-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-drawer-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
+--vibeui-drawer-007-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.02 265));
+--vibeui-drawer-007-hover:light-dark(oklch(0.96 0.004 265),oklch(0.29 0.013 265));
 --vibeui-drawer-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="drawer-007"]{
@@ -46,7 +53,7 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 [data-vibeui-block="drawer-007"] dialog{
 position:fixed;inset:0 0 0 auto;margin:0;
 width:min(30rem,100vw);max-width:100vw;height:100dvh;max-height:100dvh;
-padding:0;border:0;background:var(--vibeui-drawer-007-bg);color:inherit;
+padding:0;border:0;background:var(--vibeui-drawer-007-surface);color:inherit;
 box-shadow:-24px 0 60px -30px oklch(0.2 0.02 265 / 55%);
 translate:100% 0;transition:translate .22s ease,overlay .22s allow-discrete,display .22s allow-discrete;
 }
@@ -66,7 +73,7 @@ appearance:none;border:0;cursor:pointer;background:transparent;flex:none;
 display:flex;align-items:center;justify-content:center;
 width:2rem;height:2rem;border-radius:0.5rem;color:var(--vibeui-drawer-007-muted);
 }
-[data-vibeui-block="drawer-007"] [data-part="close"]:hover{background:oklch(0.96 0.004 265);color:var(--vibeui-drawer-007-fg)}
+[data-vibeui-block="drawer-007"] [data-part="close"]:hover{background:var(--vibeui-drawer-007-hover);color:var(--vibeui-drawer-007-fg)}
 [data-vibeui-block="drawer-007"] [data-part="close"]:focus-visible{outline:2px solid var(--vibeui-drawer-007-accent);outline-offset:2px}
 [data-vibeui-block="drawer-007"] [data-part="cross"]{position:relative;width:0.625rem;height:0.625rem}
 [data-vibeui-block="drawer-007"] [data-part="cross"]::before,
@@ -83,7 +90,7 @@ flex:1;min-height:0;overflow-y:auto;padding:0 1.125rem 1rem;
 /* Заголовок раздела прилипает: видно, где ты, не поднимаясь наверх. */
 [data-vibeui-block="drawer-007"] [data-part="heading"]{
 position:sticky;top:0;z-index:1;margin:0;
-padding:0.75rem 0 0.5rem;background:var(--vibeui-drawer-007-bg);
+padding:0.75rem 0 0.5rem;background:var(--vibeui-drawer-007-surface);
 font-size:0.75rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
 color:var(--vibeui-drawer-007-muted);
 box-shadow:0 1px 0 var(--vibeui-drawer-007-border);
@@ -94,7 +101,7 @@ margin:0.75rem 0 1.25rem;font-size:0.875rem;line-height:1.6;
 [data-vibeui-block="drawer-007"] [data-part="foot"]{
 display:flex;flex-direction:column;gap:0.625rem;
 padding:0.875rem 1.125rem calc(0.875rem + env(safe-area-inset-bottom,0px));
-border-top:1px solid var(--vibeui-drawer-007-border);background:var(--vibeui-drawer-007-bg);
+border-top:1px solid var(--vibeui-drawer-007-border);background:var(--vibeui-drawer-007-surface);
 }
 [data-vibeui-block="drawer-007"] [data-part="agree"]{
 display:flex;align-items:flex-start;gap:0.5rem;cursor:pointer;font-size:0.8125rem;line-height:1.4;
@@ -102,20 +109,20 @@ display:flex;align-items:flex-start;gap:0.5rem;cursor:pointer;font-size:0.8125re
 [data-vibeui-block="drawer-007"] [data-part="agree"] input{
 appearance:none;flex:none;width:1.125rem;height:1.125rem;margin:0.0625rem 0 0;
 border:1.5px solid var(--vibeui-drawer-007-border);border-radius:0.375rem;
-background:var(--vibeui-drawer-007-bg);cursor:pointer;position:relative;
+background:var(--vibeui-drawer-007-surface);cursor:pointer;position:relative;
 }
 [data-vibeui-block="drawer-007"] [data-part="agree"] input:checked{
 background:var(--vibeui-drawer-007-accent);border-color:var(--vibeui-drawer-007-accent);
 }
 [data-vibeui-block="drawer-007"] [data-part="agree"] input:checked::after{
 content:"";position:absolute;left:0.3125rem;top:0.125rem;
-width:0.25rem;height:0.5rem;border:solid oklch(0.99 0.01 265);
+width:0.25rem;height:0.5rem;border:solid var(--vibeui-drawer-007-on-accent);
 border-width:0 2px 2px 0;transform:rotate(45deg);
 }
 [data-vibeui-block="drawer-007"] [data-part="agree"] input:focus-visible{outline:2px solid var(--vibeui-drawer-007-accent);outline-offset:2px}
 [data-vibeui-block="drawer-007"] [data-part="accept"]{
 appearance:none;border:0;cursor:pointer;width:100%;height:2.75rem;border-radius:0.75rem;
-background:var(--vibeui-drawer-007-accent);color:oklch(0.99 0.01 265);
+background:var(--vibeui-drawer-007-accent);color:var(--vibeui-drawer-007-on-accent);
 font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="drawer-007"] [data-part="accept"]:disabled{cursor:not-allowed;opacity:.45}
@@ -146,6 +153,28 @@ const DEFAULT_SECTIONS: Drawer007Section[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Ящик во всю высоту: липкие заголовки разделов и подвал с согласием.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -155,6 +184,8 @@ export function Drawer007({
   sections = DEFAULT_SECTIONS,
   agreeLabel = "Я прочитал условия и согласен с ними",
   acceptLabel = "Принять",
+  closeLabel = "Закрыть панель",
+  background = "",
   accent,
   className,
   style,
@@ -165,6 +196,13 @@ export function Drawer007({
 
   const palette = {
     ...(accent ? { "--vibeui-drawer-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-drawer-007-bg": background,
+          "--vibeui-drawer-007-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -201,7 +239,7 @@ export function Drawer007({
               <button
                 type="button"
                 data-part="close"
-                aria-label="Закрыть панель"
+                aria-label={closeLabel}
                 onClick={() => drawer.current?.close()}
               >
                 <span data-part="cross" aria-hidden="true" />

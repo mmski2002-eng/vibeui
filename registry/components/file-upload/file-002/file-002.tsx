@@ -15,7 +15,17 @@ export type File002Props = Omit<
 > & {
   label?: string
   accept?: string
+  /** Доступное имя зоны для скринридера. */
+  zoneLabel?: string
+  /** Перечень способов в зоне: drag, pick, paste. */
+  wayText?: Record<string, string>
+  /** Пометка, как файл попал в список: drop, pick, paste. */
+  viaText?: Record<string, string>
+  /** Имя для файла из буфера: у него его часто нет. */
+  clipboardName?: string
   onChange?: (names: string[]) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,19 +34,22 @@ export type File002Props = Omit<
 // и пробелу, а ещё принимает вставку из буфера — скриншот в буфере после
 // PrtScn кладётся сюда одним Ctrl+V, без промежуточного файла на диске.
 // Все три способа перечислены в самой зоне: невидимая возможность не существует.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у панели
+// по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="file-002"]){
---vibeui-file-002-bg:oklch(1 0 0);
---vibeui-file-002-surface:oklch(1 0 0);
---vibeui-file-002-fg:oklch(0.23 0.014 265);
---vibeui-file-002-muted:oklch(0.55 0.014 265);
---vibeui-file-002-border:oklch(0.87 0.008 265);
---vibeui-file-002-shell:oklch(0.91 0.006 265);
---vibeui-file-002-key:oklch(0.965 0.004 265);
---vibeui-file-002-accent:oklch(0.53 0.18 290);
+--vibeui-file-002-bg:transparent;
+--vibeui-file-002-surface:transparent;
+--vibeui-file-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-file-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-file-002-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-file-002-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-file-002-key:light-dark(oklch(0.965 0.004 265),oklch(0.3 0.012 265));
+--vibeui-file-002-accent:light-dark(oklch(0.53 0.18 290),oklch(0.74 0.16 290));
 --vibeui-file-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: зону показывают поверх любого фона. */
+/* Панель без собственной заливки: рамка очерчивает её на любом фоне. */
 [data-vibeui-block="file-002"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:23rem;box-sizing:border-box;padding:0.875rem;
@@ -60,7 +73,7 @@ border-color:var(--vibeui-file-002-accent);
 }
 [data-vibeui-block="file-002"][data-over="true"] [data-part="zone"]{
 border-color:var(--vibeui-file-002-accent);border-style:solid;
-background:color-mix(in oklab,var(--vibeui-file-002-accent) 8%,oklch(1 0 0));
+background:color-mix(in oklab,var(--vibeui-file-002-accent) 10%,transparent);
 }
 [data-vibeui-block="file-002"] input[type="file"]{
 position:absolute;width:1px;height:1px;padding:0;margin:-1px;
@@ -110,6 +123,40 @@ flex:none;font-size:0.6875rem;color:var(--vibeui-file-002-muted);
 
 type Taken = { name: string; via: string }
 
+const WAY_TEXT: Record<string, string> = {
+  drag: "перетащить",
+  pick: "выбрать",
+  paste: "вставить",
+}
+
+const VIA_TEXT: Record<string, string> = {
+  drop: "перетащен",
+  pick: "выбран",
+  paste: "из буфера",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Зона загрузки с тремя путями: перетаскивание, клавиатура и вставка из буфера.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -117,7 +164,12 @@ type Taken = { name: string; via: string }
 export function File002({
   label = "Перетащите файлы или вставьте из буфера",
   accept = "image/*,application/pdf",
+  zoneLabel = "Добавить файлы: перетащите, нажмите Enter или вставьте из буфера",
+  wayText = WAY_TEXT,
+  viaText = VIA_TEXT,
+  clipboardName = "Из буфера обмена",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -129,14 +181,20 @@ export function File002({
 
   const palette = {
     ...(accent ? { "--vibeui-file-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-file-002-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
   const collect = (list: FileList | null, via: string) => {
     if (!list || list.length === 0) return
     const next = Array.from(list).map((file) => ({
-      name: file.name || "Из буфера обмена",
-      via,
+      name: file.name || clipboardName,
+      via: viaText[via] ?? VIA_TEXT[via],
     }))
     setTaken(next)
     onChange?.(next.map((entry) => entry.name))
@@ -145,7 +203,7 @@ export function File002({
   const onDrop = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault()
     setOver(false)
-    collect(event.dataTransfer.files, "перетащен")
+    collect(event.dataTransfer.files, "drop")
   }
 
   // Enter и пробел открывают тот же системный диалог, что и клик.
@@ -158,7 +216,7 @@ export function File002({
   const onPaste = (event: ClipboardEvent<HTMLDivElement>) => {
     if (!event.clipboardData.files.length) return
     event.preventDefault()
-    collect(event.clipboardData.files, "из буфера")
+    collect(event.clipboardData.files, "paste")
   }
 
   return (
@@ -177,7 +235,7 @@ export function File002({
           data-part="zone"
           role="button"
           tabIndex={0}
-          aria-label="Добавить файлы: перетащите, нажмите Enter или вставьте из буфера"
+          aria-label={zoneLabel}
           onClick={() => picker.current?.click()}
           onKeyDown={onKeyDown}
           onPaste={onPaste}
@@ -191,12 +249,12 @@ export function File002({
           <span data-part="plate" aria-hidden="true" />
           <span data-part="title">{label}</span>
           <ul data-part="ways">
-            <li>перетащить</li>
+            <li>{wayText.drag ?? WAY_TEXT.drag}</li>
             <li>
-              <kbd>Enter</kbd> выбрать
+              <kbd>Enter</kbd> {wayText.pick ?? WAY_TEXT.pick}
             </li>
             <li>
-              <kbd>Ctrl</kbd> + <kbd>V</kbd> вставить
+              <kbd>Ctrl</kbd> + <kbd>V</kbd> {wayText.paste ?? WAY_TEXT.paste}
             </li>
           </ul>
           <input
@@ -205,7 +263,7 @@ export function File002({
             multiple
             accept={accept}
             tabIndex={-1}
-            onChange={(event) => collect(event.target.files, "выбран")}
+            onChange={(event) => collect(event.target.files, "pick")}
           />
         </div>
         {taken.length ? (

@@ -10,6 +10,15 @@ export type Date006Props = Omit<
   label?: string
   defaultValue?: string
   soonInDays?: number
+  /**
+   * Тексты состояний: ключи idle, past, today, ahead и overdue.
+   * В past и ahead подставляется {days} — уже просклонённый срок.
+   */
+  statusText?: Record<string, string>
+  /** Склонения дней с подстановкой {count}: ключи one, few и many. */
+  daysText?: Record<string, string>
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,21 +29,24 @@ export type Date006Props = Omit<
 // вычисляется после монтирования: считать его при отрисовке значит получить на
 // сервере и на клиенте разные даты и расхождение при гидратации. До первого
 // эффекта состояние нейтральное — это честнее, чем мигнуть ложной тревогой.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="date-006"]){
---vibeui-date-006-surface:oklch(1 0 0);
---vibeui-date-006-field:oklch(1 0 0);
---vibeui-date-006-shell:oklch(0.9 0.006 265);
---vibeui-date-006-fg:oklch(0.23 0.014 265);
---vibeui-date-006-muted:oklch(0.55 0.014 265);
---vibeui-date-006-border:oklch(0.88 0.008 265);
---vibeui-date-006-ok:oklch(0.55 0.14 160);
---vibeui-date-006-soon:oklch(0.66 0.15 70);
---vibeui-date-006-past:oklch(0.56 0.19 25);
+--vibeui-date-006-surface:transparent;
+--vibeui-date-006-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-date-006-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-date-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-date-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-date-006-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-date-006-ok:light-dark(oklch(0.55 0.14 160),oklch(0.78 0.13 160));
+--vibeui-date-006-soon:light-dark(oklch(0.66 0.15 70),oklch(0.82 0.14 70));
+--vibeui-date-006-past:light-dark(oklch(0.56 0.19 25),oklch(0.75 0.16 25));
 --vibeui-date-006-accent:var(--vibeui-date-006-ok);
 --vibeui-date-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: рамка держит форму, фон приходит со страницы. */
 [data-vibeui-block="date-006"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -92,13 +104,51 @@ function midnight(value: string) {
   return new Date(year, month - 1, day).getTime()
 }
 
-function daysWord(count: number) {
+const STATUS_TEXT: Record<string, string> = {
+  idle: "Срок сверяется с сегодняшним днём после загрузки.",
+  past: "Срок прошёл {days} назад.",
+  today: "Срок истекает сегодня.",
+  ahead: "В запасе {days}.",
+  overdue: "Просрочено.",
+}
+
+const DAYS_TEXT: Record<string, string> = {
+  one: "{count} день",
+  few: "{count} дня",
+  many: "{count} дней",
+}
+
+// Русские склонения: 1 день, 2–4 дня, остальное — дней, кроме подростковых.
+function pluralKey(count: number) {
   const tail = count % 10
   const teen = count % 100
-  if (teen > 10 && teen < 20) return "дней"
-  if (tail === 1) return "день"
-  if (tail > 1 && tail < 5) return "дня"
-  return "дней"
+  if (teen > 10 && teen < 20) return "many"
+  if (tail === 1) return "one"
+  if (tail > 1 && tail < 5) return "few"
+  return "many"
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -109,6 +159,9 @@ export function Date006({
   label = "Срок сдачи",
   defaultValue = "2026-09-04",
   soonInDays = 3,
+  statusText = STATUS_TEXT,
+  daysText = DAYS_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -138,17 +191,30 @@ export function Date006({
           ? "soon"
           : "ok"
 
+  const line = (key: string) => statusText[key] ?? STATUS_TEXT[key]
+  const days = (count: number) =>
+    (daysText[pluralKey(count)] ?? DAYS_TEXT[pluralKey(count)]).replace(
+      "{count}",
+      String(count),
+    )
+
   const message =
     left === null
-      ? "Срок сверяется с сегодняшним днём после загрузки."
+      ? line("idle")
       : left < 0
-        ? `Срок прошёл ${Math.abs(left)} ${daysWord(Math.abs(left))} назад.`
+        ? line("past").replace("{days}", days(Math.abs(left)))
         : left === 0
-          ? "Срок истекает сегодня."
-          : `В запасе ${left} ${daysWord(left)}.`
+          ? line("today")
+          : line("ahead").replace("{days}", days(left))
 
   const palette = {
     ...(accent ? { "--vibeui-date-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-date-006-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -178,7 +244,7 @@ export function Date006({
           data-idle={state === "idle"}
           aria-live="polite"
         >
-          {state === "past" ? <b>Просрочено.</b> : null}
+          {state === "past" ? <b>{line("overdue")}</b> : null}
           {message}
         </p>
       </div>

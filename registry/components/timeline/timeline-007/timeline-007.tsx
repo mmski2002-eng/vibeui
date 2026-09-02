@@ -13,6 +13,8 @@ export type Timeline007Props = Omit<
   stages?: Timeline007Stage[]
   title?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: этапы разложены по горизонтали, потому что так читается
@@ -20,14 +22,18 @@ export type Timeline007Props = Omit<
 // следующего кружка: он красится в цвет пройденного отрезка и обрывается на
 // последнем узле. На узкой ширине лента не ломается в столбец, а прокручивается
 // со scroll-snap: горизонтальный путь, свёрнутый в вертикальный, врёт про порядок.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// становится тёмным там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="timeline-007"]){
---vibeui-timeline-007-bg:oklch(1 0 0);
---vibeui-timeline-007-fg:oklch(0.22 0.014 265);
---vibeui-timeline-007-muted:oklch(0.57 0.014 265);
---vibeui-timeline-007-border:oklch(0.91 0.006 265);
---vibeui-timeline-007-done:oklch(0.58 0.14 152);
---vibeui-timeline-007-accent:oklch(0.55 0.18 262);
+--vibeui-timeline-007-bg:transparent;
+--vibeui-timeline-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-timeline-007-muted:light-dark(oklch(0.57 0.014 265),oklch(0.69 0.012 265));
+--vibeui-timeline-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-timeline-007-done:light-dark(oklch(0.58 0.14 152),oklch(0.72 0.14 152));
+--vibeui-timeline-007-on-done:light-dark(oklch(1 0 0),oklch(0.19 0.04 152));
+--vibeui-timeline-007-accent:light-dark(oklch(0.55 0.18 262),oklch(0.74 0.16 262));
 --vibeui-timeline-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="timeline-007"]{
@@ -67,7 +73,7 @@ font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="timeline-007"] li[data-state="done"] [data-part="node"]{
 border-color:var(--vibeui-timeline-007-done);background:var(--vibeui-timeline-007-done);
-color:oklch(1 0 0);
+color:var(--vibeui-timeline-007-on-done);
 }
 [data-vibeui-block="timeline-007"] li[data-state="current"] [data-part="node"]{
 border-color:var(--vibeui-timeline-007-accent);color:var(--vibeui-timeline-007-accent);
@@ -88,6 +94,28 @@ const DEFAULT_STAGES: Timeline007Stage[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Горизонтальная лента этапов: соединитель красится пройденным, узкий блок прокручивается.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -95,12 +123,19 @@ export function Timeline007({
   stages = DEFAULT_STAGES,
   title = "Этапы сделки",
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Timeline007Props) {
   const palette = {
     ...(accent ? { "--vibeui-timeline-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-timeline-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

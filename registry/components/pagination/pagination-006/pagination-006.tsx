@@ -7,6 +7,10 @@ export type Pagination006Props = {
   total?: number
   batch?: number
   height?: string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labelText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -18,13 +22,13 @@ export type Pagination006Props = {
 // недоступна. Итог догрузки объявляется через aria-live, иначе он проходит мимо.
 const STYLES = `
 :where([data-vibeui-block="pagination-006"]){
---vibeui-pagination-006-bg:oklch(1 0 0);
---vibeui-pagination-006-row:oklch(0.975 0.003 265);
---vibeui-pagination-006-fg:oklch(0.24 0.014 265);
---vibeui-pagination-006-muted:oklch(0.55 0.014 265);
---vibeui-pagination-006-border:oklch(0.91 0.006 265);
---vibeui-pagination-006-hover:oklch(0.55 0.02 265 / 8%);
---vibeui-pagination-006-accent:oklch(0.55 0.2 262);
+--vibeui-pagination-006-bg:transparent;
+--vibeui-pagination-006-row:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.009 265));
+--vibeui-pagination-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-pagination-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-pagination-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.012 265));
+--vibeui-pagination-006-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.82 0.02 265 / 14%));
+--vibeui-pagination-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
 --vibeui-pagination-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="pagination-006"]{
@@ -68,6 +72,37 @@ font:inherit;font-size:0.75rem;color:var(--vibeui-pagination-006-accent);border-
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="pagination-006"] *{animation:none!important;transition:none!important}}
 `
 
+const LABEL: Record<string, string> = {
+  feed: "Лента",
+  row: "Запись из ленты — заголовок и дата",
+  more: "Загрузить ещё {count}",
+  loaded: "Загружено {shown} из {total}",
+  done: "Загружено всё: {total}",
+  top: "Наверх",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Бесконечная лента с кнопкой-якорем: догрузка по прокрутке и с клавиатуры.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -76,6 +111,8 @@ export function Pagination006({
   total = 60,
   batch = 10,
   height = "13rem",
+  labelText = LABEL,
+  background = "",
   accent,
   className,
   style,
@@ -87,6 +124,12 @@ export function Pagination006({
   const palette = {
     "--vibeui-pagination-006-height": height,
     ...(accent ? { "--vibeui-pagination-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pagination-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -124,12 +167,17 @@ export function Pagination006({
         className={className}
         style={palette}
       >
-        <div data-part="feed" ref={feedRef} tabIndex={0} aria-label="Лента">
+        <div
+          data-part="feed"
+          ref={feedRef}
+          tabIndex={0}
+          aria-label={labelText.feed ?? LABEL.feed}
+        >
           <ul data-part="list">
             {Array.from({ length: shown }, (unused, index) => (
               <li key={index} data-part="row">
                 <span data-part="num">{index + 1}</span>
-                Запись из ленты — заголовок и дата
+                {labelText.row ?? LABEL.row}
               </li>
             ))}
           </ul>
@@ -140,22 +188,27 @@ export function Pagination006({
               ref={beaconRef}
               onClick={() => setShown(Math.min(shown + batch, total))}
             >
-              Загрузить ещё {Math.min(batch, total - shown)}
+              {(labelText.more ?? LABEL.more).replace(
+                "{count}",
+                String(Math.min(batch, total - shown)),
+              )}
             </button>
           )}
         </div>
         <p data-part="bar">
           <span aria-live="polite">
             {done
-              ? `Загружено всё: ${total}`
-              : `Загружено ${shown} из ${total}`}
+              ? (labelText.done ?? LABEL.done).replace("{total}", String(total))
+              : (labelText.loaded ?? LABEL.loaded)
+                  .replace("{shown}", String(shown))
+                  .replace("{total}", String(total))}
           </span>
           <button
             type="button"
             data-part="top"
             onClick={() => feedRef.current?.scrollTo({ top: 0 })}
           >
-            Наверх
+            {labelText.top ?? LABEL.top}
           </button>
         </p>
       </div>

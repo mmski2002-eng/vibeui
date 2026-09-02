@@ -4,18 +4,23 @@ export type Skeleton002Props = ComponentPropsWithoutRef<"div"> & {
   /** Пропорция медиа-места: карточка держит его до загрузки картинки. */
   ratio?: "16 / 9" | "4 / 3" | "1 / 1"
   label?: string
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: заглушка карточки повторяет её каркас целиком — обложку с
 // заданной пропорцией, заголовок, две строки текста и ряд кнопок. Место под
 // обложку занято через aspect-ratio, поэтому при подстановке картинки высота
 // карточки не меняется и соседи по сетке не прыгают.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки по
+// умолчанию нет, карточка темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="skeleton-002"]){
---vibeui-skeleton-002-bg:oklch(1 0 0);
---vibeui-skeleton-002-border:oklch(0.9 0.006 265);
---vibeui-skeleton-002-base:oklch(0.93 0.005 265);
---vibeui-skeleton-002-shine:oklch(0.97 0.003 265);
+--vibeui-skeleton-002-bg:transparent;
+--vibeui-skeleton-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-skeleton-002-base:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.012 265));
+--vibeui-skeleton-002-shine:light-dark(oklch(0.97 0.003 265),oklch(0.39 0.016 265));
 --vibeui-skeleton-002-ratio:16 / 9;
 }
 [data-vibeui-block="skeleton-002"]{
@@ -64,18 +69,47 @@ height:2rem;border-radius:9999px;flex:1 1 0;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы полосам
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Заглушка карточки: обложка с пропорцией, заголовок, текст и кнопки.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Skeleton002({
   ratio = "16 / 9",
   label = "Карточка загружается",
+  background = "",
   className,
   style,
   ...props
 }: Skeleton002Props) {
   const palette = {
     "--vibeui-skeleton-002-ratio": ratio,
+    ...(background
+      ? {
+          "--vibeui-skeleton-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

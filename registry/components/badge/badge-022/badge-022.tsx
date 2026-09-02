@@ -7,6 +7,11 @@ export type Badge022Props = Omit<
   unread?: number
   total?: number
   max?: number
+  /** Доступное имя: {unread} и {total} подставляются числами. */
+  labelText?: string
+  accent?: string
+  /** Пусто — счётчик держит собственный нейтральный фон. */
+  background?: string
 }
 
 // Идея компонента: счётчик из двух половин. Слева непрочитанные с порогом
@@ -16,10 +21,10 @@ export type Badge022Props = Omit<
 // исчезает — иначе плашка меняет ширину и дёргает соседей.
 const STYLES = `
 :where([data-vibeui-block="badge-022"]){
---vibeui-badge-022-bg:oklch(0.97 0.004 265);
---vibeui-badge-022-border:oklch(0.89 0.006 265);
---vibeui-badge-022-accent:oklch(0.53 0.19 25);
---vibeui-badge-022-muted:oklch(0.54 0.014 265);
+--vibeui-badge-022-bg:light-dark(oklch(0.97 0.004 265),oklch(0.27 0.009 265));
+--vibeui-badge-022-border:light-dark(oklch(0.89 0.006 265),oklch(0.41 0.011 265));
+--vibeui-badge-022-accent:light-dark(oklch(0.53 0.19 25),oklch(0.72 0.17 25));
+--vibeui-badge-022-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
 --vibeui-badge-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="badge-022"]{
@@ -38,7 +43,9 @@ min-width:1.375rem;padding:0 0.5rem;
 }
 [data-vibeui-block="badge-022"] [data-part="unread"]{
 color:var(--vibeui-badge-022-accent);font-weight:700;
-background:color-mix(in oklab,var(--vibeui-badge-022-accent) 10%,oklch(1 0 0));
+/* Подмешиваем к собственному фону, а не к белому: в тёмной теме белая
+   подложка вернула бы светлую половину на тёмной плашке. */
+background:color-mix(in oklab,var(--vibeui-badge-022-accent) 14%,var(--vibeui-badge-022-bg));
 }
 [data-vibeui-block="badge-022"] [data-part="total"]{
 color:var(--vibeui-badge-022-muted);font-weight:500;
@@ -52,6 +59,28 @@ color:var(--vibeui-badge-022-muted);font-weight:500;background:transparent;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Счётчик из двух половин: новые с порогом «9+» и общее число.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -59,6 +88,9 @@ export function Badge022({
   unread = 12,
   total = 48,
   max = 9,
+  labelText = "{unread} новых из {total}",
+  accent,
+  background = "",
   className,
   style,
   ...props
@@ -66,6 +98,20 @@ export function Badge022({
   const fresh = Math.max(0, Math.round(unread))
   const all = Math.max(fresh, Math.round(total))
   const shown = fresh > max ? `${max}+` : String(fresh)
+  const label = labelText
+    .replace("{unread}", String(fresh))
+    .replace("{total}", String(all))
+
+  const palette = {
+    ...(accent ? { "--vibeui-badge-022-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-badge-022-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -77,8 +123,8 @@ export function Badge022({
         data-vibeui-block="badge-022"
         data-empty={fresh === 0}
         className={className}
-        style={style as CSSProperties}
-        aria-label={`${fresh} новых из ${all}`}
+        style={palette}
+        aria-label={label}
       >
         <span data-part="unread" aria-hidden="true">
           {shown}

@@ -25,6 +25,8 @@
           "summary": "Диапазон цены: две границы на нативных ползунках, закрашенный отрезок между ними и подписи краёв. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-range-001-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "два нативных ползунка: свой драг пришлось бы учить клавиатуре и касаниям",
             "pointer-events только на ручках — иначе верхний ползунок съедает клики по нижнему",
             "упор границ друг в друга: перепрыгивание даёт пустую выборку",
@@ -35,9 +37,12 @@
             "label, min, max и step",
             "defaultFrom и defaultTo",
             "unit — единицу измерения",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи ручек через boundText и формат чисел через locale"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ручки на одинаковых значениях наложатся: минимальный зазор задаёт step.",
             "Стилизация ручек идёт через префиксы: правила ::-webkit- и ::-moz- нельзя объединять в один селектор.",
             "Для точных сумм рядом с фильтром оставьте два числовых поля.",
@@ -67,6 +72,18 @@
             "default": 14000,
             "min": 1000,
             "max": 20000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -76,6 +93,8 @@
               "summary": "A price range: two bounds on native sliders, a filled segment between them and the edge labels. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-range-001-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
                 "two native sliders: a custom drag would need keyboard and touch support",
                 "pointer-events on the thumbs only — otherwise the top slider eats the clicks",
                 "the bounds stopping against each other: crossing them yields an empty result",
@@ -86,9 +105,12 @@
                 "label, min, max and step",
                 "defaultFrom and defaultTo",
                 "unit — the unit of measure",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the handle captions through boundText and the number format through locale"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Thumbs at equal values overlap: step sets the minimum gap.",
                 "Thumb styling is vendor-prefixed: ::-webkit- and ::-moz- rules cannot share a selector.",
                 "For exact amounts keep two number fields beside the filter.",
@@ -106,11 +128,29 @@
               },
               "defaultTo": {
                 "label": "To"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Price Range"
+            "title": "Price Range",
+            "preview": {
+              "props": {
+                "label": "Price",
+                "unit": " €",
+                "locale": "en-US",
+                "boundText": {
+                  "from": "from",
+                  "to": "to"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -137,7 +177,8 @@
           "summary": "Двойной ползунок цены с гистограммой распределения и счётчиком подходящих вариантов. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-range-002-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: фильтр показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "гистограмму рядом со шкалой: без плотности предложений диапазон не говорит ничего о рынке",
             "приглушение столбиков вне отрезка: видно не только выбранное, но и отсечённое",
             "pointer-events на ручках при отключённой дорожке: иначе верхний ползунок съедает все клики",
@@ -149,9 +190,12 @@
             "min, max, step и стартовые defaultFrom и defaultTo",
             "histogram — сами данные распределения",
             "unit — знак валюты",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи ручек boundText, счётчик matchesText со вставкой {count} и locale для чисел"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Гистограмма должна приходить с сервера вместе с выдачей: выдуманные столбики обманывают сильнее, чем их отсутствие.",
             "Корзины считаются равными по ширине: для логарифмической шкалы формулу надо менять.",
             "Счётчик вариантов складывается по пересечению корзин с отрезком — это оценка, а не точное число.",
@@ -173,6 +217,18 @@
             "default": 500,
             "min": 100,
             "max": 2000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -182,7 +238,8 @@
               "summary": "A dual price slider with a distribution histogram and a count of matching options. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-range-002-* palette — do not swap it for your theme tokens",
-                "its own light surface: the filter gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
                 "the histogram next to the scale: without listing density a range says nothing about the market",
                 "dimming the bars outside the span: what got cut off stays visible too",
                 "pointer-events on the thumbs while the track is disabled: otherwise the top slider swallows every click",
@@ -194,9 +251,12 @@
                 "min, max, step and the starting defaultFrom and defaultTo",
                 "histogram — the distribution data itself",
                 "unit — the currency sign",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the boundText handle captions, the matchesText counter with its {count} slot and locale for the numbers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The histogram has to arrive from the server with the results: invented bars mislead worse than no bars.",
                 "The buckets are equal width: a logarithmic scale needs a different formula.",
                 "The option count sums buckets intersecting the span — it is an estimate, not an exact number.",
@@ -211,11 +271,30 @@
               },
               "step": {
                 "label": "Step"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Price Histogram"
+            "title": "Price Histogram",
+            "preview": {
+              "props": {
+                "label": "Price per night",
+                "unit": "€",
+                "locale": "en-US",
+                "matchesText": "Matching options: {count}",
+                "boundText": {
+                  "from": "from",
+                  "to": "to"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -242,7 +321,8 @@
           "summary": "Диапазон дат двойным ползунком: внутри номера дней, снаружи подписи датами и счёт ночей. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-range-003-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: фильтр показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "хранение номеров дней вместо дат: арифметика дат в состоянии — источник ошибок на переходах месяцев",
             "сборку дат через Date.UTC и печать в UTC: иначе на минусовых поясах подпись съезжает на день",
             "aria-valuetext с датой: без него скринридер читает «двенадцать» вместо «12 сентября»",
@@ -254,9 +334,12 @@
             "startDate — базовая дата шкалы",
             "days — длина шкалы в днях",
             "defaultFrom и defaultTo — стартовые смещения",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи ручек handleText, формы слова «ночь» в nightsText и locale дат"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Наружу отдавайте даты, а не номера дней: принимающая сторона о базовой дате не знает.",
             "Шкала длиннее трёх месяцев становится неточной: один пиксель начинает стоить несколько дней.",
             "Занятые даты компонент не знает — отсекайте их после выбора диапазона.",
@@ -278,6 +361,18 @@
             "default": 60,
             "min": 14,
             "max": 120
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -287,7 +382,8 @@
               "summary": "A date range on a dual slider: day numbers inside, date captions and a night count outside. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-range-003-* palette — do not swap it for your theme tokens",
-                "its own light surface: the filter gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
                 "keeping day numbers instead of dates: date arithmetic in state is a source of month-boundary bugs",
                 "building dates through Date.UTC and printing in UTC: otherwise negative offsets shift the caption a day back",
                 "aria-valuetext with the date: without it a screen reader says \"twelve\" instead of \"12 September\"",
@@ -299,9 +395,12 @@
                 "startDate — the base date of the scale",
                 "days — the scale length in days",
                 "defaultFrom and defaultTo — the starting offsets",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the handleText handle captions, the night word forms in nightsText and the date locale"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Emit dates outwards, not day numbers: the receiving side knows nothing about the base date.",
                 "A scale longer than three months turns imprecise: one pixel starts costing several days.",
                 "The component knows nothing about taken dates — filter them after the range is picked.",
@@ -316,11 +415,34 @@
               },
               "days": {
                 "label": "Days on scale"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Date Range Slider"
+            "title": "Date Range Slider",
+            "preview": {
+              "props": {
+                "label": "When to go",
+                "locale": "en-GB",
+                "handleText": {
+                  "from": "Check-in date",
+                  "to": "Check-out date"
+                },
+                "nightsText": {
+                  "one": "night",
+                  "few": "nights",
+                  "many": "nights",
+                  "other": "nights"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -347,7 +469,8 @@
           "summary": "Двойной ползунок с числовыми полями по краям: точное значение вводится с клавиатуры, приблизительное — мышью. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-range-004-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: фильтр показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "две руки управления: ползунком не попасть ровно в 120 000, а полем — сразу",
             "текстовые состояния полей: числовое состояние превращает пустое поле в ноль прямо во время набора",
             "приведение по blur, а не на каждой букве: иначе «12» на пути к «120000» схлопывается в минимум",
@@ -359,9 +482,12 @@
             "min, max, step и стартовые defaultFrom и defaultTo",
             "unit — знак валюты или единицу",
             "ширину полей по краям",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи полей и ползунков через boundText и locale для чисел шкалы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Поля не форматируют разряды: разделители во время ввода прыгают под курсором.",
             "Пустое поле по blur приводится к границе шкалы, а не к нулю — так фильтр остаётся осмысленным.",
             "Шаг применяется и к полям: значение между шагами приведётся к соседней ручке.",
@@ -383,6 +509,18 @@
             "default": 5000,
             "min": 1000,
             "max": 50000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -392,7 +530,8 @@
               "summary": "A dual slider with number fields at both ends: exact values by keyboard, approximate ones by mouse. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-range-004-* palette — do not swap it for your theme tokens",
-                "its own light surface: the filter gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
                 "the two hands of control: a slider cannot land on exactly 120,000, a field can",
                 "the text state of the fields: numeric state turns an empty field into zero while typing",
                 "clamping on blur rather than per keystroke: otherwise \"12\" on the way to \"120000\" collapses to the minimum",
@@ -404,9 +543,12 @@
                 "min, max, step and the starting defaultFrom and defaultTo",
                 "unit — the currency sign or unit",
                 "the width of the end fields",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the field and slider captions through boundText and locale for the scale numbers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The fields do not group thousands: separators jump under the caret while typing.",
                 "An empty field clamps to the scale bound on blur rather than to zero, keeping the filter meaningful.",
                 "The step applies to the fields too: an off-step value snaps against the neighbouring thumb.",
@@ -421,11 +563,31 @@
               },
               "step": {
                 "label": "Step"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Range With Inputs"
+            "title": "Range With Inputs",
+            "preview": {
+              "props": {
+                "label": "Salary expectations",
+                "unit": "€",
+                "locale": "en-US",
+                "boundText": {
+                  "from": "from",
+                  "to": "to",
+                  "fromSlider": "from slider",
+                  "toSlider": "to slider"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -452,7 +614,8 @@
           "summary": "Диапазон по дискретным подписанным делениям: ползунок ходит по номерам остановок, подписи стоят под дорожкой. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-range-005-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: фильтр показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "шаг в одно деление: между «двумя» и «тремя» комнатами значения не существует",
             "подписи прямо под дорожкой: числа на ползунке без подписей ничего не сообщают о шкале",
             "отступы в половину деления: без них крайние подписи уезжают за края дорожки",
@@ -464,9 +627,12 @@
             "stops — сами деления и их подписи",
             "defaultFrom и defaultTo — стартовые номера остановок",
             "длину подписей: короткие читаются лучше",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи ручек через boundText"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Границы могут совпасть: тогда выбрана одна остановка, и подпись показывает её одну.",
             "Больше восьми делений на узком экране не помещаются — подписи начинают наезжать друг на друга.",
             "Наружу отдавайте значения остановок, а не их номера: индексы поедут при правке списка.",
@@ -488,6 +654,18 @@
             "default": 3,
             "min": 0,
             "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -497,7 +675,8 @@
               "summary": "A range over discrete labelled stops: the slider walks stop indexes, the captions sit under the track. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-range-005-* palette — do not swap it for your theme tokens",
-                "its own light surface: the filter gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
                 "the one-stop step: there is no value between two and three rooms",
                 "the captions directly under the track: numbers on a slider say nothing about this scale",
                 "the half-stop gutters: without them the outer captions run off the track edges",
@@ -509,9 +688,12 @@
                 "stops — the stops themselves and their captions",
                 "defaultFrom and defaultTo — the starting stop indexes",
                 "the caption length: shorter reads better",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the handle captions through boundText"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The bounds may coincide: one stop is then selected and the caption shows it alone.",
                 "More than eight stops do not fit a narrow screen — the captions start colliding.",
                 "Emit stop values outwards rather than indexes: indexes shift when the list is edited.",
@@ -526,11 +708,28 @@
               },
               "defaultTo": {
                 "label": "Upper stop"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Labelled Stops"
+            "title": "Labelled Stops",
+            "preview": {
+              "props": {
+                "label": "Rooms",
+                "stops": ["Studio", "1", "2", "3", "4", "5 or more"],
+                "boundText": {
+                  "from": "from",
+                  "to": "to"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultTo", "accent", "background"]
       }
     },
     {
@@ -557,7 +756,8 @@
           "summary": "Двойной ползунок площади: единица подписана у обеих границ, а верхний край означает «и больше». Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-range-006-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: фильтр показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "открытый верх шкалы: иначе «до 200 м²» тихо отсекает дом на 300",
             "единицу у каждой границы: «40 — 120» без «м²» превращается в загадку",
             "aria-valuetext на ручках: смысл «и больше» обязан быть доступен на слух",
@@ -569,9 +769,12 @@
             "min, max, step и стартовые defaultFrom и defaultTo",
             "unit — единицу измерения",
             "формулировки подписи и пояснения",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "тексты плашек fromText, toText и openText, пояснения openNote и stepNote, подписи ручек boundText"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Открытый верх надо повторить в запросе: на сервер уходит условие «больше или равно», а не диапазон.",
             "Шаг в пять единиц подобран под площадь: для соток нужен шаг помельче.",
             "Нижняя граница остаётся закрытой намеренно: «меньше минимума» в таких фильтрах обычно не бывает.",
@@ -592,6 +795,18 @@
             "type": "text",
             "default": "м²",
             "maxLength": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -601,7 +816,8 @@
               "summary": "A dual area slider: the unit is captioned at both bounds and the top edge means \"and up\". Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-range-006-* palette — do not swap it for your theme tokens",
-                "its own light surface: the filter gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
                 "the open top of the scale: otherwise \"up to 200 m²\" quietly hides a 300 m² house",
                 "the unit at each bound: \"40 — 120\" without \"m²\" is a riddle",
                 "aria-valuetext on the thumbs: the \"and up\" meaning has to be available aloud",
@@ -613,9 +829,12 @@
                 "min, max, step and the starting defaultFrom and defaultTo",
                 "unit — the unit of measure",
                 "the wording of the caption and the note",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the fromText, toText and openText chip strings, the openNote and stepNote explanations and the boundText handle captions"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The open top must be mirrored in the query: send a \"greater or equal\" condition, not a range.",
                 "A step of five suits square metres: smaller plots need a finer step.",
                 "The lower bound stays closed on purpose: \"less than the minimum\" rarely exists in such filters.",
@@ -631,11 +850,33 @@
               "unit": {
                 "label": "Unit",
                 "default": "m²"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Open Ended Area"
+            "title": "Open Ended Area",
+            "preview": {
+              "props": {
+                "label": "House area",
+                "unit": "m²",
+                "fromText": "from {value} {unit}",
+                "toText": "{value} {unit}",
+                "openText": "{value} {unit} and up",
+                "openNote": "The upper bound is lifted: the largest houses are included too.",
+                "stepNote": "Step {step} {unit}. Drag the right handle to the edge to lift the upper bound.",
+                "boundText": {
+                  "from": "from",
+                  "to": "to"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -662,7 +903,8 @@
           "summary": "Двойной ползунок с кнопками-пресетами: кнопка задаёт обе границы, отметка снимается сама после ручной правки. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-range-007-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: фильтр показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "пресеты словами: человек думает «эконом», а не «до 4 000»",
             "вычисление отметки из текущих границ: отдельное состояние пресета рассинхронизируется после первой правки",
             "рабочий ползунок рядом с пресетами: кнопка — быстрый старт, а не единственный способ ответить",
@@ -674,9 +916,12 @@
             "presets — названия и границы быстрых вариантов",
             "min, max и step шкалы",
             "unit — знак валюты",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи ручек через boundText и locale для чисел"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Границы пресетов должны попадать в шаг шкалы, иначе отметка не загорится никогда.",
             "Стартовый диапазон берётся из середины списка пресетов: пустой фильтр ничего не сообщает.",
             "Пресеты стоит держать непересекающимися: у двух одинаковых диапазонов загорятся обе кнопки.",
@@ -698,6 +943,18 @@
             "default": 500,
             "min": 100,
             "max": 2000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -707,7 +964,8 @@
               "summary": "A dual slider with preset buttons: a button sets both bounds and its mark clears itself after a manual edit. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-range-007-* palette — do not swap it for your theme tokens",
-                "its own light surface: the filter gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
                 "presets in words: people think \"budget\", not \"under 4,000\"",
                 "deriving the mark from the current bounds: a separate preset state desynchronises after the first edit",
                 "the working slider next to the presets: a button is a quick start, not the only way to answer",
@@ -719,9 +977,12 @@
                 "presets — the names and bounds of the quick options",
                 "min, max and step of the scale",
                 "unit — the currency sign",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the handle captions through boundText and locale for the numbers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Preset bounds must land on the scale step, otherwise the mark never lights up.",
                 "The starting range comes from the middle of the preset list: an empty filter says nothing.",
                 "Keep presets non-overlapping: two identical ranges light up two buttons at once.",
@@ -736,11 +997,46 @@
               },
               "step": {
                 "label": "Step"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Preset Range"
+            "title": "Preset Range",
+            "preview": {
+              "props": {
+                "label": "Budget per night",
+                "unit": "€",
+                "locale": "en-US",
+                "presets": [
+                  {
+                    "text": "Budget",
+                    "from": 0,
+                    "to": 4000
+                  },
+                  {
+                    "text": "Mid-range",
+                    "from": 4000,
+                    "to": 9000
+                  },
+                  {
+                    "text": "Premium",
+                    "from": 9000,
+                    "to": 20000
+                  }
+                ],
+                "boundText": {
+                  "from": "from",
+                  "to": "to"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

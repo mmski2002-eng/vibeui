@@ -11,14 +11,18 @@ export type Button007Props = ComponentPropsWithoutRef<"button"> & {
 // стопка перекрывающихся аватаров из инициалов, справа от подписи — тихая
 // строка с количеством. Аватары нарисованы CSS, поэтому нет ни картинок,
 // ни сетевых запросов, ни зависимостей.
+//
+// Пятно кнопки тёмное по замыслу, но не одинаково тёмное: через light-dark()
+// в тёмном контексте оно светлее фона страницы, иначе пилюля растворилась бы
+// в ней. Подпись остаётся светлой в обеих ветках.
 const STYLES = `
 :where([data-vibeui-block="button-007"]){
---vibeui-button-007-bg:oklch(0.22 0.014 265);
+--vibeui-button-007-bg:light-dark(oklch(0.22 0.014 265),oklch(0.33 0.016 265));
 --vibeui-button-007-fg:oklch(0.98 0.003 265);
---vibeui-button-007-hint:oklch(0.72 0.012 265);
---vibeui-button-007-avatar:oklch(0.62 0.13 250);
+--vibeui-button-007-hint:light-dark(oklch(0.72 0.012 265),oklch(0.78 0.012 265));
+--vibeui-button-007-avatar:light-dark(oklch(0.62 0.13 250),oklch(0.68 0.125 250));
 --vibeui-button-007-avatar-fg:oklch(0.99 0.004 250);
---vibeui-button-007-ring:oklch(0.72 0.012 265);
+--vibeui-button-007-ring:light-dark(oklch(0.72 0.012 265),oklch(0.84 0.012 265));
 --vibeui-button-007-radius:9999px;
 --vibeui-button-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

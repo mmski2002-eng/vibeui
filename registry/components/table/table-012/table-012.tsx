@@ -16,6 +16,12 @@ export type Table012Props = Omit<
   taxRate?: number
   currency?: string
   caption?: string
+  /** Заголовки колонок: компонент несёт русские, проект подставляет свои. */
+  columnText?: Record<string, string>
+  /** Подписи расчёта: ключи subtotal, tax (с подстановкой {rate}) и total. */
+  totalsText?: Record<string, string>
+  /** Пусто — подложки нет, смета лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,14 +29,17 @@ export type Table012Props = Omit<
 // и итог лежат в tfoot отдельными строками, а не сворачиваются в одно число.
 // Подписи расчёта — заголовки строк (th scope="row"), поэтому «1 200 ₽»
 // всегда читается вместе со словом, к которому относится.
+//
+// Тема берётся из color-scheme окружения через light-dark(): смета темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-012"]){
---vibeui-table-012-bg:oklch(1 0 0);
---vibeui-table-012-fg:oklch(0.24 0.014 265);
---vibeui-table-012-muted:oklch(0.56 0.014 265);
---vibeui-table-012-border:oklch(0.92 0.006 265);
---vibeui-table-012-head:oklch(0.975 0.003 265);
---vibeui-table-012-accent:oklch(0.55 0.2 262);
+--vibeui-table-012-bg:transparent;
+--vibeui-table-012-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-012-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-table-012-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
+--vibeui-table-012-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-012-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
 --vibeui-table-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="table-012"]{
@@ -94,6 +103,41 @@ const DEFAULT_LINES: Table012Line[] = [
   { title: "Поддержка", note: "часов в месяц", quantity: 8, price: 3200 },
 ]
 
+const COLUMN_TEXT: Record<string, string> = {
+  title: "Работа",
+  quantity: "Кол-во",
+  price: "Цена",
+  amount: "Сумма",
+}
+
+const TOTALS_TEXT: Record<string, string> = {
+  subtotal: "Подытог",
+  tax: "Налог {rate}%",
+  total: "К оплате",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Разряды разделяем неразрывным пробелом: сумма не должна рваться переносом. */
 function money(value: number, currency: string) {
   const fixed = Math.round(value * 100) / 100
@@ -112,6 +156,9 @@ export function Table012({
   taxRate = 20,
   currency = "₽",
   caption = "Смета на запуск сайта",
+  columnText = COLUMN_TEXT,
+  totalsText = TOTALS_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -119,6 +166,12 @@ export function Table012({
 }: Table012Props) {
   const palette = {
     ...(accent ? { "--vibeui-table-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-table-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -150,15 +203,15 @@ export function Table012({
               <caption>{caption}</caption>
               <thead>
                 <tr>
-                  <th scope="col">Работа</th>
+                  <th scope="col">{columnText.title ?? COLUMN_TEXT.title}</th>
                   <th scope="col" data-align="end">
-                    Кол-во
+                    {columnText.quantity ?? COLUMN_TEXT.quantity}
                   </th>
                   <th scope="col" data-align="end">
-                    Цена
+                    {columnText.price ?? COLUMN_TEXT.price}
                   </th>
                   <th scope="col" data-align="end">
-                    Сумма
+                    {columnText.amount ?? COLUMN_TEXT.amount}
                   </th>
                 </tr>
               </thead>
@@ -182,19 +235,22 @@ export function Table012({
               <tfoot>
                 <tr>
                   <th scope="row" colSpan={3} data-align="end">
-                    Подытог
+                    {totalsText.subtotal ?? TOTALS_TEXT.subtotal}
                   </th>
                   <td data-align="end">{money(subtotal, currency)}</td>
                 </tr>
                 <tr>
                   <th scope="row" colSpan={3} data-align="end">
-                    Налог {taxRate}%
+                    {(totalsText.tax ?? TOTALS_TEXT.tax).replace(
+                      "{rate}",
+                      String(taxRate),
+                    )}
                   </th>
                   <td data-align="end">{money(tax, currency)}</td>
                 </tr>
                 <tr data-row="total">
                   <th scope="row" colSpan={3} data-align="end">
-                    К оплате
+                    {totalsText.total ?? TOTALS_TEXT.total}
                   </th>
                   <td data-align="end">{money(subtotal + tax, currency)}</td>
                 </tr>

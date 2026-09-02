@@ -13,6 +13,12 @@ export type Card007Props = Omit<
   time?: string
   primaryLabel?: string
   secondaryLabel?: string
+  /** Подпись точки непрочитанного для скринридера. */
+  unreadLabel?: string
+  /** Отчёт после ответа. {label} — подпись нажатой кнопки. */
+  resultText?: Record<"primary" | "secondary", string>
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,14 +26,18 @@ export type Card007Props = Omit<
 // отклонить можно прямо здесь, не открывая письмо: половина уведомлений
 // требует одного нажатия. После ответа карточка не исчезает, а показывает,
 // что именно произошло — исчезнувшая строка выглядит как потерянная.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте рамка светлее подложки, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="card-007"]){
---vibeui-card-007-bg:oklch(1 0 0);
---vibeui-card-007-fg:oklch(0.22 0.014 265);
---vibeui-card-007-muted:oklch(0.56 0.014 265);
---vibeui-card-007-border:oklch(0.91 0.006 265);
---vibeui-card-007-accent:oklch(0.55 0.17 265);
---vibeui-card-007-done:oklch(0.55 0.15 152);
+--vibeui-card-007-bg:transparent;
+--vibeui-card-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-card-007-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-card-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-card-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-card-007-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.02 265));
+--vibeui-card-007-done:light-dark(oklch(0.55 0.15 152),oklch(0.76 0.14 152));
 --vibeui-card-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="card-007"]{
@@ -63,7 +73,7 @@ border:1px solid var(--vibeui-card-007-border);border-radius:0.5rem;
 background:transparent;color:inherit;font:inherit;font-size:0.8125rem;font-weight:600;
 }
 [data-vibeui-block="card-007"] button[data-primary="true"]{
-border-color:transparent;background:var(--vibeui-card-007-accent);color:oklch(0.99 0.01 265);
+border-color:transparent;background:var(--vibeui-card-007-accent);color:var(--vibeui-card-007-on-accent);
 }
 [data-vibeui-block="card-007"] button:focus-visible{outline:2px solid var(--vibeui-card-007-accent);outline-offset:2px}
 /* После ответа карточка остаётся на месте с отчётом: исчезнувшая строка
@@ -103,6 +113,36 @@ function initials(name: string) {
     .join("")
 }
 
+const UNREAD_LABEL = "Не прочитано"
+
+const RESULT_TEXT: Record<"primary" | "secondary", string> = {
+  primary: "{label}: приглашение принято",
+  secondary: "{label}: приглашение отклонено",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Уведомление с действиями внутри и отчётом вместо исчезновения.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -114,6 +154,9 @@ export function Card007({
   time = "12 мин",
   primaryLabel = "Принять",
   secondaryLabel = "Отклонить",
+  unreadLabel = UNREAD_LABEL,
+  resultText = RESULT_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -124,6 +167,12 @@ export function Card007({
   const palette = {
     "--vibeui-card-007-hue": hue(from),
     ...(accent ? { "--vibeui-card-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-card-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -138,7 +187,7 @@ export function Card007({
         className={className}
         style={palette}
       >
-        {answer ? null : <span data-part="unread" aria-label="Не прочитано" />}
+        {answer ? null : <span data-part="unread" aria-label={unreadLabel} />}
         <span data-part="face" aria-hidden="true">
           {initials(from)}
         </span>
@@ -160,7 +209,7 @@ export function Card007({
                 type="button"
                 data-primary="true"
                 onClick={() =>
-                  setAnswer(`${primaryLabel}: приглашение принято`)
+                  setAnswer(resultText.primary.replace("{label}", primaryLabel))
                 }
               >
                 {primaryLabel}
@@ -168,7 +217,9 @@ export function Card007({
               <button
                 type="button"
                 onClick={() =>
-                  setAnswer(`${secondaryLabel}: приглашение отклонено`)
+                  setAnswer(
+                    resultText.secondary.replace("{label}", secondaryLabel),
+                  )
                 }
               >
                 {secondaryLabel}

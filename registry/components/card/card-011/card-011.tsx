@@ -11,6 +11,10 @@ export type Card011Props = Omit<
   href?: string
   /** Внешняя ссылка получает target и rel, а стрелка — поворот. */
   external?: boolean
+  /** Визуально скрытое предупреждение о новой вкладке. */
+  externalLabel?: string
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,13 +22,17 @@ export type Card011Props = Omit<
 // ссылка в дереве доступности одна — заголовок растягивает свою зону через
 // ::after. Домен показан текстом, а не только знаком: перед уходом с сайта
 // человек должен видеть, куда именно он уходит.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте рамка светлее подложки, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="card-011"]){
---vibeui-card-011-bg:oklch(1 0 0);
---vibeui-card-011-fg:oklch(0.23 0.015 265);
---vibeui-card-011-muted:oklch(0.55 0.013 265);
---vibeui-card-011-border:oklch(0.91 0.006 265);
---vibeui-card-011-accent:oklch(0.55 0.18 262);
+--vibeui-card-011-bg:transparent;
+--vibeui-card-011-fg:light-dark(oklch(0.23 0.015 265),oklch(0.94 0.006 265));
+--vibeui-card-011-muted:light-dark(oklch(0.55 0.013 265),oklch(0.72 0.012 265));
+--vibeui-card-011-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-card-011-accent:light-dark(oklch(0.55 0.18 262),oklch(0.74 0.16 262));
+--vibeui-card-011-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0 0 0 / 70%));
 --vibeui-card-011-hue:250;
 --vibeui-card-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -38,7 +46,7 @@ transition:border-color .16s ease,box-shadow .16s ease;
 }
 [data-vibeui-block="card-011"]:hover{
 border-color:color-mix(in oklab,var(--vibeui-card-011-accent) 40%,var(--vibeui-card-011-border));
-box-shadow:0 10px 24px -18px oklch(0.2 0.03 265 / 55%);
+box-shadow:0 10px 24px -18px var(--vibeui-card-011-shadow);
 }
 [data-vibeui-block="card-011"]:has(a:focus-visible){
 border-color:var(--vibeui-card-011-accent);
@@ -98,6 +106,31 @@ function hue(name: string) {
   return ((hash >>> 0) % 12) * 30
 }
 
+const EXTERNAL_LABEL = " (откроется в новой вкладке)"
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Карточка-закладка на внешний материал: домен, заголовок-ссылка на всю
  * площадь и описание. Один файл, ноль зависимостей, собственная палитра.
@@ -108,6 +141,8 @@ export function Card011({
   url = "web.dev",
   href = "https://web.dev",
   external = true,
+  externalLabel = EXTERNAL_LABEL,
+  background = "",
   accent,
   className,
   style,
@@ -116,6 +151,12 @@ export function Card011({
   const palette = {
     "--vibeui-card-011-hue": hue(url),
     ...(accent ? { "--vibeui-card-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-card-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -161,9 +202,7 @@ export function Card011({
               : null)}
           >
             {title}
-            {external ? (
-              <span data-part="sr"> (откроется в новой вкладке)</span>
-            ) : null}
+            {external ? <span data-part="sr">{externalLabel}</span> : null}
           </a>
         </h3>
         {description ? <p data-part="description">{description}</p> : null}

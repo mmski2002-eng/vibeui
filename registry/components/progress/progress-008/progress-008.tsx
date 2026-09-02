@@ -7,6 +7,11 @@ export type Progress008Props = Omit<
   steps?: string[]
   current?: number
   title?: string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  text?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  accent?: string
 }
 
 // Идея компонента: главный ответ здесь — словами, а не долей. Крупная строка
@@ -15,12 +20,13 @@ export type Progress008Props = Omit<
 // расстояние между вехами показывает, сколько ещё впереди.
 const STYLES = `
 :where([data-vibeui-block="progress-008"]){
---vibeui-progress-008-bg:oklch(1 0 0);
---vibeui-progress-008-fg:oklch(0.24 0.016 265);
---vibeui-progress-008-muted:oklch(0.56 0.014 265);
---vibeui-progress-008-border:oklch(0.9 0.006 265);
---vibeui-progress-008-track:oklch(0.92 0.006 265);
---vibeui-progress-008-accent:oklch(0.55 0.19 262);
+--vibeui-progress-008-bg:transparent;
+--vibeui-progress-008-surface:light-dark(oklch(0.99 0.002 265),oklch(0.2 0.012 265));
+--vibeui-progress-008-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-progress-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-progress-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-progress-008-track:light-dark(oklch(0.92 0.006 265),oklch(0.3 0.011 265));
+--vibeui-progress-008-accent:light-dark(oklch(0.55 0.19 262),oklch(0.71 0.16 262));
 --vibeui-progress-008-value:0;
 --vibeui-progress-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -63,7 +69,7 @@ transition:width .35s cubic-bezier(.32,.72,0,1);
 [data-vibeui-block="progress-008"] [data-part="pin"]{
 position:relative;z-index:1;
 width:0.875rem;height:0.875rem;border-radius:9999px;
-box-sizing:border-box;border:0.1875rem solid var(--vibeui-progress-008-bg);
+box-sizing:border-box;border:0.1875rem solid var(--vibeui-progress-008-surface);
 background:var(--vibeui-progress-008-track);
 }
 [data-vibeui-block="progress-008"] [data-part="pin"][data-state="done"]{background:var(--vibeui-progress-008-accent)}
@@ -85,6 +91,35 @@ const DEFAULT_STEPS = [
   "Импорт",
 ]
 
+const DEFAULT_TEXT: Record<string, string> = {
+  eyebrow: "{title} · шаг {current} из {total}",
+  value: "Шаг {current} из {total}: {name}",
+  next: "Дальше: {name}",
+  last: "Это последний шаг",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Прогресс, где текущий шаг назван словами, а вехи — карта пути.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -93,6 +128,9 @@ export function Progress008({
   steps = DEFAULT_STEPS,
   current = 2,
   title = "Импорт справочника",
+  text = DEFAULT_TEXT,
+  background = "",
+  accent,
   className,
   style,
   ...props
@@ -101,8 +139,23 @@ export function Progress008({
   const index = Math.min(Math.max(0, current), total - 1)
   const percent = total > 1 ? (index / (total - 1)) * 100 : 100
   const next = steps[index + 1]
+  const say = (key: string, name = "") =>
+    (text[key] ?? DEFAULT_TEXT[key])
+      .replace("{title}", title)
+      .replace("{current}", String(index + 1))
+      .replace("{total}", String(total))
+      .replace("{name}", name)
+  // Кольцо вехи прорезано цветом подложки, поэтому заданный фон достаётся и ему.
   const palette = {
     "--vibeui-progress-008-value": percent,
+    ...(accent ? { "--vibeui-progress-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-progress-008-bg": background,
+          "--vibeui-progress-008-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -117,9 +170,7 @@ export function Progress008({
         className={className}
         style={palette}
       >
-        <span data-part="eyebrow">
-          {title} · шаг {index + 1} из {total}
-        </span>
+        <span data-part="eyebrow">{say("eyebrow")}</span>
         <p data-part="now">{steps[index]}</p>
         <div
           data-part="track"
@@ -128,7 +179,7 @@ export function Progress008({
           aria-valuemin={1}
           aria-valuemax={total}
           aria-valuenow={index + 1}
-          aria-valuetext={`Шаг ${index + 1} из ${total}: ${steps[index]}`}
+          aria-valuetext={say("value", steps[index] ?? "")}
         >
           {steps.map((step, position) => (
             <span
@@ -145,7 +196,7 @@ export function Progress008({
             />
           ))}
         </div>
-        <p data-part="next">{next ? `Дальше: ${next}` : "Это последний шаг"}</p>
+        <p data-part="next">{next ? say("next", next) : say("last")}</p>
       </div>
     </>
   )

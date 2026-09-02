@@ -19,6 +19,15 @@ export type Dashboard087Props = {
   reports?: Dashboard087Report[]
   newLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подпись под временем следующего запуска. */
+  nextLabel?: string
+  /** Подпись кнопки ручного запуска. */
+  runLabel?: string
+  /** Подписи кнопки переключения: выключенный отчёт включают. */
+  enableLabel?: string
+  disableLabel?: string
   className?: string
   style?: CSSProperties
 }
@@ -33,16 +42,22 @@ export type Dashboard087Props = {
 // назад. Последняя выгрузка подписана размером и временем: пустой файл на 2 КБ
 // виден по одной этой цифре. Упавшая выгрузка помечается и несёт причину прямо
 // в строке — иначе о ней узнают через месяц, когда придут за цифрами.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-087"]){
---vibeui-dashboard-087-bg:oklch(0.985 0.003 130);
---vibeui-dashboard-087-card:oklch(1 0 0);
---vibeui-dashboard-087-fg:oklch(0.21 0.014 130);
---vibeui-dashboard-087-muted:oklch(0.54 0.014 130);
---vibeui-dashboard-087-border:oklch(0.91 0.006 130);
---vibeui-dashboard-087-accent:oklch(0.5 0.13 145);
---vibeui-dashboard-087-soft:oklch(0.965 0.02 145);
---vibeui-dashboard-087-fail:oklch(0.57 0.19 25);
+--vibeui-dashboard-087-bg:transparent;
+/* Строка отчёта и чип получателя: подложка самого блока прозрачна. */
+--vibeui-dashboard-087-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 130));
+--vibeui-dashboard-087-inset:light-dark(oklch(0.985 0.003 130),oklch(0.22 0.012 130));
+--vibeui-dashboard-087-fg:light-dark(oklch(0.21 0.014 130),oklch(0.94 0.005 130));
+--vibeui-dashboard-087-muted:light-dark(oklch(0.54 0.014 130),oklch(0.72 0.012 130));
+--vibeui-dashboard-087-border:light-dark(oklch(0.91 0.006 130),oklch(0.36 0.012 130));
+--vibeui-dashboard-087-accent:light-dark(oklch(0.5 0.13 145),oklch(0.75 0.13 145));
+--vibeui-dashboard-087-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 145));
+--vibeui-dashboard-087-soft:light-dark(oklch(0.965 0.02 145),oklch(0.3 0.03 145));
+--vibeui-dashboard-087-fail:light-dark(oklch(0.57 0.19 25),oklch(0.72 0.16 25));
 --vibeui-dashboard-087-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -61,7 +76,7 @@ border:1px solid var(--vibeui-dashboard-087-border);border-radius:1rem;padding:1
 [data-vibeui-block="dashboard-087"] [data-part="new"]{
 margin-left:auto;appearance:none;border:0;cursor:pointer;font:inherit;
 font-size:0.75rem;font-weight:700;padding:0.4375rem 0.875rem;border-radius:0.5625rem;
-background:var(--vibeui-dashboard-087-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-087-accent);color:var(--vibeui-dashboard-087-on-accent);
 }
 [data-vibeui-block="dashboard-087"] [data-part="list"]{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.4375rem}
 [data-vibeui-block="dashboard-087"] [data-part="report"]{
@@ -69,7 +84,7 @@ display:grid;grid-template-columns:1fr auto;gap:0.375rem 0.875rem;align-items:st
 padding:0.75rem 0.8125rem;border-radius:0.8125rem;
 background:var(--vibeui-dashboard-087-card);border:1px solid var(--vibeui-dashboard-087-border);
 }
-[data-vibeui-block="dashboard-087"] [data-state="failed"]{border-color:color-mix(in oklab,var(--vibeui-dashboard-087-fail) 42%,white)}
+[data-vibeui-block="dashboard-087"] [data-state="failed"]{border-color:color-mix(in oklab,var(--vibeui-dashboard-087-fail) 42%,light-dark(white,black))}
 [data-vibeui-block="dashboard-087"] [data-state="off"]{opacity:0.68}
 [data-vibeui-block="dashboard-087"] [data-part="name"]{display:flex;flex-direction:column;gap:0.0625rem;min-width:0}
 [data-vibeui-block="dashboard-087"] [data-part="name"] b{font-size:0.875rem;font-weight:750}
@@ -86,11 +101,11 @@ grid-column:1 / -1;margin:0;padding:0;list-style:none;display:flex;flex-wrap:wra
 }
 [data-vibeui-block="dashboard-087"] [data-part="to"] li{
 font-size:0.625rem;font-weight:650;padding:0.0625rem 0.375rem;border-radius:0.3125rem;
-background:var(--vibeui-dashboard-087-bg);border:1px solid var(--vibeui-dashboard-087-border);
+background:var(--vibeui-dashboard-087-inset);border:1px solid var(--vibeui-dashboard-087-border);
 }
 [data-vibeui-block="dashboard-087"] [data-part="to"] li[data-lead="true"]{
 background:var(--vibeui-dashboard-087-soft);
-border-color:color-mix(in oklab,var(--vibeui-dashboard-087-accent) 30%,white);
+border-color:color-mix(in oklab,var(--vibeui-dashboard-087-accent) 30%,light-dark(white,black));
 }
 [data-vibeui-block="dashboard-087"] [data-part="foot"]{
 grid-column:1 / -1;margin:0;display:flex;flex-wrap:wrap;gap:0.25rem 0.75rem;
@@ -99,7 +114,7 @@ font-size:0.6875rem;color:var(--vibeui-dashboard-087-muted);align-items:center;
 [data-vibeui-block="dashboard-087"] [data-part="fmt"]{
 font-size:0.5625rem;font-weight:750;text-transform:uppercase;letter-spacing:0.05em;
 padding:0.0625rem 0.3125rem;border-radius:0.25rem;background:var(--vibeui-dashboard-087-soft);
-color:color-mix(in oklab,var(--vibeui-dashboard-087-accent) 85%,black);
+color:color-mix(in oklab,var(--vibeui-dashboard-087-accent) 85%,light-dark(black,white));
 }
 [data-vibeui-block="dashboard-087"] [data-part="fail"]{color:var(--vibeui-dashboard-087-fail);font-weight:700}
 [data-vibeui-block="dashboard-087"] [data-part="acts"]{margin-left:auto;display:flex;gap:0.3125rem;flex-wrap:wrap}
@@ -166,6 +181,28 @@ const DEFAULT_REPORTS: Dashboard087Report[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Страница отчётов с расписанием выгрузки: расписание написано словами,
  * следующий запуск — абсолютным временем с поясом, получатели перечислены
  * поимённо, упавшая выгрузка несёт причину. Один файл, ноль зависимостей.
@@ -176,11 +213,22 @@ export function Dashboard087({
   reports = DEFAULT_REPORTS,
   newLabel = "Новый отчёт",
   accent,
+  background = "",
+  nextLabel = "следующий запуск",
+  runLabel = "Запустить сейчас",
+  enableLabel = "Включить",
+  disableLabel = "Выключить",
   className,
   style,
 }: Dashboard087Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-087-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-087-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -219,7 +267,7 @@ export function Dashboard087({
 
                 <div data-part="when">
                   <b>{report.nextRun}</b>
-                  <span>следующий запуск</span>
+                  <span>{nextLabel}</span>
                 </div>
 
                 <ul data-part="to">
@@ -240,9 +288,9 @@ export function Dashboard087({
                     <span data-part="fail">{report.failure}</span>
                   ) : null}
                   <span data-part="acts">
-                    <button type="button">Запустить сейчас</button>
+                    <button type="button">{runLabel}</button>
                     <button type="button">
-                      {report.state === "off" ? "Включить" : "Выключить"}
+                      {report.state === "off" ? enableLabel : disableLabel}
                     </button>
                   </span>
                 </p>

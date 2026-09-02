@@ -16,7 +16,16 @@ export type Ai002Props = {
   presets?: string[]
   attachments?: Ai002Attachment[]
   limit?: number
+  /** Текст, с которого поле открывается. */
+  defaultText?: string
+  /** Название списка моделей для скринридера. */
+  modelLabel?: string
+  /** Счётчик остатка: {left} — сколько символов ещё влезет. */
+  counterText?: string
+  sendText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,13 +39,16 @@ export type Ai002Props = {
 // стоят над полем, потому что их проверяют глазами перед отправкой.
 const STYLES = `
 :where([data-vibeui-block="ai-002"]){
---vibeui-ai-002-bg:oklch(1 0 0);
---vibeui-ai-002-fg:oklch(0.22 0.014 265);
---vibeui-ai-002-muted:oklch(0.55 0.014 265);
---vibeui-ai-002-border:oklch(0.91 0.006 265);
---vibeui-ai-002-chip:oklch(0.97 0.003 265);
---vibeui-ai-002-accent:oklch(0.55 0.2 262);
---vibeui-ai-002-warn:oklch(0.62 0.16 60);
+--vibeui-ai-002-bg:transparent;
+--vibeui-ai-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-ai-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-ai-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-ai-002-chip:light-dark(oklch(0.97 0.003 265),oklch(0.29 0.011 265));
+--vibeui-ai-002-field:light-dark(oklch(1 0 0),oklch(0.25 0.01 265));
+--vibeui-ai-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
+--vibeui-ai-002-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-ai-002-ring:light-dark(oklch(0.55 0.2 262/20%),oklch(0.72 0.18 262/28%));
+--vibeui-ai-002-warn:light-dark(oklch(0.58 0.16 60),oklch(0.79 0.14 70));
 --vibeui-ai-002-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -71,7 +83,7 @@ border:1px solid var(--vibeui-ai-002-border);border-radius:0.875rem;overflow:hid
 }
 [data-vibeui-block="ai-002"] [data-part="field"]:focus-within{
 border-color:var(--vibeui-ai-002-accent);
-box-shadow:0 0 0 2px oklch(0.55 0.2 262 / 20%);
+box-shadow:0 0 0 2px var(--vibeui-ai-002-ring);
 }
 [data-vibeui-block="ai-002"] textarea{
 display:block;width:100%;resize:none;border:0;outline:none;
@@ -85,7 +97,7 @@ padding:0.5rem;border-top:1px solid var(--vibeui-ai-002-border);
 [data-vibeui-block="ai-002"] select{
 height:2rem;padding:0 0.5rem;
 border:1px solid var(--vibeui-ai-002-border);border-radius:0.5rem;
-background:var(--vibeui-ai-002-bg);color:inherit;font:inherit;font-size:0.75rem;
+background:var(--vibeui-ai-002-field);color:inherit;font:inherit;font-size:0.75rem;
 }
 [data-vibeui-block="ai-002"] select:focus-visible{outline:2px solid var(--vibeui-ai-002-accent);outline-offset:1px}
 [data-vibeui-block="ai-002"] [data-part="spacer"]{flex:1 1 auto}
@@ -97,7 +109,7 @@ font-size:0.75rem;color:var(--vibeui-ai-002-muted);font-variant-numeric:tabular-
 [data-vibeui-block="ai-002"] [data-part="send"]{
 appearance:none;cursor:pointer;
 height:2rem;padding:0 0.875rem;border:0;border-radius:0.5rem;
-background:var(--vibeui-ai-002-accent);color:oklch(1 0 0);
+background:var(--vibeui-ai-002-accent);color:var(--vibeui-ai-002-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="ai-002"] [data-part="send"]:disabled{opacity:.5;cursor:default}
@@ -120,6 +132,28 @@ const DEFAULT_FILES: Ai002Attachment[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Панель запроса к модели: пресеты, файлы, выбор модели и счётчик у предела.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -131,18 +165,27 @@ export function Ai002({
   presets = DEFAULT_PRESETS,
   attachments = DEFAULT_FILES,
   limit = 600,
+  defaultText = "Лендинг студии дизайна: hero с одним действием, три преимущества и тарифы.",
+  modelLabel = "Модель",
+  counterText = "Осталось {left}",
+  sendText = "Отправить",
   accent,
+  background = "",
   className,
   style,
 }: Ai002Props) {
-  const [text, setText] = useState(
-    "Лендинг студии дизайна: hero с одним действием, три преимущества и тарифы.",
-  )
+  const [text, setText] = useState(defaultText)
   const left = limit - text.length
   const near = left <= limit * 0.2
 
   const palette = {
     ...(accent ? { "--vibeui-ai-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-ai-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -193,7 +236,7 @@ export function Ai002({
             onChange={(event) => setText(event.target.value)}
           />
           <div data-part="bar">
-            <select aria-label="Модель" defaultValue={models[0]}>
+            <select aria-label={modelLabel} defaultValue={models[0]}>
               {models.map((model) => (
                 <option key={model} value={model}>
                   {model}
@@ -203,7 +246,7 @@ export function Ai002({
             <span data-part="spacer" />
             {near ? (
               <span data-part="counter" data-near="true" aria-live="polite">
-                Осталось {left}
+                {counterText.replace("{left}", String(left))}
               </span>
             ) : null}
             <button
@@ -211,7 +254,7 @@ export function Ai002({
               data-part="send"
               disabled={text.trim() === ""}
             >
-              Отправить
+              {sendText}
             </button>
           </div>
         </div>

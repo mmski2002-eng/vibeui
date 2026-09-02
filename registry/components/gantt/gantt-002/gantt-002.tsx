@@ -19,6 +19,22 @@ export type Gantt002Props = Omit<
   heading?: string
   startDate?: string
   tasks?: Gantt002Task[]
+  /** Пояснение к стрелкам под заголовком. */
+  hintText?: string
+  /** Подпись области прокрутки: {heading} — заголовок плана. */
+  scrollText?: string
+  /** Подпись связи в колонке названий: {title} — задача-предшественник. */
+  afterText?: string
+  /** Подпись задачи без предшественника. */
+  startText?: string
+  /** Длительность внутри полосы: {days} — число дней. */
+  daysText?: string
+  /** Подпись раскрывающейся таблицы точных дат. */
+  tableText?: string
+  /** Заголовки таблицы по ключам task, start, end, after. */
+  columnText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,17 +43,21 @@ export type Gantt002Props = Omit<
 // координаты считаются из тех же чисел, что и полосы, поэтому стрелка не
 // уезжает от прямоугольника. Ширина дня и высота строки заданы числами в
 // коде: SVG и полосы обязаны жить в одной системе координат, иначе рассинхрон.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="gantt-002"]){
---vibeui-gantt-002-bg:oklch(1 0 0);
---vibeui-gantt-002-fg:oklch(0.23 0.014 265);
---vibeui-gantt-002-muted:oklch(0.6 0.014 265);
---vibeui-gantt-002-border:oklch(0.91 0.006 265);
---vibeui-gantt-002-line:oklch(0.95 0.004 265);
---vibeui-gantt-002-accent:oklch(0.55 0.16 262);
---vibeui-gantt-002-risk:oklch(0.62 0.16 45);
---vibeui-gantt-002-done:oklch(0.6 0.12 165);
---vibeui-gantt-002-link:oklch(0.55 0.03 265);
+--vibeui-gantt-002-bg:transparent;
+--vibeui-gantt-002-sticky:light-dark(oklch(0.995 0.001 265),oklch(0.19 0.008 265));
+--vibeui-gantt-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-gantt-002-muted:light-dark(oklch(0.6 0.014 265),oklch(0.7 0.012 265));
+--vibeui-gantt-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-gantt-002-line:light-dark(oklch(0.95 0.004 265),oklch(0.3 0.01 265));
+--vibeui-gantt-002-accent:light-dark(oklch(0.55 0.16 262),oklch(0.74 0.14 262));
+--vibeui-gantt-002-risk:light-dark(oklch(0.62 0.16 45),oklch(0.76 0.15 55));
+--vibeui-gantt-002-done:light-dark(oklch(0.6 0.12 165),oklch(0.76 0.12 165));
+--vibeui-gantt-002-link:light-dark(oklch(0.55 0.03 265),oklch(0.66 0.02 265));
 --vibeui-gantt-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="gantt-002"]{
@@ -68,7 +88,7 @@ outline:2px solid var(--vibeui-gantt-002-accent);outline-offset:2px;
 [data-vibeui-block="gantt-002"] [data-part="shell"]{display:flex}
 [data-vibeui-block="gantt-002"] [data-part="names"]{
 position:sticky;left:0;z-index:2;flex:none;width:9.5rem;
-background:var(--vibeui-gantt-002-bg);
+background:var(--vibeui-gantt-002-sticky);
 border-right:1px solid var(--vibeui-gantt-002-border);
 }
 [data-vibeui-block="gantt-002"] [data-part="name"]{
@@ -98,18 +118,18 @@ transparent 1px var(--vibeui-gantt-002-daywidth,2.125rem));
 [data-vibeui-block="gantt-002"] [data-part="bar"]{
 position:absolute;display:flex;align-items:center;
 padding:0 0.4375rem;border-radius:0.375rem;
-background:color-mix(in oklab,var(--vibeui-gantt-002-accent) 18%,var(--vibeui-gantt-002-bg));
+background:color-mix(in oklab,var(--vibeui-gantt-002-accent) 18%,transparent);
 border:1px solid var(--vibeui-gantt-002-accent);
 font-size:0.625rem;line-height:1;white-space:nowrap;overflow:hidden;
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="gantt-002"] [data-tone="risk"]{
 border-color:var(--vibeui-gantt-002-risk);border-style:dashed;
-background:color-mix(in oklab,var(--vibeui-gantt-002-risk) 18%,var(--vibeui-gantt-002-bg));
+background:color-mix(in oklab,var(--vibeui-gantt-002-risk) 18%,transparent);
 }
 [data-vibeui-block="gantt-002"] [data-tone="done"]{
 border-color:var(--vibeui-gantt-002-done);
-background:color-mix(in oklab,var(--vibeui-gantt-002-done) 18%,var(--vibeui-gantt-002-bg));
+background:color-mix(in oklab,var(--vibeui-gantt-002-done) 18%,transparent);
 }
 [data-vibeui-block="gantt-002"] svg{position:absolute;inset:0;pointer-events:none}
 [data-vibeui-block="gantt-002"] [data-part="table"]{margin:0.75rem 0 0}
@@ -155,6 +175,35 @@ const DEFAULT_TASKS: Gantt002Task[] = [
   { id: "ship", title: "Релиз", start: 13, days: 2, after: "qa" },
 ]
 
+const DEFAULT_COLUMNS: Record<string, string> = {
+  task: "Задача",
+  start: "Начало",
+  end: "Конец",
+  after: "После",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * План со связями «после чего»: стрелки рисуются SVG-слоем по тем же
  * координатам, что и полосы. Один файл, ноль зависимостей.
@@ -163,6 +212,14 @@ export function Gantt002({
   heading = "План со связями",
   startDate = "2026-03-02",
   tasks = DEFAULT_TASKS,
+  hintText = "стрелка — «не раньше, чем закончится»",
+  scrollText = "{heading}: диаграмма, прокручивается вбок",
+  afterText = "после: {title}",
+  startText = "старт плана",
+  daysText = "{days} дн",
+  tableText = "Те же сроки таблицей",
+  columnText = DEFAULT_COLUMNS,
+  background = "",
   accent,
   className,
   style,
@@ -203,6 +260,13 @@ export function Gantt002({
   const palette = {
     "--vibeui-gantt-002-daywidth": `${DAY_WIDTH}px`,
     ...(accent ? { "--vibeui-gantt-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-gantt-002-bg": background,
+          "--vibeui-gantt-002-sticky": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -220,14 +284,14 @@ export function Gantt002({
       >
         <header data-part="head">
           <h3 data-part="heading">{heading}</h3>
-          <p data-part="hint">стрелка — «не раньше, чем закончится»</p>
+          <p data-part="hint">{hintText}</p>
         </header>
 
         <div
           data-part="scroll"
           tabIndex={0}
           role="group"
-          aria-label={`${heading}: диаграмма, прокручивается вбок`}
+          aria-label={scrollText.replace("{heading}", heading)}
         >
           <div data-part="shell">
             <div data-part="names">
@@ -241,10 +305,13 @@ export function Gantt002({
                   {task.title}
                   {task.after ? (
                     <small>
-                      после: {tasks[rowOf(task.after)]?.title ?? task.after}
+                      {afterText.replace(
+                        "{title}",
+                        tasks[rowOf(task.after)]?.title ?? task.after,
+                      )}
                     </small>
                   ) : (
-                    <small>старт плана</small>
+                    <small>{startText}</small>
                   )}
                 </div>
               ))}
@@ -309,7 +376,7 @@ export function Gantt002({
                       height: BAR_HEIGHT,
                     }}
                   >
-                    {task.days} дн
+                    {daysText.replace("{days}", String(task.days))}
                   </div>
                 ))}
               </div>
@@ -318,14 +385,14 @@ export function Gantt002({
         </div>
 
         <details data-part="table">
-          <summary>Те же сроки таблицей</summary>
+          <summary>{tableText}</summary>
           <table>
             <thead>
               <tr>
-                <th scope="col">Задача</th>
-                <th scope="col">Начало</th>
-                <th scope="col">Конец</th>
-                <th scope="col">После</th>
+                <th scope="col">{columnText.task ?? DEFAULT_COLUMNS.task}</th>
+                <th scope="col">{columnText.start ?? DEFAULT_COLUMNS.start}</th>
+                <th scope="col">{columnText.end ?? DEFAULT_COLUMNS.end}</th>
+                <th scope="col">{columnText.after ?? DEFAULT_COLUMNS.after}</th>
               </tr>
             </thead>
             <tbody>

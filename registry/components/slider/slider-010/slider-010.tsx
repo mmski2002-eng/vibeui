@@ -19,6 +19,8 @@ export type Slider010Props = Omit<
   defaultValue?: number
   unit?: string
   marks?: SliderMark[]
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -36,15 +38,18 @@ const DEFAULT_MARKS: SliderMark[] = [
   { value: 60, label: "60" },
 ]
 
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="slider-010"]){
---vibeui-slider-010-bg:oklch(1 0 0);
---vibeui-slider-010-fg:oklch(0.22 0.014 265);
---vibeui-slider-010-muted:oklch(0.55 0.014 265);
---vibeui-slider-010-border:oklch(0.9 0.006 265);
---vibeui-slider-010-track:oklch(0.92 0.006 265);
---vibeui-slider-010-mark:oklch(0.75 0.012 265);
---vibeui-slider-010-accent:oklch(0.55 0.17 230);
+--vibeui-slider-010-bg:transparent;
+--vibeui-slider-010-surface:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
+--vibeui-slider-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-slider-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-slider-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-slider-010-track:light-dark(oklch(0.92 0.006 265),oklch(0.42 0.012 265));
+--vibeui-slider-010-mark:light-dark(oklch(0.75 0.012 265),oklch(0.58 0.012 265));
+--vibeui-slider-010-accent:light-dark(oklch(0.55 0.17 230),oklch(0.74 0.15 230));
 --vibeui-slider-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-010-fill:40%;
 }
@@ -75,12 +80,12 @@ background:linear-gradient(to right,var(--vibeui-slider-010-accent) var(--vibeui
 [data-vibeui-block="slider-010"] input::-webkit-slider-thumb{
 appearance:none;margin-top:-0.34375rem;
 width:1.0625rem;height:1.0625rem;border-radius:9999px;
-background:var(--vibeui-slider-010-accent);border:3px solid var(--vibeui-slider-010-bg);
+background:var(--vibeui-slider-010-accent);border:3px solid var(--vibeui-slider-010-surface);
 box-shadow:0 1px 4px oklch(0.2 0.02 265 / 30%);
 }
 [data-vibeui-block="slider-010"] input::-moz-range-thumb{
 width:1.0625rem;height:1.0625rem;border-radius:9999px;box-sizing:border-box;
-background:var(--vibeui-slider-010-accent);border:3px solid var(--vibeui-slider-010-bg);
+background:var(--vibeui-slider-010-accent);border:3px solid var(--vibeui-slider-010-surface);
 }
 [data-vibeui-block="slider-010"] input:focus-visible{outline:2px solid var(--vibeui-slider-010-accent);outline-offset:4px;border-radius:0.5rem}
 /* Деления рисуются отдельным слоем поверх дорожки, на своём проценте от
@@ -105,6 +110,28 @@ font-size:0.6875rem;color:var(--vibeui-slider-010-muted);font-variant-numeric:ta
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Непрерывный ползунок с делениями на произвольных значениях диапазона.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -116,6 +143,7 @@ export function Slider010({
   defaultValue = 24,
   unit = " мес.",
   marks = DEFAULT_MARKS,
+  background = "",
   accent,
   className,
   style,
@@ -128,6 +156,12 @@ export function Slider010({
   const palette = {
     "--vibeui-slider-010-fill": `${percent(value)}%`,
     ...(accent ? { "--vibeui-slider-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-slider-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

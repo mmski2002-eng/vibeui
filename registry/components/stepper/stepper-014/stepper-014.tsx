@@ -15,7 +15,13 @@ export type Stepper014Props = Omit<
   /** Номер текущего шага, считая с нуля. */
   current?: number
   skipLabel?: string
+  /** Метка необязательного шага: компонент несёт русскую. */
+  optionalLabel?: string
+  /** Подписи состояний: done, current, todo. */
+  stateText?: Record<string, string>
   label?: string
+  /** Пусто — подложки нет, список лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,15 +29,17 @@ export type Stepper014Props = Omit<
 // действием — ссылкой «Пропустить этот шаг» прямо внутри него. Ссылка
 // показывается только у текущего необязательного шага: пропускать то, до
 // чего ещё не дошли, или то, что уже пройдено, — нечего.
+//
+// Тема берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="stepper-014"]){
---vibeui-stepper-014-bg:oklch(1 0 0);
---vibeui-stepper-014-fg:oklch(0.24 0.016 265);
---vibeui-stepper-014-muted:oklch(0.56 0.014 265);
---vibeui-stepper-014-border:oklch(0.92 0.006 265);
---vibeui-stepper-014-line:oklch(0.9 0.006 265);
---vibeui-stepper-014-accent:oklch(0.55 0.2 262);
---vibeui-stepper-014-accent-fg:oklch(1 0 0);
+--vibeui-stepper-014-bg:transparent;
+--vibeui-stepper-014-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-stepper-014-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.013 265));
+--vibeui-stepper-014-border:light-dark(oklch(0.92 0.006 265),oklch(0.35 0.012 265));
+--vibeui-stepper-014-line:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-stepper-014-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-stepper-014-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
 --vibeui-stepper-014-dot:1.5rem;
 --vibeui-stepper-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -114,7 +122,11 @@ outline:2px solid var(--vibeui-stepper-014-accent);outline-offset:2px;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="stepper-014"] *{animation:none!important;transition:none!important}}
 `
 
-const STATES = { done: "Готово", current: "Сейчас", todo: "Впереди" } as const
+const STATE_TEXT: Record<string, string> = {
+  done: "Готово",
+  current: "Сейчас",
+  todo: "Впереди",
+}
 
 const DEFAULT_STEPS: Stepper014Step[] = [
   { title: "Профиль", description: "Имя, фото и часовой пояс." },
@@ -129,6 +141,28 @@ const DEFAULT_STEPS: Stepper014Step[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Шаги с необязательным этапом: метка «можно пропустить» и ссылка пропуска.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -136,7 +170,10 @@ export function Stepper014({
   steps = DEFAULT_STEPS,
   current = 1,
   skipLabel = "Пропустить этот шаг",
+  optionalLabel = "Необязательно",
+  stateText = STATE_TEXT,
   label = "Настройка аккаунта",
+  background = "",
   accent,
   className,
   style,
@@ -144,6 +181,12 @@ export function Stepper014({
 }: Stepper014Props) {
   const palette = {
     ...(accent ? { "--vibeui-stepper-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-stepper-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -181,9 +224,11 @@ export function Stepper014({
                   </span>
                   <span data-part="head">
                     <span data-part="title">{step.title}</span>
-                    <span data-part="state">{STATES[state]}</span>
+                    <span data-part="state">
+                      {stateText[state] ?? STATE_TEXT[state]}
+                    </span>
                     {step.optional ? (
-                      <span data-part="tag">Необязательно</span>
+                      <span data-part="tag">{optionalLabel}</span>
                     ) : null}
                   </span>
                   {step.description ? (

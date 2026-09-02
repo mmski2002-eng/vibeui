@@ -15,7 +15,27 @@ export type Solutions054Props = {
   hint?: string
   reviews?: Solutions054Review[]
   foot?: string
+  /** Подписи плиток: avgRating, avgResponse. */
+  statsText?: Record<string, string>
+  /** Плитка отвеченных. {answered} и {total} подставляются на месте. */
+  answeredText?: string
+  /** Часы ответа. {hours} — число часов. */
+  hoursText?: string
+  /** Скрытая подпись гистограммы. {parts} — перечисление столбиков. */
+  histLabel?: string
+  /** Один столбик в подписи. {rating} — оценка, {count} — число отзывов. */
+  histItemText?: string
+  /** Скрытая подпись звёзд. {rating} — оценка, {max} — максимум. */
+  ratingLabel?: string
+  /** Подписи реквизитов отзыва: channel, topic. */
+  metaText?: Record<string, string>
+  /** Статус отвеченного отзыва. {hours} — часы до ответа. */
+  answeredStatusText?: string
+  /** Статус отзыва без ответа. */
+  waitingText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,14 +51,14 @@ export type Solutions054Props = {
 // полосой и словом, не только цветом фона.
 const STYLES = `
 :where([data-vibeui-block="solutions-054"]){
---vibeui-solutions-054-bg:oklch(1 0 0);
---vibeui-solutions-054-panel:oklch(0.977 0.004 250);
---vibeui-solutions-054-fg:oklch(0.21 0.014 260);
---vibeui-solutions-054-muted:oklch(0.54 0.014 260);
---vibeui-solutions-054-border:oklch(0.9 0.006 260);
---vibeui-solutions-054-accent:oklch(0.55 0.15 250);
---vibeui-solutions-054-low:oklch(0.57 0.19 30);
---vibeui-solutions-054-star:oklch(0.75 0.15 85);
+--vibeui-solutions-054-bg:transparent;
+--vibeui-solutions-054-panel:light-dark(oklch(0.977 0.004 250),oklch(0.27 0.011 260));
+--vibeui-solutions-054-fg:light-dark(oklch(0.21 0.014 260),oklch(0.94 0.005 260));
+--vibeui-solutions-054-muted:light-dark(oklch(0.54 0.014 260),oklch(0.69 0.012 260));
+--vibeui-solutions-054-border:light-dark(oklch(0.9 0.006 260),oklch(0.36 0.012 260));
+--vibeui-solutions-054-accent:light-dark(oklch(0.55 0.15 250),oklch(0.74 0.13 250));
+--vibeui-solutions-054-low:light-dark(oklch(0.57 0.19 30),oklch(0.73 0.16 30));
+--vibeui-solutions-054-star:light-dark(oklch(0.75 0.15 85),oklch(0.83 0.14 85));
 --vibeui-solutions-054-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -193,6 +213,38 @@ const DEFAULT_REVIEWS: Solutions054Review[] = [
 
 const RATINGS = [5, 4, 3, 2, 1] as const
 
+const STATS_LABEL: Record<string, string> = {
+  avgRating: "средняя оценка",
+  avgResponse: "средний первый ответ",
+}
+
+const META_LABEL: Record<string, string> = {
+  channel: "Канал",
+  topic: "Тема",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Разбор отзывов: гистограмма распределения оценок и лента с реквизитами
  * в <dl>, доля отвеченных и срок первого ответа считаются из данных.
@@ -203,10 +255,21 @@ export function Solutions054({
   hint = "Все каналы · последние 7 дней",
   reviews = DEFAULT_REVIEWS,
   foot = "Срок первого ответа считается только по отвеченным отзывам; неотвеченные помечены полосой слева.",
+  statsText = STATS_LABEL,
+  answeredText = "отвечено ({answered} из {total})",
+  hoursText = "{hours} ч",
+  histLabel = "Распределение оценок: {parts}",
+  histItemText = "{rating} звёзд — {count}",
+  ratingLabel = "Оценка {rating} из {max}",
+  metaText = META_LABEL,
+  answeredStatusText = "Отвечено через {hours} ч",
+  waitingText = "Ждёт ответа",
   accent,
+  background = "",
   className,
   style,
 }: Solutions054Props) {
+  const stat = (key: string) => statsText[key] ?? STATS_LABEL[key]
   const total = reviews.length
   const answeredCount = reviews.filter((review) => review.answered).length
   const answeredShare =
@@ -237,6 +300,12 @@ export function Solutions054({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-054-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-054-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -261,17 +330,23 @@ export function Solutions054({
         <div data-part="summary">
           <p data-part="tile">
             <b>{avgRating.toFixed(1)}</b>
-            <span>средняя оценка</span>
+            <span>{stat("avgRating")}</span>
           </p>
           <p data-part="tile">
             <b>{answeredShare}%</b>
             <span>
-              отвечено ({answeredCount} из {total})
+              {answeredText
+                .replace("{answered}", String(answeredCount))
+                .replace("{total}", String(total))}
             </span>
           </p>
           <p data-part="tile">
-            <b>{avgResponse === null ? "—" : `${avgResponse} ч`}</b>
-            <span>средний первый ответ</span>
+            <b>
+              {avgResponse === null
+                ? "—"
+                : hoursText.replace("{hours}", String(avgResponse))}
+            </b>
+            <span>{stat("avgResponse")}</span>
           </p>
         </div>
 
@@ -279,7 +354,14 @@ export function Solutions054({
           <div
             data-part="hist"
             role="img"
-            aria-label={`Распределение оценок: ${RATINGS.map((rating, index) => `${rating} звёзд — ${counts[index]}`).join(", ")}`}
+            aria-label={histLabel.replace(
+              "{parts}",
+              RATINGS.map((rating, index) =>
+                histItemText
+                  .replace("{rating}", String(rating))
+                  .replace("{count}", String(counts[index])),
+              ).join(", "),
+            )}
           >
             {RATINGS.map((rating, index) => (
               <div data-part="col" key={rating}>
@@ -308,7 +390,9 @@ export function Solutions054({
                   <p data-part="author">{review.author}</p>
                   <span
                     data-part="stars"
-                    aria-label={`Оценка ${review.rating} из 5`}
+                    aria-label={ratingLabel
+                      .replace("{rating}", String(review.rating))
+                      .replace("{max}", "5")}
                   >
                     {[1, 2, 3, 4, 5].map((star) => (
                       <span
@@ -322,16 +406,19 @@ export function Solutions054({
                   </span>
                 </div>
                 <dl data-part="meta">
-                  <dt>Канал</dt>
+                  <dt>{metaText.channel ?? META_LABEL.channel}</dt>
                   <dd>{review.channel}</dd>
-                  <dt>Тема</dt>
+                  <dt>{metaText.topic ?? META_LABEL.topic}</dt>
                   <dd>{review.topic}</dd>
                 </dl>
                 <p data-part="text">{review.text}</p>
                 <span data-part="status">
                   {review.answered
-                    ? `Отвечено через ${review.responseHours ?? "—"} ч`
-                    : "Ждёт ответа"}
+                    ? answeredStatusText.replace(
+                        "{hours}",
+                        String(review.responseHours ?? "—"),
+                      )
+                    : waitingText}
                 </span>
               </li>
             ))}

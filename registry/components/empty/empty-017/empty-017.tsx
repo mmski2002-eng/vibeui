@@ -9,6 +9,8 @@ export type Empty017Props = Omit<
   actionLabel?: string
   onAction?: () => void
   checkedAt?: string
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,11 +20,12 @@ export type Empty017Props = Omit<
 // написать новое письмо, второго входа в этот экран не нужно.
 const STYLES = `
 :where([data-vibeui-block="empty-017"]){
---vibeui-empty-017-bg:oklch(1 0 0);
---vibeui-empty-017-fg:oklch(0.21 0.014 265);
---vibeui-empty-017-muted:oklch(0.55 0.014 265);
---vibeui-empty-017-border:oklch(0.91 0.006 265);
---vibeui-empty-017-accent:oklch(0.55 0.17 265);
+--vibeui-empty-017-bg:transparent;
+--vibeui-empty-017-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-empty-017-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-empty-017-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-empty-017-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-empty-017-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.02 265));
 --vibeui-empty-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -44,7 +47,7 @@ margin:0;max-width:30ch;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-e
 [data-vibeui-block="empty-017"] [data-part="action"]{
 appearance:none;border:0;cursor:pointer;width:100%;margin-top:0.375rem;
 height:2.625rem;padding:0 1.125rem;border-radius:0.75rem;
-background:var(--vibeui-empty-017-accent);color:oklch(0.99 0.01 265);
+background:var(--vibeui-empty-017-accent);color:var(--vibeui-empty-017-on-accent);
 font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="empty-017"] [data-part="action"]:focus-visible{
@@ -60,6 +63,29 @@ margin:0.125rem 0 0;font-size:0.75rem;color:var(--vibeui-empty-017-muted);
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Пустой почтовый ящик: всё прочитано, действие одно — написать письмо.
  * Один файл, ноль внешних зависимостей.
  */
@@ -69,6 +95,7 @@ export function Empty017({
   actionLabel = "Написать",
   onAction,
   checkedAt = "Проверено только что",
+  background = "",
   accent,
   className,
   style,
@@ -76,6 +103,12 @@ export function Empty017({
 }: Empty017Props) {
   const palette = {
     ...(accent ? { "--vibeui-empty-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-empty-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

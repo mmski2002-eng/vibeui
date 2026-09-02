@@ -22,6 +22,10 @@ export type Select013Props = Omit<
   defaultValue?: string[]
   addLabel?: string
   emptyText?: string
+  /** Подпись кнопки удаления чипа; {label} — название метки. */
+  removeLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -32,15 +36,15 @@ export type Select013Props = Omit<
 // select, потому что чипам нужно жить отдельно от поля-триггера.
 const STYLES = `
 :where([data-vibeui-block="select-013"]){
---vibeui-select-013-surface:oklch(1 0 0);
---vibeui-select-013-surface-border:oklch(0.91 0.006 265);
---vibeui-select-013-fg:oklch(0.23 0.016 265);
---vibeui-select-013-muted:oklch(0.55 0.014 265);
---vibeui-select-013-border:oklch(0.87 0.008 265);
---vibeui-select-013-accent:oklch(0.55 0.19 262);
---vibeui-select-013-tint:oklch(0.55 0.19 262 / 14%);
---vibeui-select-013-panel:oklch(1 0 0);
---vibeui-select-013-check:oklch(1 0 0);
+--vibeui-select-013-surface:transparent;
+--vibeui-select-013-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-select-013-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-013-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-013-border:light-dark(oklch(0.87 0.008 265),oklch(0.4 0.012 265));
+--vibeui-select-013-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
+--vibeui-select-013-tint:light-dark(oklch(0.55 0.19 262 / 14%),oklch(0.73 0.17 262 / 22%));
+--vibeui-select-013-panel:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
+--vibeui-select-013-check:light-dark(oklch(1 0 0),oklch(0.19 0.014 265));
 --vibeui-select-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="select-013"]{
@@ -143,6 +147,28 @@ const DEFAULT_OPTIONS: Select013Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Множественный выбор с чипами: выбранные значения видны как чипы с
  * крестиком удаления, список открывает отдельная кнопка. Один файл, ноль
  * зависимостей, собственная палитра.
@@ -154,6 +180,8 @@ export function Select013({
   defaultValue = ["design", "case"],
   addLabel = "Добавить метку",
   emptyText = "Пока не выбрано",
+  removeLabel = "Убрать «{label}»",
+  background = "",
   accent,
   id,
   className,
@@ -235,6 +263,12 @@ export function Select013({
   const chips = options.filter((option) => selected.includes(option.value))
   const palette = {
     ...(accent ? { "--vibeui-select-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-select-013-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -263,7 +297,7 @@ export function Select013({
                 <button
                   type="button"
                   data-part="remove"
-                  aria-label={`Убрать «${chip.label}»`}
+                  aria-label={removeLabel.replace("{label}", chip.label)}
                   onClick={() => removeValue(chip.value)}
                 >
                   <span aria-hidden="true">×</span>

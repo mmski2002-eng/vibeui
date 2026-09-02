@@ -15,6 +15,14 @@ export type Navbar011Props = {
   repoLabel?: string
   repoHref?: string
   stars?: string
+  /** Буква в знаке: компонент несёт русскую. */
+  markLabel?: string
+  /** Подпись выбора версии для скринридера: компонент несёт русскую. */
+  versionLabel?: string
+  /** Подпись навигации для скринридера: компонент несёт русскую. */
+  navLabel?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -24,14 +32,18 @@ export type Navbar011Props = {
 // человек, попавший сюда из поисковика, обязан сразу видеть, о какой версии
 // читает. Выбор сделан нативным <select> внутри формы: он работает без JS,
 // на телефоне открывает системный список и не требует клиентского состояния.
+//
+// Тема берётся из color-scheme окружения через light-dark(): шапка темнеет
+// вместе с контекстом и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="navbar-011"]){
---vibeui-navbar-011-bg:oklch(0.99 0.003 250);
---vibeui-navbar-011-ink:oklch(0.24 0.014 250);
---vibeui-navbar-011-muted:oklch(0.54 0.014 250);
---vibeui-navbar-011-border:oklch(0.9 0.006 250);
---vibeui-navbar-011-accent:oklch(0.5 0.16 200);
---vibeui-navbar-011-accent-fg:oklch(0.99 0 0);
+--vibeui-navbar-011-bg:transparent;
+--vibeui-navbar-011-ink:light-dark(oklch(0.24 0.014 250),oklch(0.94 0.006 250));
+--vibeui-navbar-011-on-ink:light-dark(oklch(0.99 0.003 250),oklch(0.18 0.014 250));
+--vibeui-navbar-011-muted:light-dark(oklch(0.54 0.014 250),oklch(0.7 0.012 250));
+--vibeui-navbar-011-border:light-dark(oklch(0.9 0.006 250),oklch(0.35 0.011 250));
+--vibeui-navbar-011-accent:light-dark(oklch(0.5 0.16 200),oklch(0.74 0.13 200));
+--vibeui-navbar-011-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.03 200));
 --vibeui-navbar-011-mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
 --vibeui-navbar-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -52,7 +64,7 @@ color:inherit;text-decoration:none;font-size:0.9375rem;font-weight:680;letter-sp
 [data-vibeui-block="navbar-011"] [data-part="mark"]{
 width:1.5rem;height:1.5rem;border-radius:0.4375rem;flex:none;
 display:grid;place-items:center;
-background:var(--vibeui-navbar-011-ink);color:var(--vibeui-navbar-011-bg);
+background:var(--vibeui-navbar-011-ink);color:var(--vibeui-navbar-011-on-ink);
 font-family:var(--vibeui-navbar-011-mono);font-size:0.75rem;font-weight:700;
 }
 [data-vibeui-block="navbar-011"] [data-part="section"]{
@@ -115,6 +127,28 @@ const DEFAULT_LINKS: Navbar011Link[] = [
   { label: "Changelog", href: "#changelog" },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Шапка документации: раздел, выбор версии нативным select и ссылка на репозиторий. */
 export function Navbar011({
   project = "Плита",
@@ -125,12 +159,22 @@ export function Navbar011({
   repoLabel = "GitHub",
   repoHref = "#repo",
   stars = "4.1k",
+  markLabel = "П",
+  versionLabel = "Версия документации",
+  navLabel = "Разделы документации",
+  background = "",
   accent,
   className,
   style,
 }: Navbar011Props) {
   const palette = {
     ...(accent ? { "--vibeui-navbar-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-navbar-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -147,7 +191,7 @@ export function Navbar011({
         <div data-part="shell">
           <a data-part="brand" href="#top">
             <span data-part="mark" aria-hidden="true">
-              П
+              {markLabel}
             </span>
             {project}
           </a>
@@ -155,7 +199,7 @@ export function Navbar011({
           <select
             data-part="version"
             name="version"
-            aria-label="Версия документации"
+            aria-label={versionLabel}
             defaultValue={currentVersion}
           >
             {versions.map((version) => (
@@ -164,7 +208,7 @@ export function Navbar011({
               </option>
             ))}
           </select>
-          <nav data-part="links" aria-label="Разделы документации">
+          <nav data-part="links" aria-label={navLabel}>
             {links.map((link) => (
               <a
                 key={link.href}

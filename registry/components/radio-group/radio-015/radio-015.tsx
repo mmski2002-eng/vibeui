@@ -15,6 +15,8 @@ export type Radio015Props = Omit<
   options?: Radio015Option[]
   name?: string
   defaultValue?: Radio015Variant
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,15 +24,20 @@ export type Radio015Props = Omit<
 // фотография, а нарисованная в CSS полоска шапки и две строки контента:
 // этого достаточно, чтобы «светлая» и «тёмная» читались с одного взгляда.
 // У системной темы миниатюра честно разделена пополам — она и есть обе сразу.
+//
+// Тема берётся из color-scheme окружения через light-dark(): её слушается
+// обвязка, но не сами миниатюры — те обязаны показывать оба варианта всегда.
 const STYLES = `
 :where([data-vibeui-block="radio-015"]){
---vibeui-radio-015-bg:oklch(1 0 0);
---vibeui-radio-015-fg:oklch(0.22 0.014 265);
---vibeui-radio-015-muted:oklch(0.55 0.014 265);
---vibeui-radio-015-border:oklch(0.9 0.006 265);
---vibeui-radio-015-ring:oklch(0.74 0.012 265);
---vibeui-radio-015-accent:oklch(0.55 0.17 260);
---vibeui-radio-015-tint:oklch(0.55 0.17 260 / 7%);
+--vibeui-radio-015-bg:transparent;
+--vibeui-radio-015-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-015-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-radio-015-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-radio-015-ring:light-dark(oklch(0.74 0.012 265),oklch(0.5 0.014 265));
+--vibeui-radio-015-accent:light-dark(oklch(0.55 0.17 260),oklch(0.75 0.15 260));
+--vibeui-radio-015-tint:light-dark(oklch(0.55 0.17 260 / 7%),oklch(0.75 0.15 260 / 16%));
+/* Миниатюры остаются фиксированными: они рисуют светлую и тёмную тему как
+   картинку выбора, а не как оформление компонента. */
 --vibeui-radio-015-thumb-light-bg:oklch(0.98 0.002 265);
 --vibeui-radio-015-thumb-light-bar:oklch(0.9 0.006 265);
 --vibeui-radio-015-thumb-light-line:oklch(0.8 0.006 265);
@@ -110,6 +117,28 @@ const DEFAULT_OPTIONS: Radio015Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор темы оформления миниатюрами: полоска шапки и строки контента в CSS.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -118,6 +147,7 @@ export function Radio015({
   options = DEFAULT_OPTIONS,
   name = "vibeui-radio-015",
   defaultValue = "system",
+  background = "",
   accent,
   className,
   style,
@@ -125,6 +155,12 @@ export function Radio015({
 }: Radio015Props) {
   const palette = {
     ...(accent ? { "--vibeui-radio-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-radio-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

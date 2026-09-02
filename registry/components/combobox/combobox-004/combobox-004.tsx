@@ -22,6 +22,8 @@ export type Combobox004Props = Omit<
   emptyLabel?: string
   defaultValue?: string
   onSelect?: (name: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -31,13 +33,13 @@ export type Combobox004Props = Omit<
 // людей помнит почту, а не фамилию.
 const STYLES = `
 :where([data-vibeui-block="combobox-004"]){
---vibeui-combobox-004-bg:oklch(1 0 0);
---vibeui-combobox-004-fg:oklch(0.22 0.014 265);
---vibeui-combobox-004-muted:oklch(0.55 0.014 265);
---vibeui-combobox-004-border:oklch(0.9 0.006 265);
---vibeui-combobox-004-field:oklch(0.985 0.002 265);
---vibeui-combobox-004-active:oklch(0.955 0.012 265);
---vibeui-combobox-004-accent:oklch(0.55 0.15 25);
+--vibeui-combobox-004-bg:transparent;
+--vibeui-combobox-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-combobox-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-combobox-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-combobox-004-field:light-dark(oklch(0.985 0.002 265),oklch(0.3 0.012 265));
+--vibeui-combobox-004-active:light-dark(oklch(0.955 0.012 265),oklch(0.35 0.016 265));
+--vibeui-combobox-004-accent:light-dark(oklch(0.55 0.15 25),oklch(0.76 0.14 25));
 --vibeui-combobox-004-radius:0.625rem;
 --vibeui-combobox-004-hue:265;
 --vibeui-combobox-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -122,6 +124,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона: светлая плашка иначе досталась бы тексту
+ * тёмной ветки, потому что light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox с людьми: аватар с инициалами, вторая строка с почтой и ролью,
  * поиск по обеим строкам.
  */
@@ -132,6 +156,7 @@ export function Combobox004({
   emptyLabel = "Никого не нашлось",
   defaultValue = "Вера Наумова",
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -153,6 +178,12 @@ export function Combobox004({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

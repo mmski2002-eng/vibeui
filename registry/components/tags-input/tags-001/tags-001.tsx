@@ -15,6 +15,14 @@ export type Tags001Props = Omit<
   hint?: string
   defaultValue?: string[]
   max?: number
+  /** Подпись крестика: {tag} — имя тега. */
+  removeText?: string
+  /** Плейсхолдер ввода, пока предел не достигнут. */
+  placeholderText?: string
+  /** Плейсхолдер ввода на пределе. */
+  fullText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,19 +30,23 @@ export type Tags001Props = Omit<
 // привычки встречаются одинаково часто. Backspace на пустом поле удаляет
 // последний тег: без этого приходится целиться в крестик. Повторы отсекаются
 // молча, потому что второй такой же тег не ошибка пользователя, а шум.
+//
+// Тема берётся из color-scheme окружения через light-dark(): поле темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="tags-001"]){
---vibeui-tags-001-bg:oklch(1 0 0);
---vibeui-tags-001-surface:oklch(1 0 0);
---vibeui-tags-001-shell:oklch(0.9 0.006 265);
---vibeui-tags-001-fg:oklch(0.24 0.014 265);
---vibeui-tags-001-muted:oklch(0.56 0.014 265);
---vibeui-tags-001-border:oklch(0.88 0.008 265);
---vibeui-tags-001-chip:oklch(0.96 0.004 265);
---vibeui-tags-001-accent:oklch(0.55 0.2 262);
+--vibeui-tags-001-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-tags-001-surface:transparent;
+--vibeui-tags-001-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.01 265));
+--vibeui-tags-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tags-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-tags-001-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-tags-001-chip:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.012 265));
+--vibeui-tags-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
+--vibeui-tags-001-ring:light-dark(oklch(0.55 0.2 262 / 22%),oklch(0.72 0.18 262 / 30%));
 --vibeui-tags-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложка по умолчанию прозрачная: поле ложится на фон страницы. */
 [data-vibeui-block="tags-001"]{
 display:flex;flex-direction:column;gap:0.375rem;
 padding:0.875rem;
@@ -52,7 +64,7 @@ border:1px solid var(--vibeui-tags-001-border);border-radius:0.625rem;
 }
 [data-vibeui-block="tags-001"] [data-part="field"]:focus-within{
 border-color:var(--vibeui-tags-001-accent);
-box-shadow:0 0 0 2px oklch(0.55 0.2 262 / 22%);
+box-shadow:0 0 0 2px var(--vibeui-tags-001-ring);
 }
 [data-vibeui-block="tags-001"] [data-part="chip"]{
 display:inline-flex;align-items:center;gap:0.25rem;
@@ -81,6 +93,28 @@ margin:0;font-size:0.75rem;color:var(--vibeui-tags-001-muted);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поле тегов: Enter и запятая добавляют, Backspace на пустом поле удаляет.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -89,6 +123,10 @@ export function Tags001({
   hint = "Enter или запятая добавляют тег",
   defaultValue = ["форма", "без зависимостей"],
   max = 8,
+  removeText = "Убрать тег {tag}",
+  placeholderText = "Добавить…",
+  fullText = "Достигнут предел",
+  background = "",
   accent,
   className,
   style,
@@ -118,6 +156,12 @@ export function Tags001({
 
   const palette = {
     ...(accent ? { "--vibeui-tags-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tags-001-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -139,7 +183,7 @@ export function Tags001({
               {tag}
               <button
                 type="button"
-                aria-label={`Убрать тег ${tag}`}
+                aria-label={removeText.replace("{tag}", tag)}
                 onClick={() => setTags(tags.filter((item) => item !== tag))}
               >
                 ×
@@ -150,7 +194,7 @@ export function Tags001({
             id={id}
             type="text"
             value={draft}
-            placeholder={tags.length >= max ? "Достигнут предел" : "Добавить…"}
+            placeholder={tags.length >= max ? fullText : placeholderText}
             disabled={tags.length >= max}
             aria-describedby={`${id}-hint`}
             onChange={(event) => setDraft(event.target.value)}

@@ -14,7 +14,19 @@ export type Otp004Props = Omit<
   label?: string
   expected?: string
   attempts?: number
+  /** Подпись клетки для screen reader: {index} — номер, {total} — всего. */
+  digitLabel?: string
+  /** Подсказка до первой ошибки: {code} — код из пропа expected. */
+  hintText?: string
+  /** Сообщение о неверном коде, пока попытки ещё остались. */
+  errorText?: string
+  /** Сообщение, когда попытки кончились. */
+  lockedText?: string
+  /** Счётчик попыток: {left} — осталось, {total} — всего. */
+  attemptsText?: string
   onSubmit?: (code: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,20 +38,21 @@ export type Otp004Props = Omit<
 // несёт цвет и текст, а не движение.
 const STYLES = `
 :where([data-vibeui-block="otp-004"]){
---vibeui-otp-004-surface:oklch(1 0 0);
---vibeui-otp-004-shell:oklch(0.91 0.006 265);
---vibeui-otp-004-fg:oklch(0.21 0.014 265);
---vibeui-otp-004-muted:oklch(0.56 0.014 265);
---vibeui-otp-004-field:oklch(0.98 0.002 265);
---vibeui-otp-004-border:oklch(0.87 0.008 265);
---vibeui-otp-004-accent:oklch(0.52 0.18 285);
---vibeui-otp-004-bad:oklch(0.55 0.21 25);
+--vibeui-otp-004-bg:transparent;
+--vibeui-otp-004-surface:light-dark(oklch(1 0 0),oklch(0.26 0.014 265));
+--vibeui-otp-004-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-otp-004-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-otp-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-otp-004-field:light-dark(oklch(0.98 0.002 265),oklch(0.26 0.014 265));
+--vibeui-otp-004-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-otp-004-accent:light-dark(oklch(0.52 0.18 285),oklch(0.74 0.16 285));
+--vibeui-otp-004-bad:light-dark(oklch(0.55 0.21 25),oklch(0.72 0.17 25));
 --vibeui-otp-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="otp-004"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
-background:var(--vibeui-otp-004-surface);
+background:var(--vibeui-otp-004-bg);
 border:1px solid var(--vibeui-otp-004-shell);border-radius:0.875rem;
 font-family:var(--vibeui-otp-004-font);color:var(--vibeui-otp-004-fg);
 }
@@ -95,6 +108,28 @@ flex:none;font-variant-numeric:tabular-nums;
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Код подтверждения с честной ошибкой: красная рамка, встряска и счётчик попыток.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -102,7 +137,13 @@ export function Otp004({
   label = "Код подтверждения",
   expected = "482913",
   attempts = 3,
+  digitLabel = "Цифра {index} из {total}",
+  hintText = "Введите код из сообщения. Для примера подойдёт {code}.",
+  errorText = "Код неверный. Проверьте последнее сообщение.",
+  lockedText = "Попытки кончились — запросите новый код.",
+  attemptsText = "{left} из {total}",
   onSubmit,
+  background = "",
   accent,
   className,
   style,
@@ -118,8 +159,19 @@ export function Otp004({
 
   const palette = {
     ...(accent ? { "--vibeui-otp-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-otp-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const digitName = (index: number) =>
+    digitLabel
+      .replace("{index}", String(index + 1))
+      .replace("{total}", String(size))
 
   const check = (digits: string[]) => {
     const value = digits.join("")
@@ -190,7 +242,7 @@ export function Otp004({
               autoComplete={index === 0 ? "one-time-code" : "off"}
               maxLength={1}
               value={digit}
-              aria-label={`Цифра ${index + 1} из ${size}`}
+              aria-label={digitName(index)}
               aria-invalid={bad}
               aria-describedby={`${id}-foot`}
               onChange={(event) => type(index, event.target.value)}
@@ -207,12 +259,14 @@ export function Otp004({
           <span>
             {bad
               ? left > 0
-                ? "Код неверный. Проверьте последнее сообщение."
-                : "Попытки кончились — запросите новый код."
-              : `Введите шесть цифр из сообщения. Для примера подойдёт ${expected}.`}
+                ? errorText
+                : lockedText
+              : hintText.replace("{code}", expected)}
           </span>
           <span data-part="left">
-            {left} из {attempts}
+            {attemptsText
+              .replace("{left}", String(left))
+              .replace("{total}", String(attempts))}
           </span>
         </p>
       </div>

@@ -1,10 +1,18 @@
-import type { CSSProperties } from "react"
+import { Fragment } from "react"
+import type { CSSProperties, ReactNode } from "react"
 
 export type Codeblock010Props = {
   heading?: string
   command?: string
   file?: string
   shortcut?: string
+  configFile?: string
+  /** Первый абзац: {command} и {file} подставляются чипами. */
+  commandText?: string
+  /** Второй абзац: {shortcut} и {configFile} подставляются чипами. */
+  shortcutText?: string
+  /** Пусто — подложки нет, абзац лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -12,16 +20,19 @@ export type Codeblock010Props = {
 // Идея компонента: код внутри абзаца, а не блоком. Главная задача — чтобы
 // подложка чипа не рвалась при переносе строки: за это отвечает
 // box-decoration-break:clone, иначе у перенесённого куска пропадает скругление.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у абзаца
+// нет, чипы и клавиша держатся полупрозрачными накладками.
 const STYLES = `
 :where([data-vibeui-block="codeblock-010"]){
---vibeui-codeblock-010-bg:oklch(0.99 0.003 265);
---vibeui-codeblock-010-fg:oklch(0.27 0.016 265);
---vibeui-codeblock-010-muted:oklch(0.5 0.014 265);
---vibeui-codeblock-010-border:oklch(0.9 0.006 265);
---vibeui-codeblock-010-chip-bg:oklch(0.94 0.012 265);
---vibeui-codeblock-010-chip-fg:oklch(0.32 0.09 300);
---vibeui-codeblock-010-path-fg:oklch(0.36 0.09 240);
---vibeui-codeblock-010-key-bg:oklch(1 0 0);
+--vibeui-codeblock-010-bg:transparent;
+--vibeui-codeblock-010-fg:light-dark(oklch(0.27 0.016 265),oklch(0.92 0.008 265));
+--vibeui-codeblock-010-muted:light-dark(oklch(0.5 0.014 265),oklch(0.68 0.014 265));
+--vibeui-codeblock-010-border:light-dark(oklch(0.9 0.006 265),oklch(1 0 0 / 16%));
+--vibeui-codeblock-010-chip-bg:light-dark(oklch(0.94 0.012 265),oklch(1 0 0 / 10%));
+--vibeui-codeblock-010-chip-fg:light-dark(oklch(0.32 0.09 300),oklch(0.85 0.11 305));
+--vibeui-codeblock-010-path-fg:light-dark(oklch(0.36 0.09 240),oklch(0.83 0.1 240));
+--vibeui-codeblock-010-key-bg:light-dark(oklch(1 0 0),oklch(1 0 0 / 8%));
 --vibeui-codeblock-010-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -57,15 +68,73 @@ white-space:nowrap;
 }
 `
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
+ * Шаблон абзаца с чипами. Текст живёт в пропсе, поэтому переводится целиком,
+ * а порядок слов вокруг чипа не приходится собирать из кусков в разметке.
+ */
+function fill(template: string, chips: Record<string, ReactNode>): ReactNode[] {
+  return template.split(/(\{[a-zA-Z]+\})/).map((part, index) => {
+    const key = /^\{([a-zA-Z]+)\}$/.exec(part)?.[1]
+
+    return key && key in chips ? (
+      <Fragment key={index}>{chips[key]}</Fragment>
+    ) : (
+      <Fragment key={index}>{part}</Fragment>
+    )
+  })
+}
+
 /** Инлайновый код в абзаце: чипы команды, пути и клавиши. */
 export function Codeblock010({
   heading = "Как поставить компонент",
   command = "npx shadcn@latest add codeblock-010",
   file = "components/vibeui/codeblock-010.tsx",
   shortcut = "Ctrl + `",
+  configFile = "package.json",
+  commandText = "Выполните {command} — файл ляжет в {file} и сразу заработает.",
+  shortcutText = "Терминал открывается по {shortcut}; если команда не найдена, проверьте {configFile}.",
+  background = "",
   className,
   style,
 }: Codeblock010Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+  const chips: Record<string, ReactNode> = {
+    command: <code>{command}</code>,
+    file: <code data-kind="path">{file}</code>,
+    shortcut: <kbd>{shortcut}</kbd>,
+    configFile: <code data-kind="path">{configFile}</code>,
+  }
+
   return (
     <>
       <style href="vibeui-codeblock-010" precedence="medium">
@@ -74,17 +143,11 @@ export function Codeblock010({
       <div
         data-vibeui-block="codeblock-010"
         className={className}
-        style={style}
+        style={palette}
       >
         <h3>{heading}</h3>
-        <p>
-          Выполните <code>{command}</code> — файл ляжет в{" "}
-          <code data-kind="path">{file}</code> и сразу заработает.
-        </p>
-        <p>
-          Терминал открывается по <kbd>{shortcut}</kbd>; если команда не
-          найдена, проверьте <code data-kind="path">package.json</code>.
-        </p>
+        <p>{fill(commandText, chips)}</p>
+        <p>{fill(shortcutText, chips)}</p>
       </div>
     </>
   )

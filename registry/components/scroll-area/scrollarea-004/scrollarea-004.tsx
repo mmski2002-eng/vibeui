@@ -13,20 +13,26 @@ export type Scrollarea004Props = Omit<
   title?: string
   groups?: Scrollarea004Group[]
   height?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: заголовок раздела липнет к верху области, а не страницы.
 // Sticky считает верх от ближайшего предка с прокруткой, поэтому область
 // обязана быть этим предком, а сам заголовок — не иметь предка с overflow.
 // Отсюда плоская разметка: секция не оборачивает список в лишний контейнер.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у самой
+// области нет, но у липкого заголовка она обязана быть непрозрачной.
 const STYLES = `
 :where([data-vibeui-block="scrollarea-004"]){
---vibeui-scrollarea-004-bg:oklch(1 0 0);
---vibeui-scrollarea-004-fg:oklch(0.24 0.014 265);
---vibeui-scrollarea-004-muted:oklch(0.55 0.014 265);
---vibeui-scrollarea-004-border:oklch(0.9 0.006 265);
---vibeui-scrollarea-004-sticky:oklch(0.965 0.004 265);
---vibeui-scrollarea-004-accent:oklch(0.55 0.17 265);
+--vibeui-scrollarea-004-bg:transparent;
+--vibeui-scrollarea-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-scrollarea-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-scrollarea-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.33 0.012 265));
+--vibeui-scrollarea-004-sticky:light-dark(oklch(0.965 0.004 265),oklch(0.25 0.011 265));
+--vibeui-scrollarea-004-rule:light-dark(oklch(0.95 0.004 265),oklch(0.29 0.01 265));
+--vibeui-scrollarea-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-scrollarea-004-height:14rem;
 --vibeui-scrollarea-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -63,7 +69,7 @@ color:var(--vibeui-scrollarea-004-muted);
 margin:0;display:flex;align-items:center;
 min-height:2.125rem;padding:0 0.875rem;font-size:0.8125rem;
 }
-[data-vibeui-block="scrollarea-004"] dd + dd{border-top:1px solid oklch(0.95 0.004 265)}
+[data-vibeui-block="scrollarea-004"] dd + dd{border-top:1px solid var(--vibeui-scrollarea-004-rule)}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="scrollarea-004"] *{animation:none!important;transition:none!important}
 }
@@ -82,6 +88,28 @@ const DEFAULT_GROUPS: Scrollarea004Group[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Область прокрутки, где заголовок раздела липнет к её верху.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -89,12 +117,19 @@ export function Scrollarea004({
   title = "Контакты",
   groups = DEFAULT_GROUPS,
   height = "14rem",
+  background = "",
   className,
   style,
   ...props
 }: Scrollarea004Props) {
   const palette = {
     "--vibeui-scrollarea-004-height": height,
+    ...(background
+      ? {
+          "--vibeui-scrollarea-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

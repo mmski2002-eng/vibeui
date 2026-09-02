@@ -11,6 +11,8 @@ export type Buttongroup053Props = Omit<
 > & {
   actions?: Buttongroup053Action[]
   label?: string
+  /** Пусто — заливки нет, панель ложится на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,11 +25,13 @@ export type Buttongroup053Props = Omit<
 // обычно липнет к нижнему краю, где проходит системный жест.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-053"]){
---vibeui-buttongroup-053-surface:oklch(1 0 0);
---vibeui-buttongroup-053-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-053-muted:oklch(0.55 0.014 265);
---vibeui-buttongroup-053-border:oklch(0.9 0.006 265);
---vibeui-buttongroup-053-accent:oklch(0.5 0.16 265);
+--vibeui-buttongroup-053-surface:transparent;
+--vibeui-buttongroup-053-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-053-muted:light-dark(oklch(0.55 0.014 265),oklch(0.73 0.012 265));
+--vibeui-buttongroup-053-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.012 265));
+--vibeui-buttongroup-053-hover:light-dark(oklch(0.975 0.004 265),oklch(0.32 0.01 265));
+--vibeui-buttongroup-053-press:light-dark(oklch(0.95 0.006 265),oklch(0.37 0.012 265));
+--vibeui-buttongroup-053-accent:light-dark(oklch(0.5 0.16 265),oklch(0.76 0.14 265));
 --vibeui-buttongroup-053-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="buttongroup-053"]{
@@ -60,9 +64,9 @@ stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linej
 max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 [data-vibeui-block="buttongroup-053"] button:hover{
-color:var(--vibeui-buttongroup-053-fg);background:oklch(0.975 0.004 265);
+color:var(--vibeui-buttongroup-053-fg);background:var(--vibeui-buttongroup-053-hover);
 }
-[data-vibeui-block="buttongroup-053"] button:active{background:oklch(0.95 0.006 265)}
+[data-vibeui-block="buttongroup-053"] button:active{background:var(--vibeui-buttongroup-053-press)}
 [data-vibeui-block="buttongroup-053"] button:focus-visible{
 outline:2px solid var(--vibeui-buttongroup-053-accent);outline-offset:-3px;
 color:var(--vibeui-buttongroup-053-accent);
@@ -86,12 +90,35 @@ const DEFAULT_ACTIONS: Buttongroup053Action[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Панель действий во всю ширину: равные доли, значок над подписью, safe-area.
  * Один файл, ноль зависимостей, серверный компонент.
  */
 export function Buttongroup053({
   actions = DEFAULT_ACTIONS,
   label = "Действия с контактом",
+  background = "",
   accent,
   className,
   style,
@@ -99,6 +126,12 @@ export function Buttongroup053({
 }: Buttongroup053Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-053-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-053-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

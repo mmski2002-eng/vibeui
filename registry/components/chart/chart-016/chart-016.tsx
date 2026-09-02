@@ -14,25 +14,36 @@ export type Chart016Props = Omit<
   rows?: Chart016Row[]
   unit?: string
   scaleMax?: number
+  /** Подпись рядом с фактом: {plan} и {done}. */
+  compareLabel?: string
+  /** Подпись под списком: {unit}. */
+  unitLabel?: string
+  /** Легенда: ключи fact и plan. */
+  keyText?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: bullet-график «план против факта». Тонкая полоса факта
 // лежит на светлой шкале, риска плана стоит поперёк, а процент выполнения
 // написан числом. Одна строка отвечает сразу на три вопроса, при этом занимает
 // меньше места, чем пара столбиков.
+//
+// Тема берётся из color-scheme окружения через light-dark(): строки темнеют
+// вместе со страницей и не носят собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="chart-016"]){
---vibeui-chart-016-bg:oklch(1 0 0);
---vibeui-chart-016-fg:oklch(0.22 0.014 265);
---vibeui-chart-016-muted:oklch(0.55 0.014 265);
---vibeui-chart-016-border:oklch(0.91 0.006 265);
---vibeui-chart-016-band:oklch(0.96 0.004 265);
---vibeui-chart-016-band-2:oklch(0.93 0.005 265);
---vibeui-chart-016-band-3:oklch(0.89 0.006 265);
---vibeui-chart-016-accent:oklch(0.45 0.15 265);
---vibeui-chart-016-over:oklch(0.55 0.15 155);
---vibeui-chart-016-plan:oklch(0.3 0.02 265);
+--vibeui-chart-016-bg:transparent;
+--vibeui-chart-016-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-016-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-016-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-chart-016-band:light-dark(oklch(0.96 0.004 265),oklch(0.25 0.009 265));
+--vibeui-chart-016-band-2:light-dark(oklch(0.93 0.005 265),oklch(0.29 0.011 265));
+--vibeui-chart-016-band-3:light-dark(oklch(0.89 0.006 265),oklch(0.33 0.013 265));
+--vibeui-chart-016-accent:light-dark(oklch(0.45 0.15 265),oklch(0.74 0.14 265));
+--vibeui-chart-016-over:light-dark(oklch(0.55 0.15 155),oklch(0.76 0.14 155));
+--vibeui-chart-016-plan:light-dark(oklch(0.3 0.02 265),oklch(0.9 0.012 265));
 --vibeui-chart-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="chart-016"]{
@@ -92,6 +103,42 @@ const DEFAULT_ROWS: Chart016Row[] = [
   { label: "Средний чек", fact: 26, plan: 25 },
 ]
 
+const KEY_TEXT: Record<string, string> = {
+  fact: "Факт",
+  plan: "План",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+function fillTemplate(
+  template: string,
+  values: Record<string, string | number>,
+) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
 /**
  * Bullet-график «план против факта» строками с риской плана.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -101,13 +148,23 @@ export function Chart016({
   rows = DEFAULT_ROWS,
   unit = "факт против плана",
   scaleMax = 1.25,
+  compareLabel = "из {plan} · {done}%",
+  unitLabel = "Единица измерения: {unit}",
+  keyText = KEY_TEXT,
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Chart016Props) {
   const palette = {
     ...(accent ? { "--vibeui-chart-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-chart-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -135,7 +192,8 @@ export function Chart016({
               <li key={row.label} data-part="row">
                 <span data-part="label">{row.label}</span>
                 <span data-part="numbers">
-                  <b>{row.fact}</b> из {row.plan} · {done}%
+                  <b>{row.fact}</b>{" "}
+                  {fillTemplate(compareLabel, { plan: row.plan, done })}
                 </span>
                 <span data-part="track" aria-hidden="true">
                   <span
@@ -157,14 +215,14 @@ export function Chart016({
         <ul data-part="key">
           <li>
             <span data-part="swatch" aria-hidden="true" />
-            Факт
+            {keyText.fact ?? KEY_TEXT.fact}
           </li>
           <li>
             <span data-part="swatch" data-kind="plan" aria-hidden="true" />
-            План
+            {keyText.plan ?? KEY_TEXT.plan}
           </li>
         </ul>
-        <p data-part="unit">Единица измерения: {unit}</p>
+        <p data-part="unit">{fillTemplate(unitLabel, { unit })}</p>
       </figure>
     </>
   )

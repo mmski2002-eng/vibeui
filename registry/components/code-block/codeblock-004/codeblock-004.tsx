@@ -8,19 +8,24 @@ export type Codeblock004Props = Omit<
   prompt?: string
   cwd?: string
   branch?: string
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: одна строка терминала, а не блок кода. Приглашение и
 // каретка нарисованы псевдоэлементами, поэтому выделяется и копируется
 // только сама команда — приглашение в буфер не уезжает.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки нет,
+// терминал узнаётся по зелёной рамке и приглашению, а не по тёмной плашке.
 const STYLES = `
 :where([data-vibeui-block="codeblock-004"]){
---vibeui-codeblock-004-bg:oklch(0.16 0.012 160);
---vibeui-codeblock-004-fg:oklch(0.93 0.02 160);
---vibeui-codeblock-004-muted:oklch(0.64 0.03 160);
---vibeui-codeblock-004-prompt:oklch(0.82 0.16 148);
---vibeui-codeblock-004-branch:oklch(0.82 0.12 85);
---vibeui-codeblock-004-border:oklch(0.82 0.16 148 / 26%);
+--vibeui-codeblock-004-bg:transparent;
+--vibeui-codeblock-004-fg:light-dark(oklch(0.29 0.025 160),oklch(0.93 0.02 160));
+--vibeui-codeblock-004-muted:light-dark(oklch(0.5 0.03 160),oklch(0.64 0.03 160));
+--vibeui-codeblock-004-prompt:light-dark(oklch(0.5 0.14 148),oklch(0.82 0.16 148));
+--vibeui-codeblock-004-branch:light-dark(oklch(0.55 0.11 85),oklch(0.82 0.12 85));
+--vibeui-codeblock-004-border:light-dark(oklch(0.5 0.14 148 / 34%),oklch(0.82 0.16 148 / 26%));
 --vibeui-codeblock-004-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
 [data-vibeui-block="codeblock-004"]{
@@ -58,16 +63,49 @@ animation:vibeui-codeblock-004-blink 1.1s steps(1,end) infinite;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="codeblock-004"] *{animation:none!important;transition:none!important}}
 `
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Строка терминала с приглашением и мигающей кареткой. */
 export function Codeblock004({
   command = "npx shadcn@latest add codeblock-004",
   prompt = "$",
   cwd = "~/projects/vibeui",
   branch = "main",
+  background = "",
   className,
   style,
   ...props
 }: Codeblock004Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-codeblock-004" precedence="medium">
@@ -77,7 +115,7 @@ export function Codeblock004({
         {...props}
         data-vibeui-block="codeblock-004"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="where">
           <span>{cwd}</span>

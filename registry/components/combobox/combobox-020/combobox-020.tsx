@@ -14,6 +14,14 @@ export type Combobox020Props = Omit<
   headChars?: number
   tailChars?: number
   onSelect?: (value: string) => void
+  /** Что стоит в поле значения, пока ничего не выбрано. */
+  emptyValueText?: string
+  /** Строка на месте пустого списка. */
+  emptyText?: string
+  /** Полная строка снизу, пока ничего не выбрано. */
+  noValueText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,14 +32,15 @@ export type Combobox020Props = Omit<
 // версии, — поэтому оно режется по середине и сохраняет оба конца.
 const STYLES = `
 :where([data-vibeui-block="combobox-020"]){
---vibeui-combobox-020-bg:oklch(1 0 0);
---vibeui-combobox-020-fg:oklch(0.22 0.014 175);
---vibeui-combobox-020-muted:oklch(0.55 0.014 175);
---vibeui-combobox-020-border:oklch(0.9 0.008 175);
---vibeui-combobox-020-field:oklch(0.985 0.004 175);
---vibeui-combobox-020-soft:oklch(0.96 0.008 175);
---vibeui-combobox-020-accent:oklch(0.47 0.1 175);
---vibeui-combobox-020-accentsoft:oklch(0.93 0.045 175);
+--vibeui-combobox-020-bg:transparent;
+--vibeui-combobox-020-fg:light-dark(oklch(0.22 0.014 175),oklch(0.94 0.006 175));
+--vibeui-combobox-020-muted:light-dark(oklch(0.55 0.014 175),oklch(0.7 0.012 175));
+--vibeui-combobox-020-border:light-dark(oklch(0.9 0.008 175),oklch(0.35 0.012 175));
+--vibeui-combobox-020-field:light-dark(oklch(0.985 0.004 175),oklch(0.27 0.012 175));
+--vibeui-combobox-020-soft:light-dark(oklch(0.96 0.008 175),oklch(0.31 0.014 175));
+--vibeui-combobox-020-accent:light-dark(oklch(0.47 0.1 175),oklch(0.74 0.1 175));
+--vibeui-combobox-020-accentsoft:light-dark(oklch(0.93 0.045 175),oklch(0.34 0.045 175));
+--vibeui-combobox-020-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.02 175));
 --vibeui-combobox-020-radius:0.55rem;
 --vibeui-combobox-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-combobox-020-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
@@ -87,7 +96,7 @@ transition:background-color .16s ease;
 outline:2px solid var(--vibeui-combobox-020-accent);outline-offset:-2px;
 }
 [data-vibeui-block="combobox-020"] [data-part="option"][aria-selected="true"]{
-background:var(--vibeui-combobox-020-accent);color:var(--vibeui-combobox-020-bg);
+background:var(--vibeui-combobox-020-accent);color:var(--vibeui-combobox-020-onaccent);
 }
 [data-vibeui-block="combobox-020"] [data-part="full"]{
 margin:0;font-size:0.68rem;line-height:1.35;color:var(--vibeui-combobox-020-muted);
@@ -116,6 +125,28 @@ function shorten(text: string, head: number, tail: number) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор в узкой колонке: список режется справа, значение — по середине.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -127,6 +158,10 @@ export function Combobox020({
   headChars = 14,
   tailChars = 10,
   onSelect,
+  emptyValueText = "не выбрана",
+  emptyText = "Нет совпадений",
+  noValueText = "Ветка не выбрана",
+  background = "",
   accent,
   className,
   style,
@@ -144,6 +179,12 @@ export function Combobox020({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-020-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-020-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -161,7 +202,7 @@ export function Combobox020({
         <label htmlFor={`${id}-input`}>{label}</label>
         <p data-part="value">
           <span data-part="short" title={value}>
-            {value ? shorten(value, headChars, tailChars) : "не выбрана"}
+            {value ? shorten(value, headChars, tailChars) : emptyValueText}
           </span>
         </p>
         <input
@@ -184,7 +225,7 @@ export function Combobox020({
         >
           {matches.length === 0 ? (
             <li role="none">
-              <p data-part="empty">Нет совпадений</p>
+              <p data-part="empty">{emptyText}</p>
             </li>
           ) : (
             matches.map((option) => (
@@ -208,7 +249,7 @@ export function Combobox020({
           )}
         </ul>
         <p data-part="full" aria-live="polite">
-          {value || "Ветка не выбрана"}
+          {value || noValueText}
         </p>
       </div>
     </>

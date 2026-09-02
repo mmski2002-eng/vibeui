@@ -15,6 +15,8 @@ export type Timeline002Props = Omit<
   entries?: Timeline002Entry[]
   title?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: лента активности, где отправитель узнаётся раньше текста.
@@ -22,17 +24,19 @@ export type Timeline002Props = Omit<
 // имени, поэтому одного человека видно в ленте как повторяющееся пятно цвета.
 // Время вынесено в отдельный столбец с табличными цифрами: в ленте из
 // двадцати строк «2 мин» и «12 мин» обязаны стоять по одной вертикали.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// становится тёмным там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="timeline-002"]){
---vibeui-timeline-002-bg:oklch(1 0 0);
---vibeui-timeline-002-fg:oklch(0.22 0.014 265);
---vibeui-timeline-002-muted:oklch(0.56 0.014 265);
---vibeui-timeline-002-border:oklch(0.91 0.006 265);
---vibeui-timeline-002-line:oklch(0.93 0.005 265);
---vibeui-timeline-002-accent:oklch(0.55 0.17 265);
+--vibeui-timeline-002-bg:transparent;
+--vibeui-timeline-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-timeline-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.69 0.012 265));
+--vibeui-timeline-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-timeline-002-line:light-dark(oklch(0.93 0.005 265),oklch(0.33 0.01 265));
+--vibeui-timeline-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.75 0.15 265));
 --vibeui-timeline-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Собственная светлая подложка: текст тёмный и обязан читаться на любой странице. */
 [data-vibeui-block="timeline-002"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:26rem;box-sizing:border-box;padding:0.875rem;
@@ -57,8 +61,8 @@ width:1px;background:var(--vibeui-timeline-002-line);
 [data-vibeui-block="timeline-002"] [data-part="avatar"]{
 display:flex;align-items:center;justify-content:center;
 width:1.75rem;height:1.75rem;border-radius:9999px;
-background:oklch(0.92 0.05 var(--vibeui-timeline-002-hue,250));
-color:oklch(0.35 0.09 var(--vibeui-timeline-002-hue,250));
+background:light-dark(oklch(0.92 0.05 var(--vibeui-timeline-002-hue,250)),oklch(0.36 0.06 var(--vibeui-timeline-002-hue,250)));
+color:light-dark(oklch(0.35 0.09 var(--vibeui-timeline-002-hue,250)),oklch(0.9 0.07 var(--vibeui-timeline-002-hue,250)));
 font-size:0.6875rem;font-weight:700;letter-spacing:0.02em;
 }
 [data-vibeui-block="timeline-002"] [data-part="text"]{margin:0;font-size:0.8125rem;line-height:1.45;color:var(--vibeui-timeline-002-muted)}
@@ -114,6 +118,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Лента активности: аватар с инициалами, действие и время в отдельном столбце.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -121,12 +147,19 @@ export function Timeline002({
   entries = DEFAULT_ENTRIES,
   title = "Активность",
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Timeline002Props) {
   const palette = {
     ...(accent ? { "--vibeui-timeline-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-timeline-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

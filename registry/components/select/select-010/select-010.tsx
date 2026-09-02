@@ -22,6 +22,8 @@ export type Select010Props = Omit<
   placeholder?: string
   emptyText?: string
   defaultValue?: string
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -30,25 +32,36 @@ export type Select010Props = Omit<
 // куда больше, быстрее набрать несколько букв, чем листать разделы. Поэтому
 // поле — текстовый ввод с открывающимся списком: набор фильтрует варианты
 // сразу, а стрелки и Enter выбирают без мыши, как в обычном select.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы. Панель
+// списка остаётся непрозрачной в обеих ветках — она перекрывает страницу.
 const STYLES = `
 :where([data-vibeui-block="select-010"]){
---vibeui-select-010-surface:oklch(1 0 0);
---vibeui-select-010-surface-border:oklch(0.91 0.006 265);
---vibeui-select-010-fg:oklch(0.23 0.016 265);
---vibeui-select-010-muted:oklch(0.55 0.014 265);
---vibeui-select-010-field:oklch(0.985 0.002 265);
---vibeui-select-010-border:oklch(0.87 0.008 265);
---vibeui-select-010-accent:oklch(0.55 0.19 262);
---vibeui-select-010-tint:oklch(0.55 0.19 262 / 12%);
---vibeui-select-010-panel:oklch(1 0 0);
+--vibeui-select-010-surface:transparent;
+--vibeui-select-010-surface-border:transparent;
+--vibeui-select-010-surface-pad:0;
+--vibeui-select-010-surface-radius:0;
+--vibeui-select-010-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-select-010-field:light-dark(oklch(0.985 0.002 265),oklch(0.25 0.012 265));
+--vibeui-select-010-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-select-010-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.15 262));
+--vibeui-select-010-tint:light-dark(oklch(0.55 0.19 262 / 12%),oklch(0.75 0.15 262 / 20%));
+--vibeui-select-010-panel:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-select-010-shadow:light-dark(oklch(0 0 0 / 16%),oklch(0 0 0 / 48%));
 --vibeui-select-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Подложка появляется только вместе с пропом background: по умолчанию поле
+   лежит прямо на фоне страницы. */
 [data-vibeui-block="select-010"]{
 position:relative;
 display:flex;flex-direction:column;gap:0.375rem;
-width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:20rem;box-sizing:border-box;
+padding:var(--vibeui-select-010-surface-pad);
 background:var(--vibeui-select-010-surface);
-border:1px solid var(--vibeui-select-010-surface-border);border-radius:0.875rem;
+border:1px solid var(--vibeui-select-010-surface-border);
+border-radius:var(--vibeui-select-010-surface-radius);
 font-family:var(--vibeui-select-010-font);color:var(--vibeui-select-010-fg);
 }
 [data-vibeui-block="select-010"] [data-part="label"]{font-size:0.8125rem;font-weight:600}
@@ -87,7 +100,7 @@ margin:0;padding:0.375rem;list-style:none;
 max-height:13rem;overflow-y:auto;
 background:var(--vibeui-select-010-panel);
 border:1px solid var(--vibeui-select-010-border);border-radius:0.75rem;
-box-shadow:0 0.75rem 1.75rem oklch(0 0 0 / 16%);
+box-shadow:0 0.75rem 1.75rem var(--vibeui-select-010-shadow);
 }
 [data-vibeui-block="select-010"] [data-part="option"]{
 padding:0.5rem 0.625rem;border-radius:0.5rem;font-size:0.875rem;cursor:pointer;
@@ -114,6 +127,29 @@ const DEFAULT_OPTIONS: Select010Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Select с поиском: текстовый ввод фильтрует список, стрелки и Enter выбирают.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -124,6 +160,7 @@ export function Select010({
   placeholder = "Найдите имя",
   emptyText = "Никого не нашли",
   defaultValue = "",
+  background = "",
   accent,
   id,
   className,
@@ -206,8 +243,20 @@ export function Select010({
   }
 
   const activeOption = filtered[activeIndex]
+  // Подложка приходит вместе с полями и скруглением: без неё поле лежит
+  // прямо на странице, и лишние поля по бокам ему только мешают.
   const palette = {
     ...(accent ? { "--vibeui-select-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-select-010-surface": background,
+          "--vibeui-select-010-surface-border":
+            "light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265))",
+          "--vibeui-select-010-surface-pad": "0.875rem",
+          "--vibeui-select-010-surface-radius": "0.875rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -22,7 +22,29 @@ export type Cascader017Props = Omit<
   branches?: Cascader017Branch[]
   defaultBranch?: string
   defaultSpeciality?: string
+  /** Подпись строки фишек для скринридера. */
+  branchesLabel?: string
+  /** Подсказка в поле поиска. */
+  searchPlaceholder?: string
+  /** Подпись поля поиска, {branch} — текущее направление. */
+  searchLabel?: string
+  /** Подпись списка специальностей, {branch} — текущее направление. */
+  listLabel?: string
+  /** Строка вместо списка, когда поиск ничего не нашёл. */
+  emptyText?: string
+  /** Подпись специальности без свободных врачей. */
+  noDoctorsText?: string
+  /** Три формы слова «врач» для числа врачей. */
+  doctorsForms?: [string, string, string]
+  /** Часть строки о ближайшем приёме, {date} — время из справочника. */
+  nearestText?: string
+  /** Итог, {path} — направление и специальность. */
+  footText?: string
+  /** Итог, пока специальность не выбрана. */
+  footEmptyText?: string
   onSelect?: (branch: string, speciality: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -33,15 +55,16 @@ export type Cascader017Props = Omit<
 // и ближайший приём: специальность без свободных врачей выбрать нельзя.
 const STYLES = `
 :where([data-vibeui-block="cascader-017"]){
---vibeui-cascader-017-bg:oklch(1 0 0);
---vibeui-cascader-017-fg:oklch(0.22 0.014 190);
---vibeui-cascader-017-muted:oklch(0.55 0.014 190);
---vibeui-cascader-017-faint:oklch(0.75 0.01 190);
---vibeui-cascader-017-border:oklch(0.9 0.008 190);
---vibeui-cascader-017-field:oklch(0.985 0.004 190);
---vibeui-cascader-017-soft:oklch(0.965 0.008 190);
---vibeui-cascader-017-accent:oklch(0.47 0.1 190);
---vibeui-cascader-017-accentsoft:oklch(0.93 0.045 190);
+--vibeui-cascader-017-bg:transparent;
+--vibeui-cascader-017-fg:light-dark(oklch(0.22 0.014 190),oklch(0.94 0.006 190));
+--vibeui-cascader-017-muted:light-dark(oklch(0.55 0.014 190),oklch(0.71 0.012 190));
+--vibeui-cascader-017-faint:light-dark(oklch(0.75 0.01 190),oklch(0.54 0.012 190));
+--vibeui-cascader-017-border:light-dark(oklch(0.9 0.008 190),oklch(0.35 0.012 190));
+--vibeui-cascader-017-field:light-dark(oklch(0.985 0.004 190),oklch(0.27 0.012 190));
+--vibeui-cascader-017-soft:light-dark(oklch(0.965 0.008 190),oklch(0.29 0.012 190));
+--vibeui-cascader-017-onaccent:light-dark(oklch(1 0 0),oklch(0.2 0.02 190));
+--vibeui-cascader-017-accent:light-dark(oklch(0.47 0.1 190),oklch(0.75 0.11 190));
+--vibeui-cascader-017-accentsoft:light-dark(oklch(0.93 0.045 190),oklch(0.32 0.05 190));
 --vibeui-cascader-017-radius:0.625rem;
 --vibeui-cascader-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -70,7 +93,7 @@ transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="cascader-017"] [data-part="branch"][aria-pressed="true"]{
 background:var(--vibeui-cascader-017-accent);border-color:transparent;
-color:var(--vibeui-cascader-017-bg);
+color:var(--vibeui-cascader-017-onaccent);
 }
 [data-vibeui-block="cascader-017"] [data-part="branch"]:focus-visible,
 [data-vibeui-block="cascader-017"] [data-part="row"]:focus-visible{
@@ -157,6 +180,28 @@ function pluralize(count: number, forms: [string, string, string]) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор специальности врача: направление фишками, специальность списком.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -165,7 +210,18 @@ export function Cascader017({
   branches = CLINIC,
   defaultBranch = "Взрослым",
   defaultSpeciality = "Кардиолог",
+  branchesLabel = "Направления",
+  searchPlaceholder = "Найти специальность",
+  searchLabel = "Поиск специальности в направлении «{branch}»",
+  listLabel = "Специальности: {branch}",
+  emptyText = "В этом направлении ничего не нашлось",
+  noDoctorsText = "приём не ведётся",
+  doctorsForms = ["врач", "врача", "врачей"],
+  nearestText = "ближайший приём {date}",
+  footText = "Запись: {path}",
+  footEmptyText = "Специальность не выбрана",
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -190,8 +246,16 @@ export function Cascader017({
     (entry) => entry.name === speciality,
   )
 
+  const [footBefore, footAfter] = footText.split("{path}")
+
   const palette = {
     ...(accent ? { "--vibeui-cascader-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cascader-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -207,7 +271,7 @@ export function Cascader017({
         style={palette}
       >
         <h3 data-part="title">{label}</h3>
-        <ul data-part="branches" aria-label="Направления">
+        <ul data-part="branches" aria-label={branchesLabel}>
           {branches.map((entry) => (
             <li key={entry.name}>
               <button
@@ -229,15 +293,15 @@ export function Cascader017({
           id={`${id}-search`}
           type="search"
           autoComplete="off"
-          placeholder="Найти специальность"
-          aria-label={`Поиск специальности в направлении «${branch}»`}
+          placeholder={searchPlaceholder}
+          aria-label={searchLabel.replace("{branch}", branch)}
           value={query}
           onChange={(event) => setQuery(event.target.value)}
         />
-        <ul data-part="list" aria-label={`Специальности: ${branch}`}>
+        <ul data-part="list" aria-label={listLabel.replace("{branch}", branch)}>
           {matches.length === 0 ? (
             <li>
-              <p data-part="empty">В этом направлении ничего не нашлось</p>
+              <p data-part="empty">{emptyText}</p>
             </li>
           ) : (
             matches.map((entry) => (
@@ -255,8 +319,8 @@ export function Cascader017({
                   <span data-part="name">{entry.name}</span>
                   <span data-part="meta">
                     {entry.doctors === 0
-                      ? "приём не ведётся"
-                      : `${entry.doctors} ${pluralize(entry.doctors, ["врач", "врача", "врачей"])} · ближайший приём ${entry.nearest}`}
+                      ? noDoctorsText
+                      : `${entry.doctors} ${pluralize(entry.doctors, doctorsForms)} · ${nearestText.replace("{date}", entry.nearest ?? "")}`}
                   </span>
                 </button>
               </li>
@@ -266,13 +330,14 @@ export function Cascader017({
         <p data-part="foot" aria-live="polite">
           {picked ? (
             <>
-              Запись:{" "}
+              {footBefore}
               <b>
                 {branch} · {picked.name}
               </b>
+              {footAfter}
             </>
           ) : (
-            "Специальность не выбрана"
+            footEmptyText
           )}
         </p>
       </section>

@@ -8,6 +8,10 @@ type Navbar002Link = {
 
 export type Navbar002Props = {
   brand?: string
+  /** Буква в знаке: компонент несёт русскую. */
+  markLabel?: string
+  /** Подпись навигации для скринридера: компонент несёт русскую. */
+  navLabel?: string
   links?: Navbar002Link[]
   loginLabel?: string
   loginHref?: string
@@ -22,6 +26,9 @@ export type Navbar002Props = {
 // читается как единый объект, а не как россыпь ссылок. В узкой раскладке
 // пилюля не прячется в меню, а превращается в горизонтальную ленту с
 // прокруткой — на контентных сайтах разделы должны оставаться на виду.
+//
+// Тёмная подложка здесь — сама идея блока, а не тёмная тема: шапка остаётся
+// тёмной и на светлой странице, поэтому палитра намеренно одноцветная.
 const STYLES = `
 :where([data-vibeui-block="navbar-002"]){
 --vibeui-navbar-002-bg:oklch(0.21 0.014 265);
@@ -106,6 +113,8 @@ const DEFAULT_LINKS: Navbar002Link[] = [
 /** Тёмная шапка с меню-пилюлей: разделы всегда на виду, даже в узкой колонке. */
 export function Navbar002({
   brand = "Контур",
+  markLabel = "К",
+  navLabel = "Разделы сайта",
   links = DEFAULT_LINKS,
   loginLabel = "Войти",
   loginHref = "#login",
@@ -133,11 +142,11 @@ export function Navbar002({
         <div data-part="shell">
           <a data-part="brand" href="#top">
             <span data-part="mark" aria-hidden="true">
-              К
+              {markLabel}
             </span>
             {brand}
           </a>
-          <nav data-part="rail" aria-label="Разделы сайта">
+          <nav data-part="rail" aria-label={navLabel}>
             {links.map((link) => (
               <a
                 key={link.href}

@@ -16,6 +16,16 @@ export type Phoneinput008Props = Omit<
 > & {
   label?: string
   countries?: Phoneinput008Country[]
+  /** Подпись списка кодов для озвучки: компонент несёт русскую. */
+  codeLabel?: string
+  /** Шаблон строки над полем: {code} и {mask}. */
+  hint?: string
+  /** Подписи состояний проверки: {count} — число цифр, {word} — их слово. */
+  statusText?: Record<string, string>
+  /** Слово «цифра» в трёх формах: 1 цифра, 2 цифры, 5 цифр. */
+  digitWords?: { one: string; few: string; many: string }
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,17 +36,20 @@ export type Phoneinput008Props = Omit<
 // что лишнее, поэтому ошибку видно раньше отправки формы, а не после неё.
 // Номер набирается голыми цифрами — маска не подставляется в поле, чтобы не
 // путать это с автоформатированием: тут именно проверка, а не подстановка.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="phoneinput-008"]){
---vibeui-phoneinput-008-surface:oklch(1 0 0);
---vibeui-phoneinput-008-surface-border:oklch(0.91 0.006 265);
---vibeui-phoneinput-008-fg:oklch(0.24 0.016 265);
---vibeui-phoneinput-008-muted:oklch(0.54 0.014 265);
---vibeui-phoneinput-008-field-border:oklch(0.85 0.01 265);
---vibeui-phoneinput-008-accent:oklch(0.55 0.2 262);
---vibeui-phoneinput-008-warn:oklch(0.7 0.16 75);
---vibeui-phoneinput-008-bad:oklch(0.58 0.2 25);
---vibeui-phoneinput-008-ok:oklch(0.56 0.15 155);
+--vibeui-phoneinput-008-surface:transparent;
+--vibeui-phoneinput-008-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-phoneinput-008-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-phoneinput-008-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-phoneinput-008-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-phoneinput-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-phoneinput-008-warn:light-dark(oklch(0.62 0.14 75),oklch(0.82 0.14 75));
+--vibeui-phoneinput-008-bad:light-dark(oklch(0.58 0.2 25),oklch(0.75 0.16 25));
+--vibeui-phoneinput-008-ok:light-dark(oklch(0.56 0.15 155),oklch(0.75 0.14 155));
 --vibeui-phoneinput-008-radius:0.625rem;
 --vibeui-phoneinput-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -111,18 +124,53 @@ const DEFAULT_COUNTRIES: Phoneinput008Country[] = [
   { flag: "🇬🇧", code: "+44", name: "Великобритания", mask: "#### ######" },
 ]
 
-/** Склонение «цифра» под число: 1 цифра, 2 цифры, 5 цифр. */
-function digitWord(count: number) {
+const DEFAULT_STATUS_TEXT: Record<string, string> = {
+  empty: "Начните вводить номер",
+  incomplete: "Не хватает {count} {word}",
+  valid: "Формат верный: {count} {word}",
+  excess: "Лишних {count} {word}",
+}
+
+const DEFAULT_DIGIT_WORDS = { one: "цифра", few: "цифры", many: "цифр" }
+
+/** Склонение слова под число: 1 цифра, 2 цифры, 5 цифр. */
+function digitWord(
+  count: number,
+  words: { one: string; few: string; many: string },
+) {
   const teen = count % 100
   const tail = count % 10
-  if (teen > 10 && teen < 20) return "цифр"
-  if (tail === 1) return "цифра"
-  if (tail > 1 && tail < 5) return "цифры"
-  return "цифр"
+  if (teen > 10 && teen < 20) return words.many
+  if (tail === 1) return words.one
+  if (tail > 1 && tail < 5) return words.few
+  return words.many
 }
 
 function expectedDigits(mask: string) {
   return (mask.match(/#/g) ?? []).length
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -133,6 +181,11 @@ function expectedDigits(mask: string) {
 export function Phoneinput008({
   label = "Телефон",
   countries = DEFAULT_COUNTRIES,
+  codeLabel = "Код страны",
+  hint = "Ожидаемый формат: {code} {mask}",
+  statusText = DEFAULT_STATUS_TEXT,
+  digitWords = DEFAULT_DIGIT_WORDS,
+  background = "",
   accent,
   className,
   style,
@@ -158,14 +211,15 @@ export function Phoneinput008({
           ? "valid"
           : "excess"
 
-  const statusText =
-    state === "empty"
-      ? "Начните вводить номер"
-      : state === "incomplete"
-        ? `Не хватает ${expected - typed} ${digitWord(expected - typed)}`
-        : state === "valid"
-          ? `Формат верный: ${typed} ${digitWord(typed)}`
-          : `Лишних ${typed - expected} ${digitWord(typed - expected)}`
+  const count =
+    state === "incomplete"
+      ? expected - typed
+      : state === "excess"
+        ? typed - expected
+        : typed
+  const status = (statusText[state] ?? DEFAULT_STATUS_TEXT[state] ?? "")
+    .replace("{count}", String(count))
+    .replace("{word}", digitWord(count, digitWords))
 
   const statusMark =
     state === "valid"
@@ -178,8 +232,17 @@ export function Phoneinput008({
 
   const palette = {
     ...(accent ? { "--vibeui-phoneinput-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-phoneinput-008-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+  const hintText = hint
+    .replace("{code}", country?.code ?? "")
+    .replace("{mask}", country?.mask.replaceAll("#", "0") ?? "")
 
   return (
     <>
@@ -195,13 +258,13 @@ export function Phoneinput008({
       >
         <label htmlFor={id}>{label}</label>
         <p data-part="hint" id={hintId}>
-          Ожидаемый формат: {country?.code} {country?.mask.replaceAll("#", "0")}
+          {hintText}
         </p>
         <div data-part="group">
           <span data-part="code">
             <select
               name="country"
-              aria-label="Код страны"
+              aria-label={codeLabel}
               value={countryName}
               onChange={(event) => {
                 setCountryName(event.target.value)
@@ -236,7 +299,7 @@ export function Phoneinput008({
               {statusMark}
             </span>
           ) : null}
-          {statusText}
+          {status}
         </p>
       </div>
     </>

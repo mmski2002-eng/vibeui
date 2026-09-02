@@ -18,6 +18,16 @@ export type Command006Props = Omit<
 > & {
   commands?: Command006Command[]
   placeholder?: string
+  /** Имя панели для скринридера. */
+  label?: string
+  /** Имя списка строк для скринридера. */
+  listLabel?: string
+  /** Подпись группы клавиш; {keys} — сами клавиши через пробел. */
+  keysLabel?: string
+  /** Ответ, когда ничего не нашлось. */
+  emptyText?: string
+  /** Подложка панели. Пусто — цвет по умолчанию из палитры. */
+  background?: string
   accent?: string
 }
 
@@ -26,20 +36,25 @@ export type Command006Props = Omit<
 // <kbd> и последовательности вроде «G затем C» читаются как два нажатия, а не
 // как одно. Поиск идёт и по названию, и по самим клавишам: «⌘K» находит
 // команду быстрее, чем попытка вспомнить её имя.
+//
+// Тема берётся из color-scheme окружения через light-dark(): клавиша в тёмной
+// ветке чуть светлее панели, а не темнее, иначе рельеф kbd пропадает.
 const STYLES = `
 :where([data-vibeui-block="command-006"]){
---vibeui-command-006-bg:oklch(1 0 0);
---vibeui-command-006-fg:oklch(0.23 0.014 265);
---vibeui-command-006-muted:oklch(0.57 0.014 265);
---vibeui-command-006-border:oklch(0.9 0.006 265);
---vibeui-command-006-accent:oklch(0.56 0.15 165);
+--vibeui-command-006-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-command-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-command-006-muted:light-dark(oklch(0.57 0.014 265),oklch(0.68 0.012 265));
+--vibeui-command-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-command-006-key:light-dark(oklch(0.98 0.002 265),oklch(0.27 0.012 265));
+--vibeui-command-006-accent:light-dark(oklch(0.56 0.15 165),oklch(0.76 0.13 165));
+--vibeui-command-006-shadow:light-dark(oklch(0.2 0.03 265 / 60%),oklch(0.04 0.015 265 / 70%));
 --vibeui-command-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="command-006"]{
 display:block;box-sizing:border-box;width:100%;max-width:24rem;overflow:hidden;
 background:var(--vibeui-command-006-bg);color:var(--vibeui-command-006-fg);
 border:1px solid var(--vibeui-command-006-border);border-radius:0.875rem;
-box-shadow:0 18px 40px -28px oklch(0.2 0.03 265 / 60%);
+box-shadow:0 18px 40px -28px var(--vibeui-command-006-shadow);
 font-family:var(--vibeui-command-006-font);
 }
 [data-vibeui-block="command-006"] input{
@@ -66,7 +81,7 @@ display:inline-flex;align-items:center;gap:0.25rem;margin-left:auto;flex:none;
 [data-vibeui-block="command-006"] kbd{
 min-width:1.25rem;padding:0 0.3125rem;text-align:center;
 border:1px solid var(--vibeui-command-006-border);border-bottom-width:2px;border-radius:0.3125rem;
-background:oklch(0.98 0.002 265);
+background:var(--vibeui-command-006-key);
 font:inherit;font-size:0.6875rem;font-weight:650;line-height:1.25rem;
 color:var(--vibeui-command-006-muted);
 }
@@ -91,12 +106,39 @@ const DEFAULT_COMMANDS: Command006Command[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Палитра с горячими клавишами у каждой строки: поиск идёт и по названию,
  * и по клавишам. Один файл, ноль зависимостей.
  */
 export function Command006({
   commands = DEFAULT_COMMANDS,
   placeholder = "Команда или сочетание…",
+  label = "Горячие клавиши",
+  listLabel = "Команды",
+  keysLabel = "Сочетание: {keys}",
+  emptyText = "Такого сочетания нет — попробуйте другое.",
+  background = "",
   accent,
   className,
   style,
@@ -133,6 +175,12 @@ export function Command006({
 
   const paletteStyle = {
     ...(accent ? { "--vibeui-command-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-command-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -147,7 +195,7 @@ export function Command006({
         className={className}
         style={paletteStyle}
         role="dialog"
-        aria-label="Горячие клавиши"
+        aria-label={label}
       >
         <input
           type="text"
@@ -168,9 +216,14 @@ export function Command006({
           onKeyDown={onKeyDown}
         />
         {rows.length === 0 ? (
-          <p data-part="empty">Такого сочетания нет — попробуйте другое.</p>
+          <p data-part="empty">{emptyText}</p>
         ) : (
-          <ul id={listId} data-part="list" role="listbox" aria-label="Команды">
+          <ul
+            id={listId}
+            data-part="list"
+            role="listbox"
+            aria-label={listLabel}
+          >
             {rows.map((command, index) => (
               <li
                 key={command.label}
@@ -183,7 +236,10 @@ export function Command006({
                 {command.label}
                 <span
                   data-part="keys"
-                  aria-label={`Сочетание: ${command.keys.join(" ")}`}
+                  aria-label={keysLabel.replace(
+                    "{keys}",
+                    command.keys.join(" "),
+                  )}
                 >
                   {command.keys.map((key, position) => (
                     <kbd key={`${key}-${position}`}>{key}</kbd>

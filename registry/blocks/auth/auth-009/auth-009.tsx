@@ -9,6 +9,20 @@ export type Auth009Props = {
   submit?: string
   terms?: string
   marketing?: string
+  nameLabel?: string
+  namePlaceholder?: string
+  companyLabel?: string
+  companyPlaceholder?: string
+  emailLabel?: string
+  emailPlaceholder?: string
+  passwordLabel?: string
+  /** Подпись раскрывающегося блока с полным текстом условий. */
+  detailsSummary?: string
+  detailsText?: string
+  /** Подсказка под выключенной кнопкой. */
+  requiredHint?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -25,14 +39,20 @@ export type Auth009Props = {
 // уход по ссылке на условия — это потерянная форма с уже введёнными данными.
 //
 // Демонстрация интерфейса: форма ничего не отправляет и не хранит.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не выкладывает под себя плашку — подложка приходит
+// пропом background.
 const STYLES = `
 :where([data-vibeui-block="auth-009"]){
---vibeui-auth-009-bg:oklch(0.97 0.006 250);
---vibeui-auth-009-card:oklch(1 0 0);
---vibeui-auth-009-fg:oklch(0.22 0.014 265);
---vibeui-auth-009-muted:oklch(0.55 0.014 265);
---vibeui-auth-009-border:oklch(0.9 0.006 265);
---vibeui-auth-009-accent:oklch(0.55 0.16 200);
+--vibeui-auth-009-bg:transparent;
+--vibeui-auth-009-card:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
+--vibeui-auth-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-auth-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.013 265));
+--vibeui-auth-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265));
+--vibeui-auth-009-accent:light-dark(oklch(0.55 0.16 200),oklch(0.76 0.13 200));
+--vibeui-auth-009-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-auth-009-well:light-dark(oklch(0.55 0.02 265 / 4%),oklch(0.85 0.02 265 / 7%));
 --vibeui-auth-009-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -67,7 +87,7 @@ background:var(--vibeui-auth-009-card);color:inherit;font:inherit;font-size:0.87
 display:flex;flex-direction:column;gap:0.625rem;
 margin:1rem 0;padding:0.875rem;
 border:1px solid var(--vibeui-auth-009-border);border-radius:0.75rem;
-background:oklch(0.55 0.02 265 / 4%);
+background:var(--vibeui-auth-009-well);
 }
 [data-vibeui-block="auth-009"] [data-part="consent"]{display:flex;gap:0.5rem;font-size:0.8125rem;line-height:1.45}
 [data-vibeui-block="auth-009"] [data-part="consent"] input{flex:none;width:1.0625rem;height:1.0625rem;margin-top:0.0625rem;accent-color:var(--vibeui-auth-009-accent)}
@@ -80,7 +100,7 @@ background:oklch(0.55 0.02 265 / 4%);
 [data-vibeui-block="auth-009"] [data-part="submit"]{
 width:100%;appearance:none;cursor:pointer;height:2.625rem;
 border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-009-accent);color:oklch(1 0 0);
+background:var(--vibeui-auth-009-accent);color:var(--vibeui-auth-009-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 transition:opacity .16s ease;
 }
@@ -89,6 +109,28 @@ transition:opacity .16s ease;
 [data-vibeui-block="auth-009"] [data-part="why"]{margin:0.625rem 0 0;font-size:0.75rem;line-height:1.45;color:var(--vibeui-auth-009-muted);text-align:center;min-height:1.0625rem}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="auth-009"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Регистрация с явным согласием: кнопка ждёт обязательной галочки,
@@ -100,6 +142,17 @@ export function Auth009({
   submit = "Создать аккаунт",
   terms = "Я принимаю условия использования и политику конфиденциальности",
   marketing = "Присылать письма о новых блоках — не чаще раза в месяц",
+  nameLabel = "Имя",
+  namePlaceholder = "Анна",
+  companyLabel = "Компания",
+  companyPlaceholder = "Мера",
+  emailLabel = "Рабочая почта",
+  emailPlaceholder = "name@company.ru",
+  passwordLabel = "Пароль",
+  detailsSummary = "Что именно я принимаю",
+  detailsText = "Хранение почты и имени для доступа к аккаунту, историю установленных блоков и технические письма о работе сервиса. Рекламные письма — только по отдельной галочке выше.",
+  requiredHint = "Отметьте обязательное согласие, чтобы продолжить.",
+  background = "",
   accent,
   className,
   style,
@@ -108,6 +161,12 @@ export function Auth009({
 
   const palette = {
     ...(accent ? { "--vibeui-auth-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -133,41 +192,41 @@ export function Auth009({
           >
             <div data-part="pair">
               <div data-part="field">
-                <label htmlFor="vibeui-auth-009-name">Имя</label>
+                <label htmlFor="vibeui-auth-009-name">{nameLabel}</label>
                 <input
                   id="vibeui-auth-009-name"
                   name="name"
                   type="text"
                   autoComplete="given-name"
-                  placeholder="Анна"
+                  placeholder={namePlaceholder}
                 />
               </div>
               <div data-part="field">
-                <label htmlFor="vibeui-auth-009-company">Компания</label>
+                <label htmlFor="vibeui-auth-009-company">{companyLabel}</label>
                 <input
                   id="vibeui-auth-009-company"
                   name="organization"
                   type="text"
                   autoComplete="organization"
-                  placeholder="Мера"
+                  placeholder={companyPlaceholder}
                 />
               </div>
             </div>
 
             <div data-part="field">
-              <label htmlFor="vibeui-auth-009-email">Рабочая почта</label>
+              <label htmlFor="vibeui-auth-009-email">{emailLabel}</label>
               <input
                 id="vibeui-auth-009-email"
                 name="email"
                 type="email"
                 autoComplete="username"
-                placeholder="name@company.ru"
+                placeholder={emailPlaceholder}
                 required
               />
             </div>
 
             <div data-part="field">
-              <label htmlFor="vibeui-auth-009-password">Пароль</label>
+              <label htmlFor="vibeui-auth-009-password">{passwordLabel}</label>
               <input
                 id="vibeui-auth-009-password"
                 name="password"
@@ -194,12 +253,8 @@ export function Auth009({
                 <span>{marketing}</span>
               </label>
               <details>
-                <summary>Что именно я принимаю</summary>
-                <p>
-                  Хранение почты и имени для доступа к аккаунту, историю
-                  установленных блоков и технические письма о работе сервиса.
-                  Рекламные письма — только по отдельной галочке выше.
-                </p>
+                <summary>{detailsSummary}</summary>
+                <p>{detailsText}</p>
               </details>
             </fieldset>
 
@@ -207,9 +262,7 @@ export function Auth009({
               {submit}
             </button>
             <p data-part="why" role="status">
-              {agreed
-                ? ""
-                : "Отметьте обязательное согласие, чтобы продолжить."}
+              {agreed ? "" : requiredHint}
             </p>
           </form>
         </div>

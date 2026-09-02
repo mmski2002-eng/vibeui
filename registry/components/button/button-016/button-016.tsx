@@ -6,6 +6,11 @@ export type Button016Props = Omit<ComponentPropsWithoutRef<"a">, "children"> & {
   /** Открывать в новой вкладке: тогда об этом говорится вслух и значком. */
   external?: boolean
   tone?: "neutral" | "accent"
+  /** Пояснение для скринридера о переходе в новую вкладку. */
+  externalHint?: string
+  /** Пусто — подложки нет, кнопка лежит прямо на фоне страницы. */
+  background?: string
+  accent?: string
 }
 
 // Идея компонента: ссылка, которая выглядит кнопкой, но остаётся ссылкой.
@@ -14,11 +19,12 @@ export type Button016Props = Omit<ComponentPropsWithoutRef<"a">, "children"> & {
 // ссылки есть значок и сказано словами, что она уходит на другой сайт.
 const STYLES = `
 :where([data-vibeui-block="button-016"]){
---vibeui-button-016-fg:oklch(0.3 0.014 265);
---vibeui-button-016-bg:oklch(1 0 0);
---vibeui-button-016-border:oklch(0.9 0.006 265);
---vibeui-button-016-hover:oklch(0.96 0.004 265);
---vibeui-button-016-accent:oklch(0.55 0.17 265);
+--vibeui-button-016-fg:light-dark(oklch(0.3 0.014 265),oklch(0.94 0.006 265));
+--vibeui-button-016-bg:transparent;
+--vibeui-button-016-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-button-016-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
+--vibeui-button-016-accent:light-dark(oklch(0.55 0.17 265),oklch(0.63 0.18 265));
+--vibeui-button-016-on-accent:oklch(0.99 0.01 265);
 --vibeui-button-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-016"]{
@@ -31,7 +37,7 @@ text-decoration:none;
 transition:background-color .16s ease;
 }
 [data-vibeui-block="button-016"][data-tone="accent"]{
-border-color:transparent;background:var(--vibeui-button-016-accent);color:oklch(0.99 0.01 265);
+border-color:transparent;background:var(--vibeui-button-016-accent);color:var(--vibeui-button-016-on-accent);
 }
 [data-vibeui-block="button-016"]:hover{background:var(--vibeui-button-016-hover)}
 [data-vibeui-block="button-016"][data-tone="accent"]:hover{background:var(--vibeui-button-016-accent);filter:brightness(0.95)}
@@ -57,6 +63,28 @@ clip-path:inset(50%);white-space:nowrap;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Ссылка в виде кнопки: адрес копируется, вкладка открывается.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -65,10 +93,24 @@ export function Button016({
   href = "#",
   external = true,
   tone = "neutral",
+  externalHint = "(откроется в новой вкладке)",
+  background = "",
+  accent,
   className,
   style,
   ...props
 }: Button016Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-button-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-button-016" precedence="medium">
@@ -80,7 +122,7 @@ export function Button016({
         data-tone={tone}
         href={href}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
         {...(external
           ? { target: "_blank", rel: "noopener noreferrer" }
           : null)}
@@ -89,7 +131,7 @@ export function Button016({
         {external ? (
           <>
             <span data-part="out" aria-hidden="true" />
-            <span data-part="sr">(откроется в новой вкладке)</span>
+            <span data-part="sr">{externalHint}</span>
           </>
         ) : null}
       </a>

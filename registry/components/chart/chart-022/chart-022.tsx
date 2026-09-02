@@ -14,23 +14,33 @@ export type Chart022Props = Omit<
   rows?: Chart022Row[]
   unit?: string
   showMoves?: boolean
+  /** Подпись под списком: {unit}. */
+  unitLabel?: string
+  /** Движение места: ключи up, down и flat, плейсхолдер {shift}. */
+  moveText?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: рейтинг, в котором место важнее величины. Номер позиции
 // стоит отдельной колонкой, а рядом — движение относительно прошлого замера:
 // «был четвёртым, стал вторым». Без движения таблица топа отвечает только
 // «кто сейчас», а спрашивают обычно «что изменилось».
+//
+// Тема берётся из color-scheme окружения через light-dark(): рейтинг темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="chart-022"]){
---vibeui-chart-022-bg:oklch(1 0 0);
---vibeui-chart-022-fg:oklch(0.22 0.014 265);
---vibeui-chart-022-muted:oklch(0.55 0.014 265);
---vibeui-chart-022-border:oklch(0.91 0.006 265);
---vibeui-chart-022-track:oklch(0.95 0.004 265);
---vibeui-chart-022-accent:oklch(0.55 0.17 265);
---vibeui-chart-022-up:oklch(0.55 0.14 155);
---vibeui-chart-022-down:oklch(0.58 0.16 25);
+--vibeui-chart-022-bg:transparent;
+--vibeui-chart-022-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-022-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-022-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-chart-022-track:light-dark(oklch(0.95 0.004 265),oklch(0.29 0.01 265));
+--vibeui-chart-022-dim:light-dark(oklch(0.9 0.01 265),oklch(0.42 0.014 265));
+--vibeui-chart-022-accent:light-dark(oklch(0.55 0.17 265),oklch(0.71 0.15 265));
+--vibeui-chart-022-up:light-dark(oklch(0.55 0.14 155),oklch(0.76 0.14 155));
+--vibeui-chart-022-down:light-dark(oklch(0.58 0.16 25),oklch(0.73 0.15 25));
 --vibeui-chart-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="chart-022"]{
@@ -67,7 +77,7 @@ background:var(--vibeui-chart-022-track);overflow:hidden;
 display:block;height:100%;border-radius:inherit;background:var(--vibeui-chart-022-accent);
 }
 [data-vibeui-block="chart-022"] li:not(:nth-child(-n+3)) [data-part="fill"]{
-background:color-mix(in oklab,var(--vibeui-chart-022-accent) 45%,oklch(0.9 0.01 265));
+background:color-mix(in oklab,var(--vibeui-chart-022-accent) 45%,var(--vibeui-chart-022-dim));
 }
 [data-vibeui-block="chart-022"] [data-part="unit"]{margin:0;font-size:0.75rem;color:var(--vibeui-chart-022-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-022"] *{animation:none!important;transition:none!important}}
@@ -82,6 +92,43 @@ const DEFAULT_ROWS: Chart022Row[] = [
   { label: "Вакансии", value: 720, wasRank: 5 },
 ]
 
+const MOVE_TEXT: Record<string, string> = {
+  up: "▲ {shift}",
+  down: "▼ {shift}",
+  flat: "— без движения",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+function fillTemplate(
+  template: string,
+  values: Record<string, string | number>,
+) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
 /**
  * Рейтинг с номерами мест и движением относительно прошлого замера.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -91,7 +138,10 @@ export function Chart022({
   rows = DEFAULT_ROWS,
   unit = "визитов",
   showMoves = true,
+  unitLabel = "Единица измерения: {unit}. Стрелка — изменение места с прошлой недели.",
+  moveText = MOVE_TEXT,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -100,6 +150,12 @@ export function Chart022({
 
   const palette = {
     ...(accent ? { "--vibeui-chart-022-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-chart-022-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -129,11 +185,9 @@ export function Chart022({
                 <span data-part="name">{row.label}</span>
                 {showMoves ? (
                   <span data-part="move" data-dir={direction}>
-                    {direction === "up"
-                      ? `▲ ${shift}`
-                      : direction === "down"
-                        ? `▼ ${Math.abs(shift)}`
-                        : "— без движения"}
+                    {fillTemplate(moveText[direction] ?? MOVE_TEXT[direction], {
+                      shift: Math.abs(shift),
+                    })}
                   </span>
                 ) : (
                   <span data-part="move" />
@@ -151,9 +205,7 @@ export function Chart022({
             )
           })}
         </ol>
-        <p data-part="unit">
-          Единица измерения: {unit}. Стрелка — изменение места с прошлой недели.
-        </p>
+        <p data-part="unit">{fillTemplate(unitLabel, { unit })}</p>
       </figure>
     </>
   )

@@ -18,7 +18,11 @@ export type Button031Props = Omit<
   /** Значение атрибута accept у скрытого input. */
   accept?: string
   resetLabel?: string
+  /** Единицы веса файла: компонент несёт русские, проект подставляет свои. */
+  unitText?: Record<string, string>
   onFileChange?: (file: File | null) => void
+  /** Пусто — подложки нет, плашка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -29,11 +33,11 @@ export type Button031Props = Omit<
 // перетаскивание и очистить выбор.
 const STYLES = `
 :where([data-vibeui-block="button-031"]){
---vibeui-button-031-bg:oklch(1 0 0);
---vibeui-button-031-fg:oklch(0.26 0.016 265);
---vibeui-button-031-muted:oklch(0.55 0.014 265);
---vibeui-button-031-border:oklch(0.86 0.008 265);
---vibeui-button-031-accent:oklch(0.55 0.17 265);
+--vibeui-button-031-bg:transparent;
+--vibeui-button-031-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-button-031-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-button-031-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-button-031-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-button-031-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-031"]{
@@ -91,11 +95,44 @@ font:inherit;font-size:0.75rem;text-decoration:underline;text-underline-offset:2
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="button-031"] *{animation:none!important;transition:none!important}}
 `
 
-function weight(bytes: number) {
-  if (bytes >= 1024 * 1024) return `${(bytes / 1024 / 1024).toFixed(1)} МБ`
-  if (bytes >= 1024) return `${Math.round(bytes / 1024)} КБ`
+const UNIT_TEXT: Record<string, string> = {
+  mb: "МБ",
+  kb: "КБ",
+  b: "Б",
+}
 
-  return `${bytes} Б`
+function weight(bytes: number, units: Record<string, string>) {
+  if (bytes >= 1024 * 1024) {
+    return `${(bytes / 1024 / 1024).toFixed(1)} ${units.mb ?? UNIT_TEXT.mb}`
+  }
+
+  if (bytes >= 1024) {
+    return `${Math.round(bytes / 1024)} ${units.kb ?? UNIT_TEXT.kb}`
+  }
+
+  return `${bytes} ${units.b ?? UNIT_TEXT.b}`
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -107,7 +144,9 @@ export function Button031({
   hint = "PDF или PNG, до 10 МБ",
   accept = ".pdf,.png,.jpg",
   resetLabel = "Убрать файл",
+  unitText = UNIT_TEXT,
   onFileChange,
+  background = "",
   accent,
   className,
   style,
@@ -146,6 +185,12 @@ export function Button031({
 
   const palette = {
     ...(accent ? { "--vibeui-button-031-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-031-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -174,7 +219,9 @@ export function Button031({
           <span data-part="clip" aria-hidden="true" />
           <span data-part="text">
             <span data-part="name">{file ? file.name : label}</span>
-            <span data-part="hint">{file ? weight(file.size) : hint}</span>
+            <span data-part="hint">
+              {file ? weight(file.size, unitText) : hint}
+            </span>
           </span>
         </label>
         {file ? (

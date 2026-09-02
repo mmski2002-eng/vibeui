@@ -17,8 +17,12 @@ export type Ai007Props = {
   prompts?: Ai007Prompt[]
   actionLabel?: string
   emptyLabel?: string
+  /** Название переключателя рубрик для скринридера. */
+  tabsLabel?: string
   onPick?: (prompt: Ai007Prompt) => void
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -37,12 +41,12 @@ export type Ai007Props = {
 // интерактивность, которую не пройти с клавиатуры.
 const STYLES = `
 :where([data-vibeui-block="ai-007"]){
---vibeui-ai-007-bg:oklch(0.99 0.002 265);
---vibeui-ai-007-card:oklch(1 0 0);
---vibeui-ai-007-fg:oklch(0.22 0.014 265);
---vibeui-ai-007-muted:oklch(0.53 0.014 265);
---vibeui-ai-007-border:oklch(0.91 0.006 265);
---vibeui-ai-007-accent:oklch(0.53 0.19 300);
+--vibeui-ai-007-bg:transparent;
+--vibeui-ai-007-card:light-dark(oklch(1 0 0),oklch(0.25 0.011 265));
+--vibeui-ai-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-ai-007-muted:light-dark(oklch(0.53 0.014 265),oklch(0.69 0.012 265));
+--vibeui-ai-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-ai-007-accent:light-dark(oklch(0.53 0.19 300),oklch(0.76 0.15 300));
 --vibeui-ai-007-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -160,6 +164,28 @@ const DEFAULT_PROMPTS: Ai007Prompt[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Библиотека промптов-заготовок с рубриками-вкладками.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -170,8 +196,10 @@ export function Ai007({
   prompts = DEFAULT_PROMPTS,
   actionLabel = "Подставить в поле",
   emptyLabel = "В этой рубрике пока нет заготовок.",
+  tabsLabel = "Рубрики заготовок",
   onPick,
   accent,
+  background = "",
   className,
   style,
 }: Ai007Props) {
@@ -179,6 +207,12 @@ export function Ai007({
 
   const palette = {
     ...(accent ? { "--vibeui-ai-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-ai-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -201,7 +235,7 @@ export function Ai007({
             <p data-part="lede">{description}</p>
           </header>
 
-          <div data-part="tabs" role="tablist" aria-label="Рубрики заготовок">
+          <div data-part="tabs" role="tablist" aria-label={tabsLabel}>
             {groups.map((group) => (
               <button
                 key={group}

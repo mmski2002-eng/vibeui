@@ -15,19 +15,26 @@ export type Alert013Props = Omit<
   onReject?: () => void
   onSettings?: () => void
   accent?: string
+  /** Пусто — подложки нет, запрос лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: запрос согласия на cookie. Отказ равен согласию по весу —
 // это не вежливость, а требование закона: кнопка «Отклонить» не может быть
 // серее и мельче «Принять». Настройка вынесена третьей ссылкой, чтобы выбор
 // из двух вариантов оставался очевидным.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-013"]){
---vibeui-alert-013-fg:oklch(0.22 0.014 265);
---vibeui-alert-013-muted:oklch(0.5 0.014 265);
---vibeui-alert-013-bg:oklch(1 0 0);
---vibeui-alert-013-border:oklch(0.89 0.006 265);
---vibeui-alert-013-accent:oklch(0.55 0.2 262);
+--vibeui-alert-013-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.006 265));
+--vibeui-alert-013-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-013-bg:transparent;
+--vibeui-alert-013-border:light-dark(oklch(0.89 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-013-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-alert-013-accent-fg:light-dark(oklch(1 0 0),oklch(0.18 0.01 265));
+--vibeui-alert-013-shadow:light-dark(oklch(0.2 0.03 265 / 45%),oklch(0.05 0.02 265 / 70%));
 --vibeui-alert-013-radius:1rem;
 --vibeui-alert-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -43,7 +50,7 @@ border:1px solid var(--vibeui-alert-013-border);
 border-radius:var(--vibeui-alert-013-radius);
 background:var(--vibeui-alert-013-bg);color:var(--vibeui-alert-013-fg);
 font-family:var(--vibeui-alert-013-font);
-box-shadow:0 18px 40px -28px oklch(0.2 0.03 265 / 45%);
+box-shadow:0 18px 40px -28px var(--vibeui-alert-013-shadow);
 }
 [data-vibeui-block="alert-013"] [data-part="text"]{display:flex;flex-direction:column;gap:0.1875rem;flex:1 1 auto;min-width:0}
 [data-vibeui-block="alert-013"] [data-part="title"]{font-size:0.875rem;font-weight:600;line-height:1.4}
@@ -60,7 +67,7 @@ font-size:0.8125rem;font-weight:600;
 transition:background-color .16s ease,border-color .16s ease;
 }
 [data-vibeui-block="alert-013"] [data-part="accept"]{
-background:var(--vibeui-alert-013-accent);color:oklch(1 0 0);
+background:var(--vibeui-alert-013-accent);color:var(--vibeui-alert-013-accent-fg);
 }
 [data-vibeui-block="alert-013"] [data-part="accept"]:hover{filter:brightness(0.94)}
 [data-vibeui-block="alert-013"] [data-part="reject"]{
@@ -85,6 +92,28 @@ color:var(--vibeui-alert-013-muted);font:inherit;font-size:0.8125rem;text-decora
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Запрос согласия на cookie: отказ равен согласию по весу.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -100,12 +129,19 @@ export function Alert013({
   onReject,
   onSettings,
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Alert013Props) {
   const palette = {
     ...(accent ? { "--vibeui-alert-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-alert-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

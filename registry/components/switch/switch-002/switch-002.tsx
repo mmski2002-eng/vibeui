@@ -8,6 +8,8 @@ export type Switch002Props = Omit<
   description?: string
   /** Текст в углу, когда опция включена. */
   badge?: string
+  /** Пусто — подложки нет, плитка держится рамкой на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,14 +19,15 @@ export type Switch002Props = Omit<
 // выбранные видно с расстояния, а не по положению маленького бегунка.
 const STYLES = `
 :where([data-vibeui-block="switch-002"]){
---vibeui-switch-002-bg:oklch(1 0 0);
---vibeui-switch-002-fg:oklch(0.22 0.014 265);
---vibeui-switch-002-muted:oklch(0.54 0.014 265);
---vibeui-switch-002-border:oklch(0.9 0.006 265);
---vibeui-switch-002-track:oklch(0.88 0.008 265);
---vibeui-switch-002-thumb:oklch(1 0 0);
---vibeui-switch-002-accent:oklch(0.56 0.16 155);
---vibeui-switch-002-tint:oklch(0.56 0.16 155 / 8%);
+--vibeui-switch-002-bg:transparent;
+--vibeui-switch-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-switch-002-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-switch-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-switch-002-track:light-dark(oklch(0.88 0.008 265),oklch(0.43 0.014 265));
+--vibeui-switch-002-thumb:light-dark(oklch(1 0 0),oklch(0.93 0.004 265));
+--vibeui-switch-002-accent:light-dark(oklch(0.56 0.16 155),oklch(0.76 0.15 155));
+--vibeui-switch-002-tint:light-dark(oklch(0.56 0.16 155 / 8%),oklch(0.76 0.15 155 / 14%));
+--vibeui-switch-002-badge-ink:light-dark(oklch(1 0 0),oklch(0.2 0.03 155));
 --vibeui-switch-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="switch-002"]{
@@ -71,12 +74,34 @@ transition:transform .18s cubic-bezier(.32,.72,0,1);
 [data-vibeui-block="switch-002"] [data-part="badge"]{
 display:none;align-self:flex-start;
 padding:0.125rem 0.5rem;border-radius:9999px;
-background:var(--vibeui-switch-002-accent);color:oklch(1 0 0);
+background:var(--vibeui-switch-002-accent);color:var(--vibeui-switch-002-badge-ink);
 font-size:0.6875rem;font-weight:650;letter-spacing:0.02em;
 }
 [data-vibeui-block="switch-002"]:has(input:checked) [data-part="badge"]{display:inline-block}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="switch-002"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Плитка-переключатель: заголовок, объяснение и цвет всей карточки.
@@ -86,6 +111,7 @@ export function Switch002({
   title = "Умные напоминания",
   description = "Присылаем задачу за час до дедлайна и молчим по выходным.",
   badge = "Включено",
+  background = "",
   accent,
   defaultChecked = true,
   className,
@@ -94,6 +120,12 @@ export function Switch002({
 }: Switch002Props) {
   const palette = {
     ...(accent ? { "--vibeui-switch-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-switch-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

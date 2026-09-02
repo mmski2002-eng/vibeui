@@ -9,21 +9,32 @@ export type Empty007Props = Omit<
   retryLabel?: string
   code?: string
   detail?: string
+  /** Подпись раскрывающихся подробностей. */
+  detailsLabel?: string
   onRetry?: () => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  /** Тревожный цвет: знак и обводка фокуса. */
+  danger?: string
 }
 
 // Идея компонента: ошибка загрузки, а не пустой раздел. Разница
 // принципиальная: данные есть, их не удалось получить, поэтому главное
 // действие — повторить, а не «создать первое». Технические подробности
 // спрятаны в details: разработчику они нужны, остальным мешают.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="empty-007"]){
---vibeui-empty-007-bg:oklch(1 0 0);
---vibeui-empty-007-fg:oklch(0.21 0.014 265);
---vibeui-empty-007-muted:oklch(0.55 0.014 265);
---vibeui-empty-007-border:oklch(0.91 0.006 265);
---vibeui-empty-007-danger:oklch(0.55 0.2 25);
---vibeui-empty-007-danger-soft:oklch(0.95 0.03 25);
+--vibeui-empty-007-bg:transparent;
+--vibeui-empty-007-fg:light-dark(oklch(0.21 0.014 265),oklch(0.95 0.005 265));
+--vibeui-empty-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-empty-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-empty-007-code:light-dark(oklch(0.97 0.003 265),oklch(0.29 0.011 265));
+--vibeui-empty-007-action-fg:light-dark(oklch(0.99 0.004 265),oklch(0.18 0.012 265));
+--vibeui-empty-007-danger:light-dark(oklch(0.55 0.2 25),oklch(0.74 0.16 25));
+--vibeui-empty-007-danger-soft:light-dark(color-mix(in oklab,var(--vibeui-empty-007-danger) 14%,oklch(1 0 0)),color-mix(in oklab,var(--vibeui-empty-007-danger) 26%,oklch(0.2 0.01 265)));
 --vibeui-empty-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-empty-007-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
@@ -55,7 +66,7 @@ margin:0;max-width:34ch;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-e
 [data-vibeui-block="empty-007"] [data-part="action"]{
 appearance:none;border:0;cursor:pointer;margin-top:0.5rem;
 height:2.5rem;padding:0 1.125rem;border-radius:0.75rem;
-background:var(--vibeui-empty-007-fg);color:oklch(0.99 0.004 265);
+background:var(--vibeui-empty-007-fg);color:var(--vibeui-empty-007-action-fg);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="empty-007"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-empty-007-danger);outline-offset:2px}
@@ -69,12 +80,34 @@ color:var(--vibeui-empty-007-muted);font-weight:650;
 [data-vibeui-block="empty-007"] summary:focus-visible{outline:2px solid var(--vibeui-empty-007-danger);outline-offset:2px;border-radius:0.25rem}
 [data-vibeui-block="empty-007"] [data-part="detail"]{
 margin:0.5rem 0 0;padding:0.5rem 0.625rem;
-background:oklch(0.97 0.003 265);border-radius:0.5rem;
+background:var(--vibeui-empty-007-code);border-radius:0.5rem;
 font-family:var(--vibeui-empty-007-mono);font-size:0.6875rem;line-height:1.45;
 color:var(--vibeui-empty-007-muted);text-align:left;overflow-wrap:anywhere;white-space:pre-line;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="empty-007"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Ошибка загрузки с повтором: подробности спрятаны в details.
@@ -86,11 +119,25 @@ export function Empty007({
   retryLabel = "Повторить",
   code = "504 Gateway Timeout",
   detail = "GET /api/projects?page=1 — превышено время ожидания 15 000 мс. Запрос 8f2c-41ab.",
+  detailsLabel = "Подробности ошибки",
   onRetry,
+  background = "",
+  danger,
   className,
   style,
   ...props
 }: Empty007Props) {
+  const palette = {
+    ...(danger ? { "--vibeui-empty-007-danger": danger } : null),
+    ...(background
+      ? {
+          "--vibeui-empty-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-empty-007" precedence="medium">
@@ -101,7 +148,7 @@ export function Empty007({
         data-vibeui-block="empty-007"
         role="alert"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="mark" aria-hidden="true" />
         <h3 data-part="title">{title}</h3>
@@ -110,7 +157,7 @@ export function Empty007({
           {retryLabel}
         </button>
         <details>
-          <summary>Подробности ошибки</summary>
+          <summary>{detailsLabel}</summary>
           <p data-part="detail">
             {code}
             {"\n"}

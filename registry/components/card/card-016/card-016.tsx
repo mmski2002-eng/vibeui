@@ -14,6 +14,12 @@ export type Card016Props = Omit<
   updated?: string
   actionLabel?: string
   href?: string
+  /** Слово типа в подписи: ключи те же, что у kind. */
+  kindText?: Record<string, string>
+  /** Что написать на значке, когда у имени нет расширения. */
+  extensionFallback?: string
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,11 +29,13 @@ export type Card016Props = Omit<
 // первой строки, но расширение вынесено в значок и не теряется.
 const STYLES = `
 :where([data-vibeui-block="card-016"]){
---vibeui-card-016-bg:oklch(1 0 0);
---vibeui-card-016-fg:oklch(0.22 0.015 265);
---vibeui-card-016-muted:oklch(0.56 0.013 265);
---vibeui-card-016-border:oklch(0.91 0.006 265);
---vibeui-card-016-kind:oklch(0.58 0.16 265);
+--vibeui-card-016-bg:transparent;
+--vibeui-card-016-surface:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-card-016-ink:light-dark(oklch(0.2 0.02 265),oklch(0.97 0.005 265));
+--vibeui-card-016-fg:light-dark(oklch(0.22 0.015 265),oklch(0.94 0.006 265));
+--vibeui-card-016-muted:light-dark(oklch(0.56 0.013 265),oklch(0.71 0.012 265));
+--vibeui-card-016-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-card-016-kind:light-dark(oklch(0.58 0.16 265),oklch(0.74 0.14 265));
 --vibeui-card-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="card-016"]{
@@ -41,27 +49,27 @@ transition:border-color .16s ease;
 [data-vibeui-block="card-016"]:hover{
 border-color:color-mix(in oklab,var(--vibeui-card-016-kind) 35%,var(--vibeui-card-016-border));
 }
-[data-vibeui-block="card-016"][data-kind="pdf"]{--vibeui-card-016-kind:oklch(0.58 0.19 27)}
-[data-vibeui-block="card-016"][data-kind="doc"]{--vibeui-card-016-kind:oklch(0.55 0.16 255)}
-[data-vibeui-block="card-016"][data-kind="sheet"]{--vibeui-card-016-kind:oklch(0.55 0.15 152)}
-[data-vibeui-block="card-016"][data-kind="image"]{--vibeui-card-016-kind:oklch(0.6 0.16 320)}
-[data-vibeui-block="card-016"][data-kind="archive"]{--vibeui-card-016-kind:oklch(0.66 0.15 78)}
-[data-vibeui-block="card-016"][data-kind="code"]{--vibeui-card-016-kind:oklch(0.56 0.13 200)}
+[data-vibeui-block="card-016"][data-kind="pdf"]{--vibeui-card-016-kind:light-dark(oklch(0.58 0.19 27),oklch(0.73 0.16 27))}
+[data-vibeui-block="card-016"][data-kind="doc"]{--vibeui-card-016-kind:light-dark(oklch(0.55 0.16 255),oklch(0.73 0.14 255))}
+[data-vibeui-block="card-016"][data-kind="sheet"]{--vibeui-card-016-kind:light-dark(oklch(0.55 0.15 152),oklch(0.74 0.14 152))}
+[data-vibeui-block="card-016"][data-kind="image"]{--vibeui-card-016-kind:light-dark(oklch(0.6 0.16 320),oklch(0.76 0.14 320))}
+[data-vibeui-block="card-016"][data-kind="archive"]{--vibeui-card-016-kind:light-dark(oklch(0.66 0.15 78),oklch(0.8 0.14 78))}
+[data-vibeui-block="card-016"][data-kind="code"]{--vibeui-card-016-kind:light-dark(oklch(0.56 0.13 200),oklch(0.75 0.12 200))}
 /* Уголок листа вырезан clip-path: одна фигура на все типы файлов. */
 [data-vibeui-block="card-016"] [data-part="glyph"]{
 position:relative;display:flex;align-items:flex-end;justify-content:center;flex:none;
 width:2.375rem;height:2.875rem;padding-bottom:0.375rem;box-sizing:border-box;
 clip-path:polygon(0 0,68% 0,100% 26%,100% 100%,0 100%);
 background:linear-gradient(160deg,
-color-mix(in oklab,var(--vibeui-card-016-kind) 16%,oklch(1 0 0)),
-color-mix(in oklab,var(--vibeui-card-016-kind) 30%,oklch(1 0 0)));
-color:color-mix(in oklab,var(--vibeui-card-016-kind) 82%,oklch(0.2 0.02 265));
+color-mix(in oklab,var(--vibeui-card-016-kind) 16%,var(--vibeui-card-016-surface)),
+color-mix(in oklab,var(--vibeui-card-016-kind) 30%,var(--vibeui-card-016-surface)));
+color:color-mix(in oklab,var(--vibeui-card-016-kind) 82%,var(--vibeui-card-016-ink));
 font-size:0.5625rem;font-weight:750;letter-spacing:0.04em;text-transform:uppercase;
 }
 [data-vibeui-block="card-016"] [data-part="glyph"]::before{
 content:"";position:absolute;inset-block-start:0;inset-inline-end:0;
 width:32%;height:26%;
-background:color-mix(in oklab,var(--vibeui-card-016-kind) 45%,oklch(1 0 0));
+background:color-mix(in oklab,var(--vibeui-card-016-kind) 45%,var(--vibeui-card-016-surface));
 }
 [data-vibeui-block="card-016"] [data-part="body"]{
 flex:1;min-width:0;display:flex;flex-direction:column;gap:0.1875rem;
@@ -89,13 +97,13 @@ content:"·";margin-inline-end:0.375rem;color:var(--vibeui-card-016-border);
 appearance:none;cursor:pointer;flex:none;
 display:flex;align-items:center;justify-content:center;
 width:2rem;height:2rem;border-radius:0.5rem;
-border:1px solid var(--vibeui-card-016-border);background:oklch(1 0 0);
+border:1px solid var(--vibeui-card-016-border);background:var(--vibeui-card-016-surface);
 color:var(--vibeui-card-016-muted);
 transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="card-016"] [data-part="action"]:hover{
-background:color-mix(in oklab,var(--vibeui-card-016-kind) 10%,oklch(1 0 0));
-color:color-mix(in oklab,var(--vibeui-card-016-kind) 80%,oklch(0.2 0.02 265));
+background:color-mix(in oklab,var(--vibeui-card-016-kind) 10%,var(--vibeui-card-016-surface));
+color:color-mix(in oklab,var(--vibeui-card-016-kind) 80%,var(--vibeui-card-016-ink));
 }
 [data-vibeui-block="card-016"] [data-part="action"]:focus-visible{
 outline:2px solid var(--vibeui-card-016-kind);outline-offset:2px;
@@ -104,7 +112,7 @@ outline:2px solid var(--vibeui-card-016-kind);outline-offset:2px;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="card-016"] *{animation:none!important;transition:none!important}}
 `
 
-const KIND_TEXT = {
+const KIND_TEXT: Record<string, string> = {
   pdf: "Документ PDF",
   doc: "Текстовый документ",
   sheet: "Таблица",
@@ -113,10 +121,32 @@ const KIND_TEXT = {
   code: "Исходный код",
 }
 
-function extension(name: string) {
+function extension(name: string, fallback: string) {
   const tail = name.split(".").pop()
 
-  return tail && tail !== name ? tail.slice(0, 4) : "файл"
+  return tail && tail !== name ? tail.slice(0, 4) : fallback
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -130,6 +160,9 @@ export function Card016({
   updated = "вчера, 18:40",
   actionLabel = "Скачать файл",
   href = "#",
+  kindText = KIND_TEXT,
+  extensionFallback = "файл",
+  background = "",
   accent,
   className,
   style,
@@ -137,6 +170,13 @@ export function Card016({
 }: Card016Props) {
   const palette = {
     ...(accent ? { "--vibeui-card-016-kind": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-card-016-bg": background,
+          "--vibeui-card-016-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -153,14 +193,14 @@ export function Card016({
         style={palette}
       >
         <span data-part="glyph" aria-hidden="true">
-          {extension(name)}
+          {extension(name, extensionFallback)}
         </span>
         <div data-part="body">
           <p data-part="name" title={name}>
             {href ? <a href={href}>{name}</a> : name}
           </p>
           <p data-part="facts">
-            <span>{KIND_TEXT[kind]}</span>
+            <span>{kindText[kind] ?? KIND_TEXT[kind]}</span>
             {size ? <span data-part="size">{size}</span> : null}
             {updated ? <span>{updated}</span> : null}
           </p>

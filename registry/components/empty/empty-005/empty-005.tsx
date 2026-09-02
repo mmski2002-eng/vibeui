@@ -11,8 +11,12 @@ export type Empty005Props = Omit<
 > & {
   title?: string
   steps?: Empty005Step[]
+  /** Счётчик готовности. `{total}` — число шагов. */
+  progressTemplate?: string
   actionLabel?: string
   onAction?: () => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,13 +24,17 @@ export type Empty005Props = Omit<
 // потому, что работа ещё не начата. Поэтому здесь не картинка с подписью, а
 // три шага с нумерацией: первый выделен как текущий, остальные приглушены —
 // видно, сколько всего работы. Кнопка ровно одна и запускает первый шаг.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="empty-005"]){
---vibeui-empty-005-bg:oklch(1 0 0);
---vibeui-empty-005-fg:oklch(0.21 0.014 265);
---vibeui-empty-005-muted:oklch(0.55 0.014 265);
---vibeui-empty-005-border:oklch(0.91 0.006 265);
---vibeui-empty-005-accent:oklch(0.55 0.17 265);
+--vibeui-empty-005-bg:transparent;
+--vibeui-empty-005-fg:light-dark(oklch(0.21 0.014 265),oklch(0.95 0.005 265));
+--vibeui-empty-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-empty-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-empty-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-empty-005-accent-fg:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.03 265));
 --vibeui-empty-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="empty-005"]{
@@ -59,7 +67,7 @@ background:var(--vibeui-empty-005-bg);
 font-size:0.75rem;font-weight:700;color:var(--vibeui-empty-005-muted);
 }
 [data-vibeui-block="empty-005"] [data-part="step"][data-current="true"] [data-part="number"]{
-border-color:transparent;background:var(--vibeui-empty-005-accent);color:oklch(0.99 0.01 265);
+border-color:transparent;background:var(--vibeui-empty-005-accent);color:var(--vibeui-empty-005-accent-fg);
 }
 [data-vibeui-block="empty-005"] [data-part="body"]{display:flex;flex-direction:column;gap:0.125rem;padding-top:0.125rem}
 [data-vibeui-block="empty-005"] [data-part="name"]{font-size:0.875rem;font-weight:650;line-height:1.3}
@@ -68,7 +76,7 @@ border-color:transparent;background:var(--vibeui-empty-005-accent);color:oklch(0
 [data-vibeui-block="empty-005"] [data-part="action"]{
 appearance:none;border:0;cursor:pointer;width:100%;
 height:2.625rem;border-radius:0.75rem;
-background:var(--vibeui-empty-005-accent);color:oklch(0.99 0.01 265);
+background:var(--vibeui-empty-005-accent);color:var(--vibeui-empty-005-accent-fg);
 font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="empty-005"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-empty-005-accent);outline-offset:2px}
@@ -91,14 +99,38 @@ const DEFAULT_STEPS: Empty005Step[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Первый запуск в три шага: текущий выделен, действие одно.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Empty005({
   title = "Начнём с трёх шагов",
   steps = DEFAULT_STEPS,
+  progressTemplate = "Готово 0 из {total}",
   actionLabel = "Подключить репозиторий",
   onAction,
+  background = "",
   accent,
   className,
   style,
@@ -106,6 +138,12 @@ export function Empty005({
 }: Empty005Props) {
   const palette = {
     ...(accent ? { "--vibeui-empty-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-empty-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -122,7 +160,9 @@ export function Empty005({
       >
         <div data-part="head">
           <h3 data-part="title">{title}</h3>
-          <p data-part="progress">Готово 0 из {steps.length}</p>
+          <p data-part="progress">
+            {progressTemplate.replace("{total}", String(steps.length))}
+          </p>
         </div>
         <ol data-part="steps">
           {steps.map((step, index) => (

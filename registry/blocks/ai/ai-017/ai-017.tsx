@@ -6,6 +6,8 @@ export type Ai017Props = {
   code?: string
   attempt?: string
   steps?: string[]
+  /** Заголовок над списком шагов. */
+  stepsTitle?: string
   retryLabel?: string
   switchLabel?: string
   detailsLabel?: string
@@ -13,6 +15,8 @@ export type Ai017Props = {
   draftLabel?: string
   draft?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,13 +35,14 @@ export type Ai017Props = {
 // именно его спросят в поддержке.
 const STYLES = `
 :where([data-vibeui-block="ai-017"]){
---vibeui-ai-017-bg:oklch(1 0 0);
---vibeui-ai-017-soft:oklch(0.975 0.004 265);
---vibeui-ai-017-fg:oklch(0.21 0.014 265);
---vibeui-ai-017-muted:oklch(0.53 0.014 265);
---vibeui-ai-017-border:oklch(0.91 0.006 265);
---vibeui-ai-017-accent:oklch(0.52 0.17 268);
---vibeui-ai-017-alarm:oklch(0.57 0.19 25);
+--vibeui-ai-017-bg:transparent;
+--vibeui-ai-017-soft:light-dark(oklch(0.975 0.004 265),oklch(0.26 0.012 265));
+--vibeui-ai-017-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-ai-017-muted:light-dark(oklch(0.53 0.014 265),oklch(0.7 0.012 265));
+--vibeui-ai-017-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-ai-017-accent:light-dark(oklch(0.52 0.17 268),oklch(0.74 0.14 268));
+--vibeui-ai-017-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 268));
+--vibeui-ai-017-alarm:light-dark(oklch(0.57 0.19 25),oklch(0.73 0.16 25));
 --vibeui-ai-017-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-ai-017-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -87,7 +92,7 @@ font-size:0.8125rem;line-height:1.6;color:var(--vibeui-ai-017-muted);
 appearance:none;cursor:pointer;height:2.25rem;padding:0 1rem;border-radius:0.75rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="ai-017"] [data-part="retry"]{border:0;background:var(--vibeui-ai-017-accent);color:oklch(1 0 0)}
+[data-vibeui-block="ai-017"] [data-part="retry"]{border:0;background:var(--vibeui-ai-017-accent);color:var(--vibeui-ai-017-on-accent)}
 [data-vibeui-block="ai-017"] [data-part="switch"]{border:1px solid var(--vibeui-ai-017-border);background:none;color:inherit}
 [data-vibeui-block="ai-017"] summary{
 list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:0.375rem;
@@ -126,6 +131,28 @@ message: upstream temporarily unavailable
 retry_after: 12s`
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Экран ошибки модели: объяснение, шаги, сохранённый черновик и повтор.
  * Один файл, ноль зависимостей, клиентского JS нет.
  */
@@ -135,6 +162,7 @@ export function Ai017({
   code = "503 · req_8c41d9",
   attempt = "Попытка 2 из 3 · 14:07",
   steps = DEFAULT_STEPS,
+  stepsTitle = "Что можно сделать",
   retryLabel = "Повторить запрос",
   switchLabel = "Сменить модель",
   detailsLabel = "Технические подробности",
@@ -142,11 +170,18 @@ export function Ai017({
   draftLabel = "Ваш запрос сохранён",
   draft = "Собери страницу тарифов: три плана, годовая скидка переключателем и блок вопросов снизу.",
   accent,
+  background = "",
   className,
   style,
 }: Ai017Props) {
   const palette = {
     ...(accent ? { "--vibeui-ai-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-ai-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -179,7 +214,7 @@ export function Ai017({
           <p data-part="explanation">{explanation}</p>
 
           <div>
-            <h3>Что можно сделать</h3>
+            <h3>{stepsTitle}</h3>
             <ol>
               {steps.map((step) => (
                 <li key={step}>{step}</li>

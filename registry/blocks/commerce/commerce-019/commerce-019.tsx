@@ -16,7 +16,21 @@ export type Commerce019Props = {
   first?: string
   cta?: string
   rules?: string[]
+  /** Скрытая подпись выбора способа покупки. */
+  modeLabel?: string
+  /** Подписи способов покупки. */
+  onceLabel?: string
+  regularLabel?: string
+  /** За что названа цена: «за упаковку». */
+  perText?: string
+  /** Шаблон выгоды, {percent} — процент скидки. */
+  savingText?: string
+  /** Подпись блока периодичности и её скрытая версия для скринридера. */
+  cadenceLabel?: string
+  periodLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,12 +45,13 @@ export type Commerce019Props = {
 // стоят рядом с кнопкой, а не в подвале страницы.
 const STYLES = `
 :where([data-vibeui-block="commerce-019"]){
---vibeui-commerce-019-bg:oklch(1 0 0);
---vibeui-commerce-019-fg:oklch(0.21 0.014 265);
---vibeui-commerce-019-muted:oklch(0.55 0.014 265);
---vibeui-commerce-019-border:oklch(0.91 0.006 265);
---vibeui-commerce-019-soft:oklch(0.975 0.004 265);
---vibeui-commerce-019-accent:oklch(0.52 0.16 165);
+--vibeui-commerce-019-bg:transparent;
+--vibeui-commerce-019-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-019-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-019-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-commerce-019-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.01 265));
+--vibeui-commerce-019-accent:light-dark(oklch(0.52 0.16 165),oklch(0.72 0.14 165));
+--vibeui-commerce-019-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0.02 165));
 --vibeui-commerce-019-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -90,7 +105,7 @@ background:var(--vibeui-commerce-019-soft);font-size:0.75rem;line-height:1.45;
 }
 [data-vibeui-block="commerce-019"] [data-part="go"]{
 width:100%;appearance:none;border:0;cursor:pointer;height:2.625rem;border-radius:0.75rem;
-background:var(--vibeui-commerce-019-accent);color:oklch(1 0 0);font:inherit;font-size:0.875rem;font-weight:650;
+background:var(--vibeui-commerce-019-accent);color:var(--vibeui-commerce-019-on-accent);font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-019"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-commerce-019-accent);outline-offset:2px}
 [data-vibeui-block="commerce-019"] ul{list-style:none;margin:0.625rem 0 0;padding:0;display:flex;flex-direction:column;gap:0.25rem;font-size:0.6875rem;color:var(--vibeui-commerce-019-muted)}
@@ -112,6 +127,28 @@ const DEFAULT_RULES = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подписка на товар: разовая цена и цена по подписке рядом, период — ниже.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -125,12 +162,26 @@ export function Commerce019({
   first = "Первая доставка — 14 марта, дальше каждые 4 недели в тот же день.",
   cta = "Оформить подписку",
   rules = DEFAULT_RULES,
+  modeLabel = "Способ покупки",
+  onceLabel = "Разовая покупка",
+  regularLabel = "По подписке",
+  perText = "за упаковку",
+  savingText = "Выгода {percent}%",
+  cadenceLabel = "Как часто привозить",
+  periodLabel = "Периодичность",
   accent,
+  background = "",
   className,
   style,
 }: Commerce019Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-019-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -151,14 +202,14 @@ export function Commerce019({
 
           <div data-part="picker">
             <fieldset data-part="modes">
-              <legend data-part="vh">Способ покупки</legend>
+              <legend data-part="vh">{modeLabel}</legend>
               <label data-part="mode">
                 <span data-part="head">
                   <input type="radio" name="commerce-019-mode" />
-                  Разовая покупка
+                  {onceLabel}
                 </span>
                 <span data-part="cost">
-                  {once} <span data-part="per">за упаковку</span>
+                  {once} <span data-part="per">{perText}</span>
                 </span>
               </label>
               <label data-part="mode">
@@ -169,19 +220,21 @@ export function Commerce019({
                     id="commerce-019-sub"
                     defaultChecked
                   />
-                  По подписке
+                  {regularLabel}
                 </span>
                 <span data-part="cost">
-                  {regular} <span data-part="per">за упаковку</span>
+                  {regular} <span data-part="per">{perText}</span>
                 </span>
-                <span data-part="tag">Выгода {discount}%</span>
+                <span data-part="tag">
+                  {savingText.replace("{percent}", String(discount))}
+                </span>
               </label>
             </fieldset>
 
             <div data-part="plan">
-              <p data-part="cap">Как часто привозить</p>
+              <p data-part="cap">{cadenceLabel}</p>
               <fieldset data-part="periods">
-                <legend data-part="vh">Периодичность</legend>
+                <legend data-part="vh">{periodLabel}</legend>
                 {periods.map((period, index) => (
                   <label key={period.value} data-part="period">
                     <input

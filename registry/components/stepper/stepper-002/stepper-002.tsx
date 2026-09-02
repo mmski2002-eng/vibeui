@@ -7,7 +7,14 @@ export type Stepper002Props = Omit<
   steps?: string[]
   /** Номер текущего шага, считая с нуля. */
   current?: number
+  /**
+   * Подписи состояний для скринридера: компонент несёт русские, проект
+   * подставляет свои.
+   */
+  stateText?: Record<string, string>
   label?: string
+  /** Пусто — подложки нет, лента лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -15,16 +22,20 @@ export type Stepper002Props = Omit<
 // clip-path, поэтому фигура остаётся одним элементом и не требует лишних
 // узлов. Номер и подпись стоят в строку, а не столбиком: такая лента не
 // растёт по высоте и помещается в шапку формы.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="stepper-002"]){
---vibeui-stepper-002-bg:oklch(1 0 0);
---vibeui-stepper-002-fg:oklch(0.24 0.016 265);
---vibeui-stepper-002-muted:oklch(0.56 0.014 265);
---vibeui-stepper-002-border:oklch(0.92 0.006 265);
---vibeui-stepper-002-step:oklch(0.968 0.004 265);
---vibeui-stepper-002-accent:oklch(0.55 0.2 262);
---vibeui-stepper-002-accent-fg:oklch(1 0 0);
---vibeui-stepper-002-done:oklch(0.55 0.14 155);
+--vibeui-stepper-002-bg:transparent;
+--vibeui-stepper-002-surface:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-stepper-002-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-stepper-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-stepper-002-border:light-dark(oklch(0.92 0.006 265),oklch(0.32 0.012 265));
+--vibeui-stepper-002-step:light-dark(oklch(0.968 0.004 265),oklch(0.26 0.012 265));
+--vibeui-stepper-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-stepper-002-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
+--vibeui-stepper-002-done:light-dark(oklch(0.55 0.14 155),oklch(0.74 0.14 155));
 --vibeui-stepper-002-notch:0.75rem;
 --vibeui-stepper-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -64,7 +75,7 @@ padding:0.625rem 0.75rem 0.625rem 1rem;min-width:0;
 [data-vibeui-block="stepper-002"] [data-part="mark"]{
 flex:none;display:flex;align-items:center;justify-content:center;
 width:1.375rem;height:1.375rem;border-radius:9999px;
-background:var(--vibeui-stepper-002-bg);color:var(--vibeui-stepper-002-muted);
+background:var(--vibeui-stepper-002-surface);color:var(--vibeui-stepper-002-muted);
 border:1px solid var(--vibeui-stepper-002-border);
 font-size:0.6875rem;font-weight:700;line-height:1;
 }
@@ -74,7 +85,7 @@ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 [data-vibeui-block="stepper-002"] li[data-state="todo"] [data-part="label"]{color:var(--vibeui-stepper-002-muted)}
 [data-vibeui-block="stepper-002"] li[data-state="done"]{
-background:color-mix(in oklab,var(--vibeui-stepper-002-done) 12%,oklch(1 0 0));
+background:color-mix(in oklab,var(--vibeui-stepper-002-done) 12%,var(--vibeui-stepper-002-surface));
 }
 [data-vibeui-block="stepper-002"] li[data-state="done"] [data-part="mark"]{
 background:var(--vibeui-stepper-002-done);color:var(--vibeui-stepper-002-accent-fg);
@@ -104,6 +115,34 @@ position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);whit
 
 const DEFAULT_STEPS = ["Данные", "Доставка", "Оплата", "Готово"]
 
+const STATE_TEXT: Record<string, string> = {
+  done: " — шаг пройден",
+  current: " — текущий шаг",
+  todo: " — впереди",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Лента шагов-шевронов с номерами: пройденные отмечены галочкой и словом.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -111,7 +150,9 @@ const DEFAULT_STEPS = ["Данные", "Доставка", "Оплата", "Го
 export function Stepper002({
   steps = DEFAULT_STEPS,
   current = 1,
+  stateText = STATE_TEXT,
   label = "Оформление заказа",
+  background = "",
   accent,
   className,
   style,
@@ -119,6 +160,13 @@ export function Stepper002({
 }: Stepper002Props) {
   const palette = {
     ...(accent ? { "--vibeui-stepper-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-stepper-002-bg": background,
+          "--vibeui-stepper-002-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -156,11 +204,7 @@ export function Stepper002({
                     </span>
                     <span data-part="label">{step}</span>
                     <span data-part="sr">
-                      {state === "done"
-                        ? " — шаг пройден"
-                        : state === "current"
-                          ? " — текущий шаг"
-                          : " — впереди"}
+                      {stateText[state] ?? STATE_TEXT[state]}
                     </span>
                   </span>
                 </li>

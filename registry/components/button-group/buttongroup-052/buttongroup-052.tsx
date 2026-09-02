@@ -13,6 +13,8 @@ export type Buttongroup052Props = Omit<
   defaultValue?: string
   label?: string
   name?: string
+  /** Пусто — заливки нет, сцепка ложится на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,12 +27,12 @@ export type Buttongroup052Props = Omit<
 // множественном выборе она соврёт.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-052"]){
---vibeui-buttongroup-052-surface:oklch(1 0 0);
---vibeui-buttongroup-052-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-052-muted:oklch(0.57 0.014 265);
---vibeui-buttongroup-052-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-052-accent:oklch(0.46 0.14 160);
---vibeui-buttongroup-052-on:oklch(0.96 0.04 160);
+--vibeui-buttongroup-052-surface:transparent;
+--vibeui-buttongroup-052-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-052-muted:light-dark(oklch(0.57 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-052-border:light-dark(oklch(0.89 0.008 265),oklch(0.41 0.012 265));
+--vibeui-buttongroup-052-accent:light-dark(oklch(0.46 0.14 160),oklch(0.79 0.13 160));
+--vibeui-buttongroup-052-on:light-dark(oklch(0.96 0.04 160),oklch(0.3 0.05 160));
 --vibeui-buttongroup-052-radius:0.625rem;
 --vibeui-buttongroup-052-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -106,6 +108,28 @@ const DEFAULT_OPTIONS: Buttongroup052Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сегменты, у которых на выбранном значок сменяется галочкой без сдвига подписи.
  * Один файл, ноль зависимостей, серверный компонент.
  */
@@ -114,6 +138,7 @@ export function Buttongroup052({
   defaultValue = "push",
   label = "Канал уведомлений",
   name = "buttongroup-052",
+  background = "",
   accent,
   className,
   style,
@@ -121,6 +146,12 @@ export function Buttongroup052({
 }: Buttongroup052Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-052-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-052-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

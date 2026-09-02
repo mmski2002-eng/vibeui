@@ -18,7 +18,12 @@ export type Blog005Props = {
   allLabel?: string
   entries?: Blog005Entry[]
   emptyLabel?: string
+  /** Подпись списка для скринридера: {count} — число видимых записей. */
   countLabel?: string
+  /** Подпись группы кнопок-фильтров для скринридера. */
+  filtersLabel?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -38,12 +43,12 @@ export type Blog005Props = {
 // сколько записей осталось, иначе смена фильтра проходит незамеченной.
 const STYLES = `
 :where([data-vibeui-block="blog-005"]){
---vibeui-blog-005-bg:oklch(1 0 0);
---vibeui-blog-005-soft:oklch(0.975 0.004 265);
---vibeui-blog-005-fg:oklch(0.2 0.014 265);
---vibeui-blog-005-muted:oklch(0.52 0.014 265);
---vibeui-blog-005-border:oklch(0.91 0.006 265);
---vibeui-blog-005-accent:oklch(0.5 0.17 240);
+--vibeui-blog-005-bg:transparent;
+--vibeui-blog-005-soft:light-dark(oklch(0.975 0.004 265),oklch(0.26 0.012 265));
+--vibeui-blog-005-fg:light-dark(oklch(0.2 0.014 265),oklch(0.95 0.005 265));
+--vibeui-blog-005-muted:light-dark(oklch(0.52 0.014 265),oklch(0.72 0.012 265));
+--vibeui-blog-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-blog-005-accent:light-dark(oklch(0.5 0.17 240),oklch(0.76 0.13 240));
 --vibeui-blog-005-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -75,7 +80,7 @@ transition:color .14s ease,border-color .14s ease;
 }
 [data-vibeui-block="blog-005"] [data-part="chip"][aria-pressed="true"]{
 color:var(--vibeui-blog-005-accent);border-color:var(--vibeui-blog-005-accent);
-background:color-mix(in oklab,var(--vibeui-blog-005-accent) 8%,var(--vibeui-blog-005-bg));
+background:color-mix(in oklab,var(--vibeui-blog-005-accent) 10%,transparent);
 }
 /* Счётчик считает те же записи, что покажет фильтр: рассинхрон невозможен. */
 [data-vibeui-block="blog-005"] [data-part="count"]{
@@ -175,6 +180,28 @@ const DEFAULT_ENTRIES: Blog005Entry[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Лента статей строками с фильтром по рубрикам и честными счётчиками.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -184,7 +211,9 @@ export function Blog005({
   allLabel = "Все",
   entries = DEFAULT_ENTRIES,
   emptyLabel = "В этой рубрике пока пусто. Загляните в соседнюю.",
-  countLabel = "статей",
+  countLabel = "{count} статей",
+  filtersLabel = "Рубрики",
+  background = "",
   accent,
   className,
   style,
@@ -193,6 +222,12 @@ export function Blog005({
 
   const palette = {
     ...(accent ? { "--vibeui-blog-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-blog-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -223,7 +258,7 @@ export function Blog005({
             <h2>{title}</h2>
           </header>
 
-          <div data-part="filters" role="group" aria-label="Рубрики">
+          <div data-part="filters" role="group" aria-label={filtersLabel}>
             {topics.map((name) => (
               <button
                 key={name}
@@ -242,7 +277,12 @@ export function Blog005({
             {visible.length === 0 ? (
               <p data-part="empty">{emptyLabel}</p>
             ) : (
-              <ul aria-label={`${visible.length} ${countLabel}`}>
+              <ul
+                aria-label={countLabel.replace(
+                  "{count}",
+                  String(visible.length),
+                )}
+              >
                 {visible.map((entry) => (
                   <li key={entry.title}>
                     <article>

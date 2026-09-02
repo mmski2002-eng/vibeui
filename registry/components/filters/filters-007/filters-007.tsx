@@ -18,6 +18,10 @@ export type Filters007Props = Omit<
   views?: Filters007View[]
   saveLabel?: string
   onChange?: (id: string) => void
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,16 +32,17 @@ export type Filters007Props = Omit<
 // виды помечены отдельно: их правка меняет экран всей команде.
 const STYLES = `
 :where([data-vibeui-block="filters-007"]){
---vibeui-filters-007-surface:oklch(1 0 0);
---vibeui-filters-007-fill:oklch(0.975 0.004 265);
---vibeui-filters-007-fg:oklch(0.23 0.014 265);
---vibeui-filters-007-muted:oklch(0.55 0.014 265);
---vibeui-filters-007-border:oklch(0.89 0.008 265);
---vibeui-filters-007-shell:oklch(0.91 0.006 265);
---vibeui-filters-007-accent:oklch(0.5 0.16 210);
+--vibeui-filters-007-surface:transparent;
+--vibeui-filters-007-card:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-filters-007-fill:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.012 265));
+--vibeui-filters-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-filters-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-filters-007-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.014 265));
+--vibeui-filters-007-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-filters-007-accent:light-dark(oklch(0.5 0.16 210),oklch(0.76 0.13 210));
 --vibeui-filters-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: список показывают поверх любого фона. */
+/* Подложки по умолчанию нет: список ложится на фон страницы. */
 [data-vibeui-block="filters-007"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -56,14 +61,14 @@ appearance:none;cursor:pointer;width:100%;text-align:start;
 display:flex;flex-direction:column;gap:0.125rem;
 padding:0.5rem 0.625rem;border-radius:0.625rem;
 border:1px solid var(--vibeui-filters-007-border);
-background:var(--vibeui-filters-007-surface);color:inherit;font:inherit;
+background:var(--vibeui-filters-007-card);color:inherit;font:inherit;
 transition:border-color .16s ease,background-color .16s ease;
 }
 [data-vibeui-block="filters-007"] [data-part="view"]:hover{background:var(--vibeui-filters-007-fill)}
 [data-vibeui-block="filters-007"] [data-part="view"]:focus-visible{outline:2px solid var(--vibeui-filters-007-accent);outline-offset:2px}
 [data-vibeui-block="filters-007"] [data-part="view"][aria-pressed="true"]{
 border-color:var(--vibeui-filters-007-accent);
-background:color-mix(in oklab,var(--vibeui-filters-007-accent) 8%,oklch(1 0 0));
+background:color-mix(in oklab,var(--vibeui-filters-007-accent) 8%,var(--vibeui-filters-007-card));
 }
 [data-vibeui-block="filters-007"] [data-part="line"]{
 display:flex;align-items:center;gap:0.375rem;
@@ -117,6 +122,52 @@ const DEFAULT_VIEWS: Filters007View[] = [
   },
 ]
 
+/** Русский словарь по умолчанию: установленный файл не меняет язык проекта. */
+const DEFAULT_LABELS: Record<string, string> = {
+  shared: "общий",
+  newName: "Новый вид {index}",
+  newSummary: "Текущие условия отбора",
+}
+
+function label(
+  labels: Record<string, string>,
+  key: string,
+  values?: Record<string, string>,
+): string {
+  const template = labels[key] ?? DEFAULT_LABELS[key] ?? ""
+
+  if (!values) {
+    return template
+  }
+
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, name: string) => values[name] ?? match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Сохранённые наборы фильтров: имя, расшифровка условий и метка общего вида.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -126,6 +177,8 @@ export function Filters007({
   views = DEFAULT_VIEWS,
   saveLabel = "Сохранить текущий отбор",
   onChange,
+  labels = DEFAULT_LABELS,
+  background = "",
   accent,
   className,
   style,
@@ -136,6 +189,12 @@ export function Filters007({
 
   const palette = {
     ...(accent ? { "--vibeui-filters-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-filters-007-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -151,8 +210,8 @@ export function Filters007({
       ...list,
       {
         id,
-        name: `Новый вид ${list.length + 1}`,
-        summary: "Текущие условия отбора",
+        name: label(labels, "newName", { index: String(list.length + 1) }),
+        summary: label(labels, "newSummary"),
       },
     ])
     pick(id)
@@ -182,7 +241,9 @@ export function Filters007({
                 <span data-part="line">
                   <span data-part="dot" aria-hidden="true" />
                   {view.name}
-                  {view.shared ? <span data-part="shared">общий</span> : null}
+                  {view.shared ? (
+                    <span data-part="shared">{label(labels, "shared")}</span>
+                  ) : null}
                 </span>
                 <span data-part="summary">{view.summary}</span>
               </button>

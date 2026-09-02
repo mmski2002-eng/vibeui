@@ -9,6 +9,8 @@ export type Tooltip015Props = Omit<
   /** data: или обычный URL картинки-превью. */
   src?: string
   alt?: string
+  /** Цвет ссылки и обводки фокуса. Пусто — цвет компонента. */
+  accent?: string
 }
 
 const DEFAULT_PREVIEW =
@@ -23,18 +25,23 @@ const DEFAULT_PREVIEW =
       "</svg>",
   )
 
+// Тема берётся из color-scheme окружения через light-dark(): карточка
+// остаётся непрозрачной в обеих ветках — под картинкой без фона подпись
+// иначе не прочитать.
+//
 // Идея компонента: подсказка-миниатюра. Ссылка на файл или изображение сама
 // по себе ничего не показывает, поэтому наведение и фокус раскрывают
 // маленькую карточку с картинкой-превью и подписью — узнать содержимое
 // можно не открывая файл.
 const STYLES = `
 :where([data-vibeui-block="tooltip-015"]){
---vibeui-tooltip-015-bg:oklch(1 0 0);
---vibeui-tooltip-015-fg:oklch(0.25 0.014 265);
---vibeui-tooltip-015-muted:oklch(0.55 0.014 265);
---vibeui-tooltip-015-border:oklch(0.9 0.006 265);
---vibeui-tooltip-015-link:oklch(0.5 0.16 265);
---vibeui-tooltip-015-accent:oklch(0.57 0.17 265);
+--vibeui-tooltip-015-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-tooltip-015-fg:light-dark(oklch(0.25 0.014 265),oklch(0.93 0.006 265));
+--vibeui-tooltip-015-muted:light-dark(oklch(0.55 0.014 265),oklch(0.73 0.012 265));
+--vibeui-tooltip-015-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.012 265));
+--vibeui-tooltip-015-thumb:light-dark(oklch(0.94 0.006 265),oklch(0.33 0.012 265));
+--vibeui-tooltip-015-link:light-dark(oklch(0.5 0.16 265),oklch(0.78 0.13 265));
+--vibeui-tooltip-015-accent:light-dark(oklch(0.57 0.17 265),oklch(0.76 0.15 265));
 --vibeui-tooltip-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="tooltip-015"]{
@@ -58,7 +65,7 @@ transform:translateY(0.375rem);
 transition:opacity .15s ease,transform .15s ease;
 }
 [data-vibeui-block="tooltip-015"] [data-part="thumb"]{
-display:block;width:100%;height:6.875rem;object-fit:cover;background:oklch(0.94 0.006 265);
+display:block;width:100%;height:6.875rem;object-fit:cover;background:var(--vibeui-tooltip-015-thumb);
 }
 [data-vibeui-block="tooltip-015"] [data-part="caption"]{
 display:block;padding:0.5rem 0.625rem;
@@ -80,10 +87,21 @@ export function Tooltip015({
   caption = "1600×1000 · добавлено сегодня",
   src = DEFAULT_PREVIEW,
   alt = "Миниатюра превью изображения",
+  accent = "",
   className,
   style,
   ...props
 }: Tooltip015Props) {
+  const palette = {
+    ...(accent
+      ? {
+          "--vibeui-tooltip-015-link": accent,
+          "--vibeui-tooltip-015-accent": accent,
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-tooltip-015" precedence="medium">
@@ -93,7 +111,7 @@ export function Tooltip015({
         {...props}
         data-vibeui-block="tooltip-015"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <button
           data-part="trigger"

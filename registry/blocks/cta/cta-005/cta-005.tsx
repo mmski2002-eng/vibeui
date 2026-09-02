@@ -10,6 +10,8 @@ export type Cta005Props = {
   noteLabel?: string
   imageSrc?: string
   imageAlt?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -19,14 +21,19 @@ export type Cta005Props = {
 // поэтому раскладка не прыгает, пока изображение грузится. Если imageSrc не
 // передан, в том же месте рисуется нарисованная CSS-заглушка: блок обязан
 // выглядеть законченным без единого внешнего файла.
+//
+// Тема приходит из color-scheme окружения через light-dark(): подложки у
+// секции по умолчанию нет, заглушка и рамки темнеют вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="cta-005"]){
---vibeui-cta-005-bg:oklch(1 0 0);
---vibeui-cta-005-ink:oklch(0.2 0.015 210);
---vibeui-cta-005-muted:oklch(0.5 0.015 210);
---vibeui-cta-005-border:oklch(0.9 0.008 210);
---vibeui-cta-005-accent:oklch(0.55 0.14 195);
---vibeui-cta-005-accent-fg:oklch(0.16 0.04 195);
+--vibeui-cta-005-bg:transparent;
+--vibeui-cta-005-ink:light-dark(oklch(0.2 0.015 210),oklch(0.95 0.005 210));
+--vibeui-cta-005-muted:light-dark(oklch(0.5 0.015 210),oklch(0.72 0.012 210));
+--vibeui-cta-005-border:light-dark(oklch(0.9 0.008 210),oklch(0.35 0.012 210));
+--vibeui-cta-005-mock:light-dark(oklch(0.96 0.01 210),oklch(0.27 0.016 210));
+--vibeui-cta-005-mock-card:light-dark(oklch(1 0 0 / 78%),oklch(0.98 0.004 210 / 22%));
+--vibeui-cta-005-accent:light-dark(oklch(0.55 0.14 195),oklch(0.74 0.13 195));
+--vibeui-cta-005-accent-fg:light-dark(oklch(0.16 0.04 195),oklch(0.16 0.04 195));
 --vibeui-cta-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -72,18 +79,18 @@ transition:background-color .18s ease;
 [data-vibeui-block="cta-005"] [data-part="media"]{
 position:relative;aspect-ratio:4 / 3;border-radius:1.25rem;overflow:hidden;
 border:1px solid var(--vibeui-cta-005-border);
-background:linear-gradient(160deg,color-mix(in oklab,var(--vibeui-cta-005-accent) 26%,white),oklch(0.96 0.01 210));
+background:linear-gradient(160deg,color-mix(in oklab,var(--vibeui-cta-005-accent) 26%,var(--vibeui-cta-005-mock)),var(--vibeui-cta-005-mock));
 }
 [data-vibeui-block="cta-005"] [data-part="media"] img{display:block;width:100%;height:100%;object-fit:cover}
 [data-vibeui-block="cta-005"] [data-part="mock"]{position:absolute;inset:0}
 [data-vibeui-block="cta-005"] [data-part="mock"]::before{
 content:"";position:absolute;left:8%;right:22%;top:14%;height:34%;border-radius:0.875rem;
-background:oklch(1 0 0 / 78%);
+background:var(--vibeui-cta-005-mock-card);
 box-shadow:0 18px 40px -24px oklch(0.2 0.04 210 / 60%);
 }
 [data-vibeui-block="cta-005"] [data-part="mock"]::after{
 content:"";position:absolute;left:26%;right:8%;bottom:16%;height:42%;border-radius:0.875rem;
-background:linear-gradient(140deg,var(--vibeui-cta-005-accent),color-mix(in oklab,var(--vibeui-cta-005-accent) 40%,white));
+background:linear-gradient(140deg,var(--vibeui-cta-005-accent),color-mix(in oklab,var(--vibeui-cta-005-accent) 40%,var(--vibeui-cta-005-mock)));
 box-shadow:0 22px 46px -22px oklch(0.2 0.04 210 / 60%);
 }
 [data-vibeui-block="cta-005"] a:focus-visible{outline:2px solid var(--vibeui-cta-005-accent);outline-offset:3px}
@@ -100,6 +107,28 @@ const DEFAULT_BULLETS = [
   "Гарантия на монтаж три года",
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Призыв с картинкой сбоку: место под изображение держит соотношение сторон. */
 export function Cta005({
   eyebrow = "Ремонт кухни",
@@ -111,12 +140,19 @@ export function Cta005({
   noteLabel = "Работаем по Москве и области",
   imageSrc,
   imageAlt = "Собранная кухня после ремонта",
+  background = "",
   accent,
   className,
   style,
 }: Cta005Props) {
   const palette = {
     ...(accent ? { "--vibeui-cta-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cta-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

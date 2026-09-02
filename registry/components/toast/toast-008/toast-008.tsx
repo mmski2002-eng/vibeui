@@ -12,19 +12,32 @@ export type Toast008Props = Omit<
   /** Отступ стопки от краёв области. */
   offset?: string
   messages?: string[]
+  /** Подпись сцены, изображающей окно приложения. */
+  hintText?: string
+  /** Подпись под сценой; {corner} и {offset} заменяются значениями. */
+  legendText?: string
+  /** Цвет точки у карточки. */
+  tone?: string
+  /** Пусто — подложка сцены берётся из темы окружения. */
+  background?: string
 }
 
 // Идея компонента: не одно уведомление, а место для них. Угол задаётся одним
 // пропом, а все четыре варианта собираются из двух переменных отступа и двух
 // переключателей выравнивания — новые правила под каждый угол не нужны.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
+// границы сцены и карточек светлее их подложек, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="toast-008"]){
---vibeui-toast-008-bg:oklch(0.97 0.004 265);
---vibeui-toast-008-fg:oklch(0.24 0.014 265);
---vibeui-toast-008-muted:oklch(0.55 0.014 265);
---vibeui-toast-008-border:oklch(0.9 0.006 265);
---vibeui-toast-008-card:oklch(1 0 0);
---vibeui-toast-008-tone:oklch(0.58 0.16 265);
+--vibeui-toast-008-bg:light-dark(oklch(0.97 0.004 265),oklch(0.2 0.014 265));
+--vibeui-toast-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.95 0.004 265));
+--vibeui-toast-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-toast-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.014 265));
+--vibeui-toast-008-card:light-dark(oklch(1 0 0),oklch(0.28 0.014 265));
+--vibeui-toast-008-grid:light-dark(oklch(0.88 0.008 265 / 45%),oklch(0.5 0.01 265 / 35%));
+--vibeui-toast-008-shadow:light-dark(oklch(0.2 0.02 265 / 55%),oklch(0.08 0.02 265 / 75%));
+--vibeui-toast-008-tone:light-dark(oklch(0.58 0.16 265),oklch(0.74 0.14 265));
 --vibeui-toast-008-offset:1rem;
 --vibeui-toast-008-radius:0.875rem;
 --vibeui-toast-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -40,8 +53,8 @@ min-height:14rem;
 border:1px solid var(--vibeui-toast-008-border);
 border-radius:1rem;
 background:
-linear-gradient(0deg,oklch(0.88 0.008 265 / 45%) 1px,transparent 1px) 0 0 / 100% 1.5rem,
-linear-gradient(90deg,oklch(0.88 0.008 265 / 45%) 1px,transparent 1px) 0 0 / 1.5rem 100%,
+linear-gradient(0deg,var(--vibeui-toast-008-grid) 1px,transparent 1px) 0 0 / 100% 1.5rem,
+linear-gradient(90deg,var(--vibeui-toast-008-grid) 1px,transparent 1px) 0 0 / 1.5rem 100%,
 var(--vibeui-toast-008-bg);
 }
 [data-vibeui-block="toast-008"] [data-part="hint"]{
@@ -66,7 +79,7 @@ border:1px solid var(--vibeui-toast-008-border);
 border-radius:var(--vibeui-toast-008-radius);
 background:var(--vibeui-toast-008-card);
 font-size:0.8125rem;line-height:1.35;
-box-shadow:0 14px 30px -22px oklch(0.2 0.02 265 / 55%);
+box-shadow:0 14px 30px -22px var(--vibeui-toast-008-shadow);
 animation:vibeui-toast-008-in .28s ease both;
 }
 [data-vibeui-block="toast-008"] [data-part="card"]:nth-child(2){animation-delay:.08s}
@@ -90,6 +103,28 @@ const DEFAULT_MESSAGES = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Область уведомлений: угол задаётся одним пропом через переменные отступа.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -97,14 +132,28 @@ export function Toast008({
   corner = "bottom-right",
   offset = "1rem",
   messages = DEFAULT_MESSAGES,
+  hintText = "область приложения",
+  legendText = "угол стопки: {corner}, отступ {offset}",
+  tone,
+  background = "",
   className,
   style,
   ...props
 }: Toast008Props) {
   const palette = {
     "--vibeui-toast-008-offset": offset,
+    ...(tone ? { "--vibeui-toast-008-tone": tone } : null),
+    ...(background
+      ? {
+          "--vibeui-toast-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+  // Подпись собирается из шаблона: значения остаются выделенными, а порядок
+  // слов принадлежит переводу, а не разметке.
+  const legendParts = legendText.split(/(\{corner\}|\{offset\})/)
 
   return (
     <>
@@ -119,7 +168,7 @@ export function Toast008({
         style={palette}
       >
         <div data-part="stage">
-          <p data-part="hint">область приложения</p>
+          <p data-part="hint">{hintText}</p>
           <div data-part="region" role="log" aria-live="polite">
             {messages.map((message) => (
               <div data-part="card" key={message}>
@@ -130,7 +179,15 @@ export function Toast008({
           </div>
         </div>
         <p data-part="legend">
-          угол стопки: <b>{corner}</b>, отступ <b>{offset}</b>
+          {legendParts.map((part, index) =>
+            part === "{corner}" ? (
+              <b key={index}>{corner}</b>
+            ) : part === "{offset}" ? (
+              <b key={index}>{offset}</b>
+            ) : (
+              part
+            ),
+          )}
         </p>
       </div>
     </>

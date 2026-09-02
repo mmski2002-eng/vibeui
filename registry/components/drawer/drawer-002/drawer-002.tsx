@@ -17,6 +17,8 @@ export type Drawer002Props = Omit<
   title?: string
   actions?: Drawer002Action[]
   cancelLabel?: string
+  /** Пусто — подложки нет, триггер лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,12 +28,14 @@ export type Drawer002Props = Omit<
 // кнопка «Отмена» отделена промежутком: промах по ней ничего не стоит.
 const STYLES = `
 :where([data-vibeui-block="drawer-002"]){
---vibeui-drawer-002-bg:oklch(1 0 0);
---vibeui-drawer-002-fg:oklch(0.21 0.014 265);
---vibeui-drawer-002-muted:oklch(0.55 0.014 265);
---vibeui-drawer-002-border:oklch(0.91 0.006 265);
---vibeui-drawer-002-accent:oklch(0.55 0.17 265);
---vibeui-drawer-002-danger:oklch(0.55 0.2 25);
+--vibeui-drawer-002-bg:transparent;
+--vibeui-drawer-002-surface:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
+--vibeui-drawer-002-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-drawer-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-drawer-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-drawer-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
+--vibeui-drawer-002-danger:light-dark(oklch(0.55 0.2 25),oklch(0.73 0.17 25));
+--vibeui-drawer-002-hover:light-dark(oklch(0.97 0.003 265),oklch(0.28 0.013 265));
 --vibeui-drawer-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="drawer-002"]{
@@ -63,7 +67,7 @@ padding:0.375rem 0.75rem calc(0.75rem + env(safe-area-inset-bottom,0px));
 }
 [data-vibeui-block="drawer-002"] [data-part="card"]{
 display:flex;flex-direction:column;
-background:var(--vibeui-drawer-002-bg);border-radius:1rem;
+background:var(--vibeui-drawer-002-surface);border-radius:1rem;
 box-shadow:0 -18px 50px -28px oklch(0.2 0.02 265 / 60%);
 overflow:hidden;
 }
@@ -89,7 +93,7 @@ display:flex;flex-direction:column;gap:0.125rem;
 min-height:3.25rem;padding:0.6875rem 1rem;
 background:transparent;color:inherit;font:inherit;text-align:left;
 }
-[data-vibeui-block="drawer-002"] [data-part="action"]:hover{background:oklch(0.97 0.003 265)}
+[data-vibeui-block="drawer-002"] [data-part="action"]:hover{background:var(--vibeui-drawer-002-hover)}
 [data-vibeui-block="drawer-002"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-drawer-002-accent);outline-offset:-2px}
 [data-vibeui-block="drawer-002"] [data-part="label"]{font-size:0.9375rem;font-weight:600}
 [data-vibeui-block="drawer-002"] [data-part="hint"]{font-size:0.75rem;color:var(--vibeui-drawer-002-muted)}
@@ -98,7 +102,7 @@ background:transparent;color:inherit;font:inherit;text-align:left;
 [data-vibeui-block="drawer-002"] [data-part="cancel"]{
 appearance:none;border:0;cursor:pointer;
 height:3.25rem;border-radius:1rem;
-background:var(--vibeui-drawer-002-bg);color:var(--vibeui-drawer-002-accent);
+background:var(--vibeui-drawer-002-surface);color:var(--vibeui-drawer-002-accent);
 font:inherit;font-size:0.9375rem;font-weight:700;
 box-shadow:0 -18px 50px -28px oklch(0.2 0.02 265 / 60%);
 }
@@ -121,6 +125,28 @@ const DEFAULT_ACTIONS: Drawer002Action[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Нижний ящик действий на телефоне: ручка, крупные строки, отдельная отмена.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -129,6 +155,7 @@ export function Drawer002({
   title = "Проект «Витрина»",
   actions = DEFAULT_ACTIONS,
   cancelLabel = "Отмена",
+  background = "",
   accent,
   className,
   style,
@@ -138,6 +165,13 @@ export function Drawer002({
 
   const palette = {
     ...(accent ? { "--vibeui-drawer-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-drawer-002-bg": background,
+          "--vibeui-drawer-002-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -16,6 +16,12 @@ export type Breadcrumb014Props = Omit<
   items?: Breadcrumb014Item[]
   currentLabel?: string
   currentKind?: Breadcrumb014Kind
+  /** Названия типов: компонент несёт русские, проект подставляет свои. */
+  kindText?: Record<string, string>
+  /** Подпись навигации: компонент несёт русскую, проект подставляет свою. */
+  navLabel?: string
+  /** Пусто — подложки нет, крошки лежат прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,30 +30,33 @@ export type Breadcrumb014Props = Omit<
 // запись. В админках путь состоит из разнородных сущностей, и цепочка
 // «Продажи / Продажи / Продажи» без типа читается как ошибка. Значки —
 // инлайновый SVG в один контур: пакет иконок компоненту не нужен.
+//
+// Тема берётся из color-scheme окружения через light-dark(): путь темнеет
+// вместе со страницей, а цвета типов в тёмной ветке светлее, чем в светлой,
+// иначе контуры пропадают на тёмном фоне.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-014"]){
---vibeui-breadcrumb-014-surface:oklch(1 0 0);
---vibeui-breadcrumb-014-surface-border:oklch(0.91 0.006 265);
---vibeui-breadcrumb-014-fg:oklch(0.26 0.016 265);
---vibeui-breadcrumb-014-muted:oklch(0.55 0.014 265);
---vibeui-breadcrumb-014-faint:oklch(0.78 0.01 265);
---vibeui-breadcrumb-014-chip:oklch(0.97 0.003 265);
---vibeui-breadcrumb-014-chip-border:oklch(0.92 0.005 265);
---vibeui-breadcrumb-014-space:oklch(0.55 0.15 285);
---vibeui-breadcrumb-014-folder:oklch(0.6 0.13 75);
---vibeui-breadcrumb-014-database:oklch(0.55 0.12 195);
---vibeui-breadcrumb-014-table:oklch(0.52 0.13 150);
---vibeui-breadcrumb-014-record:oklch(0.52 0.02 265);
---vibeui-breadcrumb-014-accent:oklch(0.55 0.17 265);
+--vibeui-breadcrumb-014-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.008 265));
+--vibeui-breadcrumb-014-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-breadcrumb-014-faint:light-dark(oklch(0.78 0.01 265),oklch(0.5 0.012 265));
+--vibeui-breadcrumb-014-chip:light-dark(oklch(0.97 0.003 265),oklch(0.32 0.012 265));
+--vibeui-breadcrumb-014-chip-border:light-dark(oklch(0.92 0.005 265),oklch(0.42 0.012 265));
+--vibeui-breadcrumb-014-space:light-dark(oklch(0.55 0.15 285),oklch(0.76 0.13 285));
+--vibeui-breadcrumb-014-folder:light-dark(oklch(0.6 0.13 75),oklch(0.8 0.12 75));
+--vibeui-breadcrumb-014-database:light-dark(oklch(0.55 0.12 195),oklch(0.77 0.11 195));
+--vibeui-breadcrumb-014-table:light-dark(oklch(0.52 0.13 150),oklch(0.76 0.12 150));
+--vibeui-breadcrumb-014-record:light-dark(oklch(0.52 0.02 265),oklch(0.76 0.018 265));
+--vibeui-breadcrumb-014-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-breadcrumb-014-bg:transparent;
+--vibeui-breadcrumb-014-pad:0;
+--vibeui-breadcrumb-014-radius:0;
 --vibeui-breadcrumb-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Собственная светлая подложка: путь — это тёмный текст, и на тёмной
-   карточке каталога он обязан читаться без правки темы проекта. */
 [data-vibeui-block="breadcrumb-014"]{
 box-sizing:border-box;width:100%;max-width:38rem;
-padding:0.5rem 0.625rem;
-background:var(--vibeui-breadcrumb-014-surface);
-border:1px solid var(--vibeui-breadcrumb-014-surface-border);border-radius:0.625rem;
+padding:var(--vibeui-breadcrumb-014-pad);
+background:var(--vibeui-breadcrumb-014-bg);
+border-radius:var(--vibeui-breadcrumb-014-radius);
 font-family:var(--vibeui-breadcrumb-014-font);font-size:0.8125rem;line-height:1.4;
 color:var(--vibeui-breadcrumb-014-muted);
 }
@@ -119,6 +128,29 @@ const KIND_NAMES: Record<Breadcrumb014Kind, string> = {
   record: "Запись",
 }
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 const DEFAULT_ITEMS: Breadcrumb014Item[] = [
   { label: "Аналитика", href: "#", kind: "space" },
   { label: "Продажи", href: "#", kind: "folder" },
@@ -135,6 +167,9 @@ export function Breadcrumb014({
   items = DEFAULT_ITEMS,
   currentLabel = "Сделка №4471",
   currentKind = "record",
+  kindText = KIND_NAMES,
+  navLabel = "Хлебные крошки",
+  background = "",
   accent,
   className,
   style,
@@ -142,6 +177,14 @@ export function Breadcrumb014({
 }: Breadcrumb014Props) {
   const palette = {
     ...(accent ? { "--vibeui-breadcrumb-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-breadcrumb-014-bg": background,
+          "--vibeui-breadcrumb-014-pad": "0.5rem 0.625rem",
+          "--vibeui-breadcrumb-014-radius": "0.625rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -153,7 +196,7 @@ export function Breadcrumb014({
       <nav
         {...props}
         data-vibeui-block="breadcrumb-014"
-        aria-label="Хлебные крошки"
+        aria-label={navLabel}
         className={className}
         style={palette}
       >
@@ -167,7 +210,9 @@ export function Breadcrumb014({
                 <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                   <path d={PATHS[kind]} />
                 </svg>
-                <span data-part="kind">{KIND_NAMES[kind]}: </span>
+                <span data-part="kind">
+                  {kindText[kind] ?? KIND_NAMES[kind]}:{" "}
+                </span>
                 <span>{label}</span>
               </>
             )

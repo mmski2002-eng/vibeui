@@ -18,6 +18,22 @@ export type Datagrid025Props = Omit<
   rows?: Datagrid025Row[]
   caption?: string
   batchSize?: number
+  /** Заголовок панели над лентой. */
+  heading?: string
+  /** Счётчик загруженного. {shown} и {total} — числа строк. */
+  countText?: string
+  /** Подпись полосы прогресса для скринридера. */
+  progressLabel?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Заголовки колонок по ключу: компонент несёт русские. */
+  columnText?: Record<string, string>
+  /** Подпись кнопки догрузки. {count} — размер следующей порции. */
+  moreText?: string
+  /** Подпись после полной загрузки. {total} — число строк. */
+  doneText?: string
+  /** Пусто — подложки нет, лента лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,14 +42,17 @@ export type Datagrid025Props = Omit<
 // окна прокрутки, а «Загрузить ещё» дублирует её для клавиатуры и для
 // тех, кто дошёл до низа рывком. Полоса прогресса показывает, сколько
 // из общего числа уже подгружено — иначе бесконечный список не имеет дна.
+//
+// Тема берётся из color-scheme окружения через light-dark(): лента темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-025"]){
---vibeui-datagrid-025-bg:oklch(1 0 0);
---vibeui-datagrid-025-fg:oklch(0.23 0.014 285);
---vibeui-datagrid-025-muted:oklch(0.55 0.014 285);
---vibeui-datagrid-025-border:oklch(0.92 0.006 285);
---vibeui-datagrid-025-head:oklch(0.975 0.003 285);
---vibeui-datagrid-025-accent:oklch(0.52 0.16 265);
+--vibeui-datagrid-025-bg:transparent;
+--vibeui-datagrid-025-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-025-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-025-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
+--vibeui-datagrid-025-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
+--vibeui-datagrid-025-accent:light-dark(oklch(0.52 0.16 265),oklch(0.74 0.14 265));
 --vibeui-datagrid-025-height:17rem;
 --vibeui-datagrid-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -113,6 +132,35 @@ const DEFAULT_ROWS: Datagrid025Row[] = Array.from(
   }),
 )
 
+const COLUMN_TEXT: Record<string, string> = {
+  time: "Время",
+  event: "Событие",
+  source: "Источник",
+  weight: "Сумма, ₽",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Сетка с бесконечной прокруткой и счётчиком загруженного: порция
  * догружается у нижней кромки и по кнопке. Один файл, ноль зависимостей.
@@ -121,6 +169,14 @@ export function Datagrid025({
   rows = DEFAULT_ROWS,
   caption = "Порция догружается у нижней кромки окна прокрутки",
   batchSize = 12,
+  heading = "Лента событий кассы",
+  countText = "Загружено {shown} из {total}",
+  progressLabel = "Доля загруженных строк",
+  scrollLabel = "Лента событий, прокручивается",
+  columnText = COLUMN_TEXT,
+  moreText = "Загрузить ещё {count}",
+  doneText = "Все {total} строк загружены",
+  background = "",
   accent,
   className,
   style,
@@ -135,6 +191,12 @@ export function Datagrid025({
   const palette = {
     "--vibeui-datagrid-025-progress": `${percent}%`,
     ...(accent ? { "--vibeui-datagrid-025-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-025-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -154,14 +216,16 @@ export function Datagrid025({
         style={palette}
       >
         <div data-part="bar">
-          <h3 data-part="title">Лента событий кассы</h3>
+          <h3 data-part="title">{heading}</h3>
           <p data-part="count" role="status" aria-live="polite">
-            Загружено {visible.length} из {rows.length}
+            {countText
+              .replace("{shown}", String(visible.length))
+              .replace("{total}", String(rows.length))}
           </p>
           <span
             data-part="track"
             role="progressbar"
-            aria-label="Доля загруженных строк"
+            aria-label={progressLabel}
             aria-valuenow={percent}
             aria-valuemin={0}
             aria-valuemax={100}
@@ -172,7 +236,7 @@ export function Datagrid025({
         <div
           data-part="scroll"
           role="region"
-          aria-label="Лента событий, прокручивается"
+          aria-label={scrollLabel}
           tabIndex={0}
           onScroll={(event) => {
             const box = event.currentTarget
@@ -189,11 +253,11 @@ export function Datagrid025({
             <caption>{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Время</th>
-                <th scope="col">Событие</th>
-                <th scope="col">Источник</th>
+                <th scope="col">{columnText.time ?? COLUMN_TEXT.time}</th>
+                <th scope="col">{columnText.event ?? COLUMN_TEXT.event}</th>
+                <th scope="col">{columnText.source ?? COLUMN_TEXT.source}</th>
                 <th scope="col" data-align="end">
-                  Сумма, ₽
+                  {columnText.weight ?? COLUMN_TEXT.weight}
                 </th>
               </tr>
             </thead>
@@ -213,10 +277,15 @@ export function Datagrid025({
         </div>
         <div data-part="foot">
           {done ? (
-            <p data-part="done">Все {rows.length} строк загружены</p>
+            <p data-part="done">
+              {doneText.replace("{total}", String(rows.length))}
+            </p>
           ) : (
             <button type="button" data-part="more" onClick={loadMore}>
-              Загрузить ещё {Math.min(batchSize, rows.length - shown)}
+              {moreText.replace(
+                "{count}",
+                String(Math.min(batchSize, rows.length - shown)),
+              )}
             </button>
           )}
         </div>

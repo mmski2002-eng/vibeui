@@ -14,6 +14,10 @@ export type Inputgroup029Props = Omit<
   delay?: number
   onSave?: (value: string) => void
   hint?: string
+  /** Подписи статуса: компонент несёт русские, проект подставляет свои. */
+  statusText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,14 +31,14 @@ type Status = "idle" | "editing" | "saved"
 // иначе старый вызов onSave сработает после того, как поле уже исчезло.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-029"]){
---vibeui-inputgroup-029-surface:oklch(1 0 0);
---vibeui-inputgroup-029-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-029-fg:oklch(0.22 0.014 265);
---vibeui-inputgroup-029-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-029-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-029-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-029-accent:oklch(0.55 0.14 250);
---vibeui-inputgroup-029-saved:oklch(0.56 0.14 155);
+--vibeui-inputgroup-029-surface:transparent;
+--vibeui-inputgroup-029-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-inputgroup-029-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-029-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-inputgroup-029-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
+--vibeui-inputgroup-029-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-inputgroup-029-accent:light-dark(oklch(0.55 0.14 250),oklch(0.76 0.13 250));
+--vibeui-inputgroup-029-saved:light-dark(oklch(0.56 0.14 155),oklch(0.75 0.13 155));
 --vibeui-inputgroup-029-radius:0.75rem;
 --vibeui-inputgroup-029-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -92,6 +96,28 @@ const STATUS_TEXT: Record<Status, string> = {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сцепка «поле + индикатор автосохранения»: статус переключается на
  * «Сохраняем…» сразу при вводе и на «Сохранено» после паузы — таймер
  * debounce пересоздаётся на каждое изменение и чистится при размонтировании.
@@ -105,6 +131,8 @@ export function Inputgroup029({
   delay = 900,
   onSave,
   hint = "Демонстрация: реальное сохранение подключается через onSave, здесь оно просто меняет статус.",
+  statusText = STATUS_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -125,6 +153,12 @@ export function Inputgroup029({
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-029-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-029-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -157,7 +191,7 @@ export function Inputgroup029({
           <label htmlFor={id}>{label}</label>
           <span data-part="status" data-status={status} role="status">
             <span data-part="dot" aria-hidden="true" />
-            {STATUS_TEXT[status]}
+            {statusText[status] ?? STATUS_TEXT[status]}
           </span>
         </div>
         <input

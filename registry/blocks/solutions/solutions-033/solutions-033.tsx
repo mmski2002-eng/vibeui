@@ -15,7 +15,30 @@ export type Solutions033Props = {
   startPrice?: number
   deadlineHours?: number
   bids?: Solutions033Bid[]
+  /** Подписи плиток сводки: start, bids. */
+  summaryText?: Record<string, string>
+  /** Заголовки колонок таблицы предложений. */
+  columnText?: Record<string, string>
+  /** Подпись под обратным отсчётом. */
+  countdownNote?: string
+  /** Отсчёт в днях. {days} — число дней. */
+  daysText?: string
+  /** Отсчёт в часах. {hours} — число часов. */
+  hoursText?: string
+  /** Срок поставки. {days} — число дней. */
+  deliveryText?: string
+  /** Гарантия. {months} — число месяцев. */
+  warrantyText?: string
+  /** Метка самого дешёвого предложения. */
+  bestText?: string
+  /** Итог под таблицей. {amount} — разница, {vendor} — поставщик. */
+  footNote?: string
+  currency?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,14 +53,14 @@ export type Solutions033Props = {
 // «до 14:00» ничего не говорит о срочности, «осталось 6 ч» — говорит.
 const STYLES = `
 :where([data-vibeui-block="solutions-033"]){
---vibeui-solutions-033-bg:oklch(1 0 0);
---vibeui-solutions-033-panel:oklch(0.973 0.005 60);
---vibeui-solutions-033-fg:oklch(0.22 0.014 60);
---vibeui-solutions-033-muted:oklch(0.54 0.014 60);
---vibeui-solutions-033-border:oklch(0.9 0.007 60);
---vibeui-solutions-033-accent:oklch(0.62 0.17 55);
---vibeui-solutions-033-good:oklch(0.55 0.14 152);
---vibeui-solutions-033-bad:oklch(0.57 0.19 25);
+--vibeui-solutions-033-bg:transparent;
+--vibeui-solutions-033-panel:light-dark(oklch(0.973 0.005 60),oklch(0.27 0.01 60));
+--vibeui-solutions-033-fg:light-dark(oklch(0.22 0.014 60),oklch(0.94 0.005 60));
+--vibeui-solutions-033-muted:light-dark(oklch(0.54 0.014 60),oklch(0.69 0.011 60));
+--vibeui-solutions-033-border:light-dark(oklch(0.9 0.007 60),oklch(0.36 0.011 60));
+--vibeui-solutions-033-accent:light-dark(oklch(0.62 0.17 55),oklch(0.77 0.15 55));
+--vibeui-solutions-033-good:light-dark(oklch(0.55 0.14 152),oklch(0.71 0.14 152));
+--vibeui-solutions-033-bad:light-dark(oklch(0.57 0.19 25),oklch(0.71 0.17 25));
 --vibeui-solutions-033-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-033-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -165,6 +188,41 @@ const DEFAULT_BIDS: Solutions033Bid[] = [
   },
 ]
 
+const SUMMARY_LABEL: Record<string, string> = {
+  start: "стартовая цена лота",
+  bids: "предложений подано",
+}
+
+const COLUMN_LABEL: Record<string, string> = {
+  vendor: "Поставщик",
+  price: "Цена",
+  deviation: "Отклонение",
+  deadline: "Срок поставки",
+  warranty: "Гарантия",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Тендер по лоту: отклонение цены от стартовой считается из чисел, минимум
  * помечен полосой, дедлайн — обратным отсчётом. Один файл, своя палитра.
@@ -176,7 +234,19 @@ export function Solutions033({
   startPrice = 3600000,
   deadlineHours = 18,
   bids = DEFAULT_BIDS,
+  summaryText = SUMMARY_LABEL,
+  columnText = COLUMN_LABEL,
+  countdownNote = "до конца приёма",
+  daysText = "{days} дн.",
+  hoursText = "{hours} ч",
+  deliveryText = "{days} дн.",
+  warrantyText = "{months} мес.",
+  bestText = "минимальная цена",
+  footNote = "Минимальная цена ниже стартовой на {amount} — предложил «{vendor}».",
+  currency = "₽",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions033Props) {
@@ -187,12 +257,20 @@ export function Solutions033({
   const urgent = deadlineHours <= 24
   const countdownLabel =
     deadlineHours >= 24
-      ? `${Math.round(deadlineHours / 24)} дн.`
-      : `${deadlineHours} ч`
+      ? daysText.replace("{days}", String(Math.round(deadlineHours / 24)))
+      : hoursText.replace("{hours}", String(deadlineHours))
   const spread = startPrice - cheapest.price
+  const column = (key: string) => columnText[key] ?? COLUMN_LABEL[key]
+  const summary = (key: string) => summaryText[key] ?? SUMMARY_LABEL[key]
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-033-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-033-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -214,18 +292,18 @@ export function Solutions033({
           </div>
           <p data-part="countdown" data-urgent={urgent ? "true" : "false"}>
             <b>{countdownLabel}</b>
-            <span>до конца приёма</span>
+            <span>{countdownNote}</span>
           </p>
         </header>
 
         <div data-part="summary">
           <p data-part="tile">
             <b>{budgetLabel}</b>
-            <span>стартовая цена лота</span>
+            <span>{summary("start")}</span>
           </p>
           <p data-part="tile">
             <b>{bids.length}</b>
-            <span>предложений подано</span>
+            <span>{summary("bids")}</span>
           </p>
         </div>
 
@@ -233,18 +311,18 @@ export function Solutions033({
           <table>
             <thead>
               <tr>
-                <th scope="col">Поставщик</th>
+                <th scope="col">{column("vendor")}</th>
                 <th scope="col" data-align="end">
-                  Цена
+                  {column("price")}
                 </th>
                 <th scope="col" data-align="end">
-                  Отклонение
+                  {column("deviation")}
                 </th>
                 <th scope="col" data-align="end">
-                  Срок поставки
+                  {column("deadline")}
                 </th>
                 <th scope="col" data-align="end">
-                  Гарантия
+                  {column("warranty")}
                 </th>
               </tr>
             </thead>
@@ -262,7 +340,7 @@ export function Solutions033({
                     <td>
                       <span data-part="vendor">{bid.vendor}</span>
                       {isBest ? (
-                        <span data-part="best-tag">минимальная цена</span>
+                        <span data-part="best-tag">{bestText}</span>
                       ) : null}
                     </td>
                     <td data-align="end">
@@ -274,8 +352,18 @@ export function Solutions033({
                         {deviation}%
                       </span>
                     </td>
-                    <td data-align="end">{bid.deadlineDays} дн.</td>
-                    <td data-align="end">{bid.warrantyMonths} мес.</td>
+                    <td data-align="end">
+                      {deliveryText.replace(
+                        "{days}",
+                        String(bid.deadlineDays),
+                      )}
+                    </td>
+                    <td data-align="end">
+                      {warrantyText.replace(
+                        "{months}",
+                        String(bid.warrantyMonths),
+                      )}
+                    </td>
                   </tr>
                 )
               })}
@@ -284,8 +372,12 @@ export function Solutions033({
         </div>
 
         <p data-part="foot">
-          Минимальная цена ниже стартовой на {spread.toLocaleString("ru-RU")} ₽
-          — предложил «{cheapest.vendor}».
+          {footNote
+            .replace(
+              "{amount}",
+              `${spread.toLocaleString(locale)} ${currency}`,
+            )
+            .replace("{vendor}", cheapest.vendor)}
         </p>
       </section>
     </>

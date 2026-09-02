@@ -25,20 +25,23 @@
           "summary": "Стопка аватаров с перекрытием, счётчиком «+N» и подписью группы. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-iconstack-001-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: стопку показывают поверх любого фона",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "обратный флекс вместо z-index на каждом кружке",
             "свёртку остатка в «+N»: десять кружков подряд не читаются",
             "хеш FNV-1a для оттенка — сумма кодов красит целый алфавит одинаково",
             "кольцо фона вокруг кружка: без него стопка сливается в пятно",
-            "подпись с числом участников: кружки скрыты от скринридера"
+            "подпись с числом участников: кружки скрыты от скринридера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массив names и предел max",
             "label — подпись группы",
             "size — sm, md или lg",
-            "величину перекрытия"
+            "величину перекрытия",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Кружки декоративны: имена должны быть доступны в подписи или рядом.",
             "Инициалы берутся из первых двух слов: для одного слова останется одна буква.",
             "Больше пяти кружков не показывайте — дальше «+N» честнее.",
@@ -60,6 +63,19 @@
             "type": "select",
             "default": "md",
             "options": ["sm", "md", "lg"]
+          },
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "работают над проектом",
+            "maxLength": 30
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -69,20 +85,23 @@
               "summary": "An overlapping avatar stack with a \"+N\" counter and a group caption. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-iconstack-001-* palette — do not swap it for your theme tokens",
-                "its own light surface: the stack gets shown over any background",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
                 "the reversed flex row instead of a z-index on every circle",
                 "collapsing the remainder into \"+N\": ten circles in a row do not read",
                 "the FNV-1a hash for the hue — summing code points paints a whole alphabet alike",
                 "the ring around each circle: without it the stack becomes one blob",
-                "the caption with the member count: the circles are hidden from screen readers"
+                "the caption with the member count: the circles are hidden from screen readers",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the names array and the max cap",
                 "label — the group caption",
                 "size — sm, md or lg",
-                "the overlap amount"
+                "the overlap amount",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The circles are decorative: the names must be reachable in the caption or nearby.",
                 "Initials come from the first two words: a single-word name yields one letter.",
                 "Do not show more than five circles — past that \"+N\" is more honest.",
@@ -96,11 +115,32 @@
               },
               "size": {
                 "label": "Size"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "label": {
+                "label": "Caption",
+                "default": "working on the project"
               }
             },
-            "title": "Avatar Stack"
+            "title": "Avatar Stack",
+            "preview": {
+              "props": {
+                "names": [
+                  "Anna Rebrova",
+                  "Ilya Mokhov",
+                  "Kim Son",
+                  "Pyotr Gai",
+                  "Maria Loza",
+                  "Oleg Din"
+                ],
+                "label": "working on the project"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["size", "max", "background"]
       }
     },
     {
@@ -131,15 +171,18 @@
             "квадратные плитки: круг обрезает продуктовые логотипы по углам",
             "обводку плитки цветом подложки — без неё соседние плитки сливаются в пятно",
             "строку названий: монограммы «RE» и «NE» без расшифровки не читаются",
-            "собственную светлую подложку: подпись стека тёмная и на тёмном фоне пропадает"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "подпись под стопкой через caption",
             "величину перекрытия через overlap в пикселях",
             "состав стопки через items",
-            "размер плиток через переменную --vibeui-iconstack-002-size"
+            "размер плиток через переменную --vibeui-iconstack-002-size",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Монограмма берёт две первые буквы: «Next.js» и «Nest» дадут одинаковое «NE».",
             "Больше шести плиток превращают стопку в полосу — обрежьте список заранее.",
             "Перекрытие больше половины размера прячет монограммы соседей.",
@@ -161,6 +204,12 @@
             "default": 10,
             "min": 0,
             "max": 20
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -174,15 +223,18 @@
                 "the square tiles: a circle clips product logos at the corners",
                 "the tile ring in the surface colour — without it neighbouring tiles merge into a blob",
                 "the row of names: monograms like \"RE\" and \"NE\" are unreadable on their own",
-                "the component's own light surface: the stack caption is dark and vanishes on a dark background"
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the caption under the stack through caption",
                 "the overlap amount through overlap in pixels",
                 "the stack contents through items",
-                "the tile size through the --vibeui-iconstack-002-size variable"
+                "the tile size through the --vibeui-iconstack-002-size variable",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The monogram takes the first two letters: \"Next.js\" and \"Nest\" both yield \"NE\".",
                 "More than six tiles turn the stack into a stripe — trim the list beforehand.",
                 "An overlap larger than half the tile hides the neighbours' monograms.",
@@ -198,11 +250,21 @@
               "overlap": {
                 "label": "Overlap",
                 "default": 10
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Tech Stack Row"
+            "title": "Tech Stack Row",
+            "preview": {
+              "props": {
+                "items": ["React", "Next.js", "TypeScript", "Tailwind"],
+                "caption": "Project stack"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["overlap", "background"]
       }
     },
     {
@@ -220,7 +282,7 @@
           "target": "@components/vibeui/iconstack-003.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет: раскрытие держит нативный details, состояние живёт в DOM. Стопка и счётчик лежат внутри summary, у которого убран стандартный маркер (list-style:none и ::-webkit-details-marker) и добавлена видимая обводка фокуса — summary фокусируется по табу, и без обводки цель нажатия невидима. Счётчик поставлен слева от стопки: справа он читается как ещё один участник. Перекрытие собрано обратным флексом, оттенок кружка выводится из имени FNV-хешем. Подложка светлая, потому что раскрытый список имён набран тёмным.",
+      "docs": "Серверный компонент, хуков нет: раскрытие держит нативный details, состояние живёт в DOM. Стопка и счётчик лежат внутри summary, у которого убран стандартный маркер (list-style:none и ::-webkit-details-marker) и добавлена видимая обводка фокуса — summary фокусируется по табу, и без обводки цель нажатия невидима. Счётчик поставлен слева от стопки: справа он читается как ещё один участник. Перекрытие собрано обратным флексом, оттенок кружка выводится из имени FNV-хешем. Подложки по умолчанию нет: карточка лежит на фоне страницы, а палитра построена на light-dark() и следует color-scheme окружения.",
       "meta": {
         "tags": ["iconstack", "details", "overflow", "avatars"],
         "ai": {
@@ -233,15 +295,18 @@
             "видимую обводку фокуса на summary — иначе цель нажатия невидима с клавиатуры",
             "счётчик слева от стопки: справа он читается как ещё один участник",
             "снятый маркер details, который иначе рисуется треугольником поверх раскладки",
-            "собственную светлую подложку: список имён тёмный и на тёмном фоне каталога исчезает"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "число видимых кружков через max",
             "подпись группы и состав через names",
             "размер кружков через переменную --vibeui-iconstack-003-size",
-            "величину перекрытия через переменную --vibeui-iconstack-003-overlap"
+            "величину перекрытия через переменную --vibeui-iconstack-003-overlap",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "details не анимируется по высоте без allow-discrete: резкое раскрытие здесь намеренное.",
             "Внутри summary нельзя ставить интерактивные элементы — вложенная кнопка перехватит нажатие.",
             "Список имён не виртуализован: сотня участников раскроется одним длинным столбцом.",
@@ -263,6 +328,12 @@
             "type": "text",
             "default": "участников",
             "maxLength": 20
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -276,15 +347,18 @@
                 "the visible focus ring on summary — otherwise the tap target is invisible from the keyboard",
                 "the counter to the left of the stack: on the right it reads as one more member",
                 "the removed details marker, which otherwise draws a triangle over the layout",
-                "the component's own light surface: the name list is dark and disappears on a dark catalog background"
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the number of visible circles through max",
                 "the group caption and the roster through names",
                 "the circle size through the --vibeui-iconstack-003-size variable",
-                "the overlap through the --vibeui-iconstack-003-overlap variable"
+                "the overlap through the --vibeui-iconstack-003-overlap variable",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "details cannot animate its height without allow-discrete: the abrupt opening here is deliberate.",
                 "Interactive elements do not belong inside summary — a nested button steals the click.",
                 "The name list is not virtualised: a hundred members expand into one long column.",
@@ -300,11 +374,29 @@
               "label": {
                 "label": "Group caption",
                 "default": "members"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Expandable Stack Count"
+            "title": "Expandable Stack Count",
+            "preview": {
+              "props": {
+                "names": [
+                  "Anna Rebrova",
+                  "Ilya Mokhov",
+                  "Kim Son",
+                  "Pyotr Gai",
+                  "Maria Loza",
+                  "Oleg Din",
+                  "Nata Kir"
+                ],
+                "label": "members"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["max", "background"]
       }
     },
     {
@@ -322,7 +414,7 @@
           "target": "@components/vibeui/iconstack-004.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Перекрытие собрано column-reverse и отрицательным margin-bottom, поэтому верхний кружок ложится поверх нижнего без z-index, а первое имя списка остаётся первым сверху — порядок чтения совпадает с порядком данных. Размер и величина перекрытия связаны одной парой переменных и переключаются атрибутом data-size, так что sm, md и lg сохраняют одинаковую плотность. Кружки декоративны и помечены aria-hidden: смысл несёт подпись с числом. Подложка светлая, поскольку подпись тёмная.",
+      "docs": "Серверный компонент, хуков нет. Перекрытие собрано column-reverse и отрицательным margin-bottom, поэтому верхний кружок ложится поверх нижнего без z-index, а первое имя списка остаётся первым сверху — порядок чтения совпадает с порядком данных. Размер и величина перекрытия связаны одной парой переменных и переключаются атрибутом data-size, так что sm, md и lg сохраняют одинаковую плотность. Кружки декоративны и помечены aria-hidden: смысл несёт подпись с числом. Подложки по умолчанию нет: колонка лежит на фоне страницы, а палитра построена на light-dark() и следует color-scheme окружения.",
       "meta": {
         "tags": ["iconstack", "vertical", "sidebar", "avatars"],
         "ai": {
@@ -335,15 +427,18 @@
             "связку размера и перекрытия одной парой переменных — иначе на lg стопка распадается",
             "aria-hidden на кружках: инициалы вслух не значат ничего, значение несёт подпись",
             "подпись с числом: стопка из трёх кружков не сообщает, сколько людей в группе",
-            "собственную светлую подложку: подпись тёмная и на тёмном фоне каталога пропадает"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "размер кружков через size: sm, md или lg",
             "подпись под стопкой через label",
             "состав группы через names",
-            "величину перекрытия через переменную --vibeui-iconstack-004-overlap"
+            "величину перекрытия через переменную --vibeui-iconstack-004-overlap",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Вертикальная стопка длиннее горизонтальной по высоте: больше шести кружков ломают колонку.",
             "Инициалы берутся из двух первых слов имени: односложные ники дадут одну букву.",
             "Оттенок выводится хешем имени — переименование участника меняет цвет кружка.",
@@ -364,6 +459,12 @@
             "type": "text",
             "default": "на смене",
             "maxLength": 20
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -377,15 +478,18 @@
                 "tying size and overlap to one pair of variables — otherwise the stack falls apart at lg",
                 "aria-hidden on the circles: initials mean nothing aloud, the caption carries the meaning",
                 "the counted caption: three circles do not tell how many people are in the group",
-                "the component's own light surface: the caption is dark and vanishes on a dark catalog background"
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the circle size through size: sm, md or lg",
                 "the caption under the stack through label",
                 "the group roster through names",
-                "the overlap through the --vibeui-iconstack-004-overlap variable"
+                "the overlap through the --vibeui-iconstack-004-overlap variable",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A vertical stack is taller than a horizontal one: more than six circles break the column.",
                 "Initials come from the first two words of the name: single-word handles yield one letter.",
                 "The hue is derived from a hash of the name — renaming a member changes the circle colour.",
@@ -401,11 +505,26 @@
               "label": {
                 "label": "Caption",
                 "default": "on shift"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Vertical Avatar Stack"
+            "title": "Vertical Avatar Stack",
+            "preview": {
+              "props": {
+                "names": [
+                  "Anna Rebrova",
+                  "Ilya Mokhov",
+                  "Kim Son",
+                  "Pyotr Gai"
+                ],
+                "label": "on shift"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["size", "background"]
       }
     },
     {
@@ -423,7 +542,7 @@
           "target": "@components/vibeui/iconstack-005.tsx"
         }
       ],
-      "docs": "Серверный компонент, хуков нет. Цвет обводки вынесен в переменную --vibeui-iconstack-005-ring и задаётся полосой, а не кружком: тёмная полоса переопределяет её своим фоном, светлая берёт значение из пропа ring и красит им же собственную заливку. Из-за этого обводка физически не может разойтись с подложкой. Обе полосы показаны одновременно, чтобы разница читалась без переключения темы. Перекрытие собрано обратным флексом, оттенок кружка выводится из имени хешем. Внешняя подложка светлая: подпись светлой полосы тёмная.",
+      "docs": "Серверный компонент, хуков нет. Цвет обводки вынесен в переменную --vibeui-iconstack-005-ring и задаётся полосой, а не кружком: тёмная полоса переопределяет её своим фоном, светлая берёт значение из пропа ring и красит им же собственную заливку. Из-за этого обводка физически не может разойтись с подложкой. Обе полосы показаны одновременно, чтобы разница читалась без переключения темы. Перекрытие собрано обратным флексом, оттенок кружка выводится из имени хешем. Внешней подложки по умолчанию нет: корпус следует color-scheme окружения через light-dark(), а обе полосы намеренно держат фиксированные тона — на этом и держится демонстрация.",
       "meta": {
         "tags": ["iconstack", "ring", "surface", "contrast"],
         "ai": {
@@ -436,15 +555,20 @@
             "обе полосы рядом — без сравнения приём выглядит просто белой рамкой",
             "толщину обводки в 2px: тоньше она пропадает, толще превращается в кольцо",
             "aria-hidden на кружках: инициалы вслух ничего не сообщают",
-            "внешнюю светлую подложку: подпись светлой полосы тёмная и на тёмном фоне пропадает"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "фиксированные тона обеих полос: светлая остаётся светлой, а тёмная тёмной в любой теме — без этого сравнение теряет смысл"
           ],
           "adapt": [
             "цвет обводки и заливки светлой полосы через ring",
             "подпись тёмной полосы через label",
             "состав группы через names",
-            "цвет тёмной полосы через переменную --vibeui-iconstack-005-dark"
+            "цвет тёмной полосы через переменную --vibeui-iconstack-005-dark",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подпись светлой полосы через lightLabel"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Обводка обязана совпадать с настоящим фоном: на картинке или градиенте приём не работает.",
             "Обе полосы рендерят одну и ту же группу — это демонстрация, в бою нужна одна.",
             "Значение ring передаётся как есть: подойдёт любой валидный CSS-цвет, не только #rrggbb.",
@@ -464,6 +588,19 @@
             "type": "text",
             "default": "обводка равна цвету подложки",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "lightLabel",
+            "label": "Подпись светлой полосы",
+            "type": "text",
+            "default": "На светлой панели",
+            "maxLength": 40
           }
         ],
         "i18n": {
@@ -477,15 +614,20 @@
                 "both strips side by side — without the comparison the trick just looks like a white border",
                 "the 2px ring width: thinner it disappears, thicker it turns into a halo",
                 "aria-hidden on the circles: initials say nothing out loud",
-                "the outer light surface: the light strip caption is dark and vanishes on a dark background"
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the fixed tones of both strips: the light one stays light and the dark one dark in any theme — without that the comparison loses its point"
               ],
               "adapt": [
                 "the ring and light strip fill through ring",
                 "the dark strip caption through label",
                 "the group roster through names",
-                "the dark strip colour through the --vibeui-iconstack-005-dark variable"
+                "the dark strip colour through the --vibeui-iconstack-005-dark variable",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the light strip caption through lightLabel"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The ring must match the real background: over an image or a gradient the trick fails.",
                 "Both strips render the same group — this is a demonstration, production needs one.",
                 "The ring value is passed through as is: any valid CSS colour works, not only #rrggbb.",
@@ -501,11 +643,31 @@
               "label": {
                 "label": "Caption",
                 "default": "the ring equals the surface"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "lightLabel": {
+                "label": "Light strip caption",
+                "default": "On the light panel"
               }
             },
-            "title": "Surface Ring Stack"
+            "title": "Surface Ring Stack",
+            "preview": {
+              "props": {
+                "names": [
+                  "Anna Rebrova",
+                  "Ilya Mokhov",
+                  "Kim Son",
+                  "Pyotr Gai"
+                ],
+                "label": "the ring equals the surface",
+                "lightLabel": "On the light panel"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["ring", "background"]
       }
     },
     {
@@ -536,15 +698,21 @@
             "обратный флекс вместо z-index на каждой плитке",
             "предложение под стопкой вместо голого счётчика «+N»: сначала видимые названия, потом «и ещё N сервисов»",
             "склонение слова «сервис» по числу: 1 сервис, 2 сервиса, 5 сервисов",
-            "стопку, скрытую от скринридера через aria-hidden: подпись уже называет все сервисы текстом"
+            "стопку, скрытую от скринридера через aria-hidden: подпись уже называет все сервисы текстом",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массив services — список интеграций",
             "max — сколько логотипов показывать в стопке",
             "title — заголовок карточки",
-            "инициалы на плитках — берутся из первых двух букв имени сервиса"
+            "инициалы на плитках — берутся из первых двух букв имени сервиса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "restTemplate — хвост подписи: {count} подставляет число скрытых сервисов, {word} — форму слова",
+            "serviceWords — формы слова «сервис» для одного, двух-четырёх и пяти и больше"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Хеш имени сервиса определяет оттенок плитки: разные сервисы с похожим написанием могут получить близкие оттенки.",
             "Плитки — это инициалы, а не настоящие логотипы: для брендированных значков подставьте свои SVG вместо текста.",
             "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
@@ -565,6 +733,12 @@
             "default": 4,
             "min": 1,
             "max": 6
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -578,15 +752,21 @@
                 "the reversed flex row instead of z-index on every tile",
                 "the sentence under the stack instead of a bare \"+N\" counter: visible names first, then \"and N more services\"",
                 "the Russian plural agreement for \"service\": 1 сервис, 2 сервиса, 5 сервисов",
-                "the stack hidden from screen readers with aria-hidden: the caption already names every service as text"
+                "the stack hidden from screen readers with aria-hidden: the caption already names every service as text",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the services array — the list of integrations",
                 "max — how many logos the stack shows",
                 "title — the card heading",
-                "the tile initials — taken from the first two letters of the service name"
+                "the tile initials — taken from the first two letters of the service name",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "restTemplate — the caption tail: {count} takes the hidden service count, {word} the word form",
+                "serviceWords — the word forms for one, two-to-four, and five or more"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The service name hash picks the tile hue: different services with similar spelling can land on close hues.",
                 "Tiles are initials, not real logos: swap in your own SVGs for branded badges.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -600,11 +780,22 @@
               },
               "max": {
                 "label": "Show"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Integration Stack"
+            "title": "Integration Stack",
+            "preview": {
+              "props": {
+                "title": "Connected integrations",
+                "restTemplate": " and {count} {word} more.",
+                "serviceWords": ["service", "services", "services"]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["max", "background"]
       }
     }
   ]

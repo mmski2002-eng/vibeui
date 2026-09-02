@@ -11,6 +11,8 @@ export type Features004Props = {
   eyebrow?: string
   title?: string
   rows?: Features004Row[]
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -22,13 +24,18 @@ export type Features004Props = {
 // одним элементом массива. Иллюстрации нарисованы градиентами и полосами:
 // у каждого ряда свой оттенок, посчитанный сдвигом hue от акцента, поэтому
 // картинки различимы, но остаются одной семьёй.
+//
+// Тема берётся из color-scheme окружения через light-dark(): секция темнеет
+// вместе с контекстом и не выкладывает под себя плашку. Иллюстрация красится
+// прямо в правиле figure, а не через переменную: оттенок ряда приходит
+// инлайном, а подстановка var() внутри переменной считается один раз на корне.
 const STYLES = `
 :where([data-vibeui-block="features-004"]){
---vibeui-features-004-bg:oklch(1 0 0);
---vibeui-features-004-fg:oklch(0.2 0.012 260);
---vibeui-features-004-muted:oklch(0.51 0.012 260);
---vibeui-features-004-line:oklch(0.9 0.006 260);
---vibeui-features-004-accent:oklch(0.55 0.16 265);
+--vibeui-features-004-bg:transparent;
+--vibeui-features-004-fg:light-dark(oklch(0.2 0.012 260),oklch(0.95 0.005 260));
+--vibeui-features-004-muted:light-dark(oklch(0.51 0.012 260),oklch(0.72 0.012 260));
+--vibeui-features-004-line:light-dark(oklch(0.9 0.006 260),oklch(0.36 0.012 260));
+--vibeui-features-004-accent:light-dark(oklch(0.55 0.16 265),oklch(0.76 0.14 265));
 --vibeui-features-004-hue:265;
 --vibeui-features-004-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -68,12 +75,12 @@ flex:0 0 auto;margin-top:0.625rem;width:0.75rem;height:1px;background:var(--vibe
 margin:0;aspect-ratio:4 / 3;border-radius:1rem;border:1px solid var(--vibeui-features-004-line);
 overflow:hidden;position:relative;
 background:
-linear-gradient(135deg,oklch(0.93 0.06 var(--vibeui-features-004-hue)),oklch(0.98 0.01 var(--vibeui-features-004-hue)));
+linear-gradient(135deg,light-dark(oklch(0.93 0.06 var(--vibeui-features-004-hue)),oklch(0.33 0.06 var(--vibeui-features-004-hue))),light-dark(oklch(0.98 0.01 var(--vibeui-features-004-hue)),oklch(0.25 0.02 var(--vibeui-features-004-hue))));
 }
 [data-vibeui-block="features-004"] [data-part="bars"]{position:absolute;inset:auto 12% 14% 12%;display:flex;align-items:flex-end;gap:6%;height:46%}
 [data-vibeui-block="features-004"] [data-part="bars"] span{
 flex:1 1 0;border-radius:0.375rem 0.375rem 0 0;
-background:oklch(0.62 0.14 var(--vibeui-features-004-hue));opacity:.75;
+background:light-dark(oklch(0.62 0.14 var(--vibeui-features-004-hue)),oklch(0.74 0.14 var(--vibeui-features-004-hue)));opacity:.75;
 }
 [data-vibeui-block="features-004"] [data-part="bars"] span:nth-child(1){height:45%}
 [data-vibeui-block="features-004"] [data-part="bars"] span:nth-child(2){height:78%}
@@ -81,7 +88,7 @@ background:oklch(0.62 0.14 var(--vibeui-features-004-hue));opacity:.75;
 [data-vibeui-block="features-004"] [data-part="bars"] span:nth-child(4){height:100%;opacity:1}
 [data-vibeui-block="features-004"] [data-part="chip"]{
 position:absolute;left:12%;top:14%;padding:0.375rem 0.625rem;border-radius:0.5rem;
-background:oklch(1 0 0 / 80%);border:1px solid var(--vibeui-features-004-line);
+background:light-dark(oklch(1 0 0 / 80%),oklch(0.22 0.014 260 / 80%));border:1px solid var(--vibeui-features-004-line);
 font-size:0.6875rem;font-weight:650;color:var(--vibeui-features-004-fg);
 }
 @container (min-width: 34rem){
@@ -131,17 +138,46 @@ const DEFAULT_ROWS: Features004Row[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Чередование текст/картинка: ряды идут змейкой, иллюстрации нарисованы CSS. */
 export function Features004({
   eyebrow = "Как это устроено",
   title = "Три ряда, которые объясняют продукт без демо-звонка",
   rows = DEFAULT_ROWS,
+  background = "",
   accent,
   className,
   style,
 }: Features004Props) {
   const palette = {
     ...(accent ? { "--vibeui-features-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-features-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

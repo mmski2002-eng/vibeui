@@ -11,6 +11,10 @@ export type Field001Props = Omit<
   defaultValue?: string
   name?: string
   required?: boolean
+  /** Подпись обязательности: компонент несёт русскую, проект подставляет свою. */
+  requiredText?: string
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,17 +24,18 @@ export type Field001Props = Omit<
 // нему: пользователь теряет условия ровно тогда, когда они нужнее всего.
 const STYLES = `
 :where([data-vibeui-block="field-001"]){
---vibeui-field-001-bg:oklch(1 0 0);
---vibeui-field-001-surface:oklch(1 0 0);
---vibeui-field-001-shell:oklch(0.9 0.006 265);
---vibeui-field-001-fg:oklch(0.24 0.014 265);
---vibeui-field-001-muted:oklch(0.56 0.014 265);
---vibeui-field-001-border:oklch(0.88 0.008 265);
---vibeui-field-001-accent:oklch(0.55 0.2 262);
---vibeui-field-001-danger:oklch(0.55 0.19 25);
+--vibeui-field-001-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-field-001-surface:transparent;
+--vibeui-field-001-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265));
+--vibeui-field-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-field-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-field-001-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.012 265));
+--vibeui-field-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-field-001-danger:light-dark(oklch(0.55 0.19 25),oklch(0.73 0.16 25));
+--vibeui-field-001-mark-fg:light-dark(oklch(1 0 0),oklch(0.21 0.03 25));
 --vibeui-field-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="field-001"]{
 display:flex;flex-direction:column;gap:0.375rem;
 padding:0.875rem;
@@ -61,11 +66,33 @@ font-size:0.75rem;line-height:1.4;color:var(--vibeui-field-001-danger);
 [data-vibeui-block="field-001"] [data-part="mark"]{
 flex:none;display:inline-flex;align-items:center;justify-content:center;
 width:0.875rem;height:0.875rem;margin-top:0.0625rem;border-radius:9999px;
-background:var(--vibeui-field-001-danger);color:oklch(1 0 0);
+background:var(--vibeui-field-001-danger);color:var(--vibeui-field-001-mark-fg);
 font-size:0.625rem;font-weight:700;line-height:1;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="field-001"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Обвязка поля: подпись, пояснение и ошибка, связанные через aria-describedby.
@@ -79,6 +106,8 @@ export function Field001({
   defaultValue = "name@company",
   name = "email",
   required = true,
+  requiredText = "· обязательно",
+  background = "",
   accent,
   className,
   style,
@@ -93,6 +122,12 @@ export function Field001({
 
   const palette = {
     ...(accent ? { "--vibeui-field-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-field-001-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -109,7 +144,7 @@ export function Field001({
       >
         <label htmlFor={`${name}-input`}>
           {label}
-          {required ? <span data-part="required">· обязательно</span> : null}
+          {required ? <span data-part="required">{requiredText}</span> : null}
         </label>
         <input
           id={`${name}-input`}

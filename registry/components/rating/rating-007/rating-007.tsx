@@ -7,6 +7,14 @@ export type Rating007Props = Omit<
   value?: number
   count?: number
   breakdown?: number[]
+  /** Слово «отзыв» по числам: ключи one, few, many. */
+  reviewWords?: Record<string, string>
+  /** Подпись ряда для скринридера. {value}, {count} и {word}. */
+  summaryLabel?: string
+  /** Локаль записи чисел: от неё зависят разделители. */
+  locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -16,19 +24,22 @@ export type Rating007Props = Omit<
 // ряда: округлять 4.7 до пяти звёзд — врать в пользу товара. Рядом разбивка по
 // оценкам: средняя 4.5 из двух пятёрок и двух четвёрок и средняя 4.5 из
 // пятёрок и единиц — это разные товары, и видно это только по разбивке.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="rating-007"]){
---vibeui-rating-007-surface:oklch(1 0 0);
---vibeui-rating-007-shell:oklch(0.9 0.006 265);
---vibeui-rating-007-fg:oklch(0.23 0.014 265);
---vibeui-rating-007-muted:oklch(0.55 0.014 265);
---vibeui-rating-007-empty:oklch(0.9 0.008 265);
---vibeui-rating-007-track:oklch(0.94 0.005 265);
---vibeui-rating-007-accent:oklch(0.75 0.16 78);
+--vibeui-rating-007-surface:transparent;
+--vibeui-rating-007-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-rating-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-rating-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-rating-007-empty:light-dark(oklch(0.9 0.008 265),oklch(0.4 0.014 265));
+--vibeui-rating-007-track:light-dark(oklch(0.94 0.005 265),oklch(0.31 0.012 265));
+--vibeui-rating-007-accent:light-dark(oklch(0.75 0.16 78),oklch(0.84 0.15 80));
 --vibeui-rating-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-rating-007-fill:0%;
 }
-/* Своя светлая подложка: карточку оценки показывают поверх любого фона. */
+/* Подложки по умолчанию нет: карточка ложится на фон страницы. */
 [data-vibeui-block="rating-007"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -68,13 +79,42 @@ height:0.375rem;border-radius:9999px;background:var(--vibeui-rating-007-track);o
 
 const DEFAULT_BREAKDOWN = [842, 271, 98, 41, 32]
 
-function reviewsWord(count: number) {
+const DEFAULT_REVIEW_WORDS: Record<string, string> = {
+  one: "отзыв",
+  few: "отзыва",
+  many: "отзывов",
+}
+
+/** Форма числительного: у русского их три, у английского работают те же ключи. */
+function pluralKey(count: number) {
   const tail = count % 10
   const teen = count % 100
-  if (teen > 10 && teen < 20) return "отзывов"
-  if (tail === 1) return "отзыв"
-  if (tail > 1 && tail < 5) return "отзыва"
-  return "отзывов"
+  if (teen > 10 && teen < 20) return "many"
+  if (tail === 1) return "one"
+  if (tail > 1 && tail < 5) return "few"
+  return "many"
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -85,16 +125,29 @@ export function Rating007({
   value = 4.7,
   count = 1284,
   breakdown = DEFAULT_BREAKDOWN,
+  reviewWords = DEFAULT_REVIEW_WORDS,
+  summaryLabel = "{value} из 5 на основе {count} {word}",
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Rating007Props) {
   const total = breakdown.reduce((sum, item) => sum + item, 0) || 1
+  const key = pluralKey(count)
+  const word = reviewWords[key] ?? DEFAULT_REVIEW_WORDS[key]
+  const valueLabel = value.toLocaleString(locale)
 
   const palette = {
     "--vibeui-rating-007-fill": `${(value / 5) * 100}%`,
     ...(accent ? { "--vibeui-rating-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-rating-007-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -110,12 +163,15 @@ export function Rating007({
         style={palette}
       >
         <div data-part="head">
-          <span data-part="score">{value.toString().replace(".", ",")}</span>
+          <span data-part="score">{valueLabel}</span>
           <span data-part="meta">
             <span
               data-part="stars"
               role="img"
-              aria-label={`${value} из 5 на основе ${count} отзывов`}
+              aria-label={summaryLabel
+                .replace("{value}", valueLabel)
+                .replace("{count}", count.toLocaleString(locale))
+                .replace("{word}", word)}
             >
               <span aria-hidden="true">★★★★★</span>
               <span data-part="fill" aria-hidden="true">
@@ -123,7 +179,7 @@ export function Rating007({
               </span>
             </span>
             <span data-part="count">
-              {count.toLocaleString("ru-RU")} {reviewsWord(count)}
+              {count.toLocaleString(locale)} {word}
             </span>
           </span>
         </div>

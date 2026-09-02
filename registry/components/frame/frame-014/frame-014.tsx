@@ -8,6 +8,11 @@ export type Frame014Props = Omit<
   senderEmail?: string
   date?: string
   subject?: string
+  /** Строки тела письма по умолчанию: компонент несёт русские. */
+  bodyLines?: string[]
+  accent?: string
+  /** Пусто — подложки нет, кадр ложится на фон страницы. */
+  background?: string
   children?: ReactNode
 }
 
@@ -17,12 +22,12 @@ export type Frame014Props = Omit<
 // читаемым, даже если реальное изображение отправителя не подгрузилось.
 const STYLES = `
 :where([data-vibeui-block="frame-014"]){
---vibeui-frame-014-bg:oklch(1 0 0);
---vibeui-frame-014-fg:oklch(0.24 0.014 265);
---vibeui-frame-014-muted:oklch(0.55 0.014 265);
---vibeui-frame-014-border:oklch(0.89 0.006 265);
---vibeui-frame-014-avatar:oklch(0.55 0.14 260);
---vibeui-frame-014-avatar-fg:oklch(0.99 0.004 260);
+--vibeui-frame-014-bg:transparent;
+--vibeui-frame-014-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-frame-014-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-frame-014-border:light-dark(oklch(0.89 0.006 265),oklch(0.4 0.011 265));
+--vibeui-frame-014-avatar:light-dark(oklch(0.55 0.14 260),oklch(0.7 0.14 260));
+--vibeui-frame-014-avatar-fg:light-dark(oklch(0.99 0.004 260),oklch(0.2 0.03 260));
 --vibeui-frame-014-radius:0.875rem;
 --vibeui-frame-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -90,6 +95,28 @@ const DEFAULT_BODY_LINES = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кадр письма: строка отправителя с аватаром-инициалом, тема и тело.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -98,12 +125,25 @@ export function Frame014({
   senderEmail = "hello@vibeui.ru",
   date = "9:41",
   subject = "Новый макет письма готов к проверке",
+  bodyLines = DEFAULT_BODY_LINES,
+  accent,
+  background = "",
   children,
   className,
   style,
   ...props
 }: Frame014Props) {
   const initial = sender.trim().charAt(0).toUpperCase() || "?"
+  const palette = {
+    ...(accent ? { "--vibeui-frame-014-avatar": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-frame-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -114,7 +154,7 @@ export function Frame014({
         {...props}
         data-vibeui-block="frame-014"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="shell">
           <div data-part="meta">
@@ -130,9 +170,7 @@ export function Frame014({
           <h2 data-part="subject">{subject}</h2>
           <div data-part="body">
             {children ??
-              DEFAULT_BODY_LINES.map((line, index) => (
-                <p key={index}>{line}</p>
-              ))}
+              bodyLines.map((line, index) => <p key={index}>{line}</p>)}
           </div>
         </div>
       </figure>

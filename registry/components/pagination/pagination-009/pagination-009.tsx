@@ -4,6 +4,10 @@ export type Pagination009Props = {
   page?: number
   total?: number
   hrefOf?: (page: number) => string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labelText?: Record<string, string>
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -15,12 +19,14 @@ export type Pagination009Props = {
 // закрывается по Escape и по касанию мимо без единой строки JS.
 const STYLES = `
 :where([data-vibeui-block="pagination-009"]){
---vibeui-pagination-009-bg:oklch(1 0 0);
---vibeui-pagination-009-fg:oklch(0.24 0.014 265);
---vibeui-pagination-009-muted:oklch(0.55 0.014 265);
---vibeui-pagination-009-border:oklch(0.91 0.006 265);
---vibeui-pagination-009-hover:oklch(0.55 0.02 265 / 8%);
---vibeui-pagination-009-accent:oklch(0.55 0.2 262);
+--vibeui-pagination-009-bg:transparent;
+--vibeui-pagination-009-sheet:light-dark(oklch(1 0 0),oklch(0.23 0.008 265));
+--vibeui-pagination-009-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-pagination-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-pagination-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.012 265));
+--vibeui-pagination-009-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.82 0.02 265 / 14%));
+--vibeui-pagination-009-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-pagination-009-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
 --vibeui-pagination-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="pagination-009"]{
@@ -60,7 +66,7 @@ font-variant-numeric:tabular-nums;
 position:fixed;inset:auto;margin:0;
 width:min(18rem,92vw);max-height:14rem;overflow-y:auto;
 padding:0.5rem;box-sizing:border-box;
-background:var(--vibeui-pagination-009-bg);color:var(--vibeui-pagination-009-fg);
+background:var(--vibeui-pagination-009-sheet);color:var(--vibeui-pagination-009-fg);
 border:1px solid var(--vibeui-pagination-009-border);border-radius:0.875rem;
 font-family:var(--vibeui-pagination-009-font);
 box-shadow:0 24px 48px -24px oklch(0.2 0.03 265 / 40%);
@@ -83,10 +89,40 @@ text-decoration:none;color:inherit;font-size:0.875rem;font-variant-numeric:tabul
 [data-vibeui-block="pagination-009"] [data-part="num"]:hover{background:var(--vibeui-pagination-009-hover)}
 [data-vibeui-block="pagination-009"] [data-part="num"]:focus-visible{outline:2px solid var(--vibeui-pagination-009-accent);outline-offset:-2px}
 [data-vibeui-block="pagination-009"] [data-part="num"][aria-current="page"]{
-background:var(--vibeui-pagination-009-accent);color:oklch(1 0 0);font-weight:650;
+background:var(--vibeui-pagination-009-accent);color:var(--vibeui-pagination-009-accent-fg);font-weight:650;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="pagination-009"] *{animation:none!important;transition:none!important}}
 `
+
+const LABEL: Record<string, string> = {
+  nav: "Навигация по страницам",
+  prev: "Предыдущая страница",
+  next: "Следующая страница",
+  sheet: "Все страницы",
+  of: "из {total}",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Компактная пагинация для телефона: крупные стрелки и сетка номеров.
@@ -96,12 +132,21 @@ export function Pagination009({
   page = 3,
   total = 18,
   hrefOf = (value: number) => `?page=${value}`,
+  labelText = LABEL,
+  background = "",
   accent,
   className,
   style,
 }: Pagination009Props) {
   const palette = {
     ...(accent ? { "--vibeui-pagination-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pagination-009-bg": background,
+          "--vibeui-pagination-009-sheet": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -115,7 +160,7 @@ export function Pagination009({
       </style>
       <nav
         data-vibeui-block="pagination-009"
-        aria-label="Навигация по страницам"
+        aria-label={labelText.nav ?? LABEL.nav}
         className={className}
         style={palette}
       >
@@ -124,7 +169,7 @@ export function Pagination009({
           data-dir="prev"
           href={first ? undefined : hrefOf(page - 1)}
           aria-disabled={first || undefined}
-          aria-label="Предыдущая страница"
+          aria-label={labelText.prev ?? LABEL.prev}
           rel="prev"
         >
           <span data-part="arrow" aria-hidden="true" />
@@ -136,14 +181,16 @@ export function Pagination009({
           popoverTarget="vibeui-pagination-009-sheet"
         >
           {page}
-          <span data-part="of">из {total}</span>
+          <span data-part="of">
+            {(labelText.of ?? LABEL.of).replace("{total}", String(total))}
+          </span>
         </button>
         <a
           data-part="step"
           data-dir="next"
           href={last ? undefined : hrefOf(page + 1)}
           aria-disabled={last || undefined}
-          aria-label="Следующая страница"
+          aria-label={labelText.next ?? LABEL.next}
           rel="next"
         >
           <span data-part="arrow" aria-hidden="true" />
@@ -152,7 +199,7 @@ export function Pagination009({
           id="vibeui-pagination-009-sheet"
           data-part="sheet"
           popover="auto"
-          aria-label="Все страницы"
+          aria-label={labelText.sheet ?? LABEL.sheet}
         >
           <ul data-part="grid">
             {Array.from({ length: total }, (unused, index) => index + 1).map(

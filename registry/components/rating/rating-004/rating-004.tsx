@@ -8,6 +8,10 @@ export type Rating004Props = Omit<
   name?: string
   faces?: { face: string; text: string }[]
   defaultValue?: number
+  /** Сноска под рядом лиц. */
+  note?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,17 +21,20 @@ export type Rating004Props = Omit<
 // нарядно, но не показывает выбор. Всё держится на радиокнопках и :has(),
 // поэтому клавиатура, отправка формы и подпись под рядом работают без JS,
 // а компонент остаётся серверным.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="rating-004"]){
---vibeui-rating-004-surface:oklch(1 0 0);
---vibeui-rating-004-shell:oklch(0.9 0.006 265);
---vibeui-rating-004-fg:oklch(0.23 0.014 265);
---vibeui-rating-004-muted:oklch(0.55 0.014 265);
---vibeui-rating-004-hover:oklch(0.96 0.004 265);
---vibeui-rating-004-accent:oklch(0.58 0.16 300);
+--vibeui-rating-004-surface:transparent;
+--vibeui-rating-004-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-rating-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-rating-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-rating-004-hover:light-dark(oklch(0.96 0.004 265),oklch(0.29 0.011 265));
+--vibeui-rating-004-accent:light-dark(oklch(0.58 0.16 300),oklch(0.77 0.14 300));
 --vibeui-rating-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: оценку показывают поверх любого фона. */
+/* Подложки по умолчанию нет: оценка ложится на фон страницы. */
 [data-vibeui-block="rating-004"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:19rem;box-sizing:border-box;margin:0;padding:0.875rem;
@@ -83,6 +90,28 @@ const DEFAULT_FACES = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Оценка эмодзи на радиокнопках: выбранное лицо цветное, остальные обесцвечены.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -91,6 +120,8 @@ export function Rating004({
   name = "vibeui-rating-004",
   faces = DEFAULT_FACES,
   defaultValue = 4,
+  note = "Ответ анонимный, его видит только служба поддержки",
+  background = "",
   accent,
   className,
   style,
@@ -98,6 +129,12 @@ export function Rating004({
 }: Rating004Props) {
   const palette = {
     ...(accent ? { "--vibeui-rating-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-rating-004-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -135,9 +172,7 @@ export function Rating004({
             </p>
           ))}
         </div>
-        <p data-part="hint">
-          Ответ анонимный, его видит только служба поддержки
-        </p>
+        <p data-part="hint">{note}</p>
       </fieldset>
     </>
   )

@@ -15,18 +15,25 @@ export type Timeline006Props = Omit<
 > & {
   events?: Timeline006Event[]
   title?: string
+  /** Подписи типов для скринридера: компонент несёт русские, проект — свои. */
+  kindText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: лента, где тип события узнаётся по значку, а не по чтению.
 // Значок — встроенный SVG (иконочная библиотека сюда не тащится) в плитке,
 // которая красится оттенком своего типа. Тип продублирован текстовой
 // подписью для скринридера: цвет и форма не читаются вслух.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// становится тёмным там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="timeline-006"]){
---vibeui-timeline-006-bg:oklch(1 0 0);
---vibeui-timeline-006-fg:oklch(0.22 0.014 265);
---vibeui-timeline-006-muted:oklch(0.57 0.014 265);
---vibeui-timeline-006-border:oklch(0.91 0.006 265);
+--vibeui-timeline-006-bg:transparent;
+--vibeui-timeline-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-timeline-006-muted:light-dark(oklch(0.57 0.014 265),oklch(0.69 0.012 265));
+--vibeui-timeline-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-timeline-006-hue:262;
 --vibeui-timeline-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -53,9 +60,9 @@ width:1px;background:var(--vibeui-timeline-006-border);
 [data-vibeui-block="timeline-006"] [data-part="icon"]{
 display:flex;align-items:center;justify-content:center;
 width:1.75rem;height:1.75rem;box-sizing:border-box;border-radius:0.5rem;
-background:oklch(0.95 0.04 var(--vibeui-timeline-006-hue));
-color:oklch(0.5 0.14 var(--vibeui-timeline-006-hue));
-border:1px solid oklch(0.88 0.05 var(--vibeui-timeline-006-hue));
+background:light-dark(oklch(0.95 0.04 var(--vibeui-timeline-006-hue)),oklch(0.3 0.05 var(--vibeui-timeline-006-hue)));
+color:light-dark(oklch(0.5 0.14 var(--vibeui-timeline-006-hue)),oklch(0.85 0.11 var(--vibeui-timeline-006-hue)));
+border:1px solid light-dark(oklch(0.88 0.05 var(--vibeui-timeline-006-hue)),oklch(0.42 0.06 var(--vibeui-timeline-006-hue)));
 }
 [data-vibeui-block="timeline-006"] [data-part="icon"] svg{width:0.875rem;height:0.875rem;display:block}
 [data-vibeui-block="timeline-006"] li[data-kind="comment"]{--vibeui-timeline-006-hue:262}
@@ -118,16 +125,50 @@ const DEFAULT_EVENTS: Timeline006Event[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Лента событий со значками типов: цвет плитки плюс подпись для скринридера.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Timeline006({
   events = DEFAULT_EVENTS,
   title = "События",
+  kindText = KIND_LABEL,
+  background = "",
   className,
   style,
   ...props
 }: Timeline006Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-timeline-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-timeline-006" precedence="medium">
@@ -137,7 +178,7 @@ export function Timeline006({
         {...props}
         data-vibeui-block="timeline-006"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <h3 data-part="title">{title}</h3>
         <ol>
@@ -155,7 +196,9 @@ export function Timeline006({
               </span>
               <div data-part="body">
                 <span data-part="name">
-                  <span data-part="kind">{KIND_LABEL[event.kind]}: </span>
+                  <span data-part="kind">
+                    {kindText[event.kind] ?? KIND_LABEL[event.kind]}:{" "}
+                  </span>
                   {event.title}
                 </span>
                 {event.text ? <p data-part="text">{event.text}</p> : null}

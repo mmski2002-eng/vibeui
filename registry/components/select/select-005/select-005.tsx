@@ -16,6 +16,8 @@ export type Select005Props = Omit<
   label?: string
   options?: Select005Option[]
   defaultValue?: string
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,23 +25,32 @@ export type Select005Props = Omit<
 // планы и режимы почти всегда требуют одной поясняющей строки, но внутрь
 // <option> её не поместить: системный список рисует только текст. Поэтому
 // пояснение живёт отдельным абзацем и переключается вместе со значением.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="select-005"]){
---vibeui-select-005-surface:oklch(1 0 0);
---vibeui-select-005-surface-border:oklch(0.91 0.006 265);
---vibeui-select-005-fg:oklch(0.23 0.016 265);
---vibeui-select-005-muted:oklch(0.52 0.014 265);
---vibeui-select-005-field:oklch(0.985 0.002 265);
---vibeui-select-005-border:oklch(0.87 0.008 265);
---vibeui-select-005-accent:oklch(0.55 0.19 262);
---vibeui-select-005-note:oklch(0.55 0.19 262 / 8%);
+--vibeui-select-005-surface:transparent;
+--vibeui-select-005-surface-border:transparent;
+--vibeui-select-005-surface-pad:0;
+--vibeui-select-005-surface-radius:0;
+--vibeui-select-005-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-005-muted:light-dark(oklch(0.52 0.014 265),oklch(0.71 0.012 265));
+--vibeui-select-005-field:light-dark(oklch(0.985 0.002 265),oklch(0.25 0.012 265));
+--vibeui-select-005-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-select-005-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.15 262));
+--vibeui-select-005-note:light-dark(oklch(0.55 0.19 262 / 8%),oklch(0.75 0.15 262 / 16%));
 --vibeui-select-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Подложка появляется только вместе с пропом background: по умолчанию поле
+   лежит прямо на фоне страницы. */
 [data-vibeui-block="select-005"]{
 display:flex;flex-direction:column;gap:0.5rem;
-width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:21rem;box-sizing:border-box;
+padding:var(--vibeui-select-005-surface-pad);
 background:var(--vibeui-select-005-surface);
-border:1px solid var(--vibeui-select-005-surface-border);border-radius:0.875rem;
+border:1px solid var(--vibeui-select-005-surface-border);
+border-radius:var(--vibeui-select-005-surface-radius);
 font-family:var(--vibeui-select-005-font);color:var(--vibeui-select-005-fg);
 }
 [data-vibeui-block="select-005"] [data-part="label"]{font-size:0.8125rem;font-weight:600}
@@ -96,6 +107,29 @@ const DEFAULT_OPTIONS: Select005Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Select с пояснением: под полем живая строка про выбранный вариант.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -103,6 +137,7 @@ export function Select005({
   label = "Роль в проекте",
   options = DEFAULT_OPTIONS,
   defaultValue = "editor",
+  background = "",
   accent,
   className,
   style,
@@ -112,8 +147,20 @@ export function Select005({
   const [value, setValue] = useState(defaultValue)
   const current = options.find((option) => option.value === value) ?? options[0]
 
+  // Подложка приходит вместе с полями и скруглением: без неё поле лежит
+  // прямо на странице, и лишние поля по бокам ему только мешают.
   const palette = {
     ...(accent ? { "--vibeui-select-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-select-005-surface": background,
+          "--vibeui-select-005-surface-border":
+            "light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265))",
+          "--vibeui-select-005-surface-pad": "0.875rem",
+          "--vibeui-select-005-surface-radius": "0.875rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

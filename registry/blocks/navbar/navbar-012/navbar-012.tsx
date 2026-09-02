@@ -19,7 +19,15 @@ export type Navbar012Props = {
   actionHref?: string
   callLabel?: string
   callHref?: string
+  /** Подпись кнопки меню: компонент несёт русскую. */
+  menuLabel?: string
+  /** Подпись кнопки закрытия ящика: компонент несёт русскую. */
+  closeLabel?: string
+  /** Подпись ящика для скринридера: компонент несёт русскую. */
+  drawerLabel?: string
   id?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -29,14 +37,17 @@ export type Navbar012Props = {
 // уезжает справа и остаётся такой на любой ширине. Это осознанный выбор для
 // сайтов с длинным деревом разделов — их всё равно не поместить в строку,
 // и попытка это сделать заканчивается «ещё» с невнятным списком.
+//
+// Тема берётся из color-scheme окружения через light-dark(): шапка темнеет
+// вместе с контекстом и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="navbar-012"]){
---vibeui-navbar-012-bg:oklch(0.99 0.003 30);
---vibeui-navbar-012-ink:oklch(0.21 0.015 30);
---vibeui-navbar-012-muted:oklch(0.52 0.014 30);
---vibeui-navbar-012-border:oklch(0.9 0.008 30);
---vibeui-navbar-012-accent:oklch(0.55 0.16 340);
---vibeui-navbar-012-accent-fg:oklch(0.99 0 0);
+--vibeui-navbar-012-bg:transparent;
+--vibeui-navbar-012-ink:light-dark(oklch(0.21 0.015 30),oklch(0.94 0.006 30));
+--vibeui-navbar-012-muted:light-dark(oklch(0.52 0.014 30),oklch(0.71 0.012 30));
+--vibeui-navbar-012-border:light-dark(oklch(0.9 0.008 30),oklch(0.35 0.012 30));
+--vibeui-navbar-012-accent:light-dark(oklch(0.55 0.16 340),oklch(0.74 0.14 340));
+--vibeui-navbar-012-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 340));
 --vibeui-navbar-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -78,39 +89,44 @@ display:grid;gap:0.1875rem;width:1rem;
 [data-vibeui-navbar-012-drawer]{
 position:fixed;inset:0 0 0 auto;margin:0;width:min(22rem,90vw);height:100dvh;max-height:100dvh;
 padding:1.25rem;overflow-y:auto;
-border:0;border-left:1px solid var(--vibeui-navbar-012-border,oklch(0.9 0.008 30));
-background:oklch(1 0 0);color:oklch(0.21 0.015 30);
+border:0;
+border-left:1px solid var(--vibeui-navbar-012-border,light-dark(oklch(0.9 0.008 30),oklch(0.35 0.012 30)));
+background:light-dark(oklch(1 0 0),oklch(0.24 0.014 30));
+color:light-dark(oklch(0.21 0.015 30),oklch(0.94 0.006 30));
 font-family:var(--vibeui-navbar-012-font,ui-sans-serif,system-ui,sans-serif);
-box-shadow:-30px 0 70px -40px oklch(0.2 0.03 30 / 60%);
+box-shadow:-30px 0 70px -40px light-dark(oklch(0.2 0.03 30 / 60%),oklch(0 0 0 / 70%));
 translate:100% 0;
 transition:translate .26s cubic-bezier(.2,.7,.3,1),display .26s allow-discrete,overlay .26s allow-discrete;
 }
 [data-vibeui-navbar-012-drawer]:popover-open{translate:0 0}
 @starting-style{[data-vibeui-navbar-012-drawer]:popover-open{translate:100% 0}}
-[data-vibeui-navbar-012-drawer]::backdrop{background:oklch(0.2 0.02 30 / 42%)}
+[data-vibeui-navbar-012-drawer]::backdrop{background:light-dark(oklch(0.2 0.02 30 / 42%),oklch(0.06 0.01 30 / 62%))}
 [data-vibeui-navbar-012-drawer] [data-part="close"]{
 appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;height:2rem;padding:0 0.75rem;margin-bottom:1rem;
-border:1px solid oklch(0.9 0.008 30);border-radius:0.5rem;background:transparent;
+border:1px solid light-dark(oklch(0.9 0.008 30),oklch(0.35 0.012 30));
+border-radius:0.5rem;background:transparent;
 font:inherit;font-size:0.8125rem;font-weight:560;color:inherit;
 }
 [data-vibeui-navbar-012-drawer] [data-part="group"]{margin-bottom:1.25rem}
 [data-vibeui-navbar-012-drawer] [data-part="group-title"]{
-margin:0 0 0.375rem;color:oklch(0.52 0.014 30);
+margin:0 0 0.375rem;color:light-dark(oklch(0.52 0.014 30),oklch(0.71 0.012 30));
 font-size:0.6875rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
 }
 [data-vibeui-navbar-012-drawer] a{
 display:block;padding:0.5rem 0.625rem;border-radius:0.625rem;
 color:inherit;text-decoration:none;font-size:1rem;font-weight:560;
 }
-[data-vibeui-navbar-012-drawer] a:hover{background:oklch(0.55 0.02 30 / 8%)}
+[data-vibeui-navbar-012-drawer] a:hover{background:light-dark(oklch(0.55 0.02 30 / 8%),oklch(0.85 0.02 30 / 12%))}
 [data-vibeui-navbar-012-drawer] [data-part="note"]{
-display:block;color:oklch(0.52 0.014 30);font-size:0.8125rem;font-weight:420;
+display:block;color:light-dark(oklch(0.52 0.014 30),oklch(0.71 0.012 30));
+font-size:0.8125rem;font-weight:420;
 }
 [data-vibeui-navbar-012-drawer] [data-part="action"]{
 display:flex;justify-content:center;margin-top:0.5rem;
-background:var(--vibeui-navbar-012-accent,oklch(0.55 0.16 340));
-color:var(--vibeui-navbar-012-accent-fg,oklch(0.99 0 0));font-weight:640;
+background:var(--vibeui-navbar-012-accent,light-dark(oklch(0.55 0.16 340),oklch(0.74 0.14 340)));
+color:var(--vibeui-navbar-012-accent-fg,light-dark(oklch(0.99 0 0),oklch(0.18 0.03 340)));
+font-weight:640;
 }
 @container (min-width: 44rem){
 [data-vibeui-block="navbar-012"] [data-part="shell"]{padding:0.9375rem 2rem;gap:1.5rem}
@@ -149,6 +165,28 @@ const DEFAULT_GROUPS: Navbar012Group[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Шапка с меню-ящиком: полная панель во всю высоту уезжает справа. */
 export function Navbar012({
   brand = "Ясная",
@@ -158,13 +196,23 @@ export function Navbar012({
   actionHref = "#appointment",
   callLabel = "+7 495 000-11-22",
   callHref = "tel:+74950001122",
+  menuLabel = "Меню",
+  closeLabel = "Закрыть",
+  drawerLabel = "Все разделы",
   id = "vibeui-navbar-012-drawer",
+  background = "",
   accent,
   className,
   style,
 }: Navbar012Props) {
   const palette = {
     ...(accent ? { "--vibeui-navbar-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-navbar-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -192,7 +240,7 @@ export function Navbar012({
               <i />
               <i />
             </span>
-            Меню
+            {menuLabel}
           </button>
         </div>
         <nav
@@ -200,10 +248,10 @@ export function Navbar012({
           popover="auto"
           data-vibeui-navbar-012-drawer=""
           style={palette}
-          aria-label="Все разделы"
+          aria-label={drawerLabel}
         >
           <button data-part="close" type="button" popoverTarget={id}>
-            Закрыть
+            {closeLabel}
           </button>
           {groups.map((group) => (
             <div key={group.title} data-part="group">

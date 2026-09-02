@@ -17,6 +17,20 @@ export type Dashboard076Props = {
   campaigns?: Dashboard076Campaign[]
   pauseAllLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Состояния по ключам sending, paused, scheduled и done. */
+  stateText?: Record<string, string>
+  /** Кнопка строки по ключам paused, done и other. */
+  actionText?: Record<string, string>
+  /** Счётчик отправки: {sent} и {total}. */
+  sentText?: string
+  /** Счётчик недоставленных: {failed}. */
+  failedText?: string
+  /** Расшифровка полосы: {name}, {sent}, {total}. */
+  trackAriaText?: string
+  /** Локаль форматирования чисел. */
+  numberLocale?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,18 +46,25 @@ export type Dashboard076Props = {
 // прямо в строке — рассылку останавливают в панике, и искать кнопку внутри
 // карточки в этот момент невозможно. Общая пропускная способность подписана
 // сверху: она объясняет, почему очередь движется именно так.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-076"]){
---vibeui-dashboard-076-bg:oklch(0.985 0.003 250);
---vibeui-dashboard-076-card:oklch(1 0 0);
---vibeui-dashboard-076-fg:oklch(0.21 0.014 250);
---vibeui-dashboard-076-muted:oklch(0.54 0.014 250);
---vibeui-dashboard-076-border:oklch(0.91 0.006 250);
---vibeui-dashboard-076-accent:oklch(0.52 0.15 250);
---vibeui-dashboard-076-soft:oklch(0.965 0.02 250);
---vibeui-dashboard-076-fail:oklch(0.57 0.19 25);
---vibeui-dashboard-076-pause:oklch(0.68 0.15 72);
---vibeui-dashboard-076-done:oklch(0.6 0.11 155);
+--vibeui-dashboard-076-bg:transparent;
+/* Строка рассылки и жёлоб полосы: подложка самого блока прозрачна. */
+--vibeui-dashboard-076-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 250));
+--vibeui-dashboard-076-inset:light-dark(oklch(0.985 0.003 250),oklch(0.22 0.012 250));
+--vibeui-dashboard-076-fg:light-dark(oklch(0.21 0.014 250),oklch(0.94 0.005 250));
+--vibeui-dashboard-076-muted:light-dark(oklch(0.54 0.014 250),oklch(0.72 0.012 250));
+--vibeui-dashboard-076-border:light-dark(oklch(0.91 0.006 250),oklch(0.36 0.012 250));
+--vibeui-dashboard-076-accent:light-dark(oklch(0.52 0.15 250),oklch(0.74 0.13 250));
+--vibeui-dashboard-076-accent-line:light-dark(oklch(0.83 0.06 250),oklch(0.5 0.09 250));
+--vibeui-dashboard-076-soft:light-dark(oklch(0.965 0.02 250),oklch(0.3 0.035 250));
+--vibeui-dashboard-076-fail:light-dark(oklch(0.57 0.19 25),oklch(0.74 0.16 25));
+--vibeui-dashboard-076-fail-line:light-dark(oklch(0.84 0.07 25),oklch(0.5 0.11 25));
+--vibeui-dashboard-076-pause:light-dark(oklch(0.55 0.12 72),oklch(0.84 0.13 72));
+--vibeui-dashboard-076-done:light-dark(oklch(0.55 0.11 155),oklch(0.78 0.12 155));
 --vibeui-dashboard-076-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -63,7 +84,7 @@ border:1px solid var(--vibeui-dashboard-076-border);border-radius:1rem;padding:1
 margin-left:auto;appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:700;
 padding:0.4375rem 0.875rem;border-radius:0.5625rem;background:transparent;
 color:var(--vibeui-dashboard-076-fail);
-border:1px solid color-mix(in oklab,var(--vibeui-dashboard-076-fail) 35%,white);
+border:1px solid var(--vibeui-dashboard-076-fail-line);
 }
 [data-vibeui-block="dashboard-076"] [data-part="list"]{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.4375rem}
 [data-vibeui-block="dashboard-076"] [data-part="row"]{
@@ -71,7 +92,7 @@ display:grid;grid-template-columns:1fr auto;gap:0.375rem 0.75rem;align-items:cen
 padding:0.6875rem 0.8125rem;border-radius:0.8125rem;
 background:var(--vibeui-dashboard-076-card);border:1px solid var(--vibeui-dashboard-076-border);
 }
-[data-vibeui-block="dashboard-076"] [data-state="sending"]{border-color:color-mix(in oklab,var(--vibeui-dashboard-076-accent) 40%,white)}
+[data-vibeui-block="dashboard-076"] [data-state="sending"]{border-color:var(--vibeui-dashboard-076-accent-line)}
 [data-vibeui-block="dashboard-076"] [data-state="done"]{opacity:0.75}
 [data-vibeui-block="dashboard-076"] [data-part="who"]{min-width:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:0.1875rem 0.5rem}
 [data-vibeui-block="dashboard-076"] [data-part="who"] b{font-size:0.8125rem;font-weight:750}
@@ -82,14 +103,14 @@ font-size:0.6875rem;font-weight:750;
 }
 [data-vibeui-block="dashboard-076"] [data-part="state"]::before{content:"";width:0.4375rem;height:0.4375rem;border-radius:50%;background:currentColor}
 [data-vibeui-block="dashboard-076"] [data-state="sending"] [data-part="state"]{color:var(--vibeui-dashboard-076-accent)}
-[data-vibeui-block="dashboard-076"] [data-state="paused"] [data-part="state"]{color:color-mix(in oklab,var(--vibeui-dashboard-076-pause) 78%,black)}
+[data-vibeui-block="dashboard-076"] [data-state="paused"] [data-part="state"]{color:var(--vibeui-dashboard-076-pause)}
 [data-vibeui-block="dashboard-076"] [data-state="paused"] [data-part="state"]::before{border-radius:0.0625rem;width:0.375rem;height:0.5rem}
 [data-vibeui-block="dashboard-076"] [data-state="scheduled"] [data-part="state"]{color:var(--vibeui-dashboard-076-muted)}
 [data-vibeui-block="dashboard-076"] [data-state="scheduled"] [data-part="state"]::before{background:transparent;box-shadow:inset 0 0 0 1px currentColor}
 [data-vibeui-block="dashboard-076"] [data-state="done"] [data-part="state"]{color:var(--vibeui-dashboard-076-done)}
 [data-vibeui-block="dashboard-076"] [data-part="track"]{
 grid-column:1 / -1;display:flex;height:0.5rem;border-radius:9999px;overflow:hidden;
-background:var(--vibeui-dashboard-076-bg);
+background:var(--vibeui-dashboard-076-inset);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-076-border);
 }
 [data-vibeui-block="dashboard-076"] [data-part="ok"]{background:var(--vibeui-dashboard-076-accent);height:100%}
@@ -152,11 +173,39 @@ const DEFAULT_CAMPAIGNS: Dashboard076Campaign[] = [
   },
 ]
 
-const STATE_LABELS: Record<Dashboard076Campaign["state"], string> = {
+const STATE_TEXT: Record<string, string> = {
   sending: "отправляется",
   paused: "на паузе",
   scheduled: "запланирована",
   done: "завершена",
+}
+
+const ACTION_TEXT: Record<string, string> = {
+  paused: "Продолжить",
+  done: "Отчёт",
+  other: "Пауза",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -170,13 +219,31 @@ export function Dashboard076({
   campaigns = DEFAULT_CAMPAIGNS,
   pauseAllLabel = "Остановить всё",
   accent,
+  background = "",
+  stateText = STATE_TEXT,
+  actionText = ACTION_TEXT,
+  sentText = "{sent} из {total}",
+  failedText = "не доставлено: {failed}",
+  trackAriaText = "{name}: отправлено {sent} из {total}",
+  numberLocale = "ru-RU",
   className,
   style,
 }: Dashboard076Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-076-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-076-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const states = { ...STATE_TEXT, ...stateText }
+  const actions = { ...ACTION_TEXT, ...actionText }
+  // Отправленное выделено жирным, поэтому шаблон разрезается по метке.
+  const [sentBefore, sentAfter = ""] = sentText.split("{sent}")
 
   return (
     <>
@@ -215,7 +282,7 @@ export function Dashboard076({
                     <span>{campaign.audience}</span>
                   </div>
 
-                  <span data-part="state">{STATE_LABELS[campaign.state]}</span>
+                  <span data-part="state">{states[campaign.state]}</span>
 
                   <div
                     data-part="track"
@@ -223,7 +290,10 @@ export function Dashboard076({
                     aria-valuenow={campaign.sent}
                     aria-valuemin={0}
                     aria-valuemax={campaign.total}
-                    aria-label={`${campaign.name}: отправлено ${campaign.sent} из ${campaign.total}`}
+                    aria-label={trackAriaText
+                      .replace("{name}", campaign.name)
+                      .replace("{sent}", String(campaign.sent))
+                      .replace("{total}", String(campaign.total))}
                   >
                     <span data-part="ok" style={{ width: `${okShare}%` }} />
                     <span data-part="bad" style={{ width: `${badShare}%` }} />
@@ -231,20 +301,20 @@ export function Dashboard076({
 
                   <p data-part="nums">
                     <span>
-                      <b>{campaign.sent.toLocaleString("ru-RU")}</b> из{" "}
-                      {campaign.total.toLocaleString("ru-RU")}
+                      {sentBefore}
+                      <b>{campaign.sent.toLocaleString(numberLocale)}</b>
+                      {sentAfter.replace(
+                        "{total}",
+                        campaign.total.toLocaleString(numberLocale),
+                      )}
                     </span>
                     <span data-bad={campaign.failed > 0}>
-                      не доставлено: {campaign.failed}
+                      {failedText.replace("{failed}", String(campaign.failed))}
                     </span>
                     <span>{campaign.when}</span>
                     {campaign.rate ? <span>{campaign.rate}</span> : null}
                     <button type="button" data-part="act">
-                      {campaign.state === "paused"
-                        ? "Продолжить"
-                        : campaign.state === "done"
-                          ? "Отчёт"
-                          : "Пауза"}
+                      {actions[campaign.state] ?? actions.other}
                     </button>
                   </p>
                 </li>

@@ -24,7 +24,25 @@ export type Commerce029Props = {
   related?: string[]
   hits?: Commerce029Hit[]
   more?: string
+  /** Заголовок блока похожих запросов. */
+  relatedTitle?: string
+  /** Подпись экрана для скринридера: {query} подставляет запрос. */
+  resultsLabel?: string
+  /** Скрытая подпись поля поиска и подсказка внутри него. */
+  searchLabel?: string
+  searchPlaceholder?: string
+  /** Подпись кнопки очистки поля. */
+  clearLabel?: string
+  /** Подпись кнопки отправки формы. */
+  submitText?: string
+  /** Плашка исправления: {corrected} и {original} подставляют запросы. */
+  fixText?: string
+  fixLinkText?: string
+  /** Строка счётчика: {count} подставляет число, {query} — запрос. */
+  countText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -38,18 +56,22 @@ export type Commerce029Props = {
 // запрос: молчаливая подмена запроса выглядит как чужая выдача.
 const STYLES = `
 :where([data-vibeui-block="commerce-029"]){
---vibeui-commerce-029-bg:oklch(1 0 0);
---vibeui-commerce-029-fg:oklch(0.21 0.014 265);
---vibeui-commerce-029-muted:oklch(0.55 0.014 265);
---vibeui-commerce-029-border:oklch(0.91 0.006 265);
---vibeui-commerce-029-soft:oklch(0.975 0.004 265);
---vibeui-commerce-029-accent:oklch(0.55 0.2 262);
---vibeui-commerce-029-warn:oklch(0.98 0.03 85);
+--vibeui-commerce-029-bg:transparent;
+--vibeui-commerce-029-radius:0;
+--vibeui-commerce-029-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-029-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-029-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-commerce-029-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-commerce-029-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-commerce-029-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
+--vibeui-commerce-029-warn:light-dark(oklch(0.98 0.03 85),oklch(0.33 0.05 85));
+--vibeui-commerce-029-hl:light-dark(oklch(0.93 0.11 95),oklch(0.52 0.11 95));
 --vibeui-commerce-029-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 [data-vibeui-block="commerce-029"]{
 box-sizing:border-box;background:var(--vibeui-commerce-029-bg);
+border-radius:var(--vibeui-commerce-029-radius);
 color:var(--vibeui-commerce-029-fg);font-family:var(--vibeui-commerce-029-sans);
 }
 [data-vibeui-block="commerce-029"] *{box-sizing:border-box}
@@ -69,7 +91,7 @@ background:var(--vibeui-commerce-029-soft);color:var(--vibeui-commerce-029-muted
 }
 [data-vibeui-block="commerce-029"] [data-part="submit"]{
 appearance:none;border:0;cursor:pointer;height:2.75rem;padding:0 1.125rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-029-accent);color:oklch(1 0 0);font:inherit;font-size:0.9375rem;font-weight:650;
+background:var(--vibeui-commerce-029-accent);color:var(--vibeui-commerce-029-on-accent);font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="commerce-029"] [data-part="clear"]:focus-visible,
 [data-vibeui-block="commerce-029"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-commerce-029-accent);outline-offset:2px}
@@ -122,7 +144,7 @@ background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-029-hue,
 [data-vibeui-block="commerce-029"] [data-part="name"]{margin:0;font-size:0.875rem;font-weight:650;line-height:1.35}
 [data-vibeui-block="commerce-029"] [data-part="name"] a{color:inherit;text-decoration:none;outline:none}
 [data-vibeui-block="commerce-029"] [data-part="name"] a::after{content:"";position:absolute;inset:0}
-[data-vibeui-block="commerce-029"] mark{background:oklch(0.93 0.11 95);color:inherit;border-radius:0.1875rem;padding:0 0.0625rem}
+[data-vibeui-block="commerce-029"] mark{background:var(--vibeui-commerce-029-hl);color:inherit;border-radius:0.1875rem;padding:0 0.0625rem}
 [data-vibeui-block="commerce-029"] [data-part="spec"]{margin:0.125rem 0 0;font-size:0.75rem;color:var(--vibeui-commerce-029-muted)}
 [data-vibeui-block="commerce-029"] [data-part="side"]{grid-column:2;text-align:left}
 @container (min-width: 34rem){
@@ -188,6 +210,28 @@ const DEFAULT_HITS: Commerce029Hit[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Экран поиска по каталогу: исправление запроса, уточнения чипами и выдача строками.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -201,14 +245,35 @@ export function Commerce029({
   related = DEFAULT_RELATED,
   hits = DEFAULT_HITS,
   more = "Показать ещё 20 товаров",
+  relatedTitle = "Ищут вместе с этим",
+  resultsLabel = "Результаты поиска: {query}",
+  searchLabel = "Поиск по каталогу",
+  searchPlaceholder = "Что ищем?",
+  clearLabel = "Очистить поле",
+  submitText = "Найти",
+  fixText = "Показываем результаты по запросу «{corrected}».",
+  fixLinkText = "Искать по «{original}» без исправления",
+  countText = "Нашли {count} товаров по запросу «{query}»",
   accent,
+  background = "",
   className,
   style,
 }: Commerce029Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-029-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-029-bg": background,
+          "--vibeui-commerce-029-radius": "1.25rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+  // Число в счётчике выделено жирным, поэтому шаблон разрезается по {count}.
+  const [countHead, countTail] = countText
+    .replace("{query}", corrected)
+    .split("{count}")
 
   return (
     <>
@@ -219,43 +284,41 @@ export function Commerce029({
         data-vibeui-block="commerce-029"
         className={className}
         style={palette}
-        aria-label={`Результаты поиска: ${query}`}
+        aria-label={resultsLabel.replace("{query}", query)}
       >
         <div data-part="shell">
           <form data-part="search" role="search" action="#results">
             <div data-part="field">
               <label htmlFor="commerce-029-q" hidden>
-                Поиск по каталогу
+                {searchLabel}
               </label>
               <input
                 id="commerce-029-q"
                 type="search"
                 name="q"
                 defaultValue={query}
-                placeholder="Что ищем?"
+                placeholder={searchPlaceholder}
               />
-              <button
-                type="button"
-                data-part="clear"
-                aria-label="Очистить поле"
-              >
+              <button type="button" data-part="clear" aria-label={clearLabel}>
                 ×
               </button>
             </div>
             <button type="submit" data-part="submit">
-              Найти
+              {submitText}
             </button>
           </form>
 
           {corrected !== original ? (
             <p data-part="fix">
-              Показываем результаты по запросу «{corrected}». Искать по{" "}
-              <a href="#exact">«{original}»</a> без исправления.
+              {fixText.replace("{corrected}", corrected)}{" "}
+              <a href="#exact">{fixLinkText.replace("{original}", original)}</a>
             </p>
           ) : null}
 
           <p data-part="count" aria-live="polite">
-            Нашли <b>{found}</b> товаров по запросу «{corrected}»
+            {countHead}
+            <b>{found}</b>
+            {countTail ?? ""}
           </p>
 
           <h3>{refineTitle}</h3>
@@ -277,7 +340,7 @@ export function Commerce029({
             ))}
           </div>
 
-          <h3>Ищут вместе с этим</h3>
+          <h3>{relatedTitle}</h3>
           <ul data-part="related">
             {related.map((item) => (
               <li key={item}>

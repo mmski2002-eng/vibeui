@@ -18,6 +18,20 @@ export type Dashboard073Props = {
   segments?: Dashboard073Segment[]
   newLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Строка базы: {base}. */
+  baseText?: string
+  /** Отметки списка по ключам live и frozen. */
+  liveText?: Record<string, string>
+  /** Доля от базы: {share}. */
+  shareText?: string
+  /** Расшифровка полосы доли: {share}. */
+  shareAriaText?: string
+  /** Связка между чипами условий. */
+  andLabel?: string
+  /** Локаль форматирования чисел. */
+  numberLocale?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,17 +45,23 @@ export type Dashboard073Props = {
 // ничего не значит. Живой сегмент отличается от зафиксированного отметкой:
 // первый меняется сам, второй — снимок, и путать их дорого при рассылках.
 // Строка «используется в» отвечает на главный вопрос перед удалением.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-073"]){
---vibeui-dashboard-073-bg:oklch(0.985 0.003 20);
---vibeui-dashboard-073-card:oklch(1 0 0);
---vibeui-dashboard-073-fg:oklch(0.21 0.014 20);
---vibeui-dashboard-073-muted:oklch(0.55 0.014 20);
---vibeui-dashboard-073-border:oklch(0.91 0.006 20);
---vibeui-dashboard-073-accent:oklch(0.55 0.16 20);
---vibeui-dashboard-073-soft:oklch(0.965 0.02 20);
---vibeui-dashboard-073-up:oklch(0.55 0.13 155);
---vibeui-dashboard-073-down:oklch(0.57 0.19 25);
+--vibeui-dashboard-073-bg:transparent;
+/* Карточка сегмента и жёлоб полосы: подложка самого блока прозрачна. */
+--vibeui-dashboard-073-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 20));
+--vibeui-dashboard-073-inset:light-dark(oklch(0.985 0.003 20),oklch(0.22 0.012 20));
+--vibeui-dashboard-073-fg:light-dark(oklch(0.21 0.014 20),oklch(0.94 0.005 20));
+--vibeui-dashboard-073-muted:light-dark(oklch(0.55 0.014 20),oklch(0.72 0.012 20));
+--vibeui-dashboard-073-border:light-dark(oklch(0.91 0.006 20),oklch(0.36 0.012 20));
+--vibeui-dashboard-073-accent:light-dark(oklch(0.55 0.16 20),oklch(0.74 0.15 20));
+--vibeui-dashboard-073-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.04 20));
+--vibeui-dashboard-073-soft:light-dark(oklch(0.965 0.02 20),oklch(0.3 0.035 20));
+--vibeui-dashboard-073-up:light-dark(oklch(0.55 0.13 155),oklch(0.74 0.13 155));
+--vibeui-dashboard-073-down:light-dark(oklch(0.57 0.19 25),oklch(0.73 0.16 25));
 --vibeui-dashboard-073-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -60,7 +80,7 @@ border:1px solid var(--vibeui-dashboard-073-border);border-radius:1rem;padding:1
 [data-vibeui-block="dashboard-073"] [data-part="new"]{
 margin-left:auto;appearance:none;border:0;cursor:pointer;font:inherit;
 font-size:0.75rem;font-weight:700;padding:0.4375rem 0.875rem;border-radius:0.5625rem;
-background:var(--vibeui-dashboard-073-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-073-accent);color:var(--vibeui-dashboard-073-on-accent);
 }
 [data-vibeui-block="dashboard-073"] [data-part="list"]{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:0.5rem}
 [data-vibeui-block="dashboard-073"] [data-part="card"]{
@@ -72,7 +92,7 @@ background:var(--vibeui-dashboard-073-card);border:1px solid var(--vibeui-dashbo
 [data-vibeui-block="dashboard-073"] [data-part="live"]{
 font-size:0.5625rem;font-weight:750;text-transform:uppercase;letter-spacing:0.05em;
 padding:0.0625rem 0.375rem;border-radius:0.25rem;background:var(--vibeui-dashboard-073-soft);
-color:color-mix(in oklab,var(--vibeui-dashboard-073-accent) 85%,black);
+color:color-mix(in oklab,var(--vibeui-dashboard-073-accent) 85%,light-dark(black,white));
 }
 [data-vibeui-block="dashboard-073"] [data-part="size"]{
 display:flex;flex-wrap:wrap;align-items:baseline;gap:0.25rem 0.5rem;margin:0;
@@ -91,7 +111,7 @@ content:"";width:0;height:0;border-left:0.25rem solid transparent;border-right:0
 [data-vibeui-block="dashboard-073"] [data-part="trend"][data-up="false"]::before{border-top:0.375rem solid currentColor}
 [data-vibeui-block="dashboard-073"] [data-part="track"]{
 position:relative;height:0.3125rem;border-radius:9999px;overflow:hidden;
-background:var(--vibeui-dashboard-073-bg);
+background:var(--vibeui-dashboard-073-inset);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-073-border);
 }
 [data-vibeui-block="dashboard-073"] [data-part="track"] span{
@@ -102,7 +122,7 @@ margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;align-items:cente
 }
 [data-vibeui-block="dashboard-073"] [data-part="rules"] li{
 font-size:0.6875rem;font-weight:650;padding:0.1875rem 0.4375rem;border-radius:0.4375rem;
-background:var(--vibeui-dashboard-073-bg);border:1px solid var(--vibeui-dashboard-073-border);
+background:var(--vibeui-dashboard-073-inset);border:1px solid var(--vibeui-dashboard-073-border);
 }
 [data-vibeui-block="dashboard-073"] [data-part="and"]{
 font-size:0.625rem;font-weight:750;color:var(--vibeui-dashboard-073-muted);text-transform:uppercase;
@@ -167,6 +187,33 @@ const DEFAULT_SEGMENTS: Dashboard073Segment[] = [
   },
 ]
 
+const LIVE_TEXT: Record<string, string> = {
+  live: "живой",
+  frozen: "зафиксирован",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Страница сегментов пользователей: условия развёрнуты чипами, размер показан
  * числом и долей от базы, живой сегмент отличается от зафиксированного
@@ -178,13 +225,28 @@ export function Dashboard073({
   segments = DEFAULT_SEGMENTS,
   newLabel = "Новый сегмент",
   accent,
+  background = "",
+  baseText = "база: {base} человек, пересчитано час назад",
+  liveText = LIVE_TEXT,
+  shareText = "{share} % базы",
+  shareAriaText = "Доля от базы: {share} процентов",
+  andLabel = "и",
+  numberLocale = "ru-RU",
   className,
   style,
 }: Dashboard073Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-073-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-073-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const live = { ...LIVE_TEXT, ...liveText }
 
   return (
     <>
@@ -201,8 +263,10 @@ export function Dashboard073({
           <div data-part="head">
             <h2>{title}</h2>
             <p data-part="base">
-              база: {baseSize.toLocaleString("ru-RU")} человек, пересчитано час
-              назад
+              {baseText.replace(
+                "{base}",
+                baseSize.toLocaleString(numberLocale),
+              )}
             </p>
             <button type="button" data-part="new">
               {newLabel}
@@ -215,13 +279,15 @@ export function Dashboard073({
                 <div data-part="top">
                   <h3>{segment.name}</h3>
                   <span data-part="live">
-                    {segment.live ? "живой" : "зафиксирован"}
+                    {segment.live ? live.live : live.frozen}
                   </span>
                 </div>
 
                 <p data-part="size">
-                  <b>{segment.size.toLocaleString("ru-RU")}</b>
-                  <span>{segment.share} % базы</span>
+                  <b>{segment.size.toLocaleString(numberLocale)}</b>
+                  <span>
+                    {shareText.replace("{share}", String(segment.share))}
+                  </span>
                   <span data-part="trend" data-up={segment.up}>
                     {segment.trend}
                   </span>
@@ -230,7 +296,10 @@ export function Dashboard073({
                 <div
                   data-part="track"
                   role="img"
-                  aria-label={`Доля от базы: ${segment.share} процентов`}
+                  aria-label={shareAriaText.replace(
+                    "{share}",
+                    String(segment.share),
+                  )}
                 >
                   <span style={{ width: `${Math.max(2, segment.share)}%` }} />
                 </div>
@@ -240,7 +309,7 @@ export function Dashboard073({
                     <Fragment key={rule}>
                       {index > 0 ? (
                         <span data-part="and" aria-hidden="true">
-                          и
+                          {andLabel}
                         </span>
                       ) : null}
                       <li>{rule}</li>

@@ -14,7 +14,13 @@ export type Tabs006Item = {
 export type Tabs006Props = {
   items?: Tabs006Item[]
   defaultId?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
+  /** Подпись списка вкладок для скринридера. */
+  listLabel?: string
+  /** Шаблон подписи вкладки со счётчиком: {label} и {count}. */
+  countLabel?: string
   className?: string
   style?: CSSProperties
 }
@@ -23,14 +29,18 @@ export type Tabs006Props = {
 // строке. Значки нарисованы бордюрами, а не иконочным шрифтом, поэтому файл
 // остаётся самодостаточным. Число уходит в aria-label вкладки: сам счётчик
 // скрыт от скринридера, иначе он читается как продолжение подписи.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте рамка светлее фона, а плашка счётчика — светлее её.
 const STYLES = `
 :where([data-vibeui-block="tabs-006"]){
---vibeui-tabs-006-bg:oklch(1 0 0);
---vibeui-tabs-006-fg:oklch(0.22 0.014 265);
---vibeui-tabs-006-muted:oklch(0.55 0.014 265);
---vibeui-tabs-006-border:oklch(0.91 0.006 265);
---vibeui-tabs-006-chip:oklch(0.94 0.004 265);
---vibeui-tabs-006-accent:oklch(0.55 0.2 262);
+--vibeui-tabs-006-bg:transparent;
+--vibeui-tabs-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tabs-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-tabs-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-tabs-006-chip:light-dark(oklch(0.94 0.004 265),oklch(0.32 0.012 265));
+--vibeui-tabs-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
+--vibeui-tabs-006-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
 --vibeui-tabs-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="tabs-006"]{
@@ -82,7 +92,7 @@ font-size:0.6875rem;line-height:1.125rem;text-align:center;
 font-variant-numeric:tabular-nums;color:var(--vibeui-tabs-006-fg);
 }
 [data-vibeui-block="tabs-006"] [data-part="tab"][aria-selected="true"] [data-part="count"]{
-background:var(--vibeui-tabs-006-accent);color:oklch(1 0 0);
+background:var(--vibeui-tabs-006-accent);color:var(--vibeui-tabs-006-on-accent);
 }
 [data-vibeui-block="tabs-006"] [data-part="panel"]{
 padding-top:0.875rem;font-size:0.875rem;line-height:1.6;color:var(--vibeui-tabs-006-muted);
@@ -122,13 +132,38 @@ const DEFAULT_ITEMS: Tabs006Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Вкладки со значками и счётчиками непрочитанного.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tabs006({
   items = DEFAULT_ITEMS,
   defaultId,
+  background = "",
   accent,
+  listLabel = "Папки",
+  countLabel = "{label}, писем {count}",
   className,
   style,
 }: Tabs006Props) {
@@ -137,6 +172,12 @@ export function Tabs006({
 
   const palette = {
     ...(accent ? { "--vibeui-tabs-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tabs-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -181,7 +222,7 @@ export function Tabs006({
         <div
           data-part="list"
           role="tablist"
-          aria-label="Папки"
+          aria-label={listLabel}
           ref={listRef}
           onKeyDown={onKeyDown}
         >
@@ -197,7 +238,9 @@ export function Tabs006({
               aria-label={
                 item.count === undefined
                   ? undefined
-                  : `${item.label}, писем ${item.count}`
+                  : countLabel
+                      .replace("{label}", item.label)
+                      .replace("{count}", String(item.count))
               }
               tabIndex={item.id === active ? 0 : -1}
               onClick={() => setActive(item.id)}

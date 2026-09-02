@@ -10,7 +10,21 @@ export type Togglegroup004Props = Omit<
   label?: string
   hint?: string
   defaultValue?: string[]
+  /** Короткие подписи кружков по идентификатору дня. */
+  dayShortText?: Record<string, string>
+  /** Полные имена дней для aria-label. */
+  dayLongText?: Record<string, string>
+  /** Подпись кнопки-пресета «только будни». */
+  presetText?: string
+  /** Итог с подстановками {count}, {word} и {days}. */
+  summaryText?: string
+  /** Итог, когда не выбрано ни одного дня. */
+  emptyText?: string
+  /** Формы слова «день» для 1, 2–4 и 5+ — счётная строка остаётся живой. */
+  dayWordText?: { one: string; few: string; many: string }
   onChange?: (value: string[]) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,15 +32,20 @@ export type Togglegroup004Props = Omit<
 // toggle: нажат или нет, седьмого состояния не бывает. Рядом стоит обычная
 // кнопка «Будни» — она не toggle, а действие над выбором, и выглядит иначе,
 // чтобы разница между состоянием и действием читалась глазами.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте панель темнеет, а границы становятся светлее фона.
 const STYLES = `
 :where([data-vibeui-block="togglegroup-004"]){
---vibeui-togglegroup-004-bg:oklch(1 0 0);
---vibeui-togglegroup-004-fg:oklch(0.22 0.014 265);
---vibeui-togglegroup-004-muted:oklch(0.55 0.014 265);
---vibeui-togglegroup-004-border:oklch(0.9 0.006 265);
---vibeui-togglegroup-004-surface:oklch(0.97 0.004 265);
---vibeui-togglegroup-004-accent:oklch(0.55 0.16 145);
---vibeui-togglegroup-004-weekend:oklch(0.6 0.16 25);
+--vibeui-togglegroup-004-bg:transparent;
+--vibeui-togglegroup-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-togglegroup-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-togglegroup-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-togglegroup-004-surface:light-dark(oklch(0.97 0.004 265),oklch(0.26 0.01 265));
+--vibeui-togglegroup-004-raised:light-dark(oklch(1 0 0),oklch(0.29 0.01 265));
+--vibeui-togglegroup-004-accent:light-dark(oklch(0.55 0.16 145),oklch(0.72 0.15 145));
+--vibeui-togglegroup-004-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.02 145));
+--vibeui-togglegroup-004-weekend:light-dark(oklch(0.6 0.16 25),oklch(0.72 0.15 25));
 --vibeui-togglegroup-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="togglegroup-004"]{
@@ -57,7 +76,7 @@ appearance:none;cursor:pointer;font:inherit;
 display:inline-flex;align-items:center;justify-content:center;
 width:2.375rem;height:2.375rem;padding:0;
 border:1px solid var(--vibeui-togglegroup-004-border);border-radius:50%;
-background:var(--vibeui-togglegroup-004-bg);color:var(--vibeui-togglegroup-004-muted);
+background:var(--vibeui-togglegroup-004-raised);color:var(--vibeui-togglegroup-004-muted);
 font-size:0.8125rem;font-weight:650;line-height:1;
 transition:background-color .15s ease,color .15s ease,border-color .15s ease;
 }
@@ -68,7 +87,7 @@ outline:2px solid var(--vibeui-togglegroup-004-accent);outline-offset:2px;
 [data-vibeui-block="togglegroup-004"] [data-part="day"][aria-pressed="true"]{
 background:var(--vibeui-togglegroup-004-accent);
 border-color:var(--vibeui-togglegroup-004-accent);
-color:oklch(0.99 0 0);
+color:var(--vibeui-togglegroup-004-accent-fg);
 }
 /* Выходные красятся своим цветом только в нажатом виде: в спокойном
    состоянии семь разноцветных кружков читались бы как семь разных сущностей. */
@@ -83,33 +102,78 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-togglegroup-004-mu
 `
 
 const DAYS = [
-  { id: "mon", short: "Пн", full: "Понедельник", weekend: false },
-  { id: "tue", short: "Вт", full: "Вторник", weekend: false },
-  { id: "wed", short: "Ср", full: "Среда", weekend: false },
-  { id: "thu", short: "Чт", full: "Четверг", weekend: false },
-  { id: "fri", short: "Пт", full: "Пятница", weekend: false },
-  { id: "sat", short: "Сб", full: "Суббота", weekend: true },
-  { id: "sun", short: "Вс", full: "Воскресенье", weekend: true },
+  { id: "mon", weekend: false },
+  { id: "tue", weekend: false },
+  { id: "wed", weekend: false },
+  { id: "thu", weekend: false },
+  { id: "fri", weekend: false },
+  { id: "sat", weekend: true },
+  { id: "sun", weekend: true },
 ]
 
-function plural(count: number) {
+const DAY_SHORT_TEXT: Record<string, string> = {
+  mon: "Пн",
+  tue: "Вт",
+  wed: "Ср",
+  thu: "Чт",
+  fri: "Пт",
+  sat: "Сб",
+  sun: "Вс",
+}
+
+const DAY_LONG_TEXT: Record<string, string> = {
+  mon: "Понедельник",
+  tue: "Вторник",
+  wed: "Среда",
+  thu: "Четверг",
+  fri: "Пятница",
+  sat: "Суббота",
+  sun: "Воскресенье",
+}
+
+const DAY_WORD_TEXT = { one: "день", few: "дня", many: "дней" }
+
+/** Форма счётного слова: правило русское, сами слова приходят пропом. */
+function pluralForm(count: number): "one" | "few" | "many" {
   const tail = count % 100
 
   if (tail > 10 && tail < 20) {
-    return "дней"
+    return "many"
   }
 
   const last = count % 10
 
   if (last === 1) {
-    return "день"
+    return "one"
   }
 
   if (last > 1 && last < 5) {
-    return "дня"
+    return "few"
   }
 
-  return "дней"
+  return "many"
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -120,7 +184,14 @@ export function Togglegroup004({
   label = "Дни доставки",
   hint = "Курьер приезжает только в отмеченные дни.",
   defaultValue = ["mon", "wed", "fri"],
+  dayShortText = DAY_SHORT_TEXT,
+  dayLongText = DAY_LONG_TEXT,
+  presetText = "Только будни",
+  summaryText = "{count} {word}: {days}.",
+  emptyText = "Ни один день не выбран — доставки не будет.",
+  dayWordText = DAY_WORD_TEXT,
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -130,6 +201,12 @@ export function Togglegroup004({
 
   const palette = {
     ...(accent ? { "--vibeui-togglegroup-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-togglegroup-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -158,7 +235,7 @@ export function Togglegroup004({
             data-part="preset"
             onClick={() => apply(["mon", "tue", "wed", "thu", "fri"])}
           >
-            Только будни
+            {presetText}
           </button>
         </div>
         <div data-part="group" role="group" aria-label={label}>
@@ -169,7 +246,7 @@ export function Togglegroup004({
               data-part="day"
               data-weekend={day.weekend}
               aria-pressed={value.includes(day.id)}
-              aria-label={day.full}
+              aria-label={dayLongText[day.id] ?? DAY_LONG_TEXT[day.id]}
               onClick={() =>
                 apply(
                   value.includes(day.id)
@@ -178,16 +255,24 @@ export function Togglegroup004({
                 )
               }
             >
-              {day.short}
+              {dayShortText[day.id] ?? DAY_SHORT_TEXT[day.id]}
             </button>
           ))}
         </div>
         <p data-part="summary" role="status">
           {chosen.length === 0
-            ? "Ни один день не выбран — доставки не будет."
-            : `${chosen.length} ${plural(chosen.length)}: ${chosen
-                .map((day) => day.short)
-                .join(", ")}.`}
+            ? emptyText
+            : summaryText
+                .replace("{count}", String(chosen.length))
+                .replace("{word}", dayWordText[pluralForm(chosen.length)])
+                .replace(
+                  "{days}",
+                  chosen
+                    .map(
+                      (day) => dayShortText[day.id] ?? DAY_SHORT_TEXT[day.id],
+                    )
+                    .join(", "),
+                )}
         </p>
         <p data-part="summary">{hint}</p>
       </section>

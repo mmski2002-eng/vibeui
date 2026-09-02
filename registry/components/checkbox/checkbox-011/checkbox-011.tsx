@@ -10,7 +10,15 @@ export type Checkbox011Props = Omit<
   title?: string
   items?: string[]
   defaultValue?: string[]
+  /** Подпись чекбокса «выбрать всё». */
+  allLabel?: string
+  /** Подпись кнопки инверсии. */
+  invertLabel?: string
+  /** Счётчик в панели. {selected} — выбрано, {total} — всего пунктов. */
+  countText?: string
   onChange?: (value: string[]) => void
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,21 +26,26 @@ export type Checkbox011Props = Omit<
 // с промежуточным состоянием, числом выбранного и инверсией выбора. В отличие
 // от родительской строки внутри списка, панель не притворяется таким же
 // пунктом, как элементы под ней, и её нельзя выбрать по ошибке.
+//
+// Тема берётся из color-scheme окружения через light-dark(): панель темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="checkbox-011"]){
---vibeui-checkbox-011-bg:oklch(1 0 0);
---vibeui-checkbox-011-fg:oklch(0.22 0.014 265);
---vibeui-checkbox-011-muted:oklch(0.55 0.014 265);
---vibeui-checkbox-011-border:oklch(0.9 0.006 265);
---vibeui-checkbox-011-bar:oklch(0.97 0.004 265);
---vibeui-checkbox-011-hover:oklch(0.98 0.003 265);
---vibeui-checkbox-011-accent:oklch(0.55 0.17 285);
+--vibeui-checkbox-011-surface:transparent;
+--vibeui-checkbox-011-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-checkbox-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-checkbox-011-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-checkbox-011-bar:light-dark(oklch(0.97 0.004 265),oklch(0.3 0.012 265));
+--vibeui-checkbox-011-hover:light-dark(oklch(0.98 0.003 265),oklch(0.33 0.012 265));
+--vibeui-checkbox-011-accent:light-dark(oklch(0.55 0.17 285),oklch(0.75 0.15 285));
+--vibeui-checkbox-011-mark:light-dark(oklch(0.99 0.01 285),oklch(0.2 0.03 285));
 --vibeui-checkbox-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="checkbox-011"]{
 display:block;width:100%;max-width:23rem;box-sizing:border-box;overflow:hidden;
 border:1px solid var(--vibeui-checkbox-011-border);border-radius:0.875rem;
-background:var(--vibeui-checkbox-011-bg);
+background:var(--vibeui-checkbox-011-surface);
 font-family:var(--vibeui-checkbox-011-font);color:var(--vibeui-checkbox-011-fg);
 }
 [data-vibeui-block="checkbox-011"] [data-part="bar"]{
@@ -75,7 +88,8 @@ border-color:transparent;background:var(--vibeui-checkbox-011-accent);
 [data-vibeui-block="checkbox-011"] input:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;
-border-right:2px solid oklch(0.99 0.01 285);border-bottom:2px solid oklch(0.99 0.01 285);
+border-right:2px solid var(--vibeui-checkbox-011-mark);
+border-bottom:2px solid var(--vibeui-checkbox-011-mark);
 transform:rotate(45deg);
 }
 /* Промежуточное состояние — черта, а не бледная галка: форма читается без
@@ -83,7 +97,7 @@ transform:rotate(45deg);
 [data-vibeui-block="checkbox-011"] input:indeterminate::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.5rem;height:2px;margin:-1px 0 0 -0.25rem;border-radius:1px;
-background:oklch(0.99 0.01 285);
+background:var(--vibeui-checkbox-011-mark);
 }
 [data-vibeui-block="checkbox-011"] input:focus-visible{outline:2px solid var(--vibeui-checkbox-011-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="checkbox-011"] *{animation:none!important;transition:none!important}}
@@ -98,6 +112,28 @@ const DEFAULT_ITEMS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Панель «выбрать всё» с промежуточным состоянием и инверсией выбора.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -105,7 +141,11 @@ export function Checkbox011({
   title = "Документы",
   items = DEFAULT_ITEMS,
   defaultValue = ["Счёт за март"],
+  allLabel = "Выбрать все на странице",
+  invertLabel = "Инвертировать",
+  countText = "{selected} из {total}",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -116,6 +156,12 @@ export function Checkbox011({
 
   const palette = {
     ...(accent ? { "--vibeui-checkbox-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-checkbox-011-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -133,6 +179,10 @@ export function Checkbox011({
     setValue(next)
     onChange?.(next)
   }
+
+  const count = countText
+    .replace("{selected}", String(value.length))
+    .replace("{total}", String(items.length))
 
   return (
     <>
@@ -154,7 +204,7 @@ export function Checkbox011({
               checked={all}
               onChange={() => update(all ? [] : [...items])}
             />
-            Выбрать все на странице
+            {allLabel}
           </label>
           <button
             type="button"
@@ -162,10 +212,10 @@ export function Checkbox011({
               update(items.filter((item) => !value.includes(item)))
             }
           >
-            Инвертировать
+            {invertLabel}
           </button>
           <span data-part="count" role="status">
-            {value.length} из {items.length}
+            {count}
           </span>
         </div>
         <ul>

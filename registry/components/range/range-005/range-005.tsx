@@ -11,6 +11,10 @@ export type Range005Props = Omit<
   stops?: string[]
   defaultFrom?: number
   defaultTo?: number
+  /** Подписи ручек для скринридера: компонент несёт русские. */
+  boundText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,20 +24,25 @@ export type Range005Props = Omit<
 // значений не существует: попасть между «двумя» и «тремя» комнатами нельзя ни
 // мышью, ни стрелками. Подписи выровнены по центрам делений через долю ширины,
 // а не расставлены поровну: иначе крайние подписи уезжают за края дорожки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// фильтра по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="range-005"]){
---vibeui-range-005-surface:oklch(1 0 0);
---vibeui-range-005-shell:oklch(0.9 0.006 265);
---vibeui-range-005-fg:oklch(0.23 0.014 265);
---vibeui-range-005-muted:oklch(0.55 0.014 265);
---vibeui-range-005-track:oklch(0.93 0.006 265);
---vibeui-range-005-accent:oklch(0.5 0.17 320);
+--vibeui-range-005-surface:transparent;
+--vibeui-range-005-knob:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-range-005-shell:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.011 265));
+--vibeui-range-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-range-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-range-005-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
+--vibeui-range-005-accent:light-dark(oklch(0.5 0.17 320),oklch(0.76 0.14 320));
+--vibeui-range-005-shadow:light-dark(oklch(0.2 0.02 265 / 25%),oklch(0 0 0 / 45%));
 --vibeui-range-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-range-005-from:0%;
 --vibeui-range-005-to:100%;
 --vibeui-range-005-gutter:8%;
 }
-/* Своя светлая подложка: фильтр показывают поверх любого фона. */
+/* Подложки по умолчанию нет: фильтр ложится на фон страницы, плашку включает проп background. */
 [data-vibeui-block="range-005"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -69,13 +78,13 @@ appearance:none;background:none;pointer-events:none;
 [data-vibeui-block="range-005"] input::-webkit-slider-thumb{
 appearance:none;pointer-events:auto;cursor:pointer;margin-top:-0.3125rem;
 width:1rem;height:1rem;border-radius:9999px;
-background:var(--vibeui-range-005-surface);border:2px solid var(--vibeui-range-005-accent);
-box-shadow:0 1px 3px oklch(0.2 0.02 265 / 25%);
+background:var(--vibeui-range-005-knob);border:2px solid var(--vibeui-range-005-accent);
+box-shadow:0 1px 3px var(--vibeui-range-005-shadow);
 }
 [data-vibeui-block="range-005"] input::-moz-range-thumb{
 pointer-events:auto;cursor:pointer;box-sizing:border-box;
 width:1rem;height:1rem;border-radius:9999px;
-background:var(--vibeui-range-005-surface);border:2px solid var(--vibeui-range-005-accent);
+background:var(--vibeui-range-005-knob);border:2px solid var(--vibeui-range-005-accent);
 }
 [data-vibeui-block="range-005"] input:focus-visible{outline:2px solid var(--vibeui-range-005-accent);outline-offset:4px;border-radius:0.5rem}
 /* Подписи делений: промежуточных значений на такой шкале не существует. */
@@ -93,6 +102,29 @@ content:"";width:1px;height:0.3125rem;background:var(--vibeui-range-005-track);
 `
 
 const DEFAULT_STOPS = ["Студия", "1", "2", "3", "4", "5 и больше"]
+const BOUND_TEXT: Record<string, string> = { from: "от", to: "до" }
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Диапазон по подписанным делениям: ползунок ходит по номерам остановок.
@@ -103,6 +135,8 @@ export function Range005({
   stops = DEFAULT_STOPS,
   defaultFrom = 1,
   defaultTo = 3,
+  boundText = BOUND_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -118,6 +152,12 @@ export function Range005({
     "--vibeui-range-005-to": percent(to),
     "--vibeui-range-005-gutter": `${50 / stops.length}%`,
     ...(accent ? { "--vibeui-range-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-range-005-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -146,7 +186,7 @@ export function Range005({
               max={last}
               step={1}
               value={from}
-              aria-label={`${label}: от`}
+              aria-label={`${label}: ${boundText.from ?? BOUND_TEXT.from}`}
               aria-valuetext={stops[from]}
               onChange={(event) =>
                 setFrom(Math.min(Number(event.target.value), to))
@@ -158,7 +198,7 @@ export function Range005({
               max={last}
               step={1}
               value={to}
-              aria-label={`${label}: до`}
+              aria-label={`${label}: ${boundText.to ?? BOUND_TEXT.to}`}
               aria-valuetext={stops[to]}
               onChange={(event) =>
                 setTo(Math.max(Number(event.target.value), from))

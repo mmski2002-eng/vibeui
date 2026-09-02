@@ -17,6 +17,10 @@ export type Faq006Props = {
   helpTitle?: string
   helpText?: string
   channels?: Faq006Channel[]
+  /** Подпись карточки помощи для скринридера. */
+  helpLabel?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -26,15 +30,19 @@ export type Faq006Props = {
 // а рядом с ним и на широкой раскладке залипает: человек, который не нашёл
 // свой вопрос, не должен долистывать до конца, чтобы узнать, куда писать.
 // Каналы связи — ссылки с пояснением, а не одна кнопка «Связаться».
+//
+// Тема приходит из color-scheme окружения через light-dark(): подложки у
+// секции по умолчанию нет, она темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="faq-006"]){
---vibeui-faq-006-bg:oklch(0.99 0.003 200);
---vibeui-faq-006-card:oklch(1 0 0);
---vibeui-faq-006-ink:oklch(0.21 0.016 200);
---vibeui-faq-006-muted:oklch(0.49 0.016 200);
---vibeui-faq-006-border:oklch(0.9 0.008 200);
---vibeui-faq-006-accent:oklch(0.52 0.13 195);
---vibeui-faq-006-accent-fg:oklch(0.99 0 0);
+--vibeui-faq-006-bg:transparent;
+--vibeui-faq-006-card:light-dark(oklch(1 0 0),oklch(0.25 0.014 200));
+--vibeui-faq-006-ink:light-dark(oklch(0.21 0.016 200),oklch(0.95 0.006 200));
+--vibeui-faq-006-muted:light-dark(oklch(0.49 0.016 200),oklch(0.72 0.013 200));
+--vibeui-faq-006-border:light-dark(oklch(0.9 0.008 200),oklch(0.35 0.014 200));
+--vibeui-faq-006-accent:light-dark(oklch(0.52 0.13 195),oklch(0.74 0.12 195));
+--vibeui-faq-006-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.02 195));
+--vibeui-faq-006-shadow:light-dark(oklch(0.2 0.04 200 / 70%),oklch(0 0 0 / 55%));
 --vibeui-faq-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -74,7 +82,7 @@ color:var(--vibeui-faq-006-muted);font-size:0.9375rem;line-height:1.6;
 align-self:start;
 padding:1.5rem;border:1px solid var(--vibeui-faq-006-border);border-radius:1.25rem;
 background:var(--vibeui-faq-006-card);
-box-shadow:0 24px 50px -44px oklch(0.2 0.04 200 / 70%);
+box-shadow:0 24px 50px -44px var(--vibeui-faq-006-shadow);
 }
 [data-vibeui-block="faq-006"] [data-part="help-title"]{
 margin:0;font-size:1.125rem;font-weight:680;letter-spacing:-0.015em;
@@ -151,6 +159,29 @@ const DEFAULT_CHANNELS: Faq006Channel[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Вопросы с карточкой «не нашли ответ»: контакты рядом со списком, не после. */
 export function Faq006({
   title = "Частые вопросы о работе сервиса",
@@ -158,12 +189,20 @@ export function Faq006({
   helpTitle = "Не нашли ответ?",
   helpText = "Спросите живого человека. Мы не пересылаем вопросы по отделам: кто ответил первым, тот и доводит до решения.",
   channels = DEFAULT_CHANNELS,
+  helpLabel = "Связаться с поддержкой",
+  background = "",
   accent,
   className,
   style,
 }: Faq006Props) {
   const palette = {
     ...(accent ? { "--vibeui-faq-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-faq-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -187,7 +226,7 @@ export function Faq006({
               </details>
             ))}
           </div>
-          <aside data-part="help" aria-label="Связаться с поддержкой">
+          <aside data-part="help" aria-label={helpLabel}>
             <h3 data-part="help-title">{helpTitle}</h3>
             <p data-part="help-text">{helpText}</p>
             <div data-part="channels">

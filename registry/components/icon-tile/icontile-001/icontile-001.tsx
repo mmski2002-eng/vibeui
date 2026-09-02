@@ -16,12 +16,18 @@ export type Icontile001Props = Omit<
 // прыгает, когда иконки разной ширины. Тон задаётся одной парой переменных —
 // фон и цвет знака считаются от общего оттенка, а не подбираются вручную.
 // Плитка декоративна: она скрыта от скринридера, а смысл несёт подпись рядом.
+//
+// Обе ветки темы считаются от того же оттенка: в тёмной заливка уходит вниз
+// по светлоте, а знак — вверх, поэтому пара остаётся контрастной и не
+// требует второго набора цветов.
 const STYLES = `
 :where([data-vibeui-block="icontile-001"]){
 --vibeui-icontile-001-size:2.5rem;
 --vibeui-icontile-001-hue:265;
 --vibeui-icontile-001-chroma:0.02;
 --vibeui-icontile-001-radius:0.75rem;
+--vibeui-icontile-001-fill:light-dark(oklch(0.94 var(--vibeui-icontile-001-chroma) var(--vibeui-icontile-001-hue)),oklch(0.33 calc(var(--vibeui-icontile-001-chroma) * 1.7) var(--vibeui-icontile-001-hue)));
+--vibeui-icontile-001-mark:light-dark(oklch(0.45 calc(var(--vibeui-icontile-001-chroma) * 4) var(--vibeui-icontile-001-hue)),oklch(0.89 calc(var(--vibeui-icontile-001-chroma) * 2.4) var(--vibeui-icontile-001-hue)));
 --vibeui-icontile-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Фон и знак считаются от одного оттенка: пара цветов не подбирается руками. */
@@ -29,8 +35,8 @@ const STYLES = `
 display:inline-flex;align-items:center;justify-content:center;flex:none;
 width:var(--vibeui-icontile-001-size);height:var(--vibeui-icontile-001-size);
 border-radius:var(--vibeui-icontile-001-radius);
-background:oklch(0.94 var(--vibeui-icontile-001-chroma) var(--vibeui-icontile-001-hue));
-color:oklch(0.45 calc(var(--vibeui-icontile-001-chroma) * 4) var(--vibeui-icontile-001-hue));
+background:var(--vibeui-icontile-001-fill);
+color:var(--vibeui-icontile-001-mark);
 font-family:var(--vibeui-icontile-001-font);
 font-size:calc(var(--vibeui-icontile-001-size) * 0.44);
 font-weight:650;line-height:1;

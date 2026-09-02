@@ -19,9 +19,13 @@ export type Aspect006Props = Omit<
 // каждой плитке, а всей сетке: главный кадр занимает две колонки и две строки,
 // мелкие — по одной, и вся композиция держит 3:2. Хвост сворачивается в
 // счётчик на последней плитке — коллаж не должен расти бесконечно.
+//
+// Заливка плиток строится из оттенка и читается в обеих темах; из
+// фиксированных цветов остаётся только рамка, и она следует color-scheme
+// окружения через light-dark(). Своей подложки у коллажа нет.
 const STYLES = `
 :where([data-vibeui-block="aspect-006"]){
---vibeui-aspect-006-border:oklch(0.91 0.006 265);
+--vibeui-aspect-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.012 265));
 --vibeui-aspect-006-fg:oklch(0.99 0.003 265);
 --vibeui-aspect-006-radius:0.875rem;
 --vibeui-aspect-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

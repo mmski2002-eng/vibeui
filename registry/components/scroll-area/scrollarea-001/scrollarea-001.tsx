@@ -7,18 +7,24 @@ export type Scrollarea001Props = Omit<
   title?: string
   items?: string[]
   height?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: область прокрутки с подтёртыми краями. Тень у границы —
 // единственный честный признак, что список продолжается; без неё обрезанная
 // строка читается как последняя. Полоса прокрутки остаётся видимой: спрятать
 // её значит убрать второй признак и возможность тащить мышью.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="scrollarea-001"]){
---vibeui-scrollarea-001-bg:oklch(1 0 0);
---vibeui-scrollarea-001-fg:oklch(0.24 0.014 265);
---vibeui-scrollarea-001-muted:oklch(0.56 0.014 265);
---vibeui-scrollarea-001-border:oklch(0.9 0.006 265);
+--vibeui-scrollarea-001-bg:transparent;
+--vibeui-scrollarea-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-scrollarea-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.69 0.012 265));
+--vibeui-scrollarea-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.33 0.012 265));
+--vibeui-scrollarea-001-stripe:light-dark(oklch(0.975 0.002 265),oklch(0.255 0.009 265));
 --vibeui-scrollarea-001-height:12rem;
 --vibeui-scrollarea-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -46,7 +52,7 @@ mask:linear-gradient(to bottom,transparent,oklch(0 0 0) 0.75rem,oklch(0 0 0) cal
 display:flex;align-items:center;min-height:2rem;padding:0 0.5rem;
 border-radius:0.5rem;font-size:0.8125rem;
 }
-[data-vibeui-block="scrollarea-001"] li:nth-child(odd){background:oklch(0.975 0.002 265)}
+[data-vibeui-block="scrollarea-001"] li:nth-child(odd){background:var(--vibeui-scrollarea-001-stripe)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="scrollarea-001"] *{animation:none!important;transition:none!important}}
 `
 
@@ -64,6 +70,28 @@ const DEFAULT_ITEMS = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Область прокрутки с подтёртыми краями и видимой полосой.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -71,12 +99,19 @@ export function Scrollarea001({
   title = "Последние компоненты",
   items = DEFAULT_ITEMS,
   height = "12rem",
+  background = "",
   className,
   style,
   ...props
 }: Scrollarea001Props) {
   const palette = {
     "--vibeui-scrollarea-001-height": height,
+    ...(background
+      ? {
+          "--vibeui-scrollarea-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

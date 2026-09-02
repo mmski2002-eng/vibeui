@@ -13,20 +13,26 @@ export type Alert009Props = Omit<
   actionLabel?: string
   actionHref?: string
   accent?: string
+  /** Пусто — подложки нет, алерт лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: срок, который заканчивается. Слева крупная строка остатка,
 // справа действие, снизу убывающая полоса — три способа сказать одно и то же,
 // потому что «осталось 3 дня» пропускают, а сжимающуюся полосу замечают.
 // Отсчёт считает вызывающий код: компонент не запускает таймеров.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-009"]){
---vibeui-alert-009-fg:oklch(0.24 0.016 265);
---vibeui-alert-009-muted:oklch(0.5 0.014 265);
---vibeui-alert-009-bg:oklch(1 0 0);
---vibeui-alert-009-border:oklch(0.9 0.006 265);
---vibeui-alert-009-track:oklch(0.93 0.006 265);
---vibeui-alert-009-accent:oklch(0.68 0.15 70);
+--vibeui-alert-009-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-alert-009-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-009-bg:transparent;
+--vibeui-alert-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-009-track:light-dark(oklch(0.93 0.006 265),oklch(0.3 0.01 265));
+--vibeui-alert-009-accent:light-dark(oklch(0.68 0.15 70),oklch(0.81 0.14 75));
+--vibeui-alert-009-accent-fg:light-dark(oklch(0.2 0.02 70),oklch(0.18 0.03 70));
 --vibeui-alert-009-radius:0.875rem;
 --vibeui-alert-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -67,7 +73,7 @@ transition:width .3s cubic-bezier(.32,.72,0,1);
 [data-vibeui-block="alert-009"] [data-part="action"]{
 flex:none;display:inline-flex;align-items:center;height:2rem;padding:0 0.875rem;
 border-radius:0.5rem;text-decoration:none;
-background:var(--vibeui-alert-009-accent);color:oklch(0.2 0.02 70);
+background:var(--vibeui-alert-009-accent);color:var(--vibeui-alert-009-accent-fg);
 font-size:0.8125rem;font-weight:650;
 transition:filter .16s ease;
 }
@@ -81,6 +87,28 @@ transition:filter .16s ease;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Алерт истекающего срока: остаток крупно, действие рядом, полоса убывает.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -92,6 +120,7 @@ export function Alert009({
   actionLabel = "Продлить",
   actionHref = "#",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -100,6 +129,12 @@ export function Alert009({
   const palette = {
     "--vibeui-alert-009-elapsed": clamped,
     ...(accent ? { "--vibeui-alert-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-alert-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

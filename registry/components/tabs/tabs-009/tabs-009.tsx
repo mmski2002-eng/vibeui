@@ -13,7 +13,15 @@ export type Tabs009File = {
 export type Tabs009Props = {
   files?: Tabs009File[]
   defaultId?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
+  /** Подпись ряда вкладок для скринридера. */
+  listLabel?: string
+  /** Шаблон подписи кнопки закрытия: {label}. */
+  closeLabel?: string
+  /** Что показать, когда закрыты все вкладки. */
+  emptyText?: string
   className?: string
   style?: CSSProperties
 }
@@ -22,16 +30,19 @@ export type Tabs009Props = {
 // вкладки отдельной кнопкой, поэтому сама вкладка остаётся ролью tab, а закрытие
 // не срабатывает по ошибке при переключении. У несохранённого файла крестик
 // заменяется точкой, чтобы правки нельзя было потерять одним промахом.
+//
+// Тема берётся из color-scheme окружения через light-dark(): активная вкладка
+// повторяет подложку панели, а неактивные лежат на своей полосе.
 const STYLES = `
 :where([data-vibeui-block="tabs-009"]){
---vibeui-tabs-009-bg:oklch(1 0 0);
---vibeui-tabs-009-strip:oklch(0.96 0.003 265);
---vibeui-tabs-009-fg:oklch(0.22 0.014 265);
---vibeui-tabs-009-muted:oklch(0.55 0.014 265);
---vibeui-tabs-009-border:oklch(0.91 0.006 265);
---vibeui-tabs-009-hover:oklch(0.55 0.02 265 / 9%);
---vibeui-tabs-009-dirty:oklch(0.72 0.15 75);
---vibeui-tabs-009-accent:oklch(0.55 0.2 262);
+--vibeui-tabs-009-bg:transparent;
+--vibeui-tabs-009-strip:light-dark(oklch(0.96 0.003 265),oklch(0.27 0.01 265));
+--vibeui-tabs-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tabs-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-tabs-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-tabs-009-hover:light-dark(oklch(0.55 0.02 265 / 9%),oklch(0.85 0.02 265 / 14%));
+--vibeui-tabs-009-dirty:light-dark(oklch(0.72 0.15 75),oklch(0.79 0.15 75));
+--vibeui-tabs-009-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-tabs-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-tabs-009-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
@@ -108,13 +119,39 @@ const DEFAULT_FILES: Tabs009File[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Вкладки редактора с закрытием и меткой несохранённого файла.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tabs009({
   files = DEFAULT_FILES,
   defaultId,
+  background = "",
   accent,
+  listLabel = "Открытые файлы",
+  closeLabel = "Закрыть {label}",
+  emptyText = "Все вкладки закрыты",
   className,
   style,
 }: Tabs009Props) {
@@ -124,6 +161,12 @@ export function Tabs009({
 
   const palette = {
     ...(accent ? { "--vibeui-tabs-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tabs-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -181,7 +224,7 @@ export function Tabs009({
         <div
           data-part="list"
           role="tablist"
-          aria-label="Открытые файлы"
+          aria-label={listLabel}
           ref={listRef}
           onKeyDown={onKeyDown}
         >
@@ -203,7 +246,7 @@ export function Tabs009({
                 data-part="close"
                 data-dirty={file.dirty ? "true" : undefined}
                 tabIndex={-1}
-                aria-label={`Закрыть ${file.label}`}
+                aria-label={closeLabel.replace("{label}", file.label)}
                 onClick={(event) => {
                   event.stopPropagation()
                   close(file.id)
@@ -225,7 +268,7 @@ export function Tabs009({
             {current.text}
           </pre>
         ) : (
-          <p data-part="empty">Все вкладки закрыты</p>
+          <p data-part="empty">{emptyText}</p>
         )}
       </div>
     </>

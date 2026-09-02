@@ -14,6 +14,22 @@ export type Dashboard025Props = {
   stages?: Dashboard025Stage[]
   unit?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подпись выпадающего списка сегментов для скринридера. */
+  segmentLabel?: string
+  /** Шаблон доли шага: {percent}. */
+  reachedText?: string
+  /** Шаблон потерь между шагами: {count}. */
+  lostText?: string
+  /** Шаблон доли от входа: {percent}. */
+  shareText?: string
+  /** Шаблон подписи полосы: {label}, {value}, {unit}, {percent}. */
+  barLabelText?: string
+  /** Подписи итогов: conversion, reached, worst. */
+  totalsText?: Record<string, string>
+  /** Локаль форматирования чисел. */
+  locale?: string
   className?: string
   style?: CSSProperties
 }
@@ -28,13 +44,13 @@ export type Dashboard025Props = {
 // нарисована шириной элемента, без графической библиотеки.
 const STYLES = `
 :where([data-vibeui-block="dashboard-025"]){
---vibeui-dashboard-025-bg:oklch(1 0 0);
---vibeui-dashboard-025-panel:oklch(0.985 0.003 265);
---vibeui-dashboard-025-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-025-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-025-border:oklch(0.91 0.006 265);
---vibeui-dashboard-025-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-025-loss:oklch(0.6 0.16 25);
+--vibeui-dashboard-025-bg:transparent;
+--vibeui-dashboard-025-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.012 265));
+--vibeui-dashboard-025-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-025-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-025-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.011 265));
+--vibeui-dashboard-025-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-dashboard-025-loss:light-dark(oklch(0.6 0.16 25),oklch(0.74 0.15 25));
 --vibeui-dashboard-025-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -122,8 +138,42 @@ const DEFAULT_STAGES: Dashboard025Stage[] = [
   { label: "Оставили блок в проекте", value: 902, hint: "через 7 дней" },
 ]
 
+const DEFAULT_TOTALS: Record<string, string> = {
+  conversion: "Сквозная конверсия",
+  reached: "Дошло до конца",
+  worst: "Самый узкий шаг",
+}
+
 function percent(part: number, whole: number) {
   return whole === 0 ? 0 : Math.round((part / whole) * 1000) / 10
+}
+
+function fill(template: string, values: Record<string, string | number>) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -138,11 +188,25 @@ export function Dashboard025({
   stages = DEFAULT_STAGES,
   unit = "человек",
   accent,
+  background = "",
+  segmentLabel = "Сегмент",
+  reachedText = "дошло {percent} %,",
+  lostText = "потеряно {count}",
+  shareText = "{percent} % от входа",
+  barLabelText = "{label}: {value} {unit}, {percent} % от входа",
+  totalsText = DEFAULT_TOTALS,
+  locale = "ru-RU",
   className,
   style,
 }: Dashboard025Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-025-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-025-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -176,7 +240,11 @@ export function Dashboard025({
           <header data-part="head">
             <h2>{title}</h2>
             <p data-part="period">{period}</p>
-            <select defaultValue={activeSegment} aria-label="Сегмент">
+            <select
+              key={activeSegment}
+              defaultValue={activeSegment}
+              aria-label={segmentLabel}
+            >
               {segments.map((segment) => (
                 <option key={segment}>{segment}</option>
               ))}
@@ -194,10 +262,13 @@ export function Dashboard025({
                 <li key={stage.label} data-part="stage">
                   {index > 0 ? (
                     <p data-part="drop">
-                      дошло {step} %,{" "}
+                      {fill(reachedText, { percent: step })}{" "}
                       <span data-part="lost">
-                        потеряно{" "}
-                        {(previous - stage.value).toLocaleString("ru-RU")}
+                        {fill(lostText, {
+                          count: (previous - stage.value).toLocaleString(
+                            locale,
+                          ),
+                        })}
                       </span>
                     </p>
                   ) : null}
@@ -207,14 +278,21 @@ export function Dashboard025({
                       <span data-part="hint">{stage.hint}</span>
                     ) : null}
                     <span data-part="count">
-                      {stage.value.toLocaleString("ru-RU")}
+                      {stage.value.toLocaleString(locale)}
                     </span>
-                    <span data-part="share">· {fromTop} % от входа</span>
+                    <span data-part="share">
+                      · {fill(shareText, { percent: fromTop })}
+                    </span>
                   </p>
                   <span
                     data-part="bar"
                     role="img"
-                    aria-label={`${stage.label}: ${stage.value} ${unit}, ${fromTop} % от входа`}
+                    aria-label={fill(barLabelText, {
+                      label: stage.label,
+                      value: stage.value,
+                      unit,
+                      percent: fromTop,
+                    })}
                     style={
                       {
                         "--vibeui-dashboard-025-w": `${Math.max(6, fromTop)}%`,
@@ -228,17 +306,23 @@ export function Dashboard025({
 
           <div data-part="foot">
             <p data-part="total">
-              <span data-part="totallabel">Сквозная конверсия</span>
+              <span data-part="totallabel">
+                {totalsText.conversion ?? DEFAULT_TOTALS.conversion}
+              </span>
               <span data-part="totalvalue">{percent(bottom, top)} %</span>
             </p>
             <p data-part="total">
-              <span data-part="totallabel">Дошло до конца</span>
+              <span data-part="totallabel">
+                {totalsText.reached ?? DEFAULT_TOTALS.reached}
+              </span>
               <span data-part="totalvalue">
-                {bottom.toLocaleString("ru-RU")} {unit}
+                {bottom.toLocaleString(locale)} {unit}
               </span>
             </p>
             <p data-part="total">
-              <span data-part="totallabel">Самый узкий шаг</span>
+              <span data-part="totallabel">
+                {totalsText.worst ?? DEFAULT_TOTALS.worst}
+              </span>
               <span data-part="totalvalue">
                 {worst.label} · {worst.step} %
               </span>

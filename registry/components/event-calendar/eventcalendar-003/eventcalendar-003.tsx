@@ -16,7 +16,13 @@ export type Eventcalendar003Props = Omit<
   events?: Eventcalendar003Event[]
   dayFrom?: number
   dayTo?: number
+  /** Подсказка в шапке. {count} — событий, {overlaps} — групп пересечений. */
+  hintText?: string
+  /** Подписи легенды: компонент несёт русские, проект подставляет свои. */
+  legendText?: Record<string, string>
   locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,14 +34,15 @@ export type Eventcalendar003Props = Omit<
 // остаётся серверным.
 const STYLES = `
 :where([data-vibeui-block="eventcalendar-003"]){
---vibeui-eventcalendar-003-bg:oklch(1 0 0);
---vibeui-eventcalendar-003-fg:oklch(0.23 0.014 265);
---vibeui-eventcalendar-003-muted:oklch(0.6 0.014 265);
---vibeui-eventcalendar-003-border:oklch(0.91 0.006 265);
---vibeui-eventcalendar-003-line:oklch(0.95 0.004 265);
---vibeui-eventcalendar-003-accent:oklch(0.55 0.16 275);
---vibeui-eventcalendar-003-focus:oklch(0.6 0.13 165);
---vibeui-eventcalendar-003-hold:oklch(0.65 0.13 70);
+--vibeui-eventcalendar-003-bg:transparent;
+--vibeui-eventcalendar-003-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
+--vibeui-eventcalendar-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-eventcalendar-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-eventcalendar-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-eventcalendar-003-line:light-dark(oklch(0.95 0.004 265),oklch(0.31 0.01 265));
+--vibeui-eventcalendar-003-accent:light-dark(oklch(0.55 0.16 275),oklch(0.74 0.15 275));
+--vibeui-eventcalendar-003-focus:light-dark(oklch(0.6 0.13 165),oklch(0.76 0.12 165));
+--vibeui-eventcalendar-003-hold:light-dark(oklch(0.65 0.13 70),oklch(0.79 0.13 70));
 --vibeui-eventcalendar-003-hour:3.25rem;
 --vibeui-eventcalendar-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -90,7 +97,7 @@ display:flex;flex-direction:column;gap:0.0625rem;overflow:hidden;
 padding:0.25rem 0.4375rem;
 border:1px solid var(--vibeui-eventcalendar-003-accent);
 border-left-width:0.1875rem;border-radius:0.4375rem;
-background:color-mix(in oklab,var(--vibeui-eventcalendar-003-accent) 12%,var(--vibeui-eventcalendar-003-bg));
+background:color-mix(in oklab,var(--vibeui-eventcalendar-003-accent) 12%,var(--vibeui-eventcalendar-003-panel));
 font-size:0.6875rem;line-height:1.25;
 }
 [data-vibeui-block="eventcalendar-003"] [data-part="event"] b{font-weight:650}
@@ -101,17 +108,17 @@ font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="eventcalendar-003"] [data-tone="focus"]{
 border-color:var(--vibeui-eventcalendar-003-focus);
-background:color-mix(in oklab,var(--vibeui-eventcalendar-003-focus) 12%,var(--vibeui-eventcalendar-003-bg));
+background:color-mix(in oklab,var(--vibeui-eventcalendar-003-focus) 12%,var(--vibeui-eventcalendar-003-panel));
 }
 [data-vibeui-block="eventcalendar-003"] [data-tone="hold"]{
 border-color:var(--vibeui-eventcalendar-003-hold);border-style:dashed;
-background:color-mix(in oklab,var(--vibeui-eventcalendar-003-hold) 12%,var(--vibeui-eventcalendar-003-bg));
+background:color-mix(in oklab,var(--vibeui-eventcalendar-003-hold) 12%,var(--vibeui-eventcalendar-003-panel));
 }
 /* Соседняя дорожка сдвинута и слегка приподнята тенью: без разделения
    два прижатых прямоугольника читаются как один. */
 [data-vibeui-block="eventcalendar-003"] [data-part="event"][data-lane="1"],
 [data-vibeui-block="eventcalendar-003"] [data-part="event"][data-lane="2"]{
-box-shadow:-2px 0 0 var(--vibeui-eventcalendar-003-bg);
+box-shadow:-2px 0 0 var(--vibeui-eventcalendar-003-panel);
 }
 [data-vibeui-block="eventcalendar-003"] [data-part="legend"]{
 display:flex;flex-wrap:wrap;gap:0.875rem;margin:0.75rem 0 0;padding:0;
@@ -197,6 +204,34 @@ function layout(events: Eventcalendar003Event[]) {
   return { placed, groupWidth }
 }
 
+const LEGEND_LABEL: Record<string, string> = {
+  work: "встреча",
+  focus: "работа без встреч",
+  hold: "под вопросом",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * День с временной шкалой: пересекающиеся события расходятся по дорожкам
  * внутри своей группы. Один файл, ноль зависимостей, клиентского JS нет.
@@ -206,7 +241,10 @@ export function Eventcalendar003({
   events = DEFAULT_EVENTS,
   dayFrom = 8,
   dayTo = 19,
+  hintText = "{count} событий, пересечений: {overlaps}",
+  legendText = LEGEND_LABEL,
   locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -227,6 +265,13 @@ export function Eventcalendar003({
   const palette = {
     "--vibeui-eventcalendar-003-span": hours.length,
     ...(accent ? { "--vibeui-eventcalendar-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-eventcalendar-003-bg": background,
+          "--vibeui-eventcalendar-003-panel": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -245,7 +290,9 @@ export function Eventcalendar003({
         <header data-part="head">
           <h3 data-part="heading">{label}</h3>
           <p data-part="hint">
-            {events.length} событий, пересечений: {overlaps}
+            {hintText
+              .replace("{count}", String(events.length))
+              .replace("{overlaps}", String(overlaps))}
           </p>
         </header>
 
@@ -289,13 +336,13 @@ export function Eventcalendar003({
 
         <ul data-part="legend">
           <li>
-            <i /> встреча
+            <i /> {legendText.work ?? LEGEND_LABEL.work}
           </li>
           <li>
-            <i data-tone="focus" /> работа без встреч
+            <i data-tone="focus" /> {legendText.focus ?? LEGEND_LABEL.focus}
           </li>
           <li>
-            <i data-tone="hold" /> под вопросом
+            <i data-tone="hold" /> {legendText.hold ?? LEGEND_LABEL.hold}
           </li>
         </ul>
       </section>

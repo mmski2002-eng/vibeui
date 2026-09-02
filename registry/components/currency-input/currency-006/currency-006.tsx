@@ -12,6 +12,12 @@ export type Currency006Props = Omit<
   minFee?: number
   defaultValue?: number
   currency?: string
+  /** Подписи чека; {percent}, {min} и {currency} подставляются. */
+  checkText?: Record<string, string>
+  /** Локаль разрядов: компонент несёт русскую, проект подставляет свою. */
+  locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,18 +27,21 @@ export type Currency006Props = Omit<
 // комиссия, итог, — а комиссия считается по правилу «процент, но не меньше
 // минимума», как её и берут в жизни. Итог набран крупнее остального: это то
 // число, которое человек сверяет с остатком на карте.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у чека по
+// умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="currency-006"]){
---vibeui-currency-006-surface:oklch(1 0 0);
---vibeui-currency-006-field:oklch(0.985 0.002 265);
---vibeui-currency-006-shell:oklch(0.9 0.006 265);
---vibeui-currency-006-fg:oklch(0.22 0.014 265);
---vibeui-currency-006-muted:oklch(0.55 0.014 265);
---vibeui-currency-006-border:oklch(0.88 0.008 265);
---vibeui-currency-006-accent:oklch(0.5 0.16 200);
+--vibeui-currency-006-surface:transparent;
+--vibeui-currency-006-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-currency-006-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-currency-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-currency-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.014 265));
+--vibeui-currency-006-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.013 265));
+--vibeui-currency-006-accent:light-dark(oklch(0.5 0.16 200),oklch(0.76 0.13 200));
 --vibeui-currency-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: чек показывают поверх любого фона. */
+/* Подложки по умолчанию нет: чек ложится на фон страницы. */
 [data-vibeui-block="currency-006"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -49,7 +58,7 @@ background:var(--vibeui-currency-006-field);
 }
 [data-vibeui-block="currency-006"] [data-part="row"]:focus-within{
 border-color:var(--vibeui-currency-006-accent);
-box-shadow:0 0 0 2px oklch(0.5 0.16 200 / 18%);
+box-shadow:0 0 0 2px color-mix(in oklch,var(--vibeui-currency-006-accent) 20%,transparent);
 }
 [data-vibeui-block="currency-006"] input{
 flex:1 1 auto;min-width:0;width:100%;
@@ -90,8 +99,37 @@ margin:0;font-size:0.6875rem;color:var(--vibeui-currency-006-muted);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="currency-006"] *{animation:none!important;transition:none!important}}
 `
 
-function money(value: number) {
-  return value.toLocaleString("ru-RU", { maximumFractionDigits: 2 })
+function money(value: number, locale: string) {
+  return value.toLocaleString(locale, { maximumFractionDigits: 2 })
+}
+
+const CHECK_TEXT: Record<string, string> = {
+  receiver: "Получатель получит",
+  fee: "Комиссия {percent}%",
+  total: "Спишется с карты",
+  rule: "Комиссия {percent}%, но не меньше {min} {currency}",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -104,6 +142,9 @@ export function Currency006({
   minFee = 50,
   defaultValue = 12000,
   currency = "₽",
+  checkText = CHECK_TEXT,
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -115,8 +156,20 @@ export function Currency006({
   const fee = amount > 0 ? Math.max(minFee, (amount * percent) / 100) : 0
   const total = amount + fee
 
+  const say = (key: string) =>
+    (checkText[key] ?? CHECK_TEXT[key])
+      .replace("{percent}", String(percent))
+      .replace("{min}", String(minFee))
+      .replace("{currency}", currency)
+
   const palette = {
     ...(accent ? { "--vibeui-currency-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-currency-006-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -152,27 +205,25 @@ export function Currency006({
         </div>
         <div id={`${id}-check`} data-part="check" aria-live="polite">
           <p data-part="line">
-            <span>Получатель получит</span>
+            <span>{say("receiver")}</span>
             <span>
-              {money(amount)} {currency}
+              {money(amount, locale)} {currency}
             </span>
           </p>
           <p data-part="line">
-            <span>Комиссия {percent}%</span>
+            <span>{say("fee")}</span>
             <span>
-              {money(fee)} {currency}
+              {money(fee, locale)} {currency}
             </span>
           </p>
           <p data-part="total">
-            <span>Спишется с карты</span>
+            <span>{say("total")}</span>
             <b>
-              {money(total)} {currency}
+              {money(total, locale)} {currency}
             </b>
           </p>
         </div>
-        <p data-part="rule">
-          Комиссия {percent}%, но не меньше {minFee} {currency}
-        </p>
+        <p data-part="rule">{say("rule")}</p>
       </div>
     </>
   )

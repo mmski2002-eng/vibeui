@@ -9,7 +9,11 @@ export type Inputgroup006Props = Omit<
   unit?: string
   from?: number
   to?: number
+  /** Подписи половин: «от» и «до». */
+  boundText?: { from: string; to: string }
   hint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,15 +22,18 @@ export type Inputgroup006Props = Omit<
 // screen reader прочитает «Цена, от» и «Цена, до», а не два безымянных числа.
 // Тире — не текст внутри поля, а отдельный неинтерактивный элемент с
 // aria-hidden: озвучивать его незачем, а кликать по нему нечего.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-006"]){
---vibeui-inputgroup-006-surface:oklch(1 0 0);
---vibeui-inputgroup-006-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-006-fg:oklch(0.22 0.014 265);
---vibeui-inputgroup-006-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-006-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-006-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-006-accent:oklch(0.52 0.16 55);
+--vibeui-inputgroup-006-surface:transparent;
+--vibeui-inputgroup-006-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-inputgroup-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-inputgroup-006-field:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.013 265));
+--vibeui-inputgroup-006-border:light-dark(oklch(0.86 0.008 265),oklch(0.44 0.013 265));
+--vibeui-inputgroup-006-accent:light-dark(oklch(0.52 0.16 55),oklch(0.76 0.14 55));
 --vibeui-inputgroup-006-radius:0.75rem;
 --vibeui-inputgroup-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -88,6 +95,30 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-inputgroup-006-mut
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="inputgroup-006"] *{animation:none!important;transition:none!important}}
 `
 
+const BOUND_TEXT = { from: "от", to: "до" }
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Диапазон двумя полями в одной сцепке: «от» и «до» с тире между ними.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -98,7 +129,9 @@ export function Inputgroup006({
   unit = "₽",
   from = 1500,
   to = 9000,
+  boundText = BOUND_TEXT,
   hint = "Пустая половина означает «без ограничения» — так фильтр не заставляет придумывать границу.",
+  background = "",
   accent,
   className,
   style,
@@ -106,6 +139,12 @@ export function Inputgroup006({
 }: Inputgroup006Props) {
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-006-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -123,7 +162,7 @@ export function Inputgroup006({
         <legend>{legend}</legend>
         <div data-part="group">
           <div data-part="cell">
-            <span id={`${name}-from-label`}>от</span>
+            <span id={`${name}-from-label`}>{boundText.from}</span>
             <input
               name={`${name}-from`}
               type="number"
@@ -140,7 +179,7 @@ export function Inputgroup006({
             —
           </div>
           <div data-part="cell">
-            <span id={`${name}-to-label`}>до</span>
+            <span id={`${name}-to-label`}>{boundText.to}</span>
             <input
               name={`${name}-to`}
               type="number"

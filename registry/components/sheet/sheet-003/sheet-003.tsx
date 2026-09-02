@@ -15,21 +15,34 @@ export type Sheet003Props = Omit<
   triggerLabel?: string
   title?: string
   tabs?: Sheet003Tab[]
+  /** Имя группы разделов для скринридера: русское по умолчанию. */
+  tabsLabel?: string
+  /** Подпись кнопки закрытия: русская по умолчанию. */
+  closeLabel?: string
   accent?: string
+  /** Подложка листа и кнопки открытия. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: лист, внутри которого несколько разделов. Переключатель
 // собран на группе радиокнопок, а не на кастомных вкладках: стрелки, Home и
 // End работают от браузера, состояние читается скринридером само. Высота
 // листа зафиксирована, поэтому смена раздела не дёргает страницу под ним.
+//
+// Тема берётся из color-scheme окружения через light-dark(): лист темнеет
+// там, где тёмный контекст, и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="sheet-003"]){
---vibeui-sheet-003-bg:oklch(1 0 0);
---vibeui-sheet-003-fg:oklch(0.21 0.014 265);
---vibeui-sheet-003-muted:oklch(0.55 0.014 265);
---vibeui-sheet-003-border:oklch(0.91 0.006 265);
---vibeui-sheet-003-track:oklch(0.96 0.004 265);
---vibeui-sheet-003-accent:oklch(0.55 0.17 265);
+--vibeui-sheet-003-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-sheet-003-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-sheet-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-sheet-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-sheet-003-track:light-dark(oklch(0.96 0.004 265),oklch(0.28 0.012 265));
+--vibeui-sheet-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.16 265));
+--vibeui-sheet-003-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.03 265));
+--vibeui-sheet-003-shadow:light-dark(oklch(0.2 0.02 265 / 60%),oklch(0.02 0.01 265 / 75%));
+--vibeui-sheet-003-lift:light-dark(oklch(0.2 0.02 265 / 18%),oklch(0.02 0.01 265 / 50%));
+--vibeui-sheet-003-scrim:light-dark(oklch(0.19 0.02 265 / 45%),oklch(0.08 0.014 265 / 60%));
 --vibeui-sheet-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="sheet-003"]{
@@ -46,15 +59,15 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 position:fixed;inset:auto 0 0 0;margin:0;
 width:100%;max-width:100vw;height:min(30rem,88dvh);
 padding:0;border:0;border-radius:1.25rem 1.25rem 0 0;overflow:hidden;
-background:var(--vibeui-sheet-003-bg);color:inherit;
-box-shadow:0 -26px 60px -32px oklch(0.2 0.02 265 / 60%);
+background:var(--vibeui-sheet-003-bg);color:var(--vibeui-sheet-003-fg);
+box-shadow:0 -26px 60px -32px var(--vibeui-sheet-003-shadow);
 translate:0 100%;transition:translate .24s ease,overlay .24s allow-discrete,display .24s allow-discrete;
 }
 [data-vibeui-block="sheet-003"] dialog[open]{translate:0 0}
 @starting-style{
 [data-vibeui-block="sheet-003"] dialog[open]{translate:0 100%}
 }
-[data-vibeui-block="sheet-003"] dialog::backdrop{background:oklch(0.19 0.02 265 / 45%)}
+[data-vibeui-block="sheet-003"] dialog::backdrop{background:var(--vibeui-sheet-003-scrim)}
 [data-vibeui-block="sheet-003"] [data-part="panel"]{display:flex;flex-direction:column;height:100%;box-sizing:border-box}
 [data-vibeui-block="sheet-003"] [data-part="grabber"]{
 align-self:center;width:2.5rem;height:0.25rem;margin:0.5rem 0 0.25rem;
@@ -78,7 +91,7 @@ clip-path:inset(50%);white-space:nowrap;
 }
 [data-vibeui-block="sheet-003"] [data-part="tab"]:has(input:checked){
 background:var(--vibeui-sheet-003-bg);color:var(--vibeui-sheet-003-fg);
-box-shadow:0 1px 3px oklch(0.2 0.02 265 / 18%);
+box-shadow:0 1px 3px var(--vibeui-sheet-003-lift);
 }
 [data-vibeui-block="sheet-003"] [data-part="tab"]:has(input:focus-visible){outline:2px solid var(--vibeui-sheet-003-accent);outline-offset:2px}
 [data-vibeui-block="sheet-003"] [data-part="body"]{flex:1;min-height:0;overflow-y:auto;padding:0.875rem 1rem 1rem}
@@ -94,7 +107,7 @@ border-top:1px solid var(--vibeui-sheet-003-border);
 }
 [data-vibeui-block="sheet-003"] [data-part="done"]{
 appearance:none;border:0;cursor:pointer;width:100%;height:2.75rem;border-radius:0.75rem;
-background:var(--vibeui-sheet-003-accent);color:oklch(0.99 0.01 265);
+background:var(--vibeui-sheet-003-accent);color:var(--vibeui-sheet-003-on-accent);
 font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="sheet-003"] [data-part="done"]:focus-visible{outline:2px solid var(--vibeui-sheet-003-accent);outline-offset:2px}
@@ -135,6 +148,28 @@ const DEFAULT_TABS: Sheet003Tab[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Лист с разделами внутри: переключатель собран на радиокнопках.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -142,7 +177,10 @@ export function Sheet003({
   triggerLabel = "Показатели проекта",
   title = "Проект «Витрина»",
   tabs = DEFAULT_TABS,
+  tabsLabel = "Раздел",
+  closeLabel = "Закрыть",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -153,6 +191,12 @@ export function Sheet003({
 
   const palette = {
     ...(accent ? { "--vibeui-sheet-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-sheet-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -189,7 +233,7 @@ export function Sheet003({
             <span data-part="grabber" aria-hidden="true" />
             <h2 data-part="title">{title}</h2>
             <fieldset data-part="tabs">
-              <legend hidden>Раздел</legend>
+              <legend hidden>{tabsLabel}</legend>
               {tabs.map((tab, index) => (
                 <label key={tab.label} data-part="tab">
                   <input
@@ -218,7 +262,7 @@ export function Sheet003({
                 data-part="done"
                 onClick={() => sheet.current?.close()}
               >
-                Закрыть
+                {closeLabel}
               </button>
             </div>
           </div>

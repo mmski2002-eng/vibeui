@@ -17,7 +17,23 @@ export type Solutions036Props = {
   title?: string
   hint?: string
   tickets?: Solutions036Ticket[]
+  /** Буква в бейдже приоритета: low, normal, high, urgent. */
+  priorityLetter?: Record<string, string>
+  /** Названия приоритетов: low, normal, high, urgent. */
+  priorityText?: Record<string, string>
+  /** Подписи плиток сводки: tickets, urgent, overdue. */
+  summaryText?: Record<string, string>
+  /** Норматив у бригады. {hours} — часы норматива. */
+  slaNoteText?: string
+  /** Пройденное время. {elapsed} и {total} — часы. */
+  slaProgressText?: string
+  /** Статусы норматива: overdue, left; {hours} — часы. */
+  statusText?: Record<string, string>
+  /** Скрытая подпись полосы норматива. {id} — номер заявки. */
+  slaLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,16 +48,16 @@ export type Solutions036Props = {
 // же процента: он же красит полосу, он же подписывает статус словом.
 const STYLES = `
 :where([data-vibeui-block="solutions-036"]){
---vibeui-solutions-036-bg:oklch(1 0 0);
---vibeui-solutions-036-panel:oklch(0.973 0.005 40);
---vibeui-solutions-036-fg:oklch(0.22 0.014 40);
---vibeui-solutions-036-muted:oklch(0.54 0.014 40);
---vibeui-solutions-036-border:oklch(0.9 0.007 40);
---vibeui-solutions-036-accent:oklch(0.55 0.17 40);
---vibeui-solutions-036-low:oklch(0.6 0.02 240);
---vibeui-solutions-036-normal:oklch(0.56 0.13 235);
---vibeui-solutions-036-high:oklch(0.65 0.16 70);
---vibeui-solutions-036-urgent:oklch(0.57 0.19 25);
+--vibeui-solutions-036-bg:transparent;
+--vibeui-solutions-036-panel:light-dark(oklch(0.973 0.005 40),oklch(0.27 0.011 40));
+--vibeui-solutions-036-fg:light-dark(oklch(0.22 0.014 40),oklch(0.94 0.005 40));
+--vibeui-solutions-036-muted:light-dark(oklch(0.54 0.014 40),oklch(0.69 0.012 40));
+--vibeui-solutions-036-border:light-dark(oklch(0.9 0.007 40),oklch(0.36 0.012 40));
+--vibeui-solutions-036-accent:light-dark(oklch(0.55 0.17 40),oklch(0.74 0.15 40));
+--vibeui-solutions-036-low:light-dark(oklch(0.6 0.02 240),oklch(0.66 0.02 240));
+--vibeui-solutions-036-normal:light-dark(oklch(0.56 0.13 235),oklch(0.66 0.13 235));
+--vibeui-solutions-036-high:light-dark(oklch(0.65 0.16 70),oklch(0.75 0.15 70));
+--vibeui-solutions-036-urgent:light-dark(oklch(0.57 0.19 25),oklch(0.71 0.17 25));
 --vibeui-solutions-036-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -128,18 +144,29 @@ font-variant-numeric:tabular-nums;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="solutions-036"] *{animation:none!important;transition:none!important}}
 `
 
-const PRIORITY_LETTER: Record<Solutions036Priority, string> = {
+const PRIORITY_LETTER: Record<string, string> = {
   low: "Н",
   normal: "О",
   high: "В",
   urgent: "А",
 }
 
-const PRIORITY_LABEL: Record<Solutions036Priority, string> = {
+const PRIORITY_LABEL: Record<string, string> = {
   low: "низкий",
   normal: "обычный",
   high: "высокий",
   urgent: "аварийный",
+}
+
+const SUMMARY_LABEL: Record<string, string> = {
+  tickets: "заявок открыто",
+  urgent: "аварийных",
+  overdue: "вне норматива",
+}
+
+const STATUS_LABEL: Record<string, string> = {
+  overdue: "просрочено на {hours} ч",
+  left: "осталось {hours} ч",
 }
 
 const DEFAULT_TICKETS: Solutions036Ticket[] = [
@@ -186,6 +213,28 @@ const DEFAULT_TICKETS: Solutions036Ticket[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Диспетчерские заявки ЖКХ: норматив — полоса из процента elapsed/sla,
  * приоритет — буква в бейдже. Один файл, ноль зависимостей, своя палитра.
  */
@@ -193,7 +242,15 @@ export function Solutions036({
   title = "Диспетчерские заявки",
   hint = "Управляющая компания «Двор» · сегодня",
   tickets = DEFAULT_TICKETS,
+  priorityLetter = PRIORITY_LETTER,
+  priorityText = PRIORITY_LABEL,
+  summaryText = SUMMARY_LABEL,
+  slaNoteText = "норматив {hours} ч",
+  slaProgressText = "{elapsed} из {total} ч",
+  statusText = STATUS_LABEL,
+  slaLabel = "Норматив по заявке {id}",
   accent,
+  background = "",
   className,
   style,
 }: Solutions036Props) {
@@ -201,9 +258,16 @@ export function Solutions036({
     (ticket) => ticket.elapsedHours > ticket.slaHours,
   )
   const urgent = tickets.filter((ticket) => ticket.priority === "urgent")
+  const summary = (key: string) => summaryText[key] ?? SUMMARY_LABEL[key]
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-036-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-036-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -228,15 +292,15 @@ export function Solutions036({
         <div data-part="summary">
           <p data-part="tile">
             <b>{tickets.length}</b>
-            <span>заявок открыто</span>
+            <span>{summary("tickets")}</span>
           </p>
           <p data-part="tile">
             <b>{urgent.length}</b>
-            <span>аварийных</span>
+            <span>{summary("urgent")}</span>
           </p>
           <p data-part="tile" data-tile="late">
             <b>{overdue.length}</b>
-            <span>вне норматива</span>
+            <span>{summary("overdue")}</span>
           </p>
         </div>
 
@@ -247,9 +311,13 @@ export function Solutions036({
               Math.round((ticket.elapsedHours / ticket.slaHours) * 100),
             )
             const overdueTicket = ticket.elapsedHours > ticket.slaHours
-            const statusLabel = overdueTicket
-              ? `просрочено на ${ticket.elapsedHours - ticket.slaHours} ч`
-              : `осталось ${ticket.slaHours - ticket.elapsedHours} ч`
+            const statusKey = overdueTicket ? "overdue" : "left"
+            const statusHours = overdueTicket
+              ? ticket.elapsedHours - ticket.slaHours
+              : ticket.slaHours - ticket.elapsedHours
+            const statusLabel = (
+              statusText[statusKey] ?? STATUS_LABEL[statusKey]
+            ).replace("{hours}", String(statusHours))
 
             return (
               <article data-part="card" key={ticket.id}>
@@ -263,14 +331,18 @@ export function Solutions036({
                     </p>
                     <span data-part="priority" data-priority={ticket.priority}>
                       <span data-part="letter" aria-hidden="true">
-                        {PRIORITY_LETTER[ticket.priority]}
+                        {priorityLetter[ticket.priority] ??
+                          PRIORITY_LETTER[ticket.priority]}
                       </span>
-                      {PRIORITY_LABEL[ticket.priority]}
+                      {priorityText[ticket.priority] ??
+                        PRIORITY_LABEL[ticket.priority]}
                     </span>
                   </div>
                   <p data-part="crew">
                     <b>{ticket.crew}</b>
-                    <span>норматив {ticket.slaHours} ч</span>
+                    <span>
+                      {slaNoteText.replace("{hours}", String(ticket.slaHours))}
+                    </span>
                   </p>
                 </div>
 
@@ -281,7 +353,7 @@ export function Solutions036({
                   aria-valuenow={percent}
                   aria-valuemin={0}
                   aria-valuemax={100}
-                  aria-label={`Норматив по заявке ${ticket.id}`}
+                  aria-label={slaLabel.replace("{id}", ticket.id)}
                 >
                   <span data-part="sla-fill" style={{ width: `${percent}%` }} />
                 </div>
@@ -290,7 +362,9 @@ export function Solutions036({
                   data-overdue={overdueTicket ? "true" : "false"}
                 >
                   <span>
-                    {ticket.elapsedHours} из {ticket.slaHours} ч
+                    {slaProgressText
+                      .replace("{elapsed}", String(ticket.elapsedHours))
+                      .replace("{total}", String(ticket.slaHours))}
                   </span>
                   <span data-part="sla-status">{statusLabel}</span>
                 </div>

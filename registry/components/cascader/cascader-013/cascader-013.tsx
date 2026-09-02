@@ -16,7 +16,17 @@ export type Cascader013Props = Omit<
   defaultRegion?: string
   defaultZone?: string
   currency?: string
+  /** Подпись колонки регионов для скринридера. */
+  regionsLabel?: string
+  /** Подпись списка зон, {region} — название выбранного региона. */
+  zonesLabel?: string
+  /** Строка срока в карточке зоны, {days} — срок из справочника. */
+  daysText?: string
+  /** Строка итога, пока зона не выбрана. */
+  emptyText?: string
   onSelect?: (region: string, zone: string, price: number) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,13 +36,13 @@ export type Cascader013Props = Omit<
 // глазами и выбирает осознанно, а не узнаёт стоимость на шаге оплаты.
 const STYLES = `
 :where([data-vibeui-block="cascader-013"]){
---vibeui-cascader-013-bg:oklch(1 0 0);
---vibeui-cascader-013-fg:oklch(0.22 0.014 155);
---vibeui-cascader-013-muted:oklch(0.55 0.014 155);
---vibeui-cascader-013-border:oklch(0.9 0.008 155);
---vibeui-cascader-013-soft:oklch(0.965 0.008 155);
---vibeui-cascader-013-accent:oklch(0.47 0.11 155);
---vibeui-cascader-013-accentsoft:oklch(0.94 0.045 155);
+--vibeui-cascader-013-bg:transparent;
+--vibeui-cascader-013-fg:light-dark(oklch(0.22 0.014 155),oklch(0.94 0.006 155));
+--vibeui-cascader-013-muted:light-dark(oklch(0.55 0.014 155),oklch(0.71 0.012 155));
+--vibeui-cascader-013-border:light-dark(oklch(0.9 0.008 155),oklch(0.35 0.012 155));
+--vibeui-cascader-013-soft:light-dark(oklch(0.965 0.008 155),oklch(0.28 0.012 155));
+--vibeui-cascader-013-accent:light-dark(oklch(0.47 0.11 155),oklch(0.78 0.13 155));
+--vibeui-cascader-013-accentsoft:light-dark(oklch(0.94 0.045 155),oklch(0.33 0.05 155));
 --vibeui-cascader-013-radius:0.625rem;
 --vibeui-cascader-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -138,6 +148,28 @@ const REGIONS: Cascader013Region[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Каскадный выбор региона доставки с ценой на конечном уровне.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -147,7 +179,12 @@ export function Cascader013({
   defaultRegion = "Москва и область",
   defaultZone = "До 30 км от МКАД",
   currency = "₽",
+  regionsLabel = "Регионы",
+  zonesLabel = "Зоны: {region}",
+  daysText = "Срок: {days}",
+  emptyText = "Выберите зону доставки",
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -161,6 +198,12 @@ export function Cascader013({
 
   const palette = {
     ...(accent ? { "--vibeui-cascader-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cascader-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -177,7 +220,7 @@ export function Cascader013({
       >
         <h3 data-part="title">{label}</h3>
         <div data-part="cols">
-          <ul data-part="regions" aria-label="Регионы">
+          <ul data-part="regions" aria-label={regionsLabel}>
             {regions.map((entry) => (
               <li key={entry.name}>
                 <button
@@ -195,7 +238,10 @@ export function Cascader013({
               </li>
             ))}
           </ul>
-          <ul role="listbox" aria-label={`Зоны: ${region}`}>
+          <ul
+            role="listbox"
+            aria-label={zonesLabel.replace("{region}", region)}
+          >
             {(current?.zones ?? []).map((entry) => (
               <li key={entry.name} role="none">
                 <button
@@ -212,7 +258,9 @@ export function Cascader013({
                   <span data-part="price">
                     {entry.price} {currency}
                   </span>
-                  <span data-part="days">Срок: {entry.days}</span>
+                  <span data-part="days">
+                    {daysText.replace("{days}", entry.days)}
+                  </span>
                 </button>
               </li>
             ))}
@@ -220,7 +268,7 @@ export function Cascader013({
         </div>
         <p data-part="total" aria-live="polite">
           <span data-part="path">
-            {picked ? `${region} · ${picked.name}` : "Выберите зону доставки"}
+            {picked ? `${region} · ${picked.name}` : emptyText}
           </span>
           <span data-part="sum">
             {picked ? `${picked.price} ${currency}` : "—"}

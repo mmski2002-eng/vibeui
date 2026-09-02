@@ -5,6 +5,12 @@ export type Codeblock025Props = {
   collapsedHeight?: number
   expandedHeight?: number
   code?: string
+  /** Подпись переключателя в свёрнутом виде. */
+  expandText?: string
+  /** Подпись переключателя в раскрытом виде. */
+  collapseText?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -12,14 +18,18 @@ export type Codeblock025Props = {
 // Идея компонента: длинный файл, ограниченный по высоте, а не по числу строк.
 // Высоту держит max-height, состояние — скрытый чекбокс, поэтому раскрытие
 // анимируется и работает без JS; обрыв показан маской, которая гаснет сама.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, шапка и переключатель лежат полупрозрачными слоями поверх страницы.
 const STYLES = `
 :where([data-vibeui-block="codeblock-025"]){
---vibeui-codeblock-025-bg:oklch(0.2 0.02 320);
---vibeui-codeblock-025-head:oklch(0.24 0.024 320);
---vibeui-codeblock-025-fg:oklch(0.93 0.008 320);
---vibeui-codeblock-025-muted:oklch(0.67 0.018 320);
---vibeui-codeblock-025-border:oklch(1 0 0 / 12%);
---vibeui-codeblock-025-accent:oklch(0.82 0.13 320);
+--vibeui-codeblock-025-bg:transparent;
+--vibeui-codeblock-025-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 6%));
+--vibeui-codeblock-025-fg:light-dark(oklch(0.28 0.018 320),oklch(0.93 0.008 320));
+--vibeui-codeblock-025-muted:light-dark(oklch(0.51 0.02 320),oklch(0.67 0.018 320));
+--vibeui-codeblock-025-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 14%));
+--vibeui-codeblock-025-hover:light-dark(oklch(0 0 0 / 6%),oklch(1 0 0 / 8%));
+--vibeui-codeblock-025-accent:light-dark(oklch(0.48 0.16 320),oklch(0.82 0.13 320));
 --vibeui-codeblock-025-collapsed:9rem;
 --vibeui-codeblock-025-expanded:32rem;
 --vibeui-codeblock-025-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
@@ -65,7 +75,7 @@ background:var(--vibeui-codeblock-025-head);
 font-size:0.75rem;font-weight:650;color:var(--vibeui-codeblock-025-accent);
 transition:background-color .16s ease;
 }
-[data-vibeui-block="codeblock-025"] label:hover{background:oklch(1 0 0 / 8%)}
+[data-vibeui-block="codeblock-025"] label:hover{background:var(--vibeui-codeblock-025-hover)}
 [data-vibeui-block="codeblock-025"] label:has(input:focus-visible){
 outline:2px solid var(--vibeui-codeblock-025-accent);outline-offset:-2px;
 }
@@ -100,18 +110,49 @@ export function priceOf(plan: Plan, months = 1) {
   return base
 }`
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Блок кода с ограничением высоты и кнопкой «развернуть». */
 export function Codeblock025({
   path = "lib/pricing.ts",
   collapsedHeight = 9,
   expandedHeight = 32,
   code = CODE,
+  expandText = "Развернуть",
+  collapseText = "Свернуть",
+  background = "",
   className,
   style,
 }: Codeblock025Props) {
   const palette = {
     "--vibeui-codeblock-025-collapsed": `${collapsedHeight}rem`,
     "--vibeui-codeblock-025-expanded": `${expandedHeight}rem`,
+    ...(background
+      ? {
+          "--vibeui-codeblock-025-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -133,8 +174,8 @@ export function Codeblock025({
         </div>
         <label>
           <input type="checkbox" />
-          <span data-part="more">Развернуть</span>
-          <span data-part="less">Свернуть</span>
+          <span data-part="more">{expandText}</span>
+          <span data-part="less">{collapseText}</span>
         </label>
       </figure>
     </>

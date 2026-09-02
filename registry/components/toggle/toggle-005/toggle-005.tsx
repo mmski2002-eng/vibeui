@@ -9,9 +9,15 @@ export type Toggle005Props = Omit<
 > & {
   label?: string
   volume?: number
+  /** Подписи состояния по ключам on и off. */
+  stateText?: Record<string, string>
+  /** Строки громкости по ключам on и off; {volume} подставляется числом. */
+  valueText?: Record<string, string>
   defaultPressed?: boolean
   onChange?: (pressed: boolean) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: toggle с двумя значками состояния. Оба лежат в разметке,
@@ -19,12 +25,13 @@ export type Toggle005Props = Omit<
 // с состоянием, потому что источник у них один атрибут.
 const STYLES = `
 :where([data-vibeui-block="toggle-005"]){
---vibeui-toggle-005-bg:oklch(1 0 0);
---vibeui-toggle-005-fg:oklch(0.22 0.014 265);
---vibeui-toggle-005-muted:oklch(0.56 0.014 265);
---vibeui-toggle-005-border:oklch(0.9 0.006 265);
---vibeui-toggle-005-accent:oklch(0.55 0.17 285);
---vibeui-toggle-005-track:oklch(0.93 0.006 265);
+--vibeui-toggle-005-bg:transparent;
+--vibeui-toggle-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-toggle-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-toggle-005-accent:light-dark(oklch(0.55 0.17 285),oklch(0.75 0.14 285));
+--vibeui-toggle-005-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
+--vibeui-toggle-005-on:light-dark(oklch(0.99 0 0),oklch(0.18 0.014 265));
 --vibeui-toggle-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="toggle-005"]{
@@ -48,7 +55,7 @@ outline:2px solid var(--vibeui-toggle-005-accent);outline-offset:2px;
 }
 [data-vibeui-block="toggle-005"] button[aria-pressed="true"]{
 background:var(--vibeui-toggle-005-fg);border-color:var(--vibeui-toggle-005-fg);
-color:oklch(0.99 0 0);
+color:var(--vibeui-toggle-005-on);
 }
 [data-vibeui-block="toggle-005"] svg{width:1.1875rem;height:1.1875rem;display:none}
 [data-vibeui-block="toggle-005"] button[aria-pressed="false"] [data-part="sound"]{display:block}
@@ -78,6 +85,38 @@ font-variant-numeric:tabular-nums;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="toggle-005"] *{animation:none!important;transition:none!important}}
 `
 
+const STATE_TEXT: Record<string, string> = {
+  on: "Звук выключен",
+  off: "Звук включён",
+}
+
+const VALUE_TEXT: Record<string, string> = {
+  on: "Громкость сохранена {volume}%",
+  off: "Громкость {volume}%",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Кнопка отключения звука с двумя значками состояния: показывается тот,
  * что совпал с aria-pressed. Один файл, ноль зависимостей.
@@ -85,17 +124,27 @@ font-variant-numeric:tabular-nums;
 export function Toggle005({
   label = "Без звука",
   volume = 64,
+  stateText = STATE_TEXT,
+  valueText = VALUE_TEXT,
   defaultPressed = false,
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Toggle005Props) {
   const [pressed, setPressed] = useState(defaultPressed)
+  const key = pressed ? "on" : "off"
 
   const palette = {
     ...(accent ? { "--vibeui-toggle-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-toggle-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -152,13 +201,16 @@ export function Toggle005({
         </button>
         <div data-part="text">
           <p data-part="state" role="status">
-            {pressed ? "Звук выключен" : "Звук включён"}
+            {stateText[key] ?? STATE_TEXT[key]}
           </p>
           <span data-part="meter">
             <span data-part="fill" style={{ width: `${volume}%` }} />
           </span>
           <p data-part="value">
-            {pressed ? "Громкость сохранена" : "Громкость"} {volume}%
+            {(valueText[key] ?? VALUE_TEXT[key]).replace(
+              "{volume}",
+              String(volume),
+            )}
           </p>
         </div>
       </div>

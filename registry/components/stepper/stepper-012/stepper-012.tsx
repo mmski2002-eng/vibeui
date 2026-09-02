@@ -15,7 +15,11 @@ export type Stepper012Props = Omit<
   summaryTitle?: string
   totalLabel?: string
   total?: string
+  /** Подписи состояний: компонент несёт русские, проект подставляет свои. */
+  stateText?: Record<string, string>
   label?: string
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,16 +27,20 @@ export type Stepper012Props = Omit<
 // постоянно, а не только в конце пути. Шаги и сводка стоят рядом в двух
 // колонках; на узкой ширине сводка спускается под ленту, а не сжимает её
 // до нечитаемого столбца.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="stepper-012"]){
---vibeui-stepper-012-bg:oklch(1 0 0);
---vibeui-stepper-012-fg:oklch(0.24 0.016 265);
---vibeui-stepper-012-muted:oklch(0.56 0.014 265);
---vibeui-stepper-012-border:oklch(0.92 0.006 265);
---vibeui-stepper-012-line:oklch(0.9 0.006 265);
---vibeui-stepper-012-accent:oklch(0.55 0.2 262);
---vibeui-stepper-012-accent-fg:oklch(1 0 0);
---vibeui-stepper-012-panel:oklch(0.97 0.006 265);
+--vibeui-stepper-012-bg:transparent;
+--vibeui-stepper-012-surface:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-stepper-012-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-stepper-012-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-stepper-012-border:light-dark(oklch(0.92 0.006 265),oklch(0.32 0.012 265));
+--vibeui-stepper-012-line:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-stepper-012-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-stepper-012-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
+--vibeui-stepper-012-panel:light-dark(oklch(0.97 0.006 265),oklch(0.25 0.012 265));
 --vibeui-stepper-012-dot:1.5rem;
 --vibeui-stepper-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -68,7 +76,7 @@ background:var(--vibeui-stepper-012-line);
 display:flex;align-items:center;justify-content:center;
 width:var(--vibeui-stepper-012-dot);height:var(--vibeui-stepper-012-dot);
 border-radius:9999px;border:2px solid var(--vibeui-stepper-012-line);
-background:var(--vibeui-stepper-012-bg);color:var(--vibeui-stepper-012-muted);
+background:var(--vibeui-stepper-012-surface);color:var(--vibeui-stepper-012-muted);
 font-size:0.6875rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="stepper-012"] li[data-state="done"] [data-part="mark"]{
@@ -114,7 +122,33 @@ font-size:0.9375rem;font-weight:700;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="stepper-012"] *{animation:none!important;transition:none!important}}
 `
 
-const STATES = { done: "Готово", current: "Сейчас", todo: "Впереди" } as const
+const STATE_TEXT: Record<string, string> = {
+  done: "Готово",
+  current: "Сейчас",
+  todo: "Впереди",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_STEPS: Stepper012Step[] = [
   { title: "Корзина" },
@@ -140,7 +174,9 @@ export function Stepper012({
   summaryTitle = "Ваш заказ",
   totalLabel = "Итого",
   total = "7 730 ₽",
+  stateText = STATE_TEXT,
   label = "Оформление заказа",
+  background = "",
   accent,
   className,
   style,
@@ -148,6 +184,13 @@ export function Stepper012({
 }: Stepper012Props) {
   const palette = {
     ...(accent ? { "--vibeui-stepper-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-stepper-012-bg": background,
+          "--vibeui-stepper-012-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -185,7 +228,10 @@ export function Stepper012({
                     </span>
                     <span data-part="title">
                       {step.title}
-                      <span data-part="sr"> — {STATES[state]}</span>
+                      <span data-part="sr">
+                        {" — "}
+                        {stateText[state] ?? STATE_TEXT[state]}
+                      </span>
                     </span>
                   </li>
                 )

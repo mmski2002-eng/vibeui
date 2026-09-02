@@ -13,7 +13,15 @@ export type Navbar009Props = {
   links?: Navbar009Link[]
   actionLabel?: string
   actionHref?: string
+  /** Подпись полосы объявления: компонент несёт русскую. */
+  promoLabel?: string
+  /** Подпись крестика: компонент несёт русскую. */
+  closeLabel?: string
+  /** Подпись навигации для скринридера: компонент несёт русскую. */
+  navLabel?: string
   id?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -23,13 +31,17 @@ export type Navbar009Props = {
 // чекбокс держит состояние, а :has() убирает объявление, когда он отмечен.
 // Чекбокс остаётся в потоке фокуса, поэтому крестик доступен с клавиатуры —
 // в отличие от привычного «повесим onClick на span».
+//
+// Тема берётся из color-scheme окружения через light-dark(): шапка темнеет
+// вместе с контекстом и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="navbar-009"]){
---vibeui-navbar-009-bg:oklch(1 0 0);
---vibeui-navbar-009-ink:oklch(0.23 0.014 265);
---vibeui-navbar-009-muted:oklch(0.54 0.014 265);
---vibeui-navbar-009-border:oklch(0.91 0.005 265);
---vibeui-navbar-009-accent:oklch(0.48 0.18 300);
+--vibeui-navbar-009-bg:transparent;
+--vibeui-navbar-009-ink:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-navbar-009-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-navbar-009-border:light-dark(oklch(0.91 0.005 265),oklch(0.34 0.011 265));
+--vibeui-navbar-009-accent:light-dark(oklch(0.48 0.18 300),oklch(0.62 0.18 300));
+--vibeui-navbar-009-accent-2:light-dark(oklch(0.55 0.19 240),oklch(0.62 0.17 240));
 --vibeui-navbar-009-accent-fg:oklch(0.99 0 0);
 --vibeui-navbar-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -46,7 +58,7 @@ clip-path:inset(50%);white-space:nowrap;border:0;
 [data-vibeui-block="navbar-009"] [data-part="promo"]{
 display:flex;align-items:center;justify-content:center;gap:0.625rem;
 padding:0.5rem 2.75rem 0.5rem 1rem;position:relative;
-background:linear-gradient(90deg,var(--vibeui-navbar-009-accent),color-mix(in oklab,var(--vibeui-navbar-009-accent) 62%,oklch(0.55 0.19 240)));
+background:linear-gradient(90deg,var(--vibeui-navbar-009-accent),color-mix(in oklab,var(--vibeui-navbar-009-accent) 62%,var(--vibeui-navbar-009-accent-2)));
 color:var(--vibeui-navbar-009-accent-fg);
 font-size:0.8125rem;line-height:1.35;text-align:center;
 }
@@ -109,6 +121,28 @@ const DEFAULT_LINKS: Navbar009Link[] = [
   { label: "Билеты", href: "#tickets" },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Шапка с полосой объявления сверху; полоса закрывается без JS через :has(). */
 export function Navbar009({
   brand = "Импульс",
@@ -118,13 +152,23 @@ export function Navbar009({
   links = DEFAULT_LINKS,
   actionLabel = "Купить билет",
   actionHref = "#buy",
+  promoLabel = "Объявление",
+  closeLabel = "Скрыть объявление",
+  navLabel = "Основная навигация",
   id = "vibeui-navbar-009-switch",
+  background = "",
   accent,
   className,
   style,
 }: Navbar009Props) {
   const palette = {
     ...(accent ? { "--vibeui-navbar-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-navbar-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -142,16 +186,16 @@ export function Navbar009({
           data-part="switch"
           id={id}
           type="checkbox"
-          aria-label="Скрыть объявление"
+          aria-label={closeLabel}
         />
-        <aside data-part="promo" aria-label="Объявление">
+        <aside data-part="promo" aria-label={promoLabel}>
           <p>
             {announcement} <a href={announcementHref}>{announcementLabel}</a>
           </p>
           <label
             data-part="close"
             htmlFor={id}
-            title="Скрыть объявление"
+            title={closeLabel}
             aria-hidden="true"
           />
         </aside>
@@ -160,7 +204,7 @@ export function Navbar009({
             <span data-part="mark" aria-hidden="true" />
             {brand}
           </a>
-          <nav data-part="links" aria-label="Основная навигация">
+          <nav data-part="links" aria-label={navLabel}>
             {links.map((link) => (
               <a key={link.href} href={link.href}>
                 {link.label}

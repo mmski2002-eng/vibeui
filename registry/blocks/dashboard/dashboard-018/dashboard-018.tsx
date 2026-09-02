@@ -20,7 +20,15 @@ export type Dashboard018Props = {
   activeTab?: string
   days?: Dashboard018Day[]
   readAllLabel?: string
+  /** Шаблон счётчика непрочитанного: {count}. */
+  unreadText?: string
+  /** Слова типов: компонент несёт русские, проект подставляет свои. */
+  kindText?: Record<string, string>
+  /** Подпись списка для скринридера. */
+  listLabel?: string
   accent?: string
+  /** Подложка карточки; пусто — цвет из палитры блока. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -35,14 +43,15 @@ export type Dashboard018Props = {
 // чтобы найти нужную запись второй раз, никто не хочет.
 const STYLES = `
 :where([data-vibeui-block="dashboard-018"]){
---vibeui-dashboard-018-bg:oklch(1 0 0);
---vibeui-dashboard-018-fresh:oklch(0.975 0.012 262);
---vibeui-dashboard-018-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-018-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-018-border:oklch(0.91 0.006 265);
---vibeui-dashboard-018-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-018-billing:oklch(0.6 0.15 75);
---vibeui-dashboard-018-system:oklch(0.6 0.02 265);
+--vibeui-dashboard-018-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
+--vibeui-dashboard-018-fresh:light-dark(oklch(0.975 0.012 262),oklch(0.28 0.025 262));
+--vibeui-dashboard-018-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-018-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-dashboard-018-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-018-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.15 262));
+--vibeui-dashboard-018-billing:light-dark(oklch(0.6 0.15 75),oklch(0.79 0.13 75));
+--vibeui-dashboard-018-system:light-dark(oklch(0.6 0.02 265),oklch(0.72 0.015 265));
+--vibeui-dashboard-018-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
 --vibeui-dashboard-018-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -61,7 +70,7 @@ display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem 0.75rem;padding:1rem 1
 [data-vibeui-block="dashboard-018"] [data-part="badge"]{
 font-size:0.6875rem;font-weight:700;font-variant-numeric:tabular-nums;
 padding:0.0625rem 0.4375rem;border-radius:9999px;
-background:var(--vibeui-dashboard-018-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-018-accent);color:var(--vibeui-dashboard-018-on-accent);
 }
 [data-vibeui-block="dashboard-018"] [data-part="readall"]{
 appearance:none;border:0;background:none;cursor:pointer;margin-left:auto;
@@ -186,10 +195,32 @@ const DEFAULT_DAYS: Dashboard018Day[] = [
   },
 ]
 
-const KIND_WORD = {
+const KIND_WORD: Record<string, string> = {
   mention: "упоминание",
   system: "система",
   billing: "оплата",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -202,12 +233,22 @@ export function Dashboard018({
   activeTab = "Все",
   days = DEFAULT_DAYS,
   readAllLabel = "Отметить все прочитанными",
+  unreadText = "{count} новых",
+  kindText = KIND_WORD,
+  listLabel = "Список уведомлений",
   accent,
+  background = "",
   className,
   style,
 }: Dashboard018Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-018-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-018-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -228,7 +269,9 @@ export function Dashboard018({
       >
         <header data-part="head">
           <h2>{title}</h2>
-          <span data-part="badge">{unread} новых</span>
+          <span data-part="badge">
+            {unreadText.replace("{count}", String(unread))}
+          </span>
           <button type="button" data-part="readall">
             {readAllLabel}
           </button>
@@ -247,12 +290,7 @@ export function Dashboard018({
           ))}
         </ul>
 
-        <div
-          data-part="list"
-          tabIndex={0}
-          role="group"
-          aria-label="Список уведомлений"
-        >
+        <div data-part="list" tabIndex={0} role="group" aria-label={listLabel}>
           {days.map((group) => (
             <section key={group.day} aria-label={group.day}>
               <p data-part="day">{group.day}</p>
@@ -268,7 +306,8 @@ export function Dashboard018({
                     <div data-part="row">
                       <p data-part="subject">{notice.title}</p>
                       <span data-part="kind">
-                        {KIND_WORD[notice.kind ?? "system"]}
+                        {kindText[notice.kind ?? "system"] ??
+                          KIND_WORD[notice.kind ?? "system"]}
                       </span>
                       <span data-part="time">{notice.time}</span>
                     </div>

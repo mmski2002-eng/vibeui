@@ -13,6 +13,8 @@ export type Button046Props = Omit<
   /** Прятать кнопку до порога. По умолчанию она видна всегда. */
   autoHide?: boolean
   accent?: string
+  /** Середина кнопки. Пусто — своя, из палитры. */
+  background?: string
 }
 
 // Идея компонента: кнопка «наверх» знает, сколько страницы позади. Кольцо
@@ -22,10 +24,11 @@ export type Button046Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="button-046"]){
 --vibeui-button-046-progress:0;
---vibeui-button-046-surface:oklch(1 0 0);
---vibeui-button-046-border:oklch(0.9 0.006 265);
---vibeui-button-046-fg:oklch(0.26 0.02 265);
---vibeui-button-046-accent:oklch(0.55 0.17 265);
+--vibeui-button-046-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
+--vibeui-button-046-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.014 265));
+--vibeui-button-046-track:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-button-046-fg:light-dark(oklch(0.26 0.02 265),oklch(0.93 0.008 265));
+--vibeui-button-046-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-button-046-size:3rem;
 --vibeui-button-046-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -36,7 +39,7 @@ width:var(--vibeui-button-046-size);height:var(--vibeui-button-046-size);
 padding:3px;border:0;border-radius:50%;
 /* Кольцо прогресса и бумажная середина в одном фоне. */
 background:
-conic-gradient(var(--vibeui-button-046-accent) calc(var(--vibeui-button-046-progress) * 1%),oklch(0.9 0.006 265) 0) border-box;
+conic-gradient(var(--vibeui-button-046-accent) calc(var(--vibeui-button-046-progress) * 1%),var(--vibeui-button-046-track) 0) border-box;
 color:var(--vibeui-button-046-fg);
 font-family:var(--vibeui-button-046-font);
 box-shadow:0 10px 24px -16px oklch(0 0 0 / 60%);
@@ -73,6 +76,29 @@ transform:rotate(45deg);
 `
 
 /**
+ * Ветка темы для заданной середины. Без неё светлая заливка досталась бы
+ * значку тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кнопка «наверх» с кольцом прочитанного и появлением по прокрутке.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -81,6 +107,7 @@ export function Button046({
   threshold = 320,
   autoHide = false,
   accent,
+  background = "",
   type = "button",
   className,
   style,
@@ -114,6 +141,12 @@ export function Button046({
   const palette = {
     "--vibeui-button-046-progress": progress.toFixed(1),
     ...(accent ? { "--vibeui-button-046-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-046-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

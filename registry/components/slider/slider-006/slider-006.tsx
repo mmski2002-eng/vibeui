@@ -13,6 +13,14 @@ export type Slider006Props = Omit<
   step?: number
   defaultValue?: number
   unit?: string
+  /** Подпись кнопки «−». Шаблон: {step} и {unit} подставляются. */
+  decreaseText?: string
+  /** Подпись кнопки «+». Шаблон: {step} и {unit} подставляются. */
+  increaseText?: string
+  /** Подпись шага под дорожкой. Шаблон: {step} подставляется. */
+  stepText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,14 +28,18 @@ export type Slider006Props = Omit<
 // попасть в конкретное значение, поэтому рядом стоят кнопки «−» и «+» —
 // они двигают ровно на шаг. Единица написана рядом с числом, а не в
 // заголовке: «18» и «18 °C» — это разное количество информации.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="slider-006"]){
---vibeui-slider-006-bg:oklch(1 0 0);
---vibeui-slider-006-fg:oklch(0.22 0.014 265);
---vibeui-slider-006-muted:oklch(0.55 0.014 265);
---vibeui-slider-006-border:oklch(0.9 0.006 265);
---vibeui-slider-006-track:oklch(0.92 0.006 265);
---vibeui-slider-006-accent:oklch(0.6 0.16 45);
+--vibeui-slider-006-bg:transparent;
+--vibeui-slider-006-surface:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
+--vibeui-slider-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-slider-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-slider-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-slider-006-track:light-dark(oklch(0.92 0.006 265),oklch(0.42 0.012 265));
+--vibeui-slider-006-accent:light-dark(oklch(0.6 0.16 45),oklch(0.74 0.15 45));
 --vibeui-slider-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-006-fill:50%;
 }
@@ -54,7 +66,7 @@ font-size:1rem;font-weight:700;font-variant-numeric:tabular-nums;
 position:relative;appearance:none;cursor:pointer;flex:none;
 width:1.75rem;height:1.75rem;padding:0;border-radius:0.5rem;
 border:1px solid var(--vibeui-slider-006-border);
-background:var(--vibeui-slider-006-bg);color:inherit;
+background:var(--vibeui-slider-006-surface);color:inherit;
 transition:border-color .16s ease,background-color .16s ease;
 }
 [data-vibeui-block="slider-006"] button:hover:not(:disabled){border-color:var(--vibeui-slider-006-accent)}
@@ -84,12 +96,12 @@ background:linear-gradient(to right,var(--vibeui-slider-006-accent) var(--vibeui
 [data-vibeui-block="slider-006"] input::-webkit-slider-thumb{
 appearance:none;margin-top:-0.3125rem;
 width:1rem;height:1rem;border-radius:9999px;
-background:var(--vibeui-slider-006-bg);border:3px solid var(--vibeui-slider-006-accent);
+background:var(--vibeui-slider-006-surface);border:3px solid var(--vibeui-slider-006-accent);
 box-shadow:0 1px 3px oklch(0.2 0.02 265 / 28%);
 }
 [data-vibeui-block="slider-006"] input::-moz-range-thumb{
 width:1rem;height:1rem;border-radius:9999px;box-sizing:border-box;
-background:var(--vibeui-slider-006-bg);border:3px solid var(--vibeui-slider-006-accent);
+background:var(--vibeui-slider-006-surface);border:3px solid var(--vibeui-slider-006-accent);
 }
 [data-vibeui-block="slider-006"] input:focus-visible{outline:2px solid var(--vibeui-slider-006-accent);outline-offset:4px;border-radius:0.5rem}
 [data-vibeui-block="slider-006"] [data-part="scale"]{
@@ -98,6 +110,36 @@ font-size:0.6875rem;color:var(--vibeui-slider-006-muted);font-variant-numeric:ta
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="slider-006"] *{animation:none!important;transition:none!important}}
 `
+
+/** Подстановка {step} и {unit} в шаблон подписи. */
+function fillTemplate(template: string, values: Record<string, string>) {
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, key: string) => values[key] ?? match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Ползунок с шагом и единицей: кнопки «−» и «+» двигают ровно на шаг.
@@ -110,6 +152,10 @@ export function Slider006({
   step = 0.5,
   defaultValue = 21,
   unit = "°C",
+  decreaseText = "Убавить на {step} {unit}",
+  increaseText = "Прибавить на {step} {unit}",
+  stepText = "шаг {step}",
+  background = "",
   accent,
   className,
   style,
@@ -118,10 +164,17 @@ export function Slider006({
   const id = useId()
   const [value, setValue] = useState(defaultValue)
   const clamp = (next: number) => Math.min(max, Math.max(min, next))
+  const words = { step: String(step), unit }
 
   const palette = {
     "--vibeui-slider-006-fill": `${((value - min) / (max - min)) * 100}%`,
     ...(accent ? { "--vibeui-slider-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-slider-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -145,7 +198,7 @@ export function Slider006({
               type="button"
               data-part="minus"
               disabled={value <= min}
-              aria-label={`Убавить на ${step} ${unit}`}
+              aria-label={fillTemplate(decreaseText, words)}
               onClick={() => setValue(clamp(value - step))}
             />
             <span data-part="value">
@@ -156,7 +209,7 @@ export function Slider006({
               type="button"
               data-part="plus"
               disabled={value >= max}
-              aria-label={`Прибавить на ${step} ${unit}`}
+              aria-label={fillTemplate(increaseText, words)}
               onClick={() => setValue(clamp(value + step))}
             />
           </div>
@@ -175,7 +228,7 @@ export function Slider006({
           <span>
             {min} {unit}
           </span>
-          <span>шаг {step}</span>
+          <span>{fillTemplate(stepText, words)}</span>
           <span>
             {max} {unit}
           </span>

@@ -12,6 +12,10 @@ export type Breadcrumb007Props = Omit<
   items?: Breadcrumb007Item[]
   actionLabel?: string
   secondaryLabel?: string
+  /** Подпись навигации: компонент несёт русскую, проект подставляет свою. */
+  navLabel?: string
+  /** Пусто — заливки нет, панель держится одной рамкой на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,13 +23,18 @@ export type Breadcrumb007Props = Omit<
 // одной строке, потому что обе отвечают на вопрос «что я могу сделать здесь»;
 // на узкой ширине строка переносится, и кнопки уходят под путь, а не
 // сжимаются до нечитаемых иконок.
+//
+// Тема берётся из color-scheme окружения через light-dark(): панель темнеет
+// вместе со страницей, а рамка в тёмной теме светлее фона, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-007"]){
---vibeui-breadcrumb-007-fg:oklch(0.26 0.016 265);
---vibeui-breadcrumb-007-muted:oklch(0.56 0.014 265);
---vibeui-breadcrumb-007-border:oklch(0.9 0.006 265);
---vibeui-breadcrumb-007-bg:oklch(1 0 0);
---vibeui-breadcrumb-007-accent:oklch(0.55 0.17 265);
+--vibeui-breadcrumb-007-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.008 265));
+--vibeui-breadcrumb-007-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-breadcrumb-007-sep:light-dark(oklch(0.78 0.01 265),oklch(0.5 0.012 265));
+--vibeui-breadcrumb-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-breadcrumb-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-breadcrumb-007-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.03 265));
+--vibeui-breadcrumb-007-bg:transparent;
 --vibeui-breadcrumb-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -45,7 +54,7 @@ margin:0;padding:0;list-style:none;
 font-size:0.8125rem;line-height:1.4;color:var(--vibeui-breadcrumb-007-muted);
 }
 [data-vibeui-block="breadcrumb-007"] li{display:inline-flex;align-items:center;gap:0.375rem;min-width:0}
-[data-vibeui-block="breadcrumb-007"] li + li::before{content:"/";color:oklch(0.78 0.01 265)}
+[data-vibeui-block="breadcrumb-007"] li + li::before{content:"/";color:var(--vibeui-breadcrumb-007-sep)}
 [data-vibeui-block="breadcrumb-007"] a{color:inherit;text-decoration:none;border-radius:0.25rem}
 [data-vibeui-block="breadcrumb-007"] a:hover{color:var(--vibeui-breadcrumb-007-fg);text-decoration:underline;text-underline-offset:3px}
 [data-vibeui-block="breadcrumb-007"] a:focus-visible{outline:2px solid var(--vibeui-breadcrumb-007-accent);outline-offset:2px}
@@ -62,7 +71,7 @@ background:transparent;color:inherit;font:inherit;font-size:0.8125rem;font-weigh
 }
 [data-vibeui-block="breadcrumb-007"] button[data-primary="true"]{
 border-color:transparent;background:var(--vibeui-breadcrumb-007-accent);
-color:oklch(0.99 0.01 265);font-weight:600;
+color:var(--vibeui-breadcrumb-007-on-accent);font-weight:600;
 }
 [data-vibeui-block="breadcrumb-007"] button:focus-visible{outline:2px solid var(--vibeui-breadcrumb-007-accent);outline-offset:2px}
 /* На узкой ширине кнопки уходят под путь и остаются подписанными словами. */
@@ -80,6 +89,29 @@ const DEFAULT_ITEMS: Breadcrumb007Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Строка пути с действиями справа: на узкой ширине кнопки уходят вниз.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -87,6 +119,8 @@ export function Breadcrumb007({
   items = DEFAULT_ITEMS,
   actionLabel = "Опубликовать",
   secondaryLabel = "Настройки",
+  navLabel = "Хлебные крошки",
+  background = "",
   accent,
   className,
   style,
@@ -94,6 +128,12 @@ export function Breadcrumb007({
 }: Breadcrumb007Props) {
   const palette = {
     ...(accent ? { "--vibeui-breadcrumb-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-breadcrumb-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -109,7 +149,7 @@ export function Breadcrumb007({
         style={palette}
       >
         <div data-part="bar">
-          <nav aria-label="Хлебные крошки">
+          <nav aria-label={navLabel}>
             <ol>
               {items.map((item, index) => {
                 const last = index === items.length - 1

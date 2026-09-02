@@ -14,7 +14,13 @@ export type Tabs008Props = {
   visible?: number
   defaultId?: string
   moreLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
+  /** Подпись списка вкладок для скринридера. */
+  listLabel?: string
+  /** Подпись выпадающего списка скрытых вкладок. */
+  menuLabel?: string
   className?: string
   style?: CSSProperties
 }
@@ -23,14 +29,19 @@ export type Tabs008Props = {
 // Главное правило такой свёртки: выбранная вкладка обязана быть видимой, поэтому
 // выбранная из списка занимает последнее видимое место, а вытесненная уходит в
 // список. Иначе после выбора активная вкладка исчезает, и непонятно, где ты.
+//
+// Тема берётся из color-scheme окружения через light-dark(). Подложка списка
+// «ещё» — отдельная переменная: список висит над содержимым и обязан быть
+// непрозрачным, даже когда у самого компонента подложки нет.
 const STYLES = `
 :where([data-vibeui-block="tabs-008"]){
---vibeui-tabs-008-bg:oklch(1 0 0);
---vibeui-tabs-008-fg:oklch(0.22 0.014 265);
---vibeui-tabs-008-muted:oklch(0.55 0.014 265);
---vibeui-tabs-008-border:oklch(0.91 0.006 265);
---vibeui-tabs-008-hover:oklch(0.55 0.02 265 / 8%);
---vibeui-tabs-008-accent:oklch(0.55 0.2 262);
+--vibeui-tabs-008-bg:transparent;
+--vibeui-tabs-008-menu:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-tabs-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tabs-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-tabs-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-tabs-008-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 13%));
+--vibeui-tabs-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-tabs-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="tabs-008"]{
@@ -74,7 +85,7 @@ font-size:0.6875rem;line-height:1.0625rem;text-align:center;font-variant-numeric
 [data-vibeui-block="tabs-008"] [data-part="menu"]{
 position:absolute;top:calc(100% + 0.25rem);right:0;z-index:30;
 min-width:10rem;margin:0;padding:0.25rem;box-sizing:border-box;list-style:none;
-background:var(--vibeui-tabs-008-bg);
+background:var(--vibeui-tabs-008-menu);
 border:1px solid var(--vibeui-tabs-008-border);border-radius:0.625rem;
 box-shadow:0 18px 36px -20px oklch(0.2 0.03 265 / 45%);
 }
@@ -106,6 +117,28 @@ const DEFAULT_ITEMS: Tabs008Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Вкладки со свёрткой лишних в список «ещё».
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -114,7 +147,10 @@ export function Tabs008({
   visible = 3,
   defaultId,
   moreLabel = "Ещё",
+  background = "",
   accent,
+  listLabel = "Отчёты",
+  menuLabel = "Скрытые вкладки",
   className,
   style,
 }: Tabs008Props) {
@@ -125,6 +161,13 @@ export function Tabs008({
 
   const palette = {
     ...(accent ? { "--vibeui-tabs-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tabs-008-bg": background,
+          "--vibeui-tabs-008-menu": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -181,7 +224,7 @@ export function Tabs008({
           <div
             data-part="list"
             role="tablist"
-            aria-label="Отчёты"
+            aria-label={listLabel}
             ref={listRef}
             onKeyDown={onKeyDown}
           >
@@ -216,7 +259,7 @@ export function Tabs008({
                 </span>
               </button>
               {open ? (
-                <ul data-part="menu" aria-label="Скрытые вкладки">
+                <ul data-part="menu" aria-label={menuLabel}>
                   {rest.map((item) => (
                     <li key={item.id}>
                       <button

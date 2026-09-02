@@ -8,6 +8,10 @@ export type Progress002Props = Omit<
   /** Индекс текущего этапа: всё до него считается пройденным. */
   current?: number
   label?: string
+  /** Озвучка этапа: {step} — имя, {current} — номер, {total} — сколько всего. */
+  stageText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -16,12 +20,12 @@ export type Progress002Props = Omit<
 // шестьдесят процентов», а «три этапа из пяти закрыты, идёт четвёртый».
 const STYLES = `
 :where([data-vibeui-block="progress-002"]){
---vibeui-progress-002-bg:oklch(1 0 0);
---vibeui-progress-002-fg:oklch(0.26 0.016 265);
---vibeui-progress-002-muted:oklch(0.56 0.014 265);
---vibeui-progress-002-border:oklch(0.9 0.006 265);
---vibeui-progress-002-track:oklch(0.93 0.005 265);
---vibeui-progress-002-accent:oklch(0.55 0.19 262);
+--vibeui-progress-002-bg:transparent;
+--vibeui-progress-002-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-progress-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-progress-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-progress-002-track:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.011 265));
+--vibeui-progress-002-accent:light-dark(oklch(0.55 0.19 262),oklch(0.7 0.16 262));
 --vibeui-progress-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="progress-002"]{
@@ -76,6 +80,28 @@ color:var(--vibeui-progress-002-fg);font-weight:650;
 const DEFAULT_STEPS = ["Очередь", "Сборка", "Тесты", "Ревью", "Выкладка"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Прогресс конвейера по этапам: дорожка разрезана на сегменты.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -83,6 +109,8 @@ export function Progress002({
   steps = DEFAULT_STEPS,
   current = 2,
   label = "Пайплайн релиза",
+  stageText = "{step}: этап {current} из {total}",
+  background = "",
   accent,
   className,
   style,
@@ -92,8 +120,18 @@ export function Progress002({
   const index = Math.min(Math.max(0, current), total - 1)
   const palette = {
     ...(accent ? { "--vibeui-progress-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-progress-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+  const stage = stageText
+    .replace("{step}", steps[index] ?? "")
+    .replace("{current}", String(index + 1))
+    .replace("{total}", String(total))
 
   return (
     <>
@@ -119,7 +157,7 @@ export function Progress002({
           aria-valuemin={0}
           aria-valuemax={total}
           aria-valuenow={index}
-          aria-valuetext={`${steps[index]}: этап ${index + 1} из ${total}`}
+          aria-valuetext={stage}
         >
           {steps.map((step, position) => (
             <span

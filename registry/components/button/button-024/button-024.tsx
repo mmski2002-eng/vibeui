@@ -13,6 +13,8 @@ export type Button024Props = Omit<
   /** Сколько выбрано на старте: между нулём и total получится «частично». */
   defaultSelected?: number
   onSelectedChange?: (selected: number) => void
+  /** Пусто — подложки нет, кнопка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,11 +25,12 @@ export type Button024Props = Omit<
 // и скринридером, и глазом, без опоры на цвет.
 const STYLES = `
 :where([data-vibeui-block="button-024"]){
---vibeui-button-024-bg:oklch(1 0 0);
---vibeui-button-024-fg:oklch(0.26 0.016 265);
---vibeui-button-024-muted:oklch(0.55 0.014 265);
---vibeui-button-024-border:oklch(0.9 0.006 265);
---vibeui-button-024-accent:oklch(0.55 0.17 265);
+--vibeui-button-024-bg:transparent;
+--vibeui-button-024-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-button-024-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-button-024-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-button-024-accent:light-dark(oklch(0.55 0.17 265),oklch(0.64 0.18 265));
+--vibeui-button-024-mark:oklch(0.99 0.01 265);
 --vibeui-button-024-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-024"]{
@@ -53,18 +56,40 @@ background:var(--vibeui-button-024-accent);border-color:var(--vibeui-button-024-
 /* Галочка и тире — второй канал состояния помимо заливки. */
 [data-vibeui-block="button-024"] [data-part="tick"]{
 position:absolute;left:0.3125rem;top:0.0625rem;width:0.25rem;height:0.5rem;
-border-right:2px solid oklch(1 0 0);border-bottom:2px solid oklch(1 0 0);
+border-right:2px solid var(--vibeui-button-024-mark);border-bottom:2px solid var(--vibeui-button-024-mark);
 transform:rotate(45deg);
 }
 [data-vibeui-block="button-024"] [data-part="dash"]{
 position:absolute;left:0.1875rem;top:0.4375rem;width:0.5rem;height:2px;
-border-radius:1px;background:oklch(1 0 0);
+border-radius:1px;background:var(--vibeui-button-024-mark);
 }
 [data-vibeui-block="button-024"] [data-part="count"]{
 color:var(--vibeui-button-024-muted);font-variant-numeric:tabular-nums;font-weight:500;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="button-024"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Кнопка «выбрать всё» с третьим состоянием через aria-pressed="mixed".
@@ -75,6 +100,7 @@ export function Button024({
   total = 8,
   defaultSelected = 3,
   onSelectedChange,
+  background = "",
   accent,
   type = "button",
   className,
@@ -96,6 +122,12 @@ export function Button024({
 
   const palette = {
     ...(accent ? { "--vibeui-button-024-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-024-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

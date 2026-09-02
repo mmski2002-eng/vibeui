@@ -1890,7 +1890,8 @@
                 "name": "Anna Rebrova",
                 "hint": "PNG or JPG up to 2 MB, square, at least 200 pixels",
                 "editLabel": "Upload a photo",
-                "removeLabel": "Remove photo"
+                "removeLabel": "Remove photo",
+                "captureLabel": "Take a photo"
               }
             }
           }

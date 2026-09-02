@@ -18,6 +18,22 @@ export type Datagrid024Props = Omit<
   tree?: Datagrid024Node[]
   caption?: string
   depthStep?: number
+  /** Заголовок панели над таблицей. */
+  heading?: string
+  /** Подписи кнопки «свернуть/развернуть всё». */
+  collapseAllText?: string
+  expandAllText?: string
+  /** Подписи переключателя ветки. {label} — название статьи. */
+  collapseLabel?: string
+  expandLabel?: string
+  /** Заголовки колонок по ключу: компонент несёт русские. */
+  columnText?: Record<string, string>
+  /** Подпись строки итога. */
+  totalText?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,14 +42,17 @@ export type Datagrid024Props = Omit<
 // aria-expanded, отступ считается от уровня через собственную переменную.
 // Сумма родителя всегда пересчитывается по потомкам: свёрнутая ветка без
 // собственного итога прячет данные, а не сворачивает их.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-024"]){
---vibeui-datagrid-024-bg:oklch(1 0 0);
---vibeui-datagrid-024-fg:oklch(0.23 0.014 285);
---vibeui-datagrid-024-muted:oklch(0.55 0.014 285);
---vibeui-datagrid-024-border:oklch(0.92 0.006 285);
---vibeui-datagrid-024-head:oklch(0.975 0.003 285);
---vibeui-datagrid-024-accent:oklch(0.48 0.14 185);
+--vibeui-datagrid-024-bg:transparent;
+--vibeui-datagrid-024-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-024-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-024-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
+--vibeui-datagrid-024-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
+--vibeui-datagrid-024-accent:light-dark(oklch(0.48 0.14 185),oklch(0.76 0.12 185));
 --vibeui-datagrid-024-step:1.25rem;
 --vibeui-datagrid-024-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -53,7 +72,7 @@ padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-024-borde
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
 padding:0.3125rem 0.625rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-024-border);
-background:var(--vibeui-datagrid-024-bg);color:var(--vibeui-datagrid-024-fg);
+background:transparent;color:var(--vibeui-datagrid-024-fg);
 }
 [data-vibeui-block="datagrid-024"] [data-part="all"]:focus-visible{outline:2px solid var(--vibeui-datagrid-024-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-024"] [data-part="scroll"]{overflow-x:auto}
@@ -80,7 +99,7 @@ font-weight:500;
 appearance:none;cursor:pointer;font:inherit;font-size:0.625rem;line-height:1;flex:none;
 width:1.125rem;height:1.125rem;border-radius:0.3125rem;
 border:1px solid var(--vibeui-datagrid-024-border);
-background:var(--vibeui-datagrid-024-bg);color:var(--vibeui-datagrid-024-accent);
+background:transparent;color:var(--vibeui-datagrid-024-accent);
 transition:transform .15s ease;
 }
 [data-vibeui-block="datagrid-024"] [data-part="toggle"][aria-expanded="true"]{transform:rotate(90deg)}
@@ -143,6 +162,34 @@ const DEFAULT_TREE: Datagrid024Node[] = [
   { id: "n3", label: "Пусконаладка", owner: "Сервис", amount: 760000 },
 ]
 
+const COLUMN_TEXT: Record<string, string> = {
+  label: "Статья",
+  owner: "Исполнитель",
+  amount: "Сумма, ₽",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function total(node: Datagrid024Node): number {
   return node.children && node.children.length > 0
     ? node.children.reduce((sum, child) => sum + total(child), 0)
@@ -165,6 +212,15 @@ export function Datagrid024({
   tree = DEFAULT_TREE,
   caption = "Сумма родителя пересчитывается по вложенным строкам",
   depthStep = 20,
+  heading = "Смета проекта",
+  collapseAllText = "Свернуть всё",
+  expandAllText = "Развернуть всё",
+  collapseLabel = "Свернуть ветку «{label}»",
+  expandLabel = "Развернуть ветку «{label}»",
+  columnText = COLUMN_TEXT,
+  totalText = "Всего по смете",
+  scrollLabel = "Дерево статей сметы, прокручивается вбок",
+  background = "",
   accent,
   className,
   style,
@@ -178,6 +234,12 @@ export function Datagrid024({
   const palette = {
     "--vibeui-datagrid-024-step": `${depthStep / 16}rem`,
     ...(accent ? { "--vibeui-datagrid-024-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-024-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -202,11 +264,10 @@ export function Datagrid024({
                   type="button"
                   data-part="toggle"
                   aria-expanded={expanded}
-                  aria-label={
-                    expanded
-                      ? `Свернуть ветку «${node.label}»`
-                      : `Развернуть ветку «${node.label}»`
-                  }
+                  aria-label={(expanded ? collapseLabel : expandLabel).replace(
+                    "{label}",
+                    node.label,
+                  )}
                   onClick={() =>
                     setOpen((current) =>
                       current.includes(node.id)
@@ -250,7 +311,7 @@ export function Datagrid024({
         style={palette}
       >
         <div data-part="bar">
-          <h3 data-part="title">Смета проекта</h3>
+          <h3 data-part="title">{heading}</h3>
           <button
             type="button"
             data-part="all"
@@ -260,25 +321,23 @@ export function Datagrid024({
               )
             }
           >
-            {open.length === branches.length
-              ? "Свернуть всё"
-              : "Развернуть всё"}
+            {open.length === branches.length ? collapseAllText : expandAllText}
           </button>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Дерево статей сметы, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
             <caption>{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Статья</th>
-                <th scope="col">Исполнитель</th>
+                <th scope="col">{columnText.label ?? COLUMN_TEXT.label}</th>
+                <th scope="col">{columnText.owner ?? COLUMN_TEXT.owner}</th>
                 <th scope="col" data-align="end">
-                  Сумма, ₽
+                  {columnText.amount ?? COLUMN_TEXT.amount}
                 </th>
               </tr>
             </thead>
@@ -286,7 +345,7 @@ export function Datagrid024({
             <tfoot>
               <tr>
                 <th scope="row" colSpan={2}>
-                  Всего по смете
+                  {totalText}
                 </th>
                 <td data-align="end">{grand.toLocaleString("ru-RU")}</td>
               </tr>

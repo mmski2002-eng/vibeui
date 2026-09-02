@@ -20,6 +20,12 @@ export type Dashboard083Props = {
   subtitle?: string
   processes?: Dashboard083Process[]
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Дробь прогресса. Подставляются {done} и {total}. */
+  ratioText?: string
+  /** Подпись полосы прогресса для читалки. {name}, {done}, {total}. */
+  progressText?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,16 +40,21 @@ export type Dashboard083Props = {
 // подписана причина и он выделен: разница между «ещё не сделали» и «сделать
 // нельзя» решает, кому идти разбираться. Полоса прогресса считает только
 // выполненные шаги, заблокированные в неё не входят.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-083"]){
---vibeui-dashboard-083-bg:oklch(0.985 0.003 165);
---vibeui-dashboard-083-card:oklch(1 0 0);
---vibeui-dashboard-083-fg:oklch(0.21 0.014 165);
---vibeui-dashboard-083-muted:oklch(0.54 0.014 165);
---vibeui-dashboard-083-border:oklch(0.91 0.006 165);
---vibeui-dashboard-083-accent:oklch(0.5 0.12 165);
---vibeui-dashboard-083-soft:oklch(0.965 0.02 165);
---vibeui-dashboard-083-block:oklch(0.57 0.19 25);
+--vibeui-dashboard-083-bg:transparent;
+/* Карточка процесса и подложка шага: сам блок остаётся прозрачным. */
+--vibeui-dashboard-083-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 165));
+--vibeui-dashboard-083-inset:light-dark(oklch(0.985 0.003 165),oklch(0.22 0.012 165));
+--vibeui-dashboard-083-fg:light-dark(oklch(0.21 0.014 165),oklch(0.94 0.005 165));
+--vibeui-dashboard-083-muted:light-dark(oklch(0.54 0.014 165),oklch(0.72 0.012 165));
+--vibeui-dashboard-083-border:light-dark(oklch(0.91 0.006 165),oklch(0.36 0.012 165));
+--vibeui-dashboard-083-accent:light-dark(oklch(0.5 0.12 165),oklch(0.76 0.13 165));
+--vibeui-dashboard-083-soft:light-dark(oklch(0.965 0.02 165),oklch(0.3 0.03 165));
+--vibeui-dashboard-083-block:light-dark(oklch(0.57 0.19 25),oklch(0.72 0.16 25));
 --vibeui-dashboard-083-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -77,7 +88,7 @@ padding:0.1875rem 0.5rem;border-radius:0.4375rem;background:var(--vibeui-dashboa
 }
 [data-vibeui-block="dashboard-083"] [data-part="track"]{
 grid-column:1 / -1;height:0.375rem;border-radius:9999px;position:relative;overflow:hidden;
-background:var(--vibeui-dashboard-083-bg);
+background:var(--vibeui-dashboard-083-inset);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-083-border);
 }
 [data-vibeui-block="dashboard-083"] [data-part="track"] span{
@@ -89,11 +100,11 @@ list-style:none;margin:0;padding:0 0.875rem 0.875rem;display:flex;flex-direction
 [data-vibeui-block="dashboard-083"] [data-part="step"]{
 display:grid;grid-template-columns:auto 1fr;gap:0.125rem 0.5rem;align-items:start;
 padding:0.4375rem 0.5625rem;border-radius:0.625rem;
-background:var(--vibeui-dashboard-083-bg);border:1px solid transparent;
+background:var(--vibeui-dashboard-083-inset);border:1px solid transparent;
 }
 [data-vibeui-block="dashboard-083"] [data-part="step"][data-blocked="true"]{
-border-color:color-mix(in oklab,var(--vibeui-dashboard-083-block) 38%,white);
-background:color-mix(in oklab,var(--vibeui-dashboard-083-block) 6%,white);
+border-color:color-mix(in oklab,var(--vibeui-dashboard-083-block) 38%,light-dark(white,black));
+background:color-mix(in oklab,var(--vibeui-dashboard-083-block) 8%,light-dark(white,black));
 }
 [data-vibeui-block="dashboard-083"] input[type="checkbox"]{
 margin:0.125rem 0 0;width:1rem;height:1rem;accent-color:var(--vibeui-dashboard-083-accent);
@@ -227,6 +238,28 @@ const DEFAULT_PROCESSES: Dashboard083Process[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Страница чек-листов процессов: процессы свёрнуты в details с прогрессом в
  * заголовке, у каждого шага ответственный и срок, заблокированный шаг несёт
  * причину. Один файл, ноль зависимостей, клиентского JS нет.
@@ -236,13 +269,25 @@ export function Dashboard083({
   subtitle = "Шаг считается выполненным, когда его отметил ответственный. Заблокированный шаг не мешает идти дальше по списку, но закрывает процесс целиком.",
   processes = DEFAULT_PROCESSES,
   accent,
+  background = "",
+  ratioText = "{done} из {total}",
+  progressText = "{name}: выполнено {done} из {total}",
   className,
   style,
 }: Dashboard083Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-083-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-083-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const fill = (template: string, values: Record<string, string>) =>
+    template.replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match)
 
   return (
     <>
@@ -274,7 +319,10 @@ export function Dashboard083({
                       <span>{process.target}</span>
                     </span>
                     <span data-part="ratio">
-                      {done} из {process.steps.length}
+                      {fill(ratioText, {
+                        done: String(done),
+                        total: String(process.steps.length),
+                      })}
                     </span>
                     <span
                       data-part="track"
@@ -282,7 +330,11 @@ export function Dashboard083({
                       aria-valuenow={done}
                       aria-valuemin={0}
                       aria-valuemax={process.steps.length}
-                      aria-label={`${process.name}: выполнено ${done} из ${process.steps.length}`}
+                      aria-label={fill(progressText, {
+                        name: process.name,
+                        done: String(done),
+                        total: String(process.steps.length),
+                      })}
                     >
                       <span style={{ width: `${share}%` }} />
                     </span>

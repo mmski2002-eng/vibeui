@@ -15,8 +15,21 @@ export type Inputgroup036Props = Omit<
   max?: number
   onChange?: (from: string, to: string, valid: boolean) => void
   hint?: string
+  /** Подписи половин: ключи from и to. */
+  boundsText?: Record<string, string>
+  /** Сообщение при перевёрнутом диапазоне. */
+  errorText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
+
+const BOUNDS_TEXT: Record<string, string> = {
+  from: "От",
+  to: "До",
+}
+
+const ERROR_TEXT = "Значение «до» не может быть меньше значения «от»."
 
 // Идея компонента: в отличие от диапазона с датами, у чисел нет нативного
 // min/max, который бы сам не пускал пользователя ввести «до» меньше «от» —
@@ -25,14 +38,14 @@ export type Inputgroup036Props = Omit<
 // «до» без «от» одинаково неполны, виновата пара, а не один инпут.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-036"]){
---vibeui-inputgroup-036-surface:oklch(1 0 0);
---vibeui-inputgroup-036-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-036-fg:oklch(0.22 0.014 265);
---vibeui-inputgroup-036-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-036-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-036-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-036-accent:oklch(0.55 0.15 280);
---vibeui-inputgroup-036-error:oklch(0.56 0.19 25);
+--vibeui-inputgroup-036-surface:transparent;
+--vibeui-inputgroup-036-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-inputgroup-036-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-036-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-inputgroup-036-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
+--vibeui-inputgroup-036-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-inputgroup-036-accent:light-dark(oklch(0.55 0.15 280),oklch(0.76 0.13 280));
+--vibeui-inputgroup-036-error:light-dark(oklch(0.56 0.19 25),oklch(0.75 0.15 25));
 --vibeui-inputgroup-036-radius:0.75rem;
 --vibeui-inputgroup-036-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -87,6 +100,28 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-inputgroup-036-mut
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="inputgroup-036"] *{transition:none!important}}
 `
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function toNumber(value: string): number | null {
   if (value.trim() === "") return null
   const parsed = Number(value)
@@ -108,6 +143,9 @@ export function Inputgroup036({
   max,
   onChange,
   hint = "Проверка порядка идёт на лету: «до» меньше «от» подсвечивает всю сцепку.",
+  boundsText = BOUNDS_TEXT,
+  errorText = ERROR_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -124,6 +162,12 @@ export function Inputgroup036({
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-036-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-036-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -149,7 +193,9 @@ export function Inputgroup036({
           <legend>{legend}</legend>
           <div data-part="group" data-invalid={invalid}>
             <div data-part="half">
-              <span id={`${id}-from-label`}>От</span>
+              <span id={`${id}-from-label`}>
+                {boundsText.from ?? BOUNDS_TEXT.from}
+              </span>
               <input
                 id={`${id}-from`}
                 name={`${name}-from`}
@@ -168,7 +214,9 @@ export function Inputgroup036({
               />
             </div>
             <div data-part="half">
-              <span id={`${id}-to-label`}>До</span>
+              <span id={`${id}-to-label`}>
+                {boundsText.to ?? BOUNDS_TEXT.to}
+              </span>
               <input
                 id={`${id}-to`}
                 name={`${name}-to`}
@@ -190,7 +238,7 @@ export function Inputgroup036({
         </fieldset>
         {invalid ? (
           <p data-part="error" id={`${id}-error`} role="alert">
-            Значение «до» не может быть меньше значения «от».
+            {errorText}
           </p>
         ) : (
           <p data-part="hint" id={`${id}-hint`}>

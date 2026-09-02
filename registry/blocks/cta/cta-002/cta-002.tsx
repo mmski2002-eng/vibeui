@@ -9,24 +9,29 @@ export type Cta002Props = {
   secondaryLabel?: string
   secondaryHref?: string
   proof?: string[]
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
 }
 
-// Светлый центрированный призыв на две равные кнопки. Так делают, когда
-// у продукта два честных входа: «купить» и «сначала посмотреть». Чтобы
-// пара не выглядела нерешительностью, вторая кнопка — контурная, а под
-// ними идёт строка коротких подтверждений вместо ещё одного абзаца.
+// Центрированный призыв на две равные кнопки. Так делают, когда у продукта
+// два честных входа: «купить» и «сначала посмотреть». Чтобы пара не выглядела
+// нерешительностью, вторая кнопка — контурная, а под ними идёт строка коротких
+// подтверждений вместо ещё одного абзаца.
+//
+// Тема приходит из color-scheme окружения через light-dark(): подложки у
+// секции по умолчанию нет, карточка темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="cta-002"]){
---vibeui-cta-002-bg:oklch(0.98 0.006 250);
---vibeui-cta-002-card:oklch(1 0 0);
---vibeui-cta-002-ink:oklch(0.21 0.016 250);
---vibeui-cta-002-muted:oklch(0.5 0.016 250);
---vibeui-cta-002-border:oklch(0.9 0.008 250);
---vibeui-cta-002-accent:oklch(0.52 0.19 265);
---vibeui-cta-002-accent-fg:oklch(0.99 0 0);
+--vibeui-cta-002-bg:transparent;
+--vibeui-cta-002-card:light-dark(oklch(1 0 0),oklch(0.24 0.014 265));
+--vibeui-cta-002-ink:light-dark(oklch(0.21 0.016 250),oklch(0.95 0.005 250));
+--vibeui-cta-002-muted:light-dark(oklch(0.5 0.016 250),oklch(0.72 0.012 250));
+--vibeui-cta-002-border:light-dark(oklch(0.9 0.008 250),oklch(0.35 0.014 250));
+--vibeui-cta-002-accent:light-dark(oklch(0.52 0.19 265),oklch(0.72 0.16 265));
+--vibeui-cta-002-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.03 265));
 --vibeui-cta-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -100,6 +105,28 @@ const DEFAULT_PROOF = [
   "Поддержка отвечает за час",
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Центрированный призыв с двумя равными кнопками и строкой подтверждений. */
 export function Cta002({
   eyebrow = "Готовы начать",
@@ -110,12 +137,19 @@ export function Cta002({
   secondaryLabel = "Посмотреть примеры",
   secondaryHref = "#examples",
   proof = DEFAULT_PROOF,
+  background = "",
   accent,
   className,
   style,
 }: Cta002Props) {
   const palette = {
     ...(accent ? { "--vibeui-cta-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cta-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

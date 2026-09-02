@@ -14,7 +14,19 @@ export type Dropdown012Props = Omit<
   title?: string
   actionLabel?: string
   rows?: string[]
+  /** Счётчик выделения в шапке. Плейсхолдер {count}. */
+  selectedTemplate?: string
+  /** Заголовок меню. Плейсхолдер {count}. */
+  scopeTemplate?: string
+  /** Доступное имя меню. Плейсхолдеры {action} и {count}. */
+  menuLabelTemplate?: string
+  /** Пункты меню: ключи assign, due, rename, archive, remove. */
+  actionsText?: Record<string, string>
+  /** Пометки у пунктов: ключи single и count (плейсхолдер {count}). */
+  noteText?: Record<string, string>
   accent?: string
+  /** Подложка карточки и меню. Пусто — собственный фон по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: меню массовых действий над таблицей. Оно живёт в шапке
@@ -22,15 +34,18 @@ export type Dropdown012Props = Omit<
 // Пока не выбрано ничего, кнопка выключена, а не спрятана: исчезающий элемент
 // сдвигает шапку и заставляет искать его заново. Пункт «переименовать» помечен
 // aria-disabled, потому что имя есть у одной строки, а не у трёх сразу.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте карточка светлее фона страницы, а её граница светлее карточки.
 const STYLES = `
 :where([data-vibeui-block="dropdown-012"]){
---vibeui-dropdown-012-bg:oklch(1 0 0);
---vibeui-dropdown-012-fg:oklch(0.24 0.014 265);
---vibeui-dropdown-012-muted:oklch(0.56 0.014 265);
---vibeui-dropdown-012-border:oklch(0.9 0.006 265);
---vibeui-dropdown-012-hover:oklch(0.96 0.004 265);
---vibeui-dropdown-012-accent:oklch(0.55 0.18 265);
---vibeui-dropdown-012-danger:oklch(0.56 0.19 25);
+--vibeui-dropdown-012-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-dropdown-012-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-dropdown-012-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dropdown-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-dropdown-012-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
+--vibeui-dropdown-012-accent:light-dark(oklch(0.55 0.18 265),oklch(0.74 0.15 265));
+--vibeui-dropdown-012-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25));
 --vibeui-dropdown-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="dropdown-012"]{
@@ -124,6 +139,47 @@ const DEFAULT_ROWS = [
   "Проверить формы оплаты",
 ]
 
+const DEFAULT_ACTIONS: Record<string, string> = {
+  assign: "Назначить исполнителя",
+  due: "Поставить срок",
+  rename: "Переименовать",
+  archive: "В архив",
+  remove: "Удалить",
+}
+
+const DEFAULT_NOTES: Record<string, string> = {
+  single: "только одна строка",
+  count: "{count} шт.",
+}
+
+function fill(template: string, values: Record<string, string>) {
+  return template.replace(/\{(\w+)\}/g, (whole, key: string) =>
+    key in values ? values[key] : whole,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function stepFocus(menu: HTMLElement | null, delta: number) {
   if (!menu) {
     return
@@ -149,7 +205,13 @@ export function Dropdown012({
   title = "Задачи спринта",
   actionLabel = "Действия",
   rows = DEFAULT_ROWS,
+  selectedTemplate = "Выбрано: {count}",
+  scopeTemplate = "К {count} строкам",
+  menuLabelTemplate = "{action}: выбрано {count}",
+  actionsText = DEFAULT_ACTIONS,
+  noteText = DEFAULT_NOTES,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -165,8 +227,19 @@ export function Dropdown012({
         : [...current, row],
     )
 
+  const count = String(picked.length)
+  const action = (key: string) => actionsText[key] ?? DEFAULT_ACTIONS[key]
+  const note = (key: string) =>
+    fill(noteText[key] ?? DEFAULT_NOTES[key], { count })
+
   const palette = {
     ...(accent ? { "--vibeui-dropdown-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dropdown-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -184,7 +257,7 @@ export function Dropdown012({
       >
         <header data-part="bar">
           <span data-part="count" role="status">
-            {picked.length > 0 ? `Выбрано: ${picked.length}` : title}
+            {picked.length > 0 ? fill(selectedTemplate, { count }) : title}
           </span>
           <button
             type="button"
@@ -230,7 +303,7 @@ export function Dropdown012({
           ref={menu}
           popover="auto"
           role="menu"
-          aria-label={`${actionLabel}: выбрано ${picked.length}`}
+          aria-label={fill(menuLabelTemplate, { action: actionLabel, count })}
           data-part="menu"
           onKeyDown={(event: KeyboardEvent<HTMLDivElement>) => {
             if (event.key === "ArrowDown") {
@@ -242,14 +315,14 @@ export function Dropdown012({
             }
           }}
         >
-          <div data-part="head">К {picked.length} строкам</div>
+          <div data-part="head">{fill(scopeTemplate, { count })}</div>
           <button
             type="button"
             role="menuitem"
             data-part="item"
             onClick={() => menu.current?.hidePopover()}
           >
-            Назначить исполнителя
+            {action("assign")}
           </button>
           <button
             type="button"
@@ -257,7 +330,7 @@ export function Dropdown012({
             data-part="item"
             onClick={() => menu.current?.hidePopover()}
           >
-            Поставить срок
+            {action("due")}
           </button>
           <button
             type="button"
@@ -273,9 +346,9 @@ export function Dropdown012({
               menu.current?.hidePopover()
             }}
           >
-            Переименовать
+            {action("rename")}
             {picked.length !== 1 ? (
-              <span data-part="note">только одна строка</span>
+              <span data-part="note">{note("single")}</span>
             ) : null}
           </button>
           <div data-part="rule" role="separator" />
@@ -285,7 +358,7 @@ export function Dropdown012({
             data-part="item"
             onClick={() => menu.current?.hidePopover()}
           >
-            В архив
+            {action("archive")}
           </button>
           <button
             type="button"
@@ -297,8 +370,8 @@ export function Dropdown012({
               menu.current?.hidePopover()
             }}
           >
-            Удалить
-            <span data-part="note">{picked.length} шт.</span>
+            {action("remove")}
+            <span data-part="note">{note("count")}</span>
           </button>
         </div>
       </section>

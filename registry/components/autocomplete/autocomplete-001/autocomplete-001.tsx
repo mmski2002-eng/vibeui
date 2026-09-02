@@ -9,6 +9,8 @@ export type Autocomplete001Props = Omit<
   hint?: string
   placeholder?: string
   options?: string[]
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,16 +20,16 @@ export type Autocomplete001Props = Omit<
 // же фильтрует и озвучивает его скринридеру; наш код только рисует поле.
 const STYLES = `
 :where([data-vibeui-block="autocomplete-001"]){
---vibeui-autocomplete-001-bg:oklch(1 0 0);
---vibeui-autocomplete-001-fg:oklch(0.22 0.014 265);
---vibeui-autocomplete-001-muted:oklch(0.52 0.014 265);
---vibeui-autocomplete-001-border:oklch(0.9 0.006 265);
---vibeui-autocomplete-001-field:oklch(0.985 0.002 265);
---vibeui-autocomplete-001-accent:oklch(0.55 0.17 265);
+--vibeui-autocomplete-001-bg:transparent;
+--vibeui-autocomplete-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-autocomplete-001-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-autocomplete-001-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-autocomplete-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-autocomplete-001-radius:0.625rem;
 --vibeui-autocomplete-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Собственная светлая подложка: поле обязано читаться и на тёмной странице. */
+/* Подложки нет: поле ложится на фон страницы, а цвета берёт из color-scheme. */
 [data-vibeui-block="autocomplete-001"]{
 display:flex;flex-direction:column;gap:0.375rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -76,6 +78,28 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Автодополнение на нативном datalist: без клиентского кода.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -84,6 +108,7 @@ export function Autocomplete001({
   hint = "Начните вводить — браузер подскажет из списка",
   placeholder = "Например, Казань",
   options = DEFAULT_OPTIONS,
+  background = "",
   accent,
   className,
   style,
@@ -93,6 +118,12 @@ export function Autocomplete001({
   const listId = `${id}-list`
   const palette = {
     ...(accent ? { "--vibeui-autocomplete-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-autocomplete-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

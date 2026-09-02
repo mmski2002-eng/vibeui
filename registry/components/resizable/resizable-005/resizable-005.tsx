@@ -18,6 +18,19 @@ export type Resizable005Props = Omit<
   max?: number
   step?: number
   onChange?: (size: number) => void
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  sideTitle?: string
+  sideText?: string
+  mainTitle?: string
+  mainText?: string
+  /** Строка состояния; {size} заменяется на текущую ширину. */
+  statusText?: string
+  collapsedStatusText?: string
+  /** aria-valuetext разделителя; {size} заменяется на текущую ширину. */
+  valueText?: string
+  collapsedValueText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,12 +41,13 @@ export type Resizable005Props = Omit<
 // исчезнувший элемент.
 const STYLES = `
 :where([data-vibeui-block="resizable-005"]){
---vibeui-resizable-005-bg:oklch(1 0 0);
---vibeui-resizable-005-fg:oklch(0.22 0.014 265);
---vibeui-resizable-005-muted:oklch(0.55 0.014 265);
---vibeui-resizable-005-border:oklch(0.9 0.006 265);
---vibeui-resizable-005-surface:oklch(0.975 0.004 265);
---vibeui-resizable-005-accent:oklch(0.55 0.16 25);
+--vibeui-resizable-005-bg:transparent;
+--vibeui-resizable-005-pane:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-resizable-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-resizable-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-resizable-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-resizable-005-surface:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.011 265));
+--vibeui-resizable-005-accent:light-dark(oklch(0.55 0.16 25),oklch(0.75 0.15 25));
 --vibeui-resizable-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="resizable-005"]{
@@ -54,7 +68,7 @@ transition:width .18s ease;
 }
 [data-vibeui-block="resizable-005"] [data-part="inner"]{padding:0.75rem;min-width:9rem}
 [data-vibeui-block="resizable-005"] [data-part="main"]{
-flex:1;min-width:0;padding:0.75rem;overflow:auto;background:var(--vibeui-resizable-005-bg);
+flex:1;min-width:0;padding:0.75rem;overflow:auto;background:var(--vibeui-resizable-005-pane);
 }
 [data-vibeui-block="resizable-005"] h3{margin:0 0 0.375rem;font-size:0.8125rem;font-weight:650}
 [data-vibeui-block="resizable-005"] p{margin:0;font-size:0.75rem;line-height:1.5;color:var(--vibeui-resizable-005-muted)}
@@ -84,6 +98,28 @@ margin:0;font-size:0.75rem;color:var(--vibeui-resizable-005-muted);font-variant-
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Разделитель со сворачиванием панели в ноль: двойное нажатие и Enter
  * сворачивают, прошлый размер запоминается. Один файл, ноль зависимостей.
  */
@@ -94,6 +130,15 @@ export function Resizable005({
   max = 320,
   step = 20,
   onChange,
+  sideTitle = "Фильтры",
+  sideText = "Свёрнутая панель остаётся в разметке: её ширина — ноль, а не отсутствие.",
+  mainTitle = "Результаты",
+  mainText = "Двойное нажатие на разделителе сворачивает панель, Enter делает то же самое с клавиатуры.",
+  statusText = "Панель — {size} px",
+  collapsedStatusText = "Панель свёрнута",
+  valueText = "{size} пикселей",
+  collapsedValueText = "свёрнута",
+  background = "",
   accent,
   className,
   style,
@@ -107,6 +152,12 @@ export function Resizable005({
 
   const palette = {
     ...(accent ? { "--vibeui-resizable-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-resizable-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -166,14 +217,11 @@ export function Resizable005({
             data-part="side"
             id={sideId}
             style={{ width: `${size}px` }}
-            aria-label="Фильтры"
+            aria-label={sideTitle}
           >
             <div data-part="inner">
-              <h3>Фильтры</h3>
-              <p>
-                Свёрнутая панель остаётся в разметке: её ширина — ноль, а не
-                отсутствие.
-              </p>
+              <h3>{sideTitle}</h3>
+              <p>{sideText}</p>
             </div>
           </aside>
           <div
@@ -186,7 +234,11 @@ export function Resizable005({
             aria-valuenow={size}
             aria-valuemin={0}
             aria-valuemax={max}
-            aria-valuetext={collapsed ? "свёрнута" : `${size} пикселей`}
+            aria-valuetext={
+              collapsed
+                ? collapsedValueText
+                : valueText.replace("{size}", String(size))
+            }
             data-dragging={dragging}
             onKeyDown={onKeyDown}
             onDoubleClick={toggle}
@@ -238,15 +290,14 @@ export function Resizable005({
             </svg>
           </div>
           <main data-part="main">
-            <h3>Результаты</h3>
-            <p>
-              Двойное нажатие на разделителе сворачивает панель, Enter делает то
-              же самое с клавиатуры.
-            </p>
+            <h3>{mainTitle}</h3>
+            <p>{mainText}</p>
           </main>
         </div>
         <p data-part="status" role="status">
-          {collapsed ? "Панель свёрнута" : `Панель — ${size} px`}
+          {collapsed
+            ? collapsedStatusText
+            : statusText.replace("{size}", String(size))}
         </p>
       </div>
     </>

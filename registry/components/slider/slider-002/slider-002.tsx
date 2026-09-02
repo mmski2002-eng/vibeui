@@ -13,6 +13,12 @@ export type Slider002Props = Omit<
   step?: number
   defaultValue?: number
   suffix?: string
+  /** Подпись под левым концом шкалы. */
+  minText?: string
+  /** Подпись под правым концом шкалы. */
+  maxText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,15 +26,19 @@ export type Slider002Props = Omit<
 // заставляет глаз прыгать между ручкой и подписью; пузырь стоит ровно над
 // ручкой, поэтому цифру видно, не отрывая пальца. Сдвиг считается по
 // проценту с поправкой на половину ручки — иначе на краях пузырь уезжает.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="slider-002"]){
---vibeui-slider-002-bg:oklch(1 0 0);
---vibeui-slider-002-fg:oklch(0.22 0.014 265);
---vibeui-slider-002-muted:oklch(0.55 0.014 265);
---vibeui-slider-002-border:oklch(0.9 0.006 265);
---vibeui-slider-002-track:oklch(0.92 0.006 265);
---vibeui-slider-002-accent:oklch(0.56 0.2 25);
---vibeui-slider-002-on-accent:oklch(1 0 0);
+--vibeui-slider-002-bg:transparent;
+--vibeui-slider-002-surface:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
+--vibeui-slider-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-slider-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-slider-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-slider-002-track:light-dark(oklch(0.92 0.006 265),oklch(0.41 0.012 265));
+--vibeui-slider-002-accent:light-dark(oklch(0.56 0.2 25),oklch(0.68 0.17 25));
+--vibeui-slider-002-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.014 25));
 --vibeui-slider-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-002-fill:50%;
 }
@@ -70,12 +80,12 @@ background:linear-gradient(to right,var(--vibeui-slider-002-accent) var(--vibeui
 [data-vibeui-block="slider-002"] input::-webkit-slider-thumb{
 appearance:none;margin-top:-0.375rem;
 width:1.125rem;height:1.125rem;border-radius:9999px;
-background:var(--vibeui-slider-002-accent);border:3px solid var(--vibeui-slider-002-bg);
+background:var(--vibeui-slider-002-accent);border:3px solid var(--vibeui-slider-002-surface);
 box-shadow:0 1px 4px oklch(0.2 0.02 265 / 30%);
 }
 [data-vibeui-block="slider-002"] input::-moz-range-thumb{
 width:1.125rem;height:1.125rem;border-radius:9999px;box-sizing:border-box;
-background:var(--vibeui-slider-002-accent);border:3px solid var(--vibeui-slider-002-bg);
+background:var(--vibeui-slider-002-accent);border:3px solid var(--vibeui-slider-002-surface);
 }
 [data-vibeui-block="slider-002"] input:focus-visible{outline:2px solid var(--vibeui-slider-002-accent);outline-offset:4px;border-radius:0.5rem}
 [data-vibeui-block="slider-002"] [data-part="scale"]{
@@ -84,6 +94,28 @@ font-size:0.6875rem;color:var(--vibeui-slider-002-muted);font-variant-numeric:ta
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="slider-002"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Ползунок с пузырём значения: цифра едет вместе с ручкой.
@@ -96,6 +128,9 @@ export function Slider002({
   step = 1,
   defaultValue = 4,
   suffix = " из 10",
+  minText = "мягко",
+  maxText = "огонь",
+  background = "",
   accent,
   className,
   style,
@@ -109,6 +144,12 @@ export function Slider002({
     "--vibeui-slider-002-fill": `${ratio * 100}%`,
     "--vibeui-slider-002-ratio": String(ratio),
     ...(accent ? { "--vibeui-slider-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-slider-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -142,8 +183,8 @@ export function Slider002({
           />
         </div>
         <p data-part="scale">
-          <span>мягко</span>
-          <span>огонь</span>
+          <span>{minText}</span>
+          <span>{maxText}</span>
         </p>
       </div>
     </>

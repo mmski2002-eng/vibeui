@@ -25,21 +25,25 @@
           "summary": "Подвал сайта: слева знак, название и одна фраза о продукте, справа колонки ссылок, внизу копирайт и юридические ссылки. Светлый намеренно — тёмный подвал сразу после тёмной секции призыва даёт два тяжёлых пятна подряд. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-footer-001-* и не подменять её токенами вашей темы (bg-muted, text-muted-foreground и подобными)",
-            "светлую подложку: подвал не должен спорить с финальной секцией призыва",
+            "лёгкость подвала: тёмная плита в конце страницы спорила бы с финальной секцией призыва",
             "каждую группу ссылок как отдельный <nav> с подписью — иначе скринридер читает двадцать ссылок подряд без структуры",
             "верхнюю границу блока: она отделяет подвал от последней секции страницы",
             "нижнюю строку с копирайтом как отдельный ряд с собственной границей",
             "container-запросы на число колонок: в узкой колонке подвал обязан сложиться сам",
-            "блок <style> внутри компонента — в нём вся палитра и раскладка"
+            "блок <style> внутри компонента — в нём вся палитра и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "brand и tagline — название и фраза о продукте; знак можно заменить на свой <svg>",
             "массив columns — заголовки групп и ссылки",
             "legal и legalLinks — копирайт и юридические ссылки",
             "акцент через проп accent — цвет знака и наведения на ссылки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Подвал — не свалка ссылок: три группы по четыре пункта читаются, восемь групп — нет.",
             "Юридические ссылки держите в нижней строке, а не среди продуктовых: их ищут отдельно.",
             "Год в копирайте не подставляется автоматически намеренно: это статичный текст, а не Date. Обновляйте его вместе с остальным содержимым.",
@@ -53,21 +57,25 @@
               "summary": "A site footer: the mark, name and a single line about the product on the left, link columns on the right, copyright and legal links along the bottom. Light on purpose — a dark footer right after a dark CTA gives two heavy blocks in a row. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
                 "the local --vibeui-footer-001-* palette — do not swap it for your theme tokens (bg-muted, text-muted-foreground and the like)",
-                "the light ground: the footer must not compete with the closing call to action",
+                "the lightness of the footer: a dark slab at the end of the page would fight the closing call to action",
                 "each link group as its own labelled <nav> — otherwise a screen reader reads twenty links with no structure",
                 "the top border of the block: it separates the footer from the last section",
                 "the bottom row with its own rule for the copyright and legal links",
                 "the container queries driving the column count: in a narrow column the footer has to fold on its own",
-                "the <style> block inside the component — it holds the palette and the layout"
+                "the <style> block inside the component — it holds the palette and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent ground by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "brand and tagline — the name and the one-line description; the mark can be your own <svg>",
                 "the columns array — group titles and links",
                 "legal and legalLinks — the copyright and legal links",
                 "the accent through the accent prop — it colours the mark and link hover",
+                "background — the component ground; empty means no ground, taking the page colour",
                 "outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A footer is not a link dump: three groups of four are read, eight groups are not.",
                 "Keep legal links in the bottom row rather than among product links: people look for them separately.",
                 "The copyright year is deliberately static text rather than a Date call. Update it along with the rest of the copy.",
@@ -75,9 +83,110 @@
               ],
               "usage": "<Footer001\n  brand=\"Flight\"\n  columns={[{ title: \"Product\", links: [{ label: \"Pricing\", href: \"/pricing\" }] }]}\n  legal=\"© 2026 Flight Studio\"\n/>"
             },
-            "title": "Light Footer"
+            "title": "Light Footer",
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Flight",
+                "tagline": "Ready-made interface blocks for people who build sites together with an AI agent.",
+                "columns": [
+                  {
+                    "title": "Product",
+                    "links": [
+                      {
+                        "label": "Components",
+                        "href": "#components"
+                      },
+                      {
+                        "label": "Blocks",
+                        "href": "#blocks"
+                      },
+                      {
+                        "label": "Pricing",
+                        "href": "#pricing"
+                      },
+                      {
+                        "label": "Changelog",
+                        "href": "#changelog"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Help",
+                    "links": [
+                      {
+                        "label": "Documentation",
+                        "href": "#docs"
+                      },
+                      {
+                        "label": "How installing works",
+                        "href": "#install"
+                      },
+                      {
+                        "label": "FAQ",
+                        "href": "#faq"
+                      },
+                      {
+                        "label": "Support",
+                        "href": "#support"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Company",
+                    "links": [
+                      {
+                        "label": "About",
+                        "href": "#about"
+                      },
+                      {
+                        "label": "Blog",
+                        "href": "#blog"
+                      },
+                      {
+                        "label": "Contact",
+                        "href": "#contact"
+                      }
+                    ]
+                  }
+                ],
+                "legal": "© 2026 Flight Studio",
+                "legalLinks": [
+                  {
+                    "label": "Privacy policy",
+                    "href": "#privacy"
+                  },
+                  {
+                    "label": "Terms",
+                    "href": "#terms"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -113,17 +222,21 @@
             "правило prefers-reduced-motion — пульсация обязана выключаться",
             "четыре колонки как предел: при пяти подписи групп начинают переноситься и ломать ритм",
             "container-запросы на число колонок: в узкой колонке подвал обязан складываться сам",
-            "блок <style> внутри компонента — в нём палитра, колонки и пульсация"
+            "блок <style> внутри компонента — в нём палитра, колонки и пульсация",
+            "тёмную подложку как дизайн-идею блока: подвал намеренно одноцветный, светлой ветки у него нет, поэтому light-dark() в палитре не появляется"
           ],
           "adapt": [
             "brand и tagline — название и фраза о продукте; знак можно заменить на свой <svg>",
             "массив columns — заголовки групп и ссылки внутри",
             "legal — строка копирайта",
             "status — подпись ссылки на страницу состояния",
+            "background — подложка подвала; пусто оставляет собственную тёмную плиту блока",
             "акцент через проп accent — цвет знака, наведения на ссылки и точки состояния",
             "внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Подвал остаётся тёмным в любой теме: это дизайн блока. Своей подложкой через background можно поменять оттенок плиты, но не сделать её светлой — текст и ссылки рассчитаны на тёмный фон.",
             "Не ставьте ссылку на состояние, если страницы состояния нет: обещание проверят в первый же сбой.",
             "Больше четырёх ссылок в колонке делают подвал выше первого экрана телефона — переносите редкое в карту сайта.",
             "Знак вырезан маской из фона: при очень тёмном акценте он сольётся с подложкой.",
@@ -144,6 +257,18 @@
             "type": "text",
             "default": "Все системы работают",
             "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -159,17 +284,21 @@
                 "the prefers-reduced-motion rule — the pulse has to switch off",
                 "four columns as the limit: at five the group titles start wrapping and break the rhythm",
                 "the container queries on the column count: in a narrow column the footer has to fold on its own",
-                "the <style> block inside the component — it holds the palette, the columns and the pulse"
+                "the <style> block inside the component — it holds the palette, the columns and the pulse",
+                "the dark ground as the design idea of the block: this footer is deliberately single-toned, it has no light branch, so light-dark() never appears in its palette"
               ],
               "adapt": [
                 "brand and tagline — the name and the sentence about the product; the mark can be replaced with your own <svg>",
                 "the columns array — group titles and the links inside them",
                 "legal — the copyright line",
                 "status — the label of the status page link",
+                "background — the footer ground; empty keeps the block's own dark slab",
                 "the accent through the accent prop — it colours the mark, link hover and the status dot",
                 "outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The footer stays dark in every theme: that is the design of the block. The background prop can retint the slab, but not make it light — the text and links assume a dark ground.",
                 "Do not link to a status page you do not have: the promise gets tested at the first outage.",
                 "More than four links per column push the footer past a phone's first screen — move rare ones to a sitemap.",
                 "The mark is masked out of the background: with a very dark accent it merges into the ground.",
@@ -185,11 +314,112 @@
               "status": {
                 "label": "Service status",
                 "default": "All systems operational"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Four Column Footer"
+            "title": "Four Column Footer",
+            "preview": {
+              "props": {
+                "brand": "Contour",
+                "tagline": "A library of sections for sites people assemble by hand. It copies into the project as a single file and pulls no dependencies.",
+                "columns": [
+                  {
+                    "title": "Product",
+                    "links": [
+                      {
+                        "label": "Features",
+                        "href": "#features"
+                      },
+                      {
+                        "label": "Pricing",
+                        "href": "#pricing"
+                      },
+                      {
+                        "label": "Integrations",
+                        "href": "#integrations"
+                      },
+                      {
+                        "label": "What's new",
+                        "href": "#changelog"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Solutions",
+                    "links": [
+                      {
+                        "label": "For marketing",
+                        "href": "#marketing"
+                      },
+                      {
+                        "label": "For product",
+                        "href": "#product"
+                      },
+                      {
+                        "label": "For agencies",
+                        "href": "#agency"
+                      },
+                      {
+                        "label": "For education",
+                        "href": "#education"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Resources",
+                    "links": [
+                      {
+                        "label": "Documentation",
+                        "href": "#docs"
+                      },
+                      {
+                        "label": "Examples",
+                        "href": "#examples"
+                      },
+                      {
+                        "label": "Blog",
+                        "href": "#blog"
+                      },
+                      {
+                        "label": "Webinars",
+                        "href": "#webinars"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Company",
+                    "links": [
+                      {
+                        "label": "About",
+                        "href": "#about"
+                      },
+                      {
+                        "label": "Jobs",
+                        "href": "#jobs"
+                      },
+                      {
+                        "label": "Partners",
+                        "href": "#partners"
+                      },
+                      {
+                        "label": "Contact",
+                        "href": "#contacts"
+                      }
+                    ]
+                  }
+                ],
+                "legal": "© 2026 Contour Ltd. All rights reserved.",
+                "status": "All systems operational"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -225,17 +455,21 @@
             "строку согласия рядом с кнопкой, а не ссылкой в самом низу: согласие дают здесь",
             "каждую группу ссылок отдельным <nav> с подписью",
             "кольцо фокуса у поля и кнопки — подвал часто проходят с клавиатуры последним",
-            "блок <style> внутри компонента — в нём палитра, форма и колонки"
+            "блок <style> внутри компонента — в нём палитра, форма и колонки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "formTitle и formText — заголовок и объяснение, о чём письма",
-            "placeholder, submitLabel и consent — подсказка поля, подпись кнопки и текст согласия",
+            "emailLabel, placeholder, submitLabel и consent — подпись поля, подсказка, подпись кнопки и текст согласия",
             "массив columns — группы ссылок",
             "brand и legal — название и копирайт в нижней строке",
             "акцент через проп accent — цвет кнопки, наведения на ссылки и кольца фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Форма уходит на #subscribe: подставьте адрес своего обработчика и имя поля.",
             "Блок не показывает состояние «спасибо, проверьте почту»: сделайте отдельную страницу или добавьте своё состояние.",
             "Не обещайте частоту, которую не выдержите: строка про два письма в месяц проверяется через месяц.",
@@ -251,11 +485,30 @@
             "maxLength": 40
           },
           {
+            "prop": "emailLabel",
+            "label": "Подпись поля",
+            "type": "text",
+            "default": "Электронная почта",
+            "maxLength": 24
+          },
+          {
             "prop": "submitLabel",
             "label": "Кнопка",
             "type": "text",
             "default": "Подписаться",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -271,17 +524,21 @@
                 "the consent line next to the button rather than a link at the very bottom: consent is given here",
                 "every link group as its own <nav> with a label",
                 "the focus ring on the field and the button — the footer is often the last stop of a keyboard pass",
-                "the <style> block inside the component — it holds the palette, the form and the columns"
+                "the <style> block inside the component — it holds the palette, the form and the columns",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent ground by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "formTitle and formText — the heading and the explanation of what the letters are about",
-                "placeholder, submitLabel and consent — the field hint, the button label and the consent text",
+                "emailLabel, placeholder, submitLabel and consent — the field label, the hint, the button label and the consent text",
                 "the columns array — the link groups",
                 "brand and legal — the name and the copyright in the bottom row",
                 "the accent through the accent prop — it colours the button, link hover and the focus ring",
+                "background — the component ground; empty means no ground, taking the page colour",
                 "outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The form posts to #subscribe: point it at your own handler and field name.",
                 "The block shows no \"thanks, check your inbox\" state: use a separate page or add your own state.",
                 "Do not promise a frequency you cannot keep: the \"two letters a month\" line gets checked in a month.",
@@ -294,14 +551,107 @@
                 "label": "Form heading",
                 "default": "A letter about new batches"
               },
+              "emailLabel": {
+                "label": "Field label",
+                "default": "Email address"
+              },
               "submitLabel": {
                 "label": "Button",
                 "default": "Subscribe"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Newsletter Footer"
+            "title": "Newsletter Footer",
+            "preview": {
+              "props": {
+                "brand": "Vine",
+                "formTitle": "A letter about new batches",
+                "formText": "We write when a new batch comes out and when only the last sizes are left in stock. Usually two letters a month.",
+                "emailLabel": "Email address",
+                "placeholder": "you@example.com",
+                "submitLabel": "Subscribe",
+                "consent": "By sending your address you agree to the data processing policy. You can unsubscribe from any letter.",
+                "columns": [
+                  {
+                    "title": "Catalog",
+                    "links": [
+                      {
+                        "label": "New in",
+                        "href": "#new"
+                      },
+                      {
+                        "label": "Collections",
+                        "href": "#collections"
+                      },
+                      {
+                        "label": "Sale",
+                        "href": "#sale"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "For buyers",
+                    "links": [
+                      {
+                        "label": "Delivery and payment",
+                        "href": "#delivery"
+                      },
+                      {
+                        "label": "Returns",
+                        "href": "#returns"
+                      },
+                      {
+                        "label": "Size guide",
+                        "href": "#sizes"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "About us",
+                    "links": [
+                      {
+                        "label": "The workshop",
+                        "href": "#workshop"
+                      },
+                      {
+                        "label": "Materials",
+                        "href": "#materials"
+                      },
+                      {
+                        "label": "Stores",
+                        "href": "#stores"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Contact",
+                    "links": [
+                      {
+                        "label": "Write to us",
+                        "href": "#contact"
+                      },
+                      {
+                        "label": "Wholesale",
+                        "href": "#wholesale"
+                      },
+                      {
+                        "label": "Partnerships",
+                        "href": "#partners"
+                      }
+                    ]
+                  }
+                ],
+                "legal": "© 2026 Vine Workshop"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -337,17 +687,22 @@
             "служебные ссылки отдельным <nav> с подписью",
             "верхнюю границу блока: она отделяет подвал от последней секции страницы",
             "container-запрос вместо медиазапроса: в узкой колонке строка обязана переноситься сама",
-            "блок <style> внутри компонента — в нём палитра, строка и стрелка"
+            "блок <style> внутри компонента — в нём палитра, строка и стрелка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "brand — название рядом с точкой",
             "legal — короткая строка копирайта",
             "массив links — служебные ссылки",
+            "linksLabel — подпись группы служебных ссылок для скринридера",
             "backLabel — подпись ссылки «наверх»",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через проп accent — цвет точки, стрелки и фокуса",
             "внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ссылка «наверх» ведёт на #top: добавьте такой якорь в начало страницы, иначе она никуда не приведёт.",
             "Копирайт держите коротким: длинная юридическая строка ломает единственный ряд.",
             "Для сайта с большим деревом разделов возьмите подвал с колонками — этот блок про короткие страницы.",
@@ -368,6 +723,25 @@
             "type": "text",
             "default": "© 2026",
             "maxLength": 40
+          },
+          {
+            "prop": "backLabel",
+            "label": "Ссылка «наверх»",
+            "type": "text",
+            "default": "Наверх",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -383,17 +757,22 @@
                 "the utility links as their own <nav> with a label",
                 "the top border of the block: it separates the footer from the last section of the page",
                 "the container query instead of a media query: in a narrow column the row has to wrap on its own",
-                "the <style> block inside the component — it holds the palette, the row and the arrow"
+                "the <style> block inside the component — it holds the palette, the row and the arrow",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent ground by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "brand — the name next to the dot",
                 "legal — the short copyright line",
                 "the links array — the utility links",
+                "linksLabel — the label of the utility link group for screen readers",
                 "backLabel — the label of the back-to-top link",
+                "background — the component ground; empty means no ground, taking the page colour",
                 "the accent through the accent prop — it colours the dot, the arrow and focus",
                 "outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The back-to-top link points at #top: add that anchor at the start of the page or it leads nowhere.",
                 "Keep the copyright short: a long legal string breaks the single row.",
                 "For a site with a deep section tree take a footer with columns — this block is about short pages.",
@@ -409,11 +788,44 @@
               "legal": {
                 "label": "Copyright",
                 "default": "© 2026"
+              },
+              "backLabel": {
+                "label": "Back-to-top link",
+                "default": "Back to top"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Minimal Line Footer"
+            "title": "Minimal Line Footer",
+            "preview": {
+              "props": {
+                "brand": "Flight",
+                "legal": "© 2026",
+                "links": [
+                  {
+                    "label": "Terms",
+                    "href": "#terms"
+                  },
+                  {
+                    "label": "Privacy",
+                    "href": "#privacy"
+                  },
+                  {
+                    "label": "Contact",
+                    "href": "#contacts"
+                  }
+                ],
+                "linksLabel": "Utility links",
+                "backLabel": "Back to top"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -449,16 +861,21 @@
             "языки ссылками с атрибутом lang: смена языка — это переход на локализованный адрес, а не состояние",
             "aria-current=\"true\" у текущего языка",
             "container-запросы на число колонок: три, затем шесть",
-            "блок <style> внутри компонента — в нём палитра, свёртка и раскладка"
+            "блок <style> внутри компонента — в нём палитра, свёртка и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив groups — группы карты сайта и ссылки внутри",
             "массив locales и currentLocale — языковые версии и текущая",
+            "localesLabel — подпись ряда языковых версий для скринридера",
             "brand и legal — название и строка реквизитов",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через проп accent — цвет стрелок, наведения и активного языка",
             "внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Шесть групп — это предел для одной строки на широком экране; седьмая уедет во второй ряд.",
             "Карта сайта не заменяет sitemap.xml: поисковику нужен файл, а не подвал.",
             "Не подменяйте названия языков флагами: страна и язык — разные вещи.",
@@ -479,6 +896,18 @@
             "type": "select",
             "default": "RU",
             "options": ["RU", "EN", "DE", "KK"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -494,16 +923,21 @@
                 "languages as links carrying lang: switching language is a move to a localised address, not a state",
                 "aria-current=\"true\" on the current language",
                 "the container queries on the column count: three, then six",
-                "the <style> block inside the component — it holds the palette, the collapsing and the layout"
+                "the <style> block inside the component — it holds the palette, the collapsing and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent ground by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the groups array — the sitemap groups and the links inside them",
                 "the locales array and currentLocale — the language versions and the current one",
+                "localesLabel — the label of the language row for screen readers",
                 "brand and legal — the name and the registration line",
+                "background — the component ground; empty means no ground, taking the page colour",
                 "the accent through the accent prop — it colours the arrows, hover and the active language",
                 "outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Six groups is the limit for one row on a wide screen; a seventh drops to a second row.",
                 "A sitemap footer does not replace sitemap.xml: a crawler needs the file, not the footer.",
                 "Do not replace language names with flags: a country is not a language.",
@@ -518,12 +952,131 @@
               },
               "currentLocale": {
                 "label": "Current language",
-                "default": "RU"
+                "default": "EN"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Sitemap Footer"
+            "title": "Sitemap Footer",
+            "preview": {
+              "props": {
+                "brand": "Landmark",
+                "currentLocale": "EN",
+                "localesLabel": "Site language",
+                "groups": [
+                  {
+                    "title": "Product",
+                    "links": [
+                      {
+                        "label": "Overview",
+                        "href": "#overview"
+                      },
+                      {
+                        "label": "Pricing",
+                        "href": "#pricing"
+                      },
+                      {
+                        "label": "Security",
+                        "href": "#security"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Solutions",
+                    "links": [
+                      {
+                        "label": "Retail",
+                        "href": "#retail"
+                      },
+                      {
+                        "label": "Manufacturing",
+                        "href": "#industry"
+                      },
+                      {
+                        "label": "Logistics",
+                        "href": "#logistics"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Developers",
+                    "links": [
+                      {
+                        "label": "Documentation",
+                        "href": "#docs"
+                      },
+                      {
+                        "label": "API reference",
+                        "href": "#api"
+                      },
+                      {
+                        "label": "Service status",
+                        "href": "#status"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Resources",
+                    "links": [
+                      {
+                        "label": "Blog",
+                        "href": "#blog"
+                      },
+                      {
+                        "label": "Customer stories",
+                        "href": "#cases"
+                      },
+                      {
+                        "label": "Webinars",
+                        "href": "#webinars"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Company",
+                    "links": [
+                      {
+                        "label": "About",
+                        "href": "#about"
+                      },
+                      {
+                        "label": "Jobs",
+                        "href": "#jobs"
+                      },
+                      {
+                        "label": "Press kit",
+                        "href": "#press"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Support",
+                    "links": [
+                      {
+                        "label": "Knowledge base",
+                        "href": "#help"
+                      },
+                      {
+                        "label": "Write to us",
+                        "href": "#contact"
+                      },
+                      {
+                        "label": "Report a bug",
+                        "href": "#bug"
+                      }
+                    ]
+                  }
+                ],
+                "legal": "© 2026 Landmark Ltd. Reg. no. 7700000000"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["currentLocale", "accent", "background"]
       }
     },
     {
@@ -543,14 +1096,14 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-006-*. Серверный компонент. Контакты размечены списком определений <dl>: подпись и значение — пара, а не два независимых абзаца. Телефон и почта остаются настоящими ссылками tel: и mailto: с видимым значением, потому что подвал открывают именно ради них. Адрес обёрнут в <address>. Значки соцсетей — буквенные плашки с aria-label: блок не имеет права тянуть иконочный набор.",
       "meta": {
-        "tags": ["footer", "contacts", "social", "dark"],
+        "tags": ["footer", "contacts", "social", "address"],
         "preview": {
           "width": "full"
         },
         "ai": {
           "export": "Footer006",
           "usage": "<Footer006\n  brand=\"Ясная\"\n  address=\"Москва, Пресненская набережная, 12\"\n  contacts={[{ label: \"Телефон\", value: \"+7 495 000-11-22\", href: \"tel:+74950001122\" }]}\n/>",
-          "summary": "Тёмный подвал с контактами: название, адрес и часы работы слева, список контактов ссылками в середине, плашки соцсетей справа, внизу юридическая строка. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "summary": "Подвал с контактами: название, адрес и часы работы слева, список контактов ссылками в середине, плашки соцсетей справа, внизу юридическая строка. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-footer-006-* и не подменять её токенами вашей темы",
             "видимые значения телефона и почты вместо кнопки «Связаться»: подвал открывают ради номера, а не ради ещё одного перехода",
@@ -559,17 +1112,22 @@
             "контакты списком определений <dl> — подпись и значение обязаны быть парой",
             "aria-label у плашек соцсетей: двухбуквенное сокращение вслух звучит бессмысленно",
             "часы работы рядом с адресом — без них адрес не отвечает на главный вопрос",
-            "блок <style> внутри компонента — в нём палитра, раскладка и плашки"
+            "блок <style> внутри компонента — в нём палитра, раскладка и плашки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "brand, address и hours — название, адрес и часы работы",
             "массив contacts — подписи, значения и адреса ссылок",
             "массив socials — соцсети, их сокращения и адреса",
+            "socialsLabel — подпись группы соцсетей для скринридера",
             "legal — юридическая строка внизу",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через проп accent — цвет часов, наведения на контакты и заливки плашек",
             "внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "В href для телефона оставляйте номер без пробелов и скобок, иначе часть устройств его не наберёт.",
             "Сокращения соцсетей — две буквы: три уже не помещаются в плашку.",
             "Если офисов несколько, этот блок покажет только один: для списка адресов нужен отдельный раздел.",
@@ -590,13 +1148,25 @@
             "type": "text",
             "default": "Пн–Пт, 9:00–19:00",
             "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
             "description": "A footer with contacts and social links: the phone and email are real tel: and mailto: links with visible values, and the address sits in an address tag.",
             "ai": {
-              "summary": "A dark contacts footer: the name, address and opening hours on the left, a list of contact links in the middle, social tiles on the right and a legal line at the bottom. Zero dependencies, one file, its own palette, no client JS.",
+              "summary": "A contacts footer: the name, address and opening hours on the left, a list of contact links in the middle, social tiles on the right and a legal line at the bottom. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
                 "the local --vibeui-footer-006-* palette — do not swap it for your theme tokens",
                 "the visible phone and email values instead of a \"Contact us\" button: people open the footer for the number, not for another hop",
@@ -605,17 +1175,22 @@
                 "the contacts as a <dl> — label and value have to be a pair",
                 "the aria-labels on the social tiles: a two-letter abbreviation read aloud means nothing",
                 "the opening hours next to the address — without them the address does not answer the main question",
-                "the <style> block inside the component — it holds the palette, the layout and the tiles"
+                "the <style> block inside the component — it holds the palette, the layout and the tiles",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent ground by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "brand, address and hours — the name, the address and the opening hours",
                 "the contacts array — labels, values and link addresses",
                 "the socials array — the networks, their abbreviations and addresses",
+                "socialsLabel — the label of the social link group for screen readers",
                 "legal — the legal line at the bottom",
+                "background — the component ground; empty means no ground, taking the page colour",
                 "the accent through the accent prop — it colours the hours, contact hover and the tile fill",
                 "outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Keep the phone href free of spaces and brackets, or some devices will not dial it.",
                 "Social abbreviations are two letters: three no longer fit the tile.",
                 "With several offices this block shows only one: a list of addresses needs its own section.",
@@ -631,11 +1206,66 @@
               "hours": {
                 "label": "Opening hours",
                 "default": "Mon–Fri, 9:00–19:00"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Contacts Footer"
+            "title": "Contacts Footer",
+            "preview": {
+              "props": {
+                "brand": "Clearview",
+                "address": "12 Riverside Walk, London, entrance from the park side, second floor",
+                "hours": "Mon–Fri, 9:00–19:00",
+                "contacts": [
+                  {
+                    "label": "Phone",
+                    "value": "+44 20 7000 1122",
+                    "href": "tel:+442070001122"
+                  },
+                  {
+                    "label": "Email",
+                    "value": "hello@clearview.co.uk",
+                    "href": "mailto:hello@clearview.co.uk"
+                  },
+                  {
+                    "label": "Telegram",
+                    "value": "@clearview_support",
+                    "href": "#telegram"
+                  }
+                ],
+                "socials": [
+                  {
+                    "label": "Telegram",
+                    "short": "TG",
+                    "href": "#telegram"
+                  },
+                  {
+                    "label": "LinkedIn",
+                    "short": "IN",
+                    "href": "#linkedin"
+                  },
+                  {
+                    "label": "YouTube",
+                    "short": "YT",
+                    "href": "#youtube"
+                  },
+                  {
+                    "label": "Instagram",
+                    "short": "IG",
+                    "href": "#instagram"
+                  }
+                ],
+                "socialsLabel": "Find us on social media",
+                "legal": "© 2026 Clearview Clinic. Licence LO-77-01-000000"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -671,17 +1301,22 @@
             "пояснение про защищённую страницу банка рядом с плашками — оно снимает главное возражение перед оплатой",
             "полосу с условиями доставки: порог бесплатной доставки решает больше, чем любая ссылка в колонке",
             "каждую группу ссылок отдельным <nav> с подписью",
-            "блок <style> внутри компонента — в нём палитра, колонки и плашки"
+            "блок <style> внутри компонента — в нём палитра, колонки и плашки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив columns — группы ссылок магазина",
             "массив payments — способы оплаты, их сокращения и полные названия",
+            "paymentsTitle и paymentsLabel — заголовок ряда оплаты и подпись секции для скринридера",
             "paymentsNote — пояснение под плашками",
             "deliveryNote — полоса с условиями доставки",
             "brand и legal — название и реквизиты в нижней строке",
-            "акцент через проп accent — цвет наведения на ссылки и подложки полосы доставки"
+            "акцент через проп accent — цвет наведения на ссылки и подложки полосы доставки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не показывайте способ оплаты, который на самом деле не работает: это первая причина брошенной корзины.",
             "Сокращения держите в четыре знака: длинное название растянет плашку и сломает ряд.",
             "Порог бесплатной доставки дублируйте в корзине — в подвале его читают до, а не во время оформления.",
@@ -697,11 +1332,30 @@
             "maxLength": 24
           },
           {
+            "prop": "paymentsTitle",
+            "label": "Заголовок оплаты",
+            "type": "text",
+            "default": "Принимаем к оплате",
+            "maxLength": 32
+          },
+          {
             "prop": "deliveryNote",
             "label": "Условия доставки",
             "type": "text",
             "default": "Бесплатная доставка по городу от 5 000 ₽",
             "maxLength": 72
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -717,17 +1371,22 @@
                 "the note about the bank's secure page next to the tiles — it removes the main objection before payment",
                 "the delivery strip: the free-delivery threshold decides more than any link in a column",
                 "every link group as its own <nav> with a label",
-                "the <style> block inside the component — it holds the palette, the columns and the tiles"
+                "the <style> block inside the component — it holds the palette, the columns and the tiles",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent ground by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the columns array — the store link groups",
                 "the payments array — the methods, their abbreviations and full names",
+                "paymentsTitle and paymentsLabel — the payment row heading and the section label for screen readers",
                 "paymentsNote — the note under the tiles",
                 "deliveryNote — the delivery terms strip",
                 "brand and legal — the name and the registration details in the bottom row",
-                "the accent through the accent prop — it colours link hover and the delivery strip ground"
+                "the accent through the accent prop — it colours link hover and the delivery strip ground",
+                "background — the component ground; empty means no ground, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not show a payment method that does not actually work: it is the first cause of an abandoned cart.",
                 "Keep abbreviations to four characters: a long name stretches the tile and breaks the row.",
                 "Repeat the free-delivery threshold in the cart — in the footer it is read before checkout, not during it.",
@@ -740,14 +1399,139 @@
                 "label": "Brand",
                 "default": "House & Harmony"
               },
+              "paymentsTitle": {
+                "label": "Payment heading",
+                "default": "We accept"
+              },
               "deliveryNote": {
                 "label": "Delivery terms",
                 "default": "Free city delivery on orders over £50"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Storefront Footer"
+            "title": "Storefront Footer",
+            "preview": {
+              "props": {
+                "brand": "House & Harmony",
+                "columns": [
+                  {
+                    "title": "Catalog",
+                    "links": [
+                      {
+                        "label": "Tableware",
+                        "href": "#tableware"
+                      },
+                      {
+                        "label": "Textiles",
+                        "href": "#textile"
+                      },
+                      {
+                        "label": "Lighting",
+                        "href": "#light"
+                      },
+                      {
+                        "label": "Sale",
+                        "href": "#sale"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "For buyers",
+                    "links": [
+                      {
+                        "label": "Delivery",
+                        "href": "#delivery"
+                      },
+                      {
+                        "label": "Payment",
+                        "href": "#payment"
+                      },
+                      {
+                        "label": "Returns and exchange",
+                        "href": "#returns"
+                      },
+                      {
+                        "label": "Warranty",
+                        "href": "#warranty"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "The store",
+                    "links": [
+                      {
+                        "label": "About",
+                        "href": "#about"
+                      },
+                      {
+                        "label": "Pickup points",
+                        "href": "#pickup"
+                      },
+                      {
+                        "label": "Wholesale",
+                        "href": "#wholesale"
+                      },
+                      {
+                        "label": "Jobs",
+                        "href": "#jobs"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Help",
+                    "links": [
+                      {
+                        "label": "FAQ",
+                        "href": "#faq"
+                      },
+                      {
+                        "label": "Track an order",
+                        "href": "#track"
+                      },
+                      {
+                        "label": "Contact us",
+                        "href": "#contact"
+                      }
+                    ]
+                  }
+                ],
+                "payments": [
+                  {
+                    "label": "Bank cards",
+                    "short": "CARD"
+                  },
+                  {
+                    "label": "Instant bank transfer",
+                    "short": "BANK"
+                  },
+                  {
+                    "label": "Pay in instalments",
+                    "short": "SPLIT"
+                  },
+                  {
+                    "label": "Cash on delivery",
+                    "short": "CASH"
+                  },
+                  {
+                    "label": "Invoice for companies",
+                    "short": "INV"
+                  }
+                ],
+                "paymentsTitle": "We accept",
+                "paymentsLabel": "Payment methods",
+                "paymentsNote": "Payment goes through the bank's secure page. Card details never reach the store and are not stored by us.",
+                "deliveryNote": "Free city delivery on orders over £50; pickup point collection on the day of the order.",
+                "legal": "© 2026 House & Harmony Ltd. Reg. no. 1157700000000"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -783,17 +1567,22 @@
             "документы отдельной навигацией с подписью, а не строкой ссылок через запятую",
             "читаемый кегль дисклеймера: юридический текст в шесть пикселей — это претензия к вам, а не к пользователю",
             "разделение реквизитов и документов на две колонки только с 46rem собственной ширины",
-            "блок <style> внутри компонента — в нём палитра, реквизиты и раскладка"
+            "блок <style> внутри компонента — в нём палитра, реквизиты и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "company — название юридического лица",
             "массив details — реквизиты и их значения",
             "массив legalLinks — обязательные документы",
+            "legalLinksLabel — подпись группы документов для скринридера",
             "disclaimer и copyright — предупреждение и строка копирайта",
             "cookieLabel и cookieHref — подпись и адрес настроек cookie",
-            "акцент через проп accent — цвет наведения на документы и фокуса"
+            "акцент через проп accent — цвет наведения на документы и фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Реквизиты в блоке вымышленные: подставьте свои до публикации, иначе рискуете претензией.",
             "Ссылка на настройки cookie должна открывать настоящий диалог согласия, а не страницу политики.",
             "Дисклеймер про оферту относится к российскому праву: для другой юрисдикции перепишите текст.",
@@ -814,6 +1603,18 @@
             "type": "text",
             "default": "Настройки cookie",
             "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -829,17 +1630,22 @@
                 "the documents as their own navigation with a label rather than a comma-separated line of links",
                 "the readable size of the disclaimer: legal text at six pixels is a complaint against you, not the reader",
                 "splitting details and documents into two columns only from 46rem of the block's own width",
-                "the <style> block inside the component — it holds the palette, the details and the layout"
+                "the <style> block inside the component — it holds the palette, the details and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent ground by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "company — the legal entity name",
                 "the details array — the registration entries and their values",
                 "the legalLinks array — the required documents",
+                "legalLinksLabel — the label of the document group for screen readers",
                 "disclaimer and copyright — the notice and the copyright line",
                 "cookieLabel and cookieHref — the label and address of the cookie settings",
-                "the accent through the accent prop — it colours document hover and focus"
+                "the accent through the accent prop — it colours document hover and focus",
+                "background — the component ground; empty means no ground, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The details in the block are fictional: put your own in before publishing or risk a complaint.",
                 "The cookie-settings link has to open a real consent dialog, not the policy page.",
                 "The offer disclaimer refers to Russian law: rewrite it for another jurisdiction.",
@@ -855,11 +1661,63 @@
               "cookieLabel": {
                 "label": "Cookie link",
                 "default": "Cookie settings"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Legal Footer"
+            "title": "Legal Footer",
+            "preview": {
+              "props": {
+                "company": "Landmark Ltd",
+                "legalLinks": [
+                  {
+                    "label": "Terms of service",
+                    "href": "#terms"
+                  },
+                  {
+                    "label": "Personal data processing policy",
+                    "href": "#privacy"
+                  },
+                  {
+                    "label": "Marketing consent",
+                    "href": "#consent"
+                  },
+                  {
+                    "label": "Public offer",
+                    "href": "#offer"
+                  }
+                ],
+                "legalLinksLabel": "Legal documents",
+                "details": [
+                  {
+                    "term": "Company no.",
+                    "value": "1157700000000"
+                  },
+                  {
+                    "term": "VAT / Reg.",
+                    "value": "7700000000 / 770001001"
+                  },
+                  {
+                    "term": "Address",
+                    "value": "4 Bronnaya Street, office 12, 123001"
+                  },
+                  {
+                    "term": "Licence",
+                    "value": "No. LO-77-01-000000 of 14.02.2024"
+                  }
+                ],
+                "disclaimer": "The information on this site is for reference only and is not a public offer. Exact terms, deadlines and prices are fixed in the contract. Images may differ from the actual product.",
+                "copyright": "© 2026 Landmark Ltd. All rights reserved.",
+                "cookieLabel": "Cookie settings"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

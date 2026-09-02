@@ -19,8 +19,16 @@ export type Inputgroup033Props = Omit<
   defaultUnit?: string
   onChange?: (value: string, unit: string) => void
   hint?: string
+  /** Подпись селекта единицы для скринридера. */
+  unitsLabel?: string
+  /** Шаблон итоговой строки; {value} подставляет число с единицей. */
+  previewText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
+
+const PREVIEW_TEXT = "Напомнить через {value}"
 
 const UNITS: Inputgroup033Unit[] = [
   { value: "min", label: "мин" },
@@ -35,14 +43,14 @@ const UNITS: Inputgroup033Unit[] = [
 // onChange, у которого всегда есть оба значения разом.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-033"]){
---vibeui-inputgroup-033-surface:oklch(1 0 0);
---vibeui-inputgroup-033-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-033-fg:oklch(0.22 0.014 265);
---vibeui-inputgroup-033-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-033-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-033-fixed:oklch(0.965 0.003 265);
---vibeui-inputgroup-033-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-033-accent:oklch(0.55 0.15 200);
+--vibeui-inputgroup-033-surface:transparent;
+--vibeui-inputgroup-033-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-inputgroup-033-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-033-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-inputgroup-033-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
+--vibeui-inputgroup-033-fixed:light-dark(oklch(0.965 0.003 265),oklch(0.31 0.012 265));
+--vibeui-inputgroup-033-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-inputgroup-033-accent:light-dark(oklch(0.55 0.15 200),oklch(0.77 0.13 200));
 --vibeui-inputgroup-033-radius:0.75rem;
 --vibeui-inputgroup-033-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -101,6 +109,28 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-inputgroup-033-mut
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сцепка «число + единица времени»: числовое поле слева, нативный select
  * с мин/час/день справа, итог одной фразой под рамкой. Единица не
  * пересчитывает число — это делает вызывающий код через onChange.
@@ -114,6 +144,9 @@ export function Inputgroup033({
   defaultUnit = units[0]?.value ?? "min",
   onChange,
   hint = "Единица не пересчитывает число: 30 минут при смене на «час» не станут 30 часами.",
+  unitsLabel = "Единица времени",
+  previewText = PREVIEW_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -125,11 +158,18 @@ export function Inputgroup033({
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-033-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-033-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
   const unitLabel =
     units.find((item) => item.value === unit)?.label ?? units[0]?.label ?? ""
+  const [previewBefore, previewAfter = ""] = previewText.split("{value}")
 
   return (
     <>
@@ -161,7 +201,7 @@ export function Inputgroup033({
           />
           <select
             name={`${name}-unit`}
-            aria-label="Единица времени"
+            aria-label={unitsLabel}
             value={unit}
             onChange={(event) => {
               const next = event.target.value
@@ -177,10 +217,11 @@ export function Inputgroup033({
           </select>
         </div>
         <p data-part="preview" id={`${id}-preview`}>
-          Напомнить через{" "}
+          {previewBefore}
           <strong>
             {value || "0"} {unitLabel}
           </strong>
+          {previewAfter}
         </p>
         <p data-part="hint" id={`${id}-hint`}>
           {hint}

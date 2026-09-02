@@ -31,16 +31,20 @@
             "resize:none у textarea — размер задаёт содержимое, ручка ломает раскладку",
             "white-space:pre-wrap и word-break:break-word у копии: иначе длинное слово посчитается в одну строку",
             "потолок max-height через --vibeui-textarea-001-max-rows и прокрутку после него",
-            "блок <style> внутри компонента — в нём вся палитра, геометрия и механика роста"
+            "блок <style> внутри компонента — в нём вся палитра, геометрия и механика роста",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты label, hint и placeholder",
             "maxRows — сколько строк поле показывает до появления прокрутки",
             "акцент через проп accent — цвет рамки и кольца при фокусе",
             "любые нативные пропсы textarea: name, value, defaultValue, onChange, onKeyDown, required, maxLength, disabled",
-            "ширину и внешние отступы через className"
+            "ширину и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент клиентский: директива \"use client\" нужна ради onInput. Не убирайте её.",
             "Не переводите поле в контролируемое через value без onChange — React заблокирует ввод, и высота застынет.",
             "Для контролируемого варианта передавайте value и onChange: обработчик роста вызывается до вашего onInput и ему не мешает.",
@@ -89,6 +93,12 @@
             "label": "Выключено",
             "type": "boolean",
             "default": false
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -104,16 +114,20 @@
                 "resize:none on the textarea — the content sets the size, and the drag handle breaks the layout",
                 "white-space:pre-wrap and word-break:break-word on the copy: otherwise a long word counts as a single line",
                 "the max-height ceiling through --vibeui-textarea-001-max-rows and the scrolling past it",
-                "the <style> block inside the component — it holds the palette, the geometry and the growth mechanism"
+                "the <style> block inside the component — it holds the palette, the geometry and the growth mechanism",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the label, hint and placeholder copy",
                 "maxRows — how many rows the field shows before it starts scrolling",
                 "the accent through the accent prop — it colours the border and ring on focus",
                 "any native textarea props: name, value, defaultValue, onChange, onKeyDown, required, maxLength, disabled",
-                "width and outer spacing through className"
+                "width and outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component is a client one: the \"use client\" directive is there for onInput. Do not remove it.",
                 "Do not make it controlled with value and no onChange — React blocks typing and the height freezes.",
                 "For a controlled version pass value and onChange: the growth handler runs before your onInput and does not get in its way.",
@@ -143,14 +157,25 @@
               },
               "disabled": {
                 "label": "Disabled"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Auto Grow Textarea"
+            "title": "Auto Grow Textarea",
+            "preview": {
+              "props": {
+                "label": "What needs doing",
+                "hint": "One field, grows with the text. Ctrl + Enter to send.",
+                "placeholder": "Describe the task in your own words"
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["maxRows", "disabled", "accent", "background"]
       }
     },
     {
@@ -181,15 +206,21 @@
             "счётчик с role=\"status\" и связь с полем через aria-describedby",
             "aria-invalid при превышении вместо одной только красной рамки",
             "возможность вертикального изменения размера",
-            "подпись рядом со счётчиком: что делать, а не только сколько осталось"
+            "подпись рядом со счётчиком: что делать, а не только сколько осталось",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "limit — предел в символах",
             "label и placeholder",
             "обработчик onChange",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи состояний через stateText: ok — в пределах лимита, over — превышение",
+            "стартовый текст через defaultValue"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Отправку формы при превышении должна блокировать сама форма: поле только показывает состояние.",
             "Считаются символы, а не байты: для ограничений базы это разные величины.",
             "Мягкое ограничение уместно для описаний; для строгих полей вроде СМС нужен другой подход.",
@@ -217,6 +248,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -230,15 +267,21 @@
                 "the counter with role=\"status\" tied to the field via aria-describedby",
                 "aria-invalid past the limit rather than a red border alone",
                 "vertical resizing",
-                "the line beside the counter: what to do, not only how many are left"
+                "the line beside the counter: what to do, not only how many are left",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "limit — the character cap",
                 "label and placeholder",
                 "the onChange handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "the state captions through stateText: ok inside the limit, over past it",
+                "the starting text through defaultValue"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Blocking submission past the limit is the form's job: the field only shows state.",
                 "Characters are counted, not bytes: database limits often mean the latter.",
                 "A soft limit suits descriptions; strict fields like SMS need another approach.",
@@ -256,11 +299,26 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Limited Textarea"
+            "title": "Limited Textarea",
+            "preview": {
+              "props": {
+                "label": "Component description",
+                "placeholder": "What the component does and what the idea is",
+                "defaultValue": "A product card with a square frame: the add-to-cart button is a separate target on top of the link.",
+                "stateText": {
+                  "ok": "Short and to the point",
+                  "over": "Too long — trim it"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["limit", "accent", "background"]
       }
     },
     {
@@ -294,15 +352,20 @@
             "пробел в конце content:attr(data-value): без него последняя пустая строка не учитывается и поле не дорастает",
             "одинаковый шрифт и line-height у копии и поля — иначе высоты расходятся и текст обрезается",
             "overflow:hidden и resize:none у textarea: полоса прокрутки внутри растущего поля бессмысленна",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись через label и текст-заглушку через placeholder",
             "стартовую высоту через rows",
             "подпись под полем через hint",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "счётчик строк через linesText: {count} подставляется числом",
+            "стартовый текст через defaultValue"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Поле растёт без предела: при длинном тексте карточка становится очень высокой — ограничивайте max-height, если это важно.",
             "Копия текста дублирует содержимое в атрибуте: для очень больших текстов это лишний вес разметки.",
             "Рамка и кольцо фокуса живут на обёртке, а не на textarea: свои стили вешать туда же.",
@@ -324,6 +387,18 @@
             "type": "text",
             "default": "Растёт по мере набора",
             "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -337,15 +412,20 @@
                 "the trailing space in content:attr(data-value): without it a final empty line is ignored and the field stops growing",
                 "the identical font and line-height on the copy and the field — otherwise the heights diverge and text is clipped",
                 "overflow:hidden and resize:none on the textarea: a scrollbar inside a growing field makes no sense",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption through label and the placeholder text through placeholder",
                 "the starting height through rows",
                 "the line under the field through hint",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "the line counter through linesText: {count} is replaced by the number",
+                "the starting text through defaultValue"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The field grows without limit: long text makes the card very tall — cap it with max-height if that matters.",
                 "The text copy duplicates the content in an attribute: for very large texts that is extra markup weight.",
                 "The border and focus ring live on the wrapper, not the textarea: put your own styles there too.",
@@ -361,11 +441,27 @@
               "hint": {
                 "label": "Caption",
                 "default": "Grows as you type"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Autogrow Textarea"
+            "title": "Autogrow Textarea",
+            "preview": {
+              "props": {
+                "label": "Task for the team",
+                "placeholder": "Describe the task",
+                "hint": "Grows as you type",
+                "defaultValue": "About the task in brief: what we are doing, for whom and by when.\nThe field grows with the text — try adding a line.",
+                "linesText": "{count} lines"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["rows", "accent", "background"]
       }
     },
     {
@@ -399,15 +495,21 @@
             "возврат выделения после вставки — иначе второе нажатие кнопки промахивается мимо текста",
             "role=\"toolbar\" на панели: набор кнопок над полем должен объявляться группой",
             "обычный textarea вместо contenteditable: он отправляется формой и не требует санитайзера",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись через label и текст-заглушку через placeholder",
             "подсказку под полем через hint",
             "набор кнопок в константе TOOLS",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи кнопок панели через toolText и название панели через toolbarLabel",
+            "примеры разметки в строке подсказки через examples",
+            "стартовый текст через defaultValue"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не рисует предпросмотр: он редактирует исходник, разметку разбирает тот, кто её показывает.",
             "Повторное нажатие не снимает форматирование — обёртка только добавляется.",
             "Кнопка списка ставит дефис в начало текущей строки, а не всех выделенных: для многострочного случая логику придётся расширить.",
@@ -428,6 +530,18 @@
             "type": "text",
             "default": "Что изменилось в этой версии",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -441,15 +555,21 @@
                 "restoring the selection after insertion — otherwise a second button press misses the text",
                 "role=\"toolbar\" on the panel: a set of buttons above the field has to be announced as a group",
                 "the plain textarea instead of contenteditable: it submits with the form and needs no sanitiser",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption through label and the placeholder text through placeholder",
                 "the hint under the field through hint",
                 "the set of buttons in the TOOLS constant",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "the toolbar button captions through toolText and the panel name through toolbarLabel",
+                "the markup examples in the hint line through examples",
+                "the starting text through defaultValue"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component renders no preview: it edits the source, and whoever displays it parses the markup.",
                 "Pressing again does not remove formatting — the wrapper is only added.",
                 "The list button prefixes the current line, not every selected one: multi-line support needs extending the logic.",
@@ -465,11 +585,34 @@
               "placeholder": {
                 "label": "Placeholder",
                 "default": "What changed in this version"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Markdown Toolbar Textarea"
+            "title": "Markdown Toolbar Textarea",
+            "preview": {
+              "props": {
+                "label": "Release notes",
+                "placeholder": "What changed in this version",
+                "hint": "Markdown is supported",
+                "defaultValue": "The component installs **with one command** and pulls in no dependencies.\nInside it is a plain `textarea`.",
+                "toolText": {
+                  "bold": "Bold",
+                  "italic": "Italic",
+                  "code": "Code",
+                  "list": "Bulleted list"
+                },
+                "toolbarLabel": "Formatting",
+                "examples": ["**bold**", "_italic_"]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -503,15 +646,20 @@
             "preventDefault на mousedown у пунктов списка — иначе поле теряет фокус раньше, чем произойдёт клик",
             "setRangeText при вставке: он сохраняет историю отмены и ставит каретку за ником",
             "список под полем, а не над кареткой: точное позиционирование в textarea требует измерения текста и промахивается",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись через label и текст-заглушку через placeholder",
             "справочник коллег через people",
             "акцентный цвет через accent",
-            "число видимых подсказок ограничением списка перед отрисовкой"
+            "число видимых подсказок ограничением списка перед отрисовкой",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "строку под полем через hint: {at} подставляется выделенным символом «@»",
+            "стартовый текст через defaultValue"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Клавиатурной навигации по списку здесь нет: стрелки двигают каретку в тексте, выбор делается мышью.",
             "Справочник статичен: для живого поиска people заменяется загруженным списком у владельца данных.",
             "Компонент не разбирает упоминания обратно — распознавание ников остаётся на стороне, которая сохраняет комментарий.",
@@ -532,6 +680,18 @@
             "type": "text",
             "default": "Наберите @, чтобы позвать коллегу",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -545,15 +705,20 @@
                 "preventDefault on mousedown for the list items — otherwise the field loses focus before the click happens",
                 "setRangeText on insertion: it keeps the undo history and puts the caret after the handle",
                 "the list under the field rather than at the caret: precise positioning inside a textarea needs text measuring and misses",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption through label and the placeholder text through placeholder",
                 "the directory of colleagues through people",
                 "the accent colour through accent",
-                "the number of visible suggestions by capping the list before rendering"
+                "the number of visible suggestions by capping the list before rendering",
+                "background — the component background; empty means no background, taking the page colour",
+                "the line under the field through hint: {at} is replaced by the highlighted @ character",
+                "the starting text through defaultValue"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is no keyboard navigation in the list: arrows move the caret in the text, selection is done with the mouse.",
                 "The directory is static: for live search replace people with a list fetched by the data owner.",
                 "The component does not parse mentions back — resolving handles is left to whoever stores the comment.",
@@ -569,11 +734,48 @@
               "placeholder": {
                 "label": "Placeholder",
                 "default": "Type @ to call a colleague"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Mention Textarea"
+            "title": "Mention Textarea",
+            "preview": {
+              "props": {
+                "label": "Task comment",
+                "placeholder": "Type @ to call a colleague",
+                "defaultValue": "Ready for review, please take a look, @",
+                "hint": "The {at} character opens the list of colleagues",
+                "people": [
+                  {
+                    "handle": "anna",
+                    "name": "Anna Letova",
+                    "role": "design"
+                  },
+                  {
+                    "handle": "artem",
+                    "name": "Artem Gulyaev",
+                    "role": "frontend"
+                  },
+                  {
+                    "handle": "dasha",
+                    "name": "Dasha Kim",
+                    "role": "analytics"
+                  },
+                  {
+                    "handle": "max",
+                    "name": "Maxim Orlov",
+                    "role": "product"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -607,15 +809,20 @@
             "снятие таймера в useEffect — иначе setState зовут у уже размонтированного компонента",
             "собственное форматирование времени вместо toLocaleTimeString: локальный формат сервера и браузера различается и ломает гидрацию",
             "минимальную высоту строки статуса — без неё карточка прыгает при смене фазы",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись через label и текст-заглушку через placeholder",
             "паузу до сохранения через delay",
             "акцентный цвет через accent",
-            "формулировки фаз в тексте компонента"
+            "подписи фаз через statusText: idle, dirty и saved с {time}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "счётчик символов через countText: {count} подставляется числом",
+            "стартовый текст через defaultValue"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент ничего не отправляет: настоящую запись подключает владелец данных на месте таймера.",
             "Ошибку сохранения этот вариант не показывает — для неё нужна четвёртая фаза и кнопка повтора.",
             "Черновик живёт только в памяти страницы: при перезагрузке он теряется, пока не подключено хранилище.",
@@ -637,6 +844,18 @@
             "type": "text",
             "default": "Черновик ответа",
             "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -650,15 +869,20 @@
                 "clearing the timer in useEffect — otherwise setState is called on an unmounted component",
                 "the own time formatting instead of toLocaleTimeString: server and browser formats differ and break hydration",
                 "the minimum height of the status line — without it the card jumps when the phase changes",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption through label and the placeholder text through placeholder",
                 "the pause before saving through delay",
                 "the accent colour through accent",
-                "the phase wording inside the component text"
+                "the phase captions through statusText: idle, dirty and saved with {time}",
+                "background — the component background; empty means no background, taking the page colour",
+                "the character counter through countText: {count} is replaced by the number",
+                "the starting text through defaultValue"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component sends nothing: the data owner wires a real write in place of the timer.",
                 "This variant shows no save error — that needs a fourth phase and a retry button.",
                 "The draft lives only in page memory: it is lost on reload until storage is wired up.",
@@ -674,11 +898,31 @@
               "label": {
                 "label": "Caption",
                 "default": "Reply draft"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Draft Autosave Textarea"
+            "title": "Draft Autosave Textarea",
+            "preview": {
+              "props": {
+                "label": "Reply draft",
+                "placeholder": "Start typing — the draft saves itself",
+                "defaultValue": "This is still a draft: a sketch of a reply nobody but you can see.",
+                "countText": "{count} chars",
+                "statusText": {
+                  "idle": "Saves automatically",
+                  "dirty": "Unsaved edits…",
+                  "saved": "Draft saved at {time}"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["delay", "accent", "background"]
       }
     },
     {
@@ -712,15 +956,20 @@
             "слова и минуты вместо голых символов: автор думает объёмом текста, а не количеством знаков",
             "роль progressbar с aria-valuenow на полосе — иначе прогресс виден только зрячим",
             "aria-describedby, связывающий поле со статистикой: цифры должны читаться вместе с полем",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись через label и текст-заглушку через placeholder",
             "целевой объём через target",
             "скорость чтения через wordsPerMinute",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи счётчиков через statsText и подпись полосы через progressLabel",
+            "стартовый текст через defaultValue"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Скорость чтения — оценка: 200 слов в минуту это средний темп для русского текста, для технического он ниже.",
             "Минимум одна минута выводится даже для двух слов: «0 мин чтения» выглядит как ошибка.",
             "Полоса упирается в сто процентов и дальше не растёт — превышение цели она не показывает.",
@@ -743,6 +992,18 @@
             "default": 200,
             "min": 100,
             "max": 400
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -756,15 +1017,20 @@
                 "words and minutes instead of bare characters: an author thinks in volume, not in glyphs",
                 "the progressbar role with aria-valuenow on the bar — otherwise progress is visible to sighted users only",
                 "the aria-describedby link between field and statistics: the figures must be read together with the field",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption through label and the placeholder text through placeholder",
                 "the target volume through target",
                 "the reading speed through wordsPerMinute",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "the counter captions through statsText and the bar label through progressLabel",
+                "the starting text through defaultValue"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Reading speed is an estimate: 200 words per minute is an average pace, technical prose runs slower.",
                 "At least one minute is shown even for two words: \"0 min read\" looks like a bug.",
                 "The bar stops at one hundred percent and grows no further — it does not show overshoot.",
@@ -780,11 +1046,31 @@
               "wordsPerMinute": {
                 "label": "Words per minute",
                 "default": 200
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Reading Time Textarea"
+            "title": "Reading Time Textarea",
+            "preview": {
+              "props": {
+                "label": "Article body",
+                "placeholder": "The first paragraph sets the tone for the whole text",
+                "defaultValue": "A VibeUI component installs with one command, lives in a single file and pulls in no dependencies. Copy the agent instruction and it will install the block itself, keeping the animations, typography and spacing.",
+                "statsText": {
+                  "words": "words",
+                  "characters": "characters",
+                  "minutes": "min read"
+                },
+                "progressLabel": "Text volume: {percent}% of the target"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["target", "wordsPerMinute", "accent", "background"]
       }
     },
     {
@@ -818,16 +1104,20 @@
             "запасной путь с выделением текста — без защищённого соединения буфер обмена недоступен, и кнопка иначе молча не работает",
             "подтверждение «Скопировано» текстом, а не только сменой значка: беззвучное копирование выглядит как отсутствие реакции",
             "кнопку в шапке, а не поверх текста: наложенная кнопка перекрывает первую строку и мешает выделять руками",
-            "собственную светлую подложку — без неё тёмный текст пропадает на тёмной странице"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись через label и пояснение через hint",
             "надпись кнопки через copyText",
             "надпись подтверждения через copiedText",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "текст поля через content"
           ],
           "notes": [
-            "Содержимое задано константой в файле: подставляя своё, следите за длиной строк — поле моноширинное и не переносит команды красиво.",
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Содержимое задаётся пропом content: подставляя своё, следите за длиной строк — поле моноширинное и не переносит команды красиво.",
             "Подтверждение держится меньше двух секунд: за это время его должен успеть объявить скринридер.",
             "Выделение всего текста по фокусу помогает мышью, но мешает читать поле с клавиатуры по частям.",
             "Не выносить CSS-переменные в globals.css: компонент обязан оставаться одним самодостаточным файлом."
@@ -847,6 +1137,18 @@
             "type": "text",
             "default": "Поле доступно для чтения и выделения, но не для правки",
             "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -860,16 +1162,20 @@
                 "the fallback that selects the text — without a secure connection the clipboard is unavailable and the button would fail silently",
                 "the \"Copied\" confirmation as text, not only an icon swap: a silent copy looks like no reaction at all",
                 "the button in the header rather than over the text: an overlaid button covers the first line and blocks manual selection",
-                "the component's own light surface — without it the dark text disappears on a dark page"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the caption through label and the explanation through hint",
                 "the button caption through copyText",
                 "the confirmation caption through copiedText",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "the field text through content"
               ],
               "notes": [
-                "The content is a constant in the file: when substituting your own watch the line length — the field is monospaced and wraps commands badly.",
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The content comes from the content prop: when substituting your own watch the line length — the field is monospaced and wraps commands badly.",
                 "The confirmation lasts under two seconds: a screen reader has to announce it within that window.",
                 "Selecting everything on focus helps mouse users but hinders reading the field piece by piece from the keyboard.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -884,11 +1190,27 @@
               "hint": {
                 "label": "Explanation",
                 "default": "The field is readable and selectable, but not editable"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Readonly Copy Textarea"
+            "title": "Readonly Copy Textarea",
+            "preview": {
+              "props": {
+                "label": "Install command",
+                "hint": "The field is readable and selectable, but not editable",
+                "copyText": "Copy",
+                "copiedText": "Copied",
+                "content": "npx shadcn@latest add https://vibeui.dev/r/textarea-008.json\n\n# A read-only field: the text can be selected,\n# copied with the button and read by a screen reader."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

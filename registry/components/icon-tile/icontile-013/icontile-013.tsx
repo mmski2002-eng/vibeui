@@ -7,6 +7,8 @@ export type Icontile013Props = Omit<
   icon?: "trophy" | "star" | "medal"
   label?: string
   tier?: "bronze" | "silver" | "gold"
+  /** Пусто — подложки нет, плитка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: лента под кругом — не одна фигура, а два одинаковых
@@ -15,16 +17,26 @@ export type Icontile013Props = Omit<
 // симметричны при любом tier и любой ширине, а не подгоняются раздельно.
 // Круг и лента окрашены от одной переменной оттенка --vibeui-icontile-013-hue,
 // которую переключает tier, — металл достижения нигде не подбирается вручную.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подпись темнеет
+// и светлеет вместе со страницей, а собственной подложки у плитки нет.
 const STYLES = `
 :where([data-vibeui-block="icontile-013"]){
 container-type:inline-size;
 --vibeui-icontile-013-hue:75;
 --vibeui-icontile-013-size:3.5rem;
---vibeui-icontile-013-fg:oklch(0.26 0.014 265);
+--vibeui-icontile-013-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.006 265));
+--vibeui-icontile-013-bg:transparent;
+--vibeui-icontile-013-pad:0;
+--vibeui-icontile-013-radius:0;
 --vibeui-icontile-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="icontile-013"]{
 display:inline-flex;flex-direction:column;align-items:center;min-width:0;
+box-sizing:border-box;
+padding:var(--vibeui-icontile-013-pad);
+background:var(--vibeui-icontile-013-bg);
+border-radius:var(--vibeui-icontile-013-radius);
 font-family:var(--vibeui-icontile-013-font);
 }
 [data-vibeui-block="icontile-013"] [data-part="badge"]{
@@ -105,6 +117,29 @@ function Icontile013Icon({
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Плитка достижения: иконка в круге, симметричная лента из двух хвостов
  * под ним и подпись. Металл и цвет ленты выводятся из tier.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -113,10 +148,25 @@ export function Icontile013({
   icon = "trophy",
   label = "Первая интеграция",
   tier = "gold",
+  background = "",
   className,
   style,
   ...props
 }: Icontile013Props) {
+  // Поля появляются вместе с подложкой: без неё плитка лежит прямо на
+  // странице, и лишние отступы по краям ей только мешают.
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-icontile-013-bg": background,
+          "--vibeui-icontile-013-pad": "0.875rem 1.25rem",
+          "--vibeui-icontile-013-radius": "0.875rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-icontile-013" precedence="medium">
@@ -127,7 +177,7 @@ export function Icontile013({
         data-vibeui-block="icontile-013"
         data-tier={tier}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="badge">
           <span data-part="circle">

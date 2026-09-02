@@ -18,7 +18,13 @@ export type Commerce039Props = {
   note?: string
   deals?: Commerce039Deal[]
   cta?: string
+  /** Подпись перед зачёркнутой ценой, слышна только скринридеру. */
+  fullPriceLabel?: string
+  /** Остаток: {count} — число штук. */
+  leftText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,12 +38,14 @@ export type Commerce039Props = {
 // предложения, а не украшение.
 const STYLES = `
 :where([data-vibeui-block="commerce-039"]){
---vibeui-commerce-039-bg:oklch(1 0 0);
---vibeui-commerce-039-fg:oklch(0.21 0.014 265);
---vibeui-commerce-039-muted:oklch(0.55 0.014 265);
---vibeui-commerce-039-border:oklch(0.91 0.006 265);
---vibeui-commerce-039-soft:oklch(0.975 0.004 265);
---vibeui-commerce-039-accent:oklch(0.55 0.19 25);
+--vibeui-commerce-039-bg:transparent;
+--vibeui-commerce-039-fg:light-dark(oklch(0.21 0.014 265),oklch(0.93 0.006 265));
+--vibeui-commerce-039-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-commerce-039-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-039-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.009 265));
+--vibeui-commerce-039-accent:light-dark(oklch(0.55 0.19 25),oklch(0.72 0.17 25));
+--vibeui-commerce-039-onaccent:light-dark(oklch(1 0 0),oklch(0.18 0.03 25));
+--vibeui-commerce-039-onfg:light-dark(oklch(1 0 0),oklch(0.18 0.01 265));
 --vibeui-commerce-039-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -71,11 +79,11 @@ background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-039-hue,
 }
 [data-vibeui-block="commerce-039"] [data-part="cut"]{
 position:absolute;top:0.5rem;left:0.5rem;padding:0.25rem 0.5rem;border-radius:0.5rem;
-background:var(--vibeui-commerce-039-accent);color:oklch(1 0 0);font-size:0.75rem;font-weight:750;
+background:var(--vibeui-commerce-039-accent);color:var(--vibeui-commerce-039-onaccent);font-size:0.75rem;font-weight:750;
 }
 [data-vibeui-block="commerce-039"] [data-part="grade"]{
 position:absolute;top:0.5rem;right:0.5rem;padding:0.1875rem 0.5rem;border-radius:0.5rem;
-background:oklch(1 0 0 / 90%);font-size:0.625rem;font-weight:700;letter-spacing:0.02em;
+background:oklch(1 0 0 / 90%);color:oklch(0.21 0.014 265);font-size:0.625rem;font-weight:700;letter-spacing:0.02em;
 }
 [data-vibeui-block="commerce-039"] [data-part="body"]{padding:0.75rem 0.875rem 0.875rem;display:flex;flex-direction:column;flex:1 1 auto}
 [data-vibeui-block="commerce-039"] [data-part="name"]{margin:0;font-size:0.9375rem;font-weight:650;line-height:1.3}
@@ -108,7 +116,7 @@ margin-top:auto;padding-top:0.75rem;
 }
 [data-vibeui-block="commerce-039"] [data-part="buy"] button{
 position:relative;z-index:1;width:100%;appearance:none;border:0;cursor:pointer;height:2.5rem;border-radius:0.75rem;
-background:var(--vibeui-commerce-039-fg);color:oklch(1 0 0);font:inherit;font-size:0.875rem;font-weight:650;
+background:var(--vibeui-commerce-039-fg);color:var(--vibeui-commerce-039-onfg);font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-039"] [data-part="buy"] button:focus-visible{outline:2px solid var(--vibeui-commerce-039-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-039"] *{animation:none!important;transition:none!important}}
@@ -151,6 +159,28 @@ const DEFAULT_DEALS: Commerce039Deal[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Витрина уценки: причина скидки написана на карточке, остаток назван числом.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -160,12 +190,21 @@ export function Commerce039({
   note = "На уценённые товары действует та же гарантия, что и на новые. Вернуть их можно в течение 14 дней — кроме случаев, когда не понравился уже описанный дефект.",
   deals = DEFAULT_DEALS,
   cta = "В корзину",
+  fullPriceLabel = "Цена нового ",
+  leftText = "Осталось {count} шт. по этой цене",
   accent,
+  background = "",
   className,
   style,
 }: Commerce039Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-039-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-039-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -209,11 +248,13 @@ export function Commerce039({
                   <p data-part="prices">
                     <b>{deal.price}</b>
                     <s>
-                      <span data-part="sr">Цена нового </span>
+                      <span data-part="sr">{fullPriceLabel}</span>
                       {deal.full}
                     </s>
                   </p>
-                  <p data-part="left">Осталось {deal.left} шт. по этой цене</p>
+                  <p data-part="left">
+                    {leftText.replace("{count}", String(deal.left))}
+                  </p>
                   <span data-part="bar" aria-hidden="true">
                     <i />
                   </span>

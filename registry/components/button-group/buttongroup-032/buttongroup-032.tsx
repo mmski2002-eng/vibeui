@@ -8,6 +8,8 @@ export type Buttongroup032Props = Omit<
   busy?: string
   busyLabel?: string
   label?: string
+  /** Пусто — заливки нет, сцепка ложится на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,11 +23,14 @@ export type Buttongroup032Props = Omit<
 // незрячему не видно.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-032"]){
---vibeui-buttongroup-032-surface:oklch(1 0 0);
---vibeui-buttongroup-032-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-032-muted:oklch(0.55 0.014 265);
---vibeui-buttongroup-032-border:oklch(0.88 0.008 265);
---vibeui-buttongroup-032-accent:oklch(0.52 0.16 265);
+--vibeui-buttongroup-032-surface:transparent;
+--vibeui-buttongroup-032-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-032-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-032-border:light-dark(oklch(0.88 0.008 265),oklch(0.39 0.012 265));
+--vibeui-buttongroup-032-hover:light-dark(oklch(0.965 0.005 265),oklch(0.33 0.014 265));
+--vibeui-buttongroup-032-busy:light-dark(oklch(0.975 0.004 265),oklch(0.29 0.012 265));
+--vibeui-buttongroup-032-ring:light-dark(oklch(0.85 0.01 265),oklch(0.44 0.012 265));
+--vibeui-buttongroup-032-accent:light-dark(oklch(0.52 0.16 265),oklch(0.78 0.13 265));
 --vibeui-buttongroup-032-radius:0.625rem;
 --vibeui-buttongroup-032-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -53,7 +58,7 @@ transition:background-color .16s ease;
 [data-vibeui-block="buttongroup-032"] button + button{
 border-inline-start:1px solid var(--vibeui-buttongroup-032-border);
 }
-[data-vibeui-block="buttongroup-032"] button:hover:not(:disabled){background:oklch(0.965 0.005 265)}
+[data-vibeui-block="buttongroup-032"] button:hover:not(:disabled){background:var(--vibeui-buttongroup-032-hover)}
 [data-vibeui-block="buttongroup-032"] button:focus-visible{
 z-index:1;outline:2px solid var(--vibeui-buttongroup-032-accent);outline-offset:-2px;
 }
@@ -62,13 +67,13 @@ z-index:1;outline:2px solid var(--vibeui-buttongroup-032-accent);outline-offset:
 [data-vibeui-block="buttongroup-032"] [data-part="spinner"]{grid-area:1 / 1}
 [data-vibeui-block="buttongroup-032"] [data-part="spinner"]{
 width:1rem;height:1rem;border-radius:9999px;opacity:0;
-border:2px solid oklch(0.85 0.01 265);
+border:2px solid var(--vibeui-buttongroup-032-ring);
 border-top-color:var(--vibeui-buttongroup-032-accent);
 animation:vibeui-buttongroup-032-spin .7s linear infinite;
 }
 [data-vibeui-block="buttongroup-032"] [data-busy="true"]{
 cursor:progress;color:var(--vibeui-buttongroup-032-muted);
-background:oklch(0.975 0.004 265);
+background:var(--vibeui-buttongroup-032-busy);
 }
 [data-vibeui-block="buttongroup-032"] [data-busy="true"] [data-part="text"]{opacity:0}
 [data-vibeui-block="buttongroup-032"] [data-busy="true"] [data-part="spinner"]{opacity:1}
@@ -84,6 +89,28 @@ font-size:0.75rem;line-height:1.4;
 const DEFAULT_ACTIONS = ["Сохранить", "Проверить", "Опубликовать"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сцепка действий, где одна кнопка занята работой, а её ширина не меняется.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -92,6 +119,7 @@ export function Buttongroup032({
   busy = "Проверить",
   busyLabel = "Идёт проверка, это займёт несколько секунд",
   label = "Действия над документом",
+  background = "",
   accent,
   className,
   style,
@@ -99,6 +127,12 @@ export function Buttongroup032({
 }: Buttongroup032Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-032-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-032-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -19,6 +19,8 @@ export type Commerce072Props = {
   howLabel?: string
   howText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,12 +34,16 @@ export type Commerce072Props = {
 // воспринимаются как реклама. Ниже — раскрываемое объяснение механики.
 const STYLES = `
 :where([data-vibeui-block="commerce-072"]){
---vibeui-commerce-072-bg:oklch(1 0 0);
---vibeui-commerce-072-fg:oklch(0.2 0.014 320);
---vibeui-commerce-072-muted:oklch(0.53 0.016 320);
---vibeui-commerce-072-border:oklch(0.9 0.008 320);
---vibeui-commerce-072-soft:oklch(0.973 0.008 320);
---vibeui-commerce-072-accent:oklch(0.5 0.16 330);
+--vibeui-commerce-072-bg:transparent;
+--vibeui-commerce-072-fg:light-dark(oklch(0.2 0.014 320),oklch(0.94 0.008 320));
+--vibeui-commerce-072-muted:light-dark(oklch(0.53 0.016 320),oklch(0.73 0.014 320));
+--vibeui-commerce-072-border:light-dark(oklch(0.9 0.008 320),oklch(0.38 0.018 320));
+--vibeui-commerce-072-soft:light-dark(oklch(0.973 0.008 320),oklch(0.27 0.018 320));
+--vibeui-commerce-072-accent:light-dark(oklch(0.5 0.16 330),oklch(0.77 0.15 330));
+--vibeui-commerce-072-onaccent:light-dark(oklch(0.99 0 0),oklch(0.2 0.05 330));
+/* Обложка нарисована светлым градиентом в обеих темах, поэтому кнопка
+   поверх неё держит собственную тёмную краску, а не цвет темы. */
+--vibeui-commerce-072-oncover:oklch(0.2 0.014 320);
 --vibeui-commerce-072-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -73,13 +79,13 @@ font-size:0.6875rem;line-height:1.4;color:var(--vibeui-commerce-072-muted);
 [data-vibeui-block="commerce-072"] [data-part="price"]{margin:0;font-size:0.9375rem;font-weight:750;font-variant-numeric:tabular-nums}
 [data-vibeui-block="commerce-072"] [data-part="buy"]{
 position:relative;z-index:1;appearance:none;border:0;cursor:pointer;height:2rem;padding:0 0.75rem;border-radius:0.5rem;
-background:var(--vibeui-commerce-072-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.75rem;font-weight:700;
+background:var(--vibeui-commerce-072-accent);color:var(--vibeui-commerce-072-onaccent);font:inherit;font-size:0.75rem;font-weight:700;
 }
 [data-vibeui-block="commerce-072"] [data-part="hide"]{
 position:absolute;z-index:1;top:0.5rem;right:0.5rem;appearance:none;cursor:pointer;
 height:1.75rem;padding:0 0.625rem;border-radius:9999px;
 border:1px solid oklch(1 0 0 / 45%);background:oklch(1 0 0 / 82%);
-color:var(--vibeui-commerce-072-fg);font:inherit;font-size:0.6875rem;font-weight:650;
+color:var(--vibeui-commerce-072-oncover);font:inherit;font-size:0.6875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-072"] [data-part="buy"]:focus-visible,
 [data-vibeui-block="commerce-072"] [data-part="hide"]:focus-visible,
@@ -97,6 +103,28 @@ color:var(--vibeui-commerce-072-fg);font:inherit;font-size:0.6875rem;font-weight
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-072"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_PICKS: Commerce072Pick[] = [
   {
@@ -147,11 +175,18 @@ export function Commerce072({
   howLabel = "Как собирается эта подборка",
   howText = "Мы смотрим на заказы, просмотры и то, что покупают вместе с уже купленным. Отметки «не интересно» убирают товар и похожие на него на 90 дней. Ничего не подмешиваем за деньги: рекламные позиции в этот блок не попадают.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce072Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-072-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-072-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -12,6 +12,8 @@ export type Features010Props = {
   integrations?: Features010Integration[]
   action?: { label: string; href: string }
   note?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -23,14 +25,19 @@ export type Features010Props = {
 // одной палитре и не требуют ни SVG-файлов, ни лицензий на чужие знаки.
 // Сетка автозаполняемая (auto-fill + minmax), поэтому число колонок зависит
 // от ширины блока, а не от заранее выбранного числа.
+//
+// Тема берётся из color-scheme окружения через light-dark(): секция темнеет
+// вместе с контекстом и не выкладывает под себя плашку. Монограмма красится
+// прямо в своём правиле, а не через переменную: оттенок плитки приходит
+// инлайном, а подстановка var() внутри переменной считается один раз на корне.
 const STYLES = `
 :where([data-vibeui-block="features-010"]){
---vibeui-features-010-bg:oklch(0.98 0.004 265);
---vibeui-features-010-fg:oklch(0.2 0.012 265);
---vibeui-features-010-muted:oklch(0.52 0.012 265);
---vibeui-features-010-card:oklch(1 0 0);
---vibeui-features-010-line:oklch(0.9 0.006 265);
---vibeui-features-010-accent:oklch(0.52 0.16 268);
+--vibeui-features-010-bg:transparent;
+--vibeui-features-010-fg:light-dark(oklch(0.2 0.012 265),oklch(0.95 0.005 265));
+--vibeui-features-010-muted:light-dark(oklch(0.52 0.012 265),oklch(0.72 0.012 265));
+--vibeui-features-010-card:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-features-010-line:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-features-010-accent:light-dark(oklch(0.52 0.16 268),oklch(0.76 0.14 268));
 --vibeui-features-010-hue:268;
 --vibeui-features-010-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -66,7 +73,7 @@ transition:border-color .16s ease,transform .16s ease;
 [data-vibeui-block="features-010"] [data-part="mono"]{
 flex:0 0 auto;width:2.25rem;height:2.25rem;border-radius:0.625rem;
 display:flex;align-items:center;justify-content:center;
-background:oklch(0.94 0.05 var(--vibeui-features-010-hue));color:oklch(0.42 0.13 var(--vibeui-features-010-hue));
+background:light-dark(oklch(0.94 0.05 var(--vibeui-features-010-hue)),oklch(0.34 0.06 var(--vibeui-features-010-hue)));color:light-dark(oklch(0.42 0.13 var(--vibeui-features-010-hue)),oklch(0.87 0.09 var(--vibeui-features-010-hue)));
 font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="features-010"] [data-part="name"]{display:block;font-size:0.875rem;font-weight:650;letter-spacing:-0.005em}
@@ -118,6 +125,28 @@ function hue(name: string) {
   return ((hash >>> 0) % 12) * 30
 }
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Блок интеграций: плитки с монограммами, оттенок каждой посчитан из названия. */
 export function Features010({
   eyebrow = "Интеграции",
@@ -126,12 +155,19 @@ export function Features010({
   integrations = DEFAULT_INTEGRATIONS,
   action = { label: "Все интеграции", href: "#" },
   note = "Не нашли свой стек? Секция всё равно поставится — ей нужен только React.",
+  background = "",
   accent,
   className,
   style,
 }: Features010Props) {
   const palette = {
     ...(accent ? { "--vibeui-features-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-features-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

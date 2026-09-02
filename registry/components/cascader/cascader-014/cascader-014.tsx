@@ -17,7 +17,19 @@ export type Cascader014Props = Omit<
   label?: string
   accounts?: Cascader014Account[]
   defaultPath?: string[]
+  /** Первая крошка — возврат к корню плана счетов. */
+  rootLabel?: string
+  /** Подпись списка текущего уровня для скринридера. */
+  listLabel?: string
+  /** Пометка архивного счёта в строке. */
+  archivedText?: string
+  /** Строка под списком, {code} — выбранный счёт. */
+  chosenText?: string
+  /** Строка под списком, пока счёт не выбран. */
+  hintText?: string
   onSelect?: (code: string, name: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,14 +39,14 @@ export type Cascader014Props = Omit<
 // на конечном уровне: проводку нельзя повесить на группу счетов.
 const STYLES = `
 :where([data-vibeui-block="cascader-014"]){
---vibeui-cascader-014-bg:oklch(1 0 0);
---vibeui-cascader-014-fg:oklch(0.22 0.014 250);
---vibeui-cascader-014-muted:oklch(0.55 0.014 250);
---vibeui-cascader-014-faint:oklch(0.76 0.01 250);
---vibeui-cascader-014-border:oklch(0.9 0.008 250);
---vibeui-cascader-014-soft:oklch(0.965 0.006 250);
---vibeui-cascader-014-accent:oklch(0.48 0.12 250);
---vibeui-cascader-014-accentsoft:oklch(0.94 0.04 250);
+--vibeui-cascader-014-bg:transparent;
+--vibeui-cascader-014-fg:light-dark(oklch(0.22 0.014 250),oklch(0.94 0.006 250));
+--vibeui-cascader-014-muted:light-dark(oklch(0.55 0.014 250),oklch(0.71 0.012 250));
+--vibeui-cascader-014-faint:light-dark(oklch(0.76 0.01 250),oklch(0.55 0.014 250));
+--vibeui-cascader-014-border:light-dark(oklch(0.9 0.008 250),oklch(0.35 0.012 250));
+--vibeui-cascader-014-soft:light-dark(oklch(0.965 0.006 250),oklch(0.28 0.012 250));
+--vibeui-cascader-014-accent:light-dark(oklch(0.48 0.12 250),oklch(0.76 0.13 250));
+--vibeui-cascader-014-accentsoft:light-dark(oklch(0.94 0.04 250),oklch(0.34 0.055 250));
 --vibeui-cascader-014-radius:0.625rem;
 --vibeui-cascader-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-cascader-014-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
@@ -163,6 +175,28 @@ const PLAN: Cascader014Account[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор счёта в плане счетов: код собирается сегмент за сегментом.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -170,7 +204,13 @@ export function Cascader014({
   label = "Счёт учёта",
   accounts = PLAN,
   defaultPath = ["51", "01"],
+  rootLabel = "План счетов",
+  listLabel = "Счета уровня",
+  archivedText = " · архив",
+  chosenText = "Выбран счёт {code}",
+  hintText = "Выбрать можно только конечный субсчёт",
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -193,8 +233,16 @@ export function Cascader014({
 
   const segments = [path[0] ?? "", path[1] ?? "", chosen.split(".")[2] ?? ""]
 
+  const [chosenBefore, chosenAfter] = chosenText.split("{code}")
+
   const palette = {
     ...(accent ? { "--vibeui-cascader-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cascader-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -228,7 +276,7 @@ export function Cascader014({
                 setChosen("")
               }}
             >
-              План счетов
+              {rootLabel}
             </button>
           </li>
           {trail.map((node, index) => (
@@ -247,7 +295,7 @@ export function Cascader014({
             </li>
           ))}
         </ul>
-        <ul data-part="list" aria-label="Счета уровня">
+        <ul data-part="list" aria-label={listLabel}>
           {level.map((node) => {
             const branch = Boolean(node.children?.length)
             const full = [...path, node.code].join(".")
@@ -274,7 +322,7 @@ export function Cascader014({
                   <span data-part="num">{node.code}</span>
                   <span data-part="name">
                     {node.name}
-                    {node.archived ? " · архив" : ""}
+                    {node.archived ? archivedText : ""}
                   </span>
                   <span data-part="more" aria-hidden="true">
                     {branch ? "›" : "•"}
@@ -287,10 +335,12 @@ export function Cascader014({
         <p data-part="note">
           {chosen ? (
             <>
-              Выбран счёт <b>{chosen}</b>
+              {chosenBefore}
+              <b>{chosen}</b>
+              {chosenAfter}
             </>
           ) : (
-            "Выбрать можно только конечный субсчёт"
+            hintText
           )}
         </p>
       </div>

@@ -3,18 +3,23 @@ import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 export type Skeleton003Props = ComponentPropsWithoutRef<"div"> & {
   rows?: number
   label?: string
+  /** Пусто — подложки нет, список лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: заглушка списка, где строки оживают волной. Каждой строке
 // задана своя animation-delay, поэтому блик идёт сверху вниз и список
 // читается как один объект, а не как пачка одинаково мигающих полос.
 // Ширины текстовых полос чередуются: одинаковые выглядят как таблица.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки по
+// умолчанию нет, список темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="skeleton-003"]){
---vibeui-skeleton-003-bg:oklch(1 0 0);
---vibeui-skeleton-003-border:oklch(0.9 0.006 265);
---vibeui-skeleton-003-base:oklch(0.93 0.005 265);
---vibeui-skeleton-003-shine:oklch(0.97 0.003 265);
+--vibeui-skeleton-003-bg:transparent;
+--vibeui-skeleton-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-skeleton-003-base:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.012 265));
+--vibeui-skeleton-003-shine:light-dark(oklch(0.97 0.003 265),oklch(0.39 0.016 265));
 --vibeui-skeleton-003-delay:0s;
 }
 [data-vibeui-block="skeleton-003"]{
@@ -64,17 +69,49 @@ flex:none;width:2.75rem;height:0.75rem;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы полосам
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Заглушка списка строк: блик идёт волной сверху вниз.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Skeleton003({
   rows = 5,
   label = "Список загружается",
+  background = "",
   className,
   style,
   ...props
 }: Skeleton003Props) {
   const count = Math.min(20, Math.max(1, rows))
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-skeleton-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -88,7 +125,7 @@ export function Skeleton003({
         aria-busy="true"
         aria-label={label}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <ul>
           {Array.from({ length: count }, (_, index) => (

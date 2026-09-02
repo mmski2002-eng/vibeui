@@ -16,7 +16,13 @@ export type Checkbox004Props = Omit<
   legend?: string
   filters?: Checkbox004Filter[]
   defaultValue?: string[]
+  /** Итог внизу. {count} — сумма находок по отмеченным фильтрам. */
+  foundText?: string
+  /** Подпись кнопки сброса. */
+  resetLabel?: string
   onChange?: (value: string[]) => void
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,14 +30,19 @@ export type Checkbox004Props = Omit<
 // не прячется, а выключается: исчезнувший фильтр заставляет думать, что его
 // вообще нет. Числа выровнены по правому краю табличными цифрами — так
 // сравнивают, что выбрать.
+//
+// Тема берётся из color-scheme окружения через light-dark(): панель темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="checkbox-004"]){
---vibeui-checkbox-004-bg:oklch(1 0 0);
---vibeui-checkbox-004-fg:oklch(0.22 0.014 265);
---vibeui-checkbox-004-muted:oklch(0.56 0.014 265);
---vibeui-checkbox-004-border:oklch(0.88 0.008 265);
---vibeui-checkbox-004-hover:oklch(0.97 0.003 265);
---vibeui-checkbox-004-accent:oklch(0.55 0.17 265);
+--vibeui-checkbox-004-surface:transparent;
+--vibeui-checkbox-004-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-checkbox-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-checkbox-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-004-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
+--vibeui-checkbox-004-hover:light-dark(oklch(0.97 0.003 265),oklch(0.32 0.012 265));
+--vibeui-checkbox-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
+--vibeui-checkbox-004-mark:light-dark(oklch(0.99 0.01 265),oklch(0.2 0.014 265));
 --vibeui-checkbox-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="checkbox-004"]{
@@ -39,7 +50,7 @@ display:flex;flex-direction:column;gap:0.125rem;
 width:100%;max-width:17rem;box-sizing:border-box;
 margin:0;padding:0.75rem;
 border:1px solid var(--vibeui-checkbox-004-border);border-radius:0.875rem;
-background:var(--vibeui-checkbox-004-bg);
+background:var(--vibeui-checkbox-004-surface);
 font-family:var(--vibeui-checkbox-004-font);color:var(--vibeui-checkbox-004-fg);
 }
 /* legend у fieldset садится на рамку и обрезается — float возвращает
@@ -64,7 +75,8 @@ background:var(--vibeui-checkbox-004-bg);
 [data-vibeui-block="checkbox-004"] input:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;
-border-right:2px solid oklch(0.99 0.01 265);border-bottom:2px solid oklch(0.99 0.01 265);
+border-right:2px solid var(--vibeui-checkbox-004-mark);
+border-bottom:2px solid var(--vibeui-checkbox-004-mark);
 transform:rotate(45deg);
 }
 [data-vibeui-block="checkbox-004"] input:focus-visible{outline:2px solid var(--vibeui-checkbox-004-accent);outline-offset:2px}
@@ -98,6 +110,28 @@ const DEFAULT_FILTERS: Checkbox004Filter[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Список фильтров с числом находок: ноль выключается, а не исчезает.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -105,7 +139,10 @@ export function Checkbox004({
   legend = "Категория",
   filters = DEFAULT_FILTERS,
   defaultValue = ["Кнопки"],
+  foundText = "Найдётся: {count}",
+  resetLabel = "Сбросить",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -115,6 +152,12 @@ export function Checkbox004({
 
   const palette = {
     ...(accent ? { "--vibeui-checkbox-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-checkbox-004-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -158,13 +201,13 @@ export function Checkbox004({
           </label>
         ))}
         <p data-part="foot">
-          <span>Найдётся: {found}</span>
+          <span>{foundText.replace("{count}", String(found))}</span>
           <button
             type="button"
             disabled={value.length === 0}
             onClick={() => update([])}
           >
-            Сбросить
+            {resetLabel}
           </button>
         </p>
       </fieldset>

@@ -12,22 +12,31 @@ export type Chart011Props = Omit<
   title?: string
   points?: Chart011Point[]
   unit?: string
+  /** Подпись под графиком: {unit}. */
+  unitLabel?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: линия, у которой каждая точка отмечена кружком, а последняя
 // подписана выноской прямо на графике. Читатель ищет на тренде две вещи —
 // «где узлы» и «сколько сейчас»; выноска отвечает на второй вопрос, не
 // заставляя переводить взгляд в заголовок.
+//
+// Тема берётся из color-scheme окружения через light-dark(): выноска в тёмной
+// теме становится светлой плашкой с тёмным текстом, а не наоборот.
 const STYLES = `
 :where([data-vibeui-block="chart-011"]){
---vibeui-chart-011-bg:oklch(1 0 0);
---vibeui-chart-011-fg:oklch(0.22 0.014 265);
---vibeui-chart-011-muted:oklch(0.55 0.014 265);
---vibeui-chart-011-border:oklch(0.91 0.006 265);
---vibeui-chart-011-grid:oklch(0.94 0.005 265);
---vibeui-chart-011-accent:oklch(0.55 0.17 265);
---vibeui-chart-011-callout:oklch(0.22 0.014 265);
+--vibeui-chart-011-bg:transparent;
+--vibeui-chart-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-011-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-011-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-chart-011-grid:light-dark(oklch(0.94 0.005 265),oklch(0.3 0.01 265));
+--vibeui-chart-011-dot:light-dark(oklch(1 0 0),oklch(0.24 0.014 265));
+--vibeui-chart-011-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-chart-011-callout:light-dark(oklch(0.22 0.014 265),oklch(0.92 0.008 265));
+--vibeui-chart-011-callout-fg:light-dark(oklch(1 0 0),oklch(0.2 0.014 265));
 --vibeui-chart-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="chart-011"]{
@@ -45,12 +54,12 @@ fill:none;stroke:var(--vibeui-chart-011-accent);stroke-width:2;
 stroke-linejoin:round;stroke-linecap:round;
 }
 [data-vibeui-block="chart-011"] [data-part="dot"]{
-fill:var(--vibeui-chart-011-bg);stroke:var(--vibeui-chart-011-accent);stroke-width:2;
+fill:var(--vibeui-chart-011-dot);stroke:var(--vibeui-chart-011-accent);stroke-width:2;
 }
 [data-vibeui-block="chart-011"] [data-part="dot"][data-last="true"]{fill:var(--vibeui-chart-011-accent)}
 [data-vibeui-block="chart-011"] [data-part="callout"]{fill:var(--vibeui-chart-011-callout)}
 [data-vibeui-block="chart-011"] [data-part="callout-text"]{
-fill:oklch(1 0 0);font-size:9px;font-weight:650;text-anchor:middle;
+fill:var(--vibeui-chart-011-callout-fg);font-size:9px;font-weight:650;text-anchor:middle;
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="chart-011"] [data-part="name"]{
@@ -79,6 +88,37 @@ const DEFAULT_POINTS: Chart011Point[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+function fillTemplate(
+  template: string,
+  values: Record<string, string | number>,
+) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
+/**
  * Линия с отмеченными точками и выноской последнего значения.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -86,7 +126,9 @@ export function Chart011({
   title = "Средний чек",
   points = DEFAULT_POINTS,
   unit = "тысяч рублей",
+  unitLabel = "Единица измерения: {unit}. Последнее значение подписано на графике.",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -117,6 +159,12 @@ export function Chart011({
 
   const palette = {
     ...(accent ? { "--vibeui-chart-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-chart-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -184,9 +232,7 @@ export function Chart011({
             </text>
           ))}
         </svg>
-        <p data-part="unit">
-          Единица измерения: {unit}. Последнее значение подписано на графике.
-        </p>
+        <p data-part="unit">{fillTemplate(unitLabel, { unit })}</p>
         <table data-part="data">
           <caption>
             {title}, {unit}

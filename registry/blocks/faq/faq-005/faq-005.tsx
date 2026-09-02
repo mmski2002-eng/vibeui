@@ -13,7 +13,13 @@ export type Faq005Props = {
   title?: string
   placeholder?: string
   emptyLabel?: string
+  /** Подпись поля поиска для скринридера: видимой подписи нет. */
+  searchLabel?: string
+  /** Счётчик найденного. {found} — сколько показано, {total} — всего. */
+  countText?: string
   items?: Faq005Item[]
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -23,14 +29,18 @@ export type Faq005Props = {
 // фильтрация идёт по вопросу, ответу и теме, чтобы «когда привезут» нашло
 // раздел про доставку. Число найденного объявляется через aria-live, иначе
 // человек со скринридером не узнает, что список под полем поменялся.
+//
+// Тема приходит из color-scheme окружения через light-dark(): подложки у
+// секции по умолчанию нет, она темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="faq-005"]){
---vibeui-faq-005-bg:oklch(1 0 0);
---vibeui-faq-005-field:oklch(0.98 0.003 240);
---vibeui-faq-005-ink:oklch(0.22 0.014 240);
---vibeui-faq-005-muted:oklch(0.5 0.014 240);
---vibeui-faq-005-border:oklch(0.9 0.006 240);
---vibeui-faq-005-accent:oklch(0.52 0.16 230);
+--vibeui-faq-005-bg:transparent;
+--vibeui-faq-005-field:light-dark(oklch(0.98 0.003 240),oklch(0.26 0.012 240));
+--vibeui-faq-005-field-focus:light-dark(oklch(1 0 0),oklch(0.3 0.014 240));
+--vibeui-faq-005-ink:light-dark(oklch(0.22 0.014 240),oklch(0.95 0.005 240));
+--vibeui-faq-005-muted:light-dark(oklch(0.5 0.014 240),oklch(0.72 0.012 240));
+--vibeui-faq-005-border:light-dark(oklch(0.9 0.006 240),oklch(0.36 0.012 240));
+--vibeui-faq-005-accent:light-dark(oklch(0.52 0.16 230),oklch(0.74 0.13 230));
 --vibeui-faq-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -54,7 +64,7 @@ transition:border-color .16s ease,box-shadow .16s ease,background-color .16s eas
 }
 [data-vibeui-block="faq-005"] [data-part="input"]::placeholder{color:color-mix(in oklab,var(--vibeui-faq-005-muted) 75%,transparent)}
 [data-vibeui-block="faq-005"] [data-part="input"]:focus{
-outline:none;background:var(--vibeui-faq-005-bg);border-color:var(--vibeui-faq-005-accent);
+outline:none;background:var(--vibeui-faq-005-field-focus);border-color:var(--vibeui-faq-005-accent);
 box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-faq-005-accent) 20%,transparent);
 }
 [data-vibeui-block="faq-005"] [data-part="count"]{
@@ -152,12 +162,38 @@ function matches(item: Faq005Item, query: string) {
     .every((word) => haystack.includes(word))
 }
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Вопросы с поиском: фильтрация по вопросу, ответу и теме, счётчик — вслух. */
 export function Faq005({
   title = "Найдите ответ за десять секунд",
   placeholder = "Например: когда привезут заказ",
   emptyLabel = "Ничего не нашлось. Попробуйте другое слово или напишите в поддержку — ответим в течение часа.",
+  searchLabel = "Поиск по вопросам",
+  countText = "Показано вопросов: {found} из {total}",
   items = DEFAULT_ITEMS,
+  background = "",
   accent,
   className,
   style,
@@ -172,6 +208,12 @@ export function Faq005({
 
   const palette = {
     ...(accent ? { "--vibeui-faq-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-faq-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -194,12 +236,14 @@ export function Faq005({
               type="search"
               value={query}
               placeholder={placeholder}
-              aria-label="Поиск по вопросам"
+              aria-label={searchLabel}
               onChange={(event) => setQuery(event.target.value)}
             />
           </div>
           <p data-part="count" aria-live="polite">
-            Показано вопросов: {found.length} из {items.length}
+            {countText
+              .replace("{found}", String(found.length))
+              .replace("{total}", String(items.length))}
           </p>
           <div data-part="list">
             {found.map((item) => (

@@ -7,8 +7,13 @@ export type Field005Props = Omit<
   label?: string
   prefix?: string
   units?: string[]
+  /** Подпись select'а для screen reader. */
+  unitLabel?: string
+  hint?: string
   defaultValue?: number
   name?: string
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,17 +24,17 @@ export type Field005Props = Omit<
 // гигабайты, и не нужен отдельный ряд под выбор единицы.
 const STYLES = `
 :where([data-vibeui-block="field-005"]){
---vibeui-field-005-bg:oklch(1 0 0);
---vibeui-field-005-surface:oklch(1 0 0);
---vibeui-field-005-fill:oklch(0.975 0.004 265);
---vibeui-field-005-fg:oklch(0.24 0.014 265);
---vibeui-field-005-muted:oklch(0.55 0.014 265);
---vibeui-field-005-border:oklch(0.88 0.008 265);
---vibeui-field-005-shell:oklch(0.91 0.006 265);
---vibeui-field-005-accent:oklch(0.52 0.14 175);
+--vibeui-field-005-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-field-005-surface:transparent;
+--vibeui-field-005-fill:light-dark(oklch(0.975 0.004 265),oklch(0.29 0.011 265));
+--vibeui-field-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-field-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-field-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
+--vibeui-field-005-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
+--vibeui-field-005-accent:light-dark(oklch(0.52 0.14 175),oklch(0.76 0.12 175));
 --vibeui-field-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="field-005"]{
 display:flex;flex-direction:column;gap:0.4375rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
@@ -93,6 +98,28 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-field-005-muted);
 const DEFAULT_UNITS = ["КБ", "МБ", "ГБ"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поле с текстовой приставкой слева и выбором единицы справа в одной рамке.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -100,8 +127,11 @@ export function Field005({
   label = "Лимит на один файл",
   prefix = "не более",
   units = DEFAULT_UNITS,
+  unitLabel = "Единица измерения",
+  hint = "Значение и единица уходят двумя полями формы — пересчитывать ничего не нужно.",
   defaultValue = 25,
   name = "limit",
+  background = "",
   accent,
   className,
   style,
@@ -109,6 +139,12 @@ export function Field005({
 }: Field005Props) {
   const palette = {
     ...(accent ? { "--vibeui-field-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-field-005-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -141,7 +177,7 @@ export function Field005({
             <select
               name={`${name}-unit`}
               defaultValue={units[1] ?? units[0]}
-              aria-label="Единица измерения"
+              aria-label={unitLabel}
             >
               {units.map((unit) => (
                 <option key={unit} value={unit}>
@@ -152,8 +188,7 @@ export function Field005({
           </span>
         </div>
         <p id={`${name}-hint`} data-part="hint">
-          Значение и единица уходят двумя полями формы — пересчитывать ничего не
-          нужно.
+          {hint}
         </p>
       </div>
     </>

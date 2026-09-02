@@ -8,6 +8,12 @@ export type Separator004Props = Omit<
   below?: string
   dash?: number
   gap?: number
+  /** Подпись состояния верхнего раздела. */
+  doneText?: string
+  /** Подпись рисунка: {dash} и {gap} подставляются числами. */
+  dashText?: string
+  /** Пусто — подложки нет, разделы лежат прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: пунктирная линия с управляемым рисунком. border-style
@@ -15,18 +21,20 @@ export type Separator004Props = Omit<
 // границы — одинакового пунктира в двух местах макета так не добиться. Здесь
 // линия набрана repeating-linear-gradient: длина штриха и промежуток заданы
 // числами, поэтому рисунок повторяем и предсказуем.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки по
+// умолчанию нет, а пунктир в тёмном контексте светлее фона.
 const STYLES = `
 :where([data-vibeui-block="separator-004"]){
 --vibeui-separator-004-dash:6px;
 --vibeui-separator-004-gap:6px;
---vibeui-separator-004-line:oklch(0.78 0.01 265);
---vibeui-separator-004-surface:oklch(1 0 0);
---vibeui-separator-004-border:oklch(0.91 0.006 265);
---vibeui-separator-004-fg:oklch(0.26 0.014 265);
---vibeui-separator-004-muted:oklch(0.55 0.014 265);
+--vibeui-separator-004-line:light-dark(oklch(0.78 0.01 265),oklch(0.5 0.014 265));
+--vibeui-separator-004-surface:transparent;
+--vibeui-separator-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-separator-004-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.006 265));
+--vibeui-separator-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
 --vibeui-separator-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: подписи разделов тёмные. */
 [data-vibeui-block="separator-004"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem 1rem;
@@ -54,6 +62,28 @@ transparent calc(var(--vibeui-separator-004-dash) + var(--vibeui-separator-004-g
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Пунктирный разделитель с управляемой длиной штриха и промежутка.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -62,6 +92,9 @@ export function Separator004({
   below = "Оплата",
   dash = 6,
   gap = 6,
+  doneText = "заполнено",
+  dashText = "штрих {dash} / {gap}",
+  background = "",
   className,
   style,
   ...props
@@ -69,8 +102,17 @@ export function Separator004({
   const palette = {
     "--vibeui-separator-004-dash": `${dash}px`,
     "--vibeui-separator-004-gap": `${gap}px`,
+    ...(background
+      ? {
+          "--vibeui-separator-004-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+  const hint = dashText
+    .replace("{dash}", String(dash))
+    .replace("{gap}", String(gap))
 
   return (
     <>
@@ -85,14 +127,12 @@ export function Separator004({
       >
         <p data-part="row">
           <span>{above}</span>
-          <span data-part="hint">заполнено</span>
+          <span data-part="hint">{doneText}</span>
         </p>
         <hr data-part="rule" />
         <p data-part="row">
           <span>{below}</span>
-          <span data-part="hint">
-            штрих {dash} / {gap}
-          </span>
+          <span data-part="hint">{hint}</span>
         </p>
       </div>
     </>

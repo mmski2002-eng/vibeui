@@ -13,6 +13,10 @@ export type Inputgroup028Props = Omit<
   placeholder?: string
   onChange?: (address: string, city: string) => void
   hint?: string
+  /** Подпись селекта города для скринридера. */
+  cityLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,14 +30,14 @@ const DEFAULT_CITIES = ["Москва", "Санкт-Петербург", "Каз
 // а не только текст.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-028"]){
---vibeui-inputgroup-028-surface:oklch(1 0 0);
---vibeui-inputgroup-028-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-028-fg:oklch(0.22 0.014 265);
---vibeui-inputgroup-028-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-028-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-028-fixed:oklch(0.96 0.004 265);
---vibeui-inputgroup-028-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-028-accent:oklch(0.56 0.14 275);
+--vibeui-inputgroup-028-surface:transparent;
+--vibeui-inputgroup-028-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-inputgroup-028-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-028-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-inputgroup-028-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
+--vibeui-inputgroup-028-fixed:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-inputgroup-028-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-inputgroup-028-accent:light-dark(oklch(0.56 0.14 275),oklch(0.77 0.13 275));
 --vibeui-inputgroup-028-radius:0.75rem;
 --vibeui-inputgroup-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -86,6 +90,28 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-inputgroup-028-mut
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сцепка «город + адрес»: слева нативный select с городом, справа
  * текстовое поле адреса, оба значения уходят в onChange вместе.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -97,17 +123,25 @@ export function Inputgroup028({
   placeholder = "Улица, дом, квартира",
   onChange,
   hint = "Город определяет условия и сроки доставки, адрес — только точку выдачи внутри него.",
+  cityLabel = "Город",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Inputgroup028Props) {
   const id = useId()
-  const [city, setCity] = useState(cities[0] ?? "Москва")
+  const [city, setCity] = useState(cities[0] ?? DEFAULT_CITIES[0])
   const [address, setAddress] = useState("")
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-028-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-028-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -127,7 +161,7 @@ export function Inputgroup028({
           <select
             data-part="city"
             name={`${name}-city`}
-            aria-label="Город"
+            aria-label={cityLabel}
             value={city}
             onChange={(event) => {
               setCity(event.target.value)

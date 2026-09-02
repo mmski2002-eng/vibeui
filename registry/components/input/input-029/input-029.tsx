@@ -10,7 +10,15 @@ export type Input029Props = Omit<
   label?: string
   placeholder?: string
   defaultValue?: string
+  /** Язык распознавания для Web Speech API. */
+  lang?: string
+  /** Подпись кнопки: ключи unsupported, recording, idle. */
+  micLabel?: Record<string, string>
+  /** Примечание под полем: те же ключи, что у micLabel. */
+  noteText?: Record<string, string>
   onChange?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,14 +30,14 @@ export type Input029Props = Omit<
 // работают вперемешку, а не исключают друг друга.
 const STYLES = `
 :where([data-vibeui-block="input-029"]){
---vibeui-input-029-surface:oklch(1 0 0);
---vibeui-input-029-shell:oklch(0.91 0.006 265);
---vibeui-input-029-fg:oklch(0.23 0.014 265);
---vibeui-input-029-muted:oklch(0.56 0.014 265);
---vibeui-input-029-field:oklch(0.985 0.002 265);
---vibeui-input-029-border:oklch(0.88 0.008 265);
---vibeui-input-029-accent:oklch(0.55 0.17 265);
---vibeui-input-029-rec:oklch(0.55 0.2 25);
+--vibeui-input-029-surface:transparent;
+--vibeui-input-029-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-input-029-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-029-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-input-029-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-input-029-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-input-029-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-input-029-rec:light-dark(oklch(0.55 0.2 25),oklch(0.72 0.16 25));
 --vibeui-input-029-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-029"]{
@@ -123,6 +131,41 @@ const watchSpeechSupport = () => () => {}
 const isSpeechSupported = () => getRecognitionCtor() !== null
 const isServer = () => false
 
+const MIC_LABEL: Record<string, string> = {
+  unsupported: "Голосовой ввод не поддерживается браузером",
+  recording: "Остановить запись",
+  idle: "Начать голосовой ввод",
+}
+
+const NOTE: Record<string, string> = {
+  unsupported: "Голосовой ввод не поддерживается этим браузером.",
+  recording: "Идёт запись — говорите, распознанный текст допишется в поле.",
+  idle: "Нажмите на микрофон и продиктуйте текст.",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Текстовое поле с голосовым вводом через Web Speech API: кнопка микрофона
  * запускает запись, распознанный текст дописывается к введённому. Если
@@ -133,7 +176,11 @@ export function Input029({
   label = "Комментарий",
   placeholder = "Наберите текст или включите микрофон",
   defaultValue = "",
+  lang = "ru-RU",
+  micLabel = MIC_LABEL,
+  noteText = NOTE,
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -157,8 +204,16 @@ export function Input029({
 
   const palette = {
     ...(accent ? { "--vibeui-input-029-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-029-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const stateKey = !supported ? "unsupported" : recording ? "recording" : "idle"
 
   const commit = (next: string) => {
     setValue(next)
@@ -170,7 +225,7 @@ export function Input029({
     if (!Ctor) return
 
     const instance = new Ctor()
-    instance.lang = "ru-RU"
+    instance.lang = lang
     instance.interimResults = false
     instance.continuous = false
     instance.onresult = (event) => {
@@ -217,13 +272,7 @@ export function Input029({
             data-part="mic"
             disabled={!supported}
             aria-pressed={recording}
-            aria-label={
-              !supported
-                ? "Голосовой ввод не поддерживается браузером"
-                : recording
-                  ? "Остановить запись"
-                  : "Начать голосовой ввод"
-            }
+            aria-label={micLabel[stateKey] ?? MIC_LABEL[stateKey]}
             onClick={() => (recording ? stopRecording() : startRecording())}
           >
             {recording ? <span data-part="pulse" aria-hidden="true" /> : null}
@@ -246,11 +295,7 @@ export function Input029({
           </button>
         </div>
         <p data-part="note" id={`${id}-note`} aria-live="polite">
-          {!supported
-            ? "Голосовой ввод не поддерживается этим браузером."
-            : recording
-              ? "Идёт запись — говорите, распознанный текст допишется в поле."
-              : "Нажмите на микрофон и продиктуйте текст."}
+          {noteText[stateKey] ?? NOTE[stateKey]}
         </p>
       </div>
     </>

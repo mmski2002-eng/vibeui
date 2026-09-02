@@ -10,9 +10,47 @@ export type Pricing007Props = {
   sizes?: string[]
   privacy?: string
   contact?: { label: string; value: string; href: string }
+  /**
+   * Подписи полей формы: name, email, size, sizePlaceholder, task,
+   * taskPlaceholder. Незаданный ключ берётся из русских значений по умолчанию.
+   */
+  fieldText?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
+}
+
+const DEFAULT_FIELD_TEXT: Record<string, string> = {
+  name: "Имя",
+  email: "Рабочая почта",
+  size: "Размер команды",
+  sizePlaceholder: "Выберите вариант",
+  task: "Задача",
+  taskPlaceholder: "Что нужно собрать и к какому сроку",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 // Идея блока: корпоративный тариф без цены, зато с формой. Слева — что
@@ -23,13 +61,13 @@ export type Pricing007Props = {
 // которому заявку сортируют. Все поля с <label>, форма серверная.
 const STYLES = `
 :where([data-vibeui-block="pricing-007"]){
---vibeui-pricing-007-bg:oklch(0.97 0.004 240);
---vibeui-pricing-007-fg:oklch(0.2 0.012 240);
---vibeui-pricing-007-muted:oklch(0.51 0.012 240);
---vibeui-pricing-007-card:oklch(1 0 0);
---vibeui-pricing-007-line:oklch(0.89 0.006 240);
---vibeui-pricing-007-accent:oklch(0.42 0.13 245);
---vibeui-pricing-007-accent-fg:oklch(0.99 0 0);
+--vibeui-pricing-007-bg:transparent;
+--vibeui-pricing-007-fg:light-dark(oklch(0.2 0.012 240),oklch(0.95 0.004 240));
+--vibeui-pricing-007-muted:light-dark(oklch(0.51 0.012 240),oklch(0.72 0.012 240));
+--vibeui-pricing-007-card:light-dark(oklch(1 0 0),oklch(0.22 0.014 240));
+--vibeui-pricing-007-line:light-dark(oklch(0.89 0.006 240),oklch(0.35 0.014 240));
+--vibeui-pricing-007-accent:light-dark(oklch(0.42 0.13 245),oklch(0.73 0.14 245));
+--vibeui-pricing-007-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.03 245));
 --vibeui-pricing-007-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -150,14 +188,23 @@ export function Pricing007({
     value: "sales@vibeui.dev",
     href: "mailto:sales@vibeui.dev",
   },
+  fieldText,
   accent,
+  background = "",
   className,
   style,
 }: Pricing007Props) {
   const palette = {
     ...(accent ? { "--vibeui-pricing-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pricing-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+  const text = { ...DEFAULT_FIELD_TEXT, ...fieldText }
 
   return (
     <>
@@ -199,7 +246,7 @@ export function Pricing007({
 
             <div data-part="pair">
               <div data-part="field">
-                <label htmlFor="vibeui-pricing-007-name">Имя</label>
+                <label htmlFor="vibeui-pricing-007-name">{text.name}</label>
                 <input
                   id="vibeui-pricing-007-name"
                   name="name"
@@ -209,7 +256,7 @@ export function Pricing007({
                 />
               </div>
               <div data-part="field">
-                <label htmlFor="vibeui-pricing-007-email">Рабочая почта</label>
+                <label htmlFor="vibeui-pricing-007-email">{text.email}</label>
                 <input
                   id="vibeui-pricing-007-email"
                   name="email"
@@ -221,10 +268,10 @@ export function Pricing007({
             </div>
 
             <div data-part="field">
-              <label htmlFor="vibeui-pricing-007-size">Размер команды</label>
+              <label htmlFor="vibeui-pricing-007-size">{text.size}</label>
               <select id="vibeui-pricing-007-size" name="size" defaultValue="">
                 <option value="" disabled>
-                  Выберите вариант
+                  {text.sizePlaceholder}
                 </option>
                 {sizes.map((size) => (
                   <option key={size} value={size}>
@@ -235,11 +282,11 @@ export function Pricing007({
             </div>
 
             <div data-part="field">
-              <label htmlFor="vibeui-pricing-007-task">Задача</label>
+              <label htmlFor="vibeui-pricing-007-task">{text.task}</label>
               <textarea
                 id="vibeui-pricing-007-task"
                 name="task"
-                placeholder="Что нужно собрать и к какому сроку"
+                placeholder={text.taskPlaceholder}
               />
             </div>
 

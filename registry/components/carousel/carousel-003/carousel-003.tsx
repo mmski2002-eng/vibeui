@@ -15,6 +15,18 @@ export type Carousel003Props = Omit<
 > & {
   slides?: Carousel003Slide[]
   label?: string
+  /** Роль секции для скринридера. */
+  roleText?: string
+  /** Роль слайда для скринридера. */
+  slideRoleText?: string
+  /** Шаблон подписи слайда: {index}, {total}. */
+  slideText?: string
+  /** Шаблон подписи миниатюры: {index}, {total}, {label}. */
+  thumbText?: string
+  /** Шаблон счётчика под лентой: {index}, {total}. */
+  counterText?: string
+  /** Пусто — подложка своя; цвет заменяет её целиком. */
+  background?: string
   accent?: string
 }
 
@@ -22,14 +34,17 @@ export type Carousel003Props = Omit<
 // вопрос «сколько ещё и что там», на который точки не отвечают. Слайды не
 // удаляются из разметки, а прячутся атрибутом hidden — так работает
 // клавиатура и не рвётся порядок чтения.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложка и
+// миниатюры темнеют вместе со страницей, своей тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="carousel-003"]){
---vibeui-carousel-003-surface:oklch(1 0 0);
---vibeui-carousel-003-bg:oklch(1 0 0);
---vibeui-carousel-003-fg:oklch(0.22 0.014 265);
---vibeui-carousel-003-muted:oklch(0.58 0.014 265);
---vibeui-carousel-003-border:oklch(0.91 0.006 265);
---vibeui-carousel-003-accent:oklch(0.55 0.17 265);
+--vibeui-carousel-003-surface:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-carousel-003-bg:light-dark(oklch(1 0 0),oklch(0.26 0.013 265));
+--vibeui-carousel-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-003-muted:light-dark(oklch(0.58 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-carousel-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-carousel-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Собственная подложка: заголовок и счётчик — это текст, и на тёмной
@@ -95,6 +110,35 @@ const DEFAULT_SLIDES: Carousel003Slide[] = [
   },
 ]
 
+/** Подстановка чисел в подпись: перевод остаётся одной строкой. */
+function fill(template: string, values: Record<string, string | number>) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Слайдер с полосой миниатюр: видно, сколько ещё и что там.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -102,6 +146,12 @@ const DEFAULT_SLIDES: Carousel003Slide[] = [
 export function Carousel003({
   slides = DEFAULT_SLIDES,
   label = "Как это работает",
+  roleText = "карусель",
+  slideRoleText = "слайд",
+  slideText = "{index} из {total}",
+  thumbText = "Слайд {index}: {label}",
+  counterText = "{index} из {total}",
+  background = "",
   accent,
   className,
   style,
@@ -113,6 +163,12 @@ export function Carousel003({
   const palette = {
     "--vibeui-carousel-003-hue": current.hue ?? 250,
     ...(accent ? { "--vibeui-carousel-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-carousel-003-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -124,7 +180,7 @@ export function Carousel003({
       <section
         {...props}
         data-vibeui-block="carousel-003"
-        aria-roledescription="карусель"
+        aria-roledescription={roleText}
         aria-label={label}
         className={className}
         style={palette}
@@ -134,8 +190,11 @@ export function Carousel003({
             <div
               key={slide.title}
               hidden={position !== index}
-              aria-roledescription="слайд"
-              aria-label={`${position + 1} из ${slides.length}`}
+              aria-roledescription={slideRoleText}
+              aria-label={fill(slideText, {
+                index: position + 1,
+                total: slides.length,
+              })}
             >
               <h3 data-part="title">{slide.title}</h3>
               <p data-part="text">{slide.text}</p>
@@ -149,7 +208,11 @@ export function Carousel003({
                 type="button"
                 data-part="thumb"
                 aria-current={position === index}
-                aria-label={`Слайд ${position + 1}: ${slide.title}`}
+                aria-label={fill(thumbText, {
+                  index: position + 1,
+                  total: slides.length,
+                  label: slide.title,
+                })}
                 style={
                   {
                     "--vibeui-carousel-003-thumb": slide.hue ?? 250,
@@ -161,7 +224,7 @@ export function Carousel003({
           ))}
         </ul>
         <p data-part="counter">
-          {index + 1} из {slides.length}
+          {fill(counterText, { index: index + 1, total: slides.length })}
         </p>
       </section>
     </>

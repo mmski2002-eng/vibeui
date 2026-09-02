@@ -14,6 +14,8 @@ export type Hero016Props = {
   lede?: string
   paths?: [Hero016Path, Hero016Path]
   footnote?: string
+  /** Пусто — подложки нет, секция ложится на фон страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -25,14 +27,18 @@ export type Hero016Props = {
 // целиком за счёт растянутой псевдоссылки, но в дереве доступности остаётся
 // одна ссылка на путь, а не три. Ни один путь не выделен цветом: выбор
 // равный, иначе развилка превращается в тариф с «рекомендованным».
+//
+// Тема приходит из color-scheme окружения через light-dark(): подложки у
+// секции по умолчанию нет, а карточки в тёмном контексте светлее фона, и
+// граница у них светлее заливки.
 const STYLES = `
 :where([data-vibeui-block="hero-016"]){
---vibeui-hero-016-bg:oklch(0.96 0.004 260);
---vibeui-hero-016-fg:oklch(0.2 0.012 260);
---vibeui-hero-016-muted:oklch(0.51 0.012 260);
---vibeui-hero-016-card:oklch(1 0 0);
---vibeui-hero-016-line:oklch(0.89 0.006 260);
---vibeui-hero-016-accent:oklch(0.52 0.15 265);
+--vibeui-hero-016-bg:transparent;
+--vibeui-hero-016-fg:light-dark(oklch(0.2 0.012 260),oklch(0.94 0.006 260));
+--vibeui-hero-016-muted:light-dark(oklch(0.51 0.012 260),oklch(0.71 0.012 260));
+--vibeui-hero-016-card:light-dark(oklch(1 0 0),oklch(0.25 0.014 260));
+--vibeui-hero-016-line:light-dark(oklch(0.89 0.006 260),oklch(0.36 0.014 260));
+--vibeui-hero-016-accent:light-dark(oklch(0.52 0.15 265),oklch(0.75 0.14 265));
 --vibeui-hero-016-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -118,6 +124,28 @@ const DEFAULT_PATHS: [Hero016Path, Hero016Path] = [
   },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Hero с развилкой: два равных пути-карточки, каждый со своим списком и ссылкой. */
 export function Hero016({
   eyebrow = "Два способа начать",
@@ -125,12 +153,19 @@ export function Hero016({
   lede = "Один и тот же каталог, разная степень участия. Выберите путь — дальше сценарии не пересекаются.",
   paths = DEFAULT_PATHS,
   footnote = "Передумать можно в любой момент: секции остаются вашими в обоих случаях.",
+  background = "",
   accent,
   className,
   style,
 }: Hero016Props) {
   const palette = {
     ...(accent ? { "--vibeui-hero-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-hero-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

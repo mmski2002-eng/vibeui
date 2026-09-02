@@ -12,20 +12,35 @@ export type Sheet004Props = Omit<
   fileKind?: string
   facts?: { label: string; value: string }[]
   downloadLabel?: string
+  /** Подпись кнопки закрытия: русская по умолчанию. */
+  closeLabel?: string
+  /** Что написать на плашке, если у имени нет расширения. */
+  extensionFallback?: string
   accent?: string
+  /** Подложка листа и кнопки открытия. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: лист предпросмотра файла. Главное здесь — большая область
 // самого файла, а не список свойств: сначала человек узнаёт документ глазами
 // и только потом читает размер и дату. Область предпросмотра нарисована
 // градиентом с расширением файла, поэтому компонент не тащит картинок.
+//
+// Тема берётся из color-scheme окружения через light-dark(): лист темнеет
+// там, где тёмный контекст, и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="sheet-004"]){
---vibeui-sheet-004-bg:oklch(1 0 0);
---vibeui-sheet-004-fg:oklch(0.21 0.014 265);
---vibeui-sheet-004-muted:oklch(0.55 0.014 265);
---vibeui-sheet-004-border:oklch(0.91 0.006 265);
---vibeui-sheet-004-accent:oklch(0.55 0.17 265);
+--vibeui-sheet-004-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-sheet-004-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-sheet-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-sheet-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-sheet-004-canvas-from:light-dark(oklch(0.97 0.006 265),oklch(0.3 0.012 265));
+--vibeui-sheet-004-canvas-to:light-dark(oklch(0.93 0.01 265),oklch(0.26 0.014 265));
+--vibeui-sheet-004-chip:light-dark(oklch(1 0 0 / 78%),oklch(0.18 0.014 265 / 78%));
+--vibeui-sheet-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.16 265));
+--vibeui-sheet-004-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.03 265));
+--vibeui-sheet-004-shadow:light-dark(oklch(0.2 0.02 265 / 60%),oklch(0.02 0.01 265 / 75%));
+--vibeui-sheet-004-scrim:light-dark(oklch(0.16 0.02 265 / 60%),oklch(0.06 0.014 265 / 72%));
 --vibeui-sheet-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="sheet-004"]{
@@ -42,15 +57,15 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 position:fixed;inset:auto 0 0 0;margin:0;
 width:100%;max-width:100vw;max-height:92dvh;
 padding:0;border:0;border-radius:1.25rem 1.25rem 0 0;overflow:hidden;
-background:var(--vibeui-sheet-004-bg);color:inherit;
-box-shadow:0 -26px 60px -32px oklch(0.2 0.02 265 / 60%);
+background:var(--vibeui-sheet-004-bg);color:var(--vibeui-sheet-004-fg);
+box-shadow:0 -26px 60px -32px var(--vibeui-sheet-004-shadow);
 translate:0 100%;transition:translate .24s ease,overlay .24s allow-discrete,display .24s allow-discrete;
 }
 [data-vibeui-block="sheet-004"] dialog[open]{translate:0 0}
 @starting-style{
 [data-vibeui-block="sheet-004"] dialog[open]{translate:0 100%}
 }
-[data-vibeui-block="sheet-004"] dialog::backdrop{background:oklch(0.16 0.02 265 / 60%)}
+[data-vibeui-block="sheet-004"] dialog::backdrop{background:var(--vibeui-sheet-004-scrim)}
 [data-vibeui-block="sheet-004"] [data-part="panel"]{display:flex;flex-direction:column;max-height:92dvh}
 [data-vibeui-block="sheet-004"] [data-part="grabber"]{
 align-self:center;width:2.5rem;height:0.25rem;margin:0.5rem 0 0.375rem;
@@ -62,12 +77,12 @@ display:flex;align-items:center;justify-content:center;
 margin:0 0.75rem;height:11rem;border-radius:1rem;
 background:
 radial-gradient(120% 90% at 25% 15%,color-mix(in oklab,var(--vibeui-sheet-004-accent) 30%,transparent),transparent 60%),
-linear-gradient(160deg,oklch(0.97 0.006 265),oklch(0.93 0.01 265));
+linear-gradient(160deg,var(--vibeui-sheet-004-canvas-from),var(--vibeui-sheet-004-canvas-to));
 border:1px solid var(--vibeui-sheet-004-border);
 }
 [data-vibeui-block="sheet-004"] [data-part="chip"]{
 padding:0.375rem 0.75rem;border-radius:0.625rem;
-background:oklch(1 0 0 / 78%);color:var(--vibeui-sheet-004-fg);
+background:var(--vibeui-sheet-004-chip);color:var(--vibeui-sheet-004-fg);
 font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
 }
 [data-vibeui-block="sheet-004"] [data-part="body"]{flex:1;min-height:0;overflow-y:auto;padding:0.875rem 1rem 0}
@@ -93,7 +108,7 @@ border:1px solid var(--vibeui-sheet-004-border);background:transparent;color:inh
 font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="sheet-004"] [data-part="foot"] button[data-primary="true"]{
-flex:1;border-color:transparent;background:var(--vibeui-sheet-004-accent);color:oklch(0.99 0.01 265);
+flex:1;border-color:transparent;background:var(--vibeui-sheet-004-accent);color:var(--vibeui-sheet-004-on-accent);
 }
 [data-vibeui-block="sheet-004"] [data-part="foot"] button:focus-visible{outline:2px solid var(--vibeui-sheet-004-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){
@@ -109,9 +124,31 @@ const DEFAULT_FACTS = [
   { label: "Автор", value: "А. Ковалёва" },
 ]
 
-function extension(name: string) {
+function extension(name: string, fallback: string) {
   const parts = name.split(".")
-  return parts.length > 1 ? parts[parts.length - 1] : "файл"
+  return parts.length > 1 ? parts[parts.length - 1] : fallback
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -124,7 +161,10 @@ export function Sheet004({
   fileKind = "Документ PDF · загружен 12 марта",
   facts = DEFAULT_FACTS,
   downloadLabel = "Скачать",
+  closeLabel = "Закрыть",
+  extensionFallback = "файл",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -133,6 +173,12 @@ export function Sheet004({
 
   const palette = {
     ...(accent ? { "--vibeui-sheet-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-sheet-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -166,7 +212,9 @@ export function Sheet004({
           <div data-part="panel">
             <span data-part="grabber" aria-hidden="true" />
             <div data-part="canvas" aria-hidden="true">
-              <span data-part="chip">{extension(fileName)}</span>
+              <span data-part="chip">
+                {extension(fileName, extensionFallback)}
+              </span>
             </div>
             <div data-part="body">
               <h2 data-part="name">{fileName}</h2>
@@ -182,7 +230,7 @@ export function Sheet004({
             </div>
             <div data-part="foot">
               <button type="button" onClick={() => sheet.current?.close()}>
-                Закрыть
+                {closeLabel}
               </button>
               <button type="button" data-primary="true">
                 {downloadLabel}

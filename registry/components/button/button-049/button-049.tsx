@@ -10,6 +10,8 @@ export type Button049Props = Omit<
   children?: string
   /** Подпись после добавления: она же приглашение перейти в корзину. */
   addedLabel?: string
+  /** Что объявляет aria-live после добавления. */
+  addedAnnounce?: string
   defaultAdded?: boolean
   onAdd?: () => void
   onOpenCart?: () => void
@@ -22,9 +24,9 @@ export type Button049Props = Omit<
 // человек со скринридером не узнает, что добавление прошло.
 const STYLES = `
 :where([data-vibeui-block="button-049"]){
---vibeui-button-049-accent:oklch(0.53 0.16 275);
---vibeui-button-049-done:oklch(0.5 0.13 155);
---vibeui-button-049-fg:oklch(0.99 0.01 275);
+--vibeui-button-049-accent:light-dark(oklch(0.53 0.16 275),oklch(0.63 0.17 275));
+--vibeui-button-049-done:light-dark(oklch(0.5 0.13 155),oklch(0.6 0.13 155));
+--vibeui-button-049-fg:light-dark(oklch(0.99 0.01 275),oklch(0.98 0.012 275));
 --vibeui-button-049-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-049"]{
@@ -70,6 +72,7 @@ position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);whit
 export function Button049({
   children = "В корзину",
   addedLabel = "В корзине — открыть",
+  addedAnnounce = "Товар добавлен в корзину",
   defaultAdded = false,
   onAdd,
   onOpenCart,
@@ -115,7 +118,7 @@ export function Button049({
         />
         {added ? addedLabel : children}
         <span data-part="live" role="status" aria-live="polite">
-          {added ? "Товар добавлен в корзину" : ""}
+          {added ? addedAnnounce : ""}
         </span>
       </button>
     </>

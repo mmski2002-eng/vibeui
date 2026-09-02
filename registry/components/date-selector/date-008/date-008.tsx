@@ -12,6 +12,15 @@ export type Date008Props = Omit<
   stepMinutes?: number
   openAt?: string
   closeAt?: string
+  /** Подписи кнопок сдвига с подстановкой {minutes}. */
+  earlierLabel?: string
+  laterLabel?: string
+  /** Строка о шаге с подстановкой {minutes}. */
+  stepText?: string
+  /** Строка о часах приёма с подстановками {open} и {close}. */
+  hoursText?: string
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,18 +29,21 @@ export type Date008Props = Omit<
 // округляется до ближайшей четверти. Кнопки сдвигают время на шаг и заодно
 // выравнивают по сетке: сдвиг от 14:07 даёт 14:15, а не 14:22. Границы работы
 // заданы через min и max, и за них не выйдут ни кнопки, ни клавиатура.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="date-008"]){
---vibeui-date-008-surface:oklch(1 0 0);
---vibeui-date-008-field:oklch(0.985 0.002 265);
---vibeui-date-008-shell:oklch(0.9 0.006 265);
---vibeui-date-008-fg:oklch(0.23 0.014 265);
---vibeui-date-008-muted:oklch(0.55 0.014 265);
---vibeui-date-008-border:oklch(0.88 0.008 265);
---vibeui-date-008-accent:oklch(0.5 0.15 240);
+--vibeui-date-008-surface:transparent;
+--vibeui-date-008-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-date-008-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-date-008-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-date-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-date-008-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-date-008-accent:light-dark(oklch(0.5 0.15 240),oklch(0.76 0.14 240));
 --vibeui-date-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: рамка держит форму, фон приходит со страницы. */
 [data-vibeui-block="date-008"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:19rem;box-sizing:border-box;padding:0.875rem;
@@ -83,6 +95,29 @@ function toTime(minutes: number) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поле времени с сеткой в четверть часа и кнопками сдвига по шагу.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -92,6 +127,11 @@ export function Date008({
   stepMinutes = 15,
   openAt = "09:00",
   closeAt = "20:00",
+  earlierLabel = "Раньше на {minutes} минут",
+  laterLabel = "Позже на {minutes} минут",
+  stepText = "Шаг {minutes} мин",
+  hoursText = "приём с {open} до {close}",
+  background = "",
   accent,
   className,
   style,
@@ -110,8 +150,16 @@ export function Date008({
       Math.max(open, Math.round(minutes / stepMinutes) * stepMinutes),
     )
 
+  const minutes = String(stepMinutes)
+
   const palette = {
     ...(accent ? { "--vibeui-date-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-date-008-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -131,7 +179,7 @@ export function Date008({
           <button
             type="button"
             disabled={current <= open}
-            aria-label={`Раньше на ${stepMinutes} минут`}
+            aria-label={earlierLabel.replace("{minutes}", minutes)}
             onClick={() => setValue(toTime(snap(current - stepMinutes)))}
           >
             −{stepMinutes}
@@ -150,16 +198,16 @@ export function Date008({
           <button
             type="button"
             disabled={current >= close}
-            aria-label={`Позже на ${stepMinutes} минут`}
+            aria-label={laterLabel.replace("{minutes}", minutes)}
             onClick={() => setValue(toTime(snap(current + stepMinutes)))}
           >
             +{stepMinutes}
           </button>
         </div>
         <p id={`${id}-hint`} data-part="hint">
-          <span>Шаг {stepMinutes} мин</span>
+          <span>{stepText.replace("{minutes}", minutes)}</span>
           <span>
-            приём с {openAt} до {closeAt}
+            {hoursText.replace("{open}", openAt).replace("{close}", closeAt)}
           </span>
         </p>
       </div>

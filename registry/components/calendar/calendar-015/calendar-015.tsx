@@ -14,9 +14,18 @@ export type Calendar015Props = Omit<
   opensAt?: string
   closesAt?: string
   busy?: string[]
+  /** Заголовок колонки времени. */
+  timesLegend?: string
+  /** Подпись колонки времени для скринридера. */
+  timesLabel?: string
+  /** Строка подвала. {value} подставляется и выделяется жирным. */
+  summaryText?: string
+  submitText?: string
   locale?: string
   onChange?: (value: { date: string; time: string }) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: дата и время выбираются в одном месте и в одном
@@ -25,12 +34,13 @@ export type Calendar015Props = Omit<
 // до того как нажмёт на день.
 const STYLES = `
 :where([data-vibeui-block="calendar-015"]){
---vibeui-calendar-015-bg:oklch(1 0 0);
---vibeui-calendar-015-fg:oklch(0.24 0.014 265);
---vibeui-calendar-015-muted:oklch(0.62 0.014 265);
---vibeui-calendar-015-border:oklch(0.91 0.006 265);
---vibeui-calendar-015-hover:oklch(0.96 0.004 265);
---vibeui-calendar-015-accent:oklch(0.52 0.15 255);
+--vibeui-calendar-015-bg:transparent;
+--vibeui-calendar-015-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-calendar-015-muted:light-dark(oklch(0.62 0.014 265),oklch(0.67 0.013 265));
+--vibeui-calendar-015-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-calendar-015-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-calendar-015-accent:light-dark(oklch(0.52 0.15 255),oklch(0.72 0.14 255));
+--vibeui-calendar-015-on-accent:light-dark(oklch(0.99 0.01 255),oklch(0.2 0.04 255));
 --vibeui-calendar-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="calendar-015"]{
@@ -74,7 +84,7 @@ font:inherit;font-size:0.8125rem;font-variant-numeric:tabular-nums;
 [data-vibeui-block="calendar-015"] td button:focus-visible{outline:2px solid var(--vibeui-calendar-015-accent);outline-offset:-2px}
 [data-vibeui-block="calendar-015"] td button[data-outside="true"]{color:var(--vibeui-calendar-015-muted);opacity:.5}
 [data-vibeui-block="calendar-015"] td button[aria-pressed="true"]{
-background:var(--vibeui-calendar-015-accent);color:oklch(0.99 0.01 255);font-weight:650;opacity:1;
+background:var(--vibeui-calendar-015-accent);color:var(--vibeui-calendar-015-on-accent);font-weight:650;opacity:1;
 }
 [data-vibeui-block="calendar-015"] [data-part="times"] button{
 appearance:none;cursor:pointer;flex:none;
@@ -89,7 +99,7 @@ font:inherit;font-size:0.8125rem;font-variant-numeric:tabular-nums;
 cursor:not-allowed;color:var(--vibeui-calendar-015-muted);opacity:.5;text-decoration:line-through;
 }
 [data-vibeui-block="calendar-015"] [data-part="times"] button[aria-pressed="true"]{
-background:var(--vibeui-calendar-015-accent);color:oklch(0.99 0.01 255);
+background:var(--vibeui-calendar-015-accent);color:var(--vibeui-calendar-015-on-accent);
 border-color:var(--vibeui-calendar-015-accent);font-weight:650;
 }
 [data-vibeui-block="calendar-015"] [data-part="foot"]{
@@ -102,7 +112,7 @@ font-size:0.8125rem;
 [data-vibeui-block="calendar-015"] [data-part="submit"]{
 appearance:none;cursor:pointer;border:0;border-radius:0.5rem;
 height:2.25rem;padding:0 1rem;
-background:var(--vibeui-calendar-015-accent);color:oklch(0.99 0.01 255);
+background:var(--vibeui-calendar-015-accent);color:var(--vibeui-calendar-015-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="calendar-015"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-calendar-015-accent);outline-offset:2px}
@@ -127,6 +137,28 @@ function clock(value: number) {
 const DEFAULT_BUSY = ["10:00", "10:30", "13:00", "16:30"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Дата и время в одном блоке: месяц слева, сетка времени справа.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -137,9 +169,14 @@ export function Calendar015({
   opensAt = "09:00",
   closesAt = "18:00",
   busy = DEFAULT_BUSY,
+  timesLegend = "Время",
+  timesLabel = "Время приёма",
+  summaryText = "Запись на {value}",
+  submitText = "Подтвердить",
   locale = "ru-RU",
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -172,8 +209,16 @@ export function Calendar015({
     year: "numeric",
   }).format(first)
 
+  const [summaryBefore, summaryAfter = ""] = summaryText.split("{value}")
+
   const palette = {
     ...(accent ? { "--vibeui-calendar-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -236,8 +281,8 @@ export function Calendar015({
               </tbody>
             </table>
           </div>
-          <div data-part="times" role="group" aria-label="Время приёма">
-            <p data-part="legend">Время</p>
+          <div data-part="times" role="group" aria-label={timesLabel}>
+            <p data-part="legend">{timesLegend}</p>
             {slots.map((slot) => (
               <button
                 key={slot}
@@ -253,13 +298,14 @@ export function Calendar015({
         </div>
         <div data-part="foot">
           <span data-part="summary">
-            Запись на{" "}
+            {summaryBefore}
             <strong>
               {long.format(new Date(`${date}T00:00:00`))}, {time}
             </strong>
+            {summaryAfter}
           </span>
           <button type="button" data-part="submit">
-            Подтвердить
+            {submitText}
           </button>
         </div>
       </div>

@@ -9,6 +9,10 @@ export type Commerce040Perk = {
 
 export type Commerce040Props = {
   title?: string
+  /** Ярлык над заголовком. */
+  tag?: string
+  /** Подпись раздела: {title} — название товара. */
+  regionLabel?: string
   release?: string
   countdown?: string
   progress?: number
@@ -19,7 +23,14 @@ export type Commerce040Props = {
   guarantee?: string
   cta?: string
   reserved?: string
+  /** Концы шкалы до релиза: ключи start и end. */
+  scaleText?: Record<string, string>
+  /** Подпись перед зачёркнутой ценой, слышна только скринридеру. */
+  oldPriceLabel?: string
+  perksTitle?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -33,12 +44,15 @@ export type Commerce040Props = {
 // Условие списания и правило отмены названы словами рядом с кнопкой.
 const STYLES = `
 :where([data-vibeui-block="commerce-040"]){
---vibeui-commerce-040-bg:oklch(0.99 0.004 265);
---vibeui-commerce-040-fg:oklch(0.21 0.014 265);
---vibeui-commerce-040-muted:oklch(0.55 0.014 265);
---vibeui-commerce-040-border:oklch(0.91 0.006 265);
---vibeui-commerce-040-soft:oklch(1 0 0);
---vibeui-commerce-040-accent:oklch(0.5 0.17 300);
+--vibeui-commerce-040-bg:transparent;
+--vibeui-commerce-040-fg:light-dark(oklch(0.21 0.014 265),oklch(0.93 0.006 265));
+--vibeui-commerce-040-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-commerce-040-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-040-soft:light-dark(oklch(1 0 0),oklch(0.25 0.01 265));
+--vibeui-commerce-040-accent:light-dark(oklch(0.5 0.17 300),oklch(0.72 0.15 300));
+--vibeui-commerce-040-onaccent:light-dark(oklch(1 0 0),oklch(0.18 0.03 300));
+--vibeui-commerce-040-charge:light-dark(oklch(0.97 0.02 300),oklch(0.29 0.04 300));
+--vibeui-commerce-040-bonus:light-dark(oklch(0.62 0.16 60),oklch(0.76 0.15 65));
 --vibeui-commerce-040-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -89,7 +103,7 @@ margin:0;display:flex;align-items:baseline;gap:0.5rem;font-variant-numeric:tabul
 [data-vibeui-block="commerce-040"] [data-part="cost"] s{font-size:0.875rem;color:var(--vibeui-commerce-040-muted)}
 [data-vibeui-block="commerce-040"] [data-part="sr"]{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 [data-vibeui-block="commerce-040"] [data-part="charge"]{
-margin:0.5rem 0 0;padding:0.5rem 0.625rem;border-radius:0.75rem;background:oklch(0.97 0.02 300);
+margin:0.5rem 0 0;padding:0.5rem 0.625rem;border-radius:0.75rem;background:var(--vibeui-commerce-040-charge);
 font-size:0.75rem;line-height:1.5;
 }
 [data-vibeui-block="commerce-040"] h3{
@@ -103,14 +117,14 @@ position:relative;padding-left:1.375rem;font-size:0.8125rem;line-height:1.5;
 [data-vibeui-block="commerce-040"] li::before{
 content:"✓";position:absolute;left:0;top:0.0625rem;
 width:0.9375rem;height:0.9375rem;border-radius:9999px;display:grid;place-items:center;
-background:var(--vibeui-commerce-040-accent);color:oklch(1 0 0);font-size:0.5625rem;font-weight:800;
+background:var(--vibeui-commerce-040-accent);color:var(--vibeui-commerce-040-onaccent);font-size:0.5625rem;font-weight:800;
 }
 [data-vibeui-block="commerce-040"] li[data-bonus="yes"]{font-weight:650}
-[data-vibeui-block="commerce-040"] li[data-bonus="yes"]::before{content:"★";background:oklch(0.62 0.16 60)}
+[data-vibeui-block="commerce-040"] li[data-bonus="yes"]::before{content:"★";background:var(--vibeui-commerce-040-bonus);color:var(--vibeui-commerce-040-onaccent)}
 [data-vibeui-block="commerce-040"] li span{display:block;font-weight:400;font-size:0.75rem;color:var(--vibeui-commerce-040-muted)}
 [data-vibeui-block="commerce-040"] [data-part="cta"]{
 margin-top:0.875rem;width:100%;appearance:none;border:0;cursor:pointer;height:3rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-040-accent);color:oklch(1 0 0);font:inherit;font-size:1rem;font-weight:700;
+background:var(--vibeui-commerce-040-accent);color:var(--vibeui-commerce-040-onaccent);font:inherit;font-size:1rem;font-weight:700;
 }
 [data-vibeui-block="commerce-040"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-commerce-040-accent);outline-offset:2px}
 [data-vibeui-block="commerce-040"] [data-part="guarantee"]{margin:0.625rem 0 0;font-size:0.75rem;line-height:1.5;color:var(--vibeui-commerce-040-muted)}
@@ -145,12 +159,41 @@ const DEFAULT_PERKS: Commerce040Perk[] = [
   },
 ]
 
+const DEFAULT_SCALE: Record<string, string> = {
+  start: "анонс",
+  end: "выход",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Предзаказ с датой выхода: срок набран крупнее цены, условие списания рядом с кнопкой.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Commerce040({
   title = "Лампа «Полдень» второго поколения",
+  tag = "Предзаказ",
+  regionLabel = "Предзаказ: {title}",
   release = "18 апреля",
   countdown = "до выхода 44 дня · предзаказ открыт до 15 апреля",
   progress = 62,
@@ -161,12 +204,22 @@ export function Commerce040({
   guarantee = "Отменить предзаказ можно в любой момент до отправки — одной кнопкой в заказе, без звонка и объяснений.",
   cta = "Оформить предзаказ",
   reserved = "Забронировано 1 840 штук из 2 500",
+  scaleText = DEFAULT_SCALE,
+  oldPriceLabel = "Цена после выхода ",
+  perksTitle = "Что входит в предзаказ",
   accent,
+  background = "",
   className,
   style,
 }: Commerce040Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-040-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-040-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -179,7 +232,7 @@ export function Commerce040({
         data-vibeui-block="commerce-040"
         className={className}
         style={palette}
-        aria-label={`Предзаказ: ${title}`}
+        aria-label={regionLabel.replace("{title}", title)}
       >
         <div data-part="shell">
           <div data-part="grid">
@@ -191,7 +244,7 @@ export function Commerce040({
                 } as CSSProperties
               }
             >
-              <span data-part="tag">Предзаказ</span>
+              <span data-part="tag">{tag}</span>
               <h2>{title}</h2>
               <p data-part="release">{release}</p>
               <p data-part="count">{countdown}</p>
@@ -199,8 +252,8 @@ export function Commerce040({
                 <i />
               </div>
               <p data-part="scale">
-                <span>анонс</span>
-                <span>выход</span>
+                <span>{scaleText.start ?? DEFAULT_SCALE.start}</span>
+                <span>{scaleText.end ?? DEFAULT_SCALE.end}</span>
               </p>
             </div>
 
@@ -208,13 +261,13 @@ export function Commerce040({
               <p data-part="cost">
                 <b>{price}</b>
                 <s>
-                  <span data-part="sr">Цена после выхода </span>
+                  <span data-part="sr">{oldPriceLabel}</span>
                   {oldPrice}
                 </s>
               </p>
               <p data-part="charge">{charge}</p>
 
-              <h3>Что входит в предзаказ</h3>
+              <h3>{perksTitle}</h3>
               <ul>
                 {perks.map((perk) => (
                   <li key={perk.id} data-bonus={perk.bonus ? "yes" : "no"}>

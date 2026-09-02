@@ -32,15 +32,20 @@
             "обработку стрелок, Home и End — это обязательная часть паттерна window splitter",
             "setPointerCapture: без захвата перетаскивание срывается на быстром движении",
             "touch-action:none на полосе, иначе на телефоне вместо тяги прокручивается страница",
-            "широкую цель нажатия вокруг тонкой линии: в один пиксель мышью не попадают"
+            "широкую цель нажатия вокруг тонкой линии: в один пиксель мышью не попадают",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя разделителя через label",
             "начальную ширину через defaultSize",
             "пределы через min и max, шаг клавиатуры через step",
-            "цвет полосы и фокуса через accent"
+            "цвет полосы и фокуса через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "тексты панелей: primaryTitle, primaryText, restTitle, restText и строку statusText с подстановкой {size}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Размер в процентах: на очень узком экране левая панель может стать бесполезно тонкой — поднимите min.",
             "aria-valuenow округляется до целого, поэтому объявляемое значение чуть грубее фактического.",
             "Содержимое панелей — пример: заменяйте его, сохраняя min-width:0, иначе панель перестанет сжиматься.",
@@ -55,6 +60,18 @@
             "default": 42,
             "min": 20,
             "max": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           },
           {
             "prop": "label",
@@ -75,15 +92,20 @@
                 "the arrow, Home and End handling — a required part of the window splitter pattern",
                 "setPointerCapture: without capture the drag breaks on a fast movement",
                 "touch-action:none on the bar, otherwise a phone scrolls the page instead of dragging",
-                "the wide hit target around the thin line: nobody hits one pixel with a mouse"
+                "the wide hit target around the thin line: nobody hits one pixel with a mouse",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the separator name through label",
                 "the initial width through defaultSize",
                 "the limits through min and max, the keyboard increment through step",
-                "the bar and focus colour through accent"
+                "the bar and focus colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "the pane copy: primaryTitle, primaryText, restTitle, restText and the statusText template with its {size} placeholder"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The size is in percent: on a very narrow screen the left pane can become uselessly thin — raise min.",
                 "aria-valuenow is rounded to an integer, so the announced value is slightly coarser than the real one.",
                 "The pane content is an example: replace it but keep min-width:0, or the pane stops shrinking.",
@@ -95,14 +117,33 @@
               "defaultSize": {
                 "label": "Left pane width, %"
               },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "label": {
                 "label": "Separator name",
                 "default": "List width"
               }
             },
-            "title": "Two Panes"
+            "title": "Two Panes",
+            "preview": {
+              "props": {
+                "label": "List width",
+                "primaryLabel": "Mail list",
+                "primaryTitle": "Inbox",
+                "primaryText": "Drag the separator, or tab onto it and press the arrows.",
+                "restLabel": "Message",
+                "restTitle": "Contract to sign",
+                "restText": "The right pane takes the remainder: its width is not stored separately, so it cannot drift away from the left one.",
+                "statusText": "Left pane — {size}% of the width."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultSize", "accent", "background"]
       }
     },
     {
@@ -136,15 +177,20 @@
             "зажим границы между соседней границей и минимумом — иначе панели схлопываются друг в друга",
             "role=\"separator\" с aria-valuenow у обеих полос, а не у одной",
             "разные имена разделителей: две одинаковые «границы» с клавиатуры неразличимы",
-            "min-width:0 у панелей, иначе содержимое не даст им сжиматься"
+            "min-width:0 у панелей, иначе содержимое не даст им сжиматься",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "начальные размеры через defaultLeft и defaultMiddle",
             "минимальную долю панели через min и шаг клавиатуры через step",
             "имя разделителей через label",
-            "цвет активной полосы через accent"
+            "цвет активной полосы через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "содержимое панелей: projectsTitle с projectsItems, tasksTitle с tasksItems, summaryTitle и summaryText"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "aria-valuenow здесь — положение границы, а не ширина панели: это честнее для двух полос сразу.",
             "min задаётся в процентах и действует на все три панели одинаково.",
             "Третья панель не хранит размер: не пытайтесь задать ей ширину, она забирает остаток.",
@@ -167,6 +213,25 @@
             "default": 40,
             "min": 14,
             "max": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "label",
+            "label": "Имя разделителя",
+            "type": "text",
+            "default": "Граница",
+            "maxLength": 24
           }
         ],
         "i18n": {
@@ -180,15 +245,20 @@
                 "clamping a boundary between its neighbour and the minimum — otherwise panes collapse into each other",
                 "role=\"separator\" with aria-valuenow on both bars, not just one",
                 "distinct separator names: two identical \"boundaries\" are indistinguishable from the keyboard",
-                "min-width:0 on the panes, otherwise their content prevents shrinking"
+                "min-width:0 on the panes, otherwise their content prevents shrinking",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the initial sizes through defaultLeft and defaultMiddle",
                 "the minimum pane share through min and the keyboard increment through step",
                 "the separator name through label",
-                "the active bar colour through accent"
+                "the active bar colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "the pane content: projectsTitle with projectsItems, tasksTitle with tasksItems, summaryTitle and summaryText"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "aria-valuenow here is a boundary position, not a pane width: that is more honest with two bars.",
                 "min is expressed in percent and applies equally to all three panes.",
                 "The third pane stores no size: do not try to set its width, it takes the remainder.",
@@ -202,11 +272,37 @@
               },
               "defaultMiddle": {
                 "label": "Middle pane, %"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "label": {
+                "label": "Separator name",
+                "default": "Boundary"
               }
             },
-            "title": "Three Panes"
+            "title": "Three Panes",
+            "preview": {
+              "props": {
+                "label": "Boundary",
+                "projectsTitle": "Projects",
+                "projectsItems": ["Showcase", "Catalog", "Documents"],
+                "tasksTitle": "Tasks",
+                "tasksItems": [
+                  "Build the registry",
+                  "Check the previews",
+                  "Update the docs"
+                ],
+                "summaryTitle": "Details",
+                "summaryText": "The right pane takes the remaining width, so the total always adds up to a hundred percent without any recalculation."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultLeft", "defaultMiddle", "accent", "background"]
       }
     },
     {
@@ -240,15 +336,20 @@
             "стрелки вверх и вниз для вертикального разделения — левая и правая тут бессмысленны",
             "role=\"separator\" с tabIndex 0 и aria-valuenow: тяга мышью не заменяет клавиатуру",
             "остаток высоты у нижней панели: результат не должен исчезать при растянутом редакторе",
-            "тёмную подложку кода вместе со светлой подложкой панели результата"
+            "тёмную подложку кода: она намеренно остаётся тёмной в обеих темах, редактор читается как редактор",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя разделителя через label",
             "начальную высоту редактора через defaultSize",
             "пределы через min и max, шаг клавиатуры через step",
-            "цвет полосы и фокуса через accent"
+            "цвет полосы и фокуса через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "содержимое: code в редакторе, resultTitle и resultText в результате, строка statusText с подстановкой {size}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Высота рамки задана в rem: внутри своего экрана компонент не тянется на весь вьюпорт.",
             "Код в примере — обычный <pre>: подсветку синтаксиса компонент не делает и делать не должен.",
             "На телефоне вертикальное разделение съедает высоту вдвое — проверьте минимальные значения.",
@@ -263,6 +364,18 @@
             "default": 52,
             "min": 20,
             "max": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           },
           {
             "prop": "label",
@@ -283,15 +396,20 @@
                 "up and down arrows for a vertical split — left and right make no sense here",
                 "role=\"separator\" with tabIndex 0 and aria-valuenow: dragging does not replace the keyboard",
                 "the remaining height going to the bottom pane: the result must not vanish under a tall editor",
-                "the dark code surface together with the light surface of the result pane"
+                "the dark code surface: it deliberately stays dark in both themes so the editor reads as an editor",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the separator name through label",
                 "the initial editor height through defaultSize",
                 "the limits through min and max, the keyboard increment through step",
-                "the bar and focus colour through accent"
+                "the bar and focus colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "the content: code in the editor, resultTitle and resultText in the result, and the statusText template with its {size} placeholder"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The frame height is set in rem: the component does not stretch to the viewport on its own.",
                 "The code sample is a plain <pre>: the component does no syntax highlighting and should not.",
                 "On a phone a vertical split halves the height — check your minimum values there.",
@@ -303,14 +421,31 @@
               "defaultSize": {
                 "label": "Editor height, %"
               },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "label": {
                 "label": "Separator name",
                 "default": "Editor height"
               }
             },
-            "title": "Stacked Split"
+            "title": "Stacked Split",
+            "preview": {
+              "props": {
+                "label": "Editor height",
+                "editorLabel": "Editor",
+                "resultLabel": "Result",
+                "resultTitle": "Card",
+                "resultText": "The bottom pane takes the remaining height, so the result never vanishes even with the editor stretched to its limit.",
+                "statusText": "The editor takes {size}% of the height."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultSize", "accent", "background"]
       }
     },
     {
@@ -344,15 +479,20 @@
             "видимую реакцию на упор в предел — без неё интерфейс кажется зависшим",
             "aria-valuetext с единицами: голое число в пикселях на слух непонятно",
             "role=\"separator\" с tabIndex 0 и обработкой стрелок, Home и End",
-            "остаток ширины у основной области: меню не должно выдавливать содержимое"
+            "остаток ширины у основной области: меню не должно выдавливать содержимое",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя разделителя через label",
             "начальную ширину через defaultSize",
             "пределы через min и max, шаг клавиатуры через step",
-            "цвет полосы и фокуса через accent"
+            "цвет полосы и фокуса через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "содержимое: navTitle с navItems, mainTitle и mainText, строки statusText, minText, maxText и valueText с подстановками"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "min и max — пиксели, а не rem: при крупном системном шрифте пересчитайте их сами.",
             "Плашка предела появляется только на границе диапазона и исчезает при первом же шаге назад.",
             "Компонент не сохраняет ширину между сессиями: для этого храните значение снаружи.",
@@ -367,6 +507,18 @@
             "default": 200,
             "min": 144,
             "max": 288
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           },
           {
             "prop": "label",
@@ -387,15 +539,20 @@
                 "a visible reaction to hitting the limit — without it the interface looks frozen",
                 "aria-valuetext with units: a bare pixel number means little by ear",
                 "role=\"separator\" with tabIndex 0 and arrow, Home and End handling",
-                "the remaining width going to the main area: the menu must not squeeze the content out"
+                "the remaining width going to the main area: the menu must not squeeze the content out",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the separator name through label",
                 "the initial width through defaultSize",
                 "the limits through min and max, the keyboard increment through step",
-                "the bar and focus colour through accent"
+                "the bar and focus colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "the content: navTitle with navItems, mainTitle and mainText, and the statusText, minText, maxText and valueText templates"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "min and max are pixels, not rem: recompute them yourself for a large system font.",
                 "The limit badge appears only at the edge of the range and disappears on the first step back.",
                 "The component does not persist the width between sessions: store the value outside for that.",
@@ -407,14 +564,39 @@
               "defaultSize": {
                 "label": "Menu width, px"
               },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "label": {
                 "label": "Separator name",
                 "default": "Menu width"
               }
             },
-            "title": "Clamped Sidebar"
+            "title": "Clamped Sidebar",
+            "preview": {
+              "props": {
+                "label": "Menu width",
+                "navTitle": "Sections",
+                "navItems": [
+                  "Orders and returns",
+                  "Warehouse",
+                  "Reports by period",
+                  "Delivery settings"
+                ],
+                "mainTitle": "Order no. 4821",
+                "mainText": "The main area takes the remaining width, so the menu can never push the content off the edge.",
+                "statusText": "Menu — {size} px",
+                "minText": "minimum {value}",
+                "maxText": "maximum {value}",
+                "valueText": "{size} pixels"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultSize", "accent", "background"]
       }
     },
     {
@@ -448,15 +630,20 @@
             "ноль как значение aria-valuenow: свёрнутая панель — это размер 0, а не удалённый элемент",
             "aria-valuetext со словом «свёрнута» — по числу 0 состояние на слух не читается",
             "запомненный прошлый размер: разворот в произвольную ширину сбивает привычную раскладку",
-            "стрелку на разделителе, показывающую направление следующего движения"
+            "стрелку на разделителе, показывающую направление следующего движения",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя разделителя через label",
             "начальную и восстанавливаемую ширину через defaultSize",
             "пределы через min и max, шаг клавиатуры через step",
-            "цвет стрелки и фокуса через accent"
+            "цвет стрелки и фокуса через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "содержимое: sideTitle и sideText, mainTitle и mainText, строки statusText, collapsedStatusText, valueText и collapsedValueText"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Двойное нажатие — жест, о котором не догадываются: продублируйте его кнопкой в шапке панели.",
             "Тяга ниже половины минимума сворачивает панель: это осознанный порог, а не случайность.",
             "Содержимое свёрнутой панели остаётся в DOM и доступно скринридеру, если не спрятать его явно.",
@@ -471,6 +658,18 @@
             "default": 210,
             "min": 150,
             "max": 320
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           },
           {
             "prop": "label",
@@ -491,15 +690,20 @@
                 "zero as the aria-valuenow value: a collapsed pane is size 0, not a removed element",
                 "aria-valuetext saying \"collapsed\" — the number 0 alone does not read by ear",
                 "the remembered previous size: expanding to an arbitrary width breaks the familiar layout",
-                "the arrow on the separator showing the direction of the next move"
+                "the arrow on the separator showing the direction of the next move",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the separator name through label",
                 "the initial and restored width through defaultSize",
                 "the limits through min and max, the keyboard increment through step",
-                "the arrow and focus colour through accent"
+                "the arrow and focus colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "the content: sideTitle and sideText, mainTitle and mainText, and the statusText, collapsedStatusText, valueText and collapsedValueText strings"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A double click is an undiscoverable gesture: mirror it with a button in the pane header.",
                 "Dragging below half the minimum collapses the pane: that threshold is deliberate, not accidental.",
                 "The collapsed pane's content stays in the DOM and reachable by a screen reader unless hidden explicitly.",
@@ -511,14 +715,34 @@
               "defaultSize": {
                 "label": "Pane width, px"
               },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "label": {
                 "label": "Separator name",
                 "default": "Filters pane width"
               }
             },
-            "title": "Collapsible Pane"
+            "title": "Collapsible Pane",
+            "preview": {
+              "props": {
+                "label": "Filters pane width",
+                "sideTitle": "Filters",
+                "sideText": "A collapsed pane stays in the markup: its width is zero, not absence.",
+                "mainTitle": "Results",
+                "mainText": "Double-clicking the separator collapses the pane, and Enter does the same from the keyboard.",
+                "statusText": "Pane — {size} px",
+                "collapsedStatusText": "Pane collapsed",
+                "valueText": "{size} pixels",
+                "collapsedValueText": "collapsed"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultSize", "accent", "background"]
       }
     },
     {
@@ -552,18 +776,23 @@
             "разную aria-orientation у двух разделителей — ось объявляется каждым отдельно",
             "разные клавиши по осям: вверх-вниз для внешнего, влево-вправо для внутреннего",
             "aria-controls у каждой полосы на свою область, а не на общий контейнер",
-            "min-height:0 и min-width:0 у вложенных областей, иначе они перестают сжиматься"
+            "min-height:0 и min-width:0 у вложенных областей, иначе они перестают сжиматься",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "начальную высоту рабочей области через defaultRow",
             "начальную ширину дерева файлов через defaultColumn",
             "шаг клавиатуры через step",
-            "цвет полос и фокуса через accent"
+            "цвет полос и фокуса через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "содержимое: treeTitle с treeItems, editorTitle с editorLines, consoleLabel с consoleLines, имена полос rowLabel и columnLabel, строка statusText с подстановками {row} и {column}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пределы вложенных панелей общие (20–80%) и заданы константами в файле.",
             "Три подвижные области на телефоне бессмысленны: под узкий экран схлопывайте вёрстку в один столбец.",
-            "Консоль внизу тёмная намеренно: она не подчиняется светлой подложке остальных панелей.",
+            "Консоль внизу намеренно остаётся тёмной в обеих темах: она читается как консоль, а не как ещё одна панель.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -583,6 +812,18 @@
             "default": 34,
             "min": 20,
             "max": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -596,18 +837,23 @@
                 "a different aria-orientation on each separator — every bar declares its own axis",
                 "different keys per axis: up-down for the outer bar, left-right for the inner one",
                 "aria-controls pointing each bar at its own region rather than at the shared container",
-                "min-height:0 and min-width:0 on the nested regions, or they stop shrinking"
+                "min-height:0 and min-width:0 on the nested regions, or they stop shrinking",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the initial workspace height through defaultRow",
                 "the initial file tree width through defaultColumn",
                 "the keyboard increment through step",
-                "the bar and focus colour through accent"
+                "the bar and focus colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "the content: treeTitle with treeItems, editorTitle with editorLines, consoleLabel with consoleLines, the rowLabel and columnLabel bar names, and the statusText template with its {row} and {column} placeholders"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The nested limits are shared (20–80%) and set as constants in the file.",
                 "Three movable regions make no sense on a phone: collapse the layout to one column there.",
-                "The console at the bottom is dark on purpose: it does not follow the light surface of the other panes.",
+                "The console at the bottom deliberately stays dark in both themes: it reads as a console, not as one more pane.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Resizable006\n  defaultRow={62}\n  defaultColumn={34}\n  step={4}\n/>"
@@ -618,11 +864,35 @@
               },
               "defaultColumn": {
                 "label": "File tree, %"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Nested Split"
+            "title": "Nested Split",
+            "preview": {
+              "props": {
+                "rowLabel": "Workspace height",
+                "columnLabel": "File tree width",
+                "treeTitle": "Files",
+                "treeItems": ["app/page.tsx", "lib/utils.ts", "styles.css"],
+                "editorTitle": "Editor",
+                "editorLines": [
+                  "export function Page() {",
+                  "  return <main />",
+                  "}"
+                ],
+                "consoleLabel": "Console",
+                "consoleLines": ["$ npm run build", "✓ built in 3.4 s"],
+                "statusText": "Workspace — {row}% of the height, tree — {column}% of its width."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultRow", "defaultColumn", "accent", "background"]
       }
     },
     {
@@ -656,15 +926,20 @@
             "отсутствие обработчика resize — раскладка пересчитывается браузером сама",
             "aria-valuetext с отношением: голый процент не объясняет пропорцию",
             "role=\"separator\" с tabIndex 0 и обработкой стрелок, Home и End",
-            "кнопку «Поровну» как быстрый возврат к 50 на 50"
+            "кнопку «Поровну» как быстрый возврат к 50 на 50",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя разделителя через label",
             "начальную пропорцию через defaultRatio",
             "пределы через min и max, шаг клавиатуры через step",
-            "цвет полосы и кнопки через accent"
+            "цвет полосы и кнопки через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "содержимое: firstTitle и firstText, secondTitle и secondText, строки statusText, valueText и equalText"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Отношение показывается округлённым до двадцатых: точное значение хранится в процентах.",
             "fr не знает про минимальную ширину содержимого — при узкой рамке добавьте min-width панелям.",
             "Значение не сохраняется между сессиями: для этого храните ratio снаружи компонента.",
@@ -679,6 +954,18 @@
             "default": 38,
             "min": 20,
             "max": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           },
           {
             "prop": "label",
@@ -699,15 +986,20 @@
                 "the absence of a resize handler — the browser recomputes the layout itself",
                 "aria-valuetext with the ratio: a bare percentage does not explain a proportion",
                 "role=\"separator\" with tabIndex 0 and arrow, Home and End handling",
-                "the \"Equal\" button as a quick way back to fifty-fifty"
+                "the \"Equal\" button as a quick way back to fifty-fifty",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the separator name through label",
                 "the initial proportion through defaultRatio",
                 "the limits through min and max, the keyboard increment through step",
-                "the bar and button colour through accent"
+                "the bar and button colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "the content: firstTitle and firstText, secondTitle and secondText, and the statusText, valueText and equalText strings"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The ratio is shown rounded to twentieths: the exact value is stored as a percentage.",
                 "fr knows nothing about the content's minimum width — add min-width to the panes in a narrow frame.",
                 "The value is not persisted between sessions: keep ratio outside the component for that.",
@@ -719,14 +1011,33 @@
               "defaultRatio": {
                 "label": "Left pane share, %"
               },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "label": {
                 "label": "Separator name",
                 "default": "Pane ratio"
               }
             },
-            "title": "Ratio Panes"
+            "title": "Ratio Panes",
+            "preview": {
+              "props": {
+                "label": "Pane ratio",
+                "firstTitle": "Draft",
+                "firstText": "The shares are set in fr: as the window narrows both panes shrink together and the ratio holds.",
+                "secondTitle": "Preview",
+                "secondText": "No pixel width is written here, so the layout survives a phone rotation without a resize handler.",
+                "statusText": "Ratio {left} : {right}",
+                "valueText": "{left} to {right}",
+                "equalText": "Equal"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultRatio", "accent", "background"]
       }
     },
     {
@@ -756,19 +1067,24 @@
           "summary": "Панель кода и живое превью с перетаскиваемой вертикальной границей: тёмная подложка редактора и светлая подложка превью, стрелки влево-вправо, Home и End. Один файл, ноль зависимостей.",
           "preserve": [
             "локальную палитру --vibeui-resizable-008-* и не подменять её токенами вашей темы",
-            "тёмную подложку кода вместе со светлой подложкой превью — контраст виден даже без чтения текста",
+            "тёмную подложку кода: она намеренно остаётся тёмной в обеих темах, а превью следует теме окружения — контраст виден даже без чтения текста",
             "role=\"separator\" с tabIndex 0 и aria-valuenow: без них ширина меняется только мышью",
             "стрелки влево-вправо, Home и End — обязательная часть паттерна window splitter",
             "setPointerCapture: без захвата перетаскивание срывается на быстром движении",
-            "моноширинный шрифт у кода — переключение на обычный ломает узнаваемость панели"
+            "моноширинный шрифт у кода — переключение на обычный ломает узнаваемость панели",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
-            "код через переменную CODE в файле и содержимое превью",
+            "код через проп code и содержимое превью",
             "начальную ширину кода через defaultSize",
             "пределы через min и max, шаг клавиатуры через step",
-            "имя разделителя через label, цвет полосы и кнопки через accent"
+            "имя разделителя через label, цвет полосы и кнопки через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи превью: previewTitle, previewText, buttonText и строку statusText с подстановкой {size}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ширина в процентах: на очень узком экране код может стать нечитаемым — поднимите min.",
             "Содержимое панелей — пример: код и превью замените своими, сохранив min-width:0.",
             "aria-valuenow округляется до целого, поэтому объявляемое значение чуть грубее фактического.",
@@ -785,6 +1101,18 @@
             "max": 75
           },
           {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
             "prop": "label",
             "label": "Имя разделителя",
             "type": "text",
@@ -799,19 +1127,24 @@
               "summary": "A code panel and a live preview with a draggable vertical border: a dark editor surface and a light preview surface, left-right arrows, Home and End. One file, zero dependencies.",
               "preserve": [
                 "the local --vibeui-resizable-008-* palette — do not swap it for your theme tokens",
-                "the dark code surface together with the light preview surface — the contrast reads even without reading the text",
+                "the dark code surface: it deliberately stays dark in both themes while the preview follows the surrounding one — the contrast reads even without reading the text",
                 "role=\"separator\" with tabIndex 0 and aria-valuenow: without them the width is mouse-only",
                 "the left, right, Home and End handling — a required part of the window splitter pattern",
                 "setPointerCapture: without capture the drag breaks on a fast movement",
-                "the monospace font on the code — switching it to a regular one breaks the pane's recognisability"
+                "the monospace font on the code — switching it to a regular one breaks the pane's recognisability",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
-                "the code through the CODE constant in the file, and the preview content",
+                "the code through the code prop, and the preview content",
                 "the initial code width through defaultSize",
                 "the limits through min and max, the keyboard increment through step",
-                "the separator name through label, the bar and button colour through accent"
+                "the separator name through label, the bar and button colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "the preview copy: previewTitle, previewText, buttonText and the statusText template with its {size} placeholder"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The size is in percent: on a very narrow screen the code can become unreadable — raise min.",
                 "The pane content is an example: replace the code and preview but keep min-width:0.",
                 "aria-valuenow is rounded to an integer, so the announced value is slightly coarser than the real one.",
@@ -823,14 +1156,32 @@
               "defaultSize": {
                 "label": "Code width, %"
               },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "label": {
                 "label": "Separator name",
                 "default": "Code width"
               }
             },
-            "title": "Code Preview Split"
+            "title": "Code Preview Split",
+            "preview": {
+              "props": {
+                "label": "Code width",
+                "codeLabel": "Code",
+                "previewLabel": "Preview",
+                "previewTitle": "Product card",
+                "previewText": "The preview updates together with the code on the left.",
+                "buttonText": "Buy",
+                "statusText": "The code takes {size}% of the width."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultSize", "accent", "background"]
       }
     },
     {
@@ -864,15 +1215,20 @@
             "role=\"separator\" с aria-valuenow в пикселях у обеих полос, а не только у одной",
             "разные имена разделителей: две одинаковые «границы» с клавиатуры неразличимы",
             "остаток ширины у колонки чтения: она не должна схлопнуться при широких соседях",
-            "min-width:0 у панелей, иначе содержимое не даст им сжиматься"
+            "min-width:0 у панелей, иначе содержимое не даст им сжиматься",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "начальную ширину папок через defaultFolders",
             "начальную ширину писем через defaultList",
             "пределы через minFolders, maxFolders, minList и maxList, шаг через step",
-            "цвет активной полосы через accent"
+            "цвет активной полосы через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "содержимое колонок: foldersTitle с foldersItems, listTitle с listItems, readerTitle и readerText, строки statusText и valueText"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Каждый разделитель хранит собственный px: не путайте это с процентной моделью resizable-002.",
             "min и max заданы в пикселях: при крупном системном шрифте пересчитайте их сами.",
             "Список писем — статичный пример: реальные данные подставляйте вызывающим кодом.",
@@ -895,6 +1251,25 @@
             "default": 224,
             "min": 170,
             "max": 300
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "label",
+            "label": "Имя разделителя",
+            "type": "text",
+            "default": "Колонка",
+            "maxLength": 24
           }
         ],
         "i18n": {
@@ -908,15 +1283,20 @@
                 "role=\"separator\" with pixel aria-valuenow on both bars, not just one",
                 "distinct separator names: two identical \"boundaries\" are indistinguishable from the keyboard",
                 "the remaining width on the reading column: it must not collapse next to wide neighbours",
-                "min-width:0 on the panes, otherwise their content prevents shrinking"
+                "min-width:0 on the panes, otherwise their content prevents shrinking",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the initial folder width through defaultFolders",
                 "the initial message list width through defaultList",
                 "the limits through minFolders, maxFolders, minList and maxList, the increment through step",
-                "the active bar colour through accent"
+                "the active bar colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "the column content: foldersTitle with foldersItems, listTitle with listItems, readerTitle and readerText, and the statusText and valueText templates"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Each separator stores its own px value: do not confuse this with the percentage model of resizable-002.",
                 "min and max are pixels: recompute them yourself for a large system font.",
                 "The message list is a static example: pass real data from the calling code.",
@@ -930,11 +1310,45 @@
               },
               "defaultList": {
                 "label": "Message list width, px"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "label": {
+                "label": "Separator name",
+                "default": "Column"
               }
             },
-            "title": "Mail Columns"
+            "title": "Mail Columns",
+            "preview": {
+              "props": {
+                "label": "Column",
+                "foldersTitle": "Folders",
+                "foldersItems": ["Inbox", "Sent", "Drafts", "Spam"],
+                "listTitle": "Messages",
+                "listItems": [
+                  "Anna · Layout fixes",
+                  "Igor · Invoice no. 118",
+                  "HR · Time off",
+                  "Marina · Contract"
+                ],
+                "readerTitle": "Message",
+                "readerText": "The right column stores no size and takes the remaining width of the frame — the three columns can never add up wrong.",
+                "statusText": "Folders — {folders} px · Messages — {list} px · rest — reading.",
+                "valueText": "{size} pixels"
+              }
+            }
           }
-        }
+        },
+        "cardControls": [
+          "defaultFolders",
+          "defaultList",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -968,15 +1382,20 @@
             "отсутствие обработчика resize — раскладка пересчитывается браузером сама",
             "aria-orientation=\"horizontal\" и стрелки вверх-вниз для вертикального разделения",
             "role=\"separator\" с tabIndex 0 и обработкой стрелок, Home и End",
-            "кнопку «Поровну» как быстрый возврат к 50 на 50"
+            "кнопку «Поровну» как быстрый возврат к 50 на 50",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "имя разделителя через label",
             "начальную долю списка через defaultRatio",
             "пределы через min и max, шаг клавиатуры через step",
-            "цвет полосы и кнопки через accent"
+            "цвет полосы и кнопки через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "содержимое: listTitle с массивом tasks, detailsTitle и detailsText, строки statusText и equalText"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Доля показывается округлённой до целого: точное значение хранится в процентах.",
             "fr не знает про минимальную высоту содержимого — при короткой рамке добавьте min-height панелям.",
             "Значение не сохраняется между сессиями: для этого храните ratio снаружи компонента.",
@@ -991,6 +1410,18 @@
             "default": 45,
             "min": 20,
             "max": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           },
           {
             "prop": "label",
@@ -1011,15 +1442,20 @@
                 "the absence of a resize handler — the browser recomputes the layout itself",
                 "aria-orientation=\"horizontal\" and up-down arrows for a vertical split",
                 "role=\"separator\" with tabIndex 0 and arrow, Home and End handling",
-                "the \"Equal\" button as a quick way back to fifty-fifty"
+                "the \"Equal\" button as a quick way back to fifty-fifty",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the separator name through label",
                 "the initial list share through defaultRatio",
                 "the limits through min and max, the keyboard increment through step",
-                "the bar and button colour through accent"
+                "the bar and button colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "the content: listTitle with the tasks array, detailsTitle and detailsText, and the statusText and equalText strings"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The share is shown rounded to an integer: the exact value is stored as a percentage.",
                 "fr knows nothing about the content's minimum height — add min-height to the panes in a short frame.",
                 "The value is not persisted between sessions: keep ratio outside the component for that.",
@@ -1031,14 +1467,39 @@
               "defaultRatio": {
                 "label": "List share, %"
               },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "label": {
                 "label": "Separator name",
                 "default": "List height"
               }
             },
-            "title": "Vertical Ratio Split"
+            "title": "Vertical Ratio Split",
+            "preview": {
+              "props": {
+                "label": "List height",
+                "listLabel": "Task list",
+                "listTitle": "Tasks",
+                "tasks": [
+                  "Review the layout",
+                  "Approve the estimate",
+                  "Write the report",
+                  "Call the client"
+                ],
+                "detailsLabel": "Details",
+                "detailsTitle": "Approve the estimate",
+                "detailsText": "Due Friday, owned by accounting. The details grow downwards together with the height of the bottom share.",
+                "statusText": "List — {size}% of the height.",
+                "equalText": "Equal"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultRatio", "accent", "background"]
       }
     }
   ]

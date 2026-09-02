@@ -10,7 +10,13 @@ export type Input026Props = Omit<
   label?: string
   defaultValue?: string
   quick?: string[]
+  /** Подпись списка частых значений для скринридера. */
+  quickLabel?: string
+  /** Примечание под полем. */
+  noteText?: string
   onChange?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,13 +28,13 @@ export type Input026Props = Omit<
 // браузер. Чипы под полем — те же самые частые значения, но одним кликом.
 const STYLES = `
 :where([data-vibeui-block="input-026"]){
---vibeui-input-026-surface:oklch(1 0 0);
---vibeui-input-026-shell:oklch(0.91 0.006 265);
---vibeui-input-026-fg:oklch(0.23 0.014 265);
---vibeui-input-026-muted:oklch(0.56 0.014 265);
---vibeui-input-026-field:oklch(0.985 0.002 265);
---vibeui-input-026-border:oklch(0.88 0.008 265);
---vibeui-input-026-accent:oklch(0.55 0.15 200);
+--vibeui-input-026-surface:transparent;
+--vibeui-input-026-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-input-026-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-026-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-input-026-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-input-026-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-input-026-accent:light-dark(oklch(0.55 0.15 200),oklch(0.76 0.13 200));
 --vibeui-input-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-026"]{
@@ -81,6 +87,29 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-input-026-muted);
 const QUICK = ["09:00", "12:00", "15:00", "18:00"]
 const STEP_MINUTES = 15
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 // Ручной ввод (набор с клавиатуры) в type="time" не подчиняется атрибуту
 // step — округляем сами, к ближайшим 15 минутам, а не всегда вниз, чтобы
 // «12:52» стало «13:00», а не незаметно потеряло восемь минут в другую сторону.
@@ -104,7 +133,10 @@ export function Input026({
   label = "Время визита",
   defaultValue = "12:00",
   quick = QUICK,
+  quickLabel = "Частые значения",
+  noteText = "Шаг — 15 минут, ручной ввод округляется до ближайшего.",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -115,6 +147,12 @@ export function Input026({
 
   const palette = {
     ...(accent ? { "--vibeui-input-026-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-026-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -148,7 +186,7 @@ export function Input026({
             }}
           />
         </div>
-        <ul data-part="quick" aria-label="Частые значения">
+        <ul data-part="quick" aria-label={quickLabel}>
           {quick.map((time) => (
             <li key={time}>
               <button
@@ -163,7 +201,7 @@ export function Input026({
           ))}
         </ul>
         <p data-part="note" id={`${id}-note`}>
-          Шаг — 15 минут, ручной ввод округляется до ближайшего.
+          {noteText}
         </p>
       </div>
     </>

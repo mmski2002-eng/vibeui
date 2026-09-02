@@ -12,6 +12,13 @@ export type Tree006Props = {
   nodes?: Tree006Node[]
   label?: string
   placeholder?: string
+  /** Строка о числе находок; {count} — их количество. */
+  countText?: string
+  /** Что показать, когда ничего не нашлось. */
+  emptyText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  accent?: string
   className?: string
   style?: CSSProperties
 }
@@ -21,15 +28,19 @@ export type Tree006Props = {
 // найденный файл повисает без папки и непонятно, где он лежит. Совпадение
 // подсвечивается тегом mark, а не span с фоном: mark — семантика выделения,
 // её объявляет и скринридер. Пока поле пустое, дерево показано целиком.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="tree-006"]){
---vibeui-tree-006-bg:oklch(1 0 0);
---vibeui-tree-006-fg:oklch(0.24 0.014 265);
---vibeui-tree-006-muted:oklch(0.56 0.014 265);
---vibeui-tree-006-border:oklch(0.9 0.006 265);
---vibeui-tree-006-hover:oklch(0.97 0.004 265);
---vibeui-tree-006-mark:oklch(0.92 0.13 95);
---vibeui-tree-006-accent:oklch(0.53 0.19 265);
+--vibeui-tree-006-bg:transparent;
+--vibeui-tree-006-field:light-dark(oklch(1 0 0),oklch(0.26 0.01 265));
+--vibeui-tree-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-tree-006-muted:light-dark(oklch(0.56 0.014 265),oklch(0.67 0.012 265));
+--vibeui-tree-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-tree-006-hover:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.01 265));
+--vibeui-tree-006-mark:light-dark(oklch(0.92 0.13 95),oklch(0.52 0.11 95));
+--vibeui-tree-006-accent:light-dark(oklch(0.53 0.19 265),oklch(0.75 0.16 265));
 --vibeui-tree-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="tree-006"]{
@@ -43,7 +54,7 @@ color:var(--vibeui-tree-006-fg);
 [data-vibeui-block="tree-006"] input{
 box-sizing:border-box;width:100%;height:2rem;padding:0 0.625rem;
 border:1px solid var(--vibeui-tree-006-border);border-radius:0.5rem;
-background:var(--vibeui-tree-006-bg);color:var(--vibeui-tree-006-fg);
+background:var(--vibeui-tree-006-field);color:var(--vibeui-tree-006-fg);
 font:inherit;font-size:0.8125rem;
 }
 [data-vibeui-block="tree-006"] input::placeholder{color:var(--vibeui-tree-006-muted)}
@@ -147,6 +158,28 @@ function highlight(name: string, query: string): ReactNode {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Дерево с поиском: путь до находки остаётся, совпадение подсвечено.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -154,6 +187,10 @@ export function Tree006({
   nodes = DEFAULT_NODES,
   label = "Файлы",
   placeholder = "Поиск по дереву",
+  countText = "Совпадений: {count}",
+  emptyText = "Ничего не найдено",
+  background = "",
+  accent,
   className,
   style,
 }: Tree006Props) {
@@ -207,13 +244,23 @@ export function Tree006({
   }
 
   const tree = renderLevel(nodes, 1, "", label)
+  const palette = {
+    ...(accent ? { "--vibeui-tree-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tree-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
       <style href="vibeui-tree-006" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="tree-006" className={className} style={style}>
+      <div data-vibeui-block="tree-006" className={className} style={palette}>
         <label htmlFor={fieldId} hidden>
           {placeholder}
         </label>
@@ -226,10 +273,10 @@ export function Tree006({
         />
         {needle ? (
           <p data-part="count" role="status">
-            Совпадений: {found}
+            {countText.replace("{count}", String(found))}
           </p>
         ) : null}
-        {tree ?? <p data-part="empty">Ничего не найдено</p>}
+        {tree ?? <p data-part="empty">{emptyText}</p>}
       </div>
     </>
   )

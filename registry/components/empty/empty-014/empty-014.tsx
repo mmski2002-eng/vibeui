@@ -9,8 +9,12 @@ export type Empty014Props = Omit<
   actionLabel?: string
   onAction?: () => void
   savedCount?: number
+  /** Строка про избранное: {count} подставляется числом. */
+  savedText?: string
   savedLabel?: string
   onSavedClick?: () => void
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,11 +24,12 @@ export type Empty014Props = Omit<
 // появляется отдельная строка с переходом к ним.
 const STYLES = `
 :where([data-vibeui-block="empty-014"]){
---vibeui-empty-014-bg:oklch(1 0 0);
---vibeui-empty-014-fg:oklch(0.21 0.014 265);
---vibeui-empty-014-muted:oklch(0.55 0.014 265);
---vibeui-empty-014-border:oklch(0.91 0.006 265);
---vibeui-empty-014-accent:oklch(0.55 0.17 265);
+--vibeui-empty-014-bg:transparent;
+--vibeui-empty-014-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-empty-014-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-empty-014-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-empty-014-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-empty-014-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.02 265));
 --vibeui-empty-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -46,7 +51,7 @@ margin:0;max-width:30ch;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-e
 [data-vibeui-block="empty-014"] [data-part="action"]{
 appearance:none;border:0;cursor:pointer;width:100%;margin-top:0.375rem;
 height:2.625rem;padding:0 1.125rem;border-radius:0.75rem;
-background:var(--vibeui-empty-014-accent);color:oklch(0.99 0.01 265);
+background:var(--vibeui-empty-014-accent);color:var(--vibeui-empty-014-on-accent);
 font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="empty-014"] [data-part="action"]:focus-visible{
@@ -70,6 +75,29 @@ outline:2px solid var(--vibeui-empty-014-accent);outline-offset:2px;border-radiu
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Пустая корзина с единственным действием — вернуться в каталог.
  * Если есть отложенные в избранное товары, под кнопкой появляется
  * отдельная ссылка на них. Один файл, ноль внешних зависимостей.
@@ -80,8 +108,10 @@ export function Empty014({
   actionLabel = "Перейти в каталог",
   onAction,
   savedCount = 0,
+  savedText = "Сохранено в избранном: {count}",
   savedLabel = "Смотреть",
   onSavedClick,
+  background = "",
   accent,
   className,
   style,
@@ -89,6 +119,12 @@ export function Empty014({
 }: Empty014Props) {
   const palette = {
     ...(accent ? { "--vibeui-empty-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-empty-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -126,7 +162,7 @@ export function Empty014({
         </button>
         {savedCount > 0 ? (
           <p data-part="saved">
-            Сохранено в избранном: {savedCount}
+            {savedText.replace("{count}", String(savedCount))}
             <button type="button" data-part="saved-link" onClick={onSavedClick}>
               {savedLabel}
             </button>

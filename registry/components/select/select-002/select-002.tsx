@@ -13,6 +13,8 @@ export type Select002Props = Omit<
   hint?: string
   groups?: Select002Group[]
   placeholder?: string
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,22 +22,31 @@ export type Select002Props = Omit<
 // больше десятка, плоский перечень заставляет читать всё подряд; optgroup
 // делит его на смысловые блоки силами самого браузера — на телефоне это
 // системное колесо с заголовками, без единой строки JS.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="select-002"]){
---vibeui-select-002-surface:oklch(1 0 0);
---vibeui-select-002-surface-border:oklch(0.91 0.006 265);
---vibeui-select-002-fg:oklch(0.23 0.016 265);
---vibeui-select-002-muted:oklch(0.55 0.014 265);
---vibeui-select-002-field:oklch(0.985 0.002 265);
---vibeui-select-002-border:oklch(0.87 0.008 265);
---vibeui-select-002-accent:oklch(0.55 0.19 262);
+--vibeui-select-002-surface:transparent;
+--vibeui-select-002-surface-border:transparent;
+--vibeui-select-002-surface-pad:0;
+--vibeui-select-002-surface-radius:0;
+--vibeui-select-002-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-select-002-field:light-dark(oklch(0.985 0.002 265),oklch(0.25 0.012 265));
+--vibeui-select-002-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-select-002-accent:light-dark(oklch(0.55 0.19 262),oklch(0.74 0.16 262));
 --vibeui-select-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Подложка появляется только вместе с пропом background: по умолчанию поле
+   лежит прямо на фоне страницы. */
 [data-vibeui-block="select-002"]{
 display:flex;flex-direction:column;gap:0.375rem;
-width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:20rem;box-sizing:border-box;
+padding:var(--vibeui-select-002-surface-pad);
 background:var(--vibeui-select-002-surface);
-border:1px solid var(--vibeui-select-002-surface-border);border-radius:0.875rem;
+border:1px solid var(--vibeui-select-002-surface-border);
+border-radius:var(--vibeui-select-002-surface-radius);
 font-family:var(--vibeui-select-002-font);color:var(--vibeui-select-002-fg);
 }
 [data-vibeui-block="select-002"] [data-part="label"]{font-size:0.8125rem;font-weight:600}
@@ -97,6 +108,29 @@ const DEFAULT_GROUPS: Select002Group[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Нативный select с разделами: длинный список поделён на optgroup.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -105,6 +139,7 @@ export function Select002({
   hint = "Разделы совпадают с регионами в договоре.",
   groups = DEFAULT_GROUPS,
   placeholder = "Выберите город",
+  background = "",
   accent,
   id,
   className,
@@ -112,8 +147,20 @@ export function Select002({
   defaultValue,
   ...props
 }: Select002Props) {
+  // Подложка приходит вместе с полями и скруглением: без неё поле лежит
+  // прямо на странице, и лишние поля по бокам ему только мешают.
   const palette = {
     ...(accent ? { "--vibeui-select-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-select-002-surface": background,
+          "--vibeui-select-002-surface-border":
+            "light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265))",
+          "--vibeui-select-002-surface-pad": "0.875rem",
+          "--vibeui-select-002-surface-radius": "0.875rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

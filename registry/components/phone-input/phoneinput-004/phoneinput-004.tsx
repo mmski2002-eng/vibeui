@@ -15,6 +15,15 @@ export type Phoneinput004Props = Omit<
 > & {
   label?: string
   countries?: Phoneinput004Country[]
+  placeholder?: string
+  /** Метка справа, пока код не распознан. */
+  unknownLabel?: string
+  /** Шаблон строки под полем при распознанном коде: {code} и {country}. */
+  knownHint?: string
+  /** Строка под полем, пока код не распознан. */
+  unknownHint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,15 +32,18 @@ export type Phoneinput004Props = Omit<
 // Совпадение ищется по самому длинному коду: +1 и +1242 отличаются только
 // длиной, и короткий код не должен побеждать. Пока код не распознан,
 // поле не спорит с вводом и ничего не подставляет само.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="phoneinput-004"]){
---vibeui-phoneinput-004-surface:oklch(1 0 0);
---vibeui-phoneinput-004-surface-border:oklch(0.91 0.006 265);
---vibeui-phoneinput-004-fg:oklch(0.24 0.016 265);
---vibeui-phoneinput-004-muted:oklch(0.54 0.014 265);
---vibeui-phoneinput-004-field-border:oklch(0.85 0.01 265);
---vibeui-phoneinput-004-chip-bg:oklch(0.96 0.004 265);
---vibeui-phoneinput-004-accent:oklch(0.58 0.16 300);
+--vibeui-phoneinput-004-surface:transparent;
+--vibeui-phoneinput-004-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-phoneinput-004-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-phoneinput-004-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-phoneinput-004-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-phoneinput-004-chip-bg:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.01 265));
+--vibeui-phoneinput-004-accent:light-dark(oklch(0.58 0.16 300),oklch(0.76 0.14 300));
 --vibeui-phoneinput-004-radius:0.625rem;
 --vibeui-phoneinput-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -104,12 +116,40 @@ function detect(value: string, countries: Phoneinput004Country[]) {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Телефон без списка стран: страна определяется по коду, который человек
  * набрал сам. Один файл, ноль зависимостей.
  */
 export function Phoneinput004({
   label = "Телефон",
   countries = DEFAULT_COUNTRIES,
+  placeholder = "+7 999 123-45-67",
+  unknownLabel = "код?",
+  knownHint = "Определили страну по коду {code}: {country}.",
+  unknownHint = "Начните с «+» и кода страны — определим её сами.",
+  background = "",
   accent,
   className,
   style,
@@ -123,8 +163,19 @@ export function Phoneinput004({
     : undefined
   const palette = {
     ...(accent ? { "--vibeui-phoneinput-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-phoneinput-004-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+  const hint = country
+    ? knownHint
+        .replace("{code}", country.code)
+        .replace("{country}", country.name)
+    : unknownHint
 
   return (
     <>
@@ -145,20 +196,18 @@ export function Phoneinput004({
             type="tel"
             inputMode="tel"
             autoComplete="tel"
-            placeholder="+7 999 123-45-67"
+            placeholder={placeholder}
             value={value}
             aria-describedby={hintId}
             onChange={(event) => setValue(event.target.value)}
           />
           <span data-part="chip" data-known={Boolean(country)}>
             <span aria-hidden="true">{country ? country.flag : "🌐"}</span>
-            {country ? country.name : "код?"}
+            {country ? country.name : unknownLabel}
           </span>
         </div>
         <p data-part="hint" id={hintId} aria-live="polite">
-          {country
-            ? `Определили страну по коду ${country.code}: ${country.name}.`
-            : "Начните с «+» и кода страны — определим её сами."}
+          {hint}
         </p>
       </div>
     </>

@@ -10,6 +10,8 @@ export type Carousel012Props = Omit<
   title?: string
   /** Секунд на полный проход одной ленты. */
   duration?: number
+  /** Пусто — подложка своя; цвет заменяет её целиком. */
+  background?: string
 }
 
 // Идея компонента: две встречные ленты вместо одной. Встречное движение
@@ -19,13 +21,16 @@ export type Carousel012Props = Omit<
 // копия помечена aria-hidden, чтобы список не прочитался дважды. Движение
 // замирает при наведении и при фокусе внутри блока, а при
 // prefers-reduced-motion ленты стоят и просто прокручиваются пальцем.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложка и плашки
+// темнеют вместе со страницей, своей тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="carousel-012"]){
---vibeui-carousel-012-bg:oklch(1 0 0);
---vibeui-carousel-012-fg:oklch(0.34 0.014 265);
---vibeui-carousel-012-muted:oklch(0.58 0.014 265);
---vibeui-carousel-012-border:oklch(0.91 0.006 265);
---vibeui-carousel-012-chip:oklch(0.97 0.003 265);
+--vibeui-carousel-012-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-carousel-012-fg:light-dark(oklch(0.34 0.014 265),oklch(0.92 0.007 265));
+--vibeui-carousel-012-muted:light-dark(oklch(0.58 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-012-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-carousel-012-chip:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.013 265));
 --vibeui-carousel-012-duration:34s;
 --vibeui-carousel-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -108,6 +113,28 @@ function Rail({ items, way }: { items: string[]; way: "left" | "right" }) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Две встречные бегущие ленты логотипов с растворёнными краями и паузой.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -116,12 +143,19 @@ export function Carousel012({
   bottomRow = DEFAULT_BOTTOM,
   title = "Нам доверяют",
   duration = 34,
+  background = "",
   className,
   style,
   ...props
 }: Carousel012Props) {
   const palette = {
     "--vibeui-carousel-012-duration": `${duration}s`,
+    ...(background
+      ? {
+          "--vibeui-carousel-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

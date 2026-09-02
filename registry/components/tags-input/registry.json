@@ -25,20 +25,24 @@
           "summary": "Поле тегов: чипы с крестиком, ввод по Enter и запятой, счётчик и предел. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-tags-001-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "добавление и по Enter, и по запятой: обе привычки встречаются одинаково часто",
             "Backspace на пустом поле — без него приходится целиться в крестик",
             "молчаливое отсечение повторов: второй такой же тег не ошибка, а шум",
             "aria-label на крестике с именем тега",
-            "счётчик у предела: иначе непонятно, почему поле перестало принимать ввод"
+            "счётчик у предела: иначе непонятно, почему поле перестало принимать ввод",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "label, hint и стартовые теги",
             "max — предел количества",
             "акцент через проп accent",
-            "ширину поля"
+            "ширину поля",
+            "подписи в пропсах removeText, placeholderText и fullText: {tag} подставляется именем тега",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Подсказок и автодополнения нет: для выбора из готового списка берите autocomplete-001.",
             "Регистр не нормализуется: «Форма» и «форма» останутся разными тегами, если это не нужно — приведите сами.",
             "Значение наружу не отдаётся: добавьте свой обработчик или скрытое поле для формы.",
@@ -60,6 +64,18 @@
             "default": 8,
             "min": 2,
             "max": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -69,20 +85,24 @@
               "summary": "A tag input: chips with a remove cross, Enter and comma to add, a counter and a limit. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-tags-001-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "adding on both Enter and comma: both habits are equally common",
                 "Backspace on an empty field — otherwise you have to aim at the cross",
                 "silently dropping duplicates: a repeated tag is noise, not a user error",
                 "the aria-label on the cross naming the tag",
-                "the counter at the limit: otherwise the field just stops accepting input"
+                "the counter at the limit: otherwise the field just stops accepting input",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "label, hint and the initial tags",
                 "max — the count limit",
                 "the accent through the accent prop",
-                "the field width"
+                "the field width",
+                "the captions in the removeText, placeholderText and fullText props: {tag} is replaced with the tag name",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There are no suggestions: to pick from a known list use autocomplete-001.",
                 "Case is not normalised: \"Form\" and \"form\" stay distinct — fold them yourself if that is wrong.",
                 "The value is not exposed: add your own handler or a hidden field for the form.",
@@ -97,11 +117,28 @@
               },
               "max": {
                 "label": "Limit"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Tag Input"
+            "title": "Tag Input",
+            "preview": {
+              "props": {
+                "label": "Component tags",
+                "hint": "Enter or comma adds a tag",
+                "defaultValue": ["form", "zero deps"],
+                "removeText": "Remove tag {tag}",
+                "placeholderText": "Add…",
+                "fullText": "Limit reached"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["max", "accent", "background"]
       }
     },
     {
@@ -128,21 +165,25 @@
           "summary": "Поле тегов с подсказками из фиксированного списка на нативном datalist, плюс кнопки ещё не выбранных вариантов. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-tags-002-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "закрытый список значений: свободный ввод разводит «react», «React» и «reactjs» как три разных тега",
             "нативный datalist вместо своего выпадающего списка: он умеет фильтрацию, клавиатуру и мобильный вид",
             "сравнение без учёта регистра с подстановкой канонического варианта: в данные должен уходить один вид написания",
             "кнопки невыбранных вариантов: пустое поле не подсказывает, что вообще можно выбрать",
-            "aria-label на кнопках удаления: внутри них только крестик"
+            "aria-label на кнопках удаления: внутри них только крестик",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "label — подпись поля",
             "options — сам список допустимых тегов",
             "defaultValue — стартовый набор",
             "число вариантов, показанных кнопками",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подписи в пропсах removeText, placeholderText и hintText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Оформление выпадающего списка datalist задаёт браузер: стилизовать его нельзя, и это плата за нативность.",
             "Длинный список options лучше грузить с сервера: сотни вариантов в разметке тормозят страницу.",
             "Ввод, которого нет в списке, отбрасывается — покажите пользователю сообщение, если это неочевидно.",
@@ -162,6 +203,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -171,21 +218,25 @@
               "summary": "A tag field with suggestions from a fixed list via native datalist, plus buttons for the options not yet picked. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-tags-002-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the closed value list: free input splits \"react\", \"React\" and \"reactjs\" into three different tags",
                 "the native datalist instead of a custom dropdown: it already filters, handles the keyboard and looks right on phones",
                 "the case-insensitive match with the canonical value substituted: one spelling has to reach the data",
                 "the buttons for unpicked options: an empty field does not hint at what can be chosen",
-                "the aria-labels on the remove buttons: they contain only a cross"
+                "the aria-labels on the remove buttons: they contain only a cross",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "label — the field caption",
                 "options — the list of allowed tags itself",
                 "defaultValue — the starting set",
                 "how many options are shown as buttons",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the captions in the removeText, placeholderText and hintText props",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The datalist dropdown is styled by the browser: it cannot be themed, which is the price of going native.",
                 "Load a long options list from the server: hundreds of entries in the markup slow the page down.",
                 "Input outside the list is dropped — show a message if that is not obvious to your users.",
@@ -200,11 +251,33 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Suggested Tags"
+            "title": "Suggested Tags",
+            "preview": {
+              "props": {
+                "label": "Project stack",
+                "options": [
+                  "TypeScript",
+                  "React",
+                  "Next.js",
+                  "CSS",
+                  "Node.js",
+                  "GraphQL",
+                  "Docker"
+                ],
+                "defaultValue": ["React", "TypeScript"],
+                "removeText": "Remove {tag}",
+                "placeholderText": "Start typing…",
+                "hintText": "Your own values are not accepted: the list is shared across the catalogue"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -231,21 +304,24 @@
           "summary": "Теги с лимитом, который работает как очередь: новый вытесняет самый старый, а не блокирует ввод. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-tags-003-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "очередь вместо блокировки: заблокированное поле требует сначала догадаться, что удалить",
             "подсветку кандидата на вылет: вытеснение без предупреждения выглядит как потеря данных",
             "полосу и счётчик: заполненность лимита не должна пересчитываться глазами",
             "приведение тегов к нижнему регистру: иначе лимит съедят дубликаты в разных написаниях",
-            "aria-live на подсказке: текст меняется в момент достижения лимита"
+            "aria-live на подсказке: текст меняется в момент достижения лимита",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "label — подпись поля",
             "max — сам лимит",
             "defaultValue — стартовый набор тегов",
-            "формулировки подсказки под полем",
-            "акцент через проп accent"
+            "подписи в пропсах removeText, placeholderText, fullText и restText: {max}, {tag} и {rest} подставляются числами и именем тега",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Очередь подходит не всем сценариям: там, где теги дорогие, лучше запретить добавление явным сообщением.",
             "Вытесняется первый в списке, а не самый редкий: приоритеты компонент не знает.",
             "Лимит меньше трёх делает полосу бессмысленной — оставьте один счётчик.",
@@ -267,6 +343,18 @@
             "default": 5,
             "min": 2,
             "max": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -276,21 +364,24 @@
               "summary": "Tags with a limit that behaves as a queue: a new tag evicts the oldest instead of blocking input. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-tags-003-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the queue instead of a lock: a locked field first requires guessing what to delete",
                 "highlighting the eviction candidate: an unannounced eviction looks like data loss",
                 "the bar and the counter: limit usage should not be recounted by eye",
                 "lowercasing the tags: otherwise duplicates in different spellings eat the limit",
-                "aria-live on the hint: its text changes the moment the limit is reached"
+                "aria-live on the hint: its text changes the moment the limit is reached",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "label — the field caption",
                 "max — the limit itself",
                 "defaultValue — the starting tag set",
-                "the wording of the hint under the field",
-                "the accent through the accent prop"
+                "the captions in the removeText, placeholderText, fullText and restText props: {max}, {tag} and {rest} are filled in",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A queue does not suit every scenario: where tags are expensive, refuse the addition with a clear message.",
                 "The first tag in the list is evicted, not the least used: the component knows no priorities.",
                 "A limit below three makes the bar pointless — keep the counter alone.",
@@ -305,11 +396,28 @@
               },
               "max": {
                 "label": "Limit"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Queue Limit"
+            "title": "Queue Limit",
+            "preview": {
+              "props": {
+                "label": "Feed interests",
+                "defaultValue": ["design", "typography", "interfaces"],
+                "removeText": "Remove {tag}",
+                "placeholderText": "Add an interest…",
+                "fullText": "Limit {max}: the next tag pushes out “{tag}”.",
+                "restText": "You can add {rest} more. At the cap a new tag pushes out the oldest one."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["max", "accent", "background"]
       }
     },
     {
@@ -336,21 +444,25 @@
           "summary": "Поле тегов, где повтор подсвечивает существующий чип и объясняет, почему тег не добавился. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-tags-004-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "видимую реакцию на повтор: молчаливое отбрасывание читается как поломка поля",
             "нормализацию перед сравнением: «Ремонт» и «ремонт.» — один тег, а не три",
             "сохранение первого написания: подменять его новым вводом значит переписывать чужие данные",
             "снятие флага по onAnimationEnd: без этого вспышка сыграет ровно один раз",
-            "aria-live=\"assertive\" на сообщении: отказ важно услышать сразу, а не в очереди"
+            "aria-live=\"assertive\" на сообщении: отказ важно услышать сразу, а не в очереди",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "label — подпись поля",
             "defaultValue — стартовый набор тегов",
             "правило нормализации в функции normalize",
             "длительность и цвет вспышки",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подписи в пропсах removeText, placeholderText, duplicateText и hintText: {tag} подставляется именем тега",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Нормализация не трогает середину строки: «своими руками» и «своимируками» останутся разными тегами.",
             "Вспышка отключается при prefers-reduced-motion — текстовое объяснение поэтому обязательно.",
             "Ключ списка — сам тег: при переименовании тегов используйте стабильный идентификатор.",
@@ -370,6 +482,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -379,21 +497,25 @@
               "summary": "A tag field where a duplicate highlights the existing chip and explains why nothing was added. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-tags-004-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the visible reaction to a repeat: silently dropping it reads as a broken field",
                 "normalising before comparing: \"Repair\" and \"repair.\" are one tag, not three",
                 "keeping the first spelling: overwriting it with the new input rewrites someone's data",
                 "clearing the flag on onAnimationEnd: without it the flash plays exactly once",
-                "aria-live=\"assertive\" on the message: a refusal has to be heard immediately, not queued"
+                "aria-live=\"assertive\" on the message: a refusal has to be heard immediately, not queued",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "label — the field caption",
                 "defaultValue — the starting tag set",
                 "the normalisation rule inside the normalize helper",
                 "the duration and colour of the flash",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the captions in the removeText, placeholderText, duplicateText and hintText props: {tag} is replaced with the tag name",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Normalisation leaves the middle of the string alone: \"do it yourself\" and \"doityourself\" stay different tags.",
                 "The flash is disabled under prefers-reduced-motion, which is why the text explanation is mandatory.",
                 "The list key is the tag itself: use a stable id if tags can be renamed.",
@@ -408,11 +530,25 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Duplicate Guard"
+            "title": "Duplicate Guard",
+            "preview": {
+              "props": {
+                "label": "Listing tags",
+                "defaultValue": ["repair", "do it yourself"],
+                "removeText": "Remove {tag}",
+                "placeholderText": "New tag…",
+                "duplicateText": "The tag “{tag}” is already there — it is highlighted above.",
+                "hintText": "Case and dots do not count: “Repair” and “repair.” are one tag."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -439,21 +575,25 @@
           "summary": "Поле тегов с тремя разделителями и разбором вставленного списка: адреса из письма становятся чипами за одну вставку. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-tags-005-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "три разделителя сразу: привычки к Enter, запятой и точке с запятой встречаются одинаково часто",
             "разбор вставки тем же правилом: иначе список из письма превращается в один гигантский тег",
             "перехват вставки только при наличии разделителей: обычная вставка слова обязана работать как обычно",
             "удаление последнего чипа по Backspace на пустом поле: иначе приходится целиться в крестик",
-            "обрезку длинного текста в чипе: адрес на сорок символов иначе растягивает поле в строку"
+            "обрезку длинного текста в чипе: адрес на сорок символов иначе растягивает поле в строку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "label — подпись поля",
             "defaultValue — стартовый список",
             "набор разделителей в функции split",
             "ширину, на которой обрезается текст чипа",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подписи в пропсах removeText, placeholderText, pastedText и legendText: {count} подставляется числом разобранных адресов",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Проверки адреса тут нет: добавьте свою, если поле принимает почту.",
             "Пробел разделителем не считается намеренно: теги из двух слов иначе развалились бы.",
             "Повторы отсекаются молча — для видимой реакции на дубликат нужен отдельный вариант компонента.",
@@ -473,6 +613,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -482,21 +628,25 @@
               "summary": "A tag field with three delimiters and paste parsing: addresses from an email become chips in one paste. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-tags-005-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "all three delimiters: the Enter, comma and semicolon habits are equally common",
                 "parsing the paste with the same rule: otherwise a list from an email becomes one giant tag",
                 "intercepting a paste only when it contains delimiters: pasting a single word must behave normally",
                 "deleting the last chip on Backspace in an empty field: otherwise the cross has to be aimed at",
-                "truncating long chip text: a forty-character address would otherwise stretch the field into a line"
+                "truncating long chip text: a forty-character address would otherwise stretch the field into a line",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "label — the field caption",
                 "defaultValue — the starting list",
                 "the delimiter set inside the split helper",
                 "the width at which chip text is truncated",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the captions in the removeText, placeholderText, pastedText and legendText props: {count} is replaced with the number of parsed addresses",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is no address validation here: add your own if the field takes email.",
                 "A space is deliberately not a delimiter: two-word tags would fall apart.",
                 "Duplicates are dropped silently — a visible duplicate reaction needs a different variant.",
@@ -511,11 +661,25 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Paste Splitter"
+            "title": "Paste Splitter",
+            "preview": {
+              "props": {
+                "label": "Send to",
+                "defaultValue": ["anna@example.com"],
+                "removeText": "Remove {tag}",
+                "placeholderText": "Type or paste a list…",
+                "pastedText": "{count} addresses added from a single paste",
+                "legendText": "end a tag, and a pasted list is split as a whole"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -542,21 +706,25 @@
           "summary": "Теги с категориями, где цвет чипа вычисляется из названия категории, а категория выбирается до ввода. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-tags-006-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "вычисление оттенка из названия: список цветов пришлось бы вести руками и синхронизировать с категориями",
             "построение всех трёх цветов из одного оттенка в oklch: так контраст держится на любом hue",
             "точку рядом с текстом: цвет фона не должен оставаться единственным носителем смысла",
             "категорию в aria-label кнопки удаления: цвет скринридеру недоступен",
-            "выбор категории до ввода: назначать её после набора значит делать лишний шаг"
+            "выбор категории до ввода: назначать её после набора значит делать лишний шаг",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "label — подпись поля",
             "groups — список категорий",
             "defaultValue — стартовые теги вместе с их категориями",
             "константы светлоты и насыщенности в цветах чипа",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подписи в пропсах removeText, groupText, placeholderText и hintText: {tag} и {group} подставляются меткой и категорией",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Хеш даёт 12 оттенков: у тринадцатой категории цвет повторится, и это осознанный компромисс.",
             "Переименование категории меняет её цвет — для стабильности храните категорию идентификатором.",
             "Цвет не заменяет подпись: категория обязана быть доступна текстом.",
@@ -576,6 +744,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -585,21 +759,25 @@
               "summary": "Tags with categories where the chip colour is derived from the category name and the category is chosen before typing. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-tags-006-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "deriving the hue from the name: a colour list would have to be maintained and kept in sync with the categories",
                 "building all three colours from one hue in oklch: contrast then holds at any hue",
                 "the dot next to the text: background colour must not be the only carrier of meaning",
                 "the category inside the remove button's aria-label: colour is unavailable to a screen reader",
-                "picking the category before typing: assigning it afterwards adds an extra step"
+                "picking the category before typing: assigning it afterwards adds an extra step",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "label — the field caption",
                 "groups — the category list",
                 "defaultValue — the starting tags together with their categories",
                 "the lightness and chroma constants of the chip colours",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the captions in the removeText, groupText, placeholderText and hintText props: {tag} and {group} are replaced with the label and its category",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The hash gives 12 hues: the thirteenth category repeats a colour, which is a deliberate trade-off.",
                 "Renaming a category changes its colour — store the category as an id for stability.",
                 "Colour does not replace the caption: the category has to be available as text.",
@@ -614,11 +792,39 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Colored Categories"
+            "title": "Colored Categories",
+            "preview": {
+              "props": {
+                "label": "Task labels",
+                "groups": ["team", "urgency", "product"],
+                "defaultValue": [
+                  {
+                    "text": "design",
+                    "group": "team"
+                  },
+                  {
+                    "text": "on fire",
+                    "group": "urgency"
+                  },
+                  {
+                    "text": "catalogue",
+                    "group": "product"
+                  }
+                ],
+                "removeText": "Remove {tag} from the {group} category",
+                "groupText": "Tag category",
+                "placeholderText": "New label…",
+                "hintText": "The category is chosen before typing — the label colour comes from its name"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -645,21 +851,25 @@
           "summary": "Витрина тегов только для чтения: первые N видны, остальные свёрнуты в счётчик со списком в подсказке. Серверный, ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-tags-007-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: список показывают поверх любого фона",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "счётчик скрытых: молча обрезанный список читается как полный, и данные выглядят иначе, чем есть",
             "перечисление скрытых в title и aria-label: свёрнутое должно быть доступно и мышью, и скринридером",
             "разметку списком ul и li: это перечисление, и число элементов должно быть названо",
             "отсутствие интерактивных элементов: витрина не притворяется полем ввода",
-            "серверную природу компонента — состояние тут не нужно"
+            "серверную природу компонента — состояние тут не нужно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "label — заголовок над списком",
             "tags — сам список меток",
             "visible — сколько тегов показывать до сворачивания",
             "оформление чипов и счётчика",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подпись счётчика в пропе moreText: {count} и {tags} подставляются числом скрытых и их перечислением",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Атрибут title показывается только по наведению мышью: на телефоне скрытые теги остаются недоступными.",
             "Если скрытых много, лучше вести на отдельную страницу, а не растить подсказку.",
             "Число visible стоит подбирать под ширину карточки: при переносе строки смысл сворачивания теряется.",
@@ -681,6 +891,18 @@
             "default": 4,
             "min": 1,
             "max": 10
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -690,21 +912,25 @@
               "summary": "A read-only tag display: the first N are shown, the rest collapse into a counter that lists them in its tooltip. Server component, zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-tags-007-* palette — do not swap it for your theme tokens",
-                "its own light surface: the list gets shown over any background",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the hidden counter: a silently truncated list reads as complete and misrepresents the data",
                 "listing the hidden tags in title and aria-label: what is collapsed must stay reachable by mouse and by screen reader",
                 "the ul and li markup: this is an enumeration and the item count has to be announced",
                 "the absence of interactive elements: a display must not pretend to be an input",
-                "the server nature of the component — no state is needed here"
+                "the server nature of the component — no state is needed here",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "label — the heading above the list",
                 "tags — the label list itself",
                 "visible — how many tags to show before collapsing",
                 "the styling of the chips and the counter",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the counter caption in the moreText prop: {count} and {tags} are replaced with the hidden count and their list",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The title attribute only appears on mouse hover: on a phone the hidden tags stay unreachable.",
                 "With many hidden tags, link to a separate page instead of growing the tooltip.",
                 "Tune visible to the card width: once the row wraps, collapsing loses its point.",
@@ -719,11 +945,33 @@
               },
               "visible": {
                 "label": "Visible"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Readonly Overflow"
+            "title": "Readonly Overflow",
+            "preview": {
+              "props": {
+                "label": "Listing labels",
+                "tags": [
+                  "macbook",
+                  "16 inch",
+                  "2024",
+                  "warranty",
+                  "boxed",
+                  "negotiable",
+                  "pickup"
+                ],
+                "moreText": "{count} more: {tags}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["visible", "accent", "background"]
       }
     }
   ]

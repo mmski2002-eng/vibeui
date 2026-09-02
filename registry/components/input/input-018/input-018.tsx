@@ -10,6 +10,18 @@ export type Input018Props = Omit<
   label?: string
   defaultValue?: string
   onChange?: (value: string) => void
+  /** Названия стран по коду IBAN. */
+  countryText?: Record<string, string>
+  /** Подсказка в пустом поле. */
+  placeholder?: string
+  /** Надпись на кнопке копирования. */
+  copyText?: string
+  /** Надпись на кнопке копирования сразу после копирования. */
+  copiedText?: string
+  /** Строка под полем: ключи idle, ok, bad. */
+  noteText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,15 +32,15 @@ export type Input018Props = Omit<
 // а остаток от деления на 97 (стандарт ISO 7064 для IBAN).
 const STYLES = `
 :where([data-vibeui-block="input-018"]){
---vibeui-input-018-surface:oklch(1 0 0);
---vibeui-input-018-shell:oklch(0.91 0.006 265);
---vibeui-input-018-fg:oklch(0.22 0.014 265);
---vibeui-input-018-muted:oklch(0.55 0.014 265);
---vibeui-input-018-field:oklch(0.985 0.002 265);
---vibeui-input-018-border:oklch(0.88 0.008 265);
---vibeui-input-018-accent:oklch(0.5 0.14 230);
---vibeui-input-018-bad:oklch(0.55 0.2 25);
---vibeui-input-018-ok:oklch(0.5 0.13 155);
+--vibeui-input-018-surface:transparent;
+--vibeui-input-018-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-input-018-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-018-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-input-018-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.011 265));
+--vibeui-input-018-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.013 265));
+--vibeui-input-018-accent:light-dark(oklch(0.5 0.14 230),oklch(0.76 0.13 230));
+--vibeui-input-018-bad:light-dark(oklch(0.55 0.2 25),oklch(0.73 0.16 25));
+--vibeui-input-018-ok:light-dark(oklch(0.5 0.13 155),oklch(0.77 0.13 155));
 --vibeui-input-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-018"]{
@@ -98,6 +110,34 @@ const COUNTRIES: Record<string, string> = {
   AE: "ОАЭ",
 }
 
+const NOTE: Record<string, string> = {
+  idle: "Данные счёта не сохраняются, поле только собирает их для платёжного шлюза.",
+  ok: "Номер прошёл контрольную проверку.",
+  bad: "Номер не сходится — проверьте символы.",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function normalize(raw: string) {
   return raw
     .replace(/[^a-zA-Z0-9]/g, "")
@@ -139,6 +179,12 @@ export function Input018({
   label = "Номер счёта IBAN",
   defaultValue = "GB29NWBK60161331926819",
   onChange,
+  countryText = COUNTRIES,
+  placeholder = "GB00 BANK 0000 0000 0000 00",
+  copyText = "Копировать",
+  copiedText = "Скопировано",
+  noteText = NOTE,
+  background = "",
   accent,
   className,
   style,
@@ -151,12 +197,19 @@ export function Input018({
 
   const palette = {
     ...(accent ? { "--vibeui-input-018-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-018-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
-  const country = COUNTRIES[value.slice(0, 2)]
+  const country = countryText[value.slice(0, 2)]
   const complete = value.length >= 15
   const valid = complete && ibanValid(value)
+  const noteKey = complete ? (valid ? "ok" : "bad") : "idle"
 
   const handleCopy = async () => {
     if (!value || typeof navigator === "undefined" || !navigator.clipboard) {
@@ -195,7 +248,7 @@ export function Input018({
             inputMode="text"
             autoComplete="off"
             spellCheck={false}
-            placeholder="GB00 BANK 0000 0000 0000 00"
+            placeholder={placeholder}
             value={group(value)}
             aria-invalid={complete && !valid}
             aria-describedby={`${id}-note`}
@@ -212,7 +265,7 @@ export function Input018({
             disabled={!value}
             onClick={handleCopy}
           >
-            {copied ? "Скопировано" : "Копировать"}
+            {copied ? copiedText : copyText}
           </button>
         </div>
         <p
@@ -221,11 +274,7 @@ export function Input018({
           aria-live="polite"
           data-tone={complete ? (valid ? "ok" : "bad") : undefined}
         >
-          {complete
-            ? valid
-              ? "Номер прошёл контрольную проверку."
-              : "Номер не сходится — проверьте символы."
-            : "Данные счёта не сохраняются, поле только собирает их для платёжного шлюза."}
+          {noteText[noteKey] ?? NOTE[noteKey]}
         </p>
       </div>
     </>

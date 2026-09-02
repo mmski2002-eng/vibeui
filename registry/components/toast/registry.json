@@ -27,23 +27,26 @@
           "usage": "<Toast001\n  tone=\"success\"\n  title=\"Страница опубликована\"\n  description=\"Изменения уже видны по адресу проекта.\"\n  duration={5}\n  onUndo={handleUndo}\n  onClose={dismiss}\n/>",
           "summary": "Тёмное всплывающее уведомление: точка тона, заголовок, описание, кнопка отмены и крестик. Внизу убывает полоса времени — она показывает, сколько осталось до исчезновения, поэтому пропажа не выглядит внезапной, а «Отменить» видно, пока действие ещё можно отменить. Три тона, длительность пропом. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
-            "локальную палитру --vibeui-toast-001-* и не подменять её токенами вашей темы: уведомление намеренно тёмное и не зависит от темы страницы",
+            "локальную палитру --vibeui-toast-001-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "полосу времени как CSS-анимацию scaleX с длительностью из переменной — таймер на setInterval перерисовывал бы компонент десятки раз",
             "совпадение duration и того, через сколько вызывающий код действительно убирает уведомление: разошлись — полоса начинает врать",
             "действие «Отменить» рядом с текстом, а не под ним: тост живёт секунды, действие должно попадаться на глаза сразу",
             "выбор роли по тону: danger — role=\"alert\", остальные — role=\"status\"",
             "aria-label у крестика: иначе скринридер прочитает «×»",
             "правило prefers-reduced-motion, которое убирает полосу вместо того, чтобы её анимировать",
-            "блок <style> внутри компонента — в нём вся палитра, тона и анимация"
+            "блок <style> внутри компонента — в нём вся палитра, тона и анимация",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "тексты title и description, подпись undoLabel",
             "tone: success, danger или neutral",
             "duration — сколько секунд живёт уведомление; 0 убирает полосу",
             "обработчики onUndo и onClose — они и есть логика: компонент сам себя не удаляет",
-            "ширину и положение через className: контейнер тостов делает вызывающий код"
+            "ширину и положение через className: контейнер тостов делает вызывающий код",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не показывает и не прячет себя. Очередь, стек и таймер удаления — задача вызывающего кода.",
             "Не ставьте duration меньше четырёх секунд, если есть «Отменить»: прочитать и нажать не успевают.",
             "Не сообщайте тостом об ошибке, требующей действия: он исчезнет вместе с ней. Для этого есть alert в потоке страницы.",
@@ -86,6 +89,19 @@
             "default": 5,
             "min": 0,
             "max": 20
+          },
+          {
+            "prop": "closeLabel",
+            "label": "Подпись крестика",
+            "type": "text",
+            "default": "Закрыть уведомление",
+            "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -94,23 +110,26 @@
             "ai": {
               "summary": "A dark toast: a tone dot, a title, a description, an Undo button and a close cross. A bar drains along the bottom, showing how long is left before it disappears, so the toast does not vanish out of nowhere and Undo stays visible while undoing is still possible. Three tones, duration as a prop. Zero dependencies, one file, its own palette.",
               "preserve": [
-                "the local --vibeui-toast-001-* palette — the toast is deliberately dark and independent of the page theme",
+                "the local --vibeui-toast-001-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the time bar as a CSS scaleX animation driven by a variable — a setInterval timer would re-render the component dozens of times",
                 "keeping duration in sync with when the caller actually removes the toast: once they diverge, the bar starts lying",
                 "the Undo action beside the text rather than below it: a toast lives for seconds and the action has to be seen at once",
                 "picking the role from the tone: danger is role=\"alert\", the rest are role=\"status\"",
                 "the aria-label on the close button: otherwise a screen reader announces \"×\"",
                 "the prefers-reduced-motion rule that removes the bar instead of animating it",
-                "the <style> block inside the component — it holds the palette, the tones and the animation"
+                "the <style> block inside the component — it holds the palette, the tones and the animation",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the title and description copy and the undoLabel",
                 "tone: success, danger or neutral",
                 "duration — how many seconds the toast lives; 0 removes the bar",
                 "the onUndo and onClose handlers — they are the logic: the component does not remove itself",
-                "width and placement through className: the toast container is the caller's job"
+                "width and placement through className: the toast container is the caller's job",
+                "background — the component surface; empty means no surface of its own, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component neither shows nor hides itself. The queue, the stack and the removal timer belong to the calling code.",
                 "Do not set duration below four seconds when Undo is present: nobody can read and click in time.",
                 "Do not report an error that needs action in a toast — it leaves with the toast. Use an inline alert instead.",
@@ -136,11 +155,27 @@
               },
               "duration": {
                 "label": "Seconds"
+              },
+              "closeLabel": {
+                "label": "Close label",
+                "default": "Dismiss notification"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Timed Toast"
+            "title": "Timed Toast",
+            "preview": {
+              "props": {
+                "title": "Page published",
+                "description": "The changes are live at your project address.",
+                "undoLabel": "Undo",
+                "closeLabel": "Dismiss notification"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["tone", "duration", "background"]
       }
     },
     {
@@ -174,15 +209,19 @@
             "полосу и число секунд — без них непонятно, сколько ещё можно передумать",
             "паузу по наведению и фокусу: иначе отмену не успевают нажать",
             "role=\"status\" с aria-live: сообщение должно быть услышано",
-            "отчёт после отмены вместо мгновенного исчезновения"
+            "отчёт после отмены вместо мгновенного исчезновения",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "message и undoLabel",
             "seconds — сколько можно передумать",
             "обработчик onUndo",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подписи undoneMessage, countdownText, doneLabel и expiredLabel — русские по умолчанию; {seconds} в countdownText заменяется числом",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Отмена должна быть настоящей: если действие необратимо, нужен диалог, а не это сообщение.",
             "Восемь секунд — компромисс: меньше не успеть прочитать и нажать, больше сообщение мешает.",
             "Позиционирование не входит в компонент: угол экрана задаёт вызывающий код.",
@@ -211,6 +250,32 @@
             "default": 8,
             "min": 3,
             "max": 20
+          },
+          {
+            "prop": "undoneMessage",
+            "label": "После отмены",
+            "type": "text",
+            "default": "Действие отменено",
+            "maxLength": 40
+          },
+          {
+            "prop": "countdownText",
+            "label": "Отсчёт",
+            "type": "text",
+            "default": "Отменить можно ещё {seconds} с",
+            "maxLength": 45
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -224,15 +289,19 @@
                 "the bar and the seconds — otherwise nothing says how long the option lasts",
                 "the pause on hover and focus: otherwise undo cannot be reached in time",
                 "role=\"status\" with aria-live: the message has to be heard",
-                "the report after undo rather than instant disappearance"
+                "the report after undo rather than instant disappearance",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "message and undoLabel",
                 "seconds — how long the option lasts",
                 "the onUndo handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the undoneMessage, countdownText, doneLabel and expiredLabel copy — Russian by default; {seconds} in countdownText is replaced by the number",
+                "background — the component surface; empty means no surface of its own, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Undo must be real: if the action is irreversible, use a dialog instead.",
                 "Eight seconds is the compromise: less is unreadable, more gets in the way.",
                 "Positioning is not part of the component: the caller picks the corner.",
@@ -251,11 +320,36 @@
               },
               "seconds": {
                 "label": "Seconds"
+              },
+              "undoneMessage": {
+                "label": "After undo",
+                "default": "Action undone"
+              },
+              "countdownText": {
+                "label": "Countdown",
+                "default": "{seconds} s left to undo"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Undo Toast"
+            "title": "Undo Toast",
+            "preview": {
+              "props": {
+                "message": "Project moved to archive",
+                "undoLabel": "Undo",
+                "undoneMessage": "Action undone",
+                "countdownText": "{seconds} s left to undo",
+                "doneLabel": "Done",
+                "expiredLabel": "Time is up"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["seconds", "accent", "background"]
       }
     },
     {
@@ -289,15 +383,19 @@
             "role=\"log\" с aria-live: поток сообщений читается иначе, чем одно",
             "тон полоской, а не заливкой: сообщение должно оставаться читаемым",
             "имя сообщения в подписи кнопки закрытия",
-            "новые сообщения сверху — читают сверху вниз"
+            "новые сообщения сверху — читают сверху вниз",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массив items и их тон",
             "max — сколько показывать сразу",
             "поведение кнопки закрытия",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подписи listLabel, dismissText, moreText, expandLabel, allShownText и collapseLabel — русские по умолчанию; {title} и {count} заменяются значениями",
+            "background — подложка карточек; пусто означает «без своей подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Автоскрытия здесь нет: для одиночного сообщения с таймером есть toast-001.",
             "Ошибки не должны исчезать сами: их закрывает человек, и в стопке они стоят рядом с обычными.",
             "Позиционирование стопки — задача вызывающего кода.",
@@ -318,6 +416,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -331,15 +435,19 @@
                 "role=\"log\" with aria-live: a stream of messages reads differently from one",
                 "tone as a bar rather than a fill: the message must stay readable",
                 "the message name in the dismiss button's label",
-                "new messages on top — people read downward"
+                "new messages on top — people read downward",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the items array and their tone",
                 "max — how many show at once",
                 "what dismissal does",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the listLabel, dismissText, moreText, expandLabel, allShownText and collapseLabel copy — Russian by default; {title} and {count} are replaced with values",
+                "background — the card surface; empty means no surface of its own, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is no auto-dismiss here: for a single timed message use toast-001.",
                 "Errors must not vanish on their own: a person dismisses them, and here they sit among the rest.",
                 "Positioning the stack is the caller's job.",
@@ -353,11 +461,49 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Toast Stack"
+            "title": "Toast Stack",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "id": "1",
+                    "title": "Component button-020 published",
+                    "tone": "success"
+                  },
+                  {
+                    "id": "2",
+                    "title": "Catalog build finished in 42 s"
+                  },
+                  {
+                    "id": "3",
+                    "title": "Could not load the chart-009 preview",
+                    "tone": "danger"
+                  },
+                  {
+                    "id": "4",
+                    "title": "Dependencies updated"
+                  },
+                  {
+                    "id": "5",
+                    "title": "Someone signed in from a new device"
+                  }
+                ],
+                "listLabel": "Notifications",
+                "dismissText": "Dismiss notification: {title}",
+                "moreText": "{count} more",
+                "expandLabel": "Show all",
+                "allShownText": "All {count} shown",
+                "collapseLabel": "Collapse"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["max", "accent", "background"]
       }
     },
     {
@@ -391,15 +537,17 @@
             "переключение роли на alert при ошибке — успех не должен перебивать чтение экрана",
             "маску кольца загрузки: без radial-маски конический градиент превращается в закрашенный круг",
             "скрытие полосы-пульса вне стадии loading — иначе готовая операция выглядит незавершённой",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "стадию через state — loading, success или error",
             "надписи стадий через loadingText, successText и errorText",
             "вторую строку через hint или убрать её пустой строкой",
-            "цвет стадии через переменную --vibeui-toast-004-tone"
+            "цвет стадии через переменную --vibeui-toast-004-tone",
+            "background — подложка карточки; пусто означает «без своей подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не считает время сам: стадию переключает родитель после ответа сервера.",
             "Полоса-пульс не показывает процент — для определённого прогресса нужен другой вариант.",
             "При reduced-motion кольцо останавливается, а полоса растягивается на всю ширину: движение убрано, смысл остался.",
@@ -420,6 +568,33 @@
             "type": "text",
             "default": "Архив готов к скачиванию",
             "maxLength": 40
+          },
+          {
+            "prop": "loadingText",
+            "label": "Текст загрузки",
+            "type": "text",
+            "default": "Собираем архив проекта",
+            "maxLength": 40
+          },
+          {
+            "prop": "errorText",
+            "label": "Текст ошибки",
+            "type": "text",
+            "default": "Не удалось собрать архив",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Файлы больше 200 МБ пропускаем.",
+            "maxLength": 60
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -433,15 +608,17 @@
                 "the role switching to alert on failure — success must not interrupt a screen reader",
                 "the mask on the spinner ring: without the radial mask the conic gradient becomes a filled disc",
                 "hiding the pulse bar outside the loading stage — otherwise a finished operation still looks busy",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the stage through state — loading, success or error",
                 "the stage captions through loadingText, successText and errorText",
                 "the second line through hint, or drop it with an empty string",
-                "the stage colour through the --vibeui-toast-004-tone variable"
+                "the stage colour through the --vibeui-toast-004-tone variable",
+                "background — the card surface; empty means no surface of its own, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not time anything itself: the parent switches the stage once the server answers.",
                 "The pulse bar shows no percentage — determinate progress needs a different variant.",
                 "Under reduced motion the ring stops and the bar spans the full width: the motion is gone, the meaning stays.",
@@ -456,11 +633,35 @@
               "successText": {
                 "label": "Success text",
                 "default": "The archive is ready"
+              },
+              "loadingText": {
+                "label": "Loading text",
+                "default": "Packing the project archive"
+              },
+              "errorText": {
+                "label": "Error text",
+                "default": "Could not pack the archive"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "Files over 200 MB are skipped."
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Lifecycle Toast"
+            "title": "Lifecycle Toast",
+            "preview": {
+              "props": {
+                "loadingText": "Packing the project archive",
+                "successText": "The archive is ready to download",
+                "errorText": "Could not pack the archive",
+                "hint": "Files over 200 MB are skipped."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["state", "background"]
       }
     },
     {
@@ -494,15 +695,18 @@
             "role=\"alert\" на карточке — ошибка должна дойти до скринридера без действий пользователя",
             "нативный <details> вместо своего состояния: раскрытие работает и без JS",
             "снятый маркер summary с сохранённым фокус-стилем — иначе кнопка раскрытия теряется",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "заголовок через title и объяснение через message",
             "подпись действия через retryLabel",
             "содержимое раскрытия через details — код ответа, адрес, время",
-            "тон ошибки через переменную --vibeui-toast-005-tone"
+            "тон ошибки через проп tone или переменную --vibeui-toast-005-tone",
+            "подпись раскрытия через detailsLabel — по умолчанию русская",
+            "background — подложка карточки; пусто означает «без своей подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Текст message адресован человеку: стек вызовов кладите в details, а не в первую строку.",
             "Пустая строка в details убирает раскрытие целиком, кнопка повтора остаётся.",
             "Внутри <pre> перенос включён: длинный адрес не растянет карточку по горизонтали.",
@@ -523,6 +727,32 @@
             "type": "text",
             "default": "Повторить",
             "maxLength": 20
+          },
+          {
+            "prop": "message",
+            "label": "Объяснение",
+            "type": "text",
+            "default": "Соединение оборвалось на середине. Текст остался в браузере.",
+            "maxLength": 80
+          },
+          {
+            "prop": "detailsLabel",
+            "label": "Раскрытие",
+            "type": "text",
+            "default": "Подробности",
+            "maxLength": 20
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -536,15 +766,18 @@
                 "role=\"alert\" on the card — the failure has to reach a screen reader without any action",
                 "the native <details> instead of your own state: the disclosure works without JS",
                 "the stripped summary marker with its focus ring kept — otherwise the disclosure control disappears",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the heading through title and the explanation through message",
                 "the action caption through retryLabel",
                 "the disclosure content through details — status code, URL, timestamp",
-                "the error tone through the --vibeui-toast-005-tone variable"
+                "the error tone through the tone prop or the --vibeui-toast-005-tone variable",
+                "the disclosure caption through detailsLabel — Russian by default",
+                "background — the card surface; empty means no surface of its own, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The message text is written for a person: put the stack trace in details, not in the first line.",
                 "An empty details string removes the disclosure entirely and keeps the retry button.",
                 "Wrapping is on inside the <pre>: a long URL will not stretch the card sideways.",
@@ -560,11 +793,35 @@
               "retryLabel": {
                 "label": "Retry",
                 "default": "Retry"
+              },
+              "message": {
+                "label": "Explanation",
+                "default": "The connection dropped halfway. Your text is still in the browser."
+              },
+              "detailsLabel": {
+                "label": "Disclosure",
+                "default": "Details"
+              },
+              "tone": {
+                "label": "Tone"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Retry Toast"
+            "title": "Retry Toast",
+            "preview": {
+              "props": {
+                "title": "Could not save the draft",
+                "message": "The connection dropped halfway. Your text is still in the browser.",
+                "retryLabel": "Retry",
+                "detailsLabel": "Details",
+                "details": "PUT /api/drafts/8412 — 504 Gateway Timeout\n17:42:06, attempt 2 of 3"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["tone", "background"]
       }
     },
     {
@@ -598,15 +855,18 @@
             "role=\"progressbar\" вместе с aria-valuenow — без них прогресс не читается вслух",
             "счётчик рядом с процентом: 62% без «15 из 24» не говорят, сколько ещё ждать",
             "кнопку отмены: длинную операцию обязательно должно быть чем остановить",
-            "табличные цифры у процента и счётчика — иначе числа прыгают при каждом обновлении"
+            "табличные цифры у процента и счётчика — иначе числа прыгают при каждом обновлении",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "заголовок через title и значение прогресса через value",
             "подпись счётчика через countLabel",
             "подпись отмены через cancelLabel или убрать её пустой строкой",
-            "цвет заполнения через переменную --vibeui-toast-006-tone"
+            "цвет заполнения через проп tone или переменную --vibeui-toast-006-tone",
+            "background — подложка карточки; пусто означает «без своей подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Значение зажимается в 0–100: передать 120 безопасно, полоса не вылезет.",
             "Компонент ничего не загружает сам — value обновляет владелец операции.",
             "Отмена только вызывает onCancel: остановить запрос должен вызывающий код.",
@@ -628,6 +888,32 @@
             "type": "text",
             "default": "15 из 24 файлов",
             "maxLength": 30
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Загружаем фотографии",
+            "maxLength": 40
+          },
+          {
+            "prop": "cancelLabel",
+            "label": "Отмена",
+            "type": "text",
+            "default": "Отменить",
+            "maxLength": 20
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -641,15 +927,18 @@
                 "role=\"progressbar\" together with aria-valuenow — without them progress is never announced",
                 "the counter beside the percentage: 62% without «15 of 24» never says how long is left",
                 "the cancel button: a long operation must always be stoppable",
-                "tabular figures on the percentage and counter — otherwise the numbers jump on every update"
+                "tabular figures on the percentage and counter — otherwise the numbers jump on every update",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the heading through title and the progress through value",
                 "the counter caption through countLabel",
                 "the cancel caption through cancelLabel, or drop it with an empty string",
-                "the fill colour through the --vibeui-toast-006-tone variable"
+                "the fill colour through the tone prop or the --vibeui-toast-006-tone variable",
+                "background — the card surface; empty means no surface of its own, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The value is clamped to 0–100: passing 120 is safe, the bar will not overflow.",
                 "The component uploads nothing itself — the owner of the operation updates value.",
                 "Cancel only calls onCancel: aborting the request is the caller's job.",
@@ -664,11 +953,33 @@
               "countLabel": {
                 "label": "Counter",
                 "default": "15 of 24 files"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Uploading photos"
+              },
+              "cancelLabel": {
+                "label": "Cancel",
+                "default": "Cancel"
+              },
+              "tone": {
+                "label": "Tone"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Progress Toast"
+            "title": "Progress Toast",
+            "preview": {
+              "props": {
+                "title": "Uploading photos",
+                "countLabel": "15 of 24 files",
+                "cancelLabel": "Cancel"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["value", "tone", "background"]
       }
     },
     {
@@ -702,15 +1013,17 @@
             "действия отдельной строкой — в одну линию с заголовком они сжимают его до слова",
             "разный вес главного и второстепенного действия: две одинаковые кнопки заставляют выбирать дважды",
             "видимую подпись у крестика через aria-label — иконка без имени бесполезна для скринридера",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "заголовок через title и описание через description",
             "подписи кнопок через primaryLabel и secondaryLabel",
-            "значок в левом квадрате — символ или свою иконку",
-            "акцент через переменную --vibeui-toast-007-tone"
+            "значок в левом квадрате через glyph — символ или свою иконку",
+            "акцент через проп tone или переменную --vibeui-toast-007-tone",
+            "background — подложка карточки; пусто означает «без своей подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Обрезка на двух строках зависит от -webkit-line-clamp: в очень старых движках текст просто не обрежется.",
             "Пустой secondaryLabel убирает вторую кнопку, раскладка не ломается.",
             "Крестик не закрывает карточку сам — обработчик вешает вызывающий код.",
@@ -731,6 +1044,39 @@
             "type": "text",
             "default": "Позже",
             "maxLength": 20
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Приглашение в команду",
+            "maxLength": 40
+          },
+          {
+            "prop": "glyph",
+            "label": "Значок",
+            "type": "text",
+            "default": "✉",
+            "maxLength": 4
+          },
+          {
+            "prop": "closeLabel",
+            "label": "Подпись крестика",
+            "type": "text",
+            "default": "Закрыть уведомление",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -744,15 +1090,17 @@
                 "the actions on their own row — inline with the heading they squeeze it down to one word",
                 "the different weight of the primary and secondary action: two identical buttons make people choose twice",
                 "the aria-label on the close button — an unnamed icon is useless to a screen reader",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the heading through title and the copy through description",
                 "the button captions through primaryLabel and secondaryLabel",
-                "the glyph in the left square — a character or your own icon",
-                "the accent through the --vibeui-toast-007-tone variable"
+                "the glyph in the left square through glyph — a character or your own icon",
+                "the accent through the tone prop or the --vibeui-toast-007-tone variable",
+                "background — the card surface; empty means no surface of its own, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The two-line clamp relies on -webkit-line-clamp: in very old engines the text simply will not be cut.",
                 "An empty secondaryLabel removes the second button without breaking the layout.",
                 "The close button does not dismiss the card itself — the caller attaches the handler.",
@@ -768,11 +1116,39 @@
               "secondaryLabel": {
                 "label": "Secondary action",
                 "default": "Later"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Team invitation"
+              },
+              "glyph": {
+                "label": "Glyph",
+                "default": "✉"
+              },
+              "closeLabel": {
+                "label": "Close label",
+                "default": "Dismiss notification"
+              },
+              "tone": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Rich Toast"
+            "title": "Rich Toast",
+            "preview": {
+              "props": {
+                "title": "Team invitation",
+                "description": "Maria Gurova invites you to the «Catalog» project. Write access is granted right after you accept, and can be revoked in settings.",
+                "primaryLabel": "Accept",
+                "secondaryLabel": "Later",
+                "closeLabel": "Dismiss notification"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["tone", "background"]
       }
     },
     {
@@ -806,15 +1182,18 @@
             "переворот порядка column-reverse в нижних углах — свежее сообщение обязано быть у края",
             "role=\"log\" с aria-live=\"polite\" на стопке: поток сообщений читается именно так",
             "ограничение ширины стопки формулой с отступом — на телефоне карточка иначе упирается в края",
-            "собственную светлую подложку сцены: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "угол через corner — top-left, top-right, bottom-left или bottom-right",
             "расстояние до краёв через offset",
             "содержимое стопки через messages",
-            "цвет точки через переменную --vibeui-toast-008-tone"
+            "цвет точки через проп tone или переменную --vibeui-toast-008-tone",
+            "подписи сцены через hintText и legendText — русские по умолчанию; {corner} и {offset} заменяются значениями",
+            "background — подложка сцены; пусто означает «без своей подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сцена нужна только для показа: в приложении регион ставят на position:fixed и сцену выбрасывают.",
             "Больше трёх карточек подряд никто не читает — ограничивайте длину messages на стороне вызова.",
             "Задержки появления заданы через nth-child и рассчитаны на три карточки; для длинного списка их лучше убрать.",
@@ -835,6 +1214,25 @@
             "type": "text",
             "default": "1rem",
             "maxLength": 10
+          },
+          {
+            "prop": "hintText",
+            "label": "Подпись сцены",
+            "type": "text",
+            "default": "область приложения",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -848,15 +1246,18 @@
                 "the column-reverse order in the bottom corners — the newest message must sit at the edge",
                 "role=\"log\" with aria-live=\"polite\" on the stack: that is how a stream of messages is read",
                 "the width formula that subtracts the offset — on a phone the card would otherwise hit both edges",
-                "the stage's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the corner through corner — top-left, top-right, bottom-left or bottom-right",
                 "the distance to the edges through offset",
                 "the stack content through messages",
-                "the dot colour through the --vibeui-toast-008-tone variable"
+                "the dot colour through the tone prop or the --vibeui-toast-008-tone variable",
+                "the stage captions through hintText and legendText — Russian by default; {corner} and {offset} are replaced with values",
+                "background — the stage surface; empty means no surface of its own, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The stage exists only for the demo: in an app the region goes on position:fixed and the stage is dropped.",
                 "Nobody reads more than three cards in a row — cap the length of messages at the call site.",
                 "The entry delays use nth-child and assume three cards; for a long list they are better removed.",
@@ -871,11 +1272,33 @@
               "offset": {
                 "label": "Offset",
                 "default": "1rem"
+              },
+              "hintText": {
+                "label": "Stage caption",
+                "default": "application area"
+              },
+              "tone": {
+                "label": "Tone"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Toast Region"
+            "title": "Toast Region",
+            "preview": {
+              "props": {
+                "messages": [
+                  "Draft saved",
+                  "File uploaded to the cloud",
+                  "Invitation sent"
+                ],
+                "hintText": "application area",
+                "legendText": "stack corner: {corner}, offset {offset}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["corner", "tone", "background"]
       }
     },
     {
@@ -909,15 +1332,18 @@
             "поле ответа кнопкой, а не input: настоящая форма в короткоживущем уведомлении требует фокус-ловушки",
             "имя собеседника в доступной подписи кнопки — «Ответить» без имени в потоке бесполезно",
             "обрезку сообщения на двух строках: длинное письмо читают в переписке, а не в уведомлении",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "имя собеседника через name и текст через message",
             "отметку времени через time",
             "подпись быстрого ответа через replyLabel",
-            "скругление и подложку через переменные --vibeui-toast-009-radius и --vibeui-toast-009-bg"
+            "скругление карточки через переменную --vibeui-toast-009-radius",
+            "доступную подпись кнопки через replyText — {name} заменяется именем собеседника",
+            "background — подложка карточки; пусто означает «без своей подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Инициалы берутся из первых двух слов имени: односложный ник даст одну букву.",
             "Оттенок стабилен для одного имени, но два разных имени могут совпасть — это допустимо.",
             "Нажатие на поле ответа только вызывает onReply: открыть переписку должен вызывающий код.",
@@ -938,6 +1364,26 @@
             "type": "text",
             "default": "Ответить…",
             "maxLength": 20
+          },
+          {
+            "prop": "message",
+            "label": "Сообщение",
+            "type": "text",
+            "default": "Посмотри последний макет каталога — там поменялась сетка карточек, хочу услышать твоё мнение до вечера.",
+            "maxLength": 120
+          },
+          {
+            "prop": "time",
+            "label": "Время",
+            "type": "text",
+            "default": "18:04",
+            "maxLength": 8
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -951,15 +1397,18 @@
                 "the reply field as a button, not an input: a real form inside a short-lived toast needs a focus trap",
                 "the sender name in the button label — a bare \"Reply\" is useless in a stream",
                 "the two-line clamp on the message: a long letter is read in the thread, not in a toast",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the sender through name and the copy through message",
                 "the timestamp through time",
                 "the quick reply caption through replyLabel",
-                "the radius and surface through --vibeui-toast-009-radius and --vibeui-toast-009-bg"
+                "the card radius through the --vibeui-toast-009-radius variable",
+                "the accessible button label through replyText — {name} is replaced with the sender",
+                "background — the card surface; empty means no surface of its own, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Initials come from the first two words of the name: a single-word handle gives one letter.",
                 "The hue is stable for one name, but two different names may collide — that is acceptable.",
                 "Tapping the reply field only calls onReply: opening the thread is the caller's job.",
@@ -975,11 +1424,32 @@
               "replyLabel": {
                 "label": "Reply",
                 "default": "Reply…"
+              },
+              "message": {
+                "label": "Message",
+                "default": "Take a look at the latest catalog mockup — the card grid changed, and I would like your opinion before tonight."
+              },
+              "time": {
+                "label": "Time",
+                "default": "18:04"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Message Toast"
+            "title": "Message Toast",
+            "preview": {
+              "props": {
+                "name": "Artem Severov",
+                "message": "Take a look at the latest catalog mockup — the card grid changed, and I would like your opinion before tonight.",
+                "time": "18:04",
+                "replyLabel": "Reply…",
+                "replyText": "Reply to {name}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -1010,15 +1480,19 @@
             "отсутствие кнопок и крестика — действие в пилюле некуда поставить, она уходит сама",
             "role=\"status\" с aria-live=\"polite\": подтверждение не должно перебивать чтение",
             "выключение анимации у самого блока в prefers-reduced-motion, а не только у потомков",
-            "тёмную заливку независимо от тона: цветная пилюля спорит с интерфейсом под ней"
+            "контрастную заливку независимо от тона: цветная пилюля спорит с интерфейсом под ней",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему; палитра пилюли при этом перевёрнута — она контрастна странице в обеих темах"
           ],
           "adapt": [
             "текст через message и тон через tone",
             "значок через glyph или убрать его пустой строкой",
             "предельную ширину через max-width",
-            "цвет значка через переменную --vibeui-toast-010-tone"
+            "цвет значка через переменную --vibeui-toast-010-tone",
+            "background — подложка пилюли; пусто означает «по теме окружения»"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Пилюля инвертирует подложку: тёмная в светлой теме и светлая в тёмной. Заданный вручную background поэтому переключает ветку палитры на противоположную по светлоте.",
             "Компонент не исчезает сам: таймер держит вызывающий код.",
             "Текст длиннее строки обрезается многоточием — для двух строк возьмите карточку, а не пилюлю.",
             "Значок нарисован символом: своя иконка вставляется вместо содержимого glyph.",
@@ -1039,6 +1513,19 @@
             "type": "select",
             "default": "success",
             "options": ["neutral", "success", "warning"]
+          },
+          {
+            "prop": "glyph",
+            "label": "Значок",
+            "type": "text",
+            "default": "✓",
+            "maxLength": 4
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1052,15 +1539,19 @@
                 "the absence of buttons and a close control — there is nowhere to put an action, the pill leaves on its own",
                 "role=\"status\" with aria-live=\"polite\": a confirmation must not interrupt reading",
                 "disabling the animation on the block itself under prefers-reduced-motion, not only on its children",
-                "the dark fill regardless of tone: a coloured pill fights the interface underneath it"
+                "the contrasting fill regardless of tone: a coloured pill fights the interface underneath it",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own; the pill's palette is inverted on purpose so it contrasts with the page in both themes"
               ],
               "adapt": [
                 "the copy through message and the tone through tone",
                 "the glyph through glyph, or drop it with an empty string",
                 "the maximum width through max-width",
-                "the glyph colour through the --vibeui-toast-010-tone variable"
+                "the glyph colour through the --vibeui-toast-010-tone variable",
+                "background — the pill surface; empty means it follows the surrounding theme"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The pill inverts its surface: dark in a light theme, light in a dark one. A background set by hand therefore switches the palette to the branch opposite its own lightness.",
                 "The component does not disappear by itself: the caller owns the timer.",
                 "Text longer than the line is ellipsised — for two lines use a card, not a pill.",
                 "The glyph is a character: your own icon replaces the content of glyph.",
@@ -1075,11 +1566,25 @@
               },
               "tone": {
                 "label": "Tone"
+              },
+              "glyph": {
+                "label": "Glyph",
+                "default": "✓"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Pill Toast"
+            "title": "Pill Toast",
+            "preview": {
+              "props": {
+                "message": "Link copied",
+                "glyph": "✓"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["tone", "background"]
       }
     },
     {
@@ -1111,14 +1616,18 @@
             "сдвиг, масштаб и прозрачность карточки через переменную --vibeui-toast-011-index в calc(), а не отдельные CSS-классы на каждый индекс",
             "aria-hidden и tabIndex={-1} у карточек под верхней — скринридер и Tab должны видеть только то, что видно глазом",
             "кнопку закрытия с aria-label, включающим текст карточки",
-            "локальную палитру --vibeui-toast-011-* и не подменять её токенами вашей темы"
+            "локальную палитру --vibeui-toast-011-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "список через items с полями id, title и необязательным tone",
             "подписи через closeLabel и emptyLabel",
-            "обработчик через onDismiss"
+            "обработчик через onDismiss",
+            "строку о скрытых карточках через behindText — {count} заменяется их числом",
+            "background — подложка карточек; пусто означает «без своей подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Показывать имеет смысл 3–4 карточки: дальше срез становится незаметным.",
             "Колода не восстанавливается сама — новые уведомления добавляет вызывающий код через items."
           ]
@@ -1137,6 +1646,19 @@
             "type": "text",
             "default": "Уведомлений больше нет",
             "maxLength": 40
+          },
+          {
+            "prop": "behindText",
+            "label": "Скрытые карточки",
+            "type": "text",
+            "default": "ещё {count} за этой карточкой",
+            "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1148,14 +1670,18 @@
                 "the card's shift, scale and opacity through the --vibeui-toast-011-index variable inside calc(), not separate CSS classes per index",
                 "aria-hidden and tabIndex={-1} on the cards behind the top one — a screen reader and Tab should only reach what the eye sees",
                 "the close button with an aria-label that includes the card's text",
-                "the local --vibeui-toast-011-* palette — do not swap it for your theme tokens"
+                "the local --vibeui-toast-011-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the list through items, with id, title and an optional tone",
                 "the captions through closeLabel and emptyLabel",
-                "the handler through onDismiss"
+                "the handler through onDismiss",
+                "the line about hidden cards through behindText — {count} is replaced with their number",
+                "background — the card surface; empty means no surface of its own, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Showing 3–4 cards makes sense: beyond that the sliver stops being visible.",
                 "The deck does not refill itself — the caller adds new notifications through items."
               ],
@@ -1169,11 +1695,42 @@
               "emptyLabel": {
                 "label": "Empty state",
                 "default": "No notifications left"
+              },
+              "behindText": {
+                "label": "Hidden cards",
+                "default": "{count} more behind this card"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Deck Toast"
+            "title": "Deck Toast",
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "id": "1",
+                    "title": "Project backup created",
+                    "tone": "success"
+                  },
+                  {
+                    "id": "2",
+                    "title": "New comment on the catalog mockup"
+                  },
+                  {
+                    "id": "3",
+                    "title": "Could not sync the plugin",
+                    "tone": "danger"
+                  }
+                ],
+                "closeLabel": "Close",
+                "emptyLabel": "No notifications left",
+                "behindText": "{count} more behind this card"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -1205,15 +1762,20 @@
             "полосу прогресса на переменной --vibeui-toast-012-value — calc() дешевле пересборки разметки при каждом тике",
             "role=\"progressbar\" вместе с aria-valuenow, пока идёт загрузка — иначе прогресс не читается вслух",
             "очистку setInterval в useEffect при размонтировании и при смене фазы",
-            "переход в состояние «готово» внутри той же карточки, а не пересоздание уведомления"
+            "переход в состояние «готово» внутри той же карточки, а не пересоздание уведомления",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "заголовки загрузки и результата через title и doneTitle",
             "длительность условной загрузки через duration в миллисекундах",
             "подпись отмены через cancelLabel",
-            "обработчики через onDone и onCancel"
+            "обработчики через onDone и onCancel",
+            "подписи хода через loadingText и cancelledText — русские по умолчанию",
+            "цвет полосы и процента через проп tone или переменную --vibeui-toast-012-tone",
+            "background — подложка карточки; пусто означает «без своей подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Таймер условный: отсчёт использует Date.now(), поэтому процент не плывёт при подвисании вкладки.",
             "После отмены карточка не исчезает сама — скрыть её решает вызывающий код."
           ]
@@ -1233,6 +1795,32 @@
             "type": "text",
             "default": "Отменить",
             "maxLength": 20
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Экспортируем видео",
+            "maxLength": 40
+          },
+          {
+            "prop": "loadingText",
+            "label": "Подпись хода",
+            "type": "text",
+            "default": "Идёт загрузка",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1244,15 +1832,20 @@
                 "the progress bar on the --vibeui-toast-012-value variable — calc() is cheaper than re-rendering markup on every tick",
                 "role=\"progressbar\" together with aria-valuenow while loading — otherwise progress is never announced",
                 "clearing setInterval in useEffect on unmount and on phase change",
-                "the switch to the “done” state inside the same card, instead of recreating the toast"
+                "the switch to the “done” state inside the same card, instead of recreating the toast",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the loading and result headings through title and doneTitle",
                 "the simulated loading length through duration in milliseconds",
                 "the cancel caption through cancelLabel",
-                "the handlers through onDone and onCancel"
+                "the handlers through onDone and onCancel",
+                "the status captions through loadingText and cancelledText — Russian by default",
+                "the bar and percentage colour through the tone prop or the --vibeui-toast-012-tone variable",
+                "background — the card surface; empty means no surface of its own, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The timer is simulated: it uses Date.now(), so the percentage doesn't drift if the tab is throttled.",
                 "The card doesn't hide itself after cancelling — the caller decides whether to dismiss it."
               ],
@@ -1265,11 +1858,35 @@
               "cancelLabel": {
                 "label": "Cancel label",
                 "default": "Cancel"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "Exporting video"
+              },
+              "loadingText": {
+                "label": "Status caption",
+                "default": "Uploading"
+              },
+              "tone": {
+                "label": "Tone"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Auto Progress Toast"
+            "title": "Auto Progress Toast",
+            "preview": {
+              "props": {
+                "title": "Exporting video",
+                "doneTitle": "Video ready to download",
+                "cancelLabel": "Cancel",
+                "loadingText": "Uploading",
+                "cancelledText": "Upload cancelled"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["duration", "tone", "background"]
       }
     },
     {
@@ -1287,7 +1904,7 @@
           "target": "@components/vibeui/toast-013.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-013-*. Таймер — conic-gradient, доля круга считается из переменной --vibeui-toast-013-percent, а число секунд в центре кольца дублирует то же значение текстом, поэтому отсчёт читается и глазами, и вслух через aria-live. Наведение и фокус ставят таймер на паузу через ref, не через ререндер. После нажатия «Вернуть» кольцо превращается в галочку, а кнопка исчезает — состояние держит useState, компонент клиентский.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-013-*. Тема берётся из color-scheme окружения через light-dark(), а проп background подменяет только подложку карточки. Таймер — conic-gradient, доля круга считается из переменной --vibeui-toast-013-percent, а число секунд в центре кольца дублирует то же значение текстом, поэтому отсчёт читается и глазами, и вслух через aria-live. Наведение и фокус ставят таймер на паузу через ref, не через ререндер. После нажатия «Вернуть» кольцо превращается в галочку, а кнопка исчезает — состояние держит useState, компонент клиентский. Все подписи вынесены в пропсы: message, returnedMessage, returnLabel, expiredText и шаблон countdownText с плейсхолдером {seconds}.",
       "meta": {
         "tags": ["toast", "undo", "batch", "timer"],
         "preview": {
@@ -1301,15 +1918,21 @@
             "кольцо на conic-gradient с переменной --vibeui-toast-013-percent — доля круга и число в центре считаются от одного состояния",
             "паузу по наведению и фокусу через ref, а не через ререндер на каждый тик",
             "переход кольца в галочку после «Вернуть» вместо исчезновения карточки",
-            "локальную палитру --vibeui-toast-013-* и не подменять её токенами вашей темы"
+            "локальную палитру --vibeui-toast-013-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "плейсхолдер {seconds} в countdownText — число секунд подставляет сам компонент, разрывать строку на куски не нужно"
           ],
           "adapt": [
-            "текст действия через message",
+            "текст действия через message и текст после возврата через returnedMessage",
             "подпись кнопки через returnLabel",
+            "подписи отсчёта через countdownText с плейсхолдером {seconds} и expiredText",
             "время на отмену через seconds",
+            "tone — цвет кольца и кнопки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "обработчики через onReturn и onExpire"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "onExpire вызывается один раз, когда время истекает без нажатия «Вернуть».",
             "Компонент не восстанавливает данные сам — onReturn лишь сообщает о решении пользователя."
           ]
@@ -1324,11 +1947,51 @@
             "max": 20
           },
           {
+            "prop": "tone",
+            "label": "Цвет кольца",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "message",
+            "label": "Сообщение",
+            "type": "text",
+            "default": "5 писем перемещены в архив",
+            "maxLength": 60
+          },
+          {
+            "prop": "returnedMessage",
+            "label": "После возврата",
+            "type": "text",
+            "default": "Письма возвращены из архива",
+            "maxLength": 60
+          },
+          {
             "prop": "returnLabel",
             "label": "Подпись кнопки",
             "type": "text",
             "default": "Вернуть",
             "maxLength": 20
+          },
+          {
+            "prop": "countdownText",
+            "label": "Отсчёт",
+            "type": "text",
+            "default": "Отменить можно ещё {seconds} с",
+            "maxLength": 60
+          },
+          {
+            "prop": "expiredText",
+            "label": "Время вышло",
+            "type": "text",
+            "default": "Время вышло",
+            "maxLength": 30
           }
         ],
         "i18n": {
@@ -1340,15 +2003,21 @@
                 "the conic-gradient ring driven by the --vibeui-toast-013-percent variable — the ring's fraction and the center number come from one piece of state",
                 "pausing on hover and focus through a ref, not a re-render on every tick",
                 "the ring turning into a checkmark after “Restore” instead of the card disappearing",
-                "the local --vibeui-toast-013-* palette — do not swap it for your theme tokens"
+                "the local --vibeui-toast-013-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the {seconds} placeholder in countdownText — the component substitutes the number itself, there is no need to split the string"
               ],
               "adapt": [
-                "the action text through message",
+                "the action text through message and the after-undo text through returnedMessage",
                 "the button caption through returnLabel",
+                "the countdown copy through countdownText with its {seconds} placeholder and expiredText",
                 "the time to undo through seconds",
+                "tone — the colour of the ring and the button",
+                "background — the component surface; empty means no surface of its own, taking the page colour",
                 "the handlers through onReturn and onExpire"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "onExpire fires once, when time runs out without pressing “Restore”.",
                 "The component doesn't restore the data itself — onReturn only reports the user's decision."
               ],
@@ -1358,14 +2027,46 @@
               "seconds": {
                 "label": "Seconds to undo"
               },
+              "tone": {
+                "label": "Ring colour"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "message": {
+                "label": "Message",
+                "default": "5 emails moved to archive"
+              },
+              "returnedMessage": {
+                "label": "After undo",
+                "default": "Emails restored from the archive"
+              },
               "returnLabel": {
                 "label": "Button label",
                 "default": "Restore"
+              },
+              "countdownText": {
+                "label": "Countdown",
+                "default": "You can still undo for {seconds}s"
+              },
+              "expiredText": {
+                "label": "Time is up",
+                "default": "Time is up"
               }
             },
-            "title": "Return Toast"
+            "title": "Return Toast",
+            "preview": {
+              "props": {
+                "message": "5 emails moved to archive",
+                "returnedMessage": "Emails restored from the archive",
+                "returnLabel": "Restore",
+                "countdownText": "You can still undo for {seconds}s",
+                "expiredText": "Time is up"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["seconds", "tone", "background"]
       }
     },
     {
@@ -1383,7 +2084,7 @@
           "target": "@components/vibeui/toast-014.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-014-*. Угол задаёт две пары CSS-переключателей (top/bottom и left/right), но здесь угол меняет ещё и направление входа: карточка перемонтируется по key={corner}, поэтому анимация въезда переигрывается заново и всегда идёт с той стороны, где стоит карточка. Кнопки-переключатели отмечены aria-pressed, сцена — демонстрационная область с position: relative, а не position: fixed по окну.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-014-*. Тема берётся из color-scheme окружения через light-dark(), а проп background подменяет только подложку сцены. Угол задаёт две пары CSS-переключателей (top/bottom и left/right), но здесь угол меняет ещё и направление входа: карточка перемонтируется по key={corner}, поэтому анимация въезда переигрывается заново и всегда идёт с той стороны, где стоит карточка. Кнопки-переключатели отмечены aria-pressed, сцена — демонстрационная область с position: relative, а не position: fixed по окну. Подписи углов лежат в пропе cornerLabels, остальные строки — в pickerLabel, stageHint и legendLabel.",
       "meta": {
         "tags": ["toast", "position", "corner", "animation"],
         "preview": {
@@ -1397,14 +2098,20 @@
             "key={corner} на карточке — без перемонтирования анимация въезда не переиграется при смене угла",
             "направленные keyframes: from-left для левых углов, from-right для правых, а не одна общая анимация",
             "aria-pressed на кнопках переключателя угла",
-            "локальную палитру --vibeui-toast-014-* и не подменять её токенами вашей темы"
+            "локальную палитру --vibeui-toast-014-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "сцену и карточку как две разные светлоты: карточка обязана быть светлее сцены в обеих ветках, иначе угол показа перестаёт читаться"
           ],
           "adapt": [
             "начальный угол через defaultCorner",
             "текст карточки через message",
-            "подпись закрытия через closeLabel"
+            "подпись закрытия через closeLabel",
+            "подписи углов через cornerLabels, подписи сцены через pickerLabel, stageHint и legendLabel",
+            "tone — цвет точки и активной кнопки переключателя",
+            "background — подложка сцены; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Угол меняется через переключатель в демо-области; для управления углом снаружи добавьте проп corner и синхронизируйте его с useState.",
             "Сцена — демонстрационная область с position: relative, а не окно целиком: раскладка не завязана на viewport."
           ]
@@ -1418,11 +2125,51 @@
             "options": ["top-left", "top-right", "bottom-left", "bottom-right"]
           },
           {
+            "prop": "tone",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон сцены",
+            "type": "color",
+            "default": ""
+          },
+          {
             "prop": "message",
             "label": "Текст уведомления",
             "type": "text",
             "default": "Файл выгружен в облако",
             "maxLength": 40
+          },
+          {
+            "prop": "closeLabel",
+            "label": "Подпись крестика",
+            "type": "text",
+            "default": "Закрыть",
+            "maxLength": 30
+          },
+          {
+            "prop": "pickerLabel",
+            "label": "Подпись переключателя",
+            "type": "text",
+            "default": "Угол появления",
+            "maxLength": 30
+          },
+          {
+            "prop": "stageHint",
+            "label": "Подпись сцены",
+            "type": "text",
+            "default": "область приложения",
+            "maxLength": 30
+          },
+          {
+            "prop": "legendLabel",
+            "label": "Подпись снизу",
+            "type": "text",
+            "default": "угол появления",
+            "maxLength": 30
           }
         ],
         "i18n": {
@@ -1434,14 +2181,20 @@
                 "key={corner} on the card — without remounting, the entrance animation won't replay when the corner changes",
                 "directional keyframes: from-left for the left corners, from-right for the right ones, not one shared animation",
                 "aria-pressed on the corner switch buttons",
-                "the local --vibeui-toast-014-* palette — do not swap it for your theme tokens"
+                "the local --vibeui-toast-014-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the stage and the card as two different lightnesses: the card must stay lighter than the stage in both branches, otherwise the corner stops reading"
               ],
               "adapt": [
                 "the initial corner through defaultCorner",
                 "the card text through message",
-                "the close label through closeLabel"
+                "the close label through closeLabel",
+                "the corner captions through cornerLabels, and the stage copy through pickerLabel, stageHint and legendLabel",
+                "tone — the colour of the dot and of the pressed switch button",
+                "background — the stage surface; empty means no surface of its own, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The corner changes through the switcher inside the demo area; for an externally controlled corner, add a corner prop and sync it with useState.",
                 "The stage is a demo area with position: relative, not the whole window — the layout isn't tied to the viewport."
               ],
@@ -1451,14 +2204,52 @@
               "defaultCorner": {
                 "label": "Default corner"
               },
+              "tone": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Stage background"
+              },
               "message": {
                 "label": "Notification text",
                 "default": "File uploaded to the cloud"
+              },
+              "closeLabel": {
+                "label": "Close label",
+                "default": "Dismiss"
+              },
+              "pickerLabel": {
+                "label": "Switcher label",
+                "default": "Entry corner"
+              },
+              "stageHint": {
+                "label": "Stage caption",
+                "default": "app area"
+              },
+              "legendLabel": {
+                "label": "Bottom caption",
+                "default": "entry corner"
               }
             },
-            "title": "Corner Picker Toast"
+            "title": "Corner Picker Toast",
+            "preview": {
+              "props": {
+                "message": "File uploaded to the cloud",
+                "closeLabel": "Dismiss",
+                "pickerLabel": "Entry corner",
+                "stageHint": "app area",
+                "legendLabel": "entry corner",
+                "cornerLabels": {
+                  "top-left": "Top left",
+                  "top-right": "Top right",
+                  "bottom-left": "Bottom left",
+                  "bottom-right": "Bottom right"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultCorner", "tone", "background"]
       }
     },
     {
@@ -1476,7 +2267,7 @@
           "target": "@components/vibeui/toast-015.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-015-*. Клиентский: \"use client\". Аватар — картинка из avatarSrc; если проп пуст или <img> кинул onError, кружок молча переключается на инициалы из первых двух слов name, поэтому вести отдельный словарь заглушек не нужно. Текст сообщения обрезан в одну строку через text-overflow: ellipsis — длинное письмо читают в переписке, а не в уведомлении. Кнопка «Ответить» — обычная кнопка со своим обработчиком, а не поле, стилизованное под ввод.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-015-*. Клиентский: \"use client\". Аватар — картинка из avatarSrc; если проп пуст или <img> кинул onError, кружок молча переключается на инициалы из первых двух слов name, поэтому вести отдельный словарь заглушек не нужно. Текст сообщения обрезан в одну строку через text-overflow: ellipsis — длинное письмо читают в переписке, а не в уведомлении. Кнопка «Ответить» — обычная кнопка со своим обработчиком, а не поле, стилизованное под ввод. Тема берётся из color-scheme окружения через light-dark(), а проп background подменяет только подложку карточки. Уточнение для крестика вынесено в проп closeContext с плейсхолдером {name}.",
       "meta": {
         "tags": ["toast", "message", "avatar", "reply"],
         "preview": {
@@ -1491,20 +2282,38 @@
             "провал аватара на инициалы через onError у <img>, а не проверку URL заранее",
             "обрезку текста сообщения в одну строку через text-overflow: ellipsis",
             "aria-label крестика с именем собеседника — «Закрыть» без контекста бесполезно в потоке уведомлений",
-            "локальную палитру --vibeui-toast-015-* и не подменять её токенами вашей темы"
+            "локальную палитру --vibeui-toast-015-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "контрастную пару accent и accent-fg: у кнопки «Ответить» подпись считается от акцента, а не берётся белой на все случаи"
           ],
           "adapt": [
             "имя собеседника через name и текст через message",
             "аватар через avatarSrc — при пустом или неудачном URL показываются инициалы",
             "подпись кнопки ответа через replyLabel",
+            "подписи крестика через closeLabel и closeContext с плейсхолдером {name}",
+            "accent — цвет аватара и кнопки «Ответить»",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "обработчики через onReply и onClose"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не открывает переписку сам — onReply лишь сообщает о намерении, экран чата открывает вызывающий код.",
             "Инициалы берутся из первых двух слов name: односложный ник даст одну букву."
           ]
         },
         "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "name",
             "label": "Имя",
@@ -1525,6 +2334,20 @@
             "type": "text",
             "default": "Ответить",
             "maxLength": 20
+          },
+          {
+            "prop": "closeLabel",
+            "label": "Подпись крестика",
+            "type": "text",
+            "default": "Закрыть",
+            "maxLength": 20
+          },
+          {
+            "prop": "closeContext",
+            "label": "Уточнение крестика",
+            "type": "text",
+            "default": "сообщение от {name}",
+            "maxLength": 40
           }
         ],
         "i18n": {
@@ -1537,21 +2360,33 @@
                 "the avatar falling back to initials through the <img> onError handler, not a URL check ahead of time",
                 "the single-line message clamp through text-overflow: ellipsis",
                 "the aria-label on the close button carrying the sender's name — a bare \"Close\" is useless in a stream of toasts",
-                "the local --vibeui-toast-015-* palette — do not swap it for your theme tokens"
+                "the local --vibeui-toast-015-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the contrasting accent / accent-fg pair: the Reply caption is derived from the accent instead of being white in every case"
               ],
               "adapt": [
                 "the sender through name and the copy through message",
                 "the avatar through avatarSrc — an empty or failing URL falls back to initials",
                 "the reply button caption through replyLabel",
+                "the close-button copy through closeLabel and closeContext with its {name} placeholder",
+                "accent — the colour of the avatar and the Reply button",
+                "background — the component surface; empty means no surface of its own, taking the page colour",
                 "the handlers through onReply and onClose"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component doesn't open the thread itself — onReply only reports intent, the caller opens the chat screen.",
                 "Initials come from the first two words of name: a single-word handle gives one letter."
               ],
               "usage": "<Toast015\n  name=\"Marina Kovaleva\"\n  message=\"Sent the updated catalog mockup\"\n  avatarSrc=\"/avatars/marina.jpg\"\n  onReply={openThread}\n  onClose={dismiss}\n/>"
             },
             "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "name": {
                 "label": "Name",
                 "default": "Marina Kovaleva"
@@ -1563,11 +2398,29 @@
               "replyLabel": {
                 "label": "Reply caption",
                 "default": "Reply"
+              },
+              "closeLabel": {
+                "label": "Close label",
+                "default": "Dismiss"
+              },
+              "closeContext": {
+                "label": "Close hint",
+                "default": "message from {name}"
               }
             },
-            "title": "Reply Toast"
+            "title": "Reply Toast",
+            "preview": {
+              "props": {
+                "name": "Marina Kovaleva",
+                "message": "Sent the updated catalog mockup, take a look",
+                "replyLabel": "Reply",
+                "closeLabel": "Dismiss",
+                "closeContext": "message from {name}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1585,7 +2438,7 @@
           "target": "@components/vibeui/toast-016.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-016-*. Клиентский: \"use client\". Три стадии — offline, reconnecting, online — держатся в useState и переключаются таймерами в useEffect (в реальном проекте их заменяют слушатели online/offline или статус сокета через onStatusChange). Индикатор — три столбика, окрашенные по data-status и мигающие в reconnecting; роль и aria-live тоже переключаются по стадии: offline — role=\"alert\" с aria-live=\"assertive\", остальное — role=\"status\" с aria-live=\"polite\".",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-016-*. Клиентский: \"use client\". Три стадии — offline, reconnecting, online — держатся в useState и переключаются таймерами в useEffect (в реальном проекте их заменяют слушатели online/offline или статус сокета через onStatusChange). Индикатор — три столбика, окрашенные по data-status и мигающие в reconnecting; роль и aria-live тоже переключаются по стадии: offline — role=\"alert\" с aria-live=\"assertive\", остальное — role=\"status\" с aria-live=\"polite\". Тема берётся из color-scheme окружения через light-dark(), а проп background подменяет только подложку карточки. Вторые строки стадий вынесены в пропсы offlineHint, reconnectingHint и onlineHint.",
       "meta": {
         "tags": ["toast", "network", "offline", "status"],
         "preview": {
@@ -1600,19 +2453,46 @@
             "смену role и aria-live по статусу: offline — role=\"alert\" со срочным aria-live=\"assertive\", остальное — role=\"status\"",
             "индикатор из трёх столбиков вместо иконки wifi: на маленьком размере столбики читаются увереннее значка",
             "правило prefers-reduced-motion, отключающее мигание столбиков в reconnecting",
-            "локальную палитру --vibeui-toast-016-* и не подменять её токенами вашей темы"
+            "локальную палитру --vibeui-toast-016-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "разную светлоту сигнальных цветов в двух ветках: в тёмной danger, warning и success подняты, иначе столбики тонут в подложке"
           ],
           "adapt": [
             "тексты через offlineText, reconnectingText и onlineText",
+            "вторые строки через offlineHint, reconnectingHint и onlineHint",
             "тайминги через reconnectAfter и hideAfter",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "обработчик onStatusChange — им синхронизируют компонент с реальным navigator.onLine или статусом сокета"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Смена стадий в этом файле — демонстрационные таймеры; в проде стадию должен переключать реальный источник сети.",
             "Компонент не переподключается сам — он только показывает стадию, которую ему передают."
           ]
         },
         "controls": [
+          {
+            "prop": "reconnectAfter",
+            "label": "Задержка стадии, мс",
+            "type": "number",
+            "default": 1800,
+            "min": 500,
+            "max": 5000
+          },
+          {
+            "prop": "hideAfter",
+            "label": "Скрыть через, мс",
+            "type": "number",
+            "default": 2600,
+            "min": 1000,
+            "max": 8000
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "offlineText",
             "label": "Текст обрыва",
@@ -1621,12 +2501,39 @@
             "maxLength": 40
           },
           {
-            "prop": "reconnectAfter",
-            "label": "Задержка стадии, мс",
-            "type": "number",
-            "default": 1800,
-            "min": 500,
-            "max": 5000
+            "prop": "reconnectingText",
+            "label": "Текст попытки",
+            "type": "text",
+            "default": "Пробуем восстановить соединение…",
+            "maxLength": 40
+          },
+          {
+            "prop": "onlineText",
+            "label": "Текст возврата",
+            "type": "text",
+            "default": "Соединение восстановлено",
+            "maxLength": 40
+          },
+          {
+            "prop": "offlineHint",
+            "label": "Подсказка обрыва",
+            "type": "text",
+            "default": "Проверьте кабель или Wi-Fi",
+            "maxLength": 40
+          },
+          {
+            "prop": "reconnectingHint",
+            "label": "Подсказка попытки",
+            "type": "text",
+            "default": "Это займёт несколько секунд",
+            "maxLength": 40
+          },
+          {
+            "prop": "onlineHint",
+            "label": "Подсказка возврата",
+            "type": "text",
+            "default": "Можно продолжать работу",
+            "maxLength": 40
           }
         ],
         "i18n": {
@@ -1639,31 +2546,73 @@
                 "the role and aria-live switching with the status: offline is role=\"alert\" with urgent aria-live=\"assertive\", the rest is role=\"status\"",
                 "the three-bar indicator instead of a wifi icon: bars read more reliably than a glyph at small sizes",
                 "the prefers-reduced-motion rule that stops the bars pulsing while reconnecting",
-                "the local --vibeui-toast-016-* palette — do not swap it for your theme tokens"
+                "the local --vibeui-toast-016-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the different lightness of the signal colours in the two branches: in the dark one danger, warning and success are lifted, otherwise the bars sink into the surface"
               ],
               "adapt": [
                 "the copy through offlineText, reconnectingText and onlineText",
+                "the second lines through offlineHint, reconnectingHint and onlineHint",
                 "the timings through reconnectAfter and hideAfter",
+                "background — the component surface; empty means no surface of its own, taking the page colour",
                 "the onStatusChange handler — use it to sync the component with real navigator.onLine or a socket status"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The stage changes in this file are demo timers; in production a real network source should drive the stage.",
                 "The component never reconnects on its own — it only displays the stage it's given."
               ],
               "usage": "<Toast016\n  offlineText=\"Connection lost\"\n  reconnectAfter={1800}\n  onStatusChange={syncBanner}\n/>"
             },
             "controls": {
+              "reconnectAfter": {
+                "label": "Stage delay, ms"
+              },
+              "hideAfter": {
+                "label": "Hide after, ms"
+              },
+              "background": {
+                "label": "Background"
+              },
               "offlineText": {
                 "label": "Offline text",
                 "default": "Connection lost"
               },
-              "reconnectAfter": {
-                "label": "Stage delay, ms"
+              "reconnectingText": {
+                "label": "Reconnecting text",
+                "default": "Trying to reconnect…"
+              },
+              "onlineText": {
+                "label": "Restored text",
+                "default": "Connection restored"
+              },
+              "offlineHint": {
+                "label": "Offline hint",
+                "default": "Check the cable or Wi-Fi"
+              },
+              "reconnectingHint": {
+                "label": "Reconnecting hint",
+                "default": "This takes a few seconds"
+              },
+              "onlineHint": {
+                "label": "Restored hint",
+                "default": "You can carry on working"
               }
             },
-            "title": "Connection Status Toast"
+            "title": "Connection Status Toast",
+            "preview": {
+              "props": {
+                "offlineText": "Connection lost",
+                "reconnectingText": "Trying to reconnect…",
+                "onlineText": "Connection restored",
+                "offlineHint": "Check the cable or Wi-Fi",
+                "reconnectingHint": "This takes a few seconds",
+                "onlineHint": "You can carry on working"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["reconnectAfter", "hideAfter", "background"]
       }
     },
     {
@@ -1681,7 +2630,7 @@
           "target": "@components/vibeui/toast-017.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-017-*. Клиентский: \"use client\". Решение хранится в useState с тремя значениями — pending, kept, deleted — и при выборе карточка не закрывается сама, а переключает содержимое на строку итога: кнопки заменяются текстом решения. Карточка объявлена role=\"alert\" с aria-live=\"assertive\" на всём протяжении, потому что вопрос об удалении обязан быть услышан сразу.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-017-*. Клиентский: \"use client\". Решение хранится в useState с тремя значениями — pending, kept, deleted — и при выборе карточка не закрывается сама, а переключает содержимое на строку итога: кнопки заменяются текстом решения. Карточка объявлена role=\"alert\" с aria-live=\"assertive\" на всём протяжении, потому что вопрос об удалении обязан быть услышан сразу. Тема берётся из color-scheme окружения через light-dark(), а проп background подменяет только подложку карточки; заливка опасной кнопки считается из тона через color-mix, поэтому проп danger перекрашивает и текст, и подложку кнопки одной строкой.",
       "meta": {
         "tags": ["toast", "confirmation", "destructive", "actions"],
         "preview": {
@@ -1696,20 +2645,37 @@
             "role=\"alert\" с aria-live=\"assertive\": разрушительный вопрос обязан дойти до скринридера без действий пользователя",
             "показ итога решения после выбора вместо мгновенного исчезновения карточки",
             "равную ширину обеих кнопок — разный вес даёт цвет, а не размер, иначе кнопки давят на решение геометрией",
-            "локальную палитру --vibeui-toast-017-* и не подменять её токенами вашей темы"
+            "локальную палитру --vibeui-toast-017-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "заливку опасной кнопки через color-mix от тона danger — отдельная переменная под фон разошлась бы с цветом текста при смене тона"
           ],
           "adapt": [
             "заголовок через title и объяснение через message",
             "подписи кнопок через keepLabel и deleteLabel",
             "текст итога через keptResult и deletedResult",
+            "danger — тон опасного действия: цвет подписи и заливки кнопки «Удалить»",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "обработчики через onKeep и onDelete"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не удаляет данные сам — onDelete лишь сообщает о решении, запрос отправляет вызывающий код.",
             "Для действий, которые можно отменить, больше подходит уведомление с таймером и «Отменить» (toast-002), а не этот выбор."
           ]
         },
         "controls": [
+          {
+            "prop": "danger",
+            "label": "Тон опасности",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "title",
             "label": "Заголовок",
@@ -1718,11 +2684,39 @@
             "maxLength": 50
           },
           {
+            "prop": "message",
+            "label": "Объяснение",
+            "type": "text",
+            "default": "Черновик «Осенняя коллекция» будет удалён без возможности восстановления.",
+            "maxLength": 100
+          },
+          {
+            "prop": "keepLabel",
+            "label": "Подпись отказа",
+            "type": "text",
+            "default": "Оставить",
+            "maxLength": 20
+          },
+          {
             "prop": "deleteLabel",
             "label": "Подпись удаления",
             "type": "text",
             "default": "Удалить",
             "maxLength": 20
+          },
+          {
+            "prop": "keptResult",
+            "label": "Итог: оставлено",
+            "type": "text",
+            "default": "Черновик оставлен",
+            "maxLength": 40
+          },
+          {
+            "prop": "deletedResult",
+            "label": "Итог: удалено",
+            "type": "text",
+            "default": "Черновик удалён",
+            "maxLength": 40
           }
         ],
         "i18n": {
@@ -1735,33 +2729,71 @@
                 "role=\"alert\" with aria-live=\"assertive\": a destructive question must reach a screen reader without any action",
                 "showing the outcome after the choice instead of the card vanishing instantly",
                 "the equal width of both buttons — the weight comes from colour, not size, otherwise geometry pressures the decision",
-                "the local --vibeui-toast-017-* palette — do not swap it for your theme tokens"
+                "the local --vibeui-toast-017-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the danger button fill derived from the danger tone through color-mix — a separate background variable would drift away from the label colour when the tone changes"
               ],
               "adapt": [
                 "the heading through title and the explanation through message",
                 "the button captions through keepLabel and deleteLabel",
                 "the outcome text through keptResult and deletedResult",
+                "danger — the destructive tone: the colour of the Delete label and of its fill",
+                "background — the component surface; empty means no surface of its own, taking the page colour",
                 "the handlers through onKeep and onDelete"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component never deletes data itself — onDelete only reports the decision, the caller sends the request.",
                 "For a reversible action, a timed toast with Undo (toast-002) fits better than this choice."
               ],
               "usage": "<Toast017\n  title=\"Delete the article draft?\"\n  message=\"The «Autumn collection» draft will be deleted without recovery.\"\n  onKeep={handleKeep}\n  onDelete={handleDelete}\n/>"
             },
             "controls": {
+              "danger": {
+                "label": "Danger tone"
+              },
+              "background": {
+                "label": "Background"
+              },
               "title": {
                 "label": "Heading",
                 "default": "Delete the article draft?"
               },
+              "message": {
+                "label": "Explanation",
+                "default": "The “Autumn collection” draft will be deleted with no way to recover it."
+              },
+              "keepLabel": {
+                "label": "Keep caption",
+                "default": "Keep"
+              },
               "deleteLabel": {
                 "label": "Delete caption",
                 "default": "Delete"
+              },
+              "keptResult": {
+                "label": "Outcome: kept",
+                "default": "Draft kept"
+              },
+              "deletedResult": {
+                "label": "Outcome: deleted",
+                "default": "Draft deleted"
               }
             },
-            "title": "Destructive Choice Toast"
+            "title": "Destructive Choice Toast",
+            "preview": {
+              "props": {
+                "title": "Delete the article draft?",
+                "message": "The “Autumn collection” draft will be deleted with no way to recover it.",
+                "keepLabel": "Keep",
+                "deleteLabel": "Delete",
+                "keptResult": "Draft kept",
+                "deletedResult": "Draft deleted"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["danger", "background"]
       }
     },
     {
@@ -1779,7 +2811,7 @@
           "target": "@components/vibeui/toast-018.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-018-*. Клиентский: \"use client\". Список ограничен visibleCount, остаток считается вычитанием и выводится строкой «Показать все · ещё N»; клик переключает useState и атрибут data-expanded, который переключает max-height у <ul> — раскрытие анимируется чистым CSS без измерения высоты в JS. Кнопка раскрытия несёт aria-expanded, каждый пункт закрывается своей кнопкой с именем события в aria-label.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-018-*. Клиентский: \"use client\". Список ограничен visibleCount, остаток считается вычитанием и выводится строкой «Показать все · ещё N»; клик переключает useState и атрибут data-expanded, который переключает max-height у <ul> — раскрытие анимируется чистым CSS без измерения высоты в JS. Кнопка раскрытия несёт aria-expanded, каждый пункт закрывается своей кнопкой с именем события в aria-label. Тема берётся из color-scheme окружения через light-dark(), а проп background подменяет только подложку карточки. Подпись раскрытия — шаблон expandLabel с плейсхолдером {count}, строка пустого списка вынесена в emptyText.",
       "meta": {
         "tags": ["toast", "group", "counter", "expand"],
         "preview": {
@@ -1794,20 +2826,45 @@
             "max-height вместо измерения высоты в JS: раскрытие анимируется чистым CSS",
             "aria-expanded на кнопке раскрытия и отдельную кнопку закрытия с именем события в aria-label у каждого пункта",
             "счётчик в заголовке, а не в тексте — badge меняется вместе со списком при закрытии пунктов",
-            "локальную палитру --vibeui-toast-018-* и не подменять её токенами вашей темы"
+            "локальную палитру --vibeui-toast-018-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "плейсхолдер {count} в expandLabel — остаток подставляет сам компонент, склеивать подпись из кусков не нужно"
           ],
           "adapt": [
             "заголовок группы через groupTitle и список через items",
             "число видимых пунктов до сворачивания через visibleCount",
-            "подписи через expandLabel, collapseLabel и closeLabel",
+            "подписи через expandLabel с плейсхолдером {count}, collapseLabel, closeLabel и emptyText",
+            "accent — цвет счётчика, точек и ссылки раскрытия",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "обработчик через onDismiss"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не запрашивает события сам — items и их обновление держит вызывающий код.",
             "max-height раскрытого списка — 24rem с запасом; для очень длинных списков добавьте собственную прокрутку."
           ]
         },
         "controls": [
+          {
+            "prop": "visibleCount",
+            "label": "Видимых пунктов",
+            "type": "number",
+            "default": 2,
+            "min": 1,
+            "max": 5
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "groupTitle",
             "label": "Заголовок группы",
@@ -1816,12 +2873,32 @@
             "maxLength": 40
           },
           {
-            "prop": "visibleCount",
-            "label": "Видимых пунктов",
-            "type": "number",
-            "default": 2,
-            "min": 1,
-            "max": 5
+            "prop": "expandLabel",
+            "label": "Подпись раскрытия",
+            "type": "text",
+            "default": "Показать все · ещё {count}",
+            "maxLength": 40
+          },
+          {
+            "prop": "collapseLabel",
+            "label": "Подпись сворачивания",
+            "type": "text",
+            "default": "Свернуть",
+            "maxLength": 20
+          },
+          {
+            "prop": "closeLabel",
+            "label": "Подпись крестика",
+            "type": "text",
+            "default": "Скрыть",
+            "maxLength": 20
+          },
+          {
+            "prop": "emptyText",
+            "label": "Пустой список",
+            "type": "text",
+            "default": "Событий больше нет",
+            "maxLength": 40
           }
         ],
         "i18n": {
@@ -1834,32 +2911,91 @@
                 "max-height instead of measuring height in JS: the expand animates with plain CSS",
                 "aria-expanded on the toggle button and a separate dismiss button per item with the event name in its aria-label",
                 "the counter in the heading, not in the copy — the badge updates with the list as items are dismissed",
-                "the local --vibeui-toast-018-* palette — do not swap it for your theme tokens"
+                "the local --vibeui-toast-018-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the {count} placeholder in expandLabel — the component substitutes the remainder itself, there is no need to glue the caption from pieces"
               ],
               "adapt": [
                 "the group heading through groupTitle and the list through items",
                 "the number of items shown before folding through visibleCount",
-                "the captions through expandLabel, collapseLabel and closeLabel",
+                "the captions through expandLabel with its {count} placeholder, collapseLabel, closeLabel and emptyText",
+                "accent — the colour of the counter, the dots and the expand link",
+                "background — the component surface; empty means no surface of its own, taking the page colour",
                 "the handler through onDismiss"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component never fetches events itself — items and its updates are the caller's job.",
                 "The expanded list's max-height is 24rem with headroom; for very long lists add your own scroll."
               ],
               "usage": "<Toast018\n  groupTitle=\"New shop events\"\n  items={[\n    { id: \"1\", title: \"New order #4821 with 3 items\" },\n    { id: \"2\", title: \"5★ review on «Ceramic vase»\" },\n  ]}\n  visibleCount={2}\n  onDismiss={handleDismiss}\n/>"
             },
             "controls": {
+              "visibleCount": {
+                "label": "Visible items"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "groupTitle": {
                 "label": "Group heading",
                 "default": "New shop events"
               },
-              "visibleCount": {
-                "label": "Visible items"
+              "expandLabel": {
+                "label": "Expand caption",
+                "default": "Show all · {count} more"
+              },
+              "collapseLabel": {
+                "label": "Collapse caption",
+                "default": "Collapse"
+              },
+              "closeLabel": {
+                "label": "Dismiss label",
+                "default": "Hide"
+              },
+              "emptyText": {
+                "label": "Empty list",
+                "default": "No events left"
               }
             },
-            "title": "Grouped Toast"
+            "title": "Grouped Toast",
+            "preview": {
+              "props": {
+                "groupTitle": "New shop events",
+                "expandLabel": "Show all · {count} more",
+                "collapseLabel": "Collapse",
+                "closeLabel": "Hide",
+                "emptyText": "No events left",
+                "items": [
+                  {
+                    "id": "1",
+                    "title": "New order #4821 with 3 items"
+                  },
+                  {
+                    "id": "2",
+                    "title": "5★ review on the “Ceramic vase”"
+                  },
+                  {
+                    "id": "3",
+                    "title": "A customer question about delivery"
+                  },
+                  {
+                    "id": "4",
+                    "title": "Stock of “Wool blanket” is below five"
+                  },
+                  {
+                    "id": "5",
+                    "title": "Refund for order #4790 approved"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["visibleCount", "accent", "background"]
       }
     },
     {
@@ -1877,7 +3013,7 @@
           "target": "@components/vibeui/toast-019.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-019-*. Клиентский: \"use client\". Статус держится в useState: exporting считает процент самодостаточным таймером в useEffect (в реальном проекте его заменяет прогресс реального fetch/XHR или сокета), при достижении 100% переключается на ready и вызывает onReady. Кнопка «Отмена» видна только во время подготовки, ссылка «Скачать» — обычный <a href download>, который появляется только в состоянии ready. Крестик закрытия работает в любом статусе.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-019-*. Клиентский: \"use client\". Статус держится в useState: exporting считает процент самодостаточным таймером в useEffect (в реальном проекте его заменяет прогресс реального fetch/XHR или сокета), при достижении 100% переключается на ready и вызывает onReady. Кнопка «Отмена» видна только во время подготовки, ссылка «Скачать» — обычный <a href download>, который появляется только в состоянии ready. Крестик закрытия работает в любом статусе. Тема берётся из color-scheme окружения через light-dark(), а проп background подменяет только подложку карточки. Все подписи вынесены в пропсы: exportingLabel, readyLabel, cancelLabel, cancelledLabel, progressLabel, downloadLabel и closeLabel.",
       "meta": {
         "tags": ["toast", "download", "export", "progress"],
         "preview": {
@@ -1891,20 +3027,46 @@
             "полосу прогресса, которая сама доходит до 100% и переключает статус на «готово» — процент не пробрасывается пропом снаружи",
             "ссылку «Скачать» как <a href download>, а не кнопку — это обещание реального файла, а не действие интерфейса",
             "кнопку «Отмена» только на время подготовки — после готовности отменять уже нечего",
-            "локальную палитру --vibeui-toast-019-* и не подменять её токенами вашей темы"
+            "локальную палитру --vibeui-toast-019-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "дорожку полосы темнее подложки в тёмной ветке: осветлённая дорожка читалась бы как заполненная часть"
           ],
           "adapt": [
             "имя и размер файла через fileName и fileSize",
             "ссылку скачивания через downloadHref — по умолчанию это пустая заглушка",
+            "подписи через exportingLabel, readyLabel, cancelLabel, cancelledLabel, progressLabel, downloadLabel и closeLabel",
             "длительность демонстрационной подготовки через durationMs",
+            "tone — цвет полосы прогресса и значка подготовки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "обработчики onReady и onCancel"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Прогресс в этом файле — демонстрационный таймер; в проде процент должен приходить от реальной выгрузки (progress-событие fetch/XHR или сокета).",
             "Компонент не отменяет операцию сам — onCancel только сообщает о намерении, саму отмену выполняет вызывающий код."
           ]
         },
         "controls": [
+          {
+            "prop": "durationMs",
+            "label": "Длительность подготовки, мс",
+            "type": "number",
+            "default": 2400,
+            "min": 800,
+            "max": 6000
+          },
+          {
+            "prop": "tone",
+            "label": "Цвет полосы",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "fileName",
             "label": "Имя файла",
@@ -1913,12 +3075,39 @@
             "maxLength": 40
           },
           {
-            "prop": "durationMs",
-            "label": "Длительность подготовки, мс",
-            "type": "number",
-            "default": 2400,
-            "min": 800,
-            "max": 6000
+            "prop": "fileSize",
+            "label": "Размер файла",
+            "type": "text",
+            "default": "2,4 МБ",
+            "maxLength": 20
+          },
+          {
+            "prop": "exportingLabel",
+            "label": "Подпись подготовки",
+            "type": "text",
+            "default": "Готовим файл к скачиванию…",
+            "maxLength": 40
+          },
+          {
+            "prop": "readyLabel",
+            "label": "Подпись готовности",
+            "type": "text",
+            "default": "Файл готов",
+            "maxLength": 30
+          },
+          {
+            "prop": "downloadLabel",
+            "label": "Подпись ссылки",
+            "type": "text",
+            "default": "Скачать",
+            "maxLength": 20
+          },
+          {
+            "prop": "cancelledLabel",
+            "label": "Подпись отмены",
+            "type": "text",
+            "default": "Выгрузка отменена",
+            "maxLength": 30
           }
         ],
         "i18n": {
@@ -1930,32 +3119,78 @@
                 "the progress bar reaching 100% on its own and switching the status to ready — the percent is not passed in as a prop from outside",
                 "the “Download” link as an <a href download>, not a button — it's a promise of a real file, not an interface action",
                 "the “Cancel” button shown only while preparing — there is nothing left to cancel once it's ready",
-                "the local --vibeui-toast-019-* palette — do not swap it for your theme tokens"
+                "the local --vibeui-toast-019-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the track staying darker than the surface in the dark branch: a lighter track would read as the filled part"
               ],
               "adapt": [
                 "the file name and size through fileName and fileSize",
                 "the download link through downloadHref — it defaults to an empty placeholder",
+                "the copy through exportingLabel, readyLabel, cancelLabel, cancelledLabel, progressLabel, downloadLabel and closeLabel",
                 "the demo preparation length through durationMs",
+                "tone — the colour of the progress bar and of the preparing glyph",
+                "background — the component surface; empty means no surface of its own, taking the page colour",
                 "the onReady and onCancel handlers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The progress in this file is a demo timer; in production the percent should come from a real upload's progress event (fetch/XHR or a socket).",
                 "The component never cancels the operation itself — onCancel only reports intent, the caller performs the actual cancellation."
               ],
               "usage": "<Toast019\n  fileName=\"sales-report.xlsx\"\n  downloadHref=\"/exports/report.xlsx\"\n  durationMs={2400}\n  onReady={handleReady}\n/>"
             },
             "controls": {
+              "durationMs": {
+                "label": "Preparation length, ms"
+              },
+              "tone": {
+                "label": "Bar colour"
+              },
+              "background": {
+                "label": "Background"
+              },
               "fileName": {
                 "label": "File name",
                 "default": "sales-report.xlsx"
               },
-              "durationMs": {
-                "label": "Preparation length, ms"
+              "fileSize": {
+                "label": "File size",
+                "default": "2.4 MB"
+              },
+              "exportingLabel": {
+                "label": "Preparing caption",
+                "default": "Preparing your file…"
+              },
+              "readyLabel": {
+                "label": "Ready caption",
+                "default": "File is ready"
+              },
+              "downloadLabel": {
+                "label": "Link caption",
+                "default": "Download"
+              },
+              "cancelledLabel": {
+                "label": "Cancelled caption",
+                "default": "Export cancelled"
               }
             },
-            "title": "Download Ready Toast"
+            "title": "Download Ready Toast",
+            "preview": {
+              "props": {
+                "fileName": "sales-report.xlsx",
+                "fileSize": "2.4 MB",
+                "exportingLabel": "Preparing your file…",
+                "readyLabel": "File is ready",
+                "cancelLabel": "Cancel",
+                "cancelledLabel": "Export cancelled",
+                "progressLabel": "Preparing",
+                "downloadLabel": "Download",
+                "closeLabel": "Dismiss"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["durationMs", "tone", "background"]
       }
     },
     {
@@ -1973,7 +3208,7 @@
           "target": "@components/vibeui/toast-020.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-020-*. Клиентский: \"use client\". Остаток мс держится в useState и убывает в useEffect через setInterval, флаг паузы лежит в useRef и синхронизируется с состоянием, чтобы не пересоздавать интервал на каждый ререндер; наведение и фокус клавиатурой (onMouseEnter/Leave, onFocus/onBlur) ставят паузу одинаково. При достижении нуля вызывается onExpire один раз (флаг в useRef защищает от повтора), кнопка «Остаться в системе» возвращает left к исходному total и вызывает onExtend.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-020-*. Клиентский: \"use client\". Остаток мс держится в useState и убывает в useEffect через setInterval, флаг паузы лежит в useRef и синхронизируется с состоянием, чтобы не пересоздавать интервал на каждый ререндер; наведение и фокус клавиатурой (onMouseEnter/Leave, onFocus/onBlur) ставят паузу одинаково. При достижении нуля вызывается onExpire один раз (флаг в useRef защищает от повтора), кнопка «Остаться в системе» возвращает left к исходному total и вызывает onExtend. Тема берётся из color-scheme окружения через light-dark(), а проп background подменяет только подложку карточки. Приписка «пауза» рисуется ::after из переменной --vibeui-toast-020-paused-text, поэтому её текст задаётся пропом pausedText, а не зашит в CSS.",
       "meta": {
         "tags": ["toast", "countdown", "session", "timer"],
         "preview": {
@@ -1988,20 +3223,45 @@
             "полосу и цифровой таймер mm:ss вместе — полоса даёт общее ощущение срока, цифры дают точное значение",
             "разовый вызов onExpire по достижении нуля вместо повторных вызовов на каждый тик",
             "кнопку «Остаться в системе», которая перезапускает полный отсчёт, а не просто закрывает уведомление",
-            "локальную палитру --vibeui-toast-020-* и не подменять её токенами вашей темы"
+            "локальную палитру --vibeui-toast-020-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "приписку паузы как значение переменной в content: строка обязана приезжать пропом, а не оставаться в CSS-правиле"
           ],
           "adapt": [
             "текст предупреждения через message и текст после истечения через expiredMessage",
             "продолжительность отсчёта через seconds",
-            "подписи кнопок через extendLabel и closeLabel",
+            "подписи кнопок через extendLabel и closeLabel, приписку паузы через pausedText",
+            "tone — цвет полосы, таймера и кнопки продления",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "обработчики onExpire и onExtend"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Автодействие в этом файле не выполняется само — onExpire только сообщает о наступлении срока, реальный выход из системы делает вызывающий код.",
             "Пауза сбрасывается при потере наведения и фокуса одновременно — если элемент внутри уведомления удерживает фокус дольше, учитывайте это в интеграции."
           ]
         },
         "controls": [
+          {
+            "prop": "seconds",
+            "label": "Секунд до автодействия",
+            "type": "number",
+            "default": 30,
+            "min": 5,
+            "max": 120
+          },
+          {
+            "prop": "tone",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
           {
             "prop": "message",
             "label": "Текст предупреждения",
@@ -2010,12 +3270,32 @@
             "maxLength": 60
           },
           {
-            "prop": "seconds",
-            "label": "Секунд до автодействия",
-            "type": "number",
-            "default": 30,
-            "min": 5,
-            "max": 120
+            "prop": "expiredMessage",
+            "label": "Текст после истечения",
+            "type": "text",
+            "default": "Сессия завершена",
+            "maxLength": 40
+          },
+          {
+            "prop": "extendLabel",
+            "label": "Подпись продления",
+            "type": "text",
+            "default": "Остаться в системе",
+            "maxLength": 30
+          },
+          {
+            "prop": "closeLabel",
+            "label": "Подпись крестика",
+            "type": "text",
+            "default": "Закрыть",
+            "maxLength": 20
+          },
+          {
+            "prop": "pausedText",
+            "label": "Приписка паузы",
+            "type": "text",
+            "default": " · пауза",
+            "maxLength": 20
           }
         ],
         "i18n": {
@@ -2028,32 +3308,69 @@
                 "the bar and the mm:ss digital timer together — the bar gives an overall sense of time left, the digits give an exact value",
                 "calling onExpire exactly once when it hits zero instead of on every tick",
                 "the “Stay signed in” button, which restarts the full countdown rather than just closing the toast",
-                "the local --vibeui-toast-020-* palette — do not swap it for your theme tokens"
+                "the local --vibeui-toast-020-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the paused suffix as a variable inside content: the string has to arrive as a prop rather than stay in the CSS rule"
               ],
               "adapt": [
                 "the warning text through message and the post-expiry text through expiredMessage",
                 "the countdown length through seconds",
-                "the button captions through extendLabel and closeLabel",
+                "the button captions through extendLabel and closeLabel, and the paused suffix through pausedText",
+                "tone — the colour of the bar, the timer and the extend button",
+                "background — the component surface; empty means no surface of its own, taking the page colour",
                 "the onExpire and onExtend handlers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The automatic action in this file never runs on its own — onExpire only reports that the deadline hit, the caller performs the actual sign-out.",
                 "The pause clears when both hover and focus are gone — if something inside the toast keeps focus longer, account for that in your integration."
               ],
               "usage": "<Toast020\n  message=\"Your session will end due to inactivity\"\n  seconds={30}\n  onExpire={handleExpire}\n  onExtend={handleExtend}\n/>"
             },
             "controls": {
+              "seconds": {
+                "label": "Seconds until action"
+              },
+              "tone": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
               "message": {
                 "label": "Warning text",
                 "default": "Your session will end due to inactivity"
               },
-              "seconds": {
-                "label": "Seconds until action"
+              "expiredMessage": {
+                "label": "Expired text",
+                "default": "Session ended"
+              },
+              "extendLabel": {
+                "label": "Extend caption",
+                "default": "Stay signed in"
+              },
+              "closeLabel": {
+                "label": "Close label",
+                "default": "Dismiss"
+              },
+              "pausedText": {
+                "label": "Paused suffix",
+                "default": " · paused"
               }
             },
-            "title": "Countdown Toast"
+            "title": "Countdown Toast",
+            "preview": {
+              "props": {
+                "message": "Your session will end due to inactivity",
+                "expiredMessage": "Session ended",
+                "extendLabel": "Stay signed in",
+                "closeLabel": "Dismiss",
+                "pausedText": " · paused"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["seconds", "tone", "background"]
       }
     },
     {
@@ -2071,7 +3388,7 @@
           "target": "@components/vibeui/toast-021.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-021-*. Клиентский: \"use client\". Сцена с сеткой в position:relative изображает окно приложения — без неё «сверху по центру» показать нечем; пилюля лежит внутри неё в position:absolute с translateX(-50%) и заезжает сверху через keyframes. Автоскрытие — таймер в useEffect по autoHideMs (0 отключает его), крестик прячет пилюлю вручную в любой момент, кнопка «Показать снова» переключает key, чтобы анимация въезда проигралась заново.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-toast-021-*. Клиентский: \"use client\". Сцена с сеткой в position:relative изображает окно приложения — без неё «сверху по центру» показать нечем; пилюля лежит внутри неё в position:absolute с translateX(-50%) и заезжает сверху через keyframes. Автоскрытие — таймер в useEffect по autoHideMs (0 отключает его), крестик прячет пилюлю вручную в любой момент, кнопка «Показать снова» переключает key, чтобы анимация въезда проигралась заново. Тема берётся из color-scheme окружения через light-dark(): пилюля всегда противоположна сцене по светлоте, поэтому в тёмной ветке она светлая, а подложка крестика на ней темнее. Проп background подменяет только подложку сцены, подпись сцены вынесена в stageHint.",
       "meta": {
         "tags": ["toast", "pill", "compact", "hud"],
         "preview": {
@@ -2086,26 +3403,30 @@
             "положение пилюли через position:absolute с translateX(-50%), а не через margin:auto — так она не зависит от ширины родителя",
             "автоскрытие через таймер по autoHideMs с явным отключением при 0, а не жёстко зашитый интервал",
             "форму пилюли и однострочный текст без переноса — это системное уведомление, а не карточка сообщения",
-            "локальную палитру --vibeui-toast-021-* и не подменять её токенами вашей темы"
+            "локальную палитру --vibeui-toast-021-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "инверсию пилюли относительно сцены: пилюля берёт цвет fg, а текст — цвет bg, поэтому в тёмной теме она светлая, а не просто чуть темнее фона"
           ],
           "adapt": [
             "текст через message, значок через glyph и тон через tone",
             "время автоскрытия через autoHideMs",
-            "подписи через closeLabel и replayLabel",
+            "подписи через closeLabel, replayLabel и stageHint",
+            "background — подложка сцены; пусто означает «без подложки», по цвету страницы",
             "обработчик onDismiss"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "position:absolute в этом файле привязан к сцене-обёртке компонента, а не к окну браузера — в реальном layout эту роль берёт на себя контейнер тостов приложения.",
             "Кнопка «Показать снова» — часть демонстрации; в проде повторный показ определяет источник события, а не сам компонент."
           ]
         },
         "controls": [
           {
-            "prop": "message",
-            "label": "Текст",
-            "type": "text",
-            "default": "Обновление установлено",
-            "maxLength": 40
+            "prop": "tone",
+            "label": "Тон",
+            "type": "select",
+            "default": "success",
+            "options": ["neutral", "success", "warning"]
           },
           {
             "prop": "autoHideMs",
@@ -2114,6 +3435,47 @@
             "default": 3200,
             "min": 0,
             "max": 8000
+          },
+          {
+            "prop": "background",
+            "label": "Фон сцены",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "message",
+            "label": "Текст",
+            "type": "text",
+            "default": "Обновление установлено",
+            "maxLength": 40
+          },
+          {
+            "prop": "glyph",
+            "label": "Значок",
+            "type": "text",
+            "default": "✓",
+            "maxLength": 2
+          },
+          {
+            "prop": "closeLabel",
+            "label": "Подпись крестика",
+            "type": "text",
+            "default": "Закрыть",
+            "maxLength": 20
+          },
+          {
+            "prop": "replayLabel",
+            "label": "Подпись повтора",
+            "type": "text",
+            "default": "Показать снова",
+            "maxLength": 30
+          },
+          {
+            "prop": "stageHint",
+            "label": "Подпись сцены",
+            "type": "text",
+            "default": "область приложения",
+            "maxLength": 30
           }
         ],
         "i18n": {
@@ -2126,32 +3488,67 @@
                 "the pill's placement via position:absolute with translateX(-50%), not margin:auto — so it doesn't depend on the parent's width",
                 "auto-hide through an autoHideMs timer with an explicit off switch at 0, not a hardcoded interval",
                 "the pill shape and single-line, non-wrapping text — this is a system notification, not a message card",
-                "the local --vibeui-toast-021-* palette — do not swap it for your theme tokens"
+                "the local --vibeui-toast-021-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the pill inverted against the stage: it takes the fg colour and its text the bg colour, so in a dark theme it is light rather than merely a shade darker than the page"
               ],
               "adapt": [
                 "the text through message, the icon through glyph and the tone through tone",
                 "the auto-hide length through autoHideMs",
-                "the captions through closeLabel and replayLabel",
+                "the captions through closeLabel, replayLabel and stageHint",
+                "background — the stage surface; empty means no surface of its own, taking the page colour",
                 "the onDismiss handler"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The position:absolute in this file is anchored to the component's own stage wrapper, not the browser window — in a real layout the app's toast container takes on that role.",
                 "The “Show again” button is part of the demo; in production, a real event source decides when to show it again, not the component itself."
               ],
               "usage": "<Toast021\n  message=\"Update installed\"\n  tone=\"success\"\n  autoHideMs={3200}\n/>"
             },
             "controls": {
+              "tone": {
+                "label": "Tone"
+              },
+              "autoHideMs": {
+                "label": "Auto-hide, ms"
+              },
+              "background": {
+                "label": "Stage background"
+              },
               "message": {
                 "label": "Text",
                 "default": "Update installed"
               },
-              "autoHideMs": {
-                "label": "Auto-hide, ms"
+              "glyph": {
+                "label": "Glyph",
+                "default": "✓"
+              },
+              "closeLabel": {
+                "label": "Close label",
+                "default": "Dismiss"
+              },
+              "replayLabel": {
+                "label": "Replay caption",
+                "default": "Show again"
+              },
+              "stageHint": {
+                "label": "Stage caption",
+                "default": "app area"
               }
             },
-            "title": "Center Pill Toast"
+            "title": "Center Pill Toast",
+            "preview": {
+              "props": {
+                "message": "Update installed",
+                "closeLabel": "Dismiss",
+                "replayLabel": "Show again",
+                "stageHint": "app area"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["tone", "autoHideMs", "background"]
       }
     }
   ]

@@ -22,7 +22,18 @@ export type Dashboard017Props = {
   members?: Dashboard017Member[]
   invites?: Dashboard017Invite[]
   inviteLabel?: string
+  /** Заголовок формы приглашения. */
+  inviteTitle?: string
+  emailLabel?: string
+  roleLabel?: string
+  /** Заголовок списка отправленных приглашений. */
+  pendingTitle?: string
+  /** Шаблон подписи селекта роли: {name}. */
+  roleForLabel?: string
+  emailPlaceholder?: string
   accent?: string
+  /** Подложка карточки; пусто — цвет из палитры блока. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -36,13 +47,14 @@ export type Dashboard017Props = {
 // не сказано, что редактор может.
 const STYLES = `
 :where([data-vibeui-block="dashboard-017"]){
---vibeui-dashboard-017-bg:oklch(1 0 0);
---vibeui-dashboard-017-panel:oklch(0.985 0.003 265);
---vibeui-dashboard-017-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-017-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-017-border:oklch(0.91 0.006 265);
---vibeui-dashboard-017-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-017-wait:oklch(0.68 0.14 75);
+--vibeui-dashboard-017-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
+--vibeui-dashboard-017-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.013 265));
+--vibeui-dashboard-017-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-017-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-dashboard-017-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-017-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.15 262));
+--vibeui-dashboard-017-wait:light-dark(oklch(0.66 0.14 75),oklch(0.79 0.13 75));
+--vibeui-dashboard-017-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
 --vibeui-dashboard-017-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -68,8 +80,8 @@ padding:0.75rem 0;border-top:1px solid var(--vibeui-dashboard-017-border);
 [data-vibeui-block="dashboard-017"] [data-part="avatar"]{
 grid-row:span 2;width:2.25rem;height:2.25rem;border-radius:9999px;
 display:grid;place-items:center;font-size:0.75rem;font-weight:700;
-background:oklch(0.94 0.03 var(--vibeui-dashboard-017-hue));
-color:oklch(0.38 0.09 var(--vibeui-dashboard-017-hue));
+background:light-dark(oklch(0.94 0.03 var(--vibeui-dashboard-017-hue)),oklch(0.36 0.05 var(--vibeui-dashboard-017-hue)));
+color:light-dark(oklch(0.38 0.09 var(--vibeui-dashboard-017-hue)),oklch(0.88 0.05 var(--vibeui-dashboard-017-hue)));
 }
 [data-vibeui-block="dashboard-017"] [data-part="who"]{margin:0;font-size:0.8125rem;font-weight:650}
 [data-vibeui-block="dashboard-017"] [data-part="mail"]{
@@ -108,7 +120,7 @@ color:var(--vibeui-dashboard-017-muted);
 [data-vibeui-block="dashboard-017"] [data-part="send"]{
 appearance:none;border:0;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:650;
 width:100%;padding:0.5rem;border-radius:0.5rem;
-background:var(--vibeui-dashboard-017-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-017-accent);color:var(--vibeui-dashboard-017-on-accent);
 }
 [data-vibeui-block="dashboard-017"] [data-part="pending"]{
 margin-top:0.875rem;padding-top:0.75rem;border-top:1px solid var(--vibeui-dashboard-017-border);
@@ -179,6 +191,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Участники и доступ: роли с расшифровкой прав, форма приглашения и список
  * уже отправленных писем. Один файл, ноль зависимостей, собственная палитра.
  */
@@ -190,12 +224,25 @@ export function Dashboard017({
   members = DEFAULT_MEMBERS,
   invites = DEFAULT_INVITES,
   inviteLabel = "Отправить приглашение",
+  inviteTitle = "Пригласить в проект",
+  emailLabel = "Почта",
+  roleLabel = "Роль",
+  pendingTitle = "Ждут ответа",
+  roleForLabel = "Роль: {name}",
+  emailPlaceholder = "name@company.com",
   accent,
+  background = "",
   className,
   style,
 }: Dashboard017Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -237,7 +284,7 @@ export function Dashboard017({
                   <select
                     data-part="role"
                     defaultValue={member.role}
-                    aria-label={`Роль: ${member.name}`}
+                    aria-label={roleForLabel.replace("{name}", member.name)}
                   >
                     {roles.map((role) => (
                       <option key={role}>{role}</option>
@@ -249,13 +296,13 @@ export function Dashboard017({
           </div>
 
           <aside data-part="aside">
-            <h3>Пригласить в проект</h3>
+            <h3>{inviteTitle}</h3>
             <label data-part="field">
-              <span data-part="fieldlabel">Почта</span>
-              <input type="email" placeholder="name@company.com" />
+              <span data-part="fieldlabel">{emailLabel}</span>
+              <input type="email" placeholder={emailPlaceholder} />
             </label>
             <label data-part="field">
-              <span data-part="fieldlabel">Роль</span>
+              <span data-part="fieldlabel">{roleLabel}</span>
               <select defaultValue={inviteRole}>
                 {roles.map((role) => (
                   <option key={role}>{role}</option>
@@ -267,7 +314,7 @@ export function Dashboard017({
             </button>
 
             <div data-part="pending">
-              <h3>Ждут ответа</h3>
+              <h3>{pendingTitle}</h3>
               <ul>
                 {invites.map((invite) => (
                   <li key={invite.email} data-part="invite">

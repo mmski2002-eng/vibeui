@@ -14,12 +14,15 @@ export type Aspect008Props = Omit<
 // займут будущие кадры. Соотношение задаётся один раз и передаётся всем
 // плиткам, поэтому при загрузке страница не прыгает — это и есть смысл
 // заглушки с пропорцией, в отличие от серого прямоугольника наугад.
+//
+// Тема берётся из color-scheme окружения через light-dark(): заглушка темнеет
+// вместе со страницей, иначе светлые плитки прожигали бы тёмный макет.
 const STYLES = `
 :where([data-vibeui-block="aspect-008"]){
 --vibeui-aspect-008-ratio:4 / 3;
---vibeui-aspect-008-base:oklch(0.93 0.005 265);
---vibeui-aspect-008-shine:oklch(0.97 0.003 265);
---vibeui-aspect-008-fg:oklch(0.55 0.014 265);
+--vibeui-aspect-008-base:light-dark(oklch(0.93 0.005 265),oklch(0.28 0.012 265));
+--vibeui-aspect-008-shine:light-dark(oklch(0.97 0.003 265),oklch(0.35 0.014 265));
+--vibeui-aspect-008-fg:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
 --vibeui-aspect-008-radius:0.75rem;
 --vibeui-aspect-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

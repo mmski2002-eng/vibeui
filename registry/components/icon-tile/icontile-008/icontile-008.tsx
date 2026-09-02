@@ -14,6 +14,10 @@ export type Icontile008Props = Omit<
   "children"
 > & {
   items?: Icontile008Category[]
+  /** Подпись счётчика: {count} подставляется числом. */
+  countText?: string
+  /** Пусто — подложки нет, плитки лежат прямо на фоне страницы. */
+  background?: string
 }
 
 const ICON_HUE: Record<Icontile008CategoryIcon, number> = {
@@ -44,13 +48,14 @@ const DEFAULT_ITEMS: Icontile008Category[] = [
 const STYLES = `
 :where([data-vibeui-block="icontile-008"]){
 container-type:inline-size;
---vibeui-icontile-008-fg:oklch(0.26 0.014 265);
---vibeui-icontile-008-muted:oklch(0.52 0.014 265);
---vibeui-icontile-008-border:oklch(0.9 0.006 265);
---vibeui-icontile-008-surface:oklch(1 0 0);
---vibeui-icontile-008-hover-surface:oklch(0.97 0.008 262);
---vibeui-icontile-008-hover-border:oklch(0.78 0.03 262);
---vibeui-icontile-008-ring:oklch(0.55 0.15 262);
+--vibeui-icontile-008-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.006 265));
+--vibeui-icontile-008-muted:light-dark(oklch(0.52 0.014 265),oklch(0.71 0.012 265));
+--vibeui-icontile-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.008 265));
+--vibeui-icontile-008-surface:transparent;
+--vibeui-icontile-008-hover-surface:light-dark(oklch(0.97 0.008 262),oklch(0.3 0.016 262));
+--vibeui-icontile-008-hover-border:light-dark(oklch(0.78 0.03 262),oklch(0.52 0.05 262));
+--vibeui-icontile-008-shadow:light-dark(oklch(0.3 0.05 262 / 55%),oklch(0.05 0.03 262 / 75%));
+--vibeui-icontile-008-ring:light-dark(oklch(0.55 0.15 262),oklch(0.74 0.14 262));
 --vibeui-icontile-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="icontile-008"]{
@@ -72,7 +77,7 @@ transition:transform 0.16s ease,box-shadow 0.16s ease,background-color 0.16s eas
 transform:translateY(-2px);
 background:var(--vibeui-icontile-008-hover-surface);
 border-color:var(--vibeui-icontile-008-hover-border);
-box-shadow:0 10px 24px -16px oklch(0.3 0.05 262 / 55%);
+box-shadow:0 10px 24px -16px var(--vibeui-icontile-008-shadow);
 }
 [data-vibeui-block="icontile-008"] [data-part="item"]:focus-visible{
 outline:2px solid var(--vibeui-icontile-008-ring);outline-offset:2px;
@@ -80,8 +85,8 @@ outline:2px solid var(--vibeui-icontile-008-ring);outline-offset:2px;
 [data-vibeui-block="icontile-008"] [data-part="icon"]{
 display:grid;place-items:center;flex:none;
 width:2.5rem;height:2.5rem;border-radius:0.75rem;
-background:oklch(0.93 0.045 var(--vibeui-icontile-008-item-hue));
-color:oklch(0.44 0.18 var(--vibeui-icontile-008-item-hue));
+background:light-dark(oklch(0.93 0.045 var(--vibeui-icontile-008-item-hue)),oklch(0.34 0.055 var(--vibeui-icontile-008-item-hue)));
+color:light-dark(oklch(0.44 0.18 var(--vibeui-icontile-008-item-hue)),oklch(0.87 0.1 var(--vibeui-icontile-008-item-hue)));
 }
 [data-vibeui-block="icontile-008"] [data-part="icon"] svg{width:55%;height:55%}
 [data-vibeui-block="icontile-008"] [data-part="label"]{
@@ -157,16 +162,50 @@ function Icontile008Icon({ icon }: { icon: Icontile008CategoryIcon }) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сетка плиток-категорий: число колонок от ширины контейнера, ховер поднимает
  * плитку тенью и сдвигом, у каждой категории свой оттенок иконки.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Icontile008({
   items = DEFAULT_ITEMS,
+  countText = "{count} компонентов",
+  background = "",
   className,
   style,
   ...props
 }: Icontile008Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-icontile-008-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-icontile-008" precedence="medium">
@@ -176,7 +215,7 @@ export function Icontile008({
         {...props}
         data-vibeui-block="icontile-008"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="grid">
           {items.map((item) => (
@@ -195,7 +234,9 @@ export function Icontile008({
               </span>
               <span data-part="label">{item.label}</span>
               {item.count !== undefined ? (
-                <span data-part="count">{item.count} компонентов</span>
+                <span data-part="count">
+                  {countText.replace("{count}", String(item.count))}
+                </span>
               ) : null}
             </button>
           ))}

@@ -23,6 +23,14 @@ export type Dashboard030Props = {
   prevLabel?: string
   nextLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Шаблон счётчика дел: {count}. */
+  loadText?: string
+  /** Подпись свободного дня. */
+  freeText?: string
+  /** Подпись дня без назначенных дел. */
+  emptyText?: string
   className?: string
   style?: CSSProperties
 }
@@ -37,14 +45,17 @@ export type Dashboard030Props = {
 // нельзя спутать. Свободный день говорит об этом словами, а не пустотой.
 const STYLES = `
 :where([data-vibeui-block="dashboard-030"]){
---vibeui-dashboard-030-bg:oklch(0.985 0.003 265);
---vibeui-dashboard-030-card:oklch(1 0 0);
---vibeui-dashboard-030-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-030-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-030-border:oklch(0.91 0.006 265);
---vibeui-dashboard-030-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-030-focus:oklch(0.6 0.14 152);
---vibeui-dashboard-030-release:oklch(0.62 0.16 300);
+--vibeui-dashboard-030-bg:transparent;
+--vibeui-dashboard-030-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+/* Плашка дела внутри карточки дня: подложка блока бывает прозрачной, и
+   заливать ею дело нельзя. */
+--vibeui-dashboard-030-tile:light-dark(oklch(0.975 0.003 265),oklch(0.32 0.012 265));
+--vibeui-dashboard-030-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-030-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-030-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-dashboard-030-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-dashboard-030-focus:light-dark(oklch(0.6 0.14 152),oklch(0.76 0.14 152));
+--vibeui-dashboard-030-release:light-dark(oklch(0.62 0.16 300),oklch(0.78 0.14 300));
 --vibeui-dashboard-030-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -108,7 +119,7 @@ margin:0;padding:0;list-style:none;display:grid;gap:0.375rem;
 [data-vibeui-block="dashboard-030"] [data-part="item"]{
 display:grid;grid-template-columns:auto 1fr;gap:0.125rem 0.4375rem;
 padding:0.375rem 0.4375rem;border-radius:0.5rem;
-background:var(--vibeui-dashboard-030-bg);
+background:var(--vibeui-dashboard-030-tile);
 border-left:3px solid var(--vibeui-dashboard-030-accent);
 }
 [data-vibeui-block="dashboard-030"] [data-kind="focus"]{border-left-color:var(--vibeui-dashboard-030-focus)}
@@ -193,6 +204,28 @@ const DEFAULT_DAYS: Dashboard030Day[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Неделя как семь карточек-дней со списком дел, счётчиком загрузки и явной
  * подписью свободного дня. Один файл, ноль зависимостей, собственная палитра.
  */
@@ -203,11 +236,21 @@ export function Dashboard030({
   prevLabel = "Прошлая",
   nextLabel = "Следующая",
   accent,
+  background = "",
+  loadText = "{count} дел",
+  freeText = "Свободно",
+  emptyText = "Ничего не назначено",
   className,
   style,
 }: Dashboard030Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-030-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-030-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -244,13 +287,13 @@ export function Dashboard030({
                   <h3>{day.name}</h3>
                   <span data-part="date">{day.date}</span>
                   <span data-part="load">
-                    {day.items.length === 0 ? "—" : `${day.items.length} дел`}
+                    {day.items.length === 0
+                      ? "—"
+                      : loadText.replace("{count}", String(day.items.length))}
                   </span>
                 </div>
                 {day.items.length === 0 ? (
-                  <p data-part="free">
-                    {day.free ? "Свободно" : "Ничего не назначено"}
-                  </p>
+                  <p data-part="free">{day.free ? freeText : emptyText}</p>
                 ) : (
                   <ul data-part="items">
                     {day.items.map((item) => (

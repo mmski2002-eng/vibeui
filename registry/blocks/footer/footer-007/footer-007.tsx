@@ -19,9 +19,15 @@ export type Footer007Props = {
   brand?: string
   columns?: Footer007Column[]
   payments?: Footer007Payment[]
+  /** Видимый заголовок ряда способов оплаты. */
+  paymentsTitle?: string
+  /** Подпись секции оплаты для скринридера. */
+  paymentsLabel?: string
   paymentsNote?: string
   deliveryNote?: string
   legal?: string
+  /** Пусто — подложки нет, подвал лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -31,14 +37,17 @@ export type Footer007Props = {
 // ссылок: перед оплатой люди спускаются вниз именно за ним. Плашки — не
 // картинки платёжных систем, а текстовые начертания: логотипы требуют
 // лицензии и обновляются, а подвал должен пережить и то и другое.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подвал темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="footer-007"]){
---vibeui-footer-007-bg:oklch(0.98 0.005 60);
---vibeui-footer-007-card:oklch(1 0 0);
---vibeui-footer-007-ink:oklch(0.21 0.014 60);
---vibeui-footer-007-muted:oklch(0.51 0.014 60);
---vibeui-footer-007-border:oklch(0.89 0.008 60);
---vibeui-footer-007-accent:oklch(0.6 0.19 34);
+--vibeui-footer-007-bg:transparent;
+--vibeui-footer-007-card:light-dark(oklch(1 0 0),oklch(0.27 0.012 60));
+--vibeui-footer-007-ink:light-dark(oklch(0.21 0.014 60),oklch(0.94 0.006 60));
+--vibeui-footer-007-muted:light-dark(oklch(0.51 0.014 60),oklch(0.71 0.012 60));
+--vibeui-footer-007-border:light-dark(oklch(0.89 0.008 60),oklch(0.35 0.014 60));
+--vibeui-footer-007-accent:light-dark(oklch(0.6 0.19 34),oklch(0.75 0.16 34));
 --vibeui-footer-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -151,20 +160,51 @@ const DEFAULT_PAYMENTS: Footer007Payment[] = [
   { label: "Счёт для юридических лиц", short: "СЧЁТ" },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Подвал магазина: ряд способов оплаты стоит над копирайтом, а не в ссылках. */
 export function Footer007({
   brand = "Дом и лад",
   columns = DEFAULT_COLUMNS,
   payments = DEFAULT_PAYMENTS,
+  paymentsTitle = "Принимаем к оплате",
+  paymentsLabel = "Способы оплаты",
   paymentsNote = "Оплата проходит на защищённой странице банка. Данные карты не попадают в магазин и нигде у нас не хранятся.",
   deliveryNote = "Бесплатная доставка по городу от 5 000 ₽, самовывоз из пункта выдачи — в день заказа.",
   legal = "© 2026 ООО «Дом и лад». ОГРН 1157700000000",
+  background = "",
   accent,
   className,
   style,
 }: Footer007Props) {
   const palette = {
     ...(accent ? { "--vibeui-footer-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-footer-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -198,8 +238,8 @@ export function Footer007({
             ))}
           </div>
           <p data-part="delivery">{deliveryNote}</p>
-          <section data-part="pay" aria-label="Способы оплаты">
-            <p data-part="pay-title">Принимаем к оплате</p>
+          <section data-part="pay" aria-label={paymentsLabel}>
+            <p data-part="pay-title">{paymentsTitle}</p>
             <ul data-part="methods">
               {payments.map((payment) => (
                 <li

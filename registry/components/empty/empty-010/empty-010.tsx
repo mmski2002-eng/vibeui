@@ -11,6 +11,8 @@ export type Empty010Props = {
   searchLabel?: string
   resetLabel?: string
   onSearch?: (query: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -21,13 +23,18 @@ export type Empty010Props = {
 // подставляют в него слово, а кнопка сброса возвращает поле к исходному
 // запросу или очищает его. Отличие от статичной карточки "Ничего не
 // нашлось": здесь ищут заново, не покидая экран.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="empty-010"]){
---vibeui-empty-010-bg:oklch(1 0 0);
---vibeui-empty-010-fg:oklch(0.21 0.014 265);
---vibeui-empty-010-muted:oklch(0.55 0.014 265);
---vibeui-empty-010-border:oklch(0.9 0.006 265);
---vibeui-empty-010-accent:oklch(0.55 0.17 265);
+--vibeui-empty-010-bg:transparent;
+--vibeui-empty-010-fg:light-dark(oklch(0.21 0.014 265),oklch(0.95 0.005 265));
+--vibeui-empty-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-empty-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-empty-010-hover:light-dark(oklch(0.97 0.003 265),oklch(0.31 0.011 265));
+--vibeui-empty-010-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-empty-010-accent-fg:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.03 265));
 --vibeui-empty-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -65,7 +72,7 @@ outline:2px solid var(--vibeui-empty-010-accent);outline-offset:2px;
 [data-vibeui-block="empty-010"] [data-part="submit"]{
 appearance:none;border:0;cursor:pointer;flex:none;
 height:2.5rem;padding:0 1rem;border-radius:0.75rem;
-background:var(--vibeui-empty-010-accent);color:oklch(0.99 0.01 265);
+background:var(--vibeui-empty-010-accent);color:var(--vibeui-empty-010-accent-fg);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="empty-010"] [data-part="submit"]:focus-visible{
@@ -81,7 +88,7 @@ height:1.875rem;padding:0 0.6875rem;
 border:1px solid var(--vibeui-empty-010-border);border-radius:9999px;
 background:transparent;color:inherit;font:inherit;font-size:0.75rem;font-weight:600;
 }
-[data-vibeui-block="empty-010"] [data-part="chip"]:hover{background:oklch(0.97 0.003 265)}
+[data-vibeui-block="empty-010"] [data-part="chip"]:hover{background:var(--vibeui-empty-010-hover)}
 [data-vibeui-block="empty-010"] [data-part="chip"]:focus-visible{
 outline:2px solid var(--vibeui-empty-010-accent);outline-offset:2px;
 }
@@ -105,6 +112,28 @@ outline:2px solid var(--vibeui-empty-010-accent);outline-offset:2px;border-radiu
 const DEFAULT_SUGGESTIONS = ["кнопка", "карточка", "иконка"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Пустая выдача поиска с редактируемым полем: чипы подставляют слово,
  * сброс возвращает исходный запрос. Один файл, ноль внешних зависимостей.
  */
@@ -117,6 +146,7 @@ export function Empty010({
   searchLabel = "Искать",
   resetLabel = "Вернуть исходный запрос",
   onSearch,
+  background = "",
   accent,
   className,
   style,
@@ -125,6 +155,12 @@ export function Empty010({
   const fieldId = useId()
   const palette = {
     ...(accent ? { "--vibeui-empty-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-empty-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

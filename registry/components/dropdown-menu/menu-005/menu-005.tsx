@@ -12,20 +12,25 @@ export type Menu005Props = Omit<
   toggles?: string[]
   onChange?: (state: { view: string; on: string[] }) => void
   accent?: string
+  /** Подложка панели. Пусто — собственный фон по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: меню настроек с переключателями и выбором одного из
 // вариантов. Состояние остаётся видимым после нажатия, а меню не закрывается:
 // настройки почти всегда меняют пачкой, и захлопывающийся список заставляет
 // открывать его пять раз подряд.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте панель светлее фона страницы, а её граница светлее панели.
 const STYLES = `
 :where([data-vibeui-block="menu-005"]){
---vibeui-menu-005-bg:oklch(1 0 0);
---vibeui-menu-005-fg:oklch(0.24 0.014 265);
---vibeui-menu-005-muted:oklch(0.56 0.014 265);
---vibeui-menu-005-border:oklch(0.9 0.006 265);
---vibeui-menu-005-hover:oklch(0.96 0.004 265);
---vibeui-menu-005-accent:oklch(0.55 0.17 265);
+--vibeui-menu-005-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-menu-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-menu-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-menu-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-menu-005-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
+--vibeui-menu-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-menu-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="menu-005"]{
@@ -71,6 +76,28 @@ const DEFAULT_VIEWS = ["Сетка", "Список", "Таблица"]
 const DEFAULT_TOGGLES = ["Показывать описания", "Только мои", "Скрыть архив"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Меню настроек: переключатели и выбор вида, меню не закрывается по нажатию.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -80,6 +107,7 @@ export function Menu005({
   toggles = DEFAULT_TOGGLES,
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -90,6 +118,12 @@ export function Menu005({
 
   const palette = {
     ...(accent ? { "--vibeui-menu-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-menu-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

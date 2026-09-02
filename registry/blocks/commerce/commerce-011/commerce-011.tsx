@@ -17,7 +17,13 @@ export type Commerce011Props = {
   mail?: string
   cta?: string
   secondary?: string
+  /** Абзац под заголовком. */
+  lead?: string
+  /** Подписи блока: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -29,15 +35,19 @@ export type Commerce011Props = {
 // возвращаются к письму через неделю. Номер вынесен в элемент, который можно
 // выделить целиком, а не внутри длинной фразы. Ниже — что произойдёт дальше,
 // потому что «спасибо за заказ» само по себе не отвечает ни на один вопрос.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="commerce-011"]){
---vibeui-commerce-011-bg:oklch(1 0 0);
---vibeui-commerce-011-fg:oklch(0.21 0.014 265);
---vibeui-commerce-011-muted:oklch(0.55 0.014 265);
---vibeui-commerce-011-border:oklch(0.91 0.006 265);
---vibeui-commerce-011-soft:oklch(0.975 0.004 265);
---vibeui-commerce-011-ok:oklch(0.58 0.14 152);
---vibeui-commerce-011-accent:oklch(0.55 0.2 262);
+--vibeui-commerce-011-bg:transparent;
+--vibeui-commerce-011-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-011-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-commerce-011-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-011-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.01 265));
+--vibeui-commerce-011-ok:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
+--vibeui-commerce-011-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-commerce-011-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
 --vibeui-commerce-011-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -82,7 +92,7 @@ padding-bottom:0.5rem;border-bottom:1px solid var(--vibeui-commerce-011-border);
 }
 [data-vibeui-block="commerce-011"] [data-part="shot"]{
 width:2.5rem;height:2.5rem;border-radius:0.5rem;
-background:linear-gradient(145deg,oklch(0.94 0.05 var(--vibeui-commerce-011-hue,262)),oklch(0.87 0.09 var(--vibeui-commerce-011-hue,262)));
+background:linear-gradient(145deg,light-dark(oklch(0.94 0.05 var(--vibeui-commerce-011-hue,262)),oklch(0.43 0.06 var(--vibeui-commerce-011-hue,262))),light-dark(oklch(0.87 0.09 var(--vibeui-commerce-011-hue,262)),oklch(0.33 0.07 var(--vibeui-commerce-011-hue,262))));
 }
 [data-vibeui-block="commerce-011"] [data-part="name"]{margin:0;font-size:0.8125rem;font-weight:600}
 [data-vibeui-block="commerce-011"] [data-part="option"]{margin:0.0625rem 0 0;font-size:0.6875rem;color:var(--vibeui-commerce-011-muted)}
@@ -94,7 +104,7 @@ background:linear-gradient(145deg,oklch(0.94 0.05 var(--vibeui-commerce-011-hue,
 [data-vibeui-block="commerce-011"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.25rem}
 [data-vibeui-block="commerce-011"] [data-part="track"]{
 appearance:none;border:0;cursor:pointer;height:2.5rem;padding:0 1.125rem;border-radius:0.75rem;
-background:var(--vibeui-commerce-011-accent);color:oklch(1 0 0);font:inherit;font-size:0.875rem;font-weight:650;
+background:var(--vibeui-commerce-011-accent);color:var(--vibeui-commerce-011-on-accent);font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-011"] [data-part="back"]{
 appearance:none;cursor:pointer;height:2.5rem;padding:0 1.125rem;border-radius:0.75rem;
@@ -134,6 +144,36 @@ const DEFAULT_NEXT = [
   "Курьер позвонит за час и поднимет заказ в квартиру.",
 ]
 
+/** Русские подписи по умолчанию: установленный файл не меняет язык сам. */
+const LABELS: Record<string, string> = {
+  order: "Номер заказа",
+  eta: "Доставим",
+  next: "Что дальше",
+  lines: "В заказе",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Подтверждение заказа: номер и срок доставки крупно, дальше — что произойдёт.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -148,12 +188,23 @@ export function Commerce011({
   mail = "Чек и детали ушли на m.kovaleva@example.com. Письмо не пришло за 10 минут — проверьте «Промоакции» или напишите нам.",
   cta = "Отследить заказ",
   secondary = "Вернуться в каталог",
+  lead = "Мы всё получили и уже собираем. Номер заказа понадобится при обращении в поддержку — сохраните его.",
+  labels = LABELS,
   accent,
+  background = "",
   className,
   style,
 }: Commerce011Props) {
+  const text = { ...LABELS, ...labels }
+
   const palette = {
     ...(accent ? { "--vibeui-commerce-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -173,30 +224,27 @@ export function Commerce011({
             ✓
           </p>
           <h2>{title}</h2>
-          <p data-part="lead">
-            Мы всё получили и уже собираем. Номер заказа понадобится при
-            обращении в поддержку — сохраните его.
-          </p>
+          <p data-part="lead">{lead}</p>
 
           <div data-part="key">
             <div data-part="card">
-              <p data-part="cap">Номер заказа</p>
+              <p data-part="cap">{text.order}</p>
               <p data-part="big">{order}</p>
             </div>
             <div data-part="card">
-              <p data-part="cap">Доставим</p>
+              <p data-part="cap">{text.eta}</p>
               <p data-part="big">{eta}</p>
             </div>
           </div>
 
-          <h3>Что дальше</h3>
+          <h3>{text.next}</h3>
           <ol data-part="next">
             {next.map((step) => (
               <li key={step}>{step}</li>
             ))}
           </ol>
 
-          <h3>В заказе</h3>
+          <h3>{text.lines}</h3>
           <ul>
             {lines.map((line) => (
               <li

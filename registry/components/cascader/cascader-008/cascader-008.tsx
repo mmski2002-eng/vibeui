@@ -10,6 +10,12 @@ export type Cascader008Props = {
   name?: string
   heading?: string
   tree?: Cascader008Node[]
+  /** Путь листа, отмеченного сразу: подписи через «/». */
+  defaultValue?: string
+  /** Пояснение под деревом. */
+  hintText?: string
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -22,11 +28,11 @@ export type Cascader008Props = {
 // непонятно, где именно стоит отметка.
 const STYLES = `
 :where([data-vibeui-block="cascader-008"]){
---vibeui-cascader-008-bg:oklch(1 0 0);
---vibeui-cascader-008-fg:oklch(0.23 0.014 160);
---vibeui-cascader-008-muted:oklch(0.54 0.012 160);
---vibeui-cascader-008-border:oklch(0.9 0.006 160);
---vibeui-cascader-008-accent:oklch(0.5 0.13 165);
+--vibeui-cascader-008-bg:transparent;
+--vibeui-cascader-008-fg:light-dark(oklch(0.23 0.014 160),oklch(0.94 0.006 160));
+--vibeui-cascader-008-muted:light-dark(oklch(0.54 0.012 160),oklch(0.71 0.011 160));
+--vibeui-cascader-008-border:light-dark(oklch(0.9 0.006 160),oklch(0.38 0.011 160));
+--vibeui-cascader-008-accent:light-dark(oklch(0.5 0.13 165),oklch(0.76 0.13 165));
 --vibeui-cascader-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="cascader-008"]{
@@ -109,6 +115,28 @@ font-size:0.6875rem;line-height:1.4;color:var(--vibeui-cascader-008-muted);
 }
 `
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 const DEFAULT_TREE: Cascader008Node[] = [
   {
     label: "Документы",
@@ -148,6 +176,9 @@ export function Cascader008({
   name = "vibeui-cascader-008",
   heading = "Куда положить файл",
   tree = DEFAULT_TREE,
+  defaultValue = "Документы/Договоры/Рамочные",
+  hintText = "Уровни — нативные details, лист — radio с общим именем: дерево отправляется обычной формой даже без JavaScript.",
+  background = "",
   accent,
   className,
   style,
@@ -163,7 +194,7 @@ export function Cascader008({
               type="radio"
               name={name}
               value={path.join("/")}
-              defaultChecked={path.join("/") === "Документы/Договоры/Рамочные"}
+              defaultChecked={path.join("/") === defaultValue}
             />
             {node.label}
           </label>
@@ -183,6 +214,12 @@ export function Cascader008({
 
   const palette = {
     ...(accent ? { "--vibeui-cascader-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cascader-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -200,10 +237,7 @@ export function Cascader008({
           <p data-part="legend">{heading}</p>
           {renderNodes(tree, [])}
         </fieldset>
-        <p data-part="hint">
-          Уровни — нативные details, лист — radio с общим именем: дерево
-          отправляется обычной формой даже без JavaScript.
-        </p>
+        <p data-part="hint">{hintText}</p>
       </div>
     </>
   )

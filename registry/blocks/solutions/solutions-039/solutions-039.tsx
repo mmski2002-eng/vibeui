@@ -19,7 +19,32 @@ export type Solutions039Props = {
   hint?: string
   purchases?: Solutions039Purchase[]
   consumption?: Solutions039Consumption[]
+  /** Подписи плиток сводки: amount, liters, over. */
+  summaryText?: Record<string, string>
+  /** Заголовки секций: purchases, consumption. */
+  sectionText?: Record<string, string>
+  /** Заголовки колонок: date, card, vehicle, liters, amount. */
+  columnText?: Record<string, string>
+  /** Литры. {liters} — число литров. */
+  litersText?: string
+  /** Норма расхода. {norm} — литры на 100 км. */
+  normText?: string
+  /** Фактический расход. {actual} — литры на 100 км. */
+  actualText?: string
+  /** Величина перерасхода рядом с фактом. {over} — литры. */
+  overText?: string
+  /** Скрытая подпись полосы. {vehicle}, {actual} и {norm} подставляются. */
+  barLabel?: string
+  /** Хвост подписи полосы при перерасходе. {over} — литры. */
+  barOverLabel?: string
+  /** Сноска под полосами. */
+  footNote?: string
+  currency?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -33,13 +58,13 @@ export type Solutions039Props = {
 // друг с другом на глаз.
 const STYLES = `
 :where([data-vibeui-block="solutions-039"]){
---vibeui-solutions-039-bg:oklch(1 0 0);
---vibeui-solutions-039-panel:oklch(0.976 0.004 250);
---vibeui-solutions-039-fg:oklch(0.21 0.014 265);
---vibeui-solutions-039-muted:oklch(0.54 0.014 265);
---vibeui-solutions-039-border:oklch(0.9 0.006 265);
---vibeui-solutions-039-accent:oklch(0.52 0.16 255);
---vibeui-solutions-039-over:oklch(0.57 0.19 25);
+--vibeui-solutions-039-bg:transparent;
+--vibeui-solutions-039-panel:light-dark(oklch(0.976 0.004 250),oklch(0.27 0.011 265));
+--vibeui-solutions-039-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-039-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-039-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-039-accent:light-dark(oklch(0.52 0.16 255),oklch(0.73 0.14 255));
+--vibeui-solutions-039-over:light-dark(oklch(0.57 0.19 25),oklch(0.71 0.17 25));
 --vibeui-solutions-039-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-039-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -183,6 +208,51 @@ const DEFAULT_CONSUMPTION: Solutions039Consumption[] = [
   { vehicle: "Lada Largus · М 561 НВ", actual: 9.6, norm: 9.5 },
 ]
 
+const SUMMARY_LABEL: Record<string, string> = {
+  amount: "потрачено на топливо",
+  liters: "залито по картам",
+  over: "машин с перерасходом",
+}
+
+const SECTION_LABEL: Record<string, string> = {
+  purchases: "Заправки",
+  consumption: "Расход л/100 км против нормы",
+}
+
+const COLUMN_LABEL: Record<string, string> = {
+  date: "Дата",
+  card: "Карта",
+  vehicle: "Машина",
+  liters: "Литры",
+  amount: "Сумма",
+}
+
+function overAmount(item: Solutions039Consumption) {
+  return (item.actual - item.norm).toFixed(1)
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Заправки по картам и расход л/100 км против нормы: перерасход нарисован
  * отдельным заштрихованным отрезком поверх отметки нормы.
@@ -193,10 +263,26 @@ export function Solutions039({
   hint = "Март, все машины",
   purchases = DEFAULT_PURCHASES,
   consumption = DEFAULT_CONSUMPTION,
+  summaryText = SUMMARY_LABEL,
+  sectionText = SECTION_LABEL,
+  columnText = COLUMN_LABEL,
+  litersText = "{liters} л",
+  normText = "норма {norm} л/100 км",
+  actualText = "{actual} л/100 км",
+  overText = "(+{over})",
+  barLabel = "{vehicle}: расход {actual} л на 100 км при норме {norm}",
+  barOverLabel = ", перерасход {over} л",
+  footNote = "Штриховка — отрезок расхода сверх нормы, тонкая метка — сама норма.",
+  currency = "₽",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions039Props) {
+  const summary = (key: string) => summaryText[key] ?? SUMMARY_LABEL[key]
+  const section = (key: string) => sectionText[key] ?? SECTION_LABEL[key]
+  const column = (key: string) => columnText[key] ?? COLUMN_LABEL[key]
   const totalLiters = purchases.reduce((sum, item) => sum + item.liters, 0)
   const totalAmount = purchases.reduce((sum, item) => sum + item.amount, 0)
   const overCount = consumption.filter((item) => item.actual > item.norm).length
@@ -211,6 +297,12 @@ export function Solutions039({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-039-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-039-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -234,32 +326,39 @@ export function Solutions039({
 
         <div data-part="summary">
           <p data-part="tile">
-            <b>{totalAmount.toLocaleString("ru-RU")} ₽</b>
-            <span>потрачено на топливо</span>
+            <b>
+              {totalAmount.toLocaleString(locale)} {currency}
+            </b>
+            <span>{summary("amount")}</span>
           </p>
           <p data-part="tile">
-            <b>{totalLiters.toLocaleString("ru-RU")} л</b>
-            <span>залито по картам</span>
+            <b>
+              {litersText.replace(
+                "{liters}",
+                totalLiters.toLocaleString(locale),
+              )}
+            </b>
+            <span>{summary("liters")}</span>
           </p>
           <p data-part="tile" data-tile={overCount > 0 ? "over" : undefined}>
             <b>{overCount}</b>
-            <span>машин с перерасходом</span>
+            <span>{summary("over")}</span>
           </p>
         </div>
 
-        <p data-part="label">Заправки</p>
+        <p data-part="label">{section("purchases")}</p>
         <div data-part="scroll">
           <table>
             <thead>
               <tr>
-                <th scope="col">Дата</th>
-                <th scope="col">Карта</th>
-                <th scope="col">Машина</th>
+                <th scope="col">{column("date")}</th>
+                <th scope="col">{column("card")}</th>
+                <th scope="col">{column("vehicle")}</th>
                 <th scope="col" data-align="end">
-                  Литры
+                  {column("liters")}
                 </th>
                 <th scope="col" data-align="end">
-                  Сумма
+                  {column("amount")}
                 </th>
               </tr>
             </thead>
@@ -272,10 +371,10 @@ export function Solutions039({
                   </td>
                   <td>{purchase.vehicle}</td>
                   <td data-align="end">
-                    {purchase.liters.toLocaleString("ru-RU")}
+                    {purchase.liters.toLocaleString(locale)}
                   </td>
                   <td data-align="end">
-                    {purchase.amount.toLocaleString("ru-RU")} ₽
+                    {purchase.amount.toLocaleString(locale)} {currency}
                   </td>
                 </tr>
               ))}
@@ -283,7 +382,7 @@ export function Solutions039({
           </table>
         </div>
 
-        <p data-part="label">Расход л/100 км против нормы</p>
+        <p data-part="label">{section("consumption")}</p>
         <div data-part="rows">
           {consumption.map((item) => {
             const over = item.actual > item.norm
@@ -295,17 +394,33 @@ export function Solutions039({
                 <span data-part="vehicle">{item.vehicle}</span>
                 <span data-part="figures" data-over={String(over)}>
                   <span>
-                    норма {item.norm.toLocaleString("ru-RU")} л/100 км
+                    {normText.replace(
+                      "{norm}",
+                      item.norm.toLocaleString(locale),
+                    )}
                   </span>
                   <b>
-                    {item.actual.toLocaleString("ru-RU")} л/100 км
-                    {over ? ` (+${(item.actual - item.norm).toFixed(1)})` : ""}
+                    {actualText.replace(
+                      "{actual}",
+                      item.actual.toLocaleString(locale),
+                    )}
+                    {over
+                      ? ` ${overText.replace("{over}", overAmount(item))}`
+                      : ""}
                   </b>
                 </span>
                 <span
                   data-part="track"
                   role="img"
-                  aria-label={`${item.vehicle}: расход ${item.actual} л на 100 км при норме ${item.norm}${over ? `, перерасход ${(item.actual - item.norm).toFixed(1)} л` : ""}`}
+                  aria-label={
+                    barLabel
+                      .replace("{vehicle}", item.vehicle)
+                      .replace("{actual}", String(item.actual))
+                      .replace("{norm}", String(item.norm)) +
+                    (over
+                      ? barOverLabel.replace("{over}", overAmount(item))
+                      : "")
+                  }
                 >
                   <span data-part="within" style={{ width: `${withinPct}%` }} />
                   {over ? (
@@ -321,9 +436,7 @@ export function Solutions039({
           })}
         </div>
 
-        <p data-part="foot">
-          Штриховка — отрезок расхода сверх нормы, тонкая метка — сама норма.
-        </p>
+        <p data-part="foot">{footNote}</p>
       </section>
     </>
   )

@@ -16,7 +16,17 @@ export type Cascader016Props = Omit<
   label?: string
   buildings?: Cascader016Building[]
   defaultRoom?: string
+  /** Подписи уровней для скринридера: здания, этажи, комнаты. */
+  levelLabels?: { buildings: string; floors: string; rooms: string }
+  /** Три формы слова «место» для числа мест. */
+  seatsForms?: [string, string, string]
+  /** Подпись занятой комнаты. */
+  busyText?: string
+  /** Итог, пока комната не выбрана. */
+  emptyText?: string
   onSelect?: (building: string, floor: string, room: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,15 +36,17 @@ export type Cascader016Props = Omit<
 // пространственный, и плитка ближе к плану этажа, чем строка списка.
 const STYLES = `
 :where([data-vibeui-block="cascader-016"]){
---vibeui-cascader-016-bg:oklch(1 0 0);
---vibeui-cascader-016-fg:oklch(0.22 0.014 210);
---vibeui-cascader-016-muted:oklch(0.55 0.014 210);
---vibeui-cascader-016-border:oklch(0.9 0.008 210);
---vibeui-cascader-016-soft:oklch(0.965 0.008 210);
---vibeui-cascader-016-busy:oklch(0.94 0.03 25);
---vibeui-cascader-016-busyfg:oklch(0.5 0.1 25);
---vibeui-cascader-016-accent:oklch(0.48 0.11 210);
---vibeui-cascader-016-accentsoft:oklch(0.94 0.045 210);
+--vibeui-cascader-016-bg:transparent;
+--vibeui-cascader-016-fg:light-dark(oklch(0.22 0.014 210),oklch(0.94 0.006 210));
+--vibeui-cascader-016-muted:light-dark(oklch(0.55 0.014 210),oklch(0.71 0.012 210));
+--vibeui-cascader-016-border:light-dark(oklch(0.9 0.008 210),oklch(0.35 0.012 210));
+--vibeui-cascader-016-soft:light-dark(oklch(0.965 0.008 210),oklch(0.27 0.012 210));
+--vibeui-cascader-016-tab:light-dark(oklch(1 0 0),oklch(0.36 0.014 210));
+--vibeui-cascader-016-onaccent:light-dark(oklch(1 0 0),oklch(0.2 0.02 210));
+--vibeui-cascader-016-busy:light-dark(oklch(0.94 0.03 25),oklch(0.33 0.045 25));
+--vibeui-cascader-016-busyfg:light-dark(oklch(0.5 0.1 25),oklch(0.82 0.09 25));
+--vibeui-cascader-016-accent:light-dark(oklch(0.48 0.11 210),oklch(0.75 0.12 210));
+--vibeui-cascader-016-accentsoft:light-dark(oklch(0.94 0.045 210),oklch(0.32 0.05 210));
 --vibeui-cascader-016-radius:0.625rem;
 --vibeui-cascader-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -63,7 +75,7 @@ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="cascader-016"] [data-part="tab"][aria-selected="true"]{
-background:var(--vibeui-cascader-016-bg);color:var(--vibeui-cascader-016-fg);
+background:var(--vibeui-cascader-016-tab);color:var(--vibeui-cascader-016-fg);
 box-shadow:0 1px 2px oklch(0.2 0.02 210 / 12%);
 }
 [data-vibeui-block="cascader-016"] [data-part="tab"]:focus-visible,
@@ -84,7 +96,7 @@ transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="cascader-016"] [data-part="floor"][aria-pressed="true"]{
 background:var(--vibeui-cascader-016-accent);border-color:transparent;
-color:var(--vibeui-cascader-016-bg);
+color:var(--vibeui-cascader-016-onaccent);
 }
 [data-vibeui-block="cascader-016"] [data-part="rooms"]{
 display:grid;grid-template-columns:repeat(auto-fill,minmax(6.5rem,1fr));gap:0.35rem;
@@ -166,6 +178,28 @@ function pluralize(count: number, forms: [string, string, string]) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор места: здание вкладками, этаж фишками, комната плиткой сетки.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -173,7 +207,12 @@ export function Cascader016({
   label = "Место встречи",
   buildings = CAMPUS,
   defaultRoom = "А-201",
+  levelLabels = { buildings: "Здания", floors: "Этажи", rooms: "Комнаты" },
+  seatsForms = ["место", "места", "мест"],
+  busyText = "занята",
+  emptyText = "Комната не выбрана",
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -188,8 +227,17 @@ export function Cascader016({
   const rooms = floors.find((entry) => entry.name === floor)?.rooms ?? []
   const picked = rooms.find((entry) => entry.name === room)
 
+  const seatsLabel = (seats: number) =>
+    `${seats} ${pluralize(seats, seatsForms)}`
+
   const palette = {
     ...(accent ? { "--vibeui-cascader-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cascader-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -205,7 +253,7 @@ export function Cascader016({
         style={palette}
       >
         <h3 data-part="title">{label}</h3>
-        <div data-part="tabs" role="tablist" aria-label="Здания">
+        <div data-part="tabs" role="tablist" aria-label={levelLabels.buildings}>
           {buildings.map((entry) => (
             <button
               key={entry.name}
@@ -223,7 +271,7 @@ export function Cascader016({
             </button>
           ))}
         </div>
-        <ul data-part="floors" aria-label="Этажи">
+        <ul data-part="floors" aria-label={levelLabels.floors}>
           {floors.map((entry) => (
             <li key={entry.name}>
               <button
@@ -240,7 +288,7 @@ export function Cascader016({
             </li>
           ))}
         </ul>
-        <ul data-part="rooms" aria-label="Комнаты">
+        <ul data-part="rooms" aria-label={levelLabels.rooms}>
           {rooms.map((entry) => (
             <li key={entry.name}>
               <button
@@ -248,7 +296,7 @@ export function Cascader016({
                 data-part="room"
                 disabled={entry.busy}
                 aria-pressed={entry.name === room}
-                aria-label={`${entry.name}, ${entry.seats} ${pluralize(entry.seats, ["место", "места", "мест"])}${entry.busy ? ", занята" : ""}`}
+                aria-label={`${entry.name}, ${seatsLabel(entry.seats)}${entry.busy ? `, ${busyText}` : ""}`}
                 onClick={() => {
                   setRoom(entry.name)
                   onSelect?.(building, floor, entry.name)
@@ -256,9 +304,7 @@ export function Cascader016({
               >
                 <span data-part="roomname">{entry.name}</span>
                 <span data-part="seats">
-                  {entry.busy
-                    ? "занята"
-                    : `${entry.seats} ${pluralize(entry.seats, ["место", "места", "мест"])}`}
+                  {entry.busy ? busyText : seatsLabel(entry.seats)}
                 </span>
               </button>
             </li>
@@ -270,11 +316,10 @@ export function Cascader016({
               <b>
                 {building} · {floor} · {picked.name}
               </b>{" "}
-              — {picked.seats}{" "}
-              {pluralize(picked.seats, ["место", "места", "мест"])}
+              — {seatsLabel(picked.seats)}
             </>
           ) : (
-            "Комната не выбрана"
+            emptyText
           )}
         </p>
       </section>

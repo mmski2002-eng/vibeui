@@ -16,7 +16,14 @@ export type Inputgroup021Props = Omit<
   name?: string
   label?: string
   countries?: Inputgroup021Country[]
+  placeholder?: string
+  /** Подпись триггера; {title} — страна, {code} — её код. */
+  pickerTemplate?: string
+  /** Подпись списка стран для скринридера. */
+  listLabel?: string
   hint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -36,14 +43,16 @@ const COUNTRIES: Inputgroup021Country[] = [
 // возвращают фокус на триггер вручную.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-021"]){
---vibeui-inputgroup-021-surface:oklch(1 0 0);
---vibeui-inputgroup-021-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-021-fg:oklch(0.22 0.014 265);
---vibeui-inputgroup-021-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-021-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-021-fixed:oklch(0.96 0.004 265);
---vibeui-inputgroup-021-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-021-accent:oklch(0.62 0.15 70);
+--vibeui-inputgroup-021-surface:transparent;
+--vibeui-inputgroup-021-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-inputgroup-021-shadow:light-dark(oklch(0.2 0.02 265 / 0.16),oklch(0 0 0 / 0.5));
+--vibeui-inputgroup-021-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-inputgroup-021-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-021-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-inputgroup-021-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
+--vibeui-inputgroup-021-fixed:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-inputgroup-021-border:light-dark(oklch(0.86 0.008 265),oklch(0.4 0.014 265));
+--vibeui-inputgroup-021-accent:light-dark(oklch(0.62 0.15 70),oklch(0.8 0.14 70));
 --vibeui-inputgroup-021-radius:0.75rem;
 --vibeui-inputgroup-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -89,8 +98,8 @@ transform:translateY(-35%) rotate(-135deg);
 list-style:none;margin:0.25rem 0 0;padding:0.25rem;
 position:absolute;left:0;top:100%;z-index:2;min-width:13rem;max-height:14rem;overflow:auto;
 border:1px solid var(--vibeui-inputgroup-021-border);border-radius:var(--vibeui-inputgroup-021-radius);
-background:var(--vibeui-inputgroup-021-surface);
-box-shadow:0 0.5rem 1.5rem oklch(0.2 0.02 265 / 0.16);
+background:var(--vibeui-inputgroup-021-panel);
+box-shadow:0 0.5rem 1.5rem var(--vibeui-inputgroup-021-shadow);
 }
 [data-vibeui-block="inputgroup-021"] [data-part="listbox"] button{
 appearance:none;width:100%;cursor:pointer;text-align:left;
@@ -104,7 +113,7 @@ background:var(--vibeui-inputgroup-021-fixed);
 outline:2px solid var(--vibeui-inputgroup-021-accent);outline-offset:-2px;
 }
 [data-vibeui-block="inputgroup-021"] [data-part="listbox"] button[aria-selected="true"]{
-background:color-mix(in oklab,var(--vibeui-inputgroup-021-accent) 14%,var(--vibeui-inputgroup-021-surface));
+background:color-mix(in oklab,var(--vibeui-inputgroup-021-accent) 14%,var(--vibeui-inputgroup-021-panel));
 font-weight:650;
 }
 [data-vibeui-block="inputgroup-021"] [data-part="title"]{flex:1;min-width:0}
@@ -129,6 +138,28 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-inputgroup-021-mut
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сцепка «раскрывающийся выбор кода страны + номер»: панель на <details>,
  * триггер показывает флаг и код, список — код и полное название страны.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -137,7 +168,11 @@ export function Inputgroup021({
   name = "phone",
   label = "Телефон для связи",
   countries = COUNTRIES,
+  placeholder = "999 000-00-00",
+  pickerTemplate = "Код страны: {title}, {code}",
+  listLabel = "Страны",
   hint = "Код страны открывается панелью, а не системным списком — в ней виден не только код, но и название страны.",
+  background = "",
   accent,
   className,
   style,
@@ -151,6 +186,12 @@ export function Inputgroup021({
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-021-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-021-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -191,7 +232,9 @@ export function Inputgroup021({
             <summary
               ref={summaryRef}
               aria-haspopup="listbox"
-              aria-label={`Код страны: ${selected.title}, ${selected.code}`}
+              aria-label={pickerTemplate
+                .replace("{title}", selected.title)
+                .replace("{code}", selected.code)}
             >
               <span data-part="flag" aria-hidden="true">
                 {selected.flag}
@@ -199,7 +242,7 @@ export function Inputgroup021({
               {selected.code}
               <span data-part="chevron" aria-hidden="true" />
             </summary>
-            <ul data-part="listbox" role="listbox" aria-label="Страны">
+            <ul data-part="listbox" role="listbox" aria-label={listLabel}>
               {countries.map((country) => (
                 <li key={country.code} role="presentation">
                   <button
@@ -226,7 +269,7 @@ export function Inputgroup021({
             type="tel"
             inputMode="tel"
             autoComplete="tel-national"
-            placeholder="999 000-00-00"
+            placeholder={placeholder}
             aria-describedby={`${id}-hint`}
           />
           <input type="hidden" name={`${name}-code`} value={selected.code} />

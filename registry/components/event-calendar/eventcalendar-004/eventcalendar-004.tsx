@@ -18,7 +18,19 @@ export type Eventcalendar004Props = Omit<
   events?: Eventcalendar004Event[]
   days?: number
   heading?: string
+  /** Подсказка в шапке. {days} — глубина окна. */
+  hintText?: string
+  /** Имя списка для читалки. {heading} — заголовок. */
+  listLabel?: string
+  /**
+   * Подписи: компонент несёт русские, проект подставляет свои. Ключи —
+   * today, tomorrow, empty, due, deadline и шаблоны длительности
+   * hours ({hours}), minutes ({minutes}), hoursMinutes ({hours}, {minutes}).
+   */
+  labels?: Record<string, string>
   locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -29,14 +41,15 @@ export type Eventcalendar004Props = Omit<
 // «Сегодня» и «Завтра» подписаны словами — дату в эти два дня никто не читает.
 const STYLES = `
 :where([data-vibeui-block="eventcalendar-004"]){
---vibeui-eventcalendar-004-bg:oklch(1 0 0);
---vibeui-eventcalendar-004-fg:oklch(0.23 0.014 265);
---vibeui-eventcalendar-004-muted:oklch(0.6 0.014 265);
---vibeui-eventcalendar-004-border:oklch(0.91 0.006 265);
---vibeui-eventcalendar-004-line:oklch(0.96 0.004 265);
---vibeui-eventcalendar-004-accent:oklch(0.55 0.16 262);
---vibeui-eventcalendar-004-personal:oklch(0.6 0.13 165);
---vibeui-eventcalendar-004-deadline:oklch(0.58 0.19 25);
+--vibeui-eventcalendar-004-bg:transparent;
+--vibeui-eventcalendar-004-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
+--vibeui-eventcalendar-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-eventcalendar-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-eventcalendar-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-eventcalendar-004-line:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.01 265));
+--vibeui-eventcalendar-004-accent:light-dark(oklch(0.55 0.16 262),oklch(0.74 0.15 262));
+--vibeui-eventcalendar-004-personal:light-dark(oklch(0.6 0.13 165),oklch(0.76 0.12 165));
+--vibeui-eventcalendar-004-deadline:light-dark(oklch(0.58 0.19 25),oklch(0.74 0.17 25));
 --vibeui-eventcalendar-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="eventcalendar-004"]{
@@ -74,7 +87,7 @@ border-radius:0.5rem;
 position:sticky;top:0;z-index:1;
 display:flex;align-items:baseline;justify-content:space-between;gap:0.5rem;
 margin:0;padding:0.375rem 0;
-background:var(--vibeui-eventcalendar-004-bg);
+background:var(--vibeui-eventcalendar-004-panel);
 border-bottom:1px solid var(--vibeui-eventcalendar-004-border);
 font-size:0.75rem;font-weight:700;
 }
@@ -186,15 +199,37 @@ const DEFAULT_EVENTS: Eventcalendar004Event[] = [
   },
 ]
 
-function duration(value: number) {
-  const hours = Math.floor(value / 60)
-  const rest = value % 60
+const LABELS: Record<string, string> = {
+  today: "Сегодня",
+  tomorrow: "Завтра",
+  empty: "На ближайшие дни ничего не запланировано.",
+  due: "срок",
+  deadline: "дедлайн",
+  minutes: "{minutes} мин",
+  hours: "{hours} ч",
+  hoursMinutes: "{hours} ч {minutes} мин",
+}
 
-  if (hours === 0) {
-    return `${rest} мин`
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
   }
 
-  return rest === 0 ? `${hours} ч` : `${hours} ч ${rest} мин`
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -206,12 +241,35 @@ export function Eventcalendar004({
   events = DEFAULT_EVENTS,
   days = 7,
   heading = "Ближайшее",
+  hintText = "{days} дней вперёд",
+  listLabel = "{heading}: список событий",
+  labels = LABELS,
   locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Eventcalendar004Props) {
+  const label = (key: string) => labels[key] ?? LABELS[key]
+
+  const duration = (value: number) => {
+    const hours = Math.floor(value / 60)
+    const rest = value % 60
+
+    if (hours === 0) {
+      return label("minutes").replace("{minutes}", String(rest))
+    }
+
+    if (rest === 0) {
+      return label("hours").replace("{hours}", String(hours))
+    }
+
+    return label("hoursMinutes")
+      .replace("{hours}", String(hours))
+      .replace("{minutes}", String(rest))
+  }
+
   const from = new Date(`${today}T00:00:00Z`).getTime()
   const to = from + days * DAY
 
@@ -242,11 +300,11 @@ export function Eventcalendar004({
 
   const dayName = (key: string, offset: number) => {
     if (offset === 0) {
-      return "Сегодня"
+      return label("today")
     }
 
     if (offset === 1) {
-      return "Завтра"
+      return label("tomorrow")
     }
 
     return new Intl.DateTimeFormat(locale, {
@@ -264,6 +322,13 @@ export function Eventcalendar004({
 
   const palette = {
     ...(accent ? { "--vibeui-eventcalendar-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-eventcalendar-004-bg": background,
+          "--vibeui-eventcalendar-004-panel": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -281,17 +346,17 @@ export function Eventcalendar004({
       >
         <header data-part="head">
           <h3 data-part="heading">{heading}</h3>
-          <p data-part="hint">{days} дней вперёд</p>
+          <p data-part="hint">{hintText.replace("{days}", String(days))}</p>
         </header>
 
         <div
           data-part="feed"
           tabIndex={0}
           role="group"
-          aria-label={`${heading}: список событий`}
+          aria-label={listLabel.replace("{heading}", heading)}
         >
           {groups.length === 0 ? (
-            <p data-part="empty">На ближайшие дни ничего не запланировано.</p>
+            <p data-part="empty">{label("empty")}</p>
           ) : null}
 
           {groups.map((group) => (
@@ -315,7 +380,7 @@ export function Eventcalendar004({
                       {event.minutes ? (
                         <small>{duration(event.minutes)}</small>
                       ) : (
-                        <small>срок</small>
+                        <small>{label("due")}</small>
                       )}
                     </span>
 
@@ -323,7 +388,7 @@ export function Eventcalendar004({
                       <b>{event.title}</b>
                       {event.place ? <span>{event.place}</span> : null}
                       {event.tone === "deadline" ? (
-                        <span data-part="badge">дедлайн</span>
+                        <span data-part="badge">{label("deadline")}</span>
                       ) : null}
                     </span>
                   </li>

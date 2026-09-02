@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
 export type Toast015Props = Omit<
   ComponentPropsWithoutRef<"div">,
@@ -11,7 +11,13 @@ export type Toast015Props = Omit<
   message?: string
   avatarSrc?: string
   closeLabel?: string
+  /** Уточнение для крестика, {name} — имя собеседника. */
+  closeContext?: string
   replyLabel?: string
+  /** Цвет аватара и кнопки «Ответить». Пусто — штатная палитра. */
+  accent?: string
+  /** Подложка карточки. Пусто — штатная палитра. */
+  background?: string
   onReply?: () => void
   onClose?: () => void
 }
@@ -20,14 +26,19 @@ export type Toast015Props = Omit<
 // «Ответить», а не полем-обманкой. Аватар — картинка с провалом на
 // инициалы, если src не задан или не загрузился; текст обрезан в одну
 // строку, потому что письмо целиком читают в переписке, а не в тосте.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
+// подложка светлее фона страницы, а граница светлее подложки.
 const STYLES = `
 :where([data-vibeui-block="toast-015"]){
---vibeui-toast-015-bg:oklch(0.99 0.002 265);
---vibeui-toast-015-fg:oklch(0.22 0.014 265);
---vibeui-toast-015-muted:oklch(0.56 0.014 265);
---vibeui-toast-015-border:oklch(0.9 0.006 265);
---vibeui-toast-015-accent:oklch(0.58 0.16 260);
---vibeui-toast-015-accent-fg:oklch(0.99 0.004 265);
+--vibeui-toast-015-bg:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.014 265));
+--vibeui-toast-015-fg:light-dark(oklch(0.22 0.014 265),oklch(0.96 0.003 265));
+--vibeui-toast-015-muted:light-dark(oklch(0.56 0.014 265),oklch(0.76 0.01 265));
+--vibeui-toast-015-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
+--vibeui-toast-015-hover:light-dark(oklch(0.2 0.02 265 / 7%),oklch(1 0 0 / 12%));
+--vibeui-toast-015-shadow:light-dark(oklch(0.18 0.02 265 / 55%),oklch(0.05 0.01 265 / 70%));
+--vibeui-toast-015-accent:light-dark(oklch(0.55 0.16 260),oklch(0.7 0.15 260));
+--vibeui-toast-015-accent-fg:light-dark(oklch(0.99 0.004 265),oklch(0.18 0.03 260));
 --vibeui-toast-015-radius:0.875rem;
 --vibeui-toast-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -38,7 +49,7 @@ padding:0.75rem 0.875rem;border-radius:var(--vibeui-toast-015-radius);
 border:1px solid var(--vibeui-toast-015-border);
 background:var(--vibeui-toast-015-bg);color:var(--vibeui-toast-015-fg);
 font-family:var(--vibeui-toast-015-font);
-box-shadow:0 16px 34px -24px oklch(0.18 0.02 265 / 55%);
+box-shadow:0 16px 34px -24px var(--vibeui-toast-015-shadow);
 animation:vibeui-toast-015-in .22s ease;
 }
 @keyframes vibeui-toast-015-in{from{opacity:0;transform:translateY(-0.375rem)}to{opacity:1;transform:translateY(0)}}
@@ -73,10 +84,32 @@ width:1.75rem;height:1.75rem;padding:0;border-radius:9999px;
 color:var(--vibeui-toast-015-muted);font-size:1rem;line-height:1;
 transition:background-color .16s ease,color .16s ease;
 }
-[data-vibeui-block="toast-015"] [data-part="close"]:hover{background:oklch(0 0 0 / 6%);color:var(--vibeui-toast-015-fg)}
+[data-vibeui-block="toast-015"] [data-part="close"]:hover{background:var(--vibeui-toast-015-hover);color:var(--vibeui-toast-015-fg)}
 [data-vibeui-block="toast-015"] [data-part="close"]:focus-visible{outline:2px solid var(--vibeui-toast-015-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="toast-015"]{animation:none!important}[data-vibeui-block="toast-015"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 function initialsOf(name: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean)
@@ -94,7 +127,10 @@ export function Toast015({
   message = "Отправила обновлённый макет каталога, посмотри при случае",
   avatarSrc,
   closeLabel = "Закрыть",
+  closeContext = "сообщение от {name}",
   replyLabel = "Ответить",
+  accent = "",
+  background = "",
   onReply,
   onClose,
   className,
@@ -103,6 +139,17 @@ export function Toast015({
 }: Toast015Props) {
   const [broken, setBroken] = useState(false)
   const showImage = Boolean(avatarSrc) && !broken
+
+  const palette = {
+    ...(accent ? { "--vibeui-toast-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-toast-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -115,7 +162,7 @@ export function Toast015({
         role="status"
         aria-live="polite"
         className={className}
-        style={style}
+        style={palette}
       >
         <span data-part="avatar" aria-hidden="true">
           {showImage ? (
@@ -135,7 +182,7 @@ export function Toast015({
           <button
             type="button"
             data-part="close"
-            aria-label={`${closeLabel}: сообщение от ${name}`}
+            aria-label={`${closeLabel}: ${closeContext.replace("{name}", name)}`}
             onClick={() => onClose?.()}
           >
             ×

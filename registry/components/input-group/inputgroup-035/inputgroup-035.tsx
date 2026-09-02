@@ -16,6 +16,12 @@ export type Inputgroup035Props = Omit<
   onChange?: (value: string) => void
   onResult?: (value: string, available: boolean) => void
   hint?: string
+  /** Текст результата по ключам статуса: idle, checking, available, taken. */
+  resultText?: Record<string, string>
+  /** Подписи кнопки: ключи check и checking. */
+  actionText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -31,16 +37,16 @@ const TAKEN: string[] = ["admin", "support", "vibeui", "root"]
 // относится уже к другой строке.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-035"]){
---vibeui-inputgroup-035-surface:oklch(1 0 0);
---vibeui-inputgroup-035-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-035-fg:oklch(0.22 0.014 265);
---vibeui-inputgroup-035-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-035-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-035-fixed:oklch(0.96 0.004 265);
---vibeui-inputgroup-035-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-035-accent:oklch(0.55 0.14 150);
---vibeui-inputgroup-035-available:oklch(0.56 0.14 155);
---vibeui-inputgroup-035-taken:oklch(0.56 0.19 25);
+--vibeui-inputgroup-035-surface:transparent;
+--vibeui-inputgroup-035-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-inputgroup-035-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-035-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-inputgroup-035-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
+--vibeui-inputgroup-035-fixed:light-dark(oklch(0.965 0.003 265),oklch(0.31 0.012 265));
+--vibeui-inputgroup-035-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-inputgroup-035-accent:light-dark(oklch(0.55 0.14 150),oklch(0.77 0.13 150));
+--vibeui-inputgroup-035-available:light-dark(oklch(0.56 0.14 155),oklch(0.79 0.13 155));
+--vibeui-inputgroup-035-taken:light-dark(oklch(0.56 0.19 25),oklch(0.75 0.15 25));
 --vibeui-inputgroup-035-radius:0.75rem;
 --vibeui-inputgroup-035-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -117,6 +123,33 @@ const RESULT_TEXT: Record<Status, string> = {
   taken: "Уже занято — попробуйте другое имя.",
 }
 
+const ACTION_TEXT: Record<string, string> = {
+  check: "Проверить",
+  checking: "Проверяем…",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Сцепка «поле имени + проверка занятости»: результат виден под рамкой,
  * поле остаётся редактируемым в любом состоянии, а правка после ответа
@@ -133,6 +166,9 @@ export function Inputgroup035({
   onChange,
   onResult,
   hint = "Проверка имитационная: подставьте сюда реальный запрос к серверу.",
+  resultText = RESULT_TEXT,
+  actionText = ACTION_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -153,8 +189,16 @@ export function Inputgroup035({
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-035-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-035-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const actionKey = status === "checking" ? "checking" : "check"
 
   const check = () => {
     const handle = value.trim()
@@ -237,7 +281,7 @@ export function Inputgroup035({
                 />
               </svg>
             )}
-            {status === "checking" ? "Проверяем…" : "Проверить"}
+            {actionText[actionKey] ?? ACTION_TEXT[actionKey]}
           </button>
         </div>
         <p
@@ -249,7 +293,7 @@ export function Inputgroup035({
           {(status === "available" || status === "taken") && (
             <span data-part="dot" aria-hidden="true" />
           )}
-          {RESULT_TEXT[status]}
+          {resultText[status] ?? RESULT_TEXT[status]}
         </p>
         <p data-part="hint" id={`${id}-hint`}>
           {hint}

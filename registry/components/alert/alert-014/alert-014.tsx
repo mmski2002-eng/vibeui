@@ -13,19 +13,24 @@ export type Alert014Props = Omit<
   updated?: string
   statusLabel?: string
   statusHref?: string
+  /** Пусто — подложки нет, сводка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: состояние сервиса. Точка слева пульсирует только когда
 // что-то не так — ровное состояние не должно моргать на экране часами.
 // Время последнего обновления обязательно: сводка без отметки времени не
 // отличается от зависшей страницы.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-014"]){
---vibeui-alert-014-fg:oklch(0.24 0.016 265);
---vibeui-alert-014-muted:oklch(0.5 0.014 265);
---vibeui-alert-014-bg:oklch(1 0 0);
---vibeui-alert-014-border:oklch(0.9 0.006 265);
---vibeui-alert-014-state:oklch(0.58 0.15 152);
+--vibeui-alert-014-fg:light-dark(oklch(0.24 0.016 265),oklch(0.95 0.006 265));
+--vibeui-alert-014-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-014-bg:transparent;
+--vibeui-alert-014-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-014-state:light-dark(oklch(0.58 0.15 152),oklch(0.74 0.16 152));
 --vibeui-alert-014-radius:0.75rem;
 --vibeui-alert-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -42,9 +47,9 @@ border-radius:var(--vibeui-alert-014-radius);
 background:var(--vibeui-alert-014-bg);color:var(--vibeui-alert-014-fg);
 font-family:var(--vibeui-alert-014-font);
 }
-[data-vibeui-block="alert-014"][data-state="degraded"]{--vibeui-alert-014-state:oklch(0.68 0.15 70)}
-[data-vibeui-block="alert-014"][data-state="down"]{--vibeui-alert-014-state:oklch(0.56 0.19 25)}
-[data-vibeui-block="alert-014"][data-state="maintenance"]{--vibeui-alert-014-state:oklch(0.58 0.18 262)}
+[data-vibeui-block="alert-014"][data-state="degraded"]{--vibeui-alert-014-state:light-dark(oklch(0.68 0.15 70),oklch(0.8 0.15 70))}
+[data-vibeui-block="alert-014"][data-state="down"]{--vibeui-alert-014-state:light-dark(oklch(0.56 0.19 25),oklch(0.71 0.18 25))}
+[data-vibeui-block="alert-014"][data-state="maintenance"]{--vibeui-alert-014-state:light-dark(oklch(0.58 0.18 262),oklch(0.76 0.15 262))}
 [data-vibeui-block="alert-014"] [data-part="dot"]{
 position:relative;flex:none;width:0.625rem;height:0.625rem;border-radius:9999px;
 background:var(--vibeui-alert-014-state);
@@ -81,6 +86,28 @@ border-bottom:1px solid transparent;transition:border-color .16s ease;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сводка состояния сервиса: точка, отметка времени и ссылка на статус.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -91,10 +118,21 @@ export function Alert014({
   updated = "обновлено 2 минуты назад",
   statusLabel = "Статус сервисов",
   statusHref = "#status",
+  background = "",
   className,
   style,
   ...props
 }: Alert014Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-alert-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-alert-014" precedence="medium">
@@ -106,7 +144,7 @@ export function Alert014({
         data-state={state}
         role={state === "down" ? "alert" : "status"}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="dot" aria-hidden="true" />
         <span data-part="text">

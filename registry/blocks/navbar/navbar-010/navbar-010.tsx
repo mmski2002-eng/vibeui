@@ -14,6 +14,16 @@ export type Navbar010Props = {
   accountLabel?: string
   accountHref?: string
   deliveryNote?: string
+  /** Подпись кнопки поиска: компонент несёт русскую. */
+  findLabel?: string
+  /** Подпись поля поиска для скринридера: компонент несёт русскую. */
+  searchLabel?: string
+  /** Подпись корзины; {count} и {total} подставляют число товаров и сумму. */
+  cartLabel?: string
+  /** Подпись списка категорий для скринридера: компонент несёт русскую. */
+  navLabel?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -23,15 +33,18 @@ export type Navbar010Props = {
 // поиск, аккаунт и корзина с числом товаров и суммой. Сумма выводится рядом
 // со счётчиком намеренно — она отвечает на вопрос «сколько я уже набрал»
 // без перехода в корзину. Категории живут во втором ряду с прокруткой.
+//
+// Тема берётся из color-scheme окружения через light-dark(): шапка темнеет
+// вместе с контекстом и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="navbar-010"]){
---vibeui-navbar-010-bg:oklch(1 0 0);
---vibeui-navbar-010-ink:oklch(0.22 0.012 60);
---vibeui-navbar-010-muted:oklch(0.53 0.012 60);
---vibeui-navbar-010-border:oklch(0.9 0.008 60);
---vibeui-navbar-010-accent:oklch(0.62 0.19 34);
---vibeui-navbar-010-accent-fg:oklch(0.99 0 0);
---vibeui-navbar-010-soft:oklch(0.97 0.008 60);
+--vibeui-navbar-010-bg:transparent;
+--vibeui-navbar-010-ink:light-dark(oklch(0.22 0.012 60),oklch(0.94 0.006 60));
+--vibeui-navbar-010-muted:light-dark(oklch(0.53 0.012 60),oklch(0.71 0.012 60));
+--vibeui-navbar-010-border:light-dark(oklch(0.9 0.008 60),oklch(0.35 0.012 60));
+--vibeui-navbar-010-accent:light-dark(oklch(0.62 0.19 34),oklch(0.72 0.17 34));
+--vibeui-navbar-010-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 34));
+--vibeui-navbar-010-soft:light-dark(oklch(0.97 0.008 60),oklch(0.27 0.012 60));
 --vibeui-navbar-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -138,6 +151,28 @@ const DEFAULT_CATEGORIES: Navbar010Category[] = [
   { label: "Распродажа", href: "#sale" },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Шапка магазина: поиск, аккаунт и корзина со счётчиком и суммой заказа. */
 export function Navbar010({
   brand = "Дом и лад",
@@ -148,12 +183,23 @@ export function Navbar010({
   accountLabel = "Кабинет",
   accountHref = "#account",
   deliveryNote = "Доставим по Москве завтра, если оформить до 20:00",
+  findLabel = "Найти",
+  searchLabel = "Поиск по товарам",
+  cartLabel = "Корзина: {count} товара на {total}",
+  navLabel = "Категории товаров",
+  background = "",
   accent,
   className,
   style,
 }: Navbar010Props) {
   const palette = {
     ...(accent ? { "--vibeui-navbar-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-navbar-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -178,10 +224,10 @@ export function Navbar010({
               type="search"
               name="q"
               placeholder={searchPlaceholder}
-              aria-label="Поиск по товарам"
+              aria-label={searchLabel}
             />
             <button data-part="find" type="submit">
-              Найти
+              {findLabel}
             </button>
           </form>
           <div data-part="side">
@@ -191,7 +237,9 @@ export function Navbar010({
             <a
               data-part="cart"
               href="#cart"
-              aria-label={`Корзина: ${cartCount} товара на ${cartTotal}`}
+              aria-label={cartLabel
+                .replace("{count}", String(cartCount))
+                .replace("{total}", cartTotal)}
             >
               <span data-part="basket" aria-hidden="true" />
               <span data-part="count" aria-hidden="true">
@@ -202,7 +250,7 @@ export function Navbar010({
               </span>
             </a>
           </div>
-          <nav data-part="rail" aria-label="Категории товаров">
+          <nav data-part="rail" aria-label={navLabel}>
             {categories.map((category) => (
               <a key={category.href} href={category.href}>
                 {category.label}

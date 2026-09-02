@@ -15,6 +15,8 @@ export type Hero001Props = {
   highlights?: string[]
   accent?: string
   accentForeground?: string
+  /** Пусто — подложки нет, секция ложится на фон страницы. */
+  background?: string
   className?: string
 }
 
@@ -30,15 +32,15 @@ export type Hero001Props = {
 // проекте; специфичность (0,2,0) — выше утилит, поэтому они переопределяются.
 const STYLES = `
 :where([data-vibeui-block="hero-001"]){
---vibeui-hero-bg:oklch(0.16 0.014 266);
---vibeui-hero-fg:oklch(0.98 0.003 266);
---vibeui-hero-muted:oklch(0.75 0.019 266);
---vibeui-hero-border:oklch(1 0 0 / 14%);
---vibeui-hero-accent:oklch(0.72 0.163 264);
---vibeui-hero-accent-fg:oklch(0.17 0.02 266);
+--vibeui-hero-bg:transparent;
+--vibeui-hero-fg:light-dark(oklch(0.19 0.016 266),oklch(0.98 0.003 266));
+--vibeui-hero-muted:light-dark(oklch(0.5 0.021 266),oklch(0.75 0.019 266));
+--vibeui-hero-border:light-dark(oklch(0.16 0.014 266 / 14%),oklch(1 0 0 / 18%));
+--vibeui-hero-accent:light-dark(oklch(0.55 0.19 264),oklch(0.72 0.163 264));
+--vibeui-hero-accent-fg:light-dark(oklch(0.99 0.004 266),oklch(0.17 0.02 266));
 --vibeui-hero-ring:color-mix(in oklab, var(--vibeui-hero-accent) 75%, transparent);
 --vibeui-hero-glow:color-mix(in oklab, var(--vibeui-hero-accent) 38%, transparent);
---vibeui-hero-grid:oklch(1 0 0 / 6%);
+--vibeui-hero-grid:light-dark(oklch(0.16 0.014 266 / 7%),oklch(1 0 0 / 6%));
 --vibeui-hero-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="hero-001"]{container-type:inline-size}
@@ -64,22 +66,51 @@ function cx(...classes: (string | false | undefined)[]) {
   return classes.filter(Boolean).join(" ")
 }
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлый фон достался бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 export function Hero001({
-  badge = "Now in public beta",
-  title = "Ship your product",
-  titleAccent = "twice as fast",
-  description = "Everything your team needs to design, build and launch — in one workspace that stays out of the way.",
-  primaryAction = { label: "Start building", href: "#" },
-  secondaryAction = { label: "Book a demo", href: "#" },
-  highlights = ["No credit card", "14-day trial", "SOC 2 compliant"],
+  badge = "Уже в открытой бете",
+  title = "Запускайте продукт",
+  titleAccent = "вдвое быстрее",
+  description = "Всё, что нужно команде, чтобы проектировать, собирать и выпускать, — в одном пространстве, которое не мешает работать.",
+  primaryAction = { label: "Начать сборку", href: "#" },
+  secondaryAction = { label: "Записаться на демо", href: "#" },
+  highlights = ["Без карты", "14 дней бесплатно", "Соответствие SOC 2"],
   accent,
   accentForeground,
+  background = "",
   className,
 }: Hero001Props) {
   const style = {
     ...(accent ? { "--vibeui-hero-accent": accent } : {}),
     ...(accentForeground
       ? { "--vibeui-hero-accent-fg": accentForeground }
+      : {}),
+    ...(background
+      ? {
+          "--vibeui-hero-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
       : {}),
   } as CSSProperties
 

@@ -11,6 +11,8 @@ export type Features003Props = {
   title?: string
   lede?: string
   columns?: Features003Column[]
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -22,13 +24,18 @@ export type Features003Props = {
 // пара шрифтов делает работу, которую в других блоках делают рамки и тени.
 // Колонки равной высоты, ссылка прижата к низу, поэтому нижний край ровный
 // даже при разной длине описаний.
+//
+// Тема берётся из color-scheme окружения через light-dark(): секция темнеет
+// вместе с контекстом и не выкладывает под себя плашку. Тёмная ветка — не
+// инверсия светлой: линейка там светлее фона, но не белая, иначе рубрика
+// начинает спорить с заголовком.
 const STYLES = `
 :where([data-vibeui-block="features-003"]){
---vibeui-features-003-bg:oklch(0.98 0.006 90);
---vibeui-features-003-fg:oklch(0.19 0.012 80);
---vibeui-features-003-muted:oklch(0.48 0.014 80);
---vibeui-features-003-line:oklch(0.24 0.012 80);
---vibeui-features-003-accent:oklch(0.45 0.13 30);
+--vibeui-features-003-bg:transparent;
+--vibeui-features-003-fg:light-dark(oklch(0.19 0.012 80),oklch(0.95 0.006 80));
+--vibeui-features-003-muted:light-dark(oklch(0.48 0.014 80),oklch(0.71 0.012 80));
+--vibeui-features-003-line:light-dark(oklch(0.24 0.012 80),oklch(0.74 0.012 80));
+--vibeui-features-003-accent:light-dark(oklch(0.45 0.13 30),oklch(0.74 0.13 40));
 --vibeui-features-003-serif:ui-serif,Georgia,"Iowan Old Style","Times New Roman",serif;
 --vibeui-features-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -105,17 +112,46 @@ const DEFAULT_COLUMNS: Features003Column[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Три колонки с описаниями: верхние линейки, порядковые номера, serif-заголовки. */
 export function Features003({
   title = "Три принципа, на которых держится библиотека",
   lede = "Не список галочек, а редакционная полоса: каждая колонка объясняет одно решение и ведёт в документацию.",
   columns = DEFAULT_COLUMNS,
+  background = "",
   accent,
   className,
   style,
 }: Features003Props) {
   const palette = {
     ...(accent ? { "--vibeui-features-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-features-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

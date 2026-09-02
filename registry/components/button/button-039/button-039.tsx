@@ -13,8 +13,8 @@ const STYLES = `
 :where([data-vibeui-block="button-039"]){
 --vibeui-button-039-step:1;
 --vibeui-button-039-unit:2rem;
---vibeui-button-039-accent:oklch(0.52 0.17 320);
---vibeui-button-039-fg:oklch(0.99 0.01 320);
+--vibeui-button-039-accent:light-dark(oklch(0.52 0.17 320),oklch(0.66 0.18 320));
+--vibeui-button-039-fg:light-dark(oklch(0.99 0.01 320),oklch(0.98 0.012 320));
 --vibeui-button-039-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-039"]{

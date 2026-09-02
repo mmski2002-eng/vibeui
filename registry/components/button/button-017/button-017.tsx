@@ -21,9 +21,9 @@ export type Button017Props = Omit<
 // зафиксирована по самой длинной подписи: смена текста не должна её дёргать.
 const STYLES = `
 :where([data-vibeui-block="button-017"]){
---vibeui-button-017-accent:oklch(0.55 0.17 265);
+--vibeui-button-017-accent:light-dark(oklch(0.55 0.17 265),oklch(0.63 0.18 265));
 --vibeui-button-017-fg:oklch(0.99 0.01 265);
---vibeui-button-017-done:oklch(0.55 0.15 152);
+--vibeui-button-017-done:light-dark(oklch(0.55 0.15 152),oklch(0.6 0.15 152));
 --vibeui-button-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-017"]{

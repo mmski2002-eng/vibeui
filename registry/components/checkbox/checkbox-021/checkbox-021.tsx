@@ -16,7 +16,11 @@ export type Checkbox021Props = Omit<
   title?: string
   nodes?: Checkbox021Node[]
   defaultValue?: string[]
+  /** Счётчик внизу. {count} — выдано, {total} — всего листьев. */
+  countText?: string
   onChange?: (value: string[]) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,15 +28,19 @@ export type Checkbox021Props = Omit<
 // хранится только для листьев: ветка отмечена, когда отмечены все её листья,
 // и промежуточна, когда часть. Ветки лежат в <details>, поэтому сворачиваются
 // без JS, а линии слева показывают вложенность на любой глубине.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="checkbox-021"]){
---vibeui-checkbox-021-bg:oklch(1 0 0);
---vibeui-checkbox-021-fg:oklch(0.22 0.014 265);
---vibeui-checkbox-021-muted:oklch(0.57 0.014 265);
---vibeui-checkbox-021-border:oklch(0.9 0.006 265);
---vibeui-checkbox-021-line:oklch(0.93 0.005 265);
---vibeui-checkbox-021-hover:oklch(0.975 0.003 265);
---vibeui-checkbox-021-accent:oklch(0.52 0.15 195);
+--vibeui-checkbox-021-bg:transparent;
+--vibeui-checkbox-021-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-checkbox-021-muted:light-dark(oklch(0.57 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-021-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-checkbox-021-line:light-dark(oklch(0.93 0.005 265),oklch(0.33 0.01 265));
+--vibeui-checkbox-021-hover:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.009 265));
+--vibeui-checkbox-021-accent:light-dark(oklch(0.52 0.15 195),oklch(0.68 0.14 195));
+--vibeui-checkbox-021-on-accent:light-dark(var(--vibeui-checkbox-021-on-accent),oklch(0.19 0.03 195));
 --vibeui-checkbox-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="checkbox-021"]{
@@ -73,13 +81,13 @@ border-color:transparent;background:var(--vibeui-checkbox-021-accent);
 [data-vibeui-block="checkbox-021"] input:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.21875rem;height:0.40625rem;margin:-0.28125rem 0 0 -0.109375rem;
-border-right:2px solid oklch(0.99 0.01 195);border-bottom:2px solid oklch(0.99 0.01 195);
+border-right:2px solid var(--vibeui-checkbox-021-on-accent);border-bottom:2px solid var(--vibeui-checkbox-021-on-accent);
 transform:rotate(45deg);
 }
 [data-vibeui-block="checkbox-021"] input:indeterminate::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.5rem;height:2px;margin:-1px 0 0 -0.25rem;border-radius:1px;
-background:oklch(0.99 0.01 195);
+background:var(--vibeui-checkbox-021-on-accent);
 }
 [data-vibeui-block="checkbox-021"] input:focus-visible{outline:2px solid var(--vibeui-checkbox-021-accent);outline-offset:2px}
 [data-vibeui-block="checkbox-021"] summary{
@@ -205,6 +213,28 @@ function Row({
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Дерево чекбоксов с наследованием: ветка переключает все свои листья,
  * а её состояние считается из них. Один файл, ноль зависимостей.
  */
@@ -212,7 +242,9 @@ export function Checkbox021({
   title = "Права доступа",
   nodes = DEFAULT_NODES,
   defaultValue = ["pages-read", "media-read"],
+  countText = "Выдано прав: {count} из {total}",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -222,6 +254,12 @@ export function Checkbox021({
 
   const palette = {
     ...(accent ? { "--vibeui-checkbox-021-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-checkbox-021-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -255,7 +293,9 @@ export function Checkbox021({
           ))}
         </ul>
         <p data-part="foot" role="status">
-          Выдано прав: {value.length} из {total}
+          {countText
+            .replace("{count}", String(value.length))
+            .replace("{total}", String(total))}
         </p>
       </section>
     </>

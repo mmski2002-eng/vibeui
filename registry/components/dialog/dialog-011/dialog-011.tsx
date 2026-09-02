@@ -10,6 +10,8 @@ export type Dialog011Props = {
   primaryLabel?: string
   primaryHref?: string
   closeLabel?: string
+  /** Подложка окна. Пусто — цвет из палитры компонента. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -21,11 +23,11 @@ export type Dialog011Props = {
 // может быть внешних файлов, а заглушка-серый прямоугольник выглядит поломкой.
 const STYLES = `
 :where([data-vibeui-block="dialog-011"]){
---vibeui-dialog-011-fg:oklch(0.22 0.016 265);
---vibeui-dialog-011-muted:oklch(0.5 0.014 265);
---vibeui-dialog-011-bg:oklch(1 0 0);
---vibeui-dialog-011-border:oklch(0.89 0.006 265);
---vibeui-dialog-011-accent:oklch(0.55 0.2 262);
+--vibeui-dialog-011-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
+--vibeui-dialog-011-muted:light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dialog-011-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-dialog-011-border:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265));
+--vibeui-dialog-011-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-dialog-011-radius:1rem;
 --vibeui-dialog-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -41,10 +43,10 @@ background:var(--vibeui-dialog-011-bg);color:var(--vibeui-dialog-011-fg);
 [data-vibeui-dialog-011-window]{
 position:fixed;inset:0;margin:auto;height:fit-content;
 width:min(26rem,calc(100vw - 2rem));box-sizing:border-box;padding:0;overflow:hidden;
-border:1px solid var(--vibeui-dialog-011-border,oklch(0.89 0.006 265));
+border:1px solid var(--vibeui-dialog-011-border,light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265)));
 border-radius:var(--vibeui-dialog-011-radius,1rem);
-background:var(--vibeui-dialog-011-bg,oklch(1 0 0));
-color:var(--vibeui-dialog-011-fg,oklch(0.22 0.016 265));
+background:var(--vibeui-dialog-011-bg,light-dark(oklch(1 0 0),oklch(0.24 0.012 265)));
+color:var(--vibeui-dialog-011-fg,light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265)));
 font-family:var(--vibeui-dialog-011-font,ui-sans-serif,system-ui,sans-serif);
 box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 45%);
 opacity:0;transform:scale(0.97);
@@ -57,8 +59,8 @@ transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,ove
 [data-vibeui-dialog-011-window] [data-part="cover"]{
 position:relative;aspect-ratio:16 / 9;
 background:
-radial-gradient(110% 90% at 18% 10%,color-mix(in oklab,var(--vibeui-dialog-011-accent,oklch(0.55 0.2 262)) 55%,transparent),transparent 62%),
-linear-gradient(155deg,oklch(0.93 0.03 265),oklch(0.84 0.05 250));
+radial-gradient(110% 90% at 18% 10%,color-mix(in oklab,var(--vibeui-dialog-011-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262))) 55%,transparent),transparent 62%),
+linear-gradient(155deg,light-dark(oklch(0.93 0.03 265),oklch(0.38 0.04 265)),light-dark(oklch(0.84 0.05 250),oklch(0.3 0.05 250)));
 }
 [data-vibeui-dialog-011-window] [data-part="cover"]::after{
 content:"";position:absolute;inset:auto 0 0;height:35%;
@@ -66,10 +68,10 @@ background:linear-gradient(to top,oklch(0.2 0.02 265 / 22%),transparent);
 }
 [data-vibeui-dialog-011-window] [data-part="body"]{padding:1.125rem 1.25rem 1.25rem}
 [data-vibeui-dialog-011-window] [data-part="title"]{margin:0 0 0.25rem;font-size:1.0625rem;font-weight:640;line-height:1.3}
-[data-vibeui-dialog-011-window] [data-part="description"]{margin:0;font-size:0.875rem;line-height:1.55;color:var(--vibeui-dialog-011-muted,oklch(0.5 0.014 265))}
+[data-vibeui-dialog-011-window] [data-part="description"]{margin:0;font-size:0.875rem;line-height:1.55;color:var(--vibeui-dialog-011-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)))}
 [data-vibeui-dialog-011-window] [data-part="meta"]{
 display:block;margin-top:0.625rem;font-size:0.75rem;
-color:var(--vibeui-dialog-011-muted,oklch(0.5 0.014 265));font-variant-numeric:tabular-nums;
+color:var(--vibeui-dialog-011-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)));font-variant-numeric:tabular-nums;
 }
 [data-vibeui-dialog-011-window] [data-part="actions"]{display:flex;justify-content:flex-end;gap:0.5rem;margin-top:1.125rem}
 [data-vibeui-dialog-011-window] [data-part="close"],
@@ -78,15 +80,38 @@ cursor:pointer;font:inherit;font-size:0.875rem;font-weight:600;
 display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;
 border-radius:0.5rem;border:1px solid transparent;text-decoration:none;
 }
-[data-vibeui-dialog-011-window] [data-part="close"]{background:transparent;color:inherit;border-color:var(--vibeui-dialog-011-border,oklch(0.89 0.006 265))}
-[data-vibeui-dialog-011-window] [data-part="primary"]{background:var(--vibeui-dialog-011-accent,oklch(0.55 0.2 262));color:oklch(1 0 0)}
+[data-vibeui-dialog-011-window] [data-part="close"]{background:transparent;color:inherit;border-color:var(--vibeui-dialog-011-border,light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265)))}
+[data-vibeui-dialog-011-window] [data-part="primary"]{background:var(--vibeui-dialog-011-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));color:light-dark(oklch(1 0 0),oklch(0.17 0.02 265))}
 [data-vibeui-dialog-011-window] [data-part="primary"]:hover{filter:brightness(0.94)}
-[data-vibeui-dialog-011-window] :focus-visible{outline:2px solid var(--vibeui-dialog-011-accent,oklch(0.55 0.2 262));outline-offset:2px}
+[data-vibeui-dialog-011-window] :focus-visible{outline:2px solid var(--vibeui-dialog-011-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-011"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-011-window]{transition:none!important;opacity:1;transform:none}
 }
 `
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлый фон достался бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Окно с обложкой во всю ширину: превью материала и действие.
@@ -101,12 +126,19 @@ export function Dialog011({
   primaryLabel = "Опубликовать",
   primaryHref = "#",
   closeLabel = "Закрыть",
+  background = "",
   accent,
   className,
   style,
 }: Dialog011Props) {
   const palette = {
     ...(accent ? { "--vibeui-dialog-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dialog-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

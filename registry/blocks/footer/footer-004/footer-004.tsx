@@ -9,7 +9,11 @@ export type Footer004Props = {
   brand?: string
   legal?: string
   links?: Footer004Link[]
+  /** Подпись группы служебных ссылок для скринридера. */
+  linksLabel?: string
   backLabel?: string
+  /** Пусто — подложки нет, подвал лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -19,13 +23,16 @@ export type Footer004Props = {
 // подвал на четыре колонки под лендингом из двух экранов выглядит как
 // чужая деталь. Ссылка «наверх» стоит справа и на узкой раскладке не
 // прячется — на длинной странице она единственный быстрый путь обратно.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подвал темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="footer-004"]){
---vibeui-footer-004-bg:oklch(1 0 0);
---vibeui-footer-004-ink:oklch(0.22 0.012 255);
---vibeui-footer-004-muted:oklch(0.52 0.012 255);
---vibeui-footer-004-border:oklch(0.91 0.006 255);
---vibeui-footer-004-accent:oklch(0.5 0.16 258);
+--vibeui-footer-004-bg:transparent;
+--vibeui-footer-004-ink:light-dark(oklch(0.22 0.012 255),oklch(0.94 0.006 255));
+--vibeui-footer-004-muted:light-dark(oklch(0.52 0.012 255),oklch(0.7 0.012 255));
+--vibeui-footer-004-border:light-dark(oklch(0.91 0.006 255),oklch(0.34 0.012 255));
+--vibeui-footer-004-accent:light-dark(oklch(0.5 0.16 258),oklch(0.74 0.14 258));
 --vibeui-footer-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -79,18 +86,48 @@ const DEFAULT_LINKS: Footer004Link[] = [
   { label: "Контакты", href: "#contacts" },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Минимальный подвал в одну строку: бренд, копирайт, три ссылки и «наверх». */
 export function Footer004({
   brand = "Полёт",
   legal = "© 2026",
   links = DEFAULT_LINKS,
+  linksLabel = "Служебные ссылки",
   backLabel = "Наверх",
+  background = "",
   accent,
   className,
   style,
 }: Footer004Props) {
   const palette = {
     ...(accent ? { "--vibeui-footer-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-footer-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -110,7 +147,7 @@ export function Footer004({
             {brand}
           </a>
           <p data-part="legal">{legal}</p>
-          <nav data-part="links" aria-label="Служебные ссылки">
+          <nav data-part="links" aria-label={linksLabel}>
             {links.map((link) => (
               <a key={link.href} href={link.href}>
                 {link.label}

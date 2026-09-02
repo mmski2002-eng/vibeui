@@ -7,6 +7,14 @@ export type Rating002Props = Omit<
   legend?: string
   name?: string
   defaultValue?: number
+  /** Подпись деления для скринридера. {value} — оценка. */
+  stepLabel?: string
+  /** Строка под рядом. {value} — выбранная оценка. */
+  valueText?: string
+  /** Локаль записи числа: от неё зависит разделитель дроби. */
+  locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,18 +25,21 @@ export type Rating002Props = Omit<
 // любая дробность сводится к одному числу процентов. Зоны нажатия — десять
 // прозрачных меток поверх ряда, по половине звезды каждая, поэтому выбор
 // работает мышью, а стрелками — как в обычной группе радиокнопок.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="rating-002"]){
---vibeui-rating-002-surface:oklch(1 0 0);
---vibeui-rating-002-shell:oklch(0.9 0.006 265);
---vibeui-rating-002-fg:oklch(0.23 0.014 265);
---vibeui-rating-002-muted:oklch(0.55 0.014 265);
---vibeui-rating-002-empty:oklch(0.88 0.008 265);
---vibeui-rating-002-accent:oklch(0.75 0.16 78);
+--vibeui-rating-002-surface:transparent;
+--vibeui-rating-002-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-rating-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-rating-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-rating-002-empty:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-rating-002-accent:light-dark(oklch(0.75 0.16 78),oklch(0.84 0.15 80));
 --vibeui-rating-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-rating-002-fill:0%;
 }
-/* Своя светлая подложка: оценку показывают поверх любого фона. */
+/* Подложки по умолчанию нет: оценка ложится на фон страницы. */
 [data-vibeui-block="rating-002"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:17rem;box-sizing:border-box;margin:0;padding:0.875rem;
@@ -102,6 +113,28 @@ font-variant-numeric:tabular-nums;
 const STEPS = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Оценка звёздами с половинками, собранная на радиокнопках и :has().
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -109,6 +142,10 @@ export function Rating002({
   legend = "Насколько понравилось",
   name = "vibeui-rating-002",
   defaultValue = 3.5,
+  stepLabel = "{value} из 5",
+  valueText = "Ваша оценка: {value} из 5",
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -116,6 +153,12 @@ export function Rating002({
 }: Rating002Props) {
   const palette = {
     ...(accent ? { "--vibeui-rating-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-rating-002-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -145,7 +188,10 @@ export function Rating002({
                 name={name}
                 value={step}
                 defaultChecked={step === defaultValue}
-                aria-label={`${step} из 5`}
+                aria-label={stepLabel.replace(
+                  "{value}",
+                  step.toLocaleString(locale),
+                )}
               />
               <span
                 data-part="hit"
@@ -158,7 +204,7 @@ export function Rating002({
         <div data-part="values" aria-live="polite">
           {STEPS.map((step) => (
             <p key={step} data-part="value" data-value={step}>
-              Ваша оценка: {step.toString().replace(".", ",")} из 5
+              {valueText.replace("{value}", step.toLocaleString(locale))}
             </p>
           ))}
         </div>

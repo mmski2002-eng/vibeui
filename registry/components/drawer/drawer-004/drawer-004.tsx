@@ -12,6 +12,13 @@ export type Drawer004Props = Omit<
   status?: string
   fields?: { label: string; value: string }[]
   events?: { time: string; text: string }[]
+  /** Подписи разметки: компонент несёт русские, проект подставляет свои. */
+  historyLabel?: string
+  closeLabel?: string
+  dismissLabel?: string
+  openLabel?: string
+  /** Пусто — подложки нет, триггер лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,11 +28,14 @@ export type Drawer004Props = Omit<
 // выложены словарём, история — списком с вертикальной линией.
 const STYLES = `
 :where([data-vibeui-block="drawer-004"]){
---vibeui-drawer-004-bg:oklch(1 0 0);
---vibeui-drawer-004-fg:oklch(0.21 0.014 265);
---vibeui-drawer-004-muted:oklch(0.55 0.014 265);
---vibeui-drawer-004-border:oklch(0.91 0.006 265);
---vibeui-drawer-004-accent:oklch(0.55 0.17 265);
+--vibeui-drawer-004-bg:transparent;
+--vibeui-drawer-004-surface:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
+--vibeui-drawer-004-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-drawer-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-drawer-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-drawer-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
+--vibeui-drawer-004-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.02 265));
+--vibeui-drawer-004-hover:light-dark(oklch(0.96 0.004 265),oklch(0.29 0.013 265));
 --vibeui-drawer-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="drawer-004"]{
@@ -42,7 +52,7 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 [data-vibeui-block="drawer-004"] dialog{
 position:fixed;inset:0 0 0 auto;margin:0;
 width:min(26rem,100vw);max-width:100vw;height:100dvh;max-height:100dvh;
-padding:0;border:0;background:var(--vibeui-drawer-004-bg);color:inherit;
+padding:0;border:0;background:var(--vibeui-drawer-004-surface);color:inherit;
 box-shadow:-24px 0 60px -30px oklch(0.2 0.02 265 / 55%);
 translate:100% 0;transition:translate .22s ease,overlay .22s allow-discrete,display .22s allow-discrete;
 }
@@ -74,7 +84,7 @@ appearance:none;border:0;cursor:pointer;background:transparent;margin-left:auto;
 display:flex;align-items:center;justify-content:center;
 width:2rem;height:2rem;border-radius:0.5rem;color:var(--vibeui-drawer-004-muted);
 }
-[data-vibeui-block="drawer-004"] [data-part="close"]:hover{background:oklch(0.96 0.004 265);color:var(--vibeui-drawer-004-fg)}
+[data-vibeui-block="drawer-004"] [data-part="close"]:hover{background:var(--vibeui-drawer-004-hover);color:var(--vibeui-drawer-004-fg)}
 [data-vibeui-block="drawer-004"] [data-part="close"]:focus-visible{outline:2px solid var(--vibeui-drawer-004-accent);outline-offset:2px}
 [data-vibeui-block="drawer-004"] [data-part="cross"]{position:relative;width:0.625rem;height:0.625rem}
 [data-vibeui-block="drawer-004"] [data-part="cross"]::before,
@@ -107,7 +117,7 @@ border-left:1.5px solid var(--vibeui-drawer-004-border);
 [data-vibeui-block="drawer-004"] [data-part="event"]::before{
 content:"";position:absolute;left:-1.4375rem;top:0.3125rem;
 width:0.5rem;height:0.5rem;border-radius:9999px;
-background:var(--vibeui-drawer-004-bg);border:1.5px solid var(--vibeui-drawer-004-accent);
+background:var(--vibeui-drawer-004-surface);border:1.5px solid var(--vibeui-drawer-004-accent);
 }
 [data-vibeui-block="drawer-004"] [data-part="time"]{display:block;font-size:0.6875rem;color:var(--vibeui-drawer-004-muted)}
 [data-vibeui-block="drawer-004"] [data-part="text"]{font-size:0.8125rem}
@@ -121,7 +131,7 @@ border:1px solid var(--vibeui-drawer-004-border);background:transparent;color:in
 font:inherit;font-size:0.875rem;font-weight:600;
 }
 [data-vibeui-block="drawer-004"] [data-part="foot"] button[data-primary="true"]{
-border-color:transparent;background:var(--vibeui-drawer-004-accent);color:oklch(0.99 0.01 265);
+border-color:transparent;background:var(--vibeui-drawer-004-accent);color:var(--vibeui-drawer-004-on-accent);
 }
 [data-vibeui-block="drawer-004"] [data-part="foot"] button:focus-visible{outline:2px solid var(--vibeui-drawer-004-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){
@@ -153,6 +163,28 @@ function initials(value: string) {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Ящик деталей записи: поля словарём и история событий рядом со списком.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -162,6 +194,11 @@ export function Drawer004({
   status = "Оплачен",
   fields = DEFAULT_FIELDS,
   events = DEFAULT_EVENTS,
+  historyLabel = "История",
+  closeLabel = "Закрыть детали",
+  dismissLabel = "Закрыть",
+  openLabel = "Открыть целиком",
+  background = "",
   accent,
   className,
   style,
@@ -171,6 +208,13 @@ export function Drawer004({
 
   const palette = {
     ...(accent ? { "--vibeui-drawer-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-drawer-004-bg": background,
+          "--vibeui-drawer-004-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -213,7 +257,7 @@ export function Drawer004({
               <button
                 type="button"
                 data-part="close"
-                aria-label="Закрыть детали"
+                aria-label={closeLabel}
                 onClick={() => drawer.current?.close()}
               >
                 <span data-part="cross" aria-hidden="true" />
@@ -228,7 +272,7 @@ export function Drawer004({
                   </div>
                 ))}
               </dl>
-              <p data-part="section">История</p>
+              <p data-part="section">{historyLabel}</p>
               <ul data-part="events">
                 {events.map((event) => (
                   <li key={event.time} data-part="event">
@@ -240,10 +284,10 @@ export function Drawer004({
             </div>
             <div data-part="foot">
               <button type="button" onClick={() => drawer.current?.close()}>
-                Закрыть
+                {dismissLabel}
               </button>
               <button type="button" data-primary="true">
-                Открыть целиком
+                {openLabel}
               </button>
             </div>
           </div>

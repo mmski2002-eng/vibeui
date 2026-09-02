@@ -14,6 +14,8 @@ export type Hero009Props = {
   stats?: Hero009Stat[]
   footnote?: string
   accent?: string
+  /** Пусто — подложки нет, секция ложится на фон страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -25,12 +27,12 @@ export type Hero009Props = {
 // читаться как одно длинное число. Счётчики разделены линиями, а не карточками.
 const STYLES = `
 :where([data-vibeui-block="hero-009"]){
---vibeui-hero-009-bg:oklch(0.99 0.004 85);
---vibeui-hero-009-fg:oklch(0.2 0.014 85);
---vibeui-hero-009-muted:oklch(0.5 0.014 85);
---vibeui-hero-009-line:oklch(0.88 0.01 85);
---vibeui-hero-009-accent:oklch(0.46 0.11 45);
---vibeui-hero-009-accent-fg:oklch(0.99 0 0);
+--vibeui-hero-009-bg:transparent;
+--vibeui-hero-009-fg:light-dark(oklch(0.2 0.014 85),oklch(0.95 0.006 85));
+--vibeui-hero-009-muted:light-dark(oklch(0.5 0.014 85),oklch(0.73 0.012 85));
+--vibeui-hero-009-line:light-dark(oklch(0.88 0.01 85),oklch(0.37 0.011 85));
+--vibeui-hero-009-accent:light-dark(oklch(0.46 0.11 45),oklch(0.72 0.13 45));
+--vibeui-hero-009-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.19 0.03 45));
 --vibeui-hero-009-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -94,6 +96,28 @@ const DEFAULT_STATS: Hero009Stat[] = [
   { value: "97", unit: "%", label: "Установок без ручных правок вёрстки" },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлый фон достался бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Hero со счётчиками: узкая колонка текста и три крупные цифры на линиях. */
 export function Hero009({
   eyebrow = "Цифры за год",
@@ -103,11 +127,18 @@ export function Hero009({
   stats = DEFAULT_STATS,
   footnote = "Данные за период с января по декабрь, по проектам с включённой телеметрией.",
   accent,
+  background = "",
   className,
   style,
 }: Hero009Props) {
   const palette = {
     ...(accent ? { "--vibeui-hero-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-hero-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -8,9 +8,15 @@ export type Toggle010Props = Omit<
   "children" | "onChange"
 > & {
   label?: string
+  /** Подписи состояния по ключам on и off. */
+  stateText?: Record<string, string>
+  /** Имена кнопки по ключам on и off: что произойдёт по нажатию. */
+  actionText?: Record<string, string>
   defaultPressed?: boolean
   onChange?: (pressed: boolean) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: кнопка звука с тремя столбиками эквалайзера вместо
@@ -18,12 +24,12 @@ export type Toggle010Props = Omit<
 // постоянно видна подпись состояния — не всплывающая, а часть разметки.
 const STYLES = `
 :where([data-vibeui-block="toggle-010"]){
---vibeui-toggle-010-bg:oklch(1 0 0);
---vibeui-toggle-010-fg:oklch(0.22 0.014 265);
---vibeui-toggle-010-muted:oklch(0.55 0.014 265);
---vibeui-toggle-010-border:oklch(0.9 0.006 265);
---vibeui-toggle-010-accent:oklch(0.58 0.17 250);
---vibeui-toggle-010-off:oklch(0.7 0.01 265);
+--vibeui-toggle-010-bg:transparent;
+--vibeui-toggle-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-toggle-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-toggle-010-accent:light-dark(oklch(0.58 0.17 250),oklch(0.76 0.14 250));
+--vibeui-toggle-010-off:light-dark(oklch(0.7 0.01 265),oklch(0.48 0.012 265));
 --vibeui-toggle-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="toggle-010"]{
@@ -74,23 +80,65 @@ margin:0.125rem 0 0;font-size:0.75rem;color:var(--vibeui-toggle-010-muted);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="toggle-010"] *{animation:none!important;transition:none!important}}
 `
 
+const STATE_TEXT: Record<string, string> = {
+  on: "Звук выключен",
+  off: "Звук включён",
+}
+
+const ACTION_TEXT: Record<string, string> = {
+  on: "Включить звук",
+  off: "Выключить звук",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Кнопка звука со столбиками эквалайзера и постоянной подписью состояния
  * рядом. Один файл, ноль зависимостей, собственная палитра.
  */
 export function Toggle010({
   label = "Звук в плеере",
+  stateText = STATE_TEXT,
+  actionText = ACTION_TEXT,
   defaultPressed = false,
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Toggle010Props) {
   const [pressed, setPressed] = useState(defaultPressed)
+  const key = pressed ? "on" : "off"
 
   const palette = {
     ...(accent ? { "--vibeui-toggle-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-toggle-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -108,7 +156,7 @@ export function Toggle010({
         <button
           type="button"
           aria-pressed={pressed}
-          aria-label={pressed ? "Включить звук" : "Выключить звук"}
+          aria-label={actionText[key] ?? ACTION_TEXT[key]}
           onClick={() => {
             setPressed(!pressed)
             onChange?.(!pressed)
@@ -120,7 +168,7 @@ export function Toggle010({
         </button>
         <div data-part="text">
           <p data-part="state" role="status">
-            {pressed ? "Звук выключен" : "Звук включён"}
+            {stateText[key] ?? STATE_TEXT[key]}
           </p>
           <p data-part="hint">{label}</p>
         </div>

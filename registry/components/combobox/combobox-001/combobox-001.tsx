@@ -16,9 +16,13 @@ export type Combobox001Props = Omit<
   searchPlaceholder?: string
   options?: string[]
   emptyLabel?: string
+  /** Подпись фильтра для скринридера. {label} — подпись поля. */
+  filterLabel?: string
   defaultValue?: string
   defaultOpen?: boolean
   onSelect?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,13 +32,14 @@ export type Combobox001Props = Omit<
 // кнопку и стирает фильтр, поэтому «полунабранный» текст не утекает в форму.
 const STYLES = `
 :where([data-vibeui-block="combobox-001"]){
---vibeui-combobox-001-bg:oklch(1 0 0);
---vibeui-combobox-001-fg:oklch(0.22 0.014 265);
---vibeui-combobox-001-muted:oklch(0.53 0.014 265);
---vibeui-combobox-001-border:oklch(0.9 0.006 265);
---vibeui-combobox-001-field:oklch(0.985 0.002 265);
---vibeui-combobox-001-active:oklch(0.955 0.022 265);
---vibeui-combobox-001-accent:oklch(0.55 0.17 265);
+--vibeui-combobox-001-bg:transparent;
+--vibeui-combobox-001-panel:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-combobox-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-combobox-001-muted:light-dark(oklch(0.53 0.014 265),oklch(0.7 0.012 265));
+--vibeui-combobox-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-combobox-001-field:light-dark(oklch(0.985 0.002 265),oklch(0.3 0.012 265));
+--vibeui-combobox-001-active:light-dark(oklch(0.955 0.022 265),oklch(0.36 0.028 265));
+--vibeui-combobox-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-combobox-001-radius:0.625rem;
 --vibeui-combobox-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -73,7 +78,7 @@ transform:rotate(45deg);transition:transform .16s ease;
 display:flex;flex-direction:column;gap:0.25rem;padding:0.375rem;
 border:1px solid var(--vibeui-combobox-001-border);
 border-radius:var(--vibeui-combobox-001-radius);
-background:var(--vibeui-combobox-001-bg);
+background:var(--vibeui-combobox-001-panel);
 }
 [data-vibeui-block="combobox-001"] input{
 box-sizing:border-box;width:100%;height:2.125rem;padding:0 0.625rem;
@@ -109,6 +114,28 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая плашка иначе досталась бы тексту
+ * тёмной ветки, потому что light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox с фильтром и полной клавиатурой: значение берётся только из
  * списка, фильтр значением не становится.
  */
@@ -118,9 +145,11 @@ export function Combobox001({
   searchPlaceholder = "Поиск по списку",
   options = DEFAULT_OPTIONS,
   emptyLabel = "Ничего не нашлось",
+  filterLabel = "{label}: фильтр",
   defaultValue = "",
   defaultOpen = false,
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -147,6 +176,12 @@ export function Combobox001({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -230,7 +265,7 @@ export function Combobox001({
               role="combobox"
               autoComplete="off"
               placeholder={searchPlaceholder}
-              aria-label={`${label}: фильтр`}
+              aria-label={filterLabel.replace("{label}", label)}
               aria-expanded="true"
               aria-controls={`${id}-list`}
               aria-autocomplete="list"

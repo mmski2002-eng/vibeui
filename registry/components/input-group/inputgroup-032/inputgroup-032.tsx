@@ -16,7 +16,31 @@ export type Inputgroup032Props = Omit<
   onChange?: (value: string) => void
   onScan?: (value: string) => void
   hint?: string
+  /** Подписи состояния сканера: ключи online и offline. */
+  deviceText?: Record<string, string>
+  /** Подписи кнопки: ключи idle и scanning. */
+  buttonText?: Record<string, string>
+  /** Строки статуса: ключи empty, scanning и done; {value} — считанный код. */
+  statusText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
+}
+
+const DEVICE_TEXT: Record<string, string> = {
+  online: "Сканер подключён",
+  offline: "Сканер не найден",
+}
+
+const BUTTON_TEXT: Record<string, string> = {
+  idle: "Сканировать",
+  scanning: "Сканируем…",
+}
+
+const STATUS_TEXT: Record<string, string> = {
+  empty: "Код ещё не считан",
+  scanning: "Идёт сканирование, подождите",
+  done: "Считан код: {value}",
 }
 
 function randomCode() {
@@ -33,16 +57,16 @@ function randomCode() {
 // по кусочкам. Таймер чистится при размонтировании и при повторном запуске.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-032"]){
---vibeui-inputgroup-032-surface:oklch(1 0 0);
---vibeui-inputgroup-032-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-032-fg:oklch(0.22 0.014 265);
---vibeui-inputgroup-032-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-032-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-032-fixed:oklch(0.96 0.004 265);
---vibeui-inputgroup-032-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-032-accent:oklch(0.55 0.14 220);
---vibeui-inputgroup-032-online:oklch(0.56 0.14 155);
---vibeui-inputgroup-032-offline:oklch(0.56 0.19 25);
+--vibeui-inputgroup-032-surface:transparent;
+--vibeui-inputgroup-032-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-inputgroup-032-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-032-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-inputgroup-032-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
+--vibeui-inputgroup-032-fixed:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-inputgroup-032-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-inputgroup-032-accent:light-dark(oklch(0.55 0.14 220),oklch(0.76 0.13 220));
+--vibeui-inputgroup-032-online:light-dark(oklch(0.56 0.14 155),oklch(0.75 0.13 155));
+--vibeui-inputgroup-032-offline:light-dark(oklch(0.56 0.19 25),oklch(0.75 0.16 25));
 --vibeui-inputgroup-032-radius:0.75rem;
 --vibeui-inputgroup-032-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-inputgroup-032-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
@@ -121,6 +145,28 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-inputgroup-032-mut
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сцепка «поле кода + сканирование + статус устройства»: точка статуса
  * рядом с меткой показывает, подключён ли сканер, кнопка запускает
  * имитацию съёмки таймером и блокирует поле на время сканирования.
@@ -136,6 +182,10 @@ export function Inputgroup032({
   onChange,
   onScan,
   hint = "Демонстрационное сканирование: код генерируется на месте, вместо таймера подключите настоящий сканер.",
+  deviceText = DEVICE_TEXT,
+  buttonText = BUTTON_TEXT,
+  statusText = STATUS_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -157,8 +207,20 @@ export function Inputgroup032({
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-032-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-032-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const statusKey = scanning ? "scanning" : value ? "done" : "empty"
+  const statusLine = (statusText[statusKey] ?? STATUS_TEXT[statusKey]).replace(
+    "{value}",
+    value,
+  )
 
   const scan = () => {
     if (!connected || scanning) return
@@ -192,7 +254,9 @@ export function Inputgroup032({
           <label htmlFor={id}>{label}</label>
           <span data-part="device" data-online={connected} role="status">
             <span data-part="dot" aria-hidden="true" />
-            {connected ? "Сканер подключён" : "Сканер не найден"}
+            {connected
+              ? (deviceText.online ?? DEVICE_TEXT.online)
+              : (deviceText.offline ?? DEVICE_TEXT.offline)}
           </span>
         </div>
         <div data-part="group">
@@ -244,15 +308,13 @@ export function Inputgroup032({
                 <path d="M4 8h8" strokeLinecap="round" />
               </svg>
             )}
-            {scanning ? "Сканируем…" : "Сканировать"}
+            {scanning
+              ? (buttonText.scanning ?? BUTTON_TEXT.scanning)
+              : (buttonText.idle ?? BUTTON_TEXT.idle)}
           </button>
         </div>
         <p data-part="status" id={`${id}-status`} aria-live="polite">
-          {scanning
-            ? "Идёт сканирование, подождите"
-            : value
-              ? `Считан код: ${value}`
-              : "Код ещё не считан"}
+          {statusLine}
         </p>
         <p data-part="hint" id={`${id}-hint`}>
           {hint}

@@ -18,7 +18,25 @@ export type Commerce023Props = {
   paid?: string
   cta?: string
   fiscal?: string
+  /** Подпись таблицы позиций. */
+  linesLabel?: string
+  /** Шаблон ставки налога у позиции, {rate} — процент. */
+  vatRateText?: string
+  /** Подписи строк итога. */
+  goodsLabel?: string
+  discountLabel?: string
+  shippingLabel?: string
+  totalLabel?: string
+  paidLabel?: string
+  /** Подпись разбивки включённого налога. */
+  vatText?: string
+  /** Локаль для разрядов в суммах. */
+  locale?: string
+  /** Шаблон суммы, {value} — число с разрядами. */
+  priceText?: string
   accent?: string
+  /** Пусто — подложки нет, чек лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,12 +50,12 @@ export type Commerce023Props = {
 // чтобы карточка читалась чеком без единой картинки.
 const STYLES = `
 :where([data-vibeui-block="commerce-023"]){
---vibeui-commerce-023-bg:oklch(0.98 0.003 265);
---vibeui-commerce-023-paper:oklch(1 0 0);
---vibeui-commerce-023-fg:oklch(0.21 0.014 265);
---vibeui-commerce-023-muted:oklch(0.55 0.014 265);
---vibeui-commerce-023-border:oklch(0.9 0.006 265);
---vibeui-commerce-023-accent:oklch(0.55 0.2 262);
+--vibeui-commerce-023-bg:transparent;
+--vibeui-commerce-023-paper:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-commerce-023-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-023-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-023-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-023-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
 --vibeui-commerce-023-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-commerce-023-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;
@@ -117,11 +135,27 @@ const DEFAULT_LINES: Commerce023Line[] = [
   { title: "Набор для ухода", count: 1, price: 1900, vat: 10 },
 ]
 
-const money = (value: number) =>
-  `${(Math.round(value * 100) / 100).toLocaleString("ru-RU", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })} ₽`
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Чек с позициями и налогом: НДС посчитан по ставкам и подписан «в том числе».
@@ -138,10 +172,30 @@ export function Commerce023({
   paid = "Картой •• 4417",
   cta = "Скачать PDF",
   fiscal = "ФН 9960440301234567 · ФД 4417 · ФПД 2837451190",
+  linesLabel = "Позиции",
+  vatRateText = "НДС {rate}%",
+  goodsLabel = "Товары",
+  discountLabel = "Скидка",
+  shippingLabel = "Доставка",
+  totalLabel = "Итого",
+  paidLabel = "Оплата",
+  vatText = "В том числе НДС:",
+  locale = "ru-RU",
+  priceText = "{value} ₽",
   accent,
+  background = "",
   className,
   style,
 }: Commerce023Props) {
+  const money = (value: number) =>
+    priceText.replace(
+      "{value}",
+      (Math.round(value * 100) / 100).toLocaleString(locale, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }),
+    )
+
   // Суммы считаются из позиций, поэтому чек сходится после любой правки.
   const goods = lines.reduce((sum, line) => sum + line.price * line.count, 0)
   const total = goods - discount + shipping
@@ -160,6 +214,12 @@ export function Commerce023({
 
   const palette = {
     ...(accent ? { "--vibeui-commerce-023-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-023-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -185,7 +245,7 @@ export function Commerce023({
             </div>
 
             <table>
-              <caption>Позиции</caption>
+              <caption>{linesLabel}</caption>
               <tbody>
                 {lines.map((line) => (
                   <tr key={line.title}>
@@ -193,7 +253,13 @@ export function Commerce023({
                       {line.title}
                       <span data-part="mult">
                         {line.count} × {money(line.price)}
-                        <span data-part="rate"> · НДС {line.vat ?? 20}%</span>
+                        <span data-part="rate">
+                          {" · "}
+                          {vatRateText.replace(
+                            "{rate}",
+                            String(line.vat ?? 20),
+                          )}
+                        </span>
                       </span>
                     </td>
                     <td data-col="sum">{money(line.price * line.count)}</td>
@@ -204,29 +270,29 @@ export function Commerce023({
 
             <dl>
               <div data-part="pair">
-                <dt>Товары</dt>
+                <dt>{goodsLabel}</dt>
                 <dd>{money(goods)}</dd>
               </div>
               <div data-part="pair">
-                <dt>Скидка</dt>
+                <dt>{discountLabel}</dt>
                 <dd>−{money(discount)}</dd>
               </div>
               <div data-part="pair">
-                <dt>Доставка</dt>
+                <dt>{shippingLabel}</dt>
                 <dd>{money(shipping)}</dd>
               </div>
               <div data-part="pair" data-total="true">
-                <dt>Итого</dt>
+                <dt>{totalLabel}</dt>
                 <dd>{money(total)}</dd>
               </div>
               <div data-part="pair">
-                <dt>Оплата</dt>
+                <dt>{paidLabel}</dt>
                 <dd>{paid}</dd>
               </div>
             </dl>
 
             <p data-part="vat">
-              В том числе НДС:{" "}
+              {vatText}{" "}
               {rates.map((rate, index) => (
                 <span key={rate}>
                   {index > 0 ? " · " : ""}

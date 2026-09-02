@@ -13,6 +13,10 @@ export type Table007Props = Omit<
 > & {
   rows?: Table007Row[]
   caption?: string
+  /** Заголовки колонок: компонент несёт русские, проект подставляет свои. */
+  columnText?: Record<string, string>
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,14 +24,17 @@ export type Table007Props = Omit<
 // Заголовки колонок дублируются в data-label и выводятся через ::before, иначе
 // в карточке остаются голые значения без смысла. Ширину меряет контейнерный
 // запрос: таблица может стоять в узкой колонке на широком экране.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-007"]){
---vibeui-table-007-bg:oklch(1 0 0);
---vibeui-table-007-fg:oklch(0.24 0.014 265);
---vibeui-table-007-muted:oklch(0.56 0.014 265);
---vibeui-table-007-border:oklch(0.92 0.006 265);
---vibeui-table-007-head:oklch(0.975 0.003 265);
---vibeui-table-007-accent:oklch(0.55 0.2 262);
+--vibeui-table-007-bg:transparent;
+--vibeui-table-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-007-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-table-007-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
+--vibeui-table-007-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
 --vibeui-table-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="table-007"]{
@@ -91,11 +98,40 @@ const DEFAULT_ROWS: Table007Row[] = [
 ]
 
 const COLUMNS = [
-  { key: "order", title: "Счёт" },
-  { key: "customer", title: "Заказчик" },
-  { key: "status", title: "Статус" },
-  { key: "sum", title: "Сумма", numeric: true },
+  { key: "order" },
+  { key: "customer" },
+  { key: "status" },
+  { key: "sum", numeric: true },
 ] as const
+
+const COLUMN_TEXT: Record<string, string> = {
+  order: "Счёт",
+  customer: "Заказчик",
+  status: "Статус",
+  sum: "Сумма",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Таблица, которая в узкой колонке становится списком карточек.
@@ -104,6 +140,8 @@ const COLUMNS = [
 export function Table007({
   rows = DEFAULT_ROWS,
   caption = "Счета за март",
+  columnText = COLUMN_TEXT,
+  background = "",
   accent,
   className,
   style,
@@ -111,6 +149,12 @@ export function Table007({
 }: Table007Props) {
   const palette = {
     ...(accent ? { "--vibeui-table-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-table-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -136,7 +180,7 @@ export function Table007({
                     scope="col"
                     data-align={"numeric" in column ? "end" : undefined}
                   >
-                    {column.title}
+                    {columnText[column.key] ?? COLUMN_TEXT[column.key]}
                   </th>
                 ))}
               </tr>
@@ -147,7 +191,9 @@ export function Table007({
                   {COLUMNS.map((column) => (
                     <td
                       key={column.key}
-                      data-label={column.title}
+                      data-label={
+                        columnText[column.key] ?? COLUMN_TEXT[column.key]
+                      }
                       data-align={"numeric" in column ? "end" : undefined}
                     >
                       <span data-part="cell">{row[column.key]}</span>

@@ -25,7 +25,8 @@
           "summary": "Число с кнопками «минус» и «плюс»: поле остаётся вводимым, границы подписаны, край диапазона выключает кнопку. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-number-001-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "ручной ввод: кнопками до сорока семи не дожимают",
             "хранение строкой — иначе пустое поле в процессе ввода схлопывается в ноль",
             "disabled на краях диапазона вместо молчаливого игнорирования",
@@ -35,10 +36,14 @@
           "adapt": [
             "label, min, max, step и defaultValue",
             "unit — подпись единиц",
+            "rangeText — строка под полем с подстановками {unit}, {min} и {max}",
+            "decrementLabel и incrementLabel — подписи кнопок для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через проп accent",
             "ширину блока"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Стрелки браузера убраны намеренно: две пары кнопок в одном поле путают.",
             "Дробный шаг требует своего округления: Number не спасает от 0.30000000000000004.",
             "Компонент неуправляемый снаружи: чтобы поднять значение наверх, добавьте свой onChange.",
@@ -60,6 +65,25 @@
             "default": 4,
             "min": 1,
             "max": 20
+          },
+          {
+            "prop": "unit",
+            "label": "Единицы",
+            "type": "text",
+            "default": "шт.",
+            "maxLength": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -69,7 +93,8 @@
               "summary": "A number with minus and plus buttons: the field stays typeable, the bounds are labelled, the edge disables a button. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-number-001-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "typing: nobody clicks their way to forty-seven",
                 "storing the value as a string — otherwise an in-progress empty field collapses to zero",
                 "disabled at the range edges instead of silently ignoring the press",
@@ -79,10 +104,14 @@
               "adapt": [
                 "label, min, max, step and defaultValue",
                 "unit — the unit caption",
+                "rangeText — the line under the field, with the {unit}, {min} and {max} placeholders",
+                "decrementLabel and incrementLabel — the button captions for screen readers",
+                "background — the component background; empty means no background, taking the page colour",
                 "the accent through the accent prop",
                 "the block width"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The browser spinners are removed on purpose: two pairs of buttons in one field confuse.",
                 "A fractional step needs your own rounding: Number will not save you from 0.30000000000000004.",
                 "The component is self-contained: add your own onChange to lift the value up.",
@@ -97,11 +126,31 @@
               },
               "defaultValue": {
                 "label": "Value"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": "pcs"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Number Stepper"
+            "title": "Number Stepper",
+            "preview": {
+              "props": {
+                "label": "Seats",
+                "unit": "pcs",
+                "decrementLabel": "Fewer",
+                "incrementLabel": "More",
+                "rangeText": "{unit} · from {min} to {max}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "background"]
       }
     },
     {
@@ -128,7 +177,8 @@
           "summary": "Счётчик товара с шагом в одну упаковку: считает упаковки, показывает штуки, на минимуме превращает «минус» в удаление. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-number-002-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: строку заказа показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "шаг в одну упаковку: половина упаковки со склада не уедет, поэтому промежуточные значения недостижимы",
             "пересчёт в штуки под полем: упаковки считают, а получают штуки, и это надо видеть до оформления",
             "смену роли кнопки на минимуме: обнулять счётчик «в никуда» пользователи не догадываются, а строку убрать надо",
@@ -141,9 +191,14 @@
             "min и max — границы заказа",
             "defaultPacks — сколько упаковок в заказе изначально",
             "unit — название штучной единицы",
+            "packText — строка про размер упаковки с подстановками {pack} и {unit}",
+            "removeLabel, decrementLabel и incrementLabel — подписи кнопок для скринридера",
+            "emptyText — текст пустого заказа",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через проп accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Значение считается в упаковках: наружу отдавайте packs * pack, иначе склад получит не то число.",
             "max задан в упаковках, а не в штуках: 24 здесь — это 24 упаковки.",
             "Компонент неуправляемый снаружи: чтобы поднять значение наверх, добавьте свой onChange.",
@@ -165,6 +220,33 @@
             "default": 6,
             "min": 1,
             "max": 24
+          },
+          {
+            "prop": "defaultPacks",
+            "label": "Упаковок",
+            "type": "number",
+            "default": 2,
+            "min": 0,
+            "max": 24
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "бут.",
+            "maxLength": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -174,7 +256,8 @@
               "summary": "A quantity counter stepping by a whole pack: it counts packs, shows pieces, and turns minus into remove at the minimum. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-number-002-* palette — do not swap it for your theme tokens",
-                "its own light surface: the order row gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the one-pack step: half a pack never leaves the warehouse, so in-between values stay unreachable",
                 "the piece total under the field: people count packs but receive pieces, and that has to be visible before checkout",
                 "the button role swap at the minimum: nobody thinks of zeroing a counter, yet the row still needs removing",
@@ -187,9 +270,14 @@
                 "min and max — the order bounds",
                 "defaultPacks — how many packs start in the order",
                 "unit — the name of the single-piece unit",
+                "packText — the pack-size line, with the {pack} and {unit} placeholders",
+                "removeLabel, decrementLabel and incrementLabel — the button captions for screen readers",
+                "emptyText — the wording of an empty order",
+                "background — the component background; empty means no background, taking the page colour",
                 "the accent through the accent prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The value is kept in packs: emit packs * pack outwards or the warehouse gets the wrong number.",
                 "max is expressed in packs, not pieces: 24 here means 24 packs.",
                 "The component is self-contained: add your own onChange to lift the value up.",
@@ -204,11 +292,36 @@
               },
               "pack": {
                 "label": "Pack size"
+              },
+              "defaultPacks": {
+                "label": "Packs"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": "btl"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Pack Counter"
+            "title": "Pack Counter",
+            "preview": {
+              "props": {
+                "label": "Bottled water",
+                "unit": "btl",
+                "packText": "pack — {pack} {unit}",
+                "removeLabel": "Remove from order",
+                "decrementLabel": "One pack fewer",
+                "incrementLabel": "One pack more",
+                "emptyText": "Not in the order"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["pack", "defaultPacks", "background"]
       }
     },
     {
@@ -235,7 +348,8 @@
           "summary": "Числовое поле с единицей измерения в отдельной зоне справа: единица не исчезает при вводе и не отрывается от числа. Серверный, ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-number-003-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "единицу отдельной зоной, а не плейсхолдером: плейсхолдер пропадает ровно тогда, когда число появилось",
             "выравнивание числа вправо: между значением и единицей не должно быть пустоты",
             "aria-hidden на единице: скринридер получит её из подписи, а не вторым обрывком строки",
@@ -248,9 +362,11 @@
             "min, max, step и defaultValue",
             "hint — пояснение под полем",
             "name — имя поля в форме",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через проп accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Стрелки браузера убраны: они перекрывают зону единицы и ломают выравнивание.",
             "Длинная единица («кВт·ч») сжимает поле — при таких значениях увеличьте max-width блока.",
             "Единица не участвует в значении: форма отправит только число.",
@@ -271,6 +387,26 @@
             "type": "text",
             "default": "м²",
             "maxLength": 8
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Значение",
+            "type": "number",
+            "default": 54,
+            "min": 10,
+            "max": 400
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -280,7 +416,8 @@
               "summary": "A number field with the unit in a separate zone on the right: it never disappears while typing and never drifts away from the number. Server component, zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-number-003-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the unit as a separate zone rather than a placeholder: a placeholder vanishes exactly when the number appears",
                 "the right-aligned number: no gap is allowed between the value and its unit",
                 "aria-hidden on the unit: a screen reader takes it from the label, not as a second fragment of text",
@@ -293,9 +430,11 @@
                 "min, max, step and defaultValue",
                 "hint — the explanation under the field",
                 "name — the form field name",
+                "background — the component background; empty means no background, taking the page colour",
                 "the accent through the accent prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The browser spinners are removed: they overlap the unit zone and break the alignment.",
                 "A long unit (\"kWh\") squeezes the field — widen the block max-width for those.",
                 "The unit is not part of the value: the form submits the number alone.",
@@ -311,11 +450,28 @@
               "unit": {
                 "label": "Unit",
                 "default": "m²"
+              },
+              "defaultValue": {
+                "label": "Value"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Unit Suffix Field"
+            "title": "Unit Suffix Field",
+            "preview": {
+              "props": {
+                "label": "Apartment area",
+                "unit": "m²",
+                "hint": "Measured by the inner walls, balcony excluded."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "background"]
       }
     },
     {
@@ -342,7 +498,8 @@
           "summary": "Поле процента с честной проверкой 0–100: ошибка не прячется автоподстановкой, а подсвечивается и подписывается. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-number-004-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "отказ от молчаливого зажатия: 150 вместо 15 — опечатка, и подмена на 100 спрячет её до самой оплаты",
             "пару data-invalid и aria-invalid: подсветка обязана дублироваться для скринридера",
             "aria-live на пояснении: текст ошибки меняется без перезагрузки и должен быть озвучен",
@@ -353,10 +510,12 @@
             "label — подпись поля",
             "defaultValue — стартовый процент",
             "error — текст ошибки под полем",
-            "формулировку подсказки в спокойном состоянии",
+            "hintText — подсказка в спокойном состоянии с подстановкой {rest}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через проп accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не блокирует отправку формы: проверьте invalid снаружи перед submit.",
             "Полоса ограничена нулём и сотней даже при неверном вводе — иначе она вылезает за рамку.",
             "Дробный процент разрешён вводом, но подсказка округляет остаток до целого.",
@@ -378,6 +537,25 @@
             "default": 15,
             "min": 0,
             "max": 100
+          },
+          {
+            "prop": "error",
+            "label": "Текст ошибки",
+            "type": "text",
+            "default": "Процент бывает только от 0 до 100.",
+            "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -387,7 +565,8 @@
               "summary": "A percent field with honest 0–100 validation: the error is not hidden by autocorrection, it is highlighted and captioned. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-number-004-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the refusal to clamp silently: 150 instead of 15 is a typo, and rewriting it to 100 hides it all the way to checkout",
                 "the data-invalid and aria-invalid pair: the highlight has to be mirrored for screen readers",
                 "aria-live on the explanation: the error text changes without a reload and must be announced",
@@ -398,10 +577,12 @@
                 "label — the field caption",
                 "defaultValue — the starting percent",
                 "error — the error text under the field",
-                "the wording of the calm-state hint",
+                "hintText — the calm-state hint, with the {rest} placeholder",
+                "background — the component background; empty means no background, taking the page colour",
                 "the accent through the accent prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not block submission: check invalid on your side before submit.",
                 "The bar is capped at zero and a hundred even for invalid input — otherwise it escapes the frame.",
                 "A fractional percent is allowed on input, but the hint rounds the remainder to a whole number.",
@@ -416,11 +597,29 @@
               },
               "defaultValue": {
                 "label": "Percent"
+              },
+              "error": {
+                "label": "Error text",
+                "default": "A percent only goes from 0 to 100."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Percent Guard"
+            "title": "Percent Guard",
+            "preview": {
+              "props": {
+                "label": "Discount share",
+                "error": "A percent only goes from 0 to 100.",
+                "hintText": "{rest}% of the price remains"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -447,7 +646,8 @@
           "summary": "Числовое поле с переключением единиц: смена единицы пересчитывает значение, а эквивалент во второй единице подписан всегда. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-number-005-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "пересчёт при смене единицы: оставить 12.5 и переименовать «кг» в «фунты» — значит молча испортить данные",
             "единую базу в килограммах: два независимых числа разойдутся после первого же ручного ввода",
             "одно место округления: округление на каждом переключении уводит значение при щелчках туда-обратно",
@@ -459,9 +659,15 @@
             "defaultValue — стартовое значение",
             "defaultUnit — единица, в которой поле открывается",
             "точность округления в функции round",
+            "unitText — подписи кнопок переключателя",
+            "mirrorUnitText — названия единиц в строке эквивалента",
+            "mirrorText — строка эквивалента с подстановкой {value}",
+            "unitsLabel — подпись группы кнопок для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через проп accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Коэффициент 2.2046226218 зашит в константу: для других единиц замените её и подписи кнопок.",
             "Наружу отдавайте килограммы, а не показанное число: иначе получатель не знает, в чём измерено.",
             "Округление до десятых — компромисс: для аптечных весов увеличьте множитель в round.",
@@ -482,6 +688,26 @@
             "type": "select",
             "default": "кг",
             "options": ["кг", "фунты"]
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Значение",
+            "type": "number",
+            "default": 12.5,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -491,7 +717,8 @@
               "summary": "A number field with a unit switch: changing the unit converts the value, and the equivalent in the other unit is always captioned. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-number-005-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the conversion on unit change: keeping 12.5 and relabelling \"kg\" as \"lb\" silently corrupts the data",
                 "the single source of truth in kilograms: two independent numbers drift apart after the first manual edit",
                 "the single rounding point: rounding on every switch walks the value away as you toggle back and forth",
@@ -503,9 +730,15 @@
                 "defaultValue — the starting value",
                 "defaultUnit — the unit the field opens in",
                 "the rounding precision inside the round helper",
+                "unitText — the switch button captions",
+                "mirrorUnitText — the unit names inside the equivalent line",
+                "mirrorText — the equivalent line, with the {value} placeholder",
+                "unitsLabel — the button group caption for screen readers",
+                "background — the component background; empty means no background, taking the page colour",
                 "the accent through the accent prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The 2.2046226218 factor is a constant: swap it and the button captions for other units.",
                 "Emit kilograms outwards rather than the displayed number, or the receiver cannot tell the unit.",
                 "Rounding to a tenth is a compromise: raise the multiplier in round for pharmacy scales.",
@@ -520,11 +753,36 @@
               },
               "defaultUnit": {
                 "label": "Unit"
+              },
+              "defaultValue": {
+                "label": "Value"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Unit Switch Field"
+            "title": "Unit Switch Field",
+            "preview": {
+              "props": {
+                "label": "Parcel weight",
+                "unitText": {
+                  "кг": "kg",
+                  "фунты": "lb"
+                },
+                "mirrorUnitText": {
+                  "кг": "kg",
+                  "фунты": "lb"
+                },
+                "mirrorText": "Same value: {value}",
+                "unitsLabel": "Unit of measure"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultUnit", "defaultValue", "background"]
       }
     },
     {
@@ -551,7 +809,8 @@
           "summary": "Числовое поле с кнопками-дозами: каждая прибавляет свою величину, перебор отменяется кнопкой «сбросить». Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-number-006-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "смысл кнопок как прибавления, а не подстановки: из доз складывается любое число, а готовые суммы приходится угадывать",
             "кнопку «сбросить»: накопительный ввод обязан иметь обратный ход, иначе перебор чинят стиранием",
             "выключение доз у верхней границы вместо молчаливого упора в max",
@@ -564,9 +823,15 @@
             "defaultValue — стартовая сумма, к ней же возвращает «сбросить»",
             "max — верхняя граница за одну операцию",
             "unit — знак валюты или единицы",
+            "resetText — подпись кнопки возврата",
+            "addLabel — подпись дозы для скринридера с подстановками {step} и {unit}",
+            "hintText — строка про верхнюю границу с подстановками {max} и {unit}",
+            "locale — локаль форматирования чисел",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через проп accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "«Сбросить» возвращает к defaultValue, а не к нулю: иначе кнопка стирает и то, что ввели руками.",
             "Дозы растягиваются по ширине поровну: пять и больше штук лучше перенести на две строки.",
             "Компонент неуправляемый снаружи: чтобы поднять значение наверх, добавьте свой onChange.",
@@ -588,6 +853,33 @@
             "default": 5000,
             "min": 100,
             "max": 100000
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Сумма",
+            "type": "number",
+            "default": 250,
+            "min": 0,
+            "max": 5000
+          },
+          {
+            "prop": "unit",
+            "label": "Единица",
+            "type": "text",
+            "default": "₽",
+            "maxLength": 6
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -597,7 +889,8 @@
               "summary": "A number field with dose buttons: each adds its own amount, and a reset link undoes an overshoot. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-number-006-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the buttons meaning addition rather than substitution: doses build any number, while ready-made sums have to be guessed right",
                 "the reset control: cumulative input needs a way back, otherwise an overshoot is fixed by erasing",
                 "disabling doses at the upper bound instead of silently bumping into max",
@@ -610,9 +903,15 @@
                 "defaultValue — the starting amount, which reset returns to",
                 "max — the ceiling for a single operation",
                 "unit — the currency sign or unit",
+                "resetText — the caption of the reset control",
+                "addLabel — the dose caption for screen readers, with the {step} and {unit} placeholders",
+                "hintText — the ceiling line, with the {max} and {unit} placeholders",
+                "locale — the number formatting locale",
+                "background — the component background; empty means no background, taking the page colour",
                 "the accent through the accent prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Reset returns to defaultValue rather than zero: otherwise it also wipes what was typed by hand.",
                 "The doses stretch evenly across the width: move five or more onto two rows.",
                 "The component is self-contained: add your own onChange to lift the value up.",
@@ -627,11 +926,35 @@
               },
               "max": {
                 "label": "Maximum"
+              },
+              "defaultValue": {
+                "label": "Amount"
+              },
+              "unit": {
+                "label": "Unit",
+                "default": "$"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Additive Presets"
+            "title": "Additive Presets",
+            "preview": {
+              "props": {
+                "label": "Top up",
+                "unit": "$",
+                "resetText": "reset",
+                "addLabel": "Add {step} {unit}",
+                "hintText": "Up to {max} {unit} per top-up",
+                "locale": "en-US"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "max", "background"]
       }
     },
     {
@@ -658,7 +981,8 @@
           "summary": "Числовая оценка от нуля до десяти с шагом в десятую, цветом от значения и шкалой из десяти делений. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-number-007-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "шаг 0.1: ради него компонент и существует, целые доли отлично закрывают звёзды",
             "приведение к десятым при вводе: без него всплывает 8.400000000000001",
             "тон через data-tone и одну переменную акцента: иначе цвет придётся править в пяти правилах",
@@ -669,10 +993,14 @@
             "label — подпись поля",
             "defaultValue — стартовая оценка",
             "max — верх шкалы, пятибалльную тоже видно",
-            "пороги и слова вердикта в функции verdictOf",
+            "пороги тона в функции verdictOf",
+            "verdictText — слова вердикта по тону",
+            "hint — подсказка под шкалой",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через проп accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "accent перебивает автоматический тон: задавайте его, только если цвет по значению не нужен.",
             "Делений в шкале ровно max — при max больше двенадцати они становятся неразличимыми.",
             "Правило «половина деления» намеренно закрашивает 8.5 как девятое: иначе шкала отстаёт от числа.",
@@ -694,6 +1022,26 @@
             "default": 8.4,
             "min": 0,
             "max": 10
+          },
+          {
+            "prop": "max",
+            "label": "Верх шкалы",
+            "type": "number",
+            "default": 10,
+            "min": 5,
+            "max": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -703,7 +1051,8 @@
               "summary": "A numeric score from zero to ten with a tenth-sized step, a colour driven by the value and a ten-notch meter. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-number-007-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the 0.1 step: it is the reason this component exists, whole notches are already covered by stars",
                 "rounding to tenths on input: without it 8.400000000000001 surfaces",
                 "the tone via data-tone and a single accent variable: otherwise the colour has to be patched in five rules",
@@ -714,10 +1063,14 @@
                 "label — the field caption",
                 "defaultValue — the starting score",
                 "max — the top of the scale, a five-point one reads fine too",
-                "the thresholds and words inside the verdictOf helper",
+                "the tone thresholds inside the verdictOf helper",
+                "verdictText — the verdict words per tone",
+                "hint — the caption under the meter",
+                "background — the component background; empty means no background, taking the page colour",
                 "the accent through the accent prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "accent overrides the automatic tone: set it only when the value-driven colour is unwanted.",
                 "The meter has exactly max notches — beyond twelve they stop being distinguishable.",
                 "The half-notch rule deliberately fills 8.5 as the ninth: otherwise the meter lags behind the number.",
@@ -732,11 +1085,32 @@
               },
               "defaultValue": {
                 "label": "Score"
+              },
+              "max": {
+                "label": "Scale top"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Decimal Score"
+            "title": "Decimal Score",
+            "preview": {
+              "props": {
+                "label": "Your score",
+                "verdictText": {
+                  "low": "weak",
+                  "mid": "fair",
+                  "high": "great"
+                },
+                "hint": "Step 0.1 — the up and down arrows move the score by a tenth."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultValue", "accent", "background"]
       }
     },
     {
@@ -763,7 +1137,8 @@
           "summary": "Числовое поле с двумя шагами на стрелках: Shift увеличивает шаг в десять раз, действующий шаг подписан рядом с полем. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-number-008-* и не подменять её токенами вашей темы",
-            "собственную светлую подложку: поле показывают поверх любого фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "preventDefault на стрелках: без него браузер прибавит свой step поверх нашего и число прыгнет дважды",
             "сброс признака Shift по blur: отпускание клавиши вне поля до компонента не доходит",
             "видимую подсказку с клавишами: скрытую горячую клавишу не находят",
@@ -775,9 +1150,15 @@
             "step — точный шаг стрелки",
             "bigStep — крупный шаг под Shift",
             "min, max и defaultValue",
+            "stepText — значок действующего шага с подстановкой {step}",
+            "fineText и bigText — подписи шагов в легенде",
+            "boundsText — строка про границы с подстановками {min} и {max}",
+            "locale — локаль форматирования чисел",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцент через проп accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Крупный шаг разумно держать кратным точному: иначе значения перестают попадать на круглые числа.",
             "Атрибут step остаётся равным точному шагу: он нужен валидации формы, а не стрелкам.",
             "Клавиши PageUp и PageDown не переопределены — при желании повесьте на них bigStep тем же обработчиком.",
@@ -799,6 +1180,26 @@
             "default": 1000,
             "min": 10,
             "max": 10000
+          },
+          {
+            "prop": "step",
+            "label": "Точный шаг",
+            "type": "number",
+            "default": 100,
+            "min": 10,
+            "max": 1000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -808,7 +1209,8 @@
               "summary": "A number field with two arrow steps: Shift multiplies the step tenfold and the active step is badged next to the field. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-number-008-* palette — do not swap it for your theme tokens",
-                "its own light surface: the field gets shown over any background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "preventDefault on the arrows: without it the browser adds its own step on top of ours and the number jumps twice",
                 "clearing the Shift flag on blur: a key released outside the field never reaches the component",
                 "the visible key legend: a hidden shortcut is a shortcut nobody finds",
@@ -820,9 +1222,15 @@
                 "step — the fine arrow step",
                 "bigStep — the coarse step under Shift",
                 "min, max and defaultValue",
+                "stepText — the active-step badge, with the {step} placeholder",
+                "fineText and bigText — the step captions in the legend",
+                "boundsText — the bounds line, with the {min} and {max} placeholders",
+                "locale — the number formatting locale",
+                "background — the component background; empty means no background, taking the page colour",
                 "the accent through the accent prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Keep the coarse step a multiple of the fine one, or values stop landing on round numbers.",
                 "The step attribute stays equal to the fine step: it serves form validation, not the arrows.",
                 "PageUp and PageDown are not remapped — bind them to bigStep in the same handler if you want them.",
@@ -837,11 +1245,31 @@
               },
               "bigStep": {
                 "label": "Big step"
+              },
+              "step": {
+                "label": "Fine step"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Shift Big Step"
+            "title": "Shift Big Step",
+            "preview": {
+              "props": {
+                "label": "Request limit",
+                "stepText": "step {step}",
+                "fineText": "by {step}",
+                "bigText": "+ arrow by {step}",
+                "boundsText": "from {min} to {max}",
+                "locale": "en-US"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["step", "bigStep", "accent", "background"]
       }
     }
   ]

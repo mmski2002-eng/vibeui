@@ -3,12 +3,31 @@
 import { useState } from "react"
 import type { CSSProperties } from "react"
 
+export type Auth014Fallback = {
+  title: string
+  text: string
+}
+
 export type Auth014Props = {
   title?: string
   lead?: string
   submit?: string
   app?: string
   trustDays?: number
+  /** Метка шага над заголовком: блок несёт русскую. */
+  badgeText?: string
+  /** Строка с названием приложения; {app} подставляется из пропа app. */
+  appText?: string
+  /** Подпись поля кода. */
+  codeLabel?: string
+  /** Подпись галочки доверия; {days} подставляется из trustDays. */
+  trustText?: string
+  /** Заголовок списка запасных путей. */
+  stuckText?: string
+  /** Запасные пути входа: блок несёт русские. */
+  fallbacks?: Auth014Fallback[]
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -25,15 +44,23 @@ export type Auth014Props = {
 // Галочка «доверять устройству» имеет явный срок: «запомнить» без срока —
 // это обещание, которое интерфейс не выполняет.
 //
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не носит собственной подложки, а свечение под
+// карточкой остаётся акцентным пятном в обеих темах.
+//
 // Демонстрация интерфейса: код не сверяется, вторая проверка — на сервере.
 const STYLES = `
 :where([data-vibeui-block="auth-014"]){
---vibeui-auth-014-bg:oklch(0.22 0.02 265);
---vibeui-auth-014-card:oklch(1 0 0);
---vibeui-auth-014-fg:oklch(0.22 0.014 265);
---vibeui-auth-014-muted:oklch(0.54 0.014 265);
---vibeui-auth-014-border:oklch(0.9 0.006 265);
---vibeui-auth-014-accent:oklch(0.5 0.18 285);
+--vibeui-auth-014-bg:transparent;
+--vibeui-auth-014-card:light-dark(oklch(1 0 0),oklch(0.23 0.014 285));
+--vibeui-auth-014-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-auth-014-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-auth-014-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.014 285));
+--vibeui-auth-014-accent:light-dark(oklch(0.5 0.18 285),oklch(0.76 0.14 285));
+--vibeui-auth-014-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.02 285));
+--vibeui-auth-014-glow:light-dark(oklch(0.5 0.18 285 / 12%),oklch(0.72 0.16 285 / 20%));
+--vibeui-auth-014-tint:light-dark(oklch(0.5 0.18 285 / 12%),oklch(0.76 0.14 285 / 18%));
+--vibeui-auth-014-shadow:light-dark(oklch(0.15 0.03 285 / 14%),oklch(0 0 0 / 45%));
 --vibeui-auth-014-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-auth-014-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -41,7 +68,7 @@ container-type:inline-size;
 [data-vibeui-block="auth-014"]{
 box-sizing:border-box;padding:1.75rem 1rem;
 background:
-radial-gradient(90% 70% at 50% 0%, oklch(0.3 0.06 285), transparent 70%),
+radial-gradient(90% 70% at 50% 0%, var(--vibeui-auth-014-glow), transparent 70%),
 var(--vibeui-auth-014-bg);
 color:var(--vibeui-auth-014-fg);
 font-family:var(--vibeui-auth-014-sans);
@@ -50,7 +77,8 @@ font-family:var(--vibeui-auth-014-sans);
 [data-vibeui-block="auth-014"] [data-part="shell"]{
 width:100%;max-width:23rem;margin:0 auto;padding:1.75rem 1.5rem;
 background:var(--vibeui-auth-014-card);border-radius:1.125rem;
-box-shadow:0 1.25rem 3rem oklch(0.15 0.03 285 / 35%);
+border:1px solid var(--vibeui-auth-014-border);
+box-shadow:0 1.25rem 3rem var(--vibeui-auth-014-shadow);
 }
 @container (min-width: 40rem){
 [data-vibeui-block="auth-014"] [data-part="shell"]{max-width:25rem;padding:2.25rem 2rem}
@@ -59,7 +87,7 @@ box-shadow:0 1.25rem 3rem oklch(0.15 0.03 285 / 35%);
 [data-vibeui-block="auth-014"] [data-part="badge"]{
 display:inline-flex;align-items:center;gap:0.375rem;
 margin-bottom:0.875rem;padding:0.25rem 0.5rem;border-radius:9999px;
-background:oklch(0.5 0.18 285 / 12%);color:var(--vibeui-auth-014-accent);
+background:var(--vibeui-auth-014-tint);color:var(--vibeui-auth-014-accent);
 font-size:0.6875rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
 }
 [data-vibeui-block="auth-014"] h2{margin:0 0 0.375rem;font-size:1.25rem;font-weight:700;letter-spacing:-0.015em}
@@ -79,7 +107,7 @@ letter-spacing:0.35em;text-align:center;text-indent:0.35em;
 [data-vibeui-block="auth-014"] [data-part="submit"]{
 width:100%;appearance:none;cursor:pointer;height:2.75rem;
 border:0;border-radius:0.75rem;
-background:var(--vibeui-auth-014-accent);color:oklch(1 0 0);
+background:var(--vibeui-auth-014-accent);color:var(--vibeui-auth-014-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 transition:opacity .16s ease;
 }
@@ -101,7 +129,7 @@ transition:border-color .16s ease;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="auth-014"] *{animation:none!important;transition:none!important}}
 `
 
-const FALLBACKS = [
+const FALLBACKS: Auth014Fallback[] = [
   {
     title: "Резервный код",
     text: "Один из десяти, выданных при подключении.",
@@ -117,6 +145,28 @@ const FALLBACKS = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Второй фактор кодом из приложения: поле кода, доверие устройству
  * на срок и запасные пути входа. Один файл, ноль зависимостей.
  */
@@ -126,14 +176,29 @@ export function Auth014({
   submit = "Подтвердить вход",
   app = "Authenticator",
   trustDays = 30,
+  badgeText = "Шаг 2 из 2",
+  appText = "Приложение: {app}.",
+  codeLabel = "Код подтверждения",
+  trustText = "Доверять этому браузеру {days} дней — код спросят снова после этого срока или при смене устройства",
+  stuckText = "Нет доступа к приложению",
+  fallbacks = FALLBACKS,
+  background = "",
   accent,
   className,
   style,
 }: Auth014Props) {
   const [code, setCode] = useState("")
 
+  const [appBefore, appAfter = ""] = appText.split("{app}")
+
   const palette = {
     ...(accent ? { "--vibeui-auth-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -149,10 +214,12 @@ export function Auth014({
         aria-label={title}
       >
         <div data-part="shell">
-          <span data-part="badge">Шаг 2 из 2</span>
+          <span data-part="badge">{badgeText}</span>
           <h2>{title}</h2>
           <p data-part="lead">
-            {lead} Приложение: <span data-part="app">{app}</span>.
+            {lead} {appBefore}
+            <span data-part="app">{app}</span>
+            {appAfter}
           </p>
 
           <form
@@ -160,7 +227,7 @@ export function Auth014({
               event.preventDefault()
             }}
           >
-            <label htmlFor="vibeui-auth-014-code">Код подтверждения</label>
+            <label htmlFor="vibeui-auth-014-code">{codeLabel}</label>
             <input
               id="vibeui-auth-014-code"
               data-part="code"
@@ -177,10 +244,7 @@ export function Auth014({
 
             <label data-part="trust">
               <input type="checkbox" name="trust" />
-              <span>
-                Доверять этому браузеру {trustDays} дней — код спросят снова
-                после этого срока или при смене устройства
-              </span>
+              <span>{trustText.replace("{days}", String(trustDays))}</span>
             </label>
 
             <button type="submit" data-part="submit" disabled={code.length < 6}>
@@ -188,9 +252,9 @@ export function Auth014({
             </button>
           </form>
 
-          <p data-part="stuck">Нет доступа к приложению</p>
+          <p data-part="stuck">{stuckText}</p>
           <ul data-part="fallbacks">
-            {FALLBACKS.map((item) => (
+            {fallbacks.map((item) => (
               <li key={item.title}>
                 <button type="button" data-part="fallback">
                   <span data-part="ftitle">{item.title}</span>

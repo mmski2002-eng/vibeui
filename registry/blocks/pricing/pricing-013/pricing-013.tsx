@@ -16,7 +16,15 @@ export type Pricing013Props = {
   features?: string[]
   action?: { label: string; href: string }
   note?: string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
+  /** Подсказка под счётчиком. Плейсхолдеры {included} и {max}. */
+  seatsHint?: string
+  /** Строка включённых мест в счёте. Плейсхолдер {count}. */
+  includedText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -29,13 +37,13 @@ export type Pricing013Props = {
 // объясняет, что предел достигнут.
 const STYLES = `
 :where([data-vibeui-block="pricing-013"]){
---vibeui-pricing-013-bg:oklch(0.97 0.004 270);
---vibeui-pricing-013-fg:oklch(0.2 0.014 270);
---vibeui-pricing-013-muted:oklch(0.51 0.014 270);
---vibeui-pricing-013-card:oklch(1 0 0);
---vibeui-pricing-013-line:oklch(0.89 0.008 270);
---vibeui-pricing-013-accent:oklch(0.5 0.18 285);
---vibeui-pricing-013-accent-fg:oklch(0.99 0 0);
+--vibeui-pricing-013-bg:transparent;
+--vibeui-pricing-013-fg:light-dark(oklch(0.2 0.014 270),oklch(0.94 0.005 270));
+--vibeui-pricing-013-muted:light-dark(oklch(0.51 0.014 270),oklch(0.7 0.012 270));
+--vibeui-pricing-013-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 270));
+--vibeui-pricing-013-line:light-dark(oklch(0.89 0.008 270),oklch(0.37 0.012 270));
+--vibeui-pricing-013-accent:light-dark(oklch(0.5 0.18 285),oklch(0.74 0.15 285));
+--vibeui-pricing-013-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.19 0.03 285));
 --vibeui-pricing-013-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -120,6 +128,43 @@ const DEFAULT_FEATURES = [
 
 const MONEY = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 })
 
+const DEFAULT_LABELS: Record<string, string> = {
+  seats: "Участников в команде",
+  decrease: "Убрать участника",
+  increase: "Добавить участника",
+  included: "Входит в тариф",
+  additional: "Дополнительно",
+  perMonth: "В месяц",
+}
+
+function fill(template: string, values: Record<string, number>): string {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Тариф для команд с ценой за место: счётчик мест и живой пересчёт счёта. */
 export function Pricing013({
   eyebrow = "Для команды",
@@ -134,15 +179,27 @@ export function Pricing013({
   features = DEFAULT_FEATURES,
   action = { label: "Подключить команду", href: "#" },
   note = "Оплата помесячно. При годовой подписке место стоит на 17 % дешевле.",
+  labels = DEFAULT_LABELS,
+  seatsHint = "Первые {included} мест входят в тариф. Максимум — {max}.",
+  includedText = "{count} мест",
   accent,
+  background = "",
   className,
   style,
 }: Pricing013Props) {
   const id = useId()
   const [seats, setSeats] = useState(defaultSeats)
 
+  const text = (key: string) => labels[key] ?? DEFAULT_LABELS[key]
+
   const palette = {
     ...(accent ? { "--vibeui-pricing-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pricing-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -167,7 +224,7 @@ export function Pricing013({
           <div data-part="card">
             <div>
               <p data-part="seatlabel" id={`${id}-label`}>
-                Участников в команде
+                {text("seats")}
               </p>
               <div data-part="stepper">
                 <button
@@ -176,7 +233,7 @@ export function Pricing013({
                     setSeats((value) => Math.max(minSeats, value - 1))
                   }
                   disabled={seats <= minSeats}
-                  aria-label="Убрать участника"
+                  aria-label={text("decrease")}
                 >
                   −
                 </button>
@@ -189,14 +246,13 @@ export function Pricing013({
                     setSeats((value) => Math.min(maxSeats, value + 1))
                   }
                   disabled={seats >= maxSeats}
-                  aria-label="Добавить участника"
+                  aria-label={text("increase")}
                 >
                   +
                 </button>
               </div>
               <p data-part="seathint">
-                Первые {includedSeats} мест входят в тариф. Максимум —{" "}
-                {maxSeats}.
+                {fill(seatsHint, { included: includedSeats, max: maxSeats })}
               </p>
 
               <ul>
@@ -222,17 +278,17 @@ export function Pricing013({
 
             <div data-part="bill">
               <p data-part="row">
-                <span>Входит в тариф</span>
-                <span>{includedSeats} мест</span>
+                <span>{text("included")}</span>
+                <span>{fill(includedText, { count: includedSeats })}</span>
               </p>
               <p data-part="row">
-                <span>Дополнительно</span>
+                <span>{text("additional")}</span>
                 <span>
                   {paidSeats} × {MONEY.format(perSeat)} {currency}
                 </span>
               </p>
               <p data-part="total">
-                <span>В месяц</span>
+                <span>{text("perMonth")}</span>
                 <span data-part="sum">
                   {MONEY.format(total)} {currency}
                 </span>

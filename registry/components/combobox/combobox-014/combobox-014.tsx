@@ -14,6 +14,14 @@ export type Combobox014Props = Omit<
   options?: Combobox014Option[]
   defaultValue?: string
   onSelect?: (value: string) => void
+  /** Строка на месте пустого списка. */
+  emptyText?: string
+  /** Подпись строки итога перед выбранным вариантом. */
+  pickedLabel?: string
+  /** Что стоит в итоге, пока ничего не выбрано. */
+  emptyValueText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,14 +32,14 @@ export type Combobox014Props = Omit<
 // всегда узнаётся по одному и тому же пятну.
 const STYLES = `
 :where([data-vibeui-block="combobox-014"]){
---vibeui-combobox-014-bg:oklch(1 0 0);
---vibeui-combobox-014-fg:oklch(0.22 0.014 285);
---vibeui-combobox-014-muted:oklch(0.55 0.014 285);
---vibeui-combobox-014-border:oklch(0.9 0.008 285);
---vibeui-combobox-014-field:oklch(0.985 0.004 285);
---vibeui-combobox-014-soft:oklch(0.96 0.008 285);
---vibeui-combobox-014-accent:oklch(0.5 0.13 285);
---vibeui-combobox-014-accentsoft:oklch(0.94 0.04 285);
+--vibeui-combobox-014-bg:transparent;
+--vibeui-combobox-014-fg:light-dark(oklch(0.22 0.014 285),oklch(0.94 0.006 285));
+--vibeui-combobox-014-muted:light-dark(oklch(0.55 0.014 285),oklch(0.7 0.012 285));
+--vibeui-combobox-014-border:light-dark(oklch(0.9 0.008 285),oklch(0.35 0.012 285));
+--vibeui-combobox-014-field:light-dark(oklch(0.985 0.004 285),oklch(0.27 0.012 285));
+--vibeui-combobox-014-soft:light-dark(oklch(0.96 0.008 285),oklch(0.31 0.014 285));
+--vibeui-combobox-014-accent:light-dark(oklch(0.5 0.13 285),oklch(0.72 0.13 285));
+--vibeui-combobox-014-accentsoft:light-dark(oklch(0.94 0.04 285),oklch(0.36 0.06 285));
 --vibeui-combobox-014-radius:0.625rem;
 --vibeui-combobox-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -139,6 +147,28 @@ function initialsOf(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор варианта с картинкой: превью слева, название и подпись справа.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -148,6 +178,10 @@ export function Combobox014({
   options = TEMPLATES,
   defaultValue = "Брошенная корзина",
   onSelect,
+  emptyText = "Шаблон не найден",
+  pickedLabel = "Выбран шаблон",
+  emptyValueText = "не выбран",
+  background = "",
   accent,
   className,
   style,
@@ -169,6 +203,12 @@ export function Combobox014({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -204,7 +244,7 @@ export function Combobox014({
         >
           {matches.length === 0 ? (
             <li role="none">
-              <p data-part="empty">Шаблон не найден</p>
+              <p data-part="empty">{emptyText}</p>
             </li>
           ) : (
             matches.map((option) => (
@@ -245,7 +285,7 @@ export function Combobox014({
           )}
         </ul>
         <p data-part="picked" aria-live="polite">
-          Выбран шаблон: <b>{picked?.name ?? "не выбран"}</b>
+          {pickedLabel}: <b>{picked?.name ?? emptyValueText}</b>
         </p>
       </div>
     </>

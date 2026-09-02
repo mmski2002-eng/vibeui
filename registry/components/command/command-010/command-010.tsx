@@ -14,6 +14,18 @@ export type Command010Props = Omit<
   items?: string[]
   delay?: number
   placeholder?: string
+  /** Имя панели для скринридера. */
+  label?: string
+  /** Имя списка результатов для скринридера. */
+  listLabel?: string
+  /** Ответ, когда ничего не нашлось. */
+  emptyText?: string
+  /** Строка подвала во время ожидания ответа. */
+  loadingText?: string
+  /** Строка подвала с итогом; {count} — число строк. */
+  countText?: string
+  /** Подложка панели. Пусто — цвет по умолчанию из палитры. */
+  background?: string
   accent?: string
 }
 
@@ -22,20 +34,26 @@ export type Command010Props = Omit<
 // и «ещё не приехало» выглядят одинаково, но означают разное. Пока запрос в
 // работе, показываются скелетоны той же высоты, что и строки, поэтому список
 // не прыгает; полоса под полем и role=status озвучивают загрузку.
+//
+// Тема берётся из color-scheme окружения через light-dark(): скелетон в тёмной
+// ветке светлее подложки, а в светлой темнее — иначе его просто не видно.
 const STYLES = `
 :where([data-vibeui-block="command-010"]){
---vibeui-command-010-bg:oklch(1 0 0);
---vibeui-command-010-fg:oklch(0.23 0.014 265);
---vibeui-command-010-muted:oklch(0.57 0.014 265);
---vibeui-command-010-border:oklch(0.9 0.006 265);
---vibeui-command-010-accent:oklch(0.58 0.16 200);
+--vibeui-command-010-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-command-010-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-command-010-muted:light-dark(oklch(0.57 0.014 265),oklch(0.68 0.012 265));
+--vibeui-command-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-command-010-accent:light-dark(oklch(0.58 0.16 200),oklch(0.78 0.12 200));
+--vibeui-command-010-ghost:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.88 0.02 265 / 12%));
+--vibeui-command-010-ghost-lit:light-dark(oklch(0.55 0.02 265 / 20%),oklch(0.88 0.02 265 / 24%));
+--vibeui-command-010-shadow:light-dark(oklch(0.2 0.03 265 / 60%),oklch(0.04 0.015 265 / 70%));
 --vibeui-command-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="command-010"]{
 display:block;box-sizing:border-box;width:100%;max-width:24rem;overflow:hidden;
 background:var(--vibeui-command-010-bg);color:var(--vibeui-command-010-fg);
 border:1px solid var(--vibeui-command-010-border);border-radius:0.875rem;
-box-shadow:0 18px 40px -28px oklch(0.2 0.03 265 / 60%);
+box-shadow:0 18px 40px -28px var(--vibeui-command-010-shadow);
 font-family:var(--vibeui-command-010-font);
 }
 [data-vibeui-block="command-010"] [data-part="field"]{position:relative;border-bottom:1px solid var(--vibeui-command-010-border)}
@@ -75,7 +93,7 @@ background:color-mix(in oklab,var(--vibeui-command-010-accent) 14%,transparent);
 /* Скелетон повторяет высоту строки: после ответа список не прыгает. */
 [data-vibeui-block="command-010"] [data-part="ghost"] span{
 display:block;height:0.6875rem;border-radius:0.375rem;
-background:linear-gradient(90deg,oklch(0.55 0.02 265 / 10%),oklch(0.55 0.02 265 / 20%),oklch(0.55 0.02 265 / 10%));
+background:linear-gradient(90deg,var(--vibeui-command-010-ghost),var(--vibeui-command-010-ghost-lit),var(--vibeui-command-010-ghost));
 background-size:200% 100%;
 animation:vibeui-command-010-pulse 1.4s ease-in-out infinite;
 }
@@ -104,6 +122,28 @@ const DEFAULT_RESULTS = [
 const GHOSTS = [78, 62, 88, 54]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Палитра с индикатором загрузки: скелетоны той же высоты, что и строки,
  * плюс полоса под полем. Один файл, ноль зависимостей.
  */
@@ -111,6 +151,12 @@ export function Command010({
   items = DEFAULT_RESULTS,
   delay = 600,
   placeholder = "Поиск на сервере…",
+  label = "Поиск команд",
+  listLabel = "Результаты",
+  emptyText = "Ничего не найдено. Уточните запрос.",
+  loadingText = "Ищем на сервере…",
+  countText = "Результатов: {count}",
+  background = "",
   accent,
   className,
   style,
@@ -159,6 +205,12 @@ export function Command010({
 
   const paletteStyle = {
     ...(accent ? { "--vibeui-command-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-command-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -173,7 +225,7 @@ export function Command010({
         className={className}
         style={paletteStyle}
         role="dialog"
-        aria-label="Поиск команд"
+        aria-label={label}
       >
         <div data-part="field">
           <input
@@ -209,13 +261,13 @@ export function Command010({
             ))}
           </ul>
         ) : rows.length === 0 ? (
-          <p data-part="empty">Ничего не найдено. Уточните запрос.</p>
+          <p data-part="empty">{emptyText}</p>
         ) : (
           <ul
             id={listId}
             data-part="list"
             role="listbox"
-            aria-label="Результаты"
+            aria-label={listLabel}
           >
             {rows.map((result, index) => (
               <li
@@ -232,7 +284,9 @@ export function Command010({
           </ul>
         )}
         <p data-part="foot" role="status">
-          {loading ? "Ищем на сервере…" : `Результатов: ${rows.length}`}
+          {loading
+            ? loadingText
+            : countText.replace("{count}", String(rows.length))}
         </p>
       </div>
     </>

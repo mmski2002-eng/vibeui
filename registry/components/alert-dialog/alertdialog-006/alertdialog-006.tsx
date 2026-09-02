@@ -12,9 +12,15 @@ export type Alertdialog006Props = Omit<
   text?: string
   errorTitle?: string
   errorText?: string
+  confirm?: string
   retry?: string
   cancel?: string
   close?: string
+  /** Строка рядом с кольцом ожидания. */
+  waitText?: string
+  accent?: string
+  /** Подложка окна и кнопки открытия. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: подтверждение, которое умеет провалиться. Обычное окно
@@ -25,12 +31,14 @@ export type Alertdialog006Props = Omit<
 // ошибки называет причину и следующий шаг, а не «что-то пошло не так».
 const STYLES = `
 :where([data-vibeui-block="alertdialog-006"]){
---vibeui-alertdialog-006-bg:oklch(1 0 0);
---vibeui-alertdialog-006-fg:oklch(0.22 0.014 265);
---vibeui-alertdialog-006-muted:oklch(0.55 0.014 265);
---vibeui-alertdialog-006-border:oklch(0.9 0.006 265);
---vibeui-alertdialog-006-accent:oklch(0.55 0.2 262);
---vibeui-alertdialog-006-danger:oklch(0.55 0.19 25);
+--vibeui-alertdialog-006-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-alertdialog-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-alertdialog-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-alertdialog-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-alertdialog-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
+--vibeui-alertdialog-006-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0.03 262));
+--vibeui-alertdialog-006-danger:light-dark(oklch(0.55 0.19 25),oklch(0.74 0.17 25));
+--vibeui-alertdialog-006-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.02 0.01 265 / 70%));
 --vibeui-alertdialog-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="alertdialog-006"]{
@@ -49,10 +57,10 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 margin:auto;width:min(22rem,calc(100vw - 2rem));padding:1.125rem;
 border:1px solid var(--vibeui-alertdialog-006-border);border-radius:0.875rem;
 background:var(--vibeui-alertdialog-006-bg);color:var(--vibeui-alertdialog-006-fg);
-box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 55%);
+box-shadow:0 24px 60px -24px var(--vibeui-alertdialog-006-shadow);
 font-family:var(--vibeui-alertdialog-006-font);
 }
-[data-vibeui-block="alertdialog-006"] dialog::backdrop{background:oklch(0.2 0.02 265 / 45%)}
+[data-vibeui-block="alertdialog-006"] dialog::backdrop{background:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.08 0.014 265 / 62%))}
 [data-vibeui-block="alertdialog-006"] h2{margin:0 0 0.375rem;font-size:1rem;font-weight:700;line-height:1.3}
 [data-vibeui-block="alertdialog-006"] [data-part="text"]{margin:0 0 0.875rem;font-size:0.8125rem;line-height:1.55;color:var(--vibeui-alertdialog-006-muted)}
 /* Ошибка называет причину и следующий шаг, а не «что-то пошло не так». */
@@ -73,7 +81,7 @@ animation:vibeui-alertdialog-006-spin .7s linear infinite;
 flex:1 1 0;appearance:none;cursor:pointer;height:2.375rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="alertdialog-006"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-006-accent);color:oklch(1 0 0)}
+[data-vibeui-block="alertdialog-006"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-006-accent);color:var(--vibeui-alertdialog-006-on-accent)}
 [data-vibeui-block="alertdialog-006"] [data-part="confirm"]:disabled{opacity:.5;cursor:default}
 [data-vibeui-block="alertdialog-006"] [data-part="cancel"]{
 border:1px solid var(--vibeui-alertdialog-006-border);background:var(--vibeui-alertdialog-006-bg);color:inherit;
@@ -89,6 +97,28 @@ border:1px solid var(--vibeui-alertdialog-006-border);background:var(--vibeui-al
 type State = "ask" | "busy" | "error"
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подтверждение с ходом выполнения: ожидание и ошибка живут в том же окне.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -98,15 +128,30 @@ export function Alertdialog006({
   text = "Проекты, которые используют этот ключ, перестанут получать компоненты сразу после отзыва.",
   errorTitle = "Ключ не отозван",
   errorText = "Сервис ключей не ответил за десять секунд. Проверьте связь и повторите — отзыв не выполнен.",
+  confirm = "Отозвать",
   retry = "Повторить",
   cancel = "Отменить",
   close = "Закрыть",
+  waitText = "Отзываем ключ…",
+  accent,
+  background = "",
   className,
   style,
   ...props
 }: Alertdialog006Props) {
   const box = useRef<HTMLDialogElement>(null)
   const [state, setState] = useState<State>("ask")
+
+  const palette = {
+    ...(accent ? { "--vibeui-alertdialog-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-alertdialog-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   const send = () => {
     setState("busy")
@@ -123,7 +168,7 @@ export function Alertdialog006({
         {...props}
         data-vibeui-block="alertdialog-006"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <button
           type="button"
@@ -153,7 +198,7 @@ export function Alertdialog006({
           {state === "busy" ? (
             <p data-part="wait" aria-live="polite">
               <span data-part="ring" aria-hidden="true" />
-              Отзываем ключ…
+              {waitText}
             </p>
           ) : null}
 
@@ -164,7 +209,7 @@ export function Alertdialog006({
               disabled={state === "busy"}
               onClick={send}
             >
-              {state === "error" ? retry : "Отозвать"}
+              {state === "error" ? retry : confirm}
             </button>
             <button
               type="button"

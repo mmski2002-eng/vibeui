@@ -8,6 +8,8 @@ export type Label012Props = Omit<
   label?: string
   optionalText?: string
   placeholder?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,12 +20,12 @@ export type Label012Props = Omit<
 // подписью плюс наклеенным ярлыком.
 const STYLES = `
 :where([data-vibeui-block="label-012"]){
---vibeui-label-012-surface:oklch(1 0 0);
---vibeui-label-012-surface-border:oklch(0.91 0.006 265);
---vibeui-label-012-fg:oklch(0.24 0.016 265);
---vibeui-label-012-muted:oklch(0.6 0.012 265);
---vibeui-label-012-field-border:oklch(0.85 0.01 265);
---vibeui-label-012-accent:oklch(0.55 0.2 262);
+--vibeui-label-012-surface:transparent;
+--vibeui-label-012-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-label-012-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-label-012-muted:light-dark(oklch(0.6 0.012 265),oklch(0.68 0.012 265));
+--vibeui-label-012-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-label-012-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
 --vibeui-label-012-radius:0.625rem;
 --vibeui-label-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -58,6 +60,28 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-label-012-accent) 22%,trans
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подпись с пометкой «необязательно» как приглушённой частью той же фразы,
  * без бейджа и подложки. Один файл, ноль зависимостей.
  */
@@ -65,6 +89,7 @@ export function Label012({
   label = "Название компании",
   optionalText = "необязательно",
   placeholder = "ООО «Ромашка»",
+  background = "",
   accent,
   className,
   style,
@@ -73,6 +98,12 @@ export function Label012({
   const id = useId()
   const palette = {
     ...(accent ? { "--vibeui-label-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-label-012-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

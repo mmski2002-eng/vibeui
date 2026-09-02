@@ -29,15 +29,20 @@
             "Backspace на пустой клетке, уводящий назад — иначе стереть набранное нельзя",
             "autocomplete=\"one-time-code\" на первой клетке: телефон подставит код сам",
             "inputMode=\"numeric\" и подписи «цифра N из M» у каждой клетки",
-            "стрелки влево-вправо между клетками"
+            "стрелки влево-вправо между клетками",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "length — сколько цифр в коде",
             "label и hint",
             "обработчик onChange",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи клеток через digitLabel: {index} — номер клетки, {total} — сколько их всего"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Отправку кода компонент не делает: проверяйте его в onChange, когда длина совпала.",
             "Не прячьте цифры под точками: код виден на экране телефона всё равно, а ошибки без него не заметить.",
             "Ограничение по времени и повторная отправка — отдельная задача, обычно рядом с полем.",
@@ -66,6 +71,18 @@
             "type": "text",
             "default": "Отправили на +7 999 000-00-00. Код придёт в течение минуты",
             "maxLength": 70
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -79,15 +96,20 @@
                 "Backspace stepping back on an empty box — otherwise the code cannot be erased",
                 "autocomplete=\"one-time-code\" on the first box: phones fill it automatically",
                 "inputMode=\"numeric\" and \"digit N of M\" labels on every box",
-                "left and right arrows between boxes"
+                "left and right arrows between boxes",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "length — how many digits",
                 "label and hint",
                 "the onChange handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "the per-box labels through digitLabel: {index} is the box number, {total} the count"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component submits nothing: verify in onChange once the length matches.",
                 "Do not mask the digits: the code is visible on the phone anyway and errors go unnoticed.",
                 "Expiry and resend are a separate job, usually placed beside the field.",
@@ -106,11 +128,25 @@
               "hint": {
                 "label": "Hint",
                 "default": "Sent to +44 7700 000000. It should arrive within a minute"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "OTP Field"
+            "title": "OTP Field",
+            "preview": {
+              "props": {
+                "label": "Code from SMS",
+                "hint": "Sent to +44 7700 000000. It should arrive within a minute",
+                "digitLabel": "Digit {index} of {total}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["length", "accent", "background"]
       }
     },
     {
@@ -141,15 +177,19 @@
             "pointer-events:none у ряда ячеек — иначе щелчок не дойдёт до настоящего поля",
             "autoComplete=\"one-time-code\": телефон подставит код сам, и здесь это работает надёжнее, чем с шестью полями",
             "нарисованную каретку: у прозрачного поля системной каретки не видно",
-            "inputMode=\"numeric\": на телефоне это цифровая клавиатура"
+            "inputMode=\"numeric\": на телефоне это цифровая клавиатура",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "число ячеек в пропе length",
             "текст label и подсказки hint",
             "оформление ячейки и каретки",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Проверять код должен ваш обработчик onChange, когда длина совпала.",
             "Прозрачный текст и caret-color:transparent обязательны вместе: иначе поверх ячеек проступит настоящее значение.",
             "Разрядка поля подобрана под шесть ячеек — при другом их числе её придётся пересчитать.",
@@ -171,6 +211,18 @@
             "default": 6,
             "min": 4,
             "max": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -184,15 +236,19 @@
                 "pointer-events:none on the box row — otherwise clicks never reach the real field",
                 "autoComplete=\"one-time-code\": phones fill it in, and it is more reliable here than with six inputs",
                 "the drawn caret: a transparent field shows no system caret",
-                "inputMode=\"numeric\": that is the numeric keypad on a phone"
+                "inputMode=\"numeric\": that is the numeric keypad on a phone",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the number of boxes in the length prop",
                 "the label and hint copy",
                 "the box and caret styling",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Your onChange handler verifies the code once the length matches.",
                 "Transparent text and caret-color:transparent belong together: otherwise the real value shows over the boxes.",
                 "The letter spacing is tuned for six boxes — recompute it for a different count.",
@@ -207,11 +263,24 @@
               },
               "length": {
                 "label": "Digits"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Single Caret"
+            "title": "Single Caret",
+            "preview": {
+              "props": {
+                "label": "Confirmation code",
+                "hint": "Paste the whole code — it spreads across the boxes by itself."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["length", "accent", "background"]
       }
     },
     {
@@ -242,15 +311,20 @@
             "выключенную кнопку с текстом остатка рядом: «недоступно» без причины раздражает",
             "aria-live у строки остатка: сколько ждать, должно быть слышно, а не только видно",
             "очистку интервала в useEffect — иначе повторная отправка заведёт второй отсчёт",
-            "autoComplete=\"one-time-code\" на первой клетке: телефон подставит код сам"
+            "autoComplete=\"one-time-code\" на первой клетке: телефон подставит код сам",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "длительность отсчёта в пропе seconds",
             "число клеток length и текст label",
             "формулировки строки остатка и подписи кнопки",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "тексты waitText, readyText, resendText и digitLabel — все подписи вынесены в пропсы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Отправку кода компонент не делает: повесьте запрос на кнопку.",
             "Сервер всё равно ограничивает частоту отправки — клиентский таймер только показывает это правило.",
             "Полоса остатка обновляется раз в полсекунды: более частый интервал ничего не добавит.",
@@ -272,6 +346,26 @@
             "default": 45,
             "min": 10,
             "max": 300
+          },
+          {
+            "prop": "length",
+            "label": "Цифр",
+            "type": "number",
+            "default": 6,
+            "min": 4,
+            "max": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -285,15 +379,20 @@
                 "the disabled button with the remaining time beside it: \"unavailable\" without a reason is annoying",
                 "aria-live on the remaining-time line: how long to wait must be heard, not only seen",
                 "clearing the interval in useEffect — otherwise a resend starts a second countdown",
-                "autoComplete=\"one-time-code\" on the first box: phones fill it automatically"
+                "autoComplete=\"one-time-code\" on the first box: phones fill it automatically",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the countdown length in the seconds prop",
                 "the number of boxes in length and the label copy",
                 "the wording of the countdown line and the button",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "the waitText, readyText, resendText and digitLabel copy — every string is a prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component sends nothing: attach your request to the button.",
                 "The server rate-limits resends anyway — the client timer only shows that rule.",
                 "The bar updates twice a second: a shorter interval adds nothing.",
@@ -308,11 +407,30 @@
               },
               "seconds": {
                 "label": "Seconds before resend"
+              },
+              "length": {
+                "label": "Digits"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Resend Timer"
+            "title": "Resend Timer",
+            "preview": {
+              "props": {
+                "label": "Code from the email",
+                "waitText": "A new code can be requested in {time}",
+                "readyText": "No code? Request a new one.",
+                "resendText": "Send again",
+                "digitLabel": "Digit {index} of {total}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["length", "seconds", "accent", "background"]
       }
     },
     {
@@ -343,15 +461,20 @@
             "правило prefers-reduced-motion: движение здесь дублирует смысл, который уже несут цвет и текст",
             "короткую встряску в 0,3 секунды — длинная читается как поломка интерфейса",
             "возврат фокуса на первую клетку после ошибки: иначе непонятно, куда печатать",
-            "aria-live=\"assertive\" у сообщения: отказ должен быть объявлен сразу"
+            "aria-live=\"assertive\" у сообщения: отказ должен быть объявлен сразу",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "ожидаемый код expected и число попыток attempts",
             "текст label и формулировки сообщений",
             "амплитуду встряски и цвет ошибки",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "тексты hintText, errorText, lockedText, attemptsText и digitLabel — все подписи вынесены в пропсы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сравнение с expected здесь демонстрационное: настоящую проверку делает сервер.",
             "Не показывайте правильный код в подсказке — в примере он оставлен только ради витрины.",
             "Счётчик попыток на клиенте ничего не ограничивает: лимит держит сервер.",
@@ -380,6 +503,18 @@
             "default": 3,
             "min": 1,
             "max": 9
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -393,15 +528,20 @@
                 "the prefers-reduced-motion rule: motion here repeats meaning that colour and text already carry",
                 "the short 0.3 s shake — a long one reads as a broken interface",
                 "returning focus to the first box after a failure: otherwise it is unclear where to type",
-                "aria-live=\"assertive\" on the message: a rejection has to be announced at once"
+                "aria-live=\"assertive\" on the message: a rejection has to be announced at once",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the expected code and the attempts count",
                 "the label copy and the message wording",
                 "the shake amplitude and the error colour",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "the hintText, errorText, lockedText, attemptsText and digitLabel copy — every string is a prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Comparing against expected is a demonstration: the real check belongs on the server.",
                 "Do not show the correct code in the hint — it is there for the showcase only.",
                 "A client-side attempt counter limits nothing: the server holds the limit.",
@@ -420,11 +560,28 @@
               },
               "attempts": {
                 "label": "Attempts"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Shake Error"
+            "title": "Shake Error",
+            "preview": {
+              "props": {
+                "label": "Confirmation code",
+                "hintText": "Enter the code from the message. For the demo, {code} works.",
+                "errorText": "Wrong code. Check the latest message.",
+                "lockedText": "No attempts left — request a new code.",
+                "attemptsText": "{left} of {total}",
+                "digitLabel": "Digit {index} of {total}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["attempts", "accent", "background"]
       }
     },
     {
@@ -455,15 +612,20 @@
             "схлопнутые границы внутри группы и подъём фокусной клетки по z-index — иначе обводку срезает соседняя клетка",
             "дефис отдельным элементом с aria-hidden: его не озвучивают и по нему нечего нажимать",
             "Backspace на пустой клетке, уводящий назад — иначе стереть набранное нельзя",
-            "autoComplete=\"one-time-code\" на первой клетке: телефон подставит код сам"
+            "autoComplete=\"one-time-code\" на первой клетке: телефон подставит код сам",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "разбивку в пропе groups — [3,3], [2,2,2] или [4,4]",
             "текст label и подсказки hint",
             "вид разделителя между группами",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи клеток через digitLabel: {index} — номер клетки, {total} — сколько их всего"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Число клеток считается суммой groups: отдельного пропа длины нет.",
             "Дефис в буфере не мешает — при вставке из строки берутся только цифры.",
             "Три группы и больше на узком экране жмут клетки: следите за минимальной шириной.",
@@ -484,6 +646,18 @@
             "type": "text",
             "default": "Дефис ставить не нужно — он нарисован, а не набирается.",
             "maxLength": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -497,15 +671,20 @@
                 "the collapsed borders inside a group and the z-index lift on the focused box — otherwise a neighbour clips the ring",
                 "the dash as its own aria-hidden element: it is not announced and there is nothing to click on it",
                 "Backspace stepping back on an empty box — otherwise the code cannot be erased",
-                "autoComplete=\"one-time-code\" on the first box: phones fill it automatically"
+                "autoComplete=\"one-time-code\" on the first box: phones fill it automatically",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the split in the groups prop — [3,3], [2,2,2] or [4,4]",
                 "the label and hint copy",
                 "the look of the separator between groups",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "the per-box labels through digitLabel: {index} is the box number, {total} the count"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The box count is the sum of groups: there is no separate length prop.",
                 "A dash in the clipboard is harmless — only digits are taken from a pasted string.",
                 "Three groups or more squeeze the boxes on a narrow screen: watch the minimum width.",
@@ -521,11 +700,25 @@
               "hint": {
                 "label": "Hint",
                 "default": "No need to type the dash — it is drawn, not typed."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Split Code"
+            "title": "Split Code",
+            "preview": {
+              "props": {
+                "label": "Code from the email",
+                "hint": "No need to type the dash — it is drawn, not typed.",
+                "digitLabel": "Digit {index} of {total}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -556,15 +749,20 @@
             "подложку из точек с pointer-events:none — она держит ширину, но не перехватывает щелчки",
             "одинаковые шрифт и разрядку у подложки и у поля: иначе цифры разъедутся с точками",
             "кнопку показа с aria-pressed: состояние «видно/скрыто» должно читаться вслух",
-            "autoComplete=\"one-time-code\" и inputMode=\"numeric\""
+            "autoComplete=\"one-time-code\" и inputMode=\"numeric\"",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "число цифр в пропе length",
             "текст label и подписи кнопки показа",
             "символ подложки и величину разрядки",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи кнопки показа через peekText (ключи show и hide) и строку под полем через hint"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Разрядка и ширина подложки связаны: меняя letter-spacing, проверьте, что точки совпадают с цифрами.",
             "Маскировка кода спорна: на телефоне он и так виден в шторке уведомлений.",
             "Менеджеры паролей иногда предлагают сохранить поле типа password — при необходимости добавьте data-1p-ignore.",
@@ -586,6 +784,18 @@
             "default": 6,
             "min": 4,
             "max": 10
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -599,15 +809,20 @@
                 "the dotted underlay with pointer-events:none — it holds the width without stealing clicks",
                 "identical font and letter spacing on the underlay and the field: otherwise digits drift off the dots",
                 "the reveal button with aria-pressed: the shown/hidden state has to be announced",
-                "autoComplete=\"one-time-code\" and inputMode=\"numeric\""
+                "autoComplete=\"one-time-code\" and inputMode=\"numeric\"",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the number of digits in the length prop",
                 "the label copy and the reveal button captions",
                 "the underlay character and the letter spacing",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "the reveal button captions through peekText (show and hide keys) and the line under the field through hint"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Letter spacing and underlay width are linked: after changing one, check that dots still sit under digits.",
                 "Masking a one-time code is debatable: on a phone it is visible in the notification shade anyway.",
                 "Password managers sometimes offer to save a password-type field — add data-1p-ignore if that bothers you.",
@@ -622,11 +837,28 @@
               },
               "length": {
                 "label": "Digits"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Masked Line"
+            "title": "Masked Line",
+            "preview": {
+              "props": {
+                "label": "Confirmation code",
+                "hint": "Pasting the whole code works — this is an ordinary field.",
+                "peekText": {
+                  "show": "Show",
+                  "hide": "Hide"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["length", "accent", "background"]
       }
     },
     {
@@ -657,15 +889,20 @@
             "блокировку клеток на время проверки: иначе код успеют изменить в середине запроса",
             "полосу ожидания: автоотправка без индикатора выглядит как зависание",
             "кнопку «Ввести заново»: без неё поле остаётся заблокированным навсегда",
-            "aria-live у строки состояния: результат должен объявляться, а не только менять цвет"
+            "aria-live у строки состояния: результат должен объявляться, а не только менять цвет",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "число клеток в пропе length и текст label",
             "обработчик onSubmit — вместо демонстрационной задержки поставьте запрос",
             "формулировки строки состояния и подписи кнопки возврата",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "тексты statusText (ключи idle, sending, done), retryText и digitLabel — все подписи вынесены в пропсы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Задержка в 900 мс изображает запрос — уберите её вместе с window.setTimeout.",
             "Автоотправка требует защиты от повтора: состояние sending здесь и есть эта защита.",
             "Ошибку компонент не показывает: добавьте состояние отказа рядом с done, если проверка может не пройти.",
@@ -687,6 +924,18 @@
             "default": 6,
             "min": 4,
             "max": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -700,15 +949,20 @@
                 "locking the boxes while checking: otherwise the code can change mid-request",
                 "the progress bar: an automatic submit without an indicator looks like a freeze",
                 "the \"enter again\" button: without it the field stays locked forever",
-                "aria-live on the status line: the result must be announced, not just change colour"
+                "aria-live on the status line: the result must be announced, not just change colour",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the number of boxes in the length prop and the label copy",
                 "the onSubmit handler — replace the demo delay with a request",
                 "the wording of the status line and the re-entry button",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "the statusText copy (idle, sending, done keys), retryText and digitLabel — every string is a prop"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The 900 ms delay imitates a request — remove it together with window.setTimeout.",
                 "Auto-submit needs double-submit protection: the sending state is exactly that.",
                 "The component shows no failure state: add one beside done if verification can fail.",
@@ -723,11 +977,30 @@
               },
               "length": {
                 "label": "Digits"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Auto Submit"
+            "title": "Auto Submit",
+            "preview": {
+              "props": {
+                "label": "Sign-in confirmation",
+                "statusText": {
+                  "idle": "No button: the check starts on the last digit.",
+                  "sending": "Checking the code…",
+                  "done": "Code accepted, signing in."
+                },
+                "retryText": "Enter again",
+                "digitLabel": "Digit {index} of {total}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["length", "accent", "background"]
       }
     }
   ]

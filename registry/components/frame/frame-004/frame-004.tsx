@@ -3,6 +3,10 @@ import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
 export type Frame004Props = ComponentPropsWithoutRef<"figure"> & {
   time?: string
   carrier?: string
+  /** Заголовок заглушки экрана: компонент несёт русский, проект подставляет свой. */
+  stubTitle?: string
+  /** Пусто — экран прозрачный, сквозь него виден фон страницы. */
+  background?: string
   children?: ReactNode
 }
 
@@ -13,12 +17,13 @@ export type Frame004Props = ComponentPropsWithoutRef<"figure"> & {
 // плавающий белый прямоугольник.
 const STYLES = `
 :where([data-vibeui-block="frame-004"]){
---vibeui-frame-004-body:oklch(0.93 0.005 265);
---vibeui-frame-004-edge:oklch(0.78 0.008 265);
---vibeui-frame-004-screen:oklch(1 0 0);
---vibeui-frame-004-fg:oklch(0.22 0.014 265);
---vibeui-frame-004-muted:oklch(0.56 0.014 265);
---vibeui-frame-004-island:oklch(0.2 0.014 265);
+--vibeui-frame-004-body:light-dark(oklch(0.93 0.005 265),oklch(0.31 0.008 265));
+--vibeui-frame-004-edge:light-dark(oklch(0.78 0.008 265),oklch(0.46 0.01 265));
+--vibeui-frame-004-screen:transparent;
+--vibeui-frame-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.93 0.005 265));
+--vibeui-frame-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-frame-004-island:light-dark(oklch(0.2 0.014 265),oklch(0.08 0.006 265));
+--vibeui-frame-004-card:light-dark(oklch(0.96 0.004 265),oklch(0.36 0.008 265));
 --vibeui-frame-004-width:15rem;
 --vibeui-frame-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -79,7 +84,7 @@ height:100%;padding:1rem 0.875rem;
 [data-vibeui-block="frame-004"] [data-part="stub-title"]{font-size:0.875rem;font-weight:700;margin:0 0 0.25rem}
 [data-vibeui-block="frame-004"] [data-part="card"]{
 height:2.75rem;border-radius:0.625rem;
-background:oklch(0.96 0.004 265);
+background:var(--vibeui-frame-004-card);
 }
 [data-vibeui-block="frame-004"] [data-part="card"]:nth-child(3){height:4.5rem}
 [data-vibeui-block="frame-004"] [data-part="home"]{
@@ -90,17 +95,51 @@ border-radius:9999px;background:var(--vibeui-frame-004-edge);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Рамка телефона под скриншот: пропорция экрана, статус-строка, островок.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Frame004({
   time = "9:41",
   carrier = "VibeUI",
+  stubTitle = "Сегодня",
+  background = "",
   children,
   className,
   style,
   ...props
 }: Frame004Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-frame-004-screen": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-frame-004" precedence="medium">
@@ -110,7 +149,7 @@ export function Frame004({
         {...props}
         data-vibeui-block="frame-004"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="shell">
           <div data-part="screen">
@@ -130,7 +169,7 @@ export function Frame004({
             <div data-part="body">
               {children ?? (
                 <div data-part="stub">
-                  <p data-part="stub-title">Сегодня</p>
+                  <p data-part="stub-title">{stubTitle}</p>
                   <span data-part="card" />
                   <span data-part="card" />
                   <span data-part="card" />

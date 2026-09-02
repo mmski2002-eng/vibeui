@@ -21,12 +21,13 @@ export type Buttongroup038Props = Omit<
 // именно первая submit-кнопка, и это должно быть безопасное действие.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-038"]){
---vibeui-buttongroup-038-surface:oklch(1 0 0);
---vibeui-buttongroup-038-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-038-muted:oklch(0.56 0.014 265);
---vibeui-buttongroup-038-border:oklch(0.88 0.008 265);
---vibeui-buttongroup-038-accent:oklch(0.48 0.15 265);
---vibeui-buttongroup-038-on-accent:oklch(0.99 0.004 265);
+--vibeui-buttongroup-038-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-038-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-038-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.012 265));
+--vibeui-buttongroup-038-kbd:light-dark(oklch(0.98 0.003 265),oklch(0.31 0.01 265));
+--vibeui-buttongroup-038-accent:light-dark(oklch(0.48 0.15 265),oklch(0.62 0.16 265));
+--vibeui-buttongroup-038-on-accent:light-dark(oklch(0.99 0.004 265),oklch(0.98 0.006 265));
+--vibeui-buttongroup-038-shadow:light-dark(oklch(0.2 0.03 265 / 14%),oklch(0 0 0 / 34%));
 --vibeui-buttongroup-038-radius:0.625rem;
 --vibeui-buttongroup-038-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -38,7 +39,7 @@ font-family:var(--vibeui-buttongroup-038-font);
 [data-vibeui-block="buttongroup-038"] [data-part="track"]{
 display:flex;isolation:isolate;
 border-radius:var(--vibeui-buttongroup-038-radius);
-box-shadow:0 1px 2px oklch(0.2 0.03 265 / 14%);
+box-shadow:0 1px 2px var(--vibeui-buttongroup-038-shadow);
 }
 [data-vibeui-block="buttongroup-038"] button{
 appearance:none;cursor:pointer;font:inherit;
@@ -63,9 +64,11 @@ border-end-end-radius:var(--vibeui-buttongroup-038-radius);
 [data-vibeui-block="buttongroup-038"] button + button{
 margin-inline-start:-1px;
 box-shadow:inset 1px 0 0 oklch(1 0 0 / 34%);
-background:oklch(0.44 0.14 265);
+background:color-mix(in oklab,var(--vibeui-buttongroup-038-accent) 88%,black);
 }
-[data-vibeui-block="buttongroup-038"] button:hover{background:oklch(0.42 0.14 265)}
+[data-vibeui-block="buttongroup-038"] button:hover{
+background:color-mix(in oklab,var(--vibeui-buttongroup-038-accent) 80%,black);
+}
 [data-vibeui-block="buttongroup-038"] button:focus-visible{
 z-index:1;outline:2px solid var(--vibeui-buttongroup-038-fg);outline-offset:2px;
 }
@@ -80,7 +83,7 @@ font-size:0.75rem;line-height:1.4;
 [data-vibeui-block="buttongroup-038"] kbd{
 padding:0.0625rem 0.3125rem;border-radius:0.25rem;
 border:1px solid var(--vibeui-buttongroup-038-border);
-background:oklch(0.98 0.003 265);
+background:var(--vibeui-buttongroup-038-kbd);
 color:var(--vibeui-buttongroup-038-fg);
 font:inherit;font-size:0.6875rem;font-weight:650;
 }

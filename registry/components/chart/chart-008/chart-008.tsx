@@ -12,21 +12,31 @@ export type Chart008Props = Omit<
   title?: string
   steps?: Chart008Step[]
   unit?: string
+  /** Строка перехода между шагами; {drop} выделяется жирным. */
+  dropText?: string
+  /** Подпись полосы для скринридера: {label}, {value}, {unit}, {share}. */
+  stepLabel?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: воронка с переходами между шагами. Главное в ней — не
 // ширина полос, а процент перехода от предыдущего шага: именно он показывает,
 // где теряются люди. Абсолютные числа остаются рядом, потому что «падение на
 // 40%» с базы в двадцать человек ничего не значит.
+//
+// Тема берётся из color-scheme окружения через light-dark(): воронка темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="chart-008"]){
---vibeui-chart-008-bg:oklch(1 0 0);
---vibeui-chart-008-fg:oklch(0.22 0.014 265);
---vibeui-chart-008-muted:oklch(0.56 0.014 265);
---vibeui-chart-008-border:oklch(0.91 0.006 265);
---vibeui-chart-008-accent:oklch(0.55 0.17 265);
---vibeui-chart-008-drop:oklch(0.58 0.16 25);
+--vibeui-chart-008-bg:transparent;
+--vibeui-chart-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-chart-008-track:light-dark(oklch(0.94 0.005 265),oklch(0.3 0.01 265));
+--vibeui-chart-008-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-chart-008-drop:light-dark(oklch(0.58 0.16 25),oklch(0.75 0.14 25));
 --vibeui-chart-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="chart-008"]{
@@ -45,7 +55,7 @@ display:flex;align-items:baseline;justify-content:space-between;gap:0.5rem;font-
 [data-vibeui-block="chart-008"] [data-part="value"]{font-weight:650;font-variant-numeric:tabular-nums}
 [data-vibeui-block="chart-008"] [data-part="bar"]{
 height:1.25rem;border-radius:0.375rem;
-background:color-mix(in oklab,var(--vibeui-chart-008-accent) var(--vibeui-chart-008-mix,80%),oklch(0.94 0.005 265));
+background:color-mix(in oklab,var(--vibeui-chart-008-accent) var(--vibeui-chart-008-mix,80%),var(--vibeui-chart-008-track));
 }
 /* Переход между шагами: именно он показывает, где теряются люди. */
 [data-vibeui-block="chart-008"] [data-part="drop"]{
@@ -71,6 +81,37 @@ const DEFAULT_STEPS: Chart008Step[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+function fillTemplate(
+  template: string,
+  values: Record<string, string | number>,
+) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
+/**
  * Воронка с процентами перехода между шагами.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -78,15 +119,27 @@ export function Chart008({
   title = "Путь до установки",
   steps = DEFAULT_STEPS,
   unit = "человек за неделю",
+  dropText = "ушли {drop} от предыдущего шага",
+  stepLabel = "{label}: {value} {unit}, {share}% от первого шага",
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Chart008Props) {
   const first = steps[0]?.value || 1
+  // Число перехода выделяется жирным, поэтому строка разрезается по метке:
+  // так подпись остаётся одним пропом, а вёрстка — прежней.
+  const [dropBefore, dropAfter] = dropText.split("{drop}")
 
   const palette = {
     ...(accent ? { "--vibeui-chart-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-chart-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -114,7 +167,9 @@ export function Chart008({
               <li key={step.label}>
                 {previous ? (
                   <p data-part="drop">
-                    ушли <b>{drop}%</b> от предыдущего шага
+                    {dropBefore}
+                    <b>{drop}%</b>
+                    {dropAfter}
                   </p>
                 ) : null}
                 <div data-part="row">
@@ -127,7 +182,12 @@ export function Chart008({
                   <div
                     data-part="bar"
                     role="img"
-                    aria-label={`${step.label}: ${step.value} ${unit}, ${share}% от первого шага`}
+                    aria-label={fillTemplate(stepLabel, {
+                      label: step.label,
+                      value: step.value,
+                      unit,
+                      share,
+                    })}
                     style={
                       {
                         width: `${Math.max(12, share)}%`,

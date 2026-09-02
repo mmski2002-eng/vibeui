@@ -9,18 +9,29 @@ export type Toast009Props = Omit<
   message?: string
   time?: string
   replyLabel?: string
+  /** Доступная подпись кнопки ответа; {name} заменяется именем. */
+  replyText?: string
   onReply?: () => void
+  /** Пусто — подложка берётся из темы окружения. */
+  background?: string
 }
 
 // Идея компонента: уведомление о сообщении, а не о системном событии. Слева
 // кружок с инициалами, цвет которого выводится из имени, поэтому у каждого
 // собеседника свой оттенок и в потоке они не сливаются.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
+// граница карточки светлее её подложки, а не темнее. Оттенок кружка считается
+// из имени и читается в обеих темах, поэтому остаётся одной парой значений.
 const STYLES = `
 :where([data-vibeui-block="toast-009"]){
---vibeui-toast-009-bg:oklch(1 0 0);
---vibeui-toast-009-fg:oklch(0.23 0.014 265);
---vibeui-toast-009-muted:oklch(0.55 0.014 265);
---vibeui-toast-009-border:oklch(0.9 0.006 265);
+--vibeui-toast-009-bg:light-dark(oklch(1 0 0),oklch(0.26 0.014 265));
+--vibeui-toast-009-fg:light-dark(oklch(0.23 0.014 265),oklch(0.95 0.004 265));
+--vibeui-toast-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.73 0.012 265));
+--vibeui-toast-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
+--vibeui-toast-009-field:light-dark(oklch(0.97 0.004 265),oklch(0.31 0.014 265));
+--vibeui-toast-009-field-hover:light-dark(oklch(1 0 0),oklch(0.35 0.014 265));
+--vibeui-toast-009-shadow:light-dark(oklch(0.2 0.02 265 / 50%),oklch(0.1 0.02 265 / 70%));
 --vibeui-toast-009-hue:250;
 --vibeui-toast-009-radius:1.125rem;
 --vibeui-toast-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -33,7 +44,7 @@ border:1px solid var(--vibeui-toast-009-border);
 border-radius:var(--vibeui-toast-009-radius);
 background:var(--vibeui-toast-009-bg);color:var(--vibeui-toast-009-fg);
 font-family:var(--vibeui-toast-009-font);
-box-shadow:0 20px 42px -28px oklch(0.2 0.02 265 / 50%);
+box-shadow:0 20px 42px -28px var(--vibeui-toast-009-shadow);
 }
 /* Оттенок кружка выводится из имени: два собеседника не совпадут случайно. */
 [data-vibeui-block="toast-009"] [data-part="face"]{
@@ -56,12 +67,12 @@ display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hi
 appearance:none;cursor:pointer;text-align:left;
 margin-top:0.5rem;width:100%;box-sizing:border-box;
 padding:0.4375rem 0.6875rem;border-radius:9999px;
-border:1px solid var(--vibeui-toast-009-border);background:oklch(0.97 0.004 265);
+border:1px solid var(--vibeui-toast-009-border);background:var(--vibeui-toast-009-field);
 font:inherit;font-size:0.8125rem;color:var(--vibeui-toast-009-muted);
 transition:border-color .16s ease,background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="toast-009"] [data-part="reply"]:hover{
-background:oklch(1 0 0);color:var(--vibeui-toast-009-fg);
+background:var(--vibeui-toast-009-field-hover);color:var(--vibeui-toast-009-fg);
 border-color:oklch(0.72 0.06 var(--vibeui-toast-009-hue));
 }
 [data-vibeui-block="toast-009"] [data-part="reply"]:focus-visible{outline:2px solid oklch(0.6 0.14 var(--vibeui-toast-009-hue));outline-offset:2px}
@@ -88,6 +99,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Уведомление о личном сообщении: инициалы, текст и быстрый ответ.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -96,13 +129,21 @@ export function Toast009({
   message = "Посмотри последний макет каталога — там поменялась сетка карточек, хочу услышать твоё мнение до вечера.",
   time = "18:04",
   replyLabel = "Ответить…",
+  replyText = "Ответить: {name}",
   onReply,
+  background = "",
   className,
   style,
   ...props
 }: Toast009Props) {
   const palette = {
     "--vibeui-toast-009-hue": hue(name),
+    ...(background
+      ? {
+          "--vibeui-toast-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -133,7 +174,7 @@ export function Toast009({
               data-part="reply"
               type="button"
               onClick={onReply}
-              aria-label={`Ответить: ${name}`}
+              aria-label={replyText.replace("{name}", name)}
             >
               {replyLabel}
             </button>

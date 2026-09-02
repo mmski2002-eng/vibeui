@@ -7,6 +7,8 @@ export type Badge001Props = ComponentPropsWithoutRef<"span"> & {
   /** Точка-индикатор слева. Без неё остаётся просто плашка с текстом. */
   dot?: boolean
   size?: "sm" | "md"
+  /** Пусто — плашка держит собственный нейтральный фон. */
+  background?: string
 }
 
 // Идея компонента: цвет несёт точка, а не вся плашка. В таблице из двадцати
@@ -14,10 +16,10 @@ export type Badge001Props = ComponentPropsWithoutRef<"span"> & {
 // цветной точкой оставляет статус заметным, но не кричащим.
 const STYLES = `
 :where([data-vibeui-block="badge-001"]){
---vibeui-badge-001-fg:oklch(0.32 0.014 265);
---vibeui-badge-001-bg:oklch(0.96 0.004 265);
---vibeui-badge-001-border:oklch(0.89 0.006 265);
---vibeui-badge-001-dot:oklch(0.62 0.014 265);
+--vibeui-badge-001-fg:light-dark(oklch(0.32 0.014 265),oklch(0.92 0.006 265));
+--vibeui-badge-001-bg:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.009 265));
+--vibeui-badge-001-border:light-dark(oklch(0.89 0.006 265),oklch(0.39 0.011 265));
+--vibeui-badge-001-dot:light-dark(oklch(0.62 0.014 265),oklch(0.7 0.012 265));
 --vibeui-badge-001-radius:9999px;
 --vibeui-badge-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -36,12 +38,34 @@ width:0.375rem;height:0.375rem;flex:none;border-radius:9999px;
 background:var(--vibeui-badge-001-dot);
 }
 [data-vibeui-block="badge-001"][data-size="sm"] [data-part="dot"]{width:0.3125rem;height:0.3125rem}
-[data-vibeui-block="badge-001"][data-tone="success"]{--vibeui-badge-001-dot:oklch(0.63 0.17 152)}
-[data-vibeui-block="badge-001"][data-tone="warning"]{--vibeui-badge-001-dot:oklch(0.75 0.16 75)}
-[data-vibeui-block="badge-001"][data-tone="danger"]{--vibeui-badge-001-dot:oklch(0.58 0.2 25)}
-[data-vibeui-block="badge-001"][data-tone="info"]{--vibeui-badge-001-dot:oklch(0.58 0.18 262)}
+[data-vibeui-block="badge-001"][data-tone="success"]{--vibeui-badge-001-dot:light-dark(oklch(0.63 0.17 152),oklch(0.76 0.16 152))}
+[data-vibeui-block="badge-001"][data-tone="warning"]{--vibeui-badge-001-dot:light-dark(oklch(0.75 0.16 75),oklch(0.83 0.15 75))}
+[data-vibeui-block="badge-001"][data-tone="danger"]{--vibeui-badge-001-dot:light-dark(oklch(0.58 0.2 25),oklch(0.71 0.19 25))}
+[data-vibeui-block="badge-001"][data-tone="info"]{--vibeui-badge-001-dot:light-dark(oklch(0.58 0.18 262),oklch(0.73 0.16 262))}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="badge-001"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Статусная плашка, в которой цвет несёт только точка.
@@ -51,11 +75,22 @@ export function Badge001({
   tone = "success",
   dot = true,
   size = "md",
+  background = "",
   className,
   style,
   children = "Опубликовано",
   ...props
 }: Badge001Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-badge-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-badge-001" precedence="medium">
@@ -67,7 +102,7 @@ export function Badge001({
         data-tone={tone}
         data-size={size}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         {dot ? <span data-part="dot" aria-hidden="true" /> : null}
         {children}

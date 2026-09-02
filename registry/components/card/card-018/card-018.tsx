@@ -18,6 +18,8 @@ export type Card018Props = Omit<
   actionLabel?: string
   /** Мелкая строка под кнопкой: условия, отмена, пробный период. */
   note?: string
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,11 +30,14 @@ export type Card018Props = Omit<
 // карточка в ряду светлых читается как отключённая, а не как главная.
 const STYLES = `
 :where([data-vibeui-block="card-018"]){
---vibeui-card-018-bg:oklch(1 0 0);
---vibeui-card-018-fg:oklch(0.22 0.015 265);
---vibeui-card-018-muted:oklch(0.55 0.013 265);
---vibeui-card-018-border:oklch(0.91 0.006 265);
---vibeui-card-018-accent:oklch(0.55 0.19 275);
+--vibeui-card-018-bg:transparent;
+--vibeui-card-018-surface:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-card-018-ink:light-dark(oklch(0.2 0.02 265),oklch(0.97 0.005 265));
+--vibeui-card-018-on-accent:light-dark(oklch(0.99 0 0),oklch(0.17 0.015 275));
+--vibeui-card-018-fg:light-dark(oklch(0.22 0.015 265),oklch(0.94 0.006 265));
+--vibeui-card-018-muted:light-dark(oklch(0.55 0.013 265),oklch(0.71 0.012 265));
+--vibeui-card-018-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-card-018-accent:light-dark(oklch(0.55 0.19 275),oklch(0.72 0.16 275));
 --vibeui-card-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="card-018"]{
@@ -47,14 +52,14 @@ font-family:var(--vibeui-card-018-font);
 [data-vibeui-block="card-018"][data-featured="true"]{
 border-color:color-mix(in oklab,var(--vibeui-card-018-accent) 55%,var(--vibeui-card-018-border));
 background:linear-gradient(180deg,
-color-mix(in oklab,var(--vibeui-card-018-accent) 7%,oklch(1 0 0)),
-oklch(1 0 0) 55%);
+color-mix(in oklab,var(--vibeui-card-018-accent) 14%,transparent),
+transparent 55%),var(--vibeui-card-018-bg);
 box-shadow:0 14px 32px -22px color-mix(in oklab,var(--vibeui-card-018-accent) 70%,transparent);
 }
 [data-vibeui-block="card-018"] [data-part="ribbon"]{
 position:absolute;inset-block-start:-0.6875rem;inset-inline-start:1.25rem;
 display:inline-flex;align-items:center;height:1.375rem;padding:0 0.5625rem;
-border-radius:9999px;background:var(--vibeui-card-018-accent);color:oklch(0.99 0 0);
+border-radius:9999px;background:var(--vibeui-card-018-accent);color:var(--vibeui-card-018-on-accent);
 font-size:0.6875rem;font-weight:700;letter-spacing:0.02em;
 }
 [data-vibeui-block="card-018"] [data-part="name"]{
@@ -62,7 +67,7 @@ margin:0;font-size:0.8125rem;font-weight:700;letter-spacing:0.06em;text-transfor
 color:var(--vibeui-card-018-muted);
 }
 [data-vibeui-block="card-018"][data-featured="true"] [data-part="name"]{
-color:color-mix(in oklab,var(--vibeui-card-018-accent) 75%,oklch(0.2 0.02 265));
+color:color-mix(in oklab,var(--vibeui-card-018-accent) 75%,var(--vibeui-card-018-ink));
 }
 [data-vibeui-block="card-018"] [data-part="price"]{
 display:flex;align-items:baseline;gap:0.3125rem;margin:0;
@@ -90,18 +95,18 @@ color:var(--vibeui-card-018-accent);
 [data-vibeui-block="card-018"] [data-part="action"]{
 appearance:none;cursor:pointer;margin-top:auto;
 height:2.375rem;border-radius:0.625rem;border:1px solid var(--vibeui-card-018-border);
-background:oklch(1 0 0);color:var(--vibeui-card-018-fg);
+background:var(--vibeui-card-018-surface);color:var(--vibeui-card-018-fg);
 font:inherit;font-size:0.875rem;font-weight:650;
 transition:background-color .16s ease,border-color .16s ease;
 }
 [data-vibeui-block="card-018"][data-featured="true"] [data-part="action"]{
-border-color:transparent;background:var(--vibeui-card-018-accent);color:oklch(0.99 0 0);
+border-color:transparent;background:var(--vibeui-card-018-accent);color:var(--vibeui-card-018-on-accent);
 }
 [data-vibeui-block="card-018"] [data-part="action"]:hover{
 border-color:color-mix(in oklab,var(--vibeui-card-018-accent) 45%,var(--vibeui-card-018-border));
 }
 [data-vibeui-block="card-018"][data-featured="true"] [data-part="action"]:hover{
-background:color-mix(in oklab,var(--vibeui-card-018-accent) 85%,oklch(0.2 0.02 265));
+background:color-mix(in oklab,var(--vibeui-card-018-accent) 85%,var(--vibeui-card-018-ink));
 }
 [data-vibeui-block="card-018"] [data-part="action"]:focus-visible{
 outline:2px solid var(--vibeui-card-018-accent);outline-offset:2px;
@@ -121,6 +126,28 @@ const DEFAULT_FEATURES = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Карточка тарифа с выделенным рекомендованным состоянием.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -134,6 +161,7 @@ export function Card018({
   ribbon = "Чаще всего берут",
   actionLabel = "Выбрать тариф",
   note = "Отмена в один клик, деньги за неиспользованный месяц возвращаются.",
+  background = "",
   accent,
   className,
   style,
@@ -141,6 +169,13 @@ export function Card018({
 }: Card018Props) {
   const palette = {
     ...(accent ? { "--vibeui-card-018-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-card-018-bg": background,
+          "--vibeui-card-018-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

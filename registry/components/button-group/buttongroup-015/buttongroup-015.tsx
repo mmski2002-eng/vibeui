@@ -14,6 +14,8 @@ export type Buttongroup015Props = Omit<
   label?: string
   unit?: string
   name?: string
+  /** Пусто — подложки нет, сегменты лежат прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,13 +26,14 @@ export type Buttongroup015Props = Omit<
 // вслух сегмент звучит как «Новые 12» без объяснения, что это за 12.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-015"]){
---vibeui-buttongroup-015-surface:oklch(1 0 0);
---vibeui-buttongroup-015-fg:oklch(0.26 0.016 265);
---vibeui-buttongroup-015-muted:oklch(0.56 0.014 265);
---vibeui-buttongroup-015-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-015-badge:oklch(0.95 0.006 265);
---vibeui-buttongroup-015-accent:oklch(0.5 0.15 165);
---vibeui-buttongroup-015-on:oklch(0.96 0.04 165);
+--vibeui-buttongroup-015-surface:transparent;
+--vibeui-buttongroup-015-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-015-muted:light-dark(oklch(0.56 0.014 265),oklch(0.69 0.012 265));
+--vibeui-buttongroup-015-border:light-dark(oklch(0.89 0.008 265),oklch(0.37 0.012 265));
+--vibeui-buttongroup-015-badge:light-dark(oklch(0.95 0.006 265),oklch(0.33 0.012 265));
+--vibeui-buttongroup-015-accent:light-dark(oklch(0.5 0.15 165),oklch(0.74 0.13 165));
+--vibeui-buttongroup-015-on:light-dark(oklch(0.96 0.04 165),oklch(0.29 0.045 165));
+--vibeui-buttongroup-015-on-accent:light-dark(oklch(0.99 0.004 165),oklch(0.19 0.03 165));
 --vibeui-buttongroup-015-radius:0.625rem;
 --vibeui-buttongroup-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -90,7 +93,7 @@ color:var(--vibeui-buttongroup-015-accent);
 }
 [data-vibeui-block="buttongroup-015"] [data-part="segment"]:has(input:checked) [data-part="count"]{
 background:var(--vibeui-buttongroup-015-accent);
-color:oklch(0.99 0.004 165);
+color:var(--vibeui-buttongroup-015-on-accent);
 }
 [data-vibeui-block="buttongroup-015"] [data-part="segment"]:has(input:focus-visible){
 z-index:2;
@@ -107,6 +110,28 @@ const DEFAULT_OPTIONS: Buttongroup015Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сегментированный фильтр со счётчиком в каждом сегменте.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -116,6 +141,7 @@ export function Buttongroup015({
   label = "Фильтр заявок",
   unit = "заявок",
   name = "buttongroup-015",
+  background = "",
   accent,
   className,
   style,
@@ -123,6 +149,12 @@ export function Buttongroup015({
 }: Buttongroup015Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-015-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

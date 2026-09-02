@@ -24,7 +24,11 @@ export type Combobox027Props = Omit<
   people?: Combobox027Person[]
   emptyLabel?: string
   defaultValue?: string
+  /** Слова статусов: компонент несёт русские, проект подставляет свои. */
+  statusText?: Record<Combobox027Status, string>
   onSelect?: (name: string) => void
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -32,18 +36,23 @@ export type Combobox027Props = Omit<
 // доступен ли он сейчас. Список сортируется по статусу — сначала те, кто в
 // сети, — а у каждого аватара живёт цветная точка. Цвет дублируется словом
 // в подписи, потому что точка без слова неразличима при дальтонизме.
+//
+// Тема берётся из color-scheme окружения через light-dark(). Обводка точки
+// статуса живёт отдельным токеном ring: подложка блока прозрачна, а точке
+// нужен непрозрачный ободок, чтобы читаться поверх аватара.
 const STYLES = `
 :where([data-vibeui-block="combobox-027"]){
---vibeui-combobox-027-bg:oklch(1 0 0);
---vibeui-combobox-027-fg:oklch(0.22 0.014 160);
---vibeui-combobox-027-muted:oklch(0.55 0.014 160);
---vibeui-combobox-027-border:oklch(0.9 0.006 160);
---vibeui-combobox-027-field:oklch(0.985 0.002 160);
---vibeui-combobox-027-active:oklch(0.955 0.02 160);
---vibeui-combobox-027-accent:oklch(0.5 0.13 160);
---vibeui-combobox-027-online:oklch(0.62 0.16 150);
---vibeui-combobox-027-away:oklch(0.72 0.15 80);
---vibeui-combobox-027-offline:oklch(0.65 0.01 160);
+--vibeui-combobox-027-bg:transparent;
+--vibeui-combobox-027-ring:light-dark(oklch(1 0 0),oklch(0.24 0.012 160));
+--vibeui-combobox-027-fg:light-dark(oklch(0.22 0.014 160),oklch(0.94 0.008 160));
+--vibeui-combobox-027-muted:light-dark(oklch(0.55 0.014 160),oklch(0.72 0.012 160));
+--vibeui-combobox-027-border:light-dark(oklch(0.9 0.006 160),oklch(0.36 0.012 160));
+--vibeui-combobox-027-field:light-dark(oklch(0.985 0.002 160),oklch(0.27 0.01 160));
+--vibeui-combobox-027-active:light-dark(oklch(0.955 0.02 160),oklch(0.34 0.03 160));
+--vibeui-combobox-027-accent:light-dark(oklch(0.5 0.13 160),oklch(0.74 0.13 160));
+--vibeui-combobox-027-online:light-dark(oklch(0.62 0.16 150),oklch(0.72 0.16 150));
+--vibeui-combobox-027-away:light-dark(oklch(0.72 0.15 80),oklch(0.78 0.14 80));
+--vibeui-combobox-027-offline:light-dark(oklch(0.65 0.01 160),oklch(0.55 0.01 160));
 --vibeui-combobox-027-radius:0.625rem;
 --vibeui-combobox-027-hue:265;
 --vibeui-combobox-027-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -88,7 +97,7 @@ color:oklch(0.38 0.11 var(--vibeui-combobox-027-hue));
 [data-vibeui-block="combobox-027"] [data-part="dot"]{
 position:absolute;right:-0.05rem;bottom:-0.05rem;
 width:0.55rem;height:0.55rem;border-radius:999px;
-border:1.5px solid var(--vibeui-combobox-027-bg);
+border:1.5px solid var(--vibeui-combobox-027-ring);
 }
 [data-vibeui-block="combobox-027"] [data-part="dot"][data-status="online"]{background:var(--vibeui-combobox-027-online)}
 [data-vibeui-block="combobox-027"] [data-part="dot"][data-status="away"]{background:var(--vibeui-combobox-027-away)}
@@ -148,6 +157,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox для выбора исполнителя с аватарами и статусом онлайн: сначала
  * те, кто в сети, у каждого аватара цветная точка и подпись статуса.
  */
@@ -157,7 +188,9 @@ export function Combobox027({
   people = DEFAULT_PEOPLE,
   emptyLabel = "Никого не нашлось",
   defaultValue = "",
+  statusText = STATUS_LABEL,
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -183,6 +216,13 @@ export function Combobox027({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-027-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-027-bg": background,
+          "--vibeui-combobox-027-ring": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -288,7 +328,8 @@ export function Combobox027({
               <span data-part="text">
                 <span data-part="name">{person.name}</span>
                 <span data-part="detail">
-                  {person.role} · {STATUS_LABEL[person.status]}
+                  {person.role} ·{" "}
+                  {statusText[person.status] ?? STATUS_LABEL[person.status]}
                 </span>
               </span>
               {person.name === value ? (

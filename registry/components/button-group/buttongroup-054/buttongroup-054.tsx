@@ -12,6 +12,8 @@ export type Buttongroup054Props = Omit<
 > & {
   tools?: Buttongroup054Tool[]
   label?: string
+  /** Пусто — заливки нет, панель ложится на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,11 +26,12 @@ export type Buttongroup054Props = Omit<
 // расстояние между ними — не меньше 0.125rem, иначе цели съедят друг друга.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-054"]){
---vibeui-buttongroup-054-surface:oklch(1 0 0);
---vibeui-buttongroup-054-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-054-muted:oklch(0.6 0.014 265);
---vibeui-buttongroup-054-border:oklch(0.9 0.006 265);
---vibeui-buttongroup-054-accent:oklch(0.5 0.16 265);
+--vibeui-buttongroup-054-surface:transparent;
+--vibeui-buttongroup-054-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-054-muted:light-dark(oklch(0.6 0.014 265),oklch(0.71 0.012 265));
+--vibeui-buttongroup-054-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.012 265));
+--vibeui-buttongroup-054-hover:light-dark(oklch(0.955 0.005 265),oklch(0.34 0.01 265));
+--vibeui-buttongroup-054-accent:light-dark(oklch(0.5 0.16 265),oklch(0.76 0.14 265));
 --vibeui-buttongroup-054-radius:0.375rem;
 --vibeui-buttongroup-054-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -61,7 +64,7 @@ width:0.875rem;height:0.875rem;
 stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
 }
 [data-vibeui-block="buttongroup-054"] button:hover{
-background:oklch(0.955 0.005 265);color:var(--vibeui-buttongroup-054-fg);
+background:var(--vibeui-buttongroup-054-hover);color:var(--vibeui-buttongroup-054-fg);
 }
 [data-vibeui-block="buttongroup-054"] button:focus-visible{
 outline:2px solid var(--vibeui-buttongroup-054-accent);outline-offset:1px;
@@ -89,12 +92,35 @@ const DEFAULT_TOOLS: Buttongroup054Tool[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Плотная панель значков, у которой цель для пальца больше самого рисунка.
  * Один файл, ноль зависимостей, серверный компонент.
  */
 export function Buttongroup054({
   tools = DEFAULT_TOOLS,
   label = "Действия над строкой",
+  background = "",
   accent,
   className,
   style,
@@ -102,6 +128,12 @@ export function Buttongroup054({
 }: Buttongroup054Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-054-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-054-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

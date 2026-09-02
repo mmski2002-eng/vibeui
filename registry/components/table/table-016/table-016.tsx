@@ -14,6 +14,12 @@ export type Table016Props = Omit<
   /** Сколько знаков после запятой печатать во всех ячейках. */
   decimals?: number
   caption?: string
+  /** Подпись первой колонки. */
+  leadTitle?: string
+  /** Подпись итоговой строки. */
+  totalLabel?: string
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,15 +28,18 @@ export type Table016Props = Omit<
 // в одну границу, запятые стоят в одну линию, а минус висит слева и не
 // сдвигает цифры. Минус — знак «−», а не дефис, и он читается вслух:
 // цветом отрицательное значение не размечают.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-016"]){
---vibeui-table-016-bg:oklch(1 0 0);
---vibeui-table-016-fg:oklch(0.24 0.014 265);
---vibeui-table-016-muted:oklch(0.56 0.014 265);
---vibeui-table-016-border:oklch(0.92 0.006 265);
---vibeui-table-016-head:oklch(0.975 0.003 265);
---vibeui-table-016-accent:oklch(0.55 0.2 262);
---vibeui-table-016-minus:oklch(0.53 0.19 27);
+--vibeui-table-016-bg:transparent;
+--vibeui-table-016-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-016-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-table-016-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
+--vibeui-table-016-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-016-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
+--vibeui-table-016-minus:light-dark(oklch(0.53 0.19 27),oklch(0.74 0.16 27));
 --vibeui-table-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="table-016"]{
@@ -100,6 +109,28 @@ function split(value: number, decimals: number) {
 }
 
 /**
+ * Ветка темы для заданного фона: light-dark() смотрит на color-scheme, а не
+ * на цвет подложки, поэтому светлую плашку приходится объявлять светлой.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Числовая таблица с выравниванием по разряду и висящим минусом.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -108,6 +139,9 @@ export function Table016({
   rows = DEFAULT_ROWS,
   decimals = 2,
   caption = "Движение денег за месяц, тыс. ₽",
+  leadTitle = "Статья",
+  totalLabel = "Итого",
+  background = "",
   accent,
   className,
   style,
@@ -115,6 +149,12 @@ export function Table016({
 }: Table016Props) {
   const palette = {
     ...(accent ? { "--vibeui-table-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-table-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -156,7 +196,7 @@ export function Table016({
               <caption>{caption}</caption>
               <thead>
                 <tr>
-                  <th scope="col">Статья</th>
+                  <th scope="col">{leadTitle}</th>
                   {columns.map((column) => (
                     <th key={column} scope="col">
                       {column}
@@ -178,7 +218,7 @@ export function Table016({
               </tbody>
               <tfoot>
                 <tr>
-                  <th scope="row">Итого</th>
+                  <th scope="row">{totalLabel}</th>
                   {totals.map((total, index) => (
                     <td key={columns[index]}>{renderNumber(total)}</td>
                   ))}

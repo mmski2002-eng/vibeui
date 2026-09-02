@@ -10,23 +10,36 @@ export type Progress001Props = Omit<
   /** Правая подпись: по умолчанию проценты. */
   hint?: string
   size?: "sm" | "md"
+  /** Подпись состояния «длительность неизвестна». */
+  runningText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
 // Идея компонента: у полосы два честных состояния. Известен прогресс — она
 // показывает долю и число; неизвестен — по дорожке ходит отрезок, и никакой
 // выдуманный процент не рисуется.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// становится тёмным там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="progress-001"]){
---vibeui-progress-001-fg:oklch(0.28 0.016 265);
---vibeui-progress-001-muted:oklch(0.54 0.014 265);
---vibeui-progress-001-track:oklch(0.92 0.006 265);
---vibeui-progress-001-accent:oklch(0.55 0.2 262);
+--vibeui-progress-001-fg:light-dark(oklch(0.28 0.016 265),oklch(0.94 0.006 265));
+--vibeui-progress-001-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-progress-001-track:light-dark(oklch(0.92 0.006 265),oklch(0.31 0.012 265));
+--vibeui-progress-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.7 0.17 262));
+--vibeui-progress-001-bg:transparent;
+--vibeui-progress-001-pad:0;
+--vibeui-progress-001-radius:0;
 --vibeui-progress-001-height:0.5rem;
 --vibeui-progress-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="progress-001"]{
 display:flex;flex-direction:column;gap:0.5rem;width:100%;
+box-sizing:border-box;padding:var(--vibeui-progress-001-pad);
+background:var(--vibeui-progress-001-bg);
+border-radius:var(--vibeui-progress-001-radius);
 font-family:var(--vibeui-progress-001-font);color:var(--vibeui-progress-001-fg);
 }
 [data-vibeui-block="progress-001"][data-size="sm"]{--vibeui-progress-001-height:0.25rem}
@@ -64,6 +77,28 @@ animation:vibeui-progress-001-slide 1.4s ease-in-out infinite;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Индикатор выполнения с честным состоянием неизвестной длительности.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -72,6 +107,8 @@ export function Progress001({
   label = "Сборка проекта",
   hint,
   size = "md",
+  runningText = "идёт",
+  background = "",
   accent,
   className,
   style,
@@ -79,13 +116,23 @@ export function Progress001({
 }: Progress001Props) {
   const indeterminate = value === null || value === undefined
   const clamped = indeterminate ? 0 : Math.min(100, Math.max(0, value))
+  // Подложка появляется вместе с полями: без неё компонент лежит прямо на
+  // странице, и лишние отступы ему только мешают.
   const palette = {
     "--vibeui-progress-001-value": clamped,
     ...(accent ? { "--vibeui-progress-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-progress-001-bg": background,
+          "--vibeui-progress-001-pad": "0.875rem 1rem",
+          "--vibeui-progress-001-radius": "0.75rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
-  const note = hint ?? (indeterminate ? "идёт" : `${Math.round(clamped)}%`)
+  const note = hint ?? (indeterminate ? runningText : `${Math.round(clamped)}%`)
 
   return (
     <>

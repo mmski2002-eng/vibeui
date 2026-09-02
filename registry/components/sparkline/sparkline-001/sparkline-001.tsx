@@ -8,7 +8,11 @@ export type Sparkline001Props = {
   /** Изменение за период: положительное растёт, отрицательное падает. */
   delta?: number
   unit?: string
+  /** Подпись для скринридера: {label}, {value}, {delta} и {unit} подставляются. */
+  ariaTemplate?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -17,19 +21,22 @@ export type Sparkline001Props = {
 // а не вместо него. Число отвечает «сколько», кривая — «куда идёт», и вместе
 // они занимают место одной ячейки таблицы. Цвет считается из знака изменения,
 // поэтому падение нельзя случайно покрасить в зелёный.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// показателя нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="sparkline-001"]){
---vibeui-sparkline-001-surface:oklch(1 0 0);
---vibeui-sparkline-001-surface-border:oklch(0.91 0.006 265);
---vibeui-sparkline-001-fg:oklch(0.24 0.016 265);
---vibeui-sparkline-001-muted:oklch(0.55 0.014 265);
---vibeui-sparkline-001-up:oklch(0.58 0.15 152);
---vibeui-sparkline-001-down:oklch(0.56 0.19 25);
+--vibeui-sparkline-001-surface:transparent;
+--vibeui-sparkline-001-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-sparkline-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-sparkline-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-sparkline-001-up:light-dark(oklch(0.58 0.15 152),oklch(0.76 0.14 152));
+--vibeui-sparkline-001-down:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25));
 --vibeui-sparkline-001-accent:var(--vibeui-sparkline-001-up);
 --vibeui-sparkline-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Собственная подложка: строка показателя — это текст, и на тёмной
-   странице он обязан читаться без правки палитры проекта. */
+/* Рамка держит показатель отдельной строкой, а подложка по умолчанию
+   прозрачна: цвет приходит со страницы. */
 [data-vibeui-block="sparkline-001"]{
 box-sizing:border-box;padding:0.625rem 0.75rem;
 background:var(--vibeui-sparkline-001-surface);
@@ -69,6 +76,29 @@ transform:rotate(-45deg);
 const DEFAULT_VALUES = [12, 15, 13, 19, 17, 24, 22, 28, 31, 29, 36, 41]
 const WIDTH = 88
 const HEIGHT = 28
+const ARIA_TEMPLATE = "{label}: {value}, изменение {delta}{unit}"
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Мини-график размером со строку: число, кривая и изменение за период.
@@ -80,12 +110,20 @@ export function Sparkline001({
   value = "1 284",
   delta = 12.4,
   unit = "%",
+  ariaTemplate = ARIA_TEMPLATE,
   accent,
+  background = "",
   className,
   style,
 }: Sparkline001Props) {
   const palette = {
     ...(accent ? { "--vibeui-sparkline-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-sparkline-001-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -102,6 +140,11 @@ export function Sparkline001({
     .join(" ")
   const tail = points[points.length - 1]
   const trend = delta > 0.5 ? "up" : delta < -0.5 ? "down" : "flat"
+  const description = ariaTemplate
+    .replace("{label}", label)
+    .replace("{value}", value)
+    .replace("{delta}", String(delta))
+    .replace("{unit}", unit)
 
   return (
     <>
@@ -123,7 +166,7 @@ export function Sparkline001({
             viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
             preserveAspectRatio="none"
             role="img"
-            aria-label={`${label}: ${value}, изменение ${delta}${unit}`}
+            aria-label={description}
           >
             <path data-part="line" d={line} />
             <circle data-part="dot" cx={tail.x} cy={tail.y} r={2} />

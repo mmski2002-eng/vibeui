@@ -18,6 +18,8 @@ export type Blog001Props = {
   posts?: Blog001Post[]
   moreLabel?: string
   moreHref?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -36,12 +38,12 @@ export type Blog001Props = {
 // Дата размечена <time>, чтобы её понимали агрегаторы и поиск.
 const STYLES = `
 :where([data-vibeui-block="blog-001"]){
---vibeui-blog-001-bg:oklch(0.99 0.002 265);
---vibeui-blog-001-card:oklch(1 0 0);
---vibeui-blog-001-fg:oklch(0.2 0.014 265);
---vibeui-blog-001-muted:oklch(0.52 0.014 265);
---vibeui-blog-001-border:oklch(0.91 0.006 265);
---vibeui-blog-001-accent:oklch(0.52 0.17 262);
+--vibeui-blog-001-bg:transparent;
+--vibeui-blog-001-card:light-dark(oklch(1 0 0),oklch(0.245 0.012 265));
+--vibeui-blog-001-fg:light-dark(oklch(0.2 0.014 265),oklch(0.95 0.005 265));
+--vibeui-blog-001-muted:light-dark(oklch(0.52 0.014 265),oklch(0.72 0.012 265));
+--vibeui-blog-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-blog-001-accent:light-dark(oklch(0.52 0.17 262),oklch(0.75 0.14 262));
 --vibeui-blog-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -163,6 +165,28 @@ function hue(name: string) {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Лента статей карточками с градиентной обложкой от оттенка рубрики.
  * Один файл, ноль зависимостей, клиентского JS нет.
  */
@@ -173,12 +197,19 @@ export function Blog001({
   posts = DEFAULT_POSTS,
   moreLabel = "Все статьи",
   moreHref = "#",
+  background = "",
   accent,
   className,
   style,
 }: Blog001Props) {
   const palette = {
     ...(accent ? { "--vibeui-blog-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-blog-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

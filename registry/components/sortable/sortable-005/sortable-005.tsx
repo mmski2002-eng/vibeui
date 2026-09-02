@@ -8,14 +8,25 @@ import type {
   KeyboardEvent,
 } from "react"
 
+export type Sortable005Announcement = "moved" | "edge"
+
 export type Sortable005Props = Omit<
   ComponentPropsWithoutRef<"div">,
   "children" | "onChange"
 > & {
   title?: string
+  hint?: string
   tiles?: string[]
   columns?: number
   onChange?: (tiles: string[]) => void
+  /** Место плитки: {row} — ряд, {column} — колонка. */
+  spotLabel?: string
+  /** Подпись плитки: {item}, {position}, {total}, {spot}. */
+  tileLabel?: string
+  /** Реплики живой области: {item}, {position}, {total}, {spot}. */
+  announcements?: Record<Sortable005Announcement, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -29,12 +40,13 @@ export type Sortable005Props = Omit<
 // «шестая из восьми» в сетке не говорит ничего.
 const STYLES = `
 :where([data-vibeui-block="sortable-005"]){
---vibeui-sortable-005-bg:oklch(1 0 0);
---vibeui-sortable-005-tile:oklch(0.985 0.002 265);
---vibeui-sortable-005-fg:oklch(0.24 0.014 265);
---vibeui-sortable-005-muted:oklch(0.56 0.014 265);
---vibeui-sortable-005-border:oklch(0.9 0.006 265);
---vibeui-sortable-005-accent:oklch(0.55 0.2 262);
+--vibeui-sortable-005-bg:transparent;
+--vibeui-sortable-005-tile:light-dark(oklch(0.985 0.002 265),oklch(0.28 0.011 265));
+--vibeui-sortable-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-sortable-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-sortable-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-sortable-005-shadow:light-dark(oklch(0.2 0.02 265 / 14%),oklch(0 0 0 / 44%));
+--vibeui-sortable-005-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
 --vibeui-sortable-005-columns:3;
 --vibeui-sortable-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -64,7 +76,7 @@ transition:box-shadow .15s ease,border-color .15s ease,transform .15s ease;
 [data-vibeui-block="sortable-005"] [data-part="tile"]:focus-visible{
 outline:2px solid var(--vibeui-sortable-005-accent);outline-offset:2px;
 border-color:var(--vibeui-sortable-005-accent);
-box-shadow:0 6px 14px oklch(0.2 0.02 265 / 14%);
+box-shadow:0 6px 14px var(--vibeui-sortable-005-shadow);
 }
 [data-vibeui-block="sortable-005"] [data-part="tile"][data-dragging="true"]{opacity:.45}
 [data-vibeui-block="sortable-005"] [data-part="tile"][data-over="true"]{box-shadow:inset 0 0 0 2px var(--vibeui-sortable-005-accent)}
@@ -77,6 +89,33 @@ clip-path:inset(50%);white-space:nowrap;border:0;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="sortable-005"] *{animation:none!important;transition:none!important}}
 `
+
+const DEFAULT_ANNOUNCEMENTS: Record<Sortable005Announcement, string> = {
+  moved: "«{item}» на позиции {position} из {total}: {spot}.",
+  edge: "«{item}» уже с краю сетки: {spot}.",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_TILES = [
   "Обложка",
@@ -95,9 +134,14 @@ const DEFAULT_TILES = [
  */
 export function Sortable005({
   title = "Плитки на главной",
+  hint = "Мышью — перетаскиванием. С клавиатуры: стрелки влево и вправо двигают на позицию, вверх и вниз — на ряд.",
   tiles = DEFAULT_TILES,
   columns = 3,
   onChange,
+  spotLabel = "ряд {row}, колонка {column}",
+  tileLabel = "{item}, позиция {position} из {total}, {spot}. Стрелки переставляют плитку.",
+  announcements = DEFAULT_ANNOUNCEMENTS,
+  background = "",
   accent,
   className,
   style,
@@ -109,7 +153,22 @@ export function Sortable005({
   const [announcement, setAnnouncement] = useState("")
 
   const spot = (index: number) =>
-    `ряд ${Math.floor(index / columns) + 1}, колонка ${(index % columns) + 1}`
+    spotLabel
+      .replace("{row}", String(Math.floor(index / columns) + 1))
+      .replace("{column}", String((index % columns) + 1))
+
+  const say = (
+    key: Sortable005Announcement,
+    tile: string,
+    position: number,
+    total: number,
+    index: number,
+  ) =>
+    (announcements[key] ?? DEFAULT_ANNOUNCEMENTS[key])
+      .replace("{item}", tile)
+      .replace("{position}", String(position))
+      .replace("{total}", String(total))
+      .replace("{spot}", spot(index))
 
   const move = (from: number, to: number) => {
     const next = [...order]
@@ -117,9 +176,7 @@ export function Sortable005({
     next.splice(to, 0, tile)
     setOrder(next)
     onChange?.(next)
-    setAnnouncement(
-      `«${tile}» на позиции ${to + 1} из ${next.length}: ${spot(to)}.`,
-    )
+    setAnnouncement(say("moved", tile, to + 1, next.length, to))
   }
 
   const handleKey = (event: KeyboardEvent<HTMLButtonElement>, tile: string) => {
@@ -138,7 +195,7 @@ export function Sortable005({
     const to = from + step
 
     if (to < 0 || to >= order.length) {
-      setAnnouncement(`«${tile}» уже с краю сетки: ${spot(from)}.`)
+      setAnnouncement(say("edge", tile, from + 1, order.length, from))
       return
     }
 
@@ -156,6 +213,12 @@ export function Sortable005({
   const palette = {
     "--vibeui-sortable-005-columns": String(columns),
     ...(accent ? { "--vibeui-sortable-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-sortable-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -171,10 +234,7 @@ export function Sortable005({
         style={palette}
       >
         <h3>{title}</h3>
-        <p data-part="hint">
-          Мышью — перетаскиванием. С клавиатуры: стрелки влево и вправо двигают
-          на позицию, вверх и вниз — на ряд.
-        </p>
+        <p data-part="hint">{hint}</p>
         <ol>
           {order.map((tile, index) => (
             <li
@@ -196,7 +256,11 @@ export function Sortable005({
                 data-part="tile"
                 data-dragging={tile === dragged}
                 data-over={tile === over}
-                aria-label={`${tile}, позиция ${index + 1} из ${order.length}, ${spot(index)}. Стрелки переставляют плитку.`}
+                aria-label={tileLabel
+                  .replace("{item}", tile)
+                  .replace("{position}", String(index + 1))
+                  .replace("{total}", String(order.length))
+                  .replace("{spot}", spot(index))}
                 onKeyDown={(event) => handleKey(event, tile)}
               >
                 {tile}

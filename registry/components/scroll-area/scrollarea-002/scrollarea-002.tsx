@@ -7,6 +7,8 @@ export type Scrollarea002Props = Omit<
   title?: string
   items?: string[]
   height?: string
+  /** Подложка: приём с тенями требует непрозрачного цвета, пусто — свой. */
+  background?: string
 }
 
 // Идея компонента: тени у краёв появляются только с той стороны, где ещё есть
@@ -14,14 +16,18 @@ export type Scrollarea002Props = Omit<
 // подложки прокручиваются вместе с содержимым (background-attachment:local),
 // две тени приколоты к рамке (scroll). У верхнего края крышка накрывает тень,
 // пока лента не сдвинута, — и уезжает, открывая её. Никакого onScroll.
+//
+// Тема берётся из color-scheme окружения через light-dark(). Подложка здесь,
+// в отличие от прочих областей, обязана быть непрозрачной: крышки красятся
+// её цветом, и на прозрачном фоне тени были бы видны всегда.
 const STYLES = `
 :where([data-vibeui-block="scrollarea-002"]){
---vibeui-scrollarea-002-bg:oklch(1 0 0);
---vibeui-scrollarea-002-fg:oklch(0.24 0.014 265);
---vibeui-scrollarea-002-muted:oklch(0.55 0.014 265);
---vibeui-scrollarea-002-border:oklch(0.9 0.006 265);
---vibeui-scrollarea-002-shadow:oklch(0.24 0.014 265 / 16%);
---vibeui-scrollarea-002-accent:oklch(0.55 0.17 265);
+--vibeui-scrollarea-002-bg:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-scrollarea-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-scrollarea-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-scrollarea-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.33 0.012 265));
+--vibeui-scrollarea-002-shadow:light-dark(oklch(0.24 0.014 265 / 16%),oklch(0 0 0 / 55%));
+--vibeui-scrollarea-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-scrollarea-002-height:13rem;
 --vibeui-scrollarea-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -80,6 +86,28 @@ const DEFAULT_ITEMS = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Область прокрутки, где тени у краёв нарисованы фоном без JS.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -87,12 +115,19 @@ export function Scrollarea002({
   title = "Очередь работ",
   items = DEFAULT_ITEMS,
   height = "13rem",
+  background = "",
   className,
   style,
   ...props
 }: Scrollarea002Props) {
   const palette = {
     "--vibeui-scrollarea-002-height": height,
+    ...(background
+      ? {
+          "--vibeui-scrollarea-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

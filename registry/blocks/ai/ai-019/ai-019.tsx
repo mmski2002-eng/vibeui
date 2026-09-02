@@ -7,6 +7,8 @@ export type Ai019Example = {
 
 export type Ai019Props = {
   greeting?: string
+  /** Подпись значка над приветствием. */
+  markLabel?: string
   lede?: string
   examples?: Ai019Example[]
   placeholder?: string
@@ -14,6 +16,8 @@ export type Ai019Props = {
   limits?: string[]
   limitsTitle?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,12 +35,13 @@ export type Ai019Props = {
 // об ограничении из неудачного ответа дороже, чем прочитать строку здесь.
 const STYLES = `
 :where([data-vibeui-block="ai-019"]){
---vibeui-ai-019-bg:oklch(0.99 0.003 265);
---vibeui-ai-019-card:oklch(1 0 0);
---vibeui-ai-019-fg:oklch(0.2 0.014 265);
---vibeui-ai-019-muted:oklch(0.53 0.014 265);
---vibeui-ai-019-border:oklch(0.91 0.006 265);
---vibeui-ai-019-accent:oklch(0.53 0.18 272);
+--vibeui-ai-019-bg:transparent;
+--vibeui-ai-019-card:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-ai-019-fg:light-dark(oklch(0.2 0.014 265),oklch(0.94 0.005 265));
+--vibeui-ai-019-muted:light-dark(oklch(0.53 0.014 265),oklch(0.7 0.012 265));
+--vibeui-ai-019-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-ai-019-accent:light-dark(oklch(0.53 0.18 272),oklch(0.74 0.14 272));
+--vibeui-ai-019-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 272));
 --vibeui-ai-019-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -53,7 +58,7 @@ padding:2rem 1.25rem;display:grid;gap:1.25rem;max-width:56rem;margin:0 auto;
 [data-vibeui-block="ai-019"] [data-part="mark"]{
 display:inline-flex;align-items:center;justify-content:center;
 width:2.5rem;height:2.5rem;border-radius:0.875rem;
-background:var(--vibeui-ai-019-accent);color:oklch(1 0 0);
+background:var(--vibeui-ai-019-accent);color:var(--vibeui-ai-019-on-accent);
 font-size:0.875rem;font-weight:700;letter-spacing:0.02em;
 }
 [data-vibeui-block="ai-019"] h2{
@@ -98,7 +103,7 @@ font:inherit;font-size:0.875rem;padding:0.5rem 0;
 [data-vibeui-block="ai-019"] button[type="submit"]{
 appearance:none;cursor:pointer;flex:none;border:0;
 height:2.25rem;padding:0 1rem;border-radius:0.6875rem;
-background:var(--vibeui-ai-019-accent);color:oklch(1 0 0);
+background:var(--vibeui-ai-019-accent);color:var(--vibeui-ai-019-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="ai-019"] [data-part="limits"]{
@@ -152,11 +157,34 @@ const DEFAULT_LIMITS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Пустой экран чата: приветствие, готовые примеры запросов и поле ввода.
  * Один файл, ноль зависимостей, клиентского JS нет.
  */
 export function Ai019({
   greeting = "С чего начнём?",
+  markLabel = "AI",
   lede = "Нажмите готовый запрос или напишите свой. Ассистент отвечает по каталогу блоков и по файлам, которые вы добавите.",
   examples = DEFAULT_EXAMPLES,
   placeholder = "Опишите задачу своими словами",
@@ -164,11 +192,18 @@ export function Ai019({
   limits = DEFAULT_LIMITS,
   limitsTitle = "Чего ассистент не умеет",
   accent,
+  background = "",
   className,
   style,
 }: Ai019Props) {
   const palette = {
     ...(accent ? { "--vibeui-ai-019-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-ai-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -186,7 +221,7 @@ export function Ai019({
         <div data-part="shell">
           <div data-part="intro">
             <span data-part="mark" aria-hidden="true">
-              AI
+              {markLabel}
             </span>
             <h2>{greeting}</h2>
             <p data-part="lede">{lede}</p>

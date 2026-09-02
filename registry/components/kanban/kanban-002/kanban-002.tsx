@@ -21,7 +21,12 @@ export type Kanban002Props = Omit<
   columns?: Kanban002Column[]
   cards?: Kanban002Card[]
   onChange?: (cards: Kanban002Card[]) => void
+  /** Подписи и объявления: шаблоны с {name}, {title}, {count}, {limit}. */
+  text?: Record<string, string>
+  /** Пусто — подложки нет, доска лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
+  warn?: string
 }
 
 // Идея компонента: доска с лимитом карточек в колонке. Лимит бесполезен, если о
@@ -30,15 +35,19 @@ export type Kanban002Props = Omit<
 // живой области: молча отменённый перенос выглядит как поломка. Перенос мышью
 // сделан нативным drag and drop, а кнопки «влево» и «вправо» дают тот же
 // результат с клавиатуры — drag с неё недоступен в принципе.
+//
+// Тема берётся из color-scheme окружения через light-dark(): доска темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="kanban-002"]){
---vibeui-kanban-002-bg:oklch(0.985 0.002 265);
---vibeui-kanban-002-card:oklch(1 0 0);
---vibeui-kanban-002-fg:oklch(0.24 0.014 265);
---vibeui-kanban-002-muted:oklch(0.56 0.014 265);
---vibeui-kanban-002-border:oklch(0.91 0.006 265);
---vibeui-kanban-002-accent:oklch(0.55 0.2 262);
---vibeui-kanban-002-warn:oklch(0.62 0.17 40);
+--vibeui-kanban-002-bg:transparent;
+--vibeui-kanban-002-card:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-kanban-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-kanban-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-kanban-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-kanban-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.15 262));
+--vibeui-kanban-002-warn:light-dark(oklch(0.62 0.17 40),oklch(0.76 0.14 45));
+--vibeui-kanban-002-shadow:light-dark(oklch(0.2 0.02 265 / 6%),oklch(0 0 0 / 32%));
 --vibeui-kanban-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="kanban-002"]{
@@ -84,7 +93,7 @@ display:block;height:100%;background:var(--vibeui-kanban-002-accent);
 display:grid;gap:0.375rem;padding:0.5rem;border-radius:0.625rem;cursor:grab;
 background:var(--vibeui-kanban-002-card);
 border:1px solid var(--vibeui-kanban-002-border);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 6%);
+box-shadow:0 1px 2px var(--vibeui-kanban-002-shadow);
 font-size:0.75rem;line-height:1.35;
 }
 [data-vibeui-block="kanban-002"] [data-part="card"][data-dragging="true"]{opacity:.45}
@@ -119,6 +128,44 @@ const DEFAULT_CARDS: Kanban002Card[] = [
   { id: "5", title: "Тексты писем", column: "Проверка" },
 ]
 
+const DEFAULT_TEXT: Record<string, string> = {
+  column: "{name}: {count} из {limit}",
+  refused:
+    "«{title}» не перенесена: в колонке «{name}» уже {count} из {limit}.",
+  moved: "«{title}» перенесена в «{name}», теперь {count} из {limit}.",
+  previous: "Перенести «{title}» в предыдущую колонку",
+  next: "Перенести «{title}» в следующую колонку",
+}
+
+/** Подстановка значений в шаблон подписи. */
+function format(template: string, values: Record<string, string | number>) {
+  return template.replace(/\{(\w+)\}/g, (whole, key: string) =>
+    key in values ? String(values[key]) : whole,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Доска с лимитом карточек в колонке: перенос сверх лимита отклоняется вслух.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -127,11 +174,15 @@ export function Kanban002({
   columns = DEFAULT_COLUMNS,
   cards = DEFAULT_CARDS,
   onChange,
+  text,
+  background = "",
   accent,
+  warn,
   className,
   style,
   ...props
 }: Kanban002Props) {
+  const labels = { ...DEFAULT_TEXT, ...text }
   const [board, setBoard] = useState(cards)
   const [dragged, setDragged] = useState<string | null>(null)
   const [over, setOver] = useState<string | null>(null)
@@ -147,7 +198,12 @@ export function Kanban002({
 
     if (taken >= column.limit) {
       setAnnouncement(
-        `«${card.title}» не перенесена: в колонке «${name}» уже ${taken} из ${column.limit}.`,
+        format(labels.refused, {
+          title: card.title,
+          name,
+          count: taken,
+          limit: column.limit,
+        }),
       )
       return
     }
@@ -159,7 +215,12 @@ export function Kanban002({
     setBoard(next)
     onChange?.(next)
     setAnnouncement(
-      `«${card.title}» перенесена в «${name}», теперь ${taken + 1} из ${column.limit}.`,
+      format(labels.moved, {
+        title: card.title,
+        name,
+        count: taken + 1,
+        limit: column.limit,
+      }),
     )
   }
 
@@ -181,6 +242,13 @@ export function Kanban002({
 
   const palette = {
     ...(accent ? { "--vibeui-kanban-002-accent": accent } : null),
+    ...(warn ? { "--vibeui-kanban-002-warn": warn } : null),
+    ...(background
+      ? {
+          "--vibeui-kanban-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -206,7 +274,11 @@ export function Kanban002({
               data-part="column"
               data-over={column.name === over}
               data-full={full}
-              aria-label={`${column.name}: ${rows.length} из ${column.limit}`}
+              aria-label={format(labels.column, {
+                name: column.name,
+                count: rows.length,
+                limit: column.limit,
+              })}
               onDragOver={(event) => {
                 event.preventDefault()
                 setOver(column.name)
@@ -241,7 +313,9 @@ export function Kanban002({
                         <button
                           type="button"
                           disabled={columnIndex === 0}
-                          aria-label={`Перенести «${card.title}» в предыдущую колонку`}
+                          aria-label={format(labels.previous, {
+                            title: card.title,
+                          })}
                           onClick={() => shift(card.id, -1)}
                         >
                           ←
@@ -249,7 +323,9 @@ export function Kanban002({
                         <button
                           type="button"
                           disabled={columnIndex === columns.length - 1}
-                          aria-label={`Перенести «${card.title}» в следующую колонку`}
+                          aria-label={format(labels.next, {
+                            title: card.title,
+                          })}
                           onClick={() => shift(card.id, 1)}
                         >
                           →

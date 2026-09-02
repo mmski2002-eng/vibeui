@@ -14,6 +14,8 @@ export type Timeline011Props = Omit<
   points?: Timeline011Point[]
   title?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: вехи разложены по горизонтали вокруг общего ствола, а не
@@ -23,13 +25,17 @@ export type Timeline011Props = Omit<
 // стволе: карточка растёт в свою сторону через grid-строку 1fr, а не через
 // подгонку отступов на глаз. На узкой ширине лента не ломается в столбец —
 // она прокручивается по горизонтали.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// становится тёмным там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="timeline-011"]){
---vibeui-timeline-011-bg:oklch(1 0 0);
---vibeui-timeline-011-fg:oklch(0.22 0.014 265);
---vibeui-timeline-011-muted:oklch(0.57 0.014 265);
---vibeui-timeline-011-border:oklch(0.91 0.006 265);
---vibeui-timeline-011-accent:oklch(0.55 0.18 262);
+--vibeui-timeline-011-bg:transparent;
+--vibeui-timeline-011-surface:light-dark(oklch(0.99 0.002 265),oklch(0.19 0.012 265));
+--vibeui-timeline-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-timeline-011-muted:light-dark(oklch(0.57 0.014 265),oklch(0.69 0.012 265));
+--vibeui-timeline-011-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-timeline-011-accent:light-dark(oklch(0.55 0.18 262),oklch(0.74 0.16 262));
 --vibeui-timeline-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="timeline-011"]{
@@ -61,7 +67,7 @@ display:grid;grid-template-rows:1fr auto 1fr;justify-items:center;
 grid-row:2;position:relative;z-index:1;
 width:0.75rem;height:0.75rem;border-radius:9999px;
 background:var(--vibeui-timeline-011-accent);
-box-shadow:0 0 0 3px var(--vibeui-timeline-011-bg);
+box-shadow:0 0 0 3px var(--vibeui-timeline-011-surface);
 }
 [data-vibeui-block="timeline-011"] [data-part="card"]{
 position:relative;display:flex;flex-direction:column;gap:0.125rem;
@@ -115,6 +121,28 @@ const DEFAULT_POINTS: Timeline011Point[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Горизонтальная лента вех вокруг общего ствола: чётные карточки сверху,
  * нечётные снизу. Один файл, ноль зависимостей, собственная палитра.
  */
@@ -122,12 +150,22 @@ export function Timeline011({
   points = DEFAULT_POINTS,
   title = "Вехи проекта",
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Timeline011Props) {
+  // Разрыв ствола вокруг узла рисуется цветом подложки: на прозрачной он
+  // берёт цвет страницы через собственный токен.
   const palette = {
     ...(accent ? { "--vibeui-timeline-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-timeline-011-bg": background,
+          "--vibeui-timeline-011-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

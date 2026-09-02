@@ -5,12 +5,18 @@ import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
 export type Filters006Props = Omit<
   ComponentPropsWithoutRef<"div">,
-  "children" | "onChange"
+  "children" | "onChange" | "defaultChecked"
 > & {
   title?: string
   placeholder?: string
   values?: string[]
+  /** Отмеченные значения на старте. */
+  defaultChecked?: string[]
   onChange?: (checked: string[]) => void
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,16 +27,18 @@ export type Filters006Props = Omit<
 // с экрана и кажется снятой.
 const STYLES = `
 :where([data-vibeui-block="filters-006"]){
---vibeui-filters-006-surface:oklch(1 0 0);
---vibeui-filters-006-fill:oklch(0.975 0.004 265);
---vibeui-filters-006-fg:oklch(0.23 0.014 265);
---vibeui-filters-006-muted:oklch(0.55 0.014 265);
---vibeui-filters-006-border:oklch(0.89 0.008 265);
---vibeui-filters-006-shell:oklch(0.91 0.006 265);
---vibeui-filters-006-accent:oklch(0.53 0.18 30);
+--vibeui-filters-006-surface:transparent;
+--vibeui-filters-006-box:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-filters-006-fill:light-dark(oklch(0.975 0.004 265),oklch(0.3 0.012 265));
+--vibeui-filters-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-filters-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-filters-006-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.014 265));
+--vibeui-filters-006-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-filters-006-accent:light-dark(oklch(0.53 0.18 30),oklch(0.76 0.15 30));
+--vibeui-filters-006-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 30));
 --vibeui-filters-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: фильтр показывают поверх любого фона. */
+/* Подложки по умолчанию нет: фильтр ложится на фон страницы. */
 [data-vibeui-block="filters-006"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:17rem;box-sizing:border-box;padding:0.875rem;
@@ -77,7 +85,7 @@ padding:0.25rem 0.125rem;font-size:0.8125rem;
 [data-vibeui-block="filters-006"] input[type="checkbox"]{
 appearance:none;flex:none;margin:0;cursor:pointer;position:relative;
 width:1rem;height:1rem;border-radius:0.3125rem;
-border:1.5px solid var(--vibeui-filters-006-border);background:oklch(1 0 0);
+border:1.5px solid var(--vibeui-filters-006-border);background:var(--vibeui-filters-006-box);
 transition:background-color .16s ease,border-color .16s ease;
 }
 [data-vibeui-block="filters-006"] input[type="checkbox"]:checked{
@@ -86,7 +94,8 @@ background:var(--vibeui-filters-006-accent);border-color:var(--vibeui-filters-00
 [data-vibeui-block="filters-006"] input[type="checkbox"]:checked::after{
 content:"";position:absolute;left:0.3125rem;top:0.0625rem;
 width:0.25rem;height:0.5rem;transform:rotate(42deg);
-border-right:2px solid oklch(1 0 0);border-bottom:2px solid oklch(1 0 0);
+border-right:2px solid var(--vibeui-filters-006-on-accent);
+border-bottom:2px solid var(--vibeui-filters-006-on-accent);
 }
 [data-vibeui-block="filters-006"] input[type="checkbox"]:focus-visible{outline:2px solid var(--vibeui-filters-006-accent);outline-offset:2px}
 /* Отмеченное всегда на виду: пропавшая галочка читается как снятая. */
@@ -119,6 +128,54 @@ const DEFAULT_VALUES = [
   "Пермь",
 ]
 
+const DEFAULT_CHECKED = ["Казань"]
+
+/** Русский словарь по умолчанию: установленный файл не меняет язык проекта. */
+const DEFAULT_LABELS: Record<string, string> = {
+  search: "{title}: поиск по значениям",
+  empty: "Ничего не нашлось. Проверьте написание.",
+  count: "Показано {shown} из {total} · выбрано {checked}",
+}
+
+function label(
+  labels: Record<string, string>,
+  key: string,
+  values?: Record<string, string>,
+): string {
+  const template = labels[key] ?? DEFAULT_LABELS[key] ?? ""
+
+  if (!values) {
+    return template
+  }
+
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, name: string) => values[name] ?? match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Фильтр с поиском по значениям: отмеченное закреплено сверху списка.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -127,14 +184,17 @@ export function Filters006({
   title = "Город",
   placeholder = "Найти город",
   values = DEFAULT_VALUES,
+  defaultChecked = DEFAULT_CHECKED,
   onChange,
+  labels = DEFAULT_LABELS,
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Filters006Props) {
   const [query, setQuery] = useState("")
-  const [checked, setChecked] = useState<string[]>(["Казань"])
+  const [checked, setChecked] = useState<string[]>(defaultChecked)
 
   const shown = useMemo(() => {
     const needle = query.trim().toLowerCase()
@@ -151,6 +211,12 @@ export function Filters006({
 
   const palette = {
     ...(accent ? { "--vibeui-filters-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-filters-006-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -182,13 +248,13 @@ export function Filters006({
             type="search"
             value={query}
             placeholder={placeholder}
-            aria-label={`${title}: поиск по значениям`}
+            aria-label={label(labels, "search", { title })}
             onChange={(event) => setQuery(event.target.value)}
           />
         </div>
 
         {shown.pinned.length === 0 && shown.rest.length === 0 ? (
-          <p data-part="empty">Ничего не нашлось. Проверьте написание.</p>
+          <p data-part="empty">{label(labels, "empty")}</p>
         ) : (
           <ul>
             {shown.pinned.map((value) => (
@@ -219,7 +285,11 @@ export function Filters006({
         )}
 
         <p data-part="count" role="status">
-          Показано {shown.matched} из {values.length} · выбрано {checked.length}
+          {label(labels, "count", {
+            shown: String(shown.matched),
+            total: String(values.length),
+            checked: String(checked.length),
+          })}
         </p>
       </div>
     </>

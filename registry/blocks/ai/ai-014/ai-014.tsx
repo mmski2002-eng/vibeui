@@ -12,10 +12,18 @@ export type Ai014Props = {
   model?: string
   limit?: number
   segments?: Ai014Segment[]
+  /** Строка под числом: {limit} — размер окна, {percent} — занятая доля. */
+  totalTemplate?: string
+  /** Подпись полосы для скринридера: {percent} — занятая доля. */
+  barLabelTemplate?: string
+  /** Слово перед текстом предупреждения. */
+  warningTitle?: string
   warning?: string
   trimLabel?: string
   newChatLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -33,17 +41,18 @@ export type Ai014Props = {
 // иначе колонка значений прыгает при обновлении.
 const STYLES = `
 :where([data-vibeui-block="ai-014"]){
---vibeui-ai-014-bg:oklch(1 0 0);
---vibeui-ai-014-soft:oklch(0.975 0.004 265);
---vibeui-ai-014-fg:oklch(0.21 0.014 265);
---vibeui-ai-014-muted:oklch(0.53 0.014 265);
---vibeui-ai-014-border:oklch(0.91 0.006 265);
---vibeui-ai-014-accent:oklch(0.52 0.17 268);
---vibeui-ai-014-system:oklch(0.62 0.13 268);
---vibeui-ai-014-context:oklch(0.6 0.14 200);
---vibeui-ai-014-chat:oklch(0.65 0.15 60);
---vibeui-ai-014-free:oklch(0.92 0.006 265);
---vibeui-ai-014-warn:oklch(0.55 0.16 55);
+--vibeui-ai-014-bg:transparent;
+--vibeui-ai-014-soft:light-dark(oklch(0.975 0.004 265),oklch(0.26 0.012 265));
+--vibeui-ai-014-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-ai-014-muted:light-dark(oklch(0.53 0.014 265),oklch(0.7 0.012 265));
+--vibeui-ai-014-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-ai-014-accent:light-dark(oklch(0.52 0.17 268),oklch(0.74 0.14 268));
+--vibeui-ai-014-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 268));
+--vibeui-ai-014-system:light-dark(oklch(0.62 0.13 268),oklch(0.7 0.13 268));
+--vibeui-ai-014-context:light-dark(oklch(0.6 0.14 200),oklch(0.71 0.12 200));
+--vibeui-ai-014-chat:light-dark(oklch(0.65 0.15 60),oklch(0.76 0.13 60));
+--vibeui-ai-014-free:light-dark(oklch(0.92 0.006 265),oklch(0.34 0.01 265));
+--vibeui-ai-014-warn:light-dark(oklch(0.55 0.16 55),oklch(0.78 0.13 65));
 --vibeui-ai-014-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -101,7 +110,7 @@ font-size:0.75rem;line-height:1.55;
 appearance:none;cursor:pointer;height:2.125rem;padding:0 0.875rem;border-radius:0.6875rem;
 font:inherit;font-size:0.8125rem;font-weight:640;
 }
-[data-vibeui-block="ai-014"] [data-part="trim"]{border:0;background:var(--vibeui-ai-014-accent);color:oklch(1 0 0)}
+[data-vibeui-block="ai-014"] [data-part="trim"]{border:0;background:var(--vibeui-ai-014-accent);color:var(--vibeui-ai-014-on-accent)}
 [data-vibeui-block="ai-014"] [data-part="fresh"]{border:1px solid var(--vibeui-ai-014-border);background:none;color:inherit}
 [data-vibeui-block="ai-014"] :focus-visible{outline:2px solid var(--vibeui-ai-014-accent);outline-offset:2px}
 @container (min-width: 42rem){
@@ -142,6 +151,32 @@ function format(value: number) {
   return value.toLocaleString("ru-RU")
 }
 
+function fill(template: string, values: Record<string, string>) {
+  return template.replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match)
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Расход окна контекста долями: инструкция, файлы, переписка и остаток.
  * Один файл, ноль зависимостей, клиентского JS нет.
@@ -151,15 +186,25 @@ export function Ai014({
   model = "128 000 токенов",
   limit = 128000,
   segments = DEFAULT_SEGMENTS,
+  totalTemplate = "из {limit} · {percent}%",
+  barLabelTemplate = "Занято {percent} процентов окна контекста",
+  warningTitle = "Внимание.",
   warning = "Свободно меньше пятой части окна. Когда место кончится, самые старые сообщения выпадут из диалога молча.",
   trimLabel = "Свернуть старые сообщения",
   newChatLabel = "Начать новый диалог",
   accent,
+  background = "",
   className,
   style,
 }: Ai014Props) {
   const palette = {
     ...(accent ? { "--vibeui-ai-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-ai-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -191,7 +236,10 @@ export function Ai014({
           <p data-part="total">
             {format(used)}{" "}
             <span data-part="of">
-              из {format(limit)} · {percent}%
+              {fill(totalTemplate, {
+                limit: format(limit),
+                percent: String(percent),
+              })}
             </span>
           </p>
 
@@ -199,7 +247,7 @@ export function Ai014({
             data-part="bar"
             style={{ gridTemplateColumns: columns }}
             role="img"
-            aria-label={`Занято ${percent} процентов окна контекста`}
+            aria-label={fill(barLabelTemplate, { percent: String(percent) })}
           >
             {segments.map((segment) => (
               <span
@@ -230,7 +278,7 @@ export function Ai014({
           </ul>
 
           <p data-part="warn">
-            <strong>Внимание.</strong>
+            <strong>{warningTitle}</strong>
             <span>{warning}</span>
           </p>
 

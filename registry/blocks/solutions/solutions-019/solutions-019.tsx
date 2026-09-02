@@ -21,7 +21,19 @@ export type Solutions019Props = {
   candidates?: Solutions019Candidate[]
   slaDays?: number
   stuckLabel?: string
+  /** Норматив в шапке, {days} — число дней. */
+  slaText?: string
+  /** Заголовок списка кандидатов. */
+  candidatesTitle?: string
+  /** Пометка срока в норме. */
+  onStageLabel?: string
+  /** Срок на этапе, {days} — число дней. */
+  daysText?: string
+  /** Подпись рекрутёра, {name} — его имя. */
+  recruiterText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -36,13 +48,13 @@ export type Solutions019Props = {
 // прокруткой — сжатая ступень теряет и число, и подпись.
 const STYLES = `
 :where([data-vibeui-block="solutions-019"]){
---vibeui-solutions-019-bg:oklch(1 0 0);
---vibeui-solutions-019-panel:oklch(0.975 0.004 300);
---vibeui-solutions-019-fg:oklch(0.21 0.014 300);
---vibeui-solutions-019-muted:oklch(0.54 0.014 300);
---vibeui-solutions-019-border:oklch(0.9 0.006 300);
---vibeui-solutions-019-accent:oklch(0.53 0.17 305);
---vibeui-solutions-019-stuck:oklch(0.6 0.18 40);
+--vibeui-solutions-019-bg:transparent;
+--vibeui-solutions-019-panel:light-dark(oklch(0.975 0.004 300),oklch(0.27 0.012 300));
+--vibeui-solutions-019-fg:light-dark(oklch(0.21 0.014 300),oklch(0.94 0.005 300));
+--vibeui-solutions-019-muted:light-dark(oklch(0.54 0.014 300),oklch(0.7 0.012 300));
+--vibeui-solutions-019-border:light-dark(oklch(0.9 0.006 300),oklch(0.36 0.012 300));
+--vibeui-solutions-019-accent:light-dark(oklch(0.53 0.17 305),oklch(0.74 0.15 305));
+--vibeui-solutions-019-stuck:light-dark(oklch(0.6 0.18 40),oklch(0.76 0.15 40));
 --vibeui-solutions-019-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -170,6 +182,28 @@ const DEFAULT_CANDIDATES: Solutions019Candidate[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Воронка найма: конверсия между ступенями и кандидаты со сроком на этапе.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -180,7 +214,13 @@ export function Solutions019({
   candidates = DEFAULT_CANDIDATES,
   slaDays = 7,
   stuckLabel = "висит",
+  slaText = "Норматив этапа — {days} дней",
+  candidatesTitle = "Кандидаты в работе",
+  onStageLabel = "на этапе",
+  daysText = "{days} дн.",
+  recruiterText = "рекрутёр {name}",
   accent,
+  background = "",
   className,
   style,
 }: Solutions019Props) {
@@ -188,6 +228,12 @@ export function Solutions019({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-019-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -207,7 +253,9 @@ export function Solutions019({
             <h2>{title}</h2>
             <p data-part="vacancy">{vacancy}</p>
           </div>
-          <p data-part="vacancy">Норматив этапа — {slaDays} дней</p>
+          <p data-part="vacancy">
+            {slaText.replace("{days}", String(slaDays))}
+          </p>
         </header>
 
         <div data-part="funnel">
@@ -237,7 +285,7 @@ export function Solutions019({
           })}
         </div>
 
-        <h3>Кандидаты в работе</h3>
+        <h3>{candidatesTitle}</h3>
         <ul>
           {candidates.map((candidate) => (
             <li
@@ -256,11 +304,13 @@ export function Solutions019({
                 <span data-part="days">
                   {candidate.daysOnStage > slaDays
                     ? `${stuckLabel} `
-                    : "на этапе "}
-                  {candidate.daysOnStage} дн.
+                    : `${onStageLabel} `}
+                  {daysText.replace("{days}", String(candidate.daysOnStage))}
                 </span>
               </div>
-              <span data-part="recruiter">рекрутёр {candidate.recruiter}</span>
+              <span data-part="recruiter">
+                {recruiterText.replace("{name}", candidate.recruiter)}
+              </span>
             </li>
           ))}
         </ul>

@@ -7,8 +7,12 @@ export type Empty002Props = Omit<
   title?: string
   text?: string
   query?: string
+  /** Начало фразы с запросом. `{query}` — место самого запроса. */
+  queryTemplate?: string
   suggestions?: string[]
   resetLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -16,13 +20,17 @@ export type Empty002Props = Omit<
 // тем, что данные есть — их просто не нашлось по запросу. Поэтому здесь не
 // «создайте первый проект», а сам запрос, причины и готовые ходы: убрать
 // фильтры или попробовать соседний запрос.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="empty-002"]){
---vibeui-empty-002-bg:oklch(1 0 0);
---vibeui-empty-002-fg:oklch(0.22 0.014 265);
---vibeui-empty-002-muted:oklch(0.56 0.014 265);
---vibeui-empty-002-border:oklch(0.9 0.006 265);
---vibeui-empty-002-accent:oklch(0.55 0.17 265);
+--vibeui-empty-002-bg:transparent;
+--vibeui-empty-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-empty-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-empty-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-empty-002-hover:light-dark(oklch(0.97 0.003 265),oklch(0.31 0.011 265));
+--vibeui-empty-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-empty-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="empty-002"]{
@@ -57,7 +65,7 @@ height:1.875rem;padding:0 0.6875rem;
 border:1px solid var(--vibeui-empty-002-border);border-radius:9999px;
 background:transparent;color:inherit;font:inherit;font-size:0.75rem;font-weight:600;
 }
-[data-vibeui-block="empty-002"] [data-part="chip"]:hover{background:oklch(0.97 0.003 265)}
+[data-vibeui-block="empty-002"] [data-part="chip"]:hover{background:var(--vibeui-empty-002-hover)}
 [data-vibeui-block="empty-002"] [data-part="chip"]:focus-visible{outline:2px solid var(--vibeui-empty-002-accent);outline-offset:2px}
 [data-vibeui-block="empty-002"] [data-part="reset"]{
 appearance:none;border:0;background:transparent;cursor:pointer;padding:0;margin-top:0.25rem;
@@ -70,6 +78,28 @@ color:var(--vibeui-empty-002-accent);font:inherit;font-size:0.8125rem;font-weigh
 const DEFAULT_SUGGESTIONS = ["кнопка", "карточка", "календарь"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Пустая выдача поиска: сам запрос, причина и готовые ходы.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -77,8 +107,10 @@ export function Empty002({
   title = "Ничего не нашлось",
   text = "ничего не нашлось. Возможно, мешают фильтры или в запросе опечатка.",
   query = "карточкa товара",
+  queryTemplate = "По запросу «{query}»",
   suggestions = DEFAULT_SUGGESTIONS,
   resetLabel = "Сбросить фильтры",
+  background = "",
   accent,
   className,
   style,
@@ -86,8 +118,16 @@ export function Empty002({
 }: Empty002Props) {
   const palette = {
     ...(accent ? { "--vibeui-empty-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-empty-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const [beforeQuery = "", afterQuery = ""] = queryTemplate.split("{query}")
 
   return (
     <>
@@ -106,7 +146,9 @@ export function Empty002({
         <p data-part="text">
           {query ? (
             <>
-              По запросу <span data-part="query">«{query}»</span>{" "}
+              {beforeQuery}
+              <span data-part="query">{query}</span>
+              {afterQuery}{" "}
             </>
           ) : null}
           {text}

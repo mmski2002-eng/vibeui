@@ -13,6 +13,18 @@ export type Number002Props = Omit<
   max?: number
   defaultPacks?: number
   unit?: string
+  /** Строка про размер упаковки. Подстановки: {pack}, {unit}. */
+  packText?: string
+  /** Подпись кнопки, убирающей строку из заказа. */
+  removeLabel?: string
+  /** Подпись кнопки «на упаковку меньше». */
+  decrementLabel?: string
+  /** Подпись кнопки «на упаковку больше». */
+  incrementLabel?: string
+  /** Текст пустого заказа. */
+  emptyText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,19 +33,24 @@ export type Number002Props = Omit<
 // недостижимы, а под полем всегда видно, во что превратится заказ в штуках.
 // На минимуме кнопка «минус» становится удалением строки: обнулять счётчик
 // «в никуда» пользователи не догадываются, а корзину чистить надо.
+//
+// Тема берётся из color-scheme окружения через light-dark(): строка заказа
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="number-002"]){
---vibeui-number-002-surface:oklch(1 0 0);
---vibeui-number-002-field:oklch(0.975 0.003 265);
---vibeui-number-002-shell:oklch(0.9 0.006 265);
---vibeui-number-002-fg:oklch(0.23 0.014 265);
---vibeui-number-002-muted:oklch(0.55 0.014 265);
---vibeui-number-002-border:oklch(0.88 0.008 265);
---vibeui-number-002-accent:oklch(0.55 0.16 160);
---vibeui-number-002-danger:oklch(0.55 0.19 25);
+--vibeui-number-002-surface:transparent;
+--vibeui-number-002-chip:light-dark(oklch(1 0 0),oklch(0.31 0.013 265));
+--vibeui-number-002-field:light-dark(oklch(0.975 0.003 265),oklch(0.25 0.011 265));
+--vibeui-number-002-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-number-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-number-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-number-002-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-number-002-accent:light-dark(oklch(0.55 0.16 160),oklch(0.74 0.14 160));
+--vibeui-number-002-ring:light-dark(oklch(0.55 0.16 160 / 20%),oklch(0.74 0.14 160 / 30%));
+--vibeui-number-002-danger:light-dark(oklch(0.55 0.19 25),oklch(0.72 0.16 25));
 --vibeui-number-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: строку заказа показывают поверх любого фона. */
+/* Подложки по умолчанию нет: строка заказа ложится на фон страницы. */
 [data-vibeui-block="number-002"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:19rem;box-sizing:border-box;padding:0.875rem;
@@ -55,12 +72,12 @@ background:var(--vibeui-number-002-field);padding:0.25rem;
 }
 [data-vibeui-block="number-002"] [data-part="field"]:focus-within{
 border-color:var(--vibeui-number-002-accent);
-box-shadow:0 0 0 2px oklch(0.55 0.16 160 / 20%);
+box-shadow:0 0 0 2px var(--vibeui-number-002-ring);
 }
 [data-vibeui-block="number-002"] button{
 appearance:none;border:0;cursor:pointer;flex:none;
 width:2.25rem;height:2.25rem;border-radius:9999px;
-background:var(--vibeui-number-002-surface);color:inherit;
+background:var(--vibeui-number-002-chip);color:inherit;
 font:inherit;font-size:1rem;line-height:1;
 box-shadow:0 1px 2px oklch(0.2 0.02 265 / 12%);
 transition:color .14s ease,opacity .14s ease;
@@ -90,6 +107,28 @@ font-variant-numeric:tabular-nums;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Счётчик, который считает упаковками и пересчитывает их в штуки.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -100,6 +139,12 @@ export function Number002({
   max = 24,
   defaultPacks = 2,
   unit = "бут.",
+  packText = "упаковка — {pack} {unit}",
+  removeLabel = "Убрать из заказа",
+  decrementLabel = "На упаковку меньше",
+  incrementLabel = "На упаковку больше",
+  emptyText = "Нет в заказе",
+  background = "",
   accent,
   className,
   style,
@@ -113,6 +158,12 @@ export function Number002({
 
   const palette = {
     ...(accent ? { "--vibeui-number-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-number-002-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -130,7 +181,7 @@ export function Number002({
         <p data-part="head">
           <label htmlFor={id}>{label}</label>
           <span data-part="pack">
-            упаковка — {pack} {unit}
+            {packText.replace("{pack}", String(pack)).replace("{unit}", unit)}
           </span>
         </p>
         <div data-part="field">
@@ -138,9 +189,7 @@ export function Number002({
             type="button"
             data-role={packs === min + 1 ? "remove" : "minus"}
             disabled={empty}
-            aria-label={
-              packs === min + 1 ? "Убрать из заказа" : "На упаковку меньше"
-            }
+            aria-label={packs === min + 1 ? removeLabel : decrementLabel}
             onClick={() => setPacks(clamp(packs - 1))}
           >
             {packs === min + 1 ? "✕" : "−"}
@@ -162,7 +211,7 @@ export function Number002({
           <button
             type="button"
             disabled={packs >= max}
-            aria-label="На упаковку больше"
+            aria-label={incrementLabel}
             onClick={() => setPacks(clamp(packs + 1))}
           >
             +
@@ -170,7 +219,7 @@ export function Number002({
         </div>
         <p id={`${id}-total`} data-part="total" aria-live="polite">
           {empty ? (
-            <span data-part="empty">Нет в заказе</span>
+            <span data-part="empty">{emptyText}</span>
           ) : (
             <>
               <span>

@@ -5,6 +5,14 @@ export type Tooltip002Props = Omit<ComponentPropsWithoutRef<"div">, "title"> & {
   tip?: string
   nativeLabel?: string
   customLabel?: string
+  /** Подпись под левой кнопкой. */
+  nativeCaption?: string
+  /** Подпись под правой кнопкой. */
+  customCaption?: string
+  /** Вывод под обеими ячейками. */
+  note?: string
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: наглядное сравнение. Слева кнопка с атрибутом title —
@@ -12,12 +20,13 @@ export type Tooltip002Props = Omit<ComponentPropsWithoutRef<"div">, "title"> & {
 // и не читается с клавиатуры. Справа своя: мгновенная, со стрелкой, по фокусу.
 const STYLES = `
 :where([data-vibeui-block="tooltip-002"]){
---vibeui-tooltip-002-bg:oklch(1 0 0);
---vibeui-tooltip-002-fg:oklch(0.24 0.014 265);
---vibeui-tooltip-002-muted:oklch(0.55 0.014 265);
---vibeui-tooltip-002-border:oklch(0.9 0.006 265);
---vibeui-tooltip-002-tip:oklch(0.26 0.014 265);
---vibeui-tooltip-002-accent:oklch(0.57 0.17 265);
+--vibeui-tooltip-002-bg:transparent;
+--vibeui-tooltip-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tooltip-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-tooltip-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-tooltip-002-face:light-dark(oklch(0.98 0.003 265),oklch(0.29 0.012 265));
+--vibeui-tooltip-002-tip:light-dark(oklch(0.26 0.014 265),oklch(0.36 0.014 265));
+--vibeui-tooltip-002-accent:light-dark(oklch(0.57 0.17 265),oklch(0.72 0.16 265));
 --vibeui-tooltip-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="tooltip-002"]{
@@ -42,7 +51,7 @@ text-transform:uppercase;color:var(--vibeui-tooltip-002-muted);
 appearance:none;cursor:pointer;
 height:2.25rem;padding:0 0.875rem;border-radius:0.625rem;
 border:1px solid var(--vibeui-tooltip-002-border);
-background:oklch(0.98 0.003 265);color:inherit;
+background:var(--vibeui-tooltip-002-face);color:inherit;
 font:inherit;font-size:0.8125rem;font-weight:620;
 }
 [data-vibeui-block="tooltip-002"] [data-part="button"]:focus-visible{outline:2px solid var(--vibeui-tooltip-002-accent);outline-offset:2px}
@@ -75,6 +84,28 @@ font-size:0.75rem;line-height:1.5;color:var(--vibeui-tooltip-002-muted);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сравнение нативного title и собственной подсказки на одном экране.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -82,10 +113,24 @@ export function Tooltip002({
   tip = "Скопировать ссылку",
   nativeLabel = "Нативный title",
   customLabel = "Своя подсказка",
+  nativeCaption = "задержка ~1 с, стиль системы",
+  customCaption = "сразу, со стрелкой, по фокусу",
+  note = "Нативная подсказка не появляется по Tab и не читается на телефоне. Своя открывается и по наведению, и по фокусу — и выглядит одинаково во всех системах.",
+  background = "",
   className,
   style,
   ...props
 }: Tooltip002Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-tooltip-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-tooltip-002" precedence="medium">
@@ -95,13 +140,13 @@ export function Tooltip002({
         {...props}
         data-vibeui-block="tooltip-002"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="cell">
           <button data-part="button" type="button" title={tip}>
             {nativeLabel}
           </button>
-          <p data-part="caption">задержка ~1 с, стиль системы</p>
+          <p data-part="caption">{nativeCaption}</p>
         </div>
         <div data-part="cell">
           <span data-part="own">
@@ -116,13 +161,9 @@ export function Tooltip002({
               {tip}
             </span>
           </span>
-          <p data-part="caption">сразу, со стрелкой, по фокусу</p>
+          <p data-part="caption">{customCaption}</p>
         </div>
-        <p data-part="note">
-          Нативная подсказка не появляется по Tab и не читается на телефоне.
-          Своя открывается и по наведению, и по фокусу — и выглядит одинаково во
-          всех системах.
-        </p>
+        <p data-part="note">{note}</p>
       </div>
     </>
   )

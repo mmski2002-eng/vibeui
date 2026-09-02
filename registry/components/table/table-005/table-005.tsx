@@ -16,6 +16,17 @@ export type Table005Props = Omit<
 > & {
   rows?: Table005Row[]
   caption?: string
+  /** Заголовки колонок: компонент несёт русские, проект подставляет свои. */
+  columnText?: Record<string, string>
+  /** Подписи кнопок панели: ключи message и clear. */
+  actionText?: Record<string, string>
+  /** Счётчик выбранного; {count} подставляет число. */
+  pickedText?: string
+  selectAllText?: string
+  /** Подпись флажка строки; {name} подставляет имя. */
+  selectRowText?: string
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,15 +34,19 @@ export type Table005Props = Omit<
 // имеет три состояния, и промежуточное задаётся свойством indeterminate из
 // ref — атрибута для него в HTML нет. Панель действий появляется вместо
 // подписи таблицы, а не поверх неё: иначе она перекрывает первую строку.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-005"]){
---vibeui-table-005-bg:oklch(1 0 0);
---vibeui-table-005-fg:oklch(0.24 0.014 265);
---vibeui-table-005-muted:oklch(0.56 0.014 265);
---vibeui-table-005-border:oklch(0.92 0.006 265);
---vibeui-table-005-head:oklch(0.975 0.003 265);
---vibeui-table-005-picked:oklch(0.55 0.2 262 / 7%);
---vibeui-table-005-accent:oklch(0.55 0.2 262);
+--vibeui-table-005-bg:transparent;
+--vibeui-table-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-table-005-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
+--vibeui-table-005-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-005-picked:light-dark(oklch(0.55 0.2 262 / 7%),oklch(0.75 0.16 262 / 14%));
+--vibeui-table-005-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
+--vibeui-table-005-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
 --vibeui-table-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="table-005"]{
@@ -74,11 +89,11 @@ background:var(--vibeui-table-005-accent);border-color:var(--vibeui-table-005-ac
 [data-vibeui-block="table-005"] input:checked::after{
 content:"";position:absolute;left:0.28rem;top:0.08rem;
 width:0.2rem;height:0.45rem;
-border:solid oklch(1 0 0);border-width:0 2px 2px 0;transform:rotate(45deg);
+border:solid var(--vibeui-table-005-on-accent);border-width:0 2px 2px 0;transform:rotate(45deg);
 }
 [data-vibeui-block="table-005"] input:indeterminate::after{
 content:"";position:absolute;left:0.19rem;top:0.4rem;
-width:0.5rem;height:2px;background:oklch(1 0 0);
+width:0.5rem;height:2px;background:var(--vibeui-table-005-on-accent);
 }
 [data-vibeui-block="table-005"] input:focus-visible{outline:2px solid var(--vibeui-table-005-accent);outline-offset:2px}
 /* Выбранная строка отмечена заливкой: один флажок в ряду легко потерять. */
@@ -94,6 +109,39 @@ const DEFAULT_ROWS: Table005Row[] = [
   { id: "4", name: "Пётр Гай", role: "Фронтенд", status: "Активен" },
 ]
 
+const COLUMN_TEXT: Record<string, string> = {
+  name: "Участник",
+  role: "Роль",
+  status: "Статус",
+}
+
+const ACTION_TEXT: Record<string, string> = {
+  message: "Написать",
+  clear: "Снять выбор",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Таблица с выбором строк: флажок шапки с промежуточным состоянием.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -101,6 +149,12 @@ const DEFAULT_ROWS: Table005Row[] = [
 export function Table005({
   rows = DEFAULT_ROWS,
   caption = "Участники проекта",
+  columnText = COLUMN_TEXT,
+  actionText = ACTION_TEXT,
+  pickedText = "Выбрано: {count}",
+  selectAllText = "Выбрать всех",
+  selectRowText = "Выбрать: {name}",
+  background = "",
   accent,
   className,
   style,
@@ -119,6 +173,12 @@ export function Table005({
 
   const palette = {
     ...(accent ? { "--vibeui-table-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-table-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -134,12 +194,16 @@ export function Table005({
         style={palette}
       >
         <div data-part="bar">
-          {picked.length > 0 ? `Выбрано: ${picked.length}` : caption}
+          {picked.length > 0
+            ? pickedText.replace("{count}", String(picked.length))
+            : caption}
           {picked.length > 0 ? (
             <span data-part="actions">
-              <button type="button">Написать</button>
+              <button type="button">
+                {actionText.message ?? ACTION_TEXT.message}
+              </button>
               <button type="button" onClick={() => setPicked([])}>
-                Снять выбор
+                {actionText.clear ?? ACTION_TEXT.clear}
               </button>
             </span>
           ) : null}
@@ -154,15 +218,15 @@ export function Table005({
                   ref={(node) => {
                     if (node) node.indeterminate = some
                   }}
-                  aria-label="Выбрать всех"
+                  aria-label={selectAllText}
                   onChange={() =>
                     setPicked(all ? [] : rows.map((row) => row.id))
                   }
                 />
               </th>
-              <th scope="col">Участник</th>
-              <th scope="col">Роль</th>
-              <th scope="col">Статус</th>
+              <th scope="col">{columnText.name ?? COLUMN_TEXT.name}</th>
+              <th scope="col">{columnText.role ?? COLUMN_TEXT.role}</th>
+              <th scope="col">{columnText.status ?? COLUMN_TEXT.status}</th>
             </tr>
           </thead>
           <tbody>
@@ -172,7 +236,7 @@ export function Table005({
                   <input
                     type="checkbox"
                     checked={picked.includes(row.id)}
-                    aria-label={`Выбрать: ${row.name}`}
+                    aria-label={selectRowText.replace("{name}", row.name)}
                     onChange={() => toggle(row.id)}
                   />
                 </td>

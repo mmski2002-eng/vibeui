@@ -11,6 +11,8 @@ export type Otp002Props = Omit<
   length?: number
   hint?: string
   onChange?: (code: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -22,19 +24,20 @@ export type Otp002Props = Omit<
 // поля её не видно.
 const STYLES = `
 :where([data-vibeui-block="otp-002"]){
---vibeui-otp-002-surface:oklch(1 0 0);
---vibeui-otp-002-shell:oklch(0.91 0.006 265);
---vibeui-otp-002-fg:oklch(0.21 0.014 265);
---vibeui-otp-002-muted:oklch(0.56 0.014 265);
---vibeui-otp-002-field:oklch(0.98 0.002 265);
---vibeui-otp-002-border:oklch(0.87 0.008 265);
---vibeui-otp-002-accent:oklch(0.52 0.18 285);
+--vibeui-otp-002-bg:transparent;
+--vibeui-otp-002-surface:light-dark(oklch(1 0 0),oklch(0.3 0.014 265));
+--vibeui-otp-002-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-otp-002-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-otp-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-otp-002-field:light-dark(oklch(0.98 0.002 265),oklch(0.25 0.014 265));
+--vibeui-otp-002-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-otp-002-accent:light-dark(oklch(0.52 0.18 285),oklch(0.74 0.16 285));
 --vibeui-otp-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="otp-002"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
-background:var(--vibeui-otp-002-surface);
+background:var(--vibeui-otp-002-bg);
 border:1px solid var(--vibeui-otp-002-shell);border-radius:0.875rem;
 font-family:var(--vibeui-otp-002-font);color:var(--vibeui-otp-002-fg);
 }
@@ -83,6 +86,28 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-otp-002-muted);
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Код подтверждения: шесть ячеек, но одно настоящее поле под ними.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -91,6 +116,7 @@ export function Otp002({
   length = 6,
   hint = "Вставьте код целиком — он разложится по ячейкам сам.",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -104,6 +130,12 @@ export function Otp002({
 
   const palette = {
     ...(accent ? { "--vibeui-otp-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-otp-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

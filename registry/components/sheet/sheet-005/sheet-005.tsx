@@ -11,22 +11,33 @@ export type Sheet005Props = Omit<
   title?: string
   options?: string[]
   searchLabel?: string
+  /** Подпись подтверждения: {option} подставляет выбранное значение. */
   confirmLabel?: string
+  /** Что показать, когда поиск ничего не нашёл. */
+  emptyText?: string
   accent?: string
+  /** Подложка листа и кнопки открытия. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: лист выбора из длинного списка. Выпадающий список на
 // сотню строк на телефоне неработоспособен, поэтому выбор переезжает в лист
 // с полем поиска: строка сужает список, выбранное остаётся видимым, а
 // подтверждение стоит внизу и не уезжает вместе с прокруткой.
+//
+// Тема берётся из color-scheme окружения через light-dark(): лист темнеет
+// там, где тёмный контекст, и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="sheet-005"]){
---vibeui-sheet-005-bg:oklch(1 0 0);
---vibeui-sheet-005-fg:oklch(0.21 0.014 265);
---vibeui-sheet-005-muted:oklch(0.55 0.014 265);
---vibeui-sheet-005-border:oklch(0.91 0.006 265);
---vibeui-sheet-005-field:oklch(0.97 0.004 265);
---vibeui-sheet-005-accent:oklch(0.55 0.17 265);
+--vibeui-sheet-005-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-sheet-005-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-sheet-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-sheet-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-sheet-005-field:light-dark(oklch(0.97 0.004 265),oklch(0.28 0.012 265));
+--vibeui-sheet-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.16 265));
+--vibeui-sheet-005-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.03 265));
+--vibeui-sheet-005-shadow:light-dark(oklch(0.2 0.02 265 / 60%),oklch(0.02 0.01 265 / 75%));
+--vibeui-sheet-005-scrim:light-dark(oklch(0.19 0.02 265 / 45%),oklch(0.08 0.014 265 / 60%));
 --vibeui-sheet-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="sheet-005"]{
@@ -43,15 +54,15 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 position:fixed;inset:auto 0 0 0;margin:0;
 width:100%;max-width:100vw;height:min(32rem,90dvh);
 padding:0;border:0;border-radius:1.25rem 1.25rem 0 0;overflow:hidden;
-background:var(--vibeui-sheet-005-bg);color:inherit;
-box-shadow:0 -26px 60px -32px oklch(0.2 0.02 265 / 60%);
+background:var(--vibeui-sheet-005-bg);color:var(--vibeui-sheet-005-fg);
+box-shadow:0 -26px 60px -32px var(--vibeui-sheet-005-shadow);
 translate:0 100%;transition:translate .24s ease,overlay .24s allow-discrete,display .24s allow-discrete;
 }
 [data-vibeui-block="sheet-005"] dialog[open]{translate:0 0}
 @starting-style{
 [data-vibeui-block="sheet-005"] dialog[open]{translate:0 100%}
 }
-[data-vibeui-block="sheet-005"] dialog::backdrop{background:oklch(0.19 0.02 265 / 45%)}
+[data-vibeui-block="sheet-005"] dialog::backdrop{background:var(--vibeui-sheet-005-scrim)}
 [data-vibeui-block="sheet-005"] [data-part="panel"]{display:flex;flex-direction:column;height:100%;box-sizing:border-box}
 [data-vibeui-block="sheet-005"] [data-part="grabber"]{
 align-self:center;width:2.5rem;height:0.25rem;margin:0.5rem 0 0.25rem;
@@ -65,6 +76,7 @@ box-sizing:border-box;width:100%;height:2.5rem;padding:0 0.75rem;
 border:1px solid transparent;border-radius:0.75rem;
 background:var(--vibeui-sheet-005-field);color:inherit;font:inherit;font-size:0.875rem;
 }
+[data-vibeui-block="sheet-005"] [data-part="search"] input::placeholder{color:var(--vibeui-sheet-005-muted)}
 [data-vibeui-block="sheet-005"] [data-part="search"] input:focus-visible{outline:2px solid var(--vibeui-sheet-005-accent);outline-offset:1px}
 [data-vibeui-block="sheet-005"] [data-part="list"]{
 flex:1;min-height:0;overflow-y:auto;margin:0;padding:0 1rem;border:0;
@@ -90,7 +102,7 @@ border-top:1px solid var(--vibeui-sheet-005-border);background:var(--vibeui-shee
 }
 [data-vibeui-block="sheet-005"] [data-part="confirm"]{
 appearance:none;border:0;cursor:pointer;width:100%;height:2.75rem;border-radius:0.75rem;
-background:var(--vibeui-sheet-005-accent);color:oklch(0.99 0.01 265);
+background:var(--vibeui-sheet-005-accent);color:var(--vibeui-sheet-005-on-accent);
 font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="sheet-005"] [data-part="confirm"]:focus-visible{outline:2px solid var(--vibeui-sheet-005-accent);outline-offset:2px}
@@ -119,6 +131,28 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Лист выбора из длинного списка: поиск сверху, подтверждение внизу.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -127,8 +161,10 @@ export function Sheet005({
   title = "Регион доставки",
   options = DEFAULT_OPTIONS,
   searchLabel = "Найти регион",
-  confirmLabel = "Выбрать",
+  confirmLabel = "Выбрать: {option}",
+  emptyText = "Ничего не нашлось. Уточните запрос.",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -140,6 +176,12 @@ export function Sheet005({
 
   const palette = {
     ...(accent ? { "--vibeui-sheet-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-sheet-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -199,9 +241,7 @@ export function Sheet005({
                   <span>{option}</span>
                 </label>
               ))}
-              {found.length === 0 ? (
-                <p data-part="empty">Ничего не нашлось. Уточните запрос.</p>
-              ) : null}
+              {found.length === 0 ? <p data-part="empty">{emptyText}</p> : null}
             </fieldset>
             <div data-part="foot">
               <button
@@ -209,7 +249,7 @@ export function Sheet005({
                 data-part="confirm"
                 onClick={() => sheet.current?.close()}
               >
-                {confirmLabel}: {picked}
+                {confirmLabel.replace("{option}", picked)}
               </button>
             </div>
           </div>

@@ -10,19 +10,30 @@ export type Hovercard002Props = Omit<
   domain?: string
   excerpt?: string
   href?: string
+  /** Текст строки до ссылки. */
+  leadText?: string
+  /** Текст строки после ссылки. */
+  tailText?: string
+  accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: превью страницы у ссылки. Вместо картинки — обложка из
 // градиента и первой буквы домена: реальный скриншот пришлось бы качать, а
 // компонент обязан работать без сети и без единой зависимости.
+//
+// Тема берётся из color-scheme окружения через light-dark(): собственной
+// тёмной темы у компонента нет, он следует за страницей.
 const STYLES = `
 :where([data-vibeui-block="hovercard-002"]){
---vibeui-hovercard-002-bg:oklch(1 0 0);
---vibeui-hovercard-002-fg:oklch(0.22 0.014 265);
---vibeui-hovercard-002-muted:oklch(0.55 0.014 265);
---vibeui-hovercard-002-border:oklch(0.9 0.006 265);
+--vibeui-hovercard-002-bg:transparent;
+--vibeui-hovercard-002-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-hovercard-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-hovercard-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-hovercard-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-hovercard-002-hue:250;
---vibeui-hovercard-002-accent:oklch(0.53 0.16 255);
+--vibeui-hovercard-002-accent:light-dark(oklch(0.53 0.16 255),oklch(0.75 0.14 255));
 --vibeui-hovercard-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="hovercard-002"]{
@@ -45,7 +56,7 @@ position:absolute;left:0;top:calc(100% + 0.5rem);z-index:20;
 display:flex;flex-direction:column;
 width:17rem;box-sizing:border-box;overflow:hidden;
 border:1px solid var(--vibeui-hovercard-002-border);border-radius:0.875rem;
-background:var(--vibeui-hovercard-002-bg);
+background:var(--vibeui-hovercard-002-card);
 box-shadow:0 22px 46px -28px oklch(0.2 0.02 265 / 55%);
 opacity:0;visibility:hidden;translate:0 -0.25rem;
 transition:opacity .15s ease,translate .15s ease,visibility .15s;
@@ -83,6 +94,28 @@ display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hi
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="hovercard-002"] *{animation:none!important;transition:none!important}}
 `
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function hue(name: string) {
   let hash = 2166136261
 
@@ -104,12 +137,23 @@ export function Hovercard002({
   domain = "web.dev.example",
   excerpt = "Что ломается на узких экранах чаще всего: фиксированные ширины, шрифт меньше 16 пикселей, скрытый фокус и горизонтальная прокрутка у таблиц.",
   href = "#article",
+  leadText = "Подробнее об этом — ",
+  tailText = " — наведите, чтобы увидеть, куда она ведёт.",
+  accent,
+  background = "",
   className,
   style,
   ...props
 }: Hovercard002Props) {
   const palette = {
     "--vibeui-hovercard-002-hue": hue(domain),
+    ...(accent ? { "--vibeui-hovercard-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-hovercard-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -125,7 +169,7 @@ export function Hovercard002({
         style={palette}
       >
         <p data-part="line">
-          Подробнее об этом —{" "}
+          {leadText}
           <span data-part="host">
             <a
               data-part="link"
@@ -151,8 +195,8 @@ export function Hovercard002({
                 <span data-part="excerpt">{excerpt}</span>
               </span>
             </span>
-          </span>{" "}
-          — наведите, чтобы увидеть, куда она ведёт.
+          </span>
+          {tailText}
         </p>
       </div>
     </>

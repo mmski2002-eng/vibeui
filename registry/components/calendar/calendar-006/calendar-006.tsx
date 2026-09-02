@@ -14,7 +14,13 @@ export type Calendar006Props = Omit<
 > & {
   date?: string
   events?: Calendar006Event[]
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
   freeLabel?: string
+  hourUnit?: string
+  minuteUnit?: string
+  accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: расписание дня списком, а не сеткой с часами. Сетка
@@ -23,11 +29,11 @@ export type Calendar006Props = Omit<
 // когда открывают день.
 const STYLES = `
 :where([data-vibeui-block="calendar-006"]){
---vibeui-calendar-006-bg:oklch(1 0 0);
---vibeui-calendar-006-fg:oklch(0.24 0.014 265);
---vibeui-calendar-006-muted:oklch(0.58 0.014 265);
---vibeui-calendar-006-border:oklch(0.91 0.006 265);
---vibeui-calendar-006-accent:oklch(0.55 0.17 265);
+--vibeui-calendar-006-bg:transparent;
+--vibeui-calendar-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-calendar-006-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-calendar-006-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-calendar-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="calendar-006"]{
@@ -91,14 +97,41 @@ function minutes(time: string) {
   return hour * 60 + minute
 }
 
-function gapText(from: string, to: string) {
+function gapText(
+  from: string,
+  to: string,
+  words: { freeLabel: string; hourUnit: string; minuteUnit: string },
+) {
   const total = minutes(to) - minutes(from)
   if (total <= 0) return null
   const hours = Math.floor(total / 60)
   const rest = total % 60
-  if (hours && rest) return `свободно ${hours} ч ${rest} мин`
-  if (hours) return `свободно ${hours} ч`
-  return `свободно ${rest} мин`
+  if (hours && rest)
+    return `${words.freeLabel} ${hours} ${words.hourUnit} ${rest} ${words.minuteUnit}`
+  if (hours) return `${words.freeLabel} ${hours} ${words.hourUnit}`
+  return `${words.freeLabel} ${rest} ${words.minuteUnit}`
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -108,11 +141,26 @@ function gapText(from: string, to: string) {
 export function Calendar006({
   date = "Вторник, 17 марта",
   events = DEFAULT_EVENTS,
-  freeLabel = "Свободно",
+  freeLabel = "свободно",
+  hourUnit = "ч",
+  minuteUnit = "мин",
+  accent,
+  background = "",
   className,
   style,
   ...props
 }: Calendar006Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-calendar-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-calendar-006" precedence="medium">
@@ -122,21 +170,23 @@ export function Calendar006({
         {...props}
         data-vibeui-block="calendar-006"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <p data-part="date">{date}</p>
         <ol>
           {events.map((event, index) => {
             const previous = events[index - 1]
-            const gap = previous ? gapText(previous.to, event.from) : null
+            const gap = previous
+              ? gapText(previous.to, event.from, {
+                  freeLabel,
+                  hourUnit,
+                  minuteUnit,
+                })
+              : null
 
             return (
               <li key={`${event.from}-${event.title}`}>
-                {gap ? (
-                  <p data-part="gap">
-                    {freeLabel === "Свободно" ? gap : `${freeLabel}: ${gap}`}
-                  </p>
-                ) : null}
+                {gap ? <p data-part="gap">{gap}</p> : null}
                 <div data-part="event" data-tone={event.tone ?? "default"}>
                   <span data-part="time">
                     {event.from}

@@ -6,6 +6,12 @@ export type Spinner005Props = Omit<
 > & {
   busy?: boolean
   label?: string
+  /** Заголовок демо-содержимого: показывается, пока слот пуст. */
+  sampleTitle?: string
+  /** Подписи полей демо-содержимого: показываются, пока слот пуст. */
+  sampleFields?: string[]
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
   children?: ReactNode
 }
 
@@ -14,18 +20,22 @@ export type Spinner005Props = Omit<
 // кликабельные кнопки и достижимые табом поля. Здесь содержимое помечено
 // inert — оно уходит и из фокуса, и из дерева доступности, — а на область
 // поставлен aria-busy, чтобы скринридер сообщил о работе, а не молчал.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="spinner-005"]){
---vibeui-spinner-005-surface:oklch(1 0 0);
---vibeui-spinner-005-border:oklch(0.9 0.006 265);
---vibeui-spinner-005-fg:oklch(0.24 0.014 265);
---vibeui-spinner-005-muted:oklch(0.55 0.014 265);
---vibeui-spinner-005-soft:oklch(0.96 0.004 265);
---vibeui-spinner-005-track:oklch(0.9 0.006 265);
---vibeui-spinner-005-accent:oklch(0.55 0.17 262);
+--vibeui-spinner-005-surface:transparent;
+--vibeui-spinner-005-veil:light-dark(oklch(1 0 0 / 78%),oklch(0.19 0.012 265 / 78%));
+--vibeui-spinner-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.32 0.012 265));
+--vibeui-spinner-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.95 0.005 265));
+--vibeui-spinner-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-spinner-005-soft:light-dark(oklch(0.96 0.004 265),oklch(0.28 0.01 265));
+--vibeui-spinner-005-track:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-spinner-005-accent:light-dark(oklch(0.55 0.17 262),oklch(0.72 0.16 262));
 --vibeui-spinner-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: и содержимое, и подпись наложения тёмные. */
+/* Подложки нет по умолчанию: плашка появляется только пропом background. */
 [data-vibeui-block="spinner-005"]{
 position:relative;overflow:hidden;
 display:block;width:100%;max-width:22rem;box-sizing:border-box;
@@ -50,7 +60,7 @@ background:var(--vibeui-spinner-005-soft);
 [data-vibeui-block="spinner-005"] [data-part="veil"]{
 position:absolute;inset:0;
 display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;
-background:color-mix(in oklab,var(--vibeui-spinner-005-surface) 78%,transparent);
+background:var(--vibeui-spinner-005-veil);
 backdrop-filter:blur(2px);
 }
 [data-vibeui-block="spinner-005"] [data-part="ring"]{
@@ -75,17 +85,54 @@ border-color:var(--vibeui-spinner-005-accent);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+const DEFAULT_FIELDS = ["Название", "Домен"]
+
+/**
  * Наложение поверх блока с настоящей блокировкой содержимого через inert.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Spinner005({
   busy = true,
   label = "Сохраняем изменения",
+  sampleTitle = "Профиль команды",
+  sampleFields = DEFAULT_FIELDS,
+  background = "",
   children,
   className,
   style,
   ...props
 }: Spinner005Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-spinner-005-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-spinner-005" precedence="medium">
@@ -96,20 +143,18 @@ export function Spinner005({
         data-vibeui-block="spinner-005"
         aria-busy={busy}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="content" inert={busy}>
           {children ?? (
             <>
-              <p data-part="title">Профиль команды</p>
-              <span data-part="field">
-                Название
-                <span data-part="box" />
-              </span>
-              <span data-part="field">
-                Домен
-                <span data-part="box" />
-              </span>
+              <p data-part="title">{sampleTitle}</p>
+              {sampleFields.map((field) => (
+                <span key={field} data-part="field">
+                  {field}
+                  <span data-part="box" />
+                </span>
+              ))}
             </>
           )}
         </div>

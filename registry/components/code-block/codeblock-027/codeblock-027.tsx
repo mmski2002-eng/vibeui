@@ -13,6 +13,14 @@ export type Codeblock027Props = {
   errorName?: string
   message?: string
   frames?: Codeblock027Frame[]
+  /** Подпись блока для скринридера; {name} подставляется типом ошибки. */
+  errorLabel?: string
+  /** Подпись свёртки чужих кадров; {count} подставляется их числом. */
+  vendorLabel?: string
+  /** Оттенок ошибки: полоса, тип, выдержка из строки. */
+  accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -20,16 +28,20 @@ export type Codeblock027Props = {
 // Идея компонента: стек как список, а не как простыня текста. Свой код стоит
 // первым и раскрыт, кадры из node_modules свёрнуты в details — читатель видит
 // строку, до которой ему есть дело, а не пятнадцать чужих.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, шапка и выдержка из строки — полупрозрачные слои поверх страницы.
 const STYLES = `
 :where([data-vibeui-block="codeblock-027"]){
---vibeui-codeblock-027-bg:oklch(0.19 0.016 20);
---vibeui-codeblock-027-head:oklch(0.26 0.06 22);
---vibeui-codeblock-027-fg:oklch(0.94 0.008 20);
---vibeui-codeblock-027-muted:oklch(0.66 0.016 20);
---vibeui-codeblock-027-dim:oklch(0.52 0.014 20);
---vibeui-codeblock-027-border:oklch(1 0 0 / 12%);
---vibeui-codeblock-027-bad:oklch(0.75 0.19 25);
---vibeui-codeblock-027-mark:oklch(0.55 0.18 25 / 26%);
+--vibeui-codeblock-027-bg:transparent;
+--vibeui-codeblock-027-head:light-dark(oklch(0.62 0.16 25 / 12%),oklch(0.5 0.13 22 / 28%));
+--vibeui-codeblock-027-fg:light-dark(oklch(0.26 0.014 20),oklch(0.94 0.008 20));
+--vibeui-codeblock-027-muted:light-dark(oklch(0.5 0.016 20),oklch(0.66 0.016 20));
+--vibeui-codeblock-027-dim:light-dark(oklch(0.64 0.012 20),oklch(0.52 0.014 20));
+--vibeui-codeblock-027-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
+--vibeui-codeblock-027-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 5%));
+--vibeui-codeblock-027-bad:light-dark(oklch(0.52 0.2 25),oklch(0.75 0.19 25));
+--vibeui-codeblock-027-mark:light-dark(oklch(0.66 0.18 25 / 16%),oklch(0.55 0.18 25 / 26%));
 --vibeui-codeblock-027-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-027-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -93,7 +105,7 @@ transition:color .16s ease,background-color .16s ease;
 [data-vibeui-block="codeblock-027"] summary::-webkit-details-marker{display:none}
 [data-vibeui-block="codeblock-027"] summary::before{content:"▸ ";display:inline-block;transition:transform .18s ease}
 [data-vibeui-block="codeblock-027"] details[open] summary::before{content:"▾ "}
-[data-vibeui-block="codeblock-027"] summary:hover{color:var(--vibeui-codeblock-027-fg);background:oklch(1 0 0 / 5%)}
+[data-vibeui-block="codeblock-027"] summary:hover{color:var(--vibeui-codeblock-027-fg);background:var(--vibeui-codeblock-027-hover)}
 [data-vibeui-block="codeblock-027"] summary:focus-visible{
 outline:2px solid var(--vibeui-codeblock-027-bad);outline-offset:-2px;
 }
@@ -132,16 +144,52 @@ const FRAMES: Codeblock027Frame[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Ошибка выполнения со стеком: свой код раскрыт, чужой свёрнут. */
 export function Codeblock027({
   errorName = "TypeError",
   message = "Cannot read properties of undefined (reading 'price')",
   frames = FRAMES,
+  errorLabel = "Ошибка выполнения: {name}",
+  vendorLabel = "Кадры из node_modules ({count})",
+  accent = "",
+  background = "",
   className,
   style,
 }: Codeblock027Props) {
   const own = frames.filter((frame) => !frame.vendor)
   const vendor = frames.filter((frame) => frame.vendor)
+  const palette = {
+    ...(accent ? { "--vibeui-codeblock-027-bad": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-codeblock-027-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   const renderFrame = (frame: Codeblock027Frame) => (
     <li key={`${frame.file}:${frame.line}`} data-vendor={frame.vendor}>
@@ -161,8 +209,8 @@ export function Codeblock027({
       <section
         data-vibeui-block="codeblock-027"
         className={className}
-        style={style}
-        aria-label={`Ошибка выполнения: ${errorName}`}
+        style={palette}
+        aria-label={errorLabel.replace("{name}", errorName)}
       >
         <div data-part="head">
           <span data-part="name">{errorName}</span>
@@ -171,7 +219,9 @@ export function Codeblock027({
         <ol>{own.map(renderFrame)}</ol>
         {vendor.length > 0 ? (
           <details>
-            <summary>Кадры из node_modules ({vendor.length})</summary>
+            <summary>
+              {vendorLabel.replace("{count}", String(vendor.length))}
+            </summary>
             <ol>{vendor.map(renderFrame)}</ol>
           </details>
         ) : null}

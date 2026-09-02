@@ -10,7 +10,12 @@ export type Field006Props = Omit<
   label?: string
   action?: string
   placeholder?: string
+  note?: string
+  /** Подтверждение; {code} заменяется на введённое значение. */
+  doneText?: string
   onSubmit?: (value: string) => void
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,17 +26,18 @@ export type Field006Props = Omit<
 // пустое, кнопка выключена: нажимать нечего, и это видно.
 const STYLES = `
 :where([data-vibeui-block="field-006"]){
---vibeui-field-006-bg:oklch(1 0 0);
---vibeui-field-006-surface:oklch(1 0 0);
---vibeui-field-006-fg:oklch(0.24 0.014 265);
---vibeui-field-006-muted:oklch(0.55 0.014 265);
---vibeui-field-006-border:oklch(0.88 0.008 265);
---vibeui-field-006-shell:oklch(0.91 0.006 265);
---vibeui-field-006-accent:oklch(0.52 0.19 285);
---vibeui-field-006-ok:oklch(0.5 0.13 155);
+--vibeui-field-006-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-field-006-surface:transparent;
+--vibeui-field-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-field-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-field-006-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
+--vibeui-field-006-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
+--vibeui-field-006-accent:light-dark(oklch(0.52 0.19 285),oklch(0.72 0.16 285));
+--vibeui-field-006-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 285));
+--vibeui-field-006-ok:light-dark(oklch(0.5 0.13 155),oklch(0.75 0.13 155));
 --vibeui-field-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="field-006"]{
 display:flex;flex-direction:column;gap:0.4375rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -64,7 +70,7 @@ font:inherit;font-size:0.875rem;letter-spacing:0.02em;
 [data-vibeui-block="field-006"] button{
 appearance:none;flex:none;cursor:pointer;
 height:2rem;padding:0 0.875rem;border:0;border-radius:0.5rem;
-background:var(--vibeui-field-006-accent);color:oklch(1 0 0);
+background:var(--vibeui-field-006-accent);color:var(--vibeui-field-006-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;line-height:1;
 transition:opacity .16s ease,background-color .16s ease;
 }
@@ -85,6 +91,28 @@ background:var(--vibeui-field-006-ok);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поле с кнопкой действия внутри рамки: Enter отправляет, пустое — выключает.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -92,7 +120,10 @@ export function Field006({
   label = "Промокод",
   action = "Применить",
   placeholder = "VIBEUI-2026",
+  note = "Код появится в чеке, скидка пересчитается сразу.",
+  doneText = "Код «{code}» принят",
   onSubmit,
+  background = "",
   accent,
   className,
   style,
@@ -103,6 +134,12 @@ export function Field006({
 
   const palette = {
     ...(accent ? { "--vibeui-field-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-field-006-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -151,10 +188,10 @@ export function Field006({
           {applied ? (
             <>
               <span data-part="tick" aria-hidden="true" />
-              Код «{applied}» принят
+              {doneText.replace("{code}", applied)}
             </>
           ) : (
-            "Код появится в чеке, скидка пересчитается сразу."
+            note
           )}
         </p>
       </div>

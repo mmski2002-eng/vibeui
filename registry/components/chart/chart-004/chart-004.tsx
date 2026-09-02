@@ -12,21 +12,30 @@ export type Chart004Props = Omit<
   title?: string
   rows?: Chart004Row[]
   unit?: string
+  /** Подпись под рейтингом: {unit}. */
+  unitLabel?: string
+  /** Подпись полосы для скринридера: {label}, {value}, {unit}. */
+  rowLabel?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: рейтинг горизонтальными полосами. Длину глаз сравнивает
 // точнее, чем высоту и угол, поэтому топ-5 всегда ложится в горизонтальные
 // полосы. Числа стоят справа от каждой полосы: без них диаграмма отвечает
 // «кто больше», но не «насколько».
+//
+// Тема берётся из color-scheme окружения через light-dark(): рейтинг темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="chart-004"]){
---vibeui-chart-004-bg:oklch(1 0 0);
---vibeui-chart-004-fg:oklch(0.22 0.014 265);
---vibeui-chart-004-muted:oklch(0.56 0.014 265);
---vibeui-chart-004-border:oklch(0.91 0.006 265);
---vibeui-chart-004-track:oklch(0.95 0.004 265);
---vibeui-chart-004-accent:oklch(0.55 0.17 265);
+--vibeui-chart-004-bg:transparent;
+--vibeui-chart-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-chart-004-track:light-dark(oklch(0.95 0.004 265),oklch(0.3 0.01 265));
+--vibeui-chart-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-chart-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="chart-004"]{
@@ -57,7 +66,7 @@ background:var(--vibeui-chart-004-accent);
 /* Первая строка ярче: лидер должен читаться сразу. */
 [data-vibeui-block="chart-004"] li:first-child [data-part="fill"]{background:var(--vibeui-chart-004-accent)}
 [data-vibeui-block="chart-004"] li:not(:first-child) [data-part="fill"]{
-background:color-mix(in oklab,var(--vibeui-chart-004-accent) 55%,oklch(0.9 0.01 265));
+background:color-mix(in oklab,var(--vibeui-chart-004-accent) 55%,var(--vibeui-chart-004-track));
 }
 [data-vibeui-block="chart-004"] [data-part="unit"]{font-size:0.75rem;color:var(--vibeui-chart-004-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-004"] *{animation:none!important;transition:none!important}}
@@ -72,6 +81,37 @@ const DEFAULT_ROWS: Chart004Row[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+function fillTemplate(
+  template: string,
+  values: Record<string, string | number>,
+) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
+/**
  * Рейтинг горизонтальными полосами: длину глаз сравнивает точнее угла.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -79,7 +119,10 @@ export function Chart004({
   title = "Просмотры за неделю",
   rows = DEFAULT_ROWS,
   unit = "визитов",
+  unitLabel = "Единица измерения: {unit}",
+  rowLabel = "{label}: {value} {unit}",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -88,6 +131,12 @@ export function Chart004({
 
   const palette = {
     ...(accent ? { "--vibeui-chart-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-chart-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -111,7 +160,11 @@ export function Chart004({
               <span
                 data-part="track"
                 role="img"
-                aria-label={`${row.label}: ${row.value} ${unit}`}
+                aria-label={fillTemplate(rowLabel, {
+                  label: row.label,
+                  value: row.value,
+                  unit,
+                })}
               >
                 <span
                   data-part="fill"
@@ -121,7 +174,9 @@ export function Chart004({
             </li>
           ))}
         </ol>
-        <figcaption data-part="unit">Единица измерения: {unit}</figcaption>
+        <figcaption data-part="unit">
+          {fillTemplate(unitLabel, { unit })}
+        </figcaption>
       </figure>
     </>
   )

@@ -16,6 +16,12 @@ export type Collapsible007Props = Omit<
   title?: string
   items?: Collapsible007Item[]
   defaultCollapsed?: boolean
+  /** Подпись кнопки, когда панель свёрнута. */
+  expandLabel?: string
+  /** Подпись кнопки, когда панель развёрнута. */
+  collapseLabel?: string
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,13 +30,17 @@ export type Collapsible007Props = Omit<
 // одной переменной, подписи не размонтируются, а прячутся нулевой шириной с
 // overflow:hidden: тогда переход плавный, а порядок табуляции не скачет.
 // В свёрнутом состоянии подпись уходит в title и aria-label кнопки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у панели
+// по умолчанию нет, она темнеет вместе со страницей и не носит своей темы.
 const STYLES = `
 :where([data-vibeui-block="collapsible-007"]){
---vibeui-collapsible-007-bg:oklch(1 0 0);
---vibeui-collapsible-007-fg:oklch(0.24 0.014 265);
---vibeui-collapsible-007-muted:oklch(0.55 0.014 265);
---vibeui-collapsible-007-border:oklch(0.9 0.006 265);
---vibeui-collapsible-007-accent:oklch(0.55 0.19 262);
+--vibeui-collapsible-007-bg:transparent;
+--vibeui-collapsible-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-collapsible-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-collapsible-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-collapsible-007-accent:light-dark(oklch(0.55 0.19 262),oklch(0.74 0.16 262));
+--vibeui-collapsible-007-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 262));
 --vibeui-collapsible-007-width:14rem;
 --vibeui-collapsible-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -86,7 +96,7 @@ opacity:1;transition:opacity .18s ease;
 }
 [data-vibeui-block="collapsible-007"] [data-part="badge"]{
 flex:none;padding:0 0.375rem;border-radius:9999px;
-background:var(--vibeui-collapsible-007-accent);color:oklch(1 0 0);
+background:var(--vibeui-collapsible-007-accent);color:var(--vibeui-collapsible-007-on-accent);
 font-size:0.625rem;font-weight:700;line-height:1.15rem;
 }
 [data-vibeui-block="collapsible-007"] [data-part="rail"][data-collapsed="true"] [data-part="brand"],
@@ -105,6 +115,28 @@ const DEFAULT_ITEMS: Collapsible007Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Боковая панель, сворачивающаяся в полосу иконок: ширина едет по одной
  * переменной, подписи не размонтируются. Один файл, ноль зависимостей.
  */
@@ -112,6 +144,9 @@ export function Collapsible007({
   title = "VibeUI",
   items = DEFAULT_ITEMS,
   defaultCollapsed = false,
+  expandLabel = "Развернуть панель",
+  collapseLabel = "Свернуть панель",
+  background = "",
   accent,
   className,
   style,
@@ -121,6 +156,12 @@ export function Collapsible007({
 
   const palette = {
     ...(accent ? { "--vibeui-collapsible-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-collapsible-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -142,7 +183,7 @@ export function Collapsible007({
               type="button"
               data-part="toggle"
               aria-expanded={!collapsed}
-              aria-label={collapsed ? "Развернуть панель" : "Свернуть панель"}
+              aria-label={collapsed ? expandLabel : collapseLabel}
               onClick={() => setCollapsed((value) => !value)}
             >
               <span aria-hidden="true" />

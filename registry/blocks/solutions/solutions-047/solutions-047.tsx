@@ -3,7 +3,8 @@ import type { CSSProperties } from "react"
 export type Solutions047Document = {
   number: string
   date: string
-  kind: "накладная" | "счёт" | "возврат"
+  /** Вид документа: печатается как есть, словарь языка живёт в данных. */
+  kind: string
   ourAmount: number
   theirAmount: number
 }
@@ -13,8 +14,24 @@ export type Solutions047Props = {
   counterparty?: string
   period?: string
   documents?: Solutions047Document[]
+  /** Подписи сводных плиток: ours, theirs. */
+  statsText?: Record<string, string>
+  /** Подписи сальдо: even, us, them. */
+  balanceText?: Record<string, string>
+  /** Заголовки колонок: document, date, ours, theirs, diff, status. */
+  columnText?: Record<string, string>
+  /** Подписи строк: match, diff. */
+  statusText?: Record<string, string>
+  /** Буквы в кружке статуса: те же ключи, что и в statusText. */
+  statusLetter?: Record<string, string>
+  /** Итоговая строка. {mismatch} и {total} — числа документов. */
+  foot?: string
   currency?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -29,14 +46,14 @@ export type Solutions047Props = {
 // итоговое сальдо — тоже вывод из чисел, а не отдельный текстовый проп.
 const STYLES = `
 :where([data-vibeui-block="solutions-047"]){
---vibeui-solutions-047-bg:oklch(1 0 0);
---vibeui-solutions-047-panel:oklch(0.977 0.004 250);
---vibeui-solutions-047-fg:oklch(0.21 0.014 265);
---vibeui-solutions-047-muted:oklch(0.55 0.014 265);
---vibeui-solutions-047-border:oklch(0.9 0.006 265);
---vibeui-solutions-047-accent:oklch(0.5 0.17 265);
---vibeui-solutions-047-match:oklch(0.55 0.14 152);
---vibeui-solutions-047-diff:oklch(0.6 0.19 40);
+--vibeui-solutions-047-bg:transparent;
+--vibeui-solutions-047-panel:light-dark(oklch(0.977 0.004 250),oklch(0.27 0.011 265));
+--vibeui-solutions-047-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-047-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-047-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-047-accent:light-dark(oklch(0.5 0.17 265),oklch(0.72 0.15 265));
+--vibeui-solutions-047-match:light-dark(oklch(0.55 0.14 152),oklch(0.72 0.14 152));
+--vibeui-solutions-047-diff:light-dark(oklch(0.6 0.19 40),oklch(0.76 0.16 40));
 --vibeui-solutions-047-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-047-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -202,9 +219,56 @@ const DEFAULT_DOCUMENTS: Solutions047Document[] = [
   },
 ]
 
-function money(value: number, currency: string) {
-  const sign = value < 0 ? "−" : ""
-  return `${sign}${Math.abs(value).toLocaleString("ru-RU")} ${currency}`
+const STATS_LABEL: Record<string, string> = {
+  ours: "обороты по нашим данным",
+  theirs: "обороты по данным контрагента",
+}
+
+const BALANCE_LABEL: Record<string, string> = {
+  even: "сальдо сходится",
+  us: "сальдо в нашу пользу",
+  them: "сальдо в пользу контрагента",
+}
+
+const COLUMN_LABEL: Record<string, string> = {
+  document: "Документ",
+  date: "Дата",
+  ours: "По нам",
+  theirs: "По контрагенту",
+  diff: "Расхождение",
+  status: "Статус",
+}
+
+const STATUS_LABEL: Record<string, string> = {
+  match: "совпадает",
+  diff: "расхождение",
+}
+
+const STATUS_LETTER: Record<string, string> = {
+  match: "С",
+  diff: "Р",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -217,11 +281,24 @@ export function Solutions047({
   counterparty = "ООО «Верста Логистика»",
   period = "I квартал 2024 · 1 января — 31 марта",
   documents = DEFAULT_DOCUMENTS,
+  statsText = STATS_LABEL,
+  balanceText = BALANCE_LABEL,
+  columnText = COLUMN_LABEL,
+  statusText = STATUS_LABEL,
+  statusLetter = STATUS_LETTER,
+  foot = "Расхождение найдено в {mismatch} из {total} документов. Сверьте позиции с отметкой «расхождение» до подписания акта.",
   currency = "₽",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions047Props) {
+  const money = (value: number) => {
+    const sign = value < 0 ? "−" : ""
+    return `${sign}${Math.abs(value).toLocaleString(locale)} ${currency}`
+  }
+  const column = (key: string) => columnText[key] ?? COLUMN_LABEL[key]
   const ourTotal = documents.reduce((sum, doc) => sum + doc.ourAmount, 0)
   const theirTotal = documents.reduce((sum, doc) => sum + doc.theirAmount, 0)
   const balance = ourTotal - theirTotal
@@ -232,6 +309,12 @@ export function Solutions047({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-047-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-047-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -255,26 +338,20 @@ export function Solutions047({
 
         <div data-part="summary">
           <p data-part="tile">
-            <b>{money(ourTotal, currency)}</b>
-            <span>обороты по нашим данным</span>
+            <b>{money(ourTotal)}</b>
+            <span>{statsText.ours ?? STATS_LABEL.ours}</span>
           </p>
           <p data-part="tile">
-            <b>{money(theirTotal, currency)}</b>
-            <span>обороты по данным контрагента</span>
+            <b>{money(theirTotal)}</b>
+            <span>{statsText.theirs ?? STATS_LABEL.theirs}</span>
           </p>
           <p
             data-part="tile"
             data-tile="balance"
             data-favor={favor === "even" ? "us" : favor}
           >
-            <b>{money(balance, currency)}</b>
-            <span>
-              {favor === "even"
-                ? "сальдо сходится"
-                : favor === "us"
-                  ? "сальдо в нашу пользу"
-                  : "сальдо в пользу контрагента"}
-            </span>
+            <b>{money(balance)}</b>
+            <span>{balanceText[favor] ?? BALANCE_LABEL[favor]}</span>
           </p>
         </div>
 
@@ -282,18 +359,18 @@ export function Solutions047({
           <table>
             <thead>
               <tr>
-                <th scope="col">Документ</th>
-                <th scope="col">Дата</th>
+                <th scope="col">{column("document")}</th>
+                <th scope="col">{column("date")}</th>
                 <th scope="col" data-align="end">
-                  По нам
+                  {column("ours")}
                 </th>
                 <th scope="col" data-align="end">
-                  По контрагенту
+                  {column("theirs")}
                 </th>
                 <th scope="col" data-align="end">
-                  Расхождение
+                  {column("diff")}
                 </th>
-                <th scope="col">Статус</th>
+                <th scope="col">{column("status")}</th>
               </tr>
             </thead>
             <tbody>
@@ -307,17 +384,15 @@ export function Solutions047({
                       <span data-part="kind">{doc.kind}</span>
                     </td>
                     <td>{doc.date}</td>
-                    <td data-align="end">{money(doc.ourAmount, currency)}</td>
-                    <td data-align="end">{money(doc.theirAmount, currency)}</td>
-                    <td data-align="diff">
-                      {diff === 0 ? "—" : money(diff, currency)}
-                    </td>
+                    <td data-align="end">{money(doc.ourAmount)}</td>
+                    <td data-align="end">{money(doc.theirAmount)}</td>
+                    <td data-align="diff">{diff === 0 ? "—" : money(diff)}</td>
                     <td>
                       <span data-part="status">
                         <span data-part="letter" aria-hidden="true">
-                          {status === "match" ? "С" : "Р"}
+                          {statusLetter[status] ?? STATUS_LETTER[status]}
                         </span>
-                        {status === "match" ? "совпадает" : "расхождение"}
+                        {statusText[status] ?? STATUS_LABEL[status]}
                       </span>
                     </td>
                   </tr>
@@ -328,9 +403,9 @@ export function Solutions047({
         </div>
 
         <p data-part="foot">
-          Расхождение найдено в {mismatchCount} из {documents.length}{" "}
-          документов. Сверьте позиции с отметкой «расхождение» до подписания
-          акта.
+          {foot
+            .replace("{mismatch}", String(mismatchCount))
+            .replace("{total}", String(documents.length))}
         </p>
       </section>
     </>

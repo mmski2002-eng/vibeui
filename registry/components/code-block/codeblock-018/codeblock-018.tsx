@@ -10,6 +10,10 @@ export type Codeblock018Props = {
   showLegend?: boolean
   lines?: string[]
   notes?: Codeblock018Note[]
+  /** Подпись строки в легенде, {n} — номер строки. */
+  lineLabel?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -17,15 +21,19 @@ export type Codeblock018Props = {
 // Идея компонента: разбор кода, а не просто листинг. У размеченных строк
 // появляется кружок с номером, а под блоком стоит легенда с пояснениями.
 // Номер печатает ::after, поэтому объяснения не уезжают в буфер вместе с кодом.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, кружок выноски подобран отдельно для светлой и тёмной ветки.
 const STYLES = `
 :where([data-vibeui-block="codeblock-018"]){
---vibeui-codeblock-018-bg:oklch(0.99 0.003 95);
---vibeui-codeblock-018-code:oklch(0.97 0.006 95);
---vibeui-codeblock-018-fg:oklch(0.26 0.014 95);
---vibeui-codeblock-018-muted:oklch(0.52 0.012 95);
---vibeui-codeblock-018-border:oklch(0.9 0.008 95);
---vibeui-codeblock-018-mark:oklch(0.55 0.16 45);
---vibeui-codeblock-018-mark-bg:oklch(0.94 0.05 60);
+--vibeui-codeblock-018-bg:transparent;
+--vibeui-codeblock-018-code:light-dark(oklch(0 0 0 / 3%),oklch(1 0 0 / 5%));
+--vibeui-codeblock-018-fg:light-dark(oklch(0.26 0.014 95),oklch(0.93 0.006 95));
+--vibeui-codeblock-018-muted:light-dark(oklch(0.52 0.012 95),oklch(0.68 0.012 95));
+--vibeui-codeblock-018-border:light-dark(oklch(0.9 0.008 95),oklch(1 0 0 / 13%));
+--vibeui-codeblock-018-mark:light-dark(oklch(0.55 0.16 45),oklch(0.84 0.12 60));
+--vibeui-codeblock-018-mark-bg:light-dark(oklch(0.94 0.05 60),oklch(0.42 0.08 55));
+--vibeui-codeblock-018-row:light-dark(oklch(0.55 0.16 45 / 8%),oklch(0.78 0.13 60 / 12%));
 --vibeui-codeblock-018-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -70,7 +78,7 @@ font-size:0.6875rem;font-weight:700;line-height:1;
 user-select:none;-webkit-user-select:none;
 }
 [data-vibeui-block="codeblock-018"] [data-part="row"][data-note]{
-background:oklch(0.55 0.16 45 / 8%);
+background:var(--vibeui-codeblock-018-row);
 }
 [data-vibeui-block="codeblock-018"] ol{
 margin:0;padding:0.75rem 0.875rem;list-style:none;
@@ -113,16 +121,49 @@ const NOTES: Codeblock018Note[] = [
   { line: 7, text: "Без токена уводим на вход и дальше не идём." },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Листинг с выносками к строкам и легендой под ним. */
 export function Codeblock018({
   path = "middleware.ts",
   showLegend = true,
   lines = LINES,
   notes = NOTES,
+  lineLabel = "строка {n}",
+  background = "",
   className,
   style,
 }: Codeblock018Props) {
   const numbers = new Map(notes.map((note, index) => [note.line, index + 1]))
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-018-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -132,7 +173,7 @@ export function Codeblock018({
       <figure
         data-vibeui-block="codeblock-018"
         className={className}
-        style={style}
+        style={palette}
       >
         <figcaption data-part="head">{path}</figcaption>
         <pre>
@@ -153,7 +194,8 @@ export function Codeblock018({
             {notes.map((note) => (
               <li key={note.line}>
                 <span>
-                  <b>строка {note.line}</b> — {note.text}
+                  <b>{lineLabel.replace("{n}", String(note.line))}</b> —{" "}
+                  {note.text}
                 </span>
               </li>
             ))}

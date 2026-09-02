@@ -17,6 +17,8 @@ export type Select018Props = Omit<
   name?: string
   languages?: Select018Language[]
   defaultValue?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,13 +28,13 @@ export type Select018Props = Omit<
 // клавиатура и системный список остаются браузерными, оформление — наше.
 const STYLES = `
 :where([data-vibeui-block="select-018"]){
---vibeui-select-018-surface:oklch(1 0 0);
---vibeui-select-018-surface-border:oklch(0.91 0.006 265);
---vibeui-select-018-fg:oklch(0.23 0.016 265);
---vibeui-select-018-muted:oklch(0.55 0.014 265);
---vibeui-select-018-border:oklch(0.87 0.008 265);
---vibeui-select-018-accent:oklch(0.55 0.19 262);
---vibeui-select-018-tint:oklch(0.55 0.19 262 / 12%);
+--vibeui-select-018-surface:transparent;
+--vibeui-select-018-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-select-018-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-018-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-018-border:light-dark(oklch(0.87 0.008 265),oklch(0.4 0.012 265));
+--vibeui-select-018-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
+--vibeui-select-018-tint:light-dark(oklch(0.55 0.19 262 / 12%),oklch(0.73 0.17 262 / 20%));
 --vibeui-select-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-select-018-mono:ui-monospace,"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
 }
@@ -85,6 +87,28 @@ const DEFAULT_LANGUAGES: Select018Language[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Select языка интерфейса: полное имя языка слева, короткий код справа.
  * Своя плитка поверх настоящего select. Один файл, ноль зависимостей,
  * собственная палитра.
@@ -94,6 +118,7 @@ export function Select018({
   name,
   languages = DEFAULT_LANGUAGES,
   defaultValue = languages[0]?.value,
+  background = "",
   accent,
   id,
   className,
@@ -108,6 +133,12 @@ export function Select018({
 
   const palette = {
     ...(accent ? { "--vibeui-select-018-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-select-018-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

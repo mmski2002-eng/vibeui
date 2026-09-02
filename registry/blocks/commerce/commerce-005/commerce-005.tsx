@@ -13,6 +13,8 @@ export type Commerce005Props = {
   lead?: string
   categories?: Commerce005Category[]
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -24,13 +26,16 @@ export type Commerce005Props = {
 // не трогая CSS. Число товаров стоит в самой плитке: без него категория —
 // просто картинка, и по ней нечего решать. Вся плитка кликабельна растянутой
 // ссылкой, а фокус ловит саму плитку, а не заголовок внутри неё.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="commerce-005"]){
---vibeui-commerce-005-bg:oklch(1 0 0);
---vibeui-commerce-005-fg:oklch(0.22 0.014 265);
---vibeui-commerce-005-muted:oklch(0.55 0.014 265);
---vibeui-commerce-005-border:oklch(0.91 0.006 265);
---vibeui-commerce-005-accent:oklch(0.55 0.2 262);
+--vibeui-commerce-005-bg:transparent;
+--vibeui-commerce-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-commerce-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-005-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
 --vibeui-commerce-005-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -57,8 +62,8 @@ position:relative;display:flex;flex-direction:column;justify-content:flex-end;
 min-height:8.5rem;padding:0.75rem;overflow:hidden;
 border-radius:0.875rem;border:1px solid var(--vibeui-commerce-005-border);
 background:
-radial-gradient(120% 100% at 20% 0%, oklch(0.93 0.08 var(--vibeui-commerce-005-hue,262)), transparent 70%),
-oklch(0.97 0.02 var(--vibeui-commerce-005-hue,262));
+radial-gradient(120% 100% at 20% 0%, light-dark(oklch(0.93 0.08 var(--vibeui-commerce-005-hue,262)),oklch(0.44 0.09 var(--vibeui-commerce-005-hue,262))), transparent 70%),
+light-dark(oklch(0.97 0.02 var(--vibeui-commerce-005-hue,262)),oklch(0.3 0.03 var(--vibeui-commerce-005-hue,262)));
 }
 [data-vibeui-block="commerce-005"] h3{margin:0;font-size:0.9375rem;font-weight:650;line-height:1.25}
 /* Растянутая ссылка: цель — вся плитка, а фокус ловит именно плитка. */
@@ -91,6 +96,28 @@ const DEFAULT_CATEGORIES: Commerce005Category[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Витрина категорий: мозаика с крупной плиткой по флагу в данных.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -99,11 +126,18 @@ export function Commerce005({
   lead = "Каждая плитка ведёт в подборку — число товаров видно до перехода.",
   categories = DEFAULT_CATEGORIES,
   accent,
+  background = "",
   className,
   style,
 }: Commerce005Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

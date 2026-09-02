@@ -18,16 +18,20 @@ export type Button009Props = Omit<
 // с бегунком, который переезжает при нажатии, подпись меняется вместе
 // с состоянием. Состояние объявлено через aria-pressed, поэтому кнопка
 // остаётся кнопкой, а не чекбоксом.
+//
+// Тема берётся из color-scheme окружения через light-dark(): включённое
+// состояние в тёмном контексте — глубокая зелёная заливка со светлой
+// подписью, а не выбеленная плашка, и граница светлее фона.
 const STYLES = `
 :where([data-vibeui-block="button-009"]){
---vibeui-button-009-bg:oklch(0.96 0.004 265);
---vibeui-button-009-fg:oklch(0.42 0.014 265);
---vibeui-button-009-border:oklch(0.55 0.02 265 / 24%);
---vibeui-button-009-on-bg:oklch(0.94 0.045 160);
---vibeui-button-009-on-fg:oklch(0.36 0.08 160);
---vibeui-button-009-accent:oklch(0.62 0.15 160);
---vibeui-button-009-track:oklch(0.55 0.02 265 / 26%);
---vibeui-button-009-ring:oklch(0.55 0.02 265 / 60%);
+--vibeui-button-009-bg:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.012 265));
+--vibeui-button-009-fg:light-dark(oklch(0.42 0.014 265),oklch(0.86 0.008 265));
+--vibeui-button-009-border:light-dark(oklch(0.55 0.02 265 / 24%),oklch(0.82 0.02 265 / 28%));
+--vibeui-button-009-on-bg:light-dark(oklch(0.94 0.045 160),oklch(0.34 0.055 160));
+--vibeui-button-009-on-fg:light-dark(oklch(0.36 0.08 160),oklch(0.9 0.07 160));
+--vibeui-button-009-accent:light-dark(oklch(0.62 0.15 160),oklch(0.7 0.14 160));
+--vibeui-button-009-track:light-dark(oklch(0.55 0.02 265 / 26%),oklch(0.85 0.02 265 / 26%));
+--vibeui-button-009-ring:light-dark(oklch(0.55 0.02 265 / 60%),oklch(0.82 0.02 265 / 60%));
 --vibeui-button-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-009"]{

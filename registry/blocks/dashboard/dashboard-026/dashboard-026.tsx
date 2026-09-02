@@ -16,6 +16,16 @@ export type Dashboard026Props = {
   total?: string
   sources?: Dashboard026Source[]
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Заголовки таблицы: source, sessions, share, bounce, change, total. */
+  columnsText?: Record<string, string>
+  /** Подпись под итогом в центре кольца. */
+  ringLabel?: string
+  /** Шаблон подписи кольца для скринридера: {list}. */
+  ringAriaText?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,15 +40,15 @@ export type Dashboard026Props = {
 // потому что сегменты меньше пяти процентов на кольце не различаются.
 const STYLES = `
 :where([data-vibeui-block="dashboard-026"]){
---vibeui-dashboard-026-bg:oklch(1 0 0);
---vibeui-dashboard-026-panel:oklch(0.985 0.003 265);
---vibeui-dashboard-026-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-026-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-026-border:oklch(0.91 0.006 265);
---vibeui-dashboard-026-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-026-soft:oklch(0.93 0.04 262);
---vibeui-dashboard-026-up:oklch(0.53 0.14 152);
---vibeui-dashboard-026-down:oklch(0.55 0.18 25);
+--vibeui-dashboard-026-bg:transparent;
+--vibeui-dashboard-026-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.012 265));
+--vibeui-dashboard-026-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-026-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-026-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.011 265));
+--vibeui-dashboard-026-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-dashboard-026-soft:light-dark(color-mix(in oklab,var(--vibeui-dashboard-026-accent) 20%,white),color-mix(in oklab,var(--vibeui-dashboard-026-accent) 32%,black));
+--vibeui-dashboard-026-up:light-dark(oklch(0.53 0.14 152),oklch(0.76 0.14 152));
+--vibeui-dashboard-026-down:light-dark(oklch(0.55 0.18 25),oklch(0.73 0.16 25));
 --vibeui-dashboard-026-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -182,6 +192,37 @@ const DEFAULT_SOURCES: Dashboard026Source[] = [
 
 const ARROW = { up: "↑", down: "↓", flat: "→" }
 
+const DEFAULT_COLUMNS: Record<string, string> = {
+  source: "Источник",
+  sessions: "Сеансы",
+  share: "Доля",
+  bounce: "Отказы",
+  change: "К прошлому периоду",
+  total: "Всего",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Отчёт по трафику: кольцо каналов на conic-gradient и таблица источников
  * с долей-заливкой. Один файл, ноль зависимостей, собственная палитра.
@@ -192,9 +233,15 @@ export function Dashboard026({
   total = "44 760",
   sources = DEFAULT_SOURCES,
   accent,
+  background = "",
+  columnsText = DEFAULT_COLUMNS,
+  ringLabel = "сеансов",
+  ringAriaText = "Доли каналов: {list}",
+  locale = "ru-RU",
   className,
   style,
 }: Dashboard026Props) {
+  const column = (key: string) => columnsText[key] ?? DEFAULT_COLUMNS[key]
   const shades = sources.map((_, index) => 0.55 + index * 0.08)
   const ring = sources
     .map((source, index) => {
@@ -208,6 +255,12 @@ export function Dashboard026({
 
   const palette = {
     ...(accent ? { "--vibeui-dashboard-026-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-026-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     "--vibeui-dashboard-026-ring": ring,
     ...style,
   } as CSSProperties
@@ -235,11 +288,11 @@ export function Dashboard026({
             <table>
               <thead>
                 <tr>
-                  <th scope="col">Источник</th>
-                  <th scope="col">Сеансы</th>
-                  <th scope="col">Доля</th>
-                  <th scope="col">Отказы</th>
-                  <th scope="col">К прошлому периоду</th>
+                  <th scope="col">{column("source")}</th>
+                  <th scope="col">{column("sessions")}</th>
+                  <th scope="col">{column("share")}</th>
+                  <th scope="col">{column("bounce")}</th>
+                  <th scope="col">{column("change")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -249,7 +302,7 @@ export function Dashboard026({
                       {source.name}
                       <span data-part="kind">{source.kind}</span>
                     </th>
-                    <td>{source.sessions.toLocaleString("ru-RU")}</td>
+                    <td>{source.sessions.toLocaleString(locale)}</td>
                     <td
                       data-part="sharecell"
                       style={
@@ -274,8 +327,8 @@ export function Dashboard026({
               </tbody>
               <tfoot>
                 <tr>
-                  <th scope="row">Всего</th>
-                  <td>{sessions.toLocaleString("ru-RU")}</td>
+                  <th scope="row">{column("total")}</th>
+                  <td>{sessions.toLocaleString(locale)}</td>
                   <td>100 %</td>
                   <td>41 %</td>
                   <td>+7 %</td>
@@ -288,13 +341,16 @@ export function Dashboard026({
             <div
               data-part="ring"
               role="img"
-              aria-label={`Доли каналов: ${sources
-                .map((source) => `${source.name} ${source.share} %`)
-                .join(", ")}`}
+              aria-label={ringAriaText.replace(
+                "{list}",
+                sources
+                  .map((source) => `${source.name} ${source.share} %`)
+                  .join(", "),
+              )}
             >
               <span data-part="ringtotal">
                 <span data-part="ringvalue">{total}</span>
-                <span data-part="ringlabel">сеансов</span>
+                <span data-part="ringlabel">{ringLabel}</span>
               </span>
             </div>
             <ul data-part="legend">

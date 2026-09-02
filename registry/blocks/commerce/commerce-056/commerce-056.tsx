@@ -27,7 +27,11 @@ export type Commerce056Props = {
   cta?: string
   delivery?: string
   refund?: string
+  /** Подпись панели прав для скринридера: {license} — название лицензии. */
+  rightsAriaTemplate?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -41,14 +45,15 @@ export type Commerce056Props = {
 // ошибаются. Возврат объявлен отдельно, потому что у файла его почти нет.
 const STYLES = `
 :where([data-vibeui-block="commerce-056"]){
---vibeui-commerce-056-bg:oklch(1 0 0);
---vibeui-commerce-056-fg:oklch(0.2 0.014 300);
---vibeui-commerce-056-muted:oklch(0.53 0.016 300);
---vibeui-commerce-056-border:oklch(0.9 0.008 300);
---vibeui-commerce-056-soft:oklch(0.973 0.006 300);
---vibeui-commerce-056-accent:oklch(0.5 0.19 300);
---vibeui-commerce-056-yes:oklch(0.48 0.12 150);
---vibeui-commerce-056-no:oklch(0.53 0.16 25);
+--vibeui-commerce-056-bg:transparent;
+--vibeui-commerce-056-fg:light-dark(oklch(0.2 0.014 300),oklch(0.94 0.006 300));
+--vibeui-commerce-056-muted:light-dark(oklch(0.53 0.016 300),oklch(0.73 0.013 300));
+--vibeui-commerce-056-border:light-dark(oklch(0.9 0.008 300),oklch(0.38 0.014 300));
+--vibeui-commerce-056-soft:light-dark(oklch(0.973 0.006 300),oklch(0.27 0.012 300));
+--vibeui-commerce-056-accent:light-dark(oklch(0.5 0.19 300),oklch(0.76 0.15 300));
+--vibeui-commerce-056-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.04 300));
+--vibeui-commerce-056-yes:light-dark(oklch(0.48 0.12 150),oklch(0.72 0.14 152));
+--vibeui-commerce-056-no:light-dark(oklch(0.53 0.16 25),oklch(0.71 0.16 27));
 --vibeui-commerce-056-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -88,7 +93,7 @@ box-shadow:inset 0 0 0 1px var(--vibeui-commerce-056-accent);
 [data-vibeui-block="commerce-056"] [data-part="rights"] li{display:flex;gap:0.5rem;align-items:flex-start}
 [data-vibeui-block="commerce-056"] [data-part="rights"] li::before{
 flex:none;width:1.125rem;height:1.125rem;border-radius:9999px;display:flex;align-items:center;justify-content:center;
-font-size:0.6875rem;font-weight:800;color:oklch(0.99 0 0);margin-top:0.0625rem;
+font-size:0.6875rem;font-weight:800;color:var(--vibeui-commerce-056-onaccent);margin-top:0.0625rem;
 }
 [data-vibeui-block="commerce-056"] [data-part="allowed"] li::before{content:"✓";background:var(--vibeui-commerce-056-yes)}
 [data-vibeui-block="commerce-056"] [data-part="denied"] li::before{content:"×";background:var(--vibeui-commerce-056-no);border-radius:0.1875rem}
@@ -101,7 +106,7 @@ padding:0.875rem 1rem;border-radius:0.875rem;background:var(--vibeui-commerce-05
 [data-vibeui-block="commerce-056"] dd{margin:0;text-align:right;font-weight:650}
 [data-vibeui-block="commerce-056"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;height:2.875rem;padding:0 1.75rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-056-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-056-accent);color:var(--vibeui-commerce-056-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-056"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-commerce-056-accent);outline-offset:2px}
 [data-vibeui-block="commerce-056"] [data-part="delivery"]{margin:0.75rem 0 0;font-size:0.8125rem;color:var(--vibeui-commerce-056-muted)}
@@ -118,6 +123,28 @@ background:var(--vibeui-commerce-056-accent);color:oklch(0.99 0 0);font:inherit;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-056"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_LICENSES: Commerce056License[] = [
   {
@@ -191,12 +218,20 @@ export function Commerce056({
   cta = "Купить и скачать",
   delivery = "Ссылка на архив приходит на почту сразу после оплаты и живёт 30 дней.",
   refund = "Возврат возможен, пока ссылка не открыта: после скачивания файл считается переданным. Если архив не открывается — заменим или вернём деньги без срока.",
+  rightsAriaTemplate = "Права по лицензии «{license}»",
   accent,
+  background = "",
   className,
   style,
 }: Commerce056Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-056-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-056-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -246,7 +281,10 @@ export function Commerce056({
               key={license.value}
               data-part="rights"
               data-for={license.value}
-              aria-label={`Права по лицензии «${license.label}»`}
+              aria-label={rightsAriaTemplate.replace(
+                "{license}",
+                license.label,
+              )}
             >
               <div data-part="cols">
                 <div>

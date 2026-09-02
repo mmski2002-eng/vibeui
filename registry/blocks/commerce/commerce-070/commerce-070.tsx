@@ -15,6 +15,8 @@ export type Commerce070Props = {
   eta?: string
   where?: string
   points?: Commerce070Point[]
+  timelineTitle?: string
+  nowLabel?: string
   mapLabel?: string
   mapFallback?: string
   courier?: string
@@ -23,6 +25,8 @@ export type Commerce070Props = {
   secondary?: string
   note?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -36,14 +40,19 @@ export type Commerce070Props = {
 // плохом интернете, а вопрос «где посылка» остаётся.
 const STYLES = `
 :where([data-vibeui-block="commerce-070"]){
---vibeui-commerce-070-bg:oklch(1 0 0);
---vibeui-commerce-070-fg:oklch(0.21 0.014 210);
---vibeui-commerce-070-muted:oklch(0.53 0.016 210);
---vibeui-commerce-070-border:oklch(0.9 0.008 210);
---vibeui-commerce-070-soft:oklch(0.972 0.006 210);
---vibeui-commerce-070-land:oklch(0.94 0.02 160);
---vibeui-commerce-070-water:oklch(0.9 0.045 215);
---vibeui-commerce-070-accent:oklch(0.48 0.15 215);
+--vibeui-commerce-070-bg:transparent;
+--vibeui-commerce-070-surface:light-dark(oklch(1 0 0),oklch(0.22 0.014 210));
+--vibeui-commerce-070-fg:light-dark(oklch(0.21 0.014 210),oklch(0.94 0.007 210));
+--vibeui-commerce-070-muted:light-dark(oklch(0.53 0.016 210),oklch(0.73 0.013 210));
+--vibeui-commerce-070-border:light-dark(oklch(0.9 0.008 210),oklch(0.38 0.016 210));
+--vibeui-commerce-070-soft:light-dark(oklch(0.972 0.006 210),oklch(0.27 0.016 210));
+--vibeui-commerce-070-land:light-dark(oklch(0.94 0.02 160),oklch(0.3 0.025 160));
+--vibeui-commerce-070-water:light-dark(oklch(0.9 0.045 215),oklch(0.36 0.055 215));
+--vibeui-commerce-070-grid:light-dark(oklch(0.88 0.012 210),oklch(0.37 0.02 210));
+--vibeui-commerce-070-road:light-dark(oklch(0.99 0 0),oklch(0.47 0.02 210));
+--vibeui-commerce-070-veil:light-dark(oklch(1 0 0 / 88%),oklch(0.21 0.014 210 / 88%));
+--vibeui-commerce-070-accent:light-dark(oklch(0.48 0.15 215),oklch(0.75 0.14 215));
+--vibeui-commerce-070-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.04 215));
 --vibeui-commerce-070-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -62,20 +71,20 @@ position:relative;aspect-ratio:4/3;border-radius:1rem;overflow:hidden;
 border:1px solid var(--vibeui-commerce-070-border);
 background:
 linear-gradient(115deg,transparent 46%,var(--vibeui-commerce-070-water) 46%,var(--vibeui-commerce-070-water) 54%,transparent 54%),
-repeating-linear-gradient(0deg,oklch(0.88 0.012 210) 0 1px,transparent 1px 3.25rem),
-repeating-linear-gradient(90deg,oklch(0.88 0.012 210) 0 1px,transparent 1px 3.25rem),
+repeating-linear-gradient(0deg,var(--vibeui-commerce-070-grid) 0 1px,transparent 1px 3.25rem),
+repeating-linear-gradient(90deg,var(--vibeui-commerce-070-grid) 0 1px,transparent 1px 3.25rem),
 var(--vibeui-commerce-070-land);
 }
 [data-vibeui-block="commerce-070"] [data-part="road"]{
 position:absolute;inset:0;
 background:
-linear-gradient(72deg,transparent 47.4%,oklch(0.99 0 0) 47.4%,oklch(0.99 0 0) 52.6%,transparent 52.6%),
-linear-gradient(168deg,transparent 61%,oklch(0.99 0 0) 61%,oklch(0.99 0 0) 64%,transparent 64%);
+linear-gradient(72deg,transparent 47.4%,var(--vibeui-commerce-070-road) 47.4%,var(--vibeui-commerce-070-road) 52.6%,transparent 52.6%),
+linear-gradient(168deg,transparent 61%,var(--vibeui-commerce-070-road) 61%,var(--vibeui-commerce-070-road) 64%,transparent 64%);
 }
 [data-vibeui-block="commerce-070"] [data-part="pin"]{
 position:absolute;transform:translate(-50%,-50%);
 width:1.125rem;height:1.125rem;border-radius:9999px;
-border:2px solid oklch(0.99 0 0);background:var(--vibeui-commerce-070-muted);
+border:2px solid var(--vibeui-commerce-070-road);background:var(--vibeui-commerce-070-muted);
 box-shadow:0 1px 3px oklch(0.2 0.02 210 / 35%);
 left:var(--vibeui-commerce-070-x,50%);top:var(--vibeui-commerce-070-y,50%);
 }
@@ -84,31 +93,31 @@ left:var(--vibeui-commerce-070-x,50%);top:var(--vibeui-commerce-070-y,50%);
 width:1.5rem;height:1.5rem;background:var(--vibeui-commerce-070-accent);
 animation:vibeui-commerce-070-ring 1.8s ease-out infinite;
 }
-[data-vibeui-block="commerce-070"] [data-part="pin"][data-state="wait"]{background:oklch(0.99 0 0);border-color:var(--vibeui-commerce-070-muted)}
+[data-vibeui-block="commerce-070"] [data-part="pin"][data-state="wait"]{background:var(--vibeui-commerce-070-road);border-color:var(--vibeui-commerce-070-muted)}
 @keyframes vibeui-commerce-070-ring{
-0%{box-shadow:0 0 0 0 oklch(0.48 0.15 215 / 45%)}
-70%{box-shadow:0 0 0 0.75rem oklch(0.48 0.15 215 / 0%)}
-100%{box-shadow:0 0 0 0 oklch(0.48 0.15 215 / 0%)}
+0%{box-shadow:0 0 0 0 color-mix(in oklab,var(--vibeui-commerce-070-accent) 45%,transparent)}
+70%{box-shadow:0 0 0 0.75rem transparent}
+100%{box-shadow:0 0 0 0 transparent}
 }
 [data-vibeui-block="commerce-070"] [data-part="fallback"]{
 position:absolute;left:0.75rem;bottom:0.75rem;right:0.75rem;margin:0;padding:0.5rem 0.625rem;border-radius:0.625rem;
-background:oklch(1 0 0 / 88%);font-size:0.6875rem;line-height:1.45;color:var(--vibeui-commerce-070-muted);
+background:var(--vibeui-commerce-070-veil);font-size:0.6875rem;line-height:1.45;color:var(--vibeui-commerce-070-muted);
 }
 [data-vibeui-block="commerce-070"] h3{margin:0 0 0.625rem;font-size:0.75rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--vibeui-commerce-070-muted)}
 [data-vibeui-block="commerce-070"] ol{list-style:none;margin:0;padding:0;display:grid;gap:0.5rem}
 [data-vibeui-block="commerce-070"] [data-part="step"]{display:flex;gap:0.625rem;align-items:flex-start}
 [data-vibeui-block="commerce-070"] [data-part="dot"]{
 flex:none;width:1.125rem;height:1.125rem;margin-top:0.125rem;border-radius:9999px;
-display:flex;align-items:center;justify-content:center;font-size:0.625rem;font-weight:800;color:oklch(0.99 0 0);
+display:flex;align-items:center;justify-content:center;font-size:0.625rem;font-weight:800;color:var(--vibeui-commerce-070-onaccent);
 background:var(--vibeui-commerce-070-accent);
 }
-[data-vibeui-block="commerce-070"] [data-part="dot"][data-state="now"]{background:var(--vibeui-commerce-070-bg);border:2px solid var(--vibeui-commerce-070-accent)}
-[data-vibeui-block="commerce-070"] [data-part="dot"][data-state="wait"]{background:var(--vibeui-commerce-070-bg);border:2px solid var(--vibeui-commerce-070-border)}
+[data-vibeui-block="commerce-070"] [data-part="dot"][data-state="now"]{background:var(--vibeui-commerce-070-surface);border:2px solid var(--vibeui-commerce-070-accent)}
+[data-vibeui-block="commerce-070"] [data-part="dot"][data-state="wait"]{background:var(--vibeui-commerce-070-surface);border:2px solid var(--vibeui-commerce-070-border)}
 [data-vibeui-block="commerce-070"] [data-part="slabel"]{display:block;font-size:0.875rem;font-weight:650}
 [data-vibeui-block="commerce-070"] [data-part="sat"]{display:block;margin-top:0.0625rem;font-size:0.75rem;color:var(--vibeui-commerce-070-muted);font-variant-numeric:tabular-nums}
 [data-vibeui-block="commerce-070"] [data-part="now"]{
 display:inline-block;margin-left:0.375rem;padding:0.0625rem 0.375rem;border-radius:0.3125rem;
-background:var(--vibeui-commerce-070-accent);color:oklch(0.99 0 0);font-size:0.625rem;font-weight:700;
+background:var(--vibeui-commerce-070-accent);color:var(--vibeui-commerce-070-onaccent);font-size:0.625rem;font-weight:700;
 letter-spacing:0.04em;text-transform:uppercase;vertical-align:1px;
 }
 [data-vibeui-block="commerce-070"] [data-part="courier"]{
@@ -119,11 +128,11 @@ display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;justify-content:space-
 [data-vibeui-block="commerce-070"] [data-part="cphone"]{margin:0.0625rem 0 0;font-size:0.75rem;color:var(--vibeui-commerce-070-muted);font-variant-numeric:tabular-nums}
 [data-vibeui-block="commerce-070"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;height:2.5rem;padding:0 1.25rem;border-radius:0.75rem;
-background:var(--vibeui-commerce-070-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.875rem;font-weight:700;
+background:var(--vibeui-commerce-070-accent);color:var(--vibeui-commerce-070-onaccent);font:inherit;font-size:0.875rem;font-weight:700;
 }
 [data-vibeui-block="commerce-070"] [data-part="alt"]{
 appearance:none;cursor:pointer;height:2.5rem;padding:0 1.125rem;border-radius:0.75rem;margin-top:0.625rem;
-border:1px solid var(--vibeui-commerce-070-border);background:var(--vibeui-commerce-070-bg);
+border:1px solid var(--vibeui-commerce-070-border);background:var(--vibeui-commerce-070-surface);
 color:inherit;font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-070"] [data-part="go"]:focus-visible,
@@ -134,6 +143,28 @@ color:inherit;font:inherit;font-size:0.875rem;font-weight:650;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-070"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_POINTS: Commerce070Point[] = [
   {
@@ -180,6 +211,8 @@ export function Commerce070({
   eta = "Сегодня до 18:00",
   where = "Последнее обновление 12:05, курьер на Петроградской стороне. До вас четыре адреса.",
   points = DEFAULT_POINTS,
+  timelineTitle = "Где была посылка",
+  nowLabel = "сейчас",
   mapLabel = "Схема маршрута посылки",
   mapFallback = "Схема условная: она показывает порядок точек, а не реальные улицы. Точные адреса — в списке ниже.",
   courier = "Курьер Дмитрий",
@@ -188,11 +221,21 @@ export function Commerce070({
   secondary = "Перенести доставку",
   note = "Курьер звонит за 30 минут до приезда. Если не отвечаете два раза — посылка уезжает в пункт выдачи и ждёт там семь дней.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce070Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-070-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-070-bg": background,
+          // Точки списка и кнопка переноса не должны просвечивать: им нужна
+          // непрозрачная подложка, а она задана тем же цветом.
+          "--vibeui-commerce-070-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -234,7 +277,7 @@ export function Commerce070({
           </div>
 
           <div>
-            <h3>Где была посылка</h3>
+            <h3>{timelineTitle}</h3>
             <ol>
               {points.map((point) => (
                 <li key={point.id} data-part="step">
@@ -249,7 +292,7 @@ export function Commerce070({
                     <span data-part="slabel">
                       {point.label}
                       {point.state === "now" ? (
-                        <span data-part="now">сейчас</span>
+                        <span data-part="now">{nowLabel}</span>
                       ) : null}
                     </span>
                     <span data-part="sat">{point.at}</span>

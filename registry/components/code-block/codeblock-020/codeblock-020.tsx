@@ -7,6 +7,12 @@ export type Codeblock020Props = {
   runtime?: string
   stale?: boolean
   code?: string
+  /** Подпись актуального примера, {version} и {runtime} подставляются. */
+  freshText?: string
+  /** Подпись устаревшего примера, {version} и {runtime} подставляются. */
+  staleText?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -14,17 +20,20 @@ export type Codeblock020Props = {
 // Идея компонента: у примера кода есть срок годности. Версия и дата стоят в
 // шапке рядом с кодом, а признак устаревания перекрашивает штамп и меняет
 // подпись в подвале — читатель сразу видит, можно ли этому примеру верить.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, штампы свежести подобраны отдельно для светлой и тёмной ветки.
 const STYLES = `
 :where([data-vibeui-block="codeblock-020"]){
---vibeui-codeblock-020-bg:oklch(0.2 0.014 250);
---vibeui-codeblock-020-head:oklch(0.24 0.018 250);
---vibeui-codeblock-020-fg:oklch(0.93 0.008 250);
---vibeui-codeblock-020-muted:oklch(0.67 0.016 250);
---vibeui-codeblock-020-border:oklch(1 0 0 / 12%);
---vibeui-codeblock-020-fresh:oklch(0.83 0.14 152);
---vibeui-codeblock-020-fresh-bg:oklch(0.5 0.13 152 / 22%);
---vibeui-codeblock-020-stale:oklch(0.84 0.14 75);
---vibeui-codeblock-020-stale-bg:oklch(0.55 0.13 75 / 22%);
+--vibeui-codeblock-020-bg:transparent;
+--vibeui-codeblock-020-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
+--vibeui-codeblock-020-fg:light-dark(oklch(0.26 0.016 250),oklch(0.93 0.008 250));
+--vibeui-codeblock-020-muted:light-dark(oklch(0.5 0.016 250),oklch(0.67 0.016 250));
+--vibeui-codeblock-020-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
+--vibeui-codeblock-020-fresh:light-dark(oklch(0.47 0.15 152),oklch(0.83 0.14 152));
+--vibeui-codeblock-020-fresh-bg:light-dark(oklch(0.76 0.14 152 / 30%),oklch(0.5 0.13 152 / 22%));
+--vibeui-codeblock-020-stale:light-dark(oklch(0.52 0.14 75),oklch(0.84 0.14 75));
+--vibeui-codeblock-020-stale-bg:light-dark(oklch(0.82 0.13 75 / 34%),oklch(0.55 0.13 75 / 22%));
 --vibeui-codeblock-020-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -92,6 +101,28 @@ export default defineConfig({
   style: "base-nova",
 })`
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Блок кода со штампом версии и датой проверки примера. */
 export function Codeblock020({
   version = "v2.4.0",
@@ -100,9 +131,25 @@ export function Codeblock020({
   runtime = "next@16",
   stale = false,
   code = CODE,
+  freshText = "Пример проверен на {version} и {runtime}.",
+  staleText = "Пример писали для {version}: с тех пор вышли новые версии — сверьтесь с документацией.",
+  background = "",
   className,
   style,
 }: Codeblock020Props) {
+  const note = (stale ? staleText : freshText)
+    .replace("{version}", version)
+    .replace("{runtime}", runtime)
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-020-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-codeblock-020" precedence="medium">
@@ -112,7 +159,7 @@ export function Codeblock020({
         data-vibeui-block="codeblock-020"
         data-stale={stale || undefined}
         className={className}
-        style={style}
+        style={palette}
       >
         <figcaption data-part="head">
           <span data-part="version">{version}</span>
@@ -122,11 +169,7 @@ export function Codeblock020({
         <pre>
           <code>{code}</code>
         </pre>
-        <p data-part="foot">
-          {stale
-            ? `Пример писали для ${version}: с тех пор вышли новые версии — сверьтесь с документацией.`
-            : `Пример проверен на ${version} и ${runtime}.`}
-        </p>
+        <p data-part="foot">{note}</p>
       </figure>
     </>
   )

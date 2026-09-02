@@ -29,15 +29,20 @@
             "линию отступа — по ней видно, к какой ветке относится строка",
             "моноширинный шрифт: имена файлов сравнивают посимвольно",
             "поворот шеврона по details[open] вместо смены символа",
-            "ссылки на листьях, а не div с обработчиком"
+            "ссылки на листьях, а не div с обработчиком",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив nodes и стартовые open",
             "адреса листьев",
             "акцент через проп accent",
-            "ширину блока"
+            "ширину блока",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подпись дерева для скринридера через label"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Полная клавиатурная модель дерева (стрелки по узлам) требует JS: здесь работает Tab и Enter.",
             "Роль tree проставлена контейнеру, но узлы не размечены treeitem: для строгого соответствия нужна своя реализация.",
             "Очень глубокая вложенность съедает ширину: от пятого уровня лучше показывать путь строкой.",
@@ -50,6 +55,19 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "label",
+            "label": "Подпись дерева",
+            "type": "text",
+            "default": "Файлы проекта",
+            "maxLength": 40
           }
         ],
         "i18n": {
@@ -63,15 +81,20 @@
                 "the indent line — it shows which branch a row belongs to",
                 "the monospaced face: file names get compared character by character",
                 "rotating the chevron via details[open] instead of swapping glyphs",
-                "links on the leaves rather than divs with handlers"
+                "links on the leaves rather than divs with handlers",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the nodes array and initial open flags",
                 "the leaf URLs",
                 "the accent through the accent prop",
-                "the block width"
+                "the block width",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "the tree label for screen readers through label"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A full tree keyboard model (arrow keys between nodes) needs JS: Tab and Enter work here.",
                 "The container carries role=tree but nodes are not marked treeitem: strict conformance needs a custom build.",
                 "Deep nesting eats width: past the fifth level show a path string instead.",
@@ -82,11 +105,61 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "label": {
+                "label": "Tree label",
+                "default": "Project files"
               }
             },
-            "title": "File Tree"
+            "title": "File Tree",
+            "preview": {
+              "props": {
+                "label": "Project files",
+                "nodes": [
+                  {
+                    "name": "registry",
+                    "open": true,
+                    "children": [
+                      {
+                        "name": "components",
+                        "open": true,
+                        "children": [
+                          {
+                            "name": "buttons"
+                          },
+                          {
+                            "name": "calendar"
+                          },
+                          {
+                            "name": "menu"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "blocks",
+                        "children": [
+                          {
+                            "name": "hero"
+                          },
+                          {
+                            "name": "pricing"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "package.json"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -117,19 +190,24 @@
             "роли tree и treeitem с aria-expanded на ветках — без них дерево звучит как обычный список",
             "один таб-стоп на дерево: tabIndex=0 только у текущего узла, иначе Tab придётся жать десятки раз",
             "букву состояния файла рядом с цветом — цвет один не читается при дальтонизме",
-            "собственную светлую подложку: без неё тёмные имена файлов пропадают на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "состав дерева через nodes, включая флаг open у веток",
             "подпись дерева через label",
             "формулу оттенка в функции hue под фирменную палитру",
-            "шаг отступа уровня переменной indent"
+            "шаг отступа уровня переменной indent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "accent — цвет обводки фокуса"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Идентификатором узла служит путь из имён: два одинаковых имени в одной папке склеятся в один узел.",
             "Значок показывает первые два символа расширения — для длинных расширений это не полное имя типа.",
             "Разметка плоская: обёртки role=\"group\" здесь нет намеренно, уровень несут атрибуты.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "Значок типа остаётся светлой плашкой в обеих темах: его оттенок считается из расширения, и тёмной пары у него нет намеренно — тогда цвета типов совпадают на светлой и тёмной странице."
           ]
         },
         "controls": [
@@ -139,6 +217,18 @@
             "type": "text",
             "default": "Файлы проекта",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -152,19 +242,24 @@
                 "the tree and treeitem roles with aria-expanded on branches — without them it sounds like a plain list",
                 "one tab stop for the tree: tabIndex=0 only on the current node, or Tab has to be pressed dozens of times",
                 "the status letter alongside the colour — colour alone fails for colour blindness",
-                "its own light surface: without it the dark file names disappear on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the tree contents through nodes, including the open flag on branches",
                 "the tree caption through label",
                 "the hue formula inside the hue function to match your brand",
-                "the level indent through the indent variable"
+                "the level indent through the indent variable",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "accent — the focus ring colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A node's identity is the path of names: two identical names in one folder collapse into one node.",
                 "The badge shows the first two characters of the extension — not a full type name for long ones.",
                 "The markup is flat: there is deliberately no role=\"group\" wrapper, the attributes carry the level.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "The type badge stays a light chip in both themes: its hue is hashed from the extension and it deliberately has no dark counterpart, so type colours match on a light and a dark page."
               ],
               "usage": "<Tree002\n  label=\"Project files\"\n  nodes={[{ name: \"app\", open: true, children: [{ name: \"page.tsx\" }] }]}\n/>"
             },
@@ -172,11 +267,69 @@
               "label": {
                 "label": "Tree caption",
                 "default": "Project files"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Typed File Tree"
+            "title": "Typed File Tree",
+            "preview": {
+              "props": {
+                "label": "Project files",
+                "nodes": [
+                  {
+                    "name": "app",
+                    "open": true,
+                    "children": [
+                      {
+                        "name": "layout.tsx",
+                        "status": "M"
+                      },
+                      {
+                        "name": "page.tsx"
+                      },
+                      {
+                        "name": "globals.css",
+                        "status": "A"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "registry",
+                    "open": true,
+                    "children": [
+                      {
+                        "name": "components",
+                        "children": [
+                          {
+                            "name": "tree-002.tsx"
+                          },
+                          {
+                            "name": "registry.json"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "index.ts"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "package.json"
+                  },
+                  {
+                    "name": "README.md",
+                    "status": "D"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -207,15 +360,19 @@
             "явный aria-level: из вложенности details глубина не выводится",
             "снятый маркер summary вместе с ::-webkit-details-marker — иначе останется второй треугольник",
             "подсчёт листьев по всей ветке: число в бейдже иначе врёт на вложенных разделах",
-            "собственную светлую подложку: без неё тёмные подписи пропадают на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "состав дерева через nodes, включая флаг open у веток",
             "подпись дерева через label",
             "отступ и цвет линии уровня в CSS",
-            "содержимое бейджа, если счёт листьев не нужен"
+            "содержимое бейджа, если счёт листьев не нужен",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "accent — цвет обводки фокуса"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Анимировать раскрытие details нечем: высота содержимого браузеру заранее неизвестна.",
             "Ветки без флага open приходят свёрнутыми и на сервере, и на клиенте — состояние не переживает переход по ссылке.",
             "Ключом узла служит имя: два одинаковых имени на одном уровне столкнутся.",
@@ -229,6 +386,18 @@
             "type": "text",
             "default": "Документация",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -242,15 +411,19 @@
                 "the explicit aria-level: details nesting does not imply depth for screen readers",
                 "the removed summary marker together with ::-webkit-details-marker — otherwise a second triangle remains",
                 "counting leaves across the whole branch: otherwise the badge number lies on nested sections",
-                "its own light surface: without it the dark captions disappear on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the tree contents through nodes, including the open flag on branches",
                 "the tree caption through label",
                 "the level indent and line colour in CSS",
-                "the badge contents if a leaf count is not what you need"
+                "the badge contents if a leaf count is not what you need",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "accent — the focus ring colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is nothing to animate the details expansion with: the browser does not know the content height in advance.",
                 "Branches without the open flag arrive collapsed on both server and client — the state does not survive navigation.",
                 "The node key is its name: two identical names on one level collide.",
@@ -262,11 +435,65 @@
               "label": {
                 "label": "Tree caption",
                 "default": "Documentation"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Details Only Tree"
+            "title": "Details Only Tree",
+            "preview": {
+              "props": {
+                "label": "Documentation",
+                "nodes": [
+                  {
+                    "name": "Getting started",
+                    "open": true,
+                    "children": [
+                      {
+                        "name": "Install"
+                      },
+                      {
+                        "name": "Your first component"
+                      },
+                      {
+                        "name": "Theming",
+                        "children": [
+                          {
+                            "name": "Tokens"
+                          },
+                          {
+                            "name": "Dark theme"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Registry",
+                    "children": [
+                      {
+                        "name": "The registry.json format"
+                      },
+                      {
+                        "name": "Building"
+                      },
+                      {
+                        "name": "Publishing"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Frequently asked questions"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -297,15 +524,20 @@
             "плоский порядок обхода для клавиш: по вложенной структуре стрелка вниз считается неверно",
             "роли tree, treeitem и group с aria-level и aria-expanded — на них держится вся озвучка",
             "полосу слева у выбранной строки — заливка одна не читается при дальтонизме",
-            "собственную светлую подложку: без неё тёмные подписи пропадают на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "состав дерева через nodes, включая флаг open у веток",
             "подпись дерева через label",
             "цвет выбранной строки переменными палитры",
-            "текст строки состояния под деревом"
+            "selectedText — строка о выбранном узле; {name} подставляет его имя",
+            "hintText — подсказка в строке состояния, пока ничего не выбрано",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "accent — цвет полосы у выбранной строки и обводки фокуса"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пробел здесь и выбирает, и раскрывает ветку: если нужен только выбор, уберите вызов toggle.",
             "Клавиша перехода по первой букве (type-ahead) не реализована — в длинных деревьях её стоит добавить.",
             "Идентификатор узла — путь из имён: два одинаковых имени в одной ветке склеятся.",
@@ -319,6 +551,32 @@
             "type": "text",
             "default": "Направления",
             "maxLength": 40
+          },
+          {
+            "prop": "selectedText",
+            "label": "Строка о выборе",
+            "type": "text",
+            "default": "Выбрано: {name}",
+            "maxLength": 60
+          },
+          {
+            "prop": "hintText",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Стрелки — переход, Enter или пробел — выбор",
+            "maxLength": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -332,15 +590,20 @@
                 "the flat traversal order for the keys: computing Down over the nested structure gets it wrong",
                 "the tree, treeitem and group roles with aria-level and aria-expanded — all the speech rests on them",
                 "the left bar on the selected row — the fill alone fails for colour blindness",
-                "its own light surface: without it the dark captions disappear on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the tree contents through nodes, including the open flag on branches",
                 "the tree caption through label",
                 "the selected row colour through the palette variables",
-                "the status line copy under the tree"
+                "selectedText — the line about the selected node; {name} is replaced with its name",
+                "hintText — the status line hint while nothing is selected",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "accent — the colour of the selected row bar and the focus ring"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Space both selects and expands here: drop the toggle call if you only want selection.",
                 "First-letter type-ahead is not implemented — worth adding for long trees.",
                 "A node's identity is the path of names: two identical names in one branch collapse.",
@@ -352,11 +615,70 @@
               "label": {
                 "label": "Tree caption",
                 "default": "Business units"
+              },
+              "selectedText": {
+                "label": "Selection line",
+                "default": "Selected: {name}"
+              },
+              "hintText": {
+                "label": "Hint",
+                "default": "Arrows move, Enter or Space selects"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Selectable Keyboard Tree"
+            "title": "Selectable Keyboard Tree",
+            "preview": {
+              "props": {
+                "label": "Business units",
+                "selectedText": "Selected: {name}",
+                "hintText": "Arrows move, Enter or Space selects",
+                "nodes": [
+                  {
+                    "name": "Sales",
+                    "open": true,
+                    "children": [
+                      {
+                        "name": "Direct sales"
+                      },
+                      {
+                        "name": "Partners",
+                        "open": true,
+                        "children": [
+                          {
+                            "name": "Resellers"
+                          },
+                          {
+                            "name": "Integrators"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Marketing",
+                    "children": [
+                      {
+                        "name": "Content"
+                      },
+                      {
+                        "name": "Events"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Support"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -387,15 +709,20 @@
             "простановку indeterminate в эффекте — атрибута для третьего состояния не существует",
             "нативные чекбоксы: своя галка потеряет клавиатуру и объявление состояния",
             "роли tree, treeitem и group с aria-level и aria-expanded на ветках",
-            "собственную светлую подложку: без неё тёмные подписи пропадают на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "состав дерева через nodes",
             "подпись дерева через label",
             "начальный набор выбранных листьев в коде компонента",
-            "цвет галки переменной акцента"
+            "totalText — итог внизу; {checked} и {total} подставляют числа",
+            "expandText и collapseText — подписи кнопки ветки; {name} подставляет её имя",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "accent — цвет галки и обводки фокуса"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Свёрнутая ветка не размонтирует выбор: состояние живёт в множестве, а не в разметке.",
             "Чекбокс ветки и её раскрытие — разные органы: нажатие на галку не разворачивает ветку.",
             "Идентификатор листа — путь из имён: одинаковые имена в одной ветке склеятся в один пункт.",
@@ -409,6 +736,39 @@
             "type": "text",
             "default": "Что присылать на почту",
             "maxLength": 40
+          },
+          {
+            "prop": "totalText",
+            "label": "Строка итога",
+            "type": "text",
+            "default": "Выбрано {checked} из {total}",
+            "maxLength": 60
+          },
+          {
+            "prop": "expandText",
+            "label": "Развернуть",
+            "type": "text",
+            "default": "Развернуть «{name}»",
+            "maxLength": 60
+          },
+          {
+            "prop": "collapseText",
+            "label": "Свернуть",
+            "type": "text",
+            "default": "Свернуть «{name}»",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -422,15 +782,20 @@
                 "setting indeterminate in an effect — there is no attribute for the third state",
                 "the native checkboxes: a hand-drawn tick loses keyboard support and state announcement",
                 "the tree, treeitem and group roles with aria-level and aria-expanded on branches",
-                "its own light surface: without it the dark captions disappear on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the tree contents through nodes",
                 "the tree caption through label",
                 "the initially selected leaves in the component code",
-                "the tick colour through the accent variable"
+                "totalText — the summary line; {checked} and {total} are replaced with the numbers",
+                "expandText and collapseText — the branch button labels; {name} is replaced with its name",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "accent — the tick and focus ring colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Collapsing a branch does not unmount its selection: the state lives in a set, not in the markup.",
                 "A branch checkbox and its expander are separate controls: ticking does not expand.",
                 "A leaf's identity is the path of names: identical names in one branch collapse into one item.",
@@ -442,11 +807,79 @@
               "label": {
                 "label": "Tree caption",
                 "default": "Email notifications"
+              },
+              "totalText": {
+                "label": "Summary line",
+                "default": "{checked} of {total} selected"
+              },
+              "expandText": {
+                "label": "Expand",
+                "default": "Expand “{name}”"
+              },
+              "collapseText": {
+                "label": "Collapse",
+                "default": "Collapse “{name}”"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Partial Checkbox Tree"
+            "title": "Partial Checkbox Tree",
+            "preview": {
+              "props": {
+                "label": "Email notifications",
+                "totalText": "{checked} of {total} selected",
+                "expandText": "Expand “{name}”",
+                "collapseText": "Collapse “{name}”",
+                "nodes": [
+                  {
+                    "name": "Task alerts",
+                    "children": [
+                      {
+                        "name": "Task assigned"
+                      },
+                      {
+                        "name": "Due date changed"
+                      },
+                      {
+                        "name": "Comment added"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Release alerts",
+                    "children": [
+                      {
+                        "name": "Build failed"
+                      },
+                      {
+                        "name": "Release shipped"
+                      },
+                      {
+                        "name": "Rollbacks",
+                        "children": [
+                          {
+                            "name": "Automatic rollback"
+                          },
+                          {
+                            "name": "Manual rollback"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Weekly digest"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -477,19 +910,26 @@
             "тег mark для подсветки — фон на span не сообщает о выделении скринридеру",
             "role=\"status\" на числе совпадений: результат поиска должен быть слышен",
             "связь поля и подписи через useId, а не через placeholder вместо label",
-            "собственную светлую подложку: без неё тёмные подписи пропадают на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "состав дерева через nodes",
             "подпись дерева через label",
             "подсказку и доступное имя поля через placeholder",
-            "цвет подсветки переменной mark"
+            "цвет подсветки переменной mark",
+            "countText — строка о числе находок; {count} подставляет их количество",
+            "emptyText — что показать, когда ничего не нашлось",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "accent — цвет обводки фокуса у поля"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Поиск подстрочный и без учёта регистра: нечёткого совпадения и транслитерации здесь нет.",
             "Подсвечивается только первое вхождение в имени, остальные остаются обычным текстом.",
             "При запросе дерево показано раскрытым целиком: сворачивание веток в режиме поиска мешает.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "Поле поиска остаётся плашкой: у него своя переменная field, потому что прозрачное поле ввода на прозрачной подложке перестаёт читаться как поле."
           ]
         },
         "controls": [
@@ -506,6 +946,32 @@
             "type": "text",
             "default": "Поиск по дереву",
             "maxLength": 40
+          },
+          {
+            "prop": "countText",
+            "label": "Строка находок",
+            "type": "text",
+            "default": "Совпадений: {count}",
+            "maxLength": 60
+          },
+          {
+            "prop": "emptyText",
+            "label": "Пустая выдача",
+            "type": "text",
+            "default": "Ничего не найдено",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -519,19 +985,26 @@
                 "the mark tag for highlighting — a background on a span announces nothing to screen readers",
                 "role=\"status\" on the match count: a search result has to be audible",
                 "the field-to-label link through useId rather than a placeholder standing in for a label",
-                "its own light surface: without it the dark captions disappear on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the tree contents through nodes",
                 "the tree caption through label",
                 "the field hint and accessible name through placeholder",
-                "the highlight colour through the mark variable"
+                "the highlight colour through the mark variable",
+                "countText — the match count line; {count} is replaced with the number",
+                "emptyText — what to show when nothing matches",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "accent — the focus ring colour on the field"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The search is a case-insensitive substring match: there is no fuzzy matching or transliteration.",
                 "Only the first occurrence in a name is highlighted, the rest stays plain text.",
                 "While a query is active the tree is shown fully expanded: collapsing during search gets in the way.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "The search field keeps a fill of its own through the field variable: a transparent input on a transparent surface stops reading as a field."
               ],
               "usage": "<Tree006\n  label=\"Files\"\n  placeholder=\"Search the tree\"\n  nodes={[{ name: \"components\", children: [{ name: \"button.tsx\" }] }]}\n/>"
             },
@@ -543,11 +1016,78 @@
               "placeholder": {
                 "label": "Search hint",
                 "default": "Search the tree"
+              },
+              "countText": {
+                "label": "Match count line",
+                "default": "Matches: {count}"
+              },
+              "emptyText": {
+                "label": "Empty result",
+                "default": "Nothing found"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Searchable Tree Filter"
+            "title": "Searchable Tree Filter",
+            "preview": {
+              "props": {
+                "label": "Files",
+                "placeholder": "Search the tree",
+                "countText": "Matches: {count}",
+                "emptyText": "Nothing found",
+                "nodes": [
+                  {
+                    "name": "components",
+                    "children": [
+                      {
+                        "name": "button.tsx"
+                      },
+                      {
+                        "name": "button-group.tsx"
+                      },
+                      {
+                        "name": "calendar.tsx"
+                      },
+                      {
+                        "name": "forms",
+                        "children": [
+                          {
+                            "name": "text-field.tsx"
+                          },
+                          {
+                            "name": "select-field.tsx"
+                          },
+                          {
+                            "name": "form-message.tsx"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "lib",
+                    "children": [
+                      {
+                        "name": "utils.ts"
+                      },
+                      {
+                        "name": "format-date.ts"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "middleware.ts"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -578,15 +1118,20 @@
             "заглушки на время запроса — без них дерево прыгает в момент прихода данных",
             "кэш пришедших детей: повторный запрос при каждом раскрытии бьёт по сети без нужды",
             "снятие таймеров при размонтировании, иначе состояние обновляется у исчезнувшего узла",
-            "собственную светлую подложку: без неё тёмные подписи пропадают на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "состав дерева и ленивые ветки через nodes",
             "подпись дерева через label",
             "задержку имитации запроса через delay",
-            "число и ширины заглушек в CSS"
+            "число и ширины заглушек в CSS",
+            "loadingText — подпись загружаемой ветки; {name} подставляет её имя",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "accent — цвет обводки фокуса"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Задержка здесь имитирует сеть через setTimeout: в бою замените её на свой запрос и обработку ошибки.",
             "Ошибка загрузки не предусмотрена — добавьте состояние отказа с возможностью повтора.",
             "Ленивые ветки в этом варианте только на первом уровне: вложенная ленивая загрузка потребует рекурсии.",
@@ -602,12 +1147,31 @@
             "maxLength": 40
           },
           {
+            "prop": "loadingText",
+            "label": "Подпись загрузки",
+            "type": "text",
+            "default": "{name}: загрузка",
+            "maxLength": 60
+          },
+          {
             "prop": "delay",
             "label": "Задержка, мс",
             "type": "number",
             "default": 900,
             "min": 0,
             "max": 5000
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -621,15 +1185,20 @@
                 "the placeholders during the request — without them the tree jumps when the data lands",
                 "the cache of loaded children: refetching on every expansion hits the network for nothing",
                 "clearing the timers on unmount, otherwise state updates target a node that is gone",
-                "its own light surface: without it the dark captions disappear on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the tree contents and lazy branches through nodes",
                 "the tree caption through label",
                 "the simulated request delay through delay",
-                "the count and widths of the placeholders in CSS"
+                "the count and widths of the placeholders in CSS",
+                "loadingText — the loading branch label; {name} is replaced with its name",
+                "background — the component surface; empty means no surface, taking the page colour",
+                "accent — the focus ring colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The delay here fakes the network with setTimeout: in production replace it with your request and error handling.",
                 "There is no failure state — add one with a retry affordance.",
                 "Lazy branches are first level only in this variant: nested lazy loading needs recursion.",
@@ -642,13 +1211,53 @@
                 "label": "Tree caption",
                 "default": "Services"
               },
+              "loadingText": {
+                "label": "Loading label",
+                "default": "{name}: loading"
+              },
               "delay": {
                 "label": "Delay, ms"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Lazy Branch Tree"
+            "title": "Lazy Branch Tree",
+            "preview": {
+              "props": {
+                "label": "Services",
+                "loadingText": "{name}: loading",
+                "nodes": [
+                  {
+                    "name": "Production cluster",
+                    "lazy": [
+                      "api-gateway",
+                      "auth-service",
+                      "billing-service",
+                      "search-service"
+                    ]
+                  },
+                  {
+                    "name": "Staging cluster",
+                    "lazy": ["api-gateway", "mock-payments"]
+                  },
+                  {
+                    "name": "Archive",
+                    "children": [
+                      {
+                        "name": "legacy-monolith"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -679,15 +1288,18 @@
             "рисование уголков псевдоэлементами, а не символами ├ и └ — те уедут в буфер при копировании",
             "высоту строки в переменной: от неё считается положение поперечины",
             "роли tree, treeitem и group с aria-level: линии рисуют структуру только глазу",
-            "собственную светлую подложку: без неё тёмные имена пропадают на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "состав структуры через nodes, включая заметку note у узла",
             "подпись дерева через label",
-            "цвет и толщину направляющих переменной линии",
+            "line — цвет направляющих линий уровней",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "шаг отступа уровня переменной indent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Дерево всегда развёрнуто: сворачивания здесь нет, это витрина структуры, а не навигация.",
             "Многострочное имя ломает положение поперечины: она считается от фиксированной высоты строки.",
             "aria-expanded у веток всегда истинно — так и должно быть, свернуть их нечем.",
@@ -701,6 +1313,18 @@
             "type": "text",
             "default": "Состав пакета",
             "maxLength": 40
+          },
+          {
+            "prop": "line",
+            "label": "Направляющие",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -714,15 +1338,18 @@
                 "drawing the elbows with pseudo-elements rather than ├ and └ — those end up in the clipboard on copy",
                 "the row height in a variable: the elbow position is measured from it",
                 "the tree, treeitem and group roles with aria-level: the lines draw structure for the eye only",
-                "its own light surface: without it the dark names disappear on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the structure through nodes, including the note on a node",
                 "the tree caption through label",
-                "the guide colour and weight through the line variable",
+                "line — the colour of the level guides",
+                "background — the component surface; empty means no surface, taking the page colour",
                 "the level indent through the indent variable"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The tree is always expanded: there is no collapsing, this is a structure display, not navigation.",
                 "A multiline name breaks the elbow position: it is measured from a fixed row height.",
                 "aria-expanded on branches is always true — as it should be, there is nothing to collapse them with.",
@@ -734,11 +1361,72 @@
               "label": {
                 "label": "Tree caption",
                 "default": "Package contents"
+              },
+              "line": {
+                "label": "Guides"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Guide Line Tree"
+            "title": "Guide Line Tree",
+            "preview": {
+              "props": {
+                "label": "Package contents",
+                "nodes": [
+                  {
+                    "name": "dist",
+                    "note": "412 KB",
+                    "children": [
+                      {
+                        "name": "index.js",
+                        "note": "184 KB"
+                      },
+                      {
+                        "name": "index.d.ts",
+                        "note": "12 KB"
+                      },
+                      {
+                        "name": "chunks",
+                        "note": "216 KB",
+                        "children": [
+                          {
+                            "name": "vendor.js",
+                            "note": "168 KB"
+                          },
+                          {
+                            "name": "runtime.js",
+                            "note": "48 KB"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "src",
+                    "note": "38 files",
+                    "children": [
+                      {
+                        "name": "index.ts"
+                      },
+                      {
+                        "name": "types.ts"
+                      },
+                      {
+                        "name": "utils.ts"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "package.json",
+                    "note": "2 KB"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["line", "background"]
       }
     }
   ]

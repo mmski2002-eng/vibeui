@@ -9,6 +9,8 @@ export type Tooltip008Props = Omit<
   term?: string
   definition?: string
   after?: string
+  /** Пусто — подложки нет, абзац лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: объяснение термина прямо в тексте. Слово подчёркнуто
@@ -16,11 +18,11 @@ export type Tooltip008Props = Omit<
 // ломает набор: подсказка выезжает поверх, ничего не сдвигая.
 const STYLES = `
 :where([data-vibeui-block="tooltip-008"]){
---vibeui-tooltip-008-bg:oklch(0.99 0.003 90);
---vibeui-tooltip-008-fg:oklch(0.28 0.012 265);
---vibeui-tooltip-008-border:oklch(0.9 0.008 90);
---vibeui-tooltip-008-mark:oklch(0.52 0.13 55);
---vibeui-tooltip-008-tip:oklch(0.25 0.014 265);
+--vibeui-tooltip-008-bg:transparent;
+--vibeui-tooltip-008-fg:light-dark(oklch(0.28 0.012 265),oklch(0.92 0.006 265));
+--vibeui-tooltip-008-border:light-dark(oklch(0.9 0.008 90),oklch(0.37 0.01 90));
+--vibeui-tooltip-008-mark:light-dark(oklch(0.52 0.13 55),oklch(0.76 0.12 55));
+--vibeui-tooltip-008-tip:light-dark(oklch(0.25 0.014 265),oklch(0.35 0.014 265));
 --vibeui-tooltip-008-font:ui-serif,Georgia,"Times New Roman",serif;
 }
 [data-vibeui-block="tooltip-008"]{
@@ -65,6 +67,28 @@ opacity:1;transform:translate(-50%,0);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Термин в тексте на пунктирном подчёркивании с всплывающим объяснением.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -73,10 +97,21 @@ export function Tooltip008({
   term = "95-й перцентиль",
   definition = "Из всех замеров за месяц отбрасываются пять процентов самых высоких, и счёт выставляется по следующему значению. Короткие всплески не попадают в оплату.",
   after = ", поэтому ночной бэкап не влияет на счёт.",
+  background = "",
   className,
   style,
   ...props
 }: Tooltip008Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-tooltip-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-tooltip-008" precedence="medium">
@@ -86,7 +121,7 @@ export function Tooltip008({
         {...props}
         data-vibeui-block="tooltip-008"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         {before}
         <span

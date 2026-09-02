@@ -14,6 +14,16 @@ export type Features006Props = {
   theirName?: string
   rows?: Features006Row[]
   footnote?: string
+  /** Подпись над таблицей: компонент несёт русскую, проект подставляет свою. */
+  caption?: string
+  /** Заголовок первой колонки. */
+  featureLabel?: string
+  /** Слово вместо галочки в своей колонке. */
+  yesLabel?: string
+  /** Расшифровка прочерка для скринридера. */
+  noLabel?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -25,15 +35,21 @@ export type Features006Props = {
 // через выделение ячеек, поэтому взгляд идёт по ней вертикально. На узкой
 // ширине таблица не ломается в карточки, а прокручивается по горизонтали
 // внутри своей обёртки: сравнение теряет смысл, если колонки разъехались.
+//
+// Тема берётся из color-scheme окружения через light-dark(): секция темнеет
+// вместе с контекстом и не выкладывает под себя плашку. Тёмная ветка — не
+// инверсия светлой: полотно таблицы там светлее фона страницы, линии светлее
+// полотна, а подсветка своей колонки остаётся заметной, но не белой.
 const STYLES = `
 :where([data-vibeui-block="features-006"]){
---vibeui-features-006-bg:oklch(0.99 0.003 250);
---vibeui-features-006-fg:oklch(0.2 0.012 250);
---vibeui-features-006-muted:oklch(0.52 0.012 250);
---vibeui-features-006-line:oklch(0.9 0.006 250);
---vibeui-features-006-mine:oklch(0.97 0.02 250);
---vibeui-features-006-accent:oklch(0.5 0.17 258);
---vibeui-features-006-no:oklch(0.62 0.03 250);
+--vibeui-features-006-bg:transparent;
+--vibeui-features-006-fg:light-dark(oklch(0.2 0.012 250),oklch(0.95 0.005 250));
+--vibeui-features-006-muted:light-dark(oklch(0.52 0.012 250),oklch(0.72 0.012 250));
+--vibeui-features-006-line:light-dark(oklch(0.9 0.006 250),oklch(0.35 0.012 250));
+--vibeui-features-006-card:light-dark(oklch(1 0 0),oklch(0.24 0.011 250));
+--vibeui-features-006-mine:light-dark(oklch(0.97 0.02 250),oklch(0.3 0.035 258));
+--vibeui-features-006-accent:light-dark(oklch(0.5 0.17 258),oklch(0.78 0.14 258));
+--vibeui-features-006-no:light-dark(oklch(0.62 0.03 250),oklch(0.62 0.02 250));
 --vibeui-features-006-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -50,7 +66,7 @@ color:var(--vibeui-features-006-accent);
 [data-vibeui-block="features-006"] h2{
 margin:0 0 2rem;max-width:24ch;font-size:clamp(1.5rem,4.2cqi,2.375rem);line-height:1.12;letter-spacing:-0.025em;font-weight:700;text-wrap:balance;
 }
-[data-vibeui-block="features-006"] [data-part="scroll"]{overflow-x:auto;border:1px solid var(--vibeui-features-006-line);border-radius:1rem;background:oklch(1 0 0)}
+[data-vibeui-block="features-006"] [data-part="scroll"]{overflow-x:auto;border:1px solid var(--vibeui-features-006-line);border-radius:1rem;background:var(--vibeui-features-006-card)}
 [data-vibeui-block="features-006"] table{width:100%;min-width:32rem;border-collapse:collapse;font-size:0.875rem}
 [data-vibeui-block="features-006"] caption{
 caption-side:top;padding:1rem 1.25rem;text-align:left;font-size:0.75rem;color:var(--vibeui-features-006-muted);
@@ -112,6 +128,28 @@ const DEFAULT_ROWS: Features006Row[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Таблица сравнения с альтернативой: настоящая table, своя колонка подсвечена. */
 export function Features006({
   eyebrow = "Сравнение",
@@ -120,12 +158,23 @@ export function Features006({
   theirName = "Копипаст с сайта",
   rows = DEFAULT_ROWS,
   footnote = "Сравнение с типичной практикой: скопировать секцию из чужого проекта и чинить её под себя.",
+  caption = "Сравнение по шести признакам, важным при переносе секции в рабочий проект.",
+  featureLabel = "Признак",
+  yesLabel = "Есть",
+  noLabel = "Нет",
+  background = "",
   accent,
   className,
   style,
 }: Features006Props) {
   const palette = {
     ...(accent ? { "--vibeui-features-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-features-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -145,13 +194,10 @@ export function Features006({
 
           <div data-part="scroll">
             <table>
-              <caption>
-                Сравнение по шести признакам, важным при переносе секции в
-                рабочий проект.
-              </caption>
+              <caption>{caption}</caption>
               <thead>
                 <tr>
-                  <th scope="col">Признак</th>
+                  <th scope="col">{featureLabel}</th>
                   <th scope="col" data-part="mine">
                     {ourName}
                   </th>
@@ -180,7 +226,7 @@ export function Features006({
                               strokeLinejoin="round"
                             />
                           </svg>
-                          Есть
+                          {yesLabel}
                         </span>
                       ) : (
                         row.ours
@@ -188,7 +234,7 @@ export function Features006({
                     </td>
                     <td>
                       {row.theirs === false ? (
-                        <span data-part="dash" aria-label="Нет">
+                        <span data-part="dash" aria-label={noLabel}>
                           —
                         </span>
                       ) : (

@@ -16,6 +16,19 @@ export type Resizable006Props = Omit<
   defaultColumn?: number
   step?: number
   onChange?: (value: { row: number; column: number }) => void
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  rowLabel?: string
+  columnLabel?: string
+  treeTitle?: string
+  treeItems?: string[]
+  editorTitle?: string
+  editorLines?: string[]
+  consoleLabel?: string
+  consoleLines?: string[]
+  /** Строка состояния; {row} и {column} заменяются на текущие проценты. */
+  statusText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,13 +38,14 @@ export type Resizable006Props = Omit<
 // на двоих даёт вторую панель, которая едет не туда, куда тянут.
 const STYLES = `
 :where([data-vibeui-block="resizable-006"]){
---vibeui-resizable-006-bg:oklch(1 0 0);
---vibeui-resizable-006-fg:oklch(0.22 0.014 265);
---vibeui-resizable-006-muted:oklch(0.55 0.014 265);
---vibeui-resizable-006-border:oklch(0.9 0.006 265);
---vibeui-resizable-006-surface:oklch(0.975 0.004 265);
---vibeui-resizable-006-console:oklch(0.26 0.02 265);
---vibeui-resizable-006-accent:oklch(0.58 0.16 165);
+--vibeui-resizable-006-bg:transparent;
+--vibeui-resizable-006-pane:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-resizable-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-resizable-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-resizable-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-resizable-006-surface:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.011 265));
+--vibeui-resizable-006-console:light-dark(oklch(0.26 0.02 265),oklch(0.17 0.014 265));
+--vibeui-resizable-006-accent:light-dark(oklch(0.52 0.14 165),oklch(0.76 0.14 165));
 --vibeui-resizable-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-resizable-006-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
@@ -52,7 +66,7 @@ border:1px solid var(--vibeui-resizable-006-border);border-radius:0.75rem;overfl
 flex:none;min-width:0;padding:0.625rem;overflow:auto;background:var(--vibeui-resizable-006-surface);
 }
 [data-vibeui-block="resizable-006"] [data-part="editor"]{
-flex:1;min-width:0;padding:0.625rem;overflow:auto;background:var(--vibeui-resizable-006-bg);
+flex:1;min-width:0;padding:0.625rem;overflow:auto;background:var(--vibeui-resizable-006-pane);
 }
 [data-vibeui-block="resizable-006"] [data-part="console"]{
 flex:1;min-height:0;overflow:auto;padding:0.625rem 0.75rem;
@@ -100,6 +114,28 @@ const MIN = 20
 const MAX = 80
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Вложенное разделение: горизонтальный разделитель внутри вертикального,
  * у каждого своя система координат. Один файл, ноль зависимостей.
  */
@@ -108,6 +144,16 @@ export function Resizable006({
   defaultColumn = 34,
   step = 4,
   onChange,
+  rowLabel = "Высота рабочей области",
+  columnLabel = "Ширина дерева файлов",
+  treeTitle = "Файлы",
+  treeItems = ["app/page.tsx", "lib/utils.ts", "styles.css"],
+  editorTitle = "Редактор",
+  editorLines = ["export function Page() {", "  return <main />", "}"],
+  consoleLabel = "Консоль",
+  consoleLines = ["$ npm run build", "✓ собрано за 3.4 s"],
+  statusText = "Рабочая область — {row}% высоты, дерево — {column}% её ширины.",
+  background = "",
   accent,
   className,
   style,
@@ -123,6 +169,12 @@ export function Resizable006({
 
   const palette = {
     ...(accent ? { "--vibeui-resizable-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-resizable-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -188,13 +240,13 @@ export function Resizable006({
               data-part="tree"
               id={treeId}
               style={{ width: `${column}%` }}
-              aria-label="Файлы"
+              aria-label={treeTitle}
             >
-              <h3>Файлы</h3>
+              <h3>{treeTitle}</h3>
               <ul>
-                <li>app/page.tsx</li>
-                <li>lib/utils.ts</li>
-                <li>styles.css</li>
+                {treeItems.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
               </ul>
             </nav>
             <div
@@ -202,7 +254,7 @@ export function Resizable006({
               role="separator"
               tabIndex={0}
               aria-orientation="vertical"
-              aria-label="Ширина дерева файлов"
+              aria-label={columnLabel}
               aria-controls={treeId}
               aria-valuenow={Math.round(column)}
               aria-valuemin={MIN}
@@ -232,12 +284,12 @@ export function Resizable006({
               }}
               onPointerCancel={() => setDragging("")}
             />
-            <section data-part="editor" aria-label="Редактор">
-              <h3>Редактор</h3>
+            <section data-part="editor" aria-label={editorTitle}>
+              <h3>{editorTitle}</h3>
               <ul>
-                <li>export function Page() {"{"}</li>
-                <li>&nbsp;&nbsp;return &lt;main /&gt;</li>
-                <li>{"}"}</li>
+                {editorLines.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
               </ul>
             </section>
           </div>
@@ -246,7 +298,7 @@ export function Resizable006({
             role="separator"
             tabIndex={0}
             aria-orientation="horizontal"
-            aria-label="Высота рабочей области"
+            aria-label={rowLabel}
             aria-controls={workId}
             aria-valuenow={Math.round(row)}
             aria-valuemin={MIN}
@@ -276,14 +328,16 @@ export function Resizable006({
             }}
             onPointerCancel={() => setDragging("")}
           />
-          <section data-part="console" aria-label="Консоль">
-            <p>$ npm run build</p>
-            <p>✓ собрано за 3.4 s</p>
+          <section data-part="console" aria-label={consoleLabel}>
+            {consoleLines.map((line) => (
+              <p key={line}>{line}</p>
+            ))}
           </section>
         </div>
         <p data-part="status" role="status">
-          Рабочая область — {Math.round(row)}% высоты, дерево —{" "}
-          {Math.round(column)}% её ширины.
+          {statusText
+            .replace("{row}", String(Math.round(row)))
+            .replace("{column}", String(Math.round(column)))}
         </p>
       </div>
     </>

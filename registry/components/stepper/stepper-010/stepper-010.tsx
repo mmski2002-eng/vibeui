@@ -13,7 +13,13 @@ export type Stepper010Props = Omit<
   steps?: Stepper010Step[]
   /** Номер текущего шага, считая с нуля. */
   current?: number
+  /** Заголовок панели с подробностями текущего шага. */
+  detailsTitle?: string
+  /** Подписи состояний: компонент несёт русские, проект подставляет свои. */
+  stateText?: Record<string, string>
   label?: string
+  /** Пусто — подложки нет, лента лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,16 +27,20 @@ export type Stepper010Props = Omit<
 // только у текущего. Раскрытая панель со списком деталей появляется
 // исключительно на шаге с current, поэтому лента остаётся короткой, а
 // внимание не распыляется на детали шагов, которые ещё не наступили.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="stepper-010"]){
---vibeui-stepper-010-bg:oklch(1 0 0);
---vibeui-stepper-010-fg:oklch(0.24 0.016 265);
---vibeui-stepper-010-muted:oklch(0.56 0.014 265);
---vibeui-stepper-010-border:oklch(0.92 0.006 265);
---vibeui-stepper-010-line:oklch(0.9 0.006 265);
---vibeui-stepper-010-accent:oklch(0.55 0.2 262);
---vibeui-stepper-010-accent-fg:oklch(1 0 0);
---vibeui-stepper-010-panel:oklch(0.97 0.01 262);
+--vibeui-stepper-010-bg:transparent;
+--vibeui-stepper-010-surface:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-stepper-010-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-stepper-010-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-stepper-010-border:light-dark(oklch(0.92 0.006 265),oklch(0.32 0.012 265));
+--vibeui-stepper-010-line:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-stepper-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-stepper-010-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
+--vibeui-stepper-010-panel:light-dark(oklch(0.97 0.01 262),oklch(0.26 0.022 262));
 --vibeui-stepper-010-dot:1.5rem;
 --vibeui-stepper-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -61,7 +71,7 @@ grid-row:1 / -1;align-self:start;
 display:flex;align-items:center;justify-content:center;
 width:var(--vibeui-stepper-010-dot);height:var(--vibeui-stepper-010-dot);
 border-radius:9999px;border:2px solid var(--vibeui-stepper-010-line);
-background:var(--vibeui-stepper-010-bg);color:var(--vibeui-stepper-010-muted);
+background:var(--vibeui-stepper-010-surface);color:var(--vibeui-stepper-010-muted);
 font-size:0.6875rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="stepper-010"] li[data-state="done"] [data-part="mark"]{
@@ -138,11 +148,33 @@ const DEFAULT_STEPS: Stepper010Step[] = [
   },
 ]
 
-const STATES = {
+const STATE_TEXT: Record<string, string> = {
   done: "Готово",
   current: "Сейчас",
   todo: "Впереди",
-} as const
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Вертикальные шаги, где у текущего раскрыта панель с подробностями.
@@ -151,7 +183,10 @@ const STATES = {
 export function Stepper010({
   steps = DEFAULT_STEPS,
   current = 2,
+  detailsTitle = "Что происходит сейчас",
+  stateText = STATE_TEXT,
   label = "Перенос магазина",
+  background = "",
   accent,
   className,
   style,
@@ -159,6 +194,13 @@ export function Stepper010({
 }: Stepper010Props) {
   const palette = {
     ...(accent ? { "--vibeui-stepper-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-stepper-010-bg": background,
+          "--vibeui-stepper-010-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -195,12 +237,14 @@ export function Stepper010({
                   </span>
                   <span data-part="head">
                     <span data-part="title">{step.title}</span>
-                    <span data-part="state">{STATES[state]}</span>
+                    <span data-part="state">
+                      {stateText[state] ?? STATE_TEXT[state]}
+                    </span>
                   </span>
                   <p data-part="summary">{step.summary}</p>
                   {state === "current" && step.details?.length ? (
                     <div data-part="panel">
-                      <p data-part="panel-title">Что происходит сейчас</p>
+                      <p data-part="panel-title">{detailsTitle}</p>
                       <ul>
                         {step.details.map((detail) => (
                           <li key={detail}>{detail}</li>

@@ -7,6 +7,12 @@ export type Iconstack006Props = Omit<
   title?: string
   services?: string[]
   max?: number
+  /** Хвост подписи: {count} — сколько сервисов скрыто, {word} — форма слова. */
+  restTemplate?: string
+  /** Формы слова «сервис» для 1, 2–4 и 5 и больше. */
+  serviceWords?: [string, string, string]
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: стопка логотипов интеграций, а не людей. Плитки —
@@ -20,10 +26,12 @@ const STYLES = `
 :where([data-vibeui-block="iconstack-006"]){
 --vibeui-iconstack-006-size:2.25rem;
 --vibeui-iconstack-006-overlap:0.75rem;
---vibeui-iconstack-006-surface:oklch(1 0 0);
---vibeui-iconstack-006-border:oklch(0.9 0.006 265);
---vibeui-iconstack-006-fg:oklch(0.26 0.014 265);
---vibeui-iconstack-006-muted:oklch(0.55 0.014 265);
+--vibeui-iconstack-006-surface:transparent;
+--vibeui-iconstack-006-ring:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-iconstack-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.01 265));
+--vibeui-iconstack-006-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
+--vibeui-iconstack-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-iconstack-006-shadow:light-dark(oklch(0.2 0.02 265 / 16%),oklch(0 0 0 / 34%));
 --vibeui-iconstack-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="iconstack-006"]{
@@ -47,8 +55,8 @@ margin-right:calc(var(--vibeui-iconstack-006-overlap) * -1);
 display:inline-flex;align-items:center;justify-content:center;flex:none;box-sizing:border-box;
 width:var(--vibeui-iconstack-006-size);height:var(--vibeui-iconstack-006-size);
 border-radius:0.625rem;
-border:2px solid var(--vibeui-iconstack-006-surface);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 16%);
+border:2px solid var(--vibeui-iconstack-006-ring);
+box-shadow:0 1px 2px var(--vibeui-iconstack-006-shadow);
 background:oklch(0.9 0.07 var(--vibeui-iconstack-006-hue,265));
 color:oklch(0.32 0.13 var(--vibeui-iconstack-006-hue,265));
 font-size:0.75rem;font-weight:750;line-height:1;
@@ -88,14 +96,36 @@ function mark(name: string) {
   return name.slice(0, 2).toUpperCase()
 }
 
-/** Склонение «сервис» под число: 1 сервис, 2 сервиса, 5 сервисов. */
-function serviceWord(count: number) {
+/** Склонение под число: 1 сервис, 2 сервиса, 5 сервисов. */
+function serviceWord(count: number, words: [string, string, string]) {
   const teen = count % 100
   const tail = count % 10
-  if (teen > 10 && teen < 20) return "сервисов"
-  if (tail === 1) return "сервис"
-  if (tail > 1 && tail < 5) return "сервиса"
-  return "сервисов"
+  if (teen > 10 && teen < 20) return words[2]
+  if (tail === 1) return words[0]
+  if (tail > 1 && tail < 5) return words[1]
+  return words[2]
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -106,12 +136,32 @@ export function Iconstack006({
   title = "Подключённые интеграции",
   services = DEFAULT_SERVICES,
   max = 4,
+  restTemplate = " и ещё {count} {word}.",
+  serviceWords = ["сервис", "сервиса", "сервисов"],
+  background = "",
   className,
   style,
   ...props
 }: Iconstack006Props) {
   const shown = services.slice(0, max)
   const rest = services.length - shown.length
+  // Число попадает в <strong>, поэтому хвост разрезается по {count}, а не
+  // подставляется одной строкой.
+  const [restHead, restTail = ""] = restTemplate
+    .replace("{word}", serviceWord(rest, serviceWords))
+    .split("{count}")
+  // Обводка плитки равна подложке: заданный фон красит и её, иначе между
+  // плитками останется контур прежнего фона.
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-iconstack-006-surface": background,
+          "--vibeui-iconstack-006-ring": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -122,7 +172,7 @@ export function Iconstack006({
         {...props}
         data-vibeui-block="iconstack-006"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <h3>{title}</h3>
         <span data-part="stack" aria-hidden="true">
@@ -142,8 +192,9 @@ export function Iconstack006({
           {shown.join(", ")}
           {rest > 0 ? (
             <>
-              {" "}
-              и ещё <strong>{rest}</strong> {serviceWord(rest)}.
+              {restHead}
+              <strong>{rest}</strong>
+              {restTail}
             </>
           ) : (
             "."

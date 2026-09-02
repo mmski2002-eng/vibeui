@@ -16,6 +16,15 @@ export type Carousel011Props = Omit<
   reviews?: Carousel011Review[]
   /** Секунд на один отзыв. Меньше четырёх — прочитать не успевают. */
   interval?: number
+  label?: string
+  /** Роль секции для скринридера. */
+  roleText?: string
+  /** Подписи кнопки показа: компонент несёт русские, проект подставляет свои. */
+  playText?: Record<string, string>
+  /** Шаблон счётчика: {index}, {total}. */
+  countText?: string
+  /** Пусто — подложка своя; цвет заменяет её целиком. */
+  background?: string
   accent?: string
 }
 
@@ -25,13 +34,16 @@ export type Carousel011Props = Omit<
 // то, ради чего блок стоит на странице. При prefers-reduced-motion таймер
 // не запускается вовсе: движение здесь не украшение, а действие, и отменять
 // его надо целиком, а не гасить анимацию.
+//
+// Тема берётся из color-scheme окружения через light-dark(): карточка, цитата
+// и полоски темнеют вместе со страницей, своей тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="carousel-011"]){
---vibeui-carousel-011-bg:oklch(1 0 0);
---vibeui-carousel-011-fg:oklch(0.22 0.014 265);
---vibeui-carousel-011-muted:oklch(0.56 0.014 265);
---vibeui-carousel-011-border:oklch(0.91 0.006 265);
---vibeui-carousel-011-accent:oklch(0.55 0.17 265);
+--vibeui-carousel-011-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-carousel-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-011-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-011-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-carousel-011-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-carousel-011-step:6s;
 --vibeui-carousel-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -108,6 +120,40 @@ const DEFAULT_REVIEWS: Carousel011Review[] = [
   },
 ]
 
+const PLAY_LABEL: Record<string, string> = {
+  pause: "Остановить показ",
+  play: "Продолжить показ",
+}
+
+/** Подстановка чисел в подпись: перевод остаётся одной строкой. */
+function fill(template: string, values: Record<string, string | number>) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Отзывы с автопрокруткой, которая замирает от наведения, фокуса и паузы.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -115,6 +161,11 @@ const DEFAULT_REVIEWS: Carousel011Review[] = [
 export function Carousel011({
   reviews = DEFAULT_REVIEWS,
   interval = 6,
+  label = "Отзывы",
+  roleText = "карусель",
+  playText = PLAY_LABEL,
+  countText = "{index} / {total}",
+  background = "",
   accent,
   className,
   style,
@@ -146,6 +197,12 @@ export function Carousel011({
   const palette = {
     "--vibeui-carousel-011-step": `${interval}s`,
     ...(accent ? { "--vibeui-carousel-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-carousel-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -160,8 +217,8 @@ export function Carousel011({
         {...props}
         data-vibeui-block="carousel-011"
         data-paused={paused}
-        aria-roledescription="карусель"
-        aria-label="Отзывы"
+        aria-roledescription={roleText}
+        aria-label={label}
         className={className}
         style={palette}
         onMouseEnter={() => setHeld(true)}
@@ -180,7 +237,11 @@ export function Carousel011({
           <button
             type="button"
             data-part="pause"
-            aria-label={playing ? "Остановить показ" : "Продолжить показ"}
+            aria-label={
+              playing
+                ? (playText.pause ?? PLAY_LABEL.pause)
+                : (playText.play ?? PLAY_LABEL.play)
+            }
             onClick={() => setPlaying((value) => !value)}
           >
             {playing ? (
@@ -211,7 +272,7 @@ export function Carousel011({
             ))}
           </ul>
           <span data-part="count">
-            {index + 1} / {reviews.length}
+            {fill(countText, { index: index + 1, total: reviews.length })}
           </span>
         </div>
       </section>

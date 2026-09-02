@@ -10,6 +10,8 @@ export type Collapsible002Props = Omit<
   title?: string
   text?: string
   defaultOpen?: boolean
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,13 +20,16 @@ export type Collapsible002Props = Omit<
 // grid-template-rows от 0fr к 1fr: браузер сам считает конечную высоту и
 // плавно к ней едет. Внутренний слой держит overflow:hidden и min-height:0,
 // иначе строка грида не сожмётся ниже содержимого.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он темнеет вместе со страницей и не носит своей темы.
 const STYLES = `
 :where([data-vibeui-block="collapsible-002"]){
---vibeui-collapsible-002-bg:oklch(1 0 0);
---vibeui-collapsible-002-fg:oklch(0.24 0.014 265);
---vibeui-collapsible-002-muted:oklch(0.56 0.014 265);
---vibeui-collapsible-002-border:oklch(0.9 0.006 265);
---vibeui-collapsible-002-accent:oklch(0.58 0.16 200);
+--vibeui-collapsible-002-bg:transparent;
+--vibeui-collapsible-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-collapsible-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-collapsible-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-collapsible-002-accent:light-dark(oklch(0.58 0.16 200),oklch(0.78 0.13 200));
 --vibeui-collapsible-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="collapsible-002"]{
@@ -68,6 +73,28 @@ font-size:0.8125rem;line-height:1.55;color:var(--vibeui-collapsible-002-muted);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Свёртка с плавной анимацией высоты на grid-template-rows 0fr→1fr.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -75,6 +102,7 @@ export function Collapsible002({
   title = "Что входит в поставку",
   text = "Один .tsx-файл со всеми стилями внутри, без npm-зависимостей и без обращений к теме проекта. Палитра объявлена локальными переменными, поэтому компонент выглядит одинаково в любом окружении.",
   defaultOpen = true,
+  background = "",
   accent,
   className,
   style,
@@ -85,6 +113,12 @@ export function Collapsible002({
 
   const palette = {
     ...(accent ? { "--vibeui-collapsible-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-collapsible-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

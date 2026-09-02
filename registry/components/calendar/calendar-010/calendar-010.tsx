@@ -9,7 +9,12 @@ export type Calendar010Props = Omit<
   time?: string
   place?: string
   people?: string[]
+  locale?: string
+  /** Подпись списка участников. {people} подставляется перечислением имён. */
+  peopleLabel?: string
   accent?: string
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: карточка встречи — то, что видно в приглашении и в списке
@@ -18,11 +23,15 @@ export type Calendar010Props = Omit<
 // имена целиком есть в подписи для скринридера.
 const STYLES = `
 :where([data-vibeui-block="calendar-010"]){
---vibeui-calendar-010-bg:oklch(1 0 0);
---vibeui-calendar-010-fg:oklch(0.24 0.014 265);
---vibeui-calendar-010-muted:oklch(0.58 0.014 265);
---vibeui-calendar-010-border:oklch(0.91 0.006 265);
---vibeui-calendar-010-accent:oklch(0.55 0.17 265);
+--vibeui-calendar-010-bg:transparent;
+--vibeui-calendar-010-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-calendar-010-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-calendar-010-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-calendar-010-sheet:light-dark(oklch(0.98 0.002 265),oklch(0.28 0.012 265));
+/* Кольцо между наложенными аватарами: подложки у карточки нет, поэтому оно
+   рисуется цветом страницы, а с пропом background — цветом плашки. */
+--vibeui-calendar-010-ring:light-dark(oklch(1 0 0),oklch(0.19 0.012 265));
 --vibeui-calendar-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="calendar-010"]{
@@ -37,7 +46,7 @@ color:var(--vibeui-calendar-010-fg);font-family:var(--vibeui-calendar-010-font);
 display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;
 width:3.25rem;padding:0.4375rem 0;border-radius:0.625rem;
 border:1px solid var(--vibeui-calendar-010-border);
-background:oklch(0.98 0.002 265);
+background:var(--vibeui-calendar-010-sheet);
 }
 [data-vibeui-block="calendar-010"] [data-part="month"]{
 font-size:0.625rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
@@ -72,7 +81,7 @@ transform:rotate(-45deg);
 [data-vibeui-block="calendar-010"] [data-part="face"]{
 display:flex;align-items:center;justify-content:center;flex:none;
 width:1.5rem;height:1.5rem;border-radius:9999px;
-box-shadow:0 0 0 2px var(--vibeui-calendar-010-bg);
+box-shadow:0 0 0 2px var(--vibeui-calendar-010-ring);
 background:oklch(0.93 0.04 var(--vibeui-calendar-010-hue,250));
 color:oklch(0.38 0.08 var(--vibeui-calendar-010-hue,250));
 font-size:0.625rem;font-weight:700;
@@ -101,6 +110,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Карточка встречи: отрывной листок с датой, время, место и участники.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -110,24 +141,34 @@ export function Calendar010({
   time = "11:00 — 12:00",
   place = "Переговорная «Полёт»",
   people = ["Анна Петрова", "Марк Ильин", "Мария Гурова"],
+  locale = "ru-RU",
+  peopleLabel = "Участники: {people}",
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Calendar010Props) {
   const value = new Date(`${date}T00:00:00`)
-  const month = new Intl.DateTimeFormat("ru-RU", { month: "short" }).format(
+  const month = new Intl.DateTimeFormat(locale, { month: "short" }).format(
     value,
   )
-  const weekday = new Intl.DateTimeFormat("ru-RU", { weekday: "short" }).format(
+  const weekday = new Intl.DateTimeFormat(locale, { weekday: "short" }).format(
     value,
   )
-  const full = new Intl.DateTimeFormat("ru-RU", { dateStyle: "long" }).format(
+  const full = new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(
     value,
   )
 
   const palette = {
     ...(accent ? { "--vibeui-calendar-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-010-bg": background,
+          "--vibeui-calendar-010-ring": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -164,7 +205,7 @@ export function Calendar010({
           {people.length ? (
             <p
               data-part="people"
-              aria-label={`Участники: ${people.join(", ")}`}
+              aria-label={peopleLabel.replace("{people}", people.join(", "))}
             >
               {people.map((person) => (
                 <span

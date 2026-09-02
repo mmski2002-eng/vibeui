@@ -7,17 +7,25 @@ export type Tooltip014Props = Omit<
   label?: string
   /** Причина недоступности: показывается вместо обычной подписи действия. */
   reason?: string
+  /** Значок замка рядом с подписью: дублирует состояние для сканирования взглядом. */
+  showLock?: boolean
 }
 
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте подсказка становится светлой плашкой, а кнопка — тёмной.
+//
 // Идея компонента: подсказка на визуально отключённой кнопке. Настоящий
 // disabled не получает ни наведения, ни фокуса, поэтому кнопка остаётся
 // фокусируемой и помечена aria-disabled — а подсказка объясняет, чего не
 // хватает, вместо того чтобы кнопка молча ничего не делала.
 const STYLES = `
 :where([data-vibeui-block="tooltip-014"]){
---vibeui-tooltip-014-bg:oklch(0.24 0.014 265);
---vibeui-tooltip-014-fg:oklch(0.97 0.002 265);
---vibeui-tooltip-014-accent:oklch(0.6 0.16 265);
+--vibeui-tooltip-014-bg:light-dark(oklch(0.24 0.014 265),oklch(0.9 0.008 265));
+--vibeui-tooltip-014-fg:light-dark(oklch(0.97 0.002 265),oklch(0.22 0.014 265));
+--vibeui-tooltip-014-face:light-dark(oklch(0.94 0.003 265),oklch(0.3 0.012 265));
+--vibeui-tooltip-014-border:light-dark(oklch(0.88 0.006 265),oklch(0.42 0.012 265));
+--vibeui-tooltip-014-label:light-dark(oklch(0.58 0.01 265),oklch(0.74 0.012 265));
+--vibeui-tooltip-014-accent:light-dark(oklch(0.6 0.16 265),oklch(0.76 0.14 265));
 --vibeui-tooltip-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="tooltip-014"]{
@@ -28,8 +36,8 @@ position:relative;display:inline-flex;font-family:var(--vibeui-tooltip-014-font)
 appearance:none;cursor:not-allowed;
 display:inline-flex;align-items:center;gap:0.4375rem;
 height:2.375rem;padding:0 0.9375rem;border-radius:0.625rem;
-border:1px solid oklch(0.88 0.006 265);
-background:oklch(0.94 0.003 265);color:oklch(0.58 0.01 265);
+border:1px solid var(--vibeui-tooltip-014-border);
+background:var(--vibeui-tooltip-014-face);color:var(--vibeui-tooltip-014-label);
 font:inherit;font-size:0.875rem;font-weight:620;
 }
 [data-vibeui-block="tooltip-014"] [data-part="lock"]{opacity:0.7}
@@ -64,6 +72,7 @@ opacity:1;transform:translate(-50%,0);
 export function Tooltip014({
   label = "Опубликовать",
   reason = "Сначала заполните обязательные поля: заголовок и хотя бы одну картинку.",
+  showLock = true,
   className,
   style,
   ...props
@@ -86,9 +95,11 @@ export function Tooltip014({
           aria-describedby="vibeui-tooltip-014-tip"
         >
           {label}
-          <span data-part="lock" aria-hidden="true">
-            🔒
-          </span>
+          {showLock ? (
+            <span data-part="lock" aria-hidden="true">
+              🔒
+            </span>
+          ) : null}
         </button>
         <span data-part="tip" role="tooltip" id="vibeui-tooltip-014-tip">
           {reason}

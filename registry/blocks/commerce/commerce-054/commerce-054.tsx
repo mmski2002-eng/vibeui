@@ -36,7 +36,17 @@ export type Commerce054Props = {
   cta?: string
   formulaTitle?: string
   formula?: string
+  /** Цена за окно рядом с полем: {price} подставляется суммой. */
+  perWindowTemplate?: string
+  /** Строка расшифровки по окнам: {count} и {price}. */
+  windowsRowTemplate?: string
+  /** Строка расшифровки по срочности: {speed} и {factor}. */
+  speedRowTemplate?: string
+  /** Порог минимального заказа: {price} подставляется суммой. */
+  minimumTemplate?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -50,13 +60,15 @@ export type Commerce054Props = {
 // сумму, которую компания не примет.
 const STYLES = `
 :where([data-vibeui-block="commerce-054"]){
---vibeui-commerce-054-bg:oklch(1 0 0);
---vibeui-commerce-054-fg:oklch(0.21 0.014 230);
---vibeui-commerce-054-muted:oklch(0.53 0.016 230);
---vibeui-commerce-054-border:oklch(0.9 0.008 230);
---vibeui-commerce-054-soft:oklch(0.972 0.006 230);
---vibeui-commerce-054-accent:oklch(0.5 0.15 235);
---vibeui-commerce-054-warn:oklch(0.55 0.14 60);
+--vibeui-commerce-054-bg:transparent;
+--vibeui-commerce-054-fg:light-dark(oklch(0.21 0.014 230),oklch(0.94 0.006 230));
+--vibeui-commerce-054-muted:light-dark(oklch(0.53 0.016 230),oklch(0.73 0.013 230));
+--vibeui-commerce-054-border:light-dark(oklch(0.9 0.008 230),oklch(0.38 0.014 230));
+--vibeui-commerce-054-soft:light-dark(oklch(0.972 0.006 230),oklch(0.27 0.012 230));
+--vibeui-commerce-054-chip:light-dark(oklch(1 0 0),oklch(0.22 0.01 230));
+--vibeui-commerce-054-accent:light-dark(oklch(0.5 0.15 235),oklch(0.74 0.13 235));
+--vibeui-commerce-054-onaccent:light-dark(oklch(0.99 0 0),oklch(0.2 0.04 235));
+--vibeui-commerce-054-warn:light-dark(oklch(0.55 0.14 60),oklch(0.8 0.13 70));
 --vibeui-commerce-054-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -77,7 +89,7 @@ font-size:0.875rem;font-weight:650;
 [data-vibeui-block="commerce-054"] input[type="range"]{width:100%;accent-color:var(--vibeui-commerce-054-accent);height:1.5rem}
 [data-vibeui-block="commerce-054"] input[type="number"]{
 width:6rem;height:2.5rem;padding:0 0.625rem;border-radius:0.625rem;
-border:1px solid var(--vibeui-commerce-054-border);background:var(--vibeui-commerce-054-bg);
+border:1px solid var(--vibeui-commerce-054-border);background:var(--vibeui-commerce-054-chip);
 font:inherit;font-size:0.9375rem;color:inherit;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="commerce-054"] input:focus-visible,
@@ -119,12 +131,12 @@ padding-top:0.75rem;border-top:1px solid var(--vibeui-commerce-054-border);
 [data-vibeui-block="commerce-054"] [data-part="sum"]{font-size:1.625rem;font-weight:750;font-variant-numeric:tabular-nums}
 [data-vibeui-block="commerce-054"] [data-part="minimum"]{
 margin:0.5rem 0 0;padding:0.5rem 0.625rem;border-radius:0.625rem;
-background:var(--vibeui-commerce-054-bg);border:1px solid var(--vibeui-commerce-054-warn);
+background:var(--vibeui-commerce-054-chip);border:1px solid var(--vibeui-commerce-054-warn);
 font-size:0.75rem;line-height:1.45;color:var(--vibeui-commerce-054-warn);
 }
 [data-vibeui-block="commerce-054"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;width:100%;height:2.875rem;margin-top:0.875rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-054-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-054-accent);color:var(--vibeui-commerce-054-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-054"] details{margin-top:0.875rem;font-size:0.75rem;color:var(--vibeui-commerce-054-muted)}
 [data-vibeui-block="commerce-054"] summary{cursor:pointer;font-weight:650}
@@ -164,6 +176,28 @@ function money(value: number, currency: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Расчёт стоимости услуги по параметрам с расшифровкой каждой строки и
  * порогом минимального заказа. Один файл, ноль зависимостей.
  */
@@ -193,7 +227,12 @@ export function Commerce054({
   cta = "Записаться на расчёт",
   formulaTitle = "Точная формула",
   formula = "Площадь умножается на ставку за квадратный метр, к ней прибавляются окна по фиксированной цене, сумма умножается на коэффициент срочности, затем добавляются отдельно оплачиваемые работы.",
+  perWindowTemplate = "{price} за окно",
+  windowsRowTemplate = "Окна: {count} × {price}",
+  speedRowTemplate = "Срочность: {speed} (×{factor})",
+  minimumTemplate = "Минимальный заказ — {price}.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce054Props) {
@@ -218,6 +257,12 @@ export function Commerce054({
 
   const palette = {
     ...(accent ? { "--vibeui-commerce-054-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-054-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -259,7 +304,10 @@ export function Commerce054({
               <label data-part="flabel" htmlFor="commerce-054-windows">
                 <span>{windowsLabel}</span>
                 <span data-part="fvalue">
-                  {money(ratePerWindow, currency)} за окно
+                  {perWindowTemplate.replace(
+                    "{price}",
+                    money(ratePerWindow, currency),
+                  )}
                 </span>
               </label>
               <input
@@ -331,13 +379,17 @@ export function Commerce054({
               </div>
               <div data-part="pair">
                 <dt>
-                  Окна: {glass} × {money(ratePerWindow, currency)}
+                  {windowsRowTemplate
+                    .replace("{count}", String(glass))
+                    .replace("{price}", money(ratePerWindow, currency))}
                 </dt>
                 <dd>{money(windowCost, currency)}</dd>
               </div>
               <div data-part="pair">
                 <dt>
-                  Срочность: {chosenSpeed.label} (×{chosenSpeed.factor})
+                  {speedRowTemplate
+                    .replace("{speed}", chosenSpeed.label)
+                    .replace("{factor}", String(chosenSpeed.factor))}
                 </dt>
                 <dd>
                   {urgentAdd > 0 ? `+ ${money(urgentAdd, currency)}` : "—"}
@@ -354,7 +406,8 @@ export function Commerce054({
             </p>
             {belowMinimum ? (
               <p data-part="minimum">
-                {minimumNote} Минимальный заказ — {money(minimum, currency)}.
+                {minimumNote}{" "}
+                {minimumTemplate.replace("{price}", money(minimum, currency))}
               </p>
             ) : null}
             <button type="button" data-part="go">

@@ -15,6 +15,8 @@ export type Buttongroup050Props = Omit<
   hint?: string
   label?: string
   name?: string
+  /** Пусто — заливки нет, лестница ложится на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,11 +29,13 @@ export type Buttongroup050Props = Omit<
 // выбранная роль не должны выглядеть одинаково.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-050"]){
---vibeui-buttongroup-050-surface:oklch(1 0 0);
---vibeui-buttongroup-050-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-050-muted:oklch(0.58 0.014 265);
---vibeui-buttongroup-050-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-050-accent:oklch(0.48 0.16 285);
+--vibeui-buttongroup-050-surface:transparent;
+--vibeui-buttongroup-050-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-050-muted:light-dark(oklch(0.58 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-050-border:light-dark(oklch(0.89 0.008 265),oklch(0.41 0.012 265));
+--vibeui-buttongroup-050-on:light-dark(oklch(0.95 0.04 285),oklch(0.34 0.06 285));
+--vibeui-buttongroup-050-inherited:light-dark(oklch(0.975 0.015 285),oklch(0.28 0.025 285));
+--vibeui-buttongroup-050-accent:light-dark(oklch(0.48 0.16 285),oklch(0.78 0.13 285));
 --vibeui-buttongroup-050-radius:0.75rem;
 --vibeui-buttongroup-050-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -80,11 +84,11 @@ font-size:0.6875rem;line-height:1.25;
 }
 /* Выбранная роль включает все, что правее: младшие права залиты слабее. */
 [data-vibeui-block="buttongroup-050"] [data-part="step"]:has(input:checked) ~ [data-part="step"]{
-background:oklch(0.975 0.015 285);
+background:var(--vibeui-buttongroup-050-inherited);
 }
 [data-vibeui-block="buttongroup-050"] [data-part="step"]:has(input:checked){
 z-index:1;
-background:oklch(0.95 0.04 285);
+background:var(--vibeui-buttongroup-050-on);
 border-color:var(--vibeui-buttongroup-050-accent);
 }
 [data-vibeui-block="buttongroup-050"] [data-part="step"]:has(input:checked) [data-part="name"]{
@@ -114,6 +118,28 @@ const DEFAULT_ROLES: Buttongroup050Role[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Роли лестницей: выбранная подсвечивает все младшие, права видно вложенными.
  * Один файл, ноль зависимостей, серверный компонент.
  */
@@ -123,6 +149,7 @@ export function Buttongroup050({
   hint = "Роль включает все права, что правее неё.",
   label = "Роль участника",
   name = "buttongroup-050",
+  background = "",
   accent,
   className,
   style,
@@ -130,6 +157,12 @@ export function Buttongroup050({
 }: Buttongroup050Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-050-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-050-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

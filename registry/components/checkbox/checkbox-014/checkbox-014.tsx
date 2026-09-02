@@ -15,7 +15,15 @@ export type Checkbox014Props = Omit<
   title?: string
   tasks?: Checkbox014Task[]
   defaultDone?: string[]
+  /** Счётчик в шапке. {done} — выполнено, {total} — всего. */
+  ratioText?: string
+  /** Подпись свёрнутого блока выполненного. {count} — сколько там задач. */
+  doneLabel?: string
+  /** Строка вместо пустого активного списка. */
+  emptyText?: string
   onChange?: (done: string[]) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,14 +31,18 @@ export type Checkbox014Props = Omit<
 // в свёрнутый блок «Готово» под ним. Активный список остаётся коротким, но
 // сделанное никуда не пропадает — его можно раскрыть и снять галочку.
 // Сверху полоса прогресса: доля выполненного видна без счёта в уме.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="checkbox-014"]){
---vibeui-checkbox-014-bg:oklch(1 0 0);
---vibeui-checkbox-014-fg:oklch(0.22 0.014 265);
---vibeui-checkbox-014-muted:oklch(0.57 0.014 265);
---vibeui-checkbox-014-border:oklch(0.9 0.006 265);
---vibeui-checkbox-014-track:oklch(0.94 0.005 265);
---vibeui-checkbox-014-accent:oklch(0.56 0.14 150);
+--vibeui-checkbox-014-bg:transparent;
+--vibeui-checkbox-014-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-checkbox-014-muted:light-dark(oklch(0.57 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-014-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-checkbox-014-track:light-dark(oklch(0.94 0.005 265),oklch(0.3 0.01 265));
+--vibeui-checkbox-014-accent:light-dark(oklch(0.56 0.14 150),oklch(0.68 0.15 150));
+--vibeui-checkbox-014-on-accent:oklch(0.99 0.01 150);
 --vibeui-checkbox-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="checkbox-014"]{
@@ -71,7 +83,7 @@ transition:background-color .15s ease,border-color .15s ease;
 [data-vibeui-block="checkbox-014"] input:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;
-border-right:2px solid oklch(0.99 0.01 150);border-bottom:2px solid oklch(0.99 0.01 150);
+border-right:2px solid var(--vibeui-checkbox-014-on-accent);border-bottom:2px solid var(--vibeui-checkbox-014-on-accent);
 transform:rotate(45deg);
 }
 [data-vibeui-block="checkbox-014"] input:focus-visible{outline:2px solid var(--vibeui-checkbox-014-accent);outline-offset:2px}
@@ -110,6 +122,28 @@ const DEFAULT_TASKS: Checkbox014Task[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Список задач, где выполненное уезжает в свёрнутый блок «Готово»,
  * а сверху идёт полоса прогресса. Один файл, ноль зависимостей.
  */
@@ -117,7 +151,11 @@ export function Checkbox014({
   title = "Запуск раздела",
   tasks = DEFAULT_TASKS,
   defaultDone = ["1", "2"],
+  ratioText = "{done} из {total}",
+  doneLabel = "Готово: {count}",
+  emptyText = "Все задачи выполнены.",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -127,6 +165,12 @@ export function Checkbox014({
 
   const palette = {
     ...(accent ? { "--vibeui-checkbox-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-checkbox-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -158,7 +202,9 @@ export function Checkbox014({
         <div data-part="head">
           <h3 data-part="title">{title}</h3>
           <span data-part="ratio" role="status">
-            {closed.length} из {tasks.length}
+            {ratioText
+              .replace("{done}", String(closed.length))
+              .replace("{total}", String(tasks.length))}
           </span>
         </div>
         <span
@@ -171,7 +217,7 @@ export function Checkbox014({
           <span data-part="fill" style={{ width: `${percent}%` }} />
         </span>
         {open.length === 0 ? (
-          <p data-part="empty">Все задачи выполнены.</p>
+          <p data-part="empty">{emptyText}</p>
         ) : (
           <ul>
             {open.map((task) => (
@@ -190,7 +236,9 @@ export function Checkbox014({
         )}
         {closed.length > 0 ? (
           <details>
-            <summary>Готово: {closed.length}</summary>
+            <summary>
+              {doneLabel.replace("{count}", String(closed.length))}
+            </summary>
             <ul>
               {closed.map((task) => (
                 <li key={task.id}>

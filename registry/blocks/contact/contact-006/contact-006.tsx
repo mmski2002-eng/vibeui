@@ -22,6 +22,10 @@ export type Contact006Props = {
   submitLabel?: string
   consentLabel?: string
   footNote?: string
+  /** Подписи блока: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -43,13 +47,15 @@ export type Contact006Props = {
 // из буфера и международный формат. Отправку реализует вызывающий код.
 const STYLES = `
 :where([data-vibeui-block="contact-006"]){
---vibeui-contact-006-bg:oklch(1 0 0);
---vibeui-contact-006-soft:oklch(0.975 0.004 265);
---vibeui-contact-006-fg:oklch(0.2 0.014 265);
---vibeui-contact-006-muted:oklch(0.52 0.014 265);
---vibeui-contact-006-border:oklch(0.9 0.006 265);
---vibeui-contact-006-accent:oklch(0.51 0.18 30);
---vibeui-contact-006-alarm:oklch(0.55 0.19 25);
+--vibeui-contact-006-bg:transparent;
+--vibeui-contact-006-card:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-contact-006-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.01 265));
+--vibeui-contact-006-fg:light-dark(oklch(0.2 0.014 265),oklch(0.94 0.005 265));
+--vibeui-contact-006-muted:light-dark(oklch(0.52 0.014 265),oklch(0.72 0.012 265));
+--vibeui-contact-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-contact-006-accent:light-dark(oklch(0.51 0.18 30),oklch(0.74 0.16 40));
+--vibeui-contact-006-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 40));
+--vibeui-contact-006-alarm:light-dark(oklch(0.55 0.19 25),oklch(0.73 0.16 25));
 --vibeui-contact-006-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -82,12 +88,12 @@ background:var(--vibeui-contact-006-soft);border:1px solid var(--vibeui-contact-
 [data-vibeui-block="contact-006"] [data-part="day"]{
 display:grid;cursor:pointer;gap:0.0625rem;
 padding:0.4375rem 0.75rem;border-radius:0.6875rem;
-border:1px solid var(--vibeui-contact-006-border);background:var(--vibeui-contact-006-bg);
+border:1px solid var(--vibeui-contact-006-border);background:var(--vibeui-contact-006-card);
 font-size:0.8125rem;font-weight:620;color:var(--vibeui-contact-006-muted);
 }
 [data-vibeui-block="contact-006"] [data-part="day"]:has(input:checked){
 color:var(--vibeui-contact-006-accent);border-color:var(--vibeui-contact-006-accent);
-background:color-mix(in oklab,var(--vibeui-contact-006-accent) 8%,var(--vibeui-contact-006-bg));
+background:color-mix(in oklab,var(--vibeui-contact-006-accent) 8%,var(--vibeui-contact-006-card));
 }
 [data-vibeui-block="contact-006"] [data-part="day-note"]{font-size:0.6875rem;font-weight:400}
 [data-vibeui-block="contact-006"] input[type="radio"]{
@@ -104,11 +110,11 @@ display:grid;grid-template-columns:repeat(auto-fill,minmax(5rem,1fr));gap:0.4375
 [data-vibeui-block="contact-006"] [data-part="slot"]{
 display:grid;justify-items:center;gap:0.0625rem;cursor:pointer;
 padding:0.4375rem 0.375rem;border-radius:0.625rem;
-border:1px solid var(--vibeui-contact-006-border);background:var(--vibeui-contact-006-bg);
+border:1px solid var(--vibeui-contact-006-border);background:var(--vibeui-contact-006-card);
 font-size:0.875rem;font-weight:640;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="contact-006"] [data-part="slot"]:has(input:checked){
-color:oklch(1 0 0);background:var(--vibeui-contact-006-accent);border-color:var(--vibeui-contact-006-accent);
+color:var(--vibeui-contact-006-on-accent);background:var(--vibeui-contact-006-accent);border-color:var(--vibeui-contact-006-accent);
 }
 [data-vibeui-block="contact-006"] [data-part="slot"]:has(input:disabled){
 cursor:not-allowed;color:var(--vibeui-contact-006-muted);
@@ -124,7 +130,7 @@ color:var(--vibeui-contact-006-muted);
 [data-vibeui-block="contact-006"] select{
 width:100%;height:2.625rem;padding:0 0.75rem;border-radius:0.6875rem;
 border:1px solid var(--vibeui-contact-006-border);
-background:var(--vibeui-contact-006-bg);color:inherit;font:inherit;font-size:0.9375rem;
+background:var(--vibeui-contact-006-card);color:inherit;font:inherit;font-size:0.9375rem;
 }
 [data-vibeui-block="contact-006"] select{appearance:none;cursor:pointer;padding-right:2rem}
 [data-vibeui-block="contact-006"] [data-part="select"]{position:relative;display:block}
@@ -154,7 +160,7 @@ flex:none;width:0.9375rem;height:0.9375rem;margin:0.125rem 0 0;accent-color:var(
 [data-vibeui-block="contact-006"] button{
 appearance:none;cursor:pointer;border:0;
 height:2.75rem;padding:0 1.25rem;border-radius:0.75rem;
-background:var(--vibeui-contact-006-accent);color:oklch(1 0 0);
+background:var(--vibeui-contact-006-accent);color:var(--vibeui-contact-006-on-accent);
 font:inherit;font-size:0.9375rem;font-weight:660;
 }
 [data-vibeui-block="contact-006"] [data-part="foot"]{
@@ -195,6 +201,37 @@ const DEFAULT_ZONES = [
   "Владивосток (UTC+10)",
 ]
 
+const LABELS: Record<string, string> = {
+  dayLegend: "День",
+  slotLegend: "Время звонка",
+  taken: "занято",
+  zone: "Часовой пояс",
+  phonePlaceholder: "+7 999 123-45-67",
+  phoneError: "Похоже, в номере не хватает цифр. Проверьте код города.",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Заявка на обратный звонок с выбором дня, слота времени и часового пояса.
  * Один файл, ноль зависимостей, отправку реализует вызывающий код.
@@ -211,12 +248,21 @@ export function Contact006({
   submitLabel = "Жду звонка",
   consentLabel = "Согласен на обработку номера для организации звонка.",
   footNote = "Звоним с номера +7 495 120-45-90. Занятые окна показаны в сетке и выбрать их нельзя.",
+  labels,
+  background = "",
   accent,
   className,
   style,
 }: Contact006Props) {
+  const text = { ...LABELS, ...labels }
   const palette = {
     ...(accent ? { "--vibeui-contact-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-contact-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -242,7 +288,7 @@ export function Contact006({
 
           <form>
             <fieldset>
-              <legend>День</legend>
+              <legend>{text.dayLegend}</legend>
               <div data-part="days">
                 {days.map((day, index) => (
                   <label key={day.label} data-part="day">
@@ -262,7 +308,7 @@ export function Contact006({
             </fieldset>
 
             <fieldset>
-              <legend>Время звонка</legend>
+              <legend>{text.slotLegend}</legend>
               <div data-part="slots">
                 {slots.map((slot) => (
                   <label key={slot.time} data-part="slot">
@@ -274,7 +320,9 @@ export function Contact006({
                       defaultChecked={slot.time === firstFree}
                     />
                     <span>{slot.time}</span>
-                    {slot.taken ? <span data-part="taken">занято</span> : null}
+                    {slot.taken ? (
+                      <span data-part="taken">{text.taken}</span>
+                    ) : null}
                   </label>
                 ))}
               </div>
@@ -291,11 +339,11 @@ export function Contact006({
                   inputMode="tel"
                   autoComplete="tel"
                   pattern="[+0-9()\\s-]{10,20}"
-                  placeholder="+7 999 123-45-67"
+                  placeholder={text.phonePlaceholder}
                   aria-describedby="contact-006-phone-error contact-006-phone-hint"
                 />
                 <span id="contact-006-phone-error" data-part="error">
-                  Похоже, в номере не хватает цифр. Проверьте код города.
+                  {text.phoneError}
                 </span>
                 <span id="contact-006-phone-hint" data-part="hint">
                   {phoneHint}
@@ -303,7 +351,7 @@ export function Contact006({
               </div>
 
               <div data-part="field">
-                <label htmlFor="contact-006-zone">Часовой пояс</label>
+                <label htmlFor="contact-006-zone">{text.zone}</label>
                 <span data-part="select">
                   <select id="contact-006-zone" name="zone">
                     {zones.map((zone) => (

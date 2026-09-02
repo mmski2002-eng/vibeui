@@ -15,6 +15,12 @@ export type Rating003Props = Omit<
   max?: number
   defaultValue?: number
   hints?: string[]
+  /** Подпись клетки для скринридера. {value} — балл, {max} — размер шкалы. */
+  pointLabel?: string
+  /** Подпись под левым краем шкалы. */
+  lowAnchor?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,19 +31,22 @@ export type Rating003Props = Omit<
 // radiogroup/radio с ручным roving tabindex: десять кнопок в табуляции — это
 // десять лишних нажатий Tab, поэтому фокус в группу входит один раз, а стрелки
 // двигают выбор внутри.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="rating-003"]){
---vibeui-rating-003-surface:oklch(1 0 0);
---vibeui-rating-003-shell:oklch(0.9 0.006 265);
---vibeui-rating-003-fg:oklch(0.23 0.014 265);
---vibeui-rating-003-muted:oklch(0.55 0.014 265);
---vibeui-rating-003-border:oklch(0.9 0.006 265);
---vibeui-rating-003-empty:oklch(0.97 0.003 265);
---vibeui-rating-003-accent:oklch(0.55 0.17 265);
---vibeui-rating-003-on:oklch(1 0 0);
+--vibeui-rating-003-surface:transparent;
+--vibeui-rating-003-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-rating-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-rating-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-rating-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-rating-003-empty:light-dark(oklch(0.97 0.003 265),oklch(0.26 0.01 265));
+--vibeui-rating-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-rating-003-on:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
 --vibeui-rating-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: шкалу показывают поверх любого фона. */
+/* Подложки по умолчанию нет: шкала ложится на фон страницы. */
 [data-vibeui-block="rating-003"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -64,7 +73,7 @@ transition:background-color .12s ease,color .12s ease,border-color .12s ease;
 }
 /* Клетки до выбранной закрашены: оценка читается и числом, и длиной. */
 [data-vibeui-block="rating-003"] button[data-filled="true"]{
-background:color-mix(in oklch,var(--vibeui-rating-003-accent) 22%,white);
+background:color-mix(in oklch,var(--vibeui-rating-003-accent) 22%,var(--vibeui-rating-003-empty));
 border-color:transparent;color:var(--vibeui-rating-003-fg);
 }
 [data-vibeui-block="rating-003"] button[aria-checked="true"]{
@@ -96,6 +105,28 @@ const DEFAULT_HINTS = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Десятибалльная шкала пронумерованными клетками с накопительной заливкой.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -104,6 +135,9 @@ export function Rating003({
   max = 10,
   defaultValue = 8,
   hints = DEFAULT_HINTS,
+  pointLabel = "{value} из {max}",
+  lowAnchor = "1 — совсем плохо",
+  background = "",
   accent,
   className,
   style,
@@ -129,6 +163,12 @@ export function Rating003({
 
   const palette = {
     ...(accent ? { "--vibeui-rating-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-rating-003-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -163,7 +203,9 @@ export function Rating003({
               type="button"
               role="radio"
               aria-checked={value === point}
-              aria-label={`${point} из ${max}`}
+              aria-label={pointLabel
+                .replace("{value}", String(point))
+                .replace("{max}", String(max))}
               tabIndex={value === point ? 0 : -1}
               data-filled={point < value}
               onClick={() => setValue(point)}
@@ -173,7 +215,7 @@ export function Rating003({
           ))}
         </div>
         <p data-part="foot">
-          <span>1 — совсем плохо</span>
+          <span>{lowAnchor}</span>
           <span data-part="hint">{hints[value - 1]}</span>
         </p>
       </div>

@@ -19,7 +19,13 @@ export type Checkbox010Props = Omit<
   addons?: Checkbox010Addon[]
   defaultValue?: string[]
   currency?: string
+  /** Плашка у рекомендованного дополнения. */
+  recommendedLabel?: string
+  /** Строка итога слева. {count} — сколько дополнений выбрано. */
+  totalText?: string
   onChange?: (value: string[]) => void
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,22 +33,27 @@ export type Checkbox010Props = Omit<
 // рамкой через box-shadow inset, а не толщиной border, — карточка не дёргается
 // на ширину пикселя при отметке. Цены складываются в итог под списком, поэтому
 // выбор сразу отвечает на вопрос «сколько всего».
+//
+// Тема берётся из color-scheme окружения через light-dark(): карточки темнеют
+// вместе со страницей и не носят собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="checkbox-010"]){
---vibeui-checkbox-010-bg:oklch(1 0 0);
---vibeui-checkbox-010-fg:oklch(0.21 0.014 265);
---vibeui-checkbox-010-muted:oklch(0.55 0.014 265);
---vibeui-checkbox-010-border:oklch(0.9 0.006 265);
---vibeui-checkbox-010-surface:oklch(0.985 0.002 265);
---vibeui-checkbox-010-accent:oklch(0.52 0.15 168);
---vibeui-checkbox-010-soft:oklch(0.96 0.03 168);
+--vibeui-checkbox-010-panel:transparent;
+--vibeui-checkbox-010-bg:light-dark(oklch(1 0 0),oklch(0.29 0.012 265));
+--vibeui-checkbox-010-surface:light-dark(oklch(0.985 0.002 265),oklch(0.24 0.012 265));
+--vibeui-checkbox-010-fg:light-dark(oklch(0.21 0.014 265),oklch(0.95 0.005 265));
+--vibeui-checkbox-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-checkbox-010-accent:light-dark(oklch(0.52 0.15 168),oklch(0.74 0.13 168));
+--vibeui-checkbox-010-soft:light-dark(oklch(0.96 0.03 168),oklch(0.3 0.05 168));
+--vibeui-checkbox-010-mark:light-dark(oklch(0.99 0.01 168),oklch(0.19 0.03 168));
 --vibeui-checkbox-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="checkbox-010"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:24rem;box-sizing:border-box;
 margin:0;padding:0.875rem;border:1px solid var(--vibeui-checkbox-010-border);border-radius:1rem;
-background:var(--vibeui-checkbox-010-bg);
+background:var(--vibeui-checkbox-010-panel);
 font-family:var(--vibeui-checkbox-010-font);color:var(--vibeui-checkbox-010-fg);
 }
 /* legend у fieldset садится на рамку: float возвращает его в поток, а
@@ -82,12 +93,13 @@ background:var(--vibeui-checkbox-010-accent);box-shadow:none;
 [data-vibeui-block="checkbox-010"] [data-part="card"]:has(input:checked) [data-part="tick"]::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.1875rem;height:0.375rem;margin:-0.28125rem 0 0 -0.09375rem;
-border-right:2px solid oklch(0.99 0.01 168);border-bottom:2px solid oklch(0.99 0.01 168);
+border-right:2px solid var(--vibeui-checkbox-010-mark);
+border-bottom:2px solid var(--vibeui-checkbox-010-mark);
 transform:rotate(45deg);
 }
 [data-vibeui-block="checkbox-010"] [data-part="flag"]{
 padding:0.0625rem 0.375rem;border-radius:9999px;
-background:var(--vibeui-checkbox-010-accent);color:oklch(0.99 0.01 168);
+background:var(--vibeui-checkbox-010-accent);color:var(--vibeui-checkbox-010-mark);
 font-size:0.625rem;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;
 }
 [data-vibeui-block="checkbox-010"] [data-part="price"]{
@@ -130,6 +142,28 @@ const DEFAULT_ADDONS: Checkbox010Addon[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Карточки-чекбоксы с рамкой выбора и итоговой суммой.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -138,7 +172,10 @@ export function Checkbox010({
   addons = DEFAULT_ADDONS,
   defaultValue = ["backup"],
   currency = "₽/мес",
+  recommendedLabel = "советуем",
+  totalText = "Дополнения: {count}",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -148,6 +185,12 @@ export function Checkbox010({
 
   const palette = {
     ...(accent ? { "--vibeui-checkbox-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-checkbox-010-panel": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -187,7 +230,7 @@ export function Checkbox010({
               <span data-part="tick" aria-hidden="true" />
               {addon.title}
               {addon.recommended ? (
-                <span data-part="flag">советуем</span>
+                <span data-part="flag">{recommendedLabel}</span>
               ) : null}
             </span>
             <span data-part="price">
@@ -197,7 +240,7 @@ export function Checkbox010({
           </label>
         ))}
         <p data-part="total" role="status">
-          <span>Дополнения: {value.length}</span>
+          <span>{totalText.replace("{count}", String(value.length))}</span>
           <span data-part="sum">
             {total} {currency}
           </span>

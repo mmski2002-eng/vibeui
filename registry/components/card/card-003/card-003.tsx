@@ -10,6 +10,8 @@ export type Card003Props = Omit<
   stats?: { label: string; value: string }[]
   actionLabel?: string
   secondaryLabel?: string
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,14 +19,18 @@ export type Card003Props = Omit<
 // стоят в ряд под именем, потому что их сравнивают между карточками; текст
 // «о себе» обрезан двумя строками — иначе карточки в сетке разной высоты и
 // ряд рассыпается.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте рамка светлее подложки, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="card-003"]){
---vibeui-card-003-bg:oklch(1 0 0);
---vibeui-card-003-fg:oklch(0.22 0.014 265);
---vibeui-card-003-muted:oklch(0.56 0.014 265);
---vibeui-card-003-border:oklch(0.91 0.006 265);
+--vibeui-card-003-bg:transparent;
+--vibeui-card-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-card-003-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-card-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-card-003-hue:250;
---vibeui-card-003-accent:oklch(0.55 0.17 265);
+--vibeui-card-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-card-003-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.02 265));
 --vibeui-card-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="card-003"]{
@@ -65,7 +71,7 @@ border:1px solid var(--vibeui-card-003-border);border-radius:0.5rem;
 background:transparent;color:inherit;font:inherit;font-size:0.8125rem;font-weight:600;
 }
 [data-vibeui-block="card-003"] button[data-primary="true"]{
-border-color:transparent;background:var(--vibeui-card-003-accent);color:oklch(0.99 0.01 265);
+border-color:transparent;background:var(--vibeui-card-003-accent);color:var(--vibeui-card-003-on-accent);
 }
 [data-vibeui-block="card-003"] button:focus-visible{outline:2px solid var(--vibeui-card-003-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="card-003"] *{animation:none!important;transition:none!important}}
@@ -97,6 +103,29 @@ const DEFAULT_STATS = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Карточка человека: аватар, роль, цифры в ряд и два действия.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -107,6 +136,7 @@ export function Card003({
   stats = DEFAULT_STATS,
   actionLabel = "Написать",
   secondaryLabel = "Профиль",
+  background = "",
   accent,
   className,
   style,
@@ -115,6 +145,12 @@ export function Card003({
   const palette = {
     "--vibeui-card-003-hue": hue(name),
     ...(accent ? { "--vibeui-card-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-card-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

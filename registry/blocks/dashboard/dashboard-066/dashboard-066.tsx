@@ -15,6 +15,14 @@ export type Dashboard066Props = {
   people?: Dashboard066Person[]
   sortNote?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подписи легенды по ключам late, waiting, active, done. */
+  legendText?: Record<string, string>
+  /** Расшифровка полосы: {name}, {late}, {waiting}, {active}, {done}. */
+  barAriaText?: string
+  /** Подписи цифр по ключам total, late, done. */
+  statsText?: Record<string, string>
   className?: string
   style?: CSSProperties
 }
@@ -31,17 +39,21 @@ export type Dashboard066Props = {
 // «насколько», и легенда подписывает сегменты словами, а не только цветом.
 const STYLES = `
 :where([data-vibeui-block="dashboard-066"]){
---vibeui-dashboard-066-bg:oklch(0.985 0.003 255);
---vibeui-dashboard-066-card:oklch(1 0 0);
---vibeui-dashboard-066-fg:oklch(0.21 0.014 255);
---vibeui-dashboard-066-muted:oklch(0.55 0.014 255);
---vibeui-dashboard-066-border:oklch(0.91 0.006 255);
---vibeui-dashboard-066-accent:oklch(0.52 0.15 255);
---vibeui-dashboard-066-soft:oklch(0.965 0.02 255);
---vibeui-dashboard-066-late:oklch(0.57 0.19 25);
---vibeui-dashboard-066-waiting:oklch(0.72 0.13 85);
---vibeui-dashboard-066-active:oklch(0.55 0.14 255);
---vibeui-dashboard-066-done:oklch(0.68 0.09 155);
+--vibeui-dashboard-066-bg:transparent;
+/* Карточки строк и хвост полосы: подложка блока прозрачна. */
+--vibeui-dashboard-066-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 255));
+--vibeui-dashboard-066-inset:light-dark(oklch(0.985 0.003 255),oklch(0.22 0.012 255));
+--vibeui-dashboard-066-fg:light-dark(oklch(0.21 0.014 255),oklch(0.94 0.005 255));
+--vibeui-dashboard-066-muted:light-dark(oklch(0.55 0.014 255),oklch(0.72 0.012 255));
+--vibeui-dashboard-066-border:light-dark(oklch(0.91 0.006 255),oklch(0.36 0.012 255));
+--vibeui-dashboard-066-accent:light-dark(oklch(0.52 0.15 255),oklch(0.73 0.13 255));
+--vibeui-dashboard-066-soft:light-dark(oklch(0.965 0.02 255),oklch(0.3 0.035 255));
+--vibeui-dashboard-066-late:light-dark(oklch(0.57 0.19 25),oklch(0.7 0.18 25));
+--vibeui-dashboard-066-waiting:light-dark(oklch(0.72 0.13 85),oklch(0.78 0.14 85));
+--vibeui-dashboard-066-active:light-dark(oklch(0.55 0.14 255),oklch(0.68 0.14 255));
+--vibeui-dashboard-066-done:light-dark(oklch(0.68 0.09 155),oklch(0.73 0.11 155));
+--vibeui-dashboard-066-seg-ink:light-dark(oklch(1 0 0),oklch(0.17 0.02 255));
+--vibeui-dashboard-066-waiting-ink:light-dark(oklch(0.25 0.05 85),oklch(0.2 0.05 85));
 --vibeui-dashboard-066-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -77,15 +89,15 @@ display:flex;gap:0.125rem;height:1.125rem;min-width:0;
 }
 [data-vibeui-block="dashboard-066"] [data-part="seg"]{
 display:flex;align-items:center;justify-content:center;min-width:0;overflow:hidden;
-font-size:0.625rem;font-weight:750;color:oklch(1 0 0);border-radius:0.25rem;
+font-size:0.625rem;font-weight:750;color:var(--vibeui-dashboard-066-seg-ink);border-radius:0.25rem;
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="dashboard-066"] [data-seg="late"]{background:var(--vibeui-dashboard-066-late)}
-[data-vibeui-block="dashboard-066"] [data-seg="waiting"]{background:var(--vibeui-dashboard-066-waiting);color:oklch(0.25 0.05 85)}
+[data-vibeui-block="dashboard-066"] [data-seg="waiting"]{background:var(--vibeui-dashboard-066-waiting);color:var(--vibeui-dashboard-066-waiting-ink)}
 [data-vibeui-block="dashboard-066"] [data-seg="active"]{background:var(--vibeui-dashboard-066-active)}
 [data-vibeui-block="dashboard-066"] [data-seg="done"]{background:var(--vibeui-dashboard-066-done)}
 [data-vibeui-block="dashboard-066"] [data-part="rest"]{
-flex:1 1 auto;border-radius:0.25rem;background:var(--vibeui-dashboard-066-bg);
+flex:1 1 auto;border-radius:0.25rem;background:var(--vibeui-dashboard-066-inset);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-066-border);
 }
 [data-vibeui-block="dashboard-066"] [data-part="nums"]{
@@ -144,6 +156,41 @@ const DEFAULT_PEOPLE: Dashboard066Person[] = [
   },
 ]
 
+const LEGEND_TEXT: Record<string, string> = {
+  late: "просрочено",
+  waiting: "ждёт ответа",
+  active: "в работе",
+  done: "сделано",
+}
+
+const STATS_TEXT: Record<string, string> = {
+  total: "всего",
+  late: "просрочено",
+  done: "закрыто за неделю",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Экран статусов задач по исполнителям: составная полоса, где ширина сегментов
  * равна числу задач, а длина всей полосы — загрузке относительно самого
@@ -155,13 +202,26 @@ export function Dashboard066({
   people = DEFAULT_PEOPLE,
   sortNote = "Список отсортирован по числу просроченных, а не по алфавиту: сверху тот, кому нужна помощь.",
   accent,
+  background = "",
+  legendText = LEGEND_TEXT,
+  barAriaText = "{name}: просрочено {late}, ждёт ответа {waiting}, в работе {active}, сделано {done}",
+  statsText = STATS_TEXT,
   className,
   style,
 }: Dashboard066Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-066-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-066-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const legend = { ...LEGEND_TEXT, ...legendText }
+  const stats = { ...STATS_TEXT, ...statsText }
 
   const totals = people.map(
     (person) => person.done + person.active + person.waiting + person.late,
@@ -186,24 +246,16 @@ export function Dashboard066({
           </div>
 
           <ul data-part="legend">
-            <li>
-              <i style={{ background: "var(--vibeui-dashboard-066-late)" }} />
-              просрочено
-            </li>
-            <li>
-              <i
-                style={{ background: "var(--vibeui-dashboard-066-waiting)" }}
-              />
-              ждёт ответа
-            </li>
-            <li>
-              <i style={{ background: "var(--vibeui-dashboard-066-active)" }} />
-              в работе
-            </li>
-            <li>
-              <i style={{ background: "var(--vibeui-dashboard-066-done)" }} />
-              сделано
-            </li>
+            {(["late", "waiting", "active", "done"] as const).map((kind) => (
+              <li key={kind}>
+                <i
+                  style={{
+                    background: `var(--vibeui-dashboard-066-${kind})`,
+                  }}
+                />
+                {legend[kind]}
+              </li>
+            ))}
           </ul>
 
           <ul data-part="rows">
@@ -221,7 +273,12 @@ export function Dashboard066({
                   <div
                     data-part="bar"
                     role="img"
-                    aria-label={`${person.name}: просрочено ${person.late}, ждёт ответа ${person.waiting}, в работе ${person.active}, сделано ${person.done}`}
+                    aria-label={barAriaText
+                      .replace("{name}", person.name)
+                      .replace("{late}", String(person.late))
+                      .replace("{waiting}", String(person.waiting))
+                      .replace("{active}", String(person.active))
+                      .replace("{done}", String(person.done))}
                   >
                     {(
                       [
@@ -249,13 +306,13 @@ export function Dashboard066({
 
                   <p data-part="nums">
                     <span>
-                      всего <b>{total}</b>
+                      {stats.total} <b>{total}</b>
                     </span>
                     <span data-late={person.late > 0}>
-                      просрочено <b>{person.late}</b>
+                      {stats.late} <b>{person.late}</b>
                     </span>
                     <span>
-                      закрыто за неделю <b>{person.done}</b>
+                      {stats.done} <b>{person.done}</b>
                     </span>
                   </p>
                 </li>

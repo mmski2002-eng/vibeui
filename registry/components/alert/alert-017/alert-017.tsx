@@ -12,20 +12,26 @@ export type Alert017Props = Omit<
   affected?: string[]
   detailsLabel?: string
   detailsHref?: string
+  accent?: string
+  /** Пусто — подложки нет, предупреждение лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: предупреждение о плановых работах. Здесь важно не «что-то
 // сломается», а когда и что именно: время вынесено отдельной строкой в рамке,
 // а список затронутого — пунктами. Тон нейтральный: плановые работы это не
 // авария, и красный цвет вызвал бы лишние звонки в поддержку.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-017"]){
---vibeui-alert-017-fg:oklch(0.22 0.014 265);
---vibeui-alert-017-muted:oklch(0.5 0.014 265);
---vibeui-alert-017-bg:oklch(1 0 0);
---vibeui-alert-017-panel:oklch(0.97 0.004 265);
---vibeui-alert-017-border:oklch(0.9 0.006 265);
---vibeui-alert-017-accent:oklch(0.55 0.09 250);
+--vibeui-alert-017-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.006 265));
+--vibeui-alert-017-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-017-bg:transparent;
+--vibeui-alert-017-panel:light-dark(oklch(0.97 0.004 265),oklch(0.28 0.01 265));
+--vibeui-alert-017-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-017-accent:light-dark(oklch(0.55 0.09 250),oklch(0.78 0.08 250));
 --vibeui-alert-017-radius:0.875rem;
 --vibeui-alert-017-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-alert-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -87,6 +93,28 @@ border-bottom:1px solid transparent;transition:border-color .16s ease;
 const DEFAULT_AFFECTED = ["Публикация", "Загрузка медиа", "Экспорт"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Предупреждение о плановых работах: окно времени и список затронутого.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -97,10 +125,23 @@ export function Alert017({
   affected = DEFAULT_AFFECTED,
   detailsLabel = "Что именно меняем",
   detailsHref = "#",
+  accent,
+  background = "",
   className,
   style,
   ...props
 }: Alert017Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-alert-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-alert-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-alert-017" precedence="medium">
@@ -111,7 +152,7 @@ export function Alert017({
         data-vibeui-block="alert-017"
         role="status"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="mark" aria-hidden="true" />
         <div data-part="text">

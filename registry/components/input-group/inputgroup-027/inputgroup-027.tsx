@@ -16,12 +16,25 @@ export type Inputgroup027Props = Omit<
   maxPercent?: number
   onChange?: (value: number, unit: Inputgroup027Unit) => void
   hint?: string
+  /** Подписи кнопок единицы: компонент несёт русские, проект подставляет свои. */
+  unitText?: Record<string, string>
+  /** Подсказки по единицам: компонент несёт русские, проект подставляет свои. */
+  unitHint?: Record<string, string>
+  /** Подпись группы кнопок для скринридера. */
+  toggleLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
-const HINTS: Record<Inputgroup027Unit, string> = {
+const UNIT_HINT: Record<Inputgroup027Unit, string> = {
   currency: "Скидка задана фиксированной суммой в рублях.",
   percent: "Скидка задана процентом от стоимости заказа.",
+}
+
+const UNIT_TEXT: Record<Inputgroup027Unit, string> = {
+  currency: "₽",
+  percent: "%",
 }
 
 // Идея компонента: скидку можно задать суммой или процентом — это два
@@ -33,14 +46,15 @@ const HINTS: Record<Inputgroup027Unit, string> = {
 // граница поля (max) подстраивается только для процента.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-027"]){
---vibeui-inputgroup-027-surface:oklch(1 0 0);
---vibeui-inputgroup-027-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-027-fg:oklch(0.22 0.014 265);
---vibeui-inputgroup-027-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-027-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-027-fixed:oklch(0.96 0.004 265);
---vibeui-inputgroup-027-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-027-accent:oklch(0.55 0.16 145);
+--vibeui-inputgroup-027-surface:transparent;
+--vibeui-inputgroup-027-raised:light-dark(oklch(1 0 0),oklch(0.28 0.014 265));
+--vibeui-inputgroup-027-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-inputgroup-027-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-027-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-inputgroup-027-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
+--vibeui-inputgroup-027-fixed:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-inputgroup-027-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-inputgroup-027-accent:light-dark(oklch(0.55 0.16 145),oklch(0.76 0.14 145));
 --vibeui-inputgroup-027-radius:0.75rem;
 --vibeui-inputgroup-027-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -83,7 +97,7 @@ background:none;font:inherit;font-size:0.875rem;font-weight:700;color:var(--vibe
 transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="inputgroup-027"] [data-part="toggle"] button[aria-pressed="true"]{
-background:var(--vibeui-inputgroup-027-surface);color:var(--vibeui-inputgroup-027-accent);
+background:var(--vibeui-inputgroup-027-raised);color:var(--vibeui-inputgroup-027-accent);
 box-shadow:0 1px 2px oklch(0.2 0.02 265 / 0.16);
 }
 [data-vibeui-block="inputgroup-027"] [data-part="toggle"] button:focus-visible{
@@ -94,6 +108,28 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-inputgroup-027-mut
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="inputgroup-027"] *{transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Сцепка «число + переключатель ₽ / %»: сегментированная группа из двух
@@ -109,6 +145,10 @@ export function Inputgroup027({
   maxPercent = 100,
   onChange,
   hint,
+  unitText = UNIT_TEXT,
+  unitHint = UNIT_HINT,
+  toggleLabel = "Единица скидки",
+  background = "",
   accent,
   className,
   style,
@@ -120,6 +160,12 @@ export function Inputgroup027({
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-027-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-027-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -161,25 +207,25 @@ export function Inputgroup027({
               onChange?.(clamped, unit)
             }}
           />
-          <div data-part="toggle" role="group" aria-label="Единица скидки">
+          <div data-part="toggle" role="group" aria-label={toggleLabel}>
             <button
               type="button"
               aria-pressed={unit === "currency"}
               onClick={() => setUnitAndNotify("currency")}
             >
-              ₽
+              {unitText.currency ?? UNIT_TEXT.currency}
             </button>
             <button
               type="button"
               aria-pressed={unit === "percent"}
               onClick={() => setUnitAndNotify("percent")}
             >
-              %
+              {unitText.percent ?? UNIT_TEXT.percent}
             </button>
           </div>
         </div>
         <p data-part="hint" id={`${id}-hint`}>
-          {hint ?? HINTS[unit]}
+          {hint ?? unitHint[unit] ?? UNIT_HINT[unit]}
         </p>
       </div>
     </>

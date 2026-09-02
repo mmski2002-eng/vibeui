@@ -7,6 +7,8 @@ export type Badge009Props = Omit<
   items?: string[]
   visible?: number
   label?: string
+  /** Пусто — плашки держат собственный нейтральный фон. */
+  background?: string
 }
 
 // Идея компонента: ряд плашек, который не переносится на вторую строку. Хвост
@@ -14,10 +16,10 @@ export type Badge009Props = Omit<
 // скринридера: в строке таблицы место одно, а тегов у записи бывает десять.
 const STYLES = `
 :where([data-vibeui-block="badge-009"]){
---vibeui-badge-009-bg:oklch(0.96 0.004 265);
---vibeui-badge-009-fg:oklch(0.32 0.014 265);
---vibeui-badge-009-border:oklch(0.89 0.006 265);
---vibeui-badge-009-muted:oklch(0.52 0.014 265);
+--vibeui-badge-009-bg:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.009 265));
+--vibeui-badge-009-fg:light-dark(oklch(0.32 0.014 265),oklch(0.93 0.006 265));
+--vibeui-badge-009-border:light-dark(oklch(0.89 0.006 265),oklch(0.39 0.011 265));
+--vibeui-badge-009-muted:light-dark(oklch(0.52 0.014 265),oklch(0.68 0.012 265));
 --vibeui-badge-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="badge-009"]{
@@ -53,6 +55,28 @@ const DEFAULT_ITEMS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Ряд плашек в одну строку: хвост сворачивается в счётчик.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -60,12 +84,22 @@ export function Badge009({
   items = DEFAULT_ITEMS,
   visible = 3,
   label = "Метки",
+  background = "",
   className,
   style,
   ...props
 }: Badge009Props) {
   const shown = items.slice(0, Math.max(1, visible))
   const rest = items.length - shown.length
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-badge-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -76,7 +110,7 @@ export function Badge009({
         {...props}
         data-vibeui-block="badge-009"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
         role="group"
         aria-label={`${label}: ${items.join(", ")}`}
       >

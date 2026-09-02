@@ -16,6 +16,8 @@ export type Footer002Props = {
   columns?: Footer002Column[]
   legal?: string
   status?: string
+  /** Пусто — остаётся собственная тёмная подложка блока. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -25,6 +27,9 @@ export type Footer002Props = {
 // со своей подписью: иначе скринридер читает двадцать ссылок подряд одной
 // кашей. Строка состояния сервиса стоит в нижнем ряду с живой точкой —
 // в подвале её ищут те, у кого что-то не работает.
+//
+// Палитра намеренно одноцветная: тёмная плита — это и есть дизайн блока,
+// светлого варианта у него нет, поэтому light-dark() здесь не применяется.
 const STYLES = `
 :where([data-vibeui-block="footer-002"]){
 --vibeui-footer-002-bg:oklch(0.19 0.016 265);
@@ -151,12 +156,14 @@ export function Footer002({
   columns = DEFAULT_COLUMNS,
   legal = "© 2026 ООО «Контур». Все права защищены.",
   status = "Все системы работают",
+  background = "",
   accent,
   className,
   style,
 }: Footer002Props) {
   const palette = {
     ...(accent ? { "--vibeui-footer-002-accent": accent } : null),
+    ...(background ? { "--vibeui-footer-002-bg": background } : null),
     ...style,
   } as CSSProperties
 

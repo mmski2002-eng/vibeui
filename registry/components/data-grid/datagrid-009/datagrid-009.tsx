@@ -21,6 +21,18 @@ export type Datagrid009Props = Omit<
   rows?: Datagrid009Row[]
   caption?: string
   minWidth?: number
+  /** Заголовок панели над таблицей. */
+  heading?: string
+  /** Подпись кнопки возврата ширин. */
+  resetLabel?: string
+  /** Названия колонок: file, owner, changed, size. */
+  columnText?: Record<string, string>
+  /** Подпись разделителя. {column} — название колонки. */
+  gripLabel?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -31,14 +43,18 @@ type Key = "file" | "owner" | "changed" | "size"
 // клавиатуре: тянуть мышью умеют все сетки, а вот выставить ширину без мыши
 // обычно нельзя. Ширины живут в colgroup при table-layout:fixed, поэтому
 // перетаскивание не пересчитывает всю таблицу на каждое движение.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-009"]){
---vibeui-datagrid-009-bg:oklch(1 0 0);
---vibeui-datagrid-009-fg:oklch(0.23 0.012 240);
---vibeui-datagrid-009-muted:oklch(0.55 0.012 240);
---vibeui-datagrid-009-border:oklch(0.92 0.006 240);
---vibeui-datagrid-009-head:oklch(0.975 0.003 240);
---vibeui-datagrid-009-accent:oklch(0.55 0.16 250);
+--vibeui-datagrid-009-bg:transparent;
+--vibeui-datagrid-009-fg:light-dark(oklch(0.23 0.012 240),oklch(0.93 0.006 240));
+--vibeui-datagrid-009-muted:light-dark(oklch(0.55 0.012 240),oklch(0.68 0.012 240));
+--vibeui-datagrid-009-border:light-dark(oklch(0.92 0.006 240),oklch(0.34 0.012 240));
+--vibeui-datagrid-009-head:light-dark(oklch(0.975 0.003 240),oklch(0.27 0.012 240));
+--vibeui-datagrid-009-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 240));
+--vibeui-datagrid-009-accent:light-dark(oklch(0.55 0.16 250),oklch(0.76 0.14 250));
 --vibeui-datagrid-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-009"]{
@@ -57,7 +73,7 @@ padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-009-borde
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
 padding:0.3125rem 0.625rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-009-border);
-background:var(--vibeui-datagrid-009-bg);color:var(--vibeui-datagrid-009-fg);
+background:var(--vibeui-datagrid-009-field);color:var(--vibeui-datagrid-009-fg);
 }
 [data-vibeui-block="datagrid-009"] [data-part="bar"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-009-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-009"] [data-part="scroll"]{overflow-x:auto}
@@ -135,19 +151,47 @@ const DEFAULT_ROWS: Datagrid009Row[] = [
   },
 ]
 
-const COLUMNS: { key: Key; title: string; width: number; numeric?: boolean }[] =
-  [
-    { key: "file", title: "Файл", width: 260 },
-    { key: "owner", title: "Владелец", width: 130 },
-    { key: "changed", title: "Изменён", width: 160 },
-    { key: "size", title: "Размер", width: 100, numeric: true },
-  ]
+const COLUMNS: { key: Key; width: number; numeric?: boolean }[] = [
+  { key: "file", width: 260 },
+  { key: "owner", width: 130 },
+  { key: "changed", width: 160 },
+  { key: "size", width: 100, numeric: true },
+]
+
+const COLUMN_LABEL: Record<string, string> = {
+  file: "Файл",
+  owner: "Владелец",
+  changed: "Изменён",
+  size: "Размер",
+}
 
 const START: Record<Key, number> = {
   file: 260,
   owner: 130,
   changed: 160,
   size: 100,
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -158,6 +202,12 @@ export function Datagrid009({
   rows = DEFAULT_ROWS,
   caption = "Потяните разделитель между заголовками или наведите на него фокус и жмите стрелки",
   minWidth = 96,
+  heading = "Файлы проекта",
+  resetLabel = "Вернуть ширины",
+  columnText = COLUMN_LABEL,
+  gripLabel = "Ширина колонки «{column}»",
+  scrollLabel = "Таблица файлов, прокручивается вбок",
+  background = "",
   accent,
   className,
   style,
@@ -191,8 +241,16 @@ export function Datagrid009({
 
   const total = COLUMNS.reduce((sum, column) => sum + widths[column.key], 0)
 
+  const label = (column: string) => columnText[column] ?? COLUMN_LABEL[column]
+
   const palette = {
     ...(accent ? { "--vibeui-datagrid-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -208,15 +266,15 @@ export function Datagrid009({
         style={palette}
       >
         <div data-part="bar">
-          <h3 data-part="title">Файлы проекта</h3>
+          <h3 data-part="title">{heading}</h3>
           <button type="button" onClick={() => setWidths(START)}>
-            Вернуть ширины
+            {resetLabel}
           </button>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица файлов, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table style={{ width: `${total}px`, minWidth: "100%" }}>
@@ -237,7 +295,7 @@ export function Datagrid009({
                     scope="col"
                     data-align={column.numeric ? "end" : undefined}
                   >
-                    {column.title}
+                    {label(column.key)}
                     {index < COLUMNS.length - 1 ? (
                       <button
                         type="button"
@@ -245,7 +303,10 @@ export function Datagrid009({
                         data-dragging={dragging === column.key}
                         role="separator"
                         aria-orientation="vertical"
-                        aria-label={`Ширина колонки «${column.title}»`}
+                        aria-label={gripLabel.replace(
+                          "{column}",
+                          label(column.key),
+                        )}
                         aria-valuenow={widths[column.key]}
                         aria-valuemin={minWidth}
                         aria-valuemax={520}

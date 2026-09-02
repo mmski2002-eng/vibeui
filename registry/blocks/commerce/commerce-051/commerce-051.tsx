@@ -18,7 +18,11 @@ export type Commerce051Props = {
   viewLegend?: string
   rows?: Commerce051Row[]
   cta?: string
+  /** Счётчик найденного: {count} — сколько товаров. */
+  foundText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,12 +36,14 @@ export type Commerce051Props = {
 // ширину карточек и не даёт ничего.
 const STYLES = `
 :where([data-vibeui-block="commerce-051"]){
---vibeui-commerce-051-bg:oklch(1 0 0);
---vibeui-commerce-051-fg:oklch(0.21 0.012 145);
---vibeui-commerce-051-muted:oklch(0.53 0.014 145);
---vibeui-commerce-051-border:oklch(0.9 0.008 145);
---vibeui-commerce-051-soft:oklch(0.97 0.008 145);
---vibeui-commerce-051-accent:oklch(0.46 0.11 155);
+--vibeui-commerce-051-bg:transparent;
+--vibeui-commerce-051-card:light-dark(oklch(1 0 0),oklch(0.26 0.01 145));
+--vibeui-commerce-051-fg:light-dark(oklch(0.21 0.012 145),oklch(0.93 0.006 145));
+--vibeui-commerce-051-muted:light-dark(oklch(0.53 0.014 145),oklch(0.72 0.012 145));
+--vibeui-commerce-051-border:light-dark(oklch(0.9 0.008 145),oklch(0.36 0.012 145));
+--vibeui-commerce-051-soft:light-dark(oklch(0.97 0.008 145),oklch(0.29 0.01 145));
+--vibeui-commerce-051-accent:light-dark(oklch(0.46 0.11 155),oklch(0.74 0.12 155));
+--vibeui-commerce-051-onaccent:light-dark(oklch(0.99 0 0),oklch(0.18 0.02 155));
 --vibeui-commerce-051-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -59,7 +65,7 @@ cursor:pointer;display:inline-flex;align-items:center;gap:0.375rem;height:2rem;p
 font-size:0.8125rem;font-weight:650;color:var(--vibeui-commerce-051-muted);
 transition:background-color .14s ease,color .14s ease;
 }
-[data-vibeui-block="commerce-051"] [data-part="switch"] input:checked+label{background:var(--vibeui-commerce-051-bg);color:var(--vibeui-commerce-051-fg);box-shadow:0 1px 2px oklch(0.2 0.02 145 / 12%)}
+[data-vibeui-block="commerce-051"] [data-part="switch"] input:checked+label{background:var(--vibeui-commerce-051-card);color:var(--vibeui-commerce-051-fg);box-shadow:0 1px 2px oklch(0.2 0.02 145 / 12%)}
 [data-vibeui-block="commerce-051"] [data-part="switch"] input:focus-visible+label{outline:2px solid var(--vibeui-commerce-051-accent);outline-offset:2px}
 [data-vibeui-block="commerce-051"] ul{list-style:none;margin:0;padding:0;display:grid;gap:0.75rem;grid-template-columns:repeat(2,minmax(0,1fr))}
 [data-vibeui-block="commerce-051"] [data-part="row"]{
@@ -82,7 +88,7 @@ background:linear-gradient(155deg,oklch(0.94 0.05 var(--vibeui-commerce-051-hue,
 [data-vibeui-block="commerce-051"] [data-part="price"]{margin:0;font-size:0.9375rem;font-weight:700;font-variant-numeric:tabular-nums}
 [data-vibeui-block="commerce-051"] [data-part="buy"]{
 position:relative;z-index:1;appearance:none;border:0;cursor:pointer;height:2rem;padding:0 0.875rem;border-radius:0.625rem;
-background:var(--vibeui-commerce-051-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.75rem;font-weight:650;
+background:var(--vibeui-commerce-051-accent);color:var(--vibeui-commerce-051-onaccent);font:inherit;font-size:0.75rem;font-weight:650;
 }
 [data-vibeui-block="commerce-051"] [data-part="buy"]:focus-visible{outline:2px solid var(--vibeui-commerce-051-accent);outline-offset:2px}
 [data-vibeui-block="commerce-051"] [data-part="sr"]{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
@@ -145,6 +151,28 @@ const DEFAULT_ROWS: Commerce051Row[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Каталог с переключателем «плитка / список» на радиокнопках: раскладку и
  * состав полей меняет :has(). Один файл, ноль зависимостей, палитра своя.
  */
@@ -156,12 +184,20 @@ export function Commerce051({
   viewLegend = "Вид каталога",
   rows = DEFAULT_ROWS,
   cta = "В корзину",
+  foundText = "Найдено {count} товаров",
   accent,
+  background = "",
   className,
   style,
 }: Commerce051Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-051-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-051-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -180,7 +216,9 @@ export function Commerce051({
           <div data-part="top">
             <h2>
               {title}
-              <span data-part="found">Найдено {found} товаров</span>
+              <span data-part="found">
+                {foundText.replace("{count}", String(found))}
+              </span>
             </h2>
             <fieldset>
               <legend>{viewLegend}</legend>

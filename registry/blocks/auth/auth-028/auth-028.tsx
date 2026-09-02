@@ -16,6 +16,18 @@ export type Auth028Props = {
   purposes?: Auth028Purpose[]
   acceptAll?: string
   saveChoice?: string
+  /** Пояснение к заблокированной обязательной цели. */
+  lockText?: string
+  /** Счётчик; {count} и {total} подставляются числами. */
+  countText?: string
+  /** Текст перед ссылкой на политику. */
+  policyText?: string
+  /** Подпись ссылки на политику. */
+  policyLinkText?: string
+  /** Хвост сноски после ссылки. */
+  policyTailText?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -33,16 +45,23 @@ export type Auth028Props = {
 // значило бы умолчать о собираемых данных, а сделать снимаемой — соврать.
 // Переключатели — обычные чекбоксы, вид даёт CSS; клавиатура работает сама.
 //
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не носит собственной подложки.
+//
 // Демонстрация интерфейса: выбор никуда не сохраняется.
 const STYLES = `
 :where([data-vibeui-block="auth-028"]){
---vibeui-auth-028-bg:oklch(0.96 0.004 265);
---vibeui-auth-028-card:oklch(1 0 0);
---vibeui-auth-028-fg:oklch(0.22 0.014 265);
---vibeui-auth-028-muted:oklch(0.54 0.014 265);
---vibeui-auth-028-border:oklch(0.9 0.006 265);
---vibeui-auth-028-accent:oklch(0.5 0.15 265);
---vibeui-auth-028-track:oklch(0.85 0.008 265);
+--vibeui-auth-028-bg:transparent;
+--vibeui-auth-028-card:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
+--vibeui-auth-028-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-auth-028-muted:light-dark(oklch(0.54 0.014 265),oklch(0.71 0.012 265));
+--vibeui-auth-028-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-auth-028-accent:light-dark(oklch(0.5 0.15 265),oklch(0.75 0.13 268));
+--vibeui-auth-028-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 268));
+--vibeui-auth-028-track:light-dark(oklch(0.85 0.008 265),oklch(0.42 0.012 265));
+--vibeui-auth-028-knob:light-dark(oklch(1 0 0),oklch(0.96 0.004 265));
+--vibeui-auth-028-soft:light-dark(oklch(0.55 0.02 265 / 4%),oklch(0.82 0.02 265 / 7%));
+--vibeui-auth-028-badge:light-dark(oklch(0.55 0.02 265 / 12%),oklch(0.82 0.02 265 / 14%));
 --vibeui-auth-028-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -71,7 +90,7 @@ border:1px solid var(--vibeui-auth-028-border);
 }
 [data-vibeui-block="auth-028"] [data-part="row"]:has(input:checked){border-color:var(--vibeui-auth-028-accent)}
 [data-vibeui-block="auth-028"] [data-part="row"]:has(input:focus-visible){outline:2px solid var(--vibeui-auth-028-accent);outline-offset:2px}
-[data-vibeui-block="auth-028"] [data-part="row"]:has(input:disabled){background:oklch(0.55 0.02 265 / 4%)}
+[data-vibeui-block="auth-028"] [data-part="row"]:has(input:disabled){background:var(--vibeui-auth-028-soft)}
 [data-vibeui-block="auth-028"] [data-part="ptitle"]{display:block;font-size:0.875rem;font-weight:650}
 [data-vibeui-block="auth-028"] [data-part="ptext"]{display:block;margin-top:0.1875rem;font-size:0.75rem;line-height:1.45;color:var(--vibeui-auth-028-muted)}
 [data-vibeui-block="auth-028"] [data-part="switch"]{
@@ -89,7 +108,7 @@ transition:background-color .16s ease;
 }
 [data-vibeui-block="auth-028"] [data-part="knob"]{
 position:absolute;top:0.1875rem;left:0.1875rem;
-width:1rem;height:1rem;border-radius:9999px;background:oklch(1 0 0);
+width:1rem;height:1rem;border-radius:9999px;background:var(--vibeui-auth-028-knob);
 transition:transform .16s ease;
 }
 [data-vibeui-block="auth-028"] [data-part="switch"]:has(input:checked) [data-part="track"]{background:var(--vibeui-auth-028-accent)}
@@ -97,7 +116,7 @@ transition:transform .16s ease;
 [data-vibeui-block="auth-028"] [data-part="switch"]:has(input:disabled) [data-part="track"]{opacity:.55}
 [data-vibeui-block="auth-028"] [data-part="lock"]{
 display:inline-block;margin-top:0.375rem;padding:0.0625rem 0.375rem;border-radius:9999px;
-background:oklch(0.55 0.02 265 / 12%);font-size:0.625rem;font-weight:650;color:var(--vibeui-auth-028-muted);
+background:var(--vibeui-auth-028-badge);font-size:0.625rem;font-weight:650;color:var(--vibeui-auth-028-muted);
 }
 [data-vibeui-block="auth-028"] [data-part="actions"]{display:flex;flex-direction:column;gap:0.5rem}
 [data-vibeui-block="auth-028"] [data-part="all"],
@@ -105,7 +124,7 @@ background:oklch(0.55 0.02 265 / 12%);font-size:0.625rem;font-weight:650;color:v
 flex:1;appearance:none;cursor:pointer;height:2.625rem;padding:0 1rem;
 border-radius:0.625rem;font:inherit;font-size:0.875rem;font-weight:650;
 }
-[data-vibeui-block="auth-028"] [data-part="all"]{border:0;background:var(--vibeui-auth-028-accent);color:oklch(1 0 0)}
+[data-vibeui-block="auth-028"] [data-part="all"]{border:0;background:var(--vibeui-auth-028-accent);color:var(--vibeui-auth-028-on-accent)}
 [data-vibeui-block="auth-028"] [data-part="save"]{border:1px solid var(--vibeui-auth-028-accent);background:none;color:var(--vibeui-auth-028-accent)}
 [data-vibeui-block="auth-028"] [data-part="all"]:focus-visible,
 [data-vibeui-block="auth-028"] [data-part="save"]:focus-visible{outline:2px solid var(--vibeui-auth-028-accent);outline-offset:2px}
@@ -139,6 +158,28 @@ const DEFAULT_PURPOSES: Auth028Purpose[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Согласие на обработку данных по целям: равные кнопки «принять всё»
  * и «сохранить выбор», обязательная цель заблокирована. Один файл.
  */
@@ -148,6 +189,12 @@ export function Auth028({
   purposes = DEFAULT_PURPOSES,
   acceptAll = "Принять всё",
   saveChoice = "Сохранить выбор",
+  lockText = "нельзя отключить — иначе аккаунт не работает",
+  countText = "Выбрано целей: {count} из {total}.",
+  policyText = "Подробности — в",
+  policyLinkText = "политике обработки данных",
+  policyTailText = "; там же список обработчиков и сроки хранения.",
+  background = "",
   accent,
   className,
   style,
@@ -158,6 +205,12 @@ export function Auth028({
 
   const palette = {
     ...(accent ? { "--vibeui-auth-028-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-028-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -184,9 +237,7 @@ export function Auth028({
                     <span data-part="ptitle">{purpose.title}</span>
                     <span data-part="ptext">{purpose.text}</span>
                     {purpose.required ? (
-                      <span data-part="lock">
-                        нельзя отключить — иначе аккаунт не работает
-                      </span>
+                      <span data-part="lock">{lockText}</span>
                     ) : null}
                   </span>
                   <span data-part="switch">
@@ -226,9 +277,11 @@ export function Auth028({
           </div>
 
           <p data-part="foot">
-            Выбрано целей: {on.length} из {purposes.length}. Подробности — в{" "}
-            <a href="#">политике обработки данных</a>; там же список
-            обработчиков и сроки хранения.
+            {countText
+              .replace("{count}", String(on.length))
+              .replace("{total}", String(purposes.length))}{" "}
+            {policyText} <a href="#">{policyLinkText}</a>
+            {policyTailText}
           </p>
         </div>
       </section>

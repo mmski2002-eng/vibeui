@@ -8,6 +8,8 @@ export type Buttongroup035Props = Omit<
   extra?: string[]
   moreLabel?: string
   label?: string
+  /** Пусто — заливки нет, сцепка ложится на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,11 +22,13 @@ export type Buttongroup035Props = Omit<
 // [open], маркер списка убран через ::marker и ::-webkit-details-marker.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-035"]){
---vibeui-buttongroup-035-surface:oklch(1 0 0);
---vibeui-buttongroup-035-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-035-muted:oklch(0.55 0.014 265);
---vibeui-buttongroup-035-border:oklch(0.88 0.008 265);
---vibeui-buttongroup-035-accent:oklch(0.5 0.16 265);
+--vibeui-buttongroup-035-surface:transparent;
+--vibeui-buttongroup-035-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-035-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-035-border:light-dark(oklch(0.88 0.008 265),oklch(0.39 0.012 265));
+--vibeui-buttongroup-035-hover:light-dark(oklch(0.965 0.005 265),oklch(0.33 0.014 265));
+--vibeui-buttongroup-035-on:light-dark(oklch(0.97 0.02 265),oklch(0.34 0.06 265));
+--vibeui-buttongroup-035-accent:light-dark(oklch(0.5 0.16 265),oklch(0.79 0.13 265));
 --vibeui-buttongroup-035-radius:0.625rem;
 --vibeui-buttongroup-035-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -50,7 +54,7 @@ transition:background-color .16s ease,color .16s ease;
 [data-vibeui-block="buttongroup-035"] summary::marker{content:""}
 [data-vibeui-block="buttongroup-035"] summary::-webkit-details-marker{display:none}
 [data-vibeui-block="buttongroup-035"] button:hover,
-[data-vibeui-block="buttongroup-035"] summary:hover{background:oklch(0.965 0.005 265)}
+[data-vibeui-block="buttongroup-035"] summary:hover{background:var(--vibeui-buttongroup-035-hover)}
 [data-vibeui-block="buttongroup-035"] button:focus-visible,
 [data-vibeui-block="buttongroup-035"] summary:focus-visible{
 z-index:1;outline:2px solid var(--vibeui-buttongroup-035-accent);outline-offset:-2px;
@@ -78,7 +82,7 @@ border-end-end-radius:calc(var(--vibeui-buttongroup-035-radius) - 1px);
 }
 [data-vibeui-block="buttongroup-035"] summary{color:var(--vibeui-buttongroup-035-muted)}
 [data-vibeui-block="buttongroup-035"] details[open] summary{
-color:var(--vibeui-buttongroup-035-accent);background:oklch(0.97 0.02 265);
+color:var(--vibeui-buttongroup-035-accent);background:var(--vibeui-buttongroup-035-on);
 }
 [data-vibeui-block="buttongroup-035"] summary svg{
 width:0.875rem;height:0.875rem;
@@ -93,6 +97,28 @@ const DEFAULT_ACTIONS = ["Ответить", "Переслать"]
 const DEFAULT_EXTRA = ["В архив", "Спам", "Напомнить"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сцепка, которая раскрывает редкие действия вправо, оставаясь одной деталью.
  * Один файл, ноль зависимостей, серверный компонент на details/summary.
  */
@@ -101,6 +127,7 @@ export function Buttongroup035({
   extra = DEFAULT_EXTRA,
   moreLabel = "Ещё",
   label = "Действия над письмом",
+  background = "",
   accent,
   className,
   style,
@@ -108,6 +135,12 @@ export function Buttongroup035({
 }: Buttongroup035Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-035-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-035-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

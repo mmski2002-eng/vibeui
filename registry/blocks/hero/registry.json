@@ -5,7 +5,7 @@
       "name": "hero-001",
       "type": "registry:block",
       "title": "Первый экран с сиянием",
-      "description": "Тёмный SaaS hero с ambient-свечением, grid-подложкой, badge и парой CTA. Самодостаточен: не зависит от темы и стиля проекта.",
+      "description": "Первый экран с ambient-свечением, grid-подложкой, badge и парой CTA. Следует теме окружения и не зависит от стиля проекта.",
       "categories": ["hero"],
       "dependencies": [],
       "registryDependencies": [],
@@ -16,14 +16,15 @@
           "target": "@components/vibeui/hero-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, всегда тёмный независимо от темы проекта. Цвета живут в локальных переменных --vibeui-hero-*; акцент меняется пропом accent. Keyframes и prefers-reduced-motion лежат внутри компонента, globals.css править не нужно.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hero-*. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он ложится на фон страницы и темнеет вместе с ней. Акцент меняется пропом accent, подложка — пропом background. Keyframes и prefers-reduced-motion лежат внутри компонента, globals.css править не нужно.",
       "meta": {
-        "tags": ["dark", "saas", "gradient", "animated", "centered", "landing"],
+        "tags": ["glow", "saas", "gradient", "animated", "centered", "landing"],
         "featured": true,
         "ai": {
           "summary": "Тёмный центрированный SaaS-hero: badge, крупный заголовок в две части, подзаголовок, две CTA-ссылки, строка фактов. Ambient-свечение и grid-подложка на чистом CSS, ноль зависимостей, один файл.",
           "preserve": [
-            "тёмный фон блока независимо от темы проекта",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "локальную палитру --vibeui-hero-* — не заменять её на токены темы проекта (bg-background, text-foreground, primary и т.п.)",
             "ambient glow и grid-подложку",
             "clamp-типографику заголовка и tracking в единицах cqi",
@@ -37,9 +38,11 @@
             "тексты badge, title, titleAccent, description, CTA и highlights",
             "href у CTA",
             "акцентный цвет — проп accent (и accentForeground для контраста текста на кнопке)",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сохраняй семантику ссылок. Для внутренней навигации можно использовать компонент роутера проекта, если сохраняются визуальные стили, доступность и поведение href.",
             "Не добавляй motion-библиотеки: анимации уже на CSS.",
             "Не выноси CSS-переменные в globals.css: блок должен оставаться одним файлом."
@@ -47,11 +50,12 @@
         },
         "i18n": {
           "en": {
-            "description": "A dark SaaS hero with ambient glow, a grid backdrop, a badge and a pair of CTAs. Self-contained — indifferent to your project's theme and style.",
+            "description": "A first screen with an ambient glow, a grid backdrop, a badge and a pair of CTAs. It follows the surrounding theme and stays indifferent to your project's style.",
             "ai": {
               "summary": "A dark, centred SaaS hero: badge, a large two-part headline, a subhead, two CTA links and a row of facts. The ambient glow and grid backdrop are pure CSS. Zero dependencies, one file.",
               "preserve": [
-                "the dark background of the block, whatever theme the project runs",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the local --vibeui-hero-* palette — do not swap it for your theme tokens (bg-background, text-foreground, primary and the like)",
                 "the ambient glow and the grid backdrop",
                 "the clamped headline typography and the tracking in cqi units",
@@ -65,24 +69,79 @@
                 "the badge, title, titleAccent, description, CTA and highlights copy",
                 "the CTA hrefs",
                 "the accent colour through the accent prop (and accentForeground for text contrast on the button)",
-                "outer spacing through className"
+                "outer spacing through className",
+                "background — the component backdrop; empty means no backdrop, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Keep the link semantics. For internal navigation your router's component is fine, as long as the visual styling, the accessibility and the href behaviour survive.",
                 "Do not add a motion library: the animations are already CSS.",
                 "Do not lift the CSS variables into globals.css: the block has to stay a single file."
               ]
             },
-            "title": "Aurora Hero"
+            "title": "Aurora Hero",
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "accentForeground": {
+                "label": "Button text"
+              },
+              "background": {
+                "label": "Backdrop"
+              }
+            },
+            "preview": {
+              "props": {
+                "badge": "Now in public beta",
+                "title": "Ship your product",
+                "titleAccent": "twice as fast",
+                "description": "Everything your team needs to design, build and launch — in one workspace that stays out of the way.",
+                "primaryAction": {
+                  "label": "Start building",
+                  "href": "#"
+                },
+                "secondaryAction": {
+                  "label": "Book a demo",
+                  "href": "#"
+                },
+                "highlights": [
+                  "No credit card",
+                  "14-day trial",
+                  "SOC 2 compliant"
+                ]
+              }
+            }
           }
-        }
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "accentForeground",
+            "label": "Текст на кнопке",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["accent", "accentForeground", "background"]
       }
     },
     {
       "name": "hero-002",
       "type": "registry:block",
       "title": "Первый экран с консолью",
-      "description": "Светлый B2B SaaS hero со split-раскладкой: слева текст и пара CTA, справа декоративная визуализация продукта. Самодостаточен: не зависит от темы и стиля проекта.",
+      "description": "B2B SaaS hero со split-раскладкой: слева текст и пара CTA, справа декоративная визуализация продукта. Следует теме окружения и не зависит от стиля проекта.",
       "categories": ["hero"],
       "dependencies": [],
       "registryDependencies": [],
@@ -93,16 +152,18 @@
           "target": "@components/vibeui/hero-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, всегда светлый независимо от темы проекта. Цвета живут в локальных переменных --vibeui-hero-002-*; акцент меняется пропом accent. Раскладка переключается container-запросами от ширины самого блока, поэтому он одинаково выглядит и на странице, и в миниатюре каталога. Визуализация справа собрана на HTML/CSS/inline SVG — внешних картинок нет.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей. Цвета живут в локальных переменных --vibeui-hero-002-*; тема берётся из color-scheme окружения через light-dark(), подложки по умолчанию нет — блок ложится на фон страницы. Акцент меняется пропом accent, подложка — пропом background. Раскладка переключается container-запросами от ширины самого блока, поэтому он одинаково выглядит и на странице, и в миниатюре каталога. Визуализация справа собрана на HTML/CSS/inline SVG — внешних картинок нет.",
       "meta": {
-        "tags": ["light", "saas", "split", "dashboard", "b2b", "landing"],
+        "tags": ["analytics", "saas", "split", "dashboard", "b2b", "landing"],
         "featured": true,
         "ai": {
           "summary": "Светлый B2B SaaS-hero со split-композицией. Слева: eyebrow-pill, крупный заголовок в две части, описание, две CTA-ссылки и trust-строка с декоративной стопкой аватаров. Справа: декоративное окно приложения — шапка с точками, боковой rail, две плитки метрик, area-график на inline SVG, лента активности и floating-чип. Ноль зависимостей, один файл, раскладка и типографика считаются от ширины блока через container-запросы и cqi.",
           "preserve": [
             "split-раскладку: контент слева, визуализация продукта справа от 64rem ширины блока",
             "сам product mockup — это часть дизайна блока, а не placeholder; не удалять, не заменять на <img>, скриншот, картинку или готовый dashboard-компонент проекта",
-            "светлую локальную палитру --vibeui-hero-002-* — не заменять её на токены темы проекта (bg-background, text-foreground, primary, border и т.п.)",
+            "локальную палитру --vibeui-hero-002-* — не заменять её на токены темы проекта (bg-background, text-foreground, primary, border и т.п.)",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "container-type: inline-size на корне блока и @container-правила в его <style> — блок меряет собственную ширину, а не ширину окна; не переписывай их на viewport-медиазапросы",
             "типографику в единицах cqi, clamp и tracking",
             "area-график как inline SVG с фиксированным путём — это иллюстрация, а не данные",
@@ -114,12 +175,15 @@
           ],
           "adapt": [
             "тексты eyebrow, title, titleAccent, description, CTA, proof и panelTitle",
+            "chipLabel — подпись плавающего чипа под окном",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "href у CTA",
             "label, value и delta у двух метрик",
             "акцентный цвет — проп accent (и accentForeground для контраста текста на кнопке)",
             "внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не подключай chart-библиотеку (recharts, chart.js, visx и т.п.): график декоративный и уже собран на inline SVG.",
             "Не добавляй motion-библиотеки: анимации уже на CSS.",
             "Не выноси CSS-переменные в globals.css: блок должен оставаться одним файлом.",
@@ -130,13 +194,15 @@
         },
         "i18n": {
           "en": {
-            "description": "A light B2B SaaS hero in a split layout: copy and two CTAs on the left, a decorative product visual on the right. Self-contained — indifferent to your project's theme and style.",
+            "description": "A B2B SaaS hero in a split layout: copy and two CTAs on the left, a decorative product visual on the right. It follows the surrounding theme and stays indifferent to your project's style.",
             "ai": {
               "summary": "A light B2B SaaS hero in a split composition. Left: an eyebrow pill, a large two-part headline, a description, two CTA links and a trust line with a decorative avatar stack. Right: a decorative app window — a title bar with dots, a side rail, two metric tiles, an area chart in inline SVG, an activity feed and a floating chip. Zero dependencies, one file; layout and typography are measured against the block's own width through container queries and cqi.",
               "preserve": [
                 "the split layout: copy on the left, the product visual on the right from 64rem of block width",
                 "the product mockup itself — it is part of the design, not a placeholder; do not delete it, do not swap it for an <img>, a screenshot, a picture or a dashboard component from the project",
-                "the light local --vibeui-hero-002-* palette — do not swap it for your theme tokens (bg-background, text-foreground, primary, border and the like)",
+                "the local --vibeui-hero-002-* palette — do not swap it for your theme tokens (bg-background, text-foreground, primary, border and the like)",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "container-type: inline-size on the block root and the @container rules in its <style> — the block measures its own width, not the window's; do not rewrite them as viewport media queries",
                 "the typography in cqi units, clamp and tracking",
                 "the area chart as inline SVG on a fixed path — it is an illustration, not data",
@@ -148,12 +214,15 @@
               ],
               "adapt": [
                 "the eyebrow, title, titleAccent, description, CTA, proof and panelTitle copy",
+                "chipLabel — the caption of the floating chip under the window",
+                "background — the component backdrop; empty means no backdrop, taking the page colour",
                 "the CTA hrefs",
                 "the label, value and delta of the two metrics",
                 "the accent colour through the accent prop (and accentForeground for text contrast on the button)",
                 "outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not pull in a chart library (recharts, chart.js, visx and friends): the chart is decorative and already drawn as inline SVG.",
                 "Do not add a motion library: the animations are already CSS.",
                 "Do not lift the CSS variables into globals.css: the block has to stay a single file.",
@@ -162,16 +231,79 @@
                 "Keep the link semantics. For internal navigation your router's component is fine, as long as the visual styling, the accessibility and the href behaviour survive."
               ]
             },
-            "title": "Console Hero"
+            "title": "Console Hero",
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "accentForeground": {
+                "label": "Button text"
+              },
+              "background": {
+                "label": "Backdrop"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "New · Analytics 2.0",
+                "title": "Every metric your team",
+                "titleAccent": "actually acts on",
+                "description": "One workspace for product analytics, alerts and reporting — without a data team in the loop.",
+                "primaryAction": {
+                  "label": "Start free trial",
+                  "href": "#"
+                },
+                "secondaryAction": {
+                  "label": "Book a demo",
+                  "href": "#"
+                },
+                "proof": "Trusted by 2,000+ product teams",
+                "panelTitle": "Overview",
+                "metrics": [
+                  {
+                    "label": "Active users",
+                    "value": "24,918",
+                    "delta": "+12.4%"
+                  },
+                  {
+                    "label": "Retention",
+                    "value": "68.2%",
+                    "delta": "+3.1%"
+                  }
+                ],
+                "chipLabel": "+18.2% MRR"
+              }
+            }
           }
-        }
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "accentForeground",
+            "label": "Текст на кнопке",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["accent", "accentForeground", "background"]
       }
     },
     {
       "name": "hero-003",
       "type": "registry:block",
       "title": "Первый экран мозаикой",
-      "description": "Тёплый светлый hero, собранный мозаикой из пяти плиток: offer-плитка с заголовком и CTA, метрика, залитая акцентом плитка-утверждение, короткий чеклист и декоративный паттерн. Самодостаточен: не зависит от темы и стиля проекта.",
+      "description": "Тёплый hero, собранный мозаикой из пяти плиток: offer-плитка с заголовком и CTA, метрика, залитая акцентом плитка-утверждение, короткий чеклист и декоративный паттерн. Следует теме окружения.",
       "categories": ["hero"],
       "dependencies": [],
       "registryDependencies": [],
@@ -182,9 +314,9 @@
           "target": "@components/vibeui/hero-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, всегда светлый независимо от темы проекта. Цвета живут в локальных переменных --vibeui-hero-003-*; акцент меняется пропом accent. Раскладка переключается container-запросами от ширины самого блока, поэтому мозаика видна и на странице, и в миниатюре каталога. Заголовок использует системный serif, интерфейсный текст — системный sans; веб-шрифты не подключаются.",
+      "docs": "Блок самодостаточен: один файл, без зависимостей. Цвета живут в локальных переменных --vibeui-hero-003-*; тема берётся из color-scheme окружения через light-dark(), подложки по умолчанию нет — блок ложится на фон страницы. Акцент меняется пропом accent, подложка — пропом background. Раскладка переключается container-запросами от ширины самого блока, поэтому мозаика видна и на странице, и в миниатюре каталога. Заголовок использует системный serif, интерфейсный текст — системный sans; веб-шрифты не подключаются.",
       "meta": {
-        "tags": ["light", "warm", "bento", "editorial", "landing", "startup"],
+        "tags": ["mosaic", "warm", "bento", "editorial", "landing", "startup"],
         "featured": true,
         "ai": {
           "summary": "Тёплый светлый hero с мозаичной раскладкой из пяти плиток фиксированных ролей: крупная offer-плитка с eyebrow, serif-заголовком в две части, описанием и парой CTA; плитка метрики; плитка, залитая терракотой, с коротким утверждением и стрелкой; плитка с чеклистом из трёх пунктов; декоративная плитка со штриховкой. Тёплая нейтральная база и холодный серо-голубой слой в границах и второстепенных плитках, терракота — только акцент. Плоские плитки с тугими радиусами, без теней. Плитки проявляются последовательно. Ноль зависимостей, один файл, раскладка и типографика считаются от ширины блока через container-запросы и cqi.",
@@ -193,7 +325,9 @@
             "offer-плитку lead как центр композиции: заголовок и CTA живут только в ней, остальные плитки её поддерживают",
             "залитую терракотой плитку accent — это визуальный акцент композиции, а не декоративная подложка; не убирай заливку и не превращай её в обычную карточку",
             "чеклист коротким: максимум три пункта без описаний и без иллюстративных иконок — это hero, а не features-секция",
-            "палитру --vibeui-hero-003-*: тёплая нейтральная база, холодный серо-голубой слой в границах и второстепенных плитках, терракота точечно. Не заменять на токены темы проекта (bg-background, text-foreground, primary, border и т.п.) и не превращать блок в сплошную бежевую заливку",
+            "палитру --vibeui-hero-003-*: тёплая нейтральная база, холодный серо-голубой слой в границах и второстепенных плитках, терракота точечно. Не заменять на токены темы проекта (bg-background, text-foreground, primary, border и т.п.) и не превращать блок в сплошную заливку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "пару шрифтов: системный serif для заголовка и числа метрики, системный sans для остального; не подключай веб-шрифты и не переводи заголовок на sans",
             "тугие радиусы плиток и CTA и отсутствие теней — этим блок отличается от hero-002 с его мягкими скруглениями и тенями",
             "тёмную заливку primary CTA: акцентный цвет в этом блоке принадлежит плитке, а не кнопке",
@@ -209,9 +343,11 @@
             "value и label у метрики",
             "до трёх пунктов чеклиста",
             "акцентный цвет — проп accent (и accentForeground для контраста текста на акцентной плитке)",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не добавляй motion-библиотеки: анимации уже на CSS.",
             "Не выноси CSS-переменные в globals.css: блок должен оставаться одним файлом.",
             "Не добавляй в мозаику новые плитки и не меняй их порядок: состав фиксирован, это часть композиции.",
@@ -223,7 +359,7 @@
         },
         "i18n": {
           "en": {
-            "description": "A warm, light hero laid out as a mosaic of five tiles: an offer tile with the headline and CTAs, a metric, an accent-filled statement tile, a short checklist and a decorative pattern. Self-contained — indifferent to your project's theme and style.",
+            "description": "A warm hero laid out as a mosaic of five tiles: an offer tile with the headline and CTAs, a metric, an accent-filled statement tile, a short checklist and a decorative pattern. It follows the surrounding theme.",
             "ai": {
               "summary": "A warm, light hero built from five tiles with fixed roles: a large offer tile carrying an eyebrow, a two-part serif headline, a description and a pair of CTAs; a metric tile; a terracotta-filled tile with a short statement and an arrow; a tile with a three-item checklist; and a decorative hatched tile. A warm neutral base, a cool grey-blue layer in the borders and secondary tiles, terracotta used only as an accent. Flat tiles with tight radii and no shadows. The tiles appear in sequence. Zero dependencies, one file; layout and typography are measured against the block's own width through container queries and cqi.",
               "preserve": [
@@ -231,7 +367,9 @@
                 "the lead offer tile as the centre of the composition: the headline and the CTAs live only there, the other tiles support it",
                 "the terracotta-filled accent tile — it is the visual accent of the composition, not a decorative backdrop; do not remove the fill or turn it into an ordinary card",
                 "the checklist short: at most three items, no descriptions, no illustrative icons — this is a hero, not a features section",
-                "the --vibeui-hero-003-* palette: a warm neutral base, a cool grey-blue layer in the borders and secondary tiles, terracotta used sparingly. Do not swap it for your theme tokens (bg-background, text-foreground, primary, border and the like) and do not turn the block into one flat beige fill",
+                "the --vibeui-hero-003-* palette: a warm neutral base, a cool grey-blue layer in the borders and secondary tiles, terracotta used sparingly. Do not swap it for your theme tokens (bg-background, text-foreground, primary, border and the like) and do not turn the block into one flat fill",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the type pairing: a system serif for the headline and the metric figure, a system sans for everything else; do not load a web font and do not move the headline to sans",
                 "the tight radii of the tiles and CTAs and the absence of shadows — that is what sets this hero apart from hero-002 with its soft corners and shadows",
                 "the dark fill of the primary CTA: in this block the accent colour belongs to the tile, not to the button",
@@ -247,9 +385,11 @@
                 "the value and label of the metric",
                 "up to three checklist items",
                 "the accent colour through the accent prop (and accentForeground for text contrast on the accent tile)",
-                "outer spacing through className"
+                "outer spacing through className",
+                "background — the component backdrop; empty means no backdrop, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not add a motion library: the animations are already CSS.",
                 "Do not lift the CSS variables into globals.css: the block has to stay a single file.",
                 "Do not add tiles to the mosaic and do not reorder them: the cast is fixed and it is part of the composition.",
@@ -259,9 +399,67 @@
                 "Keep the link semantics. For internal navigation your router's component is fine, as long as the visual styling, the accessibility and the href behaviour survive."
               ]
             },
-            "title": "Mosaic Hero"
+            "title": "Mosaic Hero",
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "accentForeground": {
+                "label": "Tile text"
+              },
+              "background": {
+                "label": "Backdrop"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Design system · v3",
+                "title": "Everything you ship",
+                "titleAccent": "deserves a shape",
+                "description": "A calm, opinionated foundation for teams that would rather design once and reuse forever.",
+                "primaryAction": {
+                  "label": "Get started",
+                  "href": "#"
+                },
+                "secondaryAction": {
+                  "label": "Read the docs",
+                  "href": "#"
+                },
+                "stat": {
+                  "value": "12k+",
+                  "label": "components shipped"
+                },
+                "highlights": [
+                  "Accessible by default",
+                  "Zero runtime deps",
+                  "Works in any theme"
+                ],
+                "accentNote": "Built to be copied, not configured"
+              }
+            }
           }
-        }
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "accentForeground",
+            "label": "Текст на плитке",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["accent", "accentForeground", "background"]
       }
     },
     {
@@ -279,9 +477,9 @@
           "target": "@components/vibeui/hero-004.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра в переменных --vibeui-hero-004-*, светлая бумажная база. Раскладка считается container-запросами от ширины блока: до 34rem кнопки идут столбиком на всю ширину, дальше становятся строкой по центру. Внутренний слой [data-part=\"shell\"] держит max-width и отступы — правила @container не действуют на сам контейнер. Анимаций нет, только transition на кнопках, для него объявлен prefers-reduced-motion.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра в переменных --vibeui-hero-004-*, тема берётся из color-scheme окружения через light-dark(); подложки по умолчанию нет — блок ложится на фон страницы, подложка задаётся пропом background. Раскладка считается container-запросами от ширины блока: до 34rem кнопки идут столбиком на всю ширину, дальше становятся строкой по центру. Внутренний слой [data-part=\"shell\"] держит max-width и отступы — правила @container не действуют на сам контейнер. Анимаций нет, только transition на кнопках, для него объявлен prefers-reduced-motion.",
       "meta": {
-        "tags": ["hero", "minimal", "centered", "light"],
+        "tags": ["hero", "minimal", "centered", "typographic"],
         "preview": {
           "width": "full"
         },
@@ -292,7 +490,9 @@
           "preserve": [
             "отсутствие иллюстрации: весь смысл блока в том, что первый экран держат слова, а не мокап или фотография",
             "две короткие линейки сверху и снизу — они задают вертикальные границы композиции, без них блок теряет форму",
-            "локальную палитру --vibeui-hero-004-*: блок несёт светлый фон сам и не читает токены темы проекта",
+            "локальную палитру --vibeui-hero-004-*: блок несёт свои цвета и не читает токены темы проекта",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "container-запросы вместо медиазапросов окна: кнопки перестраиваются от ширины самого блока, поэтому в узкой колонке вёрстка честная",
             "поведение кнопок: столбик на узкой ширине, строка от 34rem — растянутая кнопка на телефоне попадает под палец",
             "семантику: один h1, обе CTA как <a href>, линейки помечены aria-hidden"
@@ -301,9 +501,11 @@
             "тексты eyebrow, title, lede и note",
             "подписи и адреса кнопок primary и secondary",
             "акцентный цвет через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "внешние отступы через className и точечные переменные через style"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не добавляйте в блок картинку или мокап: для этого есть hero-005 и hero-010, а здесь иллюстрация ломает замысел.",
             "Не делайте note длиннее строки — это микроподпись под кнопками, а не второй подзаголовок.",
             "Если меняете accent, проверьте контраст текста на основной кнопке: нужно не меньше 4.5:1.",
@@ -324,6 +526,18 @@
             "type": "text",
             "default": "Запуск открыт",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -334,7 +548,9 @@
               "preserve": [
                 "the absence of an illustration: the whole point of the block is that the first screen is carried by words, not by a mockup or a photo",
                 "the two short rules above and below — they set the vertical bounds of the composition; without them the block loses its shape",
-                "the local --vibeui-hero-004-* palette: the block carries its light background itself and never reads your theme tokens",
+                "the local --vibeui-hero-004-* palette: the block carries its own colours and never reads your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "container queries instead of window media queries: the buttons reflow against the block's own width, so the layout stays honest in a narrow column",
                 "the button behaviour: stacked on a narrow block, in a row from 34rem — a full-width button is what the thumb reaches on a phone",
                 "the semantics: a single h1, both CTAs as <a href>, the rules marked aria-hidden"
@@ -343,9 +559,11 @@
                 "the eyebrow, title, lede and note copy",
                 "the labels and hrefs of the primary and secondary buttons",
                 "the accent colour through the accent prop",
+                "background — the component backdrop; empty means no backdrop, taking the page colour",
                 "outer spacing through className and single variables through style"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not add a picture or a mockup: hero-005 and hero-010 exist for that, and here an illustration breaks the idea.",
                 "Keep note to one line — it is a micro-caption under the buttons, not a second subhead.",
                 "If you change accent, check the text contrast on the primary button: 4.5:1 minimum.",
@@ -361,18 +579,41 @@
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "Now open"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Backdrop"
               }
             },
-            "title": "Plain Centred Hero"
+            "title": "Plain Centred Hero",
+            "preview": {
+              "props": {
+                "eyebrow": "Now open",
+                "title": "Ship a landing page tonight",
+                "lede": "Ready-made sections your AI agent understands. Pick a design, hand over the brief — you get a page, not a scaffold.",
+                "primary": {
+                  "label": "Start for free",
+                  "href": "#"
+                },
+                "secondary": {
+                  "label": "Browse the catalogue",
+                  "href": "#"
+                },
+                "note": "No card required. The first ten sections are free forever."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
       "name": "hero-005",
       "type": "registry:block",
       "title": "Первый экран со снимком продукта",
-      "description": "Тёмный hero со снимком продукта: текст по центру, под ним окно приложения во всю ширину, обрезанное нижним краем. Снимок нарисован разметкой, внешних картинок нет.",
+      "description": "Hero со снимком продукта: текст по центру, под ним окно приложения во всю ширину, обрезанное нижним краем. Снимок нарисован разметкой, внешних картинок нет.",
       "categories": ["hero"],
       "dependencies": [],
       "registryDependencies": [],
@@ -383,9 +624,9 @@
           "target": "@components/vibeui/hero-005.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-005-*, тёмная база. Снимок продукта собран из HTML и CSS: шапка с точками, боковой rail, три плитки метрик и лента строк; вся конструкция помечена aria-hidden как декоративная. Нижний край окна растворяется через mask-image с линейным градиентом, а не через наложенную плашку, поэтому работает на любом фоне. Раскладка от ширины блока: rail появляется от 52rem, кнопки становятся строкой от 34rem.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-005-*, тема берётся из color-scheme окружения через light-dark(); подложки по умолчанию нет — блок ложится на фон страницы, подложка задаётся пропом background. Снимок продукта собран из HTML и CSS: шапка с точками, боковой rail, три плитки метрик и лента строк; вся конструкция помечена aria-hidden как декоративная. Нижний край окна растворяется через mask-image с линейным градиентом, а не через наложенную плашку, поэтому работает на любом фоне. Раскладка от ширины блока: rail появляется от 52rem, кнопки становятся строкой от 34rem.",
       "meta": {
-        "tags": ["hero", "dark", "product", "mockup"],
+        "tags": ["hero", "screenshot", "product", "mockup"],
         "preview": {
           "width": "full"
         },
@@ -396,7 +637,9 @@
           "preserve": [
             "сам снимок продукта: это часть дизайна блока, а не заглушка — не заменяйте его на <img>, скриншот или готовый dashboard-компонент проекта",
             "обрезку окна маской по нижнему краю: незаконченное окно читается как «страница продолжается», а плашка поверх такого эффекта не даёт",
-            "тёмную локальную палитру --vibeui-hero-005-*: блок остаётся тёмным независимо от темы проекта",
+            "локальную палитру --vibeui-hero-005-*: блок несёт свои цвета и не читает токены темы проекта",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "container-запросы: боковой rail появляется от 52rem ширины блока, кнопки становятся строкой от 34rem — не переписывайте это на медиазапросы окна",
             "aria-hidden на всём мокапе: цифры в нём декоративные и не должны читаться скринридером как данные",
             "семантику: один h1, обе CTA как <a href>"
@@ -405,9 +648,11 @@
             "тексты title и lede, подписи и адреса CTA primary и secondary",
             "appName — подпись в шапке нарисованного окна",
             "содержимое metrics и rows: подписи, значения и строки ленты",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не подставляйте в мокап реальные цифры продукта: они не помечены как данные и не обновляются.",
             "Не добавляйте в окно интерактив — это иллюстрация, любые кнопки внутри будут ловушкой для пользователя.",
             "Метрик ровно три, строк ленты не больше пяти: остальные обрезаются, чтобы окно не разъезжалось по высоте.",
@@ -428,17 +673,31 @@
             "type": "text",
             "default": "vibeui — рабочая область",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
-            "description": "A dark hero with a product shot: centred copy and, beneath it, a full-width app window cropped by the bottom edge. The shot is drawn in markup — no external images.",
+            "description": "A hero with a product shot: centred copy and, beneath it, a full-width app window cropped by the bottom edge. The shot is drawn in markup — no external images.",
             "ai": {
               "summary": "A dark hero: centred copy with two CTAs and, below, a drawn app window with metric tiles and an activity feed, cropped by a mask at the bottom. One file, zero dependencies, not a single external asset.",
               "preserve": [
                 "the product shot itself: it is part of the design, not a placeholder — do not swap it for an <img>, a screenshot or a dashboard component from the project",
                 "the mask that crops the window at the bottom: an unfinished window reads as «the page continues», and an overlay panel does not give that effect",
-                "the dark local --vibeui-hero-005-* palette: the block stays dark whatever theme the project runs",
+                "the local --vibeui-hero-005-* palette: the block carries its own colours and never reads your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "the container queries: the side rail appears from 52rem of block width and the buttons form a row from 34rem — do not rewrite them as window media queries",
                 "aria-hidden on the whole mockup: the numbers inside are decorative and must not be read out as data",
                 "the semantics: a single h1, both CTAs as <a href>"
@@ -447,9 +706,11 @@
                 "the title and lede copy, the labels and hrefs of the primary and secondary CTAs",
                 "appName — the caption in the drawn window's title bar",
                 "the contents of metrics and rows: labels, values and feed lines",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "background — the component backdrop; empty means no backdrop, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not put real product numbers into the mockup: they are not exposed as data and never update.",
                 "Do not make the window interactive — it is an illustration, and any button inside it is a trap for the user.",
                 "There are exactly three metrics and at most five feed lines: the rest are trimmed so the window keeps its height.",
@@ -465,11 +726,53 @@
               "appName": {
                 "label": "Window caption",
                 "default": "acme — workspace"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Backdrop"
               }
             },
-            "title": "Product Shot Hero"
+            "title": "Product Shot Hero",
+            "preview": {
+              "props": {
+                "title": "Show the product, not a promise",
+                "lede": "The section opens with a shot of the interface: visitors see what is inside before they sign up.",
+                "primary": {
+                  "label": "Open the demo",
+                  "href": "#"
+                },
+                "secondary": {
+                  "label": "How it works",
+                  "href": "#"
+                },
+                "appName": "vibeui — workspace",
+                "metrics": [
+                  {
+                    "label": "Sections shipped",
+                    "value": "128"
+                  },
+                  {
+                    "label": "Average time",
+                    "value": "6 min"
+                  },
+                  {
+                    "label": "Manual edits",
+                    "value": "0"
+                  }
+                ],
+                "rows": [
+                  "Pricing section installed into the project",
+                  "The agent filled in your copy and currency",
+                  "Contrast check passed",
+                  "Ready to deploy"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -487,9 +790,9 @@
           "target": "@components/vibeui/hero-006.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-006-*, светлая зелёная база с мягким радиальным свечением сверху. Форма настоящая: <form> с <label> (визуально скрытым через hidden), input type=\"email\" и required — валидацию адреса и автозаполнение даёт браузер. Поле и кнопка лежат в одной рамке, подсветка на :focus-within охватывает обе. От 34rem рамка становится горизонтальной. Обработчика отправки нет: блок серверный, подключите свой action или перехват на уровне страницы.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-006-*, тема берётся из color-scheme окружения через light-dark(); подложки по умолчанию нет — блок ложится на фон страницы, подложка задаётся пропом background. Сверху остаётся мягкое радиальное свечение акцентом. Форма настоящая: <form> с <label> (визуально скрытым через hidden), input type=\"email\" и required — валидацию адреса и автозаполнение даёт браузер. Поле и кнопка лежат в одной рамке, подсветка на :focus-within охватывает обе. От 34rem рамка становится горизонтальной. Обработчика отправки нет: блок серверный, подключите свой action или перехват на уровне страницы.",
       "meta": {
-        "tags": ["hero", "newsletter", "form", "light"],
+        "tags": ["hero", "newsletter", "form", "email"],
         "preview": {
           "width": "full"
         },
@@ -503,15 +806,20 @@
             "type=\"email\" и required у поля: валидацию адреса и автозаполнение даёт браузер, не заменяйте их своей проверкой на клике",
             "видимый для скринридера <label>: он скрыт визуально атрибутом hidden, но остаётся в дереве доступности",
             "текст согласия рядом с формой, а не в подвале страницы: без него подписка выглядит как ловушка",
-            "локальную палитру --vibeui-hero-006-* и container-запрос, который разворачивает поле в строку от 34rem ширины блока"
+            "локальную палитру --vibeui-hero-006-* и container-запрос, который разворачивает поле в строку от 34rem ширины блока",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow, title, lede, consent и proof",
             "placeholder поля и подпись кнопки submitLabel",
             "до четырёх пунктов facts под формой",
+            "formLabel и emailLabel — подписи формы и поля для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "акцентный цвет через проп accent и внешние отступы через className"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "У формы нет обработчика: подключите action, серверное действие или собственный перехват отправки.",
             "Стопка кружков рядом с proof — декоративная и помечена aria-hidden; не подставляйте туда фотографии людей без alt.",
             "Не убирайте consent: текст согласия — часть обещания, а не украшение.",
@@ -532,6 +840,18 @@
             "type": "text",
             "default": "Подписаться",
             "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -545,15 +865,20 @@
                 "type=\"email\" and required on the field: address validation and autofill come from the browser, do not replace them with your own click-time check",
                 "the <label> that screen readers still see: it is visually hidden with the hidden attribute but stays in the accessibility tree",
                 "the consent copy next to the form, not in the page footer: without it the subscription reads as a trap",
-                "the local --vibeui-hero-006-* palette and the container query that turns the field into a row from 34rem of block width"
+                "the local --vibeui-hero-006-* palette and the container query that turns the field into a row from 34rem of block width",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow, title, lede, consent and proof copy",
                 "the field placeholder and the submitLabel button caption",
                 "up to four facts items under the form",
+                "formLabel and emailLabel — the form and field captions for screen readers",
+                "background — the component backdrop; empty means no backdrop, taking the page colour",
                 "the accent colour through the accent prop and outer spacing through className"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The form has no handler: wire up an action, a server action or your own submit interception.",
                 "The stack of circles next to proof is decorative and aria-hidden; do not drop in photos of people without alt text.",
                 "Do not remove consent: the consent line is part of the promise, not decoration.",
@@ -569,11 +894,36 @@
               "submitLabel": {
                 "label": "Button",
                 "default": "Subscribe"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Backdrop"
               }
             },
-            "title": "Subscribe Hero"
+            "title": "Subscribe Hero",
+            "preview": {
+              "props": {
+                "eyebrow": "The Section of the Week newsletter",
+                "title": "One section pulled apart every Friday",
+                "lede": "What worked, what failed and why. A short letter with markup examples and conversion figures.",
+                "placeholder": "you@example.com",
+                "submitLabel": "Subscribe",
+                "consent": "By sending your address you agree to receive the letters. We never pass it on to third parties.",
+                "proof": "4,200 subscribers already read it",
+                "facts": [
+                  "One letter a week",
+                  "One-click unsubscribe",
+                  "No partner ads"
+                ],
+                "formLabel": "Newsletter subscription",
+                "emailLabel": "Email address"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -591,9 +941,9 @@
           "target": "@components/vibeui/hero-007.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-007-*, тёмная фиолетовая база. Постер — не <img>, а фон из conic- и radial-градиентов на самой ссылке; кнопка play нарисована inline SVG. Плеер намеренно не встроен: блок отдаёт ссылку на страницу с роликом, поэтому не грузит iframe и не портит LCP. Список глав — <ul>, от 40rem раскладывается в две колонки container-запросом. Есть transition на hover, для него объявлен prefers-reduced-motion.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-007-*, тема берётся из color-scheme окружения через light-dark(); подложки по умолчанию нет — блок ложится на фон страницы, подложка задаётся пропом background. Постер — не <img>, а фон из conic- и radial-градиентов на самой ссылке; он всегда тёмный, поэтому текст на нём держит отдельный токен --vibeui-hero-007-on-poster. Кнопка play нарисована inline SVG. Плеер намеренно не встроен: блок отдаёт ссылку на страницу с роликом, поэтому не грузит iframe и не портит LCP. Список глав — <ul>, от 40rem раскладывается в две колонки container-запросом. Есть transition на hover, для него объявлен prefers-reduced-motion.",
       "meta": {
-        "tags": ["hero", "video", "dark", "media"],
+        "tags": ["hero", "video", "poster", "media"],
         "preview": {
           "width": "full"
         },
@@ -607,15 +957,20 @@
             "соотношение 16:9 у постера: при другой пропорции кнопка play перестаёт попадать в оптический центр",
             "список глав с таймкодами: он превращает ролик из обещания в оглавление и работает как якорная навигация",
             "локальную палитру --vibeui-hero-007-* и container-запрос, разводящий главы в две колонки от 40rem ширины блока",
-            "aria-label на ссылке-постере: внутри неё есть текст и иконка, и без подписи ссылка читается обрывками"
+            "aria-label на ссылке-постере: внутри неё есть текст и иконка, и без подписи ссылка читается обрывками",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "тёмный постер и светлый текст на нём: постер — кадр ролика, он не светлеет вместе с темой, поэтому подпись держит отдельный токен --vibeui-hero-007-on-poster"
           ],
           "adapt": [
             "тексты eyebrow, title и lede",
             "watchLabel и watchHref — подпись и адрес ссылки на ролик",
             "duration и список chapters с таймкодами",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Если всё-таки встраиваете плеер, делайте это по клику и оставляйте постер как первый кадр.",
             "Таймкоды в chapters — обычный текст, блок не связывает их с позицией в ролике; ссылки на моменты добавляйте сами.",
             "Глав выводится не больше шести: длинное оглавление превращает hero в страницу курса.",
@@ -636,6 +991,18 @@
             "type": "text",
             "default": "6:24",
             "maxLength": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -649,15 +1016,20 @@
                 "the 16:9 ratio of the poster: at any other proportion the play button stops landing on the optical centre",
                 "the chapter list with timecodes: it turns the film from a promise into a table of contents and doubles as anchor navigation",
                 "the local --vibeui-hero-007-* palette and the container query that splits the chapters into two columns from 40rem of block width",
-                "the aria-label on the poster link: it wraps both text and an icon, and without a label the link is read in fragments"
+                "the aria-label on the poster link: it wraps both text and an icon, and without a label the link is read in fragments",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the dark poster and the light text on it: the poster is a film frame, it does not lighten with the theme, so its caption keeps its own --vibeui-hero-007-on-poster token"
               ],
               "adapt": [
                 "the eyebrow, title and lede copy",
                 "watchLabel and watchHref — the caption and the address of the film link",
                 "duration and the chapters list with its timecodes",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "background — the component backdrop; empty means no backdrop, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "If you do embed a player, do it on click and keep the poster as the first frame.",
                 "The timecodes in chapters are plain text; the block does not tie them to a position in the film — add deep links yourself.",
                 "At most six chapters are rendered: a long table of contents turns the hero into a course page.",
@@ -673,11 +1045,45 @@
               "duration": {
                 "label": "Duration",
                 "default": "6:24"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Backdrop"
               }
             },
-            "title": "Video Poster Hero"
+            "title": "Video Poster Hero",
+            "preview": {
+              "props": {
+                "eyebrow": "A six-minute tour",
+                "title": "Watch a page come together",
+                "lede": "No slides: the screen, the catalogue and the agent installing a section into a real project.",
+                "watchLabel": "Watch the product tour",
+                "duration": "6:24",
+                "chapters": [
+                  {
+                    "time": "00:00",
+                    "title": "What AI-native sections are"
+                  },
+                  {
+                    "time": "01:12",
+                    "title": "Picking a design in the catalogue"
+                  },
+                  {
+                    "time": "03:40",
+                    "title": "Copy for AI and installing"
+                  },
+                  {
+                    "time": "05:58",
+                    "title": "Editing the copy and colours"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -695,9 +1101,9 @@
           "target": "@components/vibeui/hero-008.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-008-*, белая база и светло-серая подложка у полосы логотипов. Логотипы — текстовые начертания плюс монограмма, вырезанная conic-градиентом через mask-image: чужие файлы и лицензии в блок не попадают. Полоса не бесконечная лента, а сетка: две колонки на узкой ширине, три от 34rem и шесть от 56rem — всё container-запросами от ширины блока. Пониженная непрозрачность логотипов возвращается к единице на hover.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-008-*, тема берётся из color-scheme окружения через light-dark(); подложки по умолчанию нет — блок ложится на фон страницы, подложка задаётся пропом background. Своя заливка остаётся только у полосы логотипов, она и отбивает доказательство от обещания. Логотипы — текстовые начертания плюс монограмма, вырезанная conic-градиентом через mask-image: чужие файлы и лицензии в блок не попадают. Полоса не бесконечная лента, а сетка: две колонки на узкой ширине, три от 34rem и шесть от 56rem — всё container-запросами от ширины блока. Пониженная непрозрачность логотипов возвращается к единице на hover.",
       "meta": {
-        "tags": ["hero", "social-proof", "logos", "light"],
+        "tags": ["hero", "social-proof", "logos", "wordmark"],
         "preview": {
           "width": "full"
         },
@@ -711,15 +1117,19 @@
             "сетку вместо бесконечной ленты: на узкой ширине логотипы честно переносятся, а не уезжают за край без подсказки",
             "приглушённую непрозрачность логотипов: полноцветный ряд знаков перетягивает внимание с заголовка",
             "локальную палитру --vibeui-hero-008-* и container-запросы, меняющие число колонок от ширины блока",
-            "семантику: один h1, заголовок полосы как h2, CTA как <a href>"
+            "семантику: один h1, заголовок полосы как h2, CTA как <a href>",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку; своя заливка остаётся только у полосы логотипов"
           ],
           "adapt": [
             "тексты title и lede, подписи и адреса CTA primary и secondary",
             "logosTitle — подпись над полосой клиентов",
             "список logos: до шести названий",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Если нужны настоящие знаки, вставляйте inline SVG вместо текста и держите единый оптический размер, иначе ряд поплывёт.",
             "Больше шести логотипов не выводится: длинный ряд превращает доказательство в шум.",
             "Не ставьте в logos названия, на использование которых нет разрешения.",
@@ -740,6 +1150,18 @@
             "type": "text",
             "default": "С нами работают",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -753,15 +1175,19 @@
                 "the grid instead of an infinite marquee: on a narrow block the logos wrap honestly rather than sliding off the edge unannounced",
                 "the dimmed opacity of the logos: a full-colour row of marks pulls attention away from the headline",
                 "the local --vibeui-hero-008-* palette and the container queries that change the column count against the block's width",
-                "the semantics: a single h1, the strip caption as an h2, CTAs as <a href>"
+                "the semantics: a single h1, the strip caption as an h2, CTAs as <a href>",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself; only the logo strip keeps a fill of its own"
               ],
               "adapt": [
                 "the title and lede copy, the labels and hrefs of the primary and secondary CTAs",
                 "logosTitle — the caption above the client strip",
                 "the logos list: up to six names",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "background — the component backdrop; empty means no backdrop, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "If you need real marks, drop in inline SVG instead of text and keep one optical size, otherwise the row drifts.",
                 "No more than six logos are rendered: a long row turns proof into noise.",
                 "Do not put names into logos that you have no permission to display.",
@@ -777,11 +1203,41 @@
               "logosTitle": {
                 "label": "Strip caption",
                 "default": "Trusted by"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Backdrop"
               }
             },
-            "title": "Client Logos Hero"
+            "title": "Client Logos Hero",
+            "preview": {
+              "props": {
+                "title": "Pages marketing teams actually trust",
+                "lede": "The sections outlive a rebrand: copy, colours and typography live in props, the layout stays put.",
+                "primary": {
+                  "label": "Build a page",
+                  "href": "#"
+                },
+                "secondary": {
+                  "label": "Talk to us",
+                  "href": "#"
+                },
+                "logosTitle": "Trusted by",
+                "logos": [
+                  "Kontur",
+                  "Litera",
+                  "Optika",
+                  "Tandem",
+                  "Yasno",
+                  "Versta"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -799,9 +1255,9 @@
           "target": "@components/vibeui/hero-009.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-009-*, тёплая светлая база. Счётчики размечены как <dl> с парами: значение в <dd>, подпись в <dt>, порядок переставлен через order, поэтому число визуально стоит первым, а в разметке пара остаётся правильной. Числа набраны font-variant-numeric: tabular-nums. От 56rem колонки текста и цифр встают рядом container-запросом, до этого идут друг под другом. Анимаций нет, только transition на кнопке.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-009-*, тема берётся из color-scheme окружения через light-dark(); подложки по умолчанию нет — блок ложится на фон страницы, подложка задаётся пропом background. Счётчики размечены как <dl> с парами: значение в <dd>, подпись в <dt>, порядок переставлен через order, поэтому число визуально стоит первым, а в разметке пара остаётся правильной. Числа набраны font-variant-numeric: tabular-nums. От 56rem колонки текста и цифр встают рядом container-запросом, до этого идут друг под другом. Анимаций нет, только transition на кнопке.",
       "meta": {
-        "tags": ["hero", "metrics", "stats", "light"],
+        "tags": ["hero", "metrics", "stats", "numbers"],
         "preview": {
           "width": "full"
         },
@@ -815,15 +1271,19 @@
             "tabular-nums у чисел: без него разряды пляшут и колонка цифр перестаёт читаться сверху вниз",
             "единицу измерения отдельным кеглем внутри значения: «12 400 ₽» не должно читаться как одно длинное число",
             "разделительные линии вместо карточек: цифры живут на линиях, а не в рамках — это отличает блок от плиточных метрик",
-            "сноску footnote под цифрами: показатель без указания периода и способа замера не убеждает"
+            "сноску footnote под цифрами: показатель без указания периода и способа замера не убеждает",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow, title и lede, подпись и адрес кнопки primary",
             "массив stats: value, unit и label каждого показателя",
             "текст footnote под цифрами",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Показателей выводится не больше четырёх: пятая цифра ломает ритм колонки.",
             "Не пишите в value длинные фразы — это место под число, подпись живёт в label.",
             "Цифры статичны: блок ничего не считает и не анимирует, подставляйте готовые значения.",
@@ -844,6 +1304,18 @@
             "type": "text",
             "default": "Цифры за год",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -857,15 +1329,19 @@
                 "tabular-nums on the figures: without it the digits dance and the column stops reading top to bottom",
                 "the unit at its own size inside the value: «12,400 ₽» must not read as one long number",
                 "dividing rules instead of cards: the figures live on lines, not in boxes — that is what sets this block apart from tiled metrics",
-                "the footnote under the figures: a metric without a period and a method behind it convinces nobody"
+                "the footnote under the figures: a metric without a period and a method behind it convinces nobody",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow, title and lede copy, the label and href of the primary button",
                 "the stats array: value, unit and label of every metric",
                 "the footnote copy under the figures",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "background — the component backdrop; empty means no backdrop, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "At most four metrics are rendered: a fifth figure breaks the rhythm of the column.",
                 "Do not put long phrases into value — it is the slot for a number, the wording belongs in label.",
                 "The figures are static: the block counts and animates nothing, feed it finished values.",
@@ -881,11 +1357,46 @@
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "This year"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Backdrop"
               }
             },
-            "title": "Metrics Hero"
+            "title": "Metrics Hero",
+            "preview": {
+              "props": {
+                "eyebrow": "This year",
+                "title": "Less markup, more launches",
+                "lede": "We count the time from an idea to a published page, not the number of components. Here is how it went.",
+                "primary": {
+                  "label": "Browse the catalogue",
+                  "href": "#"
+                },
+                "stats": [
+                  {
+                    "value": "6",
+                    "unit": "min",
+                    "label": "From picking a section to a finished page"
+                  },
+                  {
+                    "value": "1,080",
+                    "label": "Ready-made sections in the catalogue"
+                  },
+                  {
+                    "value": "97",
+                    "unit": "%",
+                    "label": "Installs with no manual markup fixes"
+                  }
+                ],
+                "footnote": "Data from January to December, across projects with telemetry enabled."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -903,9 +1414,9 @@
           "target": "@components/vibeui/hero-010.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-010-*, светлая холодная база. Правая половина — <figure> с фоном из двух радиальных и одного линейного градиента, косым срезом на clip-path и двумя окружностями; место под настоящий кадр размечено, достаточно положить <img> в тот же слот. Раскладка: одна колонка до 56rem, две равные от 56rem, при этом figure тянется на всю высоту секции. Подпись изображения — <figcaption> поверх нижнего левого угла.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-010-*, тема берётся из color-scheme окружения через light-dark(); подложки по умолчанию нет — текстовая половина ложится на фон страницы, подложка задаётся пропом background. Правая половина — <figure> с фоном из двух радиальных и одного линейного градиента, косым срезом на clip-path и двумя окружностями; это кадр, он остаётся цветным в обеих темах, место под настоящий снимок размечено — достаточно положить <img> в тот же слот. Раскладка: одна колонка до 56rem, две равные от 56rem, при этом figure тянется на всю высоту секции. Подпись изображения — <figcaption> поверх нижнего левого угла.",
       "meta": {
-        "tags": ["hero", "split", "image", "light"],
+        "tags": ["hero", "split", "image", "figure"],
         "preview": {
           "width": "full"
         },
@@ -919,15 +1430,20 @@
             "тягу figure на всю высоту секции: обрезанное по высоте изображение читается как баннер, а не как половина композиции",
             "чеклист коротким — до четырёх пунктов без описаний: это hero, а не секция возможностей",
             "локальную палитру --vibeui-hero-010-* и container-запросы, разводящие половины от ширины блока",
-            "семантику: один h1, чеклист как <ul>, CTA как <a href>, декоративные слои aria-hidden"
+            "семантику: один h1, чеклист как <ul>, CTA как <a href>, декоративные слои aria-hidden",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "цветной кадр справа в обеих темах: это изображение, а не подложка, и оно не светлеет и не темнеет вместе с темой"
           ],
           "adapt": [
             "тексты eyebrow, title и lede, подписи и адреса CTA primary и secondary",
             "до четырёх пунктов bullets в чеклисте",
             "текст подписи imageCaption в углу изображения",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Чтобы поставить настоящий кадр, добавьте <img> внутрь figure с object-fit: cover и оставьте декоративные слои или уберите их целиком.",
             "Не растягивайте figcaption в абзац: это подпись в углу, а не второй подзаголовок.",
             "На узкой ширине изображение уходит вниз и получает минимальную высоту — не задавайте ему фиксированную.",
@@ -948,6 +1464,18 @@
             "type": "text",
             "default": "Место под ваш кадр",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -961,15 +1489,20 @@
                 "the figure stretching to the full height of the section: an image cropped by height reads as a banner, not as half of a composition",
                 "the checklist short — up to four items with no descriptions: this is a hero, not a features section",
                 "the local --vibeui-hero-010-* palette and the container queries that split the halves against the block's width",
-                "the semantics: a single h1, the checklist as a <ul>, CTAs as <a href>, decorative layers aria-hidden"
+                "the semantics: a single h1, the checklist as a <ul>, CTAs as <a href>, decorative layers aria-hidden",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the colourful frame on the right in both themes: it is a picture, not a backdrop, and it neither lightens nor darkens with the theme"
               ],
               "adapt": [
                 "the eyebrow, title and lede copy, the labels and hrefs of the primary and secondary CTAs",
                 "up to four bullets in the checklist",
                 "the imageCaption text in the corner of the picture",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "background — the component backdrop; empty means no backdrop, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "To use a real photo, add an <img> inside the figure with object-fit: cover and either keep the decorative layers or drop them entirely.",
                 "Do not grow figcaption into a paragraph: it is a corner caption, not a second subhead.",
                 "On a narrow block the image moves below the copy and takes a minimum height — do not give it a fixed one.",
@@ -985,18 +1518,46 @@
               "imageCaption": {
                 "label": "Image caption",
                 "default": "Your photo goes here"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Backdrop"
               }
             },
-            "title": "Split Image Hero"
+            "title": "Split Image Hero",
+            "preview": {
+              "props": {
+                "eyebrow": "A design system without a designer",
+                "title": "Half the page is the picture",
+                "lede": "The classic layout where the image is flush to the edge of the screen and works across the full height of the section.",
+                "primary": {
+                  "label": "Take the section",
+                  "href": "#"
+                },
+                "secondary": {
+                  "label": "All layouts",
+                  "href": "#"
+                },
+                "bullets": [
+                  "The agent installs the section with one command",
+                  "Copy and colours are props, the markup stays put",
+                  "Works without your theme and without Tailwind"
+                ],
+                "imageCaption": "Your photo goes here"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
       "name": "hero-011",
       "type": "registry:block",
       "title": "Первый экран со светящейся сеткой",
-      "description": "Тёмный hero, где фон и есть дизайн: сетка из повторяющихся градиентов, погашенная радиальной маской, и два цветных пятна поверх. Ни одного лишнего слоя в разметке.",
+      "description": "Hero, где фон и есть дизайн: сетка из повторяющихся градиентов, погашенная радиальной маской, и два цветных пятна поверх. Ни одного лишнего слоя в разметке.",
       "categories": ["hero"],
       "dependencies": [],
       "registryDependencies": [],
@@ -1007,9 +1568,9 @@
           "target": "@components/vibeui/hero-011.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-011-*, тёмная фиолетовая база. Сетка и свечение живут в ::before и ::after самой секции с отрицательным z-index и pointer-events: none — в разметке нет ни одного декоративного div. Линии сетки нарисованы двумя repeating-linear-gradient и растворены к краям через mask-image. Акцентная часть заголовка залита градиентом через background-clip: text. Кнопки становятся строкой от 34rem container-запросом.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-011-*, тема берётся из color-scheme окружения через light-dark(); подложки по умолчанию нет — блок ложится на фон страницы, подложка задаётся пропом background. Сетка и свечение живут в ::before и ::after самой секции с отрицательным z-index и pointer-events: none — в разметке нет ни одного декоративного div. Линии сетки нарисованы двумя repeating-linear-gradient и растворены к краям через mask-image. Акцентная часть заголовка залита градиентом через background-clip: text. Кнопки становятся строкой от 34rem container-запросом.",
       "meta": {
-        "tags": ["hero", "dark", "gradient", "grid"],
+        "tags": ["hero", "glow", "gradient", "grid"],
         "preview": {
           "width": "full"
         },
@@ -1021,7 +1582,9 @@
             "сетку и свечение как фон самой секции в ::before и ::after: декоративные слои в разметке ловили бы клики и попадали в дерево доступности",
             "растворение линий сетки маской: сетка, упирающаяся в границу секции, выглядит как обрезанный скриншот",
             "градиентную заливку акцентной части заголовка через background-clip: text — на неё держится вся цветовая идея блока",
-            "тёмную локальную палитру --vibeui-hero-011-*: блок остаётся тёмным независимо от темы проекта",
+            "локальную палитру --vibeui-hero-011-*: блок несёт свои цвета и не читает токены темы проекта",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
             "pointer-events: none и отрицательный z-index у фоновых слоёв, иначе они перекроют кнопки",
             "container-запрос, разворачивающий кнопки в строку от 34rem ширины блока"
           ],
@@ -1029,9 +1592,11 @@
             "тексты kicker, title, titleAccent и lede",
             "подписи и адреса CTA primary и secondary",
             "до четырёх пунктов meta в нижней строке",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Шаг сетки задан в самих градиентах: меняйте значение 4rem в обоих repeating-linear-gradient сразу, иначе клетка перестанет быть квадратной.",
             "Градиентный текст не наследует цвет: если заменяете accent, проверьте, что вторая часть заголовка осталась читаемой.",
             "Не добавляйте поверх фона ещё один слой затемнения — контраст уже посчитан.",
@@ -1052,18 +1617,32 @@
             "type": "text",
             "default": "половину работы",
             "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
-            "description": "A dark hero where the background is the design: a grid of repeating gradients faded by a radial mask, with two colour blooms on top. Not one extra layer in the markup.",
+            "description": "A hero where the background is the design: a grid of repeating gradients faded by a radial mask, with two colour blooms on top. Not one extra layer in the markup.",
             "ai": {
               "summary": "A dark centred hero: an announcement pill, a large headline with a gradient second half, a subhead, two buttons and a row of short facts. The grid and the glow are painted onto the section itself. One file, zero dependencies.",
               "preserve": [
                 "the grid and glow as the section's own ::before and ::after background: decorative layers in the markup would catch clicks and land in the accessibility tree",
                 "the mask that fades the grid lines out: a grid that runs into the section edge looks like a cropped screenshot",
                 "the gradient fill of the accent half of the headline through background-clip: text — the whole colour idea of the block rests on it",
-                "the dark local --vibeui-hero-011-* palette: the block stays dark whatever theme the project runs",
+                "the local --vibeui-hero-011-* palette: the block carries its own colours and never reads your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
                 "pointer-events: none and the negative z-index on the background layers, otherwise they cover the buttons",
                 "the container query that turns the buttons into a row from 34rem of block width"
               ],
@@ -1071,9 +1650,11 @@
                 "the kicker, title, titleAccent and lede copy",
                 "the labels and hrefs of the primary and secondary CTAs",
                 "up to four meta items in the bottom row",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "background — the component backdrop; empty means no backdrop, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The grid step lives in the gradients themselves: change the 4rem value in both repeating-linear-gradients at once, or the cell stops being square.",
                 "Gradient text does not inherit colour: if you swap accent, check that the second half of the headline stays readable.",
                 "Do not stack another dimming layer over the background — the contrast is already balanced.",
@@ -1089,11 +1670,40 @@
               "titleAccent": {
                 "label": "Headline accent",
                 "default": "half the work"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Backdrop"
               }
             },
-            "title": "Grid Glow Hero"
+            "title": "Grid Glow Hero",
+            "preview": {
+              "props": {
+                "kicker": "Version 2.0 is in the catalogue",
+                "title": "A background that does",
+                "titleAccent": "half the work",
+                "lede": "The grid and the glow are painted onto the section with gradients — no images, no extra layers in the markup.",
+                "primary": {
+                  "label": "Take the section",
+                  "href": "#"
+                },
+                "secondary": {
+                  "label": "Read the docs",
+                  "href": "#"
+                },
+                "meta": [
+                  "Zero dependencies",
+                  "Its own palette",
+                  "Container queries",
+                  "Reduced motion"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1111,9 +1721,9 @@
           "target": "@components/vibeui/hero-012.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-012-*, светлая база с моноширинным шрифтом в карточке релиза. Строка анонса — целиком <a>, а не pill со стрелкой-ссылкой: кликабельна вся полоса. Длинный текст анонса обрезается через text-overflow: ellipsis, поэтому строка не переносится и не ломает pill. Карточка релиза выводит до четырёх пунктов. Кнопки становятся строкой от 34rem container-запросом. Есть transition на hover, для него объявлен prefers-reduced-motion.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-012-*, тема берётся из color-scheme окружения через light-dark(); подложки по умолчанию нет — блок ложится на фон страницы, подложка задаётся пропом background. Своя заливка остаётся у pill анонса и карточки релиза, там же живёт моноширинный шрифт. Строка анонса — целиком <a>, а не pill со стрелкой-ссылкой: кликабельна вся полоса. Длинный текст анонса обрезается через text-overflow: ellipsis, поэтому строка не переносится и не ломает pill. Карточка релиза выводит до четырёх пунктов. Кнопки становятся строкой от 34rem container-запросом. Есть transition на hover, для него объявлен prefers-reduced-motion.",
       "meta": {
-        "tags": ["hero", "announcement", "changelog", "light"],
+        "tags": ["hero", "announcement", "changelog", "release"],
         "preview": {
           "width": "full"
         },
@@ -1127,15 +1737,19 @@
             "обрезку длинного анонса многоточием: перенос строки внутри pill ломает его форму",
             "бейдж словами рядом с текстом анонса — цветной точки недостаточно, чтобы объявить новость",
             "моноширинный шрифт в шапке карточки релиза: версия и дата читаются как техническая запись, а не как заголовок",
-            "локальную палитру --vibeui-hero-012-* и container-запрос, разворачивающий кнопки в строку от 34rem"
+            "локальную палитру --vibeui-hero-012-* и container-запрос, разворачивающий кнопки в строку от 34rem",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку; своя заливка остаётся у pill анонса и карточки релиза"
           ],
           "adapt": [
             "тексты badge, announcement и адрес announcementHref",
             "тексты title и lede, подписи и адреса CTA primary и secondary",
             "объект release: version, date и до четырёх пунктов items",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Держите announcement коротким: длинный текст обрежется многоточием, и смысл потеряется.",
             "Пунктов в release.items выводится не больше четырёх — это анонс, а не полный changelog.",
             "Не превращайте карточку релиза в раскрывающийся список: в hero не место гармошке.",
@@ -1156,6 +1770,18 @@
             "type": "text",
             "default": "Новое",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1169,15 +1795,19 @@
                 "the ellipsis truncation of a long announcement: a line break inside the pill destroys its shape",
                 "the badge spelled out next to the announcement — a coloured dot alone cannot declare news",
                 "the monospace type in the release card header: the version and date read as a technical record, not as a heading",
-                "the local --vibeui-hero-012-* palette and the container query that turns the buttons into a row from 34rem"
+                "the local --vibeui-hero-012-* palette and the container query that turns the buttons into a row from 34rem",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself; the announcement pill and the release card keep fills of their own"
               ],
               "adapt": [
                 "the badge and announcement copy and the announcementHref address",
                 "the title and lede copy, the labels and hrefs of the primary and secondary CTAs",
                 "the release object: version, date and up to four items",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "background — the component backdrop; empty means no backdrop, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Keep announcement short: a long line is truncated with an ellipsis and the meaning goes with it.",
                 "At most four release.items are rendered — this is an announcement, not a full changelog.",
                 "Do not turn the release card into a disclosure: a hero is no place for an accordion.",
@@ -1193,11 +1823,43 @@
               "badge": {
                 "label": "Badge",
                 "default": "New"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Backdrop"
               }
             },
-            "title": "Announcement Hero"
+            "title": "Announcement Hero",
+            "preview": {
+              "props": {
+                "badge": "New",
+                "announcement": "Version 2.4 is out — 45 sections and a new Copy for AI",
+                "title": "A catalogue that ships more often than your landing page",
+                "lede": "Every release adds sections and breaks none of the installed ones: the old files stay byte for byte the same.",
+                "primary": {
+                  "label": "Open the catalogue",
+                  "href": "#"
+                },
+                "secondary": {
+                  "label": "Changelog",
+                  "href": "#"
+                },
+                "release": {
+                  "date": "14 March",
+                  "version": "v2.4.0",
+                  "items": [
+                    "45 new sections: heroes, features and pricing",
+                    "Copy for AI now hands over the version and the file hash",
+                    "The preview measures layout against block width, not the window"
+                  ]
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1215,7 +1877,7 @@
           "target": "@components/vibeui/hero-013.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-013-*, светлая холодная база с вертикальным градиентом. Форма помечена role=\"search\", метод GET, поле type=\"search\" с именем q — без JavaScript она работает как обычный поиск, с JavaScript её легко перехватить. Поле и кнопка лежат в одной pill-рамке, подсветка на :focus-within охватывает обе. Популярные запросы — <nav> со списком ссылок с готовым query-параметром: это и подсказки, и внутренняя перелинковка.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-013-* построена на light-dark(): холодная светлая база и отдельная тёмная пара, где линии светлее фона. Подложки по умолчанию нет — секция лежит на фоне страницы, проп background включает её и выставляет color-scheme под светлоту заданного цвета. Форма помечена role=\"search\", метод GET, поле type=\"search\" с именем q — без JavaScript она работает как обычный поиск, с JavaScript её легко перехватить. Поле и кнопка лежат в одной pill-рамке, подсветка на :focus-within охватывает обе. Популярные запросы — <nav> со списком ссылок с готовым query-параметром: это и подсказки, и внутренняя перелинковка.",
       "meta": {
         "tags": ["hero", "search", "catalog", "light"],
         "preview": {
@@ -1231,15 +1893,20 @@
             "популярные запросы ссылками, а не кнопками: они ведут на страницы выдачи и работают как внутренняя перелинковка",
             "счётчик под полем: он отвечает на вопрос «а есть ли вообще что искать» до первого запроса",
             "type=\"search\" у поля: браузер даёт крестик очистки и правильную клавиатуру на телефоне",
-            "локальную палитру --vibeui-hero-013-* и скрытый <label>, остающийся в дереве доступности"
+            "локальную палитру --vibeui-hero-013-* и скрытый <label>, остающийся в дереве доступности",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты title и lede, значение placeholder и подпись кнопки submitLabel",
             "текст counter под строкой поиска",
             "popularTitle и до шести запросов в списке popular",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подпись скрытого лейбла поля через searchLabel — её читает скринридер"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Адрес формы задан как action=\"#\": подставьте реальный путь страницы выдачи.",
             "Ссылки популярных запросов ведут на якорь с query-параметром — замените их на маршруты своего каталога.",
             "Больше шести запросов не выводится: длинный ряд подсказок конкурирует с полем.",
@@ -1260,11 +1927,30 @@
             "type": "text",
             "default": "Например: тарифы с переключателем",
             "maxLength": 60
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Кнопка поиска",
+            "type": "text",
+            "default": "Найти",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
-            "description": "A catalog hero whose door into the product is a search field: a GET form with an input and a button, a result counter beneath it and popular queries as links.",
+            "description": "A catalog hero whose door into the product is a search field: a GET form with an input and a button, a result counter beneath it and popular queries as links. It follows the surrounding theme and lays no panel of its own under the page.",
             "ai": {
               "summary": "A light search hero: a headline, a subhead, a search field and button in a shared frame, a result counter and up to six popular queries as pill links. One file, zero dependencies.",
               "preserve": [
@@ -1273,15 +1959,20 @@
                 "popular queries as links rather than buttons: they point at result pages and double as internal linking",
                 "the counter under the field: it answers «is there anything to search at all» before the first query",
                 "type=\"search\" on the field: the browser gives a clear button and the right keyboard on a phone",
-                "the local --vibeui-hero-013-* palette and the hidden <label> that stays in the accessibility tree"
+                "the local --vibeui-hero-013-* palette and the hidden <label> that stays in the accessibility tree",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the title and lede copy, the placeholder value and the submitLabel button caption",
                 "the counter text under the search line",
                 "popularTitle and up to six queries in the popular list",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour",
+                "the hidden field label through searchLabel — a screen reader reads it out"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The form action is set to \"#\": point it at the real results page.",
                 "The popular query links point at an anchor with a query parameter — swap them for your own catalog routes.",
                 "No more than six queries are rendered: a long row of hints competes with the field.",
@@ -1297,11 +1988,41 @@
               "placeholder": {
                 "label": "Field placeholder",
                 "default": "Try: pricing with a toggle"
+              },
+              "submitLabel": {
+                "label": "Search button",
+                "default": "Search"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Catalog Search Hero"
+            "title": "Catalog Search Hero",
+            "preview": {
+              "props": {
+                "title": "Search the catalog instead of scrolling it",
+                "lede": "More than a thousand ready sections. Type the job in plain words — «a dark hero with a form» — and take the one that fits.",
+                "placeholder": "Try: pricing with a toggle",
+                "submitLabel": "Search",
+                "searchLabel": "Search the catalog",
+                "popularTitle": "Searched most often",
+                "popular": [
+                  "hero",
+                  "pricing",
+                  "dark theme",
+                  "sign-in form",
+                  "dashboard",
+                  "testimonials"
+                ],
+                "counter": "1,080 sections · updated today"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1335,15 +2056,18 @@
             "tabular-nums у чисел отсчёта: без него цифры прыгают по ширине при каждой смене значения",
             "четыре плитки и их порядок: дни, часы, минуты, секунды — привычная последовательность, менять её нельзя",
             "aria-label у списка отсчёта: набор чисел без подписи читается скринридером как бессмыслица",
-            "тёмную локальную палитру --vibeui-hero-014-* и container-запрос, разводящий текст и отсчёт в две колонки от 56rem"
+            "тёмную локальную палитру --vibeui-hero-014-* и container-запрос, разводящий текст и отсчёт в две колонки от 56rem",
+            "тёмную базу как осознанное дизайн-решение: это hero мероприятия, и он остаётся тёмным в любом окружении — светлой ветки у палитры намеренно нет"
           ],
           "adapt": [
             "тексты kind, title, lede, place и seats",
             "date и dateTime — человеческую и машиночитаемую формы даты",
             "значения и подписи в массиве countdown",
-            "подписи и адреса CTA primary и secondary, акцентный цвет через проп accent"
+            "подписи и адреса CTA primary и secondary, акцентный цвет через проп accent",
+            "подпись списка отсчёта countdownLabel — её читает скринридер"
           ],
           "notes": [
+            "Блок намеренно одноцветный: light-dark() в палитре нет, и color-scheme страницы на него не влияет. Тёмная сцена со свечением — часть замысла, а не отсутствие светлой темы.",
             "Чтобы отсчёт шёл, оберните блок клиентским компонентом и передавайте пересчитанный countdown пропом.",
             "dateTime обязан быть валидным ISO-значением с таймзоной, иначе машиночитаемая дата бесполезна.",
             "Плиток ровно четыре: пятая ломает сетку и не помещается в две колонки на широкой ширине.",
@@ -1364,6 +2088,12 @@
             "type": "text",
             "default": "Онлайн-конференция",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1377,15 +2107,18 @@
                 "tabular-nums on the countdown figures: without it the digits jump in width on every change",
                 "the four tiles and their order — days, hours, minutes, seconds — a familiar sequence that must not be reshuffled",
                 "the aria-label on the countdown list: a set of numbers with no label is read out as nonsense",
-                "the dark local --vibeui-hero-014-* palette and the container query that splits copy and countdown into two columns from 56rem"
+                "the dark local --vibeui-hero-014-* palette and the container query that splits copy and countdown into two columns from 56rem",
+                "the dark base as a deliberate design decision: this is an event hero and it stays dark in any surrounding — the palette has no light branch on purpose"
               ],
               "adapt": [
                 "the kind, title, lede, place and seats copy",
                 "date and dateTime — the human and machine-readable forms of the date",
                 "the values and labels in the countdown array",
-                "the labels and hrefs of the primary and secondary CTAs, and the accent colour through the accent prop"
+                "the labels and hrefs of the primary and secondary CTAs, and the accent colour through the accent prop",
+                "the countdownLabel caption on the countdown list — a screen reader reads it out"
               ],
               "notes": [
+                "The block is deliberately single-toned: there is no light-dark() in the palette and the page color-scheme does not affect it. The dark stage with its glow is the point, not a missing light theme.",
                 "To make the countdown run, wrap the block in a client component and feed a recalculated countdown prop.",
                 "dateTime must be a valid ISO value with a timezone, otherwise the machine-readable date is useless.",
                 "There are exactly four tiles: a fifth breaks the grid and does not fit the two-column layout on a wide block.",
@@ -1401,11 +2134,53 @@
               "kind": {
                 "label": "Event type",
                 "default": "Online conference"
+              },
+              "accent": {
+                "label": "Accent"
               }
             },
-            "title": "Event Countdown Hero"
+            "title": "Event Countdown Hero",
+            "preview": {
+              "props": {
+                "kind": "Online conference",
+                "title": "Vibecoding day: a product in eight hours",
+                "lede": "Six talks on how teams hand their markup to agents and what comes out of it in production.",
+                "date": "26 September, 11:00 CET",
+                "dateTime": "2026-09-26T11:00:00+03:00",
+                "place": "Online, the recording stays",
+                "countdown": [
+                  {
+                    "value": "12",
+                    "label": "days"
+                  },
+                  {
+                    "value": "06",
+                    "label": "hours"
+                  },
+                  {
+                    "value": "41",
+                    "label": "minutes"
+                  },
+                  {
+                    "value": "09",
+                    "label": "seconds"
+                  }
+                ],
+                "countdownLabel": "Time left before the start",
+                "primary": {
+                  "label": "Claim a seat",
+                  "href": "#"
+                },
+                "secondary": {
+                  "label": "See the programme",
+                  "href": "#"
+                },
+                "seats": "128 seats left out of 500"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent"]
       }
     },
     {
@@ -1423,7 +2198,7 @@
           "target": "@components/vibeui/hero-015.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-015-*, бумажная тёплая база. Пара шрифтов системная: serif для заголовка, sans для остального — веб-шрифты не подключаются. Подчёркивание ссылки растёт из нуля через background-size у линейного градиента, а не через border: линия остаётся на месте и не сдвигает текст. Выходные данные — <dl> с парами, от 34rem раскладываются в три колонки container-запросом. Из движения только transition подчёркивания, для него объявлен prefers-reduced-motion.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-015-* построена на light-dark(): бумажная тёплая база в светлой теме и отдельная тёмная пара, где линии светлее фона. Подложки по умолчанию нет — секция лежит на фоне страницы, проп background включает её и выставляет color-scheme под светлоту заданного цвета. Пара шрифтов системная: serif для заголовка, sans для остального — веб-шрифты не подключаются. Подчёркивание ссылки растёт из нуля через background-size у линейного градиента, а не через border: линия остаётся на месте и не сдвигает текст. Выходные данные — <dl> с парами, от 34rem раскладываются в три колонки container-запросом. Из движения только transition подчёркивания, для него объявлен prefers-reduced-motion.",
       "meta": {
         "tags": ["hero", "editorial", "serif", "minimal"],
         "preview": {
@@ -1439,16 +2214,21 @@
             "подчёркивание через background-size, а не border: линия растёт на месте и не двигает текст по вертикали",
             "курсивный акцент внутри заголовка — единственное цветное пятно в блоке",
             "выходные данные внизу как <dl> с парами: это подпись под работой, а не список возможностей",
-            "локальную палитру --vibeui-hero-015-* и container-запрос, раскладывающий пары в три колонки от 34rem"
+            "локальную палитру --vibeui-hero-015-* и container-запрос, раскладывающий пары в три колонки от 34rem",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты studio, title и lede",
             "подпись и адрес ссылки link",
             "до трёх пар index в выходных данных",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "курсивную часть заголовка через titleAccent — пустая строка убирает единственное цветное пятно",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
-            "Курсивная часть заголовка задана прямо в разметке через <em>: чтобы поменять её текст, правьте JSX, а не только проп title.",
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Курсивная часть заголовка приходит пропом titleAccent, а не зашита в разметку: правьте проп, а не JSX.",
             "Не добавляйте в блок кнопку — она сразу превращает редакционный hero в обычный маркетинговый.",
             "Пар в index выводится не больше трёх: четвёртая ломает трёхколоночную раскладку.",
             "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
@@ -1463,16 +2243,35 @@
             "maxLength": 70
           },
           {
+            "prop": "titleAccent",
+            "label": "Курсивная часть",
+            "type": "text",
+            "default": "не нужно объяснять",
+            "maxLength": 40
+          },
+          {
             "prop": "studio",
             "label": "Название студии",
             "type": "text",
             "default": "Студия «Верста»",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
-            "description": "A minimal typographic hero for a studio site: a large serif headline with an italic accent, one link with a growing underline and small-print colophon at the bottom.",
+            "description": "A minimal typographic hero for a studio site: a large serif headline with an italic accent, one link with a growing underline and small-print colophon at the bottom. It follows the surrounding theme and lays no panel of its own under the page.",
             "ai": {
               "summary": "A light minimal hero: the studio name above a rule, a large serif headline with an italic accent, a subhead, one text link with a growing underline and three colophon pairs below. One file, zero dependencies.",
               "preserve": [
@@ -1481,16 +2280,21 @@
                 "the underline built on background-size rather than a border: the line grows in place and never shifts the text vertically",
                 "the italic accent inside the headline — the only spot of colour in the block",
                 "the colophon at the bottom as a <dl> of pairs: it is a caption under the work, not a feature list",
-                "the local --vibeui-hero-015-* palette and the container query that lays the pairs into three columns from 34rem"
+                "the local --vibeui-hero-015-* palette and the container query that lays the pairs into three columns from 34rem",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the studio, title and lede copy",
                 "the label and href of the link",
                 "up to three index pairs in the colophon",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "the italic half of the headline through titleAccent — an empty string drops the only spot of colour",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
-                "The italic half of the headline sits directly in the markup as an <em>: to change its wording edit the JSX, not only the title prop.",
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The italic half of the headline comes in as the titleAccent prop rather than sitting in the markup: edit the prop, not the JSX.",
                 "Do not add a button — it instantly turns an editorial hero into an ordinary marketing one.",
                 "At most three index pairs are rendered: a fourth breaks the three-column layout.",
                 "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
@@ -1502,14 +2306,51 @@
                 "label": "Headline",
                 "default": "We build interfaces that"
               },
+              "titleAccent": {
+                "label": "Italic half",
+                "default": "need no explaining"
+              },
               "studio": {
                 "label": "Studio name",
                 "default": "Versta Studio"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Editorial Text Hero"
+            "title": "Editorial Text Hero",
+            "preview": {
+              "props": {
+                "studio": "Versta Studio",
+                "title": "We build interfaces that",
+                "titleAccent": "need no explaining",
+                "lede": "No screenshots and no gradients above the fold. Only what we do, and the address where you can find us.",
+                "link": {
+                  "label": "See the work",
+                  "href": "#"
+                },
+                "index": [
+                  {
+                    "label": "Founded",
+                    "value": "2021"
+                  },
+                  {
+                    "label": "Projects",
+                    "value": "48"
+                  },
+                  {
+                    "label": "Cities",
+                    "value": "Moscow, Tbilisi"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1527,7 +2368,7 @@
           "target": "@components/vibeui/hero-016.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-016-*, светлая нейтральная база. Карточка кликабельна целиком за счёт растянутой псевдоссылки ::after у <a>, но в дереве доступности на путь приходится одна ссылка, а не три. Фокус-кольцо рисуется на карточке через :focus-within, поэтому клавиатурная навигация видна, хотя сама ссылка выглядит обычным текстом. Иконки — inline SVG, разные для двух путей. От 40rem карточки встают в две колонки container-запросом.",
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-016-* построена на light-dark(): нейтральная светлая база и отдельная тёмная пара, где карточка светлее фона, а граница светлее карточки. Подложки по умолчанию нет — секция лежит на фоне страницы, проп background включает её и выставляет color-scheme под светлоту заданного цвета. Карточка кликабельна целиком за счёт растянутой псевдоссылки ::after у <a>, но в дереве доступности на путь приходится одна ссылка, а не три. Фокус-кольцо рисуется на карточке через :focus-within, поэтому клавиатурная навигация видна, хотя сама ссылка выглядит обычным текстом. Иконки — inline SVG, разные для двух путей. От 40rem карточки встают в две колонки container-запросом.",
       "meta": {
         "tags": ["hero", "choice", "cards", "light"],
         "preview": {
@@ -1543,15 +2384,19 @@
             "фокус-кольцо на карточке через :focus-within: без него клавиатурная навигация по развилке невидима",
             "ровно два пути: третий вариант превращает выбор в тарифную сетку и требует другой секции",
             "по три пункта в каждом пути: списки должны быть одинаковой длины, иначе карточки визуально спорят",
-            "локальную палитру --vibeui-hero-016-* и container-запрос, разводящий карточки в две колонки от 40rem"
+            "локальную палитру --vibeui-hero-016-* и container-запрос, разводящий карточки в две колонки от 40rem",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "тексты eyebrow, title, lede и footnote",
             "содержимое обоих путей paths: title, description, points и адрес href",
             "подпись действия action в каждой карточке",
-            "акцентный цвет через проп accent и внешние отступы через className"
+            "акцентный цвет через проп accent и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Тип paths фиксирует ровно два элемента: массив другой длины TypeScript не пропустит.",
             "Иконки выбираются по индексу пути и заданы в разметке: чтобы поменять их, правьте JSX.",
             "Не вкладывайте внутрь карточки вторую ссылку — растянутая псевдоссылка перекроет её и клик уйдёт не туда.",
@@ -1572,11 +2417,23 @@
             "type": "text",
             "default": "Два способа начать",
             "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
           "en": {
-            "description": "A hero with a fork instead of a single button: two equal path cards, each with its own three-item list and its own link. Neither path is picked out in colour.",
+            "description": "A hero with a fork instead of a single button: two equal path cards, each with its own three-item list and its own link. Neither path is picked out in colour, and the section follows the surrounding theme.",
             "ai": {
               "summary": "A light fork hero: an eyebrow, a question headline, a subhead and two equal path cards — icon, description, three points and a link in each — plus a footnote below. One file, zero dependencies.",
               "preserve": [
@@ -1585,15 +2442,19 @@
                 "the focus ring on the card through :focus-within: without it keyboard navigation across the fork is invisible",
                 "exactly two paths: a third option turns the choice into a pricing grid and calls for a different section",
                 "three points per path: the lists have to be the same length, otherwise the cards visually argue",
-                "the local --vibeui-hero-016-* palette and the container query that splits the cards into two columns from 40rem"
+                "the local --vibeui-hero-016-* palette and the container query that splits the cards into two columns from 40rem",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the eyebrow, title, lede and footnote copy",
                 "the contents of both paths: title, description, points and the href",
                 "the action caption in each card",
-                "the accent colour through the accent prop and outer spacing through className"
+                "the accent colour through the accent prop and outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The paths type pins exactly two entries: TypeScript will reject an array of any other length.",
                 "The icons are chosen by path index and live in the markup: edit the JSX to change them.",
                 "Do not nest a second link inside a card — the stretched pseudo-link covers it and the click goes elsewhere.",
@@ -1609,11 +2470,50 @@
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "Two ways to start"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Two Paths Hero"
+            "title": "Two Paths Hero",
+            "preview": {
+              "props": {
+                "eyebrow": "Two ways to start",
+                "title": "Build it yourself or hand it over?",
+                "lede": "The same catalog, a different level of involvement. Pick a path — from there the two scenarios never cross.",
+                "paths": [
+                  {
+                    "title": "I build it myself",
+                    "description": "Open the catalog, copy the instruction and let your agent install the sections.",
+                    "action": "Open the catalog",
+                    "href": "#",
+                    "points": [
+                      "1,080 ready sections",
+                      "Installed with one command",
+                      "Free on any project"
+                    ]
+                  },
+                  {
+                    "title": "I need a team",
+                    "description": "We take on the design, the copy and the page build — you sign off the result.",
+                    "action": "Discuss the job",
+                    "href": "#",
+                    "points": [
+                      "A page in two weeks",
+                      "Your own designer and developer",
+                      "A fixed quote"
+                    ]
+                  }
+                ],
+                "footnote": "You can change your mind at any point: the sections stay yours either way."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

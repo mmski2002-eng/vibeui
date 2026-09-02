@@ -16,7 +16,7 @@
           "target": "@components/vibeui/sidebar-001.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sidebar-001-*. Разметка семантическая: <nav> с подписью, внутри разделы с заголовками и списки <ul>. Активный пункт определяется сравнением подписи с activeLabel и получает aria-current=\"page\", плотный фон и полосу через ::before. Счётчик — необязательное число справа с tabular-nums.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sidebar-001-*. Разметка семантическая: <nav> с подписью, внутри разделы с заголовками и списки <ul>. Активный пункт определяется сравнением подписи с activeLabel и получает aria-current=\"page\", плотный фон и полосу через ::before. Счётчик — необязательное число справа с tabular-nums. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
         "tags": ["sidebar", "navigation", "app shell", "menu"],
         "ai": {
@@ -30,15 +30,20 @@
             "семантику <nav> + <ul>: меню — это список ссылок, а не набор div'ов",
             "заголовки разделов как подписи, а не как ссылки — по ним не переходят",
             "tabular-nums у счётчиков, иначе числа дёргают правый край",
-            "блок <style> внутри компонента — в нём вся палитра, раскладка и метка активного пункта"
+            "блок <style> внутри компонента — в нём вся палитра, раскладка и метка активного пункта",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив sections: заголовки разделов, пункты, адреса и счётчики",
             "activeLabel — подпись текущего пункта; в реальном приложении подставляйте из роутера",
             "акцент через проп accent — цвет полосы и кольца фокуса",
-            "максимальную ширину и внешние отступы через className"
+            "максимальную ширину и внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "navLabel — подпись всей навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не знает про маршруты. Активный пункт задаёт вызывающий код: сравните адрес роутера и передайте подпись.",
             "Не делайте вложенность глубже одного уровня: для дерева нужен другой компонент.",
             "Счётчик — это то, что требует внимания: непрочитанные, ошибки. Общее количество элементов там не нужно.",
@@ -65,6 +70,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -79,15 +90,20 @@
                 "the <nav> + <ul> semantics: a menu is a list of links, not a pile of divs",
                 "the section titles as labels rather than links — nobody navigates to them",
                 "tabular-nums on the counts, otherwise the numbers jitter the right edge",
-                "the <style> block inside the component — it holds the palette, the layout and the active marking"
+                "the <style> block inside the component — it holds the palette, the layout and the active marking",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the sections array: section titles, items, hrefs and counts",
                 "activeLabel — the current item's label; in a real app feed it from the router",
                 "the accent through the accent prop — it colours the bar and the focus ring",
-                "max width and outer spacing through className"
+                "max width and outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour",
+                "navLabel — the label of the whole navigation for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component knows nothing about routes. The caller decides the active item: compare the router path and pass the label.",
                 "Do not nest deeper than one level: a tree needs a different component.",
                 "A count means something needing attention — unread, failing. The total number of items does not belong there.",
@@ -97,15 +113,66 @@
             },
             "controls": {
               "activeLabel": {
-                "label": "Active item"
+                "label": "Active item",
+                "default": "Pages"
               },
               "accent": {
-                "label": "Accent"
+                "label": "Accent",
+                "default": ""
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
               }
             },
-            "title": "App Sidebar Nav"
+            "title": "App Sidebar Nav",
+            "preview": {
+              "props": {
+                "navLabel": "Project sections",
+                "activeLabel": "Pages",
+                "sections": [
+                  {
+                    "title": "Project",
+                    "items": [
+                      {
+                        "label": "Overview",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Pages",
+                        "href": "#",
+                        "count": 12
+                      },
+                      {
+                        "label": "Media",
+                        "href": "#"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Publishing",
+                    "items": [
+                      {
+                        "label": "Domains",
+                        "href": "#"
+                      },
+                      {
+                        "label": "History",
+                        "href": "#",
+                        "count": 3
+                      },
+                      {
+                        "label": "Settings",
+                        "href": "#"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["activeLabel", "accent", "background"]
       }
     },
     {
@@ -123,7 +190,7 @@
           "target": "@components/vibeui/sidebar-002.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sidebar-002-*. Серверный: хуков нет, состояние держит чекбокс. Свёрнутый вид получается сменой одной переменной ширины через :has(), а подписи сжимаются до нуля с overflow:hidden и остаются в дереве доступности.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sidebar-002-*. Серверный: хуков нет, состояние держит чекбокс. Свёрнутый вид получается сменой одной переменной ширины через :has(), а подписи сжимаются до нуля с overflow:hidden и остаются в дереве доступности. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
         "tags": ["sidebar", "collapse", "no-js", "navigation"],
         "ai": {
@@ -136,15 +203,21 @@
             "смену одной переменной ширины вместо второго набора правил",
             "сжатие подписей вместо display:none — они остаются доступными и находятся поиском",
             "aria-current=\"page\" на активном разделе",
-            "заливку активного пункта, а не только жирность"
+            "заливку активного пункта, а не только жирность",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items и счётчики",
             "activeLabel и title",
             "ширину в развёрнутом состоянии",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "акцент через проп accent — заливка значка активного пункта и кольцо фокуса",
+            "navLabel — подпись списка разделов для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Свёрнутое состояние не запоминается между страницами: сохранение — за вызывающим кодом.",
             "В свёрнутом виде остаются одни значки: они должны быть узнаваемы без подписи или иметь подсказку.",
             "Значки нарисованы рамками: подставьте свой набор, сохранив размер в 1rem.",
@@ -165,6 +238,18 @@
             "type": "select",
             "default": "Компоненты",
             "options": ["Обзор", "Компоненты", "Блоки", "Настройки"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -178,15 +263,21 @@
                 "changing one width variable instead of a second rule set",
                 "shrinking the labels instead of display:none — they stay accessible and findable",
                 "aria-current=\"page\" on the active section",
-                "the filled active item rather than bold text alone"
+                "the filled active item rather than bold text alone",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array and the counters",
                 "activeLabel and title",
                 "the expanded width",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "the accent through the accent prop — the active item's glyph fill and the focus ring",
+                "navLabel — the label of the section list for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The collapsed state is not remembered between pages: persisting it is the caller's job.",
                 "Collapsed, only glyphs remain: they must be recognisable without a label or carry a tooltip.",
                 "The glyphs are drawn with borders: swap in your set, keeping the 1rem size.",
@@ -201,12 +292,48 @@
               },
               "activeLabel": {
                 "label": "Active",
-                "default": "Компоненты"
+                "default": "Components"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
               }
             },
-            "title": "Collapsible Sidebar"
+            "title": "Collapsible Sidebar",
+            "preview": {
+              "props": {
+                "title": "Collapse",
+                "navLabel": "Sections",
+                "activeLabel": "Components",
+                "items": [
+                  {
+                    "label": "Overview",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Components",
+                    "href": "#",
+                    "count": 225
+                  },
+                  {
+                    "label": "Blocks",
+                    "href": "#",
+                    "count": 12
+                  },
+                  {
+                    "label": "Settings",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["activeLabel", "accent", "background"]
       }
     },
     {
@@ -224,7 +351,7 @@
           "target": "@components/vibeui/sidebar-003.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-003-*. Клиентский (\"use client\") — состояние сворачивания держит useState. Ширина колонки задана одной переменной --vibeui-sidebar-003-width, которую переопределяет правило на [data-collapsed=\"true\"]: всё остальное подстраивается само. Подписи не удаляются из DOM, а сжимаются max-width и opacity, поэтому доступное имя ссылки не теряется. Иконки — инлайновые пути SVG из props, иконочная библиотека не нужна. В свёрнутом виде у ссылок появляется title, а у кнопки — aria-expanded.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-003-*. Клиентский (\"use client\") — состояние сворачивания держит useState. Ширина колонки задана одной переменной --vibeui-sidebar-003-width, которую переопределяет правило на [data-collapsed=\"true\"]: всё остальное подстраивается само. Подписи не удаляются из DOM, а сжимаются max-width и opacity, поэтому доступное имя ссылки не теряется. Иконки — инлайновые пути SVG из props, иконочная библиотека не нужна. В свёрнутом виде у ссылок появляется title, а у кнопки — aria-expanded. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
         "tags": ["sidebar", "collapse", "icons", "navigation"],
         "ai": {
@@ -237,15 +364,21 @@
             "ширину колонки одной переменной — иначе состояние приходится дублировать в каждом правиле",
             "title у ссылок в свёрнутом виде: иконка без подписи опознаётся не всеми и не сразу",
             "aria-expanded на кнопке сворачивания, иначе состояние меню скринридеру неизвестно",
-            "видимую обводку фокуса на ссылках: в узкой полосе иконок она единственный ориентир"
+            "видимую обводку фокуса на ссылках: в узкой полосе иконок она единственный ориентир",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "пункты через items: подпись, адрес и путь иконки",
             "текущий пункт через activeLabel",
             "подпись кнопки сворачивания через collapsedLabel",
-            "цвет акцента через accent и ширину колонки в переменной --vibeui-sidebar-003-width"
+            "цвет акцента через accent и ширину колонки в переменной --vibeui-sidebar-003-width",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "collapsedLabel и expandLabel — подписи кнопки в развёрнутом и свёрнутом состоянии",
+            "navLabel — подпись всей навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Иконка задаётся путём в системе координат 16×16: чужой viewBox приедет обрезанным.",
             "Активный пункт ищется по тексту подписи, а не по адресу: одинаковые подписи подсветятся обе.",
             "В свёрнутом виде подсказка — нативный title: она появляется с задержкой браузера.",
@@ -256,13 +389,19 @@
           {
             "prop": "activeLabel",
             "label": "Текущий пункт",
-            "type": "text",
+            "type": "select",
             "default": "Задачи",
-            "maxLength": 20
+            "options": ["Обзор", "Задачи", "Команда", "Отчёты", "Настройки"]
           },
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -278,15 +417,21 @@
                 "the column width in a single variable — otherwise the state is duplicated in every rule",
                 "the title attribute on collapsed links: an icon alone is not recognised by everyone",
                 "aria-expanded on the toggle, otherwise the menu state is unknown to a screen reader",
-                "the visible focus ring on the links: in a narrow icon rail it is the only landmark"
+                "the visible focus ring on the links: in a narrow icon rail it is the only landmark",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items through items: label, href and the icon path",
                 "the current item through activeLabel",
                 "the toggle caption through collapsedLabel",
-                "the accent colour through accent and the column width in --vibeui-sidebar-003-width"
+                "the accent colour through accent and the column width in --vibeui-sidebar-003-width",
+                "background — the component background; empty means no background, taking the page colour",
+                "collapsedLabel and expandLabel — the button labels in the expanded and collapsed states",
+                "navLabel — the label of the whole navigation for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The icon is a path in a 16×16 coordinate system: a foreign viewBox arrives cropped.",
                 "The active item is matched by label text, not by href: identical labels both light up.",
                 "While collapsed the hint is the native title: it appears with the browser's own delay.",
@@ -302,11 +447,51 @@
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
               }
             },
-            "title": "Icon Rail Sidebar"
+            "title": "Icon Rail Sidebar",
+            "preview": {
+              "props": {
+                "navLabel": "Main menu",
+                "collapsedLabel": "Collapse menu",
+                "expandLabel": "Expand menu",
+                "activeLabel": "Tasks",
+                "items": [
+                  {
+                    "label": "Overview",
+                    "href": "#",
+                    "icon": "M2 8.5 8 3l6 5.5M4 8v5h8V8"
+                  },
+                  {
+                    "label": "Tasks",
+                    "href": "#",
+                    "icon": "M3 4h10M3 8h10M3 12h6"
+                  },
+                  {
+                    "label": "Team",
+                    "href": "#",
+                    "icon": "M5.5 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm5.5 6H2a3.5 3.5 0 0 1 7 0Zm0 0h4a3 3 0 0 0-4-2.8"
+                  },
+                  {
+                    "label": "Reports",
+                    "href": "#",
+                    "icon": "M3 13V7m4 6V3m4 10V9"
+                  },
+                  {
+                    "label": "Settings",
+                    "href": "#",
+                    "icon": "M8 10.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM8 1.5v1.5M8 13v1.5M2.5 8H1M15 8h-1.5"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["activeLabel", "accent", "background"]
       }
     },
     {
@@ -324,7 +509,7 @@
           "target": "@components/vibeui/sidebar-004.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-004-*. Серверный: хуков нет, состояние раскрытия держит браузер через <details>. Атрибут open вычисляется на рендере из того, лежит ли активный пункт внутри группы: меню не должно требовать клика, чтобы показать, где пользователь находится. Свёрнутая группа с активным потомком помечена точкой в summary — после закрытия раздела текущее место иначе пропадает из виду. Галка нарисована бордюрами псевдоэлемента, маркер details скрыт.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-004-*. Серверный: хуков нет, состояние раскрытия держит браузер через <details>. Атрибут open вычисляется на рендере из того, лежит ли активный пункт внутри группы: меню не должно требовать клика, чтобы показать, где пользователь находится. Свёрнутая группа с активным потомком помечена точкой в summary — после закрытия раздела текущее место иначе пропадает из виду. Галка нарисована бордюрами псевдоэлемента, маркер details скрыт. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
         "tags": ["sidebar", "groups", "details", "navigation"],
         "ai": {
@@ -337,15 +522,20 @@
             "открытую группу с текущим пунктом: меню не должно требовать клика, чтобы показать место",
             "точку у свёрнутой группы с активным потомком — иначе «где я» теряется при закрытии",
             "aria-current=\"page\" на активной ссылке, а не только заливку",
-            "видимую обводку фокуса на summary и ссылках"
+            "видимую обводку фокуса на summary и ссылках",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "разделы и подпункты через groups и вложенный children",
             "текущий пункт через activeLabel",
             "цвет акцента через accent",
-            "ширину колонки через max-width корневого элемента"
+            "ширину колонки через max-width корневого элемента",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "navLabel — подпись всей навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Раскрытие не запоминается между переходами: это цена отказа от клиентского состояния.",
             "Открытыми могут быть сразу несколько групп — аккордеона здесь намеренно нет.",
             "Активный пункт ищется по тексту подписи: одинаковые подписи в разных группах подсветятся обе.",
@@ -356,13 +546,28 @@
           {
             "prop": "activeLabel",
             "label": "Текущий пункт",
-            "type": "text",
+            "type": "select",
             "default": "Возвраты",
-            "maxLength": 20
+            "options": [
+              "Товары",
+              "Категории",
+              "Бренды",
+              "Заказы",
+              "Возвраты",
+              "Промокоды",
+              "Доставка",
+              "Оплата"
+            ]
           },
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -378,15 +583,20 @@
                 "the group with the current item opened: the menu must not need a click to show where you are",
                 "the dot on a collapsed group holding the active child — otherwise \"where am I\" is lost on collapse",
                 "aria-current=\"page\" on the active link, not just the fill",
-                "the visible focus ring on the summary and the links"
+                "the visible focus ring on the summary and the links",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the groups and sub-items through groups and the nested children",
                 "the current item through activeLabel",
                 "the accent colour through accent",
-                "the column width through the root element's max-width"
+                "the column width through the root element's max-width",
+                "background — the component background; empty means no background, taking the page colour",
+                "navLabel — the label of the whole navigation for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The open state is not remembered across navigations: that is the price of having no client state.",
                 "Several groups can be open at once — there is deliberately no accordion behaviour.",
                 "The active item is matched by label text: identical labels in different groups both light up.",
@@ -402,11 +612,71 @@
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
               }
             },
-            "title": "Grouped Nav"
+            "title": "Grouped Nav",
+            "preview": {
+              "props": {
+                "navLabel": "Store sections",
+                "activeLabel": "Returns",
+                "groups": [
+                  {
+                    "label": "Catalogue",
+                    "children": [
+                      {
+                        "label": "Products",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Categories",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Brands",
+                        "href": "#"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Sales",
+                    "children": [
+                      {
+                        "label": "Orders",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Returns",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Promo codes",
+                        "href": "#"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Settings",
+                    "children": [
+                      {
+                        "label": "Delivery",
+                        "href": "#"
+                      },
+                      {
+                        "label": "Payment",
+                        "href": "#"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["activeLabel", "accent", "background"]
       }
     },
     {
@@ -424,7 +694,7 @@
           "target": "@components/vibeui/sidebar-005.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-005-*. Клиентский (\"use client\") — запрос держит useState, группировка результатов считается в useMemo. Фильтр простой: подстрока без учёта регистра; совпадение оборачивается в <mark>, потому что иначе непонятно, почему пункт остался в списке. Пустая выдача даёт текстовое объяснение, а не пустоту. Число найденного лежит в визуально скрытом абзаце с role=\"status\": «список стал короче» — событие, невидимое для скринридера.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-005-*. Клиентский (\"use client\") — запрос держит useState, группировка результатов считается в useMemo. Фильтр простой: подстрока без учёта регистра; совпадение оборачивается в <mark>, потому что иначе непонятно, почему пункт остался в списке. Пустая выдача даёт текстовое объяснение, а не пустоту. Число найденного лежит в визуально скрытом абзаце с role=\"status\": «список стал короче» — событие, невидимое для скринридера. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
         "tags": ["sidebar", "search", "filter", "navigation"],
         "ai": {
@@ -437,15 +707,21 @@
             "объявление числа найденного через role=\"status\": сокращение списка иначе остаётся немым",
             "объяснение при пустой выдаче — пустая колонка выглядит как поломка",
             "сохранение группировки в результатах: без заголовков одинаковые подписи путаются",
-            "type=\"search\" и aria-label на поле: поле без имени бесполезно для скринридера"
+            "type=\"search\" и aria-label на поле: поле без имени бесполезно для скринридера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "пункты и их группы через items",
             "подсказку поля через placeholder",
             "текущий пункт через activeLabel",
-            "цвет акцента через accent"
+            "цвет акцента через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "statusText — объявление для скринридера, {count} подставляется числом найденного",
+            "emptyText и navLabel — текст пустой выдачи и подпись навигации"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Поиск ищет подстроку без учёта регистра: опечатки и синонимы он не прощает.",
             "Список фильтруется целиком, включая активный пункт — он может исчезнуть из выдачи.",
             "Для сотен пунктов простой фильтр придётся заменить индексом: это не задача компонента.",
@@ -461,8 +737,32 @@
             "maxLength": 24
           },
           {
+            "prop": "activeLabel",
+            "label": "Текущий пункт",
+            "type": "select",
+            "default": "Ключи API",
+            "options": [
+              "Профиль",
+              "Уведомления",
+              "Безопасность",
+              "Тарифы и оплата",
+              "Участники",
+              "Роли и доступы",
+              "Приглашения",
+              "Ключи API",
+              "Вебхуки",
+              "Журнал событий"
+            ]
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -478,15 +778,21 @@
                 "announcing the result count through role=\"status\": a shrinking list is otherwise silent",
                 "the explanation for an empty result — a blank column looks like a breakage",
                 "keeping the grouping in the results: without headings identical labels get confused",
-                "type=\"search\" and aria-label on the field: an unnamed field is useless to a screen reader"
+                "type=\"search\" and aria-label on the field: an unnamed field is useless to a screen reader",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items and their groups through items",
                 "the field hint through placeholder",
                 "the current item through activeLabel",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "statusText — the screen-reader announcement, {count} is replaced by how many items matched",
+                "emptyText and navLabel — the empty-result text and the navigation label"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The search matches a case-insensitive substring: it forgives neither typos nor synonyms.",
                 "The whole list is filtered, the active item included — it can drop out of the results.",
                 "For hundreds of items the naive filter needs an index: that is not this component's job.",
@@ -499,14 +805,84 @@
                 "label": "Search hint",
                 "default": "Search the menu"
               },
+              "activeLabel": {
+                "label": "Current item",
+                "default": "API keys"
+              },
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
               }
             },
-            "title": "Filterable Menu"
+            "title": "Filterable Menu",
+            "preview": {
+              "props": {
+                "placeholder": "Search the menu",
+                "navLabel": "Settings",
+                "statusText": "Items found: {count}",
+                "emptyText": "Nothing found. Check the spelling.",
+                "activeLabel": "API keys",
+                "items": [
+                  {
+                    "label": "Profile",
+                    "href": "#",
+                    "group": "Account"
+                  },
+                  {
+                    "label": "Notifications",
+                    "href": "#",
+                    "group": "Account"
+                  },
+                  {
+                    "label": "Security",
+                    "href": "#",
+                    "group": "Account"
+                  },
+                  {
+                    "label": "Plans and billing",
+                    "href": "#",
+                    "group": "Account"
+                  },
+                  {
+                    "label": "Members",
+                    "href": "#",
+                    "group": "Team"
+                  },
+                  {
+                    "label": "Roles and access",
+                    "href": "#",
+                    "group": "Team"
+                  },
+                  {
+                    "label": "Invitations",
+                    "href": "#",
+                    "group": "Team"
+                  },
+                  {
+                    "label": "API keys",
+                    "href": "#",
+                    "group": "Development"
+                  },
+                  {
+                    "label": "Webhooks",
+                    "href": "#",
+                    "group": "Development"
+                  },
+                  {
+                    "label": "Event log",
+                    "href": "#",
+                    "group": "Development"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["activeLabel", "accent", "background"]
       }
     },
     {
@@ -524,7 +900,7 @@
           "target": "@components/vibeui/sidebar-006.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-006-*. Серверный: хуков нет, меню профиля собрано на <details>, состояние держит браузер. Профиль прижат к низу распоркой flex:1, а не отступом: высота колонки бывает разной. Список меню позиционирован абсолютно и раскрывается вверх — внизу колонки места нет, а обрезанное меню бесполезно. Инициалы считаются из имени на рендере. Выход и настройки живут рядом с именем, поэтому их невозможно нажать по ошибке при выборе раздела.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-006-*. Серверный: хуков нет, меню профиля собрано на <details>, состояние держит браузер. Профиль прижат к низу распоркой flex:1, а не отступом: высота колонки бывает разной. Список меню позиционирован абсолютно и раскрывается вверх — внизу колонки места нет, а обрезанное меню бесполезно. Инициалы считаются из имени на рендере. Выход и настройки живут рядом с именем, поэтому их невозможно нажать по ошибке при выборе раздела. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
         "tags": ["sidebar", "profile", "account", "footer"],
         "ai": {
@@ -537,15 +913,22 @@
             "раскрытие меню вверх — вниз оно упрётся в край колонки и обрежется",
             "выход и настройки в меню профиля, а не в списке разделов: их нельзя нажать по ошибке",
             "<details> вместо самодельного раскрытия: клавиатура работает без единой строки JS",
-            "обрезку длинных имени и почты многоточием — колонка узкая, перенос ломает карточку"
+            "обрезку длинных имени и почты многоточием — колонка узкая, перенос ломает карточку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "непрозрачную подложку всплывающего меню профиля: сквозь прозрачную просвечивали бы разделы под ним"
           ],
           "adapt": [
             "разделы через items и текущий через activeLabel",
             "имя через userName и вторую строку через userMeta",
             "пункты меню аккаунта через menu",
-            "цвет акцента через accent"
+            "цвет акцента через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "menuLabel — подпись кнопки профиля, {name} подставляется именем",
+            "navLabel — подпись списка разделов для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Аватар — инициалы из имени: для фотографии замените блок на <img> с alt.",
             "Меню профиля не закрывается по клику вне его: это плата за отсутствие клиентского JS.",
             "Минимальная высота колонки задана в CSS: без неё распорка не сработает.",
@@ -561,8 +944,21 @@
             "maxLength": 24
           },
           {
+            "prop": "activeLabel",
+            "label": "Текущий пункт",
+            "type": "select",
+            "default": "Проекты",
+            "options": ["Лента", "Проекты", "Задачи", "Файлы"]
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -578,15 +974,22 @@
                 "the menu opening upwards — downwards it hits the column edge and gets clipped",
                 "sign-out and settings inside the profile menu, not in the section list: they cannot be hit by accident",
                 "<details> instead of hand-rolled disclosure: the keyboard works without a line of JS",
-                "the ellipsis on long names and e-mails — the column is narrow and wrapping breaks the card"
+                "the ellipsis on long names and e-mails — the column is narrow and wrapping breaks the card",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the opaque surface of the profile popover: a transparent one would let the sections underneath show through"
               ],
               "adapt": [
                 "the sections through items and the current one through activeLabel",
                 "the name through userName and the second line through userMeta",
                 "the account menu entries through menu",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "menuLabel — the profile button label, {name} is replaced by the user's name",
+                "navLabel — the label of the section list for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The avatar is initials from the name: for a photo replace the block with an <img> and an alt.",
                 "The profile menu does not close on an outside click: that is the price of having no client JS.",
                 "The column's minimum height is set in CSS: without it the spacer does nothing.",
@@ -599,14 +1002,64 @@
                 "label": "Name",
                 "default": "Olga Dorn"
               },
+              "activeLabel": {
+                "label": "Current item",
+                "default": "Projects"
+              },
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
               }
             },
-            "title": "Profile Footer Nav"
+            "title": "Profile Footer Nav",
+            "preview": {
+              "props": {
+                "userName": "Olga Dorn",
+                "userMeta": "olga@studio.io",
+                "navLabel": "Sections",
+                "menuLabel": "Profile menu: {name}",
+                "activeLabel": "Projects",
+                "items": [
+                  {
+                    "label": "Feed",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Projects",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Tasks",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Files",
+                    "href": "#"
+                  }
+                ],
+                "menu": [
+                  {
+                    "label": "Profile settings",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Switch theme",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Sign out",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["activeLabel", "accent", "background"]
       }
     },
     {
@@ -624,7 +1077,7 @@
           "target": "@components/vibeui/sidebar-007.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-007-*. Серверный: хуков нет. Вес бейджа задаётся атрибутом data-tone на строке списка: один одинаковый бейдж на всё превращает меню в рябь из цифр, и срочное в ней теряется. Большие числа обрезаются до «99+» по пропу cap — точное значение всё равно не читают, а ширина колонки от него уезжает. Смысл числа продублирован визуально скрытым словом: «7» без пояснения скринридеру ничего не говорит.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-007-*. Серверный: хуков нет. Вес бейджа задаётся атрибутом data-tone на строке списка: один одинаковый бейдж на всё превращает меню в рябь из цифр, и срочное в ней теряется. Большие числа обрезаются до «99+» по пропу cap — точное значение всё равно не читают, а ширина колонки от него уезжает. Смысл числа продублирован визуально скрытым словом: «7» без пояснения скринридеру ничего не говорит. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
         "tags": ["sidebar", "badge", "counter", "navigation"],
         "ai": {
@@ -637,15 +1090,21 @@
             "обрезку больших чисел: точное значение не читают, а ширина колонки от него уезжает",
             "скрытую подпись у числа — «7» без пояснения скринридеру ничего не сообщает",
             "точку вместо числа для «есть новое»: наличие обновлений — это не количество",
-            "табличные цифры и прижатие бейджа к правому краю: иначе числа перестают выравниваться"
+            "табличные цифры и прижатие бейджа к правому краю: иначе числа перестают выравниваться",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "пункты через items: подпись, адрес, count и тон бейджа",
             "порог обрезки числа через cap",
             "текущий пункт через activeLabel",
-            "цвет акцента через accent"
+            "цвет акцента через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "countText и newText — что скринридер читает после числа и у точки «есть новое»",
+            "navLabel — подпись всей навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Тон alert стоит оставлять одному-двум пунктам: три красные плашки перестают быть срочными.",
             "Ноль в count тоже нарисуется: скрывать пустые счётчики должно приложение.",
             "Точка появляется только у пункта без count с тоном new — это разные сигналы.",
@@ -662,8 +1121,27 @@
             "max": 999
           },
           {
+            "prop": "activeLabel",
+            "label": "Текущий пункт",
+            "type": "select",
+            "default": "Требуют ответа",
+            "options": [
+              "Входящие",
+              "Требуют ответа",
+              "Черновики",
+              "Обновления",
+              "Архив"
+            ]
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -679,15 +1157,21 @@
                 "the cap on large numbers: the exact value is not read and the column width drifts",
                 "the hidden label beside the number — \"7\" alone tells a screen reader nothing",
                 "the dot instead of a number for \"something new\": having updates is not a count",
-                "tabular numerals and the right-aligned badge: otherwise the numbers stop lining up"
+                "tabular numerals and the right-aligned badge: otherwise the numbers stop lining up",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items through items: label, href, count and badge tone",
                 "the cap of the displayed number through cap",
                 "the current item through activeLabel",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "countText and newText — what a screen reader reads after the number and at the “something new” dot",
+                "navLabel — the label of the whole navigation for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Keep the alert tone to one or two items: three red pills stop being urgent.",
                 "A zero count is rendered too: hiding empty counters is the application's job.",
                 "The dot appears only on an item without a count and with the new tone — these are different signals.",
@@ -697,17 +1181,62 @@
             },
             "controls": {
               "cap": {
-                "label": "Counter cap",
-                "default": 99
+                "label": "Count cap"
+              },
+              "activeLabel": {
+                "label": "Current item",
+                "default": "Needs a reply"
               },
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
               }
             },
-            "title": "Badge Counters"
+            "title": "Badge Counters",
+            "preview": {
+              "props": {
+                "navLabel": "Mail",
+                "countText": " unread",
+                "newText": "something new",
+                "activeLabel": "Needs a reply",
+                "items": [
+                  {
+                    "label": "Inbox",
+                    "href": "#",
+                    "count": 128,
+                    "tone": "muted"
+                  },
+                  {
+                    "label": "Needs a reply",
+                    "href": "#",
+                    "count": 7,
+                    "tone": "alert"
+                  },
+                  {
+                    "label": "Drafts",
+                    "href": "#",
+                    "count": 2,
+                    "tone": "muted"
+                  },
+                  {
+                    "label": "Updates",
+                    "href": "#",
+                    "tone": "new"
+                  },
+                  {
+                    "label": "Archive",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["activeLabel", "cap", "accent", "background"]
       }
     },
     {
@@ -725,7 +1254,7 @@
           "target": "@components/vibeui/sidebar-008.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-008-*. Серверный: хуков нет, раскрытие держит <details>. Список пространств позиционирован абсолютно и лежит поверх меню: раскрытие не должно двигать разделы. Текущее пространство помечено галочкой из бордюров, а не только заливкой строки — заливку путают с наведением. Переключатель стоит над разделами, потому что одинаковые разделы в двух пространствах выглядят одинаково, и без подписи сверху правку легко внести не туда.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-008-*. Серверный: хуков нет, раскрытие держит <details>. Список пространств позиционирован абсолютно и лежит поверх меню: раскрытие не должно двигать разделы. Текущее пространство помечено галочкой из бордюров, а не только заливкой строки — заливку путают с наведением. Переключатель стоит над разделами, потому что одинаковые разделы в двух пространствах выглядят одинаково, и без подписи сверху правку легко внести не туда. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
         "tags": ["sidebar", "workspace", "switcher", "details"],
         "ai": {
@@ -738,15 +1267,22 @@
             "галочку у текущего пространства — заливку строки путают с наведением",
             "список поверх меню, а не в потоке: раскрытие не должно двигать разделы",
             "<details> вместо самодельного раскрытия: клавиатура работает без клиентского JS",
-            "обрезку длинного названия многоточием: колонка узкая, перенос ломает шапку"
+            "обрезку длинного названия многоточием: колонка узкая, перенос ломает шапку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "непрозрачную подложку выпадающего списка пространств: сквозь прозрачную просвечивали бы разделы под ним"
           ],
           "adapt": [
             "список пространств через spaces и текущее через current",
             "разделы через items и текущий раздел через activeLabel",
             "цвет акцента через accent",
-            "подпись действия «создать пространство» в разметке"
+            "подпись действия «создать пространство» в разметке",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "switcherLabel — подпись переключателя, {name} подставляется именем пространства",
+            "addLabel и navLabel — последняя строка списка и подпись разделов"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Список не закрывается по клику вне его: это плата за отсутствие клиентского JS.",
             "Плитка пространства — первая буква названия: для логотипа замените её на <img> с alt.",
             "Если current не найден в spaces, берётся первое пространство из списка.",
@@ -757,13 +1293,26 @@
           {
             "prop": "current",
             "label": "Текущее пространство",
-            "type": "text",
+            "type": "select",
             "default": "Студия Восход",
-            "maxLength": 24
+            "options": ["Студия Восход", "Личное", "Клиент: Северный порт"]
+          },
+          {
+            "prop": "activeLabel",
+            "label": "Текущий пункт",
+            "type": "select",
+            "default": "Проекты",
+            "options": ["Дашборд", "Проекты", "Счета", "Участники"]
           },
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -779,15 +1328,22 @@
                 "the check mark on the current workspace — a filled row is mistaken for hover",
                 "the list floating over the menu rather than in the flow: opening must not move the sections",
                 "<details> instead of hand-rolled disclosure: the keyboard works with no client JS",
-                "the ellipsis on a long name: the column is narrow and wrapping breaks the header"
+                "the ellipsis on a long name: the column is narrow and wrapping breaks the header",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the opaque surface of the workspace dropdown: a transparent one would let the sections underneath show through"
               ],
               "adapt": [
                 "the workspace list through spaces and the active one through current",
                 "the sections through items and the current section through activeLabel",
                 "the accent colour through accent",
-                "the caption of the \"create workspace\" action in the markup"
+                "the caption of the \"create workspace\" action in the markup",
+                "background — the component background; empty means no background, taking the page colour",
+                "switcherLabel — the switcher label, {name} is replaced by the workspace name",
+                "addLabel and navLabel — the last row of the list and the section label"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The list does not close on an outside click: that is the price of having no client JS.",
                 "The workspace tile is the first letter of the name: for a logo replace it with an <img> and an alt.",
                 "If current is not found in spaces, the first workspace in the list is used.",
@@ -800,14 +1356,67 @@
                 "label": "Current workspace",
                 "default": "Sunrise Studio"
               },
+              "activeLabel": {
+                "label": "Current item",
+                "default": "Projects"
+              },
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
               }
             },
-            "title": "Workspace Switcher"
+            "title": "Workspace Switcher",
+            "preview": {
+              "props": {
+                "current": "Sunrise Studio",
+                "navLabel": "Workspace sections",
+                "switcherLabel": "Workspace: {name}",
+                "addLabel": "+ New workspace",
+                "activeLabel": "Projects",
+                "spaces": [
+                  {
+                    "name": "Sunrise Studio",
+                    "plan": "Team · 8 people",
+                    "href": "#"
+                  },
+                  {
+                    "name": "Personal",
+                    "plan": "Free",
+                    "href": "#"
+                  },
+                  {
+                    "name": "Client: Northern Port",
+                    "plan": "Guest",
+                    "href": "#"
+                  }
+                ],
+                "items": [
+                  {
+                    "label": "Dashboard",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Projects",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Invoices",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Members",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["current", "accent", "background"]
       }
     },
     {
@@ -825,7 +1434,7 @@
           "target": "@components/vibeui/sidebar-009.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-009-*. Клиентский (\"use client\") — состояние ящика держит useState. Затемнение это кнопка с aria-hidden и tabIndex −1: оно ловит нажатие мимо панели, но не попадает в порядок обхода. Закрытый ящик помечен inert, поэтому таб не проваливается в невидимые ссылки; при открытии фокус уезжает на крестик, а при закрытии возвращается на кнопку-бургер. Escape ловится на корне блока. Ящик позиционирован внутри блока, а не относительно окна: демонстрация не захватывает страницу.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-009-*. Клиентский (\"use client\") — состояние ящика держит useState. Затемнение это кнопка с aria-hidden и tabIndex −1: оно ловит нажатие мимо панели, но не попадает в порядок обхода. Закрытый ящик помечен inert, поэтому таб не проваливается в невидимые ссылки; при открытии фокус уезжает на крестик, а при закрытии возвращается на кнопку-бургер. Escape ловится на корне блока. Ящик позиционирован внутри блока, а не относительно окна: демонстрация не захватывает страницу. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
         "tags": ["sidebar", "drawer", "mobile", "overlay"],
         "ai": {
@@ -838,15 +1447,22 @@
             "затемнение как цель нажатия — на телефоне это главный способ закрыть ящик",
             "возврат фокуса на бургер при закрытии: иначе фокус остаётся в пустоте",
             "закрытие по Escape — без него ящик становится ловушкой для клавиатуры",
-            "aria-expanded на бургере и подпись у крестика: состояние обязано быть слышно"
+            "aria-expanded на бургере и подпись у крестика: состояние обязано быть слышно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "непрозрачную подложку самого ящика: сквозь прозрачную панель просвечивала бы страница под ней"
           ],
           "adapt": [
             "пункты через items и текущий через activeLabel",
             "заголовок ящика через title и подпись бургера через openLabel",
             "цвет акцента через accent и плотность затемнения в переменной --vibeui-sidebar-009-scrim",
-            "ширину панели в правиле width у [data-part=\"drawer\"]"
+            "ширину панели в правиле width у [data-part=\"drawer\"]",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "brand и pageText — название в шапке и текст страницы под ящиком",
+            "openLabel и closeLabel — подписи кнопок открытия и закрытия"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ящик живёт внутри блока: для настоящего мобильного меню замените absolute на fixed и добавьте блокировку прокрутки страницы.",
             "Фокус внутри панели не зациклен: полноценная ловушка фокуса потребует своего обработчика Tab.",
             "Затемнение не закрывает ящик по свайпу: жесты компонент не обрабатывает.",
@@ -862,8 +1478,27 @@
             "maxLength": 16
           },
           {
+            "prop": "activeLabel",
+            "label": "Текущий пункт",
+            "type": "select",
+            "default": "Заказы",
+            "options": [
+              "Главная",
+              "Каталог",
+              "Заказы",
+              "Избранное",
+              "Поддержка"
+            ]
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -879,15 +1514,22 @@
                 "the scrim as a tap target — on a phone it is the main way to close the drawer",
                 "returning focus to the burger on close: otherwise focus is left nowhere",
                 "closing on Escape — without it the drawer becomes a keyboard trap",
-                "aria-expanded on the burger and a label on the close button: the state must be audible"
+                "aria-expanded on the burger and a label on the close button: the state must be audible",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the opaque surface of the drawer itself: a transparent panel would let the page underneath show through"
               ],
               "adapt": [
                 "the items through items and the current one through activeLabel",
                 "the drawer heading through title and the burger label through openLabel",
                 "the accent colour through accent and the scrim density in --vibeui-sidebar-009-scrim",
-                "the panel width in the width rule of [data-part=\"drawer\"]"
+                "the panel width in the width rule of [data-part=\"drawer\"]",
+                "background — the component background; empty means no background, taking the page colour",
+                "brand and pageText — the name in the bar and the page text under the drawer",
+                "openLabel and closeLabel — the labels of the open and close buttons"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The drawer lives inside the block: for a real mobile menu switch absolute to fixed and add page scroll locking.",
                 "Focus is not cycled inside the panel: a full focus trap needs its own Tab handler.",
                 "The scrim does not close the drawer on swipe: the component handles no gestures.",
@@ -900,14 +1542,55 @@
                 "label": "Drawer heading",
                 "default": "Menu"
               },
+              "activeLabel": {
+                "label": "Current item",
+                "default": "Orders"
+              },
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
               }
             },
-            "title": "Drawer Nav"
+            "title": "Drawer Nav",
+            "preview": {
+              "props": {
+                "title": "Menu",
+                "openLabel": "Open menu",
+                "closeLabel": "Close menu",
+                "brand": "Northern Port",
+                "pageText": "Page content. The drawer slides over it and dims everything underneath — tapping the dimmed area closes the menu.",
+                "activeLabel": "Orders",
+                "items": [
+                  {
+                    "label": "Home",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Catalogue",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Orders",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Favourites",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Support",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["activeLabel", "accent", "background"]
       }
     }
   ]

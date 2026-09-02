@@ -20,6 +20,15 @@ export type Command009Props = Omit<
   target?: string
   targetKind?: string
   actions?: Command009Action[]
+  placeholder?: string
+  /** Подпись поля для скринридера; {target} — имя объекта. */
+  fieldLabel?: string
+  /** Имя списка действий для скринридера. */
+  listLabel?: string
+  /** Ответ, когда действие не нашлось. */
+  emptyText?: string
+  /** Подложка панели. Пусто — цвет по умолчанию из палитры. */
+  background?: string
   accent?: string
 }
 
@@ -29,21 +38,26 @@ export type Command009Props = Omit<
 // прокрутке списка. Опасные действия помечены цветом и отделены линией:
 // «Удалить» не должно оказаться соседом «Переименовать» без границы, иначе
 // промах стрелкой стоит слишком дорого.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
+// акцент светлеет, поэтому текст на плашке типа темнеет вместе с ним.
 const STYLES = `
 :where([data-vibeui-block="command-009"]){
---vibeui-command-009-bg:oklch(1 0 0);
---vibeui-command-009-fg:oklch(0.23 0.014 265);
---vibeui-command-009-muted:oklch(0.57 0.014 265);
---vibeui-command-009-border:oklch(0.9 0.006 265);
---vibeui-command-009-accent:oklch(0.55 0.2 300);
---vibeui-command-009-danger:oklch(0.55 0.2 25);
+--vibeui-command-009-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-command-009-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-command-009-muted:light-dark(oklch(0.57 0.014 265),oklch(0.68 0.012 265));
+--vibeui-command-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-command-009-accent:light-dark(oklch(0.55 0.2 300),oklch(0.74 0.15 300));
+--vibeui-command-009-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 300));
+--vibeui-command-009-danger:light-dark(oklch(0.55 0.2 25),oklch(0.76 0.16 25));
+--vibeui-command-009-shadow:light-dark(oklch(0.2 0.03 265 / 60%),oklch(0.04 0.015 265 / 70%));
 --vibeui-command-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="command-009"]{
 display:block;box-sizing:border-box;width:100%;max-width:23rem;overflow:hidden;
 background:var(--vibeui-command-009-bg);color:var(--vibeui-command-009-fg);
 border:1px solid var(--vibeui-command-009-border);border-radius:0.875rem;
-box-shadow:0 18px 40px -28px oklch(0.2 0.03 265 / 60%);
+box-shadow:0 18px 40px -28px var(--vibeui-command-009-shadow);
 font-family:var(--vibeui-command-009-font);
 }
 /* Объект закреплён над полем: контекст не должен уезжать вместе со списком. */
@@ -56,7 +70,7 @@ font-size:0.75rem;
 }
 [data-vibeui-block="command-009"] [data-part="kind"]{
 flex:none;padding:0.0625rem 0.375rem;border-radius:0.375rem;
-background:var(--vibeui-command-009-accent);color:oklch(1 0 0);
+background:var(--vibeui-command-009-accent);color:var(--vibeui-command-009-on-accent);
 font-size:0.625rem;font-weight:750;letter-spacing:0.02em;text-transform:uppercase;
 }
 [data-vibeui-block="command-009"] [data-part="name"]{
@@ -108,6 +122,28 @@ const DEFAULT_ACTIONS: Command009Action[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Палитра действий над выделенным объектом: контекст закреплён над полем,
  * опасное действие отделено. Один файл, ноль зависимостей.
  */
@@ -115,6 +151,11 @@ export function Command009({
   target = "Hero background",
   targetKind = "Слой",
   actions = DEFAULT_ACTIONS,
+  placeholder = "Действие…",
+  fieldLabel = "Действие над «{target}»",
+  listLabel = "Действия",
+  emptyText = "Для этого объекта такого действия нет.",
+  background = "",
   accent,
   className,
   style,
@@ -150,6 +191,12 @@ export function Command009({
 
   const paletteStyle = {
     ...(accent ? { "--vibeui-command-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-command-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -179,8 +226,8 @@ export function Command009({
           aria-activedescendant={
             current ? `${rowId}-${rows.indexOf(current)}` : undefined
           }
-          aria-label={`Действие над «${target}»`}
-          placeholder="Действие…"
+          aria-label={fieldLabel.replace("{target}", target)}
+          placeholder={placeholder}
           value={query}
           onChange={(event) => {
             setQuery(event.target.value)
@@ -189,9 +236,14 @@ export function Command009({
           onKeyDown={onKeyDown}
         />
         {rows.length === 0 ? (
-          <p data-part="empty">Для этого объекта такого действия нет.</p>
+          <p data-part="empty">{emptyText}</p>
         ) : (
-          <ul id={listId} data-part="list" role="listbox" aria-label="Действия">
+          <ul
+            id={listId}
+            data-part="list"
+            role="listbox"
+            aria-label={listLabel}
+          >
             {rows.map((action, index) => (
               <li
                 key={action.label}

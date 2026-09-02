@@ -8,6 +8,8 @@ export type Ai006Props = {
   stopLabel?: string
   hint?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -26,12 +28,12 @@ export type Ai006Props = {
 // aria-hidden: скринридер читает готовый текст, а не «палочку».
 const STYLES = `
 :where([data-vibeui-block="ai-006"]){
---vibeui-ai-006-bg:oklch(1 0 0);
---vibeui-ai-006-fg:oklch(0.21 0.014 265);
---vibeui-ai-006-muted:oklch(0.54 0.014 265);
---vibeui-ai-006-border:oklch(0.91 0.006 265);
---vibeui-ai-006-soft:oklch(0.975 0.004 265);
---vibeui-ai-006-accent:oklch(0.55 0.17 155);
+--vibeui-ai-006-bg:transparent;
+--vibeui-ai-006-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-ai-006-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-ai-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-ai-006-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-ai-006-accent:light-dark(oklch(0.55 0.17 155),oklch(0.74 0.15 155));
 --vibeui-ai-006-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -102,6 +104,28 @@ const DEFAULT_TEXT =
   "Собрал структуру: hero с одним обещанием, три блока преимуществ, тарифы с годовой скидкой и форма заявки внизу. Все блоки без зависимостей, поэтому проект соберётся без установки пакетов."
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Ответ с потоковой печатью: слова проявляются каскадом, каретка мигает.
  * Один файл, ноль зависимостей, анимация целиком на CSS.
  */
@@ -113,11 +137,18 @@ export function Ai006({
   stopLabel = "Остановить поток",
   hint = "Каретка и каскад слов отключаются при prefers-reduced-motion: текст показывается целиком.",
   accent,
+  background = "",
   className,
   style,
 }: Ai006Props) {
   const palette = {
     ...(accent ? { "--vibeui-ai-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-ai-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

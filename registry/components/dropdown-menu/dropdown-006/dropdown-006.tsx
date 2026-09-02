@@ -15,7 +15,15 @@ export type Dropdown006Props = Omit<
   side?: "right" | "left"
   submenuLabel?: string
   folders?: string[]
+  /** Подпись над кнопкой: над каким объектом меню. */
+  caption?: string
+  /** Пункты до подменю. */
+  items?: string[]
+  /** Пункт после подменю. */
+  archiveLabel?: string
   accent?: string
+  /** Подложка панели и меню. Пусто — собственный фон по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: пункт с вложенным подменю. Подменю — не второй popover, а
@@ -23,14 +31,17 @@ export type Dropdown006Props = Omit<
 // закрывают друг друга, и «переместить в папку» превращается в мигание.
 // Подменю открывается наведением и стрелкой вправо, закрывается стрелкой
 // влево с возвратом фокуса на родителя — без этого с клавиатуры из него не выйти.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте панель светлее фона страницы, а её граница светлее панели.
 const STYLES = `
 :where([data-vibeui-block="dropdown-006"]){
---vibeui-dropdown-006-bg:oklch(1 0 0);
---vibeui-dropdown-006-fg:oklch(0.24 0.014 260);
---vibeui-dropdown-006-muted:oklch(0.56 0.014 260);
---vibeui-dropdown-006-border:oklch(0.9 0.006 260);
---vibeui-dropdown-006-hover:oklch(0.96 0.004 260);
---vibeui-dropdown-006-accent:oklch(0.55 0.19 300);
+--vibeui-dropdown-006-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 260));
+--vibeui-dropdown-006-fg:light-dark(oklch(0.24 0.014 260),oklch(0.94 0.006 260));
+--vibeui-dropdown-006-muted:light-dark(oklch(0.56 0.014 260),oklch(0.7 0.012 260));
+--vibeui-dropdown-006-border:light-dark(oklch(0.9 0.006 260),oklch(0.37 0.012 260));
+--vibeui-dropdown-006-hover:light-dark(oklch(0.96 0.004 260),oklch(0.32 0.014 260));
+--vibeui-dropdown-006-accent:light-dark(oklch(0.55 0.19 300),oklch(0.74 0.16 300));
 --vibeui-dropdown-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="dropdown-006"]{
@@ -107,6 +118,29 @@ height:1px;margin:0.3125rem 0.25rem;background:var(--vibeui-dropdown-006-border)
 `
 
 const DEFAULT_FOLDERS = ["Входящие", "Проекты 2026", "Архив", "Черновики"]
+const DEFAULT_ITEMS = ["Ответить", "Переслать"]
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 function stepFocus(scope: HTMLElement | null, delta: number) {
   if (!scope) {
@@ -134,7 +168,11 @@ export function Dropdown006({
   side = "right",
   submenuLabel = "Переместить в",
   folders = DEFAULT_FOLDERS,
+  caption = "Отчёт за март.pdf",
+  items = DEFAULT_ITEMS,
+  archiveLabel = "В архив",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -159,6 +197,12 @@ export function Dropdown006({
 
   const palette = {
     ...(accent ? { "--vibeui-dropdown-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dropdown-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -174,7 +218,7 @@ export function Dropdown006({
         className={className}
         style={palette}
       >
-        <span data-part="caption">Отчёт за март.pdf</span>
+        <span data-part="caption">{caption}</span>
         <button
           type="button"
           data-part="trigger"
@@ -219,22 +263,17 @@ export function Dropdown006({
             }
           }}
         >
-          <button
-            type="button"
-            role="menuitem"
-            data-part="item"
-            onClick={() => menu.current?.hidePopover()}
-          >
-            Ответить
-          </button>
-          <button
-            type="button"
-            role="menuitem"
-            data-part="item"
-            onClick={() => menu.current?.hidePopover()}
-          >
-            Переслать
-          </button>
+          {items.map((item) => (
+            <button
+              key={item}
+              type="button"
+              role="menuitem"
+              data-part="item"
+              onClick={() => menu.current?.hidePopover()}
+            >
+              {item}
+            </button>
+          ))}
           <div data-part="rule" role="separator" />
           <div
             data-part="nest"
@@ -295,7 +334,7 @@ export function Dropdown006({
             data-part="item"
             onClick={() => menu.current?.hidePopover()}
           >
-            В архив
+            {archiveLabel}
           </button>
         </div>
       </div>

@@ -15,8 +15,13 @@ export type Autocomplete010Props = Omit<
   placeholder?: string
   defaultOptions?: string[]
   defaultQuery?: string
+  /** Строка создания. {value} — набранный текст. */
   createLabel?: string
+  /** Строка под списком. {count} — сколько меток заведено. */
+  hintText?: string
   onChange?: (options: string[]) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,13 +31,14 @@ export type Autocomplete010Props = Omit<
 // Строка создания — часть списка, а не кнопка сбоку: до неё доезжают стрелки.
 const STYLES = `
 :where([data-vibeui-block="autocomplete-010"]){
---vibeui-autocomplete-010-bg:oklch(1 0 0);
---vibeui-autocomplete-010-fg:oklch(0.22 0.014 265);
---vibeui-autocomplete-010-muted:oklch(0.52 0.014 265);
---vibeui-autocomplete-010-border:oklch(0.9 0.006 265);
---vibeui-autocomplete-010-field:oklch(0.985 0.002 265);
---vibeui-autocomplete-010-active:oklch(0.95 0.02 265);
---vibeui-autocomplete-010-accent:oklch(0.55 0.17 265);
+--vibeui-autocomplete-010-bg:transparent;
+--vibeui-autocomplete-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-autocomplete-010-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-autocomplete-010-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-autocomplete-010-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
+--vibeui-autocomplete-010-active:light-dark(oklch(0.95 0.02 265),oklch(0.33 0.028 265));
+--vibeui-autocomplete-010-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-autocomplete-010-radius:0.625rem;
 --vibeui-autocomplete-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -61,7 +67,7 @@ outline:2px solid var(--vibeui-autocomplete-010-accent);outline-offset:1px;borde
 margin:0;padding:0.25rem;list-style:none;max-height:10rem;overflow-y:auto;
 border:1px solid var(--vibeui-autocomplete-010-border);
 border-radius:var(--vibeui-autocomplete-010-radius);
-background:var(--vibeui-autocomplete-010-bg);
+background:var(--vibeui-autocomplete-010-panel);
 }
 [data-vibeui-block="autocomplete-010"] [data-part="option"]{
 display:flex;align-items:center;gap:0.5rem;min-height:2rem;padding:0 0.5rem;
@@ -88,6 +94,28 @@ content:"";position:absolute;left:50%;top:50%;background:currentColor;
 const DEFAULT_OPTIONS = ["Срочно", "Баг", "Дизайн", "Документация", "Идея"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Автодополнение с созданием: пустой результат предлагает завести метку.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -96,8 +124,10 @@ export function Autocomplete010({
   placeholder = "Найти или создать",
   defaultOptions = DEFAULT_OPTIONS,
   defaultQuery = "рефакт",
-  createLabel = "Создать",
+  createLabel = "Создать «{value}»",
+  hintText = "Меток: {count}. Enter выбирает строку под курсором",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -124,6 +154,12 @@ export function Autocomplete010({
 
   const palette = {
     ...(accent ? { "--vibeui-autocomplete-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-autocomplete-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -215,13 +251,13 @@ export function Autocomplete010({
             >
               <span data-part="plus" aria-hidden="true" />
               <span data-part="create">
-                {createLabel} «{trimmed}»
+                {createLabel.replace("{value}", trimmed)}
               </span>
             </li>
           ) : null}
         </ul>
         <span data-part="hint">
-          Меток: {options.length}. Enter выбирает строку под курсором
+          {hintText.replace("{count}", String(options.length))}
         </span>
       </div>
     </>

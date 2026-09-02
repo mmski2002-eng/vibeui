@@ -15,6 +15,10 @@ export type Filters011Props = Omit<
   title?: string
   presets?: Filters011Preset[]
   onChange?: (range: { from: string; to: string }) => void
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -37,16 +41,17 @@ function daysAgo(days: number) {
 // же, а перевёрнутые границы меняются местами по уходу фокуса, а не ошибкой.
 const STYLES = `
 :where([data-vibeui-block="filters-011"]){
---vibeui-filters-011-surface:oklch(1 0 0);
---vibeui-filters-011-fill:oklch(0.975 0.004 265);
---vibeui-filters-011-fg:oklch(0.23 0.014 265);
---vibeui-filters-011-muted:oklch(0.55 0.014 265);
---vibeui-filters-011-border:oklch(0.89 0.008 265);
---vibeui-filters-011-shell:oklch(0.91 0.006 265);
---vibeui-filters-011-accent:oklch(0.53 0.15 235);
+--vibeui-filters-011-surface:transparent;
+--vibeui-filters-011-field:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-filters-011-fill:light-dark(oklch(0.975 0.004 265),oklch(0.3 0.012 265));
+--vibeui-filters-011-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-filters-011-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-filters-011-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.014 265));
+--vibeui-filters-011-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-filters-011-accent:light-dark(oklch(0.53 0.15 235),oklch(0.76 0.13 235));
 --vibeui-filters-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: фильтр показывают поверх любого фона. */
+/* Подложки по умолчанию нет: фильтр ложится на фон страницы. */
 [data-vibeui-block="filters-011"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -72,7 +77,7 @@ transition:border-color .16s ease,color .16s ease,background-color .16s ease;
 [data-vibeui-block="filters-011"] [data-part="preset"][aria-pressed="true"]{
 border-color:var(--vibeui-filters-011-accent);
 color:var(--vibeui-filters-011-accent);
-background:color-mix(in oklab,var(--vibeui-filters-011-accent) 10%,oklch(1 0 0));
+background:color-mix(in oklab,var(--vibeui-filters-011-accent) 10%,var(--vibeui-filters-011-fill));
 }
 [data-vibeui-block="filters-011"] [data-part="pair"]{
 display:flex;flex-wrap:wrap;align-items:center;gap:0.375rem;
@@ -86,7 +91,7 @@ font-size:0.6875rem;color:var(--vibeui-filters-011-muted);
 [data-vibeui-block="filters-011"] input{
 width:100%;height:2.375rem;padding:0 0.5rem;box-sizing:border-box;
 border:1px solid var(--vibeui-filters-011-border);border-radius:0.625rem;
-background:var(--vibeui-filters-011-surface);color:inherit;
+background:var(--vibeui-filters-011-field);color:inherit;
 font:inherit;font-size:0.8125rem;font-variant-numeric:tabular-nums;
 transition:border-color .16s ease,box-shadow .16s ease;
 }
@@ -107,6 +112,77 @@ const DEFAULT_PRESETS: Filters011Preset[] = [
   { label: "Квартал", days: 90 },
 ]
 
+/** Русский словарь по умолчанию: установленный файл не меняет язык проекта. */
+const DEFAULT_LABELS: Record<string, string> = {
+  from: "С",
+  to: "По",
+  fromField: "{title}: начало периода",
+  toField: "{title}: конец периода",
+  summary: "Период: {from} — {to}",
+  empty: "Период не задан — выберите пресет или даты.",
+}
+
+function label(
+  labels: Record<string, string>,
+  key: string,
+  values?: Record<string, string>,
+): string {
+  const template = labels[key] ?? DEFAULT_LABELS[key] ?? ""
+
+  if (!values) {
+    return template
+  }
+
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, name: string) => values[name] ?? match,
+  )
+}
+
+/**
+ * Сводка с выделенными границами: даты обязаны быть заметнее слов вокруг,
+ * поэтому подстановки from и to попадают в <b>, а шаблон остаётся строкой.
+ */
+function renderSummary(template: string, values: Record<string, string>) {
+  return template.split(/(\{\w+\})/).map((part, index) => {
+    const key = /^\{(\w+)\}$/.exec(part)?.[1]
+
+    if (!key) {
+      return part
+    }
+
+    const value = values[key] ?? part
+
+    return key === "from" || key === "to" ? (
+      <b key={`${key}-${index}`}>{value}</b>
+    ) : (
+      value
+    )
+  })
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Диапазон дат двумя полями и быстрыми пресетами «неделя / месяц / квартал»,
  * подставляющими готовые значения. Один файл, ноль зависимостей, своя палитра.
@@ -115,6 +191,8 @@ export function Filters011({
   title = "Период",
   presets = DEFAULT_PRESETS,
   onChange,
+  labels = DEFAULT_LABELS,
+  background = "",
   accent,
   className,
   style,
@@ -125,6 +203,12 @@ export function Filters011({
 
   const palette = {
     ...(accent ? { "--vibeui-filters-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-filters-011-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -177,21 +261,21 @@ export function Filters011({
 
         <div data-part="pair">
           <label data-part="cell">
-            <span>С</span>
+            <span>{label(labels, "from")}</span>
             <input
               type="date"
               value={from}
-              aria-label={`${title}: начало периода`}
+              aria-label={label(labels, "fromField", { title })}
               onChange={(event) => push({ from: event.target.value, to })}
               onBlur={settle}
             />
           </label>
           <label data-part="cell">
-            <span>По</span>
+            <span>{label(labels, "to")}</span>
             <input
               type="date"
               value={to}
-              aria-label={`${title}: конец периода`}
+              aria-label={label(labels, "toField", { title })}
               onChange={(event) => push({ from, to: event.target.value })}
               onBlur={settle}
             />
@@ -199,13 +283,9 @@ export function Filters011({
         </div>
 
         <p data-part="summary" role="status">
-          {from && to ? (
-            <>
-              Период: <b>{from}</b> — <b>{to}</b>
-            </>
-          ) : (
-            "Период не задан — выберите пресет или даты."
-          )}
+          {from && to
+            ? renderSummary(label(labels, "summary"), { from, to })
+            : label(labels, "empty")}
         </p>
       </div>
     </>

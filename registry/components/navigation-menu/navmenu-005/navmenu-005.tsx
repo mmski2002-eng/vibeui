@@ -11,6 +11,12 @@ export type Navmenu005Entry = {
 export type Navmenu005Props = {
   entries?: Navmenu005Entry[]
   triggerLabel?: string
+  /** Обычные ссылки полосы рядом с кнопкой. */
+  barLinks?: string[]
+  /** Подпись навигации для скринридера. */
+  label?: string
+  /** Подложка полосы и панели. Пусто — своя палитра компонента. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -22,12 +28,16 @@ export type Navmenu005Props = {
 // файлом, не тянет за собой ассеты и не ждёт загрузки изображений.
 const STYLES = `
 :where([data-vibeui-block="navmenu-005"]){
---vibeui-navmenu-005-bg:oklch(1 0 0);
---vibeui-navmenu-005-fg:oklch(0.22 0.014 265);
---vibeui-navmenu-005-muted:oklch(0.55 0.014 265);
---vibeui-navmenu-005-border:oklch(0.91 0.006 265);
---vibeui-navmenu-005-hover:oklch(0.55 0.02 265 / 8%);
---vibeui-navmenu-005-accent:oklch(0.55 0.2 262);
+--vibeui-navmenu-005-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
+--vibeui-navmenu-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-navmenu-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-navmenu-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-navmenu-005-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 12%));
+--vibeui-navmenu-005-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-navmenu-005-sheen:light-dark(oklch(1 0 0 / 70%),oklch(1 0 0 / 12%));
+--vibeui-navmenu-005-shot-fg:light-dark(oklch(0.24 0.03 265),oklch(0.22 0.02 265));
+--vibeui-navmenu-005-shot-text:light-dark(oklch(0.45 0.03 265),oklch(0.4 0.025 265));
+--vibeui-navmenu-005-shadow:light-dark(oklch(0.2 0.03 265 / 40%),oklch(0 0 0 / 70%));
 --vibeui-navmenu-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="navmenu-005"]{
@@ -58,7 +68,7 @@ gap:0.625rem;
 background:var(--vibeui-navmenu-005-bg);color:var(--vibeui-navmenu-005-fg);
 border:1px solid var(--vibeui-navmenu-005-border);border-radius:0.875rem;
 font-family:var(--vibeui-navmenu-005-font);
-box-shadow:0 24px 48px -24px oklch(0.2 0.03 265 / 40%);
+box-shadow:0 24px 48px -24px var(--vibeui-navmenu-005-shadow);
 }
 /* Раскладка только для открытой панели: display на элементе с popover
    перебивает display:none из стилей браузера, и панель видна всегда. */
@@ -85,13 +95,14 @@ position:absolute;inset:0;opacity:0;
 display:flex;flex-direction:column;justify-content:flex-end;gap:0.25rem;
 padding:0.875rem;box-sizing:border-box;
 background:
-radial-gradient(120% 80% at 20% 15%,oklch(1 0 0 / 70%),transparent 62%),
+radial-gradient(120% 80% at 20% 15%,var(--vibeui-navmenu-005-sheen),transparent 62%),
 linear-gradient(150deg,oklch(0.92 0.08 var(--vibeui-navmenu-005-hue)),oklch(0.86 0.11 calc(var(--vibeui-navmenu-005-hue) + 40)));
 border:1px solid var(--vibeui-navmenu-005-border);border-radius:0.75rem;
+color:var(--vibeui-navmenu-005-shot-fg);
 transition:opacity .18s ease;
 }
 [data-vibeui-block="navmenu-005"] [data-part="shot-title"]{margin:0;font-size:0.9375rem;font-weight:650}
-[data-vibeui-block="navmenu-005"] [data-part="shot-text"]{margin:0;font-size:0.75rem;line-height:1.45;color:var(--vibeui-navmenu-005-muted)}
+[data-vibeui-block="navmenu-005"] [data-part="shot-text"]{margin:0;font-size:0.75rem;line-height:1.45;color:var(--vibeui-navmenu-005-shot-text)}
 [data-vibeui-block="navmenu-005"] [data-part="panel"]:not(:has([data-part="link"]:hover)):not(:has([data-part="link"]:focus-visible)) [data-part="shot"][data-index="0"]{opacity:1}
 [data-vibeui-block="navmenu-005"] [data-part="panel"]:has([data-part="link"][data-index="0"]:hover) [data-part="shot"][data-index="0"],
 [data-vibeui-block="navmenu-005"] [data-part="panel"]:has([data-part="link"][data-index="0"]:focus-visible) [data-part="shot"][data-index="0"]{opacity:1}
@@ -149,18 +160,50 @@ function hue(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Меню с превью: наведение на ссылку показывает свою картинку справа.
  * Один файл, ноль зависимостей, собственная палитра, клиентского JS нет.
  */
 export function Navmenu005({
   entries = DEFAULT_ENTRIES,
   triggerLabel = "Возможности",
+  barLinks = ["Цены", "Блог"],
+  label = "Основная навигация",
+  background = "",
   accent,
   className,
   style,
 }: Navmenu005Props) {
   const palette = {
     ...(accent ? { "--vibeui-navmenu-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-navmenu-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -173,7 +216,7 @@ export function Navmenu005({
       </style>
       <nav
         data-vibeui-block="navmenu-005"
-        aria-label="Основная навигация"
+        aria-label={label}
         className={className}
         style={palette}
       >
@@ -186,12 +229,11 @@ export function Navmenu005({
           >
             {triggerLabel}
           </button>
-          <a data-part="plain" href="#">
-            Цены
-          </a>
-          <a data-part="plain" href="#">
-            Блог
-          </a>
+          {barLinks.map((entry) => (
+            <a key={entry} data-part="plain" href="#">
+              {entry}
+            </a>
+          ))}
         </div>
         <div
           id="vibeui-navmenu-005-panel"

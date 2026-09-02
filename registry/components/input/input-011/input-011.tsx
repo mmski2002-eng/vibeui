@@ -9,6 +9,16 @@ export type Input011Props = Omit<
 > & {
   label?: string
   minLength?: number
+  /** Начальное значение поля. */
+  defaultValue?: string
+  /** Пять требований по порядку; в первом {min} заменяется на minLength. */
+  ruleText?: string[]
+  /** Пять слов надёжности по числу выполненных требований. */
+  strengthText?: string[]
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  text?: Record<string, string>
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   onChange?: (value: string) => void
   accent?: string
 }
@@ -20,25 +30,30 @@ export type Input011Props = Omit<
 // шкала и список никогда не расходятся.
 const STYLES = `
 :where([data-vibeui-block="input-011"]){
---vibeui-input-011-surface:oklch(1 0 0);
---vibeui-input-011-shell:oklch(0.91 0.006 265);
---vibeui-input-011-fg:oklch(0.23 0.014 265);
---vibeui-input-011-muted:oklch(0.56 0.014 265);
---vibeui-input-011-field:oklch(0.985 0.002 265);
---vibeui-input-011-border:oklch(0.88 0.008 265);
---vibeui-input-011-accent:oklch(0.52 0.18 285);
---vibeui-input-011-track:oklch(0.92 0.005 265);
---vibeui-input-011-weak:oklch(0.6 0.2 25);
---vibeui-input-011-fair:oklch(0.72 0.15 75);
---vibeui-input-011-good:oklch(0.55 0.14 155);
+--vibeui-input-011-surface:transparent;
+--vibeui-input-011-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-input-011-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-011-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-input-011-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-input-011-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-input-011-accent:light-dark(oklch(0.52 0.18 285),oklch(0.76 0.15 285));
+--vibeui-input-011-track:light-dark(oklch(0.92 0.005 265),oklch(0.34 0.012 265));
+--vibeui-input-011-weak:light-dark(oklch(0.6 0.2 25),oklch(0.74 0.17 25));
+--vibeui-input-011-fair:light-dark(oklch(0.72 0.15 75),oklch(0.8 0.14 75));
+--vibeui-input-011-good:light-dark(oklch(0.55 0.14 155),oklch(0.76 0.14 155));
 --vibeui-input-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-011"]{
 display:flex;flex-direction:column;gap:0.5rem;
-width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:21rem;box-sizing:border-box;
+font-family:var(--vibeui-input-011-font);color:var(--vibeui-input-011-fg);
+}
+/* Подложка появляется только вместе с пропом background: без него поле
+   лежит прямо на фоне страницы. */
+[data-vibeui-block="input-011"][data-surface="on"]{
+padding:0.875rem;
 background:var(--vibeui-input-011-surface);
 border:1px solid var(--vibeui-input-011-shell);border-radius:0.875rem;
-font-family:var(--vibeui-input-011-font);color:var(--vibeui-input-011-fg);
 }
 [data-vibeui-block="input-011"] *{box-sizing:border-box}
 [data-vibeui-block="input-011"] label{font-size:0.8125rem;font-weight:600}
@@ -104,6 +119,43 @@ font-size:0.75rem;line-height:1.4;color:var(--vibeui-input-011-muted);
 const TONES = ["weak", "weak", "fair", "fair", "good"] as const
 const WORDS = ["слишком слабый", "слабый", "средний", "хороший", "надёжный"]
 
+const RULES = [
+  "не короче {min} символов",
+  "строчные и прописные буквы",
+  "хотя бы одна цифра",
+  "знак препинания или символ",
+  "не повторяет слово «пароль»",
+]
+
+const TEXT = {
+  show: "Показать",
+  hide: "Скрыть",
+  strength: "Надёжность",
+  empty: "пусто",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Пароль с сегментной шкалой и списком требований: видно, что именно исправить.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -111,6 +163,11 @@ const WORDS = ["слишком слабый", "слабый", "средний", 
 export function Input011({
   label = "Придумайте пароль",
   minLength = 10,
+  defaultValue = "vibeui2026",
+  ruleText = RULES,
+  strengthText = WORDS,
+  text,
+  background = "",
   onChange,
   accent,
   className,
@@ -118,30 +175,32 @@ export function Input011({
   ...props
 }: Input011Props) {
   const id = useId()
-  const [value, setValue] = useState("vibeui2026")
+  const [value, setValue] = useState(defaultValue)
   const [shown, setShown] = useState(false)
+  const copy = { ...TEXT, ...text }
 
   const palette = {
     ...(accent ? { "--vibeui-input-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-011-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
-  const rules = [
-    {
-      text: `не короче ${minLength} символов`,
-      done: value.length >= minLength,
-    },
-    {
-      text: "строчные и прописные буквы",
-      done: /[a-zа-я]/.test(value) && /[A-ZА-Я]/.test(value),
-    },
-    { text: "хотя бы одна цифра", done: /\d/.test(value) },
-    { text: "знак препинания или символ", done: /[^\p{L}\d]/u.test(value) },
-    {
-      text: "не повторяет слово «пароль»",
-      done: !/(пароль|password|qwerty)/i.test(value),
-    },
+  const checks = [
+    value.length >= minLength,
+    /[a-zа-я]/.test(value) && /[A-ZА-Я]/.test(value),
+    /\d/.test(value),
+    /[^\p{L}\d]/u.test(value),
+    !/(пароль|password|qwerty)/i.test(value),
   ]
+  const rules = checks.map((done, index) => ({
+    text: (ruleText[index] ?? RULES[index]).replace("{min}", String(minLength)),
+    done,
+  }))
 
   const done = rules.filter((rule) => rule.done).length
   const score = value ? done : 0
@@ -158,6 +217,7 @@ export function Input011({
         className={className}
         style={palette}
         data-tone={tone}
+        data-surface={background ? "on" : undefined}
       >
         <label htmlFor={id}>{label}</label>
         <div data-part="frame">
@@ -179,7 +239,7 @@ export function Input011({
             aria-pressed={shown}
             onClick={() => setShown((was) => !was)}
           >
-            {shown ? "Скрыть" : "Показать"}
+            {shown ? copy.hide : copy.show}
           </button>
         </div>
         <div data-part="meter" aria-hidden="true">
@@ -192,8 +252,10 @@ export function Input011({
           ))}
         </div>
         <p data-part="verdict" id={`${id}-verdict`} aria-live="polite">
-          <span>Надёжность</span>
-          <strong>{value ? (WORDS[score - 1] ?? WORDS[0]) : "пусто"}</strong>
+          <span>{copy.strength}</span>
+          <strong>
+            {value ? (strengthText[score - 1] ?? strengthText[0]) : copy.empty}
+          </strong>
         </p>
         <ul>
           {rules.map((rule) => (

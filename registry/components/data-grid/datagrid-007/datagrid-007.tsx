@@ -17,6 +17,24 @@ export type Datagrid007Props = Omit<
   rows?: Datagrid007Row[]
   caption?: string
   startCollapsed?: boolean
+  /** Заголовок панели над таблицей. */
+  heading?: string
+  /** Подпись кнопки «свернуть все». */
+  collapseAllLabel?: string
+  /** Подпись кнопки «развернуть все». */
+  expandAllLabel?: string
+  /** Названия колонок: task, owner, hours. */
+  columnText?: Record<string, string>
+  /** Число задач в группе. {count} подставляется. */
+  groupCountText?: string
+  /** Часы с единицей измерения. {hours} подставляется. */
+  hoursText?: string
+  /** Подпись итоговой строки. */
+  totalLabel?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,15 +43,19 @@ export type Datagrid007Props = Omit<
 // подписывается руками, поэтому свёрнутая группа не теряет смысла. Кнопка
 // несёт aria-expanded, а сама строка группы остаётся строкой таблицы —
 // разметка не рассыпается на вложенные таблицы.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-007"]){
---vibeui-datagrid-007-bg:oklch(1 0 0);
---vibeui-datagrid-007-fg:oklch(0.23 0.014 300);
---vibeui-datagrid-007-muted:oklch(0.55 0.014 300);
---vibeui-datagrid-007-border:oklch(0.92 0.006 300);
---vibeui-datagrid-007-head:oklch(0.975 0.003 300);
---vibeui-datagrid-007-group:oklch(0.955 0.008 300);
---vibeui-datagrid-007-accent:oklch(0.5 0.16 320);
+--vibeui-datagrid-007-bg:transparent;
+--vibeui-datagrid-007-fg:light-dark(oklch(0.23 0.014 300),oklch(0.93 0.006 300));
+--vibeui-datagrid-007-muted:light-dark(oklch(0.55 0.014 300),oklch(0.68 0.012 300));
+--vibeui-datagrid-007-border:light-dark(oklch(0.92 0.006 300),oklch(0.34 0.012 300));
+--vibeui-datagrid-007-head:light-dark(oklch(0.975 0.003 300),oklch(0.27 0.012 300));
+--vibeui-datagrid-007-group:light-dark(oklch(0.955 0.008 300),oklch(0.3 0.016 300));
+--vibeui-datagrid-007-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 300));
+--vibeui-datagrid-007-accent:light-dark(oklch(0.5 0.16 320),oklch(0.76 0.14 320));
 --vibeui-datagrid-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-007"]{
@@ -52,7 +74,7 @@ padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-007-borde
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
 padding:0.3125rem 0.625rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-007-border);
-background:var(--vibeui-datagrid-007-bg);color:var(--vibeui-datagrid-007-fg);
+background:var(--vibeui-datagrid-007-field);color:var(--vibeui-datagrid-007-fg);
 }
 [data-vibeui-block="datagrid-007"] [data-part="bar"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-007-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-007"] [data-part="scroll"]{overflow-x:auto}
@@ -104,6 +126,34 @@ const DEFAULT_ROWS: Datagrid007Row[] = [
   { group: "Аналитика", task: "Разметка событий", owner: "Лебедь", hours: 5 },
 ]
 
+const COLUMN_LABEL: Record<string, string> = {
+  task: "Задача",
+  owner: "Исполнитель",
+  hours: "Часы",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Сетка с группировкой строк: у каждой группы строка-заголовок с итогом
  * и сворачиванием. Один файл, ноль зависимостей, собственная палитра.
@@ -112,6 +162,15 @@ export function Datagrid007({
   rows = DEFAULT_ROWS,
   caption = "Часы по задачам, сгруппированные по направлению",
   startCollapsed = false,
+  heading = "Трудозатраты, спринт 14",
+  collapseAllLabel = "Свернуть все",
+  expandAllLabel = "Развернуть все",
+  columnText = COLUMN_LABEL,
+  groupCountText = "{count} задач",
+  hoursText = "{hours} ч",
+  totalLabel = "Всего по спринту",
+  scrollLabel = "Таблица трудозатрат, прокручивается вбок",
+  background = "",
   accent,
   className,
   style,
@@ -132,8 +191,17 @@ export function Datagrid007({
         : [...current, group],
     )
 
+  const label = (column: string) => columnText[column] ?? COLUMN_LABEL[column]
+  const hours = (value: number) => hoursText.replace("{hours}", String(value))
+
   const palette = {
     ...(accent ? { "--vibeui-datagrid-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -149,28 +217,28 @@ export function Datagrid007({
         style={palette}
       >
         <div data-part="bar">
-          <h3 data-part="title">Трудозатраты, спринт 14</h3>
+          <h3 data-part="title">{heading}</h3>
           <button type="button" onClick={() => setClosed(names)}>
-            Свернуть все
+            {collapseAllLabel}
           </button>
           <button type="button" onClick={() => setClosed([])}>
-            Развернуть все
+            {expandAllLabel}
           </button>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица трудозатрат, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
             <caption>{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Задача</th>
-                <th scope="col">Исполнитель</th>
+                <th scope="col">{label("task")}</th>
+                <th scope="col">{label("owner")}</th>
                 <th scope="col" data-align="end">
-                  Часы
+                  {label("hours")}
                 </th>
               </tr>
             </thead>
@@ -193,8 +261,13 @@ export function Datagrid007({
                           ▶
                         </span>
                         {group}
-                        <span data-part="count">{items.length} задач</span>
-                        <span data-part="sum">{sum} ч</span>
+                        <span data-part="count">
+                          {groupCountText.replace(
+                            "{count}",
+                            String(items.length),
+                          )}
+                        </span>
+                        <span data-part="sum">{hours(sum)}</span>
                       </button>
                     </th>
                   </tr>
@@ -214,8 +287,8 @@ export function Datagrid007({
             })}
             <tfoot>
               <tr>
-                <td colSpan={2}>Всего по спринту</td>
-                <td data-align="end">{total} ч</td>
+                <td colSpan={2}>{totalLabel}</td>
+                <td data-align="end">{hours(total)}</td>
               </tr>
             </tfoot>
           </table>

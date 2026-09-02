@@ -16,6 +16,14 @@ export type Input023Props = Omit<
   defaultValue?: string
   storageKey?: string
   onChange?: (value: string) => void
+  /** Подпись списка истории для скринридера. */
+  listLabel?: string
+  /** Надпись на кнопке очистки истории. */
+  clearText?: string
+  /** Примечание под полем. */
+  noteText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,13 +36,14 @@ export type Input023Props = Omit<
 // кнопкой, а не по одной записи.
 const STYLES = `
 :where([data-vibeui-block="input-023"]){
---vibeui-input-023-surface:oklch(1 0 0);
---vibeui-input-023-shell:oklch(0.91 0.006 265);
---vibeui-input-023-fg:oklch(0.23 0.014 265);
---vibeui-input-023-muted:oklch(0.56 0.014 265);
---vibeui-input-023-field:oklch(0.985 0.002 265);
---vibeui-input-023-border:oklch(0.88 0.008 265);
---vibeui-input-023-accent:oklch(0.55 0.17 265);
+--vibeui-input-023-surface:transparent;
+--vibeui-input-023-pop:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-input-023-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-input-023-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-023-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-input-023-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.011 265));
+--vibeui-input-023-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.013 265));
+--vibeui-input-023-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-input-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-023"]{
@@ -66,7 +75,7 @@ font:inherit;font-size:0.875rem;
 [data-vibeui-block="input-023"] [data-part="list"]{
 position:absolute;z-index:2;top:calc(100% + 0.375rem);left:0;right:0;
 margin:0;padding:0.25rem;display:flex;flex-direction:column;
-background:var(--vibeui-input-023-surface);
+background:var(--vibeui-input-023-pop);
 border:1px solid var(--vibeui-input-023-border);border-radius:0.75rem;
 box-shadow:0 14px 30px -14px color-mix(in oklab,var(--vibeui-input-023-fg) 45%,transparent);
 }
@@ -103,6 +112,28 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-input-023-muted);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поле с историей отправленных значений: сохраняется в localStorage по
  * Enter, открывается стрелкой вниз, показывает последние значения целиком
  * и чистится одной кнопкой. Один файл, ноль зависимостей.
@@ -113,6 +144,10 @@ export function Input023({
   defaultValue = "",
   storageKey = "vibeui-input-023-history",
   onChange,
+  listLabel = "Последние значения",
+  clearText = "Очистить историю",
+  noteText = "Стрелка вниз — последние значения, Enter сохраняет и подставляет выбранное.",
+  background = "",
   accent,
   className,
   style,
@@ -141,6 +176,12 @@ export function Input023({
 
   const palette = {
     ...(accent ? { "--vibeui-input-023-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-023-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -251,7 +292,7 @@ export function Input023({
               data-part="list"
               id={`${id}-list`}
               role="listbox"
-              aria-label="Последние значения"
+              aria-label={listLabel}
             >
               {history.map((entry, index) => (
                 <button
@@ -278,14 +319,13 @@ export function Input023({
                 </button>
               ))}
               <button type="button" data-part="clear" onClick={clearHistory}>
-                Очистить историю
+                {clearText}
               </button>
             </div>
           ) : null}
         </div>
         <p data-part="note" id={`${id}-note`}>
-          Стрелка вниз — последние значения, Enter сохраняет и подставляет
-          выбранное.
+          {noteText}
         </p>
       </div>
     </>

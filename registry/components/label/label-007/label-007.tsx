@@ -8,6 +8,8 @@ export type Label007Props = Omit<
   label?: string
   error?: string
   defaultValue?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,14 +19,14 @@ export type Label007Props = Omit<
 // атрибут — покраснела рамка, подпись и текст, отдельного класса нет.
 const STYLES = `
 :where([data-vibeui-block="label-007"]){
---vibeui-label-007-surface:oklch(1 0 0);
---vibeui-label-007-surface-border:oklch(0.91 0.006 265);
---vibeui-label-007-fg:oklch(0.24 0.016 265);
---vibeui-label-007-muted:oklch(0.54 0.014 265);
---vibeui-label-007-field-border:oklch(0.85 0.01 265);
---vibeui-label-007-accent:oklch(0.55 0.2 262);
---vibeui-label-007-error:oklch(0.55 0.2 25);
---vibeui-label-007-error-soft:oklch(0.96 0.03 25);
+--vibeui-label-007-surface:transparent;
+--vibeui-label-007-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-label-007-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-label-007-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-label-007-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-label-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-label-007-error:light-dark(oklch(0.55 0.2 25),oklch(0.78 0.14 25));
+--vibeui-label-007-error-soft:light-dark(oklch(0.96 0.03 25),oklch(0.3 0.05 25));
 --vibeui-label-007-radius:0.625rem;
 --vibeui-label-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -83,6 +85,28 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-label-007-error) 22%,transp
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подпись с сообщением об ошибке под ней: состояние задаётся одним
  * aria-invalid, текст связан с полем через aria-describedby. Один файл,
  * ноль зависимостей.
@@ -91,6 +115,7 @@ export function Label007({
   label = "Почта для счетов",
   error = "Такой почты не существует: проверьте, что после @ стоит домен.",
   defaultValue = "buhgalter@company",
+  background = "",
   accent,
   className,
   style,
@@ -100,6 +125,12 @@ export function Label007({
   const errorId = `${id}-error`
   const palette = {
     ...(accent ? { "--vibeui-label-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-label-007-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

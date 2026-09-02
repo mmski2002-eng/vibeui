@@ -13,6 +13,13 @@ export type Input012Props = Omit<
 > & {
   label?: string
   history?: string[]
+  placeholder?: string
+  /** Начальный запрос в поле. */
+  defaultValue?: string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  text?: Record<string, string>
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   onChange?: (value: string) => void
   accent?: string
 }
@@ -24,21 +31,29 @@ export type Input012Props = Omit<
 // Escape закрывает список, не стирая набранное.
 const STYLES = `
 :where([data-vibeui-block="input-012"]){
---vibeui-input-012-surface:oklch(1 0 0);
---vibeui-input-012-shell:oklch(0.91 0.006 265);
---vibeui-input-012-fg:oklch(0.23 0.014 265);
---vibeui-input-012-muted:oklch(0.56 0.014 265);
---vibeui-input-012-field:oklch(0.985 0.002 265);
---vibeui-input-012-border:oklch(0.88 0.008 265);
---vibeui-input-012-accent:oklch(0.55 0.17 265);
+--vibeui-input-012-surface:transparent;
+/* Список подсказок висит над страницей, поэтому его подложка непрозрачна
+   всегда и не зависит от surface. */
+--vibeui-input-012-panel:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
+--vibeui-input-012-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-input-012-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-012-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-input-012-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-input-012-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-input-012-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-input-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-012"]{
 display:flex;flex-direction:column;gap:0.4375rem;
-width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:22rem;box-sizing:border-box;
+font-family:var(--vibeui-input-012-font);color:var(--vibeui-input-012-fg);
+}
+/* Подложка появляется только вместе с пропом background: без него поле
+   лежит прямо на фоне страницы. */
+[data-vibeui-block="input-012"][data-surface="on"]{
+padding:0.875rem;
 background:var(--vibeui-input-012-surface);
 border:1px solid var(--vibeui-input-012-shell);border-radius:0.875rem;
-font-family:var(--vibeui-input-012-font);color:var(--vibeui-input-012-fg);
 }
 [data-vibeui-block="input-012"] *{box-sizing:border-box}
 [data-vibeui-block="input-012"] label{font-size:0.8125rem;font-weight:600}
@@ -62,7 +77,7 @@ font:inherit;font-size:0.875rem;
 [data-vibeui-block="input-012"] [data-part="list"]{
 position:absolute;z-index:2;top:calc(100% + 0.375rem);left:0;right:0;
 margin:0;padding:0.25rem;display:flex;flex-direction:column;
-background:var(--vibeui-input-012-surface);
+background:var(--vibeui-input-012-panel);
 border:1px solid var(--vibeui-input-012-border);border-radius:0.75rem;
 box-shadow:0 14px 30px -14px color-mix(in oklab,var(--vibeui-input-012-fg) 45%,transparent);
 }
@@ -115,16 +130,44 @@ const HISTORY = [
   "Казань, Баумана 44",
 ]
 
-function mark(text: string, query: string) {
-  const at = text.toLowerCase().indexOf(query.toLowerCase())
-  if (!query || at < 0) return text
+const TEXT = {
+  listLabel: "Из истории",
+  forget: "Забыть «{value}»",
+  note: "Стрелки — по подсказкам, Enter — подставить, крестик — забыть значение.",
+}
+
+function mark(entry: string, query: string) {
+  const at = entry.toLowerCase().indexOf(query.toLowerCase())
+  if (!query || at < 0) return entry
   return (
     <>
-      {text.slice(0, at)}
-      <mark>{text.slice(at, at + query.length)}</mark>
-      {text.slice(at + query.length)}
+      {entry.slice(0, at)}
+      <mark>{entry.slice(at, at + query.length)}</mark>
+      {entry.slice(at + query.length)}
     </>
   )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -134,6 +177,10 @@ function mark(text: string, query: string) {
 export function Input012({
   label = "Адрес доставки",
   history = HISTORY,
+  placeholder = "Город, улица, дом",
+  defaultValue = "Мос",
+  text,
+  background = "",
   onChange,
   accent,
   className,
@@ -142,13 +189,20 @@ export function Input012({
 }: Input012Props) {
   const id = useId()
   const field = useRef<HTMLInputElement | null>(null)
-  const [value, setValue] = useState("Мос")
+  const [value, setValue] = useState(defaultValue)
   const [saved, setSaved] = useState(history)
   const [open, setOpen] = useState(true)
   const [active, setActive] = useState(0)
+  const copy = { ...TEXT, ...text }
 
   const palette = {
     ...(accent ? { "--vibeui-input-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-012-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -199,6 +253,7 @@ export function Input012({
       <div
         {...props}
         data-vibeui-block="input-012"
+        data-surface={background ? "on" : undefined}
         className={className}
         style={palette}
       >
@@ -220,7 +275,7 @@ export function Input012({
               aria-expanded={shown}
               aria-controls={`${id}-list`}
               aria-describedby={`${id}-note`}
-              placeholder="Город, улица, дом"
+              placeholder={placeholder}
               value={value}
               onChange={(event) => {
                 setValue(event.target.value)
@@ -237,7 +292,7 @@ export function Input012({
               data-part="list"
               id={`${id}-list`}
               role="listbox"
-              aria-label="Из истории"
+              aria-label={copy.listLabel}
             >
               {found.map((entry, index) => (
                 <div
@@ -268,7 +323,7 @@ export function Input012({
                   <button
                     type="button"
                     data-part="drop"
-                    aria-label={`Забыть «${entry}»`}
+                    aria-label={copy.forget.replace("{value}", entry)}
                     onClick={() => forget(entry)}
                   >
                     <svg
@@ -287,8 +342,7 @@ export function Input012({
           ) : null}
         </div>
         <p data-part="note" id={`${id}-note`}>
-          Стрелки — по подсказкам, Enter — подставить, крестик — забыть
-          значение.
+          {copy.note}
         </p>
       </div>
     </>

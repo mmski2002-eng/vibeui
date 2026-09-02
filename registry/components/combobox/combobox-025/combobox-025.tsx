@@ -21,7 +21,13 @@ export type Combobox025Props = Omit<
   options?: Combobox025Option[]
   defaultValue?: string
   emptyLabel?: string
+  /** Подпись панели предпросмотра для скринридера. */
+  previewLabel?: string
+  /** Текст в панели, пока ни одна строка не активна. */
+  previewHint?: string
   onSelect?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -29,16 +35,19 @@ export type Combobox025Props = Omit<
 // должны конкурировать за одно и то же место. Слева список, справа панель
 // с описанием варианта под курсором или клавиатурным фокусом — она следует
 // за активной строкой, а не только за подтверждённым выбором.
+//
+// Тема берётся из color-scheme окружения через light-dark(): у списка, поля и
+// панели свои пары светлот, а не инверсия светлой ветки.
 const STYLES = `
 :where([data-vibeui-block="combobox-025"]){
---vibeui-combobox-025-bg:oklch(1 0 0);
---vibeui-combobox-025-fg:oklch(0.22 0.02 270);
---vibeui-combobox-025-muted:oklch(0.53 0.02 270);
---vibeui-combobox-025-border:oklch(0.9 0.01 270);
---vibeui-combobox-025-field:oklch(0.985 0.004 270);
---vibeui-combobox-025-active:oklch(0.95 0.035 270);
---vibeui-combobox-025-panel:oklch(0.975 0.01 270);
---vibeui-combobox-025-accent:oklch(0.5 0.15 270);
+--vibeui-combobox-025-bg:transparent;
+--vibeui-combobox-025-fg:light-dark(oklch(0.22 0.02 270),oklch(0.94 0.01 270));
+--vibeui-combobox-025-muted:light-dark(oklch(0.53 0.02 270),oklch(0.71 0.016 270));
+--vibeui-combobox-025-border:light-dark(oklch(0.9 0.01 270),oklch(0.36 0.016 270));
+--vibeui-combobox-025-field:light-dark(oklch(0.985 0.004 270),oklch(0.27 0.014 270));
+--vibeui-combobox-025-active:light-dark(oklch(0.95 0.035 270),oklch(0.34 0.045 270));
+--vibeui-combobox-025-panel:light-dark(oklch(0.975 0.01 270),oklch(0.29 0.018 270));
+--vibeui-combobox-025-accent:light-dark(oklch(0.5 0.15 270),oklch(0.74 0.15 270));
 --vibeui-combobox-025-radius:0.625rem;
 --vibeui-combobox-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -118,6 +127,28 @@ const DEFAULT_OPTIONS: Combobox025Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox с панелью предпросмотра: справа лежит описание варианта под
  * активной строкой, обновляется при наведении и стрелками.
  */
@@ -127,7 +158,10 @@ export function Combobox025({
   options = DEFAULT_OPTIONS,
   defaultValue = "Свободен",
   emptyLabel = "Ничего не нашлось",
+  previewLabel = "Описание варианта",
+  previewHint = "Выберите вариант, чтобы увидеть описание",
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -154,6 +188,12 @@ export function Combobox025({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-025-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-025-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -261,7 +301,7 @@ export function Combobox025({
             data-part="preview"
             role="region"
             aria-live="polite"
-            aria-label="Описание варианта"
+            aria-label={previewLabel}
           >
             {previewOption ? (
               <>
@@ -269,9 +309,7 @@ export function Combobox025({
                 <p data-part="previewtext">{previewOption.description}</p>
               </>
             ) : (
-              <p data-part="previewtext">
-                Выберите вариант, чтобы увидеть описание
-              </p>
+              <p data-part="previewtext">{previewHint}</p>
             )}
           </div>
         </div>

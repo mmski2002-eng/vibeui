@@ -13,21 +13,31 @@ export type Tabbar001Props = Omit<
 > & {
   items?: Tabbar001Item[]
   activeLabel?: string
+  /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
+  /** Подпись панели для скринридера. */
+  navLabel?: string
+  /** Шаблон подписи пункта со значком: {label} и {count}. */
+  countLabel?: string
 }
 
 // Идея компонента: нижняя панель навигации для телефона. Высота панели
 // считается вместе с safe-area-inset-bottom, иначе на iPhone нижний пункт
 // попадает под системную полосу. Активный пункт отмечен цветом и точкой
 // сверху: одного цвета мало, когда экран на солнце.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте рамка светлее фона, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="tabbar-001"]){
---vibeui-tabbar-001-bg:oklch(1 0 0);
---vibeui-tabbar-001-fg:oklch(0.24 0.014 265);
---vibeui-tabbar-001-muted:oklch(0.56 0.014 265);
---vibeui-tabbar-001-border:oklch(0.91 0.006 265);
---vibeui-tabbar-001-accent:oklch(0.55 0.2 262);
---vibeui-tabbar-001-badge:oklch(0.56 0.19 25);
+--vibeui-tabbar-001-bg:transparent;
+--vibeui-tabbar-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tabbar-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-tabbar-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-tabbar-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.17 262));
+--vibeui-tabbar-001-badge:light-dark(oklch(0.56 0.19 25),oklch(0.62 0.19 25));
+--vibeui-tabbar-001-badge-fg:oklch(1 0 0);
 --vibeui-tabbar-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="tabbar-001"]{
@@ -66,7 +76,7 @@ position:absolute;top:0.5rem;left:calc(50% + 0.125rem);
 min-width:1rem;height:1rem;padding:0 0.25rem;box-sizing:border-box;
 display:inline-flex;align-items:center;justify-content:center;
 border-radius:9999px;background:var(--vibeui-tabbar-001-badge);
-color:oklch(1 0 0);font-size:0.625rem;font-weight:650;line-height:1;
+color:var(--vibeui-tabbar-001-badge-fg);font-size:0.625rem;font-weight:650;line-height:1;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="tabbar-001"] *{animation:none!important;transition:none!important}}
 `
@@ -79,19 +89,50 @@ const DEFAULT_ITEMS: Tabbar001Item[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Нижняя панель навигации: safe area учтена, активный пункт помечен точкой.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tabbar001({
   items = DEFAULT_ITEMS,
   activeLabel = "Каталог",
+  background = "",
   accent,
+  navLabel = "Основная навигация",
+  countLabel = "{label}, новых: {count}",
   className,
   style,
   ...props
 }: Tabbar001Props) {
   const palette = {
     ...(accent ? { "--vibeui-tabbar-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tabbar-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -103,7 +144,7 @@ export function Tabbar001({
       <nav
         {...props}
         data-vibeui-block="tabbar-001"
-        aria-label="Основная навигация"
+        aria-label={navLabel}
         className={className}
         style={palette}
       >
@@ -114,7 +155,11 @@ export function Tabbar001({
             href={item.href ?? "#"}
             aria-current={item.label === activeLabel ? "page" : undefined}
             aria-label={
-              item.count ? `${item.label}, новых: ${item.count}` : undefined
+              item.count
+                ? countLabel
+                    .replace("{label}", item.label)
+                    .replace("{count}", String(item.count))
+                : undefined
             }
           >
             <span data-part="glyph" aria-hidden="true" />

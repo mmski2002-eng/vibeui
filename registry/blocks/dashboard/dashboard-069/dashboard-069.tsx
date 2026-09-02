@@ -17,6 +17,18 @@ export type Dashboard069Props = {
   backlog?: Dashboard069Task[]
   cutLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подпись рядом со шкалой. */
+  gaugeText?: string
+  /** Подпись шкалы для скринридера. */
+  gaugeAriaText?: string
+  /** Знак перед накопленной суммой. */
+  sumPrefix?: string
+  /** Пометка задачи, не готовой к работе. */
+  notReadyText?: string
+  /** Сноска под списком. */
+  footText?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,15 +44,18 @@ export type Dashboard069Props = {
 // потому что вопрос всегда один: «если добавлю вот эту, что вылетит».
 const STYLES = `
 :where([data-vibeui-block="dashboard-069"]){
---vibeui-dashboard-069-bg:oklch(0.985 0.003 275);
---vibeui-dashboard-069-card:oklch(1 0 0);
---vibeui-dashboard-069-fg:oklch(0.21 0.014 275);
---vibeui-dashboard-069-muted:oklch(0.55 0.014 275);
---vibeui-dashboard-069-border:oklch(0.91 0.006 275);
---vibeui-dashboard-069-accent:oklch(0.52 0.16 275);
---vibeui-dashboard-069-soft:oklch(0.965 0.02 275);
---vibeui-dashboard-069-cut:oklch(0.57 0.19 25);
---vibeui-dashboard-069-warn:oklch(0.68 0.15 72);
+--vibeui-dashboard-069-bg:transparent;
+/* Карточки задач и жёлоб шкалы: подложка блока прозрачна. */
+--vibeui-dashboard-069-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 275));
+--vibeui-dashboard-069-inset:light-dark(oklch(0.985 0.003 275),oklch(0.22 0.012 275));
+--vibeui-dashboard-069-fg:light-dark(oklch(0.21 0.014 275),oklch(0.94 0.005 275));
+--vibeui-dashboard-069-muted:light-dark(oklch(0.55 0.014 275),oklch(0.72 0.012 275));
+--vibeui-dashboard-069-border:light-dark(oklch(0.91 0.006 275),oklch(0.36 0.012 275));
+--vibeui-dashboard-069-accent:light-dark(oklch(0.52 0.16 275),oklch(0.73 0.14 275));
+--vibeui-dashboard-069-soft:light-dark(oklch(0.965 0.02 275),oklch(0.3 0.035 275));
+--vibeui-dashboard-069-cut:light-dark(oklch(0.57 0.19 25),oklch(0.75 0.17 25));
+--vibeui-dashboard-069-cut-line:light-dark(oklch(0.8 0.1 25),oklch(0.5 0.11 25));
+--vibeui-dashboard-069-warn:light-dark(oklch(0.68 0.15 72),oklch(0.8 0.14 72));
 --vibeui-dashboard-069-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 --vibeui-dashboard-069-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -66,7 +81,7 @@ background:var(--vibeui-dashboard-069-card);border:1px solid var(--vibeui-dashbo
 [data-vibeui-block="dashboard-069"] [data-part="gauge"] span{font-size:0.75rem;color:var(--vibeui-dashboard-069-muted)}
 [data-vibeui-block="dashboard-069"] [data-part="track"]{
 flex:1 1 10rem;position:relative;height:0.5rem;border-radius:9999px;
-background:var(--vibeui-dashboard-069-bg);
+background:var(--vibeui-dashboard-069-inset);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-069-border);overflow:hidden;
 }
 [data-vibeui-block="dashboard-069"] [data-part="track"] span{
@@ -106,7 +121,7 @@ font-size:0.6875rem;font-weight:750;color:var(--vibeui-dashboard-069-cut);
 }
 [data-vibeui-block="dashboard-069"] [data-part="cut"]::before,
 [data-vibeui-block="dashboard-069"] [data-part="cut"]::after{
-content:"";flex:1 1 auto;height:0;border-top:2px dashed color-mix(in oklab,var(--vibeui-dashboard-069-cut) 55%,white);
+content:"";flex:1 1 auto;height:0;border-top:2px dashed var(--vibeui-dashboard-069-cut-line);
 }
 [data-vibeui-block="dashboard-069"] [data-part="foot"]{margin:0;font-size:0.6875rem;color:var(--vibeui-dashboard-069-muted);max-width:66ch}
 @container (min-width: 42rem){
@@ -178,6 +193,28 @@ const DEFAULT_BACKLOG: Dashboard069Task[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Страница спринта с бэклогом: задачи одним потоком, накопленная сумма оценок
  * и явная черта отсечения там, где ёмкость спринта заканчивается. Один файл,
  * ноль зависимостей, клиентского JS нет.
@@ -190,11 +227,23 @@ export function Dashboard069({
   backlog = DEFAULT_BACKLOG,
   cutLabel = "дальше не влезает в ёмкость спринта",
   accent,
+  background = "",
+  gaugeText = "поинтов набрано из ёмкости команды",
+  gaugeAriaText = "Набрано поинтов из ёмкости спринта",
+  sumPrefix = "Σ",
+  notReadyText = "не готова к работе: нет описания и макета",
+  footText = "Ёмкость посчитана по средней скорости за три спринта и уже уменьшена на отпуск Марины. Задачи ниже черты остаются в бэклоге и не переносятся автоматически.",
   className,
   style,
 }: Dashboard069Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-069-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-069-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -228,14 +277,14 @@ export function Dashboard069({
             <b>
               {taken} / {capacity}
             </b>
-            <span>поинтов набрано из ёмкости команды</span>
+            <span>{gaugeText}</span>
             <span
               data-part="track"
               role="progressbar"
               aria-valuenow={taken}
               aria-valuemin={0}
               aria-valuemax={capacity}
-              aria-label="Набрано поинтов из ёмкости спринта"
+              aria-label={gaugeAriaText}
             >
               <span
                 style={{
@@ -253,14 +302,14 @@ export function Dashboard069({
                   <span data-part="key">{row.task.key}</span>
                   <span data-part="name">{row.task.title}</span>
                   <span data-part="pts">{row.task.points}</span>
-                  <span data-part="sum">Σ {row.sum}</span>
+                  <span data-part="sum">
+                    {sumPrefix} {row.sum}
+                  </span>
                   <p data-part="sub">
                     <span data-part="kind">{row.task.kind}</span>
                     <span>{row.task.owner}</span>
                     {row.task.ready ? null : (
-                      <span data-part="notready">
-                        не готова к работе: нет описания и макета
-                      </span>
+                      <span data-part="notready">{notReadyText}</span>
                     )}
                   </p>
                 </div>
@@ -268,11 +317,7 @@ export function Dashboard069({
             ))}
           </ul>
 
-          <p data-part="foot">
-            Ёмкость посчитана по средней скорости за три спринта и уже уменьшена
-            на отпуск Марины. Задачи ниже черты остаются в бэклоге и не
-            переносятся автоматически.
-          </p>
+          <p data-part="foot">{footText}</p>
         </div>
       </section>
     </>

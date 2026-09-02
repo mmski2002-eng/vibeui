@@ -18,10 +18,13 @@ export type Spinner009Props = Omit<
 // а сама кнопка получает disabled и aria-busy на время работы. Отдельная
 // невидимая aria-live область объявляет начало и конец ожидания, не трогая
 // видимый текст: так подпись не дёргается при каждом клике.
+//
+// Тема берётся из color-scheme окружения через light-dark(): на тёмном фоне
+// акцент светлее, и кнопка не носит собственной тёмной темы. Заливки у неё
+// нет вовсе — контур ложится прямо на фон страницы.
 const STYLES = `
 :where([data-vibeui-block="spinner-009"]){
---vibeui-spinner-009-accent:oklch(0.55 0.17 265);
---vibeui-spinner-009-fg:oklch(0.99 0.01 265);
+--vibeui-spinner-009-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-spinner-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="spinner-009"]{

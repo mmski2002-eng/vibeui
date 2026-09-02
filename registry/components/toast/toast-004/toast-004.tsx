@@ -13,19 +13,26 @@ export type Toast004Props = Omit<
   errorText?: string
   /** Вторая строка: подробность результата. Пустая строка убирает её. */
   hint?: string
+  /** Пусто — подложка берётся из темы окружения. */
+  background?: string
 }
 
 // Идея компонента: одно уведомление на всю операцию. Вместо «начали» и потом
 // отдельного «готово» карточка остаётся на месте и меняет только значок и
 // строку — глазу не надо заново искать, о чём речь.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
+// граница карточки светлее её подложки, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="toast-004"]){
---vibeui-toast-004-bg:oklch(1 0 0);
---vibeui-toast-004-fg:oklch(0.24 0.014 265);
---vibeui-toast-004-muted:oklch(0.55 0.014 265);
---vibeui-toast-004-border:oklch(0.9 0.006 265);
---vibeui-toast-004-track:oklch(0.9 0.01 265);
---vibeui-toast-004-tone:oklch(0.55 0.17 265);
+--vibeui-toast-004-bg:light-dark(oklch(1 0 0),oklch(0.26 0.014 265));
+--vibeui-toast-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.95 0.004 265));
+--vibeui-toast-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-toast-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
+--vibeui-toast-004-track:light-dark(oklch(0.9 0.01 265),oklch(0.36 0.014 265));
+--vibeui-toast-004-shadow:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.1 0.02 265 / 70%));
+--vibeui-toast-004-on-tone:light-dark(oklch(0.99 0.005 265),oklch(0.2 0.02 265));
+--vibeui-toast-004-tone:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-toast-004-radius:0.875rem;
 --vibeui-toast-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -37,10 +44,10 @@ border:1px solid var(--vibeui-toast-004-border);
 border-radius:var(--vibeui-toast-004-radius);
 background:var(--vibeui-toast-004-bg);color:var(--vibeui-toast-004-fg);
 font-family:var(--vibeui-toast-004-font);
-box-shadow:0 18px 38px -26px oklch(0.2 0.02 265 / 45%);
+box-shadow:0 18px 38px -26px var(--vibeui-toast-004-shadow);
 }
-[data-vibeui-block="toast-004"][data-state="success"]{--vibeui-toast-004-tone:oklch(0.62 0.15 152)}
-[data-vibeui-block="toast-004"][data-state="error"]{--vibeui-toast-004-tone:oklch(0.6 0.2 25)}
+[data-vibeui-block="toast-004"][data-state="success"]{--vibeui-toast-004-tone:light-dark(oklch(0.62 0.15 152),oklch(0.76 0.15 152))}
+[data-vibeui-block="toast-004"][data-state="error"]{--vibeui-toast-004-tone:light-dark(oklch(0.6 0.2 25),oklch(0.7 0.18 25))}
 [data-vibeui-block="toast-004"] [data-part="icon"]{
 position:relative;flex:none;width:1.375rem;height:1.375rem;margin-top:0.0625rem;
 }
@@ -55,7 +62,7 @@ animation:vibeui-toast-004-spin 0.9s linear infinite;
 [data-vibeui-block="toast-004"] [data-part="mark"]{
 position:absolute;inset:0;border-radius:9999px;
 display:flex;align-items:center;justify-content:center;
-background:var(--vibeui-toast-004-tone);color:oklch(0.99 0.005 265);
+background:var(--vibeui-toast-004-tone);color:var(--vibeui-toast-004-on-tone);
 font-size:0.75rem;font-weight:800;line-height:1;
 }
 [data-vibeui-block="toast-004"][data-state="loading"] [data-part="mark"]{display:none}
@@ -92,6 +99,28 @@ const MARKS: Record<Toast004State, string> = {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Уведомление операции: загрузка переходит в успех или ошибку в той же карточке.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -101,10 +130,20 @@ export function Toast004({
   successText = "Архив готов к скачиванию",
   errorText = "Не удалось собрать архив",
   hint = "Файлы больше 200 МБ пропускаем.",
+  background = "",
   className,
   style,
   ...props
 }: Toast004Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-toast-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
   const title =
     state === "loading"
       ? loadingText
@@ -124,7 +163,7 @@ export function Toast004({
         role={state === "error" ? "alert" : "status"}
         aria-live={state === "error" ? "assertive" : "polite"}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="icon" aria-hidden="true">
           <span data-part="spinner" />

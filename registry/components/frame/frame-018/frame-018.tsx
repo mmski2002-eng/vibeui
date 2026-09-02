@@ -13,6 +13,15 @@ export type Frame018Props = Omit<
   messages?: Frame018Message[]
   placeholder?: string
   caption?: string
+  /** Подпись ленты сообщений; {name} подставляется именем собеседника. */
+  feedLabel?: string
+  /** Подпись поля ввода для вспомогательных технологий. */
+  inputLabel?: string
+  /** Подпись кнопки отправки для вспомогательных технологий. */
+  sendLabel?: string
+  accent?: string
+  /** Пусто — подложки нет, кадр ложится на фон страницы. */
+  background?: string
   children?: ReactNode
 }
 
@@ -30,14 +39,14 @@ const DEFAULT_MESSAGES: Frame018Message[] = [
 // что перед ними макет, а не рабочая форма, и не требует клиентского JS.
 const STYLES = `
 :where([data-vibeui-block="frame-018"]){
---vibeui-frame-018-bg:oklch(1 0 0);
---vibeui-frame-018-fg:oklch(0.24 0.014 265);
---vibeui-frame-018-muted:oklch(0.55 0.014 265);
---vibeui-frame-018-border:oklch(0.89 0.006 265);
---vibeui-frame-018-them:oklch(0.96 0.004 265);
---vibeui-frame-018-me:oklch(0.55 0.14 260);
+--vibeui-frame-018-bg:transparent;
+--vibeui-frame-018-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-frame-018-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-frame-018-border:light-dark(oklch(0.89 0.006 265),oklch(0.4 0.011 265));
+--vibeui-frame-018-them:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.011 265));
+--vibeui-frame-018-me:light-dark(oklch(0.55 0.14 260),oklch(0.62 0.15 260));
 --vibeui-frame-018-me-fg:oklch(0.99 0.004 260);
---vibeui-frame-018-avatar:oklch(0.55 0.14 260);
+--vibeui-frame-018-avatar:light-dark(oklch(0.55 0.14 260),oklch(0.62 0.15 260));
 --vibeui-frame-018-avatar-fg:oklch(0.99 0.004 260);
 --vibeui-frame-018-radius:0.875rem;
 --vibeui-frame-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -128,6 +137,28 @@ font-size:0.75rem;line-height:1.4;color:var(--vibeui-frame-018-muted);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кадр чата: заголовок с собеседником, лента пузырей сообщений и поле
  * ввода снизу. Один файл, ноль зависимостей, собственная палитра.
  */
@@ -136,12 +167,32 @@ export function Frame018({
   messages = DEFAULT_MESSAGES,
   placeholder = "Сообщение…",
   caption = "Кадр чата: пузыри сообщений и поле ввода снизу",
+  feedLabel = "Переписка с собеседником {name}",
+  inputLabel = "Поле ввода сообщения (демо, не отправляет)",
+  sendLabel = "Отправить сообщение (демо)",
+  accent,
+  background = "",
   children,
   className,
   style,
   ...props
 }: Frame018Props) {
   const initial = contact.trim().charAt(0).toUpperCase() || "?"
+  const palette = {
+    ...(accent
+      ? {
+          "--vibeui-frame-018-me": accent,
+          "--vibeui-frame-018-avatar": accent,
+        }
+      : null),
+    ...(background
+      ? {
+          "--vibeui-frame-018-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -152,7 +203,7 @@ export function Frame018({
         {...props}
         data-vibeui-block="frame-018"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="shell">
           <div data-part="header">
@@ -164,7 +215,7 @@ export function Frame018({
           <div
             data-part="feed"
             role="log"
-            aria-label={`Переписка с собеседником ${contact}`}
+            aria-label={feedLabel.replace("{name}", contact)}
           >
             {children ??
               messages.map((message, messageIndex) => (
@@ -183,13 +234,13 @@ export function Frame018({
               type="text"
               value={placeholder}
               disabled
-              aria-label="Поле ввода сообщения (демо, не отправляет)"
+              aria-label={inputLabel}
             />
             <button
               data-part="send"
               type="button"
               disabled
-              aria-label="Отправить сообщение (демо)"
+              aria-label={sendLabel}
             >
               <span data-part="triangle" aria-hidden="true" />
             </button>

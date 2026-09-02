@@ -11,8 +11,12 @@ export type Radio008Props = Omit<
   options?: string[]
   otherLabel?: string
   placeholder?: string
+  /** Доступное имя поля. `{label}` заменяется подписью варианта «другое». */
+  otherFieldLabel?: string
   name?: string
   defaultValue?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,15 +24,17 @@ export type Radio008Props = Omit<
 // плохо: человек не видит, что можно ответить своими словами. Поле стоит
 // на месте всегда, но выключено, пока не выбран последний пункт; disabled
 // не даёт отправить пустую строку и убирает поле из обхода по Tab.
+//
+// Тема берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="radio-008"]){
---vibeui-radio-008-bg:oklch(1 0 0);
---vibeui-radio-008-fg:oklch(0.22 0.014 265);
---vibeui-radio-008-muted:oklch(0.56 0.014 265);
---vibeui-radio-008-border:oklch(0.9 0.006 265);
---vibeui-radio-008-ring:oklch(0.74 0.012 265);
---vibeui-radio-008-field:oklch(0.985 0.002 265);
---vibeui-radio-008-accent:oklch(0.55 0.19 300);
+--vibeui-radio-008-bg:transparent;
+--vibeui-radio-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-radio-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-radio-008-ring:light-dark(oklch(0.74 0.012 265),oklch(0.53 0.014 265));
+--vibeui-radio-008-field:light-dark(oklch(0.985 0.002 265),oklch(0.28 0.008 265));
+--vibeui-radio-008-accent:light-dark(oklch(0.55 0.19 300),oklch(0.75 0.15 300));
 --vibeui-radio-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="radio-008"]{
@@ -51,11 +57,13 @@ display:flex;align-items:center;gap:0.625rem;cursor:pointer;font-size:0.875rem;
 appearance:none;-webkit-appearance:none;flex:none;margin:0;cursor:pointer;
 width:1.0625rem;height:1.0625rem;border-radius:9999px;
 border:1.5px solid var(--vibeui-radio-008-ring);
-background:var(--vibeui-radio-008-bg);
+background:transparent;
 }
+/* Точка нарисована фоном самого кружка: внутренней тенью зазор пришлось бы
+   закрашивать цветом подложки, а подложки у компонента по умолчанию нет. */
 [data-vibeui-block="radio-008"] input[type="radio"]:checked{
 border-color:var(--vibeui-radio-008-accent);
-box-shadow:inset 0 0 0 0.1875rem var(--vibeui-radio-008-bg),inset 0 0 0 1rem var(--vibeui-radio-008-accent);
+background:radial-gradient(circle at 50% 50%,var(--vibeui-radio-008-accent) 0 0.25rem,transparent 0.25rem);
 }
 [data-vibeui-block="radio-008"] input[type="radio"]:focus-visible{outline:2px solid var(--vibeui-radio-008-accent);outline-offset:2px}
 /* Поле сдвинуто под подпись «другое» и всегда занимает место: исчезающее
@@ -94,6 +102,28 @@ const OTHER = "__other__"
 const LIMIT = 60
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Радиогруппа с вариантом «другое»: поле стоит всегда, включается по выбору.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -102,8 +132,10 @@ export function Radio008({
   options = DEFAULT_OPTIONS,
   otherLabel = "Другое",
   placeholder = "Расскажите своими словами",
+  otherFieldLabel = "{label}: свой вариант",
   name = "vibeui-radio-008",
   defaultValue = "Через друзей",
+  background = "",
   accent,
   className,
   style,
@@ -116,6 +148,12 @@ export function Radio008({
 
   const palette = {
     ...(accent ? { "--vibeui-radio-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-radio-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -165,7 +203,7 @@ export function Radio008({
                 maxLength={LIMIT}
                 disabled={!isOther}
                 placeholder={placeholder}
-                aria-label={`${otherLabel}: свой вариант`}
+                aria-label={otherFieldLabel.replace("{label}", otherLabel)}
                 onChange={(event) => setOther(event.target.value)}
               />
               {isOther ? (

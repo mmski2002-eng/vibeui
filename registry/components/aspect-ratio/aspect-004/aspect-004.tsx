@@ -9,6 +9,8 @@ export type Aspect004Props = Omit<
   /** Надпись в верхнем углу: рубрика, дата, номер выпуска. */
   eyebrow?: string
   href?: string
+  /** Тон градиента под подписью: им кадр тонируется, а не чернится. */
+  ink?: string
   accent?: string
 }
 
@@ -16,6 +18,10 @@ export type Aspect004Props = Omit<
 // Текст читается на любой фотографии, потому что под ним лежит градиент из
 // собственного тёмного тона, а не полупрозрачный чёрный: чёрная плёнка на
 // тёплом снимке даёт грязный серый, а тонированный градиент — нет.
+//
+// Кадр намеренно остаётся тёмным в обеих темах: это обложка со снимком, а не
+// панель интерфейса. Светлая ветка сделала бы подпись поверх фотографии
+// нечитаемой, поэтому light-dark() здесь не применяется.
 const STYLES = `
 :where([data-vibeui-block="aspect-004"]){
 --vibeui-aspect-004-ink:oklch(0.18 0.02 265);
@@ -70,12 +76,14 @@ export function Aspect004({
   subtitle = "Съёмка студии «Полёт», март",
   eyebrow = "Портфолио",
   href = "#",
+  ink,
   accent,
   className,
   style,
   ...props
 }: Aspect004Props) {
   const palette = {
+    ...(ink ? { "--vibeui-aspect-004-ink": ink } : null),
     ...(accent ? { "--vibeui-aspect-004-accent": accent } : null),
     ...style,
   } as CSSProperties

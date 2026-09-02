@@ -15,7 +15,17 @@ export type Togglegroup005Props = Omit<
   label?: string
   defaultValue?: string
   sizes?: Togglegroup005Size[]
+  /** Строка выбранного размера с подстановкой {size}. */
+  currentText?: string
+  /** Имя закончившейся кнопки для скринридера, подстановка {size}. */
+  soldOutText?: string
+  /** Ответ на нажатие закончившегося размера, подстановка {size}. */
+  refusedText?: string
+  /** Пояснение под рядом, пока никто не жал закончившийся размер. */
+  noteText?: string
   onChange?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,14 +33,19 @@ export type Togglegroup005Props = Omit<
 // размеры остаются в ряду. Они помечены aria-disabled, а не disabled: такой
 // пункт остаётся доступен с клавиатуры и может объяснить, почему не работает,
 // — исчезнувший размер читался бы как несуществующий.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте панель темнеет, а границы становятся светлее фона.
 const STYLES = `
 :where([data-vibeui-block="togglegroup-005"]){
---vibeui-togglegroup-005-bg:oklch(1 0 0);
---vibeui-togglegroup-005-fg:oklch(0.2 0.014 265);
---vibeui-togglegroup-005-muted:oklch(0.58 0.014 265);
---vibeui-togglegroup-005-border:oklch(0.88 0.006 265);
---vibeui-togglegroup-005-surface:oklch(0.97 0.004 265);
---vibeui-togglegroup-005-accent:oklch(0.28 0.02 265);
+--vibeui-togglegroup-005-bg:transparent;
+--vibeui-togglegroup-005-fg:light-dark(oklch(0.2 0.014 265),oklch(0.94 0.005 265));
+--vibeui-togglegroup-005-muted:light-dark(oklch(0.58 0.014 265),oklch(0.66 0.012 265));
+--vibeui-togglegroup-005-border:light-dark(oklch(0.88 0.006 265),oklch(0.36 0.012 265));
+--vibeui-togglegroup-005-surface:light-dark(oklch(0.97 0.004 265),oklch(0.25 0.01 265));
+--vibeui-togglegroup-005-raised:light-dark(oklch(1 0 0),oklch(0.29 0.01 265));
+--vibeui-togglegroup-005-accent:light-dark(oklch(0.28 0.02 265),oklch(0.88 0.008 265));
+--vibeui-togglegroup-005-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.2 0.014 265));
 --vibeui-togglegroup-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="togglegroup-005"]{
@@ -54,7 +69,7 @@ appearance:none;cursor:pointer;font:inherit;position:relative;
 display:inline-flex;align-items:center;justify-content:center;
 min-width:3rem;height:2.5rem;padding:0 0.625rem;
 border:1px solid var(--vibeui-togglegroup-005-border);border-radius:0.5rem;
-background:var(--vibeui-togglegroup-005-bg);color:var(--vibeui-togglegroup-005-fg);
+background:var(--vibeui-togglegroup-005-raised);color:var(--vibeui-togglegroup-005-fg);
 font-size:0.8125rem;font-weight:600;line-height:1;
 transition:border-color .15s ease,background-color .15s ease,color .15s ease;
 }
@@ -65,7 +80,7 @@ outline:2px solid var(--vibeui-togglegroup-005-accent);outline-offset:2px;
 [data-vibeui-block="togglegroup-005"] button[aria-pressed="true"]{
 background:var(--vibeui-togglegroup-005-accent);
 border-color:var(--vibeui-togglegroup-005-accent);
-color:oklch(0.99 0 0);
+color:var(--vibeui-togglegroup-005-accent-fg);
 }
 /* Закончившийся размер гасится и перечёркивается: цвет один — слишком слабый
    признак, а перечёркивание читается и в чёрно-белой печати. */
@@ -93,6 +108,28 @@ const DEFAULT_SIZES: Togglegroup005Size[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор размера одиночным toggle-выбором: закончившиеся размеры остаются
  * в ряду и помечены aria-disabled. Один файл, ноль зависимостей.
  */
@@ -100,7 +137,12 @@ export function Togglegroup005({
   label = "Размер",
   defaultValue = "M",
   sizes = DEFAULT_SIZES,
+  currentText = "Выбран: {size}",
+  soldOutText = "{size}, закончился",
+  refusedText = "Размера {size} сейчас нет. Напишем, когда привезут.",
+  noteText = "Перечёркнутых размеров нет в наличии.",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -111,6 +153,12 @@ export function Togglegroup005({
 
   const palette = {
     ...(accent ? { "--vibeui-togglegroup-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-togglegroup-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -128,7 +176,7 @@ export function Togglegroup005({
         <div data-part="head">
           <h3>{label}</h3>
           <p data-part="current" role="status">
-            Выбран: {value}
+            {currentText.replace("{size}", value)}
           </p>
         </div>
         <div data-part="group" role="group" aria-label={label}>
@@ -141,7 +189,9 @@ export function Togglegroup005({
                 type="button"
                 aria-pressed={value === size.id}
                 aria-disabled={out}
-                aria-label={out ? `${size.id}, закончился` : size.id}
+                aria-label={
+                  out ? soldOutText.replace("{size}", size.id) : size.id
+                }
                 onClick={() => {
                   if (out) {
                     setRefused(size.id)
@@ -159,9 +209,7 @@ export function Togglegroup005({
           })}
         </div>
         <p data-part="note" role="status">
-          {refused
-            ? `Размера ${refused} сейчас нет. Напишем, когда привезут.`
-            : "Перечёркнутых размеров нет в наличии."}
+          {refused ? refusedText.replace("{size}", refused) : noteText}
         </p>
       </section>
     </>

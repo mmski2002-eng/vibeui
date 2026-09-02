@@ -11,6 +11,12 @@ export type Sortable001Props = Omit<
   hint?: string
   items?: string[]
   onChange?: (items: string[]) => void
+  /** Подпись кнопки «выше»: {item} — строка, {position} — номер, {total} — всего. */
+  moveUpLabel?: string
+  /** Подпись кнопки «ниже»: те же подстановки. */
+  moveDownLabel?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,12 +27,12 @@ export type Sortable001Props = Omit<
 // доступный путь. Порядок объявляется вслух: строка называет свой номер из N.
 const STYLES = `
 :where([data-vibeui-block="sortable-001"]){
---vibeui-sortable-001-bg:oklch(1 0 0);
---vibeui-sortable-001-fg:oklch(0.24 0.014 265);
---vibeui-sortable-001-muted:oklch(0.56 0.014 265);
---vibeui-sortable-001-border:oklch(0.9 0.006 265);
---vibeui-sortable-001-hover:oklch(0.55 0.02 265 / 7%);
---vibeui-sortable-001-accent:oklch(0.55 0.2 262);
+--vibeui-sortable-001-bg:transparent;
+--vibeui-sortable-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-sortable-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-sortable-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-sortable-001-hover:light-dark(oklch(0.55 0.02 265 / 7%),oklch(0.85 0.02 265 / 12%));
+--vibeui-sortable-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
 --vibeui-sortable-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="sortable-001"]{
@@ -81,6 +87,28 @@ const DEFAULT_ITEMS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Список с ручной сортировкой: нативный drag и кнопки для клавиатуры.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -89,6 +117,9 @@ export function Sortable001({
   hint = "Перетащите строку или используйте кнопки со стрелками",
   items = DEFAULT_ITEMS,
   onChange,
+  moveUpLabel = "Поднять «{item}», сейчас {position} из {total}",
+  moveDownLabel = "Опустить «{item}», сейчас {position} из {total}",
+  background = "",
   accent,
   className,
   style,
@@ -119,8 +150,20 @@ export function Sortable001({
     setDragged(null)
   }
 
+  const label = (template: string, row: string, index: number) =>
+    template
+      .replace("{item}", row)
+      .replace("{position}", String(index + 1))
+      .replace("{total}", String(order.length))
+
   const palette = {
     ...(accent ? { "--vibeui-sortable-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-sortable-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -166,7 +209,7 @@ export function Sortable001({
                 type="button"
                 data-part="move"
                 disabled={index === 0}
-                aria-label={`Поднять «${row}», сейчас ${index + 1} из ${order.length}`}
+                aria-label={label(moveUpLabel, row, index)}
                 onClick={() => move(index, index - 1)}
               >
                 ▲
@@ -175,7 +218,7 @@ export function Sortable001({
                 type="button"
                 data-part="move"
                 disabled={index === order.length - 1}
-                aria-label={`Опустить «${row}», сейчас ${index + 1} из ${order.length}`}
+                aria-label={label(moveDownLabel, row, index)}
                 onClick={() => move(index, index + 1)}
               >
                 ▼

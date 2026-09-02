@@ -16,7 +16,11 @@ export type Combobox007Props = Omit<
   options?: string[]
   visibleLimit?: number
   hintLabel?: string
+  /** Счётчик под списком. {shown} — сколько нарисовано, {total} — всего. */
+  countText?: string
   onSelect?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,13 +30,13 @@ export type Combobox007Props = Omit<
 // объясняет, почему нужного нет на экране, и заменяет прокрутку фильтром.
 const STYLES = `
 :where([data-vibeui-block="combobox-007"]){
---vibeui-combobox-007-bg:oklch(1 0 0);
---vibeui-combobox-007-fg:oklch(0.22 0.012 250);
---vibeui-combobox-007-muted:oklch(0.53 0.012 250);
---vibeui-combobox-007-border:oklch(0.9 0.006 250);
---vibeui-combobox-007-field:oklch(0.98 0.004 250);
---vibeui-combobox-007-active:oklch(0.95 0.02 250);
---vibeui-combobox-007-accent:oklch(0.52 0.13 250);
+--vibeui-combobox-007-bg:transparent;
+--vibeui-combobox-007-fg:light-dark(oklch(0.22 0.012 250),oklch(0.94 0.005 250));
+--vibeui-combobox-007-muted:light-dark(oklch(0.53 0.012 250),oklch(0.7 0.012 250));
+--vibeui-combobox-007-border:light-dark(oklch(0.9 0.006 250),oklch(0.37 0.012 250));
+--vibeui-combobox-007-field:light-dark(oklch(0.98 0.004 250),oklch(0.3 0.012 250));
+--vibeui-combobox-007-active:light-dark(oklch(0.95 0.02 250),oklch(0.36 0.03 250));
+--vibeui-combobox-007-accent:light-dark(oklch(0.52 0.13 250),oklch(0.76 0.13 250));
 --vibeui-combobox-007-radius:0.625rem;
 --vibeui-combobox-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-combobox-007-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -107,6 +111,28 @@ const DEFAULT_OPTIONS = Array.from({ length: 240 }, (_, index) => {
 })
 
 /**
+ * Ветка темы для заданного фона: светлая плашка иначе досталась бы тексту
+ * тёмной ветки, потому что light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox для длинного справочника: рисуется окно из первых совпадений,
  * под списком — честная подпись «показано N из M».
  */
@@ -116,7 +142,9 @@ export function Combobox007({
   options = DEFAULT_OPTIONS,
   visibleLimit = 40,
   hintLabel = "уточните запрос",
+  countText = "показано {shown} из {total}",
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -139,6 +167,12 @@ export function Combobox007({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -248,7 +282,9 @@ export function Combobox007({
         </div>
         <p data-part="status" id={`${id}-status`} aria-live="polite">
           <span>
-            показано {rows.length} из {total}
+            {countText
+              .replace("{shown}", String(rows.length))
+              .replace("{total}", String(total))}
           </span>
           {rows.length < total ? <span>{hintLabel}</span> : null}
         </p>

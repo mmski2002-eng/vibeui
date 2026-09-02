@@ -32,15 +32,21 @@
             "точки как якорные ссылки — браузер сам доезжает до слайда",
             "aria-roledescription и номер слайда в подписи",
             "tabIndex на ленте: без него до неё не добраться с клавиатуры",
-            "scroll-behavior: auto при prefers-reduced-motion"
+            "scroll-behavior: auto при prefers-reduced-motion",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив slides и их оттенки",
             "label — название карусели",
             "акцент через проп accent",
-            "пропорцию слайда"
+            "пропорцию слайда",
+            "hint — подпись под лентой",
+            "подписи для скринридера: roleText, slideRoleText, slideText и dotText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Активная точка не подсвечивается: без JS браузер не знает, какой слайд в кадре. Нужна подсветка — берите carousel-005.",
             "Якоря меняют адрес страницы: если это мешает, замените ссылки кнопками с scrollIntoView.",
             "Полоса прокрутки скрыта намеренно; на десктопе оставьте подсказку о жесте.",
@@ -56,8 +62,21 @@
             "maxLength": 24
           },
           {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Листайте пальцем или переходите по точкам",
+            "maxLength": 48
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -73,15 +92,21 @@
                 "the dots as anchor links — the browser scrolls to the slide itself",
                 "aria-roledescription and the slide number in the label",
                 "the tabIndex on the track: without it the keyboard cannot reach it",
-                "scroll-behavior: auto under prefers-reduced-motion"
+                "scroll-behavior: auto under prefers-reduced-motion",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the slides array and their hues",
                 "label — the carousel's name",
                 "the accent through the accent prop",
-                "the slide ratio"
+                "the slide ratio",
+                "hint — the caption under the track",
+                "the screen-reader wording: roleText, slideRoleText, slideText and dotText",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The active dot is not highlighted: without JS the browser cannot say which slide is in view. If you need it, use carousel-005.",
                 "Anchors change the page URL: swap the links for buttons with scrollIntoView if that hurts.",
                 "The scrollbar is hidden on purpose; leave a hint about the gesture on desktop.",
@@ -94,13 +119,49 @@
                 "label": "Name",
                 "default": "Highlights"
               },
+              "hint": {
+                "label": "Hint",
+                "default": "Swipe or jump with the dots"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Snap Carousel"
+            "title": "Snap Carousel",
+            "preview": {
+              "props": {
+                "label": "Highlights",
+                "hint": "Swipe or jump with the dots",
+                "roleText": "carousel",
+                "slideRoleText": "slide",
+                "slideText": "{index} of {total}: {label}",
+                "dotText": "Go to slide {index}: {label}",
+                "slides": [
+                  {
+                    "label": "Component catalog",
+                    "hue": 250
+                  },
+                  {
+                    "label": "Live preview",
+                    "hue": 150
+                  },
+                  {
+                    "label": "Instructions for the agent",
+                    "hue": 30
+                  },
+                  {
+                    "label": "One-command install",
+                    "hue": 300
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -134,15 +195,20 @@
             "прокрутку на ширину кадра вместо «одной карточки»",
             "нативную прокрутку под стрелками: палец и колесо не должны отключаться",
             "имена стрелок в aria-label — «влево» ничего не говорит о содержимом",
-            "scroll-behavior: auto при prefers-reduced-motion"
+            "scroll-behavior: auto при prefers-reduced-motion",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "собственную подложку карточек: заголовок и счётчик — это текст, и он обязан читаться на любой странице"
           ],
           "adapt": [
             "массив items и их оттенки",
             "label — заголовок ленты",
             "долю ширины карточки",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "подписи стрелок через navText и роль секции через roleText",
+            "background — подложка компонента; пусто означает собственную подложку карточки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Стрелки не блокируются на краях: браузер сам останавливает прокрутку, а мигающая кнопка отвлекает сильнее.",
             "Ширина карточки в процентах, поэтому на широком экране их видно больше — так и задумано.",
             "Карточки не кликабельны: ссылки навешивает вызывающий код.",
@@ -162,6 +228,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -175,15 +247,20 @@
                 "scrolling by viewport width rather than \"one card\"",
                 "the native scrolling under the arrows: finger and wheel must keep working",
                 "descriptive arrow labels — \"left\" says nothing about the content",
-                "scroll-behavior: auto under prefers-reduced-motion"
+                "scroll-behavior: auto under prefers-reduced-motion",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the panel under the rail: the heading and the meta are plain text and have to stay readable on any page"
               ],
               "adapt": [
                 "the items array and their hues",
                 "label — the rail's heading",
                 "the card width share",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the arrow labels through navText and the section role through roleText",
+                "background — the component surface; empty keeps the card's own panel"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The arrows are never disabled at the ends: the browser stops the scroll anyway, and a flickering button distracts more.",
                 "Card width is a percentage, so wider screens show more — that is the intent.",
                 "The cards are not links: wire those in the caller.",
@@ -198,11 +275,47 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Peek Cards"
+            "title": "Peek Cards",
+            "preview": {
+              "props": {
+                "label": "Read next",
+                "roleText": "carousel",
+                "navText": {
+                  "prev": "Previous cards",
+                  "next": "Next cards"
+                },
+                "items": [
+                  {
+                    "title": "Build a landing page in one evening",
+                    "meta": "8 min read",
+                    "hue": 250
+                  },
+                  {
+                    "title": "What to hand the agent and what to write yourself",
+                    "meta": "6 min",
+                    "hue": 150
+                  },
+                  {
+                    "title": "Theme tokens without the pain",
+                    "meta": "11 min",
+                    "hue": 30
+                  },
+                  {
+                    "title": "Why a component is a single file",
+                    "meta": "5 min",
+                    "hue": 300
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -236,15 +349,20 @@
             "hidden вместо удаления слайдов из разметки",
             "aria-current на активной миниатюре и подпись с номером",
             "непрозрачность и обводку у активной — цвет один при дальтонизме не читается",
-            "счётчик «2 из 3» под лентой"
+            "счётчик «2 из 3» под лентой",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "собственную подложку слайдера: заголовок и счётчик — это текст, и он обязан читаться на любой странице"
           ],
           "adapt": [
             "массив slides: заголовок, текст и оттенок",
             "label — название карусели",
             "акцент через проп accent",
-            "размер миниатюр"
+            "размер миниатюр",
+            "подписи для скринридера и счётчика: roleText, slideRoleText, slideText, thumbText и counterText",
+            "background — подложка компонента; пусто означает собственную подложку карточки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Автопрокрутки здесь нет намеренно: слайдер с текстом читают, а не смотрят.",
             "Больше семи миниатюр не помещается в полосу без прокрутки — она включается сама.",
             "Кадры нарисованы градиентом: с фотографиями положите <img> внутрь сцены и миниатюры.",
@@ -260,8 +378,21 @@
             "maxLength": 30
           },
           {
+            "prop": "counterText",
+            "label": "Счётчик",
+            "type": "text",
+            "default": "{index} из {total}",
+            "maxLength": 24
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -277,15 +408,20 @@
                 "hidden rather than removing slides from the markup",
                 "aria-current on the active thumbnail plus a numbered label",
                 "opacity and outline on the active one — colour alone fails colour-blind users",
-                "the \"2 of 3\" counter under the strip"
+                "the \"2 of 3\" counter under the strip",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the panel under the slider: the heading and the counter are plain text and have to stay readable on any page"
               ],
               "adapt": [
                 "the slides array: title, text and hue",
                 "label — the carousel's name",
                 "the accent through the accent prop",
-                "the thumbnail size"
+                "the thumbnail size",
+                "the screen-reader and counter wording: roleText, slideRoleText, slideText, thumbText and counterText",
+                "background — the component surface; empty keeps the card's own panel"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is no autoplay on purpose: a slider with text is read, not watched.",
                 "More than seven thumbnails overflow the strip — scrolling turns on by itself.",
                 "The frames are gradients: for photos put an <img> inside the stage and thumbnails.",
@@ -298,13 +434,48 @@
                 "label": "Name",
                 "default": "How it works"
               },
+              "counterText": {
+                "label": "Counter",
+                "default": "{index} of {total}"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Thumbnail Slider"
+            "title": "Thumbnail Slider",
+            "preview": {
+              "props": {
+                "label": "How it works",
+                "roleText": "carousel",
+                "slideRoleText": "slide",
+                "slideText": "{index} of {total}",
+                "thumbText": "Slide {index}: {label}",
+                "counterText": "{index} of {total}",
+                "slides": [
+                  {
+                    "title": "Pick a design",
+                    "text": "The catalog shows a live preview of every component, not a screenshot.",
+                    "hue": 250
+                  },
+                  {
+                    "title": "Hand it to the AI",
+                    "text": "Copy for AI assembles the brief: what to install and what must not change.",
+                    "hue": 150
+                  },
+                  {
+                    "title": "Get your site",
+                    "text": "The agent installs the component with one command instead of rebuilding it.",
+                    "hue": 30
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -338,15 +509,19 @@
             "aria-hidden на копии: скринридер должен прочитать список один раз",
             "паузу по наведению: движущийся текст иначе невозможно прочитать",
             "маску по краям — лента должна выезжать из ничего, а не обрываться",
-            "правило prefers-reduced-motion, заменяющее движение прокруткой"
+            "правило prefers-reduced-motion, заменяющее движение прокруткой",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "собственную подложку ленты: названия — это текст, и он обязан читаться на любой странице"
           ],
           "adapt": [
             "массив items — названия или логотипы",
             "duration — секунд на полный проход",
             "label — подпись над лентой",
-            "расстояние между элементами"
+            "расстояние между элементами",
+            "background — подложка компонента; пусто означает собственную подложку карточки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Быстрее двадцати секунд лента начинает рябить: это порог читаемости, а не вкусовая настройка.",
             "Движущийся текст мешает при дислексии и вестибулярных нарушениях: не ставьте ленту рядом с важным содержимым.",
             "Логотипы вставляйте как <img> внутрь элементов списка — размеры не заданы намеренно.",
@@ -368,6 +543,12 @@
             "default": 32,
             "min": 20,
             "max": 90
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -381,15 +562,19 @@
                 "aria-hidden on the copy: a screen reader must read the list once",
                 "pause on hover: moving text is otherwise unreadable",
                 "the edge mask — the rail should emerge from nothing, not get cut",
-                "the prefers-reduced-motion rule that replaces motion with scrolling"
+                "the prefers-reduced-motion rule that replaces motion with scrolling",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the panel under the rail: the names are plain text and have to stay readable on any page"
               ],
               "adapt": [
                 "the items array — names or logos",
                 "duration — seconds per full pass",
                 "label — the caption above",
-                "the gap between items"
+                "the gap between items",
+                "background — the component surface; empty keeps the card's own panel"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Under twenty seconds the rail starts to flicker: that is a readability threshold, not taste.",
                 "Moving text hurts dyslexic and vestibular users: keep the rail away from important content.",
                 "Insert logos as <img> inside the list items — sizes are deliberately unset.",
@@ -404,11 +589,28 @@
               },
               "duration": {
                 "label": "Seconds per pass"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Logo Marquee"
+            "title": "Logo Marquee",
+            "preview": {
+              "props": {
+                "label": "Trusted by",
+                "items": [
+                  "Polyot",
+                  "Severyanka",
+                  "Kontur",
+                  "Izhevsk Group",
+                  "Murmansk Line",
+                  "Zarya"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["duration", "background"]
       }
     },
     {
@@ -442,15 +644,20 @@
             "visibility: hidden вместо display: none — высота считается по всем отзывам",
             "стрелки клавиатуры при фокусе в секции: этого ждут и почти никто не делает",
             "aria-live=\"polite\" на области цитаты",
-            "растянутую точку у активного отзыва — форма, а не только цвет"
+            "растянутую точку у активного отзыва — форма, а не только цвет",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "собственную подложку карточки: отзыв — это длинный текст, и он обязан читаться на любой странице"
           ],
           "adapt": [
             "массив reviews: текст, имя и роль",
             "label — название блока",
             "акцент через проп accent",
-            "ширину карточки"
+            "ширину карточки",
+            "подписи для скринридера: roleText, dotText и navText",
+            "background — подложка компонента; пусто означает собственную подложку карточки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Автопрокрутки нет намеренно: отзыв читают дольше, чем длится любой разумный интервал.",
             "Длинные отзывы задают высоту всему блоку: держите их примерно одинаковыми.",
             "Ротация по кругу: после последнего идёт первый, и это видно по точкам.",
@@ -470,6 +677,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -483,15 +696,20 @@
                 "visibility: hidden instead of display: none — the height accounts for every review",
                 "arrow keys while focus is inside: expected behaviour that almost nobody ships",
                 "aria-live=\"polite\" on the quote region",
-                "the stretched dot on the active review — shape, not only colour"
+                "the stretched dot on the active review — shape, not only colour",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the panel under the quote: a review is long text and has to stay readable on any page"
               ],
               "adapt": [
                 "the reviews array: text, name and role",
                 "label — the block's name",
                 "the accent through the accent prop",
-                "the card width"
+                "the card width",
+                "the screen-reader wording: roleText, dotText and navText",
+                "background — the component surface; empty keeps the card's own panel"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "No autoplay on purpose: a review takes longer to read than any sane interval.",
                 "Long reviews set the height for the whole block: keep them comparable.",
                 "It wraps around: after the last comes the first, and the dots show it.",
@@ -506,11 +724,43 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Review Slider"
+            "title": "Review Slider",
+            "preview": {
+              "props": {
+                "label": "Reviews",
+                "roleText": "carousel",
+                "dotText": "Review {index} of {total}",
+                "navText": {
+                  "prev": "Previous review",
+                  "next": "Next review"
+                },
+                "reviews": [
+                  {
+                    "text": "We shipped a landing page in one evening: the agent installed the blocks from the catalog instead of rewriting them.",
+                    "name": "Anna Petrova",
+                    "role": "product, Polyot"
+                  },
+                  {
+                    "text": "First library I have seen where the AI brief ships with the component instead of being written by hand.",
+                    "name": "Mark Ilyin",
+                    "role": "frontend, Kontur"
+                  },
+                  {
+                    "text": "The components pull no dependencies — that is the only reason we adopted them at all.",
+                    "name": "Irina Kim",
+                    "role": "tech lead, Zarya"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -541,15 +791,18 @@
             "полоски вместо точек — видно и число кадров, и время до перехода",
             "кнопки на половинах кадра с настоящими именами, а не div с onClick",
             "хранение паузы в ref: наведение не должно перерисовывать компонент",
-            "правило prefers-reduced-motion, снимающее анимацию полосы"
+            "правило prefers-reduced-motion, снимающее анимацию полосы",
+            "одноцветную палитру кадра: фон всегда цветной градиент, текст на нём всегда светлый — тёмной ветки здесь быть не должно, картинка одинакова в любой теме страницы"
           ],
           "adapt": [
             "массив stories и их оттенки",
             "seconds — сколько держать кадр",
             "label — название ленты",
-            "пропорцию кадра"
+            "пропорцию кадра",
+            "подписи для скринридера и подсказки: roleText, hintText и navText"
           ],
           "notes": [
+            "Тёмной темы у кадра нет намеренно: фон истории — цветной градиент, и светлый текст на нём читается в любой теме страницы.",
             "Автопереход всегда спорен: если содержимое важное, дайте кнопку паузы вместо наведения.",
             "Шесть секунд — верх для одной строки текста; для двух-трёх нужно больше.",
             "При prefers-reduced-motion анимация полосы снимается, но переход остаётся: полностью останавливать ленту решает вызывающий код.",
@@ -571,6 +824,13 @@
             "type": "text",
             "default": "Истории",
             "maxLength": 24
+          },
+          {
+            "prop": "hintText",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "{index} из {total} · наведите, чтобы остановить",
+            "maxLength": 48
           }
         ],
         "i18n": {
@@ -584,15 +844,18 @@
                 "bars instead of dots — they show both the count and the time left",
                 "real buttons on the halves with names, not divs with onClick",
                 "keeping the pause in a ref: hovering must not re-render",
-                "the prefers-reduced-motion rule that drops the bar animation"
+                "the prefers-reduced-motion rule that drops the bar animation",
+                "the single-tone frame palette: the background is always a coloured gradient and the text on it always light — there is deliberately no dark branch, the frame looks the same under any page theme"
               ],
               "adapt": [
                 "the stories array and their hues",
                 "seconds — how long a frame holds",
                 "label — the player's name",
-                "the frame ratio"
+                "the frame ratio",
+                "the screen-reader and hint wording: roleText, hintText and navText"
               ],
               "notes": [
+                "There is deliberately no dark theme for the frame: the story background is a coloured gradient and light text stays readable on it under any page theme.",
                 "Autoplay is always arguable: if the content matters, give a pause button instead of relying on hover.",
                 "Six seconds is the ceiling for one line of text; two or three need more.",
                 "Under prefers-reduced-motion the bar animation stops but the advance remains: halting it entirely is the caller's call.",
@@ -607,11 +870,41 @@
               "label": {
                 "label": "Name",
                 "default": "Stories"
+              },
+              "hintText": {
+                "label": "Hint",
+                "default": "{index} of {total} · hover to pause"
               }
             },
-            "title": "Story Player"
+            "title": "Story Player",
+            "preview": {
+              "props": {
+                "label": "Stories",
+                "roleText": "carousel",
+                "hintText": "{index} of {total} · hover to pause",
+                "navText": {
+                  "prev": "Previous frame",
+                  "next": "Next frame"
+                },
+                "stories": [
+                  {
+                    "title": "A catalog of living components",
+                    "hue": 250
+                  },
+                  {
+                    "title": "The brief ships with the code",
+                    "hue": 150
+                  },
+                  {
+                    "title": "One command to install",
+                    "hue": 30
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["seconds"]
       }
     },
     {
@@ -645,15 +938,19 @@
             "подписи под кадром, а не поверх — на светлом снимке текст поверх пропадает",
             "раскладку на внутренней карточке: контейнерный запрос не применяется к самому контейнеру",
             "мягкую привязку proximity: жёсткая мешает быстро просматривать",
-            "tabIndex на ленте, чтобы до неё добралась клавиатура"
+            "tabIndex на ленте, чтобы до неё добралась клавиатура",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "собственную подложку карточки: заголовок и подписи — это текст, и он обязан читаться на любой странице"
           ],
           "adapt": [
             "массив shots и их оттенки",
             "label — название галереи",
             "hint — подсказку под лентой",
-            "долю ширины кадра"
+            "долю ширины кадра",
+            "background — подложка компонента; пусто означает собственную подложку карточки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Кадры нарисованы градиентом: с настоящими снимками положите <img> внутрь рамки.",
             "Подпись режется многоточием: длинные названия лучше сокращать заранее.",
             "Просмотрщика по клику нет: открытие снимка навешивает вызывающий код.",
@@ -674,6 +971,12 @@
             "type": "text",
             "default": "Прокрутите вбок — всего кадров: 5",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -687,15 +990,19 @@
                 "captions under the frame, not over it — text over a bright shot disappears",
                 "the layout on the inner card: a container query does not apply to the container itself",
                 "proximity snapping: mandatory snapping fights quick browsing",
-                "the tabIndex on the rail so the keyboard can reach it"
+                "the tabIndex on the rail so the keyboard can reach it",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the panel under the strip: the heading and captions are plain text and have to stay readable on any page"
               ],
               "adapt": [
                 "the shots array and their hues",
                 "label — the gallery's name",
                 "hint — the line under the rail",
-                "the frame width share"
+                "the frame width share",
+                "background — the component surface; empty keeps the card's own panel"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Frames are gradients: with real screenshots put an <img> inside the frame.",
                 "Captions truncate: shorten long names upstream.",
                 "There is no lightbox: opening a shot is the caller's job.",
@@ -711,11 +1018,43 @@
               "hint": {
                 "label": "Hint",
                 "default": "Scroll sideways — 5 frames in total"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Film Strip"
+            "title": "Film Strip",
+            "preview": {
+              "props": {
+                "label": "Screenshots",
+                "hint": "Scroll sideways — 5 frames in total",
+                "shots": [
+                  {
+                    "label": "Home page",
+                    "hue": 250
+                  },
+                  {
+                    "label": "Catalog with filters",
+                    "hue": 150
+                  },
+                  {
+                    "label": "Component page",
+                    "hue": 30
+                  },
+                  {
+                    "label": "Instructions for the agent",
+                    "hue": 300
+                  },
+                  {
+                    "label": "Dark theme",
+                    "hue": 200
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -749,15 +1088,20 @@
             "возможность пропустить с первого шага — вести силой через пять экранов нельзя",
             "постоянную высоту через грид: прыгающая карточка сбивает чтение",
             "aria-live на области текста и подпись «шаг N из M» у точек",
-            "растянутую точку текущего шага — форма, а не только цвет"
+            "растянутую точку текущего шага — форма, а не только цвет",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "собственную подложку карточки: онбординг — это текст, и он обязан читаться на любой странице"
           ],
           "adapt": [
             "массив steps: заголовок и текст",
             "nextLabel и doneLabel",
             "label — название блока",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "skipLabel — подпись «пропустить», roleText и dotsText — подписи для скринридера",
+            "background — подложка компонента; пусто означает собственную подложку карточки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше четырёх шагов почти никто не дочитывает: короче — лучше.",
             "«Пропустить» ведёт на последний шаг, а не закрывает окно: закрытие — задача вызывающего кода.",
             "После последнего шага счётчик возвращается к первому: замените поведение на закрытие в проекте.",
@@ -780,8 +1124,21 @@
             "maxLength": 20
           },
           {
+            "prop": "skipLabel",
+            "label": "Кнопка пропуска",
+            "type": "text",
+            "default": "Пропустить",
+            "maxLength": 20
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -797,15 +1154,20 @@
                 "the skip from the first step — nobody may be marched through five screens",
                 "the constant height through the grid: a jumping card breaks reading",
                 "aria-live on the text region and the \"step N of M\" label on the dots",
-                "the stretched dot for the current step — shape, not only colour"
+                "the stretched dot for the current step — shape, not only colour",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the panel under the steps: onboarding is text and it has to stay readable on any page"
               ],
               "adapt": [
                 "the steps array: heading and text",
                 "nextLabel and doneLabel",
                 "label — the block's name",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "skipLabel — the skip wording, with roleText and dotsText for the screen reader",
+                "background — the component surface; empty keeps the card's own panel"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Beyond four steps almost nobody finishes: shorter is better.",
                 "\"Skip\" jumps to the last step rather than closing: closing is the caller's job.",
                 "After the last step it returns to the first: replace that with closing in a project.",
@@ -822,13 +1184,45 @@
                 "label": "Finish button",
                 "default": "Start"
               },
+              "skipLabel": {
+                "label": "Skip button",
+                "default": "Skip"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Onboarding Steps"
+            "title": "Onboarding Steps",
+            "preview": {
+              "props": {
+                "label": "Getting started",
+                "roleText": "carousel",
+                "dotsText": "Step {index} of {total}",
+                "nextLabel": "Next",
+                "doneLabel": "Start",
+                "skipLabel": "Skip",
+                "steps": [
+                  {
+                    "title": "Pick a component",
+                    "text": "The catalog shows a live preview and a category — no screenshots, everything is real."
+                  },
+                  {
+                    "title": "Copy the brief",
+                    "text": "Copy for AI assembles the install command and the rules that must not be broken."
+                  },
+                  {
+                    "title": "Hand it to the agent",
+                    "text": "It installs the component with one command instead of rebuilding it from scratch."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -862,15 +1256,20 @@
             "inert и aria-hidden на невидимых слайдах — иначе Tab уходит к скрытому содержимому",
             "позицию числом в переменной --vibeui-carousel-009-index: прокрутка расходится с точками",
             "перенос фокуса на выбранную точку при стрелках, иначе клавиатура теряет место",
-            "aria-current на активной точке: её ширина и цвет скринридеру недоступны"
+            "aria-current на активной точке: её ширина и цвет скринридеру недоступны",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "собственную подложку карточки: точки и рамка кадра должны читаться на любой странице"
           ],
           "adapt": [
             "слайды через slides: заголовок, текст и оттенок",
             "подпись карусели через label",
             "цвет акцента через accent",
-            "длительность переезда в правиле transition у [data-part=\"track\"]"
+            "длительность переезда в правиле transition у [data-part=\"track\"]",
+            "подписи для скринридера: roleText, dotsLabel и dotText",
+            "background — подложка компонента; пусто означает собственную подложку карточки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Точек больше восьми уже не читаются как позиция: для длинных лент нужен счётчик.",
             "Свайпа пальцем здесь нет: лента движется трансформацией, а не прокруткой.",
             "Автопрокрутки нет намеренно — она требует паузы по наведению и фокусу.",
@@ -890,6 +1289,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -903,15 +1308,20 @@
                 "inert and aria-hidden on the off-screen slides — otherwise Tab reaches hidden content",
                 "the position as a number in --vibeui-carousel-009-index: scrolling drifts away from the dots",
                 "moving focus to the chosen dot on arrow keys, otherwise the keyboard loses its place",
-                "aria-current on the active dot: its width and colour mean nothing to a screen reader"
+                "aria-current on the active dot: its width and colour mean nothing to a screen reader",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the panel under the frame: the dots and the frame edge have to stay readable on any page"
               ],
               "adapt": [
                 "the slides through slides: title, text and hue",
                 "the carousel label through label",
                 "the accent colour through accent",
-                "the travel duration in the transition rule of [data-part=\"track\"]"
+                "the travel duration in the transition rule of [data-part=\"track\"]",
+                "the screen-reader wording: roleText, dotsLabel and dotText",
+                "background — the component surface; empty keeps the card's own panel"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "More than eight dots stop reading as a position: long decks need a counter instead.",
                 "There is no touch swipe: the track moves by transform, not by scrolling.",
                 "There is deliberately no autoplay — it would require pausing on hover and focus.",
@@ -927,11 +1337,46 @@
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
               }
             },
-            "title": "Dot Pager"
+            "title": "Dot Pager",
+            "preview": {
+              "props": {
+                "label": "Routes",
+                "roleText": "carousel",
+                "dotsLabel": "Slide switcher",
+                "dotText": "Slide {index} of {total}: {label}",
+                "slides": [
+                  {
+                    "title": "Northern route",
+                    "text": "Four days along the coast with nights in wooden cabins",
+                    "hue": 220
+                  },
+                  {
+                    "title": "Mountain loop",
+                    "text": "A sunrise climb and a descent to the lake the same day",
+                    "hue": 150
+                  },
+                  {
+                    "title": "City rooftops",
+                    "text": "An evening walk through the old quarters with a guide",
+                    "hue": 30
+                  },
+                  {
+                    "title": "Valley of winds",
+                    "text": "Two passes and a night in a tent",
+                    "hue": 285
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -965,15 +1410,19 @@
             "отключение стрелок атрибутом disabled, а не стилем: серая, но нажимаемая кнопка врёт",
             "шаг ровно в ширину карточки — иначе лента замирает на половине товара",
             "нативную прокрутку со scroll-snap: палец, колесо и клавиатура работают без обработчиков",
-            "собственную светлую подложку: цены и названия — тёмный текст"
+            "собственную подложку витрины: цены и названия — это текст, и он обязан читаться на любой странице",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "товары через products: название, цена, старая цена, рейтинг и оттенок",
             "заголовок витрины через title",
             "цвет акцента через accent",
-            "долю ширины карточки в правиле flex:0 0 44%"
+            "долю ширины карточки в правиле flex:0 0 44%",
+            "saleLabel — значок скидки, roleText и navText — подписи для скринридера",
+            "background — подложка компонента; пусто означает собственную подложку карточки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Цена — строка: форматирование и валюту подставляет приложение.",
             "Карточка не ссылка: оборачивать её в <a> и держать доступное имя придётся вам.",
             "Состояние краёв пересчитывается на прокрутке — при программном изменении списка вызовите его сами.",
@@ -989,8 +1438,21 @@
             "maxLength": 24
           },
           {
+            "prop": "saleLabel",
+            "label": "Значок скидки",
+            "type": "text",
+            "default": "скидка",
+            "maxLength": 12
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -1006,15 +1468,19 @@
                 "disabling the arrows with the disabled attribute rather than a style: a grey but clickable button lies",
                 "the step of exactly one card width — otherwise the rail stops halfway through a product",
                 "the native scroll-snap scrolling: touch, wheel and keyboard work without handlers",
-                "the block's own light surface: prices and names are dark text"
+                "the rail's own surface: prices and names are plain text and have to stay readable on any page",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the products through products: name, price, old price, rating and hue",
                 "the rail heading through title",
                 "the accent colour through accent",
-                "the card width share in the flex:0 0 44% rule"
+                "the card width share in the flex:0 0 44% rule",
+                "saleLabel — the discount badge, with roleText and navText for the screen reader",
+                "background — the component surface; empty keeps the card's own panel"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The price is a string: formatting and currency are supplied by the application.",
                 "The card is not a link: wrapping it in an <a> with an accessible name is up to you.",
                 "The edge state is recomputed on scroll — after changing the list programmatically call it yourself.",
@@ -1027,14 +1493,68 @@
                 "label": "Heading",
                 "default": "Frequently bought"
               },
+              "saleLabel": {
+                "label": "Sale badge",
+                "default": "sale"
+              },
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
               }
             },
-            "title": "Shop Rail"
+            "title": "Shop Rail",
+            "preview": {
+              "props": {
+                "title": "Frequently bought",
+                "roleText": "carousel",
+                "navText": {
+                  "prev": "Previous products",
+                  "next": "Next products"
+                },
+                "saleLabel": "sale",
+                "products": [
+                  {
+                    "title": "Hand coffee grinder",
+                    "price": "$48",
+                    "oldPrice": "$65",
+                    "rating": 4.8,
+                    "hue": 40
+                  },
+                  {
+                    "title": "1.2 l kettle",
+                    "price": "$35",
+                    "rating": 4.6,
+                    "hue": 200
+                  },
+                  {
+                    "title": "Glass french press",
+                    "price": "$21",
+                    "oldPrice": "$27",
+                    "rating": 4.4,
+                    "hue": 150
+                  },
+                  {
+                    "title": "Kitchen scales",
+                    "price": "$31",
+                    "rating": 4.9,
+                    "hue": 280
+                  },
+                  {
+                    "title": "0.5 l thermos",
+                    "price": "$24",
+                    "rating": 4.5,
+                    "hue": 20
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1068,15 +1588,20 @@
             "кнопку паузы с меняющейся подписью — наведение недоступно с клавиатуры и на телефоне",
             "полный отказ от таймера при prefers-reduced-motion: гасить одну анимацию здесь мало",
             "зафиксированную min-height цитаты, иначе страница прыгает на каждой смене",
-            "aria-live=\"polite\" на остановленной карусели и \"off\" на идущей: иначе скринридер читает без остановки"
+            "aria-live=\"polite\" на остановленной карусели и \"off\" на идущей: иначе скринридер читает без остановки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "собственную подложку карточки: отзыв — это длинный текст, и он обязан читаться на любой странице"
           ],
           "adapt": [
             "отзывы через reviews: текст, автор и роль",
             "паузу между отзывами через interval в секундах",
             "цвет акцента через accent",
-            "высоту цитаты в правиле min-height у [data-part=\"quote\"]"
+            "высоту цитаты в правиле min-height у [data-part=\"quote\"]",
+            "подписи блока и управления: label, roleText, playText и countText",
+            "background — подложка компонента; пусто означает собственную подложку карточки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Интервал меньше четырёх секунд нечитаем: отзыв не успевают дочитать до конца.",
             "Полоски показывают прогресс только текущего отзыва и обнуляются при паузе браузером.",
             "После остановки кнопкой показ сам не возобновляется — это осознанный выбор.",
@@ -1093,8 +1618,21 @@
             "max": 20
           },
           {
+            "prop": "label",
+            "label": "Название",
+            "type": "text",
+            "default": "Отзывы",
+            "maxLength": 24
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -1110,15 +1648,20 @@
                 "the pause button with a changing label — hover is unavailable from a keyboard and on a phone",
                 "dropping the timer entirely under prefers-reduced-motion: muting one animation is not enough",
                 "the fixed min-height of the quote, otherwise the page jumps on every change",
-                "aria-live=\"polite\" while paused and \"off\" while running: otherwise the screen reader never stops"
+                "aria-live=\"polite\" while paused and \"off\" while running: otherwise the screen reader never stops",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the panel under the quote: a review is long text and has to stay readable on any page"
               ],
               "adapt": [
                 "the reviews through reviews: text, author and role",
                 "the delay between reviews through interval, in seconds",
                 "the accent colour through accent",
-                "the quote height in the min-height rule of [data-part=\"quote\"]"
+                "the quote height in the min-height rule of [data-part=\"quote\"]",
+                "the block and control wording: label, roleText, playText and countText",
+                "background — the component surface; empty keeps the card's own panel"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "An interval under four seconds is unreadable: the review cannot be finished in time.",
                 "The bars track only the current review and are frozen by the browser while paused.",
                 "After a manual stop the show does not resume by itself — that is deliberate.",
@@ -1131,14 +1674,51 @@
                 "label": "Seconds per review",
                 "default": 6
               },
+              "label": {
+                "label": "Name",
+                "default": "Reviews"
+              },
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
               }
             },
-            "title": "Auto Reviews"
+            "title": "Auto Reviews",
+            "preview": {
+              "props": {
+                "label": "Reviews",
+                "roleText": "carousel",
+                "playText": {
+                  "pause": "Pause the show",
+                  "play": "Resume the show"
+                },
+                "countText": "{index} / {total}",
+                "reviews": [
+                  {
+                    "text": "Installed it in an evening and shipped the first screen the next day. Nothing had to be rewritten for our project.",
+                    "author": "Dmitry L.",
+                    "role": "front-end developer"
+                  },
+                  {
+                    "text": "Best part is that the components drag in no foreign theme: our colours stayed ours.",
+                    "author": "Marina K.",
+                    "role": "product designer"
+                  },
+                  {
+                    "text": "The team stopped arguing about spacing: it is now a choice between variants, not an hour-long debate.",
+                    "author": "Artyom S.",
+                    "role": "tech lead"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["interval", "accent", "background"]
       }
     },
     {
@@ -1172,15 +1752,19 @@
             "aria-hidden на копии — список не должен читаться скринридеру дважды",
             "паузу и по наведению, и по :focus-within: с клавиатуры лента тоже обязана замереть",
             "остановку при prefers-reduced-motion с переходом в обычную прокрутку",
-            "маску на краях: лента должна выезжать из ничего, а не обрываться"
+            "маску на краях: лента должна выезжать из ничего, а не обрываться",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "собственную подложку блока: названия на плашках — это текст, и он обязан читаться на любой странице"
           ],
           "adapt": [
             "содержимое лент через topRow и bottomRow",
             "заголовок через title",
             "скорость через duration в секундах на полный проход",
-            "цвет плашек в переменной --vibeui-carousel-012-chip"
+            "цвет плашек в переменной --vibeui-carousel-012-chip",
+            "background — подложка компонента; пусто означает собственную подложку карточки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Логотипы здесь текстовые: с картинками задайте им фиксированную высоту, иначе лента задёргается.",
             "Меньше двадцати секунд на проход — рябит в глазах и мешает читать соседний текст.",
             "Списки в лентах должны быть достаточно длинными, чтобы заполнить ширину: короткий даст разрыв.",
@@ -1202,6 +1786,12 @@
             "default": 34,
             "min": 12,
             "max": 90
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1215,15 +1805,19 @@
                 "aria-hidden on the copy — the list must not be read twice by a screen reader",
                 "pausing on hover and on :focus-within: from a keyboard the belt must freeze too",
                 "the full stop under prefers-reduced-motion with a fallback to ordinary scrolling",
-                "the edge mask: the belt has to emerge from nothing rather than break off"
+                "the edge mask: the belt has to emerge from nothing rather than break off",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the panel under the belts: the names on the chips are text and have to stay readable on any page"
               ],
               "adapt": [
                 "the belt contents through topRow and bottomRow",
                 "the heading through title",
                 "the speed through duration, in seconds per full pass",
-                "the chip colour in the --vibeui-carousel-012-chip variable"
+                "the chip colour in the --vibeui-carousel-012-chip variable",
+                "background — the component surface; empty keeps the card's own panel"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The logos are text here: with images give them a fixed height or the belt will judder.",
                 "Under twenty seconds per pass it flickers and disturbs the text next to it.",
                 "The lists must be long enough to fill the width: a short one leaves a gap.",
@@ -1239,11 +1833,37 @@
               "duration": {
                 "label": "Seconds per pass",
                 "default": 34
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
               }
             },
-            "title": "Counter Belts"
+            "title": "Counter Belts",
+            "preview": {
+              "props": {
+                "title": "Trusted by",
+                "topRow": [
+                  "Northwind",
+                  "Ozon",
+                  "Caffeine",
+                  "Yandex",
+                  "Tochka",
+                  "Skillbox"
+                ],
+                "bottomRow": [
+                  "Tinkoff",
+                  "Avito",
+                  "VkusVill",
+                  "Samokat",
+                  "Book City",
+                  "Litres"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["duration", "background"]
       }
     },
     {
@@ -1277,15 +1897,20 @@
             "рамку у выбранной миниатюры: приглушение соседей на телефоне почти не видно",
             "миниатюры как кнопки с подписью «Кадр N»: у div'а нет ни роли, ни имени",
             "перенос фокуса на выбранную миниатюру при стрелках, иначе клавиатура теряет место",
-            "aria-current на выбранной миниатюре, а не только визуальную рамку"
+            "aria-current на выбранной миниатюре, а не только визуальную рамку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "кадры через shots: заголовок, место и оттенок",
-            "подпись галереи через label",
+            "подпись галереи через label, подпись полосы через stripLabel, шаблон подписи миниатюры через thumbLabel и роль блока через roleDescription",
             "цвет акцента через accent",
-            "размер миниатюры в правиле width у [data-part=\"thumb\"]"
+            "размер миниатюры в правиле width у [data-part=\"thumb\"]",
+            "подсказку под полосой через hint; пустая строка убирает её",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Кадры здесь градиентные: с фотографиями замените подложку на <img> с alt.",
             "Миниатюр больше двадцати превращают полосу в отдельную задачу навигации.",
             "Свайпа по большому кадру нет: переключение идёт миниатюрами и стрелками.",
@@ -1301,8 +1926,21 @@
             "maxLength": 20
           },
           {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Стрелками ← и → можно перейти к соседнему кадру.",
+            "maxLength": 80
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -1318,15 +1956,20 @@
                 "the border on the selected thumb: dimming the neighbours is barely visible on a phone",
                 "the thumbs as buttons labelled \"Frame N\": a div has neither role nor name",
                 "moving focus to the selected thumb on arrow keys, otherwise the keyboard loses its place",
-                "aria-current on the selected thumb, not just the visual border"
+                "aria-current on the selected thumb, not just the visual border",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the frames through shots: title, place and hue",
-                "the gallery label through label",
+                "the gallery label through label, the strip label through stripLabel, the thumb label template through thumbLabel and the block role through roleDescription",
                 "the accent colour through accent",
-                "the thumbnail size in the width rule of [data-part=\"thumb\"]"
+                "the thumbnail size in the width rule of [data-part=\"thumb\"]",
+                "the hint under the strip through hint; an empty string removes it",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The frames are gradients here: with photos replace the surface with an <img> and an alt.",
                 "More than twenty thumbs turn the strip into a navigation problem of its own.",
                 "There is no swipe on the main frame: switching happens through thumbs and arrow keys.",
@@ -1339,14 +1982,64 @@
                 "label": "Label",
                 "default": "Gallery"
               },
+              "hint": {
+                "label": "Hint",
+                "default": "Arrow keys ← and → move to the neighbouring frame."
+              },
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
               }
             },
-            "title": "Centering Thumbs"
+            "title": "Centering Thumbs",
+            "preview": {
+              "props": {
+                "label": "Gallery",
+                "roleDescription": "carousel",
+                "stripLabel": "Frames",
+                "thumbLabel": "Frame {n}: {title}",
+                "hint": "Arrow keys ← and → move to the neighbouring frame.",
+                "shots": [
+                  {
+                    "title": "Morning at the port",
+                    "place": "Murmansk",
+                    "hue": 220
+                  },
+                  {
+                    "title": "Road to the pass",
+                    "place": "Altai",
+                    "hue": 150
+                  },
+                  {
+                    "title": "The old bridge",
+                    "place": "Pskov",
+                    "hue": 40
+                  },
+                  {
+                    "title": "A quiet bay",
+                    "place": "Primorye",
+                    "hue": 190
+                  },
+                  {
+                    "title": "Field under snow",
+                    "place": "Vologda",
+                    "hue": 280
+                  },
+                  {
+                    "title": "Rooftops at sunset",
+                    "place": "Kazan",
+                    "hue": 20
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1380,15 +2073,20 @@
             "scroll-snap-stop:always — иначе быстрый свайп проскакивает через два слайда",
             "идентификаторы из idPrefix: два блока на странице с одинаковыми якорями сломают переходы",
             "подписи стрелок с названием соседнего слайда: «вперёд» без цели ничего не сообщает",
-            "нативную прокрутку: палец, колесо, Tab и клавиши работают без обработчиков"
+            "нативную прокрутку: палец, колесо, Tab и клавиши работают без обработчиков",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "слайды через cards: заголовок, текст и оттенок",
-            "подпись карусели через label",
+            "подпись карусели через label и роль блока через roleDescription",
             "основу идентификаторов через idPrefix",
-            "пропорции кадра в правиле aspect-ratio у [data-part=\"slide\"]"
+            "пропорции кадра в правиле aspect-ratio у [data-part=\"slide\"]",
+            "подписи стрелок через prevLabel и nextLabel, подсказку под лентой через hint",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Переход по якорю добавляет запись в историю браузера: кнопка «назад» вернёт на прошлый слайд.",
             "Активный слайд компонент не знает, поэтому точек-индикаторов здесь нет и быть не может.",
             "Лента зациклена по ссылкам: последняя стрелка ведёт на первый слайд.",
@@ -1409,6 +2107,19 @@
             "type": "text",
             "default": "vibeui-carousel-014",
             "maxLength": 32
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Листается пальцем, колесом и стрелками внутри кадра — без JavaScript.",
+            "maxLength": 90
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1422,15 +2133,20 @@
                 "scroll-snap-stop:always — otherwise a fast swipe skips two slides at once",
                 "the ids built from idPrefix: two blocks with the same anchors break each other's links",
                 "arrow labels naming the neighbouring slide: a bare \"next\" says nothing",
-                "the native scrolling: touch, wheel, Tab and keys work without handlers"
+                "the native scrolling: touch, wheel, Tab and keys work without handlers",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the slides through cards: title, text and hue",
-                "the carousel label through label",
+                "the carousel label through label and the block role through roleDescription",
                 "the id base through idPrefix",
-                "the frame proportions in the aspect-ratio rule of [data-part=\"slide\"]"
+                "the frame proportions in the aspect-ratio rule of [data-part=\"slide\"]",
+                "the arrow labels through prevLabel and nextLabel, the hint under the rail through hint",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "An anchor jump adds a history entry: the back button returns to the previous slide.",
                 "The component does not know the active slide, so dot indicators are impossible here.",
                 "The deck loops through the links: the last arrow points back at the first slide.",
@@ -1446,11 +2162,51 @@
               "idPrefix": {
                 "label": "Anchor prefix",
                 "default": "vibeui-carousel-014"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "Swipe, scroll or use the in-frame arrows — no JavaScript."
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
               }
             },
-            "title": "Anchor Deck"
+            "title": "Anchor Deck",
+            "preview": {
+              "props": {
+                "label": "Principles",
+                "roleDescription": "carousel",
+                "prevLabel": "Previous slide: {title}",
+                "nextLabel": "Next slide: {title}",
+                "hint": "Swipe, scroll or use the in-frame arrows — no JavaScript.",
+                "cards": [
+                  {
+                    "title": "Data first",
+                    "text": "The component takes an array and draws exactly what is in it",
+                    "hue": 250
+                  },
+                  {
+                    "title": "Layout next",
+                    "text": "Width is measured from the container, not from the browser window",
+                    "hue": 160
+                  },
+                  {
+                    "title": "Colour last",
+                    "text": "The palette lives in local variables and never argues with your theme",
+                    "hue": 35
+                  },
+                  {
+                    "title": "Nothing spare",
+                    "text": "No runtime, no dependencies: one file in your project",
+                    "hue": 300
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -1484,15 +2240,20 @@
             "подпись под кадром, а не поверх: на светлом снимке текст поверх не читается",
             "зарезервированную высоту подписи, иначе кнопки подпрыгивают на каждом кадре",
             "role=\"img\" с подписью на градиентном кадре: без него кадр для скринридера пуст",
-            "подписи у стрелок: «предыдущий» и «следующий» кадр обязаны быть названы"
+            "подписи у стрелок: «предыдущий» и «следующий» кадр обязаны быть названы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "кадры через slides: подпись, пояснение, автор снимка и оттенок",
-            "подпись карусели через label",
+            "подпись карусели через label и роль блока через roleDescription",
             "цвет акцента через accent",
-            "зарезервированную высоту подписи в правиле min-height у figcaption"
+            "зарезервированную высоту подписи в правиле min-height у figcaption",
+            "подписи кнопок через prevLabel и nextLabel",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Подписи разной длины: если они длиннее трёх строк, поднимите min-height, иначе прыжок вернётся.",
             "Кадр градиентный: с фотографией замените блок на <img> с alt и уберите role=\"img\".",
             "Смена кадра не объявляется скринридеру: для этого добавьте aria-live на подпись.",
@@ -1512,6 +2273,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1525,15 +2292,20 @@
                 "the caption below the frame rather than over it: over a light shot the text is unreadable",
                 "the reserved caption height, otherwise the buttons jump on every frame",
                 "role=\"img\" with a label on the gradient frame: without it the frame is empty to a screen reader",
-                "the labels on the arrows: previous and next frame must be named"
+                "the labels on the arrows: previous and next frame must be named",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the frames through slides: caption, detail, credit and hue",
-                "the carousel label through label",
+                "the carousel label through label and the block role through roleDescription",
                 "the accent colour through accent",
-                "the reserved caption height in the figcaption min-height rule"
+                "the reserved caption height in the figcaption min-height rule",
+                "the button labels through prevLabel and nextLabel",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Captions vary in length: if they run over three lines raise min-height or the jump returns.",
                 "The frame is a gradient: with a photo replace the block with an <img> and an alt and drop role=\"img\".",
                 "A frame change is not announced: add aria-live on the caption if you need that.",
@@ -1549,11 +2321,50 @@
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
               }
             },
-            "title": "Captioned Frames"
+            "title": "Captioned Frames",
+            "preview": {
+              "props": {
+                "label": "Photo story",
+                "roleDescription": "carousel",
+                "prevLabel": "Previous frame",
+                "nextLabel": "Next frame",
+                "slides": [
+                  {
+                    "caption": "The floor before the shift",
+                    "detail": "The machines warm up for an hour, so the shift starts before the working day.",
+                    "credit": "Photo: plant archive",
+                    "hue": 220
+                  },
+                  {
+                    "caption": "A casting mould",
+                    "detail": "One mould survives about two hundred casts, then it goes back into the melt.",
+                    "credit": "Photo: N. Korolev",
+                    "hue": 30
+                  },
+                  {
+                    "caption": "Quality control",
+                    "detail": "Every tenth part goes to the bench: the dimensions are checked by hand.",
+                    "credit": "Photo: N. Korolev",
+                    "hue": 150
+                  },
+                  {
+                    "caption": "A finished batch",
+                    "detail": "The crates are labelled the same day and shipped the next morning.",
+                    "credit": "Photo: plant archive",
+                    "hue": 280
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1587,15 +2398,20 @@
             "role=\"status\" на счётчике — смена кадра иначе остаётся немой",
             "отключение стрелок на краях: незацикленная лента обязана показывать, что список конечен",
             "visibility рядом с opacity на скрытых кадрах, иначе они остаются целями нажатия",
-            "inert и aria-hidden на невидимых кадрах — Tab не должен уходить в скрытое содержимое"
+            "inert и aria-hidden на невидимых кадрах — Tab не должен уходить в скрытое содержимое",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "кадры через slides: заголовок, пояснение и оттенок",
             "подпись карусели через label и слово-разделитель счётчика через ofWord",
             "цвет акцента через accent",
-            "длительность проявления в правиле transition у [data-part=\"slide\"]"
+            "длительность проявления в правиле transition у [data-part=\"slide\"]",
+            "подписи кнопок через prevLabel и nextLabel, роль блока через roleDescription",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Лента не зациклена намеренно: на краю стрелка выключается, а не переносит в начало.",
             "Свайпа пальцем нет: кадры лежат стопкой, а не в прокручиваемой ленте.",
             "role=\"status\" объявляет счётчик, но не содержимое кадра — заголовок скринридер прочитает отдельно.",
@@ -1603,6 +2419,13 @@
           ]
         },
         "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Квартира",
+            "maxLength": 20
+          },
           {
             "prop": "ofWord",
             "label": "Слово счётчика",
@@ -1613,6 +2436,12 @@
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -1628,15 +2457,20 @@
                 "role=\"status\" on the counter — otherwise a frame change is silent",
                 "disabling the arrows at the ends: a non-looping deck must show that the list is finite",
                 "visibility alongside opacity on hidden frames, otherwise they stay click targets",
-                "inert and aria-hidden on the hidden frames — Tab must not reach hidden content"
+                "inert and aria-hidden on the hidden frames — Tab must not reach hidden content",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the frames through slides: title, note and hue",
                 "the carousel label through label and the counter's joining word through ofWord",
                 "the accent colour through accent",
-                "the cross-fade duration in the transition rule of [data-part=\"slide\"]"
+                "the cross-fade duration in the transition rule of [data-part=\"slide\"]",
+                "the button labels through prevLabel and nextLabel, the block role through roleDescription",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The deck deliberately does not loop: at the end the arrow switches off instead of wrapping.",
                 "There is no touch swipe: the frames are stacked, not in a scrollable rail.",
                 "role=\"status\" announces the counter, not the frame content — the title is read separately.",
@@ -1645,6 +2479,10 @@
               "usage": "<Carousel016\n  label=\"Apartment\"\n  ofWord=\"of\"\n  slides={[\n    { title: \"Living room\", meta: \"22 m², south-facing\", hue: 200 },\n    { title: \"Kitchen\", meta: \"11 m², appliances included\", hue: 150 },\n  ]}\n/>"
             },
             "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Apartment"
+              },
               "ofWord": {
                 "label": "Counter word",
                 "default": "of"
@@ -1652,11 +2490,67 @@
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
               }
             },
-            "title": "Slide Counter"
+            "title": "Slide Counter",
+            "preview": {
+              "props": {
+                "label": "Apartment",
+                "ofWord": "of",
+                "roleDescription": "carousel",
+                "prevLabel": "Previous frame",
+                "nextLabel": "Next frame",
+                "slides": [
+                  {
+                    "title": "Hallway",
+                    "meta": "4 m², wall-to-wall wardrobe",
+                    "hue": 250
+                  },
+                  {
+                    "title": "Living room",
+                    "meta": "22 m², south-facing windows",
+                    "hue": 200
+                  },
+                  {
+                    "title": "Kitchen",
+                    "meta": "11 m², appliances included",
+                    "hue": 150
+                  },
+                  {
+                    "title": "Bedroom",
+                    "meta": "14 m², walk-in closet",
+                    "hue": 40
+                  },
+                  {
+                    "title": "Kids' room",
+                    "meta": "12 m², window on the yard",
+                    "hue": 300
+                  },
+                  {
+                    "title": "Bathroom",
+                    "meta": "6 m², has a window",
+                    "hue": 20
+                  },
+                  {
+                    "title": "Balcony",
+                    "meta": "5 m², glazed",
+                    "hue": 100
+                  },
+                  {
+                    "title": "Courtyard",
+                    "meta": "gated, parking",
+                    "hue": 220
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

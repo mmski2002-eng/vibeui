@@ -13,6 +13,10 @@ export type Dashboard005Props = {
   groups?: Dashboard005Group[]
   chips?: string[]
   resetLabel?: string
+  /** Подпись крестика у чипа: {chip} — название фильтра. */
+  chipRemoveText?: string
+  /** Пусто — подложки нет, панель ложится на фон страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -25,14 +29,19 @@ export type Dashboard005Props = {
 // Выбранные значения продублированы чипами сверху: в свёрнутой группе фильтр
 // невидим, и пустая выдача кажется поломкой, а не следствием выбора. Счётчик
 // найденного стоит рядом со сбросом — там его ищут, когда результат неожиданный.
+//
+// Тема берётся из color-scheme окружения через light-dark(): собственной
+// подложки у панели нет, остаётся только рамка.
 const STYLES = `
 :where([data-vibeui-block="dashboard-005"]){
---vibeui-dashboard-005-bg:oklch(1 0 0);
---vibeui-dashboard-005-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-005-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-005-border:oklch(0.91 0.006 265);
---vibeui-dashboard-005-chip:oklch(0.55 0.2 262 / 10%);
---vibeui-dashboard-005-accent:oklch(0.55 0.2 262);
+--vibeui-dashboard-005-bg:transparent;
+--vibeui-dashboard-005-field:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-dashboard-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-dashboard-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-dashboard-005-chip:light-dark(oklch(0.55 0.2 262 / 10%),oklch(0.74 0.16 262 / 20%));
+--vibeui-dashboard-005-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-dashboard-005-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
 --vibeui-dashboard-005-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -95,7 +104,7 @@ min-height:1.875rem;font-size:0.8125rem;
 [data-vibeui-block="dashboard-005"] input{
 appearance:none;position:relative;flex:none;cursor:pointer;
 width:1rem;height:1rem;border-radius:0.3125rem;
-border:1.5px solid var(--vibeui-dashboard-005-muted);background:var(--vibeui-dashboard-005-bg);
+border:1.5px solid var(--vibeui-dashboard-005-muted);background:var(--vibeui-dashboard-005-field);
 }
 [data-vibeui-block="dashboard-005"] input[type="radio"]{border-radius:9999px}
 [data-vibeui-block="dashboard-005"] input:checked{
@@ -104,9 +113,9 @@ background:var(--vibeui-dashboard-005-accent);border-color:var(--vibeui-dashboar
 [data-vibeui-block="dashboard-005"] input[type="checkbox"]:checked::after{
 content:"";position:absolute;left:0.28rem;top:0.08rem;
 width:0.2rem;height:0.45rem;
-border:solid oklch(1 0 0);border-width:0 2px 2px 0;transform:rotate(45deg);
+border:solid var(--vibeui-dashboard-005-on-accent);border-width:0 2px 2px 0;transform:rotate(45deg);
 }
-[data-vibeui-block="dashboard-005"] input[type="radio"]:checked{border-width:5px;background:var(--vibeui-dashboard-005-bg)}
+[data-vibeui-block="dashboard-005"] input[type="radio"]:checked{border-width:5px;background:var(--vibeui-dashboard-005-field)}
 [data-vibeui-block="dashboard-005"] input:focus-visible{outline:2px solid var(--vibeui-dashboard-005-accent);outline-offset:2px}
 [data-vibeui-block="dashboard-005"] [data-part="count"]{
 margin-left:auto;font-size:0.75rem;color:var(--vibeui-dashboard-005-muted);
@@ -147,6 +156,28 @@ const DEFAULT_GROUPS: Dashboard005Group[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Панель фильтров: группы на details и выбранные значения чипами сверху.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -156,12 +187,20 @@ export function Dashboard005({
   groups = DEFAULT_GROUPS,
   chips = ["Компоненты", "Формы"],
   resetLabel = "Сбросить",
+  chipRemoveText = "Убрать фильтр {chip}",
+  background = "",
   accent,
   className,
   style,
 }: Dashboard005Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -191,7 +230,10 @@ export function Dashboard005({
             {chips.map((chip) => (
               <span key={chip} data-part="chip">
                 {chip}
-                <button type="button" aria-label={`Убрать фильтр ${chip}`}>
+                <button
+                  type="button"
+                  aria-label={chipRemoveText.replace("{chip}", chip)}
+                >
                   ×
                 </button>
               </span>

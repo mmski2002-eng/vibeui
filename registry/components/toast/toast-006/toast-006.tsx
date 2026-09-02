@@ -11,18 +11,29 @@ export type Toast006Props = Omit<
   countLabel?: string
   cancelLabel?: string
   onCancel?: () => void
+  /** Цвет заполнения полосы и процента. */
+  tone?: string
+  /** Пусто — подложка берётся из темы окружения. */
+  background?: string
 }
 
 // Идея компонента: уведомление длинной операции с честным прогрессом. Процент
 // живёт в CSS-переменной, поэтому полосу двигает одно число, а не пересборка
 // разметки; рядом — счётчик и отмена, потому что ждать вслепую никто не готов.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
+// граница карточки светлее её подложки, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="toast-006"]){
---vibeui-toast-006-bg:oklch(0.22 0.014 265);
---vibeui-toast-006-fg:oklch(0.97 0.002 265);
---vibeui-toast-006-muted:oklch(0.76 0.008 265);
---vibeui-toast-006-track:oklch(1 0 0 / 14%);
---vibeui-toast-006-tone:oklch(0.7 0.16 200);
+--vibeui-toast-006-bg:light-dark(oklch(0.99 0.002 265),oklch(0.22 0.014 265));
+--vibeui-toast-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.97 0.002 265));
+--vibeui-toast-006-muted:light-dark(oklch(0.52 0.012 265),oklch(0.76 0.008 265));
+--vibeui-toast-006-line:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.014 265));
+--vibeui-toast-006-track:light-dark(oklch(0.2 0.02 265 / 10%),oklch(1 0 0 / 14%));
+--vibeui-toast-006-hover:light-dark(oklch(0.2 0.02 265 / 8%),oklch(1 0 0 / 10%));
+--vibeui-toast-006-shadow:light-dark(oklch(0.55 0.02 265 / 20%),oklch(0.15 0.02 265 / 65%));
+--vibeui-toast-006-tone:light-dark(oklch(0.52 0.13 200),oklch(0.7 0.16 200));
+--vibeui-toast-006-tone-end:light-dark(oklch(0.7 0.14 150),oklch(0.85 0.13 150));
 --vibeui-toast-006-value:0;
 --vibeui-toast-006-radius:0.875rem;
 --vibeui-toast-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -34,7 +45,7 @@ padding:0.875rem 0.9375rem;
 border-radius:var(--vibeui-toast-006-radius);
 background:var(--vibeui-toast-006-bg);color:var(--vibeui-toast-006-fg);
 font-family:var(--vibeui-toast-006-font);
-box-shadow:0 20px 44px -24px oklch(0.15 0.02 265 / 65%);
+box-shadow:0 0 0 1px var(--vibeui-toast-006-line),0 20px 44px -24px var(--vibeui-toast-006-shadow);
 }
 [data-vibeui-block="toast-006"] [data-part="head"]{display:flex;align-items:baseline;gap:0.75rem}
 [data-vibeui-block="toast-006"] [data-part="title"]{
@@ -54,7 +65,7 @@ background:var(--vibeui-toast-006-track);
 [data-vibeui-block="toast-006"] [data-part="fill"]{
 position:absolute;inset:0 auto 0 0;border-radius:inherit;
 width:calc(var(--vibeui-toast-006-value) * 1%);
-background:linear-gradient(90deg,var(--vibeui-toast-006-tone),color-mix(in oklab,var(--vibeui-toast-006-tone) 55%,oklch(0.85 0.13 150)));
+background:linear-gradient(90deg,var(--vibeui-toast-006-tone),color-mix(in oklab,var(--vibeui-toast-006-tone) 55%,var(--vibeui-toast-006-tone-end)));
 transition:width .3s ease;
 }
 [data-vibeui-block="toast-006"] [data-part="foot"]{display:flex;align-items:center;justify-content:space-between;gap:0.75rem}
@@ -66,10 +77,32 @@ font:inherit;font-size:0.75rem;font-weight:600;
 color:var(--vibeui-toast-006-muted);
 transition:color .16s ease,background-color .16s ease;
 }
-[data-vibeui-block="toast-006"] [data-part="cancel"]:hover{color:var(--vibeui-toast-006-fg);background:oklch(1 0 0 / 10%)}
+[data-vibeui-block="toast-006"] [data-part="cancel"]:hover{color:var(--vibeui-toast-006-fg);background:var(--vibeui-toast-006-hover)}
 [data-vibeui-block="toast-006"] [data-part="cancel"]:focus-visible{outline:2px solid var(--vibeui-toast-006-tone);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="toast-006"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Уведомление длинной операции: полоса прогресса, счётчик и отмена.
@@ -81,6 +114,8 @@ export function Toast006({
   countLabel = "15 из 24 файлов",
   cancelLabel = "Отменить",
   onCancel,
+  tone,
+  background = "",
   className,
   style,
   ...props
@@ -88,6 +123,13 @@ export function Toast006({
   const clamped = Math.min(100, Math.max(0, Math.round(value)))
   const palette = {
     "--vibeui-toast-006-value": clamped,
+    ...(tone ? { "--vibeui-toast-006-tone": tone } : null),
+    ...(background
+      ? {
+          "--vibeui-toast-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

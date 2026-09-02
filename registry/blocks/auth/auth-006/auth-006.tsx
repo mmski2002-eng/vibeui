@@ -11,6 +11,14 @@ export type Auth006Props = {
   decline?: string
   note?: string
   expires?: string
+  /** Заголовок приглашения; {project} подставляется названием проекта. */
+  headingTemplate?: string
+  /** Строка роли; {role} подставляется значением role. */
+  roleTemplate?: string
+  /** Строка состава; {count} и {names} подставляются из members. */
+  membersTemplate?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -24,15 +32,20 @@ export type Auth006Props = {
 // законный исход, как согласие. Срок жизни приглашения написан явно, иначе
 // протухшая ссылка выглядит поломкой сервиса. Кто пригласил — с ролью, чтобы
 // понять, вправе ли этот человек раздавать доступ.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="auth-006"]){
---vibeui-auth-006-bg:oklch(1 0 0);
---vibeui-auth-006-panel:oklch(0.985 0.002 265);
---vibeui-auth-006-fg:oklch(0.22 0.014 265);
---vibeui-auth-006-muted:oklch(0.55 0.014 265);
---vibeui-auth-006-border:oklch(0.9 0.006 265);
---vibeui-auth-006-accent:oklch(0.55 0.2 262);
---vibeui-auth-006-ok:oklch(0.58 0.14 152);
+--vibeui-auth-006-bg:transparent;
+--vibeui-auth-006-panel:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-auth-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-auth-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.013 265));
+--vibeui-auth-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265));
+--vibeui-auth-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-auth-006-accent-soft:light-dark(oklch(0.55 0.2 262 / 10%),oklch(0.74 0.16 262 / 18%));
+--vibeui-auth-006-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-auth-006-ok:light-dark(oklch(0.58 0.14 152),oklch(0.74 0.13 152));
 --vibeui-auth-006-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -61,7 +74,7 @@ font-size:0.8125rem;font-weight:700;
 [data-vibeui-block="auth-006"] [data-part="role"]{
 display:inline-flex;align-items:center;gap:0.375rem;margin:0 0 0.75rem;
 padding:0.25rem 0.5rem;border-radius:0.5rem;
-background:oklch(0.55 0.2 262 / 10%);color:var(--vibeui-auth-006-accent);
+background:var(--vibeui-auth-006-accent-soft);color:var(--vibeui-auth-006-accent);
 font-size:0.75rem;font-weight:650;
 }
 /* Права перечислены до кнопки: соглашаются на доступ, а не на слово. */
@@ -75,7 +88,7 @@ display:flex;flex-direction:column;gap:0.375rem;
 [data-vibeui-block="auth-006"] [data-part="mark"]{
 flex:none;display:inline-flex;align-items:center;justify-content:center;
 width:1rem;height:1rem;margin-top:0.0625rem;border-radius:9999px;
-background:var(--vibeui-auth-006-ok);color:oklch(1 0 0);
+background:var(--vibeui-auth-006-ok);color:var(--vibeui-auth-006-on-accent);
 font-size:0.5625rem;line-height:1;
 }
 [data-vibeui-block="auth-006"] [data-part="members"]{
@@ -87,7 +100,7 @@ appearance:none;cursor:pointer;height:2.5rem;padding:0 1rem;border-radius:0.625r
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="auth-006"] [data-part="accept"]{
-flex:1 1 10rem;border:0;background:var(--vibeui-auth-006-accent);color:oklch(1 0 0);
+flex:1 1 10rem;border:0;background:var(--vibeui-auth-006-accent);color:var(--vibeui-auth-006-on-accent);
 }
 /* Отказ — обычная кнопка рядом: это такой же законный исход. */
 [data-vibeui-block="auth-006"] [data-part="decline"]{
@@ -127,6 +140,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Приглашение в проект: права перечислены до кнопки, отказ рядом с согласием.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -141,13 +176,24 @@ export function Auth006({
   decline = "Отказаться",
   note = "Отказ можно отменить: попросите пригласить ещё раз.",
   expires = "Приглашение действует до 20 марта",
+  headingTemplate = "Приглашение в проект {project}",
+  roleTemplate = "Роль: {role}",
+  membersTemplate = "В команде уже {count}: {names}",
+  background = "",
   accent,
   className,
   style,
 }: Auth006Props) {
+  const [headingBefore, headingAfter] = headingTemplate.split("{project}")
   const palette = {
     "--vibeui-auth-006-hue": hue(inviter),
     ...(accent ? { "--vibeui-auth-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -160,7 +206,7 @@ export function Auth006({
         data-vibeui-block="auth-006"
         className={className}
         style={palette}
-        aria-label={`Приглашение в проект ${project}`}
+        aria-label={headingTemplate.replace("{project}", project)}
       >
         <div data-part="who">
           <span data-part="avatar" aria-hidden="true">
@@ -173,9 +219,11 @@ export function Auth006({
         </div>
 
         <h2>
-          Приглашение в проект <span data-part="project">«{project}»</span>
+          {headingBefore}
+          <span data-part="project">«{project}»</span>
+          {headingAfter}
         </h2>
-        <p data-part="role">Роль: {role}</p>
+        <p data-part="role">{roleTemplate.replace("{role}", role)}</p>
 
         <ul>
           {rights.map((right) => (
@@ -189,7 +237,9 @@ export function Auth006({
         </ul>
 
         <p data-part="members">
-          В команде уже {members.length}: {members.join(", ")}
+          {membersTemplate
+            .replace("{count}", String(members.length))
+            .replace("{names}", members.join(", "))}
         </p>
 
         <div data-part="actions">

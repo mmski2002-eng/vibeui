@@ -30,16 +30,19 @@
             "края, которые гасятся, а не исчезают: пропадающая стрелка сдвигает весь ряд",
             "tabular-nums у номеров — без них ширина кнопок пляшет от цифр",
             "подписи aria-label у стрелок: «←» скринридер прочитает как символ",
-            "блок <style> внутри компонента — в нём вся палитра и раскладка"
+            "блок <style> внутри компонента — в нём вся палитра и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "page и total — текущая страница и общее количество",
             "siblings — сколько номеров показывать вокруг текущей",
             "hrefOf — как собрать адрес страницы под ваш роутер",
             "акцент через проп accent — цвет активного номера",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "подписи через labelText — заголовок навигации и названия стрелок; по умолчанию русские"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Для бесконечной ленты пагинация не нужна: это разные способы чтения списка.",
             "Не заменяйте ссылки на onClick без адреса: тогда страницу нельзя открыть в новой вкладке и она пропадёт из истории.",
             "Общее количество страниц должно быть известно. Если его нет, показывайте «дальше» без номеров.",
@@ -90,16 +93,19 @@
                 "edges that dim instead of disappearing: a vanishing arrow shifts the whole row",
                 "tabular-nums on the numbers — without them the buttons jitter as digits change",
                 "the aria-labels on the arrows: a screen reader would otherwise announce \"←\" as a symbol",
-                "the <style> block inside the component — it holds the palette and the layout"
+                "the <style> block inside the component — it holds the palette and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "page and total — the current page and the count",
                 "siblings — how many numbers surround the current page",
                 "hrefOf — how to build a page address for your router",
                 "the accent through the accent prop — it colours the active number",
-                "outer spacing through className"
+                "outer spacing through className",
+                "the labels through labelText — the nav title and the arrow names; Russian by default"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "An infinite feed needs no pagination: they are two different ways of reading a list.",
                 "Do not replace the links with onClick and no href: the page then cannot be opened in a new tab and vanishes from history.",
                 "The total has to be known. Without it, show a plain \"next\" without numbers.",
@@ -121,9 +127,19 @@
                 "label": "Accent"
               }
             },
-            "title": "Link Pagination"
+            "title": "Link Pagination",
+            "preview": {
+              "props": {
+                "labelText": {
+                  "nav": "Pages",
+                  "prev": "Previous page",
+                  "next": "Next page"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["page", "siblings", "total", "accent"]
       }
     },
     {
@@ -157,15 +173,20 @@
             "aria-disabled на краю списка вместо удаления кнопки — иначе строка прыгает",
             "табличные цифры в диапазоне",
             "ссылки, а не кнопки: адрес страницы должен открываться в новой вкладке",
-            "стрелки из бордюров: они поворачиваются вместе с направлением"
+            "стрелки из бордюров: они поворачиваются вместе с направлением",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "from, perPage и total",
             "prevHref и nextHref",
             "акцент через проп accent",
-            "ширину строки"
+            "ширину строки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи через labelText и строку счёта rangeText с {range} и {total}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент только показывает границы: курсор и запрос держит вызывающий код.",
             "Номеров страниц нет намеренно: для стабильных данных с переходом на страницу берите pagination-001.",
             "pointer-events:none на краю не отменяет переход по клавиатуре — уберите href, если нужен полный запрет.",
@@ -196,6 +217,18 @@
             "default": 214,
             "min": 10,
             "max": 999
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -209,15 +242,20 @@
                 "aria-disabled at the edge instead of removing the button — otherwise the row jumps",
                 "tabular figures in the range",
                 "links rather than buttons: the page address must open in a new tab",
-                "the border-drawn arrows: they rotate with the direction"
+                "the border-drawn arrows: they rotate with the direction",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "from, perPage and total",
                 "prevHref and nextHref",
                 "the accent through the accent prop",
-                "the row width"
+                "the row width",
+                "background — the component background; empty means no background, taking the page colour",
+                "the labels through labelText and the counter string rangeText with {range} and {total}"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component only shows the bounds: the cursor and the request stay in the caller.",
                 "Page numbers are deliberately absent: for stable data with jump-to-page use pagination-001.",
                 "pointer-events:none at the edge does not block keyboard activation — drop the href for a hard stop.",
@@ -234,11 +272,28 @@
               },
               "total": {
                 "label": "Total"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Cursor Pagination"
+            "title": "Cursor Pagination",
+            "preview": {
+              "props": {
+                "labelText": {
+                  "nav": "List navigation",
+                  "prev": "Back",
+                  "next": "Forward"
+                },
+                "rangeText": "Rows {range} of {total}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["from", "perPage", "total", "background"]
       }
     },
     {
@@ -272,15 +327,20 @@
             "aria-label у кнопки прыжка: «…» скринридер прочитает как символ и не объяснит, куда она ведёт",
             "aria-current=\"page\" у текущей страницы: без него активный номер отличается только цветом",
             "заливку активного номера вместе с насыщенностью — один цвет теряется рядом с наведением",
-            "табличные цифры у номеров: без них ширина кнопок пляшет от цифр"
+            "табличные цифры у номеров: без них ширина кнопок пляшет от цифр",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "total и defaultPage — количество страниц и та, что открыта изначально",
             "siblings — сколько номеров показывать вокруг текущей",
             "величину прыжка многоточия (константа JUMP)",
-            "акцент через проп accent — цвет активного номера и колец фокуса"
+            "акцент через проп accent — цвет активного номера и колец фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи через labelText — стрелки, aria-подписи номеров и кнопки прыжка"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Номера здесь кнопки, а не ссылки: страница не открывается в новой вкладке. Нужен адрес — берите вариант на ссылках.",
             "Состояние живёт внутри компонента: чтобы поднять его наверх, замените useState на пропсы со своим обработчиком.",
             "Прыжок на пять страниц подобран под окно в одну соседнюю: при большем siblings увеличьте и его.",
@@ -303,6 +363,26 @@
             "default": 24,
             "min": 1,
             "max": 99
+          },
+          {
+            "prop": "siblings",
+            "label": "Соседей",
+            "type": "number",
+            "default": 1,
+            "min": 0,
+            "max": 3
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -316,15 +396,20 @@
                 "the aria-label on the jump button: a screen reader announces \"…\" as a symbol and explains nothing",
                 "aria-current=\"page\" on the active page: without it the current number differs only by colour",
                 "the filled active number together with the weight — colour alone is lost next to a hover state",
-                "tabular figures on the numbers: without them the buttons jitter as digits change"
+                "tabular figures on the numbers: without them the buttons jitter as digits change",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "total and defaultPage — the page count and the one open at the start",
                 "siblings — how many numbers surround the current page",
                 "the jump distance of the ellipsis (the JUMP constant)",
-                "the accent through the accent prop — it colours the active number and the focus rings"
+                "the accent through the accent prop — it colours the active number and the focus rings",
+                "background — the component background; empty means no background, taking the page colour",
+                "the labels through labelText — the arrows, the number aria-labels and the jump button"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The numbers here are buttons, not links: a page cannot be opened in a new tab. If you need URLs, take the link-based variant.",
                 "The state lives inside the component: to lift it up, replace useState with props and your own handler.",
                 "The five-page jump is tuned to a window of one sibling: raise it if you raise siblings.",
@@ -338,11 +423,41 @@
               },
               "total": {
                 "label": "Total pages"
+              },
+              "siblings": {
+                "label": "Siblings"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Jumping Ellipsis"
+            "title": "Jumping Ellipsis",
+            "preview": {
+              "props": {
+                "labelText": {
+                  "nav": "Result pages",
+                  "prev": "Previous page",
+                  "next": "Next page",
+                  "prevText": "← Back",
+                  "nextText": "Forward →",
+                  "jumpBack": "Back {count} pages",
+                  "jumpForward": "Forward {count} pages",
+                  "page": "Page {page}"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": [
+          "defaultPage",
+          "siblings",
+          "total",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -373,15 +488,21 @@
             "rel=\"prev\" и rel=\"next\" на краях: это подсказка и браузеру, и поисковому роботу о порядке страниц",
             "гашение края через aria-disabled вместо удаления ссылки — исчезнувшая ссылка сдвигает счётчик",
             "табличные цифры в счётчике: иначе ссылки по краям дёргаются при смене номера",
-            "счётчик текстом, а не только номером: «4 из 12» отвечает на вопрос «сколько осталось», а голая четвёрка — нет"
+            "счётчик текстом, а не только номером: «4 из 12» отвечает на вопрос «сколько осталось», а голая четвёрка — нет",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "page и total — текущая страница и общее количество",
             "hrefOf — как собрать адрес страницы под ваш роутер",
             "label — слово перед номером",
-            "акцент через проп accent — цвет колец фокуса"
+            "акцент через проп accent — цвет колец фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "countText — строка счётчика с подстановками {label}, {page} и {total}",
+            "подписи стрелок и заголовок навигации через labelText"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Прыгнуть на произвольную страницу отсюда нельзя: это осознанный отказ, для прыжков берите вариант с номерами.",
             "pointer-events:none на краю не отменяет переход по клавиатуре — href там уже не задан, и это главная защита.",
             "Общее количество должно быть известно: для меняющихся данных лучше подходит курсорная навигация.",
@@ -404,6 +525,18 @@
             "default": 12,
             "min": 1,
             "max": 99
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -417,15 +550,21 @@
                 "rel=\"prev\" and rel=\"next\" on the edges: they tell the browser and the crawler how the pages are ordered",
                 "dimming the edge with aria-disabled instead of removing the link — a vanished link shifts the counter",
                 "tabular figures in the counter: otherwise the edge links jitter as the number changes",
-                "the counter as a sentence rather than a bare number: \"4 of 12\" answers \"how much is left\", a lone 4 does not"
+                "the counter as a sentence rather than a bare number: \"4 of 12\" answers \"how much is left\", a lone 4 does not",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "page and total — the current page and the count",
                 "hrefOf — how to build a page address for your router",
                 "label — the word before the number",
-                "the accent through the accent prop — it colours the focus rings"
+                "the accent through the accent prop — it colours the focus rings",
+                "background — the component background; empty means no background, taking the page colour",
+                "countText — the counter string with the {label}, {page} and {total} placeholders",
+                "the arrow captions and the nav title through labelText"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is no way to jump to an arbitrary page: that is a deliberate omission, use the numbered variant for jumps.",
                 "pointer-events:none at the edge does not block keyboard activation — the href is already absent there, and that is the real guard.",
                 "The total has to be known: for shifting data cursor pagination fits better.",
@@ -439,11 +578,29 @@
               },
               "total": {
                 "label": "Total"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Prev Next Counter"
+            "title": "Prev Next Counter",
+            "preview": {
+              "props": {
+                "label": "Page",
+                "countText": "{label} {page} of {total}",
+                "labelText": {
+                  "nav": "Page navigation",
+                  "prev": "Back",
+                  "next": "Forward"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["page", "total", "background"]
       }
     },
     {
@@ -474,15 +631,21 @@
             "role=\"progressbar\" с aria-valuenow и границами: полоса без ролей для скринридера просто цветной прямоугольник",
             "aria-live=\"polite\" у счётчика — иначе догрузка проходит мимо тех, кто не видит экран",
             "число в подписи кнопки: человек должен знать, сколько добавит нажатие",
-            "явную строку об окончании списка вместо исчезающей кнопки: пропавшая кнопка читается как поломка"
+            "явную строку об окончании списка вместо исчезающей кнопки: пропавшая кнопка читается как поломка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "total и perPage — общее количество и размер порции",
             "defaultShown — сколько показано изначально",
             "label — подпись кнопки",
-            "акцент через проп accent — цвет полосы прогресса"
+            "акцент через проп accent — цвет полосы прогресса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "countText — строка счётчика с подстановками {shown} и {total}",
+            "подписи через labelText — aria-подпись полосы и строка об окончании списка"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент показывает только счётчики: сам список и загрузку данных держит вызывающий код.",
             "Позиция прокрутки после догрузки не трогается — это верно для «показать ещё», но неверно для замены страницы.",
             "Такой список плохо возвращается по ссылке: место в нём нельзя передать адресом. Нужен адрес — берите страницы.",
@@ -505,6 +668,26 @@
             "default": 12,
             "min": 1,
             "max": 100
+          },
+          {
+            "prop": "defaultShown",
+            "label": "Показано",
+            "type": "number",
+            "default": 12,
+            "min": 0,
+            "max": 84
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -518,15 +701,21 @@
                 "role=\"progressbar\" with aria-valuenow and the bounds: without roles the bar is just a coloured rectangle to a screen reader",
                 "aria-live=\"polite\" on the counter — otherwise the load goes unnoticed by anyone not watching the screen",
                 "the number in the button caption: people have to know how much a press adds",
-                "the explicit end-of-list line instead of a vanishing button: a disappeared button reads as a breakage"
+                "the explicit end-of-list line instead of a vanishing button: a disappeared button reads as a breakage",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "total and perPage — the overall count and the batch size",
                 "defaultShown — how much is shown at the start",
                 "label — the button caption",
-                "the accent through the accent prop — it colours the progress bar"
+                "the accent through the accent prop — it colours the progress bar",
+                "background — the component background; empty means no background, taking the page colour",
+                "countText — the counter string with the {shown} and {total} placeholders",
+                "the labels through labelText — the bar aria-label and the end-of-list line"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component only shows the counters: the list itself and the data loading stay in the caller.",
                 "The scroll position is untouched after loading — right for \"load more\", wrong for replacing a page.",
                 "Such a list returns badly from a link: a place in it cannot be carried in a URL. If you need URLs, use pages.",
@@ -540,11 +729,37 @@
               },
               "perPage": {
                 "label": "Batch"
+              },
+              "defaultShown": {
+                "label": "Shown"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Load More Progress"
+            "title": "Load More Progress",
+            "preview": {
+              "props": {
+                "label": "Load more",
+                "countText": "Showing {shown} of {total}",
+                "labelText": {
+                  "progress": "Shown out of the total",
+                  "done": "That is everything we found"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": [
+          "defaultShown",
+          "perPage",
+          "total",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -575,15 +790,20 @@
             "IntersectionObserver вместо обработчика scroll: пересчёт делает браузер, а не каждый кадр ваш код",
             "root у наблюдателя, указывающий на область прокрутки: без него слежение идёт за окном и срабатывает не там",
             "aria-live=\"polite\" у строки состояния — догрузка обязана быть объявлена",
-            "отключение наблюдателя после конца списка: иначе он продолжает висеть на удалённом узле"
+            "отключение наблюдателя после конца списка: иначе он продолжает висеть на удалённом узле",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "total и batch — общее количество и размер порции догрузки",
             "height — высота области прокрутки",
             "содержимое строк ленты",
-            "акцент через проп accent — цвет колец фокуса и ссылки «Наверх»"
+            "акцент через проп accent — цвет колец фокуса и ссылки «Наверх»",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи через labelText: строки ленты, кнопка догрузки, строка состояния и «Наверх» — в шаблонах {count}, {shown} и {total}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Данные не загружаются: компонент показывает механику, запрос за строками остаётся вашим.",
             "Бесконечная лента ломает подвал страницы: до него не долистать. Здесь лента ограничена своей областью, но в макете страницы это стоит помнить.",
             "Место в ленте нельзя передать ссылкой: для этого нужны страницы.",
@@ -606,6 +826,18 @@
             "default": 10,
             "min": 5,
             "max": 50
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -619,15 +851,20 @@
                 "IntersectionObserver instead of a scroll handler: the browser decides when to recompute, not your code every frame",
                 "the observer's root pointing at the scroll area: without it the watching happens against the window and fires in the wrong place",
                 "aria-live=\"polite\" on the status line — a load has to be announced",
-                "disconnecting the observer at the end of the list: otherwise it lingers on a removed node"
+                "disconnecting the observer at the end of the list: otherwise it lingers on a removed node",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "total and batch — the overall count and the size of each load",
                 "height — the height of the scroll area",
                 "the contents of the feed rows",
-                "the accent through the accent prop — it colours the focus rings and the back-to-top control"
+                "the accent through the accent prop — it colours the focus rings and the back-to-top control",
+                "background — the component background; empty means no background, taking the page colour",
+                "the labels through labelText: the feed rows, the load button, the status line and back-to-top — with the {count}, {shown} and {total} placeholders"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "No data is fetched: the component shows the mechanics, the request for rows stays yours.",
                 "An infinite feed breaks a page footer: nobody ever reaches it. Here the feed is bounded by its own area, but it is worth remembering in a page layout.",
                 "A place in the feed cannot be carried in a link: that needs pages.",
@@ -641,11 +878,30 @@
               },
               "batch": {
                 "label": "Batch"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Infinite Beacon"
+            "title": "Infinite Beacon",
+            "preview": {
+              "props": {
+                "labelText": {
+                  "feed": "Feed",
+                  "row": "A feed entry — headline and date",
+                  "more": "Load {count} more",
+                  "loaded": "Loaded {shown} of {total}",
+                  "done": "Everything loaded: {total}",
+                  "top": "To top"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["batch", "total", "accent", "background"]
       }
     },
     {
@@ -679,15 +935,21 @@
             "диапазон строк вместо одного номера страницы: он не врёт при смене размера",
             "aria-current=\"page\" у указателя страницы и aria-label у стрелок — символы «‹» и «›» скринридер прочитает как знаки",
             "табличные цифры в диапазоне и в номере страницы: иначе панель дёргается на каждом переходе",
-            "<select> вместо своего выпадающего списка: на телефоне он открывается системным колесом"
+            "<select> вместо своего выпадающего списка: на телефоне он открывается системным колесом",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "total и defaultPerPage — общее количество строк и начальный размер страницы",
             "массив sizes — доступные размеры",
             "акцент через проп accent — цвет колец фокуса",
-            "порог контейнерного запроса, по которому панель перестраивается"
+            "порог контейнерного запроса, по которому панель перестраивается",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "rangeText — строка диапазона с подстановками {from}, {to} и {total}",
+            "подписи через labelText — заголовок навигации, стрелки, «Показывать по» и указатель {page} / {pages}"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент показывает только границы: сам запрос строк остаётся за вызывающим кодом.",
             "Размер страницы не сохраняется между визитами: хранение — за вами.",
             "Размеры больше сотни строк почти всегда бессмысленны: страница будет грузиться дольше, чем читаться.",
@@ -710,6 +972,18 @@
             "default": 20,
             "min": 5,
             "max": 100
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -723,15 +997,21 @@
                 "the row range instead of a lone page number: it does not lie when the size changes",
                 "aria-current=\"page\" on the page indicator and aria-labels on the arrows — a screen reader reads \"‹\" and \"›\" as symbols",
                 "tabular figures in the range and the page number: otherwise the bar jitters on every step",
-                "a <select> instead of a custom drop-down: on a phone it opens as the system wheel"
+                "a <select> instead of a custom drop-down: on a phone it opens as the system wheel",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "total and defaultPerPage — the row count and the initial page size",
                 "the sizes array — the available page sizes",
                 "the accent through the accent prop — it colours the focus rings",
-                "the container-query threshold where the bar rearranges"
+                "the container-query threshold where the bar rearranges",
+                "background — the component background; empty means no background, taking the page colour",
+                "rangeText — the range string with the {from}, {to} and {total} placeholders",
+                "the labels through labelText — the nav title, the arrows, the size caption and the {page} / {pages} indicator"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component only shows the bounds: fetching the rows stays with the caller.",
                 "The page size is not remembered between visits: persisting it is up to you.",
                 "Sizes beyond a hundred rows are almost always pointless: the page takes longer to load than to read.",
@@ -745,11 +1025,30 @@
               },
               "defaultPerPage": {
                 "label": "Per page"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Page Size Pagination"
+            "title": "Page Size Pagination",
+            "preview": {
+              "props": {
+                "rangeText": "{from}–{to} of {total}",
+                "labelText": {
+                  "nav": "List navigation",
+                  "prev": "Previous page",
+                  "next": "Next page",
+                  "size": "Rows per page",
+                  "where": "{page} / {pages}"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultPerPage", "total", "background"]
       }
     },
     {
@@ -783,15 +1082,21 @@
             "aria-describedby, связывающий поле с подсказкой и с сообщением об ошибке — иначе текст рядом с полем для скринридера просто абзац",
             "role=\"alert\" у сообщения об ошибке: без него оно не объявляется в момент появления",
             "подсказку об общем числе страниц в спокойном состоянии — место под сообщение занято всегда, и раскладка не прыгает",
-            "<label> у поля вместо одного placeholder: подсказка исчезает при вводе и именем поля быть не может"
+            "<label> у поля вместо одного placeholder: подсказка исчезает при вводе и именем поля быть не может",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "total и defaultPage — количество страниц и начальную",
             "label — подпись поля перехода",
             "тексты подсказки и сообщения об ошибке",
-            "акцент через проп accent — цвет кнопки «Перейти» и колец фокуса"
+            "акцент через проп accent — цвет кнопки «Перейти» и колец фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "nowText — указатель страницы с подстановками {page} и {total}",
+            "подписи через labelText — стрелки, кнопка «Перейти», подсказка и текст ошибки"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент клиентский: состояние страницы и черновик ввода живут внутри.",
             "Поле не ограничивает ввод жёстко: атрибуты min и max — подсказка браузеру, проверка всё равно нужна в обработчике.",
             "Поле перехода окупается на списках от нескольких десятков страниц: на пяти оно только мешает.",
@@ -814,6 +1119,18 @@
             "default": 37,
             "min": 1,
             "max": 148
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -827,15 +1144,21 @@
                 "the aria-describedby linking the field to the hint and to the error — otherwise the text beside the field is just a paragraph",
                 "role=\"alert\" on the error message: without it the message is not announced when it appears",
                 "the hint about the page count in the calm state — the message slot is always occupied, so the layout never jumps",
-                "a <label> on the field rather than a placeholder alone: a placeholder disappears while typing and cannot be the name"
+                "a <label> on the field rather than a placeholder alone: a placeholder disappears while typing and cannot be the name",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "total and defaultPage — the page count and the starting page",
                 "label — the caption of the jump field",
                 "the hint and error texts",
-                "the accent through the accent prop — it colours the Go button and the focus rings"
+                "the accent through the accent prop — it colours the Go button and the focus rings",
+                "background — the component background; empty means no background, taking the page colour",
+                "nowText — the page indicator with the {page} and {total} placeholders",
+                "the labels through labelText — the arrows, the Go button, the hint and the error text"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component is a client one: the page state and the input draft live inside it.",
                 "The field does not hard-limit typing: min and max are hints to the browser, the check still belongs in the handler.",
                 "A jump field pays off on lists of dozens of pages: on five it only gets in the way.",
@@ -849,11 +1172,32 @@
               },
               "defaultPage": {
                 "label": "Page"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Jump To Page"
+            "title": "Jump To Page",
+            "preview": {
+              "props": {
+                "label": "Go to page",
+                "nowText": "Page {page} of {total}",
+                "labelText": {
+                  "nav": "Page navigation",
+                  "prev": "← Back",
+                  "next": "Forward →",
+                  "go": "Go",
+                  "error": "Enter a number from 1 to {total}",
+                  "hint": "Pages in total: {total}"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultPage", "total", "accent", "background"]
       }
     },
     {
@@ -884,15 +1228,21 @@
             "сетку номеров в popover вместо ряда: восемнадцать номеров в строку на узком экране не помещаются",
             "popover=\"auto\": Escape и касание мимо закрывают сетку без вашего кода",
             "aria-current=\"page\" у текущего номера и в списке, и на кнопке-указателе",
-            "aria-label у стрелок: стрелка из бордюров не имеет текста и без подписи безымянна"
+            "aria-label у стрелок: стрелка из бордюров не имеет текста и без подписи безымянна",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "непрозрачную подложку у сетки в popover: всплывающая панель обязана перекрывать содержимое под собой"
           ],
           "adapt": [
             "page и total — текущая страница и общее количество",
             "hrefOf — как собрать адрес страницы под ваш роутер",
             "акцент через проп accent — цвет активного номера и колец фокуса",
-            "размер целей и число колонок в сетке"
+            "размер целей и число колонок в сетке",
+            "background — подложка панели и сетки; пусто означает «без подложки», по цвету страницы",
+            "подписи через labelText — заголовок навигации, стрелки, сетка и строка «из {total}»"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сетка выводит все страницы: на нескольких сотнях она станет длинным списком с прокруткой.",
             "Без поддержки anchor positioning сетка открывается по центру экрана: на телефоне это приемлемо, но проверьте.",
             "Компонент рассчитан на узкую ширину: на десктопе берите ряд номеров.",
@@ -915,6 +1265,18 @@
             "default": 18,
             "min": 1,
             "max": 99
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -928,15 +1290,21 @@
                 "the number grid in a popover instead of a row: eighteen numbers do not fit across a narrow screen",
                 "popover=\"auto\": Escape and a tap outside close the grid without your code",
                 "aria-current=\"page\" on the current number both in the list and on the indicator button",
-                "the aria-labels on the arrows: a border-drawn arrow has no text and is nameless without one"
+                "the aria-labels on the arrows: a border-drawn arrow has no text and is nameless without one",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the opaque background of the popover grid: a floating panel has to cover what is underneath it"
               ],
               "adapt": [
                 "page and total — the current page and the count",
                 "hrefOf — how to build a page address for your router",
                 "the accent through the accent prop — it colours the active number and the focus rings",
-                "the target size and the number of grid columns"
+                "the target size and the number of grid columns",
+                "background — the bar and grid background; empty means no background, taking the page colour",
+                "the labels through labelText — the nav title, the arrows, the grid and the \"of {total}\" line"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The grid lists every page: at several hundred it becomes a long scrolling list.",
                 "Without anchor positioning support the grid opens centred: acceptable on a phone, but check it.",
                 "The component is meant for narrow widths: on desktop take the row of numbers.",
@@ -950,11 +1318,29 @@
               },
               "total": {
                 "label": "Total"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Thumb Pagination"
+            "title": "Thumb Pagination",
+            "preview": {
+              "props": {
+                "labelText": {
+                  "nav": "Page navigation",
+                  "prev": "Previous page",
+                  "next": "Next page",
+                  "sheet": "All pages",
+                  "of": "of {total}"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["page", "total", "background"]
       }
     },
     {
@@ -983,12 +1369,22 @@
             "локальную палитру --vibeui-pagination-010-* и не подменять её токенами вашей темы (bg-primary, border-input и подобными)",
             "реальные <button> для номеров, краёв и кнопки «…» — ползунок открывается и с клавиатуры, а не только по клику мыши",
             "кнопку «Перейти» рядом с range: без неё мышью подтвердить выбор, не трогая клавиатуру, нечем",
-            "aria-label у ползунка с границами скрытого диапазона — иначе значение остаётся без объяснения для скринридера"
+            "aria-label у ползунка с границами скрытого диапазона — иначе значение остаётся без объяснения для скринридера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "page, total и siblings — начальную страницу, их общее число и ширину окна вокруг текущей",
             "акцент через проп accent — цвет заливки кнопок, ползунка и колец фокуса",
-            "тексты aria-label кнопок и подсказки диапазона"
+            "тексты aria-label кнопок и подсказки диапазона",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи через labelText — стрелки, номера, ползунок и кнопки «Перейти» и «Закрыть»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Состояние страницы живёт внутри компонента: чтобы поднять его наверх, замените useState на пропсы со своим обработчиком.",
+            "Ползунок окупается на сотнях страниц; на десятке он сложнее обычного ряда номеров.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
         "controls": [
@@ -1021,6 +1417,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1032,14 +1434,24 @@
                 "the local --vibeui-pagination-010-* palette — do not swap it for your theme tokens (bg-primary, border-input and the like)",
                 "real <button> elements for numbers, edges and the ellipsis trigger — the scrubber opens from the keyboard too, not only by a mouse click",
                 "the Go button beside the range — without it a mouse user has no way to confirm a pick without touching the keyboard",
-                "the aria-label on the range naming the hidden range's bounds — otherwise the value stays unexplained for a screen reader"
+                "the aria-label on the range naming the hidden range's bounds — otherwise the value stays unexplained for a screen reader",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "page, total and siblings — the starting page, their total count and the window width around the current one",
                 "the accent through the accent prop — it colours the buttons' fill, the range and the focus rings",
-                "the aria-label wording on the buttons and the range hint"
+                "the aria-label wording on the buttons and the range hint",
+                "background — the component background; empty means no background, taking the page colour",
+                "the labels through labelText — the arrows, the numbers, the scrubber and the Go and Close buttons"
               ],
-              "usage": "<Pagination010 page={53} total={240} siblings={1} />"
+              "usage": "<Pagination010 page={53} total={240} siblings={1} />",
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The page state lives inside the component: to lift it up, replace useState with props and your own handler.",
+                "The scrubber pays off across hundreds of pages; on a dozen it is more complicated than a plain row of numbers.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ]
             },
             "controls": {
               "page": {
@@ -1053,11 +1465,29 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Ellipsis Scrubber"
+            "title": "Ellipsis Scrubber",
+            "preview": {
+              "props": {
+                "labelText": {
+                  "nav": "Result pages",
+                  "prev": "Previous page",
+                  "next": "Next page",
+                  "page": "Page {page}",
+                  "range": "Page from {from} to {to}",
+                  "showRange": "Show pages {from} through {to}",
+                  "go": "Go",
+                  "close": "Close the scrubber"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["page", "siblings", "total", "accent", "background"]
       }
     },
     {
@@ -1086,12 +1516,24 @@
             "локальную палитру --vibeui-pagination-011-* и не подменять её токенами вашей темы (bg-accent, text-muted-foreground и подобными)",
             "conic-gradient через CSS-переменную --vibeui-pagination-011-percent — процент считается в JS и не выражается голым классом",
             "aria-live у подписи «Показано N из total» — без него смена счётчика проходит мимо скринридера",
-            "disabled и смену содержимого кольца на галочку в конце списка — кнопка не должна оставаться кликабельной без дела"
+            "disabled и смену содержимого кольца на галочку в конце списка — кнопка не должна оставаться кликабельной без дела",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "непрозрачный внутренний круг кольца: именно он вырезает кольцо, и прозрачным он превратит его в диск"
           ],
           "adapt": [
             "total, batch и defaultShown — общее число, размер порции и то, сколько показано изначально",
             "акцент через проп accent — цвет заливки кольца",
-            "текст внутри кольца и подпись aria-label кнопки"
+            "текст внутри кольца и подпись aria-label кнопки",
+            "background — подложка компонента и внутреннего круга кольца; пусто означает «без подложки», по цвету страницы",
+            "countText — строка счётчика с подстановками {shown} и {total}",
+            "подписи кнопки через labelText — {count} и {total} подставляются"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Компонент показывает только счётчики: сам список и загрузку данных держит вызывающий код.",
+            "Внутренний круг кольца непрозрачен: на цветной странице задайте background, чтобы он совпал с подложкой.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
         "controls": [
@@ -1124,6 +1566,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1135,14 +1583,26 @@
                 "the local --vibeui-pagination-011-* palette — do not swap it for your theme tokens (bg-accent, text-muted-foreground and the like)",
                 "the conic-gradient driven by the --vibeui-pagination-011-percent custom property — the percentage is computed in JS and cannot be expressed as a plain class",
                 "the aria-live on the \"Shown N of total\" caption — without it the counter change passes the screen reader by",
-                "the disabled state and the ring's switch to a checkmark at the end of the list — the button must not stay clickable with nothing left to do"
+                "the disabled state and the ring's switch to a checkmark at the end of the list — the button must not stay clickable with nothing left to do",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the opaque inner circle of the ring: it is what cuts the ring out, and making it transparent turns the ring into a disc"
               ],
               "adapt": [
                 "total, batch and defaultShown — the total count, the chunk size and how much is shown initially",
                 "the accent through the accent prop — it colours the ring's fill",
-                "the text inside the ring and the button's aria-label"
+                "the text inside the ring and the button's aria-label",
+                "background — the background of the component and of the ring's inner circle; empty means no background, taking the page colour",
+                "countText — the counter string with the {shown} and {total} placeholders",
+                "the button labels through labelText — {count} and {total} are substituted"
               ],
-              "usage": "<Pagination011 total={240} batch={60} defaultShown={60} />"
+              "usage": "<Pagination011 total={240} batch={60} defaultShown={60} />",
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The component only shows the counters: the list itself and the data loading stay in the caller.",
+                "The ring's inner circle is opaque: on a coloured page set background so that it matches the surface.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ]
             },
             "controls": {
               "total": {
@@ -1156,11 +1616,30 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Load More Ring"
+            "title": "Load More Ring",
+            "preview": {
+              "props": {
+                "countText": "Showing {shown} of {total}",
+                "labelText": {
+                  "done": "Everything loaded: {total}",
+                  "more": "Load {count} more out of {total}"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": [
+          "defaultShown",
+          "batch",
+          "total",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1189,12 +1668,22 @@
             "локальную палитру --vibeui-pagination-012-* и не подменять её токенами вашей темы (bg-muted, text-foreground и подобными)",
             "спрятанную, но фокусируемую кнопку-запасной вариант — без неё подгрузка недоступна с клавиатуры и для скринридера",
             "aria-live у статуса загрузки — иначе смена «Загрузка… → Показано N из total» проходит мимо скринридера",
-            "порог в onScroll до срабатывания подгрузки — без него запрос уходит либо слишком поздно, либо на каждый пиксель прокрутки"
+            "порог в onScroll до срабатывания подгрузки — без него запрос уходит либо слишком поздно, либо на каждый пиксель прокрутки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "total, batch и height — общее число записей, размер порции и высоту прокручиваемой ленты",
             "delay — задержку имитации запроса",
-            "акцент через проп accent — цвет точек загрузки"
+            "акцент через проп accent — цвет точек загрузки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи через labelText — строки ленты, статус загрузки и запасная кнопка; {shown} и {total} подставляются"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Данные не загружаются: setTimeout здесь имитирует запрос, настоящий остаётся вашим.",
+            "Место в ленте нельзя передать ссылкой: для этого нужны страницы.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
         "controls": [
@@ -1219,6 +1708,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1230,14 +1725,24 @@
                 "the local --vibeui-pagination-012-* palette — do not swap it for your theme tokens (bg-muted, text-foreground and the like)",
                 "the visually hidden but focusable fallback button — without it loading is unreachable from the keyboard and for a screen reader",
                 "the aria-live on the loading status — otherwise the \"Loading… → Shown N of total\" change passes the screen reader by",
-                "the threshold in onScroll before loading fires — without it the request fires either too late or on every pixel of scroll"
+                "the threshold in onScroll before loading fires — without it the request fires either too late or on every pixel of scroll",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "total, batch and height — the total record count, the chunk size and the scrollable feed's height",
                 "delay — the simulated request's delay",
-                "the accent through the accent prop — it colours the loading dots"
+                "the accent through the accent prop — it colours the loading dots",
+                "background — the component background; empty means no background, taking the page colour",
+                "the labels through labelText — the feed rows, the loading status and the fallback button; {shown} and {total} are substituted"
               ],
-              "usage": "<Pagination012 total={90} batch={15} height=\"13rem\" />"
+              "usage": "<Pagination012 total={90} batch={15} height=\"13rem\" />",
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "No data is fetched: the setTimeout here simulates a request, the real one stays yours.",
+                "A place in the feed cannot be carried in a link: that needs pages.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ]
             },
             "controls": {
               "total": {
@@ -1248,11 +1753,27 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Infinite Auto Scroll"
+            "title": "Infinite Auto Scroll",
+            "preview": {
+              "props": {
+                "labelText": {
+                  "feed": "Record feed",
+                  "row": "A feed entry — headline and date",
+                  "loading": "Loading…",
+                  "shown": "Showing {shown} of {total}",
+                  "done": "All records shown: {total}",
+                  "more": "Load more"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["batch", "total", "background"]
       }
     },
     {
@@ -1281,12 +1802,21 @@
             "локальную палитру --vibeui-pagination-013-* и не подменять её токенами вашей темы (bg-secondary, border-border и подобными)",
             "role=\"group\" с aria-label и aria-pressed у кнопок размера — без них группа читается как набор несвязанных кнопок",
             "пересчёт страницы от первой видимой строки в changeSize — иначе смена размера отбрасывает читателя в начало списка",
-            "aria-current=\"page\" у активного номера и реальные <button> для всех целей ряда"
+            "aria-current=\"page\" у активного номера и реальные <button> для всех целей ряда",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "контрастный текст на акценте через --vibeui-pagination-013-on-accent: в тёмной теме акцент светлеет, и белая цифра на нём перестаёт читаться"
           ],
           "adapt": [
             "total, defaultPerPage и sizes — общее число строк, размер по умолчанию и доступные размеры",
             "siblings — ширину окна номеров вокруг текущей страницы",
-            "акцент через проп accent — цвет активного номера и активной кнопки размера"
+            "акцент через проп accent — цвет активного номера и активной кнопки размера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи navLabel, prevLabel, nextLabel, pageLabel и sizeGroupLabel — по умолчанию русские, язык задаёт проект"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Кнопки размера — не <select>: если размеров больше пяти, выпадающий список честнее ряда, который переносится на вторую строку."
           ]
         },
         "controls": [
@@ -1307,8 +1837,22 @@
             "max": 100
           },
           {
+            "prop": "siblings",
+            "label": "Соседей",
+            "type": "number",
+            "default": 1,
+            "min": 0,
+            "max": 3
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -1322,14 +1866,23 @@
                 "the local --vibeui-pagination-013-* palette — do not swap it for your theme tokens (bg-secondary, border-border and the like)",
                 "the role=\"group\" with aria-label and aria-pressed on the size buttons — without them the group reads as a set of unrelated buttons",
                 "the recalculation from the first visible row in changeSize — otherwise a size change drops the reader back to the start of the list",
-                "aria-current=\"page\" on the active number and real <button> elements for every target in the row"
+                "aria-current=\"page\" on the active number and real <button> elements for every target in the row",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the contrast text on the accent through --vibeui-pagination-013-on-accent: in the dark theme the accent lightens and a white digit on it stops reading"
               ],
               "adapt": [
                 "total, defaultPerPage and sizes — the total row count, the default size and the available sizes",
                 "siblings — the width of the number window around the current page",
-                "the accent through the accent prop — it colours the active number and the active size button"
+                "the accent through the accent prop — it colours the active number and the active size button",
+                "background — the component background; empty means no background, taking the page colour",
+                "the navLabel, prevLabel, nextLabel, pageLabel and sizeGroupLabel captions — Russian by default, the project sets the language"
               ],
-              "usage": "<Pagination013 total={326} defaultPerPage={25} sizes={[10, 25, 50, 100]} />"
+              "usage": "<Pagination013 total={326} defaultPerPage={25} sizes={[10, 25, 50, 100]} />",
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The size buttons are not a <select>: with more than five sizes a dropdown is more honest than a row that wraps onto a second line."
+              ]
             },
             "controls": {
               "total": {
@@ -1338,13 +1891,35 @@
               "defaultPerPage": {
                 "label": "Page size"
               },
+              "siblings": {
+                "label": "Siblings"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Size Toggle Pagination"
+            "title": "Size Toggle Pagination",
+            "preview": {
+              "props": {
+                "navLabel": "List navigation",
+                "prevLabel": "Previous page",
+                "nextLabel": "Next page",
+                "pageLabel": "Page {page}",
+                "sizeGroupLabel": "Rows per page"
+              }
+            }
           }
-        }
+        },
+        "cardControls": [
+          "defaultPerPage",
+          "siblings",
+          "total",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1373,12 +1948,21 @@
             "локальную палитру --vibeui-pagination-014-* и не подменять её токенами вашей темы (bg-card, text-muted-foreground и подобными)",
             "container-type: inline-size на корневом селекторе вне @container — внутри контейнерного запроса нельзя стилизовать сам блок",
             "display:none у скрытого варианта, а не visibility или opacity — иначе скринридер озвучивает оба представления сразу",
-            "общие кнопки «назад»/«вперёд» для обоих состояний — раскладка переключается только серединой ряда"
+            "общие кнопки «назад»/«вперёд» для обоих состояний — раскладка переключается только серединой ряда",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "контрастный текст на акценте через --vibeui-pagination-014-on-accent: в тёмной теме акцент светлеет, и белая цифра на нём перестаёт читаться"
           ],
           "adapt": [
             "page, total и siblings — начальную страницу, их общее число и ширину окна вокруг текущей",
             "порог в @container (max-width: 21rem) — под какой шириной блока включается компактный вид",
-            "акцент через проп accent — цвет активного номера и колец фокуса"
+            "акцент через проп accent — цвет активного номера и колец фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи navLabel, prevLabel, nextLabel, pageLabel и compactLabel — по умолчанию русские, язык задаёт проект"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Порог компактного вида живёт в @container внутри блока <style>: пропом он быть не может — контейнерный запрос не читает CSS-переменные в условии."
           ]
         },
         "controls": [
@@ -1411,6 +1995,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1422,14 +2012,23 @@
                 "the local --vibeui-pagination-014-* palette — do not swap it for your theme tokens (bg-card, text-muted-foreground and the like)",
                 "container-type: inline-size on the root selector outside @container — a rule inside a container query cannot style the block itself",
                 "display:none on the hidden variant rather than visibility or opacity — otherwise a screen reader announces both representations at once",
-                "the shared prev/next buttons for both states — only the middle of the row switches layout"
+                "the shared prev/next buttons for both states — only the middle of the row switches layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the contrast text on the accent through --vibeui-pagination-014-on-accent: in the dark theme the accent lightens and a white digit on it stops reading"
               ],
               "adapt": [
                 "page, total and siblings — the starting page, their total count and the window width around the current one",
                 "the threshold in @container (max-width: 21rem) — below which block width the compact view kicks in",
-                "the accent through the accent prop — it colours the active number and the focus rings"
+                "the accent through the accent prop — it colours the active number and the focus rings",
+                "background — the component background; empty means no background, taking the page colour",
+                "the navLabel, prevLabel, nextLabel, pageLabel and compactLabel captions — Russian by default, the project sets the language"
               ],
-              "usage": "<Pagination014 page={4} total={48} siblings={1} />"
+              "usage": "<Pagination014 page={4} total={48} siblings={1} />",
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The compact threshold lives in the @container inside the <style> block: it cannot become a prop, because a container query does not read CSS variables in its condition."
+              ]
             },
             "controls": {
               "page": {
@@ -1443,11 +2042,24 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Collapse Pagination"
+            "title": "Collapse Pagination",
+            "preview": {
+              "props": {
+                "navLabel": "Pages",
+                "prevLabel": "Previous page",
+                "nextLabel": "Next page",
+                "pageLabel": "Page {page}",
+                "compactLabel": "{page} / {total}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["page", "siblings", "total", "accent", "background"]
       }
     },
     {
@@ -1476,12 +2088,19 @@
             "локальную палитру --vibeui-pagination-015-* и не подменять её токенами вашей темы (bg-input, ring-ring и подобными)",
             "перевод фокуса и выделение текста в инпуте при входе в правку — иначе редактирование начинается с пустого клика",
             "aria-invalid и role=\"alert\" у сообщения об ошибке — неверный номер должен быть объявлен, а не только подсвечен цветом",
-            "откат правки по Escape и по потере фокуса без изменения текущей страницы"
+            "откат правки по Escape и по потере фокуса без изменения текущей страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "page и total — начальную страницу и их общее число",
-            "тексты aria-label кнопок, подсказки и сообщения об ошибке",
-            "акцент через проп accent — цвет кольца фокуса и подсказки-пунктира вокруг номера"
+            "подписи navLabel, prevText, nextText, prevLabel, nextLabel, readoutLabel, totalLabel, inputLabel, editLabel и errorText — по умолчанию русские, язык задаёт проект",
+            "акцент через проп accent — цвет кольца фокуса и подсказки-пунктира вокруг номера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "У input type=\"number\" браузер рисует свои стрелки: если они мешают, прячьте их своим CSS, а не меняйте тип поля — числовым оно остаётся ради клавиатуры на телефоне."
           ]
         },
         "controls": [
@@ -1506,6 +2125,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1517,14 +2142,21 @@
                 "the local --vibeui-pagination-015-* palette — do not swap it for your theme tokens (bg-input, ring-ring and the like)",
                 "moving focus and selecting the text in the input when edit mode starts — otherwise editing begins from an empty click",
                 "aria-invalid and role=\"alert\" on the error message — a wrong number must be announced, not only shown in color",
-                "reverting the edit on Escape and on blur without changing the current page"
+                "reverting the edit on Escape and on blur without changing the current page",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "page and total — the starting page and their total count",
-                "the aria-label wording on the buttons, the hint and the error message",
-                "the accent through the accent prop — it colours the focus ring and the dashed hint around the number"
+                "the navLabel, prevText, nextText, prevLabel, nextLabel, readoutLabel, totalLabel, inputLabel, editLabel and errorText captions — Russian by default, the project sets the language",
+                "the accent through the accent prop — it colours the focus ring and the dashed hint around the number",
+                "background — the component background; empty means no background, taking the page colour"
               ],
-              "usage": "<Pagination015 page={12} total={48} />"
+              "usage": "<Pagination015 page={12} total={48} />",
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The browser draws its own spinners on input type=\"number\": hide them with your own CSS if they get in the way rather than changing the field type — it stays numeric for the phone keyboard."
+              ]
             },
             "controls": {
               "page": {
@@ -1535,11 +2167,29 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Inline Page Editor"
+            "title": "Inline Page Editor",
+            "preview": {
+              "props": {
+                "navLabel": "Pages",
+                "prevText": "← Back",
+                "nextText": "Next →",
+                "prevLabel": "Previous page",
+                "nextLabel": "Next page",
+                "readoutLabel": "Page",
+                "totalLabel": "of {total}",
+                "inputLabel": "Page number, from 1 to {total}",
+                "editLabel": "Current page {page} of {total}, change the number",
+                "errorText": "Enter a number from 1 to {total}"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["page", "total", "accent", "background"]
       }
     }
   ]

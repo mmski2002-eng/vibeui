@@ -12,20 +12,27 @@ export type Button012Props = Omit<
   shape?: Button012Shape
   size?: "sm" | "md" | "lg"
   tone?: "neutral" | "accent"
+  /** Акцент: заливка тона accent и обводка фокуса. */
+  accent?: string
 }
 
 // Идея компонента: кнопка без подписи, у которой имя всё равно есть. Оно
 // уходит в aria-label и в title: иконка без имени — тупик и для скринридера,
 // и для человека, который видит её впервые. Значки нарисованы бордюрами и
 // псевдоэлементами, поэтому иконочный пакет не нужен.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте пятно кнопки светлее фона, граница светлее пятна, а подпись
+// на акцентном тоне становится тёмной — светлая на светлом акценте слепнет.
 const STYLES = `
 :where([data-vibeui-block="button-012"]){
 --vibeui-button-012-size:2.25rem;
---vibeui-button-012-fg:oklch(0.3 0.014 265);
---vibeui-button-012-bg:oklch(1 0 0);
---vibeui-button-012-border:oklch(0.9 0.006 265);
---vibeui-button-012-hover:oklch(0.96 0.004 265);
---vibeui-button-012-accent:oklch(0.55 0.17 265);
+--vibeui-button-012-fg:light-dark(oklch(0.3 0.014 265),oklch(0.93 0.006 265));
+--vibeui-button-012-bg:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
+--vibeui-button-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.45 0.014 265));
+--vibeui-button-012-hover:light-dark(oklch(0.96 0.004 265),oklch(0.35 0.014 265));
+--vibeui-button-012-accent:light-dark(oklch(0.55 0.17 265),oklch(0.68 0.155 265));
+--vibeui-button-012-accent-fg:light-dark(oklch(0.99 0.01 265),oklch(0.2 0.04 265));
 --vibeui-button-012-radius:0.625rem;
 }
 [data-vibeui-block="button-012"]{
@@ -42,7 +49,7 @@ transition:background-color .16s ease,border-color .16s ease;
 [data-vibeui-block="button-012"][data-size="sm"]{--vibeui-button-012-size:1.875rem;--vibeui-button-012-radius:0.5rem}
 [data-vibeui-block="button-012"][data-size="lg"]{--vibeui-button-012-size:2.75rem;--vibeui-button-012-radius:0.75rem}
 [data-vibeui-block="button-012"][data-tone="accent"]{
-border-color:transparent;background:var(--vibeui-button-012-accent);color:oklch(0.99 0.01 265);
+border-color:transparent;background:var(--vibeui-button-012-accent);color:var(--vibeui-button-012-accent-fg);
 }
 [data-vibeui-block="button-012"]:hover{background:var(--vibeui-button-012-hover)}
 [data-vibeui-block="button-012"][data-tone="accent"]:hover{filter:brightness(0.95);background:var(--vibeui-button-012-accent)}
@@ -87,11 +94,17 @@ export function Button012({
   shape = "square",
   size = "md",
   tone = "neutral",
+  accent,
   type = "button",
   className,
   style,
   ...props
 }: Button012Props) {
+  const palette = {
+    ...(accent ? { "--vibeui-button-012-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-button-012" precedence="medium">
@@ -105,7 +118,7 @@ export function Button012({
         data-size={size}
         data-tone={tone}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
         aria-label={label}
         title={label}
       >

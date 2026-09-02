@@ -12,6 +12,18 @@ export type Cascader004Node = {
 export type Cascader004Props = {
   heading?: string
   tree?: Cascader004Node[]
+  /** Подпись кнопки возврата. */
+  backText?: string
+  /** Шаблон подписи шага: {step} и {heading}. */
+  stepText?: string
+  /** Подпись перед выбранным листом. */
+  selectedText?: string
+  /** Подпись перед текущим уровнем. */
+  currentText?: string
+  /** Как назван верхний уровень в строке пути. */
+  rootText?: string
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -24,11 +36,12 @@ export type Cascader004Props = {
 // возврате — направление движения объясняет, куда пользователь попал.
 const STYLES = `
 :where([data-vibeui-block="cascader-004"]){
---vibeui-cascader-004-bg:oklch(1 0 0);
---vibeui-cascader-004-fg:oklch(0.22 0.014 250);
---vibeui-cascader-004-muted:oklch(0.55 0.012 250);
---vibeui-cascader-004-border:oklch(0.91 0.006 250);
---vibeui-cascader-004-accent:oklch(0.58 0.15 190);
+--vibeui-cascader-004-bg:transparent;
+--vibeui-cascader-004-surface:light-dark(oklch(0.985 0.003 250),oklch(0.28 0.012 250));
+--vibeui-cascader-004-fg:light-dark(oklch(0.22 0.014 250),oklch(0.94 0.006 250));
+--vibeui-cascader-004-muted:light-dark(oklch(0.55 0.012 250),oklch(0.71 0.011 250));
+--vibeui-cascader-004-border:light-dark(oklch(0.91 0.006 250),oklch(0.38 0.011 250));
+--vibeui-cascader-004-accent:light-dark(oklch(0.58 0.15 190),oklch(0.78 0.13 190));
 --vibeui-cascader-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="cascader-004"]{
@@ -47,7 +60,7 @@ padding:0.625rem 0.75rem;border-bottom:1px solid var(--vibeui-cascader-004-borde
 [data-vibeui-block="cascader-004"] [data-part="back"]{
 flex:0 0 auto;display:grid;place-items:center;width:1.75rem;height:1.75rem;
 border:1px solid var(--vibeui-cascader-004-border);border-radius:0.625rem;
-background:var(--vibeui-cascader-004-bg);color:var(--vibeui-cascader-004-fg);
+background:var(--vibeui-cascader-004-surface);color:var(--vibeui-cascader-004-fg);
 cursor:pointer;transition:border-color .14s ease,opacity .14s ease;
 }
 [data-vibeui-block="cascader-004"] [data-part="back"]:hover:not(:disabled){
@@ -177,6 +190,28 @@ const DEFAULT_TREE: Cascader004Node[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function nodesAt(tree: Cascader004Node[], path: string[]) {
   let nodes = tree
 
@@ -200,11 +235,19 @@ function nodesAt(tree: Cascader004Node[], path: string[]) {
 export function Cascader004({
   heading = "Куда доставить",
   tree = DEFAULT_TREE,
+  backText = "Вернуться на уровень выше",
+  stepText = "Шаг {step} · {heading}",
+  selectedText = "Выбрано:",
+  currentText = "Сейчас:",
+  rootText = "верхний уровень",
+  background = "",
   accent,
   className,
   style,
 }: Cascader004Props) {
-  const [path, setPath] = useState<string[]>(["Россия"])
+  const [path, setPath] = useState<string[]>(() =>
+    tree[0]?.children?.length ? [tree[0].label] : [],
+  )
   const [direction, setDirection] = useState<"forward" | "back">("forward")
   const [picked, setPicked] = useState<string[]>([])
   const nodes = nodesAt(tree, path)
@@ -229,6 +272,12 @@ export function Cascader004({
 
   const palette = {
     ...(accent ? { "--vibeui-cascader-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cascader-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -248,14 +297,16 @@ export function Cascader004({
             type="button"
             onClick={goBack}
             disabled={path.length === 0}
-            aria-label="Вернуться на уровень выше"
+            aria-label={backText}
           >
             <i aria-hidden="true" />
           </button>
           <span data-part="titles">
             <strong data-part="title">{title}</strong>
             <small data-part="step">
-              Шаг {path.length + 1} · {heading}
+              {stepText
+                .replace("{step}", String(path.length + 1))
+                .replace("{heading}", heading)}
             </small>
           </span>
         </header>
@@ -291,12 +342,11 @@ export function Cascader004({
           <p data-part="crumbs" aria-live="polite">
             {picked.length ? (
               <>
-                Выбрано: <b>{picked.join(" → ")}</b>
+                {selectedText} <b>{picked.join(" → ")}</b>
               </>
             ) : (
               <>
-                Сейчас:{" "}
-                <b>{path.length ? path.join(" → ") : "верхний уровень"}</b>
+                {currentText} <b>{path.length ? path.join(" → ") : rootText}</b>
               </>
             )}
           </p>

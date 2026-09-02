@@ -16,10 +16,38 @@ export type Pricing003Props = {
   monthLabel?: string
   yearLabel?: string
   saveLabel?: string
+  /** Подпись группы переключателя для скринридера. */
+  switchLabel?: string
+  /** Приписка к сумме: за какой период она указана. */
+  perLabel?: string
   plans?: Pricing003Plan[]
   accent?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 // Идея блока: переключатель периода без единой строки JavaScript. Две
@@ -30,14 +58,14 @@ export type Pricing003Props = {
 // переключателем, а не спрятана в подсказку.
 const STYLES = `
 :where([data-vibeui-block="pricing-003"]){
---vibeui-pricing-003-bg:oklch(0.99 0.003 160);
---vibeui-pricing-003-fg:oklch(0.19 0.014 160);
---vibeui-pricing-003-muted:oklch(0.5 0.014 160);
---vibeui-pricing-003-card:oklch(1 0 0);
---vibeui-pricing-003-line:oklch(0.89 0.008 160);
---vibeui-pricing-003-soft:oklch(0.95 0.012 160);
---vibeui-pricing-003-accent:oklch(0.46 0.12 158);
---vibeui-pricing-003-accent-fg:oklch(0.99 0 0);
+--vibeui-pricing-003-bg:transparent;
+--vibeui-pricing-003-fg:light-dark(oklch(0.19 0.014 160),oklch(0.95 0.005 160));
+--vibeui-pricing-003-muted:light-dark(oklch(0.5 0.014 160),oklch(0.71 0.012 160));
+--vibeui-pricing-003-card:light-dark(oklch(1 0 0),oklch(0.22 0.014 160));
+--vibeui-pricing-003-line:light-dark(oklch(0.89 0.008 160),oklch(0.34 0.014 160));
+--vibeui-pricing-003-soft:light-dark(oklch(0.95 0.012 160),oklch(0.27 0.016 160));
+--vibeui-pricing-003-accent:light-dark(oklch(0.46 0.12 158),oklch(0.76 0.13 158));
+--vibeui-pricing-003-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.03 158));
 --vibeui-pricing-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -158,13 +186,22 @@ export function Pricing003({
   monthLabel = "Помесячно",
   yearLabel = "За год",
   saveLabel = "−17 %",
+  switchLabel = "Период оплаты",
+  perLabel = "в месяц",
   plans = DEFAULT_PLANS,
   accent,
+  background = "",
   className,
   style,
 }: Pricing003Props) {
   const palette = {
     ...(accent ? { "--vibeui-pricing-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pricing-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -196,7 +233,7 @@ export function Pricing003({
             name="vibeui-pricing-003-period"
           />
 
-          <div data-part="switch" role="group" aria-label="Период оплаты">
+          <div data-part="switch" role="group" aria-label={switchLabel}>
             <label
               data-part="opt"
               data-opt="month"
@@ -225,7 +262,7 @@ export function Pricing003({
                 <p data-part="amount">
                   <span data-part="month">{plan.monthly}</span>
                   <span data-part="year">{plan.yearly}</span>
-                  <span data-part="per">в месяц</span>
+                  <span data-part="per">{perLabel}</span>
                 </p>
                 <p data-part="hint">
                   <span data-part="year">{plan.yearlyNote}</span>

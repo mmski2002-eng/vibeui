@@ -32,15 +32,19 @@
             "переполнение через <details>, а не через overflow:hidden — скрытое событие обязано оставаться достижимым с клавиатуры",
             "разворот всплывающего списка вверх в нижних строках: иначе он уходит за край карточки",
             "цвет вместе со стилем границы события: одного оттенка мало на печати и при дальтонизме",
-            "собственную светлую подложку карточки: тёмный текст на тёмной витрине пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив events и месяц через month",
             "число карточек в клетке через visible",
             "акцент через accent и остальные цвета палитры",
-            "язык подписей через locale и заголовок через heading"
+            "язык подписей через locale и заголовок через heading",
+            "подписи счётчика и сворачивания через countText и moreText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Многодневные события не поддерживаются: полоса через несколько клеток требует другой раскладки.",
             "Открытые «ещё N» не закрываются друг другом — это цена решения без клиентского JS.",
             "События сопоставляются с днями по номеру дня, поэтому массив относится к одному месяцу.",
@@ -61,6 +65,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -74,15 +84,19 @@
                 "the overflow handled by <details> rather than overflow:hidden — a hidden event must stay reachable from the keyboard",
                 "the popup flipping upwards in the bottom rows: otherwise it escapes the card",
                 "colour together with border style on an event: one hue alone dies in print and for colour blindness",
-                "the card's own light surface: dark text disappears on a dark showcase background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the events array and the month through month",
                 "how many chips a cell shows through visible",
                 "the accent through accent and the rest of the palette",
-                "the label language through locale and the caption through heading"
+                "the label language through locale and the caption through heading",
+                "the counter and the fold-out captions through countText and moreText",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Multi-day events are not supported: a bar across several cells needs a different layout.",
                 "Open «more N» popups do not close each other — that is the price of having no client JS.",
                 "Events are matched to cells by day number, so the array belongs to a single month.",
@@ -96,11 +110,104 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Month Overflow"
+            "title": "Month Overflow",
+            "preview": {
+              "props": {
+                "locale": "en-GB",
+                "countText": "{count} events this month",
+                "moreText": "more {count}",
+                "events": [
+                  {
+                    "day": 3,
+                    "title": "Standup",
+                    "time": "10:00"
+                  },
+                  {
+                    "day": 5,
+                    "title": "Design review",
+                    "time": "14:00"
+                  },
+                  {
+                    "day": 5,
+                    "title": "Call with Kim",
+                    "time": "16:30",
+                    "tone": "personal"
+                  },
+                  {
+                    "day": 11,
+                    "title": "Release 4.2",
+                    "time": "12:00"
+                  },
+                  {
+                    "day": 12,
+                    "title": "Swimming",
+                    "time": "07:30",
+                    "tone": "personal"
+                  },
+                  {
+                    "day": 12,
+                    "title": "Sprint review",
+                    "time": "11:00"
+                  },
+                  {
+                    "day": 12,
+                    "title": "Interview",
+                    "time": "15:00"
+                  },
+                  {
+                    "day": 12,
+                    "title": "Retro",
+                    "time": "17:00",
+                    "tone": "hold"
+                  },
+                  {
+                    "day": 18,
+                    "title": "Quarterly report",
+                    "time": "09:00"
+                  },
+                  {
+                    "day": 19,
+                    "title": "Lunch with Vera",
+                    "time": "13:00",
+                    "tone": "personal"
+                  },
+                  {
+                    "day": 19,
+                    "title": "Budget edits",
+                    "tone": "hold"
+                  },
+                  {
+                    "day": 24,
+                    "title": "Client demo",
+                    "time": "11:30"
+                  },
+                  {
+                    "day": 24,
+                    "title": "Workout",
+                    "time": "19:00",
+                    "tone": "personal"
+                  },
+                  {
+                    "day": 24,
+                    "title": "Plan draft",
+                    "tone": "hold"
+                  },
+                  {
+                    "day": 27,
+                    "title": "Team offsite",
+                    "time": "10:00"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["visible", "accent", "background"]
       }
     },
     {
@@ -134,15 +241,19 @@
             "отдельную строку «весь день» — у такого события нет положения на шкале",
             "контейнер прокрутки с tabindex=0 и видимым фокусом: неделя шире телефона всегда",
             "min-width полотна: сжатые до 2 рем колонки перестают быть читаемыми",
-            "собственную светлую подложку карточки: тёмный текст на тёмной витрине пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив events и начало недели через weekStart",
             "границы рабочего дня через dayFrom и dayTo",
             "заголовок через heading и язык подписей через locale",
-            "акцент через accent и высоту часа в палитре"
+            "акцент через accent и высоту часа в палитре",
+            "подписи подсказки, столбца «весь день» и области прокрутки через hintText, allDayText и scrollLabel",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пересечения не разводятся по дорожкам: две встречи в одно время лягут друг на друга.",
             "Событие короче двадцати минут поднимается до минимальной высоты, иначе подпись не поместится.",
             "Красная черта «сейчас» задана фиксированным процентом: на реальном времени её придётся считать.",
@@ -158,12 +269,32 @@
             "maxLength": 24
           },
           {
+            "prop": "dayFrom",
+            "label": "Начало дня",
+            "type": "number",
+            "default": 8,
+            "min": 5,
+            "max": 12
+          },
+          {
             "prop": "dayTo",
             "label": "Конец дня",
             "type": "number",
             "default": 19,
             "min": 13,
             "max": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -177,15 +308,19 @@
                 "the separate all-day row — such an event has no position on the scale",
                 "the scroll container with tabindex=0 and a visible focus ring: a week is always wider than a phone",
                 "the min-width of the canvas: columns squeezed to 2rem stop being readable",
-                "the card's own light surface: dark text disappears on a dark showcase background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the events array and the week start through weekStart",
                 "the working-day bounds through dayFrom and dayTo",
                 "the caption through heading and the label language through locale",
-                "the accent through accent and the hour height in the palette"
+                "the accent through accent and the hour height in the palette",
+                "the hint, the all-day column and the scroll region captions through hintText, allDayText and scrollLabel",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Overlaps are not split into lanes: two meetings at the same time will sit on top of each other.",
                 "An event shorter than twenty minutes is raised to a minimum height, otherwise the label does not fit.",
                 "The red «now» line uses a fixed percentage: wiring it to real time takes a calculation.",
@@ -198,13 +333,106 @@
                 "label": "Heading",
                 "default": "Week"
               },
+              "dayFrom": {
+                "label": "Day starts at"
+              },
               "dayTo": {
                 "label": "Day ends at"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Week Columns"
+            "title": "Week Columns",
+            "preview": {
+              "props": {
+                "locale": "en-GB",
+                "heading": "Week",
+                "hintText": "working day {from}:00 — {to}:00, the red line is now",
+                "allDayText": "all day",
+                "scrollLabel": "{heading}: schedule by day",
+                "events": [
+                  {
+                    "day": 0,
+                    "title": "Vera on leave"
+                  },
+                  {
+                    "day": 0,
+                    "from": "09:00",
+                    "to": "09:30",
+                    "title": "Standup"
+                  },
+                  {
+                    "day": 0,
+                    "from": "11:00",
+                    "to": "12:30",
+                    "title": "Design review"
+                  },
+                  {
+                    "day": 1,
+                    "from": "10:15",
+                    "to": "11:45",
+                    "title": "Interview",
+                    "tone": "focus"
+                  },
+                  {
+                    "day": 1,
+                    "from": "15:00",
+                    "to": "16:00",
+                    "title": "Client"
+                  },
+                  {
+                    "day": 2,
+                    "from": "09:30",
+                    "to": "12:00",
+                    "title": "Focus block",
+                    "tone": "focus"
+                  },
+                  {
+                    "day": 2,
+                    "from": "14:00",
+                    "to": "14:45",
+                    "title": "1:1 with Kim"
+                  },
+                  {
+                    "day": 3,
+                    "title": "Study day"
+                  },
+                  {
+                    "day": 3,
+                    "from": "13:00",
+                    "to": "17:00",
+                    "title": "Workshop",
+                    "tone": "away"
+                  },
+                  {
+                    "day": 4,
+                    "from": "09:00",
+                    "to": "10:00",
+                    "title": "Sprint review"
+                  },
+                  {
+                    "day": 4,
+                    "from": "16:30",
+                    "to": "18:00",
+                    "title": "Retro"
+                  },
+                  {
+                    "day": 5,
+                    "from": "11:00",
+                    "to": "12:00",
+                    "title": "Backlog cleanup",
+                    "tone": "away"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["dayFrom", "dayTo", "accent", "background"]
       }
     },
     {
@@ -238,15 +466,19 @@
             "разбиение на связные группы: без него дорожки не переиспользуются и день превращается в лапшу",
             "просвет между соседними дорожками — два прижатых прямоугольника читаются как один",
             "время текстом внутри события: по высоте прямоугольника длительность не назвать",
-            "собственную светлую подложку карточки: тёмный текст на тёмной витрине пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив events и дату через date",
             "границы шкалы через dayFrom и dayTo",
             "акцент через accent, высоту часа и остальные цвета палитры",
-            "подписи легенды и язык заголовка через locale"
+            "язык заголовка через locale",
+            "подписи легенды через legendText и подсказку через hintText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Раскладка жадная: она гарантирует отсутствие наложений, но не самое красивое распределение.",
             "Событие вне интервала dayFrom–dayTo не обрезается, а уезжает за полотно — фильтруйте данные заранее.",
             "Больше трёх одновременных событий делают колонку слишком узкой для подписи.",
@@ -263,8 +495,22 @@
             "max": 12
           },
           {
+            "prop": "dayTo",
+            "label": "Конец дня",
+            "type": "number",
+            "default": 19,
+            "min": 13,
+            "max": 24
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -280,15 +526,19 @@
                 "the split into connected groups: without it lanes are never reused and the day turns into noodles",
                 "the gap between neighbouring lanes — two rectangles pressed together read as one",
                 "the time as text inside an event: a rectangle's height does not state a duration",
-                "the card's own light surface: dark text disappears on a dark showcase background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the events array and the date through date",
                 "the scale bounds through dayFrom and dayTo",
                 "the accent through accent, the hour height and the rest of the palette",
-                "the legend captions and the heading language through locale"
+                "the heading language through locale",
+                "the legend captions through legendText and the hint through hintText",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The layout is greedy: it guarantees no overlap, not the prettiest distribution.",
                 "An event outside dayFrom–dayTo is not clipped but runs off the canvas — filter the data beforehand.",
                 "More than three simultaneous events make a column too narrow for its label.",
@@ -300,13 +550,80 @@
               "dayFrom": {
                 "label": "Day starts at"
               },
+              "dayTo": {
+                "label": "Day ends at"
+              },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Day Lanes"
+            "title": "Day Lanes",
+            "preview": {
+              "props": {
+                "locale": "en-GB",
+                "hintText": "{count} events, overlaps: {overlaps}",
+                "legendText": {
+                  "work": "meeting",
+                  "focus": "focus time",
+                  "hold": "tentative"
+                },
+                "events": [
+                  {
+                    "from": "09:00",
+                    "to": "09:30",
+                    "title": "Standup",
+                    "place": "Room 2"
+                  },
+                  {
+                    "from": "10:00",
+                    "to": "12:00",
+                    "title": "Focus block",
+                    "tone": "focus"
+                  },
+                  {
+                    "from": "10:30",
+                    "to": "11:15",
+                    "title": "Client call",
+                    "place": "Meet"
+                  },
+                  {
+                    "from": "11:00",
+                    "to": "11:45",
+                    "title": "Interview",
+                    "place": "Room 1"
+                  },
+                  {
+                    "from": "13:00",
+                    "to": "14:00",
+                    "title": "Lunch"
+                  },
+                  {
+                    "from": "14:30",
+                    "to": "16:00",
+                    "title": "Mockup edits",
+                    "tone": "focus"
+                  },
+                  {
+                    "from": "15:30",
+                    "to": "16:30",
+                    "title": "Incident review",
+                    "tone": "hold"
+                  },
+                  {
+                    "from": "17:00",
+                    "to": "18:00",
+                    "title": "Retro",
+                    "place": "Room 2"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["dayFrom", "dayTo", "accent", "background"]
       }
     },
     {
@@ -340,18 +657,22 @@
             "подписи «Сегодня» и «Завтра» словами — в эти два дня дату никто не читает",
             "моноширинные цифры времени в отдельной колонке: разной ширины цифры ломают вертикаль",
             "стиль левой границы как признак типа события, а не только её цвет",
-            "собственную светлую подложку карточки: тёмный текст на тёмной витрине пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив events и точку отсчёта через today",
             "глубину окна через days",
             "заголовок через heading и язык подписей через locale",
-            "акцент через accent и максимальную высоту ленты"
+            "акцент через accent и максимальную высоту ленты",
+            "подписи «Сегодня», «Завтра», дедлайна и длительности через labels",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Дни без событий не показываются: лента отвечает на вопрос «что дальше», а не «как выглядит неделя».",
             "Время берётся из строки as-is, без часовых поясов — переводите данные заранее.",
-            "Слова «сегодня» и «завтра» зашиты по-русски: для другого языка их придётся вынести в пропсы.",
+            "Шаблоны длительности лежат в labels отдельными строками: языку со своими правилами числа понадобится собственный набор.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
         },
@@ -370,6 +691,18 @@
             "default": 7,
             "min": 1,
             "max": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -383,18 +716,22 @@
                 "«Today» and «Tomorrow» spelled out — nobody reads a date for those two days",
                 "tabular figures in their own time column: proportional digits break the vertical rhythm",
                 "the left border style as the type marker, not only its colour",
-                "the card's own light surface: dark text disappears on a dark showcase background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the events array and the reference point through today",
                 "the window depth through days",
                 "the caption through heading and the label language through locale",
-                "the accent through accent and the maximum feed height"
+                "the accent through accent and the maximum feed height",
+                "the «Today», «Tomorrow», deadline and duration captions through labels",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Days without events are not shown: the feed answers «what is next», not «what does the week look like».",
                 "Time is taken from the string as-is, with no time zones — convert the data beforehand.",
-                "«Today» and «tomorrow» are hard-coded in Russian: another language needs them lifted into props.",
+                "The duration templates live in labels as separate strings: a language with its own plural rules needs its own set.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Eventcalendar004\n  today=\"2026-03-17\"\n  days={7}\n  events={[{ at: \"2026-03-18T11:00\", minutes: 90, title: \"Review\" }]}\n/>"
@@ -406,11 +743,86 @@
               },
               "days": {
                 "label": "Days ahead"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Upcoming Feed"
+            "title": "Upcoming Feed",
+            "preview": {
+              "props": {
+                "locale": "en-GB",
+                "heading": "Upcoming",
+                "hintText": "{days} days ahead",
+                "listLabel": "{heading}: event list",
+                "labels": {
+                  "today": "Today",
+                  "tomorrow": "Tomorrow",
+                  "empty": "Nothing is planned for the coming days.",
+                  "due": "due",
+                  "deadline": "deadline",
+                  "minutes": "{minutes} min",
+                  "hours": "{hours} h",
+                  "hoursMinutes": "{hours} h {minutes} min"
+                },
+                "events": [
+                  {
+                    "at": "2026-03-17T09:30",
+                    "minutes": 30,
+                    "title": "Team standup",
+                    "place": "Room 2"
+                  },
+                  {
+                    "at": "2026-03-17T12:00",
+                    "minutes": 60,
+                    "title": "Lunch with the contractor",
+                    "place": "Café downstairs",
+                    "tone": "personal"
+                  },
+                  {
+                    "at": "2026-03-17T16:00",
+                    "minutes": 45,
+                    "title": "Metrics review",
+                    "place": "Meet"
+                  },
+                  {
+                    "at": "2026-03-18T11:00",
+                    "minutes": 90,
+                    "title": "Catalogue design review",
+                    "place": "Room 1"
+                  },
+                  {
+                    "at": "2026-03-18T18:00",
+                    "title": "Submit the estimate",
+                    "tone": "deadline"
+                  },
+                  {
+                    "at": "2026-03-20T08:00",
+                    "minutes": 60,
+                    "title": "Swimming",
+                    "tone": "personal"
+                  },
+                  {
+                    "at": "2026-03-20T14:00",
+                    "minutes": 120,
+                    "title": "Client visit",
+                    "place": "12 Mira Avenue"
+                  },
+                  {
+                    "at": "2026-03-23T10:00",
+                    "minutes": 30,
+                    "title": "Sprint retro",
+                    "place": "Room 2"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["days", "accent", "background"]
       }
     },
     {
@@ -444,15 +856,19 @@
             "фильтрацию на :has() без состояния — она работает и до гидратации, и с выключенным JS",
             "погашенный чип у снятого источника: иначе непонятно, что именно спрятано",
             "дублирование сетки списком: по одной метке в клетке название события не прочесть",
-            "собственную светлую подложку карточки: тёмный текст на тёмной витрине пропадает"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массивы sources и events, включая цвет и форму метки",
             "начало диапазона через rangeStart",
             "глубину сетки через weeks",
-            "заголовок через heading и язык подписей через locale"
+            "заголовок через heading, акцент через accent и язык подписей через locale",
+            "подписи легенды и списка через legendText и listLabel",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Правил фильтрации четыре: пятый источник нужно добавить строкой в CSS вместе с формой метки.",
             "Если снять все галочки, останется пустая сетка — состояния «ничего не выбрано» здесь нет.",
             "Чекбоксы неуправляемые: серверу о выборе не сообщается, это чисто визуальный фильтр.",
@@ -474,6 +890,18 @@
             "default": 3,
             "min": 1,
             "max": 6
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -487,15 +915,19 @@
                 "the stateless :has() filtering — it works before hydration and with JS disabled",
                 "the dimmed chip of an unchecked source: otherwise it is unclear what exactly is hidden",
                 "the list that duplicates the grid: a single marker in a cell does not spell out the event name",
-                "the card's own light surface: dark text disappears on a dark showcase background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the sources and events arrays, including marker colour and shape",
                 "the range start through rangeStart",
                 "the grid depth through weeks",
-                "the caption through heading and the label language through locale"
+                "the caption through heading, the accent through accent and the label language through locale",
+                "the legend and list captions through legendText and listLabel",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There are four filter rules: a fifth source needs its own CSS line together with a marker shape.",
                 "Unchecking everything leaves an empty grid — there is no «nothing selected» state here.",
                 "The checkboxes are uncontrolled: the server never learns the choice, this is a purely visual filter.",
@@ -510,11 +942,120 @@
               },
               "weeks": {
                 "label": "Weeks in grid"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Source Legend"
+            "title": "Source Legend",
+            "preview": {
+              "props": {
+                "locale": "en-GB",
+                "heading": "All calendars",
+                "legendText": "Sources: colour plus marker shape",
+                "listLabel": "{heading}: events as a list",
+                "sources": [
+                  {
+                    "label": "Work",
+                    "color": "oklch(0.55 0.16 262)",
+                    "shape": "square"
+                  },
+                  {
+                    "label": "Personal",
+                    "color": "oklch(0.6 0.13 165)",
+                    "shape": "dot"
+                  },
+                  {
+                    "label": "Family",
+                    "color": "oklch(0.65 0.15 45)",
+                    "shape": "diamond"
+                  },
+                  {
+                    "label": "Holidays",
+                    "color": "oklch(0.58 0.17 15)",
+                    "shape": "triangle"
+                  }
+                ],
+                "events": [
+                  {
+                    "date": "2026-03-16",
+                    "time": "09:30",
+                    "title": "Standup",
+                    "source": 0
+                  },
+                  {
+                    "date": "2026-03-17",
+                    "time": "07:00",
+                    "title": "Morning run",
+                    "source": 1
+                  },
+                  {
+                    "date": "2026-03-17",
+                    "time": "14:00",
+                    "title": "Design review",
+                    "source": 0
+                  },
+                  {
+                    "date": "2026-03-18",
+                    "time": "18:30",
+                    "title": "Parents' meeting",
+                    "source": 2
+                  },
+                  {
+                    "date": "2026-03-19",
+                    "time": "11:00",
+                    "title": "Sprint review",
+                    "source": 0
+                  },
+                  {
+                    "date": "2026-03-20",
+                    "title": "Mum's birthday",
+                    "source": 2
+                  },
+                  {
+                    "date": "2026-03-21",
+                    "time": "10:00",
+                    "title": "Bike ride",
+                    "source": 1
+                  },
+                  {
+                    "date": "2026-03-23",
+                    "title": "Day off",
+                    "source": 3
+                  },
+                  {
+                    "date": "2026-03-24",
+                    "time": "12:00",
+                    "title": "Client demo",
+                    "source": 0
+                  },
+                  {
+                    "date": "2026-03-25",
+                    "time": "19:00",
+                    "title": "Theatre",
+                    "source": 2
+                  },
+                  {
+                    "date": "2026-03-26",
+                    "time": "08:00",
+                    "title": "Dentist",
+                    "source": 1
+                  },
+                  {
+                    "date": "2026-03-27",
+                    "time": "16:00",
+                    "title": "Retro",
+                    "source": 0
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["weeks", "background"]
       }
     }
   ]

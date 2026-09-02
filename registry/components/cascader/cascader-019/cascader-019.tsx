@@ -18,7 +18,17 @@ export type Cascader019Props = Omit<
   placeholder?: string
   entries?: Cascader019Entry[]
   defaultCode?: string
+  /** Подсказка под полем: правило поиска нельзя оставлять неявным. */
+  hintText?: string
+  /** Строка вместо списка, когда ничего не нашлось. */
+  emptyText?: string
+  /** Итог, {code} — код, {name} — название. */
+  pickedText?: string
+  /** Итог, пока код не выбран. */
+  pickedEmptyText?: string
   onSelect?: (code: string, name: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -29,14 +39,14 @@ export type Cascader019Props = Omit<
 // не исчезает, а показывается результатом.
 const STYLES = `
 :where([data-vibeui-block="cascader-019"]){
---vibeui-cascader-019-bg:oklch(1 0 0);
---vibeui-cascader-019-fg:oklch(0.22 0.014 300);
---vibeui-cascader-019-muted:oklch(0.55 0.014 300);
---vibeui-cascader-019-border:oklch(0.9 0.008 300);
---vibeui-cascader-019-field:oklch(0.985 0.004 300);
---vibeui-cascader-019-soft:oklch(0.965 0.006 300);
---vibeui-cascader-019-accent:oklch(0.5 0.13 300);
---vibeui-cascader-019-accentsoft:oklch(0.94 0.04 300);
+--vibeui-cascader-019-bg:transparent;
+--vibeui-cascader-019-fg:light-dark(oklch(0.22 0.014 300),oklch(0.94 0.006 300));
+--vibeui-cascader-019-muted:light-dark(oklch(0.55 0.014 300),oklch(0.71 0.012 300));
+--vibeui-cascader-019-border:light-dark(oklch(0.9 0.008 300),oklch(0.35 0.012 300));
+--vibeui-cascader-019-field:light-dark(oklch(0.985 0.004 300),oklch(0.27 0.012 300));
+--vibeui-cascader-019-soft:light-dark(oklch(0.965 0.006 300),oklch(0.29 0.012 300));
+--vibeui-cascader-019-accent:light-dark(oklch(0.5 0.13 300),oklch(0.77 0.13 300));
+--vibeui-cascader-019-accentsoft:light-dark(oklch(0.94 0.04 300),oklch(0.33 0.05 300));
 --vibeui-cascader-019-radius:0.625rem;
 --vibeui-cascader-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-cascader-019-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
@@ -144,6 +154,28 @@ const CLASSIFIER: Cascader019Entry[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор кода классификатора: поиск по коду или названию с показом пути.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -152,7 +184,12 @@ export function Cascader019({
   placeholder = "Код или название",
   entries = CLASSIFIER,
   defaultCode = "62.01",
+  hintText = "Введите код целиком или его начало — 62, 62.0, 62.01 — либо часть названия",
+  emptyText = "Такого кода в классификаторе нет",
+  pickedText = "Выбран код {code} — {name}",
+  pickedEmptyText = "Код не выбран",
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -181,8 +218,17 @@ export function Cascader019({
 
   const picked = entries.find((entry) => entry.code === code)
 
+  const [pickedBefore, pickedRest = ""] = pickedText.split("{code}")
+  const [pickedMiddle, pickedAfter = ""] = pickedRest.split("{name}")
+
   const palette = {
     ...(accent ? { "--vibeui-cascader-019-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cascader-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -213,8 +259,7 @@ export function Cascader019({
           onChange={(event) => setQuery(event.target.value)}
         />
         <p id={`${id}-hint`} data-part="hint">
-          Введите код целиком или его начало — 62, 62.0, 62.01 — либо часть
-          названия
+          {hintText}
         </p>
         <ul
           id={`${id}-list`}
@@ -224,7 +269,7 @@ export function Cascader019({
         >
           {matches.length === 0 ? (
             <li role="none">
-              <p data-part="empty">Такого кода в классификаторе нет</p>
+              <p data-part="empty">{emptyText}</p>
             </li>
           ) : (
             matches.map((entry) => (
@@ -250,10 +295,14 @@ export function Cascader019({
         <p data-part="picked" aria-live="polite">
           {picked ? (
             <>
-              Выбран код <b>{picked.code}</b> — {picked.name}
+              {pickedBefore}
+              <b>{picked.code}</b>
+              {pickedMiddle}
+              {picked.name}
+              {pickedAfter}
             </>
           ) : (
-            "Код не выбран"
+            pickedEmptyText
           )}
         </p>
       </div>

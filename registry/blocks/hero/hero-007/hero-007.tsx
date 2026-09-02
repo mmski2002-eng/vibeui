@@ -9,6 +9,8 @@ export type Hero007Props = {
   duration?: string
   chapters?: { time: string; title: string }[]
   accent?: string
+  /** Пусто — подложки нет, секция ложится на фон страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -20,12 +22,14 @@ export type Hero007Props = {
 // поэтому не ломает LCP. Под постером — список глав, он же оглавление ролика.
 const STYLES = `
 :where([data-vibeui-block="hero-007"]){
---vibeui-hero-007-bg:oklch(0.14 0.02 300);
---vibeui-hero-007-fg:oklch(0.97 0.004 300);
---vibeui-hero-007-muted:oklch(0.7 0.015 300);
---vibeui-hero-007-line:oklch(1 0 0 / 14%);
---vibeui-hero-007-accent:oklch(0.66 0.2 305);
---vibeui-hero-007-accent-fg:oklch(0.99 0 0);
+--vibeui-hero-007-bg:transparent;
+--vibeui-hero-007-fg:light-dark(oklch(0.19 0.02 300),oklch(0.97 0.004 300));
+--vibeui-hero-007-muted:light-dark(oklch(0.5 0.018 300),oklch(0.7 0.015 300));
+--vibeui-hero-007-line:light-dark(oklch(0.19 0.02 300 / 15%),oklch(1 0 0 / 16%));
+--vibeui-hero-007-accent:light-dark(oklch(0.52 0.2 305),oklch(0.7 0.19 305));
+--vibeui-hero-007-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.04 305));
+/* Постер всегда тёмный — это кадр, а не подложка; текст на нём светлый в обеих темах. */
+--vibeui-hero-007-on-poster:oklch(0.97 0.004 300);
 --vibeui-hero-007-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -48,7 +52,7 @@ color:var(--vibeui-hero-007-muted);text-wrap:pretty;
 }
 [data-vibeui-block="hero-007"] [data-part="player"]{
 position:relative;display:block;margin:2.25rem 0 0;aspect-ratio:16 / 9;border-radius:1rem;overflow:hidden;
-border:1px solid var(--vibeui-hero-007-line);text-decoration:none;color:inherit;
+border:1px solid var(--vibeui-hero-007-line);text-decoration:none;color:var(--vibeui-hero-007-on-poster);
 background:
 radial-gradient(60% 80% at 22% 18%,color-mix(in oklab,var(--vibeui-hero-007-accent) 55%,transparent),transparent 70%),
 conic-gradient(from 210deg at 70% 80%,oklch(0.35 0.13 250),oklch(0.28 0.1 320),oklch(0.22 0.06 280),oklch(0.35 0.13 250));
@@ -99,6 +103,28 @@ const DEFAULT_CHAPTERS = [
   { time: "05:58", title: "Правим тексты и цвета" },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлый фон достался бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Hero с видео-заглушкой: нарисованный постер, кнопка play и список глав. */
 export function Hero007({
   eyebrow = "Обзор за шесть минут",
@@ -109,11 +135,18 @@ export function Hero007({
   duration = "6:24",
   chapters = DEFAULT_CHAPTERS,
   accent,
+  background = "",
   className,
   style,
 }: Hero007Props) {
   const palette = {
     ...(accent ? { "--vibeui-hero-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-hero-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

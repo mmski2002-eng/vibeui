@@ -17,6 +17,10 @@ export type Filters004Props = Omit<
   unit?: string
   presets?: Filters004Preset[]
   onChange?: (range: { from: string; to: string }) => void
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,16 +31,16 @@ export type Filters004Props = Omit<
 // фокуса, а не подсвечиваются ошибкой — человек и так уже понял, что перепутал.
 const STYLES = `
 :where([data-vibeui-block="filters-004"]){
---vibeui-filters-004-surface:oklch(1 0 0);
---vibeui-filters-004-fill:oklch(0.975 0.004 265);
---vibeui-filters-004-fg:oklch(0.23 0.014 265);
---vibeui-filters-004-muted:oklch(0.55 0.014 265);
---vibeui-filters-004-border:oklch(0.89 0.008 265);
---vibeui-filters-004-shell:oklch(0.91 0.006 265);
---vibeui-filters-004-accent:oklch(0.52 0.16 165);
+--vibeui-filters-004-surface:transparent;
+--vibeui-filters-004-fill:light-dark(oklch(0.975 0.004 265),oklch(0.29 0.012 265));
+--vibeui-filters-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-filters-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-filters-004-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.014 265));
+--vibeui-filters-004-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-filters-004-accent:light-dark(oklch(0.52 0.16 165),oklch(0.76 0.14 165));
 --vibeui-filters-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: фильтр показывают поверх любого фона. */
+/* Подложки по умолчанию нет: фильтр ложится на фон страницы. */
 [data-vibeui-block="filters-004"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:19rem;box-sizing:border-box;padding:0.875rem;
@@ -63,7 +67,7 @@ transition:border-color .16s ease,color .16s ease;
 [data-vibeui-block="filters-004"] [data-part="preset"][aria-pressed="true"]{
 border-color:var(--vibeui-filters-004-accent);
 color:var(--vibeui-filters-004-accent);
-background:color-mix(in oklab,var(--vibeui-filters-004-accent) 10%,oklch(1 0 0));
+background:color-mix(in oklab,var(--vibeui-filters-004-accent) 10%,var(--vibeui-filters-004-fill));
 }
 [data-vibeui-block="filters-004"] [data-part="pair"]{
 display:flex;align-items:center;gap:0.375rem;
@@ -106,6 +110,79 @@ const DEFAULT_PRESETS: Filters004Preset[] = [
   { label: "от 20 000", from: "20000", to: "" },
 ]
 
+/** Русский словарь по умолчанию: установленный файл не меняет язык проекта. */
+const DEFAULT_LABELS: Record<string, string> = {
+  from: "от",
+  to: "до",
+  fromPlaceholder: "0",
+  toPlaceholder: "любая",
+  fromField: "{title}: нижняя граница, {unit}",
+  toField: "{title}: верхняя граница, {unit}",
+  summary: "Отбор: {from} — {to} {unit}",
+  empty: "Границы не заданы — цена любая.",
+}
+
+function label(
+  labels: Record<string, string>,
+  key: string,
+  values?: Record<string, string>,
+): string {
+  const template = labels[key] ?? DEFAULT_LABELS[key] ?? ""
+
+  if (!values) {
+    return template
+  }
+
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, name: string) => values[name] ?? match,
+  )
+}
+
+/**
+ * Сводка с выделенными границами: числа обязаны быть заметнее слов вокруг,
+ * поэтому подстановки from и to попадают в <b>, а шаблон остаётся строкой.
+ */
+function renderSummary(template: string, values: Record<string, string>) {
+  return template.split(/(\{\w+\})/).map((part, index) => {
+    const key = /^\{(\w+)\}$/.exec(part)?.[1]
+
+    if (!key) {
+      return part
+    }
+
+    const value = values[key] ?? part
+
+    return key === "from" || key === "to" ? (
+      <b key={`${key}-${index}`}>{value}</b>
+    ) : (
+      value
+    )
+  })
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Числовой диапазон полями ввода с быстрыми пресетами и починкой перевёрнутых границ.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -115,6 +192,8 @@ export function Filters004({
   unit = "₽",
   presets = DEFAULT_PRESETS,
   onChange,
+  labels = DEFAULT_LABELS,
+  background = "",
   accent,
   className,
   style,
@@ -125,6 +204,12 @@ export function Filters004({
 
   const palette = {
     ...(accent ? { "--vibeui-filters-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-filters-004-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -171,28 +256,28 @@ export function Filters004({
 
         <div data-part="pair">
           <span data-part="cell">
-            <span aria-hidden="true">от</span>
+            <span aria-hidden="true">{label(labels, "from")}</span>
             <input
               type="number"
               inputMode="numeric"
               min={0}
               value={from}
-              placeholder="0"
-              aria-label={`${title}: нижняя граница, ${unit}`}
+              placeholder={label(labels, "fromPlaceholder")}
+              aria-label={label(labels, "fromField", { title, unit })}
               onChange={(event) => setFrom(event.target.value)}
               onBlur={settle}
             />
           </span>
           <span data-part="dash" aria-hidden="true" />
           <span data-part="cell">
-            <span aria-hidden="true">до</span>
+            <span aria-hidden="true">{label(labels, "to")}</span>
             <input
               type="number"
               inputMode="numeric"
               min={0}
               value={to}
-              placeholder="любая"
-              aria-label={`${title}: верхняя граница, ${unit}`}
+              placeholder={label(labels, "toPlaceholder")}
+              aria-label={label(labels, "toField", { title, unit })}
               onChange={(event) => setTo(event.target.value)}
               onBlur={settle}
             />
@@ -200,13 +285,13 @@ export function Filters004({
         </div>
 
         <p data-part="summary" role="status">
-          {from || to ? (
-            <>
-              Отбор: <b>{from || "0"}</b> — <b>{to || "∞"}</b> {unit}
-            </>
-          ) : (
-            "Границы не заданы — цена любая."
-          )}
+          {from || to
+            ? renderSummary(label(labels, "summary"), {
+                from: from || "0",
+                to: to || "∞",
+                unit,
+              })
+            : label(labels, "empty")}
         </p>
       </div>
     </>

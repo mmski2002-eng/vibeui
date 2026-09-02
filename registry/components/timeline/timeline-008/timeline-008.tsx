@@ -17,20 +17,29 @@ export type Timeline008Props = Omit<
 > & {
   days?: Timeline008Day[]
   title?: string
+  /** Подпись области прокрутки; {title} подставляется заголовком. */
+  feedLabelText?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: длинная лента, разрезанная по дням, где дата не уезжает
 // вместе с прокруткой. Заголовок дня липкий (position:sticky в своей группе),
 // поэтому в любой момент видно, какой день читаешь. Липкая дата обязана быть
-// непрозрачной: без собственного фона строки ленты просвечивают сквозь неё.
+// непрозрачной: без собственного фона строки ленты просвечивают сквозь неё,
+// поэтому у неё свой токен, а не общая (прозрачная) подложка блока.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// становится тёмным там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="timeline-008"]){
---vibeui-timeline-008-bg:oklch(1 0 0);
---vibeui-timeline-008-fg:oklch(0.22 0.014 265);
---vibeui-timeline-008-muted:oklch(0.57 0.014 265);
---vibeui-timeline-008-border:oklch(0.91 0.006 265);
---vibeui-timeline-008-accent:oklch(0.55 0.18 262);
+--vibeui-timeline-008-bg:transparent;
+--vibeui-timeline-008-sticky:light-dark(oklch(0.99 0.002 265),oklch(0.19 0.012 265));
+--vibeui-timeline-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-timeline-008-muted:light-dark(oklch(0.57 0.014 265),oklch(0.69 0.012 265));
+--vibeui-timeline-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-timeline-008-accent:light-dark(oklch(0.55 0.18 262),oklch(0.74 0.16 262));
 --vibeui-timeline-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="timeline-008"]{
@@ -54,7 +63,7 @@ outline:2px solid var(--vibeui-timeline-008-accent);outline-offset:2px;border-ra
 position:sticky;top:0;z-index:1;
 display:flex;align-items:center;gap:0.5rem;
 margin:0;padding:0.3125rem 0;
-background:var(--vibeui-timeline-008-bg);
+background:var(--vibeui-timeline-008-sticky);
 font-size:0.6875rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;
 color:var(--vibeui-timeline-008-muted);
 }
@@ -119,19 +128,51 @@ const DEFAULT_DAYS: Timeline008Day[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Лента, разрезанная по дням: заголовок дня липнет к верху своей группы.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Timeline008({
   days = DEFAULT_DAYS,
   title = "Лента заявки",
+  feedLabelText = "{title}: события по дням",
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Timeline008Props) {
+  // Подложка задаёт и фон липкой даты: сквозь прозрачную просвечивают строки.
   const palette = {
     ...(accent ? { "--vibeui-timeline-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-timeline-008-bg": background,
+          "--vibeui-timeline-008-sticky": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -151,7 +192,7 @@ export function Timeline008({
           data-part="scroll"
           tabIndex={0}
           role="group"
-          aria-label={`${title}: события по дням`}
+          aria-label={feedLabelText.replace("{title}", title)}
         >
           {days.map((day) => (
             <li data-part="day" key={day.date}>

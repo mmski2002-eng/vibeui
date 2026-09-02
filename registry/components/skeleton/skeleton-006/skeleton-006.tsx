@@ -4,19 +4,23 @@ export type Skeleton006Props = ComponentPropsWithoutRef<"div"> & {
   /** Число строк в каждом абзаце: длина списка задаёт число абзацев. */
   paragraphs?: number[]
   label?: string
+  /** Подложка абзацев. Пусто — собственная подложка компонента. */
+  background?: string
 }
 
 // Идея компонента: абзац-заглушка нарисован одним элементом, а не пачкой
 // полос. Строки вырезаны повторяющейся маской, поэтому их число меняется
 // одной переменной, а интерлиньяж по определению совпадает с будущим текстом.
 // Недописанная последняя строка — накладка цвета подложки поверх маски:
-// внутрь маски её положить нельзя, она сама была бы вырезана.
+// внутрь маски её положить нельзя, она сама была бы вырезана. Поэтому у
+// компонента, в отличие от соседей, подложка непрозрачная: накладке нужно
+// чем-то закрашивать хвост. Обе ветки light-dark() у неё свои.
 const STYLES = `
 :where([data-vibeui-block="skeleton-006"]){
---vibeui-skeleton-006-bg:oklch(1 0 0);
---vibeui-skeleton-006-border:oklch(0.9 0.006 265);
---vibeui-skeleton-006-base:oklch(0.93 0.005 265);
---vibeui-skeleton-006-shine:oklch(0.97 0.003 265);
+--vibeui-skeleton-006-bg:light-dark(oklch(1 0 0),oklch(0.22 0.011 265));
+--vibeui-skeleton-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-skeleton-006-base:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.012 265));
+--vibeui-skeleton-006-shine:light-dark(oklch(0.97 0.003 265),oklch(0.39 0.016 265));
 --vibeui-skeleton-006-line:0.6875rem;
 --vibeui-skeleton-006-step:1.375rem;
 --vibeui-skeleton-006-lines:3;
@@ -62,16 +66,49 @@ background:var(--vibeui-skeleton-006-bg);
 const TAILS = ["34%", "18%", "47%", "26%", "39%"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы полосам
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Заглушка абзацев: строки вырезаны повторяющейся маской.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Skeleton006({
   paragraphs = [3, 4, 2],
   label = "Текст загружается",
+  background = "",
   className,
   style,
   ...props
 }: Skeleton006Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-skeleton-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-skeleton-006" precedence="medium">
@@ -84,7 +121,7 @@ export function Skeleton006({
         aria-busy="true"
         aria-label={label}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         {paragraphs.map((lines, index) => (
           <div

@@ -9,6 +9,16 @@ export type Auth012Props = {
   submit?: string
   length?: number
   attempts?: number
+  /** Строка над полем; {length} и {email} подставляются компонентом. */
+  leadTemplate?: string
+  /** Подпись поля для скринридера; {length} — число цифр. */
+  codeLabel?: string
+  /** Счётчик попыток; {attempts} — оставшееся число. */
+  attemptsTemplate?: string
+  resend?: string
+  changeEmail?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -25,15 +35,21 @@ export type Auth012Props = {
 // после третьей ошибки читается как поломка сервиса.
 //
 // Демонстрация интерфейса: код не проверяется, лимит попыток нужен на сервере.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не выкладывает под себя плашку — подложка приходит
+// пропом background.
 const STYLES = `
 :where([data-vibeui-block="auth-012"]){
---vibeui-auth-012-bg:oklch(0.96 0.01 200);
---vibeui-auth-012-card:oklch(1 0 0);
---vibeui-auth-012-fg:oklch(0.22 0.014 220);
---vibeui-auth-012-muted:oklch(0.54 0.014 220);
---vibeui-auth-012-border:oklch(0.89 0.008 220);
---vibeui-auth-012-accent:oklch(0.55 0.14 220);
---vibeui-auth-012-warn:oklch(0.6 0.16 45);
+--vibeui-auth-012-bg:transparent;
+--vibeui-auth-012-card:light-dark(oklch(1 0 0),oklch(0.22 0.013 220));
+--vibeui-auth-012-fg:light-dark(oklch(0.22 0.014 220),oklch(0.94 0.006 220));
+--vibeui-auth-012-muted:light-dark(oklch(0.54 0.014 220),oklch(0.7 0.013 220));
+--vibeui-auth-012-border:light-dark(oklch(0.89 0.008 220),oklch(0.35 0.011 220));
+--vibeui-auth-012-accent:light-dark(oklch(0.55 0.14 220),oklch(0.77 0.12 220));
+--vibeui-auth-012-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 220));
+--vibeui-auth-012-accent-wash:light-dark(oklch(0.55 0.14 220 / 12%),oklch(0.77 0.12 220 / 18%));
+--vibeui-auth-012-warn:light-dark(oklch(0.6 0.16 45),oklch(0.79 0.14 45));
 --vibeui-auth-012-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-auth-012-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -57,7 +73,7 @@ text-align:center;
 [data-vibeui-block="auth-012"] [data-part="glyph"]{
 display:inline-flex;align-items:center;justify-content:center;
 width:3rem;height:3rem;margin-bottom:0.875rem;border-radius:0.875rem;
-background:oklch(0.55 0.14 220 / 12%);color:var(--vibeui-auth-012-accent);
+background:var(--vibeui-auth-012-accent-wash);color:var(--vibeui-auth-012-accent);
 font-size:1.375rem;line-height:1;
 }
 [data-vibeui-block="auth-012"] h2{margin:0 0 0.375rem;font-size:1.25rem;font-weight:700;letter-spacing:-0.015em}
@@ -78,7 +94,7 @@ margin:0.625rem 0 1rem;font-size:0.75rem;line-height:1.4;color:var(--vibeui-auth
 [data-vibeui-block="auth-012"] [data-part="submit"]{
 width:100%;appearance:none;cursor:pointer;height:2.75rem;
 border:0;border-radius:0.75rem;
-background:var(--vibeui-auth-012-accent);color:oklch(1 0 0);
+background:var(--vibeui-auth-012-accent);color:var(--vibeui-auth-012-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 transition:opacity .16s ease;
 }
@@ -97,6 +113,28 @@ color:var(--vibeui-auth-012-accent);font:inherit;font-weight:600;text-decoration
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подтверждение почты кодом: одно поле с разрядкой вместо клеток
  * и счётчик оставшихся попыток. Один файл, ноль зависимостей.
  */
@@ -106,14 +144,29 @@ export function Auth012({
   submit = "Подтвердить",
   length = 6,
   attempts = 3,
+  leadTemplate = "Код из {length} цифр отправлен на {email}. Он действует 10 минут.",
+  codeLabel = "Код подтверждения из {length} цифр",
+  attemptsTemplate = "Осталось попыток: {attempts}. После этого код придётся запросить заново.",
+  resend = "Отправить код ещё раз",
+  changeEmail = "Изменить адрес",
+  background = "",
   accent,
   className,
   style,
 }: Auth012Props) {
   const [code, setCode] = useState("")
+  const [leadBefore, leadAfter] = leadTemplate
+    .replace("{length}", String(length))
+    .split("{email}")
 
   const palette = {
     ...(accent ? { "--vibeui-auth-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -134,8 +187,9 @@ export function Auth012({
           </span>
           <h2>{title}</h2>
           <p data-part="lead">
-            Код из {length} цифр отправлен на{" "}
-            <span data-part="mail">{email}</span>. Он действует 10 минут.
+            {leadBefore}
+            <span data-part="mail">{email}</span>
+            {leadAfter}
           </p>
 
           <form
@@ -150,15 +204,14 @@ export function Auth012({
               inputMode="numeric"
               autoComplete="one-time-code"
               maxLength={length}
-              aria-label={`Код подтверждения из ${length} цифр`}
+              aria-label={codeLabel.replace("{length}", String(length))}
               value={code}
               onChange={(event) =>
                 setCode(event.target.value.replace(/\D/g, "").slice(0, length))
               }
             />
             <p data-part="attempts" data-low={attempts <= 1} role="status">
-              Осталось попыток: {attempts}. После этого код придётся запросить
-              заново.
+              {attemptsTemplate.replace("{attempts}", String(attempts))}
             </p>
             <button
               type="submit"
@@ -170,8 +223,8 @@ export function Auth012({
           </form>
 
           <p data-part="links">
-            <button type="button">Отправить код ещё раз</button>
-            <button type="button">Изменить адрес</button>
+            <button type="button">{resend}</button>
+            <button type="button">{changeEmail}</button>
           </p>
         </div>
       </section>

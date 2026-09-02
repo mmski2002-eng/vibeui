@@ -10,7 +10,17 @@ export type File004Props = Omit<
   label?: string
   hint?: string
   accept?: string
+  /** Подпись на пустой плитке. */
+  pickText?: string
+  /** Подпись под плиткой, пока файл не выбран. */
+  emptyText?: string
+  /** Подпись кнопки очистки. */
+  removeText?: string
+  /** Альтернативный текст превью: {name} — имя файла. */
+  previewAlt?: string
   onChange?: (name: string | null) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,18 +29,21 @@ export type File004Props = Omit<
 // нужный кадр, и на соседний. Превью строится из самого файла через
 // createObjectURL, поэтому ничего не грузится на сервер до отправки формы, а
 // прошлая ссылка обязательно освобождается: иначе вкладка копит изображения.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у поля
+// по умолчанию нет, оно лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="file-004"]){
---vibeui-file-004-surface:oklch(1 0 0);
---vibeui-file-004-tile:oklch(0.975 0.004 265);
---vibeui-file-004-fg:oklch(0.23 0.014 265);
---vibeui-file-004-muted:oklch(0.55 0.014 265);
---vibeui-file-004-border:oklch(0.88 0.008 265);
---vibeui-file-004-shell:oklch(0.91 0.006 265);
---vibeui-file-004-accent:oklch(0.55 0.16 200);
+--vibeui-file-004-surface:transparent;
+--vibeui-file-004-tile:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.012 265));
+--vibeui-file-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-file-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-file-004-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-file-004-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-file-004-accent:light-dark(oklch(0.55 0.16 200),oklch(0.76 0.14 200));
 --vibeui-file-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Панель без собственной заливки: рамка очерчивает поле на любом фоне. */
 [data-vibeui-block="file-004"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -100,6 +113,28 @@ font:inherit;font-size:0.6875rem;font-weight:650;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Загрузка одной картинки: превью строится из файла, до отправки ничего не летит.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -107,7 +142,12 @@ export function File004({
   label = "Обложка статьи",
   hint = "JPG или PNG, лучше 1200 × 750",
   accept = "image/png,image/jpeg,image/webp",
+  pickText = "Выбрать изображение",
+  emptyText = "Файл не выбран",
+  removeText = "Убрать",
+  previewAlt = "Превью файла {name}",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -125,6 +165,12 @@ export function File004({
 
   const palette = {
     ...(accent ? { "--vibeui-file-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-file-004-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -156,11 +202,11 @@ export function File004({
         <span data-part="caption">{label}</span>
         <label htmlFor={id}>
           {preview ? (
-            <img src={preview} alt={`Превью файла ${name ?? ""}`} />
+            <img src={preview} alt={previewAlt.replace("{name}", name ?? "")} />
           ) : (
             <>
               <span data-part="frame" aria-hidden="true" />
-              <span data-part="pick">Выбрать изображение</span>
+              <span data-part="pick">{pickText}</span>
               <span data-part="hint">{hint}</span>
             </>
           )}
@@ -172,10 +218,10 @@ export function File004({
           />
         </label>
         <div data-part="foot">
-          <span data-part="file">{name ?? "Файл не выбран"}</span>
+          <span data-part="file">{name ?? emptyText}</span>
           {name ? (
             <button type="button" onClick={clear}>
-              Убрать
+              {removeText}
             </button>
           ) : null}
         </div>

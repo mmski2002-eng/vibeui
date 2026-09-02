@@ -21,6 +21,10 @@ export type Kanban006Props = Omit<
   cards?: Kanban006Card[]
   hint?: string
   onChange?: (cards: Kanban006Card[]) => void
+  /** Подписи и объявления: шаблоны с {title}, {name}, {index}, {total}, {place}. */
+  text?: Record<string, string>
+  /** Пусто — подложки нет, доска лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -31,14 +35,19 @@ export type Kanban006Props = Omit<
 // карточка «в руке», у неё поднятый вид и aria-grabbed, а каждый шаг
 // проговаривается в живой области: без озвучки перенос вслепую невозможен.
 // Escape восстанавливает снимок доски, сделанный в момент захвата.
+//
+// Тема берётся из color-scheme окружения через light-dark(): доска темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="kanban-006"]){
---vibeui-kanban-006-bg:oklch(0.985 0.002 265);
---vibeui-kanban-006-card:oklch(1 0 0);
---vibeui-kanban-006-fg:oklch(0.24 0.014 265);
---vibeui-kanban-006-muted:oklch(0.56 0.014 265);
---vibeui-kanban-006-border:oklch(0.91 0.006 265);
---vibeui-kanban-006-accent:oklch(0.55 0.2 262);
+--vibeui-kanban-006-bg:transparent;
+--vibeui-kanban-006-card:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-kanban-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-kanban-006-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-kanban-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-kanban-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.15 262));
+--vibeui-kanban-006-shadow:light-dark(oklch(0.2 0.02 265 / 6%),oklch(0 0 0 / 32%));
+--vibeui-kanban-006-lift:light-dark(oklch(0.2 0.02 265 / 16%),oklch(0 0 0 / 46%));
 --vibeui-kanban-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="kanban-006"]{
@@ -77,7 +86,7 @@ appearance:none;display:block;width:100%;text-align:left;cursor:pointer;
 padding:0.5rem;border-radius:0.625rem;
 background:var(--vibeui-kanban-006-card);
 border:1px solid var(--vibeui-kanban-006-border);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 6%);
+box-shadow:0 1px 2px var(--vibeui-kanban-006-shadow);
 color:inherit;font:inherit;font-size:0.75rem;line-height:1.35;
 transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;
 }
@@ -85,7 +94,7 @@ transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;
 /* Поднятая карточка отличается тенью и сдвигом, а не только цветом рамки. */
 [data-vibeui-block="kanban-006"] [data-part="card"][aria-grabbed="true"]{
 border-color:var(--vibeui-kanban-006-accent);
-box-shadow:0 8px 18px oklch(0.2 0.02 265 / 16%);
+box-shadow:0 8px 18px var(--vibeui-kanban-006-lift);
 transform:translateY(-2px);
 }
 [data-vibeui-block="kanban-006"] [data-part="place"]{
@@ -109,6 +118,45 @@ const DEFAULT_CARDS: Kanban006Card[] = [
   { id: "5", title: "Онбординг", column: "Готово" },
 ]
 
+const DEFAULT_TEXT: Record<string, string> = {
+  place: "«{title}»: колонка «{name}», позиция {index} из {total}.",
+  columnEdge: "Край колонки. {place}",
+  boardEdge: "Край доски. {place}",
+  taken: "Взято. {place} Стрелки несут карточку.",
+  dropped: "Положено. {place}",
+  cancelled: "Перенос отменён. {place}",
+  card: "{title}, колонка «{name}», позиция {index} из {total}",
+}
+
+/** Подстановка значений в шаблон подписи. */
+function fill(template: string, values: Record<string, string | number>) {
+  return template.replace(/\{(\w+)\}/g, (whole, key: string) =>
+    key in values ? String(values[key]) : whole,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Доска с переносом карточки клавиатурой: взять, нести стрелками, положить.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -118,11 +166,14 @@ export function Kanban006({
   cards = DEFAULT_CARDS,
   hint = "Пробел берёт карточку, стрелки несут, пробел кладёт, Escape отменяет.",
   onChange,
+  text,
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Kanban006Props) {
+  const labels = { ...DEFAULT_TEXT, ...text }
   const [board, setBoard] = useState(cards)
   const [grabbed, setGrabbed] = useState<string | null>(null)
   const [snapshot, setSnapshot] = useState<Kanban006Card[]>(cards)
@@ -136,7 +187,13 @@ export function Kanban006({
   const place = (list: Kanban006Card[], id: string) => {
     const card = list.find((row) => row.id === id)!
     const column = list.filter((row) => row.column === card.column)
-    return `«${card.title}»: колонка «${card.column}», позиция ${column.indexOf(card) + 1} из ${column.length}.`
+
+    return fill(labels.place, {
+      title: card.title,
+      name: card.column,
+      index: column.indexOf(card) + 1,
+      total: column.length,
+    })
   }
 
   const moveWithin = (id: string, step: -1 | 1) => {
@@ -146,7 +203,7 @@ export function Kanban006({
     const to = from + step
 
     if (to < 0 || to >= column.length) {
-      setAnnouncement(`Край колонки. ${place(board, id)}`)
+      setAnnouncement(fill(labels.columnEdge, { place: place(board, id) }))
       return
     }
 
@@ -163,7 +220,7 @@ export function Kanban006({
     const target = columns[columns.indexOf(card.column) + step]
 
     if (!target) {
-      setAnnouncement(`Край доски. ${place(board, id)}`)
+      setAnnouncement(fill(labels.boardEdge, { place: place(board, id) }))
       return
     }
 
@@ -182,11 +239,11 @@ export function Kanban006({
 
       if (grabbed === id) {
         setGrabbed(null)
-        setAnnouncement(`Положено. ${place(board, id)}`)
+        setAnnouncement(fill(labels.dropped, { place: place(board, id) }))
       } else {
         setGrabbed(id)
         setSnapshot(board)
-        setAnnouncement(`Взято. ${place(board, id)} Стрелки несут карточку.`)
+        setAnnouncement(fill(labels.taken, { place: place(board, id) }))
       }
 
       return
@@ -196,7 +253,7 @@ export function Kanban006({
       event.preventDefault()
       apply(snapshot)
       setGrabbed(null)
-      setAnnouncement(`Перенос отменён. ${place(snapshot, id)}`)
+      setAnnouncement(fill(labels.cancelled, { place: place(snapshot, id) }))
       return
     }
 
@@ -217,6 +274,12 @@ export function Kanban006({
 
   const palette = {
     ...(accent ? { "--vibeui-kanban-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-kanban-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -254,7 +317,12 @@ export function Kanban006({
                         type="button"
                         data-part="card"
                         aria-grabbed={card.id === grabbed}
-                        aria-label={`${card.title}, колонка «${column}», позиция ${index + 1} из ${rows.length}`}
+                        aria-label={fill(labels.card, {
+                          title: card.title,
+                          name: column,
+                          index: index + 1,
+                          total: rows.length,
+                        })}
                         onKeyDown={(event) => handleKey(event, card.id)}
                         onBlur={() => {
                           if (grabbed === card.id) setGrabbed(null)

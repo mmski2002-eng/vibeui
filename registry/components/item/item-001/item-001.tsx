@@ -9,6 +9,8 @@ export type Item001Props = Omit<
   value?: string
   status?: string
   href?: string
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -16,14 +18,17 @@ export type Item001Props = Omit<
 // псевдоэлементом, но текст остаётся выделяемым, а обводка фокуса ставится на
 // строку целиком: подсвеченное только название выглядит поломкой. Значение
 // стоит справа табличными цифрами — по нему сравнивают строки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): строка темнеет
+// там, где тёмный контекст, и не выкладывает под себя белую плашку.
 const STYLES = `
 :where([data-vibeui-block="item-001"]){
---vibeui-item-001-bg:oklch(1 0 0);
---vibeui-item-001-fg:oklch(0.22 0.014 265);
---vibeui-item-001-muted:oklch(0.56 0.014 265);
---vibeui-item-001-border:oklch(0.9 0.006 265);
---vibeui-item-001-hover:oklch(0.975 0.002 265);
---vibeui-item-001-accent:oklch(0.55 0.17 265);
+--vibeui-item-001-bg:transparent;
+--vibeui-item-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.93 0.006 265));
+--vibeui-item-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-item-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-item-001-hover:color-mix(in oklab,var(--vibeui-item-001-fg) 6%,var(--vibeui-item-001-bg));
+--vibeui-item-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.16 265));
 --vibeui-item-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="item-001"]{
@@ -55,6 +60,28 @@ font-size:0.6875rem;color:var(--vibeui-item-001-muted);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Строка списка: ссылка на всю площадь, значение справа табличными цифрами.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -64,6 +91,7 @@ export function Item001({
   value = "24 000 ₽",
   status = "Ожидает оплаты",
   href = "#",
+  background = "",
   accent,
   className,
   style,
@@ -71,6 +99,12 @@ export function Item001({
 }: Item001Props) {
   const palette = {
     ...(accent ? { "--vibeui-item-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-item-001-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

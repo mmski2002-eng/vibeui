@@ -20,7 +20,11 @@ export type Ai015Props = {
   threads?: Ai015Thread[]
   activeId?: string
   emptyLabel?: string
+  /** Отметка закреплённого диалога. */
+  pinLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -38,12 +42,13 @@ export type Ai015Props = {
 // а не только цветом полосы.
 const STYLES = `
 :where([data-vibeui-block="ai-015"]){
---vibeui-ai-015-bg:oklch(0.985 0.003 265);
---vibeui-ai-015-card:oklch(1 0 0);
---vibeui-ai-015-fg:oklch(0.21 0.014 265);
---vibeui-ai-015-muted:oklch(0.53 0.014 265);
---vibeui-ai-015-border:oklch(0.91 0.006 265);
---vibeui-ai-015-accent:oklch(0.52 0.17 258);
+--vibeui-ai-015-bg:transparent;
+--vibeui-ai-015-card:light-dark(oklch(0.965 0.004 265),oklch(0.28 0.012 265));
+--vibeui-ai-015-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-ai-015-muted:light-dark(oklch(0.53 0.014 265),oklch(0.7 0.012 265));
+--vibeui-ai-015-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-ai-015-accent:light-dark(oklch(0.52 0.17 258),oklch(0.74 0.14 258));
+--vibeui-ai-015-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 258));
 --vibeui-ai-015-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -61,7 +66,7 @@ display:grid;gap:0.75rem;padding:1rem;max-width:24rem;
 [data-vibeui-block="ai-015"] [data-part="new"]{
 appearance:none;cursor:pointer;margin-left:auto;border:0;
 height:1.875rem;padding:0 0.75rem;border-radius:0.625rem;
-background:var(--vibeui-ai-015-accent);color:oklch(1 0 0);
+background:var(--vibeui-ai-015-accent);color:var(--vibeui-ai-015-on-accent);
 font:inherit;font-size:0.75rem;font-weight:640;
 }
 [data-vibeui-block="ai-015"] [data-part="search"]{position:relative;display:block}
@@ -166,6 +171,28 @@ const DEFAULT_THREADS: Ai015Thread[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Боковая колонка истории диалогов с поиском по заголовку и первой реплике.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -176,7 +203,9 @@ export function Ai015({
   threads = DEFAULT_THREADS,
   activeId = "t2",
   emptyLabel = "Ничего не нашлось. Попробуйте слово из самого запроса.",
+  pinLabel = "закреп",
   accent,
+  background = "",
   className,
   style,
 }: Ai015Props) {
@@ -184,6 +213,12 @@ export function Ai015({
 
   const palette = {
     ...(accent ? { "--vibeui-ai-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-ai-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -245,7 +280,7 @@ export function Ai015({
                         >
                           <span data-part="row">
                             {thread.pinned ? (
-                              <span data-part="pin">закреп</span>
+                              <span data-part="pin">{pinLabel}</span>
                             ) : null}
                             <span data-part="name">{thread.title}</span>
                             <span data-part="time">{thread.time}</span>

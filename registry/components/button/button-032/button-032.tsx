@@ -13,6 +13,8 @@ export type Button032Props = Omit<
   align?: "start" | "end"
   /** id всплывающего слоя: на странице он обязан быть уникальным. */
   menuId?: string
+  /** Пусто — подложки у кнопки нет, она лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,12 +26,13 @@ export type Button032Props = Omit<
 // анимация тоже обходится без скриптов.
 const STYLES = `
 :where([data-vibeui-block="button-032"]){
---vibeui-button-032-bg:oklch(1 0 0);
---vibeui-button-032-fg:oklch(0.28 0.016 265);
---vibeui-button-032-muted:oklch(0.55 0.014 265);
---vibeui-button-032-border:oklch(0.9 0.006 265);
---vibeui-button-032-accent:oklch(0.55 0.17 265);
---vibeui-button-032-danger:oklch(0.55 0.19 25);
+--vibeui-button-032-bg:transparent;
+--vibeui-button-032-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
+--vibeui-button-032-fg:light-dark(oklch(0.28 0.016 265),oklch(0.92 0.008 265));
+--vibeui-button-032-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-button-032-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-button-032-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-button-032-danger:light-dark(oklch(0.55 0.19 25),oklch(0.72 0.16 25));
 --vibeui-button-032-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="button-032"]{
@@ -51,8 +54,8 @@ box-shadow:0 -6px 0 currentColor,0 6px 0 currentColor;
 margin:auto;padding:0.3125rem;box-sizing:border-box;
 min-width:11rem;
 border:1px solid var(--vibeui-button-032-border);border-radius:0.75rem;
-background:var(--vibeui-button-032-bg);color:var(--vibeui-button-032-fg);
-box-shadow:0 12px 32px -12px oklch(0.2 0.02 265 / 35%);
+background:var(--vibeui-button-032-surface);color:var(--vibeui-button-032-fg);
+box-shadow:0 12px 32px -12px light-dark(oklch(0.2 0.02 265 / 35%),oklch(0 0 0 / 55%));
 font-family:var(--vibeui-button-032-font);
 opacity:0;transform:translateY(-0.25rem);
 transition:opacity .14s ease,transform .14s ease,overlay .14s allow-discrete,display .14s allow-discrete;
@@ -92,6 +95,28 @@ position-try-fallbacks:flip-block;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кнопка «ещё» с меню на нативном popover и CSS anchor positioning.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -101,6 +126,7 @@ export function Button032({
   dangerLabel = "Удалить",
   align = "end",
   menuId = "vibeui-button-032-menu",
+  background = "",
   accent,
   type = "button",
   className,
@@ -109,6 +135,12 @@ export function Button032({
 }: Button032Props) {
   const palette = {
     ...(accent ? { "--vibeui-button-032-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-032-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

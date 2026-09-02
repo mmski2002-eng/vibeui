@@ -17,6 +17,8 @@ export type Commerce026Props = {
   picks?: Commerce026Pick[]
   hint?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,18 +32,21 @@ export type Commerce026Props = {
 // оставаться одним файлом и не тянуть ассеты в чужой проект.
 const STYLES = `
 :where([data-vibeui-block="commerce-026"]){
---vibeui-commerce-026-bg:oklch(1 0 0);
---vibeui-commerce-026-fg:oklch(0.21 0.014 265);
---vibeui-commerce-026-muted:oklch(0.55 0.014 265);
---vibeui-commerce-026-border:oklch(0.91 0.006 265);
---vibeui-commerce-026-soft:oklch(0.975 0.004 265);
---vibeui-commerce-026-accent:oklch(0.55 0.2 262);
+--vibeui-commerce-026-bg:transparent;
+--vibeui-commerce-026-radius:0;
+--vibeui-commerce-026-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-026-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-026-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-commerce-026-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-commerce-026-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-commerce-026-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
 --vibeui-commerce-026-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 [data-vibeui-block="commerce-026"]{
 box-sizing:border-box;
 background:var(--vibeui-commerce-026-bg);
+border-radius:var(--vibeui-commerce-026-radius);
 font-family:var(--vibeui-commerce-026-sans);color:var(--vibeui-commerce-026-fg);
 }
 [data-vibeui-block="commerce-026"] *{box-sizing:border-box}
@@ -71,7 +76,7 @@ margin:0 auto 1rem;max-width:30rem;font-size:0.875rem;line-height:1.55;color:var
 [data-vibeui-block="commerce-026"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center}
 [data-vibeui-block="commerce-026"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;height:2.5rem;padding:0 1.25rem;border-radius:0.75rem;
-background:var(--vibeui-commerce-026-accent);color:oklch(1 0 0);font:inherit;font-size:0.875rem;font-weight:650;
+background:var(--vibeui-commerce-026-accent);color:var(--vibeui-commerce-026-on-accent);font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-026"] [data-part="alt"]{
 appearance:none;cursor:pointer;height:2.5rem;padding:0 1.25rem;border-radius:0.75rem;
@@ -142,6 +147,28 @@ const DEFAULT_PICKS: Commerce026Pick[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Пустая корзина с подборкой из недавно просмотренного: экран не заканчивает визит.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -154,11 +181,19 @@ export function Commerce026({
   picks = DEFAULT_PICKS,
   hint = "Промокод VESNA10 действует до конца недели: скидка 10% на первый заказ от 5 000 ₽.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce026Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-026-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-026-bg": background,
+          "--vibeui-commerce-026-radius": "1rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

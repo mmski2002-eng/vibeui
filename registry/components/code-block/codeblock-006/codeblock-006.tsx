@@ -4,6 +4,12 @@ export type Codeblock006Props = {
   path?: string
   visibleCount?: number
   lines?: string[]
+  /** Подпись раскрытия: {count} — сколько строк осталось в хвосте. */
+  moreText?: string
+  /** Подпись сворачивания. */
+  lessText?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -11,14 +17,18 @@ export type Codeblock006Props = {
 // Идея компонента: длинный файл, свёрнутый до первых строк. Хвост лежит
 // внутри <details>, а «обрыв» показан маской на видимой части — она гаснет,
 // как только details открыт, поэтому состояние читается без иконок.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, шапка и наведение на summary держатся полупрозрачными накладками.
 const STYLES = `
 :where([data-vibeui-block="codeblock-006"]){
---vibeui-codeblock-006-bg:oklch(0.21 0.024 300);
---vibeui-codeblock-006-head:oklch(0.25 0.028 300);
---vibeui-codeblock-006-fg:oklch(0.93 0.008 300);
---vibeui-codeblock-006-muted:oklch(0.68 0.02 300);
---vibeui-codeblock-006-border:oklch(1 0 0 / 13%);
---vibeui-codeblock-006-accent:oklch(0.8 0.13 310);
+--vibeui-codeblock-006-bg:transparent;
+--vibeui-codeblock-006-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
+--vibeui-codeblock-006-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 6%));
+--vibeui-codeblock-006-fg:light-dark(oklch(0.27 0.018 300),oklch(0.93 0.008 300));
+--vibeui-codeblock-006-muted:light-dark(oklch(0.5 0.022 300),oklch(0.68 0.02 300));
+--vibeui-codeblock-006-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 13%));
+--vibeui-codeblock-006-accent:light-dark(oklch(0.5 0.16 310),oklch(0.8 0.13 310));
 --vibeui-codeblock-006-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -55,7 +65,7 @@ font-size:0.75rem;font-weight:650;color:var(--vibeui-codeblock-006-accent);
 transition:background-color .16s ease;
 }
 [data-vibeui-block="codeblock-006"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="codeblock-006"] summary:hover{background:oklch(1 0 0 / 6%)}
+[data-vibeui-block="codeblock-006"] summary:hover{background:var(--vibeui-codeblock-006-hover)}
 [data-vibeui-block="codeblock-006"] summary:focus-visible{outline:2px solid var(--vibeui-codeblock-006-accent);outline-offset:-2px}
 [data-vibeui-block="codeblock-006"] summary::after{content:"▾";transition:transform .18s ease}
 [data-vibeui-block="codeblock-006"] details[open] summary::after{transform:rotate(180deg)}
@@ -77,16 +87,50 @@ const LINES = [
   "}",
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Длинный код, свёрнутый до первых строк, с раскрытием через details. */
 export function Codeblock006({
   path = "lib/load-user.ts",
   visibleCount = 4,
   lines = LINES,
+  moreText = "Показать ещё {count} строк",
+  lessText = "Свернуть",
+  background = "",
   className,
   style,
 }: Codeblock006Props) {
   const head = lines.slice(0, visibleCount)
   const tail = lines.slice(visibleCount)
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -96,7 +140,7 @@ export function Codeblock006({
       <figure
         data-vibeui-block="codeblock-006"
         className={className}
-        style={style}
+        style={palette}
       >
         <figcaption data-part="head">{path}</figcaption>
         <pre data-part="peek">
@@ -105,8 +149,10 @@ export function Codeblock006({
         {tail.length > 0 ? (
           <details>
             <summary>
-              <span data-part="more">Показать ещё {tail.length} строк</span>
-              <span data-part="less">Свернуть</span>
+              <span data-part="more">
+                {moreText.replace("{count}", String(tail.length))}
+              </span>
+              <span data-part="less">{lessText}</span>
             </summary>
             <div data-part="tail">
               <pre>

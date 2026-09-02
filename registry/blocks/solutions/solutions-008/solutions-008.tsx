@@ -23,9 +23,19 @@ export type Solutions008Props = {
   fields?: Solutions008Field[]
   events?: Solutions008Event[]
   historyTitle?: string
+  /** Подпись рядом с этапом сделки. */
+  stageCaption?: string
+  /** Заголовок блока следующего шага: ключи normal и overdue. */
+  nextLabelText?: Record<string, string>
+  /** Буквы типов события: ключи call, mail, meeting, system. */
+  kindText?: Record<string, string>
+  /** Подпись карточки для скринридера, {company} — название клиента. */
+  dealLabelText?: string
   className?: string
   style?: CSSProperties
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Весь CSS блока живёт здесь, а не в globals.css проекта.
@@ -37,13 +47,14 @@ export type Solutions008Props = {
 // линией, тип события подписан буквой на кружке, поэтому читается и без цвета.
 const STYLES = `
 :where([data-vibeui-block="solutions-008"]){
---vibeui-solutions-008-bg:oklch(1 0 0);
---vibeui-solutions-008-panel:oklch(0.98 0.003 250);
---vibeui-solutions-008-fg:oklch(0.21 0.014 265);
---vibeui-solutions-008-muted:oklch(0.54 0.014 265);
---vibeui-solutions-008-border:oklch(0.9 0.006 265);
---vibeui-solutions-008-accent:oklch(0.5 0.16 195);
---vibeui-solutions-008-alarm:oklch(0.58 0.19 25);
+--vibeui-solutions-008-bg:transparent;
+--vibeui-solutions-008-panel:light-dark(oklch(0.98 0.003 250),oklch(0.27 0.011 255));
+--vibeui-solutions-008-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-008-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-solutions-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-solutions-008-accent:light-dark(oklch(0.5 0.16 195),oklch(0.74 0.13 195));
+--vibeui-solutions-008-onaccent:light-dark(oklch(1 0 0),oklch(0.17 0.012 265));
+--vibeui-solutions-008-alarm:light-dark(oklch(0.58 0.19 25),oklch(0.74 0.16 25));
 --vibeui-solutions-008-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -79,11 +90,11 @@ margin:0;font-size:1.375rem;font-weight:700;font-variant-numeric:tabular-nums;le
 [data-vibeui-block="solutions-008"] [data-part="next"]{
 padding:0.75rem 0.875rem;border-radius:0.875rem;
 border:1px solid color-mix(in oklab,var(--vibeui-solutions-008-accent) 45%,transparent);
-background:color-mix(in oklab,var(--vibeui-solutions-008-accent) 8%,var(--vibeui-solutions-008-bg));
+background:color-mix(in oklab,var(--vibeui-solutions-008-accent) 10%,transparent);
 }
 [data-vibeui-block="solutions-008"] [data-overdue="true"][data-part="next"]{
 border-color:color-mix(in oklab,var(--vibeui-solutions-008-alarm) 55%,transparent);
-background:color-mix(in oklab,var(--vibeui-solutions-008-alarm) 8%,var(--vibeui-solutions-008-bg));
+background:color-mix(in oklab,var(--vibeui-solutions-008-alarm) 10%,transparent);
 }
 [data-vibeui-block="solutions-008"] [data-part="next-label"]{
 margin:0 0 0.25rem;font-size:0.6875rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
@@ -123,7 +134,7 @@ color:var(--vibeui-solutions-008-muted);
 }
 [data-vibeui-block="solutions-008"] [data-kind="call"] [data-part="kind"],
 [data-vibeui-block="solutions-008"] [data-kind="meeting"] [data-part="kind"]{
-background:var(--vibeui-solutions-008-accent);border-color:var(--vibeui-solutions-008-accent);color:oklch(1 0 0);
+background:var(--vibeui-solutions-008-accent);border-color:var(--vibeui-solutions-008-accent);color:var(--vibeui-solutions-008-onaccent);
 }
 [data-vibeui-block="solutions-008"] [data-part="date"]{
 display:block;font-size:0.6875rem;color:var(--vibeui-solutions-008-muted);font-variant-numeric:tabular-nums;
@@ -169,12 +180,39 @@ const DEFAULT_EVENTS: Solutions008Event[] = [
   },
 ]
 
-const KIND_LETTER = {
+const KIND_LETTER: Record<string, string> = {
   call: "З",
   mail: "П",
   meeting: "В",
   system: "С",
-} as const
+}
+
+const DEFAULT_NEXT_LABEL_TEXT: Record<string, string> = {
+  normal: "Следующий шаг",
+  overdue: "Следующий шаг · просрочен",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Карточка сделки: следующий шаг над историей, история — лентой событий.
@@ -191,12 +229,23 @@ export function Solutions008({
   fields = DEFAULT_FIELDS,
   events = DEFAULT_EVENTS,
   historyTitle = "История",
+  stageCaption = "этап сделки",
+  nextLabelText = DEFAULT_NEXT_LABEL_TEXT,
+  kindText = KIND_LETTER,
+  dealLabelText = "Сделка {company}",
   accent,
+  background = "",
   className,
   style,
 }: Solutions008Props) {
   const palette = {
     ...(accent ? { "--vibeui-solutions-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -209,14 +258,14 @@ export function Solutions008({
         data-vibeui-block="solutions-008"
         className={className}
         style={palette}
-        aria-label={`Сделка ${company}`}
+        aria-label={dealLabelText.replace("{company}", company)}
       >
         <header data-part="head">
           <div>
             <h2>{company}</h2>
             <p data-part="stage">
               <span data-part="badge">{stage}</span>
-              этап сделки
+              {stageCaption}
             </p>
           </div>
           <p data-part="amount">{amount}</p>
@@ -226,7 +275,9 @@ export function Solutions008({
           <div>
             <section data-part="next" data-overdue={overdue ? "true" : "false"}>
               <p data-part="next-label">
-                {overdue ? "Следующий шаг · просрочен" : "Следующий шаг"}
+                {overdue
+                  ? (nextLabelText.overdue ?? DEFAULT_NEXT_LABEL_TEXT.overdue)
+                  : (nextLabelText.normal ?? DEFAULT_NEXT_LABEL_TEXT.normal)}
               </p>
               <p data-part="next-title">{nextStep}</p>
               <p data-part="next-meta">
@@ -248,7 +299,8 @@ export function Solutions008({
               {events.map((event) => (
                 <li key={event.date + event.title} data-kind={event.kind}>
                   <span data-part="kind" aria-hidden="true">
-                    {KIND_LETTER[event.kind ?? "system"]}
+                    {kindText[event.kind ?? "system"] ??
+                      KIND_LETTER[event.kind ?? "system"]}
                   </span>
                   <span data-part="date">{event.date}</span>
                   <span data-part="event">{event.title}</span>

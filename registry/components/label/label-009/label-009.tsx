@@ -9,6 +9,8 @@ export type Label009Props = Omit<
   badge?: string
   hint?: string
   placeholder?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,14 +21,14 @@ export type Label009Props = Omit<
 // бейдж «обязательно» остаётся первым, что видит и слышит человек.
 const STYLES = `
 :where([data-vibeui-block="label-009"]){
---vibeui-label-009-surface:oklch(1 0 0);
---vibeui-label-009-surface-border:oklch(0.91 0.006 265);
---vibeui-label-009-fg:oklch(0.24 0.016 265);
---vibeui-label-009-muted:oklch(0.54 0.014 265);
---vibeui-label-009-field-border:oklch(0.85 0.01 265);
---vibeui-label-009-accent:oklch(0.55 0.2 262);
---vibeui-label-009-required:oklch(0.55 0.2 25);
---vibeui-label-009-required-soft:oklch(0.96 0.03 25);
+--vibeui-label-009-surface:transparent;
+--vibeui-label-009-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-label-009-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-label-009-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-label-009-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-label-009-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-label-009-required:light-dark(oklch(0.55 0.2 25),oklch(0.79 0.14 25));
+--vibeui-label-009-required-soft:light-dark(oklch(0.96 0.03 25),oklch(0.31 0.05 25));
 --vibeui-label-009-radius:0.625rem;
 --vibeui-label-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -69,6 +71,28 @@ color:var(--vibeui-label-009-muted);
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подпись обязательного поля с читаемым текстовым бейджем вместо звёздочки:
  * бейдж лежит внутри <label> и звучит вместе с именем поля. Пояснение —
  * под полем. Один файл, ноль зависимостей.
@@ -78,6 +102,7 @@ export function Label009({
   badge = "Обязательно",
   hint = "Позвоним, если у курьера не получится дозвониться на резервный номер.",
   placeholder = "+7 900 000-00-00",
+  background = "",
   accent,
   className,
   style,
@@ -87,6 +112,12 @@ export function Label009({
   const hintId = `${id}-hint`
   const palette = {
     ...(accent ? { "--vibeui-label-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-label-009-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

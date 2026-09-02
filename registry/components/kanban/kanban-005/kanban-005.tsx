@@ -18,6 +18,10 @@ export type Kanban005Props = Omit<
   cards?: Kanban005Card[]
   everyone?: string
   onChange?: (cards: Kanban005Card[]) => void
+  /** Подписи и объявления: шаблоны с {name}, {title}, {count}, {total}. */
+  text?: Record<string, string>
+  /** Пусто — подложки нет, доска лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,14 +31,18 @@ export type Kanban005Props = Omit<
 // Пустая после фильтра колонка не схлопывается, а объясняет словами, что
 // скрыто. Смена фильтра и перенос объявляются в одной живой области. Перенос
 // мышью — нативный drag, с клавиатуры — стрелочные кнопки на карточке.
+//
+// Тема берётся из color-scheme окружения через light-dark(): доска темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="kanban-005"]){
---vibeui-kanban-005-bg:oklch(0.985 0.002 265);
---vibeui-kanban-005-card:oklch(1 0 0);
---vibeui-kanban-005-fg:oklch(0.24 0.014 265);
---vibeui-kanban-005-muted:oklch(0.56 0.014 265);
---vibeui-kanban-005-border:oklch(0.91 0.006 265);
---vibeui-kanban-005-accent:oklch(0.55 0.2 262);
+--vibeui-kanban-005-bg:transparent;
+--vibeui-kanban-005-card:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-kanban-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-kanban-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-kanban-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-kanban-005-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.15 262));
+--vibeui-kanban-005-shadow:light-dark(oklch(0.2 0.02 265 / 6%),oklch(0 0 0 / 32%));
 --vibeui-kanban-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="kanban-005"]{
@@ -59,7 +67,7 @@ transition:background-color .15s ease,color .15s ease,border-color .15s ease;
 [data-vibeui-block="kanban-005"] [data-part="chip"][aria-pressed="true"]{
 background:color-mix(in oklab,var(--vibeui-kanban-005-accent) 12%,transparent);
 border-color:color-mix(in oklab,var(--vibeui-kanban-005-accent) 50%,transparent);
-color:color-mix(in oklab,var(--vibeui-kanban-005-accent) 80%,black);
+color:color-mix(in oklab,var(--vibeui-kanban-005-accent) 80%,light-dark(black,white));
 }
 [data-vibeui-block="kanban-005"] [data-part="chip"]:focus-visible{outline:2px solid var(--vibeui-kanban-005-accent);outline-offset:2px}
 [data-vibeui-block="kanban-005"] [data-part="board"]{
@@ -92,7 +100,7 @@ color:var(--vibeui-kanban-005-muted);font-size:0.6875rem;line-height:1.35;
 display:grid;gap:0.375rem;padding:0.5rem;border-radius:0.625rem;cursor:grab;
 background:var(--vibeui-kanban-005-card);
 border:1px solid var(--vibeui-kanban-005-border);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 6%);
+box-shadow:0 1px 2px var(--vibeui-kanban-005-shadow);
 font-size:0.75rem;line-height:1.35;
 }
 [data-vibeui-block="kanban-005"] [data-part="card"][data-dragging="true"]{opacity:.45}
@@ -123,6 +131,48 @@ const DEFAULT_CARDS: Kanban005Card[] = [
   { id: "5", title: "Письма о заказе", assignee: "Пётр", column: "Готово" },
 ]
 
+const DEFAULT_TEXT: Record<string, string> = {
+  filters: "Фильтр по исполнителю",
+  cleared: "Фильтр снят, показаны все {total} задач.",
+  filtered: "Фильтр «{name}»: показано {count} из {total} задач.",
+  moved: "«{title}» перенесена в «{name}».",
+  column: "{name}: показано {count} из {total}",
+  count: "{count} из {total}",
+  empty: "Пусто",
+  hidden: "Скрыто фильтром: {total}",
+  previous: "Перенести «{title}» в предыдущую колонку",
+  next: "Перенести «{title}» в следующую колонку",
+}
+
+/** Подстановка значений в шаблон подписи. */
+function fill(template: string, values: Record<string, string | number>) {
+  return template.replace(/\{(\w+)\}/g, (whole, key: string) =>
+    key in values ? String(values[key]) : whole,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Доска с фильтром по исполнителю: счётчик колонки показывает видимое и всего.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -132,11 +182,14 @@ export function Kanban005({
   cards = DEFAULT_CARDS,
   everyone = "Все",
   onChange,
+  text,
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Kanban005Props) {
+  const labels = { ...DEFAULT_TEXT, ...text }
   const [board, setBoard] = useState(cards)
   const [filter, setFilter] = useState(everyone)
   const [dragged, setDragged] = useState<string | null>(null)
@@ -153,9 +206,11 @@ export function Kanban005({
       (card) => person === everyone || card.assignee === person,
     ).length
     setAnnouncement(
-      person === everyone
-        ? `Фильтр снят, показаны все ${board.length} задач.`
-        : `Фильтр «${person}»: показано ${shown} из ${board.length} задач.`,
+      fill(person === everyone ? labels.cleared : labels.filtered, {
+        name: person,
+        count: shown,
+        total: board.length,
+      }),
     )
   }
 
@@ -166,7 +221,7 @@ export function Kanban005({
     const next = board.map((row) => (row.id === id ? { ...row, column } : row))
     setBoard(next)
     onChange?.(next)
-    setAnnouncement(`«${card.title}» перенесена в «${column}».`)
+    setAnnouncement(fill(labels.moved, { title: card.title, name: column }))
   }
 
   const shift = (id: string, step: -1 | 1) => {
@@ -186,6 +241,12 @@ export function Kanban005({
 
   const palette = {
     ...(accent ? { "--vibeui-kanban-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-kanban-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -200,11 +261,7 @@ export function Kanban005({
         className={className}
         style={palette}
       >
-        <div
-          data-part="filters"
-          role="group"
-          aria-label="Фильтр по исполнителю"
-        >
+        <div data-part="filters" role="group" aria-label={labels.filters}>
           {people.map((person) => (
             <button
               key={person}
@@ -227,7 +284,11 @@ export function Kanban005({
                 key={column}
                 data-part="column"
                 data-over={column === over}
-                aria-label={`${column}: показано ${rows.length} из ${all.length}`}
+                aria-label={fill(labels.column, {
+                  name: column,
+                  count: rows.length,
+                  total: all.length,
+                })}
                 onDragOver={(event) => {
                   event.preventDefault()
                   setOver(column)
@@ -238,14 +299,17 @@ export function Kanban005({
                 <p data-part="head">
                   {column}
                   <span data-part="count">
-                    {rows.length} из {all.length}
+                    {fill(labels.count, {
+                      count: rows.length,
+                      total: all.length,
+                    })}
                   </span>
                 </p>
                 {rows.length === 0 ? (
                   <p data-part="empty">
                     {all.length === 0
-                      ? "Пусто"
-                      : `Скрыто фильтром: ${all.length}`}
+                      ? labels.empty
+                      : fill(labels.hidden, { total: all.length })}
                   </p>
                 ) : (
                   <ul>
@@ -267,7 +331,9 @@ export function Kanban005({
                             <button
                               type="button"
                               disabled={columnIndex === 0}
-                              aria-label={`Перенести «${card.title}» в предыдущую колонку`}
+                              aria-label={fill(labels.previous, {
+                                title: card.title,
+                              })}
                               onClick={() => shift(card.id, -1)}
                             >
                               ←
@@ -275,7 +341,9 @@ export function Kanban005({
                             <button
                               type="button"
                               disabled={columnIndex === columns.length - 1}
-                              aria-label={`Перенести «${card.title}» в следующую колонку`}
+                              aria-label={fill(labels.next, {
+                                title: card.title,
+                              })}
                               onClick={() => shift(card.id, 1)}
                             >
                               →

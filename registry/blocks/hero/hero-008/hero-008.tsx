@@ -8,6 +8,8 @@ export type Hero008Props = {
   logosTitle?: string
   logos?: string[]
   accent?: string
+  /** Пусто — подложки нет, секция ложится на фон страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -19,13 +21,13 @@ export type Hero008Props = {
 // а сетка: в узком блоке она честно переносится, а не уезжает за край.
 const STYLES = `
 :where([data-vibeui-block="hero-008"]){
---vibeui-hero-008-bg:oklch(1 0 0);
---vibeui-hero-008-fg:oklch(0.19 0.01 250);
---vibeui-hero-008-muted:oklch(0.52 0.012 250);
---vibeui-hero-008-line:oklch(0.9 0.006 250);
---vibeui-hero-008-soft:oklch(0.97 0.004 250);
---vibeui-hero-008-accent:oklch(0.5 0.19 265);
---vibeui-hero-008-accent-fg:oklch(0.99 0 0);
+--vibeui-hero-008-bg:transparent;
+--vibeui-hero-008-fg:light-dark(oklch(0.19 0.01 250),oklch(0.96 0.004 250));
+--vibeui-hero-008-muted:light-dark(oklch(0.52 0.012 250),oklch(0.72 0.012 250));
+--vibeui-hero-008-line:light-dark(oklch(0.9 0.006 250),oklch(0.36 0.01 250));
+--vibeui-hero-008-soft:light-dark(oklch(0.97 0.004 250),oklch(0.24 0.011 250));
+--vibeui-hero-008-accent:light-dark(oklch(0.5 0.19 265),oklch(0.72 0.17 265));
+--vibeui-hero-008-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 265));
 --vibeui-hero-008-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -86,6 +88,28 @@ mask-image:conic-gradient(from 45deg,black 0 25%,transparent 0 50%,black 0 75%,t
 
 const DEFAULT_LOGOS = ["Контур", "Литера", "Оптика", "Тандем", "Ясно", "Верста"]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлый фон достался бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Hero с полосой логотипов клиентов внизу: текст сверху, доказательство под линией. */
 export function Hero008({
   title = "Страницы, которым доверяют отделы маркетинга",
@@ -95,11 +119,18 @@ export function Hero008({
   logosTitle = "С нами работают",
   logos = DEFAULT_LOGOS,
   accent,
+  background = "",
   className,
   style,
 }: Hero008Props) {
   const palette = {
     ...(accent ? { "--vibeui-hero-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-hero-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -10,6 +10,13 @@ export type Progress004Props = Omit<
   total?: number
   /** Байт в секунду: из неё берутся и скорость, и оставшееся время. */
   speed?: number
+  /** Приставки объёма от байт к гигабайтам. */
+  units?: string[]
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  text?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  accent?: string
 }
 
 // Идея компонента: строка загрузки файла отвечает не «сколько процентов», а
@@ -18,12 +25,13 @@ export type Progress004Props = Omit<
 // при обычных они дёргаются на каждом обновлении.
 const STYLES = `
 :where([data-vibeui-block="progress-004"]){
---vibeui-progress-004-bg:oklch(1 0 0);
---vibeui-progress-004-fg:oklch(0.25 0.016 265);
---vibeui-progress-004-muted:oklch(0.56 0.014 265);
---vibeui-progress-004-border:oklch(0.9 0.006 265);
---vibeui-progress-004-track:oklch(0.93 0.005 265);
---vibeui-progress-004-accent:oklch(0.55 0.19 262);
+--vibeui-progress-004-bg:transparent;
+--vibeui-progress-004-fg:light-dark(oklch(0.25 0.016 265),oklch(0.94 0.006 265));
+--vibeui-progress-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-progress-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-progress-004-track:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.011 265));
+--vibeui-progress-004-accent:light-dark(oklch(0.55 0.19 262),oklch(0.72 0.16 262));
+--vibeui-progress-004-tile:light-dark(oklch(0.95 0.021 262),oklch(0.32 0.045 262));
 --vibeui-progress-004-value:0;
 --vibeui-progress-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -37,7 +45,7 @@ font-family:var(--vibeui-progress-004-font);color:var(--vibeui-progress-004-fg);
 [data-vibeui-block="progress-004"] [data-part="icon"]{
 flex:none;display:grid;place-items:center;
 width:2.25rem;height:2.75rem;border-radius:0.375rem;
-background:oklch(0.96 0.012 262);color:var(--vibeui-progress-004-accent);
+background:var(--vibeui-progress-004-tile);color:var(--vibeui-progress-004-accent);
 font-size:0.5625rem;font-weight:800;letter-spacing:0.06em;
 clip-path:polygon(0 0,72% 0,100% 26%,100% 100%,0 100%);
 }
@@ -72,8 +80,19 @@ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 `
 
-function formatBytes(bytes: number) {
-  const units = ["Б", "КБ", "МБ", "ГБ"]
+const DEFAULT_UNITS = ["Б", "КБ", "МБ", "ГБ"]
+
+const DEFAULT_TEXT: Record<string, string> = {
+  almostDone: "почти готово",
+  secondsLeft: "осталось {seconds} с",
+  minutesLeft: "осталось {minutes} мин",
+  size: "{loaded} из {total}",
+  speed: "{speed}/с",
+  loading: "Загрузка {name}",
+  value: "{percent} процентов, {left}",
+}
+
+function formatBytes(bytes: number, units: string[]) {
   let size = Math.max(0, bytes)
   let unit = 0
 
@@ -85,16 +104,41 @@ function formatBytes(bytes: number) {
   return `${size >= 100 || unit === 0 ? Math.round(size) : size.toFixed(1)} ${units[unit]}`
 }
 
-function formatLeft(seconds: number) {
+function formatLeft(seconds: number, say: (key: string) => string) {
   if (!Number.isFinite(seconds) || seconds <= 0) {
-    return "почти готово"
+    return say("almostDone")
   }
 
   if (seconds < 60) {
-    return `осталось ${Math.ceil(seconds)} с`
+    return say("secondsLeft").replace("{seconds}", String(Math.ceil(seconds)))
   }
 
-  return `осталось ${Math.ceil(seconds / 60)} мин`
+  return say("minutesLeft").replace(
+    "{minutes}",
+    String(Math.ceil(seconds / 60)),
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -106,6 +150,10 @@ export function Progress004({
   loaded = 7_340_032,
   total = 12_582_912,
   speed = 1_048_576,
+  units = DEFAULT_UNITS,
+  text = DEFAULT_TEXT,
+  background = "",
+  accent,
   className,
   style,
   ...props
@@ -116,8 +164,17 @@ export function Progress004({
   const left = speed > 0 ? (size - done) / speed : Number.POSITIVE_INFINITY
   const extension =
     fileName.split(".").pop()?.slice(0, 4).toUpperCase() ?? "FILE"
+  const say = (key: string) => text[key] ?? DEFAULT_TEXT[key]
+  const leftText = formatLeft(left, say)
   const palette = {
     "--vibeui-progress-004-value": percent,
+    ...(accent ? { "--vibeui-progress-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-progress-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -142,20 +199,25 @@ export function Progress004({
           <div
             data-part="track"
             role="progressbar"
-            aria-label={`Загрузка ${fileName}`}
+            aria-label={say("loading").replace("{name}", fileName)}
             aria-valuemin={0}
             aria-valuemax={100}
             aria-valuenow={percent}
-            aria-valuetext={`${percent} процентов, ${formatLeft(left)}`}
+            aria-valuetext={say("value")
+              .replace("{percent}", String(percent))
+              .replace("{left}", leftText)}
           >
             <div data-part="bar" />
           </div>
           <div data-part="stats">
             <span>
-              {formatBytes(done)} из {formatBytes(size)}
+              {say("size")
+                .replace("{loaded}", formatBytes(done, units))
+                .replace("{total}", formatBytes(size, units))}
             </span>
             <span>
-              {formatBytes(speed)}/с · {formatLeft(left)}
+              {say("speed").replace("{speed}", formatBytes(speed, units))} ·{" "}
+              {leftText}
             </span>
           </div>
         </div>

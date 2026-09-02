@@ -10,7 +10,17 @@ export type Dropdown013Props = Omit<
   name?: string
   email?: string
   role?: string
+  /** Доступное имя кнопки. Плейсхолдер {name}. */
+  triggerLabelTemplate?: string
+  /** Доступное имя меню. */
+  menuLabel?: string
+  /** Подсказка у почты: ключи copy и copied. */
+  copyText?: Record<string, string>
+  /** Пункты меню: ключи settings и signOut. */
+  itemsText?: Record<string, string>
   accent?: string
+  /** Подложка кнопки и меню. Пусто — собственный фон по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: меню профиля, где почта не просто написана в шапке, а
@@ -18,15 +28,18 @@ export type Dropdown013Props = Omit<
 // Подтверждение живёт в самом пункте и объявляется вслух через aria-live,
 // а не всплывающим тостом: тост потребовал бы второй слой поверх меню.
 // Выход стоит последним и за чертой — это единственное необратимое действие.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте кнопка и меню светлее фона страницы, а их границы светлее их самих.
 const STYLES = `
 :where([data-vibeui-block="dropdown-013"]){
---vibeui-dropdown-013-bg:oklch(1 0 0);
---vibeui-dropdown-013-fg:oklch(0.24 0.014 255);
---vibeui-dropdown-013-muted:oklch(0.56 0.014 255);
---vibeui-dropdown-013-border:oklch(0.9 0.006 255);
---vibeui-dropdown-013-hover:oklch(0.96 0.004 255);
---vibeui-dropdown-013-danger:oklch(0.56 0.19 25);
---vibeui-dropdown-013-accent:oklch(0.55 0.17 255);
+--vibeui-dropdown-013-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 255));
+--vibeui-dropdown-013-fg:light-dark(oklch(0.24 0.014 255),oklch(0.94 0.006 255));
+--vibeui-dropdown-013-muted:light-dark(oklch(0.56 0.014 255),oklch(0.7 0.012 255));
+--vibeui-dropdown-013-border:light-dark(oklch(0.9 0.006 255),oklch(0.37 0.012 255));
+--vibeui-dropdown-013-hover:light-dark(oklch(0.96 0.004 255),oklch(0.32 0.014 255));
+--vibeui-dropdown-013-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25));
+--vibeui-dropdown-013-accent:light-dark(oklch(0.55 0.17 255),oklch(0.75 0.14 255));
 --vibeui-dropdown-013-hue:255;
 --vibeui-dropdown-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -100,6 +113,38 @@ margin-top:0.3125rem;padding-top:0.3125rem;border-top:1px solid var(--vibeui-dro
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="dropdown-013"] *{animation:none!important;transition:none!important}}
 `
 
+const DEFAULT_COPY: Record<string, string> = {
+  copy: "Копировать",
+  copied: "Скопировано",
+}
+
+const DEFAULT_ITEMS: Record<string, string> = {
+  settings: "Настройки аккаунта",
+  signOut: "Выйти",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function hue(name: string) {
   let hash = 2166136261
 
@@ -144,7 +189,12 @@ export function Dropdown013({
   name = "Марк Соколов",
   email = "mark@example.com",
   role = "Продуктовый дизайнер",
+  triggerLabelTemplate = "Меню профиля: {name}",
+  menuLabel = "Профиль",
+  copyText = DEFAULT_COPY,
+  itemsText = DEFAULT_ITEMS,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -173,6 +223,12 @@ export function Dropdown013({
   const palette = {
     "--vibeui-dropdown-013-hue": hue(name),
     ...(accent ? { "--vibeui-dropdown-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dropdown-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -194,7 +250,7 @@ export function Dropdown013({
           popoverTarget={`${id}-menu`}
           aria-haspopup="menu"
           aria-expanded={open}
-          aria-label={`Меню профиля: ${name}`}
+          aria-label={triggerLabelTemplate.replace("{name}", name)}
           onKeyDown={(event) => {
             if (event.key === "ArrowDown") {
               event.preventDefault()
@@ -224,7 +280,7 @@ export function Dropdown013({
           ref={menu}
           popover="auto"
           role="menu"
-          aria-label="Профиль"
+          aria-label={menuLabel}
           data-part="menu"
           onToggle={(event) => setOpen(event.newState === "open")}
           onKeyDown={(event) => {
@@ -250,7 +306,9 @@ export function Dropdown013({
           >
             {email}
             <span data-part="hint" aria-live="polite">
-              {copied ? "Скопировано" : "Копировать"}
+              {copied
+                ? (copyText.copied ?? DEFAULT_COPY.copied)
+                : (copyText.copy ?? DEFAULT_COPY.copy)}
             </span>
           </button>
           <button
@@ -259,7 +317,7 @@ export function Dropdown013({
             data-part="item"
             onClick={close}
           >
-            Настройки аккаунта
+            {itemsText.settings ?? DEFAULT_ITEMS.settings}
           </button>
           <div data-part="exit">
             <button
@@ -268,7 +326,7 @@ export function Dropdown013({
               data-part="item"
               onClick={close}
             >
-              Выйти
+              {itemsText.signOut ?? DEFAULT_ITEMS.signOut}
             </button>
           </div>
         </div>

@@ -23,7 +23,15 @@ export type Commerce028Props = {
   sections?: string[]
   gridTitle?: string
   products?: Commerce028Line[]
+  /** Подпись бренда для скринридера: {brand} подставляет название. */
+  brandLabel?: string
+  /** Строка рядом с тэглайном: {since} подставляет год. */
+  sinceText?: string
+  /** Подпись навигации по разделам: {brand} подставляет название. */
+  sectionsLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -37,17 +45,23 @@ export type Commerce028Props = {
 // и по ним ходят клавиатурой.
 const STYLES = `
 :where([data-vibeui-block="commerce-028"]){
---vibeui-commerce-028-bg:oklch(1 0 0);
---vibeui-commerce-028-fg:oklch(0.21 0.014 265);
---vibeui-commerce-028-muted:oklch(0.55 0.014 265);
---vibeui-commerce-028-border:oklch(0.91 0.006 265);
---vibeui-commerce-028-soft:oklch(0.975 0.004 265);
---vibeui-commerce-028-accent:oklch(0.52 0.13 165);
+--vibeui-commerce-028-bg:transparent;
+--vibeui-commerce-028-radius:0;
+--vibeui-commerce-028-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-028-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-028-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-commerce-028-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-commerce-028-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-commerce-028-accent:light-dark(oklch(0.52 0.13 165),oklch(0.76 0.13 165));
+--vibeui-commerce-028-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 165));
+--vibeui-commerce-028-on-fg:light-dark(oklch(1 0 0),oklch(0.18 0.014 265));
+--vibeui-commerce-028-shadow:light-dark(oklch(0.2 0.02 265 / 12%),oklch(0 0 0 / 45%));
 --vibeui-commerce-028-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 [data-vibeui-block="commerce-028"]{
 box-sizing:border-box;background:var(--vibeui-commerce-028-bg);
+border-radius:var(--vibeui-commerce-028-radius);
 color:var(--vibeui-commerce-028-fg);font-family:var(--vibeui-commerce-028-sans);
 }
 [data-vibeui-block="commerce-028"] *{box-sizing:border-box}
@@ -65,15 +79,15 @@ position:relative;display:grid;gap:0.875rem;padding:0 0.25rem;
 /* Монограмма вместо файла логотипа: блок остаётся одним переносимым файлом. */
 [data-vibeui-block="commerce-028"] [data-part="mark"]{
 width:5rem;height:5rem;border-radius:1.25rem;display:grid;place-items:center;
-background:var(--vibeui-commerce-028-bg);border:1px solid var(--vibeui-commerce-028-border);
-box-shadow:0 8px 24px oklch(0.2 0.02 265 / 12%);
+background:var(--vibeui-commerce-028-card);border:1px solid var(--vibeui-commerce-028-border);
+box-shadow:0 8px 24px var(--vibeui-commerce-028-shadow);
 font-size:2rem;font-weight:800;letter-spacing:-0.04em;color:var(--vibeui-commerce-028-accent);
 }
 [data-vibeui-block="commerce-028"] h2{margin:0;font-size:1.5rem;font-weight:750;letter-spacing:-0.025em}
 [data-vibeui-block="commerce-028"] [data-part="tagline"]{margin:0.1875rem 0 0;font-size:0.875rem;color:var(--vibeui-commerce-028-muted)}
 [data-vibeui-block="commerce-028"] [data-part="follow"]{
 appearance:none;border:0;cursor:pointer;height:2.5rem;padding:0 1.25rem;border-radius:0.75rem;
-background:var(--vibeui-commerce-028-accent);color:oklch(1 0 0);font:inherit;font-size:0.875rem;font-weight:650;
+background:var(--vibeui-commerce-028-accent);color:var(--vibeui-commerce-028-on-accent);font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-028"] [data-part="follow"]:focus-visible{outline:2px solid var(--vibeui-commerce-028-accent);outline-offset:2px}
 [data-vibeui-block="commerce-028"] [data-part="about"]{
@@ -99,7 +113,7 @@ border:1px solid var(--vibeui-commerce-028-border);background:var(--vibeui-comme
 font-size:0.8125rem;font-weight:600;color:inherit;text-decoration:none;
 }
 [data-vibeui-block="commerce-028"] nav li:first-child a{
-background:var(--vibeui-commerce-028-fg);border-color:var(--vibeui-commerce-028-fg);color:oklch(1 0 0);
+background:var(--vibeui-commerce-028-fg);border-color:var(--vibeui-commerce-028-fg);color:var(--vibeui-commerce-028-on-fg);
 }
 [data-vibeui-block="commerce-028"] nav a:focus-visible{outline:2px solid var(--vibeui-commerce-028-accent);outline-offset:2px}
 [data-vibeui-block="commerce-028"] h3{margin:1.5rem 0 0.75rem;font-size:1rem;font-weight:700}
@@ -178,6 +192,28 @@ const DEFAULT_PRODUCTS: Commerce028Line[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Страница бренда: монограмма, факты о производителе, разделы и сетка товаров.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -191,12 +227,23 @@ export function Commerce028({
   sections = DEFAULT_SECTIONS,
   gridTitle = "Товары бренда",
   products = DEFAULT_PRODUCTS,
+  brandLabel = "Бренд {brand}",
+  sinceText = "на площадке с {since} года",
+  sectionsLabel = "Разделы бренда {brand}",
   accent,
+  background = "",
   className,
   style,
 }: Commerce028Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-028-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-028-bg": background,
+          "--vibeui-commerce-028-radius": "1.25rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -209,7 +256,7 @@ export function Commerce028({
         data-vibeui-block="commerce-028"
         className={className}
         style={palette}
-        aria-label={`Бренд ${brand}`}
+        aria-label={brandLabel.replace("{brand}", brand)}
       >
         <div data-part="cover" aria-hidden="true" />
         <div data-part="shell">
@@ -220,7 +267,7 @@ export function Commerce028({
             <div>
               <h2>{brand}</h2>
               <p data-part="tagline">
-                {tagline} · на площадке с {since} года
+                {tagline} · {sinceText.replace("{since}", since)}
               </p>
             </div>
             <button type="button" data-part="follow">
@@ -239,7 +286,7 @@ export function Commerce028({
             ))}
           </dl>
 
-          <nav aria-label={`Разделы бренда ${brand}`}>
+          <nav aria-label={sectionsLabel.replace("{brand}", brand)}>
             <ul>
               {sections.map((section) => (
                 <li key={section}>

@@ -3,6 +3,8 @@ import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 export type Button038Props = ComponentPropsWithoutRef<"button"> & {
   /** Ширина кнопки в rem: за неё подпись переносится на вторую строку. */
   width?: number
+  /** Заливка кнопки. Пусто — своя, тонированная, из палитры. */
+  background?: string
   accent?: string
 }
 
@@ -13,10 +15,10 @@ export type Button038Props = ComponentPropsWithoutRef<"button"> & {
 // уезжает в вертикальный центр двухстрочного текста.
 const STYLES = `
 :where([data-vibeui-block="button-038"]){
---vibeui-button-038-bg:oklch(0.95 0.04 150);
---vibeui-button-038-border:oklch(0.85 0.07 150);
---vibeui-button-038-fg:oklch(0.32 0.07 150);
---vibeui-button-038-accent:oklch(0.5 0.13 150);
+--vibeui-button-038-bg:light-dark(oklch(0.95 0.04 150),oklch(0.27 0.035 150));
+--vibeui-button-038-border:light-dark(oklch(0.85 0.07 150),oklch(0.44 0.06 150));
+--vibeui-button-038-fg:light-dark(oklch(0.32 0.07 150),oklch(0.93 0.03 150));
+--vibeui-button-038-accent:light-dark(oklch(0.5 0.13 150),oklch(0.75 0.15 150));
 --vibeui-button-038-width:18rem;
 --vibeui-button-038-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -57,11 +59,35 @@ transform:rotate(42deg);
 `
 
 /**
+ * Ветка темы для заданной заливки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кнопка с длинной подписью и переносом: значок прибит к первой строке.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Button038({
   width = 18,
+  background = "",
   accent,
   type = "button",
   className,
@@ -72,6 +98,12 @@ export function Button038({
   const palette = {
     "--vibeui-button-038-width": `${width}rem`,
     ...(accent ? { "--vibeui-button-038-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-038-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -11,6 +11,12 @@ export type Currency003Props = Omit<
   currency?: string
   defaultValue?: number
   hint?: string
+  /** Подпись копеек; {cents} подставляется остатком. */
+  centsText?: string
+  /** Локаль разрядов: компонент несёт русскую, проект подставляет свою. */
+  locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,18 +26,21 @@ export type Currency003Props = Omit<
 // промахнуться; заодно исчезает главная беда денег в JS — дробная арифметика,
 // потому что складываются копейки, а не 0.1 + 0.2. Разряды расставляются на
 // каждом нажатии, но курсор всегда в конце строки, поэтому ничего не прыгает.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у поля по
+// умолчанию нет, оно лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="currency-003"]){
---vibeui-currency-003-surface:oklch(1 0 0);
---vibeui-currency-003-field:oklch(0.985 0.002 265);
---vibeui-currency-003-shell:oklch(0.9 0.006 265);
---vibeui-currency-003-fg:oklch(0.22 0.014 265);
---vibeui-currency-003-muted:oklch(0.55 0.014 265);
---vibeui-currency-003-border:oklch(0.88 0.008 265);
---vibeui-currency-003-accent:oklch(0.5 0.15 150);
+--vibeui-currency-003-surface:transparent;
+--vibeui-currency-003-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-currency-003-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-currency-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-currency-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.014 265));
+--vibeui-currency-003-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.013 265));
+--vibeui-currency-003-accent:light-dark(oklch(0.5 0.15 150),oklch(0.74 0.13 155));
 --vibeui-currency-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="currency-003"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -48,7 +57,7 @@ background:var(--vibeui-currency-003-field);
 }
 [data-vibeui-block="currency-003"] [data-part="row"]:focus-within{
 border-color:var(--vibeui-currency-003-accent);
-box-shadow:0 0 0 2px oklch(0.5 0.15 150 / 18%);
+box-shadow:0 0 0 2px color-mix(in oklch,var(--vibeui-currency-003-accent) 20%,transparent);
 }
 /* Числа моноширинные: при вводе справа налево дрожание разрядов заметно. */
 [data-vibeui-block="currency-003"] input{
@@ -72,10 +81,34 @@ font-weight:650;color:var(--vibeui-currency-003-fg);font-variant-numeric:tabular
 
 // Форматируется всегда целое число копеек: дробная арифметика к деньгам не
 // подпускается вовсе.
-function format(cents: number) {
+function format(cents: number, locale: string) {
   const whole = Math.floor(cents / 100)
   const rest = String(cents % 100).padStart(2, "0")
-  return `${whole.toLocaleString("ru-RU")},${rest}`
+  // Разделитель дробной части берётся у локали: в ru это запятая, в en — точка.
+  const point = (1.1).toLocaleString(locale).replace(/\d/g, "")
+  return `${whole.toLocaleString(locale)}${point}${rest}`
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -87,6 +120,9 @@ export function Currency003({
   currency = "₽",
   defaultValue = 1499.9,
   hint = "Точку вводить не нужно — копейки встают сами",
+  centsText = "{cents} коп.",
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -97,6 +133,12 @@ export function Currency003({
 
   const palette = {
     ...(accent ? { "--vibeui-currency-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-currency-003-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -117,7 +159,7 @@ export function Currency003({
             id={id}
             type="text"
             inputMode="numeric"
-            value={format(cents)}
+            value={format(cents, locale)}
             aria-describedby={`${id}-foot`}
             onChange={(event) => {
               // Из строки берутся только цифры: разделители не редактируются,
@@ -132,7 +174,9 @@ export function Currency003({
         </div>
         <p id={`${id}-foot`} data-part="foot">
           <span>{hint}</span>
-          <span data-part="kopecks">{cents % 100} коп.</span>
+          <span data-part="kopecks">
+            {centsText.replace("{cents}", String(cents % 100))}
+          </span>
         </p>
       </div>
     </>

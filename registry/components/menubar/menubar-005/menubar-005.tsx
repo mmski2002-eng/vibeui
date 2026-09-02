@@ -8,6 +8,10 @@ export type Menubar005Menu = {
 export type Menubar005Props = {
   menus?: Menubar005Menu[]
   burgerLabel?: string
+  /** Имя строки меню для скринридера. */
+  menubarLabel?: string
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -20,12 +24,14 @@ export type Menubar005Props = {
 // попадает ни в порядок табуляции, ни в дерево доступности.
 const STYLES = `
 :where([data-vibeui-block="menubar-005"]){
---vibeui-menubar-005-bg:oklch(1 0 0);
---vibeui-menubar-005-fg:oklch(0.24 0.014 265);
---vibeui-menubar-005-muted:oklch(0.58 0.014 265);
---vibeui-menubar-005-border:oklch(0.9 0.006 265);
---vibeui-menubar-005-hover:oklch(0.55 0.02 265 / 10%);
---vibeui-menubar-005-accent:oklch(0.55 0.2 262);
+--vibeui-menubar-005-bg:transparent;
+--vibeui-menubar-005-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-menubar-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-menubar-005-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-menubar-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-menubar-005-hover:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.88 0.02 265 / 14%));
+--vibeui-menubar-005-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-menubar-005-shadow:light-dark(oklch(0.2 0.03 265 / 45%),oklch(0 0 0 / 62%));
 --vibeui-menubar-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -57,9 +63,9 @@ height:1.875rem;padding:0 0.625rem;border-radius:0.4375rem;font-size:0.8125rem;
 [data-vibeui-block="menubar-005"] [data-part="menu"]{
 position:absolute;top:calc(100% + 0.375rem);left:0;z-index:30;
 min-width:12rem;padding:0.25rem;box-sizing:border-box;margin:0;list-style:none;
-background:var(--vibeui-menubar-005-bg);
+background:var(--vibeui-menubar-005-panel);
 border:1px solid var(--vibeui-menubar-005-border);border-radius:0.625rem;
-box-shadow:0 16px 36px -18px oklch(0.2 0.03 265 / 45%);
+box-shadow:0 16px 36px -18px var(--vibeui-menubar-005-shadow);
 }
 [data-vibeui-block="menubar-005"] [data-part="item"]{
 display:block;width:100%;min-height:1.875rem;padding:0.3125rem 0.5rem;box-sizing:border-box;
@@ -111,18 +117,49 @@ const DEFAULT_MENUS: Menubar005Menu[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Строка меню, сворачивающаяся в бургер на узкой ширине блока.
  * Один файл, ноль зависимостей, собственная палитра, клиентского JS нет.
  */
 export function Menubar005({
   menus = DEFAULT_MENUS,
   burgerLabel = "Меню",
+  menubarLabel = "Меню приложения",
+  background = "",
   accent,
   className,
   style,
 }: Menubar005Props) {
   const palette = {
     ...(accent ? { "--vibeui-menubar-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-menubar-005-bg": background,
+          "--vibeui-menubar-005-panel": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -137,7 +174,7 @@ export function Menubar005({
         style={palette}
       >
         <div data-part="shell">
-          <div data-part="wide" role="menubar" aria-label="Меню приложения">
+          <div data-part="wide" role="menubar" aria-label={menubarLabel}>
             {menus.map((menu) => (
               <details
                 key={menu.label}

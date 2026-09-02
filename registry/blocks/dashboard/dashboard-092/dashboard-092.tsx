@@ -21,7 +21,11 @@ export type Dashboard092Props = {
   exportLabel?: string
   confirmLabel?: string
   stayLabel?: string
+  /** Подписи разделов и пояснений: компонент несёт русские. */
+  labels?: Record<string, string>
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -37,17 +41,23 @@ export type Dashboard092Props = {
 // радиокнопками и не обязательна — форма, которая не пускает без ответа,
 // получает случайный ответ. Кнопка «остаться» стоит рядом и не выглядит
 // главной: выбор должен быть настоящим.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-092"]){
---vibeui-dashboard-092-bg:oklch(0.985 0.003 255);
---vibeui-dashboard-092-card:oklch(1 0 0);
---vibeui-dashboard-092-fg:oklch(0.21 0.014 255);
---vibeui-dashboard-092-muted:oklch(0.54 0.014 255);
---vibeui-dashboard-092-border:oklch(0.91 0.006 255);
---vibeui-dashboard-092-accent:oklch(0.5 0.14 255);
---vibeui-dashboard-092-soft:oklch(0.965 0.02 255);
---vibeui-dashboard-092-keep:oklch(0.56 0.12 155);
---vibeui-dashboard-092-lose:oklch(0.56 0.19 25);
+--vibeui-dashboard-092-bg:transparent;
+/* Карточка списка, точка шага и чип причины: сам блок остаётся прозрачным. */
+--vibeui-dashboard-092-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 255));
+--vibeui-dashboard-092-inset:light-dark(oklch(0.985 0.003 255),oklch(0.22 0.012 255));
+--vibeui-dashboard-092-fg:light-dark(oklch(0.21 0.014 255),oklch(0.94 0.005 255));
+--vibeui-dashboard-092-muted:light-dark(oklch(0.54 0.014 255),oklch(0.72 0.012 255));
+--vibeui-dashboard-092-border:light-dark(oklch(0.91 0.006 255),oklch(0.36 0.012 255));
+--vibeui-dashboard-092-accent:light-dark(oklch(0.5 0.14 255),oklch(0.74 0.13 255));
+--vibeui-dashboard-092-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 255));
+--vibeui-dashboard-092-soft:light-dark(oklch(0.965 0.02 255),oklch(0.3 0.03 255));
+--vibeui-dashboard-092-keep:light-dark(oklch(0.56 0.12 155),oklch(0.74 0.12 155));
+--vibeui-dashboard-092-lose:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25));
 --vibeui-dashboard-092-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -62,7 +72,7 @@ border:1px solid var(--vibeui-dashboard-092-border);border-radius:1rem;padding:1
 [data-vibeui-block="dashboard-092"] [data-part="shell"]{display:flex;flex-direction:column;gap:0.875rem;max-width:52rem}
 [data-vibeui-block="dashboard-092"] h2{margin:0;font-size:1.25rem;font-weight:750;letter-spacing:-0.02em}
 [data-vibeui-block="dashboard-092"] h3{margin:0 0 0.4375rem;font-size:0.6875rem;font-weight:750;text-transform:uppercase;letter-spacing:0.06em;color:var(--vibeui-dashboard-092-muted)}
-[data-vibeui-block="dashboard-092"] [data-part="lead"]{margin:0.25rem 0 0;font-size:0.875rem;line-height:1.5;color:color-mix(in oklab,var(--vibeui-dashboard-092-fg) 85%,white);max-width:58ch}
+[data-vibeui-block="dashboard-092"] [data-part="lead"]{margin:0.25rem 0 0;font-size:0.875rem;line-height:1.5;color:color-mix(in oklab,var(--vibeui-dashboard-092-fg) 85%,light-dark(white,black));max-width:58ch}
 [data-vibeui-block="dashboard-092"] [data-part="steps"]{
 list-style:none;margin:0;padding:0 0 0 1.0625rem;position:relative;
 display:flex;flex-direction:column;gap:0.5rem;
@@ -74,11 +84,11 @@ background:var(--vibeui-dashboard-092-border);
 [data-vibeui-block="dashboard-092"] [data-part="step"]{position:relative;display:flex;flex-direction:column;gap:0.0625rem}
 [data-vibeui-block="dashboard-092"] [data-part="step"]::before{
 content:"";position:absolute;left:-1.0625rem;top:0.3125rem;width:0.5625rem;height:0.5625rem;
-border-radius:50%;background:var(--vibeui-dashboard-092-bg);
+border-radius:50%;background:var(--vibeui-dashboard-092-inset);
 box-shadow:0 0 0 2px var(--vibeui-dashboard-092-border);
 }
 [data-vibeui-block="dashboard-092"] [data-part="step"][data-rev="false"]::before{
-background:var(--vibeui-dashboard-092-lose);box-shadow:0 0 0 2px color-mix(in oklab,var(--vibeui-dashboard-092-lose) 30%,white);
+background:var(--vibeui-dashboard-092-lose);box-shadow:0 0 0 2px color-mix(in oklab,var(--vibeui-dashboard-092-lose) 30%,light-dark(white,black));
 }
 [data-vibeui-block="dashboard-092"] [data-part="when"]{font-size:0.6875rem;font-weight:750;color:var(--vibeui-dashboard-092-muted)}
 [data-vibeui-block="dashboard-092"] [data-part="what"]{font-size:0.8125rem;line-height:1.45}
@@ -105,13 +115,13 @@ background:var(--vibeui-dashboard-092-lose);border-radius:0;transform:rotate(45d
 display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem 0.875rem;
 padding:0.75rem 0.8125rem;border-radius:0.875rem;
 background:var(--vibeui-dashboard-092-soft);
-border:1px solid color-mix(in oklab,var(--vibeui-dashboard-092-accent) 25%,white);
+border:1px solid color-mix(in oklab,var(--vibeui-dashboard-092-accent) 25%,light-dark(white,black));
 }
 [data-vibeui-block="dashboard-092"] [data-part="export"] p{margin:0;font-size:0.75rem;line-height:1.45;flex:1 1 16rem}
 [data-vibeui-block="dashboard-092"] [data-part="ebtn"]{
 appearance:none;border:0;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:700;
 padding:0.4375rem 0.9375rem;border-radius:0.5625rem;
-background:var(--vibeui-dashboard-092-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-092-accent);color:var(--vibeui-dashboard-092-on-accent);
 }
 [data-vibeui-block="dashboard-092"] fieldset{
 margin:0;border:1px solid var(--vibeui-dashboard-092-border);border-radius:0.875rem;
@@ -126,7 +136,7 @@ color:var(--vibeui-dashboard-092-muted);
 [data-vibeui-block="dashboard-092"] [data-part="reason"]{
 display:inline-flex;align-items:center;gap:0.375rem;cursor:pointer;
 font-size:0.75rem;padding:0.3125rem 0.625rem;border-radius:0.5rem;
-background:var(--vibeui-dashboard-092-bg);border:1px solid var(--vibeui-dashboard-092-border);
+background:var(--vibeui-dashboard-092-inset);border:1px solid var(--vibeui-dashboard-092-border);
 }
 [data-vibeui-block="dashboard-092"] [data-part="reason"]:has(input:checked){
 border-color:var(--vibeui-dashboard-092-accent);font-weight:700;
@@ -138,7 +148,7 @@ border-color:var(--vibeui-dashboard-092-accent);font-weight:700;
 appearance:none;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:700;
 padding:0.5rem 1rem;border-radius:0.625rem;background:transparent;
 color:var(--vibeui-dashboard-092-lose);
-border:1px solid color-mix(in oklab,var(--vibeui-dashboard-092-lose) 45%,white);
+border:1px solid color-mix(in oklab,var(--vibeui-dashboard-092-lose) 45%,light-dark(white,black));
 }
 [data-vibeui-block="dashboard-092"] [data-part="stay"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:700;
@@ -223,6 +233,42 @@ const DEFAULT_REASONS = [
   "Другое",
 ]
 
+const LABELS: Record<string, string> = {
+  stepsTitle: "Что произойдёт и когда",
+  noRev: "это уже не отменить",
+  keptTitle: "Что останется",
+  lostTitle: "Что исчезнет",
+  exportNote:
+    "Заберите данные сейчас: архив со всеми заявками, клиентами и файлами придёт письмом в течение часа. После 14 июля выгрузить будет нечего.",
+  reasonLegend: "Почему уходите?",
+  optionalNote:
+    "Отвечать необязательно — кнопка отключения работает и без этого.",
+  byeNote:
+    "Спасибо за два года работы вместе: за это время в пространстве прошло 18 402 заявки. Если вернётесь в течение 30 дней, всё будет на месте — включая настройки и сохранённые представления.",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Экран прощания при отключении аккаунта: шаги с датами и пометкой обратимости,
  * два списка «останется» и «исчезнет», выгрузка данных до кнопки подтверждения,
@@ -237,12 +283,22 @@ export function Dashboard092({
   exportLabel = "Выгрузить все данные",
   confirmLabel = "Отключить пространство",
   stayLabel = "Я передумал, остаюсь",
+  labels,
   accent,
+  background = "",
   className,
   style,
 }: Dashboard092Props) {
+  const text = { ...LABELS, ...labels }
+
   const palette = {
     ...(accent ? { "--vibeui-dashboard-092-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-092-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -267,14 +323,14 @@ export function Dashboard092({
           </div>
 
           <div>
-            <h3>Что произойдёт и когда</h3>
+            <h3>{text.stepsTitle}</h3>
             <ol data-part="steps">
               {steps.map((step) => (
                 <li key={step.when} data-part="step" data-rev={step.reversible}>
                   <span data-part="when">{step.when}</span>
                   <span data-part="what">{step.what}</span>
                   {step.reversible ? null : (
-                    <span data-part="norev">это уже не отменить</span>
+                    <span data-part="norev">{text.noRev}</span>
                   )}
                 </li>
               ))}
@@ -283,7 +339,7 @@ export function Dashboard092({
 
           <div data-part="cols">
             <div>
-              <h3>Что останется</h3>
+              <h3>{text.keptTitle}</h3>
               <ul data-part="fates" data-kept="true">
                 {kept.map((fate) => (
                   <li key={fate.label}>
@@ -297,7 +353,7 @@ export function Dashboard092({
             </div>
 
             <div>
-              <h3>Что исчезнет</h3>
+              <h3>{text.lostTitle}</h3>
               <ul data-part="fates" data-kept="false">
                 {lost.map((fate) => (
                   <li key={fate.label}>
@@ -312,18 +368,14 @@ export function Dashboard092({
           </div>
 
           <div data-part="export">
-            <p>
-              Заберите данные сейчас: архив со всеми заявками, клиентами и
-              файлами придёт письмом в течение часа. После 14 июля выгрузить
-              будет нечего.
-            </p>
+            <p>{text.exportNote}</p>
             <button type="button" data-part="ebtn">
               {exportLabel}
             </button>
           </div>
 
           <fieldset>
-            <legend>Почему уходите?</legend>
+            <legend>{text.reasonLegend}</legend>
             <div data-part="reasons">
               {reasons.map((reason) => (
                 <label key={reason} data-part="reason">
@@ -332,9 +384,7 @@ export function Dashboard092({
                 </label>
               ))}
             </div>
-            <p data-part="optional">
-              Отвечать необязательно — кнопка отключения работает и без этого.
-            </p>
+            <p data-part="optional">{text.optionalNote}</p>
           </fieldset>
 
           <div data-part="final">
@@ -346,11 +396,7 @@ export function Dashboard092({
             </button>
           </div>
 
-          <p data-part="bye">
-            Спасибо за два года работы вместе: за это время в пространстве
-            прошло 18 402 заявки. Если вернётесь в течение 30 дней, всё будет на
-            месте — включая настройки и сохранённые представления.
-          </p>
+          <p data-part="bye">{text.byeNote}</p>
         </div>
       </section>
     </>

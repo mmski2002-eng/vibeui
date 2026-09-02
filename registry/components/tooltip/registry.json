@@ -35,7 +35,9 @@
             "role=\"tooltip\" и id, по которому триггер ссылается через aria-describedby",
             "хвостик из повёрнутого квадрата с background:inherit — он берёт цвет подсказки и не расходится с ней",
             "смещение через transform вместо изменения позиции: так подсказка не дёргается при появлении",
-            "блок <style> внутри компонента — в нём вся палитра, стороны и хвостик"
+            "блок <style> внутри компонента — в нём вся палитра, стороны и хвостик",
+            "тёмную плашку подсказки в обеих темах: это перевёрнутый чип, поэтому у неё своя ветка color-scheme, а не тема страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "tip — текст подсказки: одна короткая фраза",
@@ -43,9 +45,11 @@
             "side: top или bottom, в зависимости от того, где есть место",
             "open — принудительный показ: онбординг, отладка, витрина; в обычном интерфейсе оставляйте false",
             "id — свой на каждую подсказку, если их на странице несколько",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "background — цвет самой подсказки; пусто оставляет собственный тёмный тон, светлый тон сам переключает текст на тёмный"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не кладите в подсказку то, без чего интерфейс непонятен: подсказка не видна на телефоне, где нет наведения.",
             "Не помещайте внутрь подсказки ссылки и кнопки: до них нельзя доехать курсором, она исчезает.",
             "Триггер должен быть фокусируемым — кнопка или ссылка. У <span> подсказка не откроется с клавиатуры.",
@@ -66,6 +70,18 @@
             "type": "select",
             "default": "top",
             "options": ["top", "bottom"]
+          },
+          {
+            "prop": "open",
+            "label": "Показана",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "background",
+            "label": "Цвет подсказки",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -80,7 +96,9 @@
                 "role=\"tooltip\" and the id the trigger points at through aria-describedby",
                 "the tail as a rotated square with background:inherit — it takes the bubble's colour and never drifts from it",
                 "the transform-based offset rather than moving the position: that is what keeps the entrance from jumping",
-                "the <style> block inside the component — it holds the palette, the sides and the tail"
+                "the <style> block inside the component — it holds the palette, the sides and the tail",
+                "the dark tooltip chip in both themes: it is an inverted chip, so it carries its own color-scheme branch rather than the page theme",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "tip — the hint text: one short phrase",
@@ -88,9 +106,11 @@
                 "side: top or bottom, depending on where there is room",
                 "open — force the bubble visible: onboarding, debugging, a showcase; leave it false in a normal interface",
                 "id — one per tooltip when a page has several",
-                "outer spacing through className"
+                "outer spacing through className",
+                "background — the colour of the bubble itself; empty keeps its own dark tone, and a light tone switches the text to dark on its own"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not hide anything essential in a tooltip: it never appears on a phone, where there is no hover.",
                 "Do not put links or buttons inside: the pointer cannot reach them, the bubble disappears on the way.",
                 "The trigger has to be focusable — a button or a link. On a <span> the tooltip will not open from the keyboard.",
@@ -105,11 +125,24 @@
               },
               "side": {
                 "label": "Side"
+              },
+              "open": {
+                "label": "Shown"
+              },
+              "background": {
+                "label": "Bubble colour"
               }
             },
-            "title": "Keyboard Tooltip"
+            "title": "Keyboard Tooltip",
+            "preview": {
+              "props": {
+                "open": true,
+                "tip": "Copy the project link"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["side", "background"]
       }
     },
     {
@@ -143,15 +176,18 @@
             "открытие своей подсказки по :focus-within — без него половина пользователей её не увидит",
             "aria-describedby на правой кнопке: видимая подсказка обязана быть связана с элементом",
             "хвостик из повёрнутого квадрата с background:inherit — при смене фона он не отвалится",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "текст обеих подсказок через tip",
             "подписи кнопок через nativeLabel и customLabel",
-            "пояснительные строчки под кнопками",
-            "цвет подсказки через переменную --vibeui-tooltip-002-tip"
+            "пояснительные строчки под кнопками и вывод внизу: nativeCaption, customCaption, note",
+            "цвет подсказки через переменную --vibeui-tooltip-002-tip",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "На телефоне нативная ячейка не покажет ничего: это часть демонстрации, а не поломка.",
             "Задержку системной подсказки задаёт операционная система, из CSS её не изменить.",
             "Обе подсказки показывают один и тот же текст намеренно — сравнивается механика, а не содержание.",
@@ -172,6 +208,19 @@
             "type": "text",
             "default": "Нативный title",
             "maxLength": 24
+          },
+          {
+            "prop": "customLabel",
+            "label": "Правая кнопка",
+            "type": "text",
+            "default": "Своя подсказка",
+            "maxLength": 24
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -185,15 +234,18 @@
                 "opening the custom tooltip on :focus-within — without it half the users never see it",
                 "aria-describedby on the right button: a visible tooltip must be tied to its element",
                 "the arrow made of a rotated square with background:inherit — it survives a colour change",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the text of both tooltips through tip",
                 "the button captions through nativeLabel and customLabel",
-                "the explanatory captions under the buttons",
-                "the tooltip colour through the --vibeui-tooltip-002-tip variable"
+                "the captions under the buttons and the closing line: nativeCaption, customCaption, note",
+                "the tooltip colour through the --vibeui-tooltip-002-tip variable",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "On a phone the native cell shows nothing: that is part of the demonstration, not a bug.",
                 "The system tooltip delay is set by the operating system and cannot be changed from CSS.",
                 "Both tooltips show the same text on purpose — the mechanics are compared, not the wording.",
@@ -209,11 +261,29 @@
               "nativeLabel": {
                 "label": "Left button",
                 "default": "Native title"
+              },
+              "customLabel": {
+                "label": "Right button",
+                "default": "Custom tooltip"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Native Versus"
+            "title": "Native Versus",
+            "preview": {
+              "props": {
+                "tip": "Copy link",
+                "nativeLabel": "Native title",
+                "customLabel": "Custom tooltip",
+                "nativeCaption": "~1 s delay, system styling",
+                "customCaption": "instant, arrowed, on focus",
+                "note": "The native tooltip never shows up on Tab and is unreadable on a phone. The custom one opens on hover and on focus alike — and looks the same on every system."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -244,15 +314,19 @@
             "словесную подпись группы клавиш — иначе вслух читается набор отдельных букв",
             "теги <kbd> вместо строки «Ctrl+K»: клавиши узнают по форме",
             "открытие по :focus-within — подсказка обязана появляться и с клавиатуры",
-            "собственную светлую подложку кнопки: без неё тёмный текст пропадает на тёмном фоне"
+            "тёмную плашку подсказки в обеих темах: это перевёрнутый чип, поэтому у неё своя ветка color-scheme, а не тема страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "текст действия через tip",
             "состав сочетания через keys — массив клавиш рисуется по одной",
             "свой триггер через children вместо кнопки по умолчанию",
-            "цвет клавиш через переменную --vibeui-tooltip-003-key"
+            "цвет клавиш через переменную --vibeui-tooltip-003-key",
+            "triggerLabel — подпись кнопки-заглушки, если свой триггер не передан",
+            "background — цвет самой подсказки; пусто оставляет собственный тёмный тон, светлый тон сам переключает текст на тёмный"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "На macOS привычны ⌘ и ⌥: подставляйте их сами, компонент платформу не определяет.",
             "Сочетание в подсказке должно совпадать с реальным обработчиком — компонент клавиши не слушает.",
             "Больше трёх клавиш в ряд читаются плохо: длинные аккорды лучше писать словами.",
@@ -266,6 +340,19 @@
             "type": "text",
             "default": "Открыть поиск",
             "maxLength": 30
+          },
+          {
+            "prop": "triggerLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Поиск",
+            "maxLength": 20
+          },
+          {
+            "prop": "background",
+            "label": "Цвет подсказки",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -279,15 +366,19 @@
                 "the spoken label on the key group — otherwise a screen reader reads a run of separate letters",
                 "the <kbd> tags instead of a plain \"Ctrl+K\" string: keys are recognised by shape",
                 "opening on :focus-within — the tooltip must appear from the keyboard too",
-                "the button's own light surface: without it the dark text disappears on a dark background"
+                "the dark tooltip chip in both themes: it is an inverted chip, so it carries its own color-scheme branch rather than the page theme",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the action text through tip",
                 "the combination through keys — the array is drawn one key at a time",
                 "your own trigger through children instead of the default button",
-                "the key colour through the --vibeui-tooltip-003-key variable"
+                "the key colour through the --vibeui-tooltip-003-key variable",
+                "triggerLabel — the caption of the placeholder button when no trigger of your own is passed",
+                "background — the colour of the bubble itself; empty keeps its own dark tone, and a light tone switches the text to dark on its own"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "macOS expects ⌘ and ⌥: substitute them yourself, the component does not detect the platform.",
                 "The combination in the tooltip must match the real handler — the component listens to nothing.",
                 "More than three keys in a row read poorly: long chords are better written out in words.",
@@ -299,11 +390,26 @@
               "tip": {
                 "label": "Action",
                 "default": "Open search"
+              },
+              "triggerLabel": {
+                "label": "Button",
+                "default": "Search"
+              },
+              "background": {
+                "label": "Bubble colour"
               }
             },
-            "title": "Shortcut Tooltip"
+            "title": "Shortcut Tooltip",
+            "preview": {
+              "props": {
+                "tip": "Open search",
+                "triggerLabel": "Search",
+                "keys": ["Ctrl", "K"]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -334,15 +440,19 @@
             "aria-label на каждой кнопке — иконка без имени не читается вслух",
             "aria-hidden на видимой подсказке: иначе имя кнопки прозвучит дважды",
             "role=\"toolbar\" на панели — так группа кнопок объявляется одним целым",
-            "собственную светлую подложку панели: без неё тёмные значки пропадают на тёмном фоне"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "состав панели через actions — значок и подпись каждой кнопки",
             "сторону всплытия через side — top или bottom",
             "размер кнопок через width и height в правиле button",
-            "цвет подсказки через переменную --vibeui-tooltip-004-tip"
+            "цвет подсказки через переменную --vibeui-tooltip-004-tip",
+            "toolbarLabel — имя панели для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Значки заданы символами: своя иконка вставляется вместо содержимого glyph.",
             "Разделитель рисуется перед последней кнопкой; для другой группировки правило придётся переписать.",
             "На телефоне подсказки не появятся — важные действия дублируйте подписью в другом месте.",
@@ -356,6 +466,12 @@
             "type": "select",
             "default": "top",
             "options": ["top", "bottom"]
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -369,15 +485,19 @@
                 "the aria-label on each button — an unnamed icon is never read aloud",
                 "aria-hidden on the visible tooltip: otherwise the button name is announced twice",
                 "role=\"toolbar\" on the panel — that is how a group of buttons is announced as one",
-                "the toolbar's own light surface: without it the dark glyphs disappear on a dark background"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the toolbar contents through actions — a glyph and a caption per button",
                 "the side the tips appear on through side — top or bottom",
                 "the button size through width and height in the button rule",
-                "the tooltip colour through the --vibeui-tooltip-004-tip variable"
+                "the tooltip colour through the --vibeui-tooltip-004-tip variable",
+                "toolbarLabel — the toolbar name for screen readers",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The glyphs are characters: your own icon replaces the content of glyph.",
                 "The divider is drawn before the last button; a different grouping needs the rule rewritten.",
                 "On a phone the tooltips never appear — duplicate important actions with a caption elsewhere.",
@@ -388,11 +508,38 @@
             "controls": {
               "side": {
                 "label": "Side"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Icon Toolbar"
+            "title": "Icon Toolbar",
+            "preview": {
+              "props": {
+                "toolbarLabel": "Layer actions",
+                "actions": [
+                  {
+                    "glyph": "↩",
+                    "label": "Undo"
+                  },
+                  {
+                    "glyph": "↪",
+                    "label": "Redo"
+                  },
+                  {
+                    "glyph": "⧉",
+                    "label": "Duplicate layer"
+                  },
+                  {
+                    "glyph": "🗑",
+                    "label": "Delete layer"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["side", "background"]
       }
     },
     {
@@ -423,15 +570,18 @@
             "выключку по левому краю — центрированный абзац из трёх строк выглядит рваным",
             "второе ограничение по ширине окна: у края экрана подсказка обязана сжиматься",
             "открытие по :focus-within — длинное объяснение нужно и тем, кто ходит с клавиатуры",
-            "собственную светлую подложку триггера: без неё тёмный текст пропадает на тёмном фоне"
+            "тёмную плашку подсказки в обеих темах: это перевёрнутый чип, поэтому у неё своя ветка color-scheme, а не тема страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "подпись триггера через label и текст через tip",
             "предельную ширину через tipWidth",
             "сторону всплытия, переставив bottom на top в правиле подсказки",
-            "цвет подсказки через переменную --vibeui-tooltip-005-bg"
+            "цвет подсказки через переменную --vibeui-tooltip-005-bg",
+            "background — цвет самой подсказки; пусто оставляет собственный тёмный тон, светлый тон сам переключает текст на тёмный"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Подсказка не перехватывает курсор: выделить текст внутри не получится, для этого нужен поповер.",
             "Больше четырёх строк — признак того, что объяснению место в справке, а не в подсказке.",
             "Перенос по любому месту слова спасает от длинных адресов, но рвёт слова: не ставьте туда ссылки.",
@@ -452,6 +602,12 @@
             "type": "text",
             "default": "17rem",
             "maxLength": 10
+          },
+          {
+            "prop": "background",
+            "label": "Цвет подсказки",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -465,15 +621,18 @@
                 "the left alignment — a centred three-line paragraph looks ragged",
                 "the second cap against the viewport width: near the edge the tooltip must shrink",
                 "opening on :focus-within — a long explanation is also needed by keyboard users",
-                "the trigger's own light surface: without it the dark text disappears on a dark background"
+                "the dark tooltip chip in both themes: it is an inverted chip, so it carries its own color-scheme branch rather than the page theme",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the trigger caption through label and the copy through tip",
                 "the maximum width through tipWidth",
                 "the side it opens on by swapping bottom for top in the tooltip rule",
-                "the tooltip colour through the --vibeui-tooltip-005-bg variable"
+                "the tooltip colour through the --vibeui-tooltip-005-bg variable",
+                "background — the colour of the bubble itself; empty keeps its own dark tone, and a light tone switches the text to dark on its own"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The tooltip does not capture the pointer: text inside cannot be selected, that needs a popover.",
                 "More than four lines is a sign the explanation belongs in help, not in a tooltip.",
                 "Breaking anywhere saves long URLs but splits words: do not put links in there.",
@@ -489,11 +648,22 @@
               "tipWidth": {
                 "label": "Width",
                 "default": "17rem"
+              },
+              "background": {
+                "label": "Bubble colour"
               }
             },
-            "title": "Wrapped Tooltip"
+            "title": "Wrapped Tooltip",
+            "preview": {
+              "props": {
+                "label": "How the balance is counted",
+                "tip": "The balance is the paid volume minus what has been used in the current period. Going over does not block anything: it moves to the next invoice as a separate line.",
+                "tipWidth": "17rem"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -527,15 +697,19 @@
             "три варианта выравнивания через data-align — без них крайние подсказки обрежутся",
             "открытие по :focus-within у ячейки, а не у всей строки кнопок",
             "aria-describedby с уникальным идентификатором на каждой кнопке",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "текст подсказок через tip",
             "подписи кнопок через labels — первые три раскладываются по краям и центру",
             "сторону всплытия, переставив bottom на top в правиле подсказки",
-            "цвет подсказки через переменную --vibeui-tooltip-006-tip"
+            "цвет подсказки через переменную --vibeui-tooltip-006-tip",
+            "note — пояснение под рядом кнопок",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Выравнивание задаётся руками, а не измеряется: настоящее автоопределение края требует JS.",
             "Больше трёх кнопок компонент не раскладывает — лишние получат центральное выравнивание.",
             "Ширина центральной подсказки задана явно, потому что отрицательный отступ считается от неё.",
@@ -549,6 +723,12 @@
             "type": "text",
             "default": "Экспорт в CSV",
             "maxLength": 30
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -562,15 +742,19 @@
                 "the three alignment variants through data-align — without them the outer tips get clipped",
                 "opening on :focus-within of the cell, not of the whole button row",
                 "aria-describedby with a unique id on every button",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the tooltip copy through tip",
                 "the button captions through labels — the first three are laid out at the edges and centre",
                 "the side it opens on by swapping bottom for top in the tooltip rule",
-                "the tooltip colour through the --vibeui-tooltip-006-tip variable"
+                "the tooltip colour through the --vibeui-tooltip-006-tip variable",
+                "note — the explanation under the button row",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Alignment is declared, not measured: real edge detection needs JS.",
                 "The component lays out at most three buttons — extra ones fall back to centre alignment.",
                 "The centre tooltip has an explicit width because the negative offset is computed from it.",
@@ -582,11 +766,22 @@
               "tip": {
                 "label": "Tooltip",
                 "default": "Export to CSV"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Edge Flip"
+            "title": "Edge Flip",
+            "preview": {
+              "props": {
+                "tip": "Export to CSV",
+                "labels": ["At the left edge", "Centred", "At the right edge"],
+                "note": "Hover the outer buttons: the tooltip hugs its own side and the arrow slides to the button — nothing leaves the area."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -620,15 +815,19 @@
             "aria-describedby на поле — подсказка обязана читаться вместе с ним",
             "абсолютное позиционирование подсказки: появление не должно сдвигать форму",
             "видимую рамку фокуса у поля — она остаётся единственным указателем места ввода",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "подпись поля через label и текст требований через hint",
             "заглушку через placeholder и имя поля через name",
             "тип поля, если требования относятся не к паролю",
-            "цвет подсказки через переменную --vibeui-tooltip-007-tip"
+            "цвет подсказки через переменную --vibeui-tooltip-007-tip",
+            "note — строка под полем",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Подсказка не проверяет ввод: валидацию делает форма, компонент только объясняет правила.",
             "Идентификаторы заданы строками — при двух полях на странице их нужно развести.",
             "Подсказка перекрывает то, что стоит под полем: оставьте под ним запас по высоте.",
@@ -649,6 +848,12 @@
             "type": "text",
             "default": "От 12 знаков, хотя бы одна цифра и один спецсимвол. Пробелы считаются.",
             "maxLength": 120
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -662,15 +867,19 @@
                 "aria-describedby on the field — the hint must be read together with it",
                 "the absolute positioning of the hint: its appearance must not shift the form",
                 "the visible focus ring on the field — it stays the only marker of where you are typing",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the field caption through label and the rules through hint",
                 "the placeholder through placeholder and the field name through name",
                 "the input type if the rules are not about a password",
-                "the hint colour through the --vibeui-tooltip-007-tip variable"
+                "the hint colour through the --vibeui-tooltip-007-tip variable",
+                "note — the line under the field",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The hint validates nothing: the form does the checking, the component only states the rules.",
                 "The ids are literal strings — with two fields on a page they have to be made unique.",
                 "The hint covers whatever sits below the field: leave some vertical room under it.",
@@ -686,11 +895,22 @@
               "hint": {
                 "label": "Rules",
                 "default": "At least 12 characters, one digit and one symbol. Spaces count."
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Field Hint"
+            "title": "Field Hint",
+            "preview": {
+              "props": {
+                "label": "New password",
+                "hint": "At least 12 characters, one digit and one symbol. Spaces count.",
+                "note": "The hint appears once the field takes focus."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -724,15 +944,18 @@
             "tabIndex=0 вместе с aria-describedby — иначе объяснение недоступно с клавиатуры",
             "пунктир через text-decoration, а не рамкой: рамка не переносится вместе со словом",
             "гротеск в подсказке внутри серифного абзаца — так выноска отличается от текста",
-            "собственную светлую подложку абзаца: без неё тёмный текст пропадает на тёмном фоне"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "текст вокруг через before и after",
             "само слово через term и объяснение через definition",
             "гарнитуру абзаца через переменную --vibeui-tooltip-008-font",
-            "цвет термина через переменную --vibeui-tooltip-008-mark"
+            "цвет термина через переменную --vibeui-tooltip-008-mark",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Если термин переносится на другую строку, подсказка встанет по первой части слова.",
             "Курсор help — единственный намёк для мыши: не убирайте его вместе с пунктиром.",
             "На телефоне подсказка появится по нажатию за счёт фокуса, но закрыть её придётся нажатием мимо.",
@@ -753,6 +976,12 @@
             "type": "text",
             "default": "Из всех замеров за месяц отбрасываются пять процентов самых высоких, и счёт выставляется по следующему значению.",
             "maxLength": 200
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -766,15 +995,18 @@
                 "tabIndex=0 together with aria-describedby — otherwise the explanation is unreachable by keyboard",
                 "the dotted rule via text-decoration rather than a border: a border does not follow a wrapped word",
                 "the sans-serif tooltip inside a serif paragraph — that is what makes it read as an aside",
-                "the paragraph's own light surface: without it the dark text disappears on a dark background"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the surrounding copy through before and after",
                 "the word itself through term and the explanation through definition",
                 "the paragraph typeface through the --vibeui-tooltip-008-font variable",
-                "the term colour through the --vibeui-tooltip-008-mark variable"
+                "the term colour through the --vibeui-tooltip-008-mark variable",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "If the term wraps to the next line, the tooltip anchors to the first fragment of the word.",
                 "The help cursor is the only hint for a mouse: do not remove it along with the dotted rule.",
                 "On a phone the tooltip opens on tap through focus, but closing it needs a tap elsewhere.",
@@ -790,11 +1022,23 @@
               "definition": {
                 "label": "Explanation",
                 "default": "The top five percent of the month's samples are dropped and the bill uses the next value."
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Term Underline"
+            "title": "Term Underline",
+            "preview": {
+              "props": {
+                "before": "We are billed for traffic on the ",
+                "term": "95th percentile",
+                "definition": "The top five percent of the month's samples are dropped and the bill uses the next value. Short spikes never reach the invoice.",
+                "after": " model, so the nightly backup does not affect the bill."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -828,15 +1072,19 @@
             "нулевую задержку в базовом правиле — она и есть механизм мгновенного скрытия",
             "привязку подсказки к ячейке, а не к строке кнопок",
             "открытие по :focus-within — с клавиатуры подсказка обязана появляться сразу",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "величину задержки через delay",
             "текст подсказок через tip",
             "подписи кнопок через labels",
-            "цвет подсказки через переменную --vibeui-tooltip-009-tip"
+            "цвет подсказки через переменную --vibeui-tooltip-009-tip",
+            "note — пояснение под строкой кнопок; {delay} в нём заменяется значением задержки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Задержка больше секунды воспринимается как поломка: разумный диапазон — от 0,3 до 0,7 секунды.",
             "С клавиатуры задержка тоже работает; если это мешает, вынесите :focus-within в отдельное правило без transition-delay.",
             "Все кнопки в строке показывают один текст — в реальном интерфейсе подпись у каждой своя.",
@@ -858,6 +1106,12 @@
             "type": "text",
             "default": "Действие над выбранной строкой",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -871,15 +1125,19 @@
                 "the zero delay in the base rule — that is the instant-hide mechanism itself",
                 "binding the tooltip to the cell rather than the button row",
                 "opening on :focus-within — from the keyboard the tooltip must appear at once",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the delay length through delay",
                 "the tooltip copy through tip",
                 "the button captions through labels",
-                "the tooltip colour through the --vibeui-tooltip-009-tip variable"
+                "the tooltip colour through the --vibeui-tooltip-009-tip variable",
+                "note — the line under the button row; {delay} in it is replaced with the delay value",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A delay over a second reads as a bug: 0.3 to 0.7 seconds is the sane range.",
                 "The delay also applies to keyboard focus; if that bothers you, split :focus-within into a rule without transition-delay.",
                 "Every button in the row shows the same text — in a real interface each has its own.",
@@ -894,11 +1152,22 @@
               "tip": {
                 "label": "Tooltip",
                 "default": "Acts on the selected row"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Delayed Tooltip"
+            "title": "Delayed Tooltip",
+            "preview": {
+              "props": {
+                "tip": "Acts on the selected row",
+                "labels": ["Copy", "Duplicate", "Archive"],
+                "note": "The opening delay is {delay} s. Sweep the pointer along the row: the tips never flicker, because hiding has no delay."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["delay", "background"]
       }
     },
     {
@@ -929,15 +1198,19 @@
             "чип сочетания одной строкой, а не отдельными клавишами: так он читается как единый ярлык",
             "привязку подсказки к пункту, а не к списку — иначе наведение раскроет все подсказки разом",
             "открытие по :focus-within у пункта — с клавиатуры чип обязан быть виден",
-            "собственную светлую подложку панели: без неё тёмный текст пропадает на тёмном фоне"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "состав меню через items — значок, подпись и сочетание каждого пункта",
             "сторону раскрытия подсказки, переставив left на right в правиле tip",
             "цвет чипа через переменную --vibeui-tooltip-010-chip",
-            "ширину панели через max-width у корневого блока"
+            "ширину панели через max-width у корневого блока",
+            "shortcutLabel — подпись перед чипом сочетания",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Значки заданы символами: своя иконка вставляется вместо содержимого glyph.",
             "Сочетание в чипе должно совпадать с реальным обработчиком — компонент клавиши не слушает.",
             "На телефоне подсказка не появится — для мобильного меню нужен отдельный список действий.",
@@ -955,15 +1228,19 @@
                 "the shortcut chip as one line rather than separate keys: that is what reads as a single tag",
                 "binding the tooltip to the item, not the list — otherwise hovering opens every tip at once",
                 "opening on :focus-within of the item — the chip must be visible from the keyboard",
-                "the panel's own light surface: without it the dark text disappears on a dark background"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the menu contents through items — a glyph, caption and shortcut per entry",
                 "the side the tooltip opens on, by swapping left for right in the tip rule",
                 "the chip colour through the --vibeui-tooltip-010-chip variable",
-                "the panel width through max-width on the root block"
+                "the panel width through max-width on the root block",
+                "shortcutLabel — the caption in front of the shortcut chip",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The glyphs are characters: your own icon replaces the content of glyph.",
                 "The shortcut in the chip must match the real handler — the component listens to nothing.",
                 "On a phone the tooltip never appears — a mobile menu needs a separate action list.",
@@ -971,9 +1248,56 @@
               ],
               "usage": "<Tooltip010\n  items={[{ glyph: \"↩\", label: \"Undo\", shortcut: \"⌘Z\" }]}\n/>"
             },
-            "title": "Menu Hotkey"
+            "title": "Menu Hotkey",
+            "controls": {
+              "shortcutLabel": {
+                "label": "Chip caption",
+                "default": "Keyboard shortcut"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "shortcutLabel": "Keyboard shortcut",
+                "items": [
+                  {
+                    "glyph": "↩",
+                    "label": "Undo",
+                    "shortcut": "⌘Z"
+                  },
+                  {
+                    "glyph": "⧉",
+                    "label": "Duplicate row",
+                    "shortcut": "⌘D"
+                  },
+                  {
+                    "glyph": "⌦",
+                    "label": "Delete selection",
+                    "shortcut": "⌫"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "controls": [
+          {
+            "prop": "shortcutLabel",
+            "label": "Подпись чипа",
+            "type": "text",
+            "default": "Сочетание клавиш",
+            "maxLength": 30
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["background"]
       }
     },
     {
@@ -1007,15 +1331,19 @@
             "нулевую задержку в базовом правиле — она и есть механизм мгновенного скрытия",
             "привязку подсказки к ячейке, а не к сетке целиком",
             "открытие по :focus-within — с клавиатуры подсказка обязана появляться сразу",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "величину задержки через delay",
             "статусы точек через statuses — массив applies по порядку к ячейкам сетки",
-            "подписи статусов через объект STATUS_LABEL внутри файла",
-            "цвета статусов через переменные --vibeui-tooltip-011-ok, -warn и -down"
+            "подписи статусов через statusText и имя точки через nodeLabel: {number} заменяется номером узла",
+            "цвета статусов через переменные --vibeui-tooltip-011-ok, -warn и -down",
+            "note — пояснение под сеткой; {delay} в нём заменяется значением задержки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Задержка больше секунды воспринимается как поломка: разумный диапазон — от 0,3 до 0,7 секунды.",
             "Сетка рассчитана на 16 точек; передайте меньше значений в statuses — остальные останутся «в порядке».",
             "С клавиатуры задержка тоже работает; уберите её из правила :focus-within, если это мешает.",
@@ -1030,6 +1358,12 @@
             "default": 0.45,
             "min": 0,
             "max": 2
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1043,15 +1377,19 @@
                 "the zero delay in the base rule — that is the instant-hide mechanism itself",
                 "binding the tooltip to the cell, not the whole grid",
                 "opening on :focus-within — from the keyboard the tooltip must appear at once",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the delay length through delay",
                 "the dot statuses through statuses — the array applies in order to the grid cells",
-                "the status captions through the STATUS_LABEL object inside the file",
-                "the status colours through the --vibeui-tooltip-011-ok, -warn and -down variables"
+                "the status captions through statusText and the dot name through nodeLabel: {number} is replaced with the node index",
+                "the status colours through the --vibeui-tooltip-011-ok, -warn and -down variables",
+                "note — the line under the grid; {delay} in it is replaced with the delay value",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A delay over a second reads as a bug: 0.3 to 0.7 seconds is the sane range.",
                 "The grid holds 16 dots; pass fewer values in statuses and the rest stay \"ok\".",
                 "The delay also applies to keyboard focus; drop it from the :focus-within rule if that bothers you.",
@@ -1062,11 +1400,26 @@
             "controls": {
               "delay": {
                 "label": "Delay, s"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Dwell Delay"
+            "title": "Dwell Delay",
+            "preview": {
+              "props": {
+                "statusText": {
+                  "ok": "Node healthy",
+                  "warn": "Elevated latency",
+                  "down": "Node unreachable"
+                },
+                "nodeLabel": "Node {number}",
+                "note": "The opening delay is {delay} s, hiding is instant. Sweep the pointer across the grid: the tips never flicker on every dot."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["delay", "background"]
       }
     },
     {
@@ -1097,15 +1450,18 @@
             "узкую фиксированную ширину подсказки — она и заставляет пояснение перенестись само",
             "aria-describedby на кнопке — иконка без подписи должна быть связана с текстом",
             "курсор help на триггере — единственный намёк для мыши, что здесь есть подсказка",
-            "собственную тёмную подложку подсказки: без неё текст пропадает на тёмном фоне"
+            "тёмную плашку подсказки в обеих темах: это перевёрнутый чип, поэтому у неё своя ветка color-scheme, а не тема страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "заголовок через heading и пояснение через detail",
             "ширину подсказки через переменную --vibeui-tooltip-012-width",
             "размер и цвет кружка через правило [data-part=\"trigger\"]",
-            "сторону всплытия, переставив bottom на top в правиле tip"
+            "сторону всплытия, переставив bottom на top в правиле tip",
+            "background — цвет самой подсказки; пусто оставляет собственный тёмный тон, светлый тон сам переключает текст на тёмный"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пояснение рассчитано на одну-две строки; длиннее — используйте подсказку с переносом текста.",
             "Кнопка содержит только символ «?»: добавьте aria-label, если заголовок недостаточно описателен.",
             "На телефоне подсказка появится по нажатию за счёт фокуса, закрыть — нажатием мимо.",
@@ -1126,6 +1482,12 @@
             "type": "text",
             "default": "14 дней с полным доступом. Карта не требуется, отменить можно в любой момент.",
             "maxLength": 120
+          },
+          {
+            "prop": "background",
+            "label": "Цвет подсказки",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1139,15 +1501,18 @@
                 "the narrow fixed tooltip width — it is what forces the explanation to wrap on its own",
                 "aria-describedby on the button — an unlabelled icon must be tied to its text",
                 "the help cursor on the trigger — the only hint for a mouse that a tip lives here",
-                "the tooltip's own dark surface: without it the text disappears on a dark background"
+                "the dark tooltip chip in both themes: it is an inverted chip, so it carries its own color-scheme branch rather than the page theme",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the heading through heading and the explanation through detail",
                 "the tooltip width through the --vibeui-tooltip-012-width variable",
                 "the circle size and colour through the [data-part=\"trigger\"] rule",
-                "the side it opens on by swapping bottom for top in the tip rule"
+                "the side it opens on by swapping bottom for top in the tip rule",
+                "background — the colour of the bubble itself; empty keeps its own dark tone, and a light tone switches the text to dark on its own"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The explanation is sized for one or two lines; longer copy needs the wrapped-text tooltip instead.",
                 "The button holds only a \"?\" glyph: add an aria-label if the heading is not descriptive enough.",
                 "On a phone the tooltip opens on tap through focus, closing needs a tap elsewhere.",
@@ -1163,11 +1528,21 @@
               "detail": {
                 "label": "Explanation",
                 "default": "14 days with full access. No card required, cancel any time."
+              },
+              "background": {
+                "label": "Bubble colour"
               }
             },
-            "title": "Question Bubble"
+            "title": "Question Bubble",
+            "preview": {
+              "props": {
+                "heading": "Trial period",
+                "detail": "14 days with full access. No card required, cancel at any moment."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -1201,15 +1576,19 @@
             "переезд хвостика вместе со стороной — иначе связь подсказки с триггером теряется",
             "открытие по :focus-within у пункта, а не у всей карточки",
             "aria-describedby с уникальным идентификатором на каждой кнопке",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "текст подсказки через tip",
             "подписи пунктов через labels — ровно два значения, верхний и нижний",
             "высоту демонстрационной области через height у корневого блока",
-            "цвет подсказки через переменную --vibeui-tooltip-013-tip"
+            "цвет подсказки через переменную --vibeui-tooltip-013-tip",
+            "текст пояснения под пунктами через note",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сторона задаётся руками через data-side, а не измеряется: настоящее автоопределение требует JS.",
             "Компонент рассчитан ровно на два пункта; для большего числа сторона потребует своей логики.",
             "Оба пункта показывают один и тот же текст подсказки — в реальном интерфейсе он у каждого свой.",
@@ -1223,6 +1602,12 @@
             "type": "text",
             "default": "Добавить в закладки",
             "maxLength": 30
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1236,15 +1621,19 @@
                 "moving the arrow together with the side — otherwise the tooltip loses its link to the trigger",
                 "opening on :focus-within of the item, not the whole card",
                 "aria-describedby with a unique id on every button",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the tooltip copy through tip",
                 "the item captions through labels — exactly two values, top and bottom",
                 "the demo area height through height on the root block",
-                "the tooltip colour through the --vibeui-tooltip-013-tip variable"
+                "the tooltip colour through the --vibeui-tooltip-013-tip variable",
+                "the explanatory line under the items through note",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The side is set by hand through data-side, not measured: real auto-detection needs JS.",
                 "The component is built for exactly two items; more of them need their own side logic.",
                 "Both items show the same tooltip text — in a real interface each would carry its own.",
@@ -1256,11 +1645,22 @@
               "tip": {
                 "label": "Tooltip",
                 "default": "Add to bookmarks"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Side Switch"
+            "title": "Side Switch",
+            "preview": {
+              "props": {
+                "tip": "Add to bookmarks",
+                "labels": ["Near the top", "Near the bottom"],
+                "note": "The top item opens its tooltip downward and the bottom one upward: the side is set by data-side, not by measuring the free space."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -1291,15 +1691,17 @@
             "aria-describedby на кнопке: подсказка обязана быть связана с элементом",
             "курсор not-allowed и приглушённый цвет — визуальный сигнал состояния без disabled",
             "открытие по :focus-within — причину нужно видеть и при обходе с клавиатуры",
-            "собственную тёмную подложку подсказки: без неё текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачный корень: подложка есть только у самой кнопки, плашку под собой компонент не выкладывает"
           ],
           "adapt": [
             "подпись кнопки через label",
             "текст причины через reason",
-            "значок состояния через содержимое [data-part=\"lock\"]",
+            "показ значка замка через showLock, сам символ — в содержимом [data-part=\"lock\"]",
             "реальную блокировку клика добавьте отдельно — компонент только визуально отключает кнопку"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Кнопка не заблокирована по-настоящему: обработчик клика должен сам проверять условие и не выполнять действие.",
             "Не используйте этот приём вместо настоящего disabled там, где действие должно быть недоступно совсем — например, во время оплаты.",
             "Причина должна быть конкретной: «Недоступно» без объяснения не решает проблему обычного disabled.",
@@ -1320,6 +1722,12 @@
             "type": "text",
             "default": "Сначала заполните обязательные поля: заголовок и хотя бы одну картинку.",
             "maxLength": 120
+          },
+          {
+            "prop": "showLock",
+            "label": "Значок замка",
+            "type": "boolean",
+            "default": true
           }
         ],
         "i18n": {
@@ -1333,15 +1741,17 @@
                 "aria-describedby on the button: the tooltip must be tied to the element",
                 "the not-allowed cursor and dimmed colour — a visual state cue without disabled",
                 "opening on :focus-within — the reason must be visible while tabbing too",
-                "the tooltip's own dark surface: without it the text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent root: only the button carries a surface, the component lays no panel under itself"
               ],
               "adapt": [
                 "the button caption through label",
                 "the reason text through reason",
-                "the state glyph through the content of [data-part=\"lock\"]",
+                "the lock glyph through showLock, the symbol itself in the content of [data-part=\"lock\"]",
                 "add real click blocking separately — the component only disables the button visually"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The button is not truly blocked: the click handler must check the condition itself and do nothing.",
                 "Do not use this trick instead of a real disabled where the action must be fully unavailable — during payment, say.",
                 "The reason must be specific: an unexplained \"Unavailable\" does not solve the problem of a plain disabled.",
@@ -1357,11 +1767,21 @@
               "reason": {
                 "label": "Reason",
                 "default": "Fill in the required fields first: a title and at least one picture."
+              },
+              "showLock": {
+                "label": "Lock glyph"
               }
             },
-            "title": "Disabled Reason"
+            "title": "Disabled Reason",
+            "preview": {
+              "props": {
+                "label": "Publish",
+                "reason": "Fill in the required fields first: a title and at least one picture."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["showLock"]
       }
     },
     {
@@ -1392,15 +1812,18 @@
             "aria-describedby на триггере и alt на изображении — оба текста обязательны для скринридера",
             "object-fit:cover у миниатюры — картинка любых пропорций не искажается и не растягивает карточку",
             "открытие по :focus-within — превью нужно и при переходе табом",
-            "тень и скруглённые углы карточки: без них подсказка сливается с фоном страницы"
+            "тень и скруглённые углы карточки: без них подсказка сливается с фоном страницы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "подпись ссылки через label",
             "путь к изображению через src — обычный URL или data:URI",
             "текст под миниатюрой через caption",
-            "описание изображения через alt"
+            "описание изображения через alt",
+            "цвет ссылки и обводки фокуса через accent"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Заглушка по умолчанию нарисована как SVG внутри файла — не тратьте её на реальные проекты, подставьте свой src.",
             "Подсказка не перехватывает курсор: увеличить картинку внутри неё не получится, для этого нужен поповер.",
             "На телефоне подсказка не появится по наведению — дублируйте превью в самой карточке файла, если оно важно.",
@@ -1421,6 +1844,12 @@
             "type": "text",
             "default": "1600×1000 · добавлено сегодня",
             "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1434,15 +1863,18 @@
                 "aria-describedby on the trigger and alt on the image — both texts are required for a screen reader",
                 "object-fit:cover on the thumbnail — an image of any ratio never distorts or stretches the card",
                 "opening on :focus-within — the preview is also needed while tabbing",
-                "the card's shadow and rounded corners: without them the tooltip blends into the page background"
+                "the card's shadow and rounded corners: without them the tooltip blends into the page background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the link caption through label",
                 "the image path through src — a regular URL or a data: URI",
                 "the text under the thumbnail through caption",
-                "the image description through alt"
+                "the image description through alt",
+                "the link and focus-ring colour through accent"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The default placeholder is an SVG drawn inline in the file — do not ship it to a real project, pass your own src.",
                 "The tooltip does not capture the pointer: the image cannot be zoomed inside it, that needs a popover.",
                 "On a phone the tooltip never appears on hover — duplicate the preview in the file card itself if it matters.",
@@ -1458,11 +1890,22 @@
               "caption": {
                 "label": "Caption under preview",
                 "default": "1600×1000 · added today"
+              },
+              "accent": {
+                "label": "Accent"
               }
             },
-            "title": "Preview Card"
+            "title": "Preview Card",
+            "preview": {
+              "props": {
+                "label": "release_cover.png",
+                "caption": "1600×1000 · added today",
+                "alt": "Image preview thumbnail"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent"]
       }
     },
     {
@@ -1496,15 +1939,19 @@
             "общий соседний селектор (~) между select и hint — оба должны быть соседями по DOM, без обёртки между ними",
             "aria-describedby на select — подсказка обязана читаться вместе с полем независимо от того, видна ли она",
             "видимую рамку фокуса у select при :focus-visible — она остаётся единственным указателем места ввода",
-            "собственную светлую подложку карточки: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись поля через label и текст инструкции через hint",
             "варианты значений через options",
             "имя поля через name",
-            "цвет подсказки через переменную --vibeui-tooltip-016-tip"
+            "цвет подсказки через переменную --vibeui-tooltip-016-tip",
+            "текст пояснения под полем через note",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Приём работает надёжно на select, чекбоксах и радио; на текстовом input :focus-visible срабатывает и по клику.",
             "Подсказка не проверяет выбор: логику выбора значения ведёт форма, компонент только объясняет правила.",
             "Идентификаторы заданы строками — при двух полях на странице их нужно развести.",
@@ -1525,6 +1972,12 @@
             "type": "text",
             "default": "Действует для всех отчётов и уведомлений в аккаунте. Изменение применится со следующего входа.",
             "maxLength": 140
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1538,15 +1991,19 @@
                 "the general sibling selector (~) between select and hint — both must be DOM siblings with no wrapper between them",
                 "aria-describedby on the select — the tooltip must be read together with the field regardless of visibility",
                 "the visible focus ring on the select under :focus-visible — it stays the only marker of where you are",
-                "the card's own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the field caption through label and the instruction through hint",
                 "the value options through options",
                 "the field name through name",
-                "the hint colour through the --vibeui-tooltip-016-tip variable"
+                "the hint colour through the --vibeui-tooltip-016-tip variable",
+                "the explanatory line under the field through note",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The trick is reliable on selects, checkboxes and radios; on a text input :focus-visible also fires on a click.",
                 "The hint validates nothing: the form owns the selection logic, the component only states the rules.",
                 "The ids are literal strings — with two fields on a page they have to be made unique.",
@@ -1562,11 +2019,23 @@
               "hint": {
                 "label": "Instruction",
                 "default": "Applies to every report and notification in the account. The change takes effect on your next sign-in."
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Focus Format"
+            "title": "Focus Format",
+            "preview": {
+              "props": {
+                "label": "Time format",
+                "hint": "Applies to every report and notification in the account. The change takes effect on your next sign-in.",
+                "options": ["HH:MM, 24-hour", "HH:MM AM/PM", "Hours only"],
+                "note": "The hint appears when the field takes keyboard focus — Tab. A mouse click never opens it."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     }
   ]

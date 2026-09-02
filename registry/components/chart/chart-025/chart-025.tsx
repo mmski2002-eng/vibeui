@@ -10,6 +10,14 @@ export type Chart025Props = Omit<
   hours?: number[]
   matrix?: number[][]
   unit?: string
+  /** Подписи легенды по ключам less/more: компонент несёт русские. */
+  legendText?: Record<string, string>
+  /** Подпись под картой; {unit} — единица, {max} — максимум клетки. */
+  summaryText?: string
+  /** Заголовок столбца дней в скрытой таблице для скринридера. */
+  dayHeader?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,14 +25,17 @@ export type Chart025Props = Omit<
 // клетками служат кружки на SVG, а не залитые прямоугольники сетки. Радиус
 // кружка несёт величину, а не только цвет — это читается и в оттенках
 // серого, и когда акцентный цвет слишком светлый для заметной заливки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): карта темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="chart-025"]){
---vibeui-chart-025-bg:oklch(1 0 0);
---vibeui-chart-025-fg:oklch(0.22 0.014 265);
---vibeui-chart-025-muted:oklch(0.55 0.014 265);
---vibeui-chart-025-border:oklch(0.91 0.006 265);
---vibeui-chart-025-empty:oklch(0.9 0.004 265);
---vibeui-chart-025-accent:oklch(0.52 0.17 25);
+--vibeui-chart-025-bg:transparent;
+--vibeui-chart-025-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-chart-025-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-chart-025-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-chart-025-empty:light-dark(oklch(0.9 0.004 265),oklch(0.4 0.008 265));
+--vibeui-chart-025-accent:light-dark(oklch(0.52 0.17 25),oklch(0.71 0.16 25));
 --vibeui-chart-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="chart-025"]{
@@ -76,10 +87,36 @@ function buildDefaultMatrix() {
 
 const DEFAULT_MATRIX = buildDefaultMatrix()
 
+const DEFAULT_LEGEND_TEXT = { less: "реже", more: "чаще" }
+const DEFAULT_SUMMARY_TEXT =
+  "Единица измерения: {unit}. Максимум клетки — {max}."
+
 const LEFT = 22
 const TOP = 10
 const CELL = 11.6
 const RADIUS_MAX = 5
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Тепловая карта «день × час» в стиле punch card: величина закодирована
@@ -92,6 +129,10 @@ export function Chart025({
   hours = DEFAULT_HOURS,
   matrix = DEFAULT_MATRIX,
   unit = "событий в час",
+  legendText = DEFAULT_LEGEND_TEXT,
+  summaryText = DEFAULT_SUMMARY_TEXT,
+  dayHeader = "День",
+  background = "",
   accent,
   className,
   style,
@@ -100,9 +141,18 @@ export function Chart025({
   const max = Math.max(...matrix.flat(), 1)
   const width = LEFT + hours.length * CELL + 6
   const height = TOP + days.length * CELL + 12
+  const summary = summaryText
+    .replace("{unit}", unit)
+    .replace("{max}", String(max))
 
   const palette = {
     ...(accent ? { "--vibeui-chart-025-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-chart-025-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -172,7 +222,7 @@ export function Chart025({
           )}
         </svg>
         <p data-part="scale">
-          реже
+          {legendText.less ?? DEFAULT_LEGEND_TEXT.less}
           {[0.1, 0.35, 0.6, 0.85, 1].map((level) => (
             <span
               key={level}
@@ -187,18 +237,16 @@ export function Chart025({
               }
             />
           ))}
-          чаще
+          {legendText.more ?? DEFAULT_LEGEND_TEXT.more}
         </p>
-        <p data-part="unit">
-          Единица измерения: {unit}. Максимум клетки — {max}.
-        </p>
+        <p data-part="unit">{summary}</p>
         <table data-part="data">
           <caption>
             {title}, {unit}
           </caption>
           <thead>
             <tr>
-              <th scope="col">День</th>
+              <th scope="col">{dayHeader}</th>
               {hours.map((hour) => (
                 <th key={hour} scope="col">
                   {hour}:00

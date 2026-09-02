@@ -130,28 +130,28 @@ function LayerDiagram() {
 }
 
 export function Features001({
-  eyebrow = "Capabilities",
-  title = "Everything after the first",
-  titleAccent = "deploy",
-  description = "The unglamorous half of shipping — observability, rollbacks, access control — handled before you need it.",
-  action = { label: "See the full list", href: "#" },
+  eyebrow = "Возможности",
+  title = "Всё, что начинается после первого",
+  titleAccent = "деплоя",
+  description = "Неприметная половина работы — наблюдаемость, откаты, доступы — сделана до того, как она понадобится.",
+  action = { label: "Смотреть весь список", href: "#" },
   primaryFeature = {
-    title: "Layered environments",
+    title: "Окружения слоями",
     description:
-      "Preview, staging and production share one config and drift apart on purpose, not by accident.",
+      "Превью, стейджинг и продакшен живут на одном конфиге и расходятся намеренно, а не случайно.",
   },
   features = [
     {
-      title: "Instant rollback",
-      description: "Any deploy reverts to the previous build in one step.",
+      title: "Мгновенный откат",
+      description: "Любой деплой возвращается к прошлой сборке одним шагом.",
     },
     {
-      title: "Scoped access",
-      description: "Per-environment roles, no shared production credentials.",
+      title: "Раздельный доступ",
+      description: "Роли по окружениям, без общих продакшен-ключей.",
     },
     {
-      title: "Audit trail",
-      description: "Every change carries an author, a reason and a timestamp.",
+      title: "Журнал изменений",
+      description: "У каждого изменения есть автор, причина и время.",
     },
   ],
   accent,

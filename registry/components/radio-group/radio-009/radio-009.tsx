@@ -16,6 +16,8 @@ export type Radio009Props = Omit<
   bundles?: Radio009Bundle[]
   name?: string
   defaultValue?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,17 +25,20 @@ export type Radio009Props = Omit<
 // цене за штуку, поэтому она стоит отдельной строкой под общей суммой, а
 // самый выгодный вариант помечен бейджем в углу — сравнение идёт по цифрам,
 // а не по названию плана. Радио остаётся видимым кружком, а не тиком.
+//
+// Тема берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="radio-009"]){
---vibeui-radio-009-bg:oklch(1 0 0);
---vibeui-radio-009-card:oklch(0.99 0.002 265);
---vibeui-radio-009-fg:oklch(0.22 0.014 265);
---vibeui-radio-009-muted:oklch(0.55 0.014 265);
---vibeui-radio-009-border:oklch(0.9 0.006 265);
---vibeui-radio-009-ring:oklch(0.74 0.012 265);
---vibeui-radio-009-accent:oklch(0.58 0.15 165);
---vibeui-radio-009-tint:oklch(0.58 0.15 165 / 7%);
---vibeui-radio-009-save:oklch(0.58 0.15 165);
+--vibeui-radio-009-bg:transparent;
+--vibeui-radio-009-card:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.008 265));
+--vibeui-radio-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-radio-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-radio-009-ring:light-dark(oklch(0.74 0.012 265),oklch(0.54 0.014 265));
+--vibeui-radio-009-accent:light-dark(oklch(0.58 0.15 165),oklch(0.76 0.14 165));
+--vibeui-radio-009-tint:light-dark(oklch(0.58 0.15 165 / 7%),oklch(0.76 0.14 165 / 15%));
+--vibeui-radio-009-save:light-dark(oklch(0.58 0.15 165),oklch(0.76 0.14 165));
+--vibeui-radio-009-on-save:light-dark(oklch(1 0 0),oklch(0.18 0.03 165));
 --vibeui-radio-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="radio-009"]{
@@ -69,11 +74,13 @@ outline:2px solid var(--vibeui-radio-009-accent);outline-offset:2px;
 appearance:none;-webkit-appearance:none;flex:none;margin:0;cursor:pointer;
 width:1rem;height:1rem;border-radius:9999px;
 border:1.5px solid var(--vibeui-radio-009-ring);
-background:var(--vibeui-radio-009-bg);
+background:transparent;
 }
+/* Точка нарисована фоном самого кружка: внутренней тенью зазор пришлось бы
+   закрашивать цветом подложки, а подложки у компонента по умолчанию нет. */
 [data-vibeui-block="radio-009"] input:checked{
 border-color:var(--vibeui-radio-009-accent);
-box-shadow:inset 0 0 0 0.1875rem var(--vibeui-radio-009-bg),inset 0 0 0 1rem var(--vibeui-radio-009-accent);
+background:radial-gradient(circle at 50% 50%,var(--vibeui-radio-009-accent) 0 0.21875rem,transparent 0.21875rem);
 }
 [data-vibeui-block="radio-009"] [data-part="qty"]{font-size:0.8125rem;font-weight:700}
 /* Бейдж экономии сидит в углу карточки, а не в тексте: так самый выгодный
@@ -81,7 +88,7 @@ box-shadow:inset 0 0 0 0.1875rem var(--vibeui-radio-009-bg),inset 0 0 0 1rem var
 [data-vibeui-block="radio-009"] [data-part="save"]{
 position:absolute;top:0.5rem;right:0.5rem;
 padding:0.0625rem 0.375rem;border-radius:9999px;
-background:var(--vibeui-radio-009-save);color:oklch(1 0 0);
+background:var(--vibeui-radio-009-save);color:var(--vibeui-radio-009-on-save);
 font-size:0.625rem;font-weight:700;
 }
 [data-vibeui-block="radio-009"] [data-part="price"]{
@@ -111,6 +118,28 @@ const DEFAULT_BUNDLES: Radio009Bundle[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор объёма упаковки карточками: сумма, цена за штуку и бейдж экономии.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -119,6 +148,7 @@ export function Radio009({
   bundles = DEFAULT_BUNDLES,
   name = "vibeui-radio-009",
   defaultValue = "3",
+  background = "",
   accent,
   className,
   style,
@@ -126,6 +156,12 @@ export function Radio009({
 }: Radio009Props) {
   const palette = {
     ...(accent ? { "--vibeui-radio-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-radio-009-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

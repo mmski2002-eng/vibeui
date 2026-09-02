@@ -17,7 +17,18 @@ export type Solutions032Props = {
   title?: string
   hint?: string
   requests?: Solutions032Request[]
+  /** Подписи плиток сводки: total, finance, late. */
+  summaryText?: Record<string, string>
+  /** Подписи узлов цепочки: initiator, manager, finance, procurement. */
+  stageText?: Record<string, string>
+  holderLabel?: string
+  /** Срок потребности. {days} — число дней. */
+  dueText?: string
+  /** Просрочка. {days} — число дней. */
+  overdueText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,14 +45,14 @@ export type Solutions032Props = {
 // как «ещё есть время».
 const STYLES = `
 :where([data-vibeui-block="solutions-032"]){
---vibeui-solutions-032-bg:oklch(1 0 0);
---vibeui-solutions-032-panel:oklch(0.972 0.004 275);
---vibeui-solutions-032-fg:oklch(0.21 0.014 265);
---vibeui-solutions-032-muted:oklch(0.54 0.014 265);
---vibeui-solutions-032-border:oklch(0.9 0.006 265);
---vibeui-solutions-032-accent:oklch(0.5 0.16 275);
---vibeui-solutions-032-late:oklch(0.57 0.19 25);
---vibeui-solutions-032-done:oklch(0.55 0.14 152);
+--vibeui-solutions-032-bg:transparent;
+--vibeui-solutions-032-panel:light-dark(oklch(0.972 0.004 275),oklch(0.27 0.011 275));
+--vibeui-solutions-032-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-032-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-032-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-032-accent:light-dark(oklch(0.5 0.16 275),oklch(0.75 0.14 275));
+--vibeui-solutions-032-late:light-dark(oklch(0.57 0.19 25),oklch(0.71 0.17 25));
+--vibeui-solutions-032-done:light-dark(oklch(0.55 0.14 152),oklch(0.71 0.14 152));
 --vibeui-solutions-032-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -116,12 +127,25 @@ font-size:0.75rem;color:var(--vibeui-solutions-032-muted);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="solutions-032"] *{animation:none!important;transition:none!important}}
 `
 
-const STAGES: { key: Solutions032Stage; label: string }[] = [
-  { key: "initiator", label: "Инициатор" },
-  { key: "manager", label: "Руководитель" },
-  { key: "finance", label: "Финансы" },
-  { key: "procurement", label: "Закупки" },
+const STAGES: Solutions032Stage[] = [
+  "initiator",
+  "manager",
+  "finance",
+  "procurement",
 ]
+
+const STAGE_LABEL: Record<string, string> = {
+  initiator: "Инициатор",
+  manager: "Руководитель",
+  finance: "Финансы",
+  procurement: "Закупки",
+}
+
+const SUMMARY_LABEL: Record<string, string> = {
+  total: "заявок в работе",
+  finance: "ждут финансы",
+  late: "просрочено по сроку",
+}
 
 const DEFAULT_REQUESTS: Solutions032Request[] = [
   {
@@ -172,6 +196,28 @@ const DEFAULT_REQUESTS: Solutions032Request[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Заявки на закупку: стадия согласования — степпер из 4 узлов, держатель и
  * просрочка считаются из данных. Один файл, ноль зависимостей, своя палитра.
  */
@@ -179,15 +225,29 @@ export function Solutions032({
   title = "Заявки на закупку",
   hint = "Все подразделения, текущий квартал",
   requests = DEFAULT_REQUESTS,
+  summaryText = SUMMARY_LABEL,
+  stageText = STAGE_LABEL,
+  holderLabel = "Держит:",
+  dueText = "нужна через {days} дн.",
+  overdueText = "просрочено на {days} дн.",
   accent,
+  background = "",
   className,
   style,
 }: Solutions032Props) {
   const overdue = requests.filter((request) => request.neededInDays < 0)
   const inFinance = requests.filter((request) => request.stage === "finance")
+  const summary = (key: string) => summaryText[key] ?? SUMMARY_LABEL[key]
+  const stageName = (key: string) => stageText[key] ?? STAGE_LABEL[key]
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-032-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-032-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -212,27 +272,28 @@ export function Solutions032({
         <div data-part="summary">
           <p data-part="tile">
             <b>{requests.length}</b>
-            <span>заявок в работе</span>
+            <span>{summary("total")}</span>
           </p>
           <p data-part="tile">
             <b>{inFinance.length}</b>
-            <span>ждут финансы</span>
+            <span>{summary("finance")}</span>
           </p>
           <p data-part="tile" data-tile="late">
             <b>{overdue.length}</b>
-            <span>просрочено по сроку</span>
+            <span>{summary("late")}</span>
           </p>
         </div>
 
         <div data-part="list">
           {requests.map((request) => {
-            const stageIndex = STAGES.findIndex(
-              (stage) => stage.key === request.stage,
-            )
+            const stageIndex = STAGES.indexOf(request.stage)
             const late = request.neededInDays < 0
             const dueLabel = late
-              ? `просрочено на ${Math.abs(request.neededInDays)} дн.`
-              : `нужна через ${request.neededInDays} дн.`
+              ? overdueText.replace(
+                  "{days}",
+                  String(Math.abs(request.neededInDays)),
+                )
+              : dueText.replace("{days}", String(request.neededInDays))
 
             return (
               <article data-part="card" key={request.id}>
@@ -255,9 +316,9 @@ export function Solutions032({
                           ? "current"
                           : "pending"
                     return (
-                      <li data-part="step" data-status={status} key={stage.key}>
+                      <li data-part="step" data-status={status} key={stage}>
                         <span data-part="bullet" aria-hidden="true" />
-                        <small>{stage.label}</small>
+                        <small>{stageName(stage)}</small>
                       </li>
                     )
                   })}
@@ -265,8 +326,9 @@ export function Solutions032({
 
                 <div data-part="foot-row">
                   <span>
-                    Держит: <span data-part="holder">{request.holder}</span> ·{" "}
-                    {STAGES[stageIndex].label}
+                    {holderLabel}{" "}
+                    <span data-part="holder">{request.holder}</span> ·{" "}
+                    {stageName(STAGES[stageIndex])}
                   </span>
                   <span data-part="due" data-late={late ? "true" : "false"}>
                     {dueLabel}

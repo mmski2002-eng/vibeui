@@ -11,6 +11,8 @@ export type Card013Props = Omit<
   /** Подпись под текстом: срок, цена, статус. */
   meta?: string
   actionLabel?: string
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,11 +22,13 @@ export type Card013Props = Omit<
 // то в сайдбаре, то в основной колонке, и ширина окна о ней ничего не знает.
 const STYLES = `
 :where([data-vibeui-block="card-013"]){
---vibeui-card-013-bg:oklch(1 0 0);
---vibeui-card-013-fg:oklch(0.22 0.015 265);
---vibeui-card-013-muted:oklch(0.55 0.013 265);
---vibeui-card-013-border:oklch(0.91 0.006 265);
---vibeui-card-013-accent:oklch(0.55 0.15 195);
+--vibeui-card-013-bg:transparent;
+--vibeui-card-013-surface:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-card-013-ink:light-dark(oklch(0.2 0.02 265),oklch(0.97 0.005 265));
+--vibeui-card-013-fg:light-dark(oklch(0.22 0.015 265),oklch(0.94 0.006 265));
+--vibeui-card-013-muted:light-dark(oklch(0.55 0.013 265),oklch(0.71 0.012 265));
+--vibeui-card-013-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-card-013-accent:light-dark(oklch(0.55 0.15 195),oklch(0.75 0.12 195));
 --vibeui-card-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -43,7 +47,9 @@ display:flex;flex-direction:column;
 flex:none;aspect-ratio:16 / 9;
 background:
 radial-gradient(100% 90% at 25% 10%,color-mix(in oklab,var(--vibeui-card-013-accent) 45%,transparent),transparent 65%),
-linear-gradient(150deg,oklch(0.94 0.03 200),oklch(0.87 0.05 220));
+linear-gradient(150deg,
+light-dark(oklch(0.94 0.03 200),oklch(0.36 0.04 200)),
+light-dark(oklch(0.87 0.05 220),oklch(0.44 0.06 220)));
 }
 [data-vibeui-block="card-013"] [data-part="body"]{
 display:flex;flex-direction:column;gap:0.375rem;padding:0.9375rem 1.0625rem 1.0625rem;
@@ -70,13 +76,13 @@ margin:0;font-size:0.75rem;color:var(--vibeui-card-013-muted);
 appearance:none;cursor:pointer;flex:none;
 height:2rem;padding:0 0.875rem;border-radius:0.5rem;
 border:1px solid color-mix(in oklab,var(--vibeui-card-013-accent) 35%,var(--vibeui-card-013-border));
-background:color-mix(in oklab,var(--vibeui-card-013-accent) 10%,oklch(1 0 0));
-color:color-mix(in oklab,var(--vibeui-card-013-accent) 75%,oklch(0.2 0.02 265));
+background:color-mix(in oklab,var(--vibeui-card-013-accent) 10%,var(--vibeui-card-013-surface));
+color:color-mix(in oklab,var(--vibeui-card-013-accent) 75%,var(--vibeui-card-013-ink));
 font:inherit;font-size:0.8125rem;font-weight:640;
 transition:background-color .16s ease;
 }
 [data-vibeui-block="card-013"] [data-part="action"]:hover{
-background:color-mix(in oklab,var(--vibeui-card-013-accent) 18%,oklch(1 0 0));
+background:color-mix(in oklab,var(--vibeui-card-013-accent) 18%,var(--vibeui-card-013-surface));
 }
 [data-vibeui-block="card-013"] [data-part="action"]:focus-visible{
 outline:2px solid var(--vibeui-card-013-accent);outline-offset:2px;
@@ -97,6 +103,28 @@ outline:2px solid var(--vibeui-card-013-accent);outline-offset:2px;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Карточка, которая переключается между горизонтальной и вертикальной
  * раскладкой по собственной ширине. Один файл, ноль зависимостей.
  */
@@ -106,6 +134,7 @@ export function Card013({
   eyebrow = "Курс",
   meta = "6 занятий · 3 часа",
   actionLabel = "Начать",
+  background = "",
   accent,
   className,
   style,
@@ -113,6 +142,13 @@ export function Card013({
 }: Card013Props) {
   const palette = {
     ...(accent ? { "--vibeui-card-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-card-013-bg": background,
+          "--vibeui-card-013-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -32,15 +32,20 @@
             "rootMargin, отрезающий низ: иначе активным становится едва показавшийся раздел",
             "запас под последним разделом — без него он не долистывается и не подсвечивается",
             "полосу у активного пункта, а не только цвет текста",
-            "обычные ссылки с href: оглавление должно работать и без JS"
+            "обычные ссылки с href: оглавление должно работать и без JS",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив sections и их тексты",
             "title — заголовок оглавления",
             "высоту области текста",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "bodyLabel — подпись области чтения для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент следит за своей областью прокрутки: для слежения за страницей уберите root.",
             "Подсветка отстаёт на кадр при мгновенном перескоке — это поведение наблюдателя, а не ошибка.",
             "Оглавление из двух пунктов не нужно: оно окупается от четырёх разделов.",
@@ -60,6 +65,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -73,15 +84,20 @@
                 "the rootMargin cutting off the bottom: otherwise a barely visible section becomes active",
                 "the tail space under the last section — without it it never scrolls into view",
                 "the bar on the active item rather than colour alone",
-                "plain links with href: the contents must work without JS too"
+                "plain links with href: the contents must work without JS too",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the sections array and their text",
                 "title — the contents heading",
                 "the text area height",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "bodyLabel — the reading area's screen-reader label"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component watches its own scroll area: drop root to watch the page instead.",
                 "The highlight lags a frame on an instant jump — that is observer behaviour, not a bug.",
                 "A two-item contents list is pointless: it pays off from four sections up.",
@@ -96,11 +112,43 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Scrollspy Contents"
+            "title": "Scrollspy Contents",
+            "preview": {
+              "props": {
+                "title": "On this page",
+                "bodyLabel": "Text",
+                "sections": [
+                  {
+                    "id": "install",
+                    "title": "Install",
+                    "text": "The component installs with a single command: the file is copied into your project, and there are no dependencies."
+                  },
+                  {
+                    "id": "props",
+                    "title": "Props",
+                    "text": "Every prop has a sensible default, so the component renders even without a single attribute."
+                  },
+                  {
+                    "id": "theme",
+                    "title": "Theme",
+                    "text": "Colours live in local variables prefixed with the component name and never clash with the host project's theme."
+                  },
+                  {
+                    "id": "a11y",
+                    "title": "Accessibility",
+                    "text": "The markup is semantic, focus is visible, and state is conveyed by more than colour."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -134,15 +182,20 @@
             "IntersectionObserver вместо обработчика scroll — иначе браузер считает раскладку на каждый пиксель",
             "rootMargin с отрицательным низом: без него активным становится раздел, уже ушедший вверх",
             "aria-current на активной ссылке: залитый номер скринридеру недоступен",
-            "запас снизу у последнего раздела — иначе он не долистывается и никогда не подсвечивается"
+            "запас снизу у последнего раздела — иначе он не долистывается и никогда не подсвечивается",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок оглавления через title",
             "разделы через sections: идентификатор, заголовок и текст",
             "цвет акцента через accent",
-            "высоту области чтения в правиле height у [data-part=\"body\"]"
+            "высоту области чтения в правиле height у [data-part=\"body\"]",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "bodyLabel — подпись области чтения для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Идентификаторы разделов должны быть уникальны на странице: два блока с одинаковыми id перебьют якоря.",
             "Оглавление в строку рассчитано на пять-шесть пунктов: длинный список превращается в бесконечную прокрутку.",
             "Область чтения здесь своя; для оглавления по всей странице уберите root у наблюдателя.",
@@ -162,6 +215,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -175,15 +234,20 @@
                 "the IntersectionObserver instead of a scroll handler — otherwise the browser recomputes layout on every pixel",
                 "the negative bottom rootMargin: without it a section that already scrolled past becomes active",
                 "aria-current on the active link: a filled number is invisible to a screen reader",
-                "the bottom padding on the last section — without it it never scrolls up and never lights up"
+                "the bottom padding on the last section — without it it never scrolls up and never lights up",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the outline heading through title",
                 "the sections through sections: id, title and text",
                 "the accent colour through accent",
-                "the reading area height in the height rule of [data-part=\"body\"]"
+                "the reading area height in the height rule of [data-part=\"body\"]",
+                "background — the component background; empty means no background, taking the page colour",
+                "bodyLabel — the reading area's screen-reader label"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Section ids must be unique on the page: two blocks with the same ids break the anchors.",
                 "A single-row outline suits five or six items: a long list turns into endless scrolling.",
                 "The reading area is local here; for a whole-page outline drop the observer's root.",
@@ -199,11 +263,43 @@
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Article Outline"
+            "title": "Article Outline",
+            "preview": {
+              "props": {
+                "title": "Contents",
+                "bodyLabel": "Article text",
+                "sections": [
+                  {
+                    "id": "why",
+                    "title": "Why",
+                    "text": "The article explains why an outline on a long page stops being decoration: readers arrive from search and land in the middle of the text."
+                  },
+                  {
+                    "id": "how",
+                    "title": "How it works",
+                    "text": "Sections carry ids, the links are plain anchors, and an intersection observer adds the highlight on top of navigation that already works."
+                  },
+                  {
+                    "id": "mobile",
+                    "title": "On a phone",
+                    "text": "A single-row outline scrolls under a thumb and takes no width from the text, so there is no need to hide it behind a button."
+                  },
+                  {
+                    "id": "limits",
+                    "title": "Limits",
+                    "text": "For a fifteen-item outline the row stops working: that calls for a nested list or a side column."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -237,15 +333,20 @@
             "наблюдение за обоими уровнями сразу — иначе подпункт никогда не станет активным",
             "обычные якоря без preventDefault: без JS оглавление обязано остаться рабочим",
             "aria-current на ссылке текущего раздела, а не только жирное начертание",
-            "вычисление data-open из активного раздела вместо отдельного состояния раскрытия"
+            "вычисление data-open из активного раздела вместо отдельного состояния раскрытия",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок оглавления через title",
             "главы и подпункты через chapters и вложенный children",
             "цвет акцента через accent",
-            "ширину колонки оглавления в grid-template-columns"
+            "ширину колонки оглавления в grid-template-columns",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "bodyLabel — подпись области чтения для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Третий уровень вложенности компонент не рисует: для него нужна другая раскладка.",
             "Идентификаторы глав и подпунктов должны быть уникальны на всей странице.",
             "Глава без children ведёт себя как обычный пункт — это нормально и специально.",
@@ -265,6 +366,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -278,15 +385,20 @@
                 "observing both levels at once — otherwise a sub-item never becomes active",
                 "plain anchors without preventDefault: the outline must keep working without JS",
                 "aria-current on the current link, not just a bolder weight",
-                "deriving data-open from the active section instead of keeping separate open state"
+                "deriving data-open from the active section instead of keeping separate open state",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the outline heading through title",
                 "the chapters and sub-items through chapters and the nested children",
                 "the accent colour through accent",
-                "the outline column width in grid-template-columns"
+                "the outline column width in grid-template-columns",
+                "background — the component background; empty means no background, taking the page colour",
+                "bodyLabel — the reading area's screen-reader label"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not draw a third nesting level: that needs a different layout.",
                 "Chapter and sub-item ids must be unique across the whole page.",
                 "A chapter without children behaves like a plain item — that is intentional.",
@@ -302,11 +414,69 @@
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Nested Contents"
+            "title": "Nested Contents",
+            "preview": {
+              "props": {
+                "title": "Sections",
+                "bodyLabel": "Documentation text",
+                "chapters": [
+                  {
+                    "id": "start",
+                    "title": "Getting started",
+                    "text": "A short chapter on what you need before installing.",
+                    "children": [
+                      {
+                        "id": "start-req",
+                        "title": "Requirements",
+                        "text": "All you need is a package manager and a project to copy the component file into."
+                      },
+                      {
+                        "id": "start-install",
+                        "title": "Install",
+                        "text": "One command copies the source into the project: the build downloads nothing from the network."
+                      }
+                    ]
+                  },
+                  {
+                    "id": "api",
+                    "title": "Interface",
+                    "text": "Every prop has a default value.",
+                    "children": [
+                      {
+                        "id": "api-props",
+                        "title": "Props",
+                        "text": "Data comes in as an array, captions as strings, and the look changes through a single accent variable."
+                      },
+                      {
+                        "id": "api-events",
+                        "title": "Events",
+                        "text": "The component imposes no handlers: it stays navigation rather than a store for application state."
+                      }
+                    ]
+                  },
+                  {
+                    "id": "a11y",
+                    "title": "Accessibility",
+                    "text": "Links stay links, and state is conveyed by more than colour.",
+                    "children": [
+                      {
+                        "id": "a11y-keys",
+                        "title": "Keyboard",
+                        "text": "The outline is reachable with Tab and every link has a visible focus ring."
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -340,15 +510,21 @@
             "role=\"progressbar\" с aria-valuenow — полоса без роли скринридеру ничего не сообщает",
             "процент числом рядом с полосой: одна полоса не даёт точности",
             "обычные якоря без preventDefault: без JS оглавление обязано остаться рабочим",
-            "aria-current на активной ссылке, а не только заливку фона"
+            "aria-current на активной ссылке, а не только заливку фона",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок колонки через title",
             "разделы через sections: идентификатор, заголовок и текст",
             "цвет акцента через accent",
-            "высоту области чтения в правиле height у [data-part=\"body\"]"
+            "высоту области чтения в правиле height у [data-part=\"body\"]",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "progressLabel — подпись полосы прочитанного для скринридера",
+            "bodyLabel — подпись области чтения для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Процент считается по своей области прокрутки: для всей страницы обработчик придётся повесить на window.",
             "Сто процентов достигаются только в самом низу — короткий текст сразу покажет 100%.",
             "Идентификаторы разделов должны быть уникальны на странице.",
@@ -368,6 +544,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -381,15 +563,21 @@
                 "role=\"progressbar\" with aria-valuenow — a bar without a role tells a screen reader nothing",
                 "the percentage in figures next to the bar: the bar alone is not precise",
                 "plain anchors without preventDefault: the outline must keep working without JS",
-                "aria-current on the active link, not just the background fill"
+                "aria-current on the active link, not just the background fill",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the column heading through title",
                 "the sections through sections: id, title and text",
                 "the accent colour through accent",
-                "the reading area height in the height rule of [data-part=\"body\"]"
+                "the reading area height in the height rule of [data-part=\"body\"]",
+                "background — the component background; empty means no background, taking the page colour",
+                "progressLabel — the progress bar's screen-reader label",
+                "bodyLabel — the reading area's screen-reader label"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The percentage is measured inside this scroll area: for the whole page the handler must move to window.",
                 "A hundred percent is only reached at the very bottom — a short text shows 100% immediately.",
                 "Section ids must be unique on the page.",
@@ -405,11 +593,49 @@
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Reading Progress"
+            "title": "Reading Progress",
+            "preview": {
+              "props": {
+                "title": "Documentation",
+                "progressLabel": "Read",
+                "bodyLabel": "Documentation text",
+                "sections": [
+                  {
+                    "id": "overview",
+                    "title": "Overview",
+                    "text": "The documentation opens with a short explanation: what the library does and what it deliberately does not."
+                  },
+                  {
+                    "id": "install",
+                    "title": "Install",
+                    "text": "One command copies the component into your project. No runtime, no configuration: the file lives in your repository and is edited like your own code."
+                  },
+                  {
+                    "id": "theming",
+                    "title": "Theme",
+                    "text": "Every colour is declared in the component's local variables. To recolour the block, pass a single accent variable — global styles stay untouched."
+                  },
+                  {
+                    "id": "layout",
+                    "title": "Layout",
+                    "text": "Width is measured from the container rather than the window: the component behaves the same in a narrow column and on a full screen."
+                  },
+                  {
+                    "id": "faq",
+                    "title": "FAQ",
+                    "text": "Here are the answers people want before installing: size, compatibility and support for older browsers."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -443,19 +669,25 @@
             "block:\"nearest\" в scrollIntoView — иначе к центру подтянется вся страница",
             "непрозрачный фон панели: текст под ней не должен просвечивать сквозь подписи",
             "обычные якоря без preventDefault: без JS панель обязана остаться рабочей",
-            "aria-current на активном пункте: подчёркивание скринридеру недоступно"
+            "aria-current на активном пункте: подчёркивание скринридеру недоступно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "подпись панели для скринридера через label",
             "разделы через sections: идентификатор, заголовок и текст",
             "цвет акцента через accent",
-            "высоту области чтения в правиле height у [data-part=\"body\"]"
+            "высоту области чтения в правиле height у [data-part=\"body\"]",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "bodyLabel — подпись области чтения для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "scroll-margin-top у разделов должен быть не меньше высоты панели, иначе якорь спрячет заголовок под ней.",
             "Автоцентрирование срабатывает на каждую смену раздела: при очень быстрой прокрутке панель заметно ездит.",
             "Идентификаторы разделов должны быть уникальны на странице.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "Липкая панель берёт системный Canvas: подложки у компонента нет, но текст сквозь панель просвечивать не должен. Проп background перекрашивает и панель тоже."
           ]
         },
         "controls": [
@@ -471,6 +703,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -484,19 +722,25 @@
                 "block:\"nearest\" in scrollIntoView — otherwise the whole page is pulled to centre",
                 "the bar's opaque background: the text below must not show through the labels",
                 "plain anchors without preventDefault: the bar must keep working without JS",
-                "aria-current on the active item: the underline is invisible to a screen reader"
+                "aria-current on the active item: the underline is invisible to a screen reader",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the bar's screen-reader label through label",
                 "the sections through sections: id, title and text",
                 "the accent colour through accent",
-                "the reading area height in the height rule of [data-part=\"body\"]"
+                "the reading area height in the height rule of [data-part=\"body\"]",
+                "background — the component background; empty means no background, taking the page colour",
+                "bodyLabel — the reading area's screen-reader label"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The sections' scroll-margin-top must be at least the bar height, or the anchor hides the heading behind it.",
                 "Auto-centring fires on every section change: during very fast scrolling the bar visibly shifts.",
                 "Section ids must be unique on the page.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "The sticky bar takes the system Canvas colour: the component has no panel of its own, yet the text must not show through the bar. The background prop recolours the bar as well."
               ],
               "usage": "<Scrollspy005\n  label=\"Page sections\"\n  sections={[\n    { id: \"menu\", title: \"Menu\", text: \"Coffee, tea and pastry\" },\n    { id: \"prices\", title: \"Prices\", text: \"An hour at the shared table\" },\n  ]}\n/>"
             },
@@ -508,11 +752,53 @@
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Sticky Section Bar"
+            "title": "Sticky Section Bar",
+            "preview": {
+              "props": {
+                "label": "Page sections",
+                "bodyLabel": "Page text",
+                "sections": [
+                  {
+                    "id": "about",
+                    "title": "The place",
+                    "text": "A small workshop in the city centre: six desks, a shared oven and a shelf of tools."
+                  },
+                  {
+                    "id": "menu",
+                    "title": "Menu",
+                    "text": "Coffee, tea and pastry baked here in the morning. The list changes every week."
+                  },
+                  {
+                    "id": "prices",
+                    "title": "Prices",
+                    "text": "An hour at the shared table costs less than a coffee next door, and a monthly pass is four times better value."
+                  },
+                  {
+                    "id": "schedule",
+                    "title": "Hours",
+                    "text": "Weekdays from eight in the morning until ten at night, Saturday until six, Sunday for residents only."
+                  },
+                  {
+                    "id": "rules",
+                    "title": "Rules",
+                    "text": "Loud calls go in the phone booth, tools go back on the shelf, dishes get washed straight away."
+                  },
+                  {
+                    "id": "contacts",
+                    "title": "Contacts",
+                    "text": "Second floor, entrance from the courtyard. Write ahead if you need a table for more than four."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -546,19 +832,25 @@
             "начальное состояние «показана»: при отключённом JS ссылка обязана остаться на месте",
             "сокрытие атрибутом hidden, а не прозрачностью — иначе таб уходит в невидимую ссылку",
             "отдельный наблюдатель на сентинел: ссылка не должна предлагать то, что уже сделано",
-            "ссылку поверх области чтения, а не в потоке: появление не должно двигать текст"
+            "ссылку поверх области чтения, а не в потоке: появление не должно двигать текст",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок оглавления через title и подпись возврата через topLabel",
             "разделы через sections: идентификатор, заголовок и текст",
             "цвет акцента через accent",
-            "положение кнопки возврата в правилах right и bottom"
+            "положение кнопки возврата в правилах right и bottom",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "bodyLabel — подпись области чтения для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сентинел высотой в один пиксель: нулевая высота в некоторых браузерах не даёт пересечения.",
             "Возврат ведёт на первый раздел из sections — пустой массив оставит ссылку без цели.",
             "Идентификаторы разделов должны быть уникальны на странице.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "Кнопка возврата берёт системный Canvas: подложки у компонента нет, но сквозь кнопку текст просвечивать не должен. Проп background перекрашивает и её тоже."
           ]
         },
         "controls": [
@@ -574,6 +866,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -587,19 +885,25 @@
                 "the initial \"visible\" state: with JS disabled the link must stay in place",
                 "hiding with the hidden attribute rather than opacity — otherwise Tab lands on an invisible link",
                 "the separate observer on the sentinel: the link must not offer what is already done",
-                "the link floating above the reading area, not in the flow: appearing must not move the text"
+                "the link floating above the reading area, not in the flow: appearing must not move the text",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the outline heading through title and the return caption through topLabel",
                 "the sections through sections: id, title and text",
                 "the accent colour through accent",
-                "the position of the return button in its right and bottom rules"
+                "the position of the return button in its right and bottom rules",
+                "background — the component background; empty means no background, taking the page colour",
+                "bodyLabel — the reading area's screen-reader label"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The sentinel is one pixel tall: zero height gives no intersection in some browsers.",
                 "The return points at the first item of sections — an empty array leaves the link without a target.",
                 "Section ids must be unique on the page.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "The return control takes the system Canvas colour: the component has no panel of its own, yet the text must not show through the control. The background prop recolours it as well."
               ],
               "usage": "<Scrollspy006\n  title=\"Contents\"\n  topLabel=\"Back to top\"\n  sections={[\n    { id: \"intro\", title: \"Intro\", text: \"Why a long page needs a way back\" },\n    { id: \"usage\", title: \"Usage\", text: \"Links stay links\" },\n  ]}\n/>"
             },
@@ -611,11 +915,49 @@
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Back To Top"
+            "title": "Back To Top",
+            "preview": {
+              "props": {
+                "title": "Contents",
+                "topLabel": "Back to top",
+                "bodyLabel": "Article text",
+                "sections": [
+                  {
+                    "id": "intro",
+                    "title": "Intro",
+                    "text": "A long text with no way back to the start forces readers to spin the wheel backwards — the most common complaint about help pages."
+                  },
+                  {
+                    "id": "setup",
+                    "title": "Setup",
+                    "text": "Sections are marked with ids and the outline is built from the same array as the text: they cannot drift apart."
+                  },
+                  {
+                    "id": "usage",
+                    "title": "Usage",
+                    "text": "Links stay links: they open in a new tab, they can be copied and sent to a colleague — the address points at the section."
+                  },
+                  {
+                    "id": "tips",
+                    "title": "Tips",
+                    "text": "Do not hide the return control behind an entrance animation: on a long page it is needed instantly, not half a second later."
+                  },
+                  {
+                    "id": "end",
+                    "title": "Wrap-up",
+                    "text": "The outline answers \"what is next\", the return control answers \"how do I get back\". Those are different jobs."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -649,15 +991,20 @@
             "название текущего раздела в заголовке свёрнутого списка — иначе он бесполезен",
             "обычные якоря без preventDefault: без JS оглавление обязано остаться рабочим",
             "серверный вид по умолчанию развёрнутый: при отключённом JS список должен быть виден",
-            "aria-current на активной ссылке: заливка фона скринридеру недоступна"
+            "aria-current на активной ссылке: заливка фона скринридеру недоступна",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок оглавления через title",
             "порог сворачивания через compactAt в пикселях",
             "разделы через sections: идентификатор, заголовок и текст",
-            "цвет акцента через accent"
+            "цвет акцента через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "bodyLabel — подпись области чтения для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "До первого измерения блок считается широким: на сервере рисуется развёрнутый вид.",
             "Порог задан в пикселях, а не в rem: при крупном системном шрифте его стоит поднять.",
             "Идентификаторы разделов должны быть уникальны на странице.",
@@ -678,6 +1025,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -691,15 +1044,20 @@
                 "the current section's name in the collapsed summary — without it the collapsed outline is useless",
                 "plain anchors without preventDefault: the outline must keep working without JS",
                 "the expanded server-rendered default: with JS disabled the list must be visible",
-                "aria-current on the active link: the background fill is invisible to a screen reader"
+                "aria-current on the active link: the background fill is invisible to a screen reader",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the outline heading through title",
                 "the collapse threshold through compactAt, in pixels",
                 "the sections through sections: id, title and text",
-                "the accent colour through accent"
+                "the accent colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "bodyLabel — the reading area's screen-reader label"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Before the first measurement the block counts as wide: the server renders the expanded shape.",
                 "The threshold is in pixels, not rem: with a large system font it is worth raising.",
                 "Section ids must be unique on the page.",
@@ -715,11 +1073,48 @@
               "accent": {
                 "label": "Accent",
                 "default": ""
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Compact Contents"
+            "title": "Compact Contents",
+            "preview": {
+              "props": {
+                "title": "Contents",
+                "bodyLabel": "Agreement text",
+                "sections": [
+                  {
+                    "id": "rules",
+                    "title": "Terms",
+                    "text": "The offer agreement describes exactly what you get and when. Reading it in full is optional, but the refund section is worth opening."
+                  },
+                  {
+                    "id": "payment",
+                    "title": "Payment",
+                    "text": "The payment runs on the bank's side: card details never reach our server and are stored nowhere."
+                  },
+                  {
+                    "id": "delivery",
+                    "title": "Delivery",
+                    "text": "Times are counted from the moment the order is packed, not from payment: the warehouse is closed at weekends."
+                  },
+                  {
+                    "id": "refund",
+                    "title": "Refund",
+                    "text": "An order can be returned within fourteen days. The money comes back to the same card, usually within three working days."
+                  },
+                  {
+                    "id": "support",
+                    "title": "Support",
+                    "text": "Write to us by email: a reply arrives within a day, and faster for urgent matters."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["compactAt", "accent", "background"]
       }
     }
   ]

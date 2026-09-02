@@ -14,7 +14,27 @@ export type Solutions037Props = {
   hint?: string
   vehicles?: Solutions037Vehicle[]
   warnThresholdKm?: number
+  /** Подписи статусов: ok, warn, late. */
+  statusText?: Record<string, string>
+  /** Подписи плиток сводки: vehicles, warn, late. */
+  summaryText?: Record<string, string>
+  /** Заголовки колонок: vehicle, mileage, date, remain, status. */
+  columnText?: Record<string, string>
+  /** Пробег. {km} — километры. */
+  mileageText?: string
+  /** Остаток до ТО. {km} — километры. */
+  remainingText?: string
+  /** Перепробег. {km} — километры. */
+  overrunText?: string
+  /** Скрытая подпись полосы. {plate} — номер машины. */
+  barLabel?: string
+  /** Сноска под таблицей. */
+  footNote?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -29,15 +49,15 @@ export type Solutions037Props = {
 // произвольным цветом.
 const STYLES = `
 :where([data-vibeui-block="solutions-037"]){
---vibeui-solutions-037-bg:oklch(1 0 0);
---vibeui-solutions-037-panel:oklch(0.976 0.004 250);
---vibeui-solutions-037-fg:oklch(0.21 0.014 265);
---vibeui-solutions-037-muted:oklch(0.54 0.014 265);
---vibeui-solutions-037-border:oklch(0.9 0.006 265);
---vibeui-solutions-037-accent:oklch(0.5 0.15 250);
---vibeui-solutions-037-ok:oklch(0.55 0.14 152);
---vibeui-solutions-037-warn:oklch(0.68 0.16 75);
---vibeui-solutions-037-late:oklch(0.57 0.19 25);
+--vibeui-solutions-037-bg:transparent;
+--vibeui-solutions-037-panel:light-dark(oklch(0.976 0.004 250),oklch(0.27 0.011 265));
+--vibeui-solutions-037-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-037-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-037-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-037-accent:light-dark(oklch(0.5 0.15 250),oklch(0.72 0.14 250));
+--vibeui-solutions-037-ok:light-dark(oklch(0.55 0.14 152),oklch(0.71 0.14 152));
+--vibeui-solutions-037-warn:light-dark(oklch(0.68 0.16 75),oklch(0.79 0.15 75));
+--vibeui-solutions-037-late:light-dark(oklch(0.57 0.19 25),oklch(0.71 0.17 25));
 --vibeui-solutions-037-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-037-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -203,7 +223,7 @@ const DEFAULT_VEHICLES: Solutions037Vehicle[] = [
   },
 ]
 
-const STATUS_LABEL: Record<"ok" | "warn" | "late", string> = {
+const STATUS_LABEL: Record<string, string> = {
   ok: "в норме",
   warn: "скоро ТО",
   late: "просрочено",
@@ -213,6 +233,42 @@ const STATUS_LETTER: Record<"ok" | "warn" | "late", string> = {
   ok: "✓",
   warn: "~",
   late: "!",
+}
+
+const SUMMARY_LABEL: Record<string, string> = {
+  vehicles: "машин на контроле",
+  warn: "приближаются к ТО",
+  late: "просрочили ТО",
+}
+
+const COLUMN_LABEL: Record<string, string> = {
+  vehicle: "Машина",
+  mileage: "Пробег",
+  date: "Плановая дата ТО",
+  remain: "Остаток до ТО",
+  status: "Статус",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 function vehicleStatus(remaining: number, warnThresholdKm: number) {
@@ -231,10 +287,22 @@ export function Solutions037({
   hint = "23 машины в парке, показаны активные",
   vehicles = DEFAULT_VEHICLES,
   warnThresholdKm = 1500,
+  statusText = STATUS_LABEL,
+  summaryText = SUMMARY_LABEL,
+  columnText = COLUMN_LABEL,
+  mileageText = "{km} км",
+  remainingText = "осталось {km} км",
+  overrunText = "перепробег {km} км",
+  barLabel = "{plate}: пробег до ТО",
+  footNote = "Статус считается сравнением пробега с плановым интервалом ТО, а не хранится отдельной меткой.",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions037Props) {
+  const column = (key: string) => columnText[key] ?? COLUMN_LABEL[key]
+  const summary = (key: string) => summaryText[key] ?? SUMMARY_LABEL[key]
   const rows = vehicles.map((vehicle) => {
     const nextServiceMileage = vehicle.lastServiceMileage + vehicle.intervalKm
     const remaining = nextServiceMileage - vehicle.mileage
@@ -251,6 +319,12 @@ export function Solutions037({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-037-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-037-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -275,15 +349,15 @@ export function Solutions037({
         <div data-part="summary">
           <p data-part="tile">
             <b>{rows.length}</b>
-            <span>машин на контроле</span>
+            <span>{summary("vehicles")}</span>
           </p>
           <p data-part="tile" data-tile="warn">
             <b>{warnCount}</b>
-            <span>приближаются к ТО</span>
+            <span>{summary("warn")}</span>
           </p>
           <p data-part="tile" data-tile="late">
             <b>{lateCount}</b>
-            <span>просрочили ТО</span>
+            <span>{summary("late")}</span>
           </p>
         </div>
 
@@ -291,13 +365,13 @@ export function Solutions037({
           <table>
             <thead>
               <tr>
-                <th scope="col">Машина</th>
+                <th scope="col">{column("vehicle")}</th>
                 <th scope="col" data-align="end">
-                  Пробег
+                  {column("mileage")}
                 </th>
-                <th scope="col">Плановая дата ТО</th>
-                <th scope="col">Остаток до ТО</th>
-                <th scope="col">Статус</th>
+                <th scope="col">{column("date")}</th>
+                <th scope="col">{column("remain")}</th>
+                <th scope="col">{column("status")}</th>
               </tr>
             </thead>
             <tbody>
@@ -308,7 +382,10 @@ export function Solutions037({
                     <span data-part="model">{vehicle.model}</span>
                   </td>
                   <td data-align="end">
-                    {vehicle.mileage.toLocaleString("ru-RU")} км
+                    {mileageText.replace(
+                      "{km}",
+                      vehicle.mileage.toLocaleString(locale),
+                    )}
                   </td>
                   <td>
                     <span data-part="date">{vehicle.nextServiceDate}</span>
@@ -317,13 +394,19 @@ export function Solutions037({
                     <span data-part="remain" data-status={status}>
                       <span data-part="km">
                         {remaining > 0
-                          ? `осталось ${remaining.toLocaleString("ru-RU")} км`
-                          : `перепробег ${Math.abs(remaining).toLocaleString("ru-RU")} км`}
+                          ? remainingText.replace(
+                              "{km}",
+                              remaining.toLocaleString(locale),
+                            )
+                          : overrunText.replace(
+                              "{km}",
+                              Math.abs(remaining).toLocaleString(locale),
+                            )}
                       </span>
                       <span
                         data-part="bar"
                         role="progressbar"
-                        aria-label={`${vehicle.plate}: пробег до ТО`}
+                        aria-label={barLabel.replace("{plate}", vehicle.plate)}
                         aria-valuenow={used}
                         aria-valuemin={0}
                         aria-valuemax={vehicle.intervalKm}
@@ -342,7 +425,7 @@ export function Solutions037({
                       <span data-part="letter" aria-hidden="true">
                         {STATUS_LETTER[status]}
                       </span>
-                      {STATUS_LABEL[status]}
+                      {statusText[status] ?? STATUS_LABEL[status]}
                     </span>
                   </td>
                 </tr>
@@ -351,10 +434,7 @@ export function Solutions037({
           </table>
         </div>
 
-        <p data-part="foot">
-          Статус считается сравнением пробега с плановым интервалом ТО, а не
-          хранится отдельной меткой.
-        </p>
+        <p data-part="foot">{footNote}</p>
       </section>
     </>
   )

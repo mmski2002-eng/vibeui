@@ -16,7 +16,11 @@ export type Stepper007Props = Omit<
   current?: number
   /** Подпись ссылки возврата к пройденному шагу. */
   editLabel?: string
+  /** Подписи состояний: компонент несёт русские, проект подставляет свои. */
+  stateText?: Record<string, string>
   label?: string
+  /** Пусто — подложки нет, список лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,15 +29,19 @@ export type Stepper007Props = Omit<
 // доступное имя вида «Изменить: доставка», иначе в списке из четырёх ссылок
 // все называются одинаково. Будущие шаги ссылками не притворяются: это
 // обычный текст, а не отключённая кнопка, которую нельзя нажать.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="stepper-007"]){
---vibeui-stepper-007-bg:oklch(1 0 0);
---vibeui-stepper-007-fg:oklch(0.24 0.016 265);
---vibeui-stepper-007-muted:oklch(0.56 0.014 265);
---vibeui-stepper-007-border:oklch(0.92 0.006 265);
---vibeui-stepper-007-accent:oklch(0.55 0.2 262);
---vibeui-stepper-007-accent-fg:oklch(1 0 0);
---vibeui-stepper-007-done:oklch(0.55 0.14 155);
+--vibeui-stepper-007-bg:transparent;
+--vibeui-stepper-007-surface:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-stepper-007-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-stepper-007-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-stepper-007-border:light-dark(oklch(0.92 0.006 265),oklch(0.32 0.012 265));
+--vibeui-stepper-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-stepper-007-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
+--vibeui-stepper-007-done:light-dark(oklch(0.55 0.14 155),oklch(0.74 0.14 155));
 --vibeui-stepper-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="stepper-007"]{
@@ -58,7 +66,7 @@ grid-column:1;grid-row:1 / span 2;align-self:start;
 display:flex;align-items:center;justify-content:center;
 width:1.5rem;height:1.5rem;border-radius:9999px;
 border:2px solid var(--vibeui-stepper-007-border);
-background:var(--vibeui-stepper-007-bg);color:var(--vibeui-stepper-007-muted);
+background:var(--vibeui-stepper-007-surface);color:var(--vibeui-stepper-007-muted);
 font-size:0.6875rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="stepper-007"] li[data-state="done"] [data-part="mark"]{
@@ -120,6 +128,33 @@ const DEFAULT_STEPS: Stepper007Step[] = [
   { title: "Подтверждение", href: "#confirm" },
 ]
 
+const STATE_TEXT: Record<string, string> = {
+  current: "Сейчас",
+  todo: "Впереди",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Шаги оформления заказа: к пройденным можно вернуться по ссылке.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -128,7 +163,9 @@ export function Stepper007({
   steps = DEFAULT_STEPS,
   current = 2,
   editLabel = "Изменить",
+  stateText = STATE_TEXT,
   label = "Оформление заказа",
+  background = "",
   accent,
   className,
   style,
@@ -136,6 +173,13 @@ export function Stepper007({
 }: Stepper007Props) {
   const palette = {
     ...(accent ? { "--vibeui-stepper-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-stepper-007-bg": background,
+          "--vibeui-stepper-007-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -184,10 +228,14 @@ export function Stepper007({
                     </a>
                   ) : null}
                   {state === "current" ? (
-                    <span data-part="now">Сейчас</span>
+                    <span data-part="now">
+                      {stateText.current ?? STATE_TEXT.current}
+                    </span>
                   ) : null}
                   {state === "todo" ? (
-                    <span data-part="state">Впереди</span>
+                    <span data-part="state">
+                      {stateText.todo ?? STATE_TEXT.todo}
+                    </span>
                   ) : null}
                 </li>
               )

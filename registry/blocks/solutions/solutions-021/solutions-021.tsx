@@ -20,7 +20,17 @@ export type Solutions021Props = {
   hours?: string[]
   rooms?: Solutions021Room[]
   freeLabel?: string
+  /** Загрузка в шапке: {busy} и {total} — часы. */
+  busyText?: string
+  /** Вместимость комнаты, {seats} — число мест. */
+  seatsText?: string
+  /** Подпись свободного часа: {room}, {hour} и {label}. */
+  freeSlotLabelText?: string
+  /** Пояснение под сеткой. */
+  footText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -36,13 +46,13 @@ export type Solutions021Props = {
 // подписаны у названия: комнату выбирают по ним, а не по имени.
 const STYLES = `
 :where([data-vibeui-block="solutions-021"]){
---vibeui-solutions-021-bg:oklch(1 0 0);
---vibeui-solutions-021-panel:oklch(0.975 0.004 260);
---vibeui-solutions-021-fg:oklch(0.21 0.014 265);
---vibeui-solutions-021-muted:oklch(0.54 0.014 265);
---vibeui-solutions-021-border:oklch(0.9 0.006 265);
---vibeui-solutions-021-accent:oklch(0.52 0.16 255);
---vibeui-solutions-021-guest:oklch(0.6 0.15 320);
+--vibeui-solutions-021-bg:transparent;
+--vibeui-solutions-021-panel:light-dark(oklch(0.975 0.004 260),oklch(0.27 0.012 265));
+--vibeui-solutions-021-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-021-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-solutions-021-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-021-accent:light-dark(oklch(0.52 0.16 255),oklch(0.74 0.15 255));
+--vibeui-solutions-021-guest:light-dark(oklch(0.6 0.15 320),oklch(0.76 0.14 320));
 --vibeui-solutions-021-hours:10;
 --vibeui-solutions-021-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -165,6 +175,28 @@ const DEFAULT_ROOMS: Solutions021Room[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сетка переговорных: матрица «комната × час», бронь занимает диапазон колонок.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -174,7 +206,12 @@ export function Solutions021({
   hours = DEFAULT_HOURS,
   rooms = DEFAULT_ROOMS,
   freeLabel = "свободно",
+  busyText = "Занято {busy} из {total} часов",
+  seatsText = "{seats} мест",
+  freeSlotLabelText = "{room}, {hour} — {label}",
+  footText = "Розовым помечены встречи с внешними гостями — им нужен пропуск.",
   accent,
+  background = "",
   className,
   style,
 }: Solutions021Props) {
@@ -191,6 +228,12 @@ export function Solutions021({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-021-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-021-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     "--vibeui-solutions-021-hours": String(hours.length),
     ...style,
   } as CSSProperties
@@ -212,7 +255,9 @@ export function Solutions021({
             <p data-part="day">{day}</p>
           </div>
           <p data-part="day">
-            Занято {busy} из {capacity} часов
+            {busyText
+              .replace("{busy}", String(busy))
+              .replace("{total}", String(capacity))}
           </p>
         </header>
 
@@ -239,7 +284,8 @@ export function Solutions021({
                   <span data-part="room">
                     <span data-part="name">{room.name}</span>
                     <span data-part="gear">
-                      {room.seats} мест · {room.gear}
+                      {seatsText.replace("{seats}", String(room.seats))} ·{" "}
+                      {room.gear}
                     </span>
                   </span>
 
@@ -250,7 +296,10 @@ export function Solutions021({
                         data-part="free"
                         key={hour}
                         style={{ gridColumn: index + 2 }}
-                        aria-label={`${room.name}, ${hour} — ${freeLabel}`}
+                        aria-label={freeSlotLabelText
+                          .replace("{room}", room.name)
+                          .replace("{hour}", hour)
+                          .replace("{label}", freeLabel)}
                       >
                         {hour}
                       </button>
@@ -275,9 +324,7 @@ export function Solutions021({
           </div>
         </div>
 
-        <p data-part="foot">
-          Розовым помечены встречи с внешними гостями — им нужен пропуск.
-        </p>
+        <p data-part="foot">{footText}</p>
       </section>
     </>
   )

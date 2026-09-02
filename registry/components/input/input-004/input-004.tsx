@@ -10,6 +10,12 @@ export type Input004Props = Omit<
   label?: string
   placeholder?: string
   shortcut?: string
+  /** Начальный запрос в поле. */
+  defaultValue?: string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  text?: Record<string, string>
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   onChange?: (value: string) => void
   accent?: string
 }
@@ -20,20 +26,26 @@ export type Input004Props = Omit<
 // человек остаётся с пустым полем и без курсора.
 const STYLES = `
 :where([data-vibeui-block="input-004"]){
---vibeui-input-004-bg:oklch(1 0 0);
---vibeui-input-004-fg:oklch(0.22 0.014 265);
---vibeui-input-004-muted:oklch(0.56 0.014 265);
---vibeui-input-004-border:oklch(0.9 0.006 265);
---vibeui-input-004-field:oklch(0.985 0.002 265);
---vibeui-input-004-accent:oklch(0.55 0.17 265);
+--vibeui-input-004-bg:transparent;
+--vibeui-input-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-input-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.014 265));
+--vibeui-input-004-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-input-004-hover:light-dark(oklch(0.94 0.005 265),oklch(0.34 0.012 265));
+--vibeui-input-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-input-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-004"]{
 display:flex;flex-direction:column;gap:0.375rem;
-width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:22rem;box-sizing:border-box;
+font-family:var(--vibeui-input-004-font);color:var(--vibeui-input-004-fg);
+}
+/* Подложка появляется только вместе с пропом background: без него поле
+   лежит прямо на фоне страницы. */
+[data-vibeui-block="input-004"][data-surface="on"]{
+padding:0.875rem;
 background:var(--vibeui-input-004-bg);
 border:1px solid var(--vibeui-input-004-border);border-radius:0.875rem;
-font-family:var(--vibeui-input-004-font);color:var(--vibeui-input-004-fg);
 }
 [data-vibeui-block="input-004"] label{font-size:0.8125rem;font-weight:600}
 [data-vibeui-block="input-004"] [data-part="field"]{position:relative;display:block}
@@ -64,7 +76,7 @@ display:flex;align-items:center;justify-content:center;
 width:1.5rem;height:1.5rem;padding:0;border-radius:9999px;
 color:var(--vibeui-input-004-muted);
 }
-[data-vibeui-block="input-004"] [data-part="clear"]:hover{background:oklch(0.94 0.005 265);color:var(--vibeui-input-004-fg)}
+[data-vibeui-block="input-004"] [data-part="clear"]:hover{background:var(--vibeui-input-004-hover);color:var(--vibeui-input-004-fg)}
 [data-vibeui-block="input-004"] [data-part="clear"]:focus-visible{outline:2px solid var(--vibeui-input-004-accent);outline-offset:1px}
 [data-vibeui-block="input-004"] [data-part="cross"]{position:relative;width:0.5rem;height:0.5rem}
 [data-vibeui-block="input-004"] [data-part="cross"]::before,
@@ -84,6 +96,34 @@ font-family:inherit;font-size:0.6875rem;color:var(--vibeui-input-004-muted);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="input-004"] *{animation:none!important;transition:none!important}}
 `
 
+const TEXT = {
+  clear: "Очистить поиск",
+  idle: "Начните вводить запрос",
+  searching: "Ищем: {query}",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Поле поиска: крестик появляется с текстом, фокус возвращается после очистки.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -92,6 +132,9 @@ export function Input004({
   label = "Поиск по каталогу",
   placeholder = "Название или категория",
   shortcut = "/",
+  defaultValue = "кнопка",
+  text,
+  background = "",
   onChange,
   accent,
   className,
@@ -100,10 +143,17 @@ export function Input004({
 }: Input004Props) {
   const id = useId()
   const field = useRef<HTMLInputElement>(null)
-  const [value, setValue] = useState("кнопка")
+  const [value, setValue] = useState(defaultValue)
+  const copy = { ...TEXT, ...text }
 
   const palette = {
     ...(accent ? { "--vibeui-input-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -120,6 +170,7 @@ export function Input004({
       <div
         {...props}
         data-vibeui-block="input-004"
+        data-surface={background ? "on" : undefined}
         className={className}
         style={palette}
       >
@@ -139,7 +190,7 @@ export function Input004({
             <button
               type="button"
               data-part="clear"
-              aria-label="Очистить поиск"
+              aria-label={copy.clear}
               onClick={() => {
                 update("")
                 // Фокус обратно в поле: иначе человек остаётся без курсора.
@@ -152,7 +203,7 @@ export function Input004({
           {shortcut ? <kbd>{shortcut}</kbd> : null}
         </span>
         <span data-part="status" role="status">
-          {value ? `Ищем: ${value}` : "Начните вводить запрос"}
+          {value ? copy.searching.replace("{query}", value) : copy.idle}
         </span>
       </div>
     </>

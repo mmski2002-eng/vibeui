@@ -15,13 +15,18 @@ export type Commerce066Props = {
   attemptedAt?: string
   attemptedAtIso?: string
   code?: string
+  /** Подписи реквизитов попытки: amount, method, attemptedAt, code. */
+  factLabels?: Record<string, string>
   stepsTitle?: string
   steps?: Commerce066Step[]
   retry?: string
   otherCard?: string
   holdNote?: string
   support?: string
+  supportLink?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -35,12 +40,13 @@ export type Commerce066Props = {
 // сказано прямо: именно из-за него пишут в чат через минуту после отказа.
 const STYLES = `
 :where([data-vibeui-block="commerce-066"]){
---vibeui-commerce-066-bg:oklch(0.985 0.008 30);
---vibeui-commerce-066-card:oklch(1 0 0);
---vibeui-commerce-066-fg:oklch(0.2 0.014 30);
---vibeui-commerce-066-muted:oklch(0.52 0.016 30);
---vibeui-commerce-066-border:oklch(0.9 0.01 30);
---vibeui-commerce-066-accent:oklch(0.53 0.19 25);
+--vibeui-commerce-066-bg:transparent;
+--vibeui-commerce-066-card:light-dark(oklch(1 0 0),oklch(0.23 0.018 30));
+--vibeui-commerce-066-fg:light-dark(oklch(0.2 0.014 30),oklch(0.94 0.008 30));
+--vibeui-commerce-066-muted:light-dark(oklch(0.52 0.016 30),oklch(0.73 0.014 30));
+--vibeui-commerce-066-border:light-dark(oklch(0.9 0.01 30),oklch(0.39 0.018 30));
+--vibeui-commerce-066-accent:light-dark(oklch(0.53 0.19 25),oklch(0.72 0.16 25));
+--vibeui-commerce-066-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.04 25));
 --vibeui-commerce-066-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-commerce-066-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -53,7 +59,7 @@ color:var(--vibeui-commerce-066-fg);font-family:var(--vibeui-commerce-066-sans);
 [data-vibeui-block="commerce-066"] [data-part="shell"]{max-width:40rem;margin:0 auto;padding:1.75rem 1rem 2.25rem}
 [data-vibeui-block="commerce-066"] [data-part="badge"]{
 display:inline-flex;align-items:center;gap:0.5rem;height:1.875rem;padding:0 0.875rem;border-radius:9999px;
-background:var(--vibeui-commerce-066-accent);color:oklch(0.99 0 0);
+background:var(--vibeui-commerce-066-accent);color:var(--vibeui-commerce-066-onaccent);
 font-size:0.75rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;
 }
 [data-vibeui-block="commerce-066"] h2{margin:0.875rem 0 0.5rem;font-size:clamp(1.25rem,4.5cqi,1.875rem);line-height:1.15;letter-spacing:-0.025em}
@@ -80,7 +86,7 @@ border:1px solid var(--vibeui-commerce-066-border);font-size:0.6875rem;font-weig
 [data-vibeui-block="commerce-066"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.5rem}
 [data-vibeui-block="commerce-066"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;height:2.875rem;padding:0 1.625rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-066-accent);color:oklch(0.99 0 0);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-066-accent);color:var(--vibeui-commerce-066-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-066"] [data-part="alt"]{
 appearance:none;cursor:pointer;height:2.875rem;padding:0 1.25rem;border-radius:0.875rem;
@@ -101,6 +107,35 @@ background:var(--vibeui-commerce-066-card);font-size:0.8125rem;line-height:1.5;c
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="commerce-066"] *{animation:none!important;transition:none!important}}
 `
+
+const FACT_LABEL: Record<string, string> = {
+  amount: "Сумма",
+  method: "Карта",
+  attemptedAt: "Время попытки",
+  code: "Код ответа банка",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 const DEFAULT_STEPS: Commerce066Step[] = [
   {
@@ -133,18 +168,30 @@ export function Commerce066({
   attemptedAt = "11 марта, 14:07",
   attemptedAtIso = "2024-03-11T14:07:00+03:00",
   code = "51 · insufficient_limit",
+  factLabels = FACT_LABEL,
   stepsTitle = "Что можно сделать",
   steps = DEFAULT_STEPS,
   retry = "Повторить оплату",
   otherCard = "Оплатить другой картой",
   holdNote = "Иногда банк ненадолго удерживает сумму по отклонённой операции. Это не списание: деньги возвращаются на карту в течение 3–5 рабочих дней автоматически.",
   support = "Если ошибка повторяется, назовите код операции в поддержке — по нему видно ответ банка.",
+  supportLink = "Написать в поддержку",
   accent,
+  background = "",
   className,
   style,
 }: Commerce066Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-066-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-066-bg": background,
+          // Карточка попытки и вторая кнопка не должны просвечивать: им нужна
+          // непрозрачная подложка, а она задана тем же цветом.
+          "--vibeui-commerce-066-card": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -169,21 +216,21 @@ export function Commerce066({
           <div data-part="card">
             <dl>
               <div data-part="pair">
-                <dt>Сумма</dt>
+                <dt>{factLabels.amount ?? FACT_LABEL.amount}</dt>
                 <dd>{amount}</dd>
               </div>
               <div data-part="pair">
-                <dt>Карта</dt>
+                <dt>{factLabels.method ?? FACT_LABEL.method}</dt>
                 <dd>{method}</dd>
               </div>
               <div data-part="pair">
-                <dt>Время попытки</dt>
+                <dt>{factLabels.attemptedAt ?? FACT_LABEL.attemptedAt}</dt>
                 <dd>
                   <time dateTime={attemptedAtIso}>{attemptedAt}</time>
                 </dd>
               </div>
               <div data-part="pair">
-                <dt>Код ответа банка</dt>
+                <dt>{factLabels.code ?? FACT_LABEL.code}</dt>
                 <dd data-part="code">{code}</dd>
               </div>
             </dl>
@@ -212,7 +259,7 @@ export function Commerce066({
 
           <p data-part="hold">{holdNote}</p>
           <p data-part="support">
-            {support} <a href="#support">Написать в поддержку</a>
+            {support} <a href="#support">{supportLink}</a>
           </p>
         </div>
       </section>

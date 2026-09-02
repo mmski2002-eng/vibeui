@@ -19,6 +19,14 @@ export type Carousel005Props = Omit<
 > & {
   reviews?: Carousel005Review[]
   label?: string
+  /** Роль секции для скринридера. */
+  roleText?: string
+  /** Шаблон подписи точки: {index}, {total}. */
+  dotText?: string
+  /** Подписи стрелок: компонент несёт русские, проект подставляет свои. */
+  navText?: Record<string, string>
+  /** Пусто — подложка своя; цвет заменяет её целиком. */
+  background?: string
   accent?: string
 }
 
@@ -26,13 +34,16 @@ export type Carousel005Props = Omit<
 // листают, когда фокус внутри карусели, — это ожидаемое поведение, которое
 // почти никто не делает. Высота держится по самому длинному отзыву, иначе
 // страница дёргается при каждом переключении.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложка и текст
+// темнеют вместе со страницей, своей тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="carousel-005"]){
---vibeui-carousel-005-bg:oklch(1 0 0);
---vibeui-carousel-005-fg:oklch(0.22 0.014 265);
---vibeui-carousel-005-muted:oklch(0.56 0.014 265);
---vibeui-carousel-005-border:oklch(0.91 0.006 265);
---vibeui-carousel-005-accent:oklch(0.55 0.17 265);
+--vibeui-carousel-005-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-carousel-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-carousel-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-carousel-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="carousel-005"]{
@@ -106,6 +117,40 @@ const DEFAULT_REVIEWS: Carousel005Review[] = [
   },
 ]
 
+const NAV_LABEL: Record<string, string> = {
+  prev: "Предыдущий отзыв",
+  next: "Следующий отзыв",
+}
+
+/** Подстановка чисел в подпись: перевод остаётся одной строкой. */
+function fill(template: string, values: Record<string, string | number>) {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+    key in values ? String(values[key]) : match,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Отзывы по одному: стрелки листают, высота держится по длинному.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -113,6 +158,10 @@ const DEFAULT_REVIEWS: Carousel005Review[] = [
 export function Carousel005({
   reviews = DEFAULT_REVIEWS,
   label = "Отзывы",
+  roleText = "карусель",
+  dotText = "Отзыв {index} из {total}",
+  navText = NAV_LABEL,
+  background = "",
   accent,
   className,
   style,
@@ -122,6 +171,12 @@ export function Carousel005({
 
   const palette = {
     ...(accent ? { "--vibeui-carousel-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-carousel-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -146,7 +201,7 @@ export function Carousel005({
       <section
         {...props}
         data-vibeui-block="carousel-005"
-        aria-roledescription="карусель"
+        aria-roledescription={roleText}
         aria-label={label}
         className={className}
         style={palette}
@@ -177,7 +232,10 @@ export function Carousel005({
                 type="button"
                 data-part="dot"
                 aria-current={position === index}
-                aria-label={`Отзыв ${position + 1} из ${reviews.length}`}
+                aria-label={fill(dotText, {
+                  index: position + 1,
+                  total: reviews.length,
+                })}
                 onClick={() => setIndex(position)}
               />
             ))}
@@ -185,14 +243,14 @@ export function Carousel005({
           <div data-part="nav">
             <button
               type="button"
-              aria-label="Предыдущий отзыв"
+              aria-label={navText.prev ?? NAV_LABEL.prev}
               onClick={() => move(-1)}
             >
               <span data-part="arrow" aria-hidden="true" />
             </button>
             <button
               type="button"
-              aria-label="Следующий отзыв"
+              aria-label={navText.next ?? NAV_LABEL.next}
               onClick={() => move(1)}
             >
               <span data-part="arrow" data-dir="next" aria-hidden="true" />

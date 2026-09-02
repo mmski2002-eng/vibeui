@@ -10,6 +10,28 @@ export type Auth029Props = {
   keeps?: string[]
   graceDays?: number
   submit?: string
+  /** Пояснение под заголовком; {account} выделяется жирным. */
+  lead?: string
+  /** Заголовок колонки потерь. */
+  lossesTitle?: string
+  /** Заголовок колонки того, что остаётся у сервиса. */
+  keepsTitle?: string
+  /** Срок восстановления; {days} подставляется числом. */
+  graceText?: string
+  /** Подпись поля подтверждения; {account} подставляется адресом. */
+  confirmLabel?: string
+  /** Пояснение под полем подтверждения. */
+  hintText?: string
+  /** Кнопка отказа от удаления. */
+  keepText?: string
+  /** Текст сноски перед ссылкой на заморозку. */
+  footText?: string
+  /** Подпись ссылки на заморозку. */
+  freezeText?: string
+  /** Хвост сноски после ссылки. */
+  footTailText?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -30,15 +52,21 @@ export type Auth029Props = {
 //
 // Демонстрация интерфейса: ничего не удаляется, реальное удаление —
 // за вызывающим кодом, вместе с повторной проверкой пароля на сервере.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="auth-029"]){
---vibeui-auth-029-bg:oklch(0.95 0.01 20);
---vibeui-auth-029-card:oklch(1 0 0);
---vibeui-auth-029-fg:oklch(0.23 0.016 20);
---vibeui-auth-029-muted:oklch(0.54 0.014 20);
---vibeui-auth-029-border:oklch(0.9 0.008 20);
---vibeui-auth-029-accent:oklch(0.54 0.2 25);
---vibeui-auth-029-ok:oklch(0.52 0.12 152);
+--vibeui-auth-029-bg:transparent;
+--vibeui-auth-029-card:light-dark(oklch(1 0 0),oklch(0.22 0.014 20));
+--vibeui-auth-029-fg:light-dark(oklch(0.23 0.016 20),oklch(0.94 0.006 20));
+--vibeui-auth-029-muted:light-dark(oklch(0.54 0.014 20),oklch(0.71 0.012 20));
+--vibeui-auth-029-border:light-dark(oklch(0.9 0.008 20),oklch(0.37 0.014 20));
+--vibeui-auth-029-accent:light-dark(oklch(0.54 0.2 25),oklch(0.72 0.17 25));
+--vibeui-auth-029-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 25));
+--vibeui-auth-029-bad-soft:light-dark(oklch(0.54 0.2 25 / 7%),oklch(0.72 0.17 25 / 14%));
+--vibeui-auth-029-ok:light-dark(oklch(0.52 0.12 152),oklch(0.78 0.12 152));
+--vibeui-auth-029-ok-soft:light-dark(oklch(0.52 0.12 152 / 8%),oklch(0.78 0.12 152 / 14%));
 --vibeui-auth-029-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -66,8 +94,8 @@ border:1px solid var(--vibeui-auth-029-border);border-radius:1rem;
 [data-vibeui-block="auth-029"] [data-part="lead"]{margin:0 0 1.125rem;font-size:0.8125rem;line-height:1.55;color:var(--vibeui-auth-029-muted)}
 [data-vibeui-block="auth-029"] [data-part="lead"] b{color:var(--vibeui-auth-029-fg);font-weight:650}
 [data-vibeui-block="auth-029"] [data-part="panel"]{padding:0.875rem;border-radius:0.75rem}
-[data-vibeui-block="auth-029"] [data-part="panel"][data-tone="bad"]{background:oklch(0.54 0.2 25 / 7%)}
-[data-vibeui-block="auth-029"] [data-part="panel"][data-tone="good"]{background:oklch(0.52 0.12 152 / 8%)}
+[data-vibeui-block="auth-029"] [data-part="panel"][data-tone="bad"]{background:var(--vibeui-auth-029-bad-soft)}
+[data-vibeui-block="auth-029"] [data-part="panel"][data-tone="good"]{background:var(--vibeui-auth-029-ok-soft)}
 [data-vibeui-block="auth-029"] h3{margin:0 0 0.5rem;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em}
 [data-vibeui-block="auth-029"] [data-part="panel"][data-tone="bad"] h3{color:var(--vibeui-auth-029-accent)}
 [data-vibeui-block="auth-029"] [data-part="panel"][data-tone="good"] h3{color:var(--vibeui-auth-029-ok)}
@@ -96,7 +124,7 @@ flex:1;appearance:none;cursor:pointer;height:2.625rem;padding:0 1rem;
 border-radius:0.625rem;font:inherit;font-size:0.875rem;font-weight:650;
 transition:opacity .16s ease;
 }
-[data-vibeui-block="auth-029"] [data-part="delete"]{border:0;background:var(--vibeui-auth-029-accent);color:oklch(1 0 0)}
+[data-vibeui-block="auth-029"] [data-part="delete"]{border:0;background:var(--vibeui-auth-029-accent);color:var(--vibeui-auth-029-on-accent)}
 [data-vibeui-block="auth-029"] [data-part="delete"]:disabled{cursor:not-allowed;opacity:.4}
 [data-vibeui-block="auth-029"] [data-part="keep"]{border:1px solid var(--vibeui-auth-029-border);background:none;color:inherit}
 [data-vibeui-block="auth-029"] [data-part="delete"]:focus-visible,
@@ -120,6 +148,28 @@ const DEFAULT_KEEPS = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Удаление аккаунта: что пропадёт и что останется у сервиса,
  * срок восстановления и ввод почты вместо слова. Один файл.
  */
@@ -130,6 +180,17 @@ export function Auth029({
   keeps = DEFAULT_KEEPS,
   graceDays = 30,
   submit = "Удалить аккаунт",
+  lead = "Удаляется учётная запись {account}. Прочитайте обе колонки — вторая обычно оказывается неожиданной.",
+  lossesTitle = "Что пропадёт",
+  keepsTitle = "Что останется у нас",
+  graceText = "{days} дней аккаунт можно вернуть — просто войдите как обычно. После этого срока данные стираются насовсем.",
+  confirmLabel = "Наберите {account}, чтобы подтвердить",
+  hintText = "Просим набрать почту, а не слово «удалить»: так кнопка не нажимается по инерции.",
+  keepText = "Оставить аккаунт",
+  footText = "Не хотите терять проекты?",
+  freezeText = "Заморозьте аккаунт",
+  footTailText = " — доступ закроется, данные останутся, оплата остановится.",
+  background = "",
   accent,
   className,
   style,
@@ -137,9 +198,16 @@ export function Auth029({
   const [typed, setTyped] = useState("")
 
   const matches = typed.trim().toLowerCase() === account.toLowerCase()
+  const [leadBefore, leadAfter = ""] = lead.split("{account}")
 
   const palette = {
     ...(accent ? { "--vibeui-auth-029-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-029-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -159,13 +227,14 @@ export function Auth029({
           <div data-part="body">
             <h2>{title}</h2>
             <p data-part="lead">
-              Удаляется учётная запись <b>{account}</b>. Прочитайте обе колонки
-              — вторая обычно оказывается неожиданной.
+              {leadBefore}
+              <b>{account}</b>
+              {leadAfter}
             </p>
 
             <div data-part="cols">
               <div data-part="panel" data-tone="bad">
-                <h3>Что пропадёт</h3>
+                <h3>{lossesTitle}</h3>
                 <ul>
                   {losses.map((loss) => (
                     <li key={loss}>
@@ -179,7 +248,7 @@ export function Auth029({
               </div>
 
               <div data-part="panel" data-tone="good">
-                <h3>Что останется у нас</h3>
+                <h3>{keepsTitle}</h3>
                 <ul>
                   {keeps.map((keep) => (
                     <li key={keep}>
@@ -195,10 +264,7 @@ export function Auth029({
 
             <p data-part="grace">
               <span aria-hidden="true">⏳</span>
-              <span>
-                {graceDays} дней аккаунт можно вернуть — просто войдите как
-                обычно. После этого срока данные стираются насовсем.
-              </span>
+              <span>{graceText.replace("{days}", String(graceDays))}</span>
             </p>
 
             <form
@@ -207,7 +273,7 @@ export function Auth029({
               }}
             >
               <label htmlFor="vibeui-auth-029-confirm">
-                Наберите {account}, чтобы подтвердить
+                {confirmLabel.replace("{account}", account)}
               </label>
               <input
                 id="vibeui-auth-029-confirm"
@@ -218,24 +284,21 @@ export function Auth029({
                 value={typed}
                 onChange={(event) => setTyped(event.target.value)}
               />
-              <p data-part="hint">
-                Просим набрать почту, а не слово «удалить»: так кнопка не
-                нажимается по инерции.
-              </p>
+              <p data-part="hint">{hintText}</p>
 
               <div data-part="actions">
                 <button type="submit" data-part="delete" disabled={!matches}>
                   {submit}
                 </button>
                 <button type="button" data-part="keep">
-                  Оставить аккаунт
+                  {keepText}
                 </button>
               </div>
             </form>
 
             <p data-part="foot">
-              Не хотите терять проекты? <a href="#">Заморозьте аккаунт</a> —
-              доступ закроется, данные останутся, оплата остановится.
+              {footText} <a href="#">{freezeText}</a>
+              {footTailText}
             </p>
           </div>
         </div>

@@ -16,14 +16,42 @@ export type Inputgroup023Props = Omit<
   max?: number
   step?: number
   onChange?: (value: number) => void
+  /** Подпись ряда быстрых сумм для скринридера. */
+  presetsLabel?: string
+  /** Локаль форматирования числа: компонент несёт русскую. */
+  locale?: string
   hint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
 const DEFAULT_PRESETS = [500, 1000, 5000]
 
-function formatAmount(value: number) {
-  return value.toLocaleString("ru-RU")
+function formatAmount(value: number, locale: string) {
+  return value.toLocaleString(locale)
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 // Идея компонента: быстрые суммы — не отдельная сущность, а короткий путь к
@@ -33,14 +61,15 @@ function formatAmount(value: number) {
 // пока значение совпадает с ним в точности; ручной ввод гасит подсветку.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-023"]){
---vibeui-inputgroup-023-surface:oklch(1 0 0);
---vibeui-inputgroup-023-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-023-fg:oklch(0.22 0.014 265);
---vibeui-inputgroup-023-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-023-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-023-fixed:oklch(0.96 0.004 265);
---vibeui-inputgroup-023-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-023-accent:oklch(0.58 0.15 142);
+--vibeui-inputgroup-023-surface:transparent;
+--vibeui-inputgroup-023-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-inputgroup-023-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-023-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-inputgroup-023-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
+--vibeui-inputgroup-023-fixed:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-inputgroup-023-border:light-dark(oklch(0.86 0.008 265),oklch(0.4 0.014 265));
+--vibeui-inputgroup-023-accent:light-dark(oklch(0.58 0.15 142),oklch(0.76 0.14 142));
+--vibeui-inputgroup-023-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.012 142));
 --vibeui-inputgroup-023-radius:0.75rem;
 --vibeui-inputgroup-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -105,7 +134,7 @@ outline:2px solid var(--vibeui-inputgroup-023-accent);outline-offset:1px;
 }
 [data-vibeui-block="inputgroup-023"] [data-part="presets"] button[aria-pressed="true"]{
 background:var(--vibeui-inputgroup-023-accent);border-color:var(--vibeui-inputgroup-023-accent);
-color:oklch(1 0 0);
+color:var(--vibeui-inputgroup-023-on-accent);
 }
 [data-vibeui-block="inputgroup-023"] [data-part="hint"]{
 margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-inputgroup-023-muted);
@@ -129,7 +158,10 @@ export function Inputgroup023({
   max = 200000,
   step = 50,
   onChange,
+  presetsLabel = "Быстрый выбор суммы",
+  locale = "ru-RU",
   hint = "Кнопки ниже заменяют сумму целиком — число всегда можно поправить и вручную.",
+  background = "",
   accent,
   className,
   style,
@@ -140,6 +172,12 @@ export function Inputgroup023({
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-023-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-023-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -180,7 +218,7 @@ export function Inputgroup023({
             {currency}
           </span>
         </div>
-        <div data-part="presets" role="group" aria-label="Быстрый выбор суммы">
+        <div data-part="presets" role="group" aria-label={presetsLabel}>
           {presets.map((preset) => (
             <button
               key={preset}
@@ -188,7 +226,7 @@ export function Inputgroup023({
               aria-pressed={value === preset}
               onClick={() => setAmount(preset)}
             >
-              {formatAmount(preset)} {currency}
+              {formatAmount(preset, locale)} {currency}
             </button>
           ))}
         </div>

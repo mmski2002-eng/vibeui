@@ -8,10 +8,16 @@ export type Toggle004Props = Omit<
   "children" | "onChange"
 > & {
   label?: string
+  /** Подпись над холстом. */
+  caption?: string
+  /** Строка под холстом; {step} подставляется числом. */
+  note?: string
   step?: number
   defaultPressed?: boolean
   onChange?: (pressed: boolean) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: toggle, который управляет соседней областью и говорит об
@@ -19,13 +25,14 @@ export type Toggle004Props = Omit<
 // сетку» — не абстрактная настройка, а видимое действие над конкретным видом.
 const STYLES = `
 :where([data-vibeui-block="toggle-004"]){
---vibeui-toggle-004-bg:oklch(1 0 0);
---vibeui-toggle-004-fg:oklch(0.23 0.014 265);
---vibeui-toggle-004-muted:oklch(0.55 0.014 265);
---vibeui-toggle-004-border:oklch(0.9 0.006 265);
---vibeui-toggle-004-canvas:oklch(0.975 0.004 265);
---vibeui-toggle-004-accent:oklch(0.58 0.15 200);
---vibeui-toggle-004-line:oklch(0.58 0.15 200 / 26%);
+--vibeui-toggle-004-bg:transparent;
+--vibeui-toggle-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-toggle-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-toggle-004-canvas:light-dark(oklch(0.975 0.004 265),oklch(0.26 0.01 265));
+--vibeui-toggle-004-art:light-dark(oklch(0.86 0.02 265),oklch(0.38 0.016 265));
+--vibeui-toggle-004-accent:light-dark(oklch(0.58 0.15 200),oklch(0.76 0.12 200));
+--vibeui-toggle-004-line:light-dark(oklch(0.58 0.15 200 / 26%),oklch(0.76 0.12 200 / 34%));
 --vibeui-toggle-004-step:1.25rem;
 --vibeui-toggle-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -58,7 +65,7 @@ outline:2px solid var(--vibeui-toggle-004-accent);outline-offset:2px;
 }
 [data-vibeui-block="toggle-004"] button[aria-pressed="true"]{
 border-color:var(--vibeui-toggle-004-accent);color:var(--vibeui-toggle-004-accent);
-background:color-mix(in oklab,var(--vibeui-toggle-004-accent) 10%,white);
+background:color-mix(in oklab,var(--vibeui-toggle-004-accent) 14%,transparent);
 }
 [data-vibeui-block="toggle-004"] [data-part="canvas"]{
 position:relative;height:8.5rem;border-radius:0.625rem;overflow:hidden;
@@ -78,7 +85,7 @@ transition:opacity .18s ease;
 position:absolute;inset:0;padding:1rem;display:flex;flex-direction:column;gap:0.5rem;
 }
 [data-vibeui-block="toggle-004"] [data-part="art"] span{
-display:block;border-radius:0.375rem;background:oklch(0.86 0.02 265);
+display:block;border-radius:0.375rem;background:var(--vibeui-toggle-004-art);
 }
 [data-vibeui-block="toggle-004"] [data-part="art"] span:nth-child(1){height:1.25rem;width:58%}
 [data-vibeui-block="toggle-004"] [data-part="art"] span:nth-child(2){height:0.5rem;width:84%}
@@ -91,15 +98,40 @@ margin:0;font-size:0.75rem;color:var(--vibeui-toggle-004-muted);
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Toggle «показать сетку»: кнопка связана с холстом через aria-controls,
  * сетка включается слоем поверх макета. Один файл, ноль зависимостей.
  */
 export function Toggle004({
   label = "Показать сетку",
+  caption = "Макет карточки",
+  note = "Шаг сетки — {step} px.",
   step = 20,
   defaultPressed = true,
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -110,6 +142,12 @@ export function Toggle004({
   const palette = {
     "--vibeui-toggle-004-step": `${step}px`,
     ...(accent ? { "--vibeui-toggle-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-toggle-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -126,7 +164,7 @@ export function Toggle004({
         style={palette}
       >
         <div data-part="bar">
-          <p data-part="caption">Макет карточки</p>
+          <p data-part="caption">{caption}</p>
           <button
             type="button"
             aria-pressed={pressed}
@@ -156,7 +194,7 @@ export function Toggle004({
           </div>
           <div data-part="grid" aria-hidden="true" />
         </div>
-        <p data-part="note">Шаг сетки — {step} px.</p>
+        <p data-part="note">{note.replace("{step}", String(step))}</p>
       </section>
     </>
   )

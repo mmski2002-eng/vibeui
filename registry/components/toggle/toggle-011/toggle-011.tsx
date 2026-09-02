@@ -9,6 +9,8 @@ export type Toggle011Props = Omit<
 > & {
   label?: string
   sample?: string
+  /** Подписи темы по ключам dark и light. */
+  stateText?: Record<string, string>
   defaultPressed?: boolean
   onChange?: (pressed: boolean) => void
   accentLight?: string
@@ -77,6 +79,11 @@ background:oklch(0.27 0.012 265);color:oklch(0.94 0.004 265);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="toggle-011"] *{animation:none!important;transition:none!important}}
 `
 
+const STATE_TEXT: Record<string, string> = {
+  dark: "Тёмная тема",
+  light: "Светлая тема",
+}
+
 /**
  * Кнопка темы: солнце и луна лежат в разметке одновременно и меняются
  * прозрачностью с поворотом. Один файл, ноль зависимостей.
@@ -84,6 +91,7 @@ background:oklch(0.27 0.012 265);color:oklch(0.94 0.004 265);
 export function Toggle011({
   label = "Тёмная тема",
   sample = "Так будет выглядеть карточка контента.",
+  stateText = STATE_TEXT,
   defaultPressed = false,
   onChange,
   accentLight,
@@ -151,7 +159,10 @@ export function Toggle011({
               />
             </svg>
           </button>
-          <p data-part="label">{pressed ? "Тёмная тема" : "Светлая тема"}</p>
+          <p data-part="label">
+            {stateText[pressed ? "dark" : "light"] ??
+              STATE_TEXT[pressed ? "dark" : "light"]}
+          </p>
         </div>
         <p data-part="sample">{sample}</p>
       </div>

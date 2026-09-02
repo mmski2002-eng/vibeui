@@ -16,6 +16,14 @@ export type Dashboard034Props = {
   importLabel?: string
   helpLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подпись группы вариантов. */
+  pickLabel?: string
+  /** Пометка рекомендуемого варианта. */
+  bestLabel?: string
+  /** Строка со ссылкой на справку: {link} — место ссылки. */
+  helpText?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,13 +39,15 @@ export type Dashboard034Props = {
 // Импорт и справка стоят отдельно и намеренно тише главной кнопки.
 const STYLES = `
 :where([data-vibeui-block="dashboard-034"]){
---vibeui-dashboard-034-bg:oklch(0.985 0.003 265);
---vibeui-dashboard-034-card:oklch(1 0 0);
---vibeui-dashboard-034-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-034-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-034-border:oklch(0.91 0.006 265);
---vibeui-dashboard-034-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-034-pick:oklch(0.97 0.02 262);
+--vibeui-dashboard-034-bg:transparent;
+/* Карточка варианта: подложка блока прозрачна, и рисовать её нечем. */
+--vibeui-dashboard-034-card:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-dashboard-034-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-034-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-034-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-dashboard-034-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-dashboard-034-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
+--vibeui-dashboard-034-pick:light-dark(oklch(0.97 0.02 262),oklch(0.32 0.05 262));
 --vibeui-dashboard-034-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -103,7 +113,7 @@ margin:0 1.5rem 0.25rem 0;font-size:0.9375rem;font-weight:700;
 [data-vibeui-block="dashboard-034"] [data-part="best"]{
 font-size:0.5625rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;
 padding:0.0625rem 0.375rem;border-radius:9999px;
-color:oklch(1 0 0);background:var(--vibeui-dashboard-034-accent);
+color:var(--vibeui-dashboard-034-on-accent);background:var(--vibeui-dashboard-034-accent);
 }
 [data-vibeui-block="dashboard-034"] [data-part="text"]{
 display:block;margin:0;font-size:0.75rem;line-height:1.5;
@@ -120,7 +130,7 @@ margin-top:1.25rem;
 [data-vibeui-block="dashboard-034"] [data-part="cta"]{
 appearance:none;border:0;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:650;
 padding:0.625rem 1.125rem;border-radius:0.625rem;
-background:var(--vibeui-dashboard-034-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-034-accent);color:var(--vibeui-dashboard-034-on-accent);
 }
 [data-vibeui-block="dashboard-034"] [data-part="second"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:650;
@@ -165,6 +175,28 @@ const DEFAULT_TEMPLATES: Dashboard034Template[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Пустое рабочее пространство: три готовых старта на радиокнопках, выбор
  * подсвечен через :has(), одна главная кнопка. Один файл, ноль зависимостей.
  */
@@ -177,13 +209,25 @@ export function Dashboard034({
   importLabel = "Импортировать существующий",
   helpLabel = "Как это работает",
   accent,
+  background = "",
+  pickLabel = "С чего начнём",
+  bestLabel = "советуем",
+  helpText = "Не уверены, что выбрать? {link} — две минуты чтения.",
   className,
   style,
 }: Dashboard034Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-034-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-034-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const [helpBefore, helpAfter] = helpText.split("{link}")
 
   return (
     <>
@@ -202,7 +246,7 @@ export function Dashboard034({
           <p data-part="lead">{lead}</p>
 
           <fieldset>
-            <legend>С чего начнём</legend>
+            <legend>{pickLabel}</legend>
             <div data-part="cards">
               {templates.map((template) => (
                 <label key={template.name} data-part="card">
@@ -214,7 +258,7 @@ export function Dashboard034({
                   <span data-part="name">
                     {template.name}
                     {template.recommended ? (
-                      <span data-part="best">советуем</span>
+                      <span data-part="best">{bestLabel}</span>
                     ) : null}
                   </span>
                   <span data-part="text">{template.text}</span>
@@ -234,8 +278,9 @@ export function Dashboard034({
           </div>
 
           <span data-part="help">
-            Не уверены, что выбрать? <a href="#dashboard-034">{helpLabel}</a> —
-            две минуты чтения.
+            {helpBefore}
+            <a href="#dashboard-034">{helpLabel}</a>
+            {helpAfter}
           </span>
         </div>
       </section>

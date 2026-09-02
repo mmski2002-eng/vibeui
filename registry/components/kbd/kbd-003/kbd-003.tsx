@@ -4,6 +4,8 @@ export type Kbd003Props = Omit<ComponentPropsWithoutRef<"p">, "children"> & {
   before?: string
   keys?: string[]
   after?: string
+  /** Пусто — подложки нет, абзац лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: клавиша внутри строки текста, которая не рвёт интерлиньяж.
@@ -11,15 +13,17 @@ export type Kbd003Props = Omit<ComponentPropsWithoutRef<"p">, "children"> & {
 // Здесь высота клавиши задана в em и вписана в строку: вертикальные отступы
 // нулевые, объём даёт padding по горизонтали и рамка, а вертикальное
 // выравнивание — сдвиг на 0.05em, а не изменение line-height абзаца.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки по
+// умолчанию нет, абзац лежит на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="kbd-003"]){
---vibeui-kbd-003-surface:oklch(1 0 0);
---vibeui-kbd-003-fg:oklch(0.24 0.014 265);
---vibeui-kbd-003-border:oklch(0.87 0.008 265);
---vibeui-kbd-003-key:oklch(0.97 0.003 265);
+--vibeui-kbd-003-surface:transparent;
+--vibeui-kbd-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-kbd-003-border:light-dark(oklch(0.87 0.008 265),oklch(0.38 0.012 265));
+--vibeui-kbd-003-key:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.012 265));
 --vibeui-kbd-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: абзац и клавиши тёмные. */
 [data-vibeui-block="kbd-003"]{
 display:block;box-sizing:border-box;margin:0;
 width:100%;max-width:24rem;padding:0.875rem 1rem;
@@ -45,6 +49,28 @@ white-space:nowrap;
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Клавиша внутри строки текста без ломки интерлиньяжа абзаца.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -52,10 +78,21 @@ export function Kbd003({
   before = "Нажмите",
   keys = ["⌘", "K"],
   after = "чтобы открыть поиск по каталогу — строка ввода появится поверх страницы.",
+  background = "",
   className,
   style,
   ...props
 }: Kbd003Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-kbd-003-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-kbd-003" precedence="medium">
@@ -65,7 +102,7 @@ export function Kbd003({
         {...props}
         data-vibeui-block="kbd-003"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         {before}{" "}
         <span data-part="combo">

@@ -13,6 +13,8 @@ export type Buttongroup030Props = Omit<
   steps?: Buttongroup030Step[]
   current?: string
   label?: string
+  /** Пусто — заливки нет, сцепка ложится на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,12 +27,14 @@ export type Buttongroup030Props = Omit<
 // в span: иначе фокус на ней теряется при возврате из истории.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-030"]){
---vibeui-buttongroup-030-surface:oklch(1 0 0);
---vibeui-buttongroup-030-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-030-muted:oklch(0.57 0.014 265);
---vibeui-buttongroup-030-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-030-on:oklch(0.24 0.02 265);
---vibeui-buttongroup-030-accent:oklch(0.55 0.15 200);
+--vibeui-buttongroup-030-surface:transparent;
+--vibeui-buttongroup-030-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-030-muted:light-dark(oklch(0.57 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-030-border:light-dark(oklch(0.89 0.008 265),oklch(0.39 0.012 265));
+--vibeui-buttongroup-030-hover:light-dark(oklch(0.97 0.004 265),oklch(0.33 0.012 265));
+--vibeui-buttongroup-030-on:light-dark(oklch(0.24 0.02 265),oklch(0.92 0.012 265));
+--vibeui-buttongroup-030-on-fg:light-dark(oklch(0.99 0.002 265),oklch(0.2 0.02 265));
+--vibeui-buttongroup-030-accent:light-dark(oklch(0.55 0.15 200),oklch(0.78 0.12 200));
 --vibeui-buttongroup-030-radius:0.625rem;
 --vibeui-buttongroup-030-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -64,13 +68,13 @@ font-size:0.625rem;font-weight:600;line-height:1.1;opacity:.75;
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="buttongroup-030"] a:hover{
-background:oklch(0.97 0.004 265);color:var(--vibeui-buttongroup-030-fg);
+background:var(--vibeui-buttongroup-030-hover);color:var(--vibeui-buttongroup-030-fg);
 }
 /* Стиль выбирается тем же атрибутом, что объявляет состояние. */
 [data-vibeui-block="buttongroup-030"] a[aria-current="page"]{
 z-index:1;
 background:var(--vibeui-buttongroup-030-on);
-color:oklch(0.99 0.002 265);
+color:var(--vibeui-buttongroup-030-on-fg);
 }
 [data-vibeui-block="buttongroup-030"] a:focus-visible{
 z-index:2;outline:2px solid var(--vibeui-buttongroup-030-accent);outline-offset:-2px;
@@ -85,6 +89,28 @@ const DEFAULT_STEPS: Buttongroup030Step[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Шаг графика ссылками: состояние живёт в адресе и переживает перезагрузку.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -92,6 +118,7 @@ export function Buttongroup030({
   steps = DEFAULT_STEPS,
   current = "Неделя",
   label = "Шаг графика",
+  background = "",
   accent,
   className,
   style,
@@ -99,6 +126,12 @@ export function Buttongroup030({
 }: Buttongroup030Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-030-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-030-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

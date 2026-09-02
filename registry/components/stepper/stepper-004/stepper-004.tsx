@@ -13,7 +13,11 @@ export type Stepper004Props = Omit<
   "children"
 > & {
   steps?: Stepper004Step[]
+  /** Подписи состояний: компонент несёт русские, проект подставляет свои. */
+  stateText?: Record<Stepper004State, string>
   label?: string
+  /** Пусто — подложки нет, лента лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,18 +25,22 @@ export type Stepper004Props = Omit<
 // знак (✓, !, ↷) и своя подпись словом под заголовком, поэтому «ошибка» и
 // «пропущен» различимы при дальтонизме и в чёрно-белой печати. Соединитель
 // красится по состоянию левого соседа, поэтому разрыв виден на месте ошибки.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="stepper-004"]){
---vibeui-stepper-004-bg:oklch(1 0 0);
---vibeui-stepper-004-fg:oklch(0.24 0.016 265);
---vibeui-stepper-004-muted:oklch(0.56 0.014 265);
---vibeui-stepper-004-border:oklch(0.92 0.006 265);
---vibeui-stepper-004-line:oklch(0.9 0.006 265);
---vibeui-stepper-004-accent:oklch(0.55 0.2 262);
---vibeui-stepper-004-done:oklch(0.55 0.14 155);
---vibeui-stepper-004-error:oklch(0.55 0.19 27);
---vibeui-stepper-004-skip:oklch(0.65 0.03 265);
---vibeui-stepper-004-on:oklch(1 0 0);
+--vibeui-stepper-004-bg:transparent;
+--vibeui-stepper-004-surface:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
+--vibeui-stepper-004-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-stepper-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-stepper-004-border:light-dark(oklch(0.92 0.006 265),oklch(0.32 0.012 265));
+--vibeui-stepper-004-line:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-stepper-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-stepper-004-done:light-dark(oklch(0.55 0.14 155),oklch(0.74 0.14 155));
+--vibeui-stepper-004-error:light-dark(oklch(0.55 0.19 27),oklch(0.72 0.16 27));
+--vibeui-stepper-004-skip:light-dark(oklch(0.65 0.03 265),oklch(0.6 0.02 265));
+--vibeui-stepper-004-on:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
 --vibeui-stepper-004-size:2rem;
 --vibeui-stepper-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -70,7 +78,7 @@ position:relative;z-index:1;
 display:flex;align-items:center;justify-content:center;
 width:var(--vibeui-stepper-004-size);height:var(--vibeui-stepper-004-size);
 border-radius:9999px;border:2px solid var(--vibeui-stepper-004-tone);
-background:var(--vibeui-stepper-004-bg);color:var(--vibeui-stepper-004-tone);
+background:var(--vibeui-stepper-004-surface);color:var(--vibeui-stepper-004-tone);
 font-size:0.8125rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="stepper-004"] li[data-state="done"] [data-part="mark"],
@@ -112,12 +120,34 @@ const MARKS: Record<Stepper004State, string> = {
   todo: "•",
 }
 
-const WORDS: Record<Stepper004State, string> = {
+const STATE_TEXT: Record<Stepper004State, string> = {
   done: "Готово",
   error: "Ошибка",
   skipped: "Пропущен",
   current: "Сейчас",
   todo: "Впереди",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 const DEFAULT_STEPS: Stepper004Step[] = [
@@ -134,7 +164,9 @@ const DEFAULT_STEPS: Stepper004Step[] = [
  */
 export function Stepper004({
   steps = DEFAULT_STEPS,
+  stateText = STATE_TEXT,
   label = "Настройка магазина",
+  background = "",
   accent,
   className,
   style,
@@ -142,6 +174,13 @@ export function Stepper004({
 }: Stepper004Props) {
   const palette = {
     ...(accent ? { "--vibeui-stepper-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-stepper-004-bg": background,
+          "--vibeui-stepper-004-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -183,7 +222,9 @@ export function Stepper004({
                     {MARKS[step.state]}
                   </span>
                   <span data-part="title">{step.title}</span>
-                  <span data-part="state">{WORDS[step.state]}</span>
+                  <span data-part="state">
+                    {stateText[step.state] ?? STATE_TEXT[step.state]}
+                  </span>
                   {step.hint ? <span data-part="hint">{step.hint}</span> : null}
                 </li>
               )

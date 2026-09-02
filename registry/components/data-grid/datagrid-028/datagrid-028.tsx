@@ -18,6 +18,24 @@ export type Datagrid028Props = Omit<
   rows?: Datagrid028Row[]
   caption?: string
   triggerLabel?: string
+  /** Заголовок панели над таблицей. */
+  heading?: string
+  /** Строка состояния, пока действие не выбрано. */
+  emptyLogText?: string
+  /** Строка состояния после выбора. {action} и {order} — подстановки. */
+  logText?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Заголовки колонок по ключу: компонент несёт русские. */
+  columnText?: Record<string, string>
+  /** Подписи пунктов меню по ключу: компонент несёт русские. */
+  actionText?: Record<string, string>
+  /** Подпись кнопки меню строки. {label} и {order} — подстановки. */
+  triggerRowLabel?: string
+  /** Подпись самого меню. {order} — номер заказа. */
+  menuLabel?: string
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,16 +45,21 @@ export type Datagrid028Props = Omit<
 // по пунктам, Escape закрывает и возвращает фокус на кнопку, Home и End
 // прыгают к краям. Разрушительный пункт отделён линией и помечен цветом
 // вместе со словом «Удалить» — один цвет предупреждением не является.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной подложки. Непрозрачный фон
+// остаётся только у меню: всплывающий слой обязан перекрывать строки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-028"]){
---vibeui-datagrid-028-bg:oklch(1 0 0);
---vibeui-datagrid-028-fg:oklch(0.23 0.014 285);
---vibeui-datagrid-028-muted:oklch(0.55 0.014 285);
---vibeui-datagrid-028-border:oklch(0.92 0.006 285);
---vibeui-datagrid-028-head:oklch(0.975 0.003 285);
---vibeui-datagrid-028-accent:oklch(0.5 0.15 285);
---vibeui-datagrid-028-danger:oklch(0.53 0.19 27);
---vibeui-datagrid-028-shadow:oklch(0.23 0.014 285 / 16%);
+--vibeui-datagrid-028-bg:transparent;
+--vibeui-datagrid-028-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-028-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-028-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
+--vibeui-datagrid-028-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
+--vibeui-datagrid-028-menu:light-dark(oklch(1 0 0),oklch(0.24 0.012 285));
+--vibeui-datagrid-028-accent:light-dark(oklch(0.5 0.15 285),oklch(0.76 0.13 285));
+--vibeui-datagrid-028-danger:light-dark(oklch(0.53 0.19 27),oklch(0.73 0.17 27));
+--vibeui-datagrid-028-shadow:light-dark(oklch(0.23 0.014 285 / 16%),oklch(0 0 0 / 55%));
 --vibeui-datagrid-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-028"]{
@@ -80,7 +103,7 @@ border:1px solid transparent;background:transparent;color:var(--vibeui-datagrid-
 position:absolute;inset-inline-end:0.5rem;inset-block-start:2.125rem;z-index:6;
 min-width:11rem;padding:0.25rem;margin:0;list-style:none;text-align:start;
 border:1px solid var(--vibeui-datagrid-028-border);border-radius:0.625rem;
-background:var(--vibeui-datagrid-028-bg);box-shadow:0 14px 32px var(--vibeui-datagrid-028-shadow);
+background:var(--vibeui-datagrid-028-menu);box-shadow:0 14px 32px var(--vibeui-datagrid-028-shadow);
 }
 [data-vibeui-block="datagrid-028"] [data-part="item"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.8125rem;text-align:start;
@@ -127,12 +150,49 @@ const DEFAULT_ROWS: Datagrid028Row[] = [
 ]
 
 const ACTIONS = [
-  { key: "open", label: "Открыть заказ", danger: false },
-  { key: "copy", label: "Дублировать", danger: false },
-  { key: "print", label: "Печать накладной", danger: false },
-  { key: "hold", label: "Поставить на паузу", danger: false },
-  { key: "delete", label: "Удалить заказ", danger: true },
+  { key: "open", danger: false },
+  { key: "copy", danger: false },
+  { key: "print", danger: false },
+  { key: "hold", danger: false },
+  { key: "delete", danger: true },
 ]
+
+const ACTION_TEXT: Record<string, string> = {
+  open: "Открыть заказ",
+  copy: "Дублировать",
+  print: "Печать накладной",
+  hold: "Поставить на паузу",
+  delete: "Удалить заказ",
+}
+
+const COLUMN_TEXT: Record<string, string> = {
+  order: "Заказ",
+  customer: "Заказчик",
+  status: "Статус",
+  amount: "Сумма, ₽",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Сетка с колонкой действий и меню: клавиатурная навигация по пунктам,
@@ -142,6 +202,15 @@ export function Datagrid028({
   rows = DEFAULT_ROWS,
   caption = "Действия строки убраны в меню, оно управляется стрелками",
   triggerLabel = "Действия",
+  heading = "Заказы в работе",
+  emptyLogText = "Действие ещё не выбрано",
+  logText = "{action} — заказ {order}",
+  scrollLabel = "Таблица заказов, прокручивается вбок",
+  columnText = COLUMN_TEXT,
+  actionText = ACTION_TEXT,
+  triggerRowLabel = "{label} для заказа {order}",
+  menuLabel = "Действия для заказа {order}",
+  background = "",
   accent,
   className,
   style,
@@ -154,6 +223,12 @@ export function Datagrid028({
 
   const palette = {
     ...(accent ? { "--vibeui-datagrid-028-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-028-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -189,26 +264,28 @@ export function Datagrid028({
         style={palette}
       >
         <div data-part="bar">
-          <h3 data-part="title">Заказы в работе</h3>
+          <h3 data-part="title">{heading}</h3>
           <p data-part="log" role="status" aria-live="polite">
-            {log || "Действие ещё не выбрано"}
+            {log || emptyLogText}
           </p>
         </div>
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица заказов, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
             <caption>{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Заказ</th>
-                <th scope="col">Заказчик</th>
-                <th scope="col">Статус</th>
+                <th scope="col">{columnText.order ?? COLUMN_TEXT.order}</th>
+                <th scope="col">
+                  {columnText.customer ?? COLUMN_TEXT.customer}
+                </th>
+                <th scope="col">{columnText.status ?? COLUMN_TEXT.status}</th>
                 <th scope="col" data-align="end">
-                  Сумма, ₽
+                  {columnText.amount ?? COLUMN_TEXT.amount}
                 </th>
                 <th scope="col" data-part="actions-cell">
                   <span hidden>{triggerLabel}</span>
@@ -240,7 +317,9 @@ export function Datagrid028({
                         aria-haspopup="menu"
                         aria-expanded={open}
                         aria-controls={open ? menuId : undefined}
-                        aria-label={`${triggerLabel} для заказа ${row.order}`}
+                        aria-label={triggerRowLabel
+                          .replace("{label}", triggerLabel)
+                          .replace("{order}", row.order)}
                         onClick={() => setOpenRow(open ? null : row.id)}
                         onKeyDown={(event) => {
                           if (event.key === "ArrowDown") {
@@ -256,7 +335,7 @@ export function Datagrid028({
                           data-part="menu"
                           id={menuId}
                           role="menu"
-                          aria-label={`Действия для заказа ${row.order}`}
+                          aria-label={menuLabel.replace("{order}", row.order)}
                           onKeyDown={(event) => {
                             const list = event.currentTarget
 
@@ -286,24 +365,35 @@ export function Datagrid028({
                             }
                           }}
                         >
-                          {ACTIONS.map((action, index) => (
-                            <li key={action.key} role="none">
-                              {action.danger ? <p data-part="sep" /> : null}
-                              <button
-                                type="button"
-                                role="menuitem"
-                                data-part="item"
-                                data-danger={action.danger ? "true" : undefined}
-                                autoFocus={index === 0}
-                                onClick={() => {
-                                  setLog(`${action.label} — заказ ${row.order}`)
-                                  close(row.id)
-                                }}
-                              >
-                                {action.label}
-                              </button>
-                            </li>
-                          ))}
+                          {ACTIONS.map((action, index) => {
+                            const label =
+                              actionText[action.key] ?? ACTION_TEXT[action.key]
+
+                            return (
+                              <li key={action.key} role="none">
+                                {action.danger ? <p data-part="sep" /> : null}
+                                <button
+                                  type="button"
+                                  role="menuitem"
+                                  data-part="item"
+                                  data-danger={
+                                    action.danger ? "true" : undefined
+                                  }
+                                  autoFocus={index === 0}
+                                  onClick={() => {
+                                    setLog(
+                                      logText
+                                        .replace("{action}", label)
+                                        .replace("{order}", row.order),
+                                    )
+                                    close(row.id)
+                                  }}
+                                >
+                                  {label}
+                                </button>
+                              </li>
+                            )
+                          })}
                         </ul>
                       ) : null}
                     </td>

@@ -13,6 +13,11 @@ export type Alertdialog004Props = Omit<
   seconds?: number
   confirm?: string
   cancel?: string
+  /** Подпись кнопки во время паузы: {action} — действие, {seconds} — остаток. */
+  countdownText?: string
+  danger?: string
+  /** Подложка окна. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: подтверждение с задержкой. Кнопка включается через
@@ -23,12 +28,14 @@ export type Alertdialog004Props = Omit<
 // после отмены кнопка «включится» в невидимом окне.
 const STYLES = `
 :where([data-vibeui-block="alertdialog-004"]){
---vibeui-alertdialog-004-bg:oklch(1 0 0);
---vibeui-alertdialog-004-fg:oklch(0.22 0.014 265);
---vibeui-alertdialog-004-muted:oklch(0.55 0.014 265);
---vibeui-alertdialog-004-border:oklch(0.9 0.006 265);
---vibeui-alertdialog-004-danger:oklch(0.55 0.19 25);
---vibeui-alertdialog-004-track:oklch(0.93 0.005 265);
+--vibeui-alertdialog-004-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-alertdialog-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-alertdialog-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-alertdialog-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-alertdialog-004-danger:light-dark(oklch(0.55 0.19 25),oklch(0.72 0.17 25));
+--vibeui-alertdialog-004-on-danger:light-dark(oklch(1 0 0),oklch(0.17 0.03 25));
+--vibeui-alertdialog-004-track:light-dark(oklch(0.93 0.005 265),oklch(0.32 0.01 265));
+--vibeui-alertdialog-004-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.02 0.01 265 / 70%));
 --vibeui-alertdialog-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="alertdialog-004"]{
@@ -47,10 +54,10 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 margin:auto;width:min(22rem,calc(100vw - 2rem));padding:1.125rem;
 border:1px solid var(--vibeui-alertdialog-004-border);border-radius:0.875rem;
 background:var(--vibeui-alertdialog-004-bg);color:var(--vibeui-alertdialog-004-fg);
-box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 55%);
+box-shadow:0 24px 60px -24px var(--vibeui-alertdialog-004-shadow);
 font-family:var(--vibeui-alertdialog-004-font);
 }
-[data-vibeui-block="alertdialog-004"] dialog::backdrop{background:oklch(0.2 0.02 265 / 45%)}
+[data-vibeui-block="alertdialog-004"] dialog::backdrop{background:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.08 0.014 265 / 62%))}
 [data-vibeui-block="alertdialog-004"] h2{margin:0 0 0.375rem;font-size:1rem;font-weight:700;line-height:1.3}
 [data-vibeui-block="alertdialog-004"] [data-part="text"]{margin:0 0 0.875rem;font-size:0.8125rem;line-height:1.55;color:var(--vibeui-alertdialog-004-muted)}
 /* Полоса и цифра: известное ожидание раздражает меньше неизвестного. */
@@ -69,7 +76,7 @@ transition:width .3s linear;
 flex:1 1 0;appearance:none;cursor:pointer;height:2.375rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;font-variant-numeric:tabular-nums;
 }
-[data-vibeui-block="alertdialog-004"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-004-danger);color:oklch(1 0 0)}
+[data-vibeui-block="alertdialog-004"] [data-part="confirm"]{border:0;background:var(--vibeui-alertdialog-004-danger);color:var(--vibeui-alertdialog-004-on-danger)}
 [data-vibeui-block="alertdialog-004"] [data-part="confirm"]:disabled{opacity:.5;cursor:default}
 [data-vibeui-block="alertdialog-004"] [data-part="cancel"]{
 border:1px solid var(--vibeui-alertdialog-004-border);background:var(--vibeui-alertdialog-004-bg);color:inherit;
@@ -82,6 +89,28 @@ border:1px solid var(--vibeui-alertdialog-004-border);background:var(--vibeui-al
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Подтверждение с задержкой: кнопка включается через несколько секунд.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -92,6 +121,9 @@ export function Alertdialog004({
   seconds = 5,
   confirm = "Стереть",
   cancel = "Отменить",
+  countdownText = "{action} через {seconds}",
+  danger,
+  background = "",
   className,
   style,
   ...props
@@ -120,6 +152,13 @@ export function Alertdialog004({
 
   const palette = {
     "--vibeui-alertdialog-004-progress": `${((seconds - left) / seconds) * 100}%`,
+    ...(danger ? { "--vibeui-alertdialog-004-danger": danger } : null),
+    ...(background
+      ? {
+          "--vibeui-alertdialog-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -155,7 +194,11 @@ export function Alertdialog004({
               disabled={left > 0}
               onClick={finish}
             >
-              {left > 0 ? `${confirm} через ${left}` : confirm}
+              {left > 0
+                ? countdownText
+                    .replace("{action}", confirm)
+                    .replace("{seconds}", String(left))
+                : confirm}
             </button>
             <button type="button" data-part="cancel" autoFocus onClick={finish}>
               {cancel}

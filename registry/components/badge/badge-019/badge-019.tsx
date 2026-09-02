@@ -14,10 +14,10 @@ export type Badge019Props = ComponentPropsWithoutRef<"span"> & {
 // печати счёта.
 const STYLES = `
 :where([data-vibeui-block="badge-019"]){
---vibeui-badge-019-bg:oklch(0.97 0.004 265);
---vibeui-badge-019-fg:oklch(0.38 0.014 265);
---vibeui-badge-019-border:oklch(0.88 0.006 265);
---vibeui-badge-019-mark:oklch(0.6 0.02 265);
+--vibeui-badge-019-bg:light-dark(oklch(0.97 0.004 265),oklch(0.27 0.009 265));
+--vibeui-badge-019-fg:light-dark(oklch(0.38 0.014 265),oklch(0.92 0.006 265));
+--vibeui-badge-019-border:light-dark(oklch(0.88 0.006 265),oklch(0.4 0.011 265));
+--vibeui-badge-019-mark:light-dark(oklch(0.6 0.02 265),oklch(0.72 0.018 265));
 --vibeui-badge-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="badge-019"]{
@@ -29,11 +29,14 @@ font-family:var(--vibeui-badge-019-font);font-size:0.6875rem;font-weight:700;lin
 letter-spacing:0.07em;text-transform:uppercase;vertical-align:middle;
 }
 [data-vibeui-block="badge-019"][data-plan="pro"]{
---vibeui-badge-019-fg:oklch(0.36 0.07 75);
---vibeui-badge-019-border:oklch(0.82 0.09 80);
---vibeui-badge-019-mark:oklch(0.66 0.14 78);
-background:linear-gradient(135deg,oklch(0.96 0.05 85),oklch(0.91 0.09 78));
+--vibeui-badge-019-fg:light-dark(oklch(0.36 0.07 75),oklch(0.93 0.05 82));
+--vibeui-badge-019-border:light-dark(oklch(0.82 0.09 80),oklch(0.52 0.09 80));
+--vibeui-badge-019-mark:light-dark(oklch(0.66 0.14 78),oklch(0.82 0.13 82));
+background:linear-gradient(135deg,light-dark(oklch(0.96 0.05 85),oklch(0.36 0.05 85)),light-dark(oklch(0.91 0.09 78),oklch(0.29 0.06 72)));
 }
+/* Тёмный градиент старшего тарифа держится в обеих темах намеренно: план
+   отличается от соседей материалом, а не только числом ромбов, и в светлой
+   теме тоже обязан читаться как «дороже». */
 [data-vibeui-block="badge-019"][data-plan="business"]{
 --vibeui-badge-019-fg:oklch(0.97 0.01 265);
 --vibeui-badge-019-border:oklch(0.42 0.05 265);

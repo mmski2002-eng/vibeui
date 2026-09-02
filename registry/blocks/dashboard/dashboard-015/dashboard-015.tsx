@@ -21,7 +21,15 @@ export type Dashboard015Props = {
   bars?: Dashboard015Bar[]
   nowLabel?: string
   wasLabel?: string
+  /** Подпись под графиком. */
+  caption?: string
+  /** Шаблон описания графика: {now}, {was} и {series}. */
+  chartLabel?: string
+  /** Шаблон одного дня в описании: {label}, {now} и {was}. */
+  barLabel?: string
   accent?: string
+  /** Подложка карточки; пусто — цвет из палитры блока. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -35,15 +43,15 @@ export type Dashboard015Props = {
 // подписью легенды: на печати и при дальтонизме цвет пропадает первым.
 const STYLES = `
 :where([data-vibeui-block="dashboard-015"]){
---vibeui-dashboard-015-bg:oklch(1 0 0);
---vibeui-dashboard-015-panel:oklch(0.985 0.003 265);
---vibeui-dashboard-015-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-015-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-015-border:oklch(0.91 0.006 265);
---vibeui-dashboard-015-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-015-pale:oklch(0.87 0.05 262);
---vibeui-dashboard-015-up:oklch(0.53 0.14 152);
---vibeui-dashboard-015-down:oklch(0.55 0.18 25);
+--vibeui-dashboard-015-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
+--vibeui-dashboard-015-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.013 265));
+--vibeui-dashboard-015-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-015-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-dashboard-015-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-dashboard-015-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.15 262));
+--vibeui-dashboard-015-pale:light-dark(oklch(0.87 0.05 262),oklch(0.45 0.07 262));
+--vibeui-dashboard-015-up:light-dark(oklch(0.53 0.14 152),oklch(0.76 0.13 152));
+--vibeui-dashboard-015-down:light-dark(oklch(0.55 0.18 25),oklch(0.74 0.15 25));
 --vibeui-dashboard-015-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -181,6 +189,32 @@ const DEFAULT_BARS: Dashboard015Bar[] = [
 
 const ARROW = { up: "↑", down: "↓", flat: "→" }
 
+function fill(template: string, values: Record<string, string>): string {
+  return template.replace(/\{(\w+)\}/g, (whole, key) => values[key] ?? whole)
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Обзор периода: четыре показателя и парные столбцы «сейчас против прошлого».
  * Один файл, ноль зависимостей, собственная палитра.
@@ -192,12 +226,22 @@ export function Dashboard015({
   bars = DEFAULT_BARS,
   nowLabel = "Текущая неделя",
   wasLabel = "Прошлая неделя",
+  caption = "Столбцы стоят парами: слева прошлый период, справа текущий.",
+  chartLabel = "{now} против «{was}» по дням: {series}",
+  barLabel = "{label} {now} и {was}",
   accent,
+  background = "",
   className,
   style,
 }: Dashboard015Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-015-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -256,9 +300,19 @@ export function Dashboard015({
             <div
               data-part="plot"
               role="img"
-              aria-label={`${nowLabel} против «${wasLabel}» по дням: ${bars
-                .map((bar) => `${bar.label} ${bar.now} и ${bar.was}`)
-                .join(", ")}`}
+              aria-label={fill(chartLabel, {
+                now: nowLabel,
+                was: wasLabel,
+                series: bars
+                  .map((bar) =>
+                    fill(barLabel, {
+                      label: bar.label,
+                      now: String(bar.now),
+                      was: String(bar.was),
+                    }),
+                  )
+                  .join(", "),
+              })}
             >
               {bars.map((bar) => (
                 <div key={bar.label} data-part="col">
@@ -285,9 +339,7 @@ export function Dashboard015({
                 </div>
               ))}
             </div>
-            <figcaption>
-              Столбцы стоят парами: слева прошлый период, справа текущий.
-            </figcaption>
+            <figcaption>{caption}</figcaption>
           </figure>
         </div>
       </section>

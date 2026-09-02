@@ -9,6 +9,13 @@ export type Progress007Props = Omit<
   processed?: number
   unit?: string
   elapsed?: string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  text?: Record<string, string>
+  /** Локаль форматирования счётчика. */
+  locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  accent?: string
 }
 
 // Идея компонента: длительность неизвестна, поэтому доли нет вовсе. Дорожка
@@ -17,12 +24,12 @@ export type Progress007Props = Omit<
 // число, которое здесь честно. aria-valuenow сознательно не выставлен.
 const STYLES = `
 :where([data-vibeui-block="progress-007"]){
---vibeui-progress-007-bg:oklch(1 0 0);
---vibeui-progress-007-fg:oklch(0.25 0.016 265);
---vibeui-progress-007-muted:oklch(0.56 0.014 265);
---vibeui-progress-007-border:oklch(0.9 0.006 265);
---vibeui-progress-007-track:oklch(0.93 0.005 265);
---vibeui-progress-007-accent:oklch(0.6 0.15 262);
+--vibeui-progress-007-bg:transparent;
+--vibeui-progress-007-fg:light-dark(oklch(0.25 0.016 265),oklch(0.94 0.006 265));
+--vibeui-progress-007-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-progress-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-progress-007-track:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.011 265));
+--vibeui-progress-007-accent:light-dark(oklch(0.6 0.15 262),oklch(0.72 0.14 262));
 --vibeui-progress-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="progress-007"]{
@@ -74,6 +81,33 @@ color:var(--vibeui-progress-007-fg);font-weight:650;
 }
 `
 
+const DEFAULT_TEXT: Record<string, string> = {
+  processed: "обработано {count} {unit}",
+  unknown: "Длительность неизвестна",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Неопределённый прогресс: штриховка вместо доли, счётчик вместо процента.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -83,10 +117,30 @@ export function Progress007({
   processed = 12_480,
   unit = "документов",
   elapsed = "идёт 3 мин",
+  text = DEFAULT_TEXT,
+  locale = "ru-RU",
+  background = "",
+  accent,
   className,
   style,
   ...props
 }: Progress007Props) {
+  const say = (key: string) => text[key] ?? DEFAULT_TEXT[key]
+  // Счётчик остаётся отдельным узлом: внутри фразы он набран жирным.
+  const [countBefore, countAfter] = say("processed")
+    .replace("{unit}", unit)
+    .split("{count}")
+  const palette = {
+    ...(accent ? { "--vibeui-progress-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-progress-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-progress-007" precedence="medium">
@@ -96,7 +150,7 @@ export function Progress007({
         {...props}
         data-vibeui-block="progress-007"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div data-part="head">
           <span data-part="pip" aria-hidden="true" />
@@ -106,12 +160,13 @@ export function Progress007({
           data-part="track"
           role="progressbar"
           aria-label={label}
-          aria-valuetext="Длительность неизвестна"
+          aria-valuetext={say("unknown")}
         />
         <div data-part="foot">
           <span>
-            обработано <strong>{processed.toLocaleString("ru-RU")}</strong>{" "}
-            {unit}
+            {countBefore}
+            <strong>{processed.toLocaleString(locale)}</strong>
+            {countAfter}
           </span>
           <span>{elapsed}</span>
         </div>

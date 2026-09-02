@@ -10,7 +10,15 @@ export type Checkbox020Props = Omit<
   title?: string
   paragraphs?: string[]
   label?: string
+  /** Доступное имя прокручиваемой рамки. {title} — заголовок документа. */
+  regionLabel?: string
+  /** Подсказка под галочкой после дочитывания. */
+  readHint?: string
+  /** Подсказка под галочкой, пока текст не дочитан. */
+  unreadHint?: string
   onChange?: (accepted: boolean) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,14 +26,19 @@ export type Checkbox020Props = Omit<
 // галочка согласия включается только после прокрутки до конца. Пока текст
 // не дочитан, чекбокс выключен и рядом написано почему; внизу рамки лежит
 // градиентная тень-подсказка, что текст продолжается.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="checkbox-020"]){
---vibeui-checkbox-020-bg:oklch(1 0 0);
---vibeui-checkbox-020-fg:oklch(0.24 0.012 265);
---vibeui-checkbox-020-muted:oklch(0.55 0.014 265);
---vibeui-checkbox-020-border:oklch(0.9 0.006 265);
---vibeui-checkbox-020-paper:oklch(0.985 0.003 90);
---vibeui-checkbox-020-accent:oklch(0.45 0.11 260);
+--vibeui-checkbox-020-bg:transparent;
+--vibeui-checkbox-020-fg:light-dark(oklch(0.24 0.012 265),oklch(0.94 0.006 265));
+--vibeui-checkbox-020-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-020-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-checkbox-020-paper:light-dark(oklch(0.985 0.003 90),oklch(0.25 0.006 90));
+--vibeui-checkbox-020-off:light-dark(oklch(0.95 0.004 265),oklch(0.31 0.009 265));
+--vibeui-checkbox-020-accent:light-dark(oklch(0.45 0.11 260),oklch(0.65 0.13 260));
+--vibeui-checkbox-020-on-accent:oklch(0.99 0.01 260);
 --vibeui-checkbox-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-checkbox-020-serif:ui-serif,Georgia,"Times New Roman",serif;
 }
@@ -71,12 +84,12 @@ border:1.5px solid var(--vibeui-checkbox-020-border);border-radius:0.3125rem;
 background:var(--vibeui-checkbox-020-bg);
 transition:background-color .15s ease,border-color .15s ease;
 }
-[data-vibeui-block="checkbox-020"] input:disabled{background:oklch(0.95 0.004 265)}
+[data-vibeui-block="checkbox-020"] input:disabled{background:var(--vibeui-checkbox-020-off)}
 [data-vibeui-block="checkbox-020"] input:checked{border-color:transparent;background:var(--vibeui-checkbox-020-accent)}
 [data-vibeui-block="checkbox-020"] input:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;
-border-right:2px solid oklch(0.99 0.01 260);border-bottom:2px solid oklch(0.99 0.01 260);
+border-right:2px solid var(--vibeui-checkbox-020-on-accent);border-bottom:2px solid var(--vibeui-checkbox-020-on-accent);
 transform:rotate(45deg);
 }
 [data-vibeui-block="checkbox-020"] input:focus-visible{outline:2px solid var(--vibeui-checkbox-020-accent);outline-offset:2px}
@@ -95,6 +108,28 @@ const DEFAULT_PARAGRAPHS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Согласие с длинным документом: галочка включается только после прокрутки
  * текста до конца. Один файл, ноль зависимостей, собственная палитра.
  */
@@ -102,7 +137,11 @@ export function Checkbox020({
   title = "Пользовательское соглашение",
   paragraphs = DEFAULT_PARAGRAPHS,
   label = "Я прочитал соглашение и согласен с его условиями",
+  regionLabel = "Текст: {title}",
+  readHint = "Текст прочитан — галочку можно поставить.",
+  unreadHint = "Долистайте текст до конца, чтобы поставить галочку.",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -114,6 +153,12 @@ export function Checkbox020({
 
   const palette = {
     ...(accent ? { "--vibeui-checkbox-020-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-checkbox-020-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -145,7 +190,7 @@ export function Checkbox020({
             data-part="scroll"
             tabIndex={0}
             role="region"
-            aria-label={`Текст: ${title}`}
+            aria-label={regionLabel.replace("{title}", title)}
             onScroll={track}
           >
             {paragraphs.map((paragraph) => (
@@ -167,9 +212,7 @@ export function Checkbox020({
           <span>{label}</span>
         </label>
         <p data-part="why" role="status">
-          {read
-            ? "Текст прочитан — галочку можно поставить."
-            : "Долистайте текст до конца, чтобы поставить галочку."}
+          {read ? readHint : unreadHint}
         </p>
       </section>
     </>

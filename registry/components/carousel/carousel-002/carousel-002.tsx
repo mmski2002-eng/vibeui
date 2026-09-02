@@ -15,6 +15,12 @@ export type Carousel002Props = Omit<
 > & {
   items?: Carousel002Item[]
   label?: string
+  /** Роль секции для скринридера. */
+  roleText?: string
+  /** Подписи стрелок: компонент несёт русские, проект подставляет свои. */
+  navText?: Record<string, string>
+  /** Пусто — подложка своя; цвет заменяет её целиком. */
+  background?: string
   accent?: string
 }
 
@@ -22,14 +28,18 @@ export type Carousel002Props = Omit<
 // не украшение: обрезанная карточка — единственный честный сигнал, что
 // список продолжается. Стрелки прокручивают на ширину видимой области через
 // scrollBy, а не на «одну карточку»: карточек в кадре бывает разное число.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложка и
+// карточки темнеют вместе со страницей, своей тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="carousel-002"]){
---vibeui-carousel-002-surface:oklch(1 0 0);
---vibeui-carousel-002-bg:oklch(1 0 0);
---vibeui-carousel-002-fg:oklch(0.22 0.014 265);
---vibeui-carousel-002-muted:oklch(0.58 0.014 265);
---vibeui-carousel-002-border:oklch(0.91 0.006 265);
---vibeui-carousel-002-accent:oklch(0.55 0.17 265);
+--vibeui-carousel-002-surface:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-carousel-002-bg:light-dark(oklch(1 0 0),oklch(0.26 0.013 265));
+--vibeui-carousel-002-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
+--vibeui-carousel-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-002-muted:light-dark(oklch(0.58 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-carousel-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-carousel-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Собственная подложка: заголовок и счётчик — это текст, и на тёмной
@@ -53,7 +63,7 @@ width:2rem;height:2rem;padding:0;
 border:1px solid var(--vibeui-carousel-002-border);border-radius:0.5rem;
 background:var(--vibeui-carousel-002-bg);color:inherit;
 }
-[data-vibeui-block="carousel-002"] [data-part="nav"] button:hover{background:oklch(0.96 0.004 265)}
+[data-vibeui-block="carousel-002"] [data-part="nav"] button:hover{background:var(--vibeui-carousel-002-hover)}
 [data-vibeui-block="carousel-002"] [data-part="nav"] button:focus-visible{outline:2px solid var(--vibeui-carousel-002-accent);outline-offset:2px}
 [data-vibeui-block="carousel-002"] [data-part="arrow"]{
 width:0.375rem;height:0.375rem;
@@ -105,6 +115,33 @@ const DEFAULT_ITEMS: Carousel002Item[] = [
   { title: "Почему компонент — один файл", meta: "5 минут", hue: 300 },
 ]
 
+const NAV_LABEL: Record<string, string> = {
+  prev: "Предыдущие карточки",
+  next: "Следующие карточки",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Лента карточек с подглядыванием следующей и прокруткой на ширину кадра.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -112,6 +149,9 @@ const DEFAULT_ITEMS: Carousel002Item[] = [
 export function Carousel002({
   items = DEFAULT_ITEMS,
   label = "Читать дальше",
+  roleText = "карусель",
+  navText = NAV_LABEL,
+  background = "",
   accent,
   className,
   style,
@@ -121,6 +161,12 @@ export function Carousel002({
 
   const palette = {
     ...(accent ? { "--vibeui-carousel-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-carousel-002-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -140,7 +186,7 @@ export function Carousel002({
       <section
         {...props}
         data-vibeui-block="carousel-002"
-        aria-roledescription="карусель"
+        aria-roledescription={roleText}
         aria-label={label}
         className={className}
         style={palette}
@@ -150,14 +196,14 @@ export function Carousel002({
           <div data-part="nav">
             <button
               type="button"
-              aria-label="Предыдущие карточки"
+              aria-label={navText.prev ?? NAV_LABEL.prev}
               onClick={() => scroll(-1)}
             >
               <span data-part="arrow" aria-hidden="true" />
             </button>
             <button
               type="button"
-              aria-label="Следующие карточки"
+              aria-label={navText.next ?? NAV_LABEL.next}
               onClick={() => scroll(1)}
             >
               <span data-part="arrow" data-dir="next" aria-hidden="true" />

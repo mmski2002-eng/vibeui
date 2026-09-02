@@ -11,6 +11,8 @@ export type Testimonials004Props = {
   title?: string
   description?: string
   items?: Testimonials004Item[]
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -22,11 +24,11 @@ export type Testimonials004Props = {
 // человека — доказательство и узнавание в одном элементе.
 const STYLES = `
 :where([data-vibeui-block="testimonials-004"]){
---vibeui-testimonials-004-bg:oklch(1 0 0);
---vibeui-testimonials-004-ink:oklch(0.21 0.012 250);
---vibeui-testimonials-004-muted:oklch(0.5 0.012 250);
---vibeui-testimonials-004-border:oklch(0.91 0.005 250);
---vibeui-testimonials-004-accent:oklch(0.48 0.15 245);
+--vibeui-testimonials-004-bg:transparent;
+--vibeui-testimonials-004-ink:light-dark(oklch(0.21 0.012 250),oklch(0.95 0.006 250));
+--vibeui-testimonials-004-muted:light-dark(oklch(0.5 0.012 250),oklch(0.72 0.012 250));
+--vibeui-testimonials-004-border:light-dark(oklch(0.91 0.005 250),oklch(0.34 0.012 250));
+--vibeui-testimonials-004-accent:light-dark(oklch(0.48 0.15 245),oklch(0.75 0.14 245));
 --vibeui-testimonials-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -117,17 +119,46 @@ const DEFAULT_ITEMS: Testimonials004Item[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Лента логотипов с цитатой у каждого: узнавание и доказательство разом. */
 export function Testimonials004({
   title = "Нас выбирают не за красивые слова",
   description = "Четыре команды рассказали, что именно изменилось после перехода. Одна фраза от каждого — без пресс-релизов и общих формулировок.",
   items = DEFAULT_ITEMS,
+  background = "",
   accent,
   className,
   style,
 }: Testimonials004Props) {
   const palette = {
     ...(accent ? { "--vibeui-testimonials-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-testimonials-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

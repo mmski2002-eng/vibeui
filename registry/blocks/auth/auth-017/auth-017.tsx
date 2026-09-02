@@ -9,6 +9,26 @@ export type Auth017Props = {
   stats?: { value: string; label: string }[]
   accept?: string
   decline?: string
+  /** Строка над заголовком; {inviter} и {inviterRole} подставляются из пропов. */
+  fromText?: string
+  /** Строка о роли; {role} подставляется из пропа role. */
+  roleText?: string
+  /** Состав команды; {team} — перечисление, {more} — сколько ещё человек. */
+  whoText?: string
+  /** Сколько человек в проекте сверх перечисленных. */
+  moreCount?: number
+  /** Подвал; {email} и {days} подставляются из email и expiresDays. */
+  footText?: string
+  /** Подпись ссылки в подвале. */
+  footLink?: string
+  /** Адрес, на который выписано приглашение. */
+  email?: string
+  /** Сколько дней действует приглашение. */
+  expiresDays?: number
+  /** Заголовок области для скринридера; {project} — название проекта. */
+  ariaLabel?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -36,15 +56,23 @@ function hue(name: string) {
 // того, кто открыл ссылку под другим аккаунтом — иначе он примет приглашение
 // не тем пользователем и повторить будет нечем: ссылка одноразовая.
 //
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе с контекстом и не носит собственной подложки. Цвет лица в стопке
+// считается из хеша имени и читается в обеих темах.
+//
 // Демонстрация интерфейса: кнопки ничего не отправляют.
 const STYLES = `
 :where([data-vibeui-block="auth-017"]){
---vibeui-auth-017-bg:oklch(0.97 0.006 145);
---vibeui-auth-017-card:oklch(1 0 0);
---vibeui-auth-017-fg:oklch(0.22 0.016 150);
---vibeui-auth-017-muted:oklch(0.53 0.014 150);
---vibeui-auth-017-border:oklch(0.89 0.01 150);
---vibeui-auth-017-accent:oklch(0.5 0.14 150);
+--vibeui-auth-017-bg:transparent;
+--vibeui-auth-017-card:light-dark(oklch(1 0 0),oklch(0.22 0.014 150));
+--vibeui-auth-017-fg:light-dark(oklch(0.22 0.016 150),oklch(0.94 0.006 150));
+--vibeui-auth-017-muted:light-dark(oklch(0.53 0.014 150),oklch(0.7 0.012 150));
+--vibeui-auth-017-border:light-dark(oklch(0.89 0.01 150),oklch(0.35 0.012 150));
+--vibeui-auth-017-accent:light-dark(oklch(0.5 0.14 150),oklch(0.74 0.13 150));
+--vibeui-auth-017-accent-2:light-dark(oklch(0.6 0.15 190),oklch(0.76 0.12 190));
+--vibeui-auth-017-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 150));
+--vibeui-auth-017-tint:light-dark(oklch(0.5 0.14 150 / 12%),oklch(0.74 0.13 150 / 18%));
+--vibeui-auth-017-sheet:light-dark(oklch(0.55 0.02 150 / 5%),oklch(0.85 0.02 150 / 8%));
 --vibeui-auth-017-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -61,7 +89,7 @@ border:1px solid var(--vibeui-auth-017-border);border-radius:1.125rem;
 }
 [data-vibeui-block="auth-017"] [data-part="ribbon"]{
 height:0.375rem;
-background:linear-gradient(90deg,var(--vibeui-auth-017-accent),oklch(0.6 0.15 190));
+background:linear-gradient(90deg,var(--vibeui-auth-017-accent),var(--vibeui-auth-017-accent-2));
 }
 [data-vibeui-block="auth-017"] [data-part="body"]{padding:1.5rem}
 [data-vibeui-block="auth-017"] [data-part="stats"]{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin:1.125rem 0}
@@ -83,12 +111,12 @@ font-size:0.8125rem;color:var(--vibeui-auth-017-muted);
 [data-vibeui-block="auth-017"] [data-part="lead"]{margin:0;font-size:0.875rem;line-height:1.55;color:var(--vibeui-auth-017-muted)}
 [data-vibeui-block="auth-017"] [data-part="role"]{
 display:inline-block;padding:0.125rem 0.5rem;border-radius:9999px;
-background:oklch(0.5 0.14 150 / 12%);color:var(--vibeui-auth-017-accent);
+background:var(--vibeui-auth-017-tint);color:var(--vibeui-auth-017-accent);
 font-size:0.8125rem;font-weight:700;
 }
 [data-vibeui-block="auth-017"] [data-part="stat"]{
 padding:0.625rem 0.75rem;border-radius:0.75rem;
-background:oklch(0.55 0.02 150 / 5%);
+background:var(--vibeui-auth-017-sheet);
 }
 [data-vibeui-block="auth-017"] [data-part="value"]{display:block;font-size:1.125rem;font-weight:700;letter-spacing:-0.01em}
 [data-vibeui-block="auth-017"] [data-part="label"]{display:block;margin-top:0.125rem;font-size:0.6875rem;line-height:1.3;color:var(--vibeui-auth-017-muted)}
@@ -109,7 +137,7 @@ font-size:0.6875rem;font-weight:700;
 appearance:none;cursor:pointer;height:2.75rem;padding:0 1rem;
 border-radius:0.75rem;font:inherit;font-size:0.875rem;font-weight:650;
 }
-[data-vibeui-block="auth-017"] [data-part="accept"]{border:0;background:var(--vibeui-auth-017-accent);color:oklch(1 0 0)}
+[data-vibeui-block="auth-017"] [data-part="accept"]{border:0;background:var(--vibeui-auth-017-accent);color:var(--vibeui-auth-017-on-accent)}
 [data-vibeui-block="auth-017"] [data-part="decline"]{border:1px solid var(--vibeui-auth-017-border);background:none;color:inherit}
 [data-vibeui-block="auth-017"] [data-part="accept"]:focus-visible,
 [data-vibeui-block="auth-017"] [data-part="decline"]:focus-visible{outline:2px solid var(--vibeui-auth-017-accent);outline-offset:2px}
@@ -130,6 +158,28 @@ const DEFAULT_STATS = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Приглашение в команду широким баннером: кто зовёт, куда,
  * состав команды и два равноправных ответа. Один файл, ноль зависимостей.
  */
@@ -142,12 +192,31 @@ export function Auth017({
   stats = DEFAULT_STATS,
   accept = "Принять и войти",
   decline = "Отклонить",
+  fromText = "{inviter}, {inviterRole}, приглашает вас",
+  roleText = "Роль при входе: {role}. Её можно изменить позже — это делает владелец проекта.",
+  whoText = "Уже в проекте: {team} и ещё {more} человек",
+  moreCount = 8,
+  footText = "Приглашение выписано на адрес {email} и действует {days} дней. Это не ваш адрес?",
+  footLink = "Войти другим аккаунтом",
+  email = "anna@vibeui.ru",
+  expiresDays = 7,
+  ariaLabel = "Приглашение в проект {project}",
+  background = "",
   accent,
   className,
   style,
 }: Auth017Props) {
+  const [fromBefore, fromAfter = ""] = fromText.split("{inviter}")
+  const [roleBefore, roleAfter = ""] = roleText.split("{role}")
+
   const palette = {
     ...(accent ? { "--vibeui-auth-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-auth-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -160,7 +229,7 @@ export function Auth017({
         data-vibeui-block="auth-017"
         className={className}
         style={palette}
-        aria-label={`Приглашение в проект ${project}`}
+        aria-label={ariaLabel.replace("{project}", project)}
       >
         <div data-part="shell">
           <div data-part="ribbon" aria-hidden="true" />
@@ -168,12 +237,15 @@ export function Auth017({
             <div data-part="head">
               <div>
                 <p data-part="from">
-                  <b>{inviter}</b>, {inviterRole}, приглашает вас
+                  {fromBefore.replace("{inviterRole}", inviterRole)}
+                  <b>{inviter}</b>
+                  {fromAfter.replace("{inviterRole}", inviterRole)}
                 </p>
                 <h2>{project}</h2>
                 <p data-part="lead">
-                  Роль при входе: <span data-part="role">{role}</span>. Её можно
-                  изменить позже — это делает владелец проекта.
+                  {roleBefore}
+                  <span data-part="role">{role}</span>
+                  {roleAfter}
                 </p>
               </div>
 
@@ -207,7 +279,9 @@ export function Auth017({
                 ))}
               </span>
               <span data-part="who">
-                Уже в проекте: {team.join(", ")} и ещё восемь человек
+                {whoText
+                  .replace("{team}", team.join(", "))
+                  .replace("{more}", String(moreCount))}
               </span>
             </div>
 
@@ -221,8 +295,10 @@ export function Auth017({
             </div>
 
             <p data-part="foot">
-              Приглашение выписано на адрес anna@vibeui.ru и действует 7 дней.
-              Это не ваш адрес? <a href="#">Войти другим аккаунтом</a>
+              {footText
+                .replace("{email}", email)
+                .replace("{days}", String(expiresDays))}{" "}
+              <a href="#">{footLink}</a>
             </p>
           </div>
         </div>

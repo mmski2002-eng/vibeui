@@ -13,19 +13,36 @@ export type Toast014Props = Omit<
   defaultCorner?: Toast014Corner
   message?: string
   closeLabel?: string
+  /** Подписи углов: компонент несёт русские, проект подставляет свои. */
+  cornerLabels?: Record<Toast014Corner, string>
+  /** Подпись группы переключателей для скринридера. */
+  pickerLabel?: string
+  stageHint?: string
+  legendLabel?: string
+  /** Цвет точки и активной кнопки. Пусто — штатная палитра. */
+  tone?: string
+  /** Подложка сцены. Пусто — штатная палитра. */
+  background?: string
 }
 
 // Идея компонента: угол — это не только положение, но и направление, откуда
 // уведомление приходит. Переключатель меняет угол сцены, а карточка каждый
 // раз въезжает со своей стороны, поэтому разница между углами видна сразу.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
+// карточка светлее сцены, а граница светлее карточки — иначе сцена и карточка
+// слились бы в одно пятно.
 const STYLES = `
 :where([data-vibeui-block="toast-014"]){
---vibeui-toast-014-bg:oklch(0.97 0.004 265);
---vibeui-toast-014-fg:oklch(0.24 0.014 265);
---vibeui-toast-014-muted:oklch(0.55 0.014 265);
---vibeui-toast-014-border:oklch(0.9 0.006 265);
---vibeui-toast-014-card:oklch(1 0 0);
---vibeui-toast-014-tone:oklch(0.58 0.16 265);
+--vibeui-toast-014-bg:light-dark(oklch(0.97 0.004 265),oklch(0.21 0.012 265));
+--vibeui-toast-014-grid:light-dark(oklch(0.88 0.008 265 / 45%),oklch(0.52 0.014 265 / 40%));
+--vibeui-toast-014-fg:light-dark(oklch(0.24 0.014 265),oklch(0.96 0.003 265));
+--vibeui-toast-014-muted:light-dark(oklch(0.55 0.014 265),oklch(0.74 0.01 265));
+--vibeui-toast-014-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
+--vibeui-toast-014-card:light-dark(oklch(1 0 0),oklch(0.28 0.015 265));
+--vibeui-toast-014-hover:light-dark(oklch(0.2 0.02 265 / 7%),oklch(1 0 0 / 12%));
+--vibeui-toast-014-shadow:light-dark(oklch(0.2 0.02 265 / 55%),oklch(0.05 0.01 265 / 72%));
+--vibeui-toast-014-tone:light-dark(oklch(0.55 0.16 265),oklch(0.74 0.15 265));
 --vibeui-toast-014-offset:0.875rem;
 --vibeui-toast-014-radius:0.875rem;
 --vibeui-toast-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -56,8 +73,8 @@ position:relative;overflow:hidden;box-sizing:border-box;
 min-height:12rem;border:1px solid var(--vibeui-toast-014-border);
 border-radius:1rem;
 background:
-linear-gradient(0deg,oklch(0.88 0.008 265 / 45%) 1px,transparent 1px) 0 0 / 100% 1.5rem,
-linear-gradient(90deg,oklch(0.88 0.008 265 / 45%) 1px,transparent 1px) 0 0 / 1.5rem 100%,
+linear-gradient(0deg,var(--vibeui-toast-014-grid) 1px,transparent 1px) 0 0 / 100% 1.5rem,
+linear-gradient(90deg,var(--vibeui-toast-014-grid) 1px,transparent 1px) 0 0 / 1.5rem 100%,
 var(--vibeui-toast-014-bg);
 }
 [data-vibeui-block="toast-014"] [data-part="hint"]{
@@ -73,7 +90,7 @@ border:1px solid var(--vibeui-toast-014-border);
 border-radius:var(--vibeui-toast-014-radius);
 background:var(--vibeui-toast-014-card);
 font-size:0.8125rem;line-height:1.35;
-box-shadow:0 16px 34px -22px oklch(0.2 0.02 265 / 55%);
+box-shadow:0 16px 34px -22px var(--vibeui-toast-014-shadow);
 }
 [data-vibeui-block="toast-014"][data-corner^="top"] [data-part="card"]{top:var(--vibeui-toast-014-offset)}
 [data-vibeui-block="toast-014"][data-corner^="bottom"] [data-part="card"]{bottom:var(--vibeui-toast-014-offset)}
@@ -94,7 +111,7 @@ display:flex;align-items:center;justify-content:center;
 width:1.25rem;height:1.25rem;padding:0;border-radius:9999px;
 color:var(--vibeui-toast-014-muted);font-size:0.9375rem;line-height:1;
 }
-[data-vibeui-block="toast-014"] [data-part="close"]:hover{background:oklch(0 0 0 / 6%);color:var(--vibeui-toast-014-fg)}
+[data-vibeui-block="toast-014"] [data-part="close"]:hover{background:var(--vibeui-toast-014-hover);color:var(--vibeui-toast-014-fg)}
 [data-vibeui-block="toast-014"] [data-part="close"]:focus-visible{outline:2px solid var(--vibeui-toast-014-tone);outline-offset:2px}
 [data-vibeui-block="toast-014"] [data-part="legend"]{
 display:flex;align-items:center;gap:0.375rem;margin:0.625rem 0 0;
@@ -104,12 +121,41 @@ font-size:0.75rem;color:var(--vibeui-toast-014-muted);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="toast-014"] *{animation:none!important;transition:none!important}}
 `
 
-const CORNERS: { value: Toast014Corner; label: string }[] = [
-  { value: "top-left", label: "Сверху слева" },
-  { value: "top-right", label: "Сверху справа" },
-  { value: "bottom-left", label: "Снизу слева" },
-  { value: "bottom-right", label: "Снизу справа" },
+const CORNERS: Toast014Corner[] = [
+  "top-left",
+  "top-right",
+  "bottom-left",
+  "bottom-right",
 ]
+
+const CORNER_LABEL: Record<Toast014Corner, string> = {
+  "top-left": "Сверху слева",
+  "top-right": "Сверху справа",
+  "bottom-left": "Снизу слева",
+  "bottom-right": "Снизу справа",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Выбор угла появления: переключатель меняет позицию, карточка въезжает со
@@ -119,12 +165,29 @@ export function Toast014({
   defaultCorner = "bottom-right",
   message = "Файл выгружен в облако",
   closeLabel = "Закрыть",
+  cornerLabels = CORNER_LABEL,
+  pickerLabel = "Угол появления",
+  stageHint = "область приложения",
+  legendLabel = "угол появления",
+  tone = "",
+  background = "",
   className,
   style,
   ...props
 }: Toast014Props) {
   const [corner, setCorner] = useState<Toast014Corner>(defaultCorner)
   const [visible, setVisible] = useState(true)
+
+  const palette = {
+    ...(tone ? { "--vibeui-toast-014-tone": tone } : null),
+    ...(background
+      ? {
+          "--vibeui-toast-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -136,25 +199,25 @@ export function Toast014({
         data-vibeui-block="toast-014"
         data-corner={corner}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
-        <div data-part="picker" role="group" aria-label="Угол появления">
+        <div data-part="picker" role="group" aria-label={pickerLabel}>
           {CORNERS.map((option) => (
             <button
-              key={option.value}
+              key={option}
               type="button"
-              aria-pressed={corner === option.value}
+              aria-pressed={corner === option}
               onClick={() => {
-                setCorner(option.value)
+                setCorner(option)
                 setVisible(true)
               }}
             >
-              {option.label}
+              {cornerLabels[option] ?? CORNER_LABEL[option]}
             </button>
           ))}
         </div>
         <div data-part="stage">
-          <p data-part="hint">область приложения</p>
+          <p data-part="hint">{stageHint}</p>
           {visible ? (
             <div key={corner} data-part="card" role="status" aria-live="polite">
               <span data-part="dot" aria-hidden="true" />
@@ -171,7 +234,7 @@ export function Toast014({
           ) : null}
         </div>
         <p data-part="legend">
-          угол появления: <b>{corner}</b>
+          {legendLabel}: <b>{corner}</b>
         </p>
       </div>
     </>

@@ -22,6 +22,8 @@ export type Commerce069Props = {
   yearlyLabel?: string
   yearly?: string
   subs?: Commerce069Sub[]
+  /** Подписи статусов: active, paused, ending. */
+  stateText?: Record<string, string>
   nextLabel?: string
   pause?: string
   resume?: string
@@ -29,6 +31,8 @@ export type Commerce069Props = {
   cancel?: string
   note?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -42,15 +46,16 @@ export type Commerce069Props = {
 // стоит рядом с отменой, потому что чаще нужна именно она.
 const STYLES = `
 :where([data-vibeui-block="commerce-069"]){
---vibeui-commerce-069-bg:oklch(1 0 0);
---vibeui-commerce-069-fg:oklch(0.21 0.014 300);
---vibeui-commerce-069-muted:oklch(0.53 0.016 300);
---vibeui-commerce-069-border:oklch(0.9 0.008 300);
---vibeui-commerce-069-soft:oklch(0.972 0.006 300);
---vibeui-commerce-069-accent:oklch(0.5 0.16 300);
---vibeui-commerce-069-live:oklch(0.47 0.12 150);
---vibeui-commerce-069-pause:oklch(0.58 0.13 75);
---vibeui-commerce-069-end:oklch(0.54 0.16 25);
+--vibeui-commerce-069-bg:transparent;
+--vibeui-commerce-069-surface:light-dark(oklch(1 0 0),oklch(0.22 0.014 300));
+--vibeui-commerce-069-fg:light-dark(oklch(0.21 0.014 300),oklch(0.94 0.007 300));
+--vibeui-commerce-069-muted:light-dark(oklch(0.53 0.016 300),oklch(0.73 0.013 300));
+--vibeui-commerce-069-border:light-dark(oklch(0.9 0.008 300),oklch(0.38 0.016 300));
+--vibeui-commerce-069-soft:light-dark(oklch(0.972 0.006 300),oklch(0.27 0.016 300));
+--vibeui-commerce-069-accent:light-dark(oklch(0.5 0.16 300),oklch(0.76 0.14 300));
+--vibeui-commerce-069-live:light-dark(oklch(0.47 0.12 150),oklch(0.78 0.14 150));
+--vibeui-commerce-069-pause:light-dark(oklch(0.58 0.13 75),oklch(0.82 0.14 75));
+--vibeui-commerce-069-end:light-dark(oklch(0.54 0.16 25),oklch(0.73 0.15 25));
 --vibeui-commerce-069-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -98,7 +103,7 @@ font-size:0.8125rem;line-height:1.45;
 [data-vibeui-block="commerce-069"] [data-part="tools"]{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.75rem}
 [data-vibeui-block="commerce-069"] [data-part="tool"]{
 appearance:none;cursor:pointer;height:2.125rem;padding:0 0.875rem;border-radius:0.625rem;
-border:1px solid var(--vibeui-commerce-069-border);background:var(--vibeui-commerce-069-bg);
+border:1px solid var(--vibeui-commerce-069-border);background:var(--vibeui-commerce-069-surface);
 color:inherit;font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="commerce-069"] [data-part="danger"]{
@@ -121,6 +126,28 @@ const STATE_WORD: Record<Commerce069State, string> = {
   active: "Активна",
   paused: "На паузе",
   ending: "Заканчивается",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 const DEFAULT_SUBS: Commerce069Sub[] = [
@@ -171,6 +198,7 @@ export function Commerce069({
   yearlyLabel = "За год",
   yearly = "29 470 ₽",
   subs = DEFAULT_SUBS,
+  stateText = STATE_WORD,
   nextLabel = "Следующее списание",
   pause = "Поставить на паузу",
   resume = "Возобновить",
@@ -178,11 +206,21 @@ export function Commerce069({
   cancel = "Отменить",
   note = "Пауза сохраняет цену: после возобновления подписка продолжится по старому тарифу, даже если он подорожал. Отмена этого не сохраняет.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce069Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-069-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-069-bg": background,
+          // Кнопки действий не должны просвечивать: им нужна непрозрачная
+          // подложка, а она задана тем же цветом.
+          "--vibeui-commerce-069-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -230,7 +268,7 @@ export function Commerce069({
                       <p data-part="name">{sub.title}</p>
                       <span data-part="state" data-state={sub.state}>
                         <span data-part="mark" aria-hidden="true" />
-                        {STATE_WORD[sub.state]}
+                        {stateText[sub.state] ?? STATE_WORD[sub.state]}
                       </span>
                     </div>
                     <p data-part="detail">{sub.detail}</p>

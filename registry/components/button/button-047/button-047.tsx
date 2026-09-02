@@ -4,7 +4,11 @@ export type Button047Props = ComponentPropsWithoutRef<"a"> & {
   href?: string
   /** Показывать домен назначения рядом с подписью. */
   showHost?: boolean
+  /** Строка для скринридера: сам target о новой вкладке не сообщает. */
+  newTabHint?: string
   accent?: string
+  /** Поверхность ссылки. Пусто — своя, из палитры. */
+  background?: string
 }
 
 // Идея компонента: ссылка, которая честно предупреждает об уходе с сайта.
@@ -13,11 +17,11 @@ export type Button047Props = ComponentPropsWithoutRef<"a"> & {
 // скрытая строка «откроется в новой вкладке» — target сам по себе её не даёт.
 const STYLES = `
 :where([data-vibeui-block="button-047"]){
---vibeui-button-047-surface:oklch(1 0 0);
---vibeui-button-047-border:oklch(0.9 0.006 265);
---vibeui-button-047-fg:oklch(0.26 0.02 265);
---vibeui-button-047-muted:oklch(0.55 0.014 265);
---vibeui-button-047-accent:oklch(0.5 0.16 245);
+--vibeui-button-047-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
+--vibeui-button-047-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.014 265));
+--vibeui-button-047-fg:light-dark(oklch(0.26 0.02 265),oklch(0.93 0.008 265));
+--vibeui-button-047-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-button-047-accent:light-dark(oklch(0.5 0.16 245),oklch(0.75 0.13 245));
 --vibeui-button-047-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-button-047-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
@@ -68,13 +72,38 @@ function hostOf(href: string) {
 }
 
 /**
+ * Ветка темы для заданной поверхности. Без неё светлая заливка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Ссылка на внешний ресурс со значком выхода и доменом назначения.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Button047({
   href = "https://ui.shadcn.com/docs",
   showHost = true,
+  newTabHint = "(откроется в новой вкладке)",
   accent,
+  background = "",
   className,
   style,
   children = "Документация shadcn",
@@ -82,6 +111,12 @@ export function Button047({
 }: Button047Props) {
   const palette = {
     ...(accent ? { "--vibeui-button-047-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-047-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -102,7 +137,7 @@ export function Button047({
         <span data-part="label">{children}</span>
         {showHost ? <span data-part="host">{hostOf(href)}</span> : null}
         <span data-part="out" aria-hidden="true" />
-        <span data-part="sr">(откроется в новой вкладке)</span>
+        <span data-part="sr">{newTabHint}</span>
       </a>
     </>
   )

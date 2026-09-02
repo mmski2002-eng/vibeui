@@ -4,12 +4,17 @@ export type Buttongroup037Props = Omit<
   ComponentPropsWithoutRef<"fieldset">,
   "children"
 > & {
+  /** Доступное имя группы: читается скринридером, визуально скрыто. */
+  label?: string
   fileLabel?: string
   linkLabel?: string
   filePrompt?: string
   linkPrompt?: string
+  linkPlaceholder?: string
   defaultValue?: "file" | "link"
   name?: string
+  /** Пусто — заливки нет, карточка ложится на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,11 +26,13 @@ export type Buttongroup037Props = Omit<
 // только верхние углы, у панели — только нижние, и общая рамка не разрывается.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-037"]){
---vibeui-buttongroup-037-surface:oklch(1 0 0);
---vibeui-buttongroup-037-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-037-muted:oklch(0.57 0.014 265);
---vibeui-buttongroup-037-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-037-accent:oklch(0.5 0.16 265);
+--vibeui-buttongroup-037-surface:transparent;
+--vibeui-buttongroup-037-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-037-muted:light-dark(oklch(0.57 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-037-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.012 265));
+--vibeui-buttongroup-037-track:light-dark(oklch(0.975 0.003 265),oklch(0.29 0.01 265));
+--vibeui-buttongroup-037-dash:light-dark(oklch(0.84 0.01 265),oklch(0.47 0.014 265));
+--vibeui-buttongroup-037-accent:light-dark(oklch(0.5 0.16 265),oklch(0.76 0.14 265));
 --vibeui-buttongroup-037-radius:0.75rem;
 --vibeui-buttongroup-037-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -46,12 +53,14 @@ overflow:hidden;clip-path:inset(50%);white-space:nowrap;
 [data-vibeui-block="buttongroup-037"] [data-part="track"]{
 display:grid;grid-template-columns:1fr 1fr;
 border-bottom:1px solid var(--vibeui-buttongroup-037-border);
-background:oklch(0.975 0.003 265);
 }
+/* Тон лежит на самом сегменте, а не на треке: активная вкладка обязана
+   показывать подложку карточки, а при прозрачной подложке — фон страницы. */
 [data-vibeui-block="buttongroup-037"] [data-part="segment"]{
 position:relative;
 display:inline-flex;align-items:center;justify-content:center;gap:0.4375rem;
 height:2.5rem;
+background:var(--vibeui-buttongroup-037-track);
 color:var(--vibeui-buttongroup-037-muted);
 font-size:0.8125rem;font-weight:650;line-height:1;cursor:pointer;
 transition:background-color .16s ease,color .16s ease;
@@ -82,7 +91,7 @@ outline:2px solid var(--vibeui-buttongroup-037-accent);outline-offset:-2px;
 [data-vibeui-block="buttongroup-037"] [data-part="drop"]{
 display:flex;flex-direction:column;align-items:center;gap:0.375rem;
 padding:1.125rem 0.75rem;
-border:1.5px dashed oklch(0.84 0.01 265);border-radius:0.625rem;
+border:1.5px dashed var(--vibeui-buttongroup-037-dash);border-radius:0.625rem;
 color:var(--vibeui-buttongroup-037-muted);
 font-size:0.75rem;line-height:1.4;text-align:center;cursor:pointer;
 transition:border-color .16s ease,color .16s ease;
@@ -112,16 +121,41 @@ outline:2px solid var(--vibeui-buttongroup-037-accent);outline-offset:1px;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Переключатель источника: сцепка из двух сегментов меняет панель под собой.
  * Один файл, ноль зависимостей, серверный компонент без JS.
  */
 export function Buttongroup037({
+  label = "Источник вложения",
   fileLabel = "Загрузить файл",
   linkLabel = "Дать ссылку",
   filePrompt = "Перетащите файл или нажмите, чтобы выбрать. PDF, PNG, до 10 МБ.",
   linkPrompt = "Ссылка на файл в вашем хранилище",
+  linkPlaceholder = "https://disk.example.com/act.pdf",
   defaultValue = "file",
   name = "buttongroup-037",
+  background = "",
   accent,
   className,
   style,
@@ -129,6 +163,12 @@ export function Buttongroup037({
 }: Buttongroup037Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-037-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-037-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -143,7 +183,7 @@ export function Buttongroup037({
         className={className}
         style={palette}
       >
-        <legend>Источник вложения</legend>
+        <legend>{label}</legend>
         <div data-part="track">
           <label data-part="segment" data-mode="file">
             <input
@@ -185,7 +225,7 @@ export function Buttongroup037({
             <input
               type="url"
               name={`${name}-url`}
-              placeholder="https://disk.example.com/act.pdf"
+              placeholder={linkPlaceholder}
             />
           </label>
         </div>

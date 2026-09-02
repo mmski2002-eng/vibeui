@@ -1,6 +1,8 @@
 import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
 export type Buttongroup046Period = {
+  /** Независимый от языка ключ пресета: его же ждёт форма. */
+  id: string
   label: string
   range: string
 }
@@ -14,6 +16,8 @@ export type Buttongroup046Props = Omit<
   defaultValue?: string
   label?: string
   name?: string
+  /** Пусто — заливки нет, сегменты ложатся на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,12 +30,13 @@ export type Buttongroup046Props = Omit<
 // и вместо него стоит значок календаря, а не пустая строка.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-046"]){
---vibeui-buttongroup-046-surface:oklch(1 0 0);
---vibeui-buttongroup-046-fg:oklch(0.25 0.016 265);
---vibeui-buttongroup-046-muted:oklch(0.58 0.014 265);
---vibeui-buttongroup-046-border:oklch(0.89 0.008 265);
---vibeui-buttongroup-046-on:oklch(0.965 0.03 265);
---vibeui-buttongroup-046-accent:oklch(0.5 0.16 265);
+--vibeui-buttongroup-046-surface:transparent;
+--vibeui-buttongroup-046-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-046-muted:light-dark(oklch(0.58 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-046-border:light-dark(oklch(0.89 0.008 265),oklch(0.41 0.012 265));
+--vibeui-buttongroup-046-hover:light-dark(oklch(0.985 0.003 265),oklch(0.32 0.012 265));
+--vibeui-buttongroup-046-on:light-dark(oklch(0.965 0.03 265),oklch(0.33 0.055 265));
+--vibeui-buttongroup-046-accent:light-dark(oklch(0.5 0.16 265),oklch(0.79 0.13 265));
 --vibeui-buttongroup-046-radius:0.75rem;
 --vibeui-buttongroup-046-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -83,7 +88,7 @@ width:0.875rem;height:0.875rem;
 stroke:var(--vibeui-buttongroup-046-muted);fill:none;stroke-width:1.8;
 stroke-linecap:round;stroke-linejoin:round;
 }
-[data-vibeui-block="buttongroup-046"] [data-part="segment"]:hover{background:oklch(0.985 0.003 265)}
+[data-vibeui-block="buttongroup-046"] [data-part="segment"]:hover{background:var(--vibeui-buttongroup-046-hover)}
 [data-vibeui-block="buttongroup-046"] [data-part="segment"]:has(input:checked){
 z-index:1;
 background:var(--vibeui-buttongroup-046-on);
@@ -99,10 +104,32 @@ z-index:2;outline:2px solid var(--vibeui-buttongroup-046-accent);outline-offset:
 `
 
 const DEFAULT_PERIODS: Buttongroup046Period[] = [
-  { label: "Неделя", range: "6–12 мая" },
-  { label: "Месяц", range: "13.04 – 12.05" },
-  { label: "Квартал", range: "13.02 – 12.05" },
+  { id: "week", label: "Неделя", range: "6–12 мая" },
+  { id: "month", label: "Месяц", range: "13.04 – 12.05" },
+  { id: "quarter", label: "Квартал", range: "13.02 – 12.05" },
 ]
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Пресеты периода, каждый со своим конкретным диапазоном дат под названием.
@@ -111,9 +138,10 @@ const DEFAULT_PERIODS: Buttongroup046Period[] = [
 export function Buttongroup046({
   periods = DEFAULT_PERIODS,
   customLabel = "Свой период",
-  defaultValue = "Месяц",
+  defaultValue = "month",
   label = "Период отчёта",
   name = "buttongroup-046",
+  background = "",
   accent,
   className,
   style,
@@ -121,6 +149,12 @@ export function Buttongroup046({
 }: Buttongroup046Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-046-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-046-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -138,12 +172,12 @@ export function Buttongroup046({
         <legend>{label}</legend>
         <div data-part="track">
           {periods.map((period) => (
-            <label key={period.label} data-part="segment">
+            <label key={period.id} data-part="segment">
               <input
                 type="radio"
                 name={name}
-                value={period.label}
-                defaultChecked={period.label === defaultValue}
+                value={period.id}
+                defaultChecked={period.id === defaultValue}
               />
               <span data-part="name">{period.label}</span>
               <span data-part="range">{period.range}</span>
@@ -154,7 +188,7 @@ export function Buttongroup046({
               type="radio"
               name={name}
               value="custom"
-              defaultChecked={customLabel === defaultValue}
+              defaultChecked={defaultValue === "custom"}
             />
             <span data-part="name">{customLabel}</span>
             <svg viewBox="0 0 24 24" aria-hidden="true">

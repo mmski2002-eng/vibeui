@@ -25,6 +25,18 @@ export type Dashboard038Props = {
   noteLabel?: string
   callLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Шаблон подписи карточки: {company}. */
+  cardLabel?: string
+  /** Шаблон строки менеджера: {manager}. */
+  managerText?: string
+  /** Заголовок ленты взаимодействий. */
+  feedTitle?: string
+  /** Заголовок столбца реквизитов. */
+  factsTitle?: string
+  /** Подписи типов события по ключу. */
+  kindText?: Record<string, string>
   className?: string
   style?: CSSProperties
 }
@@ -39,13 +51,15 @@ export type Dashboard038Props = {
 // вынесены в отдельный столбец списком dl: это справка, а не события.
 const STYLES = `
 :where([data-vibeui-block="dashboard-038"]){
---vibeui-dashboard-038-bg:oklch(0.985 0.003 265);
---vibeui-dashboard-038-card:oklch(1 0 0);
---vibeui-dashboard-038-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-038-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-038-border:oklch(0.91 0.006 265);
---vibeui-dashboard-038-accent:oklch(0.5 0.15 172);
---vibeui-dashboard-038-soft:oklch(0.95 0.03 172);
+--vibeui-dashboard-038-bg:transparent;
+/* Панели карточки: подложка блока прозрачна, и рисовать их ею нечем. */
+--vibeui-dashboard-038-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-dashboard-038-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-038-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-038-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-dashboard-038-accent:light-dark(oklch(0.5 0.15 172),oklch(0.75 0.13 172));
+--vibeui-dashboard-038-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 172));
+--vibeui-dashboard-038-soft:light-dark(oklch(0.95 0.03 172),oklch(0.31 0.05 172));
 --vibeui-dashboard-038-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -77,7 +91,7 @@ display:block;margin-top:0.1875rem;font-size:0.75rem;color:var(--vibeui-dashboar
 [data-vibeui-block="dashboard-038"] [data-part="call"]{
 appearance:none;border:0;cursor:pointer;font:inherit;
 font-size:0.8125rem;font-weight:700;padding:0.5rem 0.875rem;border-radius:0.625rem;
-background:var(--vibeui-dashboard-038-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-038-accent);color:var(--vibeui-dashboard-038-on-accent);
 }
 [data-vibeui-block="dashboard-038"] [data-part="note"]{
 appearance:none;cursor:pointer;font:inherit;
@@ -215,6 +229,36 @@ const DEFAULT_FACTS: Dashboard038Fact[] = [
   { label: "Каналов связи", value: "3" },
 ]
 
+const DEFAULT_KINDS: Record<string, string> = {
+  Звонок: "Звонок",
+  Письмо: "Письмо",
+  Встреча: "Встреча",
+  Оплата: "Оплата",
+  Заявка: "Заявка",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Страница клиента: шапка с компанией и менеджером, показатели, лента
  * взаимодействий по дням и столбец реквизитов. Один файл, ноль зависимостей,
@@ -231,11 +275,23 @@ export function Dashboard038({
   noteLabel = "Добавить заметку",
   callLabel = "Позвонить",
   accent,
+  background = "",
+  cardLabel = "Карточка клиента: {company}",
+  managerText = "Менеджер: {manager}",
+  feedTitle = "История взаимодействий",
+  factsTitle = "Реквизиты и условия",
+  kindText = DEFAULT_KINDS,
   className,
   style,
 }: Dashboard038Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-038-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-038-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -253,7 +309,7 @@ export function Dashboard038({
         data-vibeui-block="dashboard-038"
         className={className}
         style={palette}
-        aria-label={`Карточка клиента: ${company}`}
+        aria-label={cardLabel.replace("{company}", company)}
       >
         <div data-part="shell">
           <div data-part="head">
@@ -266,7 +322,9 @@ export function Dashboard038({
                 {segment} · {since}
               </span>
             </div>
-            <span data-part="sub">Менеджер: {manager}</span>
+            <span data-part="sub">
+              {managerText.replace("{manager}", manager)}
+            </span>
             <div data-part="acts">
               <button type="button" data-part="call">
                 {callLabel}
@@ -287,7 +345,7 @@ export function Dashboard038({
           </dl>
 
           <div data-part="feed">
-            <h3>История взаимодействий</h3>
+            <h3>{feedTitle}</h3>
             {days.map((day) => (
               <div key={day}>
                 <span data-part="day">{day}</span>
@@ -300,13 +358,17 @@ export function Dashboard038({
                         data-part="event"
                         data-kind={event.kind}
                       >
-                        <span data-part="dot" title={event.kind}>
-                          {event.kind.charAt(0)}
+                        <span
+                          data-part="dot"
+                          title={kindText[event.kind] ?? event.kind}
+                        >
+                          {(kindText[event.kind] ?? event.kind).charAt(0)}
                         </span>
                         <span data-part="top">
                           {event.title}
                           <span data-part="time">
-                            {event.time} · {event.kind} · {event.who}
+                            {event.time} · {kindText[event.kind] ?? event.kind}{" "}
+                            · {event.who}
                           </span>
                         </span>
                         <p data-part="text">{event.text}</p>
@@ -318,7 +380,7 @@ export function Dashboard038({
           </div>
 
           <div data-part="side">
-            <h3>Реквизиты и условия</h3>
+            <h3>{factsTitle}</h3>
             <dl>
               {facts.map((fact) => (
                 <div key={fact.label} style={{ display: "contents" }}>

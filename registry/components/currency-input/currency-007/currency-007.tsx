@@ -11,6 +11,12 @@ export type Currency007Props = Omit<
   defaultFrom?: string
   defaultTo?: string
   currency?: string
+  /** Подписи фильтра; {from}, {to} и {currency} подставляются. */
+  filterText?: Record<string, string>
+  /** Локаль разрядов: компонент несёт русскую, проект подставляет свою. */
+  locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,18 +26,21 @@ export type Currency007Props = Omit<
 // Каждая граница необязательна: одно «до 5000» — самый частый фильтр, и
 // заставлять придумывать нижнюю границу не за что. Итоговая формулировка
 // собирается словами и меняется в зависимости от того, что заполнено.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у фильтра
+// по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="currency-007"]){
---vibeui-currency-007-surface:oklch(1 0 0);
---vibeui-currency-007-field:oklch(0.985 0.002 265);
---vibeui-currency-007-shell:oklch(0.9 0.006 265);
---vibeui-currency-007-fg:oklch(0.22 0.014 265);
---vibeui-currency-007-muted:oklch(0.55 0.014 265);
---vibeui-currency-007-border:oklch(0.88 0.008 265);
---vibeui-currency-007-accent:oklch(0.55 0.18 40);
+--vibeui-currency-007-surface:transparent;
+--vibeui-currency-007-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-currency-007-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-currency-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-currency-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.014 265));
+--vibeui-currency-007-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.013 265));
+--vibeui-currency-007-accent:light-dark(oklch(0.55 0.18 40),oklch(0.76 0.15 45));
 --vibeui-currency-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: фильтр показывают поверх любого фона. */
+/* Подложки по умолчанию нет: фильтр ложится на фон страницы. */
 [data-vibeui-block="currency-007"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:21rem;box-sizing:border-box;margin:0;padding:0.875rem;
@@ -54,7 +63,7 @@ background:var(--vibeui-currency-007-field);
 }
 [data-vibeui-block="currency-007"] [data-part="cell"]:focus-within{
 border-color:var(--vibeui-currency-007-accent);
-box-shadow:0 0 0 2px oklch(0.55 0.18 40 / 18%);
+box-shadow:0 0 0 2px color-mix(in oklch,var(--vibeui-currency-007-accent) 20%,transparent);
 }
 [data-vibeui-block="currency-007"] [data-part="prefix"]{
 flex:none;font-size:0.75rem;font-weight:650;color:var(--vibeui-currency-007-muted);
@@ -81,9 +90,43 @@ margin:0;font-size:0.75rem;color:var(--vibeui-currency-007-muted);font-variant-n
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="currency-007"] *{animation:none!important;transition:none!important}}
 `
 
-function pretty(value: string) {
+function pretty(value: string, locale: string) {
   const number = Number(value)
-  return Number.isFinite(number) ? number.toLocaleString("ru-RU") : value
+  return Number.isFinite(number) ? number.toLocaleString(locale) : value
+}
+
+const FILTER_TEXT: Record<string, string> = {
+  fromPrefix: "от",
+  toPrefix: "до",
+  fromLabel: "Цена от, {currency}",
+  toLabel: "Цена до, {currency}",
+  caption: "Фильтр:",
+  any: "Любая цена",
+  onlyFrom: "От {from} {currency}",
+  onlyTo: "До {to} {currency}",
+  both: "От {from} до {to} {currency}",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -95,6 +138,9 @@ export function Currency007({
   defaultFrom = "3000",
   defaultTo = "12000",
   currency = "₽",
+  filterText = FILTER_TEXT,
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -112,17 +158,29 @@ export function Currency007({
     }
   }
 
+  const say = (key: string) =>
+    (filterText[key] ?? FILTER_TEXT[key])
+      .replace("{from}", pretty(from, locale))
+      .replace("{to}", pretty(to, locale))
+      .replace("{currency}", currency)
+
   const summary =
     from === "" && to === ""
-      ? "Любая цена"
+      ? say("any")
       : from === ""
-        ? `До ${pretty(to)} ${currency}`
+        ? say("onlyTo")
         : to === ""
-          ? `От ${pretty(from)} ${currency}`
-          : `От ${pretty(from)} до ${pretty(to)} ${currency}`
+          ? say("onlyFrom")
+          : say("both")
 
   const palette = {
     ...(accent ? { "--vibeui-currency-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-currency-007-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -141,7 +199,7 @@ export function Currency007({
         <div data-part="pair">
           <div data-part="cell">
             <span data-part="prefix" aria-hidden="true">
-              от
+              {say("fromPrefix")}
             </span>
             <input
               id={`${id}-from`}
@@ -151,7 +209,7 @@ export function Currency007({
               step={100}
               value={from}
               placeholder="0"
-              aria-label={`Цена от, ${currency}`}
+              aria-label={say("fromLabel")}
               onChange={(event) => setFrom(event.target.value)}
               onBlur={settle}
             />
@@ -164,7 +222,7 @@ export function Currency007({
           </span>
           <div data-part="cell">
             <span data-part="prefix" aria-hidden="true">
-              до
+              {say("toPrefix")}
             </span>
             <input
               id={`${id}-to`}
@@ -174,7 +232,7 @@ export function Currency007({
               step={100}
               value={to}
               placeholder="∞"
-              aria-label={`Цена до, ${currency}`}
+              aria-label={say("toLabel")}
               onChange={(event) => setTo(event.target.value)}
               onBlur={settle}
             />
@@ -184,7 +242,7 @@ export function Currency007({
           </div>
         </div>
         <p data-part="summary" aria-live="polite">
-          Фильтр: <b>{summary}</b>
+          {say("caption")} <b>{summary}</b>
         </p>
       </fieldset>
     </>

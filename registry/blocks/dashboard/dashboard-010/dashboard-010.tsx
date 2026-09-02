@@ -11,6 +11,12 @@ export type Dashboard010Props = {
   cta?: string
   secondary?: string
   facts?: { label: string; value: string }[]
+  /** Подпись шапки для скринридера: {name} — имя из профиля. */
+  profileText?: string
+  /** Название полосы вкладок для скринридера. */
+  tabsText?: string
+  /** Пусто — подложки нет, шапка ложится на фон страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -24,13 +30,22 @@ export type Dashboard010Props = {
 // отрицательным отступом, а не абсолютным позиционированием — тогда высота
 // шапки остаётся предсказуемой на любом кегле. Вкладки сделаны ссылками:
 // раздел профиля должен открываться по адресу и в новой вкладке.
+//
+// Тема берётся из color-scheme окружения через light-dark(): собственной
+// подложки у шапки нет, кольцу вокруг аватара оставлена своя поверхность.
 const STYLES = `
 :where([data-vibeui-block="dashboard-010"]){
---vibeui-dashboard-010-bg:oklch(1 0 0);
---vibeui-dashboard-010-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-010-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-010-border:oklch(0.91 0.006 265);
---vibeui-dashboard-010-accent:oklch(0.55 0.2 262);
+--vibeui-dashboard-010-bg:transparent;
+--vibeui-dashboard-010-surface:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-dashboard-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-dashboard-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-dashboard-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-dashboard-010-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
+--vibeui-dashboard-010-cover:light-dark(oklch(0.95 0.03 var(--vibeui-dashboard-010-hue,262)),oklch(0.3 0.045 var(--vibeui-dashboard-010-hue,262)));
+--vibeui-dashboard-010-glow:light-dark(oklch(0.9 0.09 var(--vibeui-dashboard-010-hue,262)),oklch(0.42 0.09 var(--vibeui-dashboard-010-hue,262)));
+--vibeui-dashboard-010-avatar:light-dark(oklch(0.9 0.07 var(--vibeui-dashboard-010-hue,262)),oklch(0.4 0.08 var(--vibeui-dashboard-010-hue,262)));
+--vibeui-dashboard-010-avatar-fg:light-dark(oklch(0.35 0.12 var(--vibeui-dashboard-010-hue,262)),oklch(0.94 0.04 var(--vibeui-dashboard-010-hue,262)));
 --vibeui-dashboard-010-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -44,17 +59,17 @@ font-family:var(--vibeui-dashboard-010-sans);color:var(--vibeui-dashboard-010-fg
 [data-vibeui-block="dashboard-010"] [data-part="cover"]{
 height:5.5rem;
 background:
-radial-gradient(120% 140% at 20% 0%, oklch(0.9 0.09 var(--vibeui-dashboard-010-hue,262)), transparent 70%),
-oklch(0.95 0.03 var(--vibeui-dashboard-010-hue,262));
+radial-gradient(120% 140% at 20% 0%, var(--vibeui-dashboard-010-glow), transparent 70%),
+var(--vibeui-dashboard-010-cover);
 }
 [data-vibeui-block="dashboard-010"] [data-part="body"]{padding:0 1rem 0.875rem}
 /* Аватар вынесен отступом, а не абсолютом: высота шапки остаётся предсказуемой. */
 [data-vibeui-block="dashboard-010"] [data-part="avatar"]{
 display:flex;align-items:center;justify-content:center;
 width:4rem;height:4rem;margin:-2rem 0 0.5rem;
-border-radius:9999px;border:3px solid var(--vibeui-dashboard-010-bg);
-background:oklch(0.9 0.07 var(--vibeui-dashboard-010-hue,262));
-color:oklch(0.35 0.12 var(--vibeui-dashboard-010-hue,262));
+border-radius:9999px;border:3px solid var(--vibeui-dashboard-010-surface);
+background:var(--vibeui-dashboard-010-avatar);
+color:var(--vibeui-dashboard-010-avatar-fg);
 font-size:1.125rem;font-weight:700;
 }
 [data-vibeui-block="dashboard-010"] [data-part="top"]{
@@ -71,7 +86,7 @@ font-size:0.75rem;color:var(--vibeui-dashboard-010-muted);
 appearance:none;cursor:pointer;height:2.125rem;padding:0 0.875rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="dashboard-010"] [data-part="primary"]{border:0;background:var(--vibeui-dashboard-010-accent);color:oklch(1 0 0)}
+[data-vibeui-block="dashboard-010"] [data-part="primary"]{border:0;background:var(--vibeui-dashboard-010-accent);color:var(--vibeui-dashboard-010-on-accent)}
 [data-vibeui-block="dashboard-010"] [data-part="secondary"]{
 border:1px solid var(--vibeui-dashboard-010-border);background:none;color:inherit;
 }
@@ -141,6 +156,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Шапка профиля: обложка, аватар, показатели и вкладки-ссылки.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -155,6 +192,9 @@ export function Dashboard010({
   cta = "Написать",
   secondary = "Профиль",
   facts = DEFAULT_FACTS,
+  profileText = "Профиль: {name}",
+  tabsText = "Разделы профиля",
+  background = "",
   accent,
   className,
   style,
@@ -162,6 +202,13 @@ export function Dashboard010({
   const palette = {
     "--vibeui-dashboard-010-hue": hue(name),
     ...(accent ? { "--vibeui-dashboard-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-010-bg": background,
+          "--vibeui-dashboard-010-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -174,7 +221,7 @@ export function Dashboard010({
         data-vibeui-block="dashboard-010"
         className={className}
         style={palette}
-        aria-label={`Профиль: ${name}`}
+        aria-label={profileText.replace("{name}", name)}
       >
         <div data-part="cover" aria-hidden="true" />
         <div data-part="body">
@@ -210,7 +257,7 @@ export function Dashboard010({
           </ul>
         </div>
 
-        <nav data-part="tabs" aria-label="Разделы профиля">
+        <nav data-part="tabs" aria-label={tabsText}>
           {tabs.map((tab) => (
             <a
               key={tab}

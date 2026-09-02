@@ -9,9 +9,13 @@ export type Toggle002Props = Omit<
 > & {
   label?: string
   onLabel?: string
+  /** Строка состояния, когда кнопка не нажата. */
+  offLabel?: string
   defaultPressed?: boolean
   onChange?: (pressed: boolean) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: toggle с иконкой и подписью, у которого подпись остаётся
@@ -20,12 +24,12 @@ export type Toggle002Props = Omit<
 // aria-pressed вместе, и получится «Откреплено, нажато».
 const STYLES = `
 :where([data-vibeui-block="toggle-002"]){
---vibeui-toggle-002-bg:oklch(1 0 0);
---vibeui-toggle-002-fg:oklch(0.24 0.014 265);
---vibeui-toggle-002-muted:oklch(0.55 0.014 265);
---vibeui-toggle-002-border:oklch(0.9 0.006 265);
---vibeui-toggle-002-accent:oklch(0.56 0.16 255);
---vibeui-toggle-002-soft:oklch(0.95 0.03 255);
+--vibeui-toggle-002-bg:transparent;
+--vibeui-toggle-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-toggle-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-toggle-002-accent:light-dark(oklch(0.56 0.16 255),oklch(0.76 0.13 255));
+--vibeui-toggle-002-soft:light-dark(oklch(0.95 0.03 255),oklch(0.31 0.05 255));
 --vibeui-toggle-002-radius:0.625rem;
 --vibeui-toggle-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -71,15 +75,39 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-toggle-002-muted);
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Toggle с иконкой и постоянной подписью: состояние объявляет aria-pressed,
  * а результат — живая строка под кнопкой. Один файл, ноль зависимостей.
  */
 export function Toggle002({
   label = "Закрепить",
   onLabel = "Закреплено вверху списка",
+  offLabel = "Не закреплено",
   defaultPressed = true,
   onChange,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -88,6 +116,12 @@ export function Toggle002({
 
   const palette = {
     ...(accent ? { "--vibeui-toggle-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-toggle-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -114,7 +148,7 @@ export function Toggle002({
           {label}
         </button>
         <p data-part="state" role="status">
-          {pressed ? onLabel : "Не закреплено"}
+          {pressed ? onLabel : offLabel}
         </p>
       </div>
     </>

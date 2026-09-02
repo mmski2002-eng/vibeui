@@ -9,6 +9,8 @@ export type Hero005Props = {
   metrics?: { label: string; value: string }[]
   rows?: string[]
   accent?: string
+  /** Пусто — подложки нет, секция ложится на фон страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -20,14 +22,14 @@ export type Hero005Props = {
 // незаконченное окно читается как «страница продолжается».
 const STYLES = `
 :where([data-vibeui-block="hero-005"]){
---vibeui-hero-005-bg:oklch(0.16 0.018 265);
---vibeui-hero-005-fg:oklch(0.97 0.003 265);
---vibeui-hero-005-muted:oklch(0.72 0.012 265);
---vibeui-hero-005-panel:oklch(0.21 0.018 265);
---vibeui-hero-005-tile:oklch(0.25 0.018 265);
---vibeui-hero-005-line:oklch(1 0 0 / 12%);
---vibeui-hero-005-accent:oklch(0.72 0.16 195);
---vibeui-hero-005-accent-fg:oklch(0.18 0.03 195);
+--vibeui-hero-005-bg:transparent;
+--vibeui-hero-005-fg:light-dark(oklch(0.2 0.018 265),oklch(0.97 0.003 265));
+--vibeui-hero-005-muted:light-dark(oklch(0.52 0.014 265),oklch(0.72 0.012 265));
+--vibeui-hero-005-panel:light-dark(oklch(0.99 0.002 265),oklch(0.21 0.018 265));
+--vibeui-hero-005-tile:light-dark(oklch(0.955 0.004 265),oklch(0.25 0.018 265));
+--vibeui-hero-005-line:light-dark(oklch(0.2 0.018 265 / 13%),oklch(1 0 0 / 15%));
+--vibeui-hero-005-accent:light-dark(oklch(0.52 0.13 195),oklch(0.72 0.16 195));
+--vibeui-hero-005-accent-fg:light-dark(oklch(0.99 0.005 195),oklch(0.18 0.03 195));
 --vibeui-hero-005-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -102,6 +104,28 @@ const DEFAULT_ROWS = [
   "Готово к деплою",
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлый фон достался бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Hero со снимком продукта: текст по центру, под ним обрезанное окно приложения. */
 export function Hero005({
   title = "Покажите продукт, а не обещание",
@@ -112,11 +136,18 @@ export function Hero005({
   metrics = DEFAULT_METRICS,
   rows = DEFAULT_ROWS,
   accent,
+  background = "",
   className,
   style,
 }: Hero005Props) {
   const palette = {
     ...(accent ? { "--vibeui-hero-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-hero-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

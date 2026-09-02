@@ -7,6 +7,8 @@ export type Iconstack002Props = Omit<
   items?: string[]
   caption?: string
   overlap?: number
+  /** Пусто — подложки нет, стопка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: стопка технологий с подписью. В отличие от стопки людей
@@ -18,13 +20,14 @@ const STYLES = `
 :where([data-vibeui-block="iconstack-002"]){
 --vibeui-iconstack-002-size:2rem;
 --vibeui-iconstack-002-overlap:10px;
---vibeui-iconstack-002-surface:oklch(1 0 0);
---vibeui-iconstack-002-border:oklch(0.9 0.006 265);
---vibeui-iconstack-002-fg:oklch(0.26 0.014 265);
---vibeui-iconstack-002-muted:oklch(0.55 0.014 265);
+--vibeui-iconstack-002-surface:transparent;
+--vibeui-iconstack-002-ring:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
+--vibeui-iconstack-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.01 265));
+--vibeui-iconstack-002-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
+--vibeui-iconstack-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
 --vibeui-iconstack-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: подпись стека тёмная. */
+/* Подложки по умолчанию нет: карточка лежит на фоне страницы. */
 [data-vibeui-block="iconstack-002"]{
 display:inline-flex;flex-direction:column;gap:0.5rem;
 box-sizing:border-box;padding:0.75rem 0.875rem;
@@ -45,7 +48,7 @@ display:inline-flex;align-items:center;justify-content:center;flex:none;
 box-sizing:border-box;
 width:var(--vibeui-iconstack-002-size);height:var(--vibeui-iconstack-002-size);
 border-radius:0.5rem;
-border:2px solid var(--vibeui-iconstack-002-surface);
+border:2px solid var(--vibeui-iconstack-002-ring);
 background:oklch(0.92 0.06 var(--vibeui-iconstack-002-hue,265));
 color:oklch(0.36 0.13 var(--vibeui-iconstack-002-hue,265));
 font-size:0.6875rem;font-weight:700;line-height:1;
@@ -76,6 +79,28 @@ function monogram(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Стопка технологий: перекрытые плитки и подпись со списком названий.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -83,12 +108,22 @@ export function Iconstack002({
   items = DEFAULT_ITEMS,
   caption = "Стек проекта",
   overlap = 10,
+  background = "",
   className,
   style,
   ...props
 }: Iconstack002Props) {
+  // Обводка плитки равна подложке: заданный фон красит и её, иначе между
+  // плитками останется контур прежнего фона.
   const palette = {
     "--vibeui-iconstack-002-overlap": `${overlap}px`,
+    ...(background
+      ? {
+          "--vibeui-iconstack-002-surface": background,
+          "--vibeui-iconstack-002-ring": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

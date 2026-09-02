@@ -17,6 +17,10 @@ export type Select017Props = Omit<
   loadingText?: string
   errorText?: string
   retryLabel?: string
+  /** Подпись пустого варианта в готовом состоянии. */
+  placeholderText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,14 +32,15 @@ export type Select017Props = Omit<
 // всех трёх состояний без переключения контролов вручную.
 const STYLES = `
 :where([data-vibeui-block="select-017"]){
---vibeui-select-017-surface:oklch(1 0 0);
---vibeui-select-017-surface-border:oklch(0.91 0.006 265);
---vibeui-select-017-fg:oklch(0.23 0.016 265);
---vibeui-select-017-muted:oklch(0.57 0.014 265);
---vibeui-select-017-field:oklch(0.985 0.002 265);
---vibeui-select-017-border:oklch(0.87 0.008 265);
---vibeui-select-017-accent:oklch(0.55 0.19 245);
---vibeui-select-017-danger:oklch(0.58 0.21 25);
+--vibeui-select-017-surface:transparent;
+--vibeui-select-017-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-select-017-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-017-muted:light-dark(oklch(0.57 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-017-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-select-017-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.012 265));
+--vibeui-select-017-accent:light-dark(oklch(0.55 0.19 245),oklch(0.74 0.15 245));
+--vibeui-select-017-danger:light-dark(oklch(0.58 0.21 25),oklch(0.68 0.19 25));
+--vibeui-select-017-on-danger:light-dark(oklch(1 0 0),oklch(0.18 0.02 25));
 --vibeui-select-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="select-017"]{
@@ -87,7 +92,7 @@ animation:vibeui-select-017-spin .8s linear infinite;
 [data-vibeui-block="select-017"] [data-part="error-icon"]{
 position:absolute;right:0.875rem;top:50%;margin-top:-0.5rem;
 display:grid;place-items:center;width:1rem;height:1rem;border-radius:9999px;pointer-events:none;
-background:var(--vibeui-select-017-danger);color:oklch(1 0 0);
+background:var(--vibeui-select-017-danger);color:var(--vibeui-select-017-on-danger);
 font-size:0.6875rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="select-017"] [data-part="status"]{
@@ -126,6 +131,28 @@ const DEFAULT_OPTIONS = ["Стандартный", "Ускоренный", "Но
 const RESOLVE_DELAY_MS = 900
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Select с состояниями загрузки, ошибки и повтора: поле disabled и
  * помечено aria-busy во время загрузки, при ошибке — aria-invalid и
  * кнопка «Повторить» в role="alert". Один файл, ноль зависимостей,
@@ -139,6 +166,8 @@ export function Select017({
   loadingText = "Загружаем варианты доставки",
   errorText = "Не удалось загрузить варианты доставки",
   retryLabel = "Повторить",
+  placeholderText = "Выберите вариант",
+  background = "",
   accent,
   id,
   className,
@@ -179,6 +208,12 @@ export function Select017({
 
   const palette = {
     ...(accent ? { "--vibeui-select-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-select-017-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -187,7 +222,7 @@ export function Select017({
       ? `${loadingText}…`
       : status === "error"
         ? errorText
-        : "Выберите вариант"
+        : placeholderText
 
   return (
     <>

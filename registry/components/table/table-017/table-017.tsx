@@ -14,8 +14,14 @@ export type Table017Props = Omit<
 > & {
   rows?: Table017Row[]
   caption?: string
+  /** Подпись первой колонки: в режиме карточек это заголовок карточки. */
+  leadTitle?: string
+  /** Заголовки колонок: ключи city, plan, renew и sum. */
+  columnText?: Record<string, string>
   /** Минимальная ширина карточки в узкой раскладке. */
   cardWidth?: string
+  /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,14 +31,18 @@ export type Table017Props = Omit<
 // «подпись / значение» в два столбца. Подписи лежат в разметке рядом со
 // значением и просто прячутся на широкой ширине, поэтому это одна таблица
 // и на телефоне, и на десктопе — без второй вёрстки списком.
+//
+// Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-017"]){
---vibeui-table-017-bg:oklch(1 0 0);
---vibeui-table-017-fg:oklch(0.24 0.014 265);
---vibeui-table-017-muted:oklch(0.56 0.014 265);
---vibeui-table-017-border:oklch(0.92 0.006 265);
---vibeui-table-017-head:oklch(0.975 0.003 265);
---vibeui-table-017-accent:oklch(0.55 0.2 262);
+--vibeui-table-017-bg:transparent;
+--vibeui-table-017-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-017-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-table-017-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
+--vibeui-table-017-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-017-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
+--vibeui-table-017-shadow:light-dark(oklch(0.24 0.014 265 / 6%),oklch(0 0 0 / 24%));
 --vibeui-table-017-card:14rem;
 --vibeui-table-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -73,7 +83,7 @@ grid-template-columns:repeat(auto-fill,minmax(var(--vibeui-table-017-card),1fr))
 display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;
 border:1px solid var(--vibeui-table-017-border);border-radius:0.75rem;
 padding:0.625rem 0.75rem;background:var(--vibeui-table-017-bg);
-box-shadow:0 1px 2px oklch(0.24 0.014 265 / 6%);
+box-shadow:0 1px 2px var(--vibeui-table-017-shadow);
 }
 [data-vibeui-block="table-017"] [data-part="shell"] th,
 [data-vibeui-block="table-017"] [data-part="shell"] td{
@@ -126,11 +136,40 @@ const DEFAULT_ROWS: Table017Row[] = [
 ]
 
 const COLUMNS = [
-  { key: "city", title: "Город" },
-  { key: "plan", title: "Тариф" },
-  { key: "renew", title: "Продление" },
-  { key: "sum", title: "Сумма", numeric: true },
+  { key: "city" },
+  { key: "plan" },
+  { key: "renew" },
+  { key: "sum", numeric: true },
 ] as const
+
+const DEFAULT_COLUMN_TEXT: Record<string, string> = {
+  city: "Город",
+  plan: "Тариф",
+  renew: "Продление",
+  sum: "Сумма",
+}
+
+/**
+ * Ветка темы для заданного фона: light-dark() смотрит на color-scheme, а не
+ * на цвет подложки, поэтому светлую плашку приходится объявлять светлой.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Таблица, которая на узкой ширине раскладывается сеткой карточек.
@@ -139,7 +178,10 @@ const COLUMNS = [
 export function Table017({
   rows = DEFAULT_ROWS,
   caption = "Подписки клиентов",
+  leadTitle = "Клиент",
+  columnText = DEFAULT_COLUMN_TEXT,
   cardWidth,
+  background = "",
   accent,
   className,
   style,
@@ -148,6 +190,12 @@ export function Table017({
   const palette = {
     ...(accent ? { "--vibeui-table-017-accent": accent } : null),
     ...(cardWidth ? { "--vibeui-table-017-card": cardWidth } : null),
+    ...(background
+      ? {
+          "--vibeui-table-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -167,14 +215,14 @@ export function Table017({
             <caption>{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">Клиент</th>
+                <th scope="col">{leadTitle}</th>
                 {COLUMNS.map((column) => (
                   <th
                     key={column.key}
                     scope="col"
                     data-align={"numeric" in column ? "end" : undefined}
                   >
-                    {column.title}
+                    {columnText[column.key] ?? DEFAULT_COLUMN_TEXT[column.key]}
                   </th>
                 ))}
               </tr>
@@ -189,7 +237,8 @@ export function Table017({
                       data-align={"numeric" in column ? "end" : undefined}
                     >
                       <span data-part="label" aria-hidden="true">
-                        {column.title}
+                        {columnText[column.key] ??
+                          DEFAULT_COLUMN_TEXT[column.key]}
                       </span>
                       <span data-part="value">{row[column.key]}</span>
                     </td>

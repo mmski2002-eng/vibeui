@@ -4,22 +4,28 @@ export type Kbd002Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
   keys?: string[]
   separator?: "plus" | "then" | "arrow"
   caption?: string
+  /** Подписи разделителей: компонент несёт русские, проект подставляет свои. */
+  separatorText?: Record<string, string>
+  /** Пусто — подложки нет, сочетание лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: сочетание клавиш с явным разделителем. «⌘ + K» и «⌘ затем
 // K» — разные действия: первое нажимают вместе, второе по очереди, и без
 // слова между клавишами пользователь угадывает. Разделитель лежит в разметке
 // отдельным элементом, поэтому его слышно при чтении вслух, а не только видно.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки по
+// умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="kbd-002"]){
---vibeui-kbd-002-surface:oklch(1 0 0);
---vibeui-kbd-002-fg:oklch(0.24 0.014 265);
---vibeui-kbd-002-muted:oklch(0.55 0.014 265);
---vibeui-kbd-002-border:oklch(0.88 0.008 265);
---vibeui-kbd-002-key:oklch(0.985 0.002 265);
+--vibeui-kbd-002-surface:transparent;
+--vibeui-kbd-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-kbd-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-kbd-002-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-kbd-002-key:light-dark(oklch(0.985 0.002 265),oklch(0.3 0.012 265));
 --vibeui-kbd-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: клавиши и подпись тёмные. */
 [data-vibeui-block="kbd-002"]{
 display:inline-flex;flex-direction:column;gap:0.5rem;
 box-sizing:border-box;padding:0.875rem 1rem;
@@ -51,10 +57,32 @@ font-size:0.6875rem;text-transform:lowercase;letter-spacing:0.02em;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="kbd-002"] *{animation:none!important;transition:none!important}}
 `
 
-const SEPARATORS: Record<NonNullable<Kbd002Props["separator"]>, string> = {
+const SEPARATOR_TEXT: Record<string, string> = {
   plus: "+",
   then: "затем",
   arrow: "→",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -65,11 +93,22 @@ export function Kbd002({
   keys = ["⌘", "⇧", "P"],
   separator = "plus",
   caption = "Палитра команд",
+  separatorText = SEPARATOR_TEXT,
+  background = "",
   className,
   style,
   ...props
 }: Kbd002Props) {
-  const glue = SEPARATORS[separator]
+  const glue = separatorText[separator] ?? SEPARATOR_TEXT[separator]
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-kbd-002-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -81,7 +120,7 @@ export function Kbd002({
         data-vibeui-block="kbd-002"
         data-separator={separator}
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <span data-part="chord">
           {keys.map((key, index) => (

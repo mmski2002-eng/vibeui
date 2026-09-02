@@ -16,6 +16,10 @@ export type Timeline010Props = Omit<
 > & {
   entries?: Timeline010Entry[]
   title?: string
+  /** Подписи типов правки: компонент несёт русские, проект — свои. */
+  kindText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: история правок документа, где тип правки виден раньше
@@ -24,12 +28,15 @@ export type Timeline010Props = Omit<
 // взгляда, потому что оттенок плашки задан единственной переменной на
 // data-kind — четыре типа стоят четырьмя строчками CSS, а не четырьмя
 // наборами правил.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// становится тёмным там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="timeline-010"]){
---vibeui-timeline-010-bg:oklch(1 0 0);
---vibeui-timeline-010-fg:oklch(0.22 0.014 265);
---vibeui-timeline-010-muted:oklch(0.57 0.014 265);
---vibeui-timeline-010-border:oklch(0.91 0.006 265);
+--vibeui-timeline-010-bg:transparent;
+--vibeui-timeline-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-timeline-010-muted:light-dark(oklch(0.57 0.014 265),oklch(0.69 0.012 265));
+--vibeui-timeline-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-timeline-010-hue:262;
 --vibeui-timeline-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -51,7 +58,7 @@ border-left:2px solid var(--vibeui-timeline-010-border);
 [data-vibeui-block="timeline-010"] [data-part="dot"]{
 position:absolute;left:-0.375rem;top:0.25rem;
 width:0.625rem;height:0.625rem;border-radius:9999px;
-background:oklch(0.6 0.14 var(--vibeui-timeline-010-hue));
+background:light-dark(oklch(0.6 0.14 var(--vibeui-timeline-010-hue)),oklch(0.72 0.13 var(--vibeui-timeline-010-hue)));
 }
 [data-vibeui-block="timeline-010"] li[data-kind="edit"]{--vibeui-timeline-010-hue:262}
 [data-vibeui-block="timeline-010"] li[data-kind="comment"]{--vibeui-timeline-010-hue:200}
@@ -62,8 +69,8 @@ background:oklch(0.6 0.14 var(--vibeui-timeline-010-hue));
 [data-vibeui-block="timeline-010"] [data-part="pill"]{
 display:inline-flex;align-items:center;
 padding:0.0625rem 0.5rem;border-radius:9999px;
-background:oklch(0.95 0.04 var(--vibeui-timeline-010-hue));
-color:oklch(0.4 0.14 var(--vibeui-timeline-010-hue));
+background:light-dark(oklch(0.95 0.04 var(--vibeui-timeline-010-hue)),oklch(0.31 0.05 var(--vibeui-timeline-010-hue)));
+color:light-dark(oklch(0.4 0.14 var(--vibeui-timeline-010-hue)),oklch(0.87 0.1 var(--vibeui-timeline-010-hue)));
 font-size:0.6875rem;font-weight:700;
 }
 [data-vibeui-block="timeline-010"] [data-part="author"]{font-size:0.8125rem;font-weight:650}
@@ -114,16 +121,50 @@ const DEFAULT_ENTRIES: Timeline010Entry[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * История правок документа: тип правки видимой плашкой, автор и время.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Timeline010({
   entries = DEFAULT_ENTRIES,
   title = "Правки документа",
+  kindText = KIND_LABEL,
+  background = "",
   className,
   style,
   ...props
 }: Timeline010Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-timeline-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-timeline-010" precedence="medium">
@@ -133,7 +174,7 @@ export function Timeline010({
         {...props}
         data-vibeui-block="timeline-010"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <h3 data-part="title">{title}</h3>
         <ol>
@@ -141,7 +182,9 @@ export function Timeline010({
             <li key={`${entry.dateTime}-${index}`} data-kind={entry.kind}>
               <span data-part="dot" aria-hidden="true" />
               <div data-part="row">
-                <span data-part="pill">{KIND_LABEL[entry.kind]}</span>
+                <span data-part="pill">
+                  {kindText[entry.kind] ?? KIND_LABEL[entry.kind]}
+                </span>
                 <span data-part="author">{entry.author}</span>
                 <time data-part="time" dateTime={entry.dateTime}>
                   {entry.time}

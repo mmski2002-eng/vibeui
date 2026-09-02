@@ -18,6 +18,30 @@ export type Datagrid002Props = Omit<
   rows?: Datagrid002Row[]
   caption?: string
   actionLabel?: string
+  /** Заголовок панели, пока ничего не выбрано. */
+  heading?: string
+  /** Подзаголовок с числом строк. {count} — сколько их. */
+  countText?: string
+  /** Счётчик выбранного. {count}, {total} и {sum} подставляются. */
+  selectedText?: string
+  /** Названия колонок по ключу строки: компонент несёт русские. */
+  columnText?: Record<string, string>
+  /** Подпись кнопки экспорта. */
+  exportLabel?: string
+  /** Подпись кнопки снятия выделения. */
+  clearLabel?: string
+  /** Подпись итоговой строки. */
+  totalLabel?: string
+  /** Подпись флажка шапки для скринридера. */
+  selectAllLabel?: string
+  /** Подпись флажка строки. {client} — имя клиента. */
+  selectRowLabel?: string
+  /** Подпись области прокрутки для скринридера. */
+  scrollLabel?: string
+  /** Знак валюты в суммах. */
+  currency?: string
+  /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,15 +50,20 @@ export type Datagrid002Props = Omit<
 // и обычная шапка: строки не прыгают. Счётчик выбранного объявлен
 // aria-live, флажок шапки знает промежуточное состояние, а сумма по выбору
 // считается на лету — ради неё выбор строк обычно и делают.
+//
+// Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
+// вместе со страницей и не носит собственной подложки.
 const STYLES = `
 :where([data-vibeui-block="datagrid-002"]){
---vibeui-datagrid-002-bg:oklch(1 0 0);
---vibeui-datagrid-002-fg:oklch(0.23 0.014 275);
---vibeui-datagrid-002-muted:oklch(0.55 0.014 275);
---vibeui-datagrid-002-border:oklch(0.92 0.006 275);
---vibeui-datagrid-002-head:oklch(0.975 0.003 275);
---vibeui-datagrid-002-accent:oklch(0.5 0.17 300);
---vibeui-datagrid-002-accent-soft:oklch(0.5 0.17 300 / 9%);
+--vibeui-datagrid-002-bg:transparent;
+--vibeui-datagrid-002-fg:light-dark(oklch(0.23 0.014 275),oklch(0.93 0.006 275));
+--vibeui-datagrid-002-muted:light-dark(oklch(0.55 0.014 275),oklch(0.68 0.012 275));
+--vibeui-datagrid-002-border:light-dark(oklch(0.92 0.006 275),oklch(0.34 0.012 275));
+--vibeui-datagrid-002-head:light-dark(oklch(0.975 0.003 275),oklch(0.27 0.012 275));
+--vibeui-datagrid-002-btn:light-dark(oklch(1 0 0 / 80%),oklch(0.32 0.014 275 / 80%));
+--vibeui-datagrid-002-accent:light-dark(oklch(0.5 0.17 300),oklch(0.74 0.14 300));
+--vibeui-datagrid-002-accent-soft:light-dark(oklch(0.5 0.17 300 / 9%),oklch(0.74 0.14 300 / 16%));
+--vibeui-datagrid-002-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.02 300));
 --vibeui-datagrid-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="datagrid-002"]{
@@ -66,10 +95,10 @@ font-size:0.875rem;font-weight:650;color:var(--vibeui-datagrid-002-accent);
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:550;
 padding:0.375rem 0.75rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-002-border);
-background:var(--vibeui-datagrid-002-bg);color:var(--vibeui-datagrid-002-fg);
+background:var(--vibeui-datagrid-002-btn);color:var(--vibeui-datagrid-002-fg);
 }
 [data-vibeui-block="datagrid-002"] [data-part="actions"] button[data-tone="primary"]{
-border-color:transparent;background:var(--vibeui-datagrid-002-accent);color:oklch(1 0 0);
+border-color:transparent;background:var(--vibeui-datagrid-002-accent);color:var(--vibeui-datagrid-002-on-accent);
 }
 [data-vibeui-block="datagrid-002"] [data-part="actions"] button:focus-visible{
 outline:2px solid var(--vibeui-datagrid-002-accent);outline-offset:2px;
@@ -118,6 +147,35 @@ const DEFAULT_ROWS: Datagrid002Row[] = [
   { id: "c-6", client: "Ёлка", plan: "Команда", seats: 12, amount: 48000 },
 ]
 
+const COLUMN_LABEL: Record<string, string> = {
+  client: "Клиент",
+  plan: "Тариф",
+  seats: "Места",
+  amount: "Сумма",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Сетка с выбором строк и панелью массовых действий: счётчик, сумма
  * по выбору и промежуточное состояние флажка шапки. Один файл.
@@ -126,6 +184,18 @@ export function Datagrid002({
   rows = DEFAULT_ROWS,
   caption = "Отметьте строки, чтобы шапка превратилась в панель действий",
   actionLabel = "Выставить счёт",
+  heading = "Договоры на продление",
+  countText = "{count} клиентов",
+  selectedText = "Выбрано {count} из {total} · {sum}",
+  columnText = COLUMN_LABEL,
+  exportLabel = "Экспорт CSV",
+  clearLabel = "Снять выделение",
+  totalLabel = "Итого по выбранным",
+  selectAllLabel = "Выбрать все строки",
+  selectRowLabel = "Выбрать {client}",
+  scrollLabel = "Таблица договоров, прокручивается вбок",
+  currency = "₽",
+  background = "",
   accent,
   className,
   style,
@@ -146,8 +216,18 @@ export function Datagrid002({
         : [...current, id],
     )
 
+  const money = (value: number) =>
+    `${value.toLocaleString("ru-RU")} ${currency}`
+  const label = (column: string) => columnText[column] ?? COLUMN_LABEL[column]
+
   const palette = {
     ...(accent ? { "--vibeui-datagrid-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-datagrid-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -166,13 +246,17 @@ export function Datagrid002({
           <div data-part="bar-text">
             {selected.length > 0 ? (
               <p data-part="count" aria-live="polite">
-                Выбрано {selected.length} из {rows.length} ·{" "}
-                {total.toLocaleString("ru-RU")} ₽
+                {selectedText
+                  .replace("{count}", String(selected.length))
+                  .replace("{total}", String(rows.length))
+                  .replace("{sum}", money(total))}
               </p>
             ) : (
               <>
-                <h3 data-part="bar-title">Договоры на продление</h3>
-                <p data-part="bar-note">{rows.length} клиентов</p>
+                <h3 data-part="bar-title">{heading}</h3>
+                <p data-part="bar-note">
+                  {countText.replace("{count}", String(rows.length))}
+                </p>
               </>
             )}
           </div>
@@ -181,9 +265,9 @@ export function Datagrid002({
               <button type="button" data-tone="primary">
                 {actionLabel}
               </button>
-              <button type="button">Экспорт CSV</button>
+              <button type="button">{exportLabel}</button>
               <button type="button" onClick={() => setSelected([])}>
-                Снять выделение
+                {clearLabel}
               </button>
             </div>
           ) : null}
@@ -191,7 +275,7 @@ export function Datagrid002({
         <div
           data-part="scroll"
           role="region"
-          aria-label="Таблица договоров, прокручивается вбок"
+          aria-label={scrollLabel}
           tabIndex={0}
         >
           <table>
@@ -202,7 +286,7 @@ export function Datagrid002({
                   <input
                     type="checkbox"
                     checked={all}
-                    aria-label="Выбрать все строки"
+                    aria-label={selectAllLabel}
                     ref={(node) => {
                       if (node) node.indeterminate = some
                     }}
@@ -211,13 +295,13 @@ export function Datagrid002({
                     }
                   />
                 </th>
-                <th scope="col">Клиент</th>
-                <th scope="col">Тариф</th>
+                <th scope="col">{label("client")}</th>
+                <th scope="col">{label("plan")}</th>
                 <th scope="col" data-align="end">
-                  Места
+                  {label("seats")}
                 </th>
                 <th scope="col" data-align="end">
-                  Сумма
+                  {label("amount")}
                 </th>
               </tr>
             </thead>
@@ -231,24 +315,25 @@ export function Datagrid002({
                       <input
                         type="checkbox"
                         checked={checked}
-                        aria-label={`Выбрать ${row.client}`}
+                        aria-label={selectRowLabel.replace(
+                          "{client}",
+                          row.client,
+                        )}
                         onChange={() => toggleRow(row.id)}
                       />
                     </td>
                     <th scope="row">{row.client}</th>
                     <td data-part="plan">{row.plan}</td>
                     <td data-align="end">{row.seats}</td>
-                    <td data-align="end">
-                      {row.amount.toLocaleString("ru-RU")} ₽
-                    </td>
+                    <td data-align="end">{money(row.amount)}</td>
                   </tr>
                 )
               })}
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan={4}>Итого по выбранным</td>
-                <td data-align="end">{total.toLocaleString("ru-RU")} ₽</td>
+                <td colSpan={4}>{totalLabel}</td>
+                <td data-align="end">{money(total)}</td>
               </tr>
             </tfoot>
           </table>

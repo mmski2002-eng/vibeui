@@ -25,8 +25,10 @@ container-type:inline-size;
 --vibeui-icontile-010-size:3.75rem;
 --vibeui-icontile-010-hue:262;
 --vibeui-icontile-010-chroma:0.05;
---vibeui-icontile-010-fg:oklch(0.26 0.014 265);
---vibeui-icontile-010-muted:oklch(0.52 0.014 265);
+--vibeui-icontile-010-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.006 265));
+--vibeui-icontile-010-muted:light-dark(oklch(0.52 0.014 265),oklch(0.71 0.012 265));
+--vibeui-icontile-010-track:light-dark(oklch(0.9 0.012 var(--vibeui-icontile-010-hue)),oklch(0.36 0.016 var(--vibeui-icontile-010-hue)));
+--vibeui-icontile-010-arc:light-dark(oklch(0.5 calc(var(--vibeui-icontile-010-chroma) * 4) var(--vibeui-icontile-010-hue)),oklch(0.75 calc(var(--vibeui-icontile-010-chroma) * 3.4) var(--vibeui-icontile-010-hue)));
 --vibeui-icontile-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="icontile-010"]{
@@ -42,11 +44,11 @@ width:100%;height:100%;transform:rotate(-90deg);transform-origin:50% 50%;
 }
 [data-vibeui-block="icontile-010"] [data-part="track"]{
 fill:none;stroke-width:4;
-stroke:oklch(0.9 0.012 var(--vibeui-icontile-010-hue));
+stroke:var(--vibeui-icontile-010-track);
 }
 [data-vibeui-block="icontile-010"] [data-part="value"]{
 fill:none;stroke-width:4;stroke-linecap:round;
-stroke:oklch(0.5 calc(var(--vibeui-icontile-010-chroma) * 4) var(--vibeui-icontile-010-hue));
+stroke:var(--vibeui-icontile-010-arc);
 transition:stroke-dashoffset 0.3s ease;
 }
 [data-vibeui-block="icontile-010"] [data-part="percent"]{

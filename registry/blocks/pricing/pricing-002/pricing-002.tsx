@@ -18,8 +18,32 @@ export type Pricing002Props = {
   plans?: Pricing002Plan[]
   note?: string
   accent?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 // Идея блока: три тарифа, где рекомендованный выделен не только цветом.
@@ -30,13 +54,13 @@ export type Pricing002Props = {
 // role="list" не зря: list-style:none в Safari снимает роль списка.
 const STYLES = `
 :where([data-vibeui-block="pricing-002"]){
---vibeui-pricing-002-bg:oklch(0.98 0.004 265);
---vibeui-pricing-002-fg:oklch(0.2 0.012 265);
---vibeui-pricing-002-muted:oklch(0.52 0.012 265);
---vibeui-pricing-002-card:oklch(1 0 0);
---vibeui-pricing-002-line:oklch(0.9 0.006 265);
---vibeui-pricing-002-accent:oklch(0.52 0.18 268);
---vibeui-pricing-002-accent-fg:oklch(0.99 0 0);
+--vibeui-pricing-002-bg:transparent;
+--vibeui-pricing-002-fg:light-dark(oklch(0.2 0.012 265),oklch(0.95 0.004 265));
+--vibeui-pricing-002-muted:light-dark(oklch(0.52 0.012 265),oklch(0.72 0.012 265));
+--vibeui-pricing-002-card:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-pricing-002-line:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-pricing-002-accent:light-dark(oklch(0.52 0.18 268),oklch(0.73 0.15 268));
+--vibeui-pricing-002-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 268));
 --vibeui-pricing-002-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -161,11 +185,18 @@ export function Pricing002({
   plans = DEFAULT_PLANS,
   note = "Цены указаны без НДС. Годовая оплата — минус два месяца.",
   accent,
+  background = "",
   className,
   style,
 }: Pricing002Props) {
   const palette = {
     ...(accent ? { "--vibeui-pricing-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pricing-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

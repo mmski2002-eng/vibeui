@@ -6,8 +6,16 @@ export type Field009Props = Omit<
 > & {
   label?: string
   hint?: string
+  defaultValue?: string
+  /** Подписи соседних строк: компонент несёт русские. */
+  roleLabel?: string
+  roles?: string[]
+  cityLabel?: string
+  cityPlaceholder?: string
   labelWidth?: string
   name?: string
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -18,18 +26,18 @@ export type Field009Props = Omit<
 // вьюпорту, — форма в боковой панели ведёт себя как узкая, даже на десктопе.
 const STYLES = `
 :where([data-vibeui-block="field-009"]){
---vibeui-field-009-bg:oklch(1 0 0);
---vibeui-field-009-surface:oklch(1 0 0);
---vibeui-field-009-fg:oklch(0.24 0.014 265);
---vibeui-field-009-muted:oklch(0.55 0.014 265);
---vibeui-field-009-border:oklch(0.88 0.008 265);
---vibeui-field-009-shell:oklch(0.91 0.006 265);
---vibeui-field-009-accent:oklch(0.55 0.2 262);
+--vibeui-field-009-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-field-009-surface:transparent;
+--vibeui-field-009-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-field-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-field-009-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
+--vibeui-field-009-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
+--vibeui-field-009-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-field-009-label:9rem;
 --vibeui-field-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
-/* Своя светлая подложка: строку показывают поверх любого фона. */
+/* Подложки по умолчанию нет: строка ложится на фон страницы. */
 [data-vibeui-block="field-009"]{
 display:block;width:100%;max-width:34rem;box-sizing:border-box;padding:0.875rem;
 background:var(--vibeui-field-009-surface);
@@ -76,6 +84,30 @@ text-align:end;color:var(--vibeui-field-009-muted);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="field-009"] *{animation:none!important;transition:none!important}}
 `
 
+const DEFAULT_ROLES = ["Владелец", "Редактор", "Наблюдатель"]
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Строка формы с подписью слева, складывающаяся в столбец на узкой ширине.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -83,8 +115,14 @@ text-align:end;color:var(--vibeui-field-009-muted);
 export function Field009({
   label = "Отображаемое имя",
   hint = "Так вас увидят в комментариях и в истории изменений.",
+  defaultValue = "Анна Кузнецова",
+  roleLabel = "Роль в команде",
+  roles = DEFAULT_ROLES,
+  cityLabel = "Город",
+  cityPlaceholder = "Например, Казань",
   labelWidth = "9rem",
   name = "profile",
+  background = "",
   accent,
   className,
   style,
@@ -93,6 +131,12 @@ export function Field009({
   const palette = {
     "--vibeui-field-009-label": labelWidth,
     ...(accent ? { "--vibeui-field-009-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-field-009-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -115,7 +159,7 @@ export function Field009({
                 id={`${name}-name`}
                 name={`${name}-name`}
                 type="text"
-                defaultValue="Анна Кузнецова"
+                defaultValue={defaultValue}
                 aria-describedby={`${name}-hint`}
               />
               <p id={`${name}-hint`} data-part="hint">
@@ -125,24 +169,24 @@ export function Field009({
           </div>
 
           <div data-part="row">
-            <label htmlFor={`${name}-role`}>Роль в команде</label>
+            <label htmlFor={`${name}-role`}>{roleLabel}</label>
             <div data-part="control">
               <select id={`${name}-role`} name={`${name}-role`}>
-                <option>Владелец</option>
-                <option>Редактор</option>
-                <option>Наблюдатель</option>
+                {roles.map((role) => (
+                  <option key={role}>{role}</option>
+                ))}
               </select>
             </div>
           </div>
 
           <div data-part="row">
-            <label htmlFor={`${name}-city`}>Город</label>
+            <label htmlFor={`${name}-city`}>{cityLabel}</label>
             <div data-part="control">
               <input
                 id={`${name}-city`}
                 name={`${name}-city`}
                 type="text"
-                placeholder="Например, Казань"
+                placeholder={cityPlaceholder}
               />
             </div>
           </div>

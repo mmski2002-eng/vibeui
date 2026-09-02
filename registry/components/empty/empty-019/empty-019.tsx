@@ -10,6 +10,8 @@ export type Empty019Props = {
   formats?: string
   onAction?: () => void
   onDropFiles?: (files: FileList) => void
+  /** Пусто — подложки нет, зона лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -21,11 +23,12 @@ export type Empty019Props = {
 // а не только по факту сброса, — так видно, что цель поймана верно.
 const STYLES = `
 :where([data-vibeui-block="empty-019"]){
---vibeui-empty-019-bg:oklch(1 0 0);
---vibeui-empty-019-fg:oklch(0.21 0.014 265);
---vibeui-empty-019-muted:oklch(0.55 0.014 265);
---vibeui-empty-019-border:oklch(0.88 0.008 265);
---vibeui-empty-019-accent:oklch(0.55 0.17 265);
+--vibeui-empty-019-bg:transparent;
+--vibeui-empty-019-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-empty-019-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-empty-019-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.014 265));
+--vibeui-empty-019-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-empty-019-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.02 265));
 --vibeui-empty-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -40,7 +43,7 @@ transition:border-color .15s ease,background-color .15s ease;
 }
 [data-vibeui-block="empty-019"][data-dragging="true"]{
 border-color:var(--vibeui-empty-019-accent);
-background:color-mix(in oklab,var(--vibeui-empty-019-accent) 6%,var(--vibeui-empty-019-bg));
+background:color-mix(in oklab,var(--vibeui-empty-019-accent) 10%,transparent);
 }
 [data-vibeui-block="empty-019"] [data-part="mark"]{
 width:2.75rem;height:2.75rem;margin-bottom:0.25rem;color:var(--vibeui-empty-019-accent);
@@ -52,7 +55,7 @@ margin:0;max-width:32ch;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-e
 [data-vibeui-block="empty-019"] [data-part="action"]{
 appearance:none;border:0;cursor:pointer;margin-top:0.5rem;
 height:2.5rem;padding:0 1.125rem;border-radius:0.75rem;
-background:var(--vibeui-empty-019-accent);color:oklch(0.99 0.01 265);
+background:var(--vibeui-empty-019-accent);color:var(--vibeui-empty-019-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="empty-019"] [data-part="action"]:focus-visible{
@@ -70,6 +73,29 @@ margin:0.375rem 0 0;font-size:0.6875rem;color:var(--vibeui-empty-019-muted);
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Пустой проект как зона загрузки: рамка подсвечивается при перетаскивании
  * файлов над блоком, кнопка открывает выбор с диска. Один файл, клиентский
  * компонент на useState, без внешних зависимостей.
@@ -81,6 +107,7 @@ export function Empty019({
   formats = "Любые файлы проекта — до 100 МБ каждый",
   onAction,
   onDropFiles,
+  background = "",
   accent,
   className,
   style,
@@ -88,6 +115,12 @@ export function Empty019({
   const [isDragging, setIsDragging] = useState(false)
   const palette = {
     ...(accent ? { "--vibeui-empty-019-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-empty-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

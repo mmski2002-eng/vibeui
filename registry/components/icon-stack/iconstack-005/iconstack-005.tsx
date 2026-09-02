@@ -6,7 +6,12 @@ export type Iconstack005Props = Omit<
 > & {
   names?: string[]
   ring?: string
+  /** Подпись тёмной полосы. */
   label?: string
+  /** Подпись светлой полосы. */
+  lightLabel?: string
+  /** Пусто — подложки нет, обе полосы лежат прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: обводка кружка — это не «белая рамка», а цвет подложки под
@@ -19,11 +24,15 @@ const STYLES = `
 --vibeui-iconstack-005-size:2rem;
 --vibeui-iconstack-005-overlap:0.625rem;
 --vibeui-iconstack-005-ring:oklch(1 0 0);
---vibeui-iconstack-005-surface:oklch(1 0 0);
+--vibeui-iconstack-005-surface:transparent;
 --vibeui-iconstack-005-dark:oklch(0.26 0.02 265);
---vibeui-iconstack-005-border:oklch(0.9 0.006 265);
---vibeui-iconstack-005-fg:oklch(0.26 0.014 265);
---vibeui-iconstack-005-muted:oklch(0.55 0.014 265);
+--vibeui-iconstack-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.01 265));
+--vibeui-iconstack-005-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
+/* Полосы намеренно фиксированные: приём и держится на том, что светлая
+   остаётся светлой в любой теме. Их собственные токены темы не слушают. */
+--vibeui-iconstack-005-light-line:oklch(0.9 0.006 265);
+--vibeui-iconstack-005-light-fg:oklch(0.26 0.014 265);
+--vibeui-iconstack-005-light-muted:oklch(0.55 0.014 265);
 --vibeui-iconstack-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="iconstack-005"]{
@@ -40,7 +49,8 @@ padding:0.625rem 0.875rem;border-radius:0.75rem;
 /* Обводка берётся у полосы, а не у кружка: цвет подложки задаёт её сама. */
 [data-vibeui-block="iconstack-005"] [data-part="row"][data-tone="light"]{
 background:var(--vibeui-iconstack-005-ring);
-border:1px solid var(--vibeui-iconstack-005-border);
+border:1px solid var(--vibeui-iconstack-005-light-line);
+color:var(--vibeui-iconstack-005-light-fg);
 }
 [data-vibeui-block="iconstack-005"] [data-part="row"][data-tone="dark"]{
 background:var(--vibeui-iconstack-005-dark);
@@ -67,7 +77,7 @@ font-size:0.6875rem;font-weight:700;line-height:1;
 font-size:0.75rem;line-height:1.3;
 }
 [data-vibeui-block="iconstack-005"] [data-part="row"][data-tone="light"] [data-part="caption"]{
-color:var(--vibeui-iconstack-005-muted);
+color:var(--vibeui-iconstack-005-light-muted);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="iconstack-005"] *{animation:none!important;transition:none!important}}
 `
@@ -92,6 +102,28 @@ function initials(name: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Стопка с обводкой под цвет подложки: светлая и тёмная полосы рядом.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -99,10 +131,22 @@ export function Iconstack005({
   names = DEFAULT_NAMES,
   ring = "#ffffff",
   label = "обводка равна цвету подложки",
+  lightLabel = "На светлой панели",
+  background = "",
   className,
   style,
   ...props
 }: Iconstack005Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-iconstack-005-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   const faces = [...names].reverse().map((name) => (
     <span
       key={name}
@@ -122,7 +166,7 @@ export function Iconstack005({
         {...props}
         data-vibeui-block="iconstack-005"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <div
           data-part="row"
@@ -132,7 +176,7 @@ export function Iconstack005({
           <span data-part="stack" aria-hidden="true">
             {faces}
           </span>
-          <span data-part="caption">На светлой панели</span>
+          <span data-part="caption">{lightLabel}</span>
         </div>
         <div data-part="row" data-tone="dark">
           <span data-part="stack" aria-hidden="true">

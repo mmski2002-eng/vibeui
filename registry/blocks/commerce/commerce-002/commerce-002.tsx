@@ -19,7 +19,15 @@ export type Commerce002Props = {
   cta?: string
   secondary?: string
   delivery?: string
+  /** Подпись группы размеров. */
+  sizeLabel?: string
+  /** Подпись рейтинга: {count} — число отзывов. */
+  reviewsText?: string
+  /** Локаль форматирования рейтинга. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -32,15 +40,20 @@ export type Commerce002Props = {
 // исчезнувший вариант заставляет искать его глазами и злит сильнее отсутствия.
 // Срок доставки стоит рядом с кнопкой, потому что решение принимают по нему,
 // а не по названию, а галерея заменена цветным полем: блок не тянет чужие файлы.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="commerce-002"]){
---vibeui-commerce-002-bg:oklch(1 0 0);
---vibeui-commerce-002-fg:oklch(0.22 0.014 265);
---vibeui-commerce-002-muted:oklch(0.55 0.014 265);
---vibeui-commerce-002-border:oklch(0.91 0.006 265);
---vibeui-commerce-002-accent:oklch(0.55 0.2 262);
---vibeui-commerce-002-star:oklch(0.72 0.16 75);
---vibeui-commerce-002-ok:oklch(0.58 0.14 152);
+--vibeui-commerce-002-bg:transparent;
+--vibeui-commerce-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-commerce-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-commerce-002-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
+--vibeui-commerce-002-pick:light-dark(oklch(0.55 0.2 262 / 8%),oklch(0.72 0.17 262 / 18%));
+--vibeui-commerce-002-star:light-dark(oklch(0.72 0.16 75),oklch(0.82 0.15 75));
+--vibeui-commerce-002-ok:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
 --vibeui-commerce-002-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -58,13 +71,13 @@ font-family:var(--vibeui-commerce-002-sans);color:var(--vibeui-commerce-002-fg);
 [data-vibeui-block="commerce-002"] [data-part="shot"]{
 aspect-ratio:1 / 1;border-radius:0.875rem;
 background:
-radial-gradient(120% 90% at 30% 20%, oklch(0.94 0.08 var(--vibeui-commerce-002-hue,262)), transparent 70%),
-oklch(0.96 0.02 var(--vibeui-commerce-002-hue,262));
+radial-gradient(120% 90% at 30% 20%, light-dark(oklch(0.94 0.08 var(--vibeui-commerce-002-hue,262)),oklch(0.46 0.09 var(--vibeui-commerce-002-hue,262))), transparent 70%),
+light-dark(oklch(0.96 0.02 var(--vibeui-commerce-002-hue,262)),oklch(0.34 0.03 var(--vibeui-commerce-002-hue,262)));
 }
 [data-vibeui-block="commerce-002"] [data-part="thumbs"]{display:flex;gap:0.375rem}
 [data-vibeui-block="commerce-002"] [data-part="thumb"]{
 flex:1 1 0;aspect-ratio:1 / 1;border-radius:0.5rem;
-background:oklch(0.95 0.03 var(--vibeui-commerce-002-hue,262));
+background:light-dark(oklch(0.95 0.03 var(--vibeui-commerce-002-hue,262)),oklch(0.36 0.04 var(--vibeui-commerce-002-hue,262)));
 border:1px solid var(--vibeui-commerce-002-border);
 }
 [data-vibeui-block="commerce-002"] [data-part="brand"]{margin:0;font-size:0.75rem;color:var(--vibeui-commerce-002-muted)}
@@ -90,7 +103,7 @@ font-size:0.8125rem;
 }
 [data-vibeui-block="commerce-002"] input:checked + [data-part="size"]{
 border-color:var(--vibeui-commerce-002-accent);
-background:oklch(0.55 0.2 262 / 8%);font-weight:650;
+background:var(--vibeui-commerce-002-pick);font-weight:650;
 }
 [data-vibeui-block="commerce-002"] input:focus-visible + [data-part="size"]{outline:2px solid var(--vibeui-commerce-002-accent);outline-offset:2px}
 /* Недоступный размер виден и зачёркнут: исчезнувший вариант ищут глазами. */
@@ -103,7 +116,7 @@ text-decoration:line-through;opacity:.7;
 appearance:none;cursor:pointer;height:2.5rem;padding:0 1rem;border-radius:0.625rem;
 font:inherit;font-size:0.875rem;font-weight:650;
 }
-[data-vibeui-block="commerce-002"] [data-part="buy"]{flex:1 1 10rem;border:0;background:var(--vibeui-commerce-002-accent);color:oklch(1 0 0)}
+[data-vibeui-block="commerce-002"] [data-part="buy"]{flex:1 1 10rem;border:0;background:var(--vibeui-commerce-002-accent);color:var(--vibeui-commerce-002-on-accent)}
 [data-vibeui-block="commerce-002"] [data-part="wish"]{
 border:1px solid var(--vibeui-commerce-002-border);background:none;color:inherit;
 }
@@ -143,6 +156,28 @@ function stars(rating: number) {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Карточка товара: размеры радиокнопками, срок доставки рядом с кнопкой.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -159,12 +194,22 @@ export function Commerce002({
   cta = "В корзину",
   secondary = "В избранное",
   delivery = "Доставка завтра, если заказать сегодня",
+  sizeLabel = "Размер",
+  reviewsText = "{count} отзывов",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Commerce002Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -196,7 +241,8 @@ export function Commerce002({
               <span data-part="stars" aria-hidden="true">
                 {stars(rating)}
               </span>
-              {rating.toLocaleString("ru-RU")} · {reviews} отзывов
+              {rating.toLocaleString(locale)} ·{" "}
+              {reviewsText.replace("{count}", String(reviews))}
             </p>
             <p data-part="prices">
               <span data-part="price">{price}</span>
@@ -205,7 +251,7 @@ export function Commerce002({
             <p data-part="summary">{summary}</p>
 
             <fieldset>
-              <legend>Размер</legend>
+              <legend>{sizeLabel}</legend>
               <div data-part="sizes">
                 {sizes.map((size) => (
                   <label key={size.value}>

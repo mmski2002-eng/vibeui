@@ -8,6 +8,12 @@ export type Codeblock023Props = {
   label?: string
   doneLabel?: string
   commands?: string[]
+  /** Уточнение в подписи кнопки для скринридера, {count} — число команд. */
+  hintText?: string
+  /** Подпись в подвале блока. */
+  footText?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -15,15 +21,20 @@ export type Codeblock023Props = {
 // Идея компонента: последовательность команд, которую можно вставить в
 // терминал одним куском. Приглашение $ нарисовано в CSS и не существует в
 // тексте, поэтому в буфер уходят только сами команды, готовые к запуску.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, приглашение и акцент подобраны отдельно для светлой и тёмной ветки.
 const STYLES = `
 :where([data-vibeui-block="codeblock-023"]){
---vibeui-codeblock-023-bg:oklch(0.18 0.01 160);
---vibeui-codeblock-023-head:oklch(0.22 0.014 160);
---vibeui-codeblock-023-fg:oklch(0.93 0.008 160);
---vibeui-codeblock-023-muted:oklch(0.66 0.014 160);
---vibeui-codeblock-023-border:oklch(1 0 0 / 12%);
---vibeui-codeblock-023-prompt:oklch(0.78 0.15 150);
---vibeui-codeblock-023-accent:oklch(0.84 0.14 150);
+--vibeui-codeblock-023-bg:transparent;
+--vibeui-codeblock-023-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
+--vibeui-codeblock-023-key:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 8%));
+--vibeui-codeblock-023-key-hover:light-dark(oklch(0 0 0 / 10%),oklch(1 0 0 / 14%));
+--vibeui-codeblock-023-fg:light-dark(oklch(0.26 0.014 160),oklch(0.93 0.008 160));
+--vibeui-codeblock-023-muted:light-dark(oklch(0.5 0.014 160),oklch(0.66 0.014 160));
+--vibeui-codeblock-023-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
+--vibeui-codeblock-023-prompt:light-dark(oklch(0.5 0.15 150),oklch(0.78 0.15 150));
+--vibeui-codeblock-023-accent:light-dark(oklch(0.47 0.15 150),oklch(0.84 0.14 150));
 --vibeui-codeblock-023-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -46,11 +57,11 @@ appearance:none;cursor:pointer;flex:none;
 display:inline-flex;align-items:center;gap:0.375rem;
 padding:0.3125rem 0.625rem;border-radius:0.4375rem;
 border:1px solid var(--vibeui-codeblock-023-border);
-background:oklch(1 0 0 / 8%);color:var(--vibeui-codeblock-023-fg);
+background:var(--vibeui-codeblock-023-key);color:var(--vibeui-codeblock-023-fg);
 font-family:inherit;font-size:0.6875rem;font-weight:650;
 transition:background-color .16s ease,color .16s ease;
 }
-[data-vibeui-block="codeblock-023"] button:hover{background:oklch(1 0 0 / 14%)}
+[data-vibeui-block="codeblock-023"] button:hover{background:var(--vibeui-codeblock-023-key-hover)}
 [data-vibeui-block="codeblock-023"] button:focus-visible{
 outline:2px solid var(--vibeui-codeblock-023-accent);outline-offset:2px;
 }
@@ -90,12 +101,37 @@ const COMMANDS = [
   "npm run dev",
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Список команд с копированием без символа приглашения. */
 export function Codeblock023({
   title = "Установка",
   label = "Скопировать без $",
   doneLabel = "Скопировано",
   commands = COMMANDS,
+  hintText = "строк: {count}",
+  footText = "Приглашение нарисовано стилями: в буфер уходят только команды, строка за строкой.",
+  background = "",
   className,
   style,
 }: Codeblock023Props) {
@@ -121,6 +157,16 @@ export function Codeblock023({
     timer.current = setTimeout(() => setCopied(false), 1600)
   }
 
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-023-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-codeblock-023" precedence="medium">
@@ -129,7 +175,7 @@ export function Codeblock023({
       <figure
         data-vibeui-block="codeblock-023"
         className={className}
-        style={style}
+        style={palette}
       >
         <figcaption data-part="head">
           <span>{title}</span>
@@ -137,7 +183,10 @@ export function Codeblock023({
             type="button"
             onClick={copy}
             data-copied={copied || undefined}
-            aria-label={`${copied ? doneLabel : label} (строк: ${commands.length})`}
+            aria-label={`${copied ? doneLabel : label} (${hintText.replace(
+              "{count}",
+              String(commands.length),
+            )})`}
           >
             {copied ? (
               <svg viewBox="0 0 12 12" aria-hidden="true">
@@ -183,10 +232,7 @@ export function Codeblock023({
             ))}
           </code>
         </pre>
-        <p data-part="foot">
-          Приглашение нарисовано стилями: в буфер уходят только команды, строка
-          за строкой.
-        </p>
+        <p data-part="foot">{footText}</p>
       </figure>
     </>
   )

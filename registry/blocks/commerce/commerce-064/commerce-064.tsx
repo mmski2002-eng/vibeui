@@ -21,10 +21,13 @@ export type Commerce064Props = {
   copyLabel?: string
   memoLabel?: string
   memo?: string
+  memoHint?: string
   warning?: string
   cta?: string
   waiting?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -38,13 +41,18 @@ export type Commerce064Props = {
 // без картинок, а настоящий код подставляет вызывающий проект.
 const STYLES = `
 :where([data-vibeui-block="commerce-064"]){
---vibeui-commerce-064-bg:oklch(0.19 0.02 265);
---vibeui-commerce-064-panel:oklch(0.25 0.025 265);
---vibeui-commerce-064-fg:oklch(0.97 0.006 265);
---vibeui-commerce-064-muted:oklch(0.72 0.018 265);
---vibeui-commerce-064-border:oklch(0.35 0.025 265);
---vibeui-commerce-064-accent:oklch(0.78 0.16 145);
---vibeui-commerce-064-warn:oklch(0.8 0.15 75);
+--vibeui-commerce-064-bg:transparent;
+--vibeui-commerce-064-panel:light-dark(oklch(0.975 0.005 265),oklch(0.25 0.025 265));
+--vibeui-commerce-064-fg:light-dark(oklch(0.22 0.018 265),oklch(0.97 0.006 265));
+--vibeui-commerce-064-muted:light-dark(oklch(0.52 0.018 265),oklch(0.72 0.018 265));
+--vibeui-commerce-064-border:light-dark(oklch(0.89 0.009 265),oklch(0.4 0.028 265));
+--vibeui-commerce-064-accent:light-dark(oklch(0.52 0.13 145),oklch(0.78 0.16 145));
+--vibeui-commerce-064-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.02 265));
+--vibeui-commerce-064-warn:light-dark(oklch(0.53 0.14 65),oklch(0.8 0.15 75));
+/* Бумага и краска QR не зависят от темы: код читает сканер, а ему нужен
+   постоянный контраст. */
+--vibeui-commerce-064-qr-paper:oklch(0.99 0 0);
+--vibeui-commerce-064-qr-ink:oklch(0.19 0.02 265);
 --vibeui-commerce-064-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-commerce-064-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -91,10 +99,11 @@ background:var(--vibeui-commerce-064-panel);transition:border-color .14s ease;
 [data-vibeui-block="commerce-064"] [data-part="nfee"]{display:block;margin-top:0.125rem;font-size:0.75rem;color:var(--vibeui-commerce-064-muted);font-variant-numeric:tabular-nums}
 [data-vibeui-block="commerce-064"] [data-part="pay"]{display:grid;gap:1rem;grid-template-columns:1fr;align-items:start}
 [data-vibeui-block="commerce-064"] [data-part="qr"]{
-width:9rem;height:9rem;justify-self:center;padding:0.5rem;border-radius:0.75rem;background:oklch(0.99 0 0);
+width:9rem;height:9rem;justify-self:center;padding:0.5rem;border-radius:0.75rem;
+background:var(--vibeui-commerce-064-qr-paper);
 display:grid;grid-template-columns:repeat(9,1fr);grid-template-rows:repeat(9,1fr);gap:2px;
 }
-[data-vibeui-block="commerce-064"] [data-part="cell"]{background:oklch(0.19 0.02 265);border-radius:1px}
+[data-vibeui-block="commerce-064"] [data-part="cell"]{background:var(--vibeui-commerce-064-qr-ink);border-radius:1px}
 [data-vibeui-block="commerce-064"] [data-part="alabel"]{margin:0 0 0.25rem;font-size:0.6875rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--vibeui-commerce-064-muted)}
 [data-vibeui-block="commerce-064"] [data-part="address"]{
 margin:0;padding:0.625rem 0.75rem;border-radius:0.625rem;border:1px solid var(--vibeui-commerce-064-border);
@@ -116,7 +125,7 @@ font-size:0.8125rem;line-height:1.5;
 }
 [data-vibeui-block="commerce-064"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;width:100%;height:2.875rem;margin-top:1rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-064-accent);color:oklch(0.19 0.02 265);font:inherit;font-size:0.9375rem;font-weight:700;
+background:var(--vibeui-commerce-064-accent);color:var(--vibeui-commerce-064-onaccent);font:inherit;font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="commerce-064"] [data-part="waiting"]{margin:0.75rem 0 0;font-size:0.75rem;line-height:1.5;color:var(--vibeui-commerce-064-muted);text-align:center}
 @container (min-width: 34rem){
@@ -146,6 +155,28 @@ const DEFAULT_NETWORKS: Commerce064Network[] = [
   { value: "ton", label: "TON", fee: "Комиссия 0,2 USDT", time: "≈ 30 секунд" },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 // Узор QR нарисован сеткой: настоящий код подставляет вызывающий проект.
 const QR_PATTERN = [
   1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1,
@@ -172,15 +203,26 @@ export function Commerce064({
   copyLabel = "Скопировать адрес",
   memoLabel = "Комментарий к переводу",
   memo = "ORD-2024-1187",
+  memoHint = "Без него платёж придётся искать вручную — это до трёх рабочих дней.",
   warning = "Отправляйте только USDT и только в выбранной сети. Монета в другой сети уходит навсегда: вернуть её не может ни магазин, ни биржа.",
   cta = "Я отправил перевод",
   waiting = "После отправки счёт закроется автоматически, когда сеть подтвердит транзакцию.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce064Props) {
   const palette = {
     ...(accent ? { "--vibeui-commerce-064-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-064-bg": background,
+          // Панели и поля не должны просвечивать: им нужна непрозрачная
+          // подложка, а она задана тем же цветом.
+          "--vibeui-commerce-064-panel": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -251,8 +293,7 @@ export function Commerce064({
                 {copyLabel}
               </button>
               <p data-part="memo">
-                {memoLabel}: <code>{memo}</code>. Без него платёж придётся
-                искать вручную — это до трёх рабочих дней.
+                {memoLabel}: <code>{memo}</code>. {memoHint}
               </p>
             </div>
           </div>

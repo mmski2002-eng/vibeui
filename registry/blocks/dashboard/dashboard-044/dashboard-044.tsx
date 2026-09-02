@@ -21,6 +21,12 @@ export type Dashboard044Props = {
   escalateLabel?: string
   handoverLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подпись перед ответственным. */
+  ownerLabel?: string
+  /** Шаблон подсказки приоритета: {level} и {duration}. */
+  levelTitleText?: string
   className?: string
   style?: CSSProperties
 }
@@ -35,15 +41,19 @@ export type Dashboard044Props = {
 // временем: без него список инцидентов выглядит замершим.
 const STYLES = `
 :where([data-vibeui-block="dashboard-044"]){
---vibeui-dashboard-044-bg:oklch(0.985 0.004 20);
---vibeui-dashboard-044-card:oklch(1 0 0);
---vibeui-dashboard-044-fg:oklch(0.22 0.014 20);
---vibeui-dashboard-044-muted:oklch(0.55 0.014 20);
---vibeui-dashboard-044-border:oklch(0.91 0.007 20);
---vibeui-dashboard-044-p1:oklch(0.55 0.2 25);
---vibeui-dashboard-044-p2:oklch(0.64 0.16 60);
---vibeui-dashboard-044-p3:oklch(0.55 0.06 250);
---vibeui-dashboard-044-accent:oklch(0.5 0.15 25);
+--vibeui-dashboard-044-bg:transparent;
+/* Карточки и плашка обновления: подложка блока прозрачна, и рисовать их ею нечем. */
+--vibeui-dashboard-044-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 20));
+--vibeui-dashboard-044-soft:light-dark(oklch(0.97 0.005 20),oklch(0.22 0.012 20));
+--vibeui-dashboard-044-fg:light-dark(oklch(0.22 0.014 20),oklch(0.94 0.005 20));
+--vibeui-dashboard-044-muted:light-dark(oklch(0.55 0.014 20),oklch(0.72 0.012 20));
+--vibeui-dashboard-044-border:light-dark(oklch(0.91 0.007 20),oklch(0.36 0.012 20));
+--vibeui-dashboard-044-p1:light-dark(oklch(0.55 0.2 25),oklch(0.7 0.18 25));
+--vibeui-dashboard-044-p2:light-dark(oklch(0.64 0.16 60),oklch(0.78 0.14 60));
+--vibeui-dashboard-044-p3:light-dark(oklch(0.55 0.06 250),oklch(0.7 0.06 250));
+--vibeui-dashboard-044-accent:light-dark(oklch(0.5 0.15 25),oklch(0.72 0.15 25));
+/* Текст на цветной заливке: в тёмной ветке заливки светлее фона. */
+--vibeui-dashboard-044-on-fill:light-dark(oklch(1 0 0),oklch(0.2 0.03 25));
 --vibeui-dashboard-044-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -69,7 +79,7 @@ border:1px solid var(--vibeui-dashboard-044-border);
 [data-vibeui-block="dashboard-044"] [data-part="face"]{
 width:1.75rem;height:1.75rem;border-radius:50%;flex:none;display:grid;place-items:center;
 font-size:0.6875rem;font-weight:800;
-background:color-mix(in oklab,var(--vibeui-dashboard-044-accent) 15%,white);
+background:color-mix(in oklab,var(--vibeui-dashboard-044-accent) 18%,var(--vibeui-dashboard-044-card));
 color:var(--vibeui-dashboard-044-accent);
 }
 [data-vibeui-block="dashboard-044"] [data-part="dutyText"]{display:grid;line-height:1.25}
@@ -88,7 +98,7 @@ border:1px solid var(--vibeui-dashboard-044-border);border-radius:0.875rem;overf
 }
 [data-vibeui-block="dashboard-044"] [data-part="level"]{
 grid-row:1/-1;display:grid;place-items:center;align-content:center;gap:0.125rem;
-padding:0.75rem 0;color:oklch(1 0 0);font-size:0.8125rem;font-weight:800;letter-spacing:0.02em;
+padding:0.75rem 0;color:var(--vibeui-dashboard-044-on-fill);font-size:0.8125rem;font-weight:800;letter-spacing:0.02em;
 }
 [data-vibeui-block="dashboard-044"] article[data-level="P1"] [data-part="level"]{background:var(--vibeui-dashboard-044-p1)}
 [data-vibeui-block="dashboard-044"] article[data-level="P2"] [data-part="level"]{background:var(--vibeui-dashboard-044-p2)}
@@ -109,7 +119,7 @@ margin:0.25rem 0.875rem 0 0;font-size:0.6875rem;color:var(--vibeui-dashboard-044
 [data-vibeui-block="dashboard-044"] [data-part="owner"]{font-weight:750;color:var(--vibeui-dashboard-044-fg)}
 [data-vibeui-block="dashboard-044"] [data-part="update"]{
 margin:0.5rem 0.875rem 0 0;padding:0.4375rem 0.625rem;border-radius:0.5rem;
-background:var(--vibeui-dashboard-044-bg);
+background:var(--vibeui-dashboard-044-soft);
 font-size:0.75rem;line-height:1.45;
 }
 [data-vibeui-block="dashboard-044"] [data-part="stamp"]{
@@ -121,7 +131,7 @@ grid-column:2;display:flex;flex-wrap:wrap;gap:0.5rem;padding:0.625rem 0.875rem 0
 [data-vibeui-block="dashboard-044"] [data-part="take"]{
 appearance:none;border:0;cursor:pointer;font:inherit;
 font-size:0.75rem;font-weight:700;padding:0.4375rem 0.8125rem;border-radius:0.5rem;
-background:var(--vibeui-dashboard-044-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-044-accent);color:var(--vibeui-dashboard-044-on-fill);
 }
 [data-vibeui-block="dashboard-044"] [data-part="up"]{
 appearance:none;cursor:pointer;font:inherit;
@@ -179,6 +189,28 @@ const DEFAULT_INCIDENTS: Dashboard044Incident[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Страница инцидентов: дежурный в шапке и список инцидентов с приоритетом,
  * длительностью, ответственным и последним обновлением. Один файл, ноль
  * зависимостей, клиентского JS нет.
@@ -192,11 +224,20 @@ export function Dashboard044({
   escalateLabel = "Эскалировать",
   handoverLabel = "Передать смену",
   accent,
+  background = "",
+  ownerLabel = "ответственный",
+  levelTitleText = "Приоритет {level}, идёт {duration}",
   className,
   style,
 }: Dashboard044Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-044-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-044-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -239,7 +280,9 @@ export function Dashboard044({
               <article key={incident.code} data-level={incident.level}>
                 <span
                   data-part="level"
-                  title={`Приоритет ${incident.level}, идёт ${incident.duration}`}
+                  title={levelTitleText
+                    .replace("{level}", incident.level)
+                    .replace("{duration}", incident.duration)}
                 >
                   {incident.level}
                   <span data-part="clock">{incident.duration}</span>
@@ -251,7 +294,7 @@ export function Dashboard044({
                 </div>
 
                 <p data-part="meta">
-                  {incident.service} · {incident.started} · ответственный{" "}
+                  {incident.service} · {incident.started} · {ownerLabel}{" "}
                   <span data-part="owner">{incident.owner}</span>
                 </p>
 

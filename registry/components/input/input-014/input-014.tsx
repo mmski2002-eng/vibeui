@@ -10,6 +10,15 @@ export type Input014Props = Omit<
   label?: string
   taken?: string[]
   onChange?: (handle: string) => void
+  /** Подсказка в пустом поле. */
+  placeholder?: string
+  /**
+   * Подсказка под полем по состоянию: idle, checking, taken, free.
+   * В taken и free подставляется {handle}.
+   */
+  noteText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,15 +29,15 @@ export type Input014Props = Omit<
 // чтобы её нельзя было стереть или продублировать.
 const STYLES = `
 :where([data-vibeui-block="input-014"]){
---vibeui-input-014-surface:oklch(1 0 0);
---vibeui-input-014-shell:oklch(0.91 0.006 265);
---vibeui-input-014-fg:oklch(0.23 0.014 265);
---vibeui-input-014-muted:oklch(0.56 0.014 265);
---vibeui-input-014-field:oklch(0.985 0.002 265);
---vibeui-input-014-border:oklch(0.88 0.008 265);
---vibeui-input-014-accent:oklch(0.55 0.17 250);
---vibeui-input-014-bad:oklch(0.55 0.2 25);
---vibeui-input-014-ok:oklch(0.48 0.13 155);
+--vibeui-input-014-surface:transparent;
+--vibeui-input-014-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-input-014-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-014-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-input-014-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.011 265));
+--vibeui-input-014-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.013 265));
+--vibeui-input-014-accent:light-dark(oklch(0.55 0.17 250),oklch(0.74 0.15 250));
+--vibeui-input-014-bad:light-dark(oklch(0.55 0.2 25),oklch(0.73 0.16 25));
+--vibeui-input-014-ok:light-dark(oklch(0.48 0.13 155),oklch(0.76 0.13 155));
 --vibeui-input-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-014"]{
@@ -105,6 +114,35 @@ outline:2px solid var(--vibeui-input-014-accent);outline-offset:2px;
 
 const TAKEN = ["anna", "orlova", "design", "anna_orlova"]
 
+const NOTE: Record<string, string> = {
+  idle: "Латиница, цифры, точка и подчёркивание. От трёх символов.",
+  checking: "Проверяем, свободно ли имя…",
+  taken: "Имя @{handle} занято. Возьмите одно из свободных:",
+  free: "Имя @{handle} свободно.",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 // Нормализация на вводе, а не на отправке: иначе человек видит одно, а
 // сохраняется другое.
 function normalize(value: string) {
@@ -129,6 +167,9 @@ export function Input014({
   label = "Имя пользователя",
   taken = TAKEN,
   onChange,
+  placeholder = "anna_orlova",
+  noteText = NOTE,
+  background = "",
   accent,
   className,
   style,
@@ -167,6 +208,12 @@ export function Input014({
 
   const palette = {
     ...(accent ? { "--vibeui-input-014-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-014-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -200,7 +247,7 @@ export function Input014({
               autoComplete="username"
               spellCheck={false}
               autoCapitalize="none"
-              placeholder="anna_orlova"
+              placeholder={placeholder}
               value={handle}
               aria-invalid={state === "taken"}
               aria-describedby={`${id}-note`}
@@ -235,13 +282,7 @@ export function Input014({
             </span>
           </div>
           <p data-part="note" id={`${id}-note`} aria-live="polite">
-            {state === "checking"
-              ? "Проверяем, свободно ли имя…"
-              : state === "taken"
-                ? `Имя @${handle} занято. Возьмите одно из свободных:`
-                : state === "free"
-                  ? `Имя @${handle} свободно.`
-                  : "Латиница, цифры, точка и подчёркивание. От трёх символов."}
+            {(noteText[state] ?? NOTE[state]).replace("{handle}", handle)}
           </p>
           {ideas.length > 0 ? (
             <div data-part="ideas">

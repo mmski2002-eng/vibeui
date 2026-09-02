@@ -8,12 +8,29 @@ import type {
   PointerEvent,
 } from "react"
 
+export type Contextmenu002Action = {
+  label: string
+  keys?: string
+}
+
 export type Contextmenu002Props = Omit<
   ComponentPropsWithoutRef<"section">,
   "children" | "title"
 > & {
   title?: string
   files?: string[]
+  /** Подсказка в шапке: компонент несёт русскую, проект подставляет свою. */
+  hint?: string
+  actions?: Contextmenu002Action[]
+  deleteLabel?: string
+  /** Имя меню для скринридера, когда цель ещё не выбрана. */
+  menuLabel?: string
+  /** Имя кнопки «•••» и открытого меню; {file} — имя файла. */
+  moreLabel?: string
+  /** Строка отчёта; {action} — действие, {file} — имя файла. */
+  doneText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,13 +41,15 @@ export type Contextmenu002Props = Omit<
 // одинаковых плитках непонятно, что именно удаляется.
 const STYLES = `
 :where([data-vibeui-block="contextmenu-002"]){
---vibeui-contextmenu-002-bg:oklch(1 0 0);
---vibeui-contextmenu-002-fg:oklch(0.24 0.014 265);
---vibeui-contextmenu-002-muted:oklch(0.55 0.014 265);
---vibeui-contextmenu-002-border:oklch(0.9 0.006 265);
---vibeui-contextmenu-002-hover:oklch(0.96 0.004 265);
---vibeui-contextmenu-002-accent:oklch(0.55 0.18 258);
---vibeui-contextmenu-002-danger:oklch(0.56 0.19 25);
+--vibeui-contextmenu-002-bg:transparent;
+--vibeui-contextmenu-002-surface:light-dark(oklch(1 0 0),oklch(0.24 0.013 265));
+--vibeui-contextmenu-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-contextmenu-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-contextmenu-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-contextmenu-002-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.014 265));
+--vibeui-contextmenu-002-accent:light-dark(oklch(0.55 0.18 258),oklch(0.75 0.14 258));
+--vibeui-contextmenu-002-danger:light-dark(oklch(0.56 0.19 25),oklch(0.73 0.16 25));
+--vibeui-contextmenu-002-shadow:light-dark(oklch(0.2 0.03 265 / 50%),oklch(0 0 0 / 72%));
 --vibeui-contextmenu-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-contextmenu-002-x:50%;
 --vibeui-contextmenu-002-y:50%;
@@ -86,9 +105,9 @@ margin:0;font-size:0.6875rem;color:var(--vibeui-contextmenu-002-muted);min-heigh
 position:fixed;margin:0;padding:0.3125rem;
 top:var(--vibeui-contextmenu-002-y);left:var(--vibeui-contextmenu-002-x);
 min-width:12rem;box-sizing:border-box;
-background:var(--vibeui-contextmenu-002-bg);color:var(--vibeui-contextmenu-002-fg);
+background:var(--vibeui-contextmenu-002-surface);color:var(--vibeui-contextmenu-002-fg);
 border:1px solid var(--vibeui-contextmenu-002-border);border-radius:0.75rem;
-box-shadow:0 18px 40px -20px oklch(0.2 0.03 265 / 50%);
+box-shadow:0 18px 40px -20px var(--vibeui-contextmenu-002-shadow);
 font-family:var(--vibeui-contextmenu-002-font);
 }
 [data-vibeui-block="contextmenu-002"] [data-part="target"]{
@@ -122,11 +141,33 @@ const DEFAULT_FILES = [
   "Договор.docx",
 ]
 
-const ACTIONS = [
+const DEFAULT_ACTIONS: Contextmenu002Action[] = [
   { label: "Открыть", keys: "↵" },
   { label: "Переименовать", keys: "F2" },
   { label: "Скачать", keys: "⌘S" },
 ]
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Контекстное меню файла: правый клик, кнопка «•••» и долгое нажатие.
@@ -135,6 +176,13 @@ const ACTIONS = [
 export function Contextmenu002({
   title = "Документы",
   files = DEFAULT_FILES,
+  hint = "правый клик · «•••» · долгое нажатие",
+  actions = DEFAULT_ACTIONS,
+  deleteLabel = "Удалить",
+  menuLabel = "Действия",
+  moreLabel = "Действия: {file}",
+  doneText = "{action}: {file}",
+  background = "",
   accent,
   className,
   style,
@@ -178,12 +226,20 @@ export function Contextmenu002({
   }
 
   const run = (action: string) => {
-    setDone(`${action}: ${target}`)
+    setDone(
+      doneText.replace("{action}", action).replace("{file}", target ?? ""),
+    )
     menu.current?.hidePopover()
   }
 
   const palette = {
     ...(accent ? { "--vibeui-contextmenu-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-contextmenu-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...(spot
       ? {
           "--vibeui-contextmenu-002-x": spot.x,
@@ -207,7 +263,7 @@ export function Contextmenu002({
       >
         <div data-part="head">
           <h3 data-part="title">{title}</h3>
-          <span data-part="hint">правый клик · «•••» · долгое нажатие</span>
+          <span data-part="hint">{hint}</span>
         </div>
         <ul data-part="grid">
           {files.map((file) => (
@@ -228,7 +284,7 @@ export function Contextmenu002({
                 type="button"
                 data-part="more"
                 aria-haspopup="menu"
-                aria-label={`Действия: ${file}`}
+                aria-label={moreLabel.replace("{file}", file)}
                 onClick={(event) => {
                   const box = event.currentTarget.getBoundingClientRect()
                   openAt(box.left, box.bottom + 4, file)
@@ -247,7 +303,7 @@ export function Contextmenu002({
           data-part="menu"
           popover="auto"
           role="menu"
-          aria-label={target ? `Действия: ${target}` : "Действия"}
+          aria-label={target ? moreLabel.replace("{file}", target) : menuLabel}
           onKeyDown={(event) => {
             if (event.key !== "ArrowDown" && event.key !== "ArrowUp") {
               return
@@ -275,7 +331,7 @@ export function Contextmenu002({
           }}
         >
           <div data-part="target">{target}</div>
-          {ACTIONS.map((action) => (
+          {actions.map((action) => (
             <button
               key={action.label}
               type="button"
@@ -293,9 +349,9 @@ export function Contextmenu002({
             role="menuitem"
             data-part="item"
             data-danger="true"
-            onClick={() => run("Удалить")}
+            onClick={() => run(deleteLabel)}
           >
-            Удалить
+            {deleteLabel}
             <span data-part="keys">⌫</span>
           </button>
         </div>

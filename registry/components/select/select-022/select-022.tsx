@@ -21,10 +21,10 @@ export type Select022Props = Omit<ComponentPropsWithoutRef<"p">, "children"> & {
 // компонент не ломается, просто теряет точную подгонку.
 const STYLES = `
 :where([data-vibeui-block="select-022"]){
---vibeui-select-022-fg:oklch(0.23 0.016 265);
---vibeui-select-022-muted:oklch(0.55 0.014 265);
---vibeui-select-022-accent:oklch(0.55 0.19 262);
---vibeui-select-022-tint:oklch(0.55 0.19 262 / 10%);
+--vibeui-select-022-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-022-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-select-022-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.16 262));
+--vibeui-select-022-tint:light-dark(oklch(0.55 0.19 262 / 10%),oklch(0.75 0.16 262 / 18%));
 --vibeui-select-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="select-022"]{

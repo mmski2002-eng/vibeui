@@ -18,6 +18,20 @@ export type Resizable004Props = Omit<
   max?: number
   step?: number
   onChange?: (size: number) => void
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  navTitle?: string
+  navItems?: string[]
+  mainTitle?: string
+  mainText?: string
+  /** Строка состояния; {size} заменяется на текущую ширину. */
+  statusText?: string
+  /** Плашка предела; {value} заменяется на границу диапазона. */
+  minText?: string
+  maxText?: string
+  /** aria-valuetext разделителя; {size} заменяется на текущую ширину. */
+  valueText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,13 +41,16 @@ export type Resizable004Props = Omit<
 // не проглатывается молча: разделитель меняет цвет, а подпись называет предел.
 const STYLES = `
 :where([data-vibeui-block="resizable-004"]){
---vibeui-resizable-004-bg:oklch(1 0 0);
---vibeui-resizable-004-fg:oklch(0.22 0.014 265);
---vibeui-resizable-004-muted:oklch(0.55 0.014 265);
---vibeui-resizable-004-border:oklch(0.9 0.006 265);
---vibeui-resizable-004-surface:oklch(0.975 0.004 265);
---vibeui-resizable-004-accent:oklch(0.55 0.17 275);
---vibeui-resizable-004-limit:oklch(0.62 0.16 55);
+--vibeui-resizable-004-bg:transparent;
+--vibeui-resizable-004-pane:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-resizable-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-resizable-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-resizable-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-resizable-004-surface:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.011 265));
+--vibeui-resizable-004-accent:light-dark(oklch(0.55 0.17 275),oklch(0.74 0.15 275));
+--vibeui-resizable-004-limit:light-dark(oklch(0.62 0.16 55),oklch(0.78 0.14 55));
+--vibeui-resizable-004-badge:light-dark(oklch(0.93 0.045 55),oklch(0.38 0.06 55));
+--vibeui-resizable-004-badge-fg:light-dark(oklch(0.42 0.12 55),oklch(0.9 0.08 55));
 --vibeui-resizable-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="resizable-004"]{
@@ -52,7 +69,7 @@ border:1px solid var(--vibeui-resizable-004-border);border-radius:0.75rem;overfl
 flex:none;min-width:0;padding:0.75rem;overflow:auto;background:var(--vibeui-resizable-004-surface);
 }
 [data-vibeui-block="resizable-004"] [data-part="main"]{
-flex:1;min-width:0;padding:0.75rem;overflow:auto;background:var(--vibeui-resizable-004-bg);
+flex:1;min-width:0;padding:0.75rem;overflow:auto;background:var(--vibeui-resizable-004-pane);
 }
 [data-vibeui-block="resizable-004"] h3{margin:0 0 0.375rem;font-size:0.8125rem;font-weight:650}
 [data-vibeui-block="resizable-004"] ul{list-style:none;margin:0;padding:0;display:grid;gap:0.3125rem}
@@ -85,11 +102,33 @@ font-size:0.75rem;color:var(--vibeui-resizable-004-muted);font-variant-numeric:t
 }
 [data-vibeui-block="resizable-004"] [data-part="badge"]{
 display:inline-flex;align-items:center;padding:0.0625rem 0.375rem;border-radius:9999px;
-background:color-mix(in oklab,var(--vibeui-resizable-004-limit) 18%,white);
-color:oklch(0.42 0.12 55);font-size:0.6875rem;font-weight:650;
+background:var(--vibeui-resizable-004-badge);
+color:var(--vibeui-resizable-004-badge-fg);font-size:0.6875rem;font-weight:650;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="resizable-004"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Панель с пределами в пикселях: размер зажат между min и max, а упор в
@@ -102,6 +141,20 @@ export function Resizable004({
   max = 288,
   step = 16,
   onChange,
+  navTitle = "Разделы",
+  navItems = [
+    "Заказы и возвраты",
+    "Склад",
+    "Отчёты за период",
+    "Настройки доставки",
+  ],
+  mainTitle = "Заказ № 4821",
+  mainText = "Основная область забирает остаток ширины, поэтому меню не может выдавить содержимое за край.",
+  statusText = "Меню — {size} px",
+  minText = "минимум {value}",
+  maxText = "максимум {value}",
+  valueText = "{size} пикселей",
+  background = "",
   accent,
   className,
   style,
@@ -114,6 +167,12 @@ export function Resizable004({
 
   const palette = {
     ...(accent ? { "--vibeui-resizable-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-resizable-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -159,14 +218,13 @@ export function Resizable004({
             data-part="side"
             id={sideId}
             style={{ width: `${size}px` }}
-            aria-label="Разделы"
+            aria-label={navTitle}
           >
-            <h3>Разделы</h3>
+            <h3>{navTitle}</h3>
             <ul>
-              <li>Заказы и возвраты</li>
-              <li>Склад</li>
-              <li>Отчёты за период</li>
-              <li>Настройки доставки</li>
+              {navItems.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
             </ul>
           </nav>
           <div
@@ -179,7 +237,7 @@ export function Resizable004({
             aria-valuenow={size}
             aria-valuemin={min}
             aria-valuemax={max}
-            aria-valuetext={`${size} пикселей`}
+            aria-valuetext={valueText.replace("{size}", String(size))}
             data-dragging={dragging}
             onKeyDown={onKeyDown}
             onPointerDown={(event) => {
@@ -206,17 +264,22 @@ export function Resizable004({
             onPointerCancel={() => setDragging(false)}
           />
           <main data-part="main">
-            <h3>Заказ № 4821</h3>
-            <p>
-              Основная область забирает остаток ширины, поэтому меню не может
-              выдавить содержимое за край.
-            </p>
+            <h3>{mainTitle}</h3>
+            <p>{mainText}</p>
           </main>
         </div>
         <p data-part="status" role="status">
-          Меню — {size} px
-          {size <= min ? <span data-part="badge">минимум {min}</span> : null}
-          {size >= max ? <span data-part="badge">максимум {max}</span> : null}
+          {statusText.replace("{size}", String(size))}
+          {size <= min ? (
+            <span data-part="badge">
+              {minText.replace("{value}", String(min))}
+            </span>
+          ) : null}
+          {size >= max ? (
+            <span data-part="badge">
+              {maxText.replace("{value}", String(max))}
+            </span>
+          ) : null}
         </p>
       </div>
     </>

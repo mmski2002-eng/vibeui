@@ -11,7 +11,19 @@ export type Inputgroup018Props = Omit<
   legend?: string
   defaultFrom?: string
   defaultTo?: string
+  /** Подпись первой даты: компонент несёт русскую. */
+  fromLabel?: string
+  /** Подпись второй даты. */
+  toLabel?: string
+  /** Текст, пока обе даты не заданы. */
+  emptyText?: string
+  /** Итог; {count} — число ночей, {unit} — их форма из nightsText. */
+  totalTemplate?: string
+  /** Формы слова «ночь»: one, few, many. */
+  nightsText?: Record<string, string>
   hint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,12 +37,40 @@ function nightsBetween(from: string, to: string) {
   return days >= 0 ? days : null
 }
 
-function pluralNights(count: number) {
+const NIGHTS_TEXT: Record<string, string> = {
+  one: "ночь",
+  few: "ночи",
+  many: "ночей",
+}
+
+function pluralKey(count: number) {
   const mod10 = count % 10
   const mod100 = count % 100
-  if (mod10 === 1 && mod100 !== 11) return "ночь"
-  if ([2, 3, 4].includes(mod10) && ![12, 13, 14].includes(mod100)) return "ночи"
-  return "ночей"
+  if (mod10 === 1 && mod100 !== 11) return "one"
+  if ([2, 3, 4].includes(mod10) && ![12, 13, 14].includes(mod100)) return "few"
+  return "many"
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 // Идея компонента: «от» и «до» — одна величина из двух дат, поэтому обёртка —
@@ -41,13 +81,13 @@ function pluralNights(count: number) {
 // схлопываются в одну сцепку с тире между половинами.
 const STYLES = `
 :where([data-vibeui-block="inputgroup-018"]){
---vibeui-inputgroup-018-surface:oklch(1 0 0);
---vibeui-inputgroup-018-shell:oklch(0.91 0.006 265);
---vibeui-inputgroup-018-fg:oklch(0.22 0.014 265);
---vibeui-inputgroup-018-muted:oklch(0.55 0.014 265);
---vibeui-inputgroup-018-field:oklch(0.99 0.002 265);
---vibeui-inputgroup-018-border:oklch(0.86 0.008 265);
---vibeui-inputgroup-018-accent:oklch(0.5 0.13 165);
+--vibeui-inputgroup-018-surface:transparent;
+--vibeui-inputgroup-018-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-inputgroup-018-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-018-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-inputgroup-018-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
+--vibeui-inputgroup-018-border:light-dark(oklch(0.86 0.008 265),oklch(0.4 0.014 265));
+--vibeui-inputgroup-018-accent:light-dark(oklch(0.5 0.13 165),oklch(0.74 0.13 165));
 --vibeui-inputgroup-018-radius:0.75rem;
 --vibeui-inputgroup-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -134,7 +174,13 @@ export function Inputgroup018({
   legend = "Период проживания",
   defaultFrom = "2026-09-10",
   defaultTo = "2026-09-14",
+  fromLabel = "с",
+  toLabel = "по",
+  emptyText = "Укажите обе даты",
+  totalTemplate = "Итого: {count} {unit}",
+  nightsText = NIGHTS_TEXT,
   hint = "Вторая дата не может быть раньше первой — ограничение задано атрибутом min у поля.",
+  background = "",
   accent,
   className,
   style,
@@ -145,9 +191,16 @@ export function Inputgroup018({
   const [to, setTo] = useState(defaultTo)
 
   const nights = nightsBetween(from, to)
+  const [totalBefore, totalAfter = ""] = totalTemplate.split("{count}")
 
   const palette = {
     ...(accent ? { "--vibeui-inputgroup-018-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-inputgroup-018-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -165,7 +218,7 @@ export function Inputgroup018({
         <legend>{legend}</legend>
         <div data-part="group">
           <div data-part="cell">
-            <span id={`${id}-from-label`}>с</span>
+            <span id={`${id}-from-label`}>{fromLabel}</span>
             <input
               id={id}
               name={`${name}-from`}
@@ -186,7 +239,7 @@ export function Inputgroup018({
             →
           </div>
           <div data-part="cell">
-            <span id={`${id}-to-label`}>по</span>
+            <span id={`${id}-to-label`}>{toLabel}</span>
             <input
               name={`${name}-to`}
               type="date"
@@ -200,10 +253,15 @@ export function Inputgroup018({
         </div>
         <p data-part="status" id={`${id}-status`} aria-live="polite">
           {nights === null ? (
-            "Укажите обе даты"
+            emptyText
           ) : (
             <>
-              Итого: <b>{nights}</b> {pluralNights(nights)}
+              {totalBefore}
+              <b>{nights}</b>
+              {totalAfter.replace(
+                "{unit}",
+                nightsText[pluralKey(nights)] ?? NIGHTS_TEXT[pluralKey(nights)],
+              )}
             </>
           )}
         </p>

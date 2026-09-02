@@ -8,6 +8,14 @@ export type Buttongroup025Props = Omit<
   minLevel?: number
   maxLevel?: number
   label?: string
+  /** Подпись кнопки приближения: компонент несёт русскую. */
+  zoomInLabel?: string
+  /** Подпись кнопки отдаления. */
+  zoomOutLabel?: string
+  /** Подпись кнопки геолокации. */
+  locateLabel?: string
+  /** Шаблон скрытого текста об уровне: {level} и {max} подставляются. */
+  levelTemplate?: string
   accent?: string
 }
 
@@ -20,13 +28,15 @@ export type Buttongroup025Props = Omit<
 // не отдельный элемент, а ячейка той же сцепки.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-025"]){
---vibeui-buttongroup-025-map:oklch(0.93 0.02 150);
---vibeui-buttongroup-025-road:oklch(0.99 0.004 150);
---vibeui-buttongroup-025-surface:oklch(1 0 0);
---vibeui-buttongroup-025-fg:oklch(0.26 0.016 265);
---vibeui-buttongroup-025-muted:oklch(0.55 0.014 265);
---vibeui-buttongroup-025-border:oklch(0.9 0.006 265);
---vibeui-buttongroup-025-accent:oklch(0.55 0.16 250);
+--vibeui-buttongroup-025-map:light-dark(oklch(0.93 0.02 150),oklch(0.3 0.024 155));
+--vibeui-buttongroup-025-road:light-dark(oklch(0.99 0.004 150),oklch(0.42 0.016 155));
+--vibeui-buttongroup-025-surface:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-buttongroup-025-fg:light-dark(oklch(0.26 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-025-muted:light-dark(oklch(0.55 0.014 265),oklch(0.73 0.012 265));
+--vibeui-buttongroup-025-border:light-dark(oklch(0.9 0.006 265),oklch(0.41 0.012 265));
+--vibeui-buttongroup-025-hover:light-dark(oklch(0.965 0.005 265),oklch(0.34 0.014 265));
+--vibeui-buttongroup-025-tick:light-dark(oklch(0.88 0.008 265),oklch(0.46 0.012 265));
+--vibeui-buttongroup-025-accent:light-dark(oklch(0.55 0.16 250),oklch(0.76 0.14 250));
 --vibeui-buttongroup-025-radius:0.625rem;
 --vibeui-buttongroup-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -68,7 +78,7 @@ width:1.0625rem;height:1.0625rem;
 stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
 }
 [data-vibeui-block="buttongroup-025"] button:hover:not(:disabled){
-background:oklch(0.965 0.005 265);color:var(--vibeui-buttongroup-025-fg);
+background:var(--vibeui-buttongroup-025-hover);color:var(--vibeui-buttongroup-025-fg);
 }
 [data-vibeui-block="buttongroup-025"] button:disabled{opacity:.35;cursor:not-allowed}
 [data-vibeui-block="buttongroup-025"] button:focus-visible{
@@ -90,7 +100,7 @@ border-block:1px solid var(--vibeui-buttongroup-025-border);
 }
 [data-vibeui-block="buttongroup-025"] [data-part="tick"]{
 width:0.875rem;height:2px;border-radius:1px;
-background:oklch(0.88 0.008 265);
+background:var(--vibeui-buttongroup-025-tick);
 }
 [data-vibeui-block="buttongroup-025"] [data-tick="on"]{background:var(--vibeui-buttongroup-025-accent)}
 [data-vibeui-block="buttongroup-025"] [data-part="level"]{
@@ -108,12 +118,19 @@ export function Buttongroup025({
   minLevel = 1,
   maxLevel = 6,
   label = "Управление картой",
+  zoomInLabel = "Приблизить",
+  zoomOutLabel = "Отдалить",
+  locateLabel = "Показать моё положение",
+  levelTemplate = "Уровень приближения {level} из {max}",
   accent,
   className,
   style,
   ...props
 }: Buttongroup025Props) {
   const current = Math.min(maxLevel, Math.max(minLevel, level))
+  const levelText = levelTemplate
+    .replace("{level}", String(current))
+    .replace("{max}", String(maxLevel))
   const ticks = Array.from(
     { length: maxLevel - minLevel + 1 },
     (_, offset) => minLevel + offset,
@@ -140,7 +157,7 @@ export function Buttongroup025({
             <button
               type="button"
               disabled={current === maxLevel}
-              aria-label="Приблизить"
+              aria-label={zoomInLabel}
             >
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M12 5v14M5 12h14" />
@@ -155,14 +172,12 @@ export function Buttongroup025({
                   aria-hidden="true"
                 />
               ))}
-              <span data-part="level">
-                Уровень приближения {current} из {maxLevel}
-              </span>
+              <span data-part="level">{levelText}</span>
             </div>
             <button
               type="button"
               disabled={current === minLevel}
-              aria-label="Отдалить"
+              aria-label={zoomOutLabel}
             >
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M5 12h14" />
@@ -170,7 +185,7 @@ export function Buttongroup025({
             </button>
           </div>
           <div data-part="stack">
-            <button type="button" aria-label="Показать моё положение">
+            <button type="button" aria-label={locateLabel}>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M12 3v3M12 18v3M3 12h3M18 12h3M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8" />
               </svg>

@@ -10,8 +10,18 @@ export type Calendar020Props = Omit<
   now?: string
   startedAt?: string
   heading?: string
+  /** Формы единиц времени: ключ «day.one», «hour.few» и так далее. {count} подставляется. */
+  unitsText?: Record<string, string>
+  /** Строка остатка. {span} подставляется. */
+  remainingText?: string
+  /** Строка просрочки. {span} подставляется. */
+  overdueText?: string
+  /** Строка срока. {value} подставляется датой в теге time. */
+  dueText?: string
   locale?: string
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: остаток до дедлайна словами, а не таймером «17:23:04».
@@ -20,14 +30,14 @@ export type Calendar020Props = Omit<
 // «сгоревшего» времени пугает точнее, чем оставшиеся дни сами по себе.
 const STYLES = `
 :where([data-vibeui-block="calendar-020"]){
---vibeui-calendar-020-bg:oklch(1 0 0);
---vibeui-calendar-020-fg:oklch(0.24 0.014 265);
---vibeui-calendar-020-muted:oklch(0.62 0.014 265);
---vibeui-calendar-020-border:oklch(0.91 0.006 265);
---vibeui-calendar-020-track:oklch(0.94 0.005 265);
---vibeui-calendar-020-accent:oklch(0.55 0.16 265);
---vibeui-calendar-020-warn:oklch(0.65 0.16 70);
---vibeui-calendar-020-late:oklch(0.55 0.18 25);
+--vibeui-calendar-020-bg:transparent;
+--vibeui-calendar-020-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-calendar-020-muted:light-dark(oklch(0.62 0.014 265),oklch(0.67 0.013 265));
+--vibeui-calendar-020-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-calendar-020-track:light-dark(oklch(0.94 0.005 265),oklch(0.3 0.011 265));
+--vibeui-calendar-020-accent:light-dark(oklch(0.55 0.16 265),oklch(0.73 0.14 265));
+--vibeui-calendar-020-warn:light-dark(oklch(0.65 0.16 70),oklch(0.78 0.14 70));
+--vibeui-calendar-020-late:light-dark(oklch(0.55 0.18 25),oklch(0.74 0.15 25));
 --vibeui-calendar-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="calendar-020"]{
@@ -85,43 +95,48 @@ const MINUTE = 60000
 const HOUR = 3600000
 const DAY = 86400000
 
-function pluralize(count: number, forms: [string, string, string]) {
-  const tens = count % 100
-  const ones = count % 10
-
-  if (tens > 10 && tens < 20) {
-    return forms[2]
-  }
-
-  if (ones === 1) {
-    return forms[0]
-  }
-
-  if (ones > 1 && ones < 5) {
-    return forms[1]
-  }
-
-  return forms[2]
+const DEFAULT_UNITS_TEXT: Record<string, string> = {
+  "day.one": "{count} день",
+  "day.few": "{count} дня",
+  "day.many": "{count} дней",
+  "day.other": "{count} дней",
+  "hour.one": "{count} час",
+  "hour.few": "{count} часа",
+  "hour.many": "{count} часов",
+  "hour.other": "{count} часов",
+  "minute.one": "{count} минута",
+  "minute.few": "{count} минуты",
+  "minute.many": "{count} минут",
+  "minute.other": "{count} минут",
 }
 
-function humanize(span: number) {
-  const days = Math.floor(span / DAY)
-  const hours = Math.floor((span % DAY) / HOUR)
-  const minutes = Math.floor((span % HOUR) / MINUTE)
+function fillText(template: string, values: Record<string, string | number>) {
+  return template.replace(
+    /\{(\w+)\}/g,
+    (match, key) => `${values[key] ?? match}`,
+  )
+}
 
-  if (days > 0) {
-    const head = `${days} ${pluralize(days, ["день", "дня", "дней"])}`
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
 
-    return hours > 0
-      ? `${head} ${hours} ${pluralize(hours, ["час", "часа", "часов"])}`
-      : head
+  if (!match) {
+    return undefined
   }
 
-  if (hours > 0) {
-    return `${hours} ${pluralize(hours, ["час", "часа", "часов"])} ${minutes} ${pluralize(minutes, ["минута", "минуты", "минут"])}`
-  }
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
 
-  return `${minutes} ${pluralize(minutes, ["минута", "минуты", "минут"])}`
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -133,8 +148,13 @@ export function Calendar020({
   now = "2026-03-14T09:30",
   startedAt = "2026-02-20T10:00",
   heading = "Сдача макетов",
+  unitsText = DEFAULT_UNITS_TEXT,
+  remainingText = "Осталось {span}",
+  overdueText = "Просрочено на {span}",
+  dueText = "Срок: {value}",
   locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -158,9 +178,46 @@ export function Calendar020({
     timeStyle: "short",
   }).format(target)
 
+  // Формы единиц выбираются по правилам самого языка, а не по русским:
+  // словарь приходит пропсом, а категорию называет Intl.
+  const plural = new Intl.PluralRules(locale)
+  const unit = (name: string, count: number) =>
+    fillText(
+      unitsText[`${name}.${plural.select(count)}`] ??
+        unitsText[`${name}.other`] ??
+        DEFAULT_UNITS_TEXT[`${name}.other`],
+      { count },
+    )
+
+  const humanize = (value: number) => {
+    const days = Math.floor(value / DAY)
+    const hours = Math.floor((value % DAY) / HOUR)
+    const minutes = Math.floor((value % HOUR) / MINUTE)
+
+    if (days > 0) {
+      return hours > 0
+        ? `${unit("day", days)} ${unit("hour", hours)}`
+        : unit("day", days)
+    }
+
+    if (hours > 0) {
+      return `${unit("hour", hours)} ${unit("minute", minutes)}`
+    }
+
+    return unit("minute", minutes)
+  }
+
+  const [dueBefore, dueAfter = ""] = dueText.split("{value}")
+
   const palette = {
     "--vibeui-calendar-020-progress": progress,
     ...(accent ? { "--vibeui-calendar-020-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-020-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -184,11 +241,13 @@ export function Calendar020({
           <h3 data-part="heading">{heading}</h3>
           <p data-part="left">
             {late
-              ? `Просрочено на ${humanize(-span)}`
-              : `Осталось ${humanize(span)}`}
+              ? fillText(overdueText, { span: humanize(-span) })
+              : fillText(remainingText, { span: humanize(span) })}
           </p>
           <p data-part="when">
-            Срок: <time dateTime={deadline}>{stamp}</time>
+            {dueBefore}
+            <time dateTime={deadline}>{stamp}</time>
+            {dueAfter}
           </p>
           <div data-part="bar" aria-hidden="true">
             <i />

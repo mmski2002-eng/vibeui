@@ -21,8 +21,12 @@ export type Hero002Props = {
   proof?: string
   panelTitle?: string
   metrics?: Hero002Metric[]
+  /** Подпись плавающего чипа под окном: компонент несёт русскую. */
+  chipLabel?: string
   accent?: string
   accentForeground?: string
+  /** Пусто — подложки нет, секция ложится на фон страницы. */
+  background?: string
   className?: string
 }
 
@@ -37,18 +41,18 @@ export type Hero002Props = {
 // зависел от версии Tailwind в чужом проекте; специфичность (0,2,0) выше утилит.
 const STYLES = `
 :where([data-vibeui-block="hero-002"]){
---vibeui-hero-002-bg:oklch(0.981 0.004 255);
---vibeui-hero-002-panel:oklch(1 0 0);
---vibeui-hero-002-panel-alt:oklch(0.974 0.004 255);
---vibeui-hero-002-fg:oklch(0.21 0.02 260);
---vibeui-hero-002-muted:oklch(0.52 0.015 260);
---vibeui-hero-002-border:oklch(0.9 0.008 260);
---vibeui-hero-002-accent:oklch(0.48 0.17 262);
---vibeui-hero-002-accent-fg:oklch(0.99 0 0);
---vibeui-hero-002-positive:oklch(0.45 0.12 155);
+--vibeui-hero-002-bg:transparent;
+--vibeui-hero-002-panel:light-dark(oklch(1 0 0),oklch(0.235 0.012 260));
+--vibeui-hero-002-panel-alt:light-dark(oklch(0.974 0.004 255),oklch(0.28 0.013 260));
+--vibeui-hero-002-fg:light-dark(oklch(0.21 0.02 260),oklch(0.96 0.004 260));
+--vibeui-hero-002-muted:light-dark(oklch(0.52 0.015 260),oklch(0.72 0.014 260));
+--vibeui-hero-002-border:light-dark(oklch(0.9 0.008 260),oklch(0.37 0.012 260));
+--vibeui-hero-002-accent:light-dark(oklch(0.48 0.17 262),oklch(0.73 0.155 262));
+--vibeui-hero-002-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.022 262));
+--vibeui-hero-002-positive:light-dark(oklch(0.45 0.12 155),oklch(0.78 0.14 155));
 --vibeui-hero-002-ring:color-mix(in oklab, var(--vibeui-hero-002-accent) 70%, transparent);
---vibeui-hero-002-shadow:color-mix(in oklab, var(--vibeui-hero-002-fg) 16%, transparent);
---vibeui-hero-002-dot:oklch(0.21 0.02 260 / 7%);
+--vibeui-hero-002-shadow:light-dark(oklch(0.21 0.02 260 / 16%),oklch(0 0 0 / 46%));
+--vibeui-hero-002-dot:light-dark(oklch(0.21 0.02 260 / 7%),oklch(1 0 0 / 8%));
 --vibeui-hero-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="hero-002"]{container-type:inline-size}
@@ -110,6 +114,28 @@ const CHART_LINE =
 
 function cx(...classes: (string | false | undefined)[]) {
   return classes.filter(Boolean).join(" ")
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлый фон достался бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 function MetricTile({ label, value, delta }: Hero002Metric) {
@@ -260,26 +286,34 @@ function ProductWindow({
 }
 
 export function Hero002({
-  eyebrow = "New · Analytics 2.0",
-  title = "Every metric your team",
-  titleAccent = "actually acts on",
-  description = "One workspace for product analytics, alerts and reporting — without a data team in the loop.",
-  primaryAction = { label: "Start free trial", href: "#" },
-  secondaryAction = { label: "Book a demo", href: "#" },
-  proof = "Trusted by 2,000+ product teams",
-  panelTitle = "Overview",
+  eyebrow = "Новое · Аналитика 2.0",
+  title = "Каждая метрика, по которой",
+  titleAccent = "команда правда действует",
+  description = "Одно пространство для продуктовой аналитики, оповещений и отчётов — без участия дата-команды.",
+  primaryAction = { label: "Начать бесплатно", href: "#" },
+  secondaryAction = { label: "Записаться на демо", href: "#" },
+  proof = "Нам доверяют 2000+ продуктовых команд",
+  panelTitle = "Обзор",
   metrics = [
-    { label: "Active users", value: "24,918", delta: "+12.4%" },
-    { label: "Retention", value: "68.2%", delta: "+3.1%" },
+    { label: "Активные пользователи", value: "24 918", delta: "+12,4%" },
+    { label: "Удержание", value: "68,2%", delta: "+3,1%" },
   ],
+  chipLabel = "+18,2% MRR",
   accent,
   accentForeground,
+  background = "",
   className,
 }: Hero002Props) {
   const style = {
     ...(accent ? { "--vibeui-hero-002-accent": accent } : {}),
     ...(accentForeground
       ? { "--vibeui-hero-002-accent-fg": accentForeground }
+      : {}),
+    ...(background
+      ? {
+          "--vibeui-hero-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
       : {}),
   } as CSSProperties
 
@@ -411,7 +445,7 @@ export function Hero002({
                     <span
                       key={background}
                       className={cx(
-                        "size-7 rounded-full border-2 border-[var(--vibeui-hero-002-bg)]",
+                        "size-7 rounded-full border-2 border-[var(--vibeui-hero-002-panel)]",
                         index > 0 && "-ml-2",
                       )}
                       style={{ background }}
@@ -451,7 +485,9 @@ export function Hero002({
                   strokeLinejoin="round"
                 />
               </svg>
-              <span className="text-[0.8125rem] font-semibold">+18.2% MRR</span>
+              <span className="text-[0.8125rem] font-semibold">
+                {chipLabel}
+              </span>
             </div>
           </div>
         </div>

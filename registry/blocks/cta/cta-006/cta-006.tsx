@@ -15,6 +15,8 @@ export type Cta006Props = {
   secondaryHref?: string
   terms?: Cta006Term[]
   smallPrint?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -24,15 +26,18 @@ export type Cta006Props = {
 // мелкий шрифт внизу. Мелкий текст здесь не спрятан — он набран читаемым
 // кеглем и стоит там, где его ищут. Печать нарисована коническим градиентом
 // с вырезом через mask, отдельного изображения нет.
+//
+// Тема приходит из color-scheme окружения через light-dark(): подложки у
+// секции по умолчанию нет, карточка с печатью темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="cta-006"]){
---vibeui-cta-006-bg:oklch(0.98 0.004 150);
---vibeui-cta-006-card:oklch(1 0 0);
---vibeui-cta-006-ink:oklch(0.22 0.02 150);
---vibeui-cta-006-muted:oklch(0.49 0.018 150);
---vibeui-cta-006-border:oklch(0.89 0.012 150);
---vibeui-cta-006-accent:oklch(0.5 0.13 152);
---vibeui-cta-006-accent-fg:oklch(0.99 0 0);
+--vibeui-cta-006-bg:transparent;
+--vibeui-cta-006-card:light-dark(oklch(1 0 0),oklch(0.24 0.014 150));
+--vibeui-cta-006-ink:light-dark(oklch(0.22 0.02 150),oklch(0.95 0.006 150));
+--vibeui-cta-006-muted:light-dark(oklch(0.49 0.018 150),oklch(0.72 0.014 150));
+--vibeui-cta-006-border:light-dark(oklch(0.89 0.012 150),oklch(0.35 0.014 150));
+--vibeui-cta-006-accent:light-dark(oklch(0.5 0.13 152),oklch(0.74 0.13 152));
+--vibeui-cta-006-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.04 152));
 --vibeui-cta-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -52,7 +57,7 @@ box-shadow:0 30px 60px -48px oklch(0.2 0.04 150 / 60%);
 [data-vibeui-block="cta-006"] [data-part="seal"]{
 width:5rem;height:5rem;flex:none;border-radius:999px;
 display:grid;place-items:center;text-align:center;
-background:conic-gradient(from 200deg,var(--vibeui-cta-006-accent),color-mix(in oklab,var(--vibeui-cta-006-accent) 40%,white),var(--vibeui-cta-006-accent));
+background:conic-gradient(from 200deg,var(--vibeui-cta-006-accent),color-mix(in oklab,var(--vibeui-cta-006-accent) 40%,var(--vibeui-cta-006-card)),var(--vibeui-cta-006-accent));
 }
 [data-vibeui-block="cta-006"] [data-part="seal-inner"]{
 width:4.25rem;height:4.25rem;padding:0 0.375rem;border-radius:999px;
@@ -113,6 +118,28 @@ const DEFAULT_TERMS: Cta006Term[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Призыв с гарантией: печать, условия списком определений и мелкий шрифт. */
 export function Cta006({
   badge = "60 дней гарантии",
@@ -124,12 +151,19 @@ export function Cta006({
   secondaryHref = "#terms",
   terms = DEFAULT_TERMS,
   smallPrint = "Возврат оформляется на исходный способ оплаты в течение десяти рабочих дней. Гарантия распространяется на первый оплаченный период и не действует при повторной подписке после возврата. Стоимость подключённых сторонних сервисов не возвращается.",
+  background = "",
   accent,
   className,
   style,
 }: Cta006Props) {
   const palette = {
     ...(accent ? { "--vibeui-cta-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-cta-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

@@ -14,6 +14,12 @@ export type Range004Props = Omit<
   defaultFrom?: number
   defaultTo?: number
   unit?: string
+  /** Подписи полей и ручек для скринридера: компонент несёт русские. */
+  boundText?: Record<string, string>
+  /** Локаль форматирования чисел на шкале. */
+  locale?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,21 +29,27 @@ export type Range004Props = Omit<
 // ручку и наоборот. Поля хранят строки, поэтому во время набора можно очистить
 // содержимое, не получив ноль; приведение к границам и к соседней ручке
 // происходит по уходу из поля, а не на каждой букве.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// фильтра по умолчанию нет, он лежит на фоне страницы и темнеет вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="range-004"]){
---vibeui-range-004-surface:oklch(1 0 0);
---vibeui-range-004-field:oklch(0.985 0.002 265);
---vibeui-range-004-shell:oklch(0.9 0.006 265);
---vibeui-range-004-fg:oklch(0.23 0.014 265);
---vibeui-range-004-muted:oklch(0.55 0.014 265);
---vibeui-range-004-border:oklch(0.88 0.008 265);
---vibeui-range-004-track:oklch(0.93 0.006 265);
---vibeui-range-004-accent:oklch(0.55 0.16 145);
+--vibeui-range-004-surface:transparent;
+--vibeui-range-004-knob:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-range-004-field:light-dark(oklch(0.985 0.002 265),oklch(0.28 0.012 265));
+--vibeui-range-004-shell:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.011 265));
+--vibeui-range-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-range-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-range-004-border:light-dark(oklch(0.88 0.008 265),oklch(0.39 0.012 265));
+--vibeui-range-004-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
+--vibeui-range-004-accent:light-dark(oklch(0.55 0.16 145),oklch(0.76 0.14 145));
+--vibeui-range-004-soft:light-dark(oklch(0.55 0.16 145 / 18%),oklch(0.76 0.14 145 / 26%));
+--vibeui-range-004-shadow:light-dark(oklch(0.2 0.02 265 / 25%),oklch(0 0 0 / 45%));
 --vibeui-range-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-range-004-from:0%;
 --vibeui-range-004-to:100%;
 }
-/* Своя светлая подложка: фильтр показывают поверх любого фона. */
+/* Подложки по умолчанию нет: фильтр ложится на фон страницы, плашку включает проп background. */
 [data-vibeui-block="range-004"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -56,7 +68,7 @@ background:var(--vibeui-range-004-field);
 }
 [data-vibeui-block="range-004"] [data-part="cell"]:focus-within{
 border-color:var(--vibeui-range-004-accent);
-box-shadow:0 0 0 2px oklch(0.55 0.16 145 / 18%);
+box-shadow:0 0 0 2px var(--vibeui-range-004-soft);
 }
 [data-vibeui-block="range-004"] input[type="number"]{
 flex:1 1 auto;min-width:0;width:100%;
@@ -89,13 +101,13 @@ appearance:none;background:none;pointer-events:none;
 [data-vibeui-block="range-004"] input[type="range"]::-webkit-slider-thumb{
 appearance:none;pointer-events:auto;cursor:pointer;margin-top:-0.3125rem;
 width:1rem;height:1rem;border-radius:9999px;
-background:var(--vibeui-range-004-surface);border:2px solid var(--vibeui-range-004-accent);
-box-shadow:0 1px 3px oklch(0.2 0.02 265 / 25%);
+background:var(--vibeui-range-004-knob);border:2px solid var(--vibeui-range-004-accent);
+box-shadow:0 1px 3px var(--vibeui-range-004-shadow);
 }
 [data-vibeui-block="range-004"] input[type="range"]::-moz-range-thumb{
 pointer-events:auto;cursor:pointer;box-sizing:border-box;
 width:1rem;height:1rem;border-radius:9999px;
-background:var(--vibeui-range-004-surface);border:2px solid var(--vibeui-range-004-accent);
+background:var(--vibeui-range-004-knob);border:2px solid var(--vibeui-range-004-accent);
 }
 [data-vibeui-block="range-004"] input[type="range"]:focus-visible{outline:2px solid var(--vibeui-range-004-accent);outline-offset:4px;border-radius:0.5rem}
 [data-vibeui-block="range-004"] [data-part="scale"]{
@@ -104,6 +116,35 @@ font-size:0.6875rem;color:var(--vibeui-range-004-muted);font-variant-numeric:tab
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="range-004"] *{animation:none!important;transition:none!important}}
 `
+
+const BOUND_TEXT: Record<string, string> = {
+  from: "от",
+  to: "до",
+  fromSlider: "ползунок «от»",
+  toSlider: "ползунок «до»",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Диапазон с полями ввода по краям: ползунок и числа правят одно значение.
@@ -117,6 +158,9 @@ export function Range004({
   defaultFrom = 120000,
   defaultTo = 260000,
   unit = "₽",
+  boundText = BOUND_TEXT,
+  locale = "ru-RU",
+  background = "",
   accent,
   className,
   style,
@@ -147,6 +191,12 @@ export function Range004({
     "--vibeui-range-004-from": percent(from),
     "--vibeui-range-004-to": percent(to),
     ...(accent ? { "--vibeui-range-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-range-004-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -172,7 +222,7 @@ export function Range004({
               max={max}
               step={step}
               value={fromText}
-              aria-label={`${label}: от`}
+              aria-label={`${label}: ${boundText.from ?? BOUND_TEXT.from}`}
               onChange={(event) => setFromText(event.target.value)}
               onBlur={() => applyFrom(Number(fromText) || min)}
             />
@@ -192,7 +242,7 @@ export function Range004({
               max={max}
               step={step}
               value={toText}
-              aria-label={`${label}: до`}
+              aria-label={`${label}: ${boundText.to ?? BOUND_TEXT.to}`}
               onChange={(event) => setToText(event.target.value)}
               onBlur={() => applyTo(Number(toText) || max)}
             />
@@ -208,7 +258,9 @@ export function Range004({
             max={max}
             step={step}
             value={from}
-            aria-label={`${label}: ползунок «от»`}
+            aria-label={`${label}: ${
+              boundText.fromSlider ?? BOUND_TEXT.fromSlider
+            }`}
             onChange={(event) => applyFrom(Number(event.target.value))}
           />
           <input
@@ -217,16 +269,18 @@ export function Range004({
             max={max}
             step={step}
             value={to}
-            aria-label={`${label}: ползунок «до»`}
+            aria-label={`${label}: ${
+              boundText.toSlider ?? BOUND_TEXT.toSlider
+            }`}
             onChange={(event) => applyTo(Number(event.target.value))}
           />
         </div>
         <p data-part="scale">
           <span>
-            {min.toLocaleString("ru-RU")} {unit}
+            {min.toLocaleString(locale)} {unit}
           </span>
           <span>
-            {max.toLocaleString("ru-RU")} {unit}
+            {max.toLocaleString(locale)} {unit}
           </span>
         </p>
       </div>

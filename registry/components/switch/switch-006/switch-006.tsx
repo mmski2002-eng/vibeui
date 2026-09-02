@@ -11,6 +11,11 @@ export type Switch006Props = Omit<
   description?: string
   /** Сколько миллисекунд «сохраняем» — столько же ждёт настоящий запрос. */
   delay?: number
+  /** Подписи фаз записи: компонент несёт русские, проект подставляет свои. */
+  savingText?: string
+  savedText?: string
+  /** Пусто — подложки нет, карточка держится рамкой на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,14 +25,14 @@ export type Switch006Props = Omit<
 // человек уходит со страницы, не дождавшись записи.
 const STYLES = `
 :where([data-vibeui-block="switch-006"]){
---vibeui-switch-006-bg:oklch(1 0 0);
---vibeui-switch-006-fg:oklch(0.22 0.014 265);
---vibeui-switch-006-muted:oklch(0.55 0.014 265);
---vibeui-switch-006-border:oklch(0.91 0.006 265);
---vibeui-switch-006-track:oklch(0.88 0.008 265);
---vibeui-switch-006-thumb:oklch(1 0 0);
---vibeui-switch-006-accent:oklch(0.55 0.19 262);
---vibeui-switch-006-ok:oklch(0.55 0.15 155);
+--vibeui-switch-006-bg:transparent;
+--vibeui-switch-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-switch-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-switch-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-switch-006-track:light-dark(oklch(0.88 0.008 265),oklch(0.43 0.014 265));
+--vibeui-switch-006-thumb:light-dark(oklch(1 0 0),oklch(0.93 0.004 265));
+--vibeui-switch-006-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.16 262));
+--vibeui-switch-006-ok:light-dark(oklch(0.55 0.15 155),oklch(0.75 0.14 155));
 --vibeui-switch-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="switch-006"]{
@@ -81,6 +86,28 @@ transition:transform .18s cubic-bezier(.32,.72,0,1);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Переключатель с отложенным сохранением: «сохраняем» → «сохранено».
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -88,6 +115,9 @@ export function Switch006({
   label = "Синхронизация с календарём",
   description = "Задачи с датой попадают в рабочий календарь.",
   delay = 900,
+  savingText = "Сохраняем настройку…",
+  savedText = "Сохранено",
+  background = "",
   accent,
   className,
   style,
@@ -107,6 +137,12 @@ export function Switch006({
 
   const palette = {
     ...(accent ? { "--vibeui-switch-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-switch-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -129,13 +165,13 @@ export function Switch006({
             {state === "saving" ? (
               <>
                 <span data-part="spinner" aria-hidden="true" />
-                Сохраняем настройку…
+                {savingText}
               </>
             ) : null}
             {state === "saved" ? (
               <>
                 <span data-part="tick" aria-hidden="true" />
-                Сохранено
+                {savedText}
               </>
             ) : null}
             {state === "idle" ? description : null}

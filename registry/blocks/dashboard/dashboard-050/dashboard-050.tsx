@@ -15,6 +15,16 @@ export type Dashboard050Props = {
   saveLabel?: string
   legendLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Заголовок первой колонки. */
+  rightColumnLabel?: string
+  /** Подписи уровней доступа: full, some, none. */
+  levelText?: Record<string, string>
+  /** Строки легенды: full, some, none. */
+  legendText?: Record<string, string>
+  /** Шаблон подсказки ячейки: {role} и {level}. */
+  cellTitleText?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,14 +40,17 @@ export type Dashboard050Props = {
 // по разделам заголовками внутри таблицы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-050"]){
---vibeui-dashboard-050-bg:oklch(0.985 0.003 255);
---vibeui-dashboard-050-card:oklch(1 0 0);
---vibeui-dashboard-050-fg:oklch(0.22 0.014 255);
---vibeui-dashboard-050-muted:oklch(0.55 0.014 255);
---vibeui-dashboard-050-border:oklch(0.91 0.006 255);
---vibeui-dashboard-050-accent:oklch(0.5 0.15 255);
---vibeui-dashboard-050-soft:oklch(0.96 0.02 255);
---vibeui-dashboard-050-part:oklch(0.65 0.15 65);
+--vibeui-dashboard-050-bg:transparent;
+/* Таблица и строки разделов: подложка блока прозрачна, и рисовать их ею нечем. */
+--vibeui-dashboard-050-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 255));
+--vibeui-dashboard-050-inset:light-dark(oklch(0.97 0.004 255),oklch(0.22 0.012 255));
+--vibeui-dashboard-050-fg:light-dark(oklch(0.22 0.014 255),oklch(0.94 0.005 255));
+--vibeui-dashboard-050-muted:light-dark(oklch(0.55 0.014 255),oklch(0.72 0.012 255));
+--vibeui-dashboard-050-border:light-dark(oklch(0.91 0.006 255),oklch(0.36 0.012 255));
+--vibeui-dashboard-050-accent:light-dark(oklch(0.5 0.15 255),oklch(0.74 0.13 255));
+--vibeui-dashboard-050-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 255));
+--vibeui-dashboard-050-soft:light-dark(oklch(0.96 0.02 255),oklch(0.32 0.045 255));
+--vibeui-dashboard-050-part:light-dark(oklch(0.65 0.15 65),oklch(0.8 0.13 65));
 --vibeui-dashboard-050-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -56,7 +69,7 @@ border:1px solid var(--vibeui-dashboard-050-border);border-radius:1rem;padding:1
 [data-vibeui-block="dashboard-050"] [data-part="save"]{
 appearance:none;border:0;cursor:pointer;font:inherit;margin-left:auto;
 font-size:0.8125rem;font-weight:700;padding:0.5rem 0.9375rem;border-radius:0.625rem;
-background:var(--vibeui-dashboard-050-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-050-accent);color:var(--vibeui-dashboard-050-on-accent);
 }
 [data-vibeui-block="dashboard-050"] [data-part="scroll"]{
 overflow-x:auto;
@@ -86,7 +99,7 @@ box-shadow:1px 0 0 var(--vibeui-dashboard-050-border);
 [data-vibeui-block="dashboard-050"] thead th:first-child{z-index:3}
 [data-vibeui-block="dashboard-050"] [data-part="group"] th{
 text-align:left;padding:0.5rem 0.625rem;
-background:var(--vibeui-dashboard-050-bg);
+background:var(--vibeui-dashboard-050-inset);
 font-size:0.5625rem;font-weight:800;letter-spacing:0.07em;text-transform:uppercase;
 color:var(--vibeui-dashboard-050-muted);
 }
@@ -100,7 +113,7 @@ display:inline-grid;place-items:center;width:1.375rem;height:1.375rem;border-rad
 font-size:0.75rem;font-weight:800;
 }
 [data-vibeui-block="dashboard-050"] [data-part="cell"][data-level="full"]{
-background:var(--vibeui-dashboard-050-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-050-accent);color:var(--vibeui-dashboard-050-on-accent);
 }
 [data-vibeui-block="dashboard-050"] [data-part="cell"][data-level="some"]{
 border:1.5px solid var(--vibeui-dashboard-050-part);color:var(--vibeui-dashboard-050-part);
@@ -182,6 +195,33 @@ const WORD: Record<string, string> = {
   some: "частично",
   none: "нет доступа",
 }
+const LEGEND: Record<string, string> = {
+  full: "полный доступ",
+  some: "частичный: только свои записи или с подтверждением",
+  none: "доступа нет",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Страница ролей и прав: матрица с тремя состояниями доступа, липкой первой
@@ -196,11 +236,22 @@ export function Dashboard050({
   saveLabel = "Сохранить права",
   legendLabel = "Обозначения",
   accent,
+  background = "",
+  rightColumnLabel = "Право",
+  levelText = WORD,
+  legendText = LEGEND,
+  cellTitleText = "{role}: {level}",
   className,
   style,
 }: Dashboard050Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-050-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-050-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -235,7 +286,7 @@ export function Dashboard050({
               <caption hidden>{title}</caption>
               <thead>
                 <tr>
-                  <th scope="col">Право</th>
+                  <th scope="col">{rightColumnLabel}</th>
                   {roles.map((role) => (
                     <th key={role} scope="col">
                       {role}
@@ -263,10 +314,12 @@ export function Dashboard050({
                             <span
                               data-part="cell"
                               data-level={level}
-                              title={`${roles[index]}: ${WORD[level]}`}
+                              title={cellTitleText
+                                .replace("{role}", roles[index])
+                                .replace("{level}", levelText[level] ?? level)}
                             >
                               {MARK[level]}
-                              <span hidden>{WORD[level]}</span>
+                              <span hidden>{levelText[level] ?? level}</span>
                             </span>
                           </td>
                         ))}
@@ -282,19 +335,19 @@ export function Dashboard050({
               <span data-part="cell" data-level="full" aria-hidden="true">
                 ✓
               </span>
-              полный доступ
+              {legendText.full ?? LEGEND.full}
             </li>
             <li>
               <span data-part="cell" data-level="some" aria-hidden="true">
                 ~
               </span>
-              частичный: только свои записи или с подтверждением
+              {legendText.some ?? LEGEND.some}
             </li>
             <li>
               <span data-part="cell" data-level="none" aria-hidden="true">
                 —
               </span>
-              доступа нет
+              {legendText.none ?? LEGEND.none}
             </li>
           </ul>
         </div>

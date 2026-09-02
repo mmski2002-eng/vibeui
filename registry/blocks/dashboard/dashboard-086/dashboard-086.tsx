@@ -22,6 +22,21 @@ export type Dashboard086Props = {
   metric?: Dashboard086Metric["key"]
   metrics?: Dashboard086Metric[]
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подпись перед числом среднего по сети. */
+  meanLabel?: string
+  /** Пояснение после среднего. */
+  meanNote?: string
+  /** Пометки лучшего и худшего филиала. */
+  bestLabel?: string
+  worstLabel?: string
+  /** Разница со средним. Подставляется {delta}. */
+  deltaText?: string
+  /** Подпись полосы для читалки. {name}, {value}, {unit}, {delta}. */
+  rowLabelText?: string
+  /** Подпись центра шкалы под списком. */
+  meanTick?: string
   className?: string
   style?: CSSProperties
 }
@@ -35,17 +50,23 @@ export type Dashboard086Props = {
 // абсолютной величины не даёт масштаба. Среднее подписано в шапке, иначе центр
 // шкалы ничего не значит. Метрику переключают вкладками: в одной таблице
 // смешивать рубли, штуки и баллы нельзя — шкала отклонений станет бессмысленной.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-086"]){
---vibeui-dashboard-086-bg:oklch(0.985 0.003 220);
---vibeui-dashboard-086-card:oklch(1 0 0);
---vibeui-dashboard-086-fg:oklch(0.21 0.014 220);
---vibeui-dashboard-086-muted:oklch(0.54 0.014 220);
---vibeui-dashboard-086-border:oklch(0.91 0.006 220);
---vibeui-dashboard-086-accent:oklch(0.5 0.14 220);
---vibeui-dashboard-086-soft:oklch(0.965 0.02 220);
---vibeui-dashboard-086-up:oklch(0.58 0.13 155);
---vibeui-dashboard-086-down:oklch(0.57 0.19 25);
+--vibeui-dashboard-086-bg:transparent;
+/* Карточка списка и жёлоб оси: подложка самого блока прозрачна. */
+--vibeui-dashboard-086-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 220));
+--vibeui-dashboard-086-inset:light-dark(oklch(0.985 0.003 220),oklch(0.22 0.012 220));
+--vibeui-dashboard-086-fg:light-dark(oklch(0.21 0.014 220),oklch(0.94 0.005 220));
+--vibeui-dashboard-086-muted:light-dark(oklch(0.54 0.014 220),oklch(0.72 0.012 220));
+--vibeui-dashboard-086-border:light-dark(oklch(0.91 0.006 220),oklch(0.36 0.012 220));
+--vibeui-dashboard-086-accent:light-dark(oklch(0.5 0.14 220),oklch(0.74 0.13 220));
+--vibeui-dashboard-086-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 220));
+--vibeui-dashboard-086-soft:light-dark(oklch(0.965 0.02 220),oklch(0.3 0.03 220));
+--vibeui-dashboard-086-up:light-dark(oklch(0.58 0.13 155),oklch(0.74 0.13 155));
+--vibeui-dashboard-086-down:light-dark(oklch(0.57 0.19 25),oklch(0.72 0.16 25));
 --vibeui-dashboard-086-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -68,7 +89,7 @@ padding:0.3125rem 0.6875rem;border-radius:9999px;background:var(--vibeui-dashboa
 color:inherit;border:1px solid var(--vibeui-dashboard-086-border);
 }
 [data-vibeui-block="dashboard-086"] [data-part="tab"][aria-pressed="true"]{
-background:var(--vibeui-dashboard-086-accent);color:oklch(1 0 0);border-color:transparent;
+background:var(--vibeui-dashboard-086-accent);color:var(--vibeui-dashboard-086-on-accent);border-color:transparent;
 }
 [data-vibeui-block="dashboard-086"] [data-part="mean"]{
 margin:0;font-size:0.75rem;color:var(--vibeui-dashboard-086-muted);
@@ -88,15 +109,15 @@ font-size:0.5625rem;font-weight:750;text-transform:uppercase;letter-spacing:0.05
 padding:0.0625rem 0.3125rem;border-radius:0.25rem;
 }
 [data-vibeui-block="dashboard-086"] [data-part="mark"][data-kind="best"]{
-color:var(--vibeui-dashboard-086-up);background:color-mix(in oklab,var(--vibeui-dashboard-086-up) 12%,white);
+color:var(--vibeui-dashboard-086-up);background:color-mix(in oklab,var(--vibeui-dashboard-086-up) 14%,light-dark(white,black));
 }
 [data-vibeui-block="dashboard-086"] [data-part="mark"][data-kind="worst"]{
-color:var(--vibeui-dashboard-086-down);background:color-mix(in oklab,var(--vibeui-dashboard-086-down) 12%,white);
+color:var(--vibeui-dashboard-086-down);background:color-mix(in oklab,var(--vibeui-dashboard-086-down) 14%,light-dark(white,black));
 }
 /* Ось по центру: полоса растёт влево при отставании и вправо при опережении. */
 [data-vibeui-block="dashboard-086"] [data-part="axis"]{
 position:relative;height:1.25rem;border-radius:0.375rem;
-background:var(--vibeui-dashboard-086-bg);
+background:var(--vibeui-dashboard-086-inset);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-086-border);
 }
 [data-vibeui-block="dashboard-086"] [data-part="axis"]::before{
@@ -179,6 +200,28 @@ const DEFAULT_METRICS: Dashboard086Metric[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Экран сравнения филиалов: вместо столбиков от нуля — отклонение от среднего с
  * осью по центру, абсолютное значение рядом, метрика переключается вкладками.
  * Один файл, ноль зависимостей, клиентского JS нет.
@@ -190,13 +233,30 @@ export function Dashboard086({
   metric = "revenue",
   metrics = DEFAULT_METRICS,
   accent,
+  background = "",
+  meanLabel = "Среднее по сети:",
+  meanNote = "Полоса показывает отклонение филиала от этого среднего.",
+  bestLabel = "лучший",
+  worstLabel = "худший",
+  deltaText = "{delta} к среднему",
+  rowLabelText = "{name}: {value} {unit}, отклонение от среднего {delta}",
+  meanTick = "среднее",
   className,
   style,
 }: Dashboard086Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-086-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-086-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const fill = (template: string, values: Record<string, string>) =>
+    template.replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match)
 
   const active = metrics.find((entry) => entry.key === metric) ?? metrics[0]
   const values = branches.map((branch) => branch[active.key])
@@ -236,8 +296,7 @@ export function Dashboard086({
           </div>
 
           <p data-part="mean">
-            Среднее по сети: <b>{mean.toFixed(1)}</b> {active.unit}. Полоса
-            показывает отклонение филиала от этого среднего.
+            {meanLabel} <b>{mean.toFixed(1)}</b> {active.unit}. {meanNote}
           </p>
 
           <ul data-part="rows">
@@ -253,12 +312,12 @@ export function Dashboard086({
                     <span>{branch.city}</span>
                     {value === best ? (
                       <span data-part="mark" data-kind="best">
-                        лучший
+                        {bestLabel}
                       </span>
                     ) : null}
                     {value === worst ? (
                       <span data-part="mark" data-kind="worst">
-                        худший
+                        {worstLabel}
                       </span>
                     ) : null}
                   </p>
@@ -266,7 +325,12 @@ export function Dashboard086({
                   <div
                     data-part="axis"
                     role="img"
-                    aria-label={`${branch.name}: ${value} ${active.unit}, отклонение от среднего ${delta.toFixed(1)}`}
+                    aria-label={fill(rowLabelText, {
+                      name: branch.name,
+                      value: String(value),
+                      unit: active.unit,
+                      delta: delta.toFixed(1),
+                    })}
                   >
                     <span
                       data-part="dev"
@@ -283,8 +347,9 @@ export function Dashboard086({
                       {value} {active.unit}
                     </b>
                     <span data-part="delta" data-neg={delta < 0}>
-                      {delta > 0 ? "+" : ""}
-                      {delta.toFixed(1)} к среднему
+                      {fill(deltaText, {
+                        delta: `${delta > 0 ? "+" : ""}${delta.toFixed(1)}`,
+                      })}
                     </span>
                   </p>
                 </li>
@@ -294,7 +359,7 @@ export function Dashboard086({
 
           <div data-part="scale">
             <span>−{spread.toFixed(1)}</span>
-            <span>среднее</span>
+            <span>{meanTick}</span>
             <span>+{spread.toFixed(1)}</span>
           </div>
         </div>

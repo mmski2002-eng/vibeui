@@ -17,6 +17,10 @@ export type Kanban004Props = Omit<
   cards?: Kanban004Card[]
   collapsed?: string[]
   onChange?: (cards: Kanban004Card[]) => void
+  /** Подписи и объявления: шаблоны с {name}, {title}. */
+  text?: Record<string, string>
+  /** Пусто — подложки нет, доска лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -27,14 +31,18 @@ export type Kanban004Props = Omit<
 // свёрнутую колонку не отклоняется, а разворачивает её: спрятанная цель, куда
 // нельзя попасть, — это не свёртка, а ловушка. Стрелочные кнопки на карточке
 // дают тот же перенос с клавиатуры, результат объявляется вслух.
+//
+// Тема берётся из color-scheme окружения через light-dark(): доска темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="kanban-004"]){
---vibeui-kanban-004-bg:oklch(0.985 0.002 265);
---vibeui-kanban-004-card:oklch(1 0 0);
---vibeui-kanban-004-fg:oklch(0.24 0.014 265);
---vibeui-kanban-004-muted:oklch(0.56 0.014 265);
---vibeui-kanban-004-border:oklch(0.91 0.006 265);
---vibeui-kanban-004-accent:oklch(0.55 0.2 262);
+--vibeui-kanban-004-bg:transparent;
+--vibeui-kanban-004-card:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-kanban-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-kanban-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-kanban-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-kanban-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.15 262));
+--vibeui-kanban-004-shadow:light-dark(oklch(0.2 0.02 265 / 6%),oklch(0 0 0 / 32%));
 --vibeui-kanban-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="kanban-004"]{
@@ -77,7 +85,7 @@ color:var(--vibeui-kanban-004-muted);font-weight:650;font-size:0.6875rem;font-va
 display:grid;gap:0.375rem;padding:0.5rem;border-radius:0.625rem;cursor:grab;
 background:var(--vibeui-kanban-004-card);
 border:1px solid var(--vibeui-kanban-004-border);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 6%);
+box-shadow:0 1px 2px var(--vibeui-kanban-004-shadow);
 font-size:0.75rem;line-height:1.35;
 }
 [data-vibeui-block="kanban-004"] [data-part="card"][data-dragging="true"]{opacity:.45}
@@ -108,6 +116,44 @@ const DEFAULT_CARDS: Kanban004Card[] = [
   { id: "6", title: "Отчёт за февраль", column: "Готово" },
 ]
 
+const DEFAULT_TEXT: Record<string, string> = {
+  collapse: "Колонка «{name}» свёрнута.",
+  expand: "Колонка «{name}» развёрнута.",
+  moved: "«{title}» перенесена в «{name}»{expanded}.",
+  expanded: ", колонка развёрнута",
+  previous: "Перенести «{title}» в предыдущую колонку",
+  next: "Перенести «{title}» в следующую колонку",
+}
+
+/** Подстановка значений в шаблон подписи. */
+function fill(template: string, values: Record<string, string>) {
+  return template.replace(/\{(\w+)\}/g, (whole, key: string) =>
+    key in values ? values[key] : whole,
+  )
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Доска со сворачиваемыми колонками: свёрнутая остаётся целью переноса.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -117,11 +163,14 @@ export function Kanban004({
   cards = DEFAULT_CARDS,
   collapsed = ["Готово"],
   onChange,
+  text,
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Kanban004Props) {
+  const labels = { ...DEFAULT_TEXT, ...text }
   const [board, setBoard] = useState(cards)
   const [shut, setShut] = useState(collapsed)
   const [dragged, setDragged] = useState<string | null>(null)
@@ -135,9 +184,9 @@ export function Kanban004({
 
     setShut(next)
     setAnnouncement(
-      next.includes(column)
-        ? `Колонка «${column}» свёрнута.`
-        : `Колонка «${column}» развёрнута.`,
+      fill(next.includes(column) ? labels.collapse : labels.expand, {
+        name: column,
+      }),
     )
   }
 
@@ -154,7 +203,11 @@ export function Kanban004({
     if (wasShut) setShut(shut.filter((name) => name !== column))
 
     setAnnouncement(
-      `«${card.title}» перенесена в «${column}»${wasShut ? ", колонка развёрнута" : ""}.`,
+      fill(labels.moved, {
+        title: card.title,
+        name: column,
+        expanded: wasShut ? labels.expanded : "",
+      }),
     )
   }
 
@@ -175,6 +228,12 @@ export function Kanban004({
 
   const palette = {
     ...(accent ? { "--vibeui-kanban-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-kanban-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -237,7 +296,9 @@ export function Kanban004({
                         <button
                           type="button"
                           disabled={columnIndex === 0}
-                          aria-label={`Перенести «${card.title}» в предыдущую колонку`}
+                          aria-label={fill(labels.previous, {
+                            title: card.title,
+                          })}
                           onClick={() => shift(card.id, -1)}
                         >
                           ←
@@ -245,7 +306,7 @@ export function Kanban004({
                         <button
                           type="button"
                           disabled={columnIndex === columns.length - 1}
-                          aria-label={`Перенести «${card.title}» в следующую колонку`}
+                          aria-label={fill(labels.next, { title: card.title })}
                           onClick={() => shift(card.id, 1)}
                         >
                           →

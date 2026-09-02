@@ -11,6 +11,8 @@ export type Item006Props = Omit<
 > & {
   title?: string
   cells?: Item006Cell[]
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,13 +22,16 @@ export type Item006Props = Omit<
 // Раскладка считается от ширины самой строки через контейнерный запрос: в узкой
 // колонке три ячейки встают друг под друга, в широкой — в ряд. Правило запроса
 // целит во внутреннюю обёртку, потому что на сам контейнер оно не действует.
+//
+// Тема берётся из color-scheme окружения через light-dark(): строка темнеет
+// там, где тёмный контекст, и не выкладывает под себя белую плашку.
 const STYLES = `
 :where([data-vibeui-block="item-006"]){
---vibeui-item-006-bg:oklch(1 0 0);
---vibeui-item-006-fg:oklch(0.23 0.014 265);
---vibeui-item-006-muted:oklch(0.56 0.014 265);
---vibeui-item-006-border:oklch(0.9 0.006 265);
---vibeui-item-006-accent:oklch(0.55 0.19 262);
+--vibeui-item-006-bg:transparent;
+--vibeui-item-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-item-006-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-item-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-item-006-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.16 262));
 --vibeui-item-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="item-006"]{
@@ -69,12 +74,35 @@ const DEFAULT_CELLS: Item006Cell[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Строка списка с подробностями в трёх подписанных колонках.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Item006({
   title = "Смета на второй этап",
   cells = DEFAULT_CELLS,
+  background = "",
   accent,
   className,
   style,
@@ -82,6 +110,12 @@ export function Item006({
 }: Item006Props) {
   const palette = {
     ...(accent ? { "--vibeui-item-006-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-item-006-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

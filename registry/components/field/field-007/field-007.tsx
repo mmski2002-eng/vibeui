@@ -10,6 +10,12 @@ export type Field007Props = Omit<
   label?: string
   value?: string
   hint?: string
+  /** Подписи кнопки и строки состояния: компонент несёт русские. */
+  copyText?: string
+  copiedText?: string
+  copiedHint?: string
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,18 +26,19 @@ export type Field007Props = Omit<
 // буфер обмена, а при отказе просто выделяет текст — так работает везде.
 const STYLES = `
 :where([data-vibeui-block="field-007"]){
---vibeui-field-007-bg:oklch(0.975 0.004 265);
---vibeui-field-007-surface:oklch(1 0 0);
---vibeui-field-007-fg:oklch(0.24 0.014 265);
---vibeui-field-007-muted:oklch(0.55 0.014 265);
---vibeui-field-007-border:oklch(0.88 0.008 265);
---vibeui-field-007-shell:oklch(0.91 0.006 265);
---vibeui-field-007-accent:oklch(0.5 0.16 250);
---vibeui-field-007-ok:oklch(0.5 0.13 155);
+--vibeui-field-007-bg:light-dark(oklch(0.975 0.004 265),oklch(0.26 0.011 265));
+--vibeui-field-007-surface:transparent;
+--vibeui-field-007-button:light-dark(oklch(1 0 0),oklch(0.31 0.012 265));
+--vibeui-field-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-field-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-field-007-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.012 265));
+--vibeui-field-007-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
+--vibeui-field-007-accent:light-dark(oklch(0.5 0.16 250),oklch(0.75 0.13 250));
+--vibeui-field-007-ok:light-dark(oklch(0.5 0.13 155),oklch(0.75 0.13 155));
 --vibeui-field-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-field-007-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="field-007"]{
 display:flex;flex-direction:column;gap:0.4375rem;
 width:100%;max-width:23rem;box-sizing:border-box;padding:0.875rem;
@@ -64,7 +71,7 @@ appearance:none;flex:none;cursor:pointer;
 display:inline-flex;align-items:center;gap:0.375rem;
 height:2rem;padding:0 0.75rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-field-007-border);
-background:oklch(1 0 0);color:inherit;
+background:var(--vibeui-field-007-button);color:inherit;
 font:inherit;font-size:0.75rem;font-weight:650;line-height:1;
 transition:border-color .16s ease,color .16s ease;
 }
@@ -90,6 +97,28 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-field-007-muted);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поле только для чтения с кнопкой копирования и откатом на выделение.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -97,6 +126,10 @@ export function Field007({
   label = "Ключ доступа к registry",
   value = "vibeui_live_8f3c21a7b904e6d5",
   hint = "Ключ показывается один раз — сохраните его сейчас.",
+  copyText = "Копировать",
+  copiedText = "Готово",
+  copiedHint = "Скопировано в буфер обмена",
+  background = "",
   accent,
   className,
   style,
@@ -107,6 +140,12 @@ export function Field007({
 
   const palette = {
     ...(accent ? { "--vibeui-field-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-field-007-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -148,11 +187,11 @@ export function Field007({
           />
           <button type="button" onClick={copy}>
             <span data-part="mark" aria-hidden="true" />
-            {copied ? "Готово" : "Копировать"}
+            {copied ? copiedText : copyText}
           </button>
         </div>
         <p data-part="hint" role="status">
-          {copied ? "Скопировано в буфер обмена" : hint}
+          {copied ? copiedHint : hint}
         </p>
       </div>
     </>

@@ -31,16 +31,21 @@
             "outline focus-visible у квадрата: чекбокс переключают с клавиатуры",
             "отрицательные margin, компенсирующие padding строки: без них компонент выпирает относительно соседних полей формы",
             "пару правил на :has(input:disabled) — они гасят всю строку, а не только квадрат",
-            "блок <style> внутри компонента — в нём вся палитра, геометрия и анимация галки"
+            "блок <style> внутри компонента — в нём вся палитра, геометрия и анимация галки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "отрицательные поля строки под подложкой снимаются: плашка обязана держаться в границах колонки"
           ],
           "adapt": [
             "тексты label и description; description можно не передавать — строка станет однострочной",
             "акцент через проп accent — цвет залитого квадрата и кольца фокуса",
             "любые нативные пропсы input: name, checked, defaultChecked, onChange, required, disabled, value",
             "внешние отступы и ширину через className",
-            "порядок строк: несколько чекбоксов подряд ставятся без обёрток, между ними достаточно gap у родителя"
+            "порядок строк: несколько чекбоксов подряд ставятся без обёрток, между ними достаточно gap у родителя",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не оборачивайте компонент в свой <label>: он уже внутри, вложенные label ломают клик.",
             "Смешанное состояние (indeterminate) не поддержано: это свойство DOM, его нельзя выставить разметкой. Нужен третий вид — берите отдельный компонент.",
             "Для группы чекбоксов оберните строки в <fieldset> с <legend>: у самой строки заголовка группы нет.",
@@ -79,6 +84,12 @@
             "label": "Выключено",
             "type": "boolean",
             "default": false
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -94,16 +105,21 @@
                 "the focus-visible outline on the square: checkboxes get toggled from the keyboard",
                 "the negative margins that offset the row's padding: without them the component sticks out next to the other form fields",
                 "the :has(input:disabled) rules — they dim the whole row rather than just the square",
-                "the <style> block inside the component — it holds the palette, the geometry and the tick animation"
+                "the <style> block inside the component — it holds the palette, the geometry and the tick animation",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the row's negative margins are dropped once a background is set: the panel has to stay inside the column"
               ],
               "adapt": [
                 "the label and description copy; omit description and the row becomes single-line",
                 "the accent through the accent prop — it colours the filled square and the focus ring",
                 "any native input props: name, checked, defaultChecked, onChange, required, disabled, value",
                 "outer spacing and width through className",
-                "stacking: several rows sit together with no wrappers, a gap on the parent is enough"
+                "stacking: several rows sit together with no wrappers, a gap on the parent is enough",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not wrap the component in your own <label> — there is one inside, and nested labels break clicking.",
                 "The indeterminate state is not supported: it is a DOM property and cannot be set in markup. If you need a third state, use a different component.",
                 "For a group of checkboxes wrap the rows in a <fieldset> with a <legend>: the row itself carries no group heading.",
@@ -128,14 +144,24 @@
               },
               "disabled": {
                 "label": "Disabled"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Checkbox Row"
+            "title": "Checkbox Row",
+            "preview": {
+              "props": {
+                "label": "Email me reports",
+                "description": "Once a week, in a short email. Turn it off any time."
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["defaultChecked", "disabled", "accent", "background"]
       }
     },
     {
@@ -169,15 +195,20 @@
             "настоящие checkbox: пробел, Tab и объявление «отмечено» работают сами",
             "fieldset с legend — у группы обязано быть имя",
             "рамку и галочку у отмеченной: один цвет при дальтонизме не читается",
-            "счётчик выбранного: он подтверждает, что нажатие сработало"
+            "счётчик выбранного: он подтверждает, что нажатие сработало",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив options: заголовок, описание и цена",
             "legend — название группы",
+            "countText — строка счётчика; {selected} подставляет выбранное, {total} — общее число вариантов",
             "обработчик onChange",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше пяти карточек превращают выбор в список: там уместнее checkbox-004.",
             "Цена — строка: складывать её должен вызывающий код.",
             "Компонент не отправляет форму: имена полей задавайте сами, если нужен POST без JS.",
@@ -197,6 +228,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -210,15 +247,20 @@
                 "real checkboxes: space, Tab and the \"checked\" announcement come free",
                 "the fieldset with a legend — a group must have a name",
                 "the border and tick on a selected card: colour alone fails colour-blind users",
-                "the selected counter: it confirms the tap registered"
+                "the selected counter: it confirms the tap registered",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the options array: title, description and price",
                 "legend — the group's name",
+                "countText — the counter line; {selected} takes the selected count, {total} the number of options",
                 "the onChange handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "More than five cards turn into a list: checkbox-004 fits that better.",
                 "The price is a string: summing is the caller's job.",
                 "The component submits nothing: set your own field names for a no-JS POST.",
@@ -233,11 +275,41 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Choice Checkboxes"
+            "title": "Choice Checkboxes",
+            "preview": {
+              "props": {
+                "legend": "Add to your order",
+                "countText": "Selected: {selected} of {total}",
+                "options": [
+                  {
+                    "value": "delivery",
+                    "title": "Courier delivery",
+                    "description": "Tomorrow between 10:00 and 14:00.",
+                    "price": "£4"
+                  },
+                  {
+                    "value": "assembly",
+                    "title": "Assembly on site",
+                    "description": "We assemble it and take the packaging away.",
+                    "price": "£12"
+                  },
+                  {
+                    "value": "insurance",
+                    "title": "A year of cover",
+                    "description": "Replaced on failure, no assessment needed.",
+                    "price": "£6"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -268,15 +340,21 @@
             "разные фигуры для отмеченного и промежуточного — галочка и черта",
             "aria-controls, связывающий родителя с группой детей",
             "отступ у детей: иерархия видна формой, а не только порядком",
-            "счётчик отмеченного под списком"
+            "счётчик отмеченного под списком",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items и стартовый defaultValue",
             "legend — название группы",
+            "allLabel — подпись родительского чекбокса",
+            "countText — строка счётчика; {selected} подставляет отмеченное, {total} — общее число пунктов",
             "обработчик onChange",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Уровень вложенности один: для дерева нужен рекурсивный компонент и другая модель состояния.",
             "Родитель ничего не выбирает сам — он отражает детей и переключает их разом.",
             "Промежуточное состояние нельзя показывать цветом: скринридер объявляет именно indeterminate.",
@@ -296,6 +374,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -309,15 +393,21 @@
                 "distinct shapes for checked and indeterminate — a tick and a dash",
                 "aria-controls linking the parent to the group",
                 "the indent on children: hierarchy shows in shape, not only order",
-                "the counter under the list"
+                "the counter under the list",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array and the initial defaultValue",
                 "legend — the group's name",
+                "allLabel — the parent checkbox caption",
+                "countText — the counter line; {selected} takes the checked count, {total} the number of items",
                 "the onChange handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "One level of nesting: a tree needs a recursive component and a different state model.",
                 "The parent selects nothing on its own — it reflects the children and toggles them together.",
                 "The indeterminate state must not be colour-only: screen readers announce the property itself.",
@@ -332,11 +422,29 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Parent Checkbox"
+            "title": "Parent Checkbox",
+            "preview": {
+              "props": {
+                "legend": "What to copy over",
+                "allLabel": "Select all",
+                "countText": "{selected} of {total} checked",
+                "items": [
+                  "Component catalogue",
+                  "Component page",
+                  "Agent instructions",
+                  "Dark theme"
+                ],
+                "defaultValue": ["Component catalogue", "Dark theme"]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -367,15 +475,21 @@
             "числа находок у каждой строки: без них выбор вслепую",
             "кликабельную строку целиком, а не только квадратик",
             "табличные цифры и выравнивание чисел по правому краю",
-            "кнопку сброса, выключенную при пустом выборе"
+            "кнопку сброса, выключенную при пустом выборе",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив filters с числами",
             "legend — название группы",
+            "foundText — итог внизу; {count} подставляет сумму находок по отмеченным фильтрам",
+            "resetLabel — подпись кнопки сброса",
             "обработчик onChange",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Числа должны обновляться вместе с выборкой: устаревшие счётчики хуже их отсутствия.",
             "Сумма по выбранным фильтрам верна только для несвязанных категорий: при пересечении она завышена.",
             "Больше десяти строк — повод добавить поиск по фильтрам.",
@@ -395,6 +509,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -408,15 +528,21 @@
                 "the counts on every row: without them the choice is blind",
                 "the whole row clickable, not just the box",
                 "tabular figures with the numbers right-aligned",
-                "the reset button disabled when nothing is selected"
+                "the reset button disabled when nothing is selected",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the filters array with counts",
                 "legend — the group's name",
+                "foundText — the total line; {count} takes the sum of matches across the checked filters",
+                "resetLabel — the reset button caption",
                 "the onChange handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Counts must update with the result set: stale counters are worse than none.",
                 "The total across selected filters holds only for disjoint categories; overlaps inflate it.",
                 "Beyond ten rows, add a search over the filters.",
@@ -431,11 +557,46 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Filter List"
+            "title": "Filter List",
+            "preview": {
+              "props": {
+                "legend": "Category",
+                "foundText": "Matches: {count}",
+                "resetLabel": "Reset",
+                "filters": [
+                  {
+                    "label": "Buttons",
+                    "count": 20
+                  },
+                  {
+                    "label": "Forms",
+                    "count": 14
+                  },
+                  {
+                    "label": "Navigation",
+                    "count": 12
+                  },
+                  {
+                    "label": "Charts",
+                    "count": 10
+                  },
+                  {
+                    "label": "Calendars",
+                    "count": 0,
+                    "disabled": true
+                  }
+                ],
+                "defaultValue": ["Buttons"]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -466,15 +627,19 @@
             "ссылку как отдельную цель — нажатие на неё не должно переключать галочку",
             "aria-invalid и aria-describedby при ошибке",
             "role=\"alert\" на сообщении: оно должно быть услышано сразу",
-            "появление ошибки только после касания, а не при первой отрисовке"
+            "появление ошибки только после касания, а не при первой отрисовке",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "text, linkLabel и linkHref",
             "error — текст ошибки",
             "акцент через проп accent",
-            "ширину блока"
+            "ширину блока",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Одно согласие — один чекбокс: рассылка и обработка данных не объединяются в одну галочку.",
             "Компонент не блокирует отправку формы: проверку делает форма, здесь только состояние.",
             "Текст согласия должен быть внятным: «принимаю условия» без ссылки юридически ничего не значит.",
@@ -502,6 +667,18 @@
             "type": "text",
             "default": "Без согласия отправить форму не получится",
             "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -515,15 +692,19 @@
                 "the link as its own target — clicking it must not toggle the box",
                 "aria-invalid and aria-describedby on error",
                 "role=\"alert\" on the message: it has to be heard immediately",
-                "showing the error only after interaction, not on first render"
+                "showing the error only after interaction, not on first render",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "text, linkLabel and linkHref",
                 "error — the error wording",
                 "the accent through the accent prop",
-                "the block width"
+                "the block width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "One consent per checkbox: marketing and data processing never share a tick.",
                 "The component does not block submission: the form validates, this only holds state.",
                 "The consent text must be specific: \"I accept the terms\" without a link means nothing legally.",
@@ -543,11 +724,25 @@
               "error": {
                 "label": "Error",
                 "default": "The form cannot be sent without consent"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Consent Checkbox"
+            "title": "Consent Checkbox",
+            "preview": {
+              "props": {
+                "text": "I have read and accept",
+                "linkLabel": "the privacy policy",
+                "error": "The form cannot be sent without consent"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -581,15 +776,22 @@
             "подпись «на странице» у заголовочного чекбокса — он не выбирает всю базу",
             "indeterminate в шапке при частичном выборе",
             "подсветку выбранных строк вместо одной галочки",
-            "aria-label у каждого чекбокса строки: «выбрать» без имени бесполезно"
+            "aria-label у каждого чекбокса строки: «выбрать» без имени бесполезно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив rows и их поля",
             "действия в полосе",
+            "selectedText — строка полосы действий; {count} подставляет число выбранных строк",
+            "clearLabel и selectAllLabel, selectRowText со вставкой {name} — подписи кнопки сброса и скрытые подписи чекбоксов",
+            "columnText — заголовки колонок: name и meta",
             "обработчик onChange",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Выбор живёт только на текущей странице: «выбрать всё в базе» — отдельное действие с явным подтверждением.",
             "Опасные массовые действия требуют подтверждения: полоса не место для немедленного удаления.",
             "Компонент не сортирует и не фильтрует: это только выбор строк.",
@@ -600,6 +802,12 @@
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
             "type": "color",
             "default": ""
           }
@@ -615,15 +823,22 @@
                 "the \"on this page\" wording on the header checkbox — it does not select the database",
                 "the indeterminate header on partial selection",
                 "highlighting selected rows rather than relying on the tick alone",
-                "an aria-label on every row checkbox: a bare \"select\" is useless"
+                "an aria-label on every row checkbox: a bare \"select\" is useless",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the rows array and its fields",
                 "the actions in the bar",
+                "selectedText — the action bar line; {count} takes the number of selected rows",
+                "clearLabel and selectAllLabel, selectRowText with its {name} slot — the clear button caption and the checkboxes' hidden labels",
+                "columnText — the column headings: name and meta",
                 "the onChange handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Selection lives on the current page only: \"select everything\" is a separate, explicit action.",
                 "Destructive bulk actions need confirmation: the bar is not a place for instant deletion.",
                 "The component neither sorts nor filters: it only selects.",
@@ -634,11 +849,50 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Row Selection"
+            "title": "Row Selection",
+            "preview": {
+              "props": {
+                "selectedText": "Selected on this page: {count}",
+                "clearLabel": "Clear selection",
+                "selectAllLabel": "Select every row on this page",
+                "selectRowText": "Select {name}",
+                "columnText": {
+                  "name": "Document",
+                  "meta": "Amount"
+                },
+                "rows": [
+                  {
+                    "id": "1",
+                    "name": "Invoice 42-118",
+                    "meta": "£1,248"
+                  },
+                  {
+                    "id": "2",
+                    "name": "Invoice 42-119",
+                    "meta": "£890"
+                  },
+                  {
+                    "id": "3",
+                    "name": "Bill 300",
+                    "meta": "£2,400"
+                  },
+                  {
+                    "id": "4",
+                    "name": "Bill 301",
+                    "meta": "£620"
+                  }
+                ],
+                "defaultValue": ["1", "3"]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -669,15 +923,20 @@
             "зачёркнутый, но читаемый текст — это память о сделанном, а не мусор",
             "круглую отметку: задача отличается от поля формы формой отметки",
             "счётчик выполненного в шапке",
-            "срок справа мелким шрифтом, чтобы он не спорил с текстом задачи"
+            "срок справа мелким шрифтом, чтобы он не спорил с текстом задачи",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив tasks и стартовый defaultDone",
             "title — название списка",
+            "progressText — счётчик в шапке; {done} подставляет сделанное, {total} — всего задач",
             "обработчик onChange",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Удаление выполненных — отдельное действие: автоматическое исчезновение путает.",
             "Компонент ничего не сохраняет: состояние живёт до перезагрузки страницы.",
             "Для длинных списков добавьте группировку по дням — двадцать строк подряд не читаются.",
@@ -697,6 +956,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -710,15 +975,20 @@
                 "struck-through but readable text — it is a record of work, not rubbish",
                 "the round mark: a task differs from a form field by the shape of its mark",
                 "the done counter in the header",
-                "the due date in small type on the right so it does not fight the task"
+                "the due date in small type on the right so it does not fight the task",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the tasks array and the initial defaultDone",
                 "title — the list's name",
+                "progressText — the counter in the header; {done} takes the finished count, {total} the number of tasks",
                 "the onChange handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Clearing done items is a separate action: automatic disappearance confuses.",
                 "The component persists nothing: state lives until reload.",
                 "For long lists add grouping by day — twenty rows in a row do not read.",
@@ -733,11 +1003,44 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Checklist"
+            "title": "Checklist",
+            "preview": {
+              "props": {
+                "title": "This week's tasks",
+                "progressText": "{done} of {total}",
+                "tasks": [
+                  {
+                    "id": "1",
+                    "text": "Write up the category's components",
+                    "due": "today"
+                  },
+                  {
+                    "id": "2",
+                    "text": "Check the preview on a phone",
+                    "due": "tomorrow"
+                  },
+                  {
+                    "id": "3",
+                    "text": "Update the agent instructions",
+                    "due": "Fri"
+                  },
+                  {
+                    "id": "4",
+                    "text": "Ship to production",
+                    "due": "Fri"
+                  }
+                ],
+                "defaultDone": ["1"]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -771,15 +1074,19 @@
             "aria-describedby у подсказки: без связи это просто соседний текст",
             "размеры в rem: они масштабируются вместе с настройками системы",
             "подсветку строки по наведению — цель видна до нажатия",
-            "гашение всей строки в выключенном состоянии, а не только квадрата"
+            "гашение всей строки в выключенном состоянии, а не только квадрата",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "label и hint",
             "defaultChecked и disabled",
             "обработчик onChange",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Подсказка не место для условий: длинный текст под галочкой не читают.",
             "Выключенный чекбокс должен объясняться рядом: иначе непонятно, почему нельзя.",
             "Для согласия с документом возьмите checkbox-005 — там есть ссылка и ошибка.",
@@ -806,6 +1113,24 @@
             "label": "Выключен",
             "type": "boolean",
             "default": false
+          },
+          {
+            "prop": "defaultChecked",
+            "label": "Отмечен",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -819,15 +1144,19 @@
                 "aria-describedby on the hint: without it the text is merely adjacent",
                 "sizes in rem: they scale with the system settings",
                 "the hover highlight — the target shows before the tap",
-                "dimming the whole row when disabled, not just the box"
+                "dimming the whole row when disabled, not just the box",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "label and hint",
                 "defaultChecked and disabled",
                 "the onChange handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The hint is not for terms: long text under a checkbox goes unread.",
                 "A disabled checkbox needs an explanation beside it, or the block is a mystery.",
                 "For document consent use checkbox-005 — it has the link and the error.",
@@ -846,11 +1175,27 @@
               },
               "disabled": {
                 "label": "Disabled"
+              },
+              "defaultChecked": {
+                "label": "Checked"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Touch Checkbox"
+            "title": "Touch Checkbox",
+            "preview": {
+              "props": {
+                "label": "Save this card for future purchases",
+                "hint": "The card number stays with the bank; we only get a token"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["defaultChecked", "disabled", "accent", "background"]
       }
     },
     {
@@ -881,15 +1226,21 @@
             "точку у изменённой строки: она отвечает на вопрос «что именно я поменял»",
             "пояснение под подписью, а не в подсказке по наведению — на телефоне наведения нет",
             "кнопку, выключенную при отсутствии изменений: активная кнопка без работы обманывает",
-            "role=\"status\" на счётчике несохранённого — число изменений должно проговариваться"
+            "role=\"status\" на счётчике несохранённого — число изменений должно проговариваться",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив options: подпись, пояснение и бейдж у каждой строки",
             "title — заголовок панели",
+            "savedText и unsavedText — строки состояния; {count} подставляет число изменённых строк",
+            "saveLabel — подпись кнопки сохранения",
             "стартовый defaultValue и обработчик onChange",
-            "акцент через проп accent — цвет отметки, точки и кнопки"
+            "акцент через проп accent — цвет отметки, точки и кнопки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент ничего не отправляет: по нажатию «Сохранить» он лишь принимает черновик за новый базовый набор.",
             "Для настроек, применяющихся мгновенно, черновик лишний — там уместнее checkbox-001.",
             "Бейдж не заменяет пояснение: «beta» без текста ничего не объясняет.",
@@ -909,6 +1260,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -922,15 +1279,21 @@
                 "the dot on a changed row: it answers \"what exactly did I change\"",
                 "the description under the label rather than in a hover tooltip — phones have no hover",
                 "the button disabled when nothing changed: an active button with no work to do lies",
-                "role=\"status\" on the unsaved counter — the number of changes has to be announced"
+                "role=\"status\" on the unsaved counter — the number of changes has to be announced",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the options array: label, description and badge for every row",
                 "title — the panel heading",
+                "savedText and unsavedText — the status lines; {count} takes the number of changed rows",
+                "saveLabel — the save button caption",
                 "the initial defaultValue and the onChange handler",
-                "the accent through the accent prop — it colours the tick, the dot and the button"
+                "the accent through the accent prop — it colours the tick, the dot and the button",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component sends nothing: Save merely accepts the draft as the new baseline.",
                 "For settings that apply instantly a draft is overhead — checkbox-001 fits better there.",
                 "A badge is not a description: \"beta\" on its own explains nothing.",
@@ -945,14 +1308,45 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Draft Settings"
+            "title": "Draft Settings",
+            "preview": {
+              "props": {
+                "title": "Notifications",
+                "savedText": "Everything saved",
+                "unsavedText": "Unsaved: {count}",
+                "saveLabel": "Save",
+                "options": [
+                  {
+                    "id": "digest",
+                    "label": "Weekly digest",
+                    "description": "A Monday email with everything that changed."
+                  },
+                  {
+                    "id": "mentions",
+                    "label": "Mentions",
+                    "description": "A note whenever someone names you in a comment.",
+                    "badge": "new"
+                  },
+                  {
+                    "id": "deploys",
+                    "label": "Deploy reports",
+                    "description": "Every production deploy with its result and time."
+                  }
+                ],
+                "defaultValue": ["digest"]
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -983,15 +1377,21 @@
             "спрятанный, но настоящий input: Tab, пробел и объявление «отмечено» держатся на нём",
             "круглую галочку рядом с заголовком — цвет фона один не читается при дальтонизме",
             "итог под списком: выбор дополнений бессмыслен без суммы",
-            "clear:both у карточек — иначе они обтекают всплывший legend"
+            "clear:both у карточек — иначе они обтекают всплывший legend",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив addons: заголовок, пояснение, цену и признак recommended",
             "legend — название группы",
             "currency — подпись валюты рядом с числами",
-            "обработчик onChange и акцент через проп accent"
+            "recommendedLabel — плашка у рекомендованного дополнения",
+            "totalText — строка итога; {count} подставляет число выбранных дополнений",
+            "обработчик onChange и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Цены — числа: округление и налоги считает вызывающий код, компонент только складывает.",
             "Больше пяти карточек читаются хуже списка: там уместнее checkbox-004 или checkbox-016.",
             "Метка «советуем» должна быть одна: две рекомендации не рекомендуют ничего.",
@@ -1018,6 +1418,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1031,15 +1437,21 @@
                 "the hidden but real input: Tab, space and the \"checked\" announcement rest on it",
                 "the round tick beside the title — background colour alone fails colour-blind users",
                 "the total under the list: picking add-ons is pointless without a sum",
-                "clear:both on the cards — otherwise they wrap around the floated legend"
+                "clear:both on the cards — otherwise they wrap around the floated legend",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the addons array: title, note, price and the recommended flag",
                 "legend — the group's name",
                 "currency — the unit shown next to the numbers",
-                "the onChange handler and the accent through the accent prop"
+                "recommendedLabel — the badge on the recommended add-on",
+                "totalText — the total line; {count} takes the number of selected add-ons",
+                "the onChange handler and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Prices are numbers: rounding and tax are the caller's job, the component only adds up.",
                 "Beyond five cards a list reads better: use checkbox-004 or checkbox-016.",
                 "Keep a single \"recommended\" flag: two recommendations recommend nothing.",
@@ -1058,14 +1470,48 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Addon Cards"
+            "title": "Addon Cards",
+            "preview": {
+              "props": {
+                "legend": "Add-ons",
+                "currency": "$/mo",
+                "recommendedLabel": "suggested",
+                "totalText": "Add-ons: {count}",
+                "addons": [
+                  {
+                    "id": "backup",
+                    "title": "Daily backups",
+                    "note": "A copy of the database every night, kept for a month.",
+                    "price": 3,
+                    "recommended": true
+                  },
+                  {
+                    "id": "domain",
+                    "title": "Your own domain",
+                    "note": "Hook-up and certificate at no extra cost.",
+                    "price": 2
+                  },
+                  {
+                    "id": "support",
+                    "title": "24/7 support",
+                    "note": "An answer within the hour, any day.",
+                    "price": 9
+                  }
+                ],
+                "defaultValue": ["backup"]
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1096,15 +1542,21 @@
             "черту вместо бледной галки: промежуточное состояние должно отличаться формой, а не оттенком",
             "подпись «на странице» — панель не выбирает записи за пределами списка",
             "отделённую фоном панель: строка «выбрать всё» не должна выглядеть пунктом списка",
-            "счётчик с role=\"status\": после массового действия нужно услышать, сколько выбрано"
+            "счётчик с role=\"status\": после массового действия нужно услышать, сколько выбрано",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items и стартовый defaultValue",
             "title — доступное имя блока",
+            "allLabel и invertLabel — подписи чекбокса «выбрать всё» и кнопки инверсии",
+            "countText — счётчик в панели; {selected} подставляет выбранное, {total} — всего пунктов",
             "обработчик onChange",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Инверсия выбора без числа опасна: держите счётчик рядом с кнопкой.",
             "Для древовидных данных этого мало — наследование от родителя есть в checkbox-021.",
             "Компонент не листает страницы: выбор относится к переданному массиву целиком.",
@@ -1124,6 +1576,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1137,15 +1595,21 @@
                 "the dash instead of a faded tick: a mixed state must differ in shape, not in shade",
                 "the \"on this page\" wording — the bar selects nothing beyond the list it holds",
                 "the bar separated by its own background: a select-all row must not look like a list item",
-                "the counter with role=\"status\": after a bulk action you need to hear how many are selected"
+                "the counter with role=\"status\": after a bulk action you need to hear how many are selected",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array and the initial defaultValue",
                 "title — the accessible name of the block",
+                "allLabel and invertLabel — the select-all caption and the invert button caption",
+                "countText — the counter in the bar; {selected} takes the selected count, {total} the number of items",
                 "the onChange handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Inverting without a count is risky: keep the counter next to the button.",
                 "Tree data needs more — parent inheritance lives in checkbox-021.",
                 "The component does not paginate: the selection covers the array you pass.",
@@ -1160,14 +1624,34 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Select All Bar"
+            "title": "Select All Bar",
+            "preview": {
+              "props": {
+                "title": "Invoices",
+                "allLabel": "Select all on this page",
+                "invertLabel": "Invert",
+                "countText": "{selected} of {total}",
+                "items": [
+                  "March invoice",
+                  "April invoice",
+                  "May invoice",
+                  "June invoice",
+                  "July invoice"
+                ],
+                "defaultValue": ["March invoice"]
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1198,15 +1682,21 @@
             "счётчик «сколько из скольких» — без него лимит выглядит поломкой",
             "полосу заполнения рядом со счётчиком: длину замечают раньше числа",
             "текст под списком, объясняющий, что делать на лимите",
-            "оставшиеся в списке заблокированные пункты: убирать их нельзя, они снова доступны после снятия галочки"
+            "оставшиеся в списке заблокированные пункты: убирать их нельзя, они снова доступны после снятия галочки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив options и стартовый defaultValue",
             "limit — потолок выбора",
             "legend — название группы",
-            "обработчик onChange и акцент через проп accent"
+            "counterText — счётчик у полосы; {selected} подставляет выбранное, {limit} — потолок",
+            "fullText и remainingText — подписи под списком; {left} подставляет остаток",
+            "обработчик onChange и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Лимит меньше двух превращает группу в переключатель: там нужны radio, а не чекбоксы.",
             "Компонент не сообщает о попытке превысить лимит: он её просто не допускает.",
             "Если вариантов больше десяти, добавьте поиск — заблокированные строки в длинном списке раздражают.",
@@ -1234,6 +1724,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1247,15 +1743,21 @@
                 "the \"how many of how many\" counter — without it the limit looks like a bug",
                 "the fill bar next to the counter: length registers before the number does",
                 "the sentence under the list explaining what to do at the limit",
-                "keeping blocked options in the list: removing them is a lie, they return once a tick is cleared"
+                "keeping blocked options in the list: removing them is a lie, they return once a tick is cleared",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the options array and the initial defaultValue",
                 "limit — the selection cap",
                 "legend — the group's name",
-                "the onChange handler and the accent through the accent prop"
+                "counterText — the counter next to the bar; {selected} takes the selected count, {limit} the cap",
+                "fullText and remainingText — the lines under the list; {left} takes how many are still allowed",
+                "the onChange handler and the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A limit below two turns the group into a single choice: use radios, not checkboxes.",
                 "The component reports no over-limit attempt: it simply prevents one.",
                 "With more than ten options add a search — blocked rows in a long list irritate.",
@@ -1273,14 +1775,35 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Choice Limit"
+            "title": "Choice Limit",
+            "preview": {
+              "props": {
+                "legend": "What matters most to you",
+                "counterText": "{selected} of {limit}",
+                "fullText": "That is the maximum. Clear one to pick another.",
+                "remainingText": "You can pick {left} more.",
+                "options": [
+                  "Loading speed",
+                  "A clear interface",
+                  "Support",
+                  "Price",
+                  "Reliability",
+                  "Looks"
+                ],
+                "defaultValue": ["Price"]
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["limit", "accent", "background"]
       }
     },
     {
@@ -1298,7 +1821,7 @@
       ],
       "title": "Обязательное согласие",
       "description": "Обязательная галочка как ворота формы: кнопка отправки выключена, пока условие не принято, и рядом написано, почему именно.",
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-013-*. Клиентский: \"use client\". Корень — form с onSubmit и preventDefault: отправка ничего не шлёт, а переводит блок в состояние «готово». У обязательного поля стоит нативный required и звёздочка на самой строке, у необязательного — подпись «необязательно». Причина выключенной кнопки показана текстом под ней.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-013-*. Клиентский: \"use client\". Корень — form с onSubmit и preventDefault: отправка ничего не шлёт, а переводит блок в состояние «готово». У обязательного поля стоит нативный required и звёздочка на самой строке, у необязательного — подпись «необязательно». Причина выключенной кнопки показана текстом под ней. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
         "tags": ["checkbox", "consent", "form", "validation"],
         "ai": {
@@ -1311,15 +1834,21 @@
             "нативный required на обязательной галочке — валидация браузера должна работать и без JS",
             "звёздочку обязательности на самой строке, а не только у заголовка формы",
             "непроставленные галочки: предвыбранное согласие незаконно в ЕС и нечестно везде",
-            "раздельные обязательное и необязательное согласия — рассылка не смешивается с офертой"
+            "раздельные обязательное и необязательное согласия — рассылка не смешивается с офертой",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "terms и optional — тексты двух согласий",
             "title — заголовок формы",
             "submitLabel — подпись кнопки и обработчик onConfirm",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "requiredNote, optionalNote — пометки под строками согласий",
+            "doneText, acceptedHint, pendingHint — сообщение об успехе и подсказки под кнопкой",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не отправляет данные: onConfirm вызывается после локальной проверки, запрос делает вызывающий код.",
             "Выключенная кнопка не заменяет серверную проверку: согласие подтверждается на бэкенде.",
             "Если условий несколько, каждому нужна своя галочка — одна на всё юридически ничего не значит.",
@@ -1346,6 +1875,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1359,15 +1894,21 @@
                 "the native required on the mandatory tick — browser validation has to work without JS too",
                 "the required asterisk on the row itself, not only next to the form heading",
                 "the unchecked defaults: pre-ticked consent is illegal in the EU and dishonest everywhere",
-                "keeping the required and the optional consent apart — marketing never rides on the terms"
+                "keeping the required and the optional consent apart — marketing never rides on the terms",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "terms and optional — the copy of the two consents",
                 "title — the form heading",
                 "submitLabel — the button caption and the onConfirm handler",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "requiredNote, optionalNote — the notes under the consent rows",
+                "doneText, acceptedHint, pendingHint — the success line and the hints under the button",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component sends nothing: onConfirm fires after the local check, the request is the caller's job.",
                 "A disabled button is not a server check: confirm the consent on the backend too.",
                 "Several terms need several ticks — one box for everything means nothing legally.",
@@ -1386,14 +1927,31 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Required Consent"
+            "title": "Required Consent",
+            "preview": {
+              "props": {
+                "title": "Confirm your order",
+                "terms": "I accept the terms of sale and the refund policy",
+                "optional": "Send me emails about discounts",
+                "submitLabel": "Place order",
+                "requiredNote": "Required",
+                "optionalNote": "Optional, unsubscribe from any email",
+                "doneText": "Done: the order has been sent.",
+                "acceptedHint": "Terms accepted — the button is live.",
+                "pendingHint": "The button turns on once you accept the terms."
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1411,7 +1969,7 @@
       ],
       "title": "Ящик выполненного",
       "description": "Список задач, где выполненное уезжает в свёрнутый блок «Готово»: активный список остаётся коротким, а сделанное никуда не пропадает.",
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-014-*. Клиентский: \"use client\". Задачи делятся на два списка по состоянию, выполненные лежат в нативном <details> — сворачивание работает без JS и доступно с клавиатуры. Сверху полоса прогресса: span с шириной в процентах и role=\"progressbar\" с aria-valuenow. Маркер <summary> убран, стрелка нарисована псевдоэлементом.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-014-*. Клиентский: \"use client\". Задачи делятся на два списка по состоянию, выполненные лежат в нативном <details> — сворачивание работает без JS и доступно с клавиатуры. Сверху полоса прогресса: span с шириной в процентах и role=\"progressbar\" с aria-valuenow. Маркер <summary> убран, стрелка нарисована псевдоэлементом. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
         "tags": ["checkbox", "tasks", "progress", "details"],
         "ai": {
@@ -1424,15 +1982,21 @@
             "возможность снять галочку у выполненной задачи — иначе ошибочная отметка необратима",
             "полосу прогресса с role=\"progressbar\" и aria-valuenow: доля важнее списка",
             "текст «Все задачи выполнены» вместо пустого места, когда активных не осталось",
-            "зачёркивание внутри блока «Готово»: там текст читают как историю, а не как задачу"
+            "зачёркивание внутри блока «Готово»: там текст читают как историю, а не как задачу",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив tasks и стартовый defaultDone",
             "title — название списка",
             "обработчик onChange",
-            "акцент через проп accent — цвет отметки и полосы"
+            "акцент через проп accent — цвет отметки и полосы",
+            "ratioText — счётчик в шапке с подстановками {done} и {total}",
+            "doneLabel — подпись свёрнутого блока с подстановкой {count}, emptyText — строка вместо пустого списка",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Перемещение строки при отметке — намеренное: если это мешает, возьмите checkbox-007, там порядок фиксирован.",
             "Компонент ничего не сохраняет: состояние живёт до перезагрузки страницы.",
             "Блок «Готово» лучше держать свёрнутым: раскрытый по умолчанию, он сводит идею на нет.",
@@ -1452,6 +2016,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1465,15 +2035,21 @@
                 "the ability to untick a finished task — otherwise a wrong tap is irreversible",
                 "the progress bar with role=\"progressbar\" and aria-valuenow: the ratio matters more than the list",
                 "the \"all tasks are done\" line instead of blank space when nothing is active",
-                "the strike-through inside the Done drawer: there the text reads as history, not as work"
+                "the strike-through inside the Done drawer: there the text reads as history, not as work",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the tasks array and the initial defaultDone",
                 "title — the list's name",
                 "the onChange handler",
-                "the accent through the accent prop — the tick and the bar colour"
+                "the accent through the accent prop — the tick and the bar colour",
+                "ratioText — the header counter with the {done} and {total} placeholders",
+                "doneLabel — the drawer caption with the {count} placeholder, emptyText — the line replacing an empty list",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Rows moving on tick is deliberate: if it gets in the way use checkbox-007, where the order is fixed.",
                 "The component persists nothing: state lives until reload.",
                 "Keep the Done drawer collapsed: open by default it defeats the point.",
@@ -1488,14 +2064,48 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Done Drawer"
+            "title": "Done Drawer",
+            "preview": {
+              "props": {
+                "title": "Section launch",
+                "tasks": [
+                  {
+                    "id": "1",
+                    "text": "Gather the requirements"
+                  },
+                  {
+                    "id": "2",
+                    "text": "Draw the layout"
+                  },
+                  {
+                    "id": "3",
+                    "text": "Agree it with the team"
+                  },
+                  {
+                    "id": "4",
+                    "text": "Write the component"
+                  },
+                  {
+                    "id": "5",
+                    "text": "Check it on a phone"
+                  }
+                ],
+                "ratioText": "{done} of {total}",
+                "doneLabel": "Done: {count}",
+                "emptyText": "Every task is finished."
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1513,7 +2123,7 @@
       ],
       "title": "Ошибка группы",
       "description": "Ошибка у всей группы, а не у строки: «отметьте хотя бы одно» показано рамкой, знаком и объяснением, что именно сделать.",
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-015-*. Клиентский: \"use client\". Ошибка живёт на fieldset: он получает data-invalid, aria-invalid и aria-describedby с идентификатором из useId. Сообщение объявлено role=\"alert\" и состоит из знака «!» кружком и двух строк — что не так и что сделать. Состояние ошибки пересчитывается при отправке и снимается сразу после первой отметки.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-015-*. Клиентский: \"use client\". Ошибка живёт на fieldset: он получает data-invalid, aria-invalid и aria-describedby с идентификатором из useId. Сообщение объявлено role=\"alert\" и состоит из знака «!» кружком и двух строк — что не так и что сделать. Состояние ошибки пересчитывается при отправке и снимается сразу после первой отметки. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
         "tags": ["checkbox", "validation", "error", "fieldset"],
         "ai": {
@@ -1526,15 +2136,20 @@
             "знак «!» рядом с текстом — одним красным цветом ошибку не показать",
             "aria-invalid и aria-describedby на группе: связь с сообщением обязана быть в разметке",
             "role=\"alert\" у сообщения, чтобы оно было услышано сразу после отправки",
-            "вторую строку с подсказкой: «ошибка» без «что делать» ничего не решает"
+            "вторую строку с подсказкой: «ошибка» без «что делать» ничего не решает",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив options — варианты в группе",
             "legend — название группы",
             "error и hint — текст ошибки и подсказки",
-            "обработчик onSubmitValue и акцент через проп accent"
+            "обработчик onSubmitValue и акцент через проп accent",
+            "submitLabel — подпись кнопки отправки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ошибка снимается сразу после первой отметки — держать её до повторной отправки жестоко.",
             "Компонент не отправляет форму: onSubmitValue вызывается только при непустом выборе.",
             "Для согласия с документом это не подходит: там ошибка у одной галочки, возьмите checkbox-005.",
@@ -1555,6 +2170,25 @@
             "type": "text",
             "default": "Отметьте хотя бы одно направление",
             "maxLength": 60
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Продолжить",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1568,15 +2202,20 @@
                 "the \"!\" sign next to the text — red alone cannot carry an error",
                 "aria-invalid and aria-describedby on the group: the link to the message must exist in markup",
                 "role=\"alert\" on the message so it is heard right after submission",
-                "the second line with the hint: an error without \"what to do\" solves nothing"
+                "the second line with the hint: an error without \"what to do\" solves nothing",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the options array — the choices in the group",
                 "legend — the group's name",
                 "error and hint — the error and helper copy",
-                "the onSubmitValue handler and the accent through the accent prop"
+                "the onSubmitValue handler and the accent through the accent prop",
+                "submitLabel — the submit button caption",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The error clears on the first tick — holding it until the next submit is cruel.",
                 "The component submits nothing: onSubmitValue fires only with a non-empty selection.",
                 "Document consent is a different case: the error sits on one box there, use checkbox-005.",
@@ -1592,14 +2231,39 @@
               "error": {
                 "label": "Error text",
                 "default": "Pick at least one area"
+              },
+              "submitLabel": {
+                "label": "Button",
+                "default": "Continue"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Group Error"
+            "title": "Group Error",
+            "preview": {
+              "props": {
+                "legend": "What does your team do",
+                "options": [
+                  "Engineering",
+                  "Design",
+                  "Analytics",
+                  "Customer support"
+                ],
+                "error": "Pick at least one area",
+                "hint": "We will suggest templates for the areas you pick.",
+                "submitLabel": "Continue"
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1617,7 +2281,7 @@
       ],
       "title": "Поиск по вариантам",
       "description": "Длинный список чекбоксов с поиском по пунктам: отмеченные закреплены сверху и не исчезают при фильтрации.",
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-016-*. Клиентский: \"use client\". Поиск фильтрует только неотмеченные пункты; выбранные всегда идут первой группой, поэтому фильтр не выглядит сбросом выбора. Список прокручивается внутри себя (max-height + overscroll-behavior: contain), поле поиска и счётчик остаются на месте. Заголовки групп скрыты от скринридера как декоративные.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-016-*. Клиентский: \"use client\". Поиск фильтрует только неотмеченные пункты; выбранные всегда идут первой группой, поэтому фильтр не выглядит сбросом выбора. Список прокручивается внутри себя (max-height + overscroll-behavior: contain), поле поиска и счётчик остаются на месте. Заголовки групп скрыты от скринридера как декоративные. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
         "tags": ["checkbox", "search", "list", "filter"],
         "ai": {
@@ -1630,15 +2294,21 @@
             "прокрутку внутри списка — поле поиска и счётчик не должны уезжать вместе с ним",
             "overscroll-behavior: contain, чтобы прокрутка списка не утаскивала страницу",
             "сообщение «ничего не нашлось» вместо пустоты: пустой блок выглядит поломкой",
-            "input[type=search] с aria-label: поле поиска без имени бесполезно для скринридера"
+            "input[type=search] с aria-label: поле поиска без имени бесполезно для скринридера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив options и стартовый defaultValue",
             "placeholder — подсказку в поле поиска",
             "label — заголовок и доступное имя блока",
-            "обработчик onChange и акцент через проп accent"
+            "обработчик onChange и акцент через проп accent",
+            "pickedLabel и restLabel — заголовки групп «выбрано» и «остальные»",
+            "emptyText — строка при пустом поиске, countText — счётчик с подстановками {count} и {total}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Поиск идёт по подстроке без учёта регистра: морфологию и опечатки он не понимает.",
             "Для сотен пунктов нужен серверный поиск — компонент фильтрует переданный массив целиком.",
             "Порядок групп фиксирован: выбранные сверху, остальные ниже — менять его местами не стоит.",
@@ -1665,6 +2335,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1678,15 +2354,21 @@
                 "scrolling inside the list — the search field and the counter must not scroll away",
                 "overscroll-behavior: contain so the list does not drag the page along",
                 "the \"nothing found\" line instead of blank space: an empty box looks broken",
-                "the search input with an aria-label: an unnamed field is useless to a screen reader"
+                "the search input with an aria-label: an unnamed field is useless to a screen reader",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the options array and the initial defaultValue",
                 "placeholder — the hint inside the search field",
                 "label — the heading and accessible name of the block",
-                "the onChange handler and the accent through the accent prop"
+                "the onChange handler and the accent through the accent prop",
+                "pickedLabel and restLabel — the «selected» and «the rest» group captions",
+                "emptyText — the empty-search line, countText — the counter with the {count} and {total} placeholders",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The search is a case-insensitive substring match: it knows nothing about typos or morphology.",
                 "Hundreds of options need server-side search — this filters the array you pass in full.",
                 "The group order is fixed: selected first, the rest below; swapping them defeats the point.",
@@ -1705,14 +2387,45 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Searchable Options"
+            "title": "Searchable Options",
+            "preview": {
+              "props": {
+                "label": "Delivery countries",
+                "placeholder": "Search the list",
+                "options": [
+                  "Armenia",
+                  "Brazil",
+                  "Canada",
+                  "France",
+                  "Georgia",
+                  "Germany",
+                  "Hungary",
+                  "India",
+                  "Kazakhstan",
+                  "Mexico",
+                  "Portugal",
+                  "Serbia",
+                  "Spain",
+                  "Turkey"
+                ],
+                "defaultValue": ["Georgia"],
+                "pickedLabel": "Selected",
+                "restLabel": "The rest",
+                "emptyText": "Nothing found",
+                "countText": "{count} of {total} checked"
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1730,7 +2443,7 @@
       ],
       "title": "Выделение диапазона",
       "description": "Таблица, где выбор ставится диапазоном: клик с Shift отмечает всё от прошлой отметки до текущей, а подсказка про жест написана явно.",
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-017-*. Клиентский: \"use client\". Логика диапазона висит на onClick (там доступен shiftKey), onChange оставлен пустым, чтобы React не ругался на управляемый input. Якорь — индекс последней одиночной отметки. Чекбокс шапки получает indeterminate эффектом, выбранные строки подсвечиваются через tr:has(input:checked), таблица завёрнута в контейнер с overflow-x.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-017-*. Клиентский: \"use client\". Логика диапазона висит на onClick (там доступен shiftKey), onChange оставлен пустым, чтобы React не ругался на управляемый input. Якорь — индекс последней одиночной отметки. Чекбокс шапки получает indeterminate эффектом, выбранные строки подсвечиваются через tr:has(input:checked), таблица завёрнута в контейнер с overflow-x. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
         "tags": ["checkbox", "table", "range", "shift"],
         "ai": {
@@ -1743,15 +2456,22 @@
             "пустой onChange у управляемого input — без него React ругается на поле без обработчика",
             "подсказку про Shift в подвале: скрытый жест не существует для того, кто о нём не знает",
             "indeterminate в шапке при частичном выборе и подпись «на странице»",
-            "подсветку выбранных строк и aria-label у каждого чекбокса: «выбрать» без имени бесполезно"
+            "подсветку выбранных строк и aria-label у каждого чекбокса: «выбрать» без имени бесполезно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив rows и набор колонок",
             "caption — заголовок таблицы",
             "обработчик onChange",
-            "акцент через проп accent — цвет отметки и подсветки строк"
+            "акцент через проп accent — цвет отметки и подсветки строк",
+            "columnText — заголовки колонок по ключам name, email и role",
+            "selectAllLabel и rowLabel — доступные имена чекбоксов; в rowLabel подставляется {name}",
+            "countText — счётчик с подстановками {count} и {total}; shiftKeyLabel и rangeHint — подсказка про жест",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Shift только добавляет диапазон и никогда не снимает: снятие диапазоном чаще ошибка, чем намерение.",
             "Выбор относится к переданным строкам: «выбрать всё в базе» — отдельное действие с подтверждением.",
             "На телефоне Shift недоступен — оставьте способ выбрать строки по одной.",
@@ -1771,6 +2491,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1784,15 +2510,22 @@
                 "the empty onChange on the controlled input — without it React complains about a field with no handler",
                 "the Shift hint in the footer: a hidden gesture does not exist for anyone who was not told",
                 "the indeterminate header on partial selection and the \"on this page\" wording",
-                "the row highlight and an aria-label on every checkbox: a bare \"select\" is useless"
+                "the row highlight and an aria-label on every checkbox: a bare \"select\" is useless",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the rows array and the set of columns",
                 "caption — the table heading",
                 "the onChange handler",
-                "the accent through the accent prop — the tick and row highlight colour"
+                "the accent through the accent prop — the tick and row highlight colour",
+                "columnText — the column headings keyed by name, email and role",
+                "selectAllLabel and rowLabel — the accessible checkbox names; rowLabel takes the {name} placeholder",
+                "countText — the counter with the {count} and {total} placeholders; shiftKeyLabel and rangeHint — the gesture hint",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Shift only adds a range and never clears it: clearing by range is more often a mistake than an intent.",
                 "The selection covers the rows you pass: \"select everything\" is a separate, confirmed action.",
                 "Phones have no Shift — always keep one-by-one selection available.",
@@ -1807,14 +2540,65 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Range Selection"
+            "title": "Range Selection",
+            "preview": {
+              "props": {
+                "caption": "Project members",
+                "rows": [
+                  {
+                    "id": "1",
+                    "name": "Anna Kravtsova",
+                    "email": "anna@studio.io",
+                    "role": "Owner"
+                  },
+                  {
+                    "id": "2",
+                    "name": "Peter Demin",
+                    "email": "petr@studio.io",
+                    "role": "Editor"
+                  },
+                  {
+                    "id": "3",
+                    "name": "Maria Luts",
+                    "email": "maria@studio.io",
+                    "role": "Editor"
+                  },
+                  {
+                    "id": "4",
+                    "name": "Igor Soin",
+                    "email": "igor@studio.io",
+                    "role": "Viewer"
+                  },
+                  {
+                    "id": "5",
+                    "name": "Lena Askarova",
+                    "email": "lena@studio.io",
+                    "role": "Viewer"
+                  }
+                ],
+                "columnText": {
+                  "name": "Name",
+                  "email": "Email",
+                  "role": "Role"
+                },
+                "selectAllLabel": "Select every row on this page",
+                "rowLabel": "Select {name}",
+                "countText": "{count} of {total} selected",
+                "shiftKeyLabel": "Shift",
+                "rangeHint": "+ click selects a range"
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1832,7 +2616,7 @@
       ],
       "title": "Флажки разной формы",
       "description": "Чекбоксы, у которых вместо галочки фигура по смыслу отметки: звезда, флажок и молния вырезаны через clip-path.",
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-018-*. Клиентский: \"use client\". Настоящий input спрятан визуально (clip-path: inset(50%)), карточка реагирует через :has(input:checked). Иконки — квадраты с фоном, обрезанные clip-path: polygon по атрибуту data-shape, поэтому иконочная библиотека не нужна и цвет наследуется из палитры. Невыбранная фигура показана приглушённой, а не пустой рамкой.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-018-*. Клиентский: \"use client\". Настоящий input спрятан визуально (clip-path: inset(50%)), карточка реагирует через :has(input:checked). Иконки — квадраты с фоном, обрезанные clip-path: polygon по атрибуту data-shape, поэтому иконочная библиотека не нужна и цвет наследуется из палитры. Невыбранная фигура показана приглушённой, а не пустой рамкой. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
         "tags": ["checkbox", "icons", "clip-path", "toggle"],
         "ai": {
@@ -1845,15 +2629,21 @@
             "спрятанный, но настоящий input — Tab, пробел и объявление состояния держатся на нём",
             "видимую приглушённую фигуру в невыбранном состоянии: пустая рамка не подсказывает, что появится",
             "подпись под фигурой — иконка без слова понимается по-разному",
-            "фокус-кольцо на всей карточке через :has(input:focus-visible): сам input не виден"
+            "фокус-кольцо на всей карточке через :has(input:focus-visible): сам input не виден",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив options: подпись и фигуру (star, flag, bolt) у каждой отметки",
             "legend — название группы",
             "стартовый defaultValue и обработчик onChange",
-            "акцент через проп accent — цвет отмеченной фигуры и рамки"
+            "акцент через проп accent — цвет отмеченной фигуры и рамки",
+            "emptyText — строка под рядом, когда отметок нет",
+            "countText — счётчик отметок с подстановками {count} и {total}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Фигур ровно три: новая форма — это ещё один polygon в CSS, придумать его в разметке нельзя.",
             "Иконка не заменяет подпись: сама по себе звезда означает и «избранное», и «оценку».",
             "Для длинного списка отметок форма перестаёт помогать — там нужен обычный список.",
@@ -1873,6 +2663,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1886,15 +2682,21 @@
                 "the hidden but real input — Tab, space and the state announcement rest on it",
                 "the muted but visible shape when unchecked: an empty box does not hint at what appears",
                 "the caption under the shape — an icon alone is read differently by everyone",
-                "the focus ring on the whole card via :has(input:focus-visible): the input itself is invisible"
+                "the focus ring on the whole card via :has(input:focus-visible): the input itself is invisible",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the options array: a caption and a shape (star, flag, bolt) per mark",
                 "legend — the group's name",
                 "the initial defaultValue and the onChange handler",
-                "the accent through the accent prop — the checked shape and ring colour"
+                "the accent through the accent prop — the checked shape and ring colour",
+                "emptyText — the line under the row when nothing is marked",
+                "countText — the marks counter with the {count} and {total} placeholders",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There are exactly three shapes: a new one means another polygon in the CSS, markup cannot invent it.",
                 "An icon does not replace the caption: a star means both \"favourite\" and \"rating\".",
                 "For a long list of marks the shape stops helping — use a plain list there.",
@@ -1909,14 +2711,43 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Shape Checkboxes"
+            "title": "Shape Checkboxes",
+            "preview": {
+              "props": {
+                "legend": "Card marks",
+                "options": [
+                  {
+                    "id": "favorite",
+                    "label": "Favourite",
+                    "shape": "star"
+                  },
+                  {
+                    "id": "report",
+                    "label": "Flag it",
+                    "shape": "flag"
+                  },
+                  {
+                    "id": "priority",
+                    "label": "Urgent",
+                    "shape": "bolt"
+                  }
+                ],
+                "defaultValue": ["favorite"],
+                "emptyText": "No marks yet",
+                "countText": "Marks: {count} of {total}"
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1934,7 +2765,7 @@
       ],
       "title": "Чипы фильтров",
       "description": "Компактный ряд фильтров-таблеток с переносом: настоящие чекбоксы со спрятанным input, галочка у отмеченных и сброс.",
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-019-*. Клиентский: \"use client\". Таблетка — label со спрятанным input (clip-path: inset(50%)), состояние берётся через :has(input:checked). Галочка появляется анимацией ширины, а не opacity, поэтому невыбранная таблетка не резервирует пустое место. Группа обёрнута в fieldset с legend, кнопка сброса выключена при пустом выборе.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-019-*. Клиентский: \"use client\". Таблетка — label со спрятанным input (clip-path: inset(50%)), состояние берётся через :has(input:checked). Галочка появляется анимацией ширины, а не opacity, поэтому невыбранная таблетка не резервирует пустое место. Группа обёрнута в fieldset с legend, кнопка сброса выключена при пустом выборе. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
         "tags": ["checkbox", "chips", "filters", "compact"],
         "ai": {
@@ -1947,15 +2778,21 @@
             "галочку у отмеченной таблетки — одной заливкой состояние не показать при дальтонизме",
             "рост галочки шириной, а не через opacity: иначе невыбранная таблетка резервирует пустое место",
             "перенос строк (flex-wrap): лента фильтров не должна уезжать за край на телефоне",
-            "кнопку сброса, выключенную при пустом выборе, и счётчик рядом с ней"
+            "кнопку сброса, выключенную при пустом выборе, и счётчик рядом с ней",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив options и стартовый defaultValue",
             "legend — название группы фильтров",
             "обработчик onChange",
-            "акцент через проп accent — цвет отмеченной таблетки"
+            "акцент через проп accent — цвет отмеченной таблетки",
+            "resetLabel — подпись кнопки сброса",
+            "emptyText и countText — строки под лентой; в countText подставляется {count}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Таблетки хороши до десятка: дальше лента переносится на три строки и хуже списка.",
             "Компонент ничего не фильтрует сам: он отдаёт выбранные значения в onChange.",
             "Длинные подписи ломают компактность — держите их в два-три слова.",
@@ -1975,6 +2812,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1988,15 +2831,21 @@
                 "the tick on a selected chip — fill alone cannot carry the state for colour-blind users",
                 "growing the tick by width rather than opacity: otherwise an unselected chip reserves blank space",
                 "the wrapping (flex-wrap): a filter row must not run off the edge on a phone",
-                "the reset button disabled on an empty selection, and the counter beside it"
+                "the reset button disabled on an empty selection, and the counter beside it",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the options array and the initial defaultValue",
                 "legend — the filter group's name",
                 "the onChange handler",
-                "the accent through the accent prop — the selected chip colour"
+                "the accent through the accent prop — the selected chip colour",
+                "resetLabel — the reset button caption",
+                "emptyText and countText — the lines under the row; countText takes the {count} placeholder",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Chips work up to about ten: beyond that the row wraps three times and loses to a list.",
                 "The component filters nothing itself: it hands the selected values to onChange.",
                 "Long captions break the compactness — keep them to two or three words.",
@@ -2011,14 +2860,35 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Filter Chips"
+            "title": "Filter Chips",
+            "preview": {
+              "props": {
+                "legend": "Quick filters",
+                "options": [
+                  "Free",
+                  "On sale",
+                  "New in",
+                  "In stock",
+                  "With delivery",
+                  "Rated 4+"
+                ],
+                "defaultValue": ["In stock"],
+                "resetLabel": "Reset",
+                "emptyText": "No filters selected",
+                "countText": "Filters selected: {count}"
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2036,7 +2906,7 @@
       ],
       "title": "Согласие после прокрутки",
       "description": "Согласие с длинным документом: текст лежит в прокручиваемой рамке, а галочка включается только после того, как его долистали до конца.",
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-020-*. Клиентский: \"use client\". Обработчик onScroll сравнивает scrollTop + clientHeight со scrollHeight с запасом в восемь пикселей и разблокирует чекбокс. Рамка текста получает tabIndex и role=\"region\" с именем, чтобы её можно было листать с клавиатуры. Градиентная тень у нижнего края показывает продолжение и гаснет по data-read на корне.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-020-*. Клиентский: \"use client\". Обработчик onScroll сравнивает scrollTop + clientHeight со scrollHeight с запасом в восемь пикселей и разблокирует чекбокс. Рамка текста получает tabIndex и role=\"region\" с именем, чтобы её можно было листать с клавиатуры. Градиентная тень у нижнего края показывает продолжение и гаснет по data-read на корне. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
         "tags": ["checkbox", "legal", "scroll", "consent"],
         "ai": {
@@ -2049,15 +2919,21 @@
             "объяснение под галочкой, почему она выключена — иначе блок выглядит сломанным",
             "запас в несколько пикселей при проверке конца прокрутки: дробные высоты не дают точного равенства",
             "градиентную тень у нижнего края и её исчезновение после дочитывания",
-            "непроставленную галочку: предвыбранное согласие незаконно в ЕС и нечестно везде"
+            "непроставленную галочку: предвыбранное согласие незаконно в ЕС и нечестно везде",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив paragraphs — текст документа по абзацам",
             "title — заголовок документа",
             "label — подпись рядом с галочкой",
-            "обработчик onChange и акцент через проп accent"
+            "обработчик onChange и акцент через проп accent",
+            "regionLabel — доступное имя рамки с подстановкой {title}",
+            "readHint и unreadHint — подсказки под галочкой до и после дочитывания",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Требование долистать — приём убеждения, а не юридическое доказательство прочтения.",
             "Очень длинный документ лучше открывать отдельной страницей: девять экранов в рамке никто не листает.",
             "Компонент не хранит согласие: факт и время подтверждения записывает вызывающий код.",
@@ -2078,6 +2954,18 @@
             "type": "text",
             "default": "Я прочитал соглашение и согласен с его условиями",
             "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2091,15 +2979,21 @@
                 "the explanation under the box for why it is disabled — otherwise the block looks broken",
                 "the few-pixel slack in the end-of-scroll check: fractional heights never match exactly",
                 "the gradient fade at the bottom edge and its disappearance once the text is read",
-                "the unchecked default: pre-ticked consent is illegal in the EU and dishonest everywhere"
+                "the unchecked default: pre-ticked consent is illegal in the EU and dishonest everywhere",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the paragraphs array — the document text, paragraph by paragraph",
                 "title — the document heading",
                 "label — the wording next to the checkbox",
-                "the onChange handler and the accent through the accent prop"
+                "the onChange handler and the accent through the accent prop",
+                "regionLabel — the frame's accessible name with the {title} placeholder",
+                "readHint and unreadHint — the hints under the box before and after the text is read",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Requiring a scroll is persuasion, not legal proof that anything was read.",
                 "A very long document belongs on its own page: nobody scrolls nine screens inside a frame.",
                 "The component stores no consent: recording the fact and the timestamp is the caller's job.",
@@ -2115,14 +3009,37 @@
               "label": {
                 "label": "Consent wording",
                 "default": "I have read the terms and agree to them"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Scroll Consent"
+            "title": "Scroll Consent",
+            "preview": {
+              "props": {
+                "title": "Terms of service",
+                "label": "I have read the terms and agree to them",
+                "paragraphs": [
+                  "1. These terms govern the use of the service and are entered into between you and the operator at the moment an account is created.",
+                  "2. The operator processes the data you submit solely to provide the service and stores it on its servers for the term of the agreement.",
+                  "3. You are responsible for keeping your password safe and for every action taken under your account, including those of the people you invite.",
+                  "4. The operator may change these terms with thirty days' notice. Continuing to use the service after that period means accepting the new version.",
+                  "5. You may terminate the agreement at any time from your account settings; the data is deleted within ninety days."
+                ],
+                "regionLabel": "Text: {title}",
+                "readHint": "The text has been read — the box can be ticked.",
+                "unreadHint": "Scroll the text to the end to tick the box."
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2140,7 +3057,7 @@
       ],
       "title": "Дерево прав",
       "description": "Дерево чекбоксов с наследованием: ветка переключает все свои листья разом, а её собственное состояние вычисляется из них.",
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-021-*. Клиентский: \"use client\". Состояние хранится только для листьев; ветка считает своё через список потомков, поэтому дерево работает на любой глубине. indeterminate выставляется эффектом в каждой строке. Ветки лежат в <details> со скрытым маркером, клик по галочке внутри <summary> останавливает всплытие, иначе он сворачивал бы ветку.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-021-*. Клиентский: \"use client\". Состояние хранится только для листьев; ветка считает своё через список потомков, поэтому дерево работает на любой глубине. indeterminate выставляется эффектом в каждой строке. Ветки лежат в <details> со скрытым маркером, клик по галочке внутри <summary> останавливает всплытие, иначе он сворачивал бы ветку. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
         "tags": ["checkbox", "tree", "permissions", "indeterminate"],
         "ai": {
@@ -2153,15 +3070,20 @@
             "остановку всплытия у галочки внутри <summary> — иначе клик по ней сворачивает ветку",
             "установку indeterminate эффектом: разметкой это свойство не задаётся",
             "линию слева у вложенных списков: на третьем уровне один отступ уже не читается",
-            "черту вместо бледной галки для частичного выбора — форма важнее оттенка"
+            "черту вместо бледной галки для частичного выбора — форма важнее оттенка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив nodes — дерево любой глубины",
             "title — заголовок блока",
             "стартовый defaultValue из идентификаторов листьев",
-            "обработчик onChange и акцент через проп accent"
+            "обработчик onChange и акцент через проп accent",
+            "countText — счётчик внизу с подстановками {count} и {total}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "defaultValue содержит только листья: идентификатор ветки в нём ничего не включит.",
             "Идентификаторы листьев должны быть уникальными во всём дереве, иначе ветки будут влиять друг на друга.",
             "Для одного уровня вложенности дерево избыточно — там достаточно checkbox-003.",
@@ -2181,6 +3103,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2194,15 +3122,20 @@
                 "stopping propagation on the tick inside <summary> — otherwise clicking it collapses the branch",
                 "setting indeterminate in an effect: the property cannot be written in markup",
                 "the guide line on nested lists: at the third level indentation alone stops reading",
-                "the dash instead of a faded tick for a partial selection — shape beats shade"
+                "the dash instead of a faded tick for a partial selection — shape beats shade",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the nodes array — a tree of any depth",
                 "title — the block heading",
                 "the initial defaultValue built from leaf identifiers",
-                "the onChange handler and the accent through the accent prop"
+                "the onChange handler and the accent through the accent prop",
+                "countText — the counter below, with the {count} and {total} placeholders",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "defaultValue holds leaves only: a branch id in it turns nothing on.",
                 "Leaf identifiers must be unique across the whole tree, or branches start affecting each other.",
                 "For a single level of nesting a tree is overkill — checkbox-003 is enough.",
@@ -2217,14 +3150,79 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Permission Tree"
+            "title": "Permission Tree",
+            "preview": {
+              "props": {
+                "title": "Permissions",
+                "nodes": [
+                  {
+                    "id": "content",
+                    "label": "Content",
+                    "children": [
+                      {
+                        "id": "pages",
+                        "label": "Pages",
+                        "children": [
+                          {
+                            "id": "pages-read",
+                            "label": "Read"
+                          },
+                          {
+                            "id": "pages-edit",
+                            "label": "Edit"
+                          },
+                          {
+                            "id": "pages-delete",
+                            "label": "Delete"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "media",
+                        "label": "Media",
+                        "children": [
+                          {
+                            "id": "media-read",
+                            "label": "View"
+                          },
+                          {
+                            "id": "media-upload",
+                            "label": "Upload"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "team",
+                    "label": "Team",
+                    "children": [
+                      {
+                        "id": "team-read",
+                        "label": "Member list"
+                      },
+                      {
+                        "id": "team-invite",
+                        "label": "Invite people"
+                      }
+                    ]
+                  }
+                ],
+                "defaultValue": ["pages-read", "media-read"],
+                "countText": "Granted: {count} of {total}"
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2242,7 +3240,7 @@
       ],
       "title": "Закрытые настройки",
       "description": "Настройки, часть которых только для чтения: у заблокированной строки замок, приглушённый фон и причина прямо под подписью.",
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-022-*. Клиентский: \"use client\". Заблокированная строка помечена readOnly и aria-disabled, а не disabled: она остаётся в порядке табуляции и доступна скринридеру. Причина связана с полем через aria-describedby с идентификатором из useId. Замок нарисован корпусом и дужкой из ::before, поэтому иконочная библиотека не нужна.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-022-*. Клиентский: \"use client\". Заблокированная строка помечена readOnly и aria-disabled, а не disabled: она остаётся в порядке табуляции и доступна скринридеру. Причина связана с полем через aria-describedby с идентификатором из useId. Замок нарисован корпусом и дужкой из ::before, поэтому иконочная библиотека не нужна. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
         "tags": ["checkbox", "readonly", "policy", "settings"],
         "ai": {
@@ -2255,15 +3253,20 @@
             "причину под подписью, связанную через aria-describedby — «нельзя» без объяснения читается как поломка",
             "замок как вторую примету блокировки: приглушённый текст сам по себе можно принять за оформление",
             "различимую отметку у заблокированной строки: её значение важно, даже если менять его нельзя",
-            "сноску внизу, называющую, кто именно управляет этими настройками"
+            "сноску внизу, называющую, кто именно управляет этими настройками",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "приглушённую подложку заблокированной строки: она держится на своём токене и обязана оставаться различимой в обеих темах"
           ],
           "adapt": [
             "массив options: подпись, признак locked и причину блокировки",
             "legend — название группы",
             "footnote — сноску под списком",
-            "обработчик onChange и акцент через проп accent"
+            "обработчик onChange и акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "readOnly не мешает отправке формы: значение заблокированного поля уйдёт на сервер, и его надо проверять там.",
             "Причина обязана быть конкретной: «недоступно» не объясняет, к кому идти.",
             "Если менять настройку нельзя никому и никогда, её лучше не показывать вовсе.",
@@ -2284,6 +3287,18 @@
             "type": "text",
             "default": "Строки с замком заданы политикой организации — их меняет администратор.",
             "maxLength": 90
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -2297,15 +3312,20 @@
                 "the reason under the label, linked with aria-describedby — a bare \"no\" reads as a bug",
                 "the lock as a second cue: muted text alone can pass for styling",
                 "a legible tick on a locked row: its value matters even when it cannot be changed",
-                "the footnote naming who actually controls these settings"
+                "the footnote naming who actually controls these settings",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the muted background of a locked row: it lives on its own token and has to stay legible in both themes"
               ],
               "adapt": [
                 "the options array: label, the locked flag and the reason",
                 "legend — the group's name",
                 "footnote — the line under the list",
-                "the onChange handler and the accent through the accent prop"
+                "the onChange handler and the accent through the accent prop",
+                "background — the component surface; empty means no surface, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "readOnly does not stop submission: a locked field still posts its value, so validate it on the server.",
                 "The reason must be specific: \"unavailable\" does not say whom to ask.",
                 "If nobody can ever change a setting, it is better not to show it at all.",
@@ -2321,14 +3341,50 @@
               "footnote": {
                 "label": "Footnote",
                 "default": "Rows with a lock are set by the org policy — an admin changes them."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
               }
             },
-            "title": "Locked Settings"
+            "title": "Locked Settings",
+            "preview": {
+              "props": {
+                "legend": "Account security",
+                "footnote": "Rows with a lock are set by the org policy — an admin changes them.",
+                "options": [
+                  {
+                    "id": "2fa",
+                    "label": "Two-factor sign-in",
+                    "locked": true,
+                    "reason": "Turned on by the org policy"
+                  },
+                  {
+                    "id": "session",
+                    "label": "Sign out after 30 minutes of inactivity"
+                  },
+                  {
+                    "id": "export",
+                    "label": "Allow data export",
+                    "locked": true,
+                    "reason": "Turned off by the workspace admin"
+                  },
+                  {
+                    "id": "digest",
+                    "label": "Weekly sign-in report"
+                  }
+                ],
+                "defaultValue": ["2fa", "session"]
+              }
+            }
           }
         },
         "preview": {
           "width": "full"
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

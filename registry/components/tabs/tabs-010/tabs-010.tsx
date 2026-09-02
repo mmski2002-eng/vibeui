@@ -9,7 +9,11 @@ export type Tabs010Tab = {
 export type Tabs010Props = {
   tabs?: Tabs010Tab[]
   name?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
+  /** Подпись группы вкладок для скринридера. */
+  groupLabel?: string
   className?: string
   style?: CSSProperties
 }
@@ -18,13 +22,16 @@ export type Tabs010Props = {
 // радиокнопки, а положение полосы задаёт правило :has() — отмеченная кнопка
 // выставляет индекс переменной, и полоса едет по арифметике в CSS. Панели
 // показываются тем же :has(): ни состояния, ни гидратации, ни измерений.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте рамка светлее фона, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="tabs-010"]){
---vibeui-tabs-010-bg:oklch(1 0 0);
---vibeui-tabs-010-fg:oklch(0.22 0.014 265);
---vibeui-tabs-010-muted:oklch(0.55 0.014 265);
---vibeui-tabs-010-border:oklch(0.91 0.006 265);
---vibeui-tabs-010-accent:oklch(0.55 0.2 262);
+--vibeui-tabs-010-bg:transparent;
+--vibeui-tabs-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tabs-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-tabs-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-tabs-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-tabs-010-index:0;
 --vibeui-tabs-010-count:4;
 --vibeui-tabs-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -100,19 +107,49 @@ const DEFAULT_TABS: Tabs010Tab[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Вкладки на радиокнопках с переезжающим индикатором и без JS.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tabs010({
   tabs = DEFAULT_TABS,
   name = "vibeui-tabs-010",
+  background = "",
   accent,
+  groupLabel = "Условия",
   className,
   style,
 }: Tabs010Props) {
   const palette = {
     "--vibeui-tabs-010-count": `${tabs.length}`,
     ...(accent ? { "--vibeui-tabs-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-tabs-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -122,7 +159,7 @@ export function Tabs010({
         {STYLES}
       </style>
       <div data-vibeui-block="tabs-010" className={className} style={palette}>
-        <div data-part="strip" role="radiogroup" aria-label="Условия">
+        <div data-part="strip" role="radiogroup" aria-label={groupLabel}>
           {tabs.map((tab, index) => (
             <label key={tab.label}>
               <input

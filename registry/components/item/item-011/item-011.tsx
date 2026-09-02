@@ -10,6 +10,8 @@ export type Item011Props = Omit<
   assigneeName?: string
   name?: string
   defaultChecked?: boolean
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,13 +21,17 @@ export type Item011Props = Omit<
 // зачёркивание названия: выполненная задача читается сразу, без взгляда на
 // сам чекбокс. Инициалы исполнителя не единственный носитель имени — полное
 // имя лежит в aria-label плитки, а не только в её визуальных двух буквах.
+//
+// Тема берётся из color-scheme окружения через light-dark(): строка темнеет
+// там, где тёмный контекст, и не выкладывает под себя белую плашку.
 const STYLES = `
 :where([data-vibeui-block="item-011"]){
---vibeui-item-011-bg:oklch(1 0 0);
---vibeui-item-011-fg:oklch(0.23 0.014 265);
---vibeui-item-011-muted:oklch(0.56 0.014 265);
---vibeui-item-011-border:oklch(0.9 0.006 265);
---vibeui-item-011-accent:oklch(0.55 0.19 262);
+--vibeui-item-011-bg:transparent;
+--vibeui-item-011-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-item-011-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-item-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-item-011-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.16 262));
+--vibeui-item-011-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
 --vibeui-item-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="item-011"]{
@@ -52,7 +58,7 @@ color:transparent;font-size:0.6875rem;font-weight:800;line-height:1;
 transition:background-color .15s ease,border-color .15s ease,color .15s ease;
 }
 [data-vibeui-block="item-011"]:has(input:checked) [data-part="box"]{
-background:var(--vibeui-item-011-accent);border-color:var(--vibeui-item-011-accent);color:oklch(1 0 0);
+background:var(--vibeui-item-011-accent);border-color:var(--vibeui-item-011-accent);color:var(--vibeui-item-011-on-accent);
 }
 [data-vibeui-block="item-011"] [data-part="title"]{
 font-size:0.875rem;font-weight:650;line-height:1.3;
@@ -76,6 +82,28 @@ color:var(--vibeui-item-011-accent);font-size:0.625rem;font-weight:700;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Строка задачи: чекбокс на нативном input, срок и исполнитель.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -86,6 +114,7 @@ export function Item011({
   assigneeName = "Мария Ковалёва",
   name = "task",
   defaultChecked = false,
+  background = "",
   accent,
   className,
   style,
@@ -93,6 +122,12 @@ export function Item011({
 }: Item011Props) {
   const palette = {
     ...(accent ? { "--vibeui-item-011-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-item-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

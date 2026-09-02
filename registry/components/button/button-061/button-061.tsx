@@ -21,6 +21,8 @@ export type Button061Props = Omit<
   slowHint?: string
   onCancel?: MouseEventHandler<HTMLButtonElement>
   accent?: string
+  /** Поверхность плашки. Пусто — своя, из палитры. */
+  background?: string
 }
 
 // Идея компонента: отмена длительной операции с честным таймером. Кнопка
@@ -30,12 +32,12 @@ export type Button061Props = Omit<
 // сам компонент, работу — приложение.
 const STYLES = `
 :where([data-vibeui-block="button-061"]){
---vibeui-button-061-surface:oklch(1 0 0);
---vibeui-button-061-border:oklch(0.89 0.006 265);
---vibeui-button-061-fg:oklch(0.26 0.02 265);
---vibeui-button-061-muted:oklch(0.56 0.014 265);
---vibeui-button-061-accent:oklch(0.55 0.16 250);
---vibeui-button-061-warn:oklch(0.62 0.15 70);
+--vibeui-button-061-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
+--vibeui-button-061-border:light-dark(oklch(0.89 0.006 265),oklch(0.42 0.014 265));
+--vibeui-button-061-fg:light-dark(oklch(0.26 0.02 265),oklch(0.94 0.008 265));
+--vibeui-button-061-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-button-061-accent:light-dark(oklch(0.55 0.16 250),oklch(0.74 0.13 250));
+--vibeui-button-061-warn:light-dark(oklch(0.62 0.15 70),oklch(0.78 0.14 70));
 --vibeui-button-061-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-button-061-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
@@ -103,6 +105,29 @@ function clock(seconds: number) {
 }
 
 /**
+ * Ветка темы для заданной поверхности. Без неё светлая заливка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Отмена длительной операции с прошедшим временем и порогом «дольше обычного».
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -114,6 +139,7 @@ export function Button061({
   slowHint = "дольше обычного",
   onCancel,
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -147,6 +173,12 @@ export function Button061({
 
   const palette = {
     ...(accent ? { "--vibeui-button-061-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-button-061-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

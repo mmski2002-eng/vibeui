@@ -18,6 +18,10 @@ export type Calendar004Props = Omit<
   timezone?: string
   onChange?: (time: string) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  /** Подпись над сеткой. {free} и {total} подставляются числами. */
+  freeText?: string
 }
 
 // Идея компонента: сетка слотов записи. Занятые слоты остаются видимыми, но
@@ -26,11 +30,14 @@ export type Calendar004Props = Omit<
 // без пояса регулярно оборачивается опозданием на несколько часов.
 const STYLES = `
 :where([data-vibeui-block="calendar-004"]){
---vibeui-calendar-004-bg:oklch(1 0 0);
---vibeui-calendar-004-fg:oklch(0.24 0.014 265);
---vibeui-calendar-004-muted:oklch(0.6 0.014 265);
---vibeui-calendar-004-border:oklch(0.91 0.006 265);
---vibeui-calendar-004-accent:oklch(0.55 0.17 265);
+--vibeui-calendar-004-bg:transparent;
+--vibeui-calendar-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-calendar-004-muted:light-dark(oklch(0.6 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-calendar-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-calendar-004-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.19 0.03 265));
+--vibeui-calendar-004-hatch-a:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.012 265));
+--vibeui-calendar-004-hatch-b:light-dark(oklch(0.94 0.004 265),oklch(0.31 0.012 265));
 --vibeui-calendar-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -61,14 +68,14 @@ cursor:pointer;
 }
 [data-vibeui-block="calendar-004"] input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
 [data-vibeui-block="calendar-004"] label:has(input:checked){
-border-color:transparent;background:var(--vibeui-calendar-004-accent);color:oklch(0.99 0.01 265);
+border-color:transparent;background:var(--vibeui-calendar-004-accent);color:var(--vibeui-calendar-004-on-accent);
 }
 [data-vibeui-block="calendar-004"] label:has(input:focus-visible){outline:2px solid var(--vibeui-calendar-004-accent);outline-offset:2px}
 /* Занятый слот остаётся на месте: исчезнувший создаёт ложное ощущение
    свободного расписания. */
 [data-vibeui-block="calendar-004"] label:has(input:disabled){
 cursor:not-allowed;color:var(--vibeui-calendar-004-muted);
-background:repeating-linear-gradient(135deg,oklch(0.97 0.003 265) 0 0.25rem,oklch(0.94 0.004 265) 0.25rem 0.5rem);
+background:repeating-linear-gradient(135deg,var(--vibeui-calendar-004-hatch-a) 0 0.25rem,var(--vibeui-calendar-004-hatch-b) 0.25rem 0.5rem);
 }
 [data-vibeui-block="calendar-004"] [data-part="zone"]{font-size:0.75rem;color:var(--vibeui-calendar-004-muted)}
 @container (max-width: 17rem){
@@ -90,6 +97,28 @@ const DEFAULT_SLOTS: Calendar004Slot[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сетка слотов записи: занятые видны, но выключены, пояс подписан.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -100,6 +129,8 @@ export function Calendar004({
   timezone = "Время московское (UTC+3)",
   onChange,
   accent,
+  background = "",
+  freeText = "Свободно {free} из {total}",
   className,
   style,
   ...props
@@ -109,6 +140,12 @@ export function Calendar004({
 
   const palette = {
     ...(accent ? { "--vibeui-calendar-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -129,7 +166,9 @@ export function Calendar004({
           <p data-part="date">{date}</p>
           <fieldset data-part="grid-wrap">
             <legend>
-              Свободно {free} из {slots.length}
+              {freeText
+                .replace("{free}", String(free))
+                .replace("{total}", String(slots.length))}
             </legend>
             <div data-part="grid">
               {slots.map((slot) => (

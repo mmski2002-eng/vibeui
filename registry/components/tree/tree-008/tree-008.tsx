@@ -9,6 +9,10 @@ export type Tree008Node = {
 export type Tree008Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
   nodes?: Tree008Node[]
   label?: string
+  /** Цвет направляющих линий уровней. */
+  line?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: развёрнутая структура с настоящими направляющими. Уголок
@@ -17,13 +21,16 @@ export type Tree008Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
 // заканчивается на нём, а не уходит в пустоту. Это ровно то, что печатает
 // tree в терминале, но без псевдографики в тексте: символы ├ и └ уехали бы
 // в буфер обмена при копировании имён.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="tree-008"]){
---vibeui-tree-008-bg:oklch(1 0 0);
---vibeui-tree-008-fg:oklch(0.24 0.014 265);
---vibeui-tree-008-muted:oklch(0.56 0.014 265);
---vibeui-tree-008-border:oklch(0.9 0.006 265);
---vibeui-tree-008-line:oklch(0.85 0.008 265);
+--vibeui-tree-008-bg:transparent;
+--vibeui-tree-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-tree-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.67 0.012 265));
+--vibeui-tree-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-tree-008-line:light-dark(oklch(0.85 0.008 265),oklch(0.42 0.014 265));
 --vibeui-tree-008-row:1.75rem;
 --vibeui-tree-008-indent:0.875rem;
 --vibeui-tree-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
@@ -131,16 +138,51 @@ function renderNodes(nodes: Tree008Node[], level: number) {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Развёрнутая структура с направляющими линиями уровней.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tree008({
   nodes = DEFAULT_NODES,
   label = "Состав пакета",
+  line,
+  background = "",
   className,
   style,
   ...props
 }: Tree008Props) {
+  const palette = {
+    ...(line ? { "--vibeui-tree-008-line": line } : null),
+    ...(background
+      ? {
+          "--vibeui-tree-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-tree-008" precedence="medium">
@@ -150,7 +192,7 @@ export function Tree008({
         {...props}
         data-vibeui-block="tree-008"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
       >
         <ul role="tree" aria-label={label}>
           {renderNodes(nodes, 1)}

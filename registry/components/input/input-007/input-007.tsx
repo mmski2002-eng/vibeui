@@ -10,6 +10,11 @@ export type Input007Props = Omit<
   label?: string
   defaultValue?: string
   scheme?: string
+  placeholder?: string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  text?: Record<string, string>
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
   onChange?: (value: string) => void
   accent?: string
 }
@@ -21,23 +26,28 @@ export type Input007Props = Omit<
 // значение заранее: пока в поле пусто, дописывать нечего.
 const STYLES = `
 :where([data-vibeui-block="input-007"]){
---vibeui-input-007-surface:oklch(1 0 0);
---vibeui-input-007-shell:oklch(0.91 0.006 265);
---vibeui-input-007-fg:oklch(0.23 0.014 265);
---vibeui-input-007-muted:oklch(0.55 0.014 265);
---vibeui-input-007-field:oklch(0.985 0.002 265);
---vibeui-input-007-border:oklch(0.88 0.008 265);
---vibeui-input-007-accent:oklch(0.52 0.16 195);
---vibeui-input-007-bad:oklch(0.55 0.2 25);
+--vibeui-input-007-surface:transparent;
+--vibeui-input-007-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-input-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-input-007-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-input-007-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-input-007-accent:light-dark(oklch(0.52 0.16 195),oklch(0.78 0.13 195));
+--vibeui-input-007-bad:light-dark(oklch(0.55 0.2 25),oklch(0.74 0.17 25));
 --vibeui-input-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-input-007-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
 }
 [data-vibeui-block="input-007"]{
 display:flex;flex-direction:column;gap:0.4375rem;
-width:100%;max-width:23rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:23rem;box-sizing:border-box;
+font-family:var(--vibeui-input-007-font);color:var(--vibeui-input-007-fg);
+}
+/* Подложка появляется только вместе с пропом background: без него поле
+   лежит прямо на фоне страницы. */
+[data-vibeui-block="input-007"][data-surface="on"]{
+padding:0.875rem;
 background:var(--vibeui-input-007-surface);
 border:1px solid var(--vibeui-input-007-shell);border-radius:0.875rem;
-font-family:var(--vibeui-input-007-font);color:var(--vibeui-input-007-fg);
 }
 [data-vibeui-block="input-007"] *{box-sizing:border-box}
 [data-vibeui-block="input-007"] label{font-size:0.8125rem;font-weight:600}
@@ -77,6 +87,11 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-input-007-muted);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="input-007"] *{animation:none!important;transition:none!important}}
 `
 
+const TEXT = {
+  bad: "В домене нет точки — проверьте адрес.",
+  calm: "Схему {scheme}:// допишем сами, набирать её не нужно.",
+}
+
 function withScheme(value: string, scheme: string) {
   const trimmed = value.trim()
   if (!trimmed) return ""
@@ -94,6 +109,28 @@ function split(value: string) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поле адреса сайта: схема дописывается по уходу из фокуса, разбор виден рядом.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -101,6 +138,9 @@ export function Input007({
   label = "Ссылка на сайт",
   defaultValue = "vibeui.ru/components",
   scheme = "https",
+  placeholder = "example.com/page",
+  text,
+  background = "",
   onChange,
   accent,
   className,
@@ -109,9 +149,16 @@ export function Input007({
 }: Input007Props) {
   const id = useId()
   const [value, setValue] = useState(defaultValue)
+  const copy = { ...TEXT, ...text }
 
   const palette = {
     ...(accent ? { "--vibeui-input-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-007-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -127,6 +174,7 @@ export function Input007({
       <div
         {...props}
         data-vibeui-block="input-007"
+        data-surface={background ? "on" : undefined}
         className={className}
         style={palette}
       >
@@ -149,7 +197,7 @@ export function Input007({
             inputMode="url"
             spellCheck={false}
             autoCapitalize="none"
-            placeholder="example.com/page"
+            placeholder={placeholder}
             value={value}
             aria-invalid={bad}
             aria-describedby={`${id}-note`}
@@ -176,9 +224,7 @@ export function Input007({
           )}
         </p>
         <p data-part="note" id={`${id}-note`} data-tone={bad ? "bad" : "calm"}>
-          {bad
-            ? "В домене нет точки — проверьте адрес."
-            : `Схему ${scheme}:// допишем сами, набирать её не нужно.`}
+          {bad ? copy.bad : copy.calm.replace("{scheme}", scheme)}
         </p>
       </div>
     </>

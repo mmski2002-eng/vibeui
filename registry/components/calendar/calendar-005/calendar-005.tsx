@@ -11,6 +11,8 @@ export type Calendar005Props = Omit<
   max?: string
   hint?: string
   accent?: string
+  /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: поле даты на нативном input type="date". Календарь,
@@ -20,12 +22,12 @@ export type Calendar005Props = Omit<
 // системном календаре не объясняет, почему он недоступен.
 const STYLES = `
 :where([data-vibeui-block="calendar-005"]){
---vibeui-calendar-005-bg:oklch(1 0 0);
---vibeui-calendar-005-fg:oklch(0.24 0.014 265);
---vibeui-calendar-005-muted:oklch(0.58 0.014 265);
---vibeui-calendar-005-border:oklch(0.91 0.006 265);
---vibeui-calendar-005-field:oklch(0.985 0.002 265);
---vibeui-calendar-005-accent:oklch(0.55 0.17 265);
+--vibeui-calendar-005-bg:transparent;
+--vibeui-calendar-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-calendar-005-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-calendar-005-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-calendar-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-calendar-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="calendar-005"]{
@@ -56,6 +58,28 @@ cursor:pointer;opacity:.55;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Поле даты на нативном input: календарь и формат берутся у системы.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -66,6 +90,7 @@ export function Calendar005({
   max = "2026-12-31",
   hint = "Можно выбрать с 1 марта по 31 декабря 2026 года",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -73,6 +98,12 @@ export function Calendar005({
   const id = useId()
   const palette = {
     ...(accent ? { "--vibeui-calendar-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

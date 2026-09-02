@@ -10,7 +10,15 @@ export type Checkbox019Props = Omit<
   legend?: string
   options?: string[]
   defaultValue?: string[]
+  /** Подпись кнопки сброса. */
+  resetLabel?: string
+  /** Строка под лентой, когда ничего не выбрано. */
+  emptyText?: string
+  /** Строка под лентой со счётчиком. {count} — сколько выбрано. */
+  countText?: string
   onChange?: (value: string[]) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,15 +27,18 @@ export type Checkbox019Props = Omit<
 // работают, а внешне это компактный ряд, помещающийся над списком. Отмеченная
 // таблетка не только заливается, но и получает галочку слева: заливка одна
 // не читается при дальтонизме.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="checkbox-019"]){
---vibeui-checkbox-019-bg:oklch(1 0 0);
---vibeui-checkbox-019-fg:oklch(0.24 0.014 265);
---vibeui-checkbox-019-muted:oklch(0.55 0.014 265);
---vibeui-checkbox-019-border:oklch(0.89 0.006 265);
---vibeui-checkbox-019-chip:oklch(0.97 0.003 265);
---vibeui-checkbox-019-accent:oklch(0.45 0.13 200);
---vibeui-checkbox-019-on:oklch(0.98 0.01 200);
+--vibeui-checkbox-019-bg:transparent;
+--vibeui-checkbox-019-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-checkbox-019-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-019-border:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265));
+--vibeui-checkbox-019-chip:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.009 265));
+--vibeui-checkbox-019-accent:light-dark(oklch(0.45 0.13 200),oklch(0.62 0.13 200));
+--vibeui-checkbox-019-on:light-dark(oklch(0.98 0.01 200),oklch(0.17 0.03 200));
 --vibeui-checkbox-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="checkbox-019"]{
@@ -89,6 +100,28 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Компактный ряд фильтров-таблеток: настоящие чекбоксы со спрятанным input,
  * галочка у отмеченных и сброс. Один файл, ноль зависимостей.
  */
@@ -96,7 +129,11 @@ export function Checkbox019({
   legend = "Быстрые фильтры",
   options = DEFAULT_OPTIONS,
   defaultValue = ["В наличии"],
+  resetLabel = "Сбросить",
+  emptyText = "Фильтры не выбраны",
+  countText = "Выбрано фильтров: {count}",
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -106,6 +143,12 @@ export function Checkbox019({
 
   const palette = {
     ...(accent ? { "--vibeui-checkbox-019-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-checkbox-019-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -148,12 +191,12 @@ export function Checkbox019({
           disabled={value.length === 0}
           onClick={() => update([])}
         >
-          Сбросить
+          {resetLabel}
         </button>
         <p data-part="count" role="status">
           {value.length === 0
-            ? "Фильтры не выбраны"
-            : `Выбрано фильтров: ${value.length}`}
+            ? emptyText
+            : countText.replace("{count}", String(value.length))}
         </p>
       </fieldset>
     </>

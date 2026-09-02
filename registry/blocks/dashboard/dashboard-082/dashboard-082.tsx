@@ -16,6 +16,12 @@ export type Dashboard082Props = {
   notes?: Dashboard082Note[]
   newLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Заголовок ряда закреплённых заметок. */
+  pinnedTitle?: string
+  /** Заголовок общего потока заметок. */
+  restTitle?: string
   className?: string
   style?: CSSProperties
 }
@@ -30,15 +36,22 @@ export type Dashboard082Props = {
 // порядок чтения не строго сверху вниз, и «первая» заметка там не первая.
 // Чек-лист внутри заметки показан как есть, с отметками: половина командных
 // заметок — это список дел, и прятать его прогрессом бессмысленно.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-082"]){
---vibeui-dashboard-082-bg:oklch(0.985 0.004 85);
---vibeui-dashboard-082-card:oklch(1 0 0);
---vibeui-dashboard-082-fg:oklch(0.21 0.014 85);
---vibeui-dashboard-082-muted:oklch(0.54 0.014 85);
---vibeui-dashboard-082-border:oklch(0.9 0.008 85);
---vibeui-dashboard-082-accent:oklch(0.56 0.13 65);
---vibeui-dashboard-082-soft:oklch(0.965 0.025 85);
+--vibeui-dashboard-082-bg:transparent;
+/* Карточка заметки и чип тега: подложка самого блока прозрачна. */
+--vibeui-dashboard-082-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 85));
+--vibeui-dashboard-082-inset:light-dark(oklch(0.985 0.004 85),oklch(0.22 0.012 85));
+--vibeui-dashboard-082-fg:light-dark(oklch(0.21 0.014 85),oklch(0.94 0.005 85));
+--vibeui-dashboard-082-muted:light-dark(oklch(0.54 0.014 85),oklch(0.72 0.012 85));
+--vibeui-dashboard-082-border:light-dark(oklch(0.9 0.008 85),oklch(0.36 0.012 85));
+--vibeui-dashboard-082-accent:light-dark(oklch(0.56 0.13 65),oklch(0.78 0.12 65));
+--vibeui-dashboard-082-accent-line:light-dark(oklch(0.84 0.06 65),oklch(0.52 0.09 65));
+--vibeui-dashboard-082-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 65));
+--vibeui-dashboard-082-soft:light-dark(oklch(0.965 0.025 85),oklch(0.3 0.035 85));
 --vibeui-dashboard-082-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }
@@ -57,7 +70,7 @@ border:1px solid var(--vibeui-dashboard-082-border);border-radius:1rem;padding:1
 [data-vibeui-block="dashboard-082"] [data-part="new"]{
 margin-left:auto;appearance:none;border:0;cursor:pointer;font:inherit;
 font-size:0.75rem;font-weight:700;padding:0.4375rem 0.875rem;border-radius:0.5625rem;
-background:var(--vibeui-dashboard-082-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-082-accent);color:var(--vibeui-dashboard-082-on-accent);
 }
 [data-vibeui-block="dashboard-082"] h3{margin:0 0 0.4375rem;font-size:0.6875rem;font-weight:750;text-transform:uppercase;letter-spacing:0.06em;color:var(--vibeui-dashboard-082-muted)}
 [data-vibeui-block="dashboard-082"] [data-part="pinned"]{
@@ -76,10 +89,10 @@ background:var(--vibeui-dashboard-082-card);border:1px solid var(--vibeui-dashbo
 }
 [data-vibeui-block="dashboard-082"] [data-part="note"][data-pinned="true"]{
 background:var(--vibeui-dashboard-082-soft);
-border-color:color-mix(in oklab,var(--vibeui-dashboard-082-accent) 35%,white);
+border-color:var(--vibeui-dashboard-082-accent-line);
 }
 [data-vibeui-block="dashboard-082"] [data-part="note"] h4{margin:0;font-size:0.875rem;font-weight:750;line-height:1.3}
-[data-vibeui-block="dashboard-082"] [data-part="body"]{margin:0;font-size:0.8125rem;line-height:1.5;color:color-mix(in oklab,var(--vibeui-dashboard-082-fg) 88%,white)}
+[data-vibeui-block="dashboard-082"] [data-part="body"]{margin:0;font-size:0.8125rem;line-height:1.5;color:color-mix(in oklab,var(--vibeui-dashboard-082-fg) 88%,light-dark(white,black))}
 [data-vibeui-block="dashboard-082"] [data-part="todo"]{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.1875rem}
 [data-vibeui-block="dashboard-082"] [data-part="todo"] li{
 display:flex;align-items:flex-start;gap:0.4375rem;font-size:0.8125rem;line-height:1.4;
@@ -97,7 +110,7 @@ margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:0.25rem;
 }
 [data-vibeui-block="dashboard-082"] [data-part="tags"] li{
 font-size:0.625rem;font-weight:700;padding:0.0625rem 0.375rem;border-radius:0.3125rem;
-background:var(--vibeui-dashboard-082-bg);border:1px solid var(--vibeui-dashboard-082-border);
+background:var(--vibeui-dashboard-082-inset);border:1px solid var(--vibeui-dashboard-082-border);
 color:var(--vibeui-dashboard-082-muted);
 }
 [data-vibeui-block="dashboard-082"] [data-part="by"]{
@@ -175,6 +188,28 @@ const DEFAULT_NOTES: Dashboard082Note[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Экран заметок команды: закреплённые вынесены наверх, остальные уложены
  * колонками, поэтому карточка занимает ровно свою высоту, а чек-листы
  * показаны с отметками. Один файл, ноль зависимостей, клиентского JS нет.
@@ -185,11 +220,20 @@ export function Dashboard082({
   notes = DEFAULT_NOTES,
   newLabel = "Новая заметка",
   accent,
+  background = "",
+  pinnedTitle = "Закреплено",
+  restTitle = "Остальные заметки",
   className,
   style,
 }: Dashboard082Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-082-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-082-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -243,7 +287,7 @@ export function Dashboard082({
 
           {pinned.length > 0 ? (
             <div>
-              <h3>Закреплено</h3>
+              <h3>{pinnedTitle}</h3>
               <ul data-part="pinned">
                 {pinned.map((note) => (
                   <li key={note.title}>{card(note)}</li>
@@ -253,7 +297,7 @@ export function Dashboard082({
           ) : null}
 
           <div>
-            <h3>Остальные заметки</h3>
+            <h3>{restTitle}</h3>
             <ul data-part="flow">
               {rest.map((note) => (
                 <li key={note.title}>{card(note)}</li>

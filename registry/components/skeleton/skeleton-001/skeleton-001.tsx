@@ -13,10 +13,13 @@ export type Skeleton001Props = ComponentPropsWithoutRef<"div"> & {
 // Идея компонента: заглушка повторяет метрику будущего текста, а не рисует
 // серые прямоугольники наугад. Высота строки и промежутки те же, что у
 // абзаца, поэтому при появлении данных страница не прыгает.
+//
+// Тема берётся из color-scheme окружения через light-dark(): заглушка темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="skeleton-001"]){
---vibeui-skeleton-001-base:oklch(0.93 0.005 265);
---vibeui-skeleton-001-shine:oklch(0.97 0.003 265);
+--vibeui-skeleton-001-base:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.012 265));
+--vibeui-skeleton-001-shine:light-dark(oklch(0.97 0.003 265),oklch(0.39 0.016 265));
 --vibeui-skeleton-001-radius:0.375rem;
 --vibeui-skeleton-001-line:1rem;
 --vibeui-skeleton-001-gap:0.625rem;

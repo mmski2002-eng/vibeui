@@ -9,8 +9,12 @@ export type Buttongroup045Props = Omit<
   metricValue?: string
   imperialValue?: string
   caption?: string
+  /** Доступное имя группы: читается скринридером, визуально скрыто. */
+  label?: string
   defaultValue?: "metric" | "imperial"
   name?: string
+  /** Пусто — заливки нет, карточка ложится на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,12 +27,14 @@ export type Buttongroup045Props = Omit<
 // Сама сцепка компактная, потому что стоит рядом со значением, а не отдельно.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-045"]){
---vibeui-buttongroup-045-surface:oklch(1 0 0);
---vibeui-buttongroup-045-track:oklch(0.955 0.004 265);
---vibeui-buttongroup-045-fg:oklch(0.24 0.016 265);
---vibeui-buttongroup-045-muted:oklch(0.56 0.014 265);
---vibeui-buttongroup-045-border:oklch(0.9 0.006 265);
---vibeui-buttongroup-045-accent:oklch(0.5 0.15 230);
+--vibeui-buttongroup-045-surface:transparent;
+--vibeui-buttongroup-045-track:light-dark(oklch(0.955 0.004 265),oklch(0.3 0.01 265));
+--vibeui-buttongroup-045-knob:light-dark(oklch(1 0 0),oklch(0.42 0.013 265));
+--vibeui-buttongroup-045-fg:light-dark(oklch(0.24 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-045-muted:light-dark(oklch(0.56 0.014 265),oklch(0.73 0.012 265));
+--vibeui-buttongroup-045-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.012 265));
+--vibeui-buttongroup-045-shadow:light-dark(oklch(0.2 0.02 265 / 16%),oklch(0 0 0 / 38%));
+--vibeui-buttongroup-045-accent:light-dark(oklch(0.5 0.15 230),oklch(0.79 0.13 230));
 --vibeui-buttongroup-045-radius:0.4375rem;
 --vibeui-buttongroup-045-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -76,9 +82,9 @@ transition:background-color .16s ease,color .16s ease;
 position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;
 }
 [data-vibeui-block="buttongroup-045"] [data-part="unit"]:has(input:checked){
-background:var(--vibeui-buttongroup-045-surface);
+background:var(--vibeui-buttongroup-045-knob);
 color:var(--vibeui-buttongroup-045-accent);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 16%);
+box-shadow:0 1px 2px var(--vibeui-buttongroup-045-shadow);
 }
 [data-vibeui-block="buttongroup-045"] [data-part="unit"]:has(input:focus-visible){
 outline:2px solid var(--vibeui-buttongroup-045-accent);outline-offset:2px;
@@ -90,6 +96,28 @@ outline:2px solid var(--vibeui-buttongroup-045-accent);outline-offset:2px;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая заливка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Переключатель единиц, показывающий пересчитанное значение без JS.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -99,8 +127,10 @@ export function Buttongroup045({
   metricValue = "18 °C",
   imperialValue = "64 °F",
   caption = "средняя за неделю",
+  label = "Единицы измерения",
   defaultValue = "metric",
   name = "buttongroup-045",
+  background = "",
   accent,
   className,
   style,
@@ -108,6 +138,12 @@ export function Buttongroup045({
 }: Buttongroup045Props) {
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-045-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-buttongroup-045-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -122,7 +158,7 @@ export function Buttongroup045({
         className={className}
         style={palette}
       >
-        <legend>Единицы измерения</legend>
+        <legend>{label}</legend>
         <p data-part="readout">
           <span data-part="value">
             <span data-value="metric">{metricValue}</span>

@@ -27,11 +27,11 @@ export type Button037Props = Omit<
 // свой transition-delay, поэтому стопка читается как раскрытие, а не рывок.
 const STYLES = `
 :where([data-vibeui-block="button-037"]){
---vibeui-button-037-accent:oklch(0.56 0.2 25);
---vibeui-button-037-fg:oklch(0.99 0.01 25);
---vibeui-button-037-surface:oklch(1 0 0);
---vibeui-button-037-ink:oklch(0.26 0.016 265);
---vibeui-button-037-border:oklch(0.9 0.006 265);
+--vibeui-button-037-accent:light-dark(oklch(0.56 0.2 25),oklch(0.66 0.19 25));
+--vibeui-button-037-fg:light-dark(oklch(0.99 0.01 25),oklch(0.98 0.014 25));
+--vibeui-button-037-surface:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-button-037-ink:light-dark(oklch(0.26 0.016 265),oklch(0.93 0.006 265));
+--vibeui-button-037-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
 --vibeui-button-037-size:3.25rem;
 --vibeui-button-037-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

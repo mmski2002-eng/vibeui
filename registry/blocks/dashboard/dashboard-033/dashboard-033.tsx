@@ -15,6 +15,16 @@ export type Dashboard033Props = {
   steps?: Dashboard033Step[]
   skipLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подпись кольца готовности для скринридера. */
+  progressLabel?: string
+  /** Отметка выполненного шага вместо оценки времени. */
+  doneText?: string
+  /** Шаблон оценки времени: {minutes}. */
+  minutesText?: string
+  /** Шаблон итоговой строки: {minutes} и {steps}. */
+  footText?: string
   className?: string
   style?: CSSProperties
 }
@@ -29,13 +39,17 @@ export type Dashboard033Props = {
 // шаг помечен галочкой и зачёркнутым заголовком — цвета одного мало.
 const STYLES = `
 :where([data-vibeui-block="dashboard-033"]){
---vibeui-dashboard-033-bg:oklch(1 0 0);
---vibeui-dashboard-033-panel:oklch(0.985 0.003 265);
---vibeui-dashboard-033-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-033-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-033-border:oklch(0.91 0.006 265);
---vibeui-dashboard-033-accent:oklch(0.55 0.2 262);
---vibeui-dashboard-033-done:oklch(0.55 0.14 152);
+--vibeui-dashboard-033-bg:transparent;
+--vibeui-dashboard-033-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.012 265));
+/* Кнопка сделанного шага: подложка блока прозрачна, и рисовать её нечем. */
+--vibeui-dashboard-033-card:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-dashboard-033-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-033-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-033-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-dashboard-033-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-dashboard-033-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
+--vibeui-dashboard-033-done:light-dark(oklch(0.55 0.14 152),oklch(0.76 0.14 152));
+--vibeui-dashboard-033-on-done:light-dark(oklch(1 0 0),oklch(0.19 0.03 152));
 --vibeui-dashboard-033-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -84,7 +98,7 @@ outline:2px solid var(--vibeui-dashboard-033-accent);outline-offset:-2px;
 [data-vibeui-block="dashboard-033"] [data-part="tick"]{
 width:1.125rem;height:1.125rem;flex:none;border-radius:9999px;
 display:grid;place-items:center;font-size:0.625rem;font-weight:700;
-color:oklch(1 0 0);background:var(--vibeui-dashboard-033-done);
+color:var(--vibeui-dashboard-033-on-done);background:var(--vibeui-dashboard-033-done);
 }
 [data-vibeui-block="dashboard-033"] [data-done="false"] [data-part="tick"]{
 background:none;color:var(--vibeui-dashboard-033-muted);
@@ -107,10 +121,10 @@ margin:0 0 0.5rem;font-size:0.8125rem;line-height:1.55;color:var(--vibeui-dashbo
 [data-vibeui-block="dashboard-033"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:650;
 padding:0.4375rem 0.75rem;border-radius:0.5rem;
-background:var(--vibeui-dashboard-033-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-033-accent);color:var(--vibeui-dashboard-033-on-accent);
 }
 [data-vibeui-block="dashboard-033"] [data-done="true"] [data-part="go"]{
-background:var(--vibeui-dashboard-033-bg);color:var(--vibeui-dashboard-033-muted);
+background:var(--vibeui-dashboard-033-card);color:var(--vibeui-dashboard-033-muted);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-033-border);
 }
 [data-vibeui-block="dashboard-033"] [data-part="foot"]{
@@ -169,6 +183,28 @@ const DEFAULT_STEPS: Dashboard033Step[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Чек-лист онбординга: шаги свёрнуты в details, у каждого оценка времени,
  * прогресс считается из массива. Один файл, ноль зависимостей.
  */
@@ -178,11 +214,22 @@ export function Dashboard033({
   steps = DEFAULT_STEPS,
   skipLabel = "Скрыть чек-лист",
   accent,
+  background = "",
+  progressLabel = "Готовность чек-листа",
+  doneText = "сделано",
+  minutesText = "≈ {minutes} мин",
+  footText = "Осталось примерно {minutes} мин на {steps} шага",
   className,
   style,
 }: Dashboard033Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-033-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-033-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -214,7 +261,7 @@ export function Dashboard033({
               aria-valuenow={done}
               aria-valuemin={0}
               aria-valuemax={steps.length}
-              aria-label="Готовность чек-листа"
+              aria-label={progressLabel}
             >
               <span data-part="ringtext">
                 {done}/{steps.length}
@@ -239,7 +286,12 @@ export function Dashboard033({
                     <span data-part="steptitle">{step.title}</span>
                     {step.minutes ? (
                       <span data-part="minutes">
-                        {step.done ? "сделано" : `≈ ${step.minutes} мин`}
+                        {step.done
+                          ? doneText
+                          : minutesText.replace(
+                              "{minutes}",
+                              String(step.minutes),
+                            )}
                       </span>
                     ) : null}
                   </summary>
@@ -258,7 +310,9 @@ export function Dashboard033({
 
           <p data-part="foot">
             <span>
-              Осталось примерно {left} мин на {steps.length - done} шага
+              {footText
+                .replace("{minutes}", String(left))
+                .replace("{steps}", String(steps.length - done))}
             </span>
             <button type="button" data-part="skip">
               {skipLabel}

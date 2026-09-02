@@ -9,6 +9,10 @@ export type Breadcrumb015Props = Omit<
   loading?: boolean
   placeholderWidth?: number
   loadingText?: string
+  /** Подпись навигации: компонент несёт русскую, проект подставляет свою. */
+  navLabel?: string
+  /** Пусто — подложки нет, крошки лежат прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -17,26 +21,29 @@ export type Breadcrumb015Props = Omit<
 // последнем месте стоит полоса-скелетон заранее заданной ширины: строка
 // крошек не меняет высоту и не смещает соседние блоки, когда имя приедет.
 // Состояние объявлено через aria-busy и живую область, а не одним цветом.
+//
+// Тема берётся из color-scheme окружения через light-dark(): строка темнеет
+// вместе со страницей, а кость скелетона в тёмной ветке светлее фона — иначе
+// место под имя перестаёт читаться.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-015"]){
---vibeui-breadcrumb-015-surface:oklch(1 0 0);
---vibeui-breadcrumb-015-surface-border:oklch(0.91 0.006 265);
---vibeui-breadcrumb-015-fg:oklch(0.26 0.016 265);
---vibeui-breadcrumb-015-muted:oklch(0.56 0.014 265);
---vibeui-breadcrumb-015-faint:oklch(0.78 0.01 265);
---vibeui-breadcrumb-015-bone:oklch(0.93 0.005 265);
---vibeui-breadcrumb-015-sheen:oklch(0.975 0.003 265);
---vibeui-breadcrumb-015-accent:oklch(0.55 0.17 265);
+--vibeui-breadcrumb-015-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.008 265));
+--vibeui-breadcrumb-015-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-breadcrumb-015-faint:light-dark(oklch(0.78 0.01 265),oklch(0.5 0.012 265));
+--vibeui-breadcrumb-015-bone:light-dark(oklch(0.93 0.005 265),oklch(0.34 0.012 265));
+--vibeui-breadcrumb-015-sheen:light-dark(oklch(0.975 0.003 265),oklch(0.44 0.014 265));
+--vibeui-breadcrumb-015-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-breadcrumb-015-bg:transparent;
+--vibeui-breadcrumb-015-pad:0;
+--vibeui-breadcrumb-015-radius:0;
 --vibeui-breadcrumb-015-width:10ch;
 --vibeui-breadcrumb-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Собственная светлая подложка: крошки — это тёмный текст, и на тёмной
-   карточке каталога он обязан читаться без правки темы проекта. */
 [data-vibeui-block="breadcrumb-015"]{
 box-sizing:border-box;width:100%;max-width:34rem;
-padding:0.5rem 0.75rem;
-background:var(--vibeui-breadcrumb-015-surface);
-border:1px solid var(--vibeui-breadcrumb-015-surface-border);border-radius:0.625rem;
+padding:var(--vibeui-breadcrumb-015-pad);
+background:var(--vibeui-breadcrumb-015-bg);
+border-radius:var(--vibeui-breadcrumb-015-radius);
 font-family:var(--vibeui-breadcrumb-015-font);font-size:0.8125rem;line-height:1.4;
 color:var(--vibeui-breadcrumb-015-muted);
 }
@@ -89,6 +96,29 @@ to{background-position:-60% 0}
 const DEFAULT_TRAIL = ["Каталог", "Поставщики", "Партии"]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Путь известен сразу, имя последнего сегмента подгружается: место
  * под него занимает скелетон. Один файл, ноль зависимостей, своя палитра.
  */
@@ -98,6 +128,8 @@ export function Breadcrumb015({
   loading = true,
   placeholderWidth = 10,
   loadingText = "Загружаем название",
+  navLabel = "Хлебные крошки",
+  background = "",
   accent,
   className,
   style,
@@ -106,6 +138,14 @@ export function Breadcrumb015({
   const palette = {
     "--vibeui-breadcrumb-015-width": `${placeholderWidth}ch`,
     ...(accent ? { "--vibeui-breadcrumb-015-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-breadcrumb-015-bg": background,
+          "--vibeui-breadcrumb-015-pad": "0.5rem 0.75rem",
+          "--vibeui-breadcrumb-015-radius": "0.625rem",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -117,7 +157,7 @@ export function Breadcrumb015({
       <nav
         {...props}
         data-vibeui-block="breadcrumb-015"
-        aria-label="Хлебные крошки"
+        aria-label={navLabel}
         className={className}
         style={palette}
       >

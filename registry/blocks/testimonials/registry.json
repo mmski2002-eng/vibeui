@@ -30,15 +30,19 @@
             "семантику figure / blockquote / figcaption — это цитата с автором, а не карточка с текстом",
             "инициалы вместо фотографий: стоковое лицо в отзыве заметно и вредит доверию",
             "container-запросы на число колонок и на span главного отзыва",
-            "блок <style> внутри компонента — в нём вся палитра, сетка и типографика"
+            "блок <style> внутри компонента — в нём вся палитра, сетка и типографика",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив items: цитата, имя, должность и флаг featured у главного",
             "тексты eyebrow и title",
             "акцент через проп accent — цвет надзаголовка, подложки инициалов и рамки главного отзыва",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Отзывы должны быть настоящими. Придуманная цитата с должностью — это ложь о продукте, а не оформление.",
             "Главный отзыв ровно один: два «главных» отменяют иерархию.",
             "Должность важнее компании: «арт-директор» объясняет, почему мнению стоит верить, а название студии — нет.",
@@ -57,15 +61,19 @@
                 "the figure / blockquote / figcaption semantics — this is a quotation with an author, not a card with text",
                 "initials instead of photographs: a stock face in a testimonial is noticed and costs trust",
                 "the container queries driving the column count and the featured quote's span",
-                "the <style> block inside the component — it holds the palette, the grid and the typography"
+                "the <style> block inside the component — it holds the palette, the grid and the typography",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the items array: quote, name, role and the featured flag on the main one",
                 "the eyebrow and title copy",
                 "the accent through the accent prop — it colours the eyebrow, the initials background and the featured border",
-                "outer spacing through className"
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Testimonials have to be real. An invented quote with a job title is a lie about the product, not decoration.",
                 "Exactly one featured quote: two \"main\" ones cancel the hierarchy.",
                 "The role matters more than the company: \"art director\" explains why the opinion counts, the studio name does not.",
@@ -73,9 +81,88 @@
               ],
               "usage": "<Testimonials001\n  title=\"What people say after shipping\"\n  items={[{ quote: \"...\", name: \"Anna Kovalyova\", role: \"Art director\", featured: true }]}\n/>"
             },
-            "title": "Featured Testimonials"
+            "title": "Featured Testimonials",
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "What people say after building"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Testimonials"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Testimonials",
+                "title": "What people say after building",
+                "items": [
+                  {
+                    "quote": "We stopped arguing about markup. The designer picks a block, the agent installs exactly that one — and what we saw in the preview lands on the page untouched.",
+                    "name": "Anna Kovalyova",
+                    "role": "Art director, Polyot studio",
+                    "featured": true
+                  },
+                  {
+                    "quote": "A landing page used to take a week. Now I put one together in an evening and spend the time on the copy instead of the spacing.",
+                    "name": "Dmitry Orlov",
+                    "role": "Founder, Grafit"
+                  },
+                  {
+                    "quote": "What I liked is that a component arrives as a single file. No dependencies to drag along for years.",
+                    "name": "Sergey Mokhov",
+                    "role": "Frontend developer"
+                  },
+                  {
+                    "quote": "The instruction for the agent turned out to matter more than the blocks: it no longer invents its own version instead of ours.",
+                    "name": "Irina Belova",
+                    "role": "Product manager, Severnaya Pochta"
+                  },
+                  {
+                    "quote": "We took five blocks, overrode the variables for our brand — and the sections dropped into the existing site with no style conflicts.",
+                    "name": "Pavel Gusev",
+                    "role": "CTO, Remark"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что говорят те, кто уже собрал сайт",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Отзывы",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -111,15 +198,19 @@
             "семантику figure / blockquote / figcaption — это цитата с автором, а не карточка с текстом",
             "инициалы вместо фотографий: стоковое лицо в отзыве заметно и бьёт по доверию",
             "container-запросы на число колонок: в узкой колонке сетка обязана складываться сама",
-            "блок <style> внутри компонента — в нём палитра, сетка и карточка"
+            "блок <style> внутри компонента — в нём палитра, сетка и карточка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "eyebrow и title — надзаголовок и заголовок секции",
             "массив items — цитата, имя, должность и источник каждого отзыва",
             "акцент через проп accent — цвет надзаголовка, инициалов и рамки при наведении",
-            "внешние отступы через className: секция занимает всю ширину родителя"
+            "внешние отступы через className: секция занимает всю ширину родителя",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Инициалы считаются из первых двух слов имени: для одного слова получится одна буква, это нормально.",
             "Кавычки добавляются псевдоэлементами — не дублируйте их в тексте цитаты.",
             "Шесть отзывов дают ровные два ряда по три; при пяти последний ряд будет неполным.",
@@ -140,6 +231,18 @@
             "type": "text",
             "default": "Отзывы",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -155,15 +258,19 @@
                 "the figure / blockquote / figcaption semantics — this is a quote with an author, not a card with text",
                 "initials instead of photographs: a stock face in a testimonial is noticed and costs trust",
                 "the container queries on the column count: in a narrow column the grid has to fold on its own",
-                "the <style> block inside the component — it holds the palette, the grid and the card"
+                "the <style> block inside the component — it holds the palette, the grid and the card",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "eyebrow and title — the eyebrow and the section heading",
                 "the items array — the quote, name, role and source of every testimonial",
                 "the accent through the accent prop — it colours the eyebrow, the initials and the hover border",
-                "outer spacing through className: the section fills its parent's width"
+                "outer spacing through className: the section fills its parent's width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The initials come from the first two words of the name: a single word gives one letter, which is fine.",
                 "The quotation marks are added by pseudo-elements — do not repeat them inside the quote text.",
                 "Six testimonials make two even rows of three; with five the last row stays incomplete.",
@@ -179,11 +286,62 @@
               "eyebrow": {
                 "label": "Eyebrow",
                 "default": "Testimonials"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Even Testimonial Grid"
+            "title": "Even Testimonial Grid",
+            "preview": {
+              "props": {
+                "eyebrow": "Testimonials",
+                "title": "What teams say after switching",
+                "items": [
+                  {
+                    "quote": "A landing page used to eat a week of markup. Now the marketer builds it in an evening and we only check the copy.",
+                    "name": "Anna Kovalyova",
+                    "role": "Head of marketing, Severny Put",
+                    "source": "Chat message"
+                  },
+                  {
+                    "quote": "I liked that the components arrive as ordinary files in the project. Nothing breaks on update, because there is nothing to update.",
+                    "name": "Igor Demidov",
+                    "role": "CTO, Sturm",
+                    "source": "Email"
+                  },
+                  {
+                    "quote": "We came for one section and stayed for the documentation. First time I have seen instructions written for whoever maintains this later.",
+                    "name": "Pyotr Lyakhov",
+                    "role": "Frontend developer",
+                    "source": "GitHub review"
+                  },
+                  {
+                    "quote": "We built the campaign landing page in two days, copy included. We hit the launch date, which had not happened once in three years.",
+                    "name": "Maria Soboleva",
+                    "role": "Producer of educational programmes",
+                    "source": "Call"
+                  },
+                  {
+                    "quote": "We have one designer and five projects. The library took the routine off him and gave back the time he was hired for.",
+                    "name": "Dmitry Khan",
+                    "role": "Founder, Plot studio",
+                    "source": "Chat message"
+                  },
+                  {
+                    "quote": "It matters separately that the blocks do not drag a component library behind them. We took three and did not get forty megabytes of dependencies.",
+                    "name": "Olga Titova",
+                    "role": "Engineer, fintech",
+                    "source": "Email"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -219,17 +377,22 @@
             "разметку цифр через <dl>: значение и подпись обязаны быть парой",
             "фоновую кавычку с pointer-events:none и user-select:none — иначе она попадёт в выделение и копирование",
             "text-wrap:balance у цитаты: без него последняя строка часто остаётся из одного слова",
-            "блок <style> внутри компонента — в нём палитра, типографика и кавычка"
+            "блок <style> внутри компонента — в нём палитра, типографика и кавычка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "quote — текст отзыва",
             "name, role и company — автор, должность и название компании",
+            "initials — инициалы в кружке; по умолчанию считаются из name",
             "массив metrics — значения и подписи к ним",
             "акцент через проп accent — цвет кавычки, подложки инициалов и цифр",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
-            "Инициалы в кружке заданы текстом в разметке: при смене name поменяйте и их.",
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Инициалы в кружке считаются из name; задайте проп initials, если нужны другие буквы.",
             "Цитата длиннее сорока слов теряет силу — сокращайте до одной мысли.",
             "Цифры должны быть проверяемыми: «−62 %» работает, «в разы лучше» вызывает недоверие.",
             "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
@@ -249,6 +412,18 @@
             "type": "text",
             "default": "Артель",
             "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -264,17 +439,22 @@
                 "the <dl> markup for the numbers: value and caption have to be a pair",
                 "the background quotation mark with pointer-events:none and user-select:none — otherwise it lands in selections and copies",
                 "text-wrap:balance on the quote: without it the last line is often a single word",
-                "the <style> block inside the component — it holds the palette, the typography and the quotation mark"
+                "the <style> block inside the component — it holds the palette, the typography and the quotation mark",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "quote — the testimonial text",
                 "name, role and company — the author, their role and the company name",
+                "initials — the initials in the circle; derived from name by default",
                 "the metrics array — the values and their captions",
                 "the accent through the accent prop — it colours the quotation mark, the initials and the numbers",
-                "outer spacing through className"
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
-                "The initials in the circle are written as text in the markup: change them when you change name.",
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The initials in the circle are derived from name; pass the initials prop if you need different letters.",
                 "A quote longer than forty words loses its force — cut it down to a single thought.",
                 "The numbers have to be verifiable: \"−62%\" works, \"far better\" invites doubt.",
                 "Do not lift the CSS variables into globals.css: the block has to stay a single file."
@@ -289,11 +469,40 @@
               "company": {
                 "label": "Company",
                 "default": "Artel"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Single Quote Testimonial"
+            "title": "Single Quote Testimonial",
+            "preview": {
+              "props": {
+                "quote": "We stopped arguing about how the next page should look. Now we argue about what it says — the only argument that has ever made money.",
+                "name": "Elena Remizova",
+                "role": "Head of product",
+                "company": "Artel",
+                "metrics": [
+                  {
+                    "value": "4 days",
+                    "caption": "instead of three weeks to ship a landing page"
+                  },
+                  {
+                    "value": "−62%",
+                    "caption": "of designer time on routine screens"
+                  },
+                  {
+                    "value": "17",
+                    "caption": "pages built in the first quarter"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -329,15 +538,19 @@
             "оформление ячеек линиями, а не карточками — это список клиентов, а не набор плашек",
             "знак, вырезанный маской из фона: он перекрашивается вместе с акцентом и не требует файла",
             "container-запросы на число колонок: в узком контейнере лента обязана складываться сама",
-            "блок <style> внутри компонента — в нём палитра, знак и раскладка"
+            "блок <style> внутри компонента — в нём палитра, знак и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title и description — заголовок и вводный абзац",
             "массив items — компания, отрасль, цитата и имя сказавшего",
             "акцент через проп accent — цвет знака рядом с названием компании",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Знак у всех компаний одинаковый: если у вас есть настоящие логотипы, замените его на <img> или <svg> в своей копии.",
             "Четыре колонки — предел читаемости: при шести цитаты сжимаются до трёх слов и перестают работать.",
             "Цитату держите в две строки: этот блок про узнавание, развёрнутые отзывы — другой блок.",
@@ -358,6 +571,18 @@
             "type": "text",
             "default": "Четыре команды рассказали, что именно изменилось после перехода.",
             "maxLength": 96
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -373,15 +598,19 @@
                 "cells separated by rules rather than cards — this is a client list, not a set of tiles",
                 "the glyph masked out of the background: it recolours with the accent and needs no file",
                 "the container queries on the column count: in a narrow container the row has to fold on its own",
-                "the <style> block inside the component — it holds the palette, the glyph and the layout"
+                "the <style> block inside the component — it holds the palette, the glyph and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title and description — the heading and the intro paragraph",
                 "the items array — company, industry, quote and the speaker's name",
                 "the accent through the accent prop — it colours the glyph next to the company name",
-                "outer spacing through className"
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The glyph is the same for every company: if you have real logos, swap it for an <img> or <svg> in your copy.",
                 "Four columns is the readability limit: at six the quotes shrink to three words and stop working.",
                 "Keep each quote to two lines: this block is about recognition, full testimonials belong elsewhere.",
@@ -397,11 +626,50 @@
               "description": {
                 "label": "Intro paragraph",
                 "default": "Four teams told us what actually changed after switching."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Logo Quote Row"
+            "title": "Logo Quote Row",
+            "preview": {
+              "props": {
+                "title": "Chosen for more than nice words",
+                "description": "Four teams told us what actually changed after switching. One sentence each — no press releases, no boilerplate.",
+                "items": [
+                  {
+                    "company": "Severny Put",
+                    "industry": "Logistics",
+                    "quote": "We rewrote the customer account in a month instead of a quarter and did not lose a single flow.",
+                    "person": "Anna Kovalyova, marketing"
+                  },
+                  {
+                    "company": "Artel",
+                    "industry": "Manufacturing",
+                    "quote": "A two-thousand item catalogue built from ready sections. There was no markup developer on the project at all.",
+                    "person": "Elena Remizova, product"
+                  },
+                  {
+                    "company": "Sfera",
+                    "industry": "Education",
+                    "quote": "We launch a new course landing page every week. It used to swallow the whole design budget.",
+                    "person": "Maria Soboleva, programmes"
+                  },
+                  {
+                    "company": "Plot",
+                    "industry": "Studio",
+                    "quote": "We hand clients sites they then edit themselves. Not one came back in six months.",
+                    "person": "Dmitry Khan, founder"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -437,16 +705,21 @@
             "заголовок у каждого отзыва — по нему отзывы просматривают, а не читают подряд",
             "разные оценки в списке, включая тройку: стена одних пятёрок вызывает недоверие",
             "дату у отзыва: свежесть здесь важнее длины текста",
-            "блок <style> внутри компонента — в нём палитра, звёзды и сетка"
+            "блок <style> внутри компонента — в нём палитра, звёзды и сетка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "average и total — средняя оценка и подпись про число отзывов",
             "summaryTitle — фраза рядом со средней оценкой",
+            "averageLabel и ratingLabel — подписи рядов звёзд для скринридера; {value} подставляет оценку",
             "массив items — оценка, заголовок, текст, имя и дата каждого отзыва",
             "акцент через проп accent — цвет заливки звёзд",
-            "внешние отступы через className"
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "average — строка: запятая в «4,8» разбирается кодом, точка тоже подойдёт.",
             "rating принимает дробные значения: 4.5 нарисует половину звезды.",
             "Не убирайте отзывы ниже пяти звёзд ради красоты — они и делают остальные достоверными.",
@@ -467,6 +740,18 @@
             "type": "text",
             "default": "на основе 1 214 оценок",
             "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -482,16 +767,21 @@
                 "the title on every review — people scan reviews by titles rather than reading them in sequence",
                 "the mix of scores, including a three: a wall of fives reads as fake",
                 "the date on each review: freshness matters more here than length",
-                "the <style> block inside the component — it holds the palette, the stars and the grid"
+                "the <style> block inside the component — it holds the palette, the stars and the grid",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "average and total — the average score and the review-count caption",
                 "summaryTitle — the sentence next to the average",
+                "averageLabel and ratingLabel — the screen-reader captions of the star rows; {value} is replaced with the score",
                 "the items array — the rating, title, text, name and date of every review",
                 "the accent through the accent prop — it colours the star fill",
-                "outer spacing through className"
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "average is a string: the comma in \"4,8\" is parsed by the code, a dot works too.",
                 "rating accepts fractions: 4.5 draws half a star.",
                 "Do not remove reviews below five stars for looks — they are what make the rest believable.",
@@ -507,11 +797,71 @@
               "total": {
                 "label": "Rating count",
                 "default": "based on 1,214 ratings"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Star Rating Reviews"
+            "title": "Star Rating Reviews",
+            "preview": {
+              "props": {
+                "average": "4.8",
+                "total": "based on 1,214 ratings",
+                "summaryTitle": "Customers give us almost five out of five",
+                "averageLabel": "Average score {value} out of 5",
+                "ratingLabel": "Rated {value} out of 5",
+                "items": [
+                  {
+                    "rating": 5,
+                    "title": "Arrived ahead of schedule",
+                    "quote": "Ordered on Friday evening, delivered by Saturday afternoon. Packed tightly, nothing creased, and the courier waited while I checked.",
+                    "name": "Natalia V.",
+                    "date": "12 March"
+                  },
+                  {
+                    "rating": 4,
+                    "title": "Good, but the colour is darker",
+                    "quote": "Lovely thing, the seam is even. The shade looks lighter in the photo than in life — worth knowing if you are matching an interior.",
+                    "name": "Sergey P.",
+                    "date": "5 March"
+                  },
+                  {
+                    "rating": 5,
+                    "title": "Second order this month",
+                    "quote": "We bought one to try, now we have ordered three more. Support answers to the point and without scripts.",
+                    "name": "Irina K.",
+                    "date": "28 February"
+                  },
+                  {
+                    "rating": 5,
+                    "title": "Helped with the return",
+                    "quote": "I got the size wrong and returned it with no argument. The money came back on the fourth day, nobody talked me out of it.",
+                    "name": "Alina R.",
+                    "date": "21 February"
+                  },
+                  {
+                    "rating": 3,
+                    "title": "Slow delivery to the region",
+                    "quote": "No complaints about the item itself, but three days were promised and it took six. They warned me in advance, at least.",
+                    "name": "Viktor M.",
+                    "date": "14 February"
+                  },
+                  {
+                    "rating": 5,
+                    "title": "Clear instructions",
+                    "quote": "Assembled in twenty minutes with no spare parts left in the box. First time I did not have to watch a video on my phone.",
+                    "name": "Pavel S.",
+                    "date": "9 February"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -547,7 +897,8 @@
             "тёмную подложку: стена одинаковых карточек на светлом фоне читается как таблица",
             "подсветку части карточек через data-highlight — она задаёт ритм и не даёт стене слиться",
             "семантику figure / blockquote / figcaption у каждой карточки",
-            "блок <style> внутри компонента — в нём палитра, кладка и подсветка"
+            "блок <style> внутри компонента — в нём палитра, кладка и подсветка",
+            "одноцветную тёмную палитру: тёмная подложка здесь дизайн-решение, а не тема — светлой ветки у блока нет намеренно, и light-dark() ему не добавляют"
           ],
           "adapt": [
             "title и description — заголовок и вводный абзац",
@@ -576,6 +927,12 @@
             "type": "text",
             "default": "Мы не подрезали цитаты под одинаковый размер.",
             "maxLength": 96
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -591,7 +948,8 @@
                 "the dark ground: a wall of identical cards on a light background reads as a table",
                 "the highlight on some cards through data-highlight — it sets the rhythm and keeps the wall from blurring",
                 "the figure / blockquote / figcaption semantics on every card",
-                "the <style> block inside the component — it holds the palette, the masonry and the highlight"
+                "the <style> block inside the component — it holds the palette, the masonry and the highlight",
+                "the single dark palette: the dark ground here is a design decision rather than a theme — the block deliberately has no light branch and light-dark() is not added to it"
               ],
               "adapt": [
                 "title and description — the heading and the intro paragraph",
@@ -615,11 +973,65 @@
               "description": {
                 "label": "Intro paragraph",
                 "default": "We did not trim the quotes to a common length."
+              },
+              "accent": {
+                "label": "Accent"
               }
             },
-            "title": "Testimonial Wall"
+            "title": "Testimonial Wall",
+            "preview": {
+              "props": {
+                "title": "A living wall of testimonials",
+                "description": "We did not trim the quotes to a common length. Short stayed short, long stayed long: that is how you see who had something to say.",
+                "items": [
+                  {
+                    "quote": "Every landing page used to start with an empty file and end in an argument about a button.",
+                    "name": "Anna Kovalyova",
+                    "role": "Marketing, Severny Put"
+                  },
+                  {
+                    "quote": "Three months ago we kept two sets of components: one for the site, one for the app. Every release somebody forgot to carry a fix across, and half the work went into reconciling them. Now there is one library, and the argument about which button is the right one simply stopped.",
+                    "name": "Igor Demidov",
+                    "role": "CTO, Sturm",
+                    "highlight": true
+                  },
+                  {
+                    "quote": "Sections go into the project by copying a file. That sounds dull right up to the first library update in a neighbouring project.",
+                    "name": "Pyotr Lyakhov",
+                    "role": "Frontend developer"
+                  },
+                  {
+                    "quote": "We have one designer across five products. He finally works on what no template will do.",
+                    "name": "Dmitry Khan",
+                    "role": "Founder, Plot studio"
+                  },
+                  {
+                    "quote": "We launch a course every week. The landing page stopped being the bottleneck: the course lead builds it instead of queueing for design. Seventeen pages went out in a quarter and not one needed a markup developer.",
+                    "name": "Maria Soboleva",
+                    "role": "Producer of educational programmes"
+                  },
+                  {
+                    "quote": "We took three blocks and did not get forty megabytes of somebody else's dependencies. That settled it for us.",
+                    "name": "Olga Titova",
+                    "role": "Engineer, fintech"
+                  },
+                  {
+                    "quote": "The documentation reads as if written by the person who maintains it afterwards. That is rare.",
+                    "name": "Kirill Aseev",
+                    "role": "Tech lead"
+                  },
+                  {
+                    "quote": "Clients edit their own sites and do not call us on Saturdays. That alone is enough to stay.",
+                    "name": "Elena Remizova",
+                    "role": "Head of product, Artel",
+                    "highlight": true
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent"]
       }
     }
   ]

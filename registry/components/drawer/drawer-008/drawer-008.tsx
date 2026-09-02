@@ -17,6 +17,13 @@ export type Drawer008Props = Omit<
   title?: string
   steps?: Drawer008Step[]
   finishLabel?: string
+  /** Счётчик шагов: {step} — текущий, {total} — сколько всего. */
+  stepTemplate?: string
+  nextLabel?: string
+  backLabel?: string
+  closeLabel?: string
+  /** Пусто — подложки нет, триггер лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -26,11 +33,13 @@ export type Drawer008Props = Omit<
 // отмены, и их нельзя вешать на одну кнопку.
 const STYLES = `
 :where([data-vibeui-block="drawer-008"]){
---vibeui-drawer-008-bg:oklch(1 0 0);
---vibeui-drawer-008-fg:oklch(0.21 0.014 265);
---vibeui-drawer-008-muted:oklch(0.55 0.014 265);
---vibeui-drawer-008-border:oklch(0.91 0.006 265);
---vibeui-drawer-008-accent:oklch(0.55 0.17 265);
+--vibeui-drawer-008-bg:transparent;
+--vibeui-drawer-008-surface:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
+--vibeui-drawer-008-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-drawer-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-drawer-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-drawer-008-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
+--vibeui-drawer-008-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.02 265));
 --vibeui-drawer-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="drawer-008"]{
@@ -46,7 +55,7 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 [data-vibeui-block="drawer-008"] dialog{
 position:fixed;inset:0 0 0 auto;margin:0;
 width:min(25rem,100vw);max-width:100vw;height:100dvh;max-height:100dvh;
-padding:0;border:0;background:var(--vibeui-drawer-008-bg);color:inherit;
+padding:0;border:0;background:var(--vibeui-drawer-008-surface);color:inherit;
 box-shadow:-24px 0 60px -30px oklch(0.2 0.02 265 / 55%);
 translate:100% 0;transition:translate .22s ease,overlay .22s allow-discrete,display .22s allow-discrete;
 }
@@ -102,7 +111,7 @@ border:1px solid var(--vibeui-drawer-008-border);background:transparent;color:in
 font:inherit;font-size:0.875rem;font-weight:600;padding:0 1rem;
 }
 [data-vibeui-block="drawer-008"] [data-part="foot"] button[data-primary="true"]{
-flex:1;border-color:transparent;background:var(--vibeui-drawer-008-accent);color:oklch(0.99 0.01 265);
+flex:1;border-color:transparent;background:var(--vibeui-drawer-008-accent);color:var(--vibeui-drawer-008-on-accent);
 }
 [data-vibeui-block="drawer-008"] [data-part="foot"] button:focus-visible{outline:2px solid var(--vibeui-drawer-008-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){
@@ -130,6 +139,28 @@ const DEFAULT_STEPS: Drawer008Step[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Ящик с шагами: один вопрос за раз, полоса прогресса и раздельные «Назад»
  * и «Закрыть». Один файл, ноль зависимостей, собственная палитра.
  */
@@ -138,6 +169,11 @@ export function Drawer008({
   title = "Подключение проекта",
   steps = DEFAULT_STEPS,
   finishLabel = "Готово",
+  stepTemplate = "Шаг {step} из {total}",
+  nextLabel = "Далее",
+  backLabel = "Назад",
+  closeLabel = "Закрыть",
+  background = "",
   accent,
   className,
   style,
@@ -149,11 +185,21 @@ export function Drawer008({
 
   const palette = {
     ...(accent ? { "--vibeui-drawer-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-drawer-008-bg": background,
+          "--vibeui-drawer-008-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
   const current = steps[Math.min(step, steps.length - 1)]
   const last = step >= steps.length - 1
+  const counter = stepTemplate
+    .replace("{step}", String(step + 1))
+    .replace("{total}", String(steps.length))
 
   function open() {
     setStep(0)
@@ -182,7 +228,7 @@ export function Drawer008({
               aria-valuemin={1}
               aria-valuemax={steps.length}
               aria-valuenow={step + 1}
-              aria-label={`Шаг ${step + 1} из ${steps.length}`}
+              aria-label={counter}
             >
               {steps.map((item, index) => (
                 <span
@@ -193,9 +239,7 @@ export function Drawer008({
               ))}
             </div>
             <div data-part="head">
-              <span data-part="counter">
-                Шаг {step + 1} из {steps.length}
-              </span>
+              <span data-part="counter">{counter}</span>
               <h2 data-part="title">{current.title}</h2>
             </div>
             <div data-part="body">
@@ -218,11 +262,11 @@ export function Drawer008({
             <div data-part="foot">
               {step > 0 ? (
                 <button type="button" onClick={() => setStep(step - 1)}>
-                  Назад
+                  {backLabel}
                 </button>
               ) : (
                 <button type="button" onClick={() => drawer.current?.close()}>
-                  Закрыть
+                  {closeLabel}
                 </button>
               )}
               <button
@@ -232,7 +276,7 @@ export function Drawer008({
                   last ? drawer.current?.close() : setStep(step + 1)
                 }
               >
-                {last ? finishLabel : "Далее"}
+                {last ? finishLabel : nextLabel}
               </button>
             </div>
           </div>

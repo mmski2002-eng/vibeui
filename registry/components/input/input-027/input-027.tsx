@@ -9,7 +9,15 @@ export type Input027Props = Omit<
 > & {
   label?: string
   defaultValue?: string
+  placeholder?: string
+  /**
+   * Примечание под полем: ключи empty, invalid и ready. В ready подставляется
+   * {color} — получившийся цвет.
+   */
+  noteText?: Record<string, string>
   onChange?: (hex: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,14 +28,14 @@ export type Input027Props = Omit<
 // разница между «ещё не дописали» и «ошиблись» должна быть видна глазами.
 const STYLES = `
 :where([data-vibeui-block="input-027"]){
---vibeui-input-027-surface:oklch(1 0 0);
---vibeui-input-027-shell:oklch(0.91 0.006 265);
---vibeui-input-027-fg:oklch(0.23 0.014 265);
---vibeui-input-027-muted:oklch(0.56 0.014 265);
---vibeui-input-027-field:oklch(0.985 0.002 265);
---vibeui-input-027-border:oklch(0.88 0.008 265);
---vibeui-input-027-accent:oklch(0.55 0.17 265);
---vibeui-input-027-bad:oklch(0.55 0.2 25);
+--vibeui-input-027-surface:transparent;
+--vibeui-input-027-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-input-027-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-027-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-input-027-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-input-027-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-input-027-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-input-027-bad:light-dark(oklch(0.55 0.2 25),oklch(0.72 0.16 25));
 --vibeui-input-027-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="input-027"]{
@@ -78,6 +86,35 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-input-027-muted);
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="input-027"] *{animation:none!important;transition:none!important}}
 `
 
+const NOTE: Record<string, string> = {
+  empty: "Три или шесть шестнадцатеричных знаков, решётка не нужна.",
+  invalid: "Нужно ровно три или шесть знаков 0–9 и A–F.",
+  ready: "Итоговый цвет — {color}.",
+}
+
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function normalize(raw: string) {
   return raw
     .replace(/[^0-9a-fA-F]/g, "")
@@ -103,7 +140,10 @@ function expand(hex: string) {
 export function Input027({
   label = "Акцентный цвет",
   defaultValue = "5B8DEF",
+  placeholder = "5B8DEF",
+  noteText = NOTE,
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -114,12 +154,23 @@ export function Input027({
 
   const palette = {
     ...(accent ? { "--vibeui-input-027-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-input-027-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
   const complete = value.length === 3 || value.length === 6
   const preview = complete ? `#${expand(value)}` : undefined
   const invalid = value.length > 0 && !complete
+  const noteKey = value.length === 0 ? "empty" : invalid ? "invalid" : "ready"
+  const note = (noteText[noteKey] ?? NOTE[noteKey]).replace(
+    "{color}",
+    preview ?? "",
+  )
 
   return (
     <>
@@ -150,7 +201,7 @@ export function Input027({
               inputMode="text"
               autoComplete="off"
               spellCheck={false}
-              placeholder="5B8DEF"
+              placeholder={placeholder}
               value={value}
               aria-invalid={invalid}
               aria-describedby={`${id}-note`}
@@ -165,11 +216,7 @@ export function Input027({
           </span>
         </div>
         <p data-part="note" id={`${id}-note`} aria-live="polite">
-          {value.length === 0
-            ? "Три или шесть шестнадцатеричных знаков, решётка не нужна."
-            : invalid
-              ? "Нужно ровно три или шесть знаков 0–9 и A–F."
-              : `Итоговый цвет — ${preview}.`}
+          {note}
         </p>
       </div>
     </>

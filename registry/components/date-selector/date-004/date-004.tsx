@@ -9,6 +9,11 @@ export type Date004Props = Omit<
   defaultTime?: string
   timezone?: string
   name?: string
+  /** Подписи полей: компонент несёт русские, проект подставляет свои. */
+  dateLabel?: string
+  timeLabel?: string
+  /** Пусто — подложки нет, поля лежат прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,18 +24,21 @@ export type Date004Props = Omit<
 // правятся независимо. Часовой пояс подписан явно: «в 19:00» без пояса —
 // самая частая причина сорванных встреч. Состояние не нужно, форма сама
 // соберёт оба значения, поэтому компонент серверный.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="date-004"]){
---vibeui-date-004-surface:oklch(1 0 0);
---vibeui-date-004-field:oklch(0.985 0.002 265);
---vibeui-date-004-shell:oklch(0.9 0.006 265);
---vibeui-date-004-fg:oklch(0.23 0.014 265);
---vibeui-date-004-muted:oklch(0.55 0.014 265);
---vibeui-date-004-border:oklch(0.88 0.008 265);
---vibeui-date-004-accent:oklch(0.52 0.17 300);
+--vibeui-date-004-surface:transparent;
+--vibeui-date-004-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-date-004-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-date-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-date-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-date-004-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-date-004-accent:light-dark(oklch(0.52 0.17 300),oklch(0.78 0.14 300));
 --vibeui-date-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Своя светлая подложка: поле показывают поверх любого фона. */
+/* Подложки по умолчанию нет: рамка держит форму, фон приходит со страницы. */
 [data-vibeui-block="date-004"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
@@ -47,7 +55,7 @@ background:var(--vibeui-date-004-field);
 }
 [data-vibeui-block="date-004"] [data-part="frame"]:focus-within{
 border-color:var(--vibeui-date-004-accent);
-box-shadow:0 0 0 2px oklch(0.52 0.17 300 / 18%);
+box-shadow:0 0 0 2px color-mix(in oklch,var(--vibeui-date-004-accent) 22%,transparent);
 }
 [data-vibeui-block="date-004"] [data-part="cell"]{
 display:flex;flex-direction:column;gap:0.125rem;justify-content:center;
@@ -80,6 +88,29 @@ background:var(--vibeui-date-004-accent);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ * Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Дата и время двумя полями в одной рамке, с явной подписью часового пояса.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -89,6 +120,9 @@ export function Date004({
   defaultTime = "19:00",
   timezone = "Время московское, UTC+3",
   name = "meeting",
+  dateLabel = "Дата",
+  timeLabel = "Время",
+  background = "",
   accent,
   className,
   style,
@@ -96,6 +130,12 @@ export function Date004({
 }: Date004Props) {
   const palette = {
     ...(accent ? { "--vibeui-date-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-date-004-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -113,7 +153,7 @@ export function Date004({
         <p data-part="title">{label}</p>
         <div data-part="frame">
           <div data-part="cell" data-role="date">
-            <label htmlFor={`${name}-date`}>Дата</label>
+            <label htmlFor={`${name}-date`}>{dateLabel}</label>
             <input
               id={`${name}-date`}
               name={`${name}-date`}
@@ -122,7 +162,7 @@ export function Date004({
             />
           </div>
           <div data-part="cell" data-role="time">
-            <label htmlFor={`${name}-time`}>Время</label>
+            <label htmlFor={`${name}-time`}>{timeLabel}</label>
             <input
               id={`${name}-time`}
               name={`${name}-time`}

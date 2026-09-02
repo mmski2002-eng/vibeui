@@ -13,6 +13,8 @@ export type Nativeselect002Props = Omit<
   label?: string
   hint?: string
   groups?: Nativeselect002Group[]
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -21,22 +23,26 @@ export type Nativeselect002Props = Omit<
 // системе заголовки разделов: она сама рисует их некликабельными и сама
 // произносит название раздела перед пунктом. Своими силами такое в
 // кастомном списке приходится городить ролями и разметкой.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// блока по умолчанию нет, а поле и границы получают свои пары светлот.
 const STYLES = `
 :where([data-vibeui-block="nativeselect-002"]){
---vibeui-nativeselect-002-surface:oklch(1 0 0);
---vibeui-nativeselect-002-surface-border:oklch(0.91 0.006 265);
---vibeui-nativeselect-002-fg:oklch(0.24 0.016 265);
---vibeui-nativeselect-002-muted:oklch(0.54 0.014 265);
---vibeui-nativeselect-002-field-border:oklch(0.85 0.01 265);
---vibeui-nativeselect-002-accent:oklch(0.5 0.16 165);
+--vibeui-nativeselect-002-bg:transparent;
+--vibeui-nativeselect-002-line:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-nativeselect-002-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-nativeselect-002-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.004 265));
+--vibeui-nativeselect-002-muted:light-dark(oklch(0.54 0.014 265),oklch(0.68 0.012 265));
+--vibeui-nativeselect-002-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.42 0.014 265));
+--vibeui-nativeselect-002-accent:light-dark(oklch(0.5 0.16 165),oklch(0.74 0.14 165));
 --vibeui-nativeselect-002-radius:0.625rem;
 --vibeui-nativeselect-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="nativeselect-002"]{
 box-sizing:border-box;width:100%;max-width:22rem;
 padding:1rem;border-radius:0.875rem;
-background:var(--vibeui-nativeselect-002-surface);
-border:1px solid var(--vibeui-nativeselect-002-surface-border);
+background:var(--vibeui-nativeselect-002-bg);
+border:1px solid var(--vibeui-nativeselect-002-line);
 font-family:var(--vibeui-nativeselect-002-font);color:var(--vibeui-nativeselect-002-fg);
 display:flex;flex-direction:column;gap:0.375rem;
 }
@@ -50,7 +56,7 @@ box-sizing:border-box;width:100%;height:2.5rem;
 padding:0 2.25rem 0 0.75rem;
 font:inherit;font-size:0.9375rem;line-height:1.2;
 color:var(--vibeui-nativeselect-002-fg);
-background:var(--vibeui-nativeselect-002-surface);
+background:var(--vibeui-nativeselect-002-field);
 border:1px solid var(--vibeui-nativeselect-002-field-border);
 border-radius:var(--vibeui-nativeselect-002-radius);
 cursor:pointer;
@@ -83,6 +89,29 @@ color:var(--vibeui-nativeselect-002-muted);
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Нативный select с разделами на <optgroup>: заголовки групп рисует и
  * произносит сама система. Один файл, ноль зависимостей.
  */
@@ -94,6 +123,7 @@ export function Nativeselect002({
     { label: "Офисы", options: ["Основной, Тверская", "Филиал, Казань"] },
     { label: "Партнёры", options: ["Пункт выдачи «Восток»", "Терминал СДЭК"] },
   ],
+  background = "",
   accent,
   className,
   style,
@@ -103,6 +133,12 @@ export function Nativeselect002({
   const hintId = `${id}-hint`
   const palette = {
     ...(accent ? { "--vibeui-nativeselect-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-nativeselect-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

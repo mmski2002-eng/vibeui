@@ -17,6 +17,22 @@ export type Dashboard078Props = {
   period?: string
   issues?: Dashboard078Issue[]
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Статусы по ключам new, triaged, muted и fixed. */
+  statusText?: Record<string, string>
+  /** Расшифровка спарклайна. */
+  sparkAriaText?: string
+  /** Подпись под числом затронутых людей. */
+  usersLabel?: string
+  /** Подпись под числом событий. */
+  eventsLabel?: string
+  /** Кнопка «взять в работу». */
+  takeLabel?: string
+  /** Кнопка «заглушить». */
+  muteLabel?: string
+  /** Локаль форматирования чисел. */
+  numberLocale?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,17 +47,23 @@ export type Dashboard078Props = {
 // стека набрана моноширинным и обрезается по ширине — по ней ошибку узнают
 // в лицо. Версия, в которой ошибка появилась, стоит рядом со статусом: это
 // первое, что спрашивают на разборе.
+//
+// Тема берётся из color-scheme окружения через light-dark(): блок темнеет
+// вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-078"]){
---vibeui-dashboard-078-bg:oklch(0.985 0.003 30);
---vibeui-dashboard-078-card:oklch(1 0 0);
---vibeui-dashboard-078-fg:oklch(0.21 0.014 30);
---vibeui-dashboard-078-muted:oklch(0.54 0.014 30);
---vibeui-dashboard-078-border:oklch(0.91 0.006 30);
---vibeui-dashboard-078-accent:oklch(0.55 0.18 28);
---vibeui-dashboard-078-soft:oklch(0.965 0.02 30);
---vibeui-dashboard-078-new:oklch(0.57 0.19 25);
---vibeui-dashboard-078-fixed:oklch(0.58 0.13 155);
+--vibeui-dashboard-078-bg:transparent;
+/* Строка ошибки: подложка самого блока прозрачна. */
+--vibeui-dashboard-078-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 30));
+--vibeui-dashboard-078-fg:light-dark(oklch(0.21 0.014 30),oklch(0.94 0.005 30));
+--vibeui-dashboard-078-muted:light-dark(oklch(0.54 0.014 30),oklch(0.72 0.012 30));
+--vibeui-dashboard-078-border:light-dark(oklch(0.91 0.006 30),oklch(0.36 0.012 30));
+--vibeui-dashboard-078-accent:light-dark(oklch(0.55 0.18 28),oklch(0.74 0.16 28));
+--vibeui-dashboard-078-soft:light-dark(oklch(0.965 0.02 30),oklch(0.3 0.035 30));
+--vibeui-dashboard-078-new:light-dark(oklch(0.57 0.19 25),oklch(0.75 0.16 25));
+--vibeui-dashboard-078-new-bg:light-dark(oklch(0.96 0.025 25),oklch(0.31 0.05 25));
+--vibeui-dashboard-078-fixed:light-dark(oklch(0.53 0.13 155),oklch(0.78 0.13 155));
+--vibeui-dashboard-078-fixed-bg:light-dark(oklch(0.96 0.025 155),oklch(0.31 0.05 155));
 --vibeui-dashboard-078-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 --vibeui-dashboard-078-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
@@ -84,17 +106,17 @@ font-weight:750;text-transform:uppercase;letter-spacing:0.05em;
 padding:0.0625rem 0.3125rem;border-radius:0.25rem;background:var(--vibeui-dashboard-078-soft);
 }
 [data-vibeui-block="dashboard-078"] [data-status="new"] [data-part="status"]{
-color:var(--vibeui-dashboard-078-new);background:color-mix(in oklab,var(--vibeui-dashboard-078-new) 12%,white);
+color:var(--vibeui-dashboard-078-new);background:var(--vibeui-dashboard-078-new-bg);
 }
 [data-vibeui-block="dashboard-078"] [data-status="fixed"] [data-part="status"]{
-color:var(--vibeui-dashboard-078-fixed);background:color-mix(in oklab,var(--vibeui-dashboard-078-fixed) 12%,white);
+color:var(--vibeui-dashboard-078-fixed);background:var(--vibeui-dashboard-078-fixed-bg);
 }
 /* Спарклайн из столбиков: важна форма тренда, а не точные значения. */
 [data-vibeui-block="dashboard-078"] [data-part="spark"]{
 display:flex;align-items:flex-end;gap:0.0625rem;height:1.75rem;min-width:5rem;
 }
 [data-vibeui-block="dashboard-078"] [data-part="spark"] span{
-flex:1 1 0;border-radius:0.0625rem;background:color-mix(in oklab,var(--vibeui-dashboard-078-accent) 45%,white);
+flex:1 1 0;border-radius:0.0625rem;background:color-mix(in oklab,var(--vibeui-dashboard-078-accent) 45%,var(--vibeui-dashboard-078-card));
 }
 [data-vibeui-block="dashboard-078"] [data-part="spark"] span:last-child{background:var(--vibeui-dashboard-078-accent)}
 [data-vibeui-block="dashboard-078"] [data-part="nums"]{
@@ -167,11 +189,33 @@ const DEFAULT_ISSUES: Dashboard078Issue[] = [
   },
 ]
 
-const STATUS_LABELS: Record<Dashboard078Issue["status"], string> = {
+const STATUS_TEXT: Record<string, string> = {
   new: "новая",
   triaged: "в работе",
   muted: "заглушена",
   fixed: "исправлена",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -184,13 +228,29 @@ export function Dashboard078({
   period = "за последние 24 часа, группировка по месту падения",
   issues = DEFAULT_ISSUES,
   accent,
+  background = "",
+  statusText = STATUS_TEXT,
+  sparkAriaText = "Частота за последние часы",
+  usersLabel = "человек задело",
+  eventsLabel = "событий",
+  takeLabel = "Взять",
+  muteLabel = "Заглушить",
+  numberLocale = "ru-RU",
   className,
   style,
 }: Dashboard078Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-078-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-078-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+
+  const statuses = { ...STATUS_TEXT, ...statusText }
 
   return (
     <>
@@ -219,19 +279,13 @@ export function Dashboard078({
                     <b>{issue.title}</b>
                     <code data-part="frame">{issue.frame}</code>
                     <p data-part="meta">
-                      <span data-part="status">
-                        {STATUS_LABELS[issue.status]}
-                      </span>
+                      <span data-part="status">{statuses[issue.status]}</span>
                       <span>{issue.since}</span>
                       <span>{issue.release}</span>
                     </p>
                   </div>
 
-                  <div
-                    data-part="spark"
-                    role="img"
-                    aria-label="Частота за последние часы"
-                  >
+                  <div data-part="spark" role="img" aria-label={sparkAriaText}>
                     {issue.spark.map((value, index) => (
                       <span
                         key={`${issue.id}-${index}`}
@@ -244,18 +298,18 @@ export function Dashboard078({
 
                   <div data-part="nums">
                     <span data-part="users">
-                      <b>{issue.users.toLocaleString("ru-RU")}</b>
-                      <span>человек задело</span>
+                      <b>{issue.users.toLocaleString(numberLocale)}</b>
+                      <span>{usersLabel}</span>
                     </span>
                     <span data-part="events">
-                      <b>{issue.events.toLocaleString("ru-RU")}</b>
-                      <span>событий</span>
+                      <b>{issue.events.toLocaleString(numberLocale)}</b>
+                      <span>{eventsLabel}</span>
                     </span>
                   </div>
 
                   <div data-part="acts">
-                    <button type="button">Взять</button>
-                    <button type="button">Заглушить</button>
+                    <button type="button">{takeLabel}</button>
+                    <button type="button">{muteLabel}</button>
                   </div>
                 </li>
               )

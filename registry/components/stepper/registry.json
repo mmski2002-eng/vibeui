@@ -33,15 +33,18 @@
             "линию через ::before, идущую от центра предыдущего кружка: отдельный элемент-линия сместится при переносе",
             "aria-current=\"step\" у текущего шага — по нему скринридер находит место в процессе",
             "@container-запрос, прячущий подсказки в узкой колонке: иначе подписи наезжают друг на друга",
-            "блок <style> внутри компонента — в нём вся палитра, кружки и линия"
+            "блок <style> внутри компонента — в нём вся палитра, кружки и линия",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "массив steps: подписи и подсказки под ними",
             "current — номер текущего шага, считая с нуля",
             "акцент через проп accent — цвет пройденных кружков и линии",
-            "ширину и внешние отступы через className"
+            "ширину и внешние отступы через className",
+            "label — доступное имя списка шагов для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Это индикатор, а не навигация: шаги не кликаются. Если по шагам нужно возвращаться, оберните подписи в ссылки в своей копии.",
             "Не делайте больше пяти шагов: длинный процесс лучше разбить на этапы, иначе подписи не помещаются.",
             "Шаг «готово» в конце не нужен: последний шаг и есть завершение.",
@@ -62,6 +65,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "label",
+            "label": "Имя для скринридера",
+            "type": "text",
+            "default": "Шаги"
           }
         ],
         "i18n": {
@@ -76,15 +85,18 @@
                 "the connecting line as ::before reaching back to the previous circle's centre: a separate line element drifts when the row wraps",
                 "aria-current=\"step\" on the current step — it is how a screen reader locates the position in the process",
                 "the @container query that hides the hints in a narrow column: otherwise the labels collide",
-                "the <style> block inside the component — it holds the palette, the circles and the line"
+                "the <style> block inside the component — it holds the palette, the circles and the line",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the steps array: labels and the hints beneath them",
                 "current — the index of the active step, counting from zero",
                 "the accent through the accent prop — it colours completed circles and the line",
-                "width and outer spacing through className"
+                "width and outer spacing through className",
+                "label — the accessible name of the step list for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "This is an indicator, not navigation: the steps are not clickable. If people must go back, wrap the labels in links in your copy.",
                 "Do not go past five steps: a long process is better split into stages, or the labels stop fitting.",
                 "A final \"Done\" step is unnecessary: the last step is the completion.",
@@ -98,11 +110,38 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "label": {
+                "label": "Screen reader name",
+                "default": "Steps"
               }
             },
-            "title": "Process Stepper"
+            "title": "Process Stepper",
+            "preview": {
+              "props": {
+                "label": "Steps",
+                "steps": [
+                  {
+                    "label": "Project",
+                    "hint": "Name and address"
+                  },
+                  {
+                    "label": "Design",
+                    "hint": "Blocks and theme"
+                  },
+                  {
+                    "label": "Domain",
+                    "hint": "Ours or your own"
+                  },
+                  {
+                    "label": "Publish"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["current", "accent"]
       }
     },
     {
@@ -136,15 +175,21 @@
             "скрытую подпись состояния у каждого пункта: заливка и галочка не читаются вслух",
             "порядок в ol: нумерованный список — это и есть смысл «шаг за шагом»",
             "container-type:inline-size на корне: раскладка обязана мерить блок, а не окно",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "названия шагов через steps",
             "номер активного шага через current",
             "доступное имя ленты через label",
-            "глубину выреза шеврона через переменную --vibeui-stepper-002-notch"
+            "глубину выреза шеврона через переменную --vibeui-stepper-002-notch",
+            "stateText — подписи состояний для скринридера: пройден, текущий, впереди",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "акцент через проп accent — цвет пройденных кружков, линии и активного шага"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше пяти шагов в ленту не влезают: шевроны сожмут подписи до многоточия.",
             "current считается с нуля — 0 значит первый шаг, а не «ещё не начали».",
             "Шевроны не кликабельны: возврат к пройденному шагу — задача другого варианта.",
@@ -162,10 +207,21 @@
           },
           {
             "prop": "label",
-            "label": "Название ленты",
+            "label": "Имя для скринридера",
             "type": "text",
-            "default": "Оформление заказа",
-            "maxLength": 32
+            "default": "Оформление заказа"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -179,15 +235,21 @@
                 "the hidden state phrase on each item: a fill colour and a check mark are not read aloud",
                 "the ol ordering: a numbered list is what \"step by step\" actually means",
                 "container-type:inline-size on the root: the layout must measure the block, not the window",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "the component's own light surface: dark text disappears on the dark catalog card",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the step names through steps",
                 "the active step number through current",
                 "the ribbon's accessible name through label",
-                "the chevron notch depth through the --vibeui-stepper-002-notch variable"
+                "the chevron notch depth through the --vibeui-stepper-002-notch variable",
+                "stateText — the screen-reader state labels: completed, current, ahead",
+                "background — the component background; empty means no background, taking the page colour",
+                "the accent through the accent prop — it colours the completed circles, the line and the active step"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "More than five steps do not fit: the chevrons squeeze labels down to an ellipsis.",
                 "current is zero-based — 0 means the first step, not \"not started\".",
                 "The chevrons are not clickable: returning to a finished step is another variant's job.",
@@ -200,13 +262,31 @@
                 "label": "Current step"
               },
               "label": {
-                "label": "Ribbon name",
+                "label": "Screen reader name",
                 "default": "Checkout"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Chevron Steps"
+            "title": "Chevron Steps",
+            "preview": {
+              "props": {
+                "label": "Checkout",
+                "steps": ["Details", "Delivery", "Payment", "Done"],
+                "stateText": {
+                  "done": " — step completed",
+                  "current": " — current step",
+                  "todo": " — ahead"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["current", "accent", "background"]
       }
     },
     {
@@ -240,15 +320,21 @@
             "подпись состояния словом: залитая линия для скринридера не существует",
             "обрыв линии на последнем пункте: свисающий хвост читается как незаконченный список",
             "кружок в отдельной колонке grid: текст обязан выравниваться по заголовку, а не по значку",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "шаги, описания и отметки времени через steps",
             "номер активного шага через current",
             "доступное имя ленты через label",
-            "диаметр кружка через переменную --vibeui-stepper-003-dot"
+            "диаметр кружка через переменную --vibeui-stepper-003-dot",
+            "stateText — подписи состояний словом: Готово, Сейчас, Впереди",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "акцент через проп accent — цвет пройденных кружков, линии и активного шага"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Описание необязательно: без него пункт схлопывается до одной строки и лента остаётся ровной.",
             "current считается с нуля; значение больше длины списка просто закрасит все шаги пройденными.",
             "Три строки текста на шаг — потолок читаемости: подробности лучше уводить на отдельную страницу.",
@@ -266,10 +352,21 @@
           },
           {
             "prop": "label",
-            "label": "Название ленты",
+            "label": "Имя для скринридера",
             "type": "text",
-            "default": "Ход заявки",
-            "maxLength": 32
+            "default": "Ход заявки"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -283,15 +380,21 @@
                 "the state word: a filled connector does not exist for a screen reader",
                 "cutting the line at the last item: a dangling tail reads as an unfinished list",
                 "the dot in its own grid column: text must align to the title, not to the marker",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "the component's own light surface: dark text disappears on the dark catalog card",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the steps, descriptions and timestamps through steps",
                 "the active step number through current",
                 "the list's accessible name through label",
-                "the dot diameter through the --vibeui-stepper-003-dot variable"
+                "the dot diameter through the --vibeui-stepper-003-dot variable",
+                "stateText — the state words: Done, Now, Ahead",
+                "background — the component background; empty means no background, taking the page colour",
+                "the accent through the accent prop — it colours the completed circles, the line and the active step"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The description is optional: without it the item collapses to one line and the rhythm holds.",
                 "current is zero-based; a value past the list length simply marks every step as done.",
                 "Three lines of text per step is the legibility ceiling: send the details to their own page.",
@@ -304,13 +407,51 @@
                 "label": "Current step"
               },
               "label": {
-                "label": "List name",
+                "label": "Screen reader name",
                 "default": "Application progress"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Vertical Steps"
+            "title": "Vertical Steps",
+            "preview": {
+              "props": {
+                "label": "Application progress",
+                "stateText": {
+                  "done": "Done",
+                  "current": "Now",
+                  "todo": "Ahead"
+                },
+                "steps": [
+                  {
+                    "title": "Request received",
+                    "description": "We have your details and opened the case in the system.",
+                    "meta": "12 August, 10:04"
+                  },
+                  {
+                    "title": "Document check",
+                    "description": "A lawyer verifies the details and signatures. Usually takes a day.",
+                    "meta": "12 August, 15:20"
+                  },
+                  {
+                    "title": "Signing",
+                    "description": "We will email the contract — sign it with your electronic signature.",
+                    "meta": "expected today"
+                  },
+                  {
+                    "title": "Payout",
+                    "description": "The money reaches your account within three working days."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["current", "accent", "background"]
       }
     },
     {
@@ -344,15 +485,20 @@
             "пунктирную рамку у пропущенного шага: форма дублирует цвет там, где цвет не читается",
             "aria-current=\"step\" на текущем шаге: без него порядок теряется в озвучке",
             "aria-hidden на знаках ✓, ! и ↷: сами по себе они звучат как случайные символы",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "шаги и их состояния через steps",
             "доступное имя ленты через label",
             "основной цвет через accent",
-            "слова состояний — правкой таблиц MARKS и WORDS"
+            "слова состояний — правкой таблиц MARKS и WORDS",
+            "stateText — подписи состояний словом: Готово, Ошибка, Пропущен, Сейчас, Впереди",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Состояние задаётся явно: компонент не вычисляет его из номера и не проверяет, что текущий шаг один.",
             "Шаг с ошибкой не блокирует следующие — это решает форма, а не индикатор.",
             "Пять шагов на телефоне уже тесно: ниже 30rem подсказки прячутся, остаются заголовки.",
@@ -362,14 +508,19 @@
         "controls": [
           {
             "prop": "label",
-            "label": "Название ленты",
+            "label": "Имя для скринридера",
             "type": "text",
-            "default": "Настройка магазина",
-            "maxLength": 32
+            "default": "Настройка магазина"
           },
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -385,15 +536,20 @@
                 "the dashed ring on a skipped step: shape backs up colour where colour fails",
                 "aria-current=\"step\" on the current step: without it the order is lost when announced",
                 "aria-hidden on the ✓, ! and ↷ glyphs: on their own they sound like stray symbols",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "the component's own light surface: dark text disappears on the dark catalog card",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the steps and their states through steps",
                 "the list's accessible name through label",
                 "the main colour through accent",
-                "the state wording by editing the MARKS and WORDS tables"
+                "the state wording by editing the MARKS and WORDS tables",
+                "stateText — the state words: Done, Error, Skipped, Now, Ahead",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "State is explicit: the component neither derives it from an index nor checks that only one step is current.",
                 "An errored step does not block the following ones — that is the form's decision, not the indicator's.",
                 "Five steps are already tight on a phone: below 30rem the hints hide and only titles remain.",
@@ -403,16 +559,58 @@
             },
             "controls": {
               "label": {
-                "label": "List name",
+                "label": "Screen reader name",
                 "default": "Store setup"
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Step States"
+            "title": "Step States",
+            "preview": {
+              "props": {
+                "label": "Store setup",
+                "stateText": {
+                  "done": "Done",
+                  "error": "Error",
+                  "skipped": "Skipped",
+                  "current": "Now",
+                  "todo": "Ahead"
+                },
+                "steps": [
+                  {
+                    "title": "Account",
+                    "state": "done",
+                    "hint": "email confirmed"
+                  },
+                  {
+                    "title": "Tax details",
+                    "state": "error",
+                    "hint": "the tax number does not match"
+                  },
+                  {
+                    "title": "Logo",
+                    "state": "skipped",
+                    "hint": "can be added later"
+                  },
+                  {
+                    "title": "Payment",
+                    "state": "current",
+                    "hint": "pick a method"
+                  },
+                  {
+                    "title": "Launch",
+                    "state": "todo"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -446,15 +644,21 @@
             "напечатанный процент рядом с полоской: заливка сама по себе не озвучивается",
             "aria-current=\"step\" на текущем шаге: без него непонятно, к чему относится процент",
             "правило prefers-reduced-motion: у заливки есть переход по ширине, и его нужно уметь выключить",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "названия шагов через steps",
             "номер активного шага через current",
             "долю готовности через progress",
-            "доступное имя ленты через label"
+            "доступное имя ленты через label",
+            "progressText и doneText — подписи под текущим и пройденным шагом; {value} подставляет проценты",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "акцент через проп accent — цвет пройденных кружков, линии и активного шага"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "progress зажимается в 0–100: значение вне диапазона не сломает вёрстку, но и не отобразится как есть.",
             "Доля относится к переходу в текущий шаг, а не к работе внутри него — это разные величины.",
             "У первого шага соединителя нет, поэтому прогресс на нём показать нечем: начинайте с current={1}.",
@@ -464,7 +668,7 @@
         "controls": [
           {
             "prop": "progress",
-            "label": "Готовность, %",
+            "label": "Готовность",
             "type": "number",
             "default": 45,
             "min": 0,
@@ -477,6 +681,24 @@
             "default": 2,
             "min": 0,
             "max": 3
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "label",
+            "label": "Имя для скринридера",
+            "type": "text",
+            "default": "Импорт каталога"
           }
         ],
         "i18n": {
@@ -490,15 +712,21 @@
                 "the printed percentage beside the bar: a fill is not announced on its own",
                 "aria-current=\"step\" on the current step: without it the percentage has nothing to attach to",
                 "the prefers-reduced-motion rule: the fill animates its width and that must be switchable",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "the component's own light surface: dark text disappears on the dark catalog card",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the step names through steps",
                 "the active step number through current",
                 "the readiness fraction through progress",
-                "the list's accessible name through label"
+                "the list's accessible name through label",
+                "progressText and doneText — the captions under the current and completed steps; {value} takes the percentage",
+                "background — the component background; empty means no background, taking the page colour",
+                "the accent through the accent prop — it colours the completed circles, the line and the active step"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "progress is clamped to 0–100: an out-of-range value will not break the layout but will not render literally.",
                 "The fraction describes the transition into the current step, not the work inside it — different quantities.",
                 "The first step has no connector, so progress cannot show there: start from current={1}.",
@@ -508,15 +736,34 @@
             },
             "controls": {
               "progress": {
-                "label": "Readiness, %"
+                "label": "Readiness"
               },
               "current": {
                 "label": "Current step"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "label": {
+                "label": "Screen reader name",
+                "default": "Catalogue import"
               }
             },
-            "title": "Connector Progress"
+            "title": "Connector Progress",
+            "preview": {
+              "props": {
+                "label": "Catalogue import",
+                "steps": ["Upload", "Check", "Processing", "Report"],
+                "progressText": "{value}% done",
+                "doneText": "Done"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["current", "progress", "accent", "background"]
       }
     },
     {
@@ -550,15 +797,22 @@
             "aria-current=\"step\" на текущем сегменте: счётчик текстом и разметка обязаны совпадать",
             "счётчик «шаг N из M» словами: на телефоне это единственная навигация по процессу",
             "зажим current в границы массива: иначе заголовок текущего шага окажется пустым",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "названия шагов через steps",
             "номер активного шага через current",
             "приставку к следующему шагу через nextPrefix",
-            "доступное имя блока через label"
+            "доступное имя блока через label",
+            "counterText, leftText и lastText — счётчик сверху и остаток шагов; {current}, {total} и {left} подставляют числа",
+            "stateText — подписи состояний для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "акцент через проп accent — цвет пройденных кружков, линии и активного шага"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Названия шагов должны быть короткими: длинное уедет в две строки и собьёт высоту карточки.",
             "На последнем шаге строка «Далее» не рисуется — подсказывать нечего.",
             "Сегментов больше семи-восьми не имеет смысла: полоски станут неразличимы.",
@@ -578,8 +832,19 @@
             "prop": "nextPrefix",
             "label": "Приставка «далее»",
             "type": "text",
-            "default": "Далее",
-            "maxLength": 16
+            "default": "Далее"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -593,15 +858,22 @@
                 "aria-current=\"step\" on the current segment: the text counter and the markup must agree",
                 "the \"step N of M\" counter in words: on a phone it is the only navigation through the process",
                 "clamping current to the array bounds: otherwise the current step title comes out empty",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "the component's own light surface: dark text disappears on the dark catalog card",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the step names through steps",
                 "the active step number through current",
                 "the next-step prefix through nextPrefix",
-                "the block's accessible name through label"
+                "the block's accessible name through label",
+                "counterText, leftText and lastText — the counter on top and the steps left; {current}, {total} and {left} take the numbers",
+                "stateText — the screen-reader state labels",
+                "background — the component background; empty means no background, taking the page colour",
+                "the accent through the accent prop — it colours the completed circles, the line and the active step"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Step names must be short: a long one wraps to two lines and breaks the card height.",
                 "On the last step the \"next\" line is not drawn — there is nothing to hint at.",
                 "More than seven or eight segments is pointless: the bars stop being distinguishable.",
@@ -616,11 +888,33 @@
               "nextPrefix": {
                 "label": "Next prefix",
                 "default": "Next"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Mobile Counter"
+            "title": "Mobile Counter",
+            "preview": {
+              "props": {
+                "label": "Checkout",
+                "steps": ["Cart", "Delivery", "Payment", "Review", "Done"],
+                "nextPrefix": "Next",
+                "counterText": "Step {current} of {total}",
+                "leftText": "{left} left",
+                "lastText": "the last one",
+                "stateText": {
+                  "done": " — completed",
+                  "current": " — current step",
+                  "todo": " — ahead"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["current", "accent", "background"]
       }
     },
     {
@@ -654,15 +948,21 @@
             "aria-current=\"step\" на текущем шаге: он единственный, где сейчас идёт ввод",
             "будущие шаги обычным текстом, а не disabled-кнопками: отключённая кнопка обещает действие, которого нет",
             "видимый фокус у ссылки возврата: возврат обязан быть достижим с клавиатуры",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "шаги, выбранные значения и адреса через steps",
             "номер активного шага через current",
             "подпись ссылки возврата через editLabel",
-            "доступное имя списка через label"
+            "доступное имя списка через label",
+            "stateText — подписи «Сейчас» и «Впереди» у шагов",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "акцент через проп accent — цвет пройденных кружков, линии и активного шага"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ссылка возврата рисуется только у пройденного шага, у которого задан href: без адреса возвращаться некуда.",
             "Значение показывается тоже только у пройденных: у текущего шага его ещё не выбрали.",
             "Компонент не запрещает вернуться назад после оплаты — это правило бизнес-логики, а не индикатора.",
@@ -680,10 +980,21 @@
           },
           {
             "prop": "editLabel",
-            "label": "Подпись возврата",
+            "label": "Подпись ссылки",
             "type": "text",
-            "default": "Изменить",
-            "maxLength": 16
+            "default": "Изменить"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -697,15 +1008,21 @@
                 "aria-current=\"step\" on the current step: it is the only one being filled in right now",
                 "upcoming steps as plain text rather than disabled buttons: a disabled button promises an action that does not exist",
                 "the visible focus on the return link: going back must be reachable from the keyboard",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "the component's own light surface: dark text disappears on the dark catalog card",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the steps, chosen values and targets through steps",
                 "the active step number through current",
                 "the return link caption through editLabel",
-                "the list's accessible name through label"
+                "the list's accessible name through label",
+                "stateText — the “Now” and “Ahead” labels on the steps",
+                "background — the component background; empty means no background, taking the page colour",
+                "the accent through the accent prop — it colours the completed circles, the line and the active step"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The return link is drawn only for a finished step that has an href: without a target there is nowhere to go.",
                 "Values are shown for finished steps only: the current one has nothing chosen yet.",
                 "The component does not forbid going back after payment — that is business logic, not an indicator's job.",
@@ -718,13 +1035,50 @@
                 "label": "Current step"
               },
               "editLabel": {
-                "label": "Return caption",
-                "default": "Edit"
+                "label": "Link label",
+                "default": "Change"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Checkout Steps"
+            "title": "Checkout Steps",
+            "preview": {
+              "props": {
+                "label": "Checkout",
+                "editLabel": "Change",
+                "stateText": {
+                  "current": "Now",
+                  "todo": "Ahead"
+                },
+                "steps": [
+                  {
+                    "title": "Contacts",
+                    "value": "Maria Kim, +44 20 7000 1122",
+                    "href": "#contacts"
+                  },
+                  {
+                    "title": "Delivery",
+                    "value": "Courier tomorrow, 12:00–15:00",
+                    "href": "#delivery"
+                  },
+                  {
+                    "title": "Payment",
+                    "href": "#payment"
+                  },
+                  {
+                    "title": "Confirmation",
+                    "href": "#confirm"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["current", "accent", "background"]
       }
     },
     {
@@ -758,15 +1112,22 @@
             "счёт только обязательных шагов: иначе прогресс занижен и человек бросает настройку",
             "aria-current=\"step\" на текущем шаге: список с переносом иначе теряет точку внимания",
             "перенос пунктов вместо горизонтальной прокрутки: шесть шагов в ленту не помещаются",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "шаги и признак необязательности через steps",
             "номер активного шага через current",
             "текст метки через optionalLabel",
-            "доступное имя списка через label"
+            "доступное имя списка через label",
+            "counterText и countText — строка счётчика обязательных шагов; {count}, {done} и {total} подставляют числа",
+            "stateText — подписи состояний для скринридера",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "акцент через проп accent — цвет пройденных кружков, линии и активного шага"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пройденность считается по номеру: пропущенный необязательный шаг выглядит пройденным, отдельного состояния нет.",
             "Если необязательных шагов больше половины, счётчик перестаёт помогать — стоит разделить процесс на два.",
             "Пункты не кликабельны: переход к шагу — задача формы, а не индикатора.",
@@ -786,8 +1147,19 @@
             "prop": "optionalLabel",
             "label": "Метка «необязательно»",
             "type": "text",
-            "default": "Необязательно",
-            "maxLength": 20
+            "default": "Необязательно"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -801,15 +1173,22 @@
                 "counting required steps only: otherwise progress looks understated and people abandon setup",
                 "aria-current=\"step\" on the current step: a wrapping list otherwise loses its focal point",
                 "wrapping instead of horizontal scrolling: six steps do not fit one ribbon",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "the component's own light surface: dark text disappears on the dark catalog card",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the steps and their optional flag through steps",
                 "the active step number through current",
                 "the badge text through optionalLabel",
-                "the list's accessible name through label"
+                "the list's accessible name through label",
+                "counterText and countText — the required-steps counter line; {count}, {done} and {total} take the numbers",
+                "stateText — the screen-reader state labels",
+                "background — the component background; empty means no background, taking the page colour",
+                "the accent through the accent prop — it colours the completed circles, the line and the active step"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Completion is derived from the index: a skipped optional step looks done, there is no separate state.",
                 "If more than half the steps are optional the counter stops helping — split the process in two.",
                 "The items are not clickable: navigating to a step is the form's job, not the indicator's.",
@@ -824,11 +1203,54 @@
               "optionalLabel": {
                 "label": "Optional badge",
                 "default": "Optional"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Optional Steps"
+            "title": "Optional Steps",
+            "preview": {
+              "props": {
+                "label": "Workspace setup",
+                "optionalLabel": "Optional",
+                "counterText": "Required steps done {count}. The rest can be skipped and finished later.",
+                "countText": "{done} of {total}",
+                "stateText": {
+                  "done": " — step completed",
+                  "current": " — current step",
+                  "todo": " — ahead"
+                },
+                "steps": [
+                  {
+                    "title": "Profile"
+                  },
+                  {
+                    "title": "Team",
+                    "optional": true
+                  },
+                  {
+                    "title": "Plan"
+                  },
+                  {
+                    "title": "Integrations",
+                    "optional": true
+                  },
+                  {
+                    "title": "Domain",
+                    "optional": true
+                  },
+                  {
+                    "title": "Publish"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["current", "accent", "background"]
       }
     },
     {
@@ -862,15 +1284,21 @@
             "видимый фокус у pre: иначе непонятно, что именно сейчас прокручивается",
             "pre + code вместо div: команду копируют, и переносы обязаны сохраниться дословно",
             "aria-current=\"step\" и подпись состояния словом: раскрытый блок сам по себе не сообщает, где вы",
-            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает"
+            "собственную светлую подложку: на тёмной карточке каталога тёмный текст пропадает",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "шаги, описания и команды через steps",
             "номер активного шага через current",
             "подпись над блоком кода через codeCaption",
-            "доступное имя списка через label"
+            "доступное имя списка через label",
+            "stateText — подписи состояний словом: Готово, Сейчас, Впереди",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "акцент через проп accent — цвет пройденных кружков, линии и активного шага"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Раскрыт ровно один шаг — текущий: это осознанный отказ от аккордеона, чтобы не терять место в инструкции.",
             "Кнопки «скопировать» нет: она потребовала бы клиентского JS и превратила бы компонент в клиентский.",
             "Подсветки синтаксиса нет — команда остаётся простым текстом и не тянет зависимость.",
@@ -890,8 +1318,19 @@
             "prop": "codeCaption",
             "label": "Подпись над кодом",
             "type": "text",
-            "default": "Выполните в терминале",
-            "maxLength": 32
+            "default": "Выполните в терминале"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -905,15 +1344,21 @@
                 "the visible focus on pre: otherwise there is no way to tell what is being scrolled",
                 "pre + code instead of a div: the command gets copied and its line breaks must survive verbatim",
                 "aria-current=\"step\" and the state word: an expanded block alone does not say where you are",
-                "the component's own light surface: dark text disappears on the dark catalog card"
+                "the component's own light surface: dark text disappears on the dark catalog card",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the steps, descriptions and commands through steps",
                 "the active step number through current",
                 "the caption above the code block through codeCaption",
-                "the list's accessible name through label"
+                "the list's accessible name through label",
+                "stateText — the state words: Done, Now, Ahead",
+                "background — the component background; empty means no background, taking the page colour",
+                "the accent through the accent prop — it colours the completed circles, the line and the active step"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Exactly one step is expanded — the current one: a deliberate refusal of an accordion so the place is never lost.",
                 "There is no copy button: it would need client JS and turn the component into a client one.",
                 "There is no syntax highlighting — the command stays plain text and pulls in no dependency.",
@@ -927,12 +1372,47 @@
               },
               "codeCaption": {
                 "label": "Code caption",
-                "default": "Run in your terminal"
+                "default": "Run in the terminal"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Setup Steps"
+            "title": "Setup Steps",
+            "preview": {
+              "props": {
+                "label": "Installing the component",
+                "codeCaption": "Run in the terminal",
+                "stateText": {
+                  "done": "Done",
+                  "current": "Now",
+                  "todo": "Ahead"
+                },
+                "steps": [
+                  {
+                    "title": "Install the package",
+                    "description": "It goes into the project as a whole, no separate build step.",
+                    "code": "npm i @vibeui/blocks"
+                  },
+                  {
+                    "title": "Add the component",
+                    "description": "The command drops the file into components/vibeui and adds the import.",
+                    "code": "npx shadcn@latest add https://vibeui.dev/r/stepper-009.json"
+                  },
+                  {
+                    "title": "Check the build",
+                    "description": "The component is server-side: no client JS lands in the bundle.",
+                    "code": "npm run build"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["current", "accent", "background"]
       }
     },
     {
@@ -965,15 +1445,21 @@
             "панель подробностей только у текущего шага: детали пройденных и будущих шагов не нужны одновременно",
             "aria-current=\"step\" на текущем шаге: без него панель подробностей не привязана к месту в процессе",
             "линию через ::before, идущую от центра предыдущего кружка",
-            "блок <style> внутри компонента — в нём вся палитра и раскладка"
+            "блок <style> внутри компонента — в нём вся палитра и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "массив steps: заголовок, однострочную сводку и необязательные details",
             "current — номер текущего шага, считая с нуля",
             "акцент через проп accent — цвет пройденных кружков и панели",
-            "доступное имя ленты через label"
+            "доступное имя ленты через label",
+            "detailsTitle — заголовок панели с подробностями текущего шага",
+            "stateText — подписи состояний словом: Готово, Сейчас, Впереди",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Панель подробностей рисуется, только если у текущего шага задан details — иначе виден один заголовок со сводкой.",
             "Больше пяти шагов лента не держит: подробности растянут карточку по высоте.",
             "current считается с нуля; значение больше длины списка просто закрасит все шаги пройденными.",
@@ -991,10 +1477,21 @@
           },
           {
             "prop": "label",
-            "label": "Название ленты",
+            "label": "Имя для скринридера",
             "type": "text",
-            "default": "Перенос магазина",
-            "maxLength": 32
+            "default": "Перенос магазина"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1007,15 +1504,21 @@
                 "the detail panel on the current step only: finished and upcoming steps do not need details at the same time",
                 "aria-current=\"step\" on the current step: without it the detail panel has nothing to attach to",
                 "the connecting line as ::before reaching back to the previous circle's centre",
-                "the <style> block inside the component — it holds the palette and the layout"
+                "the <style> block inside the component — it holds the palette and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the steps array: title, one-line summary and optional details",
                 "current — the index of the active step, counting from zero",
                 "the accent through the accent prop — it colours completed circles and the panel",
-                "the ribbon's accessible name through label"
+                "the ribbon's accessible name through label",
+                "detailsTitle — the heading of the details panel on the current step",
+                "stateText — the state words: Done, Now, Ahead",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The detail panel is drawn only when the current step has a details array — otherwise only the title and summary show.",
                 "More than five steps do not fit: the details would stretch the card too tall.",
                 "current is zero-based; a value past the list length simply marks every step as done.",
@@ -1028,13 +1531,54 @@
                 "label": "Current step"
               },
               "label": {
-                "label": "Ribbon name",
+                "label": "Screen reader name",
                 "default": "Store migration"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Detail Steps"
+            "title": "Detail Steps",
+            "preview": {
+              "props": {
+                "label": "Store migration",
+                "detailsTitle": "What is happening now",
+                "stateText": {
+                  "done": "Done",
+                  "current": "Now",
+                  "todo": "Ahead"
+                },
+                "steps": [
+                  {
+                    "title": "Domain",
+                    "summary": "Connected and verified, the certificate was issued automatically."
+                  },
+                  {
+                    "title": "Payment",
+                    "summary": "The payment method is saved for future charges."
+                  },
+                  {
+                    "title": "Data import",
+                    "summary": "We are moving the catalogue and orders from the old system.",
+                    "details": [
+                      "The export file is accepted, rows are being parsed",
+                      "Duplicate products are flagged, not deleted",
+                      "We will email a report once parsing is done"
+                    ]
+                  },
+                  {
+                    "title": "Launch",
+                    "summary": "The store becomes visible to customers."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["current", "accent", "background"]
       }
     },
     {
@@ -1067,16 +1611,22 @@
             "карточку с issue и fix под лентой: значок \"!\" на кружке сам по себе не объясняет, что делать",
             "aria-current=\"step\" на текущем шаге",
             "видимый текст состояния рядом с кружком: цвет не единственный носитель смысла",
-            "видимый фокус у ссылки исправления: путь к форме обязан быть доступен с клавиатуры"
+            "видимый фокус у ссылки исправления: путь к форме обязан быть доступен с клавиатуры",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "шаги и их состояния через steps",
             "текст ошибки и способ её исправить через issue и fix",
             "ссылку и подпись действия через href и actionLabel",
             "доступное имя ленты через label",
-            "основной цвет через accent"
+            "основной цвет через accent",
+            "alertTitleText и actionLabel — заголовок карточки ошибки и запасная подпись ссылки исправления; {title} подставляет название шага",
+            "stateText — подписи состояний словом: Готово, Ошибка, Сейчас, Впереди",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Карточка с исправлением рисуется для каждого шага в состоянии error — обычно он один, но компонент не ограничивает их число.",
             "Шаг с ошибкой не блокирует следующие: это решает форма, а не индикатор.",
             "Промежуточного состояния «пропущен» здесь нет — набор состояний сознательно сужен до готово/ошибка/сейчас/впереди.",
@@ -1086,14 +1636,19 @@
         "controls": [
           {
             "prop": "label",
-            "label": "Название ленты",
+            "label": "Имя для скринридера",
             "type": "text",
-            "default": "Настройка магазина",
-            "maxLength": 32
+            "default": "Настройка магазина"
           },
           {
             "prop": "accent",
             "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
             "type": "color",
             "default": ""
           }
@@ -1108,16 +1663,22 @@
                 "the issue-and-fix card below the ribbon: an \"!\" glyph on a circle alone does not explain what to do",
                 "aria-current=\"step\" on the current step",
                 "the visible state text beside the circle: colour is not the only carrier of meaning",
-                "the visible focus on the fix link: the path to the form must be reachable from the keyboard"
+                "the visible focus on the fix link: the path to the form must be reachable from the keyboard",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the steps and their states through steps",
                 "the issue text and the fix instructions through issue and fix",
                 "the link and its caption through href and actionLabel",
                 "the ribbon's accessible name through label",
-                "the main colour through accent"
+                "the main colour through accent",
+                "alertTitleText and actionLabel — the error card heading and the fallback fix-link label; {title} takes the step title",
+                "stateText — the state words: Done, Error, Now, Ahead",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The fix card is drawn for every step in the error state — usually there is one, but the component does not cap the count.",
                 "An errored step does not block the following ones — that is the form's decision, not the indicator's.",
                 "There is no separate \"skipped\" state here — the set is deliberately narrowed to done/error/current/upcoming.",
@@ -1127,16 +1688,55 @@
             },
             "controls": {
               "label": {
-                "label": "List name",
+                "label": "Screen reader name",
                 "default": "Store setup"
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Error Recovery"
+            "title": "Error Recovery",
+            "preview": {
+              "props": {
+                "label": "Store setup",
+                "alertTitleText": "Error at the “{title}” step",
+                "actionLabel": "Fix",
+                "stateText": {
+                  "done": "Done",
+                  "error": "Error",
+                  "current": "Now",
+                  "todo": "Ahead"
+                },
+                "steps": [
+                  {
+                    "title": "Account",
+                    "state": "done"
+                  },
+                  {
+                    "title": "Tax details",
+                    "state": "error",
+                    "issue": "The tax number does not match the company name.",
+                    "fix": "Check the number on your tax certificate and enter it without spaces.",
+                    "href": "#requisites",
+                    "actionLabel": "Fix the tax details"
+                  },
+                  {
+                    "title": "Payment",
+                    "state": "current"
+                  },
+                  {
+                    "title": "Launch",
+                    "state": "todo"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1169,16 +1769,22 @@
             "двухколоночную раскладку [data-part=\"layout\"]: сводка обязана быть рядом с шагами, а не под ними, пока хватает ширины",
             "container-type:inline-size на корне и правило внутри @container для [data-part=\"layout\"], а не для самого блока",
             "скрытую подпись состояния у каждого шага: цвет кружка не озвучивается",
-            "aside с aria-label у сводки: это отдельная область страницы, а не продолжение списка шагов"
+            "aside с aria-label у сводки: это отдельная область страницы, а не продолжение списка шагов",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "шаги через steps",
             "номер активного шага через current",
             "строки сводки через summary, итог через total",
             "подписи через summaryTitle и totalLabel",
-            "доступное имя ленты через label"
+            "доступное имя ленты через label",
+            "stateText — подписи состояний для скринридера: Готово, Сейчас, Впереди",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "акцент через проп accent — цвет пройденных кружков, линии и активного шага"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Сводка не пересчитывает сумму: значения приходят готовыми строками, компонент их не форматирует.",
             "На ширине уже 28rem колонки складываются в одну — сводка уходит под ленту шагов.",
             "current считается с нуля; значение вне диапазона не сломает вёрстку.",
@@ -1198,8 +1804,19 @@
             "prop": "totalLabel",
             "label": "Подпись итога",
             "type": "text",
-            "default": "Итого",
-            "maxLength": 16
+            "default": "Итого"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1212,16 +1829,22 @@
                 "the two-column [data-part=\"layout\"]: the summary has to sit beside the steps, not below, while width allows",
                 "container-type:inline-size on the root and the @container rule targeting [data-part=\"layout\"], not the block itself",
                 "the hidden state caption on each step: a circle's colour is not announced",
-                "the aside with its own aria-label on the summary: it is a separate page region, not a continuation of the step list"
+                "the aside with its own aria-label on the summary: it is a separate page region, not a continuation of the step list",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the steps through steps",
                 "the active step number through current",
                 "the summary line items through summary, the total through total",
                 "the captions through summaryTitle and totalLabel",
-                "the ribbon's accessible name through label"
+                "the ribbon's accessible name through label",
+                "stateText — the screen-reader state labels: Done, Now, Ahead",
+                "background — the component background; empty means no background, taking the page colour",
+                "the accent through the accent prop — it colours the completed circles, the line and the active step"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The summary does not compute totals: values arrive as ready-made strings and the component does not format them.",
                 "Already at 28rem the columns collapse to one — the summary moves below the step ribbon.",
                 "current is zero-based; an out-of-range value will not break the layout.",
@@ -1236,11 +1859,59 @@
               "totalLabel": {
                 "label": "Total label",
                 "default": "Total"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Order Summary"
+            "title": "Order Summary",
+            "preview": {
+              "props": {
+                "label": "Checkout",
+                "summaryTitle": "Your order",
+                "totalLabel": "Total",
+                "total": "£79.30",
+                "stateText": {
+                  "done": "Done",
+                  "current": "Now",
+                  "todo": "Ahead"
+                },
+                "steps": [
+                  {
+                    "title": "Cart"
+                  },
+                  {
+                    "title": "Delivery"
+                  },
+                  {
+                    "title": "Payment"
+                  },
+                  {
+                    "title": "Confirmation"
+                  }
+                ],
+                "summary": [
+                  {
+                    "label": "Items (3)",
+                    "value": "£79.40"
+                  },
+                  {
+                    "label": "Delivery",
+                    "value": "£2.90"
+                  },
+                  {
+                    "label": "Discount",
+                    "value": "−£5.00"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["current", "accent", "background"]
       }
     },
     {
@@ -1273,15 +1944,21 @@
             "визуально скрытый ol с состоянием каждого шага: полоса прогресса сама по себе для скринридера не существует",
             "aria-hidden на декоративных track и fill: их смысл уже озвучен текстом счётчика",
             "напечатанный процент рядом со счётчиком: заливка сама по себе не озвучивается",
-            "правило prefers-reduced-motion: у заливки есть переход по ширине, и его нужно уметь выключить"
+            "правило prefers-reduced-motion: у заливки есть переход по ширине, и его нужно уметь выключить",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "названия шагов через steps",
             "номер активного шага через current",
             "доступное имя счётчика через label",
-            "акцент через проп accent — цвет заливки и процента"
+            "акцент через проп accent — цвет заливки и процента",
+            "шаблон счётчика через countText — {current} и {total} подставляются",
+            "подписи состояний для скринридера через stateText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Процент считается от порядкового номера шага, а не от прогресса внутри него — это разные величины.",
             "current зажимается в границы массива: значение вне диапазона не даст пустого заголовка.",
             "Сегментов или галочек здесь нет намеренно — при недостатке ширины важнее одно число и одна полоса.",
@@ -1302,6 +1979,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1314,15 +1997,21 @@
                 "the visually hidden ol with each step's state: a progress bar does not exist for a screen reader on its own",
                 "aria-hidden on the decorative track and fill: their meaning is already spoken by the counter text",
                 "the printed percentage beside the counter: a fill is not announced on its own",
-                "the prefers-reduced-motion rule: the fill animates its width and that must be switchable"
+                "the prefers-reduced-motion rule: the fill animates its width and that must be switchable",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the step names through steps",
                 "the active step number through current",
                 "the counter's accessible name through label",
-                "the accent through the accent prop — it colours the fill and the percentage"
+                "the accent through the accent prop — it colours the fill and the percentage",
+                "the counter template through countText — {current} and {total} are substituted",
+                "the screen-reader state captions through stateText",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The percentage is derived from the step's index, not from progress inside it — different quantities.",
                 "current is clamped to the array bounds: an out-of-range value will not produce an empty title.",
                 "There are no segments or checkmarks on purpose — when width is scarce, one number and one bar matter more.",
@@ -1336,11 +2025,27 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Progress Counter"
+            "title": "Progress Counter",
+            "preview": {
+              "props": {
+                "steps": ["Account", "Company", "Team", "Plan", "Done"],
+                "label": "Sign up",
+                "countText": "Step {current} of {total}",
+                "stateText": {
+                  "done": "completed",
+                  "current": "current step",
+                  "todo": "ahead"
+                }
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["current", "accent", "background"]
       }
     },
     {
@@ -1373,16 +2078,22 @@
             "метку «Необязательно» словом и пунктирную рамку кружка: необязательность не должна держаться на одном цвете",
             "ссылку пропуска только у текущего необязательного шага: пропускать пройденное или ещё не начатое нечего",
             "aria-current=\"step\" на текущем шаге",
-            "видимый фокус у ссылки пропуска: путь мимо шага обязан быть доступен с клавиатуры"
+            "видимый фокус у ссылки пропуска: путь мимо шага обязан быть доступен с клавиатуры",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "шаги, описания и признак optional через steps",
             "номер активного шага через current",
             "адрес и подпись пропуска через skipHref в шаге и через skipLabel",
             "доступное имя ленты через label",
-            "акцент через проп accent"
+            "акцент через проп accent",
+            "метку необязательного шага через optionalLabel",
+            "подписи состояний через stateText",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Ссылка пропуска рисуется только когда у шага одновременно optional: true, состояние current и задан skipHref.",
             "Компонент не решает, что произойдёт при пропуске — это переход по обычной ссылке, логика на стороне формы.",
             "current считается с нуля; значение вне диапазона просто закрасит все шаги пройденными.",
@@ -1404,6 +2115,18 @@
             "type": "text",
             "default": "Пропустить этот шаг",
             "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1416,16 +2139,22 @@
                 "the word \"Optional\" plus the dashed circle: optionality must not rest on colour alone",
                 "the skip link only on the current optional step: there is nothing to skip in a finished or not-yet-started step",
                 "aria-current=\"step\" on the current step",
-                "the visible focus on the skip link: the path around the step must be reachable from the keyboard"
+                "the visible focus on the skip link: the path around the step must be reachable from the keyboard",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the steps, descriptions and the optional flag through steps",
                 "the active step number through current",
                 "the skip target and caption through a step's skipHref and through skipLabel",
                 "the ribbon's accessible name through label",
-                "the accent through the accent prop"
+                "the accent through the accent prop",
+                "the optional badge through optionalLabel",
+                "the state captions through stateText",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The skip link is drawn only when a step is optional, current, and has a skipHref, all at once.",
                 "The component does not decide what happens on skip — it is a plain link, the logic lives in the form.",
                 "current is zero-based; a value past the list length simply marks every step as done.",
@@ -1440,11 +2169,49 @@
               "skipLabel": {
                 "label": "Skip caption",
                 "default": "Skip this step"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Skip Step"
+            "title": "Skip Step",
+            "preview": {
+              "props": {
+                "steps": [
+                  {
+                    "title": "Profile",
+                    "description": "Name, photo and time zone."
+                  },
+                  {
+                    "title": "Import contacts",
+                    "description": "Upload your address book so you do not have to type contacts in by hand.",
+                    "optional": true,
+                    "skipHref": "#tariff"
+                  },
+                  {
+                    "title": "Plan",
+                    "description": "Pick a plan — you can change it later."
+                  },
+                  {
+                    "title": "Done"
+                  }
+                ],
+                "skipLabel": "Skip this step",
+                "optionalLabel": "Optional",
+                "stateText": {
+                  "done": "Done",
+                  "current": "Now",
+                  "todo": "Ahead"
+                },
+                "label": "Account setup"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["current", "accent", "background"]
       }
     },
     {
@@ -1477,16 +2244,23 @@
             "карточку сверки только на последнем шаге: до него внимание не распыляется на детали",
             "доступное имя ссылки редактирования с названием раздела: несколько ссылок «Изменить» подряд неразличимы в списке ссылок",
             "ссылку «Назад» рядом с подтверждением: возврат должен быть так же заметен, как основное действие",
-            "видимый фокус у всех ссылок панели"
+            "видимый фокус у всех ссылок панели",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "названия шагов через steps",
             "номер активного шага через current",
             "пункты сверки через review — метка, значение и адрес редактирования",
             "подписи действий через editLabel, backLabel и confirmLabel",
-            "адреса через backHref и confirmHref"
+            "адреса через backHref и confirmHref",
+            "заголовок карточки сверки через panelTitle",
+            "текст до последнего шага через pendingText — {step} подставляется",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Карточка сверки рисуется, только когда current указывает на последний шаг — это условие, а не отдельный проп.",
             "Кнопки «Назад» и «Подтвердить» — обычные ссылки: без клиентского JS компонент не может отправить форму сам.",
             "current считается с нуля и зажимается в границы массива steps.",
@@ -1508,6 +2282,18 @@
             "type": "text",
             "default": "Изменить",
             "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -1520,16 +2306,23 @@
                 "the review card on the last step only: attention is not split across details before then",
                 "the edit link's accessible name including the section title: several \"Edit\" links in a row are indistinguishable in a links list",
                 "the \"Back\" link beside the confirm action: going back must be as visible as the primary action",
-                "the visible focus on every link in the panel"
+                "the visible focus on every link in the panel",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the step names through steps",
                 "the active step number through current",
                 "the review items through review — label, value and edit target",
                 "the action captions through editLabel, backLabel and confirmLabel",
-                "the targets through backHref and confirmHref"
+                "the targets through backHref and confirmHref",
+                "the review card heading through panelTitle",
+                "the text shown before the last step through pendingText — {step} is substituted",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The review card is drawn only when current points at the last step — that is a condition, not a separate prop.",
                 "\"Back\" and \"Confirm\" are plain links: without client JS the component cannot submit a form itself.",
                 "current is zero-based and clamped to the steps array bounds.",
@@ -1544,11 +2337,46 @@
               "editLabel": {
                 "label": "Edit caption",
                 "default": "Edit"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Review Steps"
+            "title": "Review Steps",
+            "preview": {
+              "props": {
+                "steps": ["Details", "Address", "Payment", "Review"],
+                "review": [
+                  {
+                    "label": "Recipient",
+                    "value": "Igor Petrov",
+                    "href": "#step-0"
+                  },
+                  {
+                    "label": "Address",
+                    "value": "12 Lenin St, Moscow",
+                    "href": "#step-1"
+                  },
+                  {
+                    "label": "Payment method",
+                    "value": "Card •• 4412",
+                    "href": "#step-2"
+                  }
+                ],
+                "panelTitle": "Check this before you confirm",
+                "pendingText": "The review appears on the last step — “{step}”.",
+                "editLabel": "Edit",
+                "backLabel": "Back",
+                "confirmLabel": "Confirm",
+                "label": "Checkout"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["current", "accent", "background"]
       }
     }
   ]

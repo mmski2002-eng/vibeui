@@ -23,6 +23,22 @@ export type Dashboard052Props = {
   createLabel?: string
   downloadLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Заголовок формы заказа. */
+  formTitle?: string
+  /** Подпись поля набора данных. */
+  datasetLabel?: string
+  /** Подпись поля периода. */
+  rangeLabel?: string
+  /** Подпись группы форматов. */
+  formatLabel?: string
+  /** Пояснение под кнопкой заказа. */
+  noteText?: string
+  /** Подписи состояний: ключ — значение state. */
+  stateText?: Record<string, string>
+  /** Шаблон подписи полосы: {name} и {value}. */
+  progressAriaText?: string
   className?: string
   style?: CSSProperties
 }
@@ -38,15 +54,18 @@ export type Dashboard052Props = {
 // процентом, потому что «готовится» без цифры ничего не говорит о времени.
 const STYLES = `
 :where([data-vibeui-block="dashboard-052"]){
---vibeui-dashboard-052-bg:oklch(0.985 0.003 190);
---vibeui-dashboard-052-card:oklch(1 0 0);
---vibeui-dashboard-052-fg:oklch(0.22 0.014 190);
---vibeui-dashboard-052-muted:oklch(0.55 0.014 190);
---vibeui-dashboard-052-border:oklch(0.91 0.006 190);
---vibeui-dashboard-052-accent:oklch(0.5 0.12 190);
---vibeui-dashboard-052-soft:oklch(0.95 0.025 190);
---vibeui-dashboard-052-ok:oklch(0.55 0.13 155);
---vibeui-dashboard-052-bad:oklch(0.58 0.19 25);
+--vibeui-dashboard-052-bg:transparent;
+/* Панели и поля ввода: подложка блока прозрачна, и рисовать их ею нечем. */
+--vibeui-dashboard-052-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 190));
+--vibeui-dashboard-052-inset:light-dark(oklch(0.97 0.004 190),oklch(0.22 0.012 190));
+--vibeui-dashboard-052-fg:light-dark(oklch(0.22 0.014 190),oklch(0.94 0.005 190));
+--vibeui-dashboard-052-muted:light-dark(oklch(0.55 0.014 190),oklch(0.72 0.012 190));
+--vibeui-dashboard-052-border:light-dark(oklch(0.91 0.006 190),oklch(0.36 0.012 190));
+--vibeui-dashboard-052-accent:light-dark(oklch(0.5 0.12 190),oklch(0.76 0.11 190));
+--vibeui-dashboard-052-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 190));
+--vibeui-dashboard-052-soft:light-dark(oklch(0.95 0.025 190),oklch(0.32 0.045 190));
+--vibeui-dashboard-052-ok:light-dark(oklch(0.55 0.13 155),oklch(0.74 0.13 155));
+--vibeui-dashboard-052-bad:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.17 25));
 --vibeui-dashboard-052-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -77,7 +96,7 @@ font-size:0.6875rem;font-weight:650;color:var(--vibeui-dashboard-052-muted);
 [data-vibeui-block="dashboard-052"] select{
 font:inherit;font-size:0.8125rem;color:inherit;width:100%;
 padding:0.4375rem 0.5rem;border-radius:0.5rem;
-border:1px solid var(--vibeui-dashboard-052-border);background:var(--vibeui-dashboard-052-bg);
+border:1px solid var(--vibeui-dashboard-052-border);background:var(--vibeui-dashboard-052-inset);
 }
 [data-vibeui-block="dashboard-052"] fieldset{border:0;margin:0;padding:0;min-width:0}
 [data-vibeui-block="dashboard-052"] legend{
@@ -88,7 +107,7 @@ font-size:0.6875rem;font-weight:650;color:var(--vibeui-dashboard-052-muted);
 [data-vibeui-block="dashboard-052"] [data-part="pick"]{
 display:inline-flex;align-items:center;gap:0.375rem;cursor:pointer;
 padding:0.375rem 0.625rem;border-radius:0.5rem;font-size:0.75rem;font-weight:650;
-border:1px solid var(--vibeui-dashboard-052-border);background:var(--vibeui-dashboard-052-bg);
+border:1px solid var(--vibeui-dashboard-052-border);background:var(--vibeui-dashboard-052-inset);
 }
 [data-vibeui-block="dashboard-052"] [data-part="pick"]:has(input:checked){
 border-color:var(--vibeui-dashboard-052-accent);
@@ -103,7 +122,7 @@ margin:0;width:0.875rem;height:0.875rem;accent-color:var(--vibeui-dashboard-052-
 [data-vibeui-block="dashboard-052"] [data-part="create"]{
 appearance:none;border:0;cursor:pointer;font:inherit;
 font-size:0.8125rem;font-weight:700;padding:0.5625rem 0.9375rem;border-radius:0.625rem;
-background:var(--vibeui-dashboard-052-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-052-accent);color:var(--vibeui-dashboard-052-on-accent);
 }
 [data-vibeui-block="dashboard-052"] [data-part="note"]{
 margin:0;font-size:0.6875rem;line-height:1.45;color:var(--vibeui-dashboard-052-muted);
@@ -141,7 +160,7 @@ background:currentColor;border-radius:0;transform:rotate(45deg);
 }
 [data-vibeui-block="dashboard-052"] [data-part="track"]{
 grid-column:1/-1;height:0.3125rem;border-radius:9999px;overflow:hidden;
-background:var(--vibeui-dashboard-052-bg);
+background:var(--vibeui-dashboard-052-inset);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-052-border);
 }
 [data-vibeui-block="dashboard-052"] [data-part="fill"]{
@@ -207,6 +226,36 @@ const DEFAULT_JOBS: Dashboard052Job[] = [
   },
 ]
 
+const STATE_LABEL: Record<string, string> = {
+  "В очереди": "В очереди",
+  Готовится: "Готовится",
+  Готов: "Готов",
+  Просрочен: "Просрочен",
+  Ошибка: "Ошибка",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Страница экспорта: форма заказа выгрузки и список заданий с прогрессом,
  * размером и сроком жизни ссылки. Один файл, ноль зависимостей, клиентского
@@ -230,11 +279,25 @@ export function Dashboard052({
   createLabel = "Заказать выгрузку",
   downloadLabel = "Скачать",
   accent,
+  background = "",
+  formTitle = "Новая выгрузка",
+  datasetLabel = "Что выгружаем",
+  rangeLabel = "Период",
+  formatLabel = "Формат файла",
+  noteText = "Готовый файл появится в списке справа. Ссылка на скачивание живёт 24 часа, после этого выгрузку нужно заказать заново.",
+  stateText = STATE_LABEL,
+  progressAriaText = "{name}: готовность {value} процентов",
   className,
   style,
 }: Dashboard052Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-052-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-052-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -256,11 +319,11 @@ export function Dashboard052({
           </div>
 
           <form>
-            <h3>Новая выгрузка</h3>
+            <h3>{formTitle}</h3>
 
             <p data-part="field">
               <label data-part="label" htmlFor="dashboard-052-dataset">
-                Что выгружаем
+                {datasetLabel}
               </label>
               <select id="dashboard-052-dataset" defaultValue={dataset}>
                 {datasets.map((item) => (
@@ -271,7 +334,7 @@ export function Dashboard052({
 
             <p data-part="field">
               <label data-part="label" htmlFor="dashboard-052-range">
-                Период
+                {rangeLabel}
               </label>
               <select id="dashboard-052-range" defaultValue={range}>
                 {ranges.map((item) => (
@@ -281,7 +344,7 @@ export function Dashboard052({
             </p>
 
             <fieldset>
-              <legend>Формат файла</legend>
+              <legend>{formatLabel}</legend>
               <span data-part="formats">
                 {formats.map((item) => (
                   <label key={item} data-part="pick">
@@ -300,17 +363,16 @@ export function Dashboard052({
               {createLabel}
             </button>
 
-            <p data-part="note">
-              Готовый файл появится в списке справа. Ссылка на скачивание живёт
-              24 часа, после этого выгрузку нужно заказать заново.
-            </p>
+            <p data-part="note">{noteText}</p>
           </form>
 
           <div data-part="jobs">
             {jobs.map((job) => (
               <article key={job.name} data-state={job.state}>
                 <span data-part="name">{job.name}</span>
-                <span data-part="state">{job.state}</span>
+                <span data-part="state">
+                  {stateText[job.state] ?? job.state}
+                </span>
                 <span data-part="asked">{job.asked}</span>
 
                 <div
@@ -319,7 +381,9 @@ export function Dashboard052({
                   aria-valuenow={job.progress}
                   aria-valuemin={0}
                   aria-valuemax={100}
-                  aria-label={`${job.name}: готовность ${job.progress} процентов`}
+                  aria-label={progressAriaText
+                    .replace("{name}", job.name)
+                    .replace("{value}", String(job.progress))}
                 >
                   <span
                     data-part="fill"

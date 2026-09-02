@@ -9,6 +9,13 @@ export type Progress003Props = Omit<
   target?: number
   label?: string
   unit?: string
+  /** Подпись цели под кольцом: {target} — процент плана. */
+  goalText?: string
+  /** Озвучка кольца: {value} — факт, {target} — план. */
+  valueText?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  accent?: string
 }
 
 // Идея компонента: кольцевая шкала с делениями и меткой цели. Дуга и риски
@@ -21,12 +28,13 @@ const STYLES = `
 --vibeui-progress-003-thickness:0.75rem;
 --vibeui-progress-003-value:0;
 --vibeui-progress-003-target:0;
---vibeui-progress-003-bg:oklch(1 0 0);
---vibeui-progress-003-fg:oklch(0.24 0.014 265);
---vibeui-progress-003-muted:oklch(0.55 0.014 265);
---vibeui-progress-003-border:oklch(0.9 0.006 265);
---vibeui-progress-003-track:oklch(0.93 0.006 265);
---vibeui-progress-003-accent:oklch(0.58 0.16 155);
+--vibeui-progress-003-bg:transparent;
+--vibeui-progress-003-surface:light-dark(oklch(0.99 0.002 265),oklch(0.2 0.012 265));
+--vibeui-progress-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-progress-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-progress-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-progress-003-track:light-dark(oklch(0.93 0.006 265),oklch(0.31 0.012 265));
+--vibeui-progress-003-accent:light-dark(oklch(0.58 0.16 155),oklch(0.74 0.15 155));
 --vibeui-progress-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="progress-003"]{
@@ -50,10 +58,11 @@ var(--vibeui-progress-003-track) 0);
 mask:radial-gradient(farthest-side,transparent calc(100% - var(--vibeui-progress-003-thickness)),#000 calc(100% - var(--vibeui-progress-003-thickness)));
 transition:background .35s ease;
 }
-/* Риски: второй conic-gradient поверх дуги, повторяющийся каждые 30 градусов. */
+/* Риски: второй conic-gradient поверх дуги, повторяющийся каждые 30 градусов.
+   Цвет рисок — цвет подложки, поэтому они читаются как прорези в кольце. */
 [data-vibeui-block="progress-003"] [data-part="ticks"]{
 position:absolute;inset:0;border-radius:9999px;pointer-events:none;
-background:repeating-conic-gradient(var(--vibeui-progress-003-bg) 0deg 1.4deg,transparent 1.4deg 30deg);
+background:repeating-conic-gradient(var(--vibeui-progress-003-surface) 0deg 1.4deg,transparent 1.4deg 30deg);
 mask:radial-gradient(farthest-side,transparent calc(100% - var(--vibeui-progress-003-thickness)),#000 calc(100% - var(--vibeui-progress-003-thickness)));
 }
 /* Метка цели: засечка, повёрнутая на долю круга — видно план поверх факта. */
@@ -88,6 +97,28 @@ font-variant-numeric:tabular-nums;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Кольцевая шкала с делениями и меткой цели.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -96,17 +127,34 @@ export function Progress003({
   target = 85,
   label = "План квартала",
   unit = "выполнено",
+  goalText = "Цель {target}%",
+  valueText = "{value} процентов при цели {target}",
+  background = "",
+  accent,
   className,
   style,
   ...props
 }: Progress003Props) {
   const done = Math.min(100, Math.max(0, value))
   const goal = Math.min(100, Math.max(0, target))
+  // Риски прорезаны цветом подложки, поэтому заданный фон достаётся и им.
   const palette = {
     "--vibeui-progress-003-value": done,
     "--vibeui-progress-003-target": goal,
+    ...(accent ? { "--vibeui-progress-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-progress-003-bg": background,
+          "--vibeui-progress-003-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+  const fill = (template: string) =>
+    template
+      .replace("{value}", String(Math.round(done)))
+      .replace("{target}", String(Math.round(goal)))
 
   return (
     <>
@@ -126,7 +174,7 @@ export function Progress003({
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={Math.round(done)}
-          aria-valuetext={`${Math.round(done)} процентов при цели ${Math.round(goal)}`}
+          aria-valuetext={fill(valueText)}
         >
           <span data-part="arc" />
           <span data-part="ticks" aria-hidden="true" />
@@ -135,7 +183,7 @@ export function Progress003({
         </div>
         <span data-part="unit">{unit}</span>
         <span data-part="label">{label}</span>
-        <span data-part="goalnote">Цель {Math.round(goal)}%</span>
+        <span data-part="goalnote">{fill(goalText)}</span>
       </div>
     </>
   )

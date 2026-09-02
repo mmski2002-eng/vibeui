@@ -24,6 +24,20 @@ export type Dashboard053Props = {
   quietTitle?: string
   saveLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подписи состояний канала: ключ — значение state. */
+  stateText?: Record<string, string>
+  /** Сводка в закрытой карточке: {address}, {on} и {total}. */
+  summaryText?: string
+  /** Подпись поля начала тихих часов. */
+  fromLabel?: string
+  /** Подпись поля конца тихих часов. */
+  toLabel?: string
+  /** Подпись переключателя тихих часов для скринридера. */
+  quietSwitchLabel?: string
+  /** Пояснение под тихими часами. */
+  quietNote?: string
   className?: string
   style?: CSSProperties
 }
@@ -39,14 +53,19 @@ export type Dashboard053Props = {
 // для срочных иначе выглядит как ошибка.
 const STYLES = `
 :where([data-vibeui-block="dashboard-053"]){
---vibeui-dashboard-053-bg:oklch(0.985 0.003 160);
---vibeui-dashboard-053-card:oklch(1 0 0);
---vibeui-dashboard-053-fg:oklch(0.22 0.014 160);
---vibeui-dashboard-053-muted:oklch(0.53 0.014 160);
---vibeui-dashboard-053-border:oklch(0.91 0.006 160);
---vibeui-dashboard-053-accent:oklch(0.5 0.13 160);
---vibeui-dashboard-053-soft:oklch(0.95 0.025 160);
---vibeui-dashboard-053-bad:oklch(0.58 0.19 25);
+--vibeui-dashboard-053-bg:transparent;
+/* Карточки и поля ввода: подложка блока прозрачна, и рисовать их ею нечем. */
+--vibeui-dashboard-053-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 160));
+--vibeui-dashboard-053-inset:light-dark(oklch(0.97 0.004 160),oklch(0.22 0.012 160));
+--vibeui-dashboard-053-fg:light-dark(oklch(0.22 0.014 160),oklch(0.94 0.005 160));
+--vibeui-dashboard-053-muted:light-dark(oklch(0.53 0.014 160),oklch(0.72 0.012 160));
+--vibeui-dashboard-053-border:light-dark(oklch(0.91 0.006 160),oklch(0.36 0.012 160));
+--vibeui-dashboard-053-accent:light-dark(oklch(0.5 0.13 160),oklch(0.76 0.12 160));
+--vibeui-dashboard-053-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 160));
+--vibeui-dashboard-053-soft:light-dark(oklch(0.95 0.025 160),oklch(0.32 0.045 160));
+--vibeui-dashboard-053-bad:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.17 25));
+--vibeui-dashboard-053-bad-line:light-dark(oklch(0.8 0.09 25),oklch(0.45 0.1 25));
+--vibeui-dashboard-053-bad-soft:light-dark(oklch(0.96 0.022 25),oklch(0.3 0.05 25));
 --vibeui-dashboard-053-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -65,7 +84,7 @@ border:1px solid var(--vibeui-dashboard-053-border);border-radius:1rem;padding:1
 [data-vibeui-block="dashboard-053"] [data-part="save"]{
 appearance:none;border:0;cursor:pointer;font:inherit;margin-left:auto;
 font-size:0.8125rem;font-weight:700;padding:0.5rem 0.9375rem;border-radius:0.625rem;
-background:var(--vibeui-dashboard-053-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-053-accent);color:var(--vibeui-dashboard-053-on-accent);
 }
 [data-vibeui-block="dashboard-053"] [data-part="grid"]{display:grid;grid-template-columns:1fr;gap:0.625rem}
 [data-vibeui-block="dashboard-053"] details{
@@ -73,7 +92,7 @@ background:var(--vibeui-dashboard-053-card);
 border:1px solid var(--vibeui-dashboard-053-border);border-radius:0.875rem;overflow:hidden;
 }
 [data-vibeui-block="dashboard-053"] details[data-state="Ошибка"]{
-border-color:color-mix(in oklab,var(--vibeui-dashboard-053-bad) 45%,white);
+border-color:var(--vibeui-dashboard-053-bad-line);
 }
 [data-vibeui-block="dashboard-053"] summary{
 display:grid;grid-template-columns:auto 1fr auto;gap:0.125rem 0.625rem;align-items:center;
@@ -93,12 +112,12 @@ font-size:0.625rem;font-weight:750;padding:0.0625rem 0.375rem;border-radius:0.31
 color:var(--vibeui-dashboard-053-accent);background:var(--vibeui-dashboard-053-soft);
 }
 [data-vibeui-block="dashboard-053"] details[data-state="Не подключён"] [data-part="state"]{
-color:var(--vibeui-dashboard-053-muted);background:var(--vibeui-dashboard-053-bg);
+color:var(--vibeui-dashboard-053-muted);background:var(--vibeui-dashboard-053-inset);
 box-shadow:inset 0 0 0 1px var(--vibeui-dashboard-053-border);
 }
 [data-vibeui-block="dashboard-053"] details[data-state="Ошибка"] [data-part="state"]{
 color:var(--vibeui-dashboard-053-bad);
-background:color-mix(in oklab,var(--vibeui-dashboard-053-bad) 10%,white);
+background:var(--vibeui-dashboard-053-bad-soft);
 }
 [data-vibeui-block="dashboard-053"] [data-part="sum"]{
 grid-column:2;font-size:0.6875rem;color:var(--vibeui-dashboard-053-muted);
@@ -116,7 +135,7 @@ padding:0 0.875rem 0.875rem 3.5rem;display:grid;gap:0.4375rem;
 [data-vibeui-block="dashboard-053"] [data-part="topic"]{
 display:grid;grid-template-columns:auto 1fr;gap:0.125rem 0.5rem;align-items:start;
 padding:0.4375rem 0.625rem;border-radius:0.625rem;
-background:var(--vibeui-dashboard-053-bg);
+background:var(--vibeui-dashboard-053-inset);
 }
 [data-vibeui-block="dashboard-053"] [data-part="topic"]:has(input:focus-visible){
 outline:2px solid var(--vibeui-dashboard-053-accent);outline-offset:2px;
@@ -141,7 +160,7 @@ display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;font-size:0.8125rem;
 [data-vibeui-block="dashboard-053"] input[type="time"]{
 font:inherit;font-size:0.8125rem;color:inherit;
 padding:0.3125rem 0.5rem;border-radius:0.5rem;
-border:1px solid var(--vibeui-dashboard-053-border);background:var(--vibeui-dashboard-053-bg);
+border:1px solid var(--vibeui-dashboard-053-border);background:var(--vibeui-dashboard-053-inset);
 }
 [data-vibeui-block="dashboard-053"] [data-part="switch"]{
 position:relative;width:2.125rem;height:1.25rem;flex:none;margin-left:auto;
@@ -254,6 +273,34 @@ const DEFAULT_CHANNELS: Dashboard053Channel[] = [
   },
 ]
 
+const STATE_LABEL: Record<string, string> = {
+  Подключён: "Подключён",
+  "Не подключён": "Не подключён",
+  Ошибка: "Ошибка",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Экран уведомлений: каналы карточками с адресом, состоянием подключения и
  * набором событий внутри details, плюс тихие часы. Один файл, ноль
@@ -269,11 +316,24 @@ export function Dashboard053({
   quietTitle = "Тихие часы",
   saveLabel = "Сохранить настройки",
   accent,
+  background = "",
+  stateText = STATE_LABEL,
+  summaryText = "{address} · включено {on} из {total}",
+  fromLabel = "с",
+  toLabel = "до",
+  quietSwitchLabel = "Включить тихие часы",
+  quietNote = "В тихие часы уведомления копятся и приходят одной сводкой утром. Исключение — срочные инциденты приоритета P1: они приходят всегда, иначе тихие часы превращаются в отключённые уведомления.",
   className,
   style,
 }: Dashboard053Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-053-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-053-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -313,11 +373,15 @@ export function Dashboard053({
                     </span>
                     <span data-part="name">
                       {channel.name}
-                      <span data-part="state">{channel.state}</span>
+                      <span data-part="state">
+                        {stateText[channel.state] ?? channel.state}
+                      </span>
                     </span>
                     <span data-part="sum">
-                      {channel.address} · включено {on} из{" "}
-                      {channel.topics.length}
+                      {summaryText
+                        .replace("{address}", channel.address)
+                        .replace("{on}", String(on))
+                        .replace("{total}", String(channel.topics.length))}
                     </span>
                     <span data-part="chev" aria-hidden="true" />
                   </summary>
@@ -343,28 +407,24 @@ export function Dashboard053({
           <div data-part="quiet">
             <h3>{quietTitle}</h3>
             <div data-part="hours">
-              <label htmlFor="dashboard-053-from">с</label>
+              <label htmlFor="dashboard-053-from">{fromLabel}</label>
               <input
                 id="dashboard-053-from"
                 type="time"
                 defaultValue={quietFrom}
               />
-              <label htmlFor="dashboard-053-to">до</label>
+              <label htmlFor="dashboard-053-to">{toLabel}</label>
               <input id="dashboard-053-to" type="time" defaultValue={quietTo} />
               <span data-part="switch">
                 <input
                   type="checkbox"
                   defaultChecked={quietOn}
-                  aria-label="Включить тихие часы"
+                  aria-label={quietSwitchLabel}
                 />
                 <span data-part="knob" aria-hidden="true" />
               </span>
             </div>
-            <p data-part="note">
-              В тихие часы уведомления копятся и приходят одной сводкой утром.
-              Исключение — срочные инциденты приоритета P1: они приходят всегда,
-              иначе тихие часы превращаются в отключённые уведомления.
-            </p>
+            <p data-part="note">{quietNote}</p>
           </div>
         </div>
       </section>

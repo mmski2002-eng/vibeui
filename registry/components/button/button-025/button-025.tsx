@@ -21,8 +21,8 @@ export type Button025Props = Omit<
 // Пока фокус в поле ввода, сочетание не перехватывается.
 const STYLES = `
 :where([data-vibeui-block="button-025"]){
---vibeui-button-025-accent:oklch(0.52 0.16 285);
---vibeui-button-025-fg:oklch(0.99 0.01 285);
+--vibeui-button-025-accent:light-dark(oklch(0.52 0.16 285),oklch(0.6 0.17 285));
+--vibeui-button-025-fg:light-dark(oklch(0.99 0.01 285),oklch(0.98 0.012 285));
 --vibeui-button-025-radius:0.625rem;
 --vibeui-button-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-button-025-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;

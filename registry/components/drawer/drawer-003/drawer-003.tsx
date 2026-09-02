@@ -16,6 +16,12 @@ export type Drawer003Props = Omit<
   title?: string
   groups?: Drawer003Group[]
   applyLabel?: string
+  /** Подпись сброса: компонент несёт русскую, проект подставляет свою. */
+  resetLabel?: string
+  /** Имя счётчика для скринридера, {count} — сколько условий выбрано. */
+  selectedTemplate?: string
+  /** Пусто — подложки нет, триггер лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,11 +31,13 @@ export type Drawer003Props = Omit<
 // кнопке применения и на сбросе: сколько условий сейчас включено.
 const STYLES = `
 :where([data-vibeui-block="drawer-003"]){
---vibeui-drawer-003-bg:oklch(1 0 0);
---vibeui-drawer-003-fg:oklch(0.21 0.014 265);
---vibeui-drawer-003-muted:oklch(0.55 0.014 265);
---vibeui-drawer-003-border:oklch(0.91 0.006 265);
---vibeui-drawer-003-accent:oklch(0.55 0.17 265);
+--vibeui-drawer-003-bg:transparent;
+--vibeui-drawer-003-surface:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
+--vibeui-drawer-003-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-drawer-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-drawer-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-drawer-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
+--vibeui-drawer-003-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.02 265));
 --vibeui-drawer-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="drawer-003"]{
@@ -47,14 +55,14 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 [data-vibeui-block="drawer-003"] [data-part="badge"]{
 display:inline-flex;align-items:center;justify-content:center;
 min-width:1.25rem;height:1.25rem;padding:0 0.375rem;border-radius:9999px;
-background:var(--vibeui-drawer-003-accent);color:oklch(0.99 0.01 265);
+background:var(--vibeui-drawer-003-accent);color:var(--vibeui-drawer-003-on-accent);
 font-size:0.6875rem;font-weight:700;
 }
 /* Ящик слева: фильтры привычно живут у левого края списка. */
 [data-vibeui-block="drawer-003"] dialog{
 position:fixed;inset:0 auto 0 0;margin:0;
 width:min(20rem,100vw);max-width:100vw;height:100dvh;max-height:100dvh;
-padding:0;border:0;background:var(--vibeui-drawer-003-bg);color:inherit;
+padding:0;border:0;background:var(--vibeui-drawer-003-surface);color:inherit;
 box-shadow:24px 0 60px -30px oklch(0.2 0.02 265 / 55%);
 translate:-100% 0;transition:translate .22s ease,overlay .22s allow-discrete,display .22s allow-discrete;
 }
@@ -93,14 +101,14 @@ padding:0.4375rem 0;cursor:pointer;font-size:0.875rem;
 [data-vibeui-block="drawer-003"] [data-part="option"] input{
 appearance:none;flex:none;width:1.125rem;height:1.125rem;margin:0;
 border:1.5px solid var(--vibeui-drawer-003-border);border-radius:0.375rem;
-background:var(--vibeui-drawer-003-bg);cursor:pointer;position:relative;
+background:var(--vibeui-drawer-003-surface);cursor:pointer;position:relative;
 }
 [data-vibeui-block="drawer-003"] [data-part="option"] input:checked{
 background:var(--vibeui-drawer-003-accent);border-color:var(--vibeui-drawer-003-accent);
 }
 [data-vibeui-block="drawer-003"] [data-part="option"] input:checked::after{
 content:"";position:absolute;left:0.3125rem;top:0.125rem;
-width:0.25rem;height:0.5rem;border:solid oklch(0.99 0.01 265);
+width:0.25rem;height:0.5rem;border:solid var(--vibeui-drawer-003-on-accent);
 border-width:0 2px 2px 0;transform:rotate(45deg);
 }
 [data-vibeui-block="drawer-003"] [data-part="option"] input:focus-visible{outline:2px solid var(--vibeui-drawer-003-accent);outline-offset:2px}
@@ -111,7 +119,7 @@ border-top:1px solid var(--vibeui-drawer-003-border);
 }
 [data-vibeui-block="drawer-003"] [data-part="apply"]{
 appearance:none;border:0;cursor:pointer;width:100%;height:2.75rem;border-radius:0.75rem;
-background:var(--vibeui-drawer-003-accent);color:oklch(0.99 0.01 265);
+background:var(--vibeui-drawer-003-accent);color:var(--vibeui-drawer-003-on-accent);
 font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="drawer-003"] [data-part="apply"]:focus-visible{outline:2px solid var(--vibeui-drawer-003-accent);outline-offset:2px}
@@ -140,6 +148,28 @@ const DEFAULT_GROUPS: Drawer003Group[] = [
 ]
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Боковой ящик фильтров: выбор копится внутри и уходит одной кнопкой внизу.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -148,6 +178,9 @@ export function Drawer003({
   title = "Фильтры",
   groups = DEFAULT_GROUPS,
   applyLabel = "Показать результаты",
+  resetLabel = "Сбросить",
+  selectedTemplate = "выбрано {count}",
+  background = "",
   accent,
   className,
   style,
@@ -158,6 +191,13 @@ export function Drawer003({
 
   const palette = {
     ...(accent ? { "--vibeui-drawer-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-drawer-003-bg": background,
+          "--vibeui-drawer-003-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -187,7 +227,13 @@ export function Drawer003({
         >
           {triggerLabel}
           {picked.length ? (
-            <span data-part="badge" aria-label={`выбрано ${picked.length}`}>
+            <span
+              data-part="badge"
+              aria-label={selectedTemplate.replace(
+                "{count}",
+                String(picked.length),
+              )}
+            >
               {picked.length}
             </span>
           ) : null}
@@ -210,7 +256,7 @@ export function Drawer003({
                 disabled={picked.length === 0}
                 onClick={() => setPicked([])}
               >
-                Сбросить
+                {resetLabel}
               </button>
             </div>
             <div data-part="body">

@@ -15,7 +15,11 @@ export type Pricing017Props = {
   title?: string
   hint?: string
   plans?: Pricing017Plan[]
+  /** Подпись ленты для скринридера. */
+  trackLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -28,13 +32,13 @@ export type Pricing017Props = {
 // От 52rem лента превращается в обычную сетку, и snap отключается.
 const STYLES = `
 :where([data-vibeui-block="pricing-017"]){
---vibeui-pricing-017-bg:oklch(0.97 0.005 255);
---vibeui-pricing-017-fg:oklch(0.2 0.012 255);
---vibeui-pricing-017-muted:oklch(0.51 0.012 255);
---vibeui-pricing-017-card:oklch(1 0 0);
---vibeui-pricing-017-line:oklch(0.89 0.006 255);
---vibeui-pricing-017-accent:oklch(0.51 0.17 255);
---vibeui-pricing-017-accent-fg:oklch(0.99 0 0);
+--vibeui-pricing-017-bg:transparent;
+--vibeui-pricing-017-fg:light-dark(oklch(0.2 0.012 255),oklch(0.94 0.005 255));
+--vibeui-pricing-017-muted:light-dark(oklch(0.51 0.012 255),oklch(0.7 0.01 255));
+--vibeui-pricing-017-card:light-dark(oklch(1 0 0),oklch(0.25 0.011 255));
+--vibeui-pricing-017-line:light-dark(oklch(0.89 0.006 255),oklch(0.37 0.011 255));
+--vibeui-pricing-017-accent:light-dark(oklch(0.51 0.17 255),oklch(0.75 0.14 255));
+--vibeui-pricing-017-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.19 0.03 255));
 --vibeui-pricing-017-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -132,18 +136,48 @@ const DEFAULT_PLANS: Pricing017Plan[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Тарифы карточками на телефоне: горизонтальная лента со scroll-snap, сетка от 52rem. */
 export function Pricing017({
   eyebrow = "Тарифы",
   title = "Пролистайте и выберите — как в приложении",
   hint = "Листайте вбок, чтобы увидеть все тарифы",
   plans = DEFAULT_PLANS,
+  trackLabel = "Тарифы",
   accent,
+  background = "",
   className,
   style,
 }: Pricing017Props) {
   const palette = {
     ...(accent ? { "--vibeui-pricing-017-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pricing-017-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -163,7 +197,12 @@ export function Pricing017({
             <h2>{title}</h2>
           </div>
 
-          <div data-part="track" tabIndex={0} role="group" aria-label="Тарифы">
+          <div
+            data-part="track"
+            tabIndex={0}
+            role="group"
+            aria-label={trackLabel}
+          >
             {plans.slice(0, 4).map((plan) => (
               <article
                 key={plan.name}

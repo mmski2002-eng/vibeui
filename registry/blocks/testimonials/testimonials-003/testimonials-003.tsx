@@ -10,7 +10,11 @@ export type Testimonials003Props = {
   name?: string
   role?: string
   company?: string
+  /** Инициалы в кружке. По умолчанию считаются из name. */
+  initials?: string
   metrics?: Testimonials003Metric[]
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -22,11 +26,12 @@ export type Testimonials003Props = {
 // знаком и намеренно обрезана сверху — она подложка, а не украшение.
 const STYLES = `
 :where([data-vibeui-block="testimonials-003"]){
---vibeui-testimonials-003-bg:oklch(0.97 0.008 90);
---vibeui-testimonials-003-ink:oklch(0.2 0.02 70);
---vibeui-testimonials-003-muted:oklch(0.47 0.02 70);
---vibeui-testimonials-003-border:oklch(0.87 0.016 80);
---vibeui-testimonials-003-accent:oklch(0.5 0.13 45);
+--vibeui-testimonials-003-bg:transparent;
+--vibeui-testimonials-003-ink:light-dark(oklch(0.2 0.02 70),oklch(0.95 0.008 80));
+--vibeui-testimonials-003-muted:light-dark(oklch(0.47 0.02 70),oklch(0.73 0.014 80));
+--vibeui-testimonials-003-border:light-dark(oklch(0.87 0.016 80),oklch(0.36 0.018 75));
+--vibeui-testimonials-003-accent:light-dark(oklch(0.5 0.13 45),oklch(0.74 0.13 55));
+--vibeui-testimonials-003-on-accent:light-dark(oklch(0.99 0 0),oklch(0.2 0.05 45));
 --vibeui-testimonials-003-serif:ui-serif,Georgia,"Times New Roman",serif;
 --vibeui-testimonials-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -59,7 +64,7 @@ display:flex;align-items:center;gap:0.875rem;margin-top:2rem;
 [data-vibeui-block="testimonials-003"] [data-part="avatar"]{
 width:3rem;height:3rem;flex:none;border-radius:999px;
 display:grid;place-items:center;
-background:var(--vibeui-testimonials-003-accent);color:oklch(0.99 0 0);
+background:var(--vibeui-testimonials-003-accent);color:var(--vibeui-testimonials-003-on-accent);
 font-size:0.9375rem;font-weight:700;
 }
 [data-vibeui-block="testimonials-003"] [data-part="name"]{display:block;font-size:1rem;font-weight:660}
@@ -93,19 +98,59 @@ const DEFAULT_METRICS: Testimonials003Metric[] = [
   { value: "17", caption: "страниц собрано за первый квартал" },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/** Инициалы: первые буквы двух первых слов имени. */
+function initialsOf(name: string) {
+  return name
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((word) => word.charAt(0).toUpperCase())
+    .join("")
+}
+
 /** Одна крупная цитата: засечный набор, автор и три проверяемые цифры. */
 export function Testimonials003({
   quote = "Мы перестали спорить о том, как должна выглядеть очередная страница. Спорим теперь о том, что на ней написано, — и это единственный спор, который приносит деньги.",
   name = "Елена Ремизова",
   role = "Директор по продукту",
   company = "Артель",
+  initials = initialsOf(name),
   metrics = DEFAULT_METRICS,
+  background = "",
   accent,
   className,
   style,
 }: Testimonials003Props) {
   const palette = {
     ...(accent ? { "--vibeui-testimonials-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-testimonials-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -127,7 +172,7 @@ export function Testimonials003({
             <blockquote data-part="quote">{quote}</blockquote>
             <figcaption data-part="author">
               <span data-part="avatar" aria-hidden="true">
-                ЕР
+                {initials}
               </span>
               <span>
                 <span data-part="name">{name}</span>

@@ -3,6 +3,8 @@ import type { CSSProperties } from "react"
 export type Codeblock014Props = {
   rows?: number
   label?: string
+  /** Пусто — подложки нет, скелетон лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -10,13 +12,16 @@ export type Codeblock014Props = {
 // Идея компонента: скелетон именно кода, а не абзаца. Ширины и отступы строк
 // повторяют форму листинга — вложенность, пустая строка, короткая закрывающая
 // скобка, — поэтому подмена на настоящий код не дёргает раскладку.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// нет, полосы проступают на фоне страницы и темнеют вместе с ней.
 const STYLES = `
 :where([data-vibeui-block="codeblock-014"]){
---vibeui-codeblock-014-bg:oklch(0.21 0.012 265);
---vibeui-codeblock-014-head:oklch(0.25 0.014 265);
---vibeui-codeblock-014-border:oklch(1 0 0 / 12%);
---vibeui-codeblock-014-bar:oklch(1 0 0 / 11%);
---vibeui-codeblock-014-shine:oklch(1 0 0 / 22%);
+--vibeui-codeblock-014-bg:transparent;
+--vibeui-codeblock-014-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
+--vibeui-codeblock-014-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
+--vibeui-codeblock-014-bar:light-dark(oklch(0 0 0 / 9%),oklch(1 0 0 / 11%));
+--vibeui-codeblock-014-shine:light-dark(oklch(1 0 0 / 62%),oklch(1 0 0 / 22%));
 --vibeui-codeblock-014-row:1.375rem;
 }
 [data-vibeui-block="codeblock-014"]{
@@ -69,14 +74,46 @@ const SHAPE = [
   { indent: 0, width: 18 },
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы полосам
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Скелетон загрузки блока кода: шапка и строки формы листинга. */
 export function Codeblock014({
   rows = 6,
   label = "Загрузка кода",
+  background = "",
   className,
   style,
 }: Codeblock014Props) {
   const count = Math.max(1, Math.round(rows))
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-codeblock-014-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -86,7 +123,7 @@ export function Codeblock014({
       <div
         data-vibeui-block="codeblock-014"
         className={className}
-        style={style}
+        style={palette}
         role="status"
         aria-busy="true"
       >

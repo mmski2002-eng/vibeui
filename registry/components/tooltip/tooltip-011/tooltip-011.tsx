@@ -8,6 +8,14 @@ export type Tooltip011Props = Omit<
   delay?: number
   /** Статусы узлов сетки: влияют только на цвет точки. */
   statuses?: ("ok" | "warn" | "down")[]
+  /** Подписи статусов: компонент несёт русские, проект подставляет свои. */
+  statusText?: Record<string, string>
+  /** Имя точки для скринридера: {number} подставляется номером узла. */
+  nodeLabel?: string
+  /** Пояснение под сеткой: {delay} подставляется числом. */
+  note?: string
+  /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: сетка статус-точек мониторинга. Пробегая курсором по
@@ -15,15 +23,15 @@ export type Tooltip011Props = Omit<
 // откладывается, а скрытие происходит мгновенно, стоит увести курсор дальше.
 const STYLES = `
 :where([data-vibeui-block="tooltip-011"]){
---vibeui-tooltip-011-bg:oklch(1 0 0);
---vibeui-tooltip-011-fg:oklch(0.25 0.014 265);
---vibeui-tooltip-011-muted:oklch(0.55 0.014 265);
---vibeui-tooltip-011-border:oklch(0.9 0.006 265);
---vibeui-tooltip-011-tip:oklch(0.22 0.014 265);
---vibeui-tooltip-011-accent:oklch(0.57 0.17 265);
---vibeui-tooltip-011-ok:oklch(0.72 0.17 152);
---vibeui-tooltip-011-warn:oklch(0.8 0.17 85);
---vibeui-tooltip-011-down:oklch(0.62 0.21 25);
+--vibeui-tooltip-011-bg:transparent;
+--vibeui-tooltip-011-fg:light-dark(oklch(0.25 0.014 265),oklch(0.93 0.005 265));
+--vibeui-tooltip-011-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-tooltip-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-tooltip-011-tip:light-dark(oklch(0.22 0.014 265),oklch(0.34 0.014 265));
+--vibeui-tooltip-011-accent:light-dark(oklch(0.57 0.17 265),oklch(0.72 0.16 265));
+--vibeui-tooltip-011-ok:light-dark(oklch(0.72 0.17 152),oklch(0.78 0.16 152));
+--vibeui-tooltip-011-warn:light-dark(oklch(0.8 0.17 85),oklch(0.85 0.16 85));
+--vibeui-tooltip-011-down:light-dark(oklch(0.62 0.21 25),oklch(0.7 0.19 25));
 --vibeui-tooltip-011-delay:0.45s;
 --vibeui-tooltip-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -101,19 +109,52 @@ function buildStatuses(overrides?: ("ok" | "warn" | "down")[]) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Сетка статус-точек, где подсказка ждёт перед появлением, но прячется
  * мгновенно. Один файл, ноль зависимостей, собственная палитра.
  */
 export function Tooltip011({
   delay = 0.45,
   statuses,
+  statusText = STATUS_LABEL,
+  nodeLabel = "Узел {number}",
+  note = "Задержка появления — {delay} с, скрытие — мгновенно. Проведите курсором по сетке: подсказки не мигают на каждой точке.",
+  background = "",
   className,
   style,
   ...props
 }: Tooltip011Props) {
   const grid = buildStatuses(statuses)
+  const [noteBefore, noteAfter] = note.split("{delay}")
   const palette = {
     "--vibeui-tooltip-011-delay": `${delay}s`,
+    ...(background
+      ? {
+          "--vibeui-tooltip-011-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -138,18 +179,19 @@ export function Tooltip011({
                   data-part="dot"
                   type="button"
                   aria-describedby={id}
-                  aria-label={`Узел ${index + 1}`}
+                  aria-label={nodeLabel.replace("{number}", String(index + 1))}
                 />
                 <span data-part="tip" role="tooltip" id={id}>
-                  {STATUS_LABEL[status]}
+                  {statusText[status] ?? STATUS_LABEL[status]}
                 </span>
               </span>
             )
           })}
         </div>
         <p data-part="note">
-          Задержка появления — <b>{delay}&nbsp;с</b>, скрытие — мгновенно.
-          Проведите курсором по сетке: подсказки не мигают на каждой точке.
+          {noteBefore}
+          <b>{delay}</b>
+          {noteAfter}
         </p>
       </div>
     </>

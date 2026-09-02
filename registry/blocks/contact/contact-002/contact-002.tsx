@@ -19,6 +19,10 @@ export type Contact002Props = {
   hours?: Contact002Hours[]
   routes?: string[]
   legal?: string
+  /** Подписи блока: компонент несёт русские, проект подставляет свои. */
+  labels?: Record<string, string>
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -39,14 +43,17 @@ export type Contact002Props = {
 // что теряются люди именно на последних тридцати метрах.
 const STYLES = `
 :where([data-vibeui-block="contact-002"]){
---vibeui-contact-002-bg:oklch(1 0 0);
---vibeui-contact-002-soft:oklch(0.97 0.004 265);
---vibeui-contact-002-fg:oklch(0.2 0.014 265);
---vibeui-contact-002-muted:oklch(0.52 0.014 265);
---vibeui-contact-002-border:oklch(0.9 0.006 265);
---vibeui-contact-002-accent:oklch(0.53 0.18 25);
---vibeui-contact-002-land:oklch(0.94 0.014 140);
---vibeui-contact-002-road:oklch(0.99 0.002 265);
+--vibeui-contact-002-bg:transparent;
+--vibeui-contact-002-soft:light-dark(oklch(0.97 0.004 265),oklch(0.27 0.01 265));
+--vibeui-contact-002-fg:light-dark(oklch(0.2 0.014 265),oklch(0.94 0.005 265));
+--vibeui-contact-002-muted:light-dark(oklch(0.52 0.014 265),oklch(0.72 0.012 265));
+--vibeui-contact-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-contact-002-accent:light-dark(oklch(0.53 0.18 25),oklch(0.75 0.15 30));
+--vibeui-contact-002-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 30));
+--vibeui-contact-002-chip:light-dark(oklch(1 0 0 / 92%),oklch(0.26 0.012 265 / 92%));
+--vibeui-contact-002-shade:light-dark(oklch(0.2 0.014 265 / 28%),oklch(0 0 0 / 50%));
+--vibeui-contact-002-land:light-dark(oklch(0.94 0.014 140),oklch(0.31 0.022 150));
+--vibeui-contact-002-road:light-dark(oklch(0.99 0.002 265),oklch(0.4 0.008 265));
 --vibeui-contact-002-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -133,11 +140,11 @@ display:grid;justify-items:center;gap:0.25rem;
 [data-vibeui-block="contact-002"] [data-part="needle"]{
 width:1.375rem;height:1.375rem;border-radius:9999px 9999px 9999px 0;
 background:var(--vibeui-contact-002-accent);transform:rotate(-45deg);
-box-shadow:0 2px 6px oklch(0.2 0.014 265 / 28%);
+box-shadow:0 2px 6px var(--vibeui-contact-002-shade);
 }
 [data-vibeui-block="contact-002"] [data-part="pin-label"]{
 padding:0.125rem 0.5rem;border-radius:9999px;white-space:nowrap;
-background:oklch(1 0 0 / 92%);border:1px solid var(--vibeui-contact-002-border);
+background:var(--vibeui-contact-002-chip);border:1px solid var(--vibeui-contact-002-border);
 font-size:0.6875rem;font-weight:650;
 }
 [data-vibeui-block="contact-002"] figcaption{display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center}
@@ -147,7 +154,7 @@ font-size:0.75rem;line-height:1.5;color:var(--vibeui-contact-002-muted);
 [data-vibeui-block="contact-002"] [data-part="map-link"]{
 display:inline-flex;align-items:center;gap:0.4375rem;flex:none;
 height:2.375rem;padding:0 1rem;border-radius:0.6875rem;text-decoration:none;
-background:var(--vibeui-contact-002-accent);color:oklch(1 0 0);
+background:var(--vibeui-contact-002-accent);color:var(--vibeui-contact-002-on-accent);
 font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="contact-002"] a:focus-visible{outline:2px solid var(--vibeui-contact-002-accent);outline-offset:2px;border-radius:0.25rem}
@@ -169,6 +176,34 @@ const DEFAULT_ROUTES = [
   "Курьеров принимаем на ресепшене до 18:30",
 ]
 
+const LABELS: Record<string, string> = {
+  phone: "Телефон",
+  email: "Почта",
+  hours: "Часы работы",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Контакты офиса: адрес, часы работы и нарисованная CSS-заглушка карты.
  * Один файл, ноль зависимостей и ни одного внешнего запроса.
@@ -187,12 +222,21 @@ export function Contact002({
   hours = DEFAULT_HOURS,
   routes = DEFAULT_ROUTES,
   legal = "ООО «Студия», ИНН 7701234567, ОГРН 1157746000000. Юридический адрес совпадает с фактическим.",
+  labels,
+  background = "",
   accent,
   className,
   style,
 }: Contact002Props) {
+  const text = { ...LABELS, ...labels }
   const palette = {
     ...(accent ? { "--vibeui-contact-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-contact-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -216,17 +260,17 @@ export function Contact002({
 
             <div data-part="links">
               <span data-part="link">
-                <span data-part="key">Телефон</span>
+                <span data-part="key">{text.phone}</span>
                 <a href={`tel:${phone.replace(/[^+\d]/g, "")}`}>{phone}</a>
               </span>
               <span data-part="link">
-                <span data-part="key">Почта</span>
+                <span data-part="key">{text.email}</span>
                 <a href={`mailto:${email}`}>{email}</a>
               </span>
             </div>
 
             <table>
-              <caption>Часы работы</caption>
+              <caption>{text.hours}</caption>
               <tbody>
                 {hours.map((row) => (
                   <tr key={row.days}>

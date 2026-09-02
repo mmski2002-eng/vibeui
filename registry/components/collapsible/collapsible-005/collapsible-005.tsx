@@ -12,6 +12,8 @@ export type Collapsible005Props = Omit<
 > & {
   steps?: Collapsible005Step[]
   groupName?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -20,13 +22,17 @@ export type Collapsible005Props = Omit<
 // поэтому состояние не дублируется в React и работает до гидратации. Слева
 // пронумерованная колонка: у мастера настройки важен порядок, а не только
 // сам факт раскрытия.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у блока
+// по умолчанию нет, он темнеет вместе со страницей и не носит своей темы.
 const STYLES = `
 :where([data-vibeui-block="collapsible-005"]){
---vibeui-collapsible-005-bg:oklch(1 0 0);
---vibeui-collapsible-005-fg:oklch(0.24 0.014 265);
---vibeui-collapsible-005-muted:oklch(0.56 0.014 265);
---vibeui-collapsible-005-border:oklch(0.9 0.006 265);
---vibeui-collapsible-005-accent:oklch(0.54 0.19 285);
+--vibeui-collapsible-005-bg:transparent;
+--vibeui-collapsible-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-collapsible-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-collapsible-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-collapsible-005-accent:light-dark(oklch(0.54 0.19 285),oklch(0.75 0.15 285));
+--vibeui-collapsible-005-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 285));
 --vibeui-collapsible-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="collapsible-005"]{
@@ -55,7 +61,7 @@ font-size:0.6875rem;font-weight:700;color:var(--vibeui-collapsible-005-muted);
 transition:background-color .18s ease,color .18s ease,border-color .18s ease;
 }
 [data-vibeui-block="collapsible-005"] details[open] summary::before{
-background:var(--vibeui-collapsible-005-accent);border-color:transparent;color:oklch(1 0 0);
+background:var(--vibeui-collapsible-005-accent);border-color:transparent;color:var(--vibeui-collapsible-005-on-accent);
 }
 [data-vibeui-block="collapsible-005"] [data-part="mark"]{
 flex:none;margin-left:auto;width:0.4375rem;height:0.4375rem;
@@ -88,12 +94,35 @@ const DEFAULT_STEPS: Collapsible005Step[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Группа свёрток с одной открытой за раз: взаимное исключение держит атрибут
  * name у details. Один файл, ноль зависимостей, клиентского кода нет.
  */
 export function Collapsible005({
   steps = DEFAULT_STEPS,
   groupName = "vibeui-collapsible-005",
+  background = "",
   accent,
   className,
   style,
@@ -101,6 +130,12 @@ export function Collapsible005({
 }: Collapsible005Props) {
   const palette = {
     ...(accent ? { "--vibeui-collapsible-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-collapsible-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

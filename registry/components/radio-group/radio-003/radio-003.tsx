@@ -17,6 +17,8 @@ export type Radio003Props = Omit<
   plans?: Radio003Plan[]
   name?: string
   defaultValue?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -24,15 +26,18 @@ export type Radio003Props = Omit<
 // списку возможностей, а не по подписи в строке. Кружок радио убран совсем:
 // его роль играет галочка в углу выбранной карточки, а сам input остаётся
 // в разметке — он держит клавиатуру, группировку и отправку формы.
+//
+// Тема берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="radio-003"]){
---vibeui-radio-003-bg:oklch(1 0 0);
---vibeui-radio-003-card:oklch(0.99 0.002 265);
---vibeui-radio-003-fg:oklch(0.22 0.014 265);
---vibeui-radio-003-muted:oklch(0.55 0.014 265);
---vibeui-radio-003-border:oklch(0.9 0.006 265);
---vibeui-radio-003-accent:oklch(0.5 0.19 285);
---vibeui-radio-003-tint:oklch(0.5 0.19 285 / 7%);
+--vibeui-radio-003-bg:transparent;
+--vibeui-radio-003-card:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.008 265));
+--vibeui-radio-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-radio-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-radio-003-accent:light-dark(oklch(0.5 0.19 285),oklch(0.72 0.16 285));
+--vibeui-radio-003-tint:light-dark(oklch(0.5 0.19 285 / 7%),oklch(0.72 0.16 285 / 16%));
+--vibeui-radio-003-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 285));
 --vibeui-radio-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="radio-003"]{
@@ -84,13 +89,13 @@ border-color:var(--vibeui-radio-003-accent);background:var(--vibeui-radio-003-ac
 [data-vibeui-block="radio-003"] [data-part="plan"]:has(input:checked) [data-part="tick"]::after{
 content:"";position:absolute;left:0.3125rem;top:0.125rem;
 width:0.25rem;height:0.5rem;
-border-right:2px solid var(--vibeui-radio-003-bg);
-border-bottom:2px solid var(--vibeui-radio-003-bg);
+border-right:2px solid var(--vibeui-radio-003-on-accent);
+border-bottom:2px solid var(--vibeui-radio-003-on-accent);
 transform:rotate(45deg);
 }
 [data-vibeui-block="radio-003"] [data-part="badge"]{
 align-self:flex-start;padding:0.0625rem 0.375rem;border-radius:9999px;
-background:var(--vibeui-radio-003-accent);color:oklch(1 0 0);
+background:var(--vibeui-radio-003-accent);color:var(--vibeui-radio-003-on-accent);
 font-size:0.625rem;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;
 }
 [data-vibeui-block="radio-003"] [data-part="name"]{font-size:0.8125rem;font-weight:650;padding-right:1.25rem}
@@ -138,6 +143,28 @@ const DEFAULT_PLANS: Radio003Plan[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор тарифа плитками: цена, список возможностей и галочка вместо кружка.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -146,6 +173,7 @@ export function Radio003({
   plans = DEFAULT_PLANS,
   name = "vibeui-radio-003",
   defaultValue = "pro",
+  background = "",
   accent,
   className,
   style,
@@ -153,6 +181,12 @@ export function Radio003({
 }: Radio003Props) {
   const palette = {
     ...(accent ? { "--vibeui-radio-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-radio-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

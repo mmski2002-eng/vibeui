@@ -17,7 +17,21 @@ export type Commerce016Props = {
   items?: Commerce016Item[]
   cta?: string
   saving?: number
+  /** Локаль для разрядов в цене. */
+  locale?: string
+  /** Шаблон цены, {value} — число с разрядами. */
+  priceText?: string
+  /** Шаблон подписи над суммой, {count} — сколько товаров выбрано. */
+  totalText?: string
+  /** Шаблон выгоды комплекта, {value} — сумма скидки. */
+  savedText?: string
+  /** Что стоит вместо выгоды, пока выбран один товар. */
+  addMoreText?: string
+  /** Шаблон сноски под кнопкой, {percent} — скидка комплекта. */
+  hintText?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,13 +45,14 @@ export type Commerce016Props = {
 // без товара, ради которого пришли.
 const STYLES = `
 :where([data-vibeui-block="commerce-016"]){
---vibeui-commerce-016-bg:oklch(1 0 0);
---vibeui-commerce-016-fg:oklch(0.21 0.014 265);
---vibeui-commerce-016-muted:oklch(0.55 0.014 265);
---vibeui-commerce-016-border:oklch(0.91 0.006 265);
---vibeui-commerce-016-soft:oklch(0.975 0.004 265);
---vibeui-commerce-016-accent:oklch(0.55 0.2 262);
---vibeui-commerce-016-save:oklch(0.58 0.14 152);
+--vibeui-commerce-016-bg:transparent;
+--vibeui-commerce-016-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-commerce-016-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-commerce-016-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-commerce-016-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.01 265));
+--vibeui-commerce-016-accent:light-dark(oklch(0.55 0.2 262),oklch(0.68 0.17 262));
+--vibeui-commerce-016-on-accent:light-dark(oklch(1 0 0),oklch(0.16 0.02 265));
+--vibeui-commerce-016-save:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
 --vibeui-commerce-016-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -80,7 +95,7 @@ background:var(--vibeui-commerce-016-soft);
 [data-vibeui-block="commerce-016"] [data-part="save"]{margin:0.25rem 0 0.75rem;font-size:0.75rem;font-weight:650;color:var(--vibeui-commerce-016-save)}
 [data-vibeui-block="commerce-016"] [data-part="buy"]{
 width:100%;appearance:none;border:0;cursor:pointer;height:2.625rem;border-radius:0.75rem;
-background:var(--vibeui-commerce-016-accent);color:oklch(1 0 0);font:inherit;font-size:0.875rem;font-weight:650;
+background:var(--vibeui-commerce-016-accent);color:var(--vibeui-commerce-016-on-accent);font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-016"] [data-part="buy"]:disabled{opacity:.5;cursor:not-allowed}
 [data-vibeui-block="commerce-016"] [data-part="buy"]:focus-visible{outline:2px solid var(--vibeui-commerce-016-accent);outline-offset:2px}
@@ -113,7 +128,27 @@ const DEFAULT_ITEMS: Commerce016Item[] = [
   },
 ]
 
-const money = (value: number) => `${value.toLocaleString("ru-RU")} ₽`
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Комплект «с этим покупают»: сумма пересчитывается от галочек.
@@ -124,10 +159,20 @@ export function Commerce016({
   items = DEFAULT_ITEMS,
   cta = "Добавить в корзину",
   saving = 5,
+  locale = "ru-RU",
+  priceText = "{value} ₽",
+  totalText = "Итого за {count} товара",
+  savedText = "Комплектом дешевле на {value}",
+  addMoreText = "Добавьте второй товар — комплект дешевле",
+  hintText = "Скидка комплекта {percent}% действует, пока товары лежат в корзине вместе.",
   accent,
+  background = "",
   className,
   style,
 }: Commerce016Props) {
+  const money = (value: number) =>
+    priceText.replace("{value}", value.toLocaleString(locale))
+
   const [picked, setPicked] = useState(() => items.map((item) => item.id))
 
   // Сумма считается от галочек: набор без пересчёта ничего не обещает.
@@ -144,6 +189,12 @@ export function Commerce016({
 
   const palette = {
     ...(accent ? { "--vibeui-commerce-016-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-commerce-016-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -192,12 +243,14 @@ export function Commerce016({
             </div>
 
             <div data-part="total">
-              <p data-part="cap">Итого за {chosen.length} товара</p>
+              <p data-part="cap">
+                {totalText.replace("{count}", String(chosen.length))}
+              </p>
               <p data-part="sum">{money(full - discount)}</p>
               <p data-part="save">
                 {discount > 0
-                  ? `Комплектом дешевле на ${money(discount)}`
-                  : "Добавьте второй товар — комплект дешевле"}
+                  ? savedText.replace("{value}", money(discount))
+                  : addMoreText}
               </p>
               <button
                 type="button"
@@ -207,8 +260,7 @@ export function Commerce016({
                 {cta} · {chosen.length}
               </button>
               <p data-part="hint">
-                Скидка комплекта {saving}% действует, пока товары лежат в
-                корзине вместе.
+                {hintText.replace("{percent}", String(saving))}
               </p>
             </div>
           </div>

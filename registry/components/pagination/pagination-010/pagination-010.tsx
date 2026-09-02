@@ -7,6 +7,10 @@ export type Pagination010Props = {
   page?: number
   total?: number
   siblings?: number
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  labelText?: Record<string, string>
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -19,13 +23,14 @@ export type Pagination010Props = {
 // работают одинаково надёжно.
 const STYLES = `
 :where([data-vibeui-block="pagination-010"]){
---vibeui-pagination-010-bg:oklch(1 0 0);
---vibeui-pagination-010-fg:oklch(0.24 0.014 265);
---vibeui-pagination-010-muted:oklch(0.55 0.014 265);
---vibeui-pagination-010-border:oklch(0.91 0.006 265);
---vibeui-pagination-010-track:oklch(0.9 0.006 265);
---vibeui-pagination-010-hover:oklch(0.55 0.02 265 / 8%);
---vibeui-pagination-010-accent:oklch(0.55 0.2 262);
+--vibeui-pagination-010-bg:transparent;
+--vibeui-pagination-010-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-pagination-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-pagination-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.012 265));
+--vibeui-pagination-010-track:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.012 265));
+--vibeui-pagination-010-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.82 0.02 265 / 14%));
+--vibeui-pagination-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-pagination-010-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
 --vibeui-pagination-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="pagination-010"]{
@@ -48,7 +53,7 @@ transition:background-color .14s ease;
 [data-vibeui-block="pagination-010"] [data-part="cell"]:focus-visible{outline:2px solid var(--vibeui-pagination-010-accent);outline-offset:1px}
 [data-vibeui-block="pagination-010"] [data-part="cell"]:disabled{color:var(--vibeui-pagination-010-muted);cursor:default;opacity:.55}
 [data-vibeui-block="pagination-010"] [data-part="cell"][aria-current="page"]{
-background:var(--vibeui-pagination-010-accent);color:oklch(1 0 0);font-weight:650;
+background:var(--vibeui-pagination-010-accent);color:var(--vibeui-pagination-010-accent-fg);font-weight:650;
 }
 [data-vibeui-block="pagination-010"] [data-part="gap"]{
 color:var(--vibeui-pagination-010-muted);letter-spacing:0.05em;
@@ -66,7 +71,7 @@ font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="pagination-010"] [data-part="go"]{
 appearance:none;cursor:pointer;height:1.75rem;padding:0 0.625rem;box-sizing:border-box;
-border:0;border-radius:0.5rem;background:var(--vibeui-pagination-010-accent);color:oklch(1 0 0);
+border:0;border-radius:0.5rem;background:var(--vibeui-pagination-010-accent);color:var(--vibeui-pagination-010-accent-fg);
 font:inherit;font-size:0.75rem;font-weight:600;
 }
 [data-vibeui-block="pagination-010"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-pagination-010-accent);outline-offset:2px}
@@ -78,6 +83,39 @@ background:none;color:var(--vibeui-pagination-010-muted);font:inherit;font-size:
 [data-vibeui-block="pagination-010"] [data-part="close"]:focus-visible{outline:2px solid var(--vibeui-pagination-010-accent);outline-offset:1px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="pagination-010"] *{animation:none!important;transition:none!important}}
 `
+
+const LABEL: Record<string, string> = {
+  nav: "Страницы результатов",
+  prev: "Предыдущая страница",
+  next: "Следующая страница",
+  page: "Страница {page}",
+  range: "Страница от {from} до {to}",
+  showRange: "Показать страницы с {from} по {to}",
+  go: "Перейти",
+  close: "Закрыть ползунок",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 type Cell =
   | { kind: "page"; value: number }
@@ -124,6 +162,8 @@ export function Pagination010({
   page: initialPage = 53,
   total = 240,
   siblings = 1,
+  labelText = LABEL,
+  background = "",
   accent,
   className,
   style,
@@ -134,6 +174,12 @@ export function Pagination010({
 
   const palette = {
     ...(accent ? { "--vibeui-pagination-010-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-pagination-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -166,7 +212,7 @@ export function Pagination010({
       </style>
       <nav
         data-vibeui-block="pagination-010"
-        aria-label="Страницы результатов"
+        aria-label={labelText.nav ?? LABEL.nav}
         className={className}
         style={palette}
       >
@@ -174,7 +220,7 @@ export function Pagination010({
           type="button"
           data-part="cell"
           disabled={page === 1}
-          aria-label="Предыдущая страница"
+          aria-label={labelText.prev ?? LABEL.prev}
           onClick={() => setPage(Math.max(page - 1, 1))}
         >
           ←
@@ -186,7 +232,10 @@ export function Pagination010({
               type="button"
               data-part="cell"
               aria-current={cell.value === page ? "page" : undefined}
-              aria-label={`Страница ${cell.value}`}
+              aria-label={(labelText.page ?? LABEL.page).replace(
+                "{page}",
+                String(cell.value),
+              )}
               onClick={() => setPage(cell.value)}
             >
               {cell.value}
@@ -198,18 +247,20 @@ export function Pagination010({
                 min={cell.from}
                 max={cell.to}
                 value={draft}
-                aria-label={`Страница от ${cell.from} до ${cell.to}`}
+                aria-label={(labelText.range ?? LABEL.range)
+                  .replace("{from}", String(cell.from))
+                  .replace("{to}", String(cell.to))}
                 onChange={(event) => setDraft(Number(event.target.value))}
                 onKeyDown={onScrubberKey}
               />
               <output data-part="preview">{draft}</output>
               <button type="button" data-part="go" onClick={commit}>
-                Перейти
+                {labelText.go ?? LABEL.go}
               </button>
               <button
                 type="button"
                 data-part="close"
-                aria-label="Закрыть ползунок"
+                aria-label={labelText.close ?? LABEL.close}
                 onClick={() => setOpenGap(null)}
               >
                 ×
@@ -221,7 +272,9 @@ export function Pagination010({
               type="button"
               data-part="cell"
               data-part-gap="true"
-              aria-label={`Показать страницы с ${cell.from} по ${cell.to}`}
+              aria-label={(labelText.showRange ?? LABEL.showRange)
+                .replace("{from}", String(cell.from))
+                .replace("{to}", String(cell.to))}
               onClick={() => openScrubber(cell)}
             >
               <span data-part="gap">…</span>
@@ -232,7 +285,7 @@ export function Pagination010({
           type="button"
           data-part="cell"
           disabled={page === total}
-          aria-label="Следующая страница"
+          aria-label={labelText.next ?? LABEL.next}
           onClick={() => setPage(Math.min(page + 1, total))}
         >
           →

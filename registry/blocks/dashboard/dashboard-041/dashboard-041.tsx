@@ -23,6 +23,14 @@ export type Dashboard041Props = {
   rejectLabel?: string
   bulkLabel?: string
   accent?: string
+  /** Пусто — подложки нет, блок ложится на фон страницы. */
+  background?: string
+  /** Подпись цепочки согласования. */
+  routeLabel?: string
+  /** Подписи шагов маршрута по ключу. */
+  stateText?: Record<string, string>
+  /** Шаблон строки прогресса: {signed} и {total}. */
+  stageText?: string
   className?: string
   style?: CSSProperties
 }
@@ -38,14 +46,16 @@ export type Dashboard041Props = {
 // эти два действия стоят рядом и путать их дорого.
 const STYLES = `
 :where([data-vibeui-block="dashboard-041"]){
---vibeui-dashboard-041-bg:oklch(0.985 0.003 265);
---vibeui-dashboard-041-card:oklch(1 0 0);
---vibeui-dashboard-041-fg:oklch(0.22 0.014 265);
---vibeui-dashboard-041-muted:oklch(0.55 0.014 265);
---vibeui-dashboard-041-border:oklch(0.91 0.006 265);
---vibeui-dashboard-041-accent:oklch(0.5 0.14 200);
---vibeui-dashboard-041-soft:oklch(0.95 0.03 200);
---vibeui-dashboard-041-urgent:oklch(0.58 0.19 25);
+--vibeui-dashboard-041-bg:transparent;
+/* Карточки документов: подложка блока прозрачна, и рисовать их ею нечем. */
+--vibeui-dashboard-041-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-dashboard-041-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-dashboard-041-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-dashboard-041-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-dashboard-041-accent:light-dark(oklch(0.5 0.14 200),oklch(0.74 0.12 200));
+--vibeui-dashboard-041-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 200));
+--vibeui-dashboard-041-soft:light-dark(oklch(0.95 0.03 200),oklch(0.32 0.05 200));
+--vibeui-dashboard-041-urgent:light-dark(oklch(0.58 0.19 25),oklch(0.74 0.16 25));
 --vibeui-dashboard-041-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -108,7 +118,7 @@ border:1.5px dashed var(--vibeui-dashboard-041-border);
 color:var(--vibeui-dashboard-041-muted);
 }
 [data-vibeui-block="dashboard-041"] [data-part="step"][data-state="Подписал"] [data-part="node"]{
-background:var(--vibeui-dashboard-041-accent);border:1.5px solid var(--vibeui-dashboard-041-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-041-accent);border:1.5px solid var(--vibeui-dashboard-041-accent);color:var(--vibeui-dashboard-041-on-accent);
 }
 [data-vibeui-block="dashboard-041"] [data-part="step"][data-state="Ваш ход"] [data-part="node"]{
 border:1.5px solid var(--vibeui-dashboard-041-accent);color:var(--vibeui-dashboard-041-accent);
@@ -130,7 +140,7 @@ font-size:0.6875rem;color:var(--vibeui-dashboard-041-muted);margin-right:auto;
 [data-vibeui-block="dashboard-041"] [data-part="sign"]{
 appearance:none;border:0;cursor:pointer;font:inherit;
 font-size:0.8125rem;font-weight:700;padding:0.5rem 0.9375rem;border-radius:0.625rem;
-background:var(--vibeui-dashboard-041-accent);color:oklch(1 0 0);
+background:var(--vibeui-dashboard-041-accent);color:var(--vibeui-dashboard-041-on-accent);
 }
 [data-vibeui-block="dashboard-041"] [data-part="back"]{
 appearance:none;cursor:pointer;font:inherit;
@@ -194,6 +204,34 @@ const DEFAULT_PAPERS: Dashboard041Paper[] = [
   },
 ]
 
+const DEFAULT_STATES: Record<string, string> = {
+  Подписал: "Подписал",
+  "Ваш ход": "Ваш ход",
+  Ожидает: "Ожидает",
+}
+
+/**
+ * Ветка темы для заданного фона: светлая подложка не должна доставаться
+ * тексту тёмной ветки light-dark().
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /**
  * Экран согласований: очередь документов на подпись, маршрут согласования
  * цепочкой и действия подписи или возврата. Один файл, ноль зависимостей,
@@ -207,11 +245,21 @@ export function Dashboard041({
   rejectLabel = "Вернуть на доработку",
   bulkLabel = "Подписать все без замечаний",
   accent,
+  background = "",
+  routeLabel = "Маршрут согласования",
+  stateText = DEFAULT_STATES,
+  stageText = "Подписали {signed} из {total}",
   className,
   style,
 }: Dashboard041Props) {
   const palette = {
     ...(accent ? { "--vibeui-dashboard-041-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dashboard-041-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -256,20 +304,23 @@ export function Dashboard041({
                     {paper.author} · <span data-part="due">{paper.due}</span>
                   </p>
 
-                  <ol data-part="route" aria-label="Маршрут согласования">
+                  <ol data-part="route" aria-label={routeLabel}>
                     {paper.route.map((step) => (
                       <li
                         key={step.who}
                         data-part="step"
                         data-state={step.state}
                       >
-                        <span data-part="node" title={step.state}>
+                        <span
+                          data-part="node"
+                          title={stateText[step.state] ?? step.state}
+                        >
                           {step.state === "Подписал" ? "✓" : ""}
                         </span>
                         <span data-part="who">
                           {step.who}
                           <br />
-                          {step.state}
+                          {stateText[step.state] ?? step.state}
                         </span>
                       </li>
                     ))}
@@ -277,7 +328,9 @@ export function Dashboard041({
 
                   <div data-part="acts">
                     <span data-part="stage">
-                      Подписали {signed} из {paper.route.length}
+                      {stageText
+                        .replace("{signed}", String(signed))
+                        .replace("{total}", String(paper.route.length))}
                     </span>
                     <button type="button" data-part="sign">
                       {signLabel}

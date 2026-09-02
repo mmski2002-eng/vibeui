@@ -14,6 +14,8 @@ export type Select021Props = Omit<
   name?: string
   options?: Select021Option[]
   defaultValue?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -23,13 +25,13 @@ export type Select021Props = Omit<
 // в неизменном виде, а глаз всё равно цепляется за значок.
 const STYLES = `
 :where([data-vibeui-block="select-021"]){
---vibeui-select-021-surface:oklch(1 0 0);
---vibeui-select-021-surface-border:oklch(0.91 0.006 265);
---vibeui-select-021-fg:oklch(0.23 0.016 265);
---vibeui-select-021-muted:oklch(0.55 0.014 265);
---vibeui-select-021-field:oklch(0.985 0.002 265);
---vibeui-select-021-border:oklch(0.87 0.008 265);
---vibeui-select-021-accent:oklch(0.55 0.19 262);
+--vibeui-select-021-surface:transparent;
+--vibeui-select-021-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-select-021-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-021-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-021-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-select-021-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.012 265));
+--vibeui-select-021-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
 --vibeui-select-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="select-021"]{
@@ -75,6 +77,28 @@ const DEFAULT_OPTIONS: Select021Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Select с иконкой у каждого варианта в честном нативном стиле: список
  * открывает система, значок — обычный символ перед текстом option и перед
  * текстом в самом поле. Один файл, ноль зависимостей, серверный компонент.
@@ -84,6 +108,7 @@ export function Select021({
   name,
   options = DEFAULT_OPTIONS,
   defaultValue = options[0]?.value,
+  background = "",
   accent,
   id,
   className,
@@ -92,6 +117,12 @@ export function Select021({
 }: Select021Props) {
   const palette = {
     ...(accent ? { "--vibeui-select-021-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-select-021-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

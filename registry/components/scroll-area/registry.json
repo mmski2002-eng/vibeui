@@ -29,15 +29,19 @@
             "видимую полосу прокрутки: спрятанная убирает второй признак и возможность тащить мышью",
             "tabIndex и role=\"group\" на области — иначе её не прокрутить с клавиатуры",
             "overscroll-behavior: contain, чтобы прокрутка не уходила на страницу",
-            "счётчик в шапке: он говорит, сколько всего строк"
+            "счётчик в шапке: он говорит, сколько всего строк",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "title и массив items",
             "height — высота области",
             "чередование фона строк",
-            "ширину блока"
+            "ширину блока",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Виртуализации нет: для тысяч строк нужен другой компонент.",
             "Маска рисуется поверх содержимого: не кладите у краёв ничего интерактивного.",
             "Высота фиксированная: если список короче, останется пустое место — задавайте её по смыслу.",
@@ -55,9 +59,15 @@
           {
             "prop": "height",
             "label": "Высота",
-            "type": "text",
+            "type": "select",
             "default": "12rem",
-            "maxLength": 10
+            "options": ["8rem", "10rem", "12rem", "16rem", "20rem"]
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -71,15 +81,19 @@
                 "the visible scrollbar: hiding it removes the second cue and the drag affordance",
                 "tabIndex and role=\"group\" on the area — otherwise it cannot be scrolled by keyboard",
                 "overscroll-behavior: contain so the scroll does not escape to the page",
-                "the counter in the header: it says how many rows exist"
+                "the counter in the header: it says how many rows exist",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "title and the items array",
                 "height — the area's height",
                 "the row striping",
-                "the block width"
+                "the block width",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is no virtualisation: thousands of rows need a different component.",
                 "The mask paints over content: keep interactive elements away from the edges.",
                 "The height is fixed: a short list leaves empty space — choose it deliberately.",
@@ -93,13 +107,21 @@
                 "default": "Recent components"
               },
               "height": {
-                "label": "Height",
-                "default": "12rem"
+                "label": "Height"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Scroll Area"
+            "title": "Scroll Area",
+            "preview": {
+              "props": {
+                "title": "Recent components"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["height", "background"]
       }
     },
     {
@@ -130,15 +152,18 @@
             "непрозрачный цвет крышек — на прозрачном фоне тень видна всегда и подсказка врёт",
             "tabindex=\"0\" и role=\"region\" с aria-label на прокручиваемом узле: иначе с клавиатуры не прокрутить",
             "overscroll-behavior: contain, чтобы прокрутка не проваливалась на страницу",
-            "собственную светлую подложку: тени считаются от её цвета"
+            "непрозрачную подложку в обеих ветках темы: тени считаются от её цвета",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "заголовок через title",
             "содержимое списка через items",
             "высоту области через height",
-            "силу тени переменной цвета тени"
+            "силу тени переменной цвета тени",
+            "background — подложка компонента; она обязана быть непрозрачной, иначе приём с тенями разваливается"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Приём работает только на непрозрачном фоне: сквозь стеклянную подложку тень будет видна всегда.",
             "Горизонтальные тени этот вариант не рисует — для ленты вбок слои нужно переписать по оси X.",
             "Слишком высокие крышки съедают первые строки списка: держите их около двух строк.",
@@ -156,9 +181,15 @@
           {
             "prop": "height",
             "label": "Высота",
-            "type": "text",
+            "type": "select",
             "default": "13rem",
-            "maxLength": 12
+            "options": ["10rem", "13rem", "16rem", "20rem"]
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -172,15 +203,18 @@
                 "the opaque cover colour — on a transparent ground the shadow is always visible and the hint lies",
                 "tabindex=\"0\" and role=\"region\" with aria-label on the scroller: without them keyboard users cannot scroll it",
                 "overscroll-behavior: contain so the scroll does not fall through to the page",
-                "its own light surface: the shadows are measured against its colour"
+                "an opaque surface in both theme branches: the shadows are measured against its colour",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the heading through title",
                 "the list content through items",
                 "the area height through height",
-                "the shadow strength through the shadow colour variable"
+                "the shadow strength through the shadow colour variable",
+                "background — the component surface; it has to stay opaque, otherwise the shadow trick falls apart"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The trick only works on an opaque background: through a glass surface the shadow always shows.",
                 "This variant draws no horizontal shadows — for a sideways rail the layers must be rewritten on X.",
                 "Overly tall covers eat the first rows of the list: keep them at about two rows.",
@@ -194,13 +228,33 @@
                 "default": "Work queue"
               },
               "height": {
-                "label": "Height",
-                "default": "13rem"
+                "label": "Height"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Edge Shadow Scroll"
+            "title": "Edge Shadow Scroll",
+            "preview": {
+              "props": {
+                "title": "Work queue",
+                "items": [
+                  "Rebuild the registry",
+                  "Check the types",
+                  "Refresh the preview snapshots",
+                  "Write the block description",
+                  "Translate the metadata",
+                  "Run the linter",
+                  "Resolve the conflicts",
+                  "Ship to staging",
+                  "Request a review",
+                  "Close the task"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["height", "background"]
       }
     },
     {
@@ -231,15 +285,20 @@
             "scroll-padding-inline, равный внутреннему отступу ленты, иначе карточка липнет впритык к краю",
             "отступы на самой ленте, а не на контейнере — иначе последняя карточка обрежется",
             "tabindex=\"0\" и role=\"region\" с aria-label на ленте: без них лента не листается с клавиатуры",
-            "собственную светлую подложку: карточки и подписи тёмные и на тёмном фоне исчезнут"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок через title",
             "состав карточек через cards",
             "ширину карточки через cardWidth",
-            "пропорцию превью и радиусы карточек в CSS"
+            "пропорцию превью и радиусы карточек в CSS",
+            "подсказку в шапке через hint и имя ленты для скринридера через railLabel",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "mandatory не даёт остановиться между карточками: для длинных лент мягче proximity.",
             "Кнопок «вперёд-назад» здесь нет намеренно — они требуют клиентского кода и ссылки на узел.",
             "На тачпадах с инерцией прилипание иногда перепрыгивает карточку: это поведение браузера, не компонента.",
@@ -257,9 +316,22 @@
           {
             "prop": "cardWidth",
             "label": "Ширина карточки",
-            "type": "text",
+            "type": "select",
             "default": "9.5rem",
-            "maxLength": 12
+            "options": ["7.5rem", "9.5rem", "12rem", "14rem"]
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "листайте вбок",
+            "maxLength": 24
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -273,15 +345,20 @@
                 "scroll-padding-inline matching the rail's own padding, or the card snaps flush to the edge",
                 "the padding on the rail rather than the container — otherwise the last card is clipped",
                 "tabindex=\"0\" and role=\"region\" with aria-label on the rail: without them it cannot be scrolled by keyboard",
-                "its own light surface: the cards and captions are dark and vanish on a dark ground"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the heading through title",
                 "the card set through cards",
                 "the card width through cardWidth",
-                "the thumbnail ratio and card radii in CSS"
+                "the thumbnail ratio and card radii in CSS",
+                "the header hint through hint and the screen-reader name of the rail through railLabel",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "mandatory forbids resting between cards: proximity is gentler for long rails.",
                 "There are deliberately no prev/next buttons — they need client code and a node reference.",
                 "On inertial trackpads snapping sometimes skips a card: that is browser behaviour, not the component.",
@@ -295,13 +372,53 @@
                 "default": "Ready-made blocks"
               },
               "cardWidth": {
-                "label": "Card width",
-                "default": "9.5rem"
+                "label": "Card width"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "scroll sideways"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Snap Card Rail"
+            "title": "Snap Card Rail",
+            "preview": {
+              "props": {
+                "title": "Ready-made blocks",
+                "hint": "scroll sideways",
+                "railLabel": "{title}: horizontal rail",
+                "cards": [
+                  {
+                    "title": "Hero Split",
+                    "meta": "block · 2 min"
+                  },
+                  {
+                    "title": "Pricing Trio",
+                    "meta": "block · 3 min"
+                  },
+                  {
+                    "title": "Feature Grid",
+                    "meta": "block · 2 min"
+                  },
+                  {
+                    "title": "Testimonial Wall",
+                    "meta": "block · 4 min"
+                  },
+                  {
+                    "title": "FAQ Accordion",
+                    "meta": "block · 2 min"
+                  },
+                  {
+                    "title": "Footer Columns",
+                    "meta": "block · 1 min"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["cardWidth", "background"]
       }
     },
     {
@@ -332,15 +449,19 @@
             "непрозрачный фон заголовка — сквозь прозрачный просвечивают уезжающие строки",
             "фиксированную высоту и overflow-y на самой области: без них sticky считает верх от страницы",
             "tabindex=\"0\" и role=\"region\" с aria-label на прокручиваемом узле",
-            "собственную светлую подложку: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок области через title",
             "разделы и их содержимое через groups",
             "высоту области через height",
-            "цвет и высоту липкой полосы в CSS"
+            "цвет и высоту липкой полосы в CSS",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Заголовок остаётся на месте до конца своего раздела и уступает место следующему: это поведение sticky, не анимация.",
             "z-index у заголовка нужен, иначе строки следующего раздела перекрывают его при прокрутке.",
             "Группы в dl обёрнуты фрагментами: не заменяйте их на div, прилипание сломается.",
@@ -358,9 +479,15 @@
           {
             "prop": "height",
             "label": "Высота",
-            "type": "text",
+            "type": "select",
             "default": "14rem",
-            "maxLength": 12
+            "options": ["10rem", "14rem", "18rem", "22rem"]
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -374,15 +501,19 @@
                 "the opaque header background — a transparent one lets the departing rows show through",
                 "the fixed height and overflow-y on the area itself: without them sticky measures against the page",
                 "tabindex=\"0\" and role=\"region\" with aria-label on the scroller",
-                "its own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the area heading through title",
                 "the sections and their contents through groups",
                 "the area height through height",
-                "the colour and height of the sticky bar in CSS"
+                "the colour and height of the sticky bar in CSS",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A header stays put until its section ends and then yields to the next: that is sticky behaviour, not animation.",
                 "The header needs a z-index, otherwise the next section's rows paint over it while scrolling.",
                 "The dl groups are wrapped in fragments: replacing them with divs breaks the sticking.",
@@ -396,13 +527,45 @@
                 "default": "Contacts"
               },
               "height": {
-                "label": "Height",
-                "default": "14rem"
+                "label": "Height"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Sticky Group Headers"
+            "title": "Sticky Group Headers",
+            "preview": {
+              "props": {
+                "title": "Contacts",
+                "groups": [
+                  {
+                    "title": "Today",
+                    "items": ["Anna Rebrova", "Igor Kim", "Maria Pak"]
+                  },
+                  {
+                    "title": "Yesterday",
+                    "items": [
+                      "Dmitry Gnatyuk",
+                      "Liza Orlova",
+                      "Pyotr Savin",
+                      "Timur Khan"
+                    ]
+                  },
+                  {
+                    "title": "Last week",
+                    "items": [
+                      "Olga Dyuzheva",
+                      "Sergey Mun",
+                      "Yulia Kim",
+                      "Artyom Voloshin"
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["height", "background"]
       }
     },
     {
@@ -433,15 +596,20 @@
             "фиксированную высоту самой строки — при плавающей высоте расчёт разъедется",
             "нумерацию CSS-счётчиком: номера в разметке пришлось бы пересчитывать при каждой сортировке",
             "tabindex=\"0\" и role=\"region\" с aria-label на прокручиваемом узле",
-            "собственную светлую подложку: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок через title",
             "содержимое через items",
             "число видимых строк через rows",
-            "высоту строки переменной шага"
+            "высоту строки переменной шага",
+            "подписи подвала через capacityText и hint",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "rows зажат числом элементов: список из трёх строк не станет высотой в шесть.",
             "Многострочный текст в пункте ломает расчёт: строка обязана оставаться однострочной.",
             "Счётчик в подвале статический — он не следит за прокруткой, а сообщает вместимость.",
@@ -463,6 +631,26 @@
             "default": 6,
             "min": 1,
             "max": 12
+          },
+          {
+            "prop": "capacityText",
+            "label": "Подпись вместимости",
+            "type": "text",
+            "default": "видно {visible} из {total}",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "прокрутите список",
+            "maxLength": 30
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -476,15 +664,20 @@
                 "the fixed row height — a fluid one breaks the calculation",
                 "the CSS counter numbering: numbers in markup would need renumbering on every sort",
                 "tabindex=\"0\" and role=\"region\" with aria-label on the scroller",
-                "its own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the heading through title",
                 "the contents through items",
                 "the visible row count through rows",
-                "the row height through the step variable"
+                "the row height through the step variable",
+                "the footer captions through capacityText and hint",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "rows is clamped by the item count: a list of three will not grow to six rows tall.",
                 "Multiline item text breaks the calculation: rows must stay single-line.",
                 "The footer counter is static — it reports capacity, it does not track scrolling.",
@@ -499,11 +692,44 @@
               },
               "rows": {
                 "label": "Visible rows"
+              },
+              "capacityText": {
+                "label": "Capacity caption",
+                "default": "{visible} of {total} visible"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "scroll the list"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Row Counted Panel"
+            "title": "Row Counted Panel",
+            "preview": {
+              "props": {
+                "title": "Build history",
+                "capacityText": "{visible} of {total} visible",
+                "hint": "scroll the list",
+                "items": [
+                  "Build 4821 · passed",
+                  "Build 4820 · passed",
+                  "Build 4819 · failed on tests",
+                  "Build 4818 · passed",
+                  "Build 4817 · cancelled",
+                  "Build 4816 · passed",
+                  "Build 4815 · passed",
+                  "Build 4814 · failed on lint",
+                  "Build 4813 · passed",
+                  "Build 4812 · passed",
+                  "Build 4811 · passed",
+                  "Build 4810 · cancelled"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["rows", "background"]
       }
     },
     {
@@ -534,15 +760,20 @@
             "мгновенную установку при первом показе и плавную по кнопке — плавная на старте выглядит как случайный скачок",
             "aria-current на активной строке: заливка сама по себе не сообщает о ней скринридеру",
             "отметку слева у активной строки — цвет один не читается при дальтонизме",
-            "tabindex=\"0\" и role=\"region\" с aria-label на прокручиваемом узле"
+            "tabindex=\"0\" и role=\"region\" с aria-label на прокручиваемом узле",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок через title",
             "содержимое через items",
             "активный элемент через activeIndex",
-            "высоту области через height"
+            "высоту области через height",
+            "подпись кнопки возврата через revealLabel",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Расчёт опирается на offsetTop: у строк не должно быть предков с position: relative внутри области.",
             "При смене activeIndex после монтирования область сама не поедет — вызовите кнопку или добавьте эффект.",
             "scroll-behavior: smooth снимается правилом prefers-reduced-motion, а не отдельным пропсом.",
@@ -564,6 +795,26 @@
             "default": 5,
             "min": 0,
             "max": 9
+          },
+          {
+            "prop": "height",
+            "label": "Высота",
+            "type": "select",
+            "default": "12rem",
+            "options": ["10rem", "12rem", "16rem", "20rem"]
+          },
+          {
+            "prop": "revealLabel",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "К текущему",
+            "maxLength": 24
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -577,15 +828,20 @@
                 "the instant placement on first paint and the smooth one on the button — smooth at start reads as a random jump",
                 "aria-current on the active row: the fill alone does not announce it to screen readers",
                 "the marker on the left of the active row — colour alone fails for colour blindness",
-                "tabindex=\"0\" and role=\"region\" with aria-label on the scroller"
+                "tabindex=\"0\" and role=\"region\" with aria-label on the scroller",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the heading through title",
                 "the contents through items",
                 "the active item through activeIndex",
-                "the area height through height"
+                "the area height through height",
+                "the label of the return button through revealLabel",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The calculation relies on offsetTop: rows must have no positioned ancestors inside the area.",
                 "Changing activeIndex after mount does not move the area — press the button or add an effect.",
                 "scroll-behavior: smooth is disabled by the prefers-reduced-motion rule, not by a prop.",
@@ -600,11 +856,40 @@
               },
               "activeIndex": {
                 "label": "Active item"
+              },
+              "height": {
+                "label": "Height"
+              },
+              "revealLabel": {
+                "label": "Button label",
+                "default": "Jump to current"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Reveal Active Item"
+            "title": "Reveal Active Item",
+            "preview": {
+              "props": {
+                "title": "Lesson chapters",
+                "revealLabel": "Jump to current",
+                "items": [
+                  "00:00 Intro",
+                  "02:14 Install",
+                  "05:40 First component",
+                  "09:02 Theme tokens",
+                  "13:35 Copy for AI",
+                  "18:10 Your own registry",
+                  "23:48 Build",
+                  "27:05 Deploy",
+                  "31:22 Common mistakes",
+                  "36:00 Wrap-up"
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["activeIndex", "height", "background"]
       }
     },
     {
@@ -635,15 +920,20 @@
             "видимую полосу прокрутки — спрятанная убирает и признак прокрутки, и возможность тащить мышью",
             "scrollbar-gutter: stable, иначе текст дёргается в момент появления полосы",
             "tabindex=\"0\" и role=\"region\" с aria-label на прокручиваемом узле",
-            "собственную светлую подложку: без неё тёмный текст пропадает на тёмном фоне"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "заголовок через title",
             "текст через text — абзацы разделяются пустой строкой",
             "высоту области через height",
-            "толщину полосы через barWidth"
+            "толщину полосы через barWidth",
+            "подпись подвала через note",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "scrollbar-color красит только стандартную полосу: в запасном варианте цвета берутся из правил бегунка.",
             "На macOS полоса по умолчанию появляется только при прокрутке — стилизация видна не всегда.",
             "Слишком тонкая полоса перестаёт быть целью для мыши: меньше 0.375rem её трудно поймать.",
@@ -659,11 +949,31 @@
             "maxLength": 40
           },
           {
+            "prop": "height",
+            "label": "Высота",
+            "type": "select",
+            "default": "12rem",
+            "options": ["10rem", "12rem", "16rem", "20rem"]
+          },
+          {
             "prop": "barWidth",
             "label": "Толщина полосы",
-            "type": "text",
+            "type": "select",
             "default": "0.5rem",
-            "maxLength": 12
+            "options": ["0.375rem", "0.5rem", "0.75rem", "1rem"]
+          },
+          {
+            "prop": "note",
+            "label": "Подпись подвала",
+            "type": "text",
+            "default": "Полоса прокрутки остаётся видимой",
+            "maxLength": 60
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -677,15 +987,20 @@
                 "the visible scrollbar — hiding it removes both the scroll cue and the ability to drag it",
                 "scrollbar-gutter: stable, otherwise the text jerks the moment the bar appears",
                 "tabindex=\"0\" and role=\"region\" with aria-label on the scroller",
-                "its own light surface: without it the dark text disappears on a dark background"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the heading through title",
                 "the copy through text — paragraphs are split on a blank line",
                 "the area height through height",
-                "the bar thickness through barWidth"
+                "the bar thickness through barWidth",
+                "the footer caption through note",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "scrollbar-color paints only the standard bar: the fallback takes its colours from the thumb rules.",
                 "On macOS the bar appears only while scrolling by default, so the styling is not always visible.",
                 "A bar that is too thin stops being a mouse target: below 0.375rem it is hard to grab.",
@@ -698,14 +1013,31 @@
                 "label": "Heading",
                 "default": "Terms of service"
               },
+              "height": {
+                "label": "Height"
+              },
               "barWidth": {
-                "label": "Bar thickness",
-                "default": "0.5rem"
+                "label": "Bar thickness"
+              },
+              "note": {
+                "label": "Footer caption",
+                "default": "The scrollbar stays visible"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Thin Scrollbar Area"
+            "title": "Thin Scrollbar Area",
+            "preview": {
+              "props": {
+                "title": "Terms of service",
+                "note": "The scrollbar stays visible",
+                "text": "The component installs with a single command and then lives in your project: the file is yours, edit it however you like.\n\nThe palette is declared in local variables, so the block looks right in both the light and the dark theme of the host project.\n\nWe deliberately leave the scrollbar visible: it is the only thing that shows how much text is left below.\n\nThe bar thickness is a variable, so it can be tuned to the density of your interface without touching the other rules.\n\nEverything else is ordinary text flow: no virtualisation, no position syncing, zero client code."
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["height", "background"]
       }
     }
   ]

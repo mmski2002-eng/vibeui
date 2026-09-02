@@ -7,34 +7,38 @@ export type Checkbox001Props = Omit<
   label?: string
   /** Пояснение под подписью. Кликается вместе с ней. */
   description?: string
+  /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
 // Идея компонента: кликабельна вся строка, а не квадратик 16×16. Галка
 // рисуется двумя гранями и появляется прочерком времени, а не картинкой:
 // иконочная библиотека не нужна, состояние держит нативный input.
+//
+// Тема берётся из color-scheme окружения через light-dark(): строка темнеет
+// вместе со страницей и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="checkbox-001"]){
---vibeui-checkbox-001-surface:oklch(1 0 0);
---vibeui-checkbox-001-surface-border:oklch(0.91 0.006 265);
---vibeui-checkbox-001-fg:oklch(0.24 0.016 265);
---vibeui-checkbox-001-muted:oklch(0.54 0.014 265);
---vibeui-checkbox-001-bg:oklch(1 0 0);
---vibeui-checkbox-001-border:oklch(0.82 0.01 265);
---vibeui-checkbox-001-accent:oklch(0.55 0.2 262);
---vibeui-checkbox-001-mark:oklch(1 0 0);
---vibeui-checkbox-001-hover:oklch(0.55 0.02 265 / 7%);
+--vibeui-checkbox-001-surface:transparent;
+--vibeui-checkbox-001-pull:-0.625rem -0.75rem;
+--vibeui-checkbox-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-checkbox-001-muted:light-dark(oklch(0.54 0.014 265),oklch(0.72 0.012 265));
+--vibeui-checkbox-001-bg:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
+--vibeui-checkbox-001-border:light-dark(oklch(0.82 0.01 265),oklch(0.5 0.014 265));
+--vibeui-checkbox-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.71 0.16 262));
+--vibeui-checkbox-001-mark:light-dark(oklch(1 0 0),oklch(0.18 0.012 265));
+--vibeui-checkbox-001-hover:light-dark(oklch(0.55 0.02 265 / 7%),oklch(0.85 0.02 265 / 10%));
 --vibeui-checkbox-001-radius:0.625rem;
 --vibeui-checkbox-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-/* Собственная подложка: подпись и пояснение — это текст, и на тёмной
-   странице он обязан читаться без правки палитры проекта. */
+/* Подложки по умолчанию нет: строка ложится на фон страницы, а отрицательные
+   поля возвращают её к общей сетке формы. */
 [data-vibeui-block="checkbox-001"]{
-box-sizing:border-box;padding:0.75rem 0.875rem;
+box-sizing:border-box;
 background:var(--vibeui-checkbox-001-surface);
-border:1px solid var(--vibeui-checkbox-001-surface-border);border-radius:0.875rem;
 display:flex;align-items:flex-start;gap:0.6875rem;
-padding:0.625rem 0.75rem;margin:-0.625rem -0.75rem;
+padding:0.625rem 0.75rem;margin:var(--vibeui-checkbox-001-pull);
 border-radius:var(--vibeui-checkbox-001-radius);cursor:pointer;
 font-family:var(--vibeui-checkbox-001-font);color:var(--vibeui-checkbox-001-fg);
 transition:background-color .16s ease;
@@ -73,19 +77,51 @@ opacity:0;transition:opacity .14s ease,transform .14s ease;
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Чекбокс со строкой-мишенью: подпись, пояснение и галка на чистом CSS.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Checkbox001({
   label = "Присылать отчёты",
   description = "Раз в неделю, коротким письмом. Отключается в любой момент.",
+  background = "",
   accent,
   className,
   style,
   ...props
 }: Checkbox001Props) {
+  // С подложкой отрицательные поля не нужны: плашка обязана держаться
+  // в границах колонки, а не вылезать за неё.
   const palette = {
     ...(accent ? { "--vibeui-checkbox-001-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-checkbox-001-surface": background,
+          "--vibeui-checkbox-001-pull": "0",
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

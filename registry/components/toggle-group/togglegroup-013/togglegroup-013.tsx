@@ -21,6 +21,8 @@ export type Togglegroup013Props = Omit<
   defaultValue?: string
   options?: Togglegroup013Option[]
   onChange?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -28,14 +30,17 @@ export type Togglegroup013Props = Omit<
 // горизонтальных вариантах, но кнопки идут вертикальным столбцом и несут
 // подпись с пояснением, а не только значок. Roving tabindex здесь ходит
 // стрелками вверх-вниз — это соответствует направлению самого списка.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="togglegroup-013"]){
---vibeui-togglegroup-013-bg:oklch(1 0 0);
---vibeui-togglegroup-013-fg:oklch(0.22 0.014 265);
---vibeui-togglegroup-013-muted:oklch(0.55 0.014 265);
---vibeui-togglegroup-013-border:oklch(0.9 0.006 265);
---vibeui-togglegroup-013-surface:oklch(0.97 0.004 265);
---vibeui-togglegroup-013-accent:oklch(0.55 0.16 250);
+--vibeui-togglegroup-013-bg:transparent;
+--vibeui-togglegroup-013-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-togglegroup-013-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-togglegroup-013-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-togglegroup-013-surface:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.011 265));
+--vibeui-togglegroup-013-accent:light-dark(oklch(0.55 0.16 250),oklch(0.74 0.14 250));
 --vibeui-togglegroup-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="togglegroup-013"]{
@@ -54,7 +59,7 @@ display:flex;flex-direction:column;gap:0.375rem;
 appearance:none;cursor:pointer;font:inherit;text-align:left;
 display:flex;align-items:flex-start;gap:0.625rem;width:100%;
 padding:0.625rem 0.75rem;border:1px solid var(--vibeui-togglegroup-013-border);
-border-radius:0.75rem;background:var(--vibeui-togglegroup-013-bg);color:var(--vibeui-togglegroup-013-fg);
+border-radius:0.75rem;background:transparent;color:var(--vibeui-togglegroup-013-fg);
 transition:border-color .15s ease,background-color .15s ease,box-shadow .15s ease;
 }
 [data-vibeui-block="togglegroup-013"] button:hover{background:var(--vibeui-togglegroup-013-surface)}
@@ -64,7 +69,7 @@ outline:2px solid var(--vibeui-togglegroup-013-accent);outline-offset:2px;
 [data-vibeui-block="togglegroup-013"] button[aria-pressed="true"]{
 border-color:var(--vibeui-togglegroup-013-accent);
 box-shadow:inset 0 0 0 1px var(--vibeui-togglegroup-013-accent);
-background:color-mix(in oklab,var(--vibeui-togglegroup-013-accent) 7%,white);
+background:color-mix(in oklab,var(--vibeui-togglegroup-013-accent) 9%,transparent);
 }
 [data-vibeui-block="togglegroup-013"] [data-part="dot"]{
 flex:none;margin-top:0.1875rem;width:1rem;height:1rem;border-radius:50%;
@@ -103,6 +108,28 @@ const DEFAULT_OPTIONS: Togglegroup013Option[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Вертикальная группа тумблеров с одиночным выбором и подписями: roving
  * tabindex ходит стрелками вверх-вниз. Один файл, ноль зависимостей.
  */
@@ -111,6 +138,7 @@ export function Togglegroup013({
   defaultValue = "courier",
   options = DEFAULT_OPTIONS,
   onChange,
+  background = "",
   accent,
   className,
   style,
@@ -121,6 +149,12 @@ export function Togglegroup013({
 
   const palette = {
     ...(accent ? { "--vibeui-togglegroup-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-togglegroup-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

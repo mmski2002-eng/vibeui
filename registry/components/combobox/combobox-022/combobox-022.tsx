@@ -20,6 +20,8 @@ export type Combobox022Props = Omit<
   emptyLabel?: string
   defaultValue?: string
   onSelect?: (value: string) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -29,14 +31,14 @@ export type Combobox022Props = Omit<
 // двумя подписанными секциями, поэтому разделитель — семантика, а не текст.
 const STYLES = `
 :where([data-vibeui-block="combobox-022"]){
---vibeui-combobox-022-bg:oklch(1 0 0);
---vibeui-combobox-022-fg:oklch(0.22 0.014 205);
---vibeui-combobox-022-muted:oklch(0.55 0.014 205);
---vibeui-combobox-022-border:oklch(0.9 0.008 205);
---vibeui-combobox-022-field:oklch(0.985 0.004 205);
---vibeui-combobox-022-active:oklch(0.95 0.03 205);
---vibeui-combobox-022-accent:oklch(0.52 0.13 205);
---vibeui-combobox-022-tag:oklch(0.93 0.045 205);
+--vibeui-combobox-022-bg:transparent;
+--vibeui-combobox-022-fg:light-dark(oklch(0.22 0.014 205),oklch(0.94 0.006 205));
+--vibeui-combobox-022-muted:light-dark(oklch(0.55 0.014 205),oklch(0.7 0.012 205));
+--vibeui-combobox-022-border:light-dark(oklch(0.9 0.008 205),oklch(0.35 0.012 205));
+--vibeui-combobox-022-field:light-dark(oklch(0.985 0.004 205),oklch(0.27 0.012 205));
+--vibeui-combobox-022-active:light-dark(oklch(0.95 0.03 205),oklch(0.32 0.035 205));
+--vibeui-combobox-022-accent:light-dark(oklch(0.52 0.13 205),oklch(0.74 0.12 205));
+--vibeui-combobox-022-tag:light-dark(oklch(0.93 0.045 205),oklch(0.34 0.05 205));
 --vibeui-combobox-022-radius:0.625rem;
 --vibeui-combobox-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -93,6 +95,28 @@ const DEFAULT_OPTIONS = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Combobox с недавними значениями сверху: без заголовков секций, только
  * тонкий разделитель и метка «недавно» у строки.
  */
@@ -106,6 +130,7 @@ export function Combobox022({
   emptyLabel = "Ничего не нашлось",
   defaultValue = "",
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -132,6 +157,12 @@ export function Combobox022({
 
   const palette = {
     ...(accent ? { "--vibeui-combobox-022-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-combobox-022-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

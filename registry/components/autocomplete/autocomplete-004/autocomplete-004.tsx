@@ -20,7 +20,11 @@ export type Autocomplete004Props = Omit<
   placeholder?: string
   commands?: Autocomplete004Command[]
   emptyLabel?: string
+  /** Имя списка для скринридера. */
+  listLabel?: string
   onSelect?: (label: string) => void
+  /** Пусто — подложки нет, панель ложится на фон страницы. */
+  background?: string
   accent?: string
 }
 
@@ -30,12 +34,13 @@ export type Autocomplete004Props = Omit<
 // пропускаются стрелками: остановка на неинтерактивной строке сбивает счёт.
 const STYLES = `
 :where([data-vibeui-block="autocomplete-004"]){
---vibeui-autocomplete-004-bg:oklch(1 0 0);
---vibeui-autocomplete-004-fg:oklch(0.22 0.014 265);
---vibeui-autocomplete-004-muted:oklch(0.52 0.014 265);
---vibeui-autocomplete-004-border:oklch(0.9 0.006 265);
---vibeui-autocomplete-004-active:oklch(0.95 0.02 265);
---vibeui-autocomplete-004-accent:oklch(0.55 0.17 265);
+--vibeui-autocomplete-004-bg:transparent;
+--vibeui-autocomplete-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-autocomplete-004-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-autocomplete-004-active:light-dark(oklch(0.95 0.02 265),oklch(0.33 0.028 265));
+--vibeui-autocomplete-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-autocomplete-004-shadow:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.02 0.01 265 / 70%));
 --vibeui-autocomplete-004-radius:0.75rem;
 --vibeui-autocomplete-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -45,7 +50,7 @@ width:100%;max-width:26rem;box-sizing:border-box;overflow:hidden;
 background:var(--vibeui-autocomplete-004-bg);
 border:1px solid var(--vibeui-autocomplete-004-border);
 border-radius:var(--vibeui-autocomplete-004-radius);
-box-shadow:0 18px 40px -24px oklch(0.2 0.02 265 / 45%);
+box-shadow:0 18px 40px -24px var(--vibeui-autocomplete-004-shadow);
 color:var(--vibeui-autocomplete-004-fg);
 font-family:var(--vibeui-autocomplete-004-font);
 }
@@ -105,6 +110,28 @@ const DEFAULT_COMMANDS: Autocomplete004Command[] = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Строка команд: поиск по приложению с группами и клавиатурой.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -112,7 +139,9 @@ export function Autocomplete004({
   placeholder = "Команда или раздел",
   commands = DEFAULT_COMMANDS,
   emptyLabel = "Ничего не нашлось",
+  listLabel = "Команды",
   onSelect,
+  background = "",
   accent,
   className,
   style,
@@ -132,6 +161,12 @@ export function Autocomplete004({
 
   const palette = {
     ...(accent ? { "--vibeui-autocomplete-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-autocomplete-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -194,7 +229,7 @@ export function Autocomplete004({
         <ul
           id={`${id}-list`}
           role="listbox"
-          aria-label="Команды"
+          aria-label={listLabel}
           data-part="list"
         >
           {matches.map((command, index) => (

@@ -11,7 +11,19 @@ export type Checkbox013Props = Omit<
   terms?: string
   optional?: string
   submitLabel?: string
+  /** Пометка под обязательным условием. */
+  requiredNote?: string
+  /** Пометка под необязательным согласием. */
+  optionalNote?: string
+  /** Сообщение после отправки. */
+  doneText?: string
+  /** Подсказка под кнопкой, когда условие принято. */
+  acceptedHint?: string
+  /** Подсказка под кнопкой, пока условие не принято. */
+  pendingHint?: string
   onConfirm?: (subscribed: boolean) => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -19,15 +31,19 @@ export type Checkbox013Props = Omit<
 // выключена, пока условие не принято, и рядом с ней написано, почему именно, —
 // выключенная кнопка без объяснения читается как поломка. Вторая галочка
 // подчёркнуто необязательная: обязательное и добровольное не смешиваются.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он лежит прямо на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="checkbox-013"]){
---vibeui-checkbox-013-bg:oklch(1 0 0);
---vibeui-checkbox-013-fg:oklch(0.21 0.014 265);
---vibeui-checkbox-013-muted:oklch(0.55 0.014 265);
---vibeui-checkbox-013-border:oklch(0.9 0.006 265);
---vibeui-checkbox-013-surface:oklch(0.98 0.003 265);
---vibeui-checkbox-013-accent:oklch(0.5 0.16 255);
---vibeui-checkbox-013-required:oklch(0.55 0.2 25);
+--vibeui-checkbox-013-bg:transparent;
+--vibeui-checkbox-013-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-checkbox-013-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-013-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-checkbox-013-surface:light-dark(oklch(0.98 0.003 265),oklch(0.26 0.009 265));
+--vibeui-checkbox-013-accent:light-dark(oklch(0.5 0.16 255),oklch(0.64 0.16 255));
+--vibeui-checkbox-013-required:light-dark(oklch(0.55 0.2 25),oklch(0.72 0.17 25));
+--vibeui-checkbox-013-on-accent:oklch(0.99 0.01 255);
 --vibeui-checkbox-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="checkbox-013"]{
@@ -57,7 +73,7 @@ transition:background-color .15s ease,border-color .15s ease;
 [data-vibeui-block="checkbox-013"] input:checked::after{
 content:"";position:absolute;left:50%;top:50%;
 width:0.25rem;height:0.4375rem;margin:-0.3125rem 0 0 -0.125rem;
-border-right:2px solid oklch(0.99 0.01 255);border-bottom:2px solid oklch(0.99 0.01 255);
+border-right:2px solid var(--vibeui-checkbox-013-on-accent);border-bottom:2px solid var(--vibeui-checkbox-013-on-accent);
 transform:rotate(45deg);
 }
 [data-vibeui-block="checkbox-013"] input:focus-visible{outline:2px solid var(--vibeui-checkbox-013-accent);outline-offset:2px}
@@ -73,7 +89,7 @@ display:block;margin-top:0.125rem;font-size:0.75rem;color:var(--vibeui-checkbox-
 appearance:none;border:0;cursor:pointer;
 height:2.375rem;border-radius:0.625rem;padding:0 1rem;
 font:inherit;font-size:0.875rem;font-weight:650;
-background:var(--vibeui-checkbox-013-accent);color:oklch(0.99 0.01 255);
+background:var(--vibeui-checkbox-013-accent);color:var(--vibeui-checkbox-013-on-accent);
 transition:opacity .15s ease;
 }
 [data-vibeui-block="checkbox-013"] button:disabled{cursor:not-allowed;opacity:.4}
@@ -88,6 +104,28 @@ margin:0;font-size:0.8125rem;font-weight:600;color:var(--vibeui-checkbox-013-acc
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Форма с обязательной галочкой: отправка заблокирована, пока условие не
  * принято, и рядом сказано почему. Один файл, ноль зависимостей.
  */
@@ -96,7 +134,13 @@ export function Checkbox013({
   terms = "Я принимаю условия оферты и правила возврата",
   optional = "Присылать письма о скидках",
   submitLabel = "Оформить",
+  requiredNote = "Обязательное условие",
+  optionalNote = "Необязательно, отключается в письме",
+  doneText = "Готово: заказ отправлен.",
+  acceptedHint = "Условия приняты — кнопка активна.",
+  pendingHint = "Кнопка включится после согласия с условиями.",
   onConfirm,
+  background = "",
   accent,
   className,
   style,
@@ -108,6 +152,12 @@ export function Checkbox013({
 
   const palette = {
     ...(accent ? { "--vibeui-checkbox-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-checkbox-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -140,7 +190,7 @@ export function Checkbox013({
           />
           <span>
             {terms} <span data-part="star">*</span>
-            <span data-part="soft">Обязательное условие</span>
+            <span data-part="soft">{requiredNote}</span>
           </span>
         </label>
         <label>
@@ -151,7 +201,7 @@ export function Checkbox013({
           />
           <span>
             {optional}
-            <span data-part="soft">Необязательно, отключается в письме</span>
+            <span data-part="soft">{optionalNote}</span>
           </span>
         </label>
         <button type="submit" disabled={!accepted}>
@@ -159,14 +209,10 @@ export function Checkbox013({
         </button>
         {sent ? (
           <p data-part="done" role="status">
-            Готово: заказ отправлен.
+            {doneText}
           </p>
         ) : (
-          <p data-part="why">
-            {accepted
-              ? "Условия приняты — кнопка активна."
-              : "Кнопка включится после согласия с условиями."}
-          </p>
+          <p data-part="why">{accepted ? acceptedHint : pendingHint}</p>
         )}
       </form>
     </>

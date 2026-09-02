@@ -32,15 +32,19 @@
             "details вместо своего состояния — клавиатура и роль достаются даром",
             "раскладку на внутренней панели: контейнерный запрос не применяется к самому контейнеру",
             "складывание в одну колонку на узкой ширине",
-            "верхний слой у панели: меню обязано перекрывать содержимое"
+            "верхний слой у панели: меню обязано перекрывать содержимое",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную панель: меню перекрывает содержимое страницы, и просвечивающая подложка делает его нечитаемым"
           ],
           "adapt": [
             "массив sections и их ссылки",
             "label — подпись раздела",
             "акцент через проп accent",
-            "число колонок"
+            "число колонок",
+            "background — подложка кнопки и панели; пусто оставляет собственную палитру компонента"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Details не закрывается по клику вне: для этого нужен JS, и это осознанный размен.",
             "Больше трёх колонок читаются как таблица: разбивайте меню на разделы.",
             "Пояснение должно объяснять, а не повторять название ссылки другими словами.",
@@ -60,6 +64,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -73,15 +83,19 @@
                 "details instead of custom state — keyboard and role come free",
                 "the layout on the inner panel: a container query does not apply to the container itself",
                 "collapsing to one column at narrow widths",
-                "the top layer on the panel: a menu must overlap content"
+                "the top layer on the panel: a menu must overlap content",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque panel: the menu overlaps page content, and a see-through surface makes it unreadable"
               ],
               "adapt": [
                 "the sections array and their links",
                 "label — the trigger's text",
                 "the accent through the accent prop",
-                "the number of columns"
+                "the number of columns",
+                "background — the surface of the trigger and the panel; empty keeps the component's own palette"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Details does not close on an outside click: that needs JS, and skipping it is a deliberate trade.",
                 "More than three columns read as a table: split the menu into sections.",
                 "A hint must explain, not restate the link's name in other words.",
@@ -96,11 +110,56 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Mega Menu"
+            "title": "Mega Menu",
+            "preview": {
+              "props": {
+                "label": "Product",
+                "sections": [
+                  {
+                    "title": "Product",
+                    "items": [
+                      {
+                        "label": "Catalog",
+                        "hint": "A live preview of every component"
+                      },
+                      {
+                        "label": "Blocks",
+                        "hint": "Ready-made landing sections"
+                      },
+                      {
+                        "label": "Registry",
+                        "hint": "Install with a single command"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Resources",
+                    "items": [
+                      {
+                        "label": "Documentation",
+                        "hint": "How a component works inside"
+                      },
+                      {
+                        "label": "AI instructions",
+                        "hint": "What to hand the agent"
+                      },
+                      {
+                        "label": "Changelog",
+                        "hint": "What shipped this week"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -134,15 +193,20 @@
             "якорь на всей полосе, а не на отдельной кнопке: широкая панель, привязанная к кнопке, съезжает за край окна",
             "popover=\"auto\": Escape, клик мимо и закрытие соседней панели достаются от браузера",
             "auto-fit с minmax в колонках — при узкой панели они перестраиваются сами, без второго набора правил",
-            "разделы без панели обычными ссылками: кнопка, которая просто ведёт на страницу, ломает открытие в новой вкладке"
+            "разделы без панели обычными ссылками: кнопка, которая просто ведёт на страницу, ломает открытие в новой вкладке",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную панель поповера: меню перекрывает содержимое страницы, и просвечивающая подложка делает его нечитаемым"
           ],
           "adapt": [
             "массив entries: разделы, их колонки, ссылки и пояснения",
             "ширину панели и минимальную ширину колонки",
             "акцент через проп accent — цвет колец фокуса",
-            "высоту полосы навигации"
+            "высоту полосы навигации",
+            "background — подложка полосы и панели; пусто оставляет собственную палитру компонента",
+            "label — подпись навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Панель не открывается по наведению — только по клику: случайное раскрытие мега-меню при проезде курсором раздражает сильнее, чем лишний клик.",
             "Без поддержки anchor positioning панель открывается по центру экрана: проверьте целевые браузеры.",
             "Больше трёх колонок в панели не ставьте: список перестаёт читаться и превращается в стену ссылок.",
@@ -155,6 +219,19 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "label",
+            "label": "Подпись навигации",
+            "type": "text",
+            "default": "Основная навигация",
+            "maxLength": 32
           }
         ],
         "i18n": {
@@ -168,15 +245,20 @@
                 "anchoring to the whole bar rather than one button: a wide panel tied to a button slides off the window edge",
                 "popover=\"auto\": Escape, outside clicks and closing a neighbouring panel come from the browser",
                 "auto-fit with minmax in the columns — a narrow panel rearranges itself without a second rule set",
-                "plain links for sections without a panel: a button that merely navigates breaks opening in a new tab"
+                "plain links for sections without a panel: a button that merely navigates breaks opening in a new tab",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque popover panel: the menu overlaps page content, and a see-through surface makes it unreadable"
               ],
               "adapt": [
                 "the entries array: sections, their columns, links and hints",
                 "the panel width and the minimum column width",
                 "the accent through the accent prop — it colours the focus rings",
-                "the height of the nav bar"
+                "the height of the nav bar",
+                "background — the surface of the bar and the panel; empty keeps the component's own palette",
+                "label — the navigation label for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The panel does not open on hover, only on click: a mega menu unfolding as the cursor passes annoys more than one extra click.",
                 "Without anchor positioning support the panel opens centred: check your target browsers.",
                 "Do not go past three columns: the list stops reading and turns into a wall of links.",
@@ -187,11 +269,95 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "label": {
+                "label": "Navigation label",
+                "default": "Main navigation"
               }
             },
-            "title": "Column Navmenu"
+            "title": "Column Navmenu",
+            "preview": {
+              "props": {
+                "label": "Main navigation",
+                "entries": [
+                  {
+                    "label": "Product",
+                    "columns": [
+                      {
+                        "title": "Tools",
+                        "links": [
+                          {
+                            "label": "Editor",
+                            "hint": "Build pages out of ready blocks"
+                          },
+                          {
+                            "label": "Analytics",
+                            "hint": "Views, sources and funnels"
+                          },
+                          {
+                            "label": "Forms",
+                            "hint": "Requests land in mail and CRM"
+                          }
+                        ]
+                      },
+                      {
+                        "title": "Platform",
+                        "links": [
+                          {
+                            "label": "Domains",
+                            "hint": "Your address and certificate in a minute"
+                          },
+                          {
+                            "label": "Storage",
+                            "hint": "Images and files next to the site"
+                          },
+                          {
+                            "label": "Roles",
+                            "hint": "Who edits and who only reads"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Solutions",
+                    "columns": [
+                      {
+                        "title": "Who for",
+                        "links": [
+                          {
+                            "label": "Studios",
+                            "hint": "Dozens of sites in one panel"
+                          },
+                          {
+                            "label": "Shops",
+                            "hint": "Catalogue, payment and delivery"
+                          },
+                          {
+                            "label": "Media",
+                            "hint": "A stream of stories and authors"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Documentation",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -226,15 +392,20 @@
             "popover=\"auto\": Escape и клик мимо достаются от браузера",
             "фон промо из градиента вместо картинки — компонент обязан оставаться одним файлом без ассетов",
             "метку «Новое» отдельным элементом, а не припиской к заголовку: приписку не видно при беглом чтении",
-            "раскладку панели только в :popover-open — display на элементе с popover перебивает display:none из стилей браузера, и панель перестаёт закрываться"
+            "раскладку панели только в :popover-open — display на элементе с popover перебивает display:none из стилей браузера, и панель перестаёт закрываться",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачную панель поповера: меню перекрывает содержимое страницы, и просвечивающая подложка делает его нечитаемым"
           ],
           "adapt": [
             "массив links и подписи panelLabel, promoTitle, promoText, promoAction",
             "массив entries — остальные разделы полосы",
             "акцент через проп accent — цвет метки и колец фокуса",
-            "пропорции колонок панели"
+            "пропорции колонок панели",
+            "background — подложка полосы и панели; пусто оставляет собственную палитру компонента",
+            "подписи badgeText, linksTitle и label — метка промо, заголовок списка и подпись навигации"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Промо-блок стоит первым в разметке, поэтому и в порядке табуляции он первый: это осознанный приоритет, а не ошибка.",
             "Без поддержки anchor positioning панель открывается по центру экрана: проверьте целевые браузеры.",
             "Двух промо в одной панели быть не должно: приоритет, поделённый надвое, перестаёт работать.",
@@ -255,6 +426,25 @@
             "type": "text",
             "default": "Конструктор писем",
             "maxLength": 28
+          },
+          {
+            "prop": "badgeText",
+            "label": "Метка промо",
+            "type": "text",
+            "default": "Новое",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -269,15 +459,20 @@
                 "popover=\"auto\": Escape and outside clicks come from the browser",
                 "the gradient promo background instead of an image — the component has to stay one file with no assets",
                 "the \"New\" badge as its own element rather than an addition to the heading: an addition goes unseen when scanning",
-                "the panel layout scoped to :popover-open — a display on a popover element overrides the browser display:none and the panel stops closing"
+                "the panel layout scoped to :popover-open — a display on a popover element overrides the browser display:none and the panel stops closing",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque popover panel: the menu overlaps page content, and a see-through surface makes it unreadable"
               ],
               "adapt": [
                 "the links array and the panelLabel, promoTitle, promoText and promoAction captions",
                 "the entries array — the remaining sections of the bar",
                 "the accent through the accent prop — it colours the badge and the focus rings",
-                "the column proportions of the panel"
+                "the column proportions of the panel",
+                "background — the surface of the bar and the panel; empty keeps the component's own palette",
+                "the badgeText, linksTitle and label captions — the promo badge, the list heading and the navigation label"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The promo comes first in the markup and therefore first in the tab order: that is deliberate priority, not a bug.",
                 "Without anchor positioning support the panel opens centred: check your target browsers.",
                 "There must never be two promos in one panel: a priority split in half stops working.",
@@ -293,11 +488,52 @@
               "promoTitle": {
                 "label": "Promo title",
                 "default": "Email builder"
+              },
+              "badgeText": {
+                "label": "Promo badge",
+                "default": "New"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Promo Navmenu"
+            "title": "Promo Navmenu",
+            "preview": {
+              "props": {
+                "label": "Main navigation",
+                "entries": ["Features", "Pricing", "Blog"],
+                "panelLabel": "Features",
+                "promoTitle": "Email builder",
+                "promoText": "Newsletters are assembled from the same blocks as site pages.",
+                "promoAction": "Take a look →",
+                "badgeText": "New",
+                "linksTitle": "Everything else",
+                "links": [
+                  {
+                    "label": "Editor",
+                    "hint": "Blocks, grid and typography"
+                  },
+                  {
+                    "label": "Templates",
+                    "hint": "Ready pages for the job"
+                  },
+                  {
+                    "label": "Analytics",
+                    "hint": "Sources and funnels"
+                  },
+                  {
+                    "label": "Integrations",
+                    "hint": "CRM, mail, payments"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -331,15 +567,20 @@
             "переворот галочки по атрибуту open — состояние кнопки должно читаться на ней самой",
             "разделы без подпунктов обычными ссылками: кнопка вместо ссылки лишает открытия в новой вкладке",
             "разметку меню списком <ul>: набор ссылок — это список, а не стопка div'ов",
-            "видимое кольцо фокуса на кнопках и ссылках: меню обязано проходиться табуляцией"
+            "видимое кольцо фокуса на кнопках и ссылках: меню обязано проходиться табуляцией",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "непрозрачный выпадающий столбик: он перекрывает содержимое под собой, и просвечивающая подложка делает его нечитаемым"
           ],
           "adapt": [
             "массив groups: разделы, их пункты и адреса",
             "ширину выпадающего столбика",
             "акцент через проп accent — цвет колец фокуса",
-            "высоту полосы навигации"
+            "высоту полосы навигации",
+            "background — подложка полосы и выпадающего столбика; пусто оставляет собственную палитру компонента",
+            "label — подпись навигации для скринридера"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Escape не закрывает <details>: это поведение элемента. Нужна реакция на Escape — берите вариант на popover.",
             "Клик мимо тоже не закрывает раздел: за это в <details> никто не отвечает.",
             "Выпадающий столбик перекрывает содержимое под собой: полоса навигации должна лежать выше по слою.",
@@ -352,6 +593,19 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "label",
+            "label": "Подпись навигации",
+            "type": "text",
+            "default": "Основная навигация",
+            "maxLength": 32
           }
         ],
         "i18n": {
@@ -365,15 +619,20 @@
                 "flipping the caret from the open attribute — a button's state must read on the button itself",
                 "plain links for sections without children: a button instead of a link removes opening in a new tab",
                 "the <ul> markup inside the menu: a set of links is a list, not a pile of divs",
-                "the visible focus ring on the buttons and links: the menu has to be walkable with Tab"
+                "the visible focus ring on the buttons and links: the menu has to be walkable with Tab",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the opaque drop-down column: it covers the content beneath it, and a see-through surface makes it unreadable"
               ],
               "adapt": [
                 "the groups array: sections, their items and hrefs",
                 "the width of the drop-down column",
                 "the accent through the accent prop — it colours the focus rings",
-                "the height of the nav bar"
+                "the height of the nav bar",
+                "background — the surface of the bar and the drop-down column; empty keeps the component's own palette",
+                "label — the navigation label for screen readers"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Escape does not close a <details>: that is the element's behaviour. If you need Escape, take the popover-based variant.",
                 "An outside click does not close it either: nothing in <details> handles that.",
                 "The drop-down covers whatever is beneath it: the nav bar has to sit higher in the stacking order.",
@@ -384,11 +643,47 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "label": {
+                "label": "Navigation label",
+                "default": "Main navigation"
               }
             },
-            "title": "Simple Navmenu"
+            "title": "Simple Navmenu",
+            "preview": {
+              "props": {
+                "label": "Main navigation",
+                "groups": [
+                  {
+                    "label": "Product",
+                    "items": [
+                      "Editor",
+                      "Templates",
+                      "Analytics",
+                      "Integrations"
+                    ]
+                  },
+                  {
+                    "label": "Company",
+                    "items": ["About us", "Jobs", "Contacts"]
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Blog",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -422,15 +717,20 @@
             "плитки вместо строчек: в каталоге на десяток категорий строчки сливаются, а плитка ловит взгляд значком",
             "popover=\"auto\": Escape и клик мимо достаются от браузера",
             "auto-fit в сетке плиток — панель перестраивается сама, без второго набора правил",
-            "табличные цифры у счётчиков, иначе числа дёргают подписи"
+            "табличные цифры у счётчиков, иначе числа дёргают подписи",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "оттенок значка из хеша без светлой и тёмной пары: oklch с одной светлотой читается в обеих темах, и подставлять туда light-dark() не нужно"
           ],
           "adapt": [
             "массив tiles: категории, пояснения, счётчики и адреса",
             "подписи triggerLabel и footerLabel",
             "акцент через проп accent — цвет ссылки в подвале панели и колец фокуса",
-            "размер плитки и число колонок"
+            "размер плитки и число колонок",
+            "background — подложка полосы и панели; пусто оставляет собственную палитру компонента",
+            "подписи entries, footerNote и label — ссылки полосы, строка подвала и подпись навигации"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Значок — это две первые буквы названия: для категорий, начинающихся одинаково, подставьте свои значки.",
             "Хеш даёт двенадцать оттенков: в очень длинном каталоге цвета начнут повторяться.",
             "Без поддержки anchor positioning панель открывается по центру экрана: проверьте целевые браузеры.",
@@ -451,6 +751,18 @@
             "type": "text",
             "default": "Все категории",
             "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -464,15 +776,20 @@
                 "tiles instead of rows: with a dozen categories rows blur together, while a tile catches the eye with its glyph",
                 "popover=\"auto\": Escape and outside clicks come from the browser",
                 "auto-fit in the tile grid — the panel rearranges itself without a second rule set",
-                "tabular figures on the counts, or the numbers jitter the labels"
+                "tabular figures on the counts, or the numbers jitter the labels",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the hashed glyph hue with no light/dark pair: a single-lightness oklch reads in both themes, so light-dark() does not belong there"
               ],
               "adapt": [
                 "the tiles array: categories, hints, counts and hrefs",
                 "the triggerLabel and footerLabel captions",
                 "the accent through the accent prop — it colours the footer link and the focus rings",
-                "the tile size and the number of columns"
+                "the tile size and the number of columns",
+                "background — the surface of the bar and the panel; empty keeps the component's own palette",
+                "the entries, footerNote and label captions — the bar links, the footer line and the navigation label"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The glyph is the first two letters of the name: for categories that start alike, supply your own icons.",
                 "The hash yields twelve hues: in a very long catalog the colours start repeating.",
                 "Without anchor positioning support the panel opens centred: check your target browsers.",
@@ -488,11 +805,59 @@
               "footerLabel": {
                 "label": "Footer link",
                 "default": "All categories"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Catalog Navmenu"
+            "title": "Catalog Navmenu",
+            "preview": {
+              "props": {
+                "label": "Catalog",
+                "triggerLabel": "Catalog",
+                "footerLabel": "All categories",
+                "footerNote": "Items in stock at the warehouse",
+                "entries": ["Delivery", "Payment"],
+                "tiles": [
+                  {
+                    "label": "Laptops",
+                    "hint": "Thin and gaming",
+                    "count": 412
+                  },
+                  {
+                    "label": "Phones",
+                    "hint": "And accessories",
+                    "count": 908
+                  },
+                  {
+                    "label": "Monitors",
+                    "hint": "From 24 to 49 inches",
+                    "count": 176
+                  },
+                  {
+                    "label": "Keyboards",
+                    "hint": "Mechanical and membrane",
+                    "count": 233
+                  },
+                  {
+                    "label": "Headphones",
+                    "hint": "Over-ear and in-ear",
+                    "count": 514
+                  },
+                  {
+                    "label": "Storage",
+                    "hint": "Drives and memory cards",
+                    "count": 187
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -527,15 +892,20 @@
             "область превью помеченной aria-hidden: картинка дублирует подпись ссылки и скринридеру не нужна",
             "фиксированную высоту области превью — иначе панель прыгает при переходе между строками",
             "правила на шесть строк: их число ограничено сверху, потому что каждая требует своей пары селекторов",
-            "раскладку панели только в :popover-open — display на элементе с popover перебивает display:none из стилей браузера, и панель перестаёт закрываться"
+            "раскладку панели только в :popover-open — display на элементе с popover перебивает display:none из стилей браузера, и панель перестаёт закрываться",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "тёмный текст на превью в обеих темах: картинка остаётся светлой, потому что её оттенок приходит из хеша, а не из темы"
           ],
           "adapt": [
             "массив entries: ссылки, пояснения и подписи превью",
             "triggerLabel — подпись кнопки, открывающей панель",
             "акцент через проп accent — цвет колец фокуса",
-            "размер области превью и оформление карточек"
+            "размер области превью и оформление карточек",
+            "background — подложка полосы и панели; пусто оставляет собственную палитру компонента",
+            "подписи barLinks и label — ссылки полосы и подпись навигации"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Показывается не больше пяти строк: под каждую нужна своя пара правил, остальные обрезаются.",
             "Превью — это градиент с подписью, а не скриншот: подставьте свои изображения, сохранив стопку и правила :has().",
             "Без поддержки :has() превью останется на первом варианте — меню при этом работает.",
@@ -555,6 +925,12 @@
             "label": "Акцент",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -569,15 +945,20 @@
                 "the preview area marked aria-hidden: the picture repeats the link label and a screen reader does not need it",
                 "the fixed preview height — otherwise the panel jumps as you move between rows",
                 "the rules written for six rows: the count is capped because each row needs its own pair of selectors",
-                "the panel layout scoped to :popover-open — a display on a popover element overrides the browser display:none and the panel stops closing"
+                "the panel layout scoped to :popover-open — a display on a popover element overrides the browser display:none and the panel stops closing",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "dark text on the preview in both themes: the picture stays light because its hue comes from the hash, not from the theme"
               ],
               "adapt": [
                 "the entries array: links, hints and preview captions",
                 "triggerLabel — the caption of the button that opens the panel",
                 "the accent through the accent prop — it colours the focus rings",
-                "the preview size and the card styling"
+                "the preview size and the card styling",
+                "background — the surface of the bar and the panel; empty keeps the component's own palette",
+                "the barLinks and label captions — the bar links and the navigation label"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "No more than five rows are rendered: each needs its own pair of rules, the rest are trimmed.",
                 "A preview is a captioned gradient, not a screenshot: drop in your images, keeping the stack and the :has() rules.",
                 "Without :has() support the preview stays on the first entry — the menu itself still works.",
@@ -592,11 +973,48 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Preview Navmenu"
+            "title": "Preview Navmenu",
+            "preview": {
+              "props": {
+                "label": "Main navigation",
+                "triggerLabel": "Features",
+                "barLinks": ["Pricing", "Blog"],
+                "entries": [
+                  {
+                    "label": "Editor",
+                    "hint": "Blocks, grid, typography",
+                    "shotTitle": "Canvas and blocks",
+                    "shotText": "A page is assembled by dragging, with no hand-written markup."
+                  },
+                  {
+                    "label": "Analytics",
+                    "hint": "Sources and funnels",
+                    "shotTitle": "Weekly report",
+                    "shotText": "You see where people come from and where they drop off."
+                  },
+                  {
+                    "label": "Forms",
+                    "hint": "Requests and alerts",
+                    "shotTitle": "Requests",
+                    "shotText": "Every enquiry lands in the mailbox and in a spreadsheet."
+                  },
+                  {
+                    "label": "Domains",
+                    "hint": "Addresses and certificates",
+                    "shotTitle": "Your own address",
+                    "shotText": "The certificate is issued and renewed on its own."
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -627,15 +1045,20 @@
             "чекбокс как хранилище состояния: без JS оно больше нигде не живёт",
             "aria-label у скрытого чекбокса — иначе переключатель меню останется без имени",
             "раскрытие списком вместо всплывающей панели: на телефоне панель либо не помещается, либо закрывает весь экран",
-            "крупные цели у строк: пункт меньше сорока пикселей по высоте пальцем не берётся"
+            "крупные цели у строк: пункт меньше сорока пикселей по высоте пальцем не берётся",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "отдельный токен цвета текста на кнопке действия: в тёмной теме акцент светлее, и белая подпись на нём теряется"
           ],
           "adapt": [
             "массив sections: разделы, их пункты и адреса",
             "brand и actionLabel — название и подпись кнопки действия",
             "акцент через проп accent — цвет кнопки действия и колец фокуса",
-            "высоту шапки и отступы в листе"
+            "высоту шапки и отступы в листе",
+            "background — подложка карточки; пусто оставляет собственную палитру компонента",
+            "подписи burgerLabel, toggleLabel и label — текст у бургера, имя переключателя и подпись навигации"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Идентификатор чекбокса зафиксирован в разметке: два экземпляра на странице дадут повторяющийся id, задайте свой.",
             "Состояние листа не сохраняется между страницами: это переключатель меню, а не настройка.",
             "Компонент рассчитан на узкую ширину: на десктопе берите вариант с выпадающими панелями.",
@@ -656,6 +1079,25 @@
             "type": "text",
             "default": "Начать бесплатно",
             "maxLength": 24
+          },
+          {
+            "prop": "burgerLabel",
+            "label": "Подпись бургера",
+            "type": "text",
+            "default": "Меню",
+            "maxLength": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -669,15 +1111,20 @@
                 "the checkbox as the state store: without JS the state lives nowhere else",
                 "the aria-label on the hidden checkbox — otherwise the menu toggle has no name",
                 "unfolding as a list instead of a floating panel: on a phone a panel either does not fit or covers the whole screen",
-                "the large row targets: an item under forty pixels tall cannot be hit with a thumb"
+                "the large row targets: an item under forty pixels tall cannot be hit with a thumb",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the separate token for the action button's text colour: in the dark theme the accent is lighter and a white caption disappears on it"
               ],
               "adapt": [
                 "the sections array: sections, their items and hrefs",
                 "brand and actionLabel — the wordmark and the action button caption",
                 "the accent through the accent prop — it colours the action button and the focus rings",
-                "the header height and the spacing inside the sheet"
+                "the header height and the spacing inside the sheet",
+                "background — the card surface; empty keeps the component's own palette",
+                "the burgerLabel, toggleLabel and label captions — the burger text, the toggle's name and the navigation label"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The checkbox id is fixed in the markup: two instances on one page produce a duplicate id, so give it your own.",
                 "The sheet state is not kept between pages: this is a menu toggle, not a setting.",
                 "The component is meant for narrow widths: on desktop take the drop-down panel variant.",
@@ -693,11 +1140,54 @@
               "actionLabel": {
                 "label": "Action",
                 "default": "Start free"
+              },
+              "burgerLabel": {
+                "label": "Burger caption",
+                "default": "Menu"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Mobile Navmenu"
+            "title": "Mobile Navmenu",
+            "preview": {
+              "props": {
+                "label": "Main navigation",
+                "brand": "Canvas",
+                "actionLabel": "Start free",
+                "burgerLabel": "Menu",
+                "toggleLabel": "Show menu",
+                "sections": [
+                  {
+                    "label": "Product",
+                    "items": [
+                      "Editor",
+                      "Templates",
+                      "Analytics",
+                      "Integrations"
+                    ]
+                  },
+                  {
+                    "label": "Solutions",
+                    "items": ["Studios", "Shops", "Media"]
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Documentation",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -731,15 +1221,20 @@
             "flex:1 у средней части вместо распорок — правая группа остаётся у края при любом числе разделов",
             "логотип ссылкой на главную: это первое, куда возвращаются с любой страницы",
             "контейнерный запрос, убирающий ссылки в узкой шапке: иначе кнопка выдавливается за край",
-            "общий атрибут name у <details>: им разделы закрывают друг друга"
+            "общий атрибут name у <details>: им разделы закрывают друг друга",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "отдельный токен цвета текста на главной кнопке: в тёмной теме акцент светлее, и белая подпись на нём теряется"
           ],
           "adapt": [
             "массив entries: разделы и их подпункты",
             "brand и actionLabel — название и подпись главной кнопки",
             "акцент через проп accent — цвет знака логотипа и главной кнопки",
-            "высоту шапки и радиус скругления"
+            "высоту шапки и радиус скругления",
+            "background — подложка шапки; пусто оставляет собственную палитру компонента",
+            "secondaryLabel и label — вторичная ссылка и подпись группы разделов"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "В узком виде разделы просто исчезают: рядом должен стоять мобильный вариант навигации.",
             "Знак логотипа — градиентный квадрат: подставьте свой, сохранив размер в 1.375rem.",
             "Escape не закрывает <details>: это поведение элемента, а не ошибка.",
@@ -760,6 +1255,25 @@
             "type": "text",
             "default": "Начать",
             "maxLength": 16
+          },
+          {
+            "prop": "secondaryLabel",
+            "label": "Вторичная ссылка",
+            "type": "text",
+            "default": "Войти",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -773,15 +1287,20 @@
                 "flex:1 on the middle section instead of spacers — the right group stays at the edge whatever the section count",
                 "the wordmark as a link to the home page: it is the first place people return to from anywhere",
                 "the container query that removes the links in a narrow header: otherwise the button is pushed off the edge",
-                "the shared name attribute on <details>: it is how sections close one another"
+                "the shared name attribute on <details>: it is how sections close one another",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the separate token for the primary button's text colour: in the dark theme the accent is lighter and a white caption disappears on it"
               ],
               "adapt": [
                 "the entries array: sections and their children",
                 "brand and actionLabel — the wordmark and the primary button caption",
                 "the accent through the accent prop — it colours the logo mark and the primary button",
-                "the header height and the corner radius"
+                "the header height and the corner radius",
+                "background — the header surface; empty keeps the component's own palette",
+                "secondaryLabel and label — the secondary link and the label of the section group"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "In the narrow view the sections simply disappear: a mobile navigation variant has to sit alongside.",
                 "The logo mark is a gradient square: swap in your own, keeping the 1.375rem size.",
                 "Escape does not close a <details>: that is the element's behaviour, not a bug.",
@@ -797,11 +1316,48 @@
               "actionLabel": {
                 "label": "Button",
                 "default": "Start"
+              },
+              "secondaryLabel": {
+                "label": "Secondary link",
+                "default": "Sign in"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Brand Navmenu"
+            "title": "Brand Navmenu",
+            "preview": {
+              "props": {
+                "label": "Site sections",
+                "brand": "Canvas",
+                "actionLabel": "Start",
+                "secondaryLabel": "Sign in",
+                "entries": [
+                  {
+                    "label": "Product",
+                    "items": ["Editor", "Templates", "Analytics"]
+                  },
+                  {
+                    "label": "Solutions",
+                    "items": ["Studios", "Shops", "Media"]
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Blog",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -835,15 +1391,20 @@
             "aria-label у поля вместе с placeholder: подсказка исчезает при вводе и именем поля быть не может",
             "type=\"search\" у поля — браузер даёт очистку и правильную клавиатуру на телефоне",
             "подсказки обычными ссылками, а не кнопками: частый запрос должен открываться в новой вкладке",
-            "popover=\"auto\": Escape и клик мимо достаются от браузера"
+            "popover=\"auto\": Escape и клик мимо достаются от браузера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "отдельный токен цвета текста на кнопке «Найти»: в тёмной теме акцент светлее, и белая подпись на нём теряется"
           ],
           "adapt": [
             "массивы suggestions и recent — частые и недавние запросы",
             "подписи triggerLabel и placeholder",
             "адрес формы: сейчас это заглушка",
-            "акцент через проп accent — цвет кнопки «Найти» и колец фокуса"
+            "акцент через проп accent — цвет кнопки «Найти» и колец фокуса",
+            "background — подложка полосы и панели; пусто оставляет собственную палитру компонента",
+            "подписи barLinks, submitLabel, recentTitle и label — ссылки полосы, кнопка формы, заголовок недавнего и подпись навигации"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Подсказок по мере ввода нет: для живого поиска понадобится клиентский код и своя выдача.",
             "Недавние запросы приходят пропом: компонент ничего не хранит и не читает историю.",
             "Без поддержки anchor positioning панель открывается по центру экрана: проверьте целевые браузеры.",
@@ -864,6 +1425,25 @@
             "type": "text",
             "default": "Поиск",
             "maxLength": 16
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Кнопка формы",
+            "type": "text",
+            "default": "Найти",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -877,15 +1457,20 @@
                 "the field's aria-label alongside the placeholder: a placeholder disappears while typing and cannot be the name",
                 "type=\"search\" on the field — the browser gives a clear button and the right keyboard on a phone",
                 "the suggestions as plain links rather than buttons: a frequent query should open in a new tab",
-                "popover=\"auto\": Escape and outside clicks come from the browser"
+                "popover=\"auto\": Escape and outside clicks come from the browser",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the separate token for the Search button's text colour: in the dark theme the accent is lighter and a white caption disappears on it"
               ],
               "adapt": [
                 "the suggestions and recent arrays — frequent and recent queries",
                 "the triggerLabel and placeholder captions",
                 "the form action: it is a stub right now",
-                "the accent through the accent prop — it colours the Search button and the focus rings"
+                "the accent through the accent prop — it colours the Search button and the focus rings",
+                "background — the surface of the bar and the panel; empty keeps the component's own palette",
+                "the barLinks, submitLabel, recentTitle and label captions — the bar links, the form button, the recent heading and the navigation label"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There are no as-you-type suggestions: live search needs client code and your own results.",
                 "Recent queries arrive as a prop: the component stores nothing and reads no history.",
                 "Without anchor positioning support the panel opens centred: check your target browsers.",
@@ -901,11 +1486,40 @@
               "triggerLabel": {
                 "label": "Trigger",
                 "default": "Search"
+              },
+              "submitLabel": {
+                "label": "Form button",
+                "default": "Search"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Search Navmenu"
+            "title": "Search Navmenu",
+            "preview": {
+              "props": {
+                "label": "Main navigation",
+                "triggerLabel": "Search",
+                "placeholder": "Search the help centre",
+                "submitLabel": "Search",
+                "recentTitle": "Recent",
+                "barLinks": ["Help", "Community"],
+                "suggestions": [
+                  "Pricing",
+                  "Domains",
+                  "Import from Tilda",
+                  "Forms",
+                  "API"
+                ],
+                "recent": ["How to connect a domain", "Exporting statistics"]
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["accent", "background"]
       }
     }
   ]

@@ -5,9 +5,13 @@ export type Hero013Props = {
   lede?: string
   placeholder?: string
   submitLabel?: string
+  /** Подпись поля для скринридера: она скрыта, но остаётся в дереве доступности. */
+  searchLabel?: string
   popularTitle?: string
   popular?: string[]
   counter?: string
+  /** Пусто — подложки нет, секция ложится на фон страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -18,21 +22,25 @@ export type Hero013Props = {
 // обычный поиск, а с JS её легко перехватить. Под полем — популярные запросы
 // ссылками с готовым query-параметром: это и подсказки, и внутренняя
 // перелинковка. Счётчик рядом с полем отвечает на вопрос «а есть ли что искать».
+//
+// Тема приходит из color-scheme окружения через light-dark(): подложки у
+// секции по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе
+// с ней.
 const STYLES = `
 :where([data-vibeui-block="hero-013"]){
---vibeui-hero-013-bg:oklch(0.97 0.008 210);
---vibeui-hero-013-fg:oklch(0.2 0.02 220);
---vibeui-hero-013-muted:oklch(0.5 0.018 220);
---vibeui-hero-013-card:oklch(1 0 0);
---vibeui-hero-013-line:oklch(0.88 0.012 220);
---vibeui-hero-013-accent:oklch(0.52 0.14 220);
---vibeui-hero-013-accent-fg:oklch(0.99 0 0);
+--vibeui-hero-013-bg:transparent;
+--vibeui-hero-013-fg:light-dark(oklch(0.2 0.02 220),oklch(0.94 0.008 220));
+--vibeui-hero-013-muted:light-dark(oklch(0.5 0.018 220),oklch(0.7 0.015 220));
+--vibeui-hero-013-card:light-dark(oklch(1 0 0),oklch(0.26 0.014 220));
+--vibeui-hero-013-line:light-dark(oklch(0.88 0.012 220),oklch(0.37 0.015 220));
+--vibeui-hero-013-accent:light-dark(oklch(0.52 0.14 220),oklch(0.74 0.13 220));
+--vibeui-hero-013-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 220));
 --vibeui-hero-013-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
 [data-vibeui-block="hero-013"]{
 box-sizing:border-box;
-background:linear-gradient(180deg,var(--vibeui-hero-013-bg),color-mix(in oklab,var(--vibeui-hero-013-bg) 40%,white));
+background:linear-gradient(180deg,var(--vibeui-hero-013-bg),color-mix(in oklab,var(--vibeui-hero-013-bg) 45%,transparent));
 color:var(--vibeui-hero-013-fg);font-family:var(--vibeui-hero-013-sans);
 }
 [data-vibeui-block="hero-013"] *{box-sizing:border-box}
@@ -96,21 +104,51 @@ const DEFAULT_POPULAR = [
   "отзывы",
 ]
 
+/**
+ * Ветка темы для заданного фона. Без неё светлая подложка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Hero с поиском по каталогу: форма GET, подсказки-ссылки и счётчик секций. */
 export function Hero013({
   title = "Найдите секцию по названию, а не листайте каталог",
   lede = "Тысяча с лишним готовых блоков. Введите задачу словами — «тёмный hero с формой» — и берите подходящий.",
   placeholder = "Например: тарифы с переключателем",
   submitLabel = "Найти",
+  searchLabel = "Поиск по каталогу",
   popularTitle = "Ищут чаще всего",
   popular = DEFAULT_POPULAR,
   counter = "1 080 секций · обновлено сегодня",
+  background = "",
   accent,
   className,
   style,
 }: Hero013Props) {
   const palette = {
     ...(accent ? { "--vibeui-hero-013-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-hero-013-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -153,7 +191,7 @@ export function Hero013({
                 />
               </svg>
               <label htmlFor="vibeui-hero-013-q" hidden>
-                Поиск по каталогу
+                {searchLabel}
               </label>
               <input
                 id="vibeui-hero-013-q"

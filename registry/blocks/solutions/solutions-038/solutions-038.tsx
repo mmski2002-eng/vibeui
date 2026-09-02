@@ -16,7 +16,27 @@ export type Solutions038Props = {
   title?: string
   shift?: string
   sheets?: Solutions038Sheet[]
+  /** Подписи плиток сводки: sheets, mileage, incomplete. */
+  summaryText?: Record<string, string>
+  /** Подписи одометра: start, end, mileage. */
+  odometerText?: Record<string, string>
+  /** Названия отметок: medExam, techControl. */
+  markText?: Record<string, string>
+  /** Состояния отметки: done, missing. */
+  markStateText?: Record<string, string>
+  /** Время выезда. {time} — часы и минуты. */
+  departureText?: string
+  /** Время возврата. {time} — часы и минуты. */
+  arrivalText?: string
+  /** Пробег. {km} — километры. */
+  mileageText?: string
+  /** Сноска под списком. */
+  footNote?: string
+  /** Локаль форматирования чисел. */
+  locale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -31,14 +51,14 @@ export type Solutions038Props = {
 // может разойтись с реальными цифрами счётчика.
 const STYLES = `
 :where([data-vibeui-block="solutions-038"]){
---vibeui-solutions-038-bg:oklch(1 0 0);
---vibeui-solutions-038-panel:oklch(0.976 0.004 250);
---vibeui-solutions-038-fg:oklch(0.21 0.014 265);
---vibeui-solutions-038-muted:oklch(0.54 0.014 265);
---vibeui-solutions-038-border:oklch(0.9 0.006 265);
---vibeui-solutions-038-accent:oklch(0.5 0.15 250);
---vibeui-solutions-038-ok:oklch(0.55 0.14 152);
---vibeui-solutions-038-warn:oklch(0.6 0.19 45);
+--vibeui-solutions-038-bg:transparent;
+--vibeui-solutions-038-panel:light-dark(oklch(0.976 0.004 250),oklch(0.27 0.011 265));
+--vibeui-solutions-038-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-038-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-solutions-038-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-038-accent:light-dark(oklch(0.5 0.15 250),oklch(0.72 0.14 250));
+--vibeui-solutions-038-ok:light-dark(oklch(0.55 0.14 152),oklch(0.71 0.14 152));
+--vibeui-solutions-038-warn:light-dark(oklch(0.6 0.19 45),oklch(0.74 0.16 45));
 --vibeui-solutions-038-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-038-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -184,6 +204,50 @@ const DEFAULT_SHEETS: Solutions038Sheet[] = [
   },
 ]
 
+const SUMMARY_LABEL: Record<string, string> = {
+  sheets: "листов за смену",
+  mileage: "суммарный пробег",
+  incomplete: "без полной отметки",
+}
+
+const ODOMETER_LABEL: Record<string, string> = {
+  start: "Одометр, выезд",
+  end: "Одометр, возврат",
+  mileage: "Пробег",
+}
+
+const MARK_LABEL: Record<string, string> = {
+  medExam: "медосмотр",
+  techControl: "техконтроль",
+}
+
+const MARK_STATE_LABEL: Record<string, string> = {
+  done: "пройден",
+  missing: "нет отметки",
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function timeToHours(value: string) {
   const [hours, minutes] = value.split(":").map(Number)
   return hours + minutes / 60
@@ -198,10 +262,26 @@ export function Solutions038({
   title = "Путевые листы",
   shift = "Смена 5 марта, 1-я бригада",
   sheets = DEFAULT_SHEETS,
+  summaryText = SUMMARY_LABEL,
+  odometerText = ODOMETER_LABEL,
+  markText = MARK_LABEL,
+  markStateText = MARK_STATE_LABEL,
+  departureText = "выезд {time}",
+  arrivalText = "возврат {time}",
+  mileageText = "{km} км",
+  footNote = "Пробег считается разницей показаний одометра при выезде и возврате.",
+  locale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions038Props) {
+  const summary = (key: string) => summaryText[key] ?? SUMMARY_LABEL[key]
+  const odometer = (key: string) => odometerText[key] ?? ODOMETER_LABEL[key]
+  const markState = (done: boolean) => {
+    const key = done ? "done" : "missing"
+    return markStateText[key] ?? MARK_STATE_LABEL[key]
+  }
   const totalMileage = sheets.reduce(
     (sum, sheet) => sum + (sheet.odometerEnd - sheet.odometerStart),
     0,
@@ -212,6 +292,12 @@ export function Solutions038({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-038-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-038-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -236,15 +322,17 @@ export function Solutions038({
         <div data-part="summary">
           <p data-part="tile">
             <b>{sheets.length}</b>
-            <span>листов за смену</span>
+            <span>{summary("sheets")}</span>
           </p>
           <p data-part="tile">
-            <b>{totalMileage.toLocaleString("ru-RU")} км</b>
-            <span>суммарный пробег</span>
+            <b>
+              {mileageText.replace("{km}", totalMileage.toLocaleString(locale))}
+            </b>
+            <span>{summary("mileage")}</span>
           </p>
           <p data-part="tile" data-tile={incomplete > 0 ? "warn" : undefined}>
             <b>{incomplete}</b>
-            <span>без полной отметки</span>
+            <span>{summary("incomplete")}</span>
           </p>
         </div>
 
@@ -271,22 +359,29 @@ export function Solutions038({
                   />
                 </div>
                 <div data-part="times">
-                  <span>выезд {sheet.departure}</span>
-                  <span>возврат {sheet.arrival}</span>
+                  <span>
+                    {departureText.replace("{time}", sheet.departure)}
+                  </span>
+                  <span>{arrivalText.replace("{time}", sheet.arrival)}</span>
                 </div>
 
                 <dl data-part="odo">
                   <div>
-                    <dt>Одометр, выезд</dt>
-                    <dd>{sheet.odometerStart.toLocaleString("ru-RU")}</dd>
+                    <dt>{odometer("start")}</dt>
+                    <dd>{sheet.odometerStart.toLocaleString(locale)}</dd>
                   </div>
                   <div>
-                    <dt>Одометр, возврат</dt>
-                    <dd>{sheet.odometerEnd.toLocaleString("ru-RU")}</dd>
+                    <dt>{odometer("end")}</dt>
+                    <dd>{sheet.odometerEnd.toLocaleString(locale)}</dd>
                   </div>
                   <div>
-                    <dt>Пробег</dt>
-                    <dd>{mileage.toLocaleString("ru-RU")} км</dd>
+                    <dt>{odometer("mileage")}</dt>
+                    <dd>
+                      {mileageText.replace(
+                        "{km}",
+                        mileage.toLocaleString(locale),
+                      )}
+                    </dd>
                   </div>
                 </dl>
 
@@ -296,14 +391,16 @@ export function Solutions038({
                     data-mark={sheet.medExam ? "done" : "missing"}
                   >
                     <b aria-hidden="true">{sheet.medExam ? "✓" : "!"}</b>
-                    медосмотр {sheet.medExam ? "пройден" : "нет отметки"}
+                    {markText.medExam ?? MARK_LABEL.medExam}{" "}
+                    {markState(sheet.medExam)}
                   </span>
                   <span
                     data-part="mark"
                     data-mark={sheet.techControl ? "done" : "missing"}
                   >
                     <b aria-hidden="true">{sheet.techControl ? "✓" : "!"}</b>
-                    техконтроль {sheet.techControl ? "пройден" : "нет отметки"}
+                    {markText.techControl ?? MARK_LABEL.techControl}{" "}
+                    {markState(sheet.techControl)}
                   </span>
                 </div>
               </li>
@@ -311,9 +408,7 @@ export function Solutions038({
           })}
         </ol>
 
-        <p data-part="foot">
-          Пробег считается разницей показаний одометра при выезде и возврате.
-        </p>
+        <p data-part="foot">{footNote}</p>
       </section>
     </>
   )

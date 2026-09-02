@@ -33,7 +33,9 @@
             "блик через background-position у градиента 200% — отдельный движущийся слой заставляет браузер перерисовывать больше",
             "role=\"status\", aria-busy и подпись: без них загрузка для скринридера просто не существует",
             "правило prefers-reduced-motion, которое гасит блик и оставляет ровную заливку",
-            "блок <style> внутри компонента — в нём вся палитра, формы и анимация"
+            "блок <style> внутри компонента — в нём вся палитра, формы и анимация",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "заливку полос без собственного фона: заглушка ложится прямо на фон страницы"
           ],
           "adapt": [
             "shape: text для абзаца, avatar для строки списка, block под изображение или карту",
@@ -42,6 +44,7 @@
             "ширину и внешние отступы через className: по умолчанию заглушка занимает всю ширину родителя"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Не показывайте заглушку дольше пары секунд как единственный ответ: для долгих операций нужен прогресс или объяснение.",
             "Не мигайте заглушкой на быстрых запросах — вспышка на 100 мс раздражает сильнее пустоты.",
             "Число строк должно примерно совпадать с реальным содержимым: заглушка на восемь строк перед двухстрочным абзацем выглядит как ошибка.",
@@ -84,7 +87,9 @@
                 "the shimmer through background-position on a 200% gradient — a separate moving layer makes the browser repaint more",
                 "role=\"status\", aria-busy and the label: without them the loading state does not exist for a screen reader",
                 "the prefers-reduced-motion rule that kills the shimmer and leaves a flat fill",
-                "the <style> block inside the component — it holds the palette, the shapes and the animation"
+                "the <style> block inside the component — it holds the palette, the shapes and the animation",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the bar fills without a background of their own: the skeleton sits straight on the page background"
               ],
               "adapt": [
                 "shape: text for a paragraph, avatar for a list row, block for an image or a map",
@@ -93,6 +98,7 @@
                 "width and outer spacing through className: by default it fills its parent"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Do not leave a skeleton as the only answer for more than a couple of seconds: long operations need progress or an explanation.",
                 "Do not flash a skeleton on fast requests — a 100 ms flicker is worse than empty space.",
                 "Keep the row count close to the real content: eight rows in front of a two-line paragraph reads as a bug.",
@@ -112,9 +118,15 @@
                 "default": "Loading"
               }
             },
-            "title": "Content Skeleton"
+            "title": "Content Skeleton",
+            "preview": {
+              "props": {
+                "label": "Loading"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["shape", "lines"]
       }
     },
     {
@@ -145,15 +157,19 @@
             "role=\"status\" и aria-busy на корне — без них заглушка молчит для скринридера",
             "общее правило заливки для всех частей: разными правилами блик разъедется",
             "правило prefers-reduced-motion, гасящее блик до ровной заливки",
-            "собственную светлую подложку карточки: на тёмной витрине серые полосы иначе не видно"
+            "собственную светлую подложку карточки: на тёмной витрине серые полосы иначе не видно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "пропорцию обложки через ratio",
             "подпись для скринридера через label",
             "ширины полос заголовка и текста в CSS под свою типографику",
-            "радиусы и отступы карточки под свою систему"
+            "радиусы и отступы карточки под свою систему",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Заглушка обязана совпадать по метрике с настоящей карточкой, иначе смысл в ней пропадает.",
             "Больше секунды показывать скелетон вместо мгновенного ответа вреднее, чем показать пустое место.",
             "Внутри заглушки нет текста: подпись живёт только в aria-label.",
@@ -174,6 +190,12 @@
             "type": "text",
             "default": "Карточка загружается",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -187,15 +209,19 @@
                 "role=\"status\" and aria-busy on the root — without them the skeleton is silent to screen readers",
                 "the shared fill rule for every part: separate rules let the shimmer drift apart",
                 "the prefers-reduced-motion rule that flattens the shimmer to a plain fill",
-                "the card's own light surface: on a dark gallery the grey bars are invisible otherwise"
+                "the card's own light surface: on a dark gallery the grey bars are invisible otherwise",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the cover proportion through ratio",
                 "the screen-reader caption through label",
                 "the heading and text bar widths in CSS to match your typography",
-                "the radii and paddings of the card to fit your system"
+                "the radii and paddings of the card to fit your system",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The skeleton must match the real card's metrics, otherwise it loses its point.",
                 "Showing a skeleton for more than a second instead of answering instantly is worse than showing nothing.",
                 "There is no text inside the skeleton: the caption lives only in aria-label.",
@@ -210,11 +236,20 @@
               "label": {
                 "label": "Caption",
                 "default": "Card is loading"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Card Skeleton"
+            "title": "Card Skeleton",
+            "preview": {
+              "props": {
+                "label": "Card is loading"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["ratio", "background"]
       }
     },
     {
@@ -245,15 +280,19 @@
             "чередование ширин полос — одинаковые читаются как таблица, а не как список",
             "role=\"status\" и aria-busy на корне, иначе заглушка молчит для скринридера",
             "правило prefers-reduced-motion, гасящее и волну, и блик",
-            "собственную светлую подложку списка: на тёмной витрине серые полосы иначе не видно"
+            "собственную светлую подложку списка: на тёмной витрине серые полосы иначе не видно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "число строк через rows",
             "подпись для скринридера через label",
             "высоту строки и размер аватара в CSS",
-            "шаг задержки волны в коде компонента"
+            "шаг задержки волны в коде компонента",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Число строк должно совпадать с ожидаемой страницей выдачи, иначе список дёрнется при подстановке.",
             "Больше двадцати строк компонент не рисует: длинная волна выглядит как рябь.",
             "Задержка последней строки в длинном списке заметно отстаёт — уменьшайте шаг при росте rows.",
@@ -275,6 +314,12 @@
             "type": "text",
             "default": "Список загружается",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -288,15 +333,19 @@
                 "the alternating bar widths — identical ones read as a table, not a list",
                 "role=\"status\" and aria-busy on the root, or the skeleton is silent to screen readers",
                 "the prefers-reduced-motion rule that stops both the wave and the shimmer",
-                "the list's own light surface: on a dark gallery the grey bars are invisible otherwise"
+                "the list's own light surface: on a dark gallery the grey bars are invisible otherwise",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the row count through rows",
                 "the screen-reader caption through label",
                 "the row height and avatar size in CSS",
-                "the wave delay step in the component code"
+                "the wave delay step in the component code",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The row count should match the expected page size, otherwise the list jerks when data lands.",
                 "The component caps at twenty rows: a longer wave looks like ripple noise.",
                 "In a long list the last row lags noticeably — shrink the step as rows grows.",
@@ -311,11 +360,20 @@
               "label": {
                 "label": "Caption",
                 "default": "List is loading"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "List Rows Skeleton"
+            "title": "List Rows Skeleton",
+            "preview": {
+              "props": {
+                "label": "List is loading"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["rows", "background"]
       }
     },
     {
@@ -346,15 +404,19 @@
             "разную длину ячеек — одинаковые прямоугольники читаются как решётка, а не как данные",
             "выделенную шапку: без неё блок не узнаётся как таблица",
             "role=\"status\" и aria-busy на корне, иначе заглушка молчит для скринридера",
-            "собственную светлую подложку: на тёмной витрине серые ячейки иначе не видно"
+            "собственную светлую подложку: на тёмной витрине серые ячейки иначе не видно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "раскладку колонок через columns",
             "число строк через rows",
             "подпись для скринридера через label",
-            "высоту строки и отступы ячеек в CSS"
+            "высоту строки и отступы ячеек в CSS",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "columns принимает любое валидное значение grid-template-columns, но число колонок в разметке фиксировано пятью.",
             "Ширины колонок обязаны совпадать с настоящей таблицей, иначе заглушка врёт и данные прыгнут.",
             "Горизонтальную прокрутку компонент не рисует: широкую таблицу оборачивайте сами.",
@@ -376,6 +438,12 @@
             "type": "text",
             "default": "1.5rem 2fr 1fr 1fr 4rem",
             "maxLength": 60
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -389,15 +457,19 @@
                 "the varying cell lengths — identical rectangles read as a lattice, not as data",
                 "the distinguished header: without it the block is not recognisable as a table",
                 "role=\"status\" and aria-busy on the root, or the skeleton is silent to screen readers",
-                "its own light surface: on a dark gallery the grey cells are invisible otherwise"
+                "its own light surface: on a dark gallery the grey cells are invisible otherwise",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the column layout through columns",
                 "the row count through rows",
                 "the screen-reader caption through label",
-                "the row height and cell padding in CSS"
+                "the row height and cell padding in CSS",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "columns accepts any valid grid-template-columns value, but the markup is fixed at five columns.",
                 "The widths must match the real table, otherwise the skeleton lies and the data jumps.",
                 "The component draws no horizontal scrolling: wrap wide tables yourself.",
@@ -412,11 +484,20 @@
               "columns": {
                 "label": "Columns",
                 "default": "1.5rem 2fr 1fr 1fr 4rem"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Table Skeleton"
+            "title": "Table Skeleton",
+            "preview": {
+              "props": {
+                "label": "Table is loading"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["rows", "background"]
       }
     },
     {
@@ -447,15 +528,20 @@
             "кольцо box-shadow цветом подложки — бордюр увеличил бы круг и сдвинул текст",
             "три равные колонки метрик: другое число разойдётся с настоящей шапкой",
             "role=\"status\" и aria-busy на корне, иначе заглушка молчит для скринридера",
-            "собственную светлую подложку: на тёмной витрине серые фигуры иначе не видно"
+            "собственную светлую подложку: на тёмной витрине серые фигуры иначе не видно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "обводку аватара цветом линии: без подложки только она отделяет аватар от обложки"
           ],
           "adapt": [
             "высоту обложки через cover",
             "подпись для скринридера через label",
             "диаметр аватара переменной размера",
-            "ширины полос имени и био в CSS"
+            "ширины полос имени и био в CSS",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Диаметр аватара живёт в CSS-переменной: меняя его пропсом стиля, наезд пересчитается сам.",
             "Заглушка обязана совпадать по высоте с настоящей шапкой, иначе страница дёрнется при подстановке.",
             "Кнопки действий в шапке компонент не рисует: добавьте их отдельным рядом, если они у вас есть.",
@@ -466,9 +552,9 @@
           {
             "prop": "cover",
             "label": "Высота обложки",
-            "type": "text",
+            "type": "select",
             "default": "5.5rem",
-            "maxLength": 12
+            "options": ["4rem", "5.5rem", "7rem"]
           },
           {
             "prop": "label",
@@ -476,6 +562,12 @@
             "type": "text",
             "default": "Профиль загружается",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -489,15 +581,20 @@
                 "the surface-coloured box-shadow ring — a border would grow the circle and shift the text",
                 "the three equal stat columns: any other count diverges from the real header",
                 "role=\"status\" and aria-busy on the root, or the skeleton is silent to screen readers",
-                "its own light surface: on a dark gallery the grey shapes are invisible otherwise"
+                "its own light surface: on a dark gallery the grey shapes are invisible otherwise",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the line-coloured outline on the avatar: without a background it is the only thing separating the avatar from the cover"
               ],
               "adapt": [
                 "the cover height through cover",
                 "the screen-reader caption through label",
                 "the avatar diameter through its size variable",
-                "the name and bio bar widths in CSS"
+                "the name and bio bar widths in CSS",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The avatar diameter lives in a CSS variable: change it and the overlap recomputes itself.",
                 "The skeleton must match the real header's height, otherwise the page jerks when data lands.",
                 "The component draws no header action buttons: add them as a separate row if you have them.",
@@ -507,17 +604,25 @@
             },
             "controls": {
               "cover": {
-                "label": "Cover height",
-                "default": "5.5rem"
+                "label": "Cover height"
               },
               "label": {
                 "label": "Caption",
                 "default": "Profile is loading"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Profile Header Skeleton"
+            "title": "Profile Header Skeleton",
+            "preview": {
+              "props": {
+                "label": "Profile is loading"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["cover", "background"]
       }
     },
     {
@@ -548,15 +653,18 @@
             "накладку хвоста соседом, а не ребёнком абзаца — внутри маски её вырежет",
             "фиксированные длины хвостов: случайные разъедутся между сервером и клиентом",
             "role=\"status\" и aria-busy на корне, иначе заглушка молчит для скринридера",
-            "собственную светлую подложку: и накладка хвоста, и контраст полос считаются от неё"
+            "непрозрачную подложку компонента: и накладка хвоста, и контраст полос считаются от неё — это осознанное исключение среди скелетонов, обе ветки light-dark() у подложки свои",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
             "число абзацев и строк в каждом через paragraphs",
             "подпись для скринридера через label",
             "высоту строки и шаг интерлиньяжа переменными",
-            "набор длин хвостов в массиве TAILS"
+            "набор длин хвостов в массиве TAILS",
+            "background — подложка компонента; пусто оставляет его собственную подложку"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Шаг маски обязан совпадать с line-height настоящего текста, иначе при подстановке абзац подпрыгнет.",
             "Накладка хвоста закрашена цветом подложки: на прозрачном фоне она станет заметным прямоугольником.",
             "mask пока требует префикса в очень старых WebKit — там строки просто станут сплошным блоком.",
@@ -570,6 +678,12 @@
             "type": "text",
             "default": "Текст загружается",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -583,15 +697,18 @@
                 "the tail patch as a sibling rather than a child — inside the mask it would be cut away too",
                 "the fixed tail widths: random ones would mismatch between server and client",
                 "role=\"status\" and aria-busy on the root, or the skeleton is silent to screen readers",
-                "its own light surface: both the tail patch and the bar contrast are measured against it"
+                "the opaque surface of the component: both the tail patch and the bar contrast are measured against it — a deliberate exception among the skeletons, with its own light and dark branches",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
                 "the paragraph count and lines per paragraph through paragraphs",
                 "the screen-reader caption through label",
                 "the line height and leading step through the variables",
-                "the set of tail widths in the TAILS array"
+                "the set of tail widths in the TAILS array",
+                "background — the component background; empty keeps its own surface"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The mask step must match the real text's line-height, otherwise the paragraph jumps when data lands.",
                 "The tail patch is painted in the surface colour: on a transparent background it becomes a visible rectangle.",
                 "mask still needs a prefix in very old WebKit builds — there the lines collapse into a solid block.",
@@ -603,11 +720,20 @@
               "label": {
                 "label": "Caption",
                 "default": "Text is loading"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Masked Paragraph Skeleton"
+            "title": "Masked Paragraph Skeleton",
+            "preview": {
+              "props": {
+                "label": "Text is loading"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["background"]
       }
     },
     {
@@ -638,15 +764,19 @@
             "квадрат через aspect-ratio, а не фиксированную высоту — иначе плитки перестанут тянуться",
             "закольцованную задержку блика: линейная волна на двадцати плитках выглядит поломкой",
             "role=\"status\" и aria-busy на корне, иначе заглушка молчит для скринридера",
-            "собственную светлую подложку: на тёмной витрине серые плитки иначе не видно"
+            "собственную светлую подложку: на тёмной витрине серые плитки иначе не видно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "число плиток через tiles",
             "минимальную ширину плитки через minTile",
             "подпись для скринридера через label",
-            "зазор сетки и радиусы плиток в CSS"
+            "зазор сетки и радиусы плиток в CSS",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "minTile задаёт не ширину, а нижнюю границу: реальная плитка тянется до 1fr колонки.",
             "Число плиток стоит брать равным размеру первой страницы выдачи, иначе сетка дёрнется.",
             "Больше двадцати четырёх плиток компонент не рисует: заглушка тяжелее самой галереи не нужна.",
@@ -665,9 +795,15 @@
           {
             "prop": "minTile",
             "label": "Минимум плитки",
-            "type": "text",
+            "type": "select",
             "default": "6rem",
-            "maxLength": 12
+            "options": ["5rem", "6rem", "8rem"]
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -681,15 +817,19 @@
                 "the square via aspect-ratio rather than a fixed height — otherwise the tiles stop stretching",
                 "the wrapped shimmer delay: a linear wave across twenty tiles looks broken",
                 "role=\"status\" and aria-busy on the root, or the skeleton is silent to screen readers",
-                "its own light surface: on a dark gallery the grey tiles are invisible otherwise"
+                "its own light surface: on a dark gallery the grey tiles are invisible otherwise",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the tile count through tiles",
                 "the minimum tile width through minTile",
                 "the screen-reader caption through label",
-                "the grid gap and tile radii in CSS"
+                "the grid gap and tile radii in CSS",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "minTile sets a lower bound, not a width: the real tile stretches to the 1fr column.",
                 "Match the tile count to your first page size, otherwise the grid jerks when data lands.",
                 "The component caps at twenty-four tiles: a skeleton heavier than the gallery serves no one.",
@@ -702,13 +842,21 @@
                 "label": "Tiles"
               },
               "minTile": {
-                "label": "Tile minimum",
-                "default": "6rem"
+                "label": "Tile minimum"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Tile Grid Skeleton"
+            "title": "Tile Grid Skeleton",
+            "preview": {
+              "props": {
+                "label": "Gallery is loading"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["tiles", "minTile", "background"]
       }
     },
     {
@@ -739,15 +887,19 @@
             "фиксированные высоты столбиков вместо случайных — случайные ломают гидратацию",
             "фиксированную высоту поля: она и есть обещание, что график встанет на это место",
             "role=\"status\" и aria-busy на корне, иначе заглушка молчит для скринридера",
-            "собственную светлую подложку: на тёмной витрине серые столбики иначе не видно"
+            "собственную светлую подложку: на тёмной витрине серые столбики иначе не видно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "силуэт столбиков через bars",
             "высоту поля через height",
             "подпись для скринридера через label",
-            "шаг линий сетки в правиле фона"
+            "шаг линий сетки в правиле фона",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Число подписей оси равно числу столбиков: они рисуются из того же массива.",
             "Высоты столбиков зажаты снизу четырьмя процентами, иначе нулевой столбик исчезает совсем.",
             "Под линейный график заглушка не подходит: там силуэт задаётся кривой, а не прямоугольниками.",
@@ -758,9 +910,9 @@
           {
             "prop": "height",
             "label": "Высота поля",
-            "type": "text",
+            "type": "select",
             "default": "8.5rem",
-            "maxLength": 12
+            "options": ["7rem", "8.5rem", "11rem"]
           },
           {
             "prop": "label",
@@ -768,6 +920,12 @@
             "type": "text",
             "default": "График загружается",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -781,15 +939,19 @@
                 "the fixed bar heights instead of random ones — random values break hydration",
                 "the fixed plot height: it is the promise that the chart will land in that exact space",
                 "role=\"status\" and aria-busy on the root, or the skeleton is silent to screen readers",
-                "its own light surface: on a dark gallery the grey bars are invisible otherwise"
+                "its own light surface: on a dark gallery the grey bars are invisible otherwise",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the bar silhouette through bars",
                 "the plot height through height",
                 "the screen-reader caption through label",
-                "the grid line step in the background rule"
+                "the grid line step in the background rule",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The axis tick count equals the bar count: both come from the same array.",
                 "Bar heights are clamped to a minimum of four percent, otherwise a zero bar disappears entirely.",
                 "This skeleton does not fit a line chart: there the silhouette is a curve, not rectangles.",
@@ -799,17 +961,25 @@
             },
             "controls": {
               "height": {
-                "label": "Plot height",
-                "default": "8.5rem"
+                "label": "Plot height"
               },
               "label": {
                 "label": "Caption",
                 "default": "Chart is loading"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Chart Skeleton"
+            "title": "Chart Skeleton",
+            "preview": {
+              "props": {
+                "label": "Chart is loading"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["height", "background"]
       }
     },
     {
@@ -840,15 +1010,19 @@
             "полосу цены отдельным элементом толще и короче строк названия — одинаковые полосы не читаются как карточка товара",
             "role=\"status\" и aria-busy на корне — без них заглушка молчит для скринридера",
             "aria-hidden на декоративной разметке: реальный текст для скринридера лежит только в aria-label",
-            "правило prefers-reduced-motion, гасящее блик до ровной заливки"
+            "правило prefers-reduced-motion, гасящее блик до ровной заливки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "пропорцию обложки через ratio",
             "подпись для скринридера через label",
             "ширины строк названия и цены в CSS под свою типографику",
-            "радиусы и отступы карточки под свою систему"
+            "радиусы и отступы карточки под свою систему",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Заглушка обязана совпадать по метрике с настоящей карточкой товара, иначе смысл в ней пропадает.",
             "Больше секунды показывать скелетон вместо мгновенного ответа вреднее, чем показать пустое место.",
             "Внутри заглушки нет текста: подпись живёт только в aria-label.",
@@ -869,6 +1043,12 @@
             "type": "text",
             "default": "Товар загружается",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -882,15 +1062,19 @@
                 "the price bar as a separate element, thicker and shorter than the title lines — identical bars do not read as a product card",
                 "role=\"status\" and aria-busy on the root — without them the skeleton is silent to screen readers",
                 "aria-hidden on the decorative markup: the real text for a screen reader lives only in aria-label",
-                "the prefers-reduced-motion rule that flattens the shimmer to a plain fill"
+                "the prefers-reduced-motion rule that flattens the shimmer to a plain fill",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the cover proportion through ratio",
                 "the screen-reader caption through label",
                 "the title and price bar widths in CSS to match your typography",
-                "the card radii and paddings to fit your system"
+                "the card radii and paddings to fit your system",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The skeleton must match the real product card's metrics, otherwise it loses its point.",
                 "Showing a skeleton for more than a second instead of answering instantly is worse than showing nothing.",
                 "There is no text inside the skeleton: the caption lives only in aria-label.",
@@ -905,11 +1089,20 @@
               "label": {
                 "label": "Caption",
                 "default": "Product is loading"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Product Card Skeleton"
+            "title": "Product Card Skeleton",
+            "preview": {
+              "props": {
+                "label": "Product is loading"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["ratio", "background"]
       }
     },
     {
@@ -940,15 +1133,19 @@
             "aria-hidden на самой table: она декоративна, реальный текст лежит в aria-label обёртки",
             "role=\"status\" и aria-busy на обёртке, иначе заглушка молчит для скринридера",
             "разную длину ячеек по столбцу и по строке — одинаковые прямоугольники читаются как решётка",
-            "собственную светлую подложку: на тёмной витрине серые ячейки иначе не видно"
+            "собственную светлую подложку: на тёмной витрине серые ячейки иначе не видно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
           "adapt": [
             "число строк через rows",
             "подпись для скринридера через label",
             "высоту строки и отступы ячеек в CSS",
-            "число и ширину колонок в массиве COLUMNS и таблице стилей"
+            "число и ширину колонок в массиве COLUMNS и таблице стилей",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "rows зажат в диапазоне 3–8: компонент рассчитан на первую страницу выдачи, а не на длинный список.",
             "Число колонок фиксировано четырьмя в разметке: для другого числа отредактируйте COLUMNS и правила cell.",
             "Ширины колонок — оценка: если верстаете рядом настоящую таблицу, сверьте их вручную.",
@@ -970,6 +1167,12 @@
             "type": "text",
             "default": "Таблица загружается",
             "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -983,15 +1186,19 @@
                 "aria-hidden on the table itself: it is decorative, the real text lives in the wrapper's aria-label",
                 "role=\"status\" and aria-busy on the wrapper, or the skeleton is silent to screen readers",
                 "cell lengths varying by column and by row — identical rectangles read as a lattice",
-                "its own light surface: on a dark gallery the grey cells are invisible otherwise"
+                "its own light surface: on a dark gallery the grey cells are invisible otherwise",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
               "adapt": [
                 "the row count through rows",
                 "the screen-reader caption through label",
                 "the row height and cell padding in CSS",
-                "the column count and widths in the COLUMNS array and the style rules"
+                "the column count and widths in the COLUMNS array and the style rules",
+                "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "rows is clamped to 3–8: the component targets the first results page, not a long list.",
                 "The column count is fixed at four in the markup: edit COLUMNS and the cell rules for a different count.",
                 "The column widths are an estimate: check them by hand if a real table sits next to it.",
@@ -1006,11 +1213,20 @@
               "label": {
                 "label": "Caption",
                 "default": "Table is loading"
+              },
+              "background": {
+                "label": "Background"
               }
             },
-            "title": "Data Table Skeleton"
+            "title": "Data Table Skeleton",
+            "preview": {
+              "props": {
+                "label": "Table is loading"
+              }
+            }
           }
-        }
+        },
+        "cardControls": ["rows", "background"]
       }
     }
   ]

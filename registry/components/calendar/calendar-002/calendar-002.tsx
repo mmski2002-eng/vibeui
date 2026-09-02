@@ -12,6 +12,14 @@ export type Calendar002Props = Omit<
   locale?: string
   onChange?: (range: { from: string; to: string }) => void
   accent?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
+  /** Подписи: компонент несёт русские, проект подставляет свои. */
+  previousLabel?: string
+  nextLabel?: string
+  pendingLabel?: string
+  /** Счёт ночей. {count} подставляется числом. */
+  nightsText?: string
 }
 
 // Идея компонента: выбор диапазона в один заход. Первый клик ставит начало,
@@ -20,12 +28,13 @@ export type Calendar002Props = Omit<
 // Подсветка идёт по всей строке между границами, а не точками по дням.
 const STYLES = `
 :where([data-vibeui-block="calendar-002"]){
---vibeui-calendar-002-bg:oklch(1 0 0);
---vibeui-calendar-002-fg:oklch(0.24 0.014 265);
---vibeui-calendar-002-muted:oklch(0.6 0.014 265);
---vibeui-calendar-002-border:oklch(0.91 0.006 265);
---vibeui-calendar-002-accent:oklch(0.55 0.17 265);
---vibeui-calendar-002-range:color-mix(in oklab,var(--vibeui-calendar-002-accent) 12%,oklch(1 0 0));
+--vibeui-calendar-002-bg:transparent;
+--vibeui-calendar-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-calendar-002-muted:light-dark(oklch(0.6 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-calendar-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-calendar-002-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.19 0.03 265));
+--vibeui-calendar-002-range:light-dark(color-mix(in oklab,var(--vibeui-calendar-002-accent) 12%,oklch(1 0 0)),color-mix(in oklab,var(--vibeui-calendar-002-accent) 26%,oklch(0.24 0.014 265)));
 --vibeui-calendar-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="calendar-002"]{
@@ -74,7 +83,7 @@ font:inherit;font-size:0.8125rem;font-variant-numeric:tabular-nums;
 [data-vibeui-block="calendar-002"] td button:focus-visible{outline:2px solid var(--vibeui-calendar-002-accent);outline-offset:-2px}
 [data-vibeui-block="calendar-002"] td button[data-outside="true"]{color:var(--vibeui-calendar-002-muted);opacity:.55}
 [data-vibeui-block="calendar-002"] td button[data-edge="true"]{
-background:var(--vibeui-calendar-002-accent);color:oklch(0.99 0.01 265);font-weight:650;opacity:1;
+background:var(--vibeui-calendar-002-accent);color:var(--vibeui-calendar-002-on-accent);font-weight:650;opacity:1;
 }
 [data-vibeui-block="calendar-002"] [data-part="summary"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
@@ -104,6 +113,28 @@ function buildGrid(year: number, month: number) {
 }
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Выбор диапазона: два клика, автоперестановка границ и счёт ночей.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -113,6 +144,11 @@ export function Calendar002({
   locale = "ru-RU",
   onChange,
   accent,
+  background = "",
+  previousLabel = "Предыдущий месяц",
+  nextLabel = "Следующий месяц",
+  pendingLabel = "Выберите вторую дату",
+  nightsText = "{count} ночей",
   className,
   style,
   ...props
@@ -145,6 +181,12 @@ export function Calendar002({
 
   const palette = {
     ...(accent ? { "--vibeui-calendar-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-calendar-002-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -187,7 +229,7 @@ export function Calendar002({
           <span data-part="nav">
             <button
               type="button"
-              aria-label="Предыдущий месяц"
+              aria-label={previousLabel}
               onClick={() => {
                 const next = new Date(cursor.year, cursor.month - 1, 1)
                 setCursor({ year: next.getFullYear(), month: next.getMonth() })
@@ -197,7 +239,7 @@ export function Calendar002({
             </button>
             <button
               type="button"
-              aria-label="Следующий месяц"
+              aria-label={nextLabel}
               onClick={() => {
                 const next = new Date(cursor.year, cursor.month + 1, 1)
                 setCursor({ year: next.getFullYear(), month: next.getMonth() })
@@ -257,7 +299,9 @@ export function Calendar002({
             {titles.day.format(new Date(`${range.to}T00:00:00`))}
           </span>
           <span data-part="nights">
-            {pending ? "Выберите вторую дату" : `${nights} ночей`}
+            {pending
+              ? pendingLabel
+              : nightsText.replace("{count}", String(nights))}
           </span>
         </div>
       </div>

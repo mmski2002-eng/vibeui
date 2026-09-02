@@ -12,7 +12,13 @@ export type Testimonials005Props = {
   average?: string
   total?: string
   summaryTitle?: string
+  /** Подпись ряда звёзд в шапке. {value} — средняя оценка. */
+  averageLabel?: string
+  /** Подпись ряда звёзд у отзыва. {value} — оценка отзыва. */
+  ratingLabel?: string
   items?: Testimonials005Item[]
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -24,13 +30,13 @@ export type Testimonials005Props = {
 // ряд одинаковых значков скринридер прочитает как мусор.
 const STYLES = `
 :where([data-vibeui-block="testimonials-005"]){
---vibeui-testimonials-005-bg:oklch(0.99 0.004 95);
---vibeui-testimonials-005-card:oklch(1 0 0);
---vibeui-testimonials-005-ink:oklch(0.21 0.016 80);
---vibeui-testimonials-005-muted:oklch(0.49 0.016 80);
---vibeui-testimonials-005-border:oklch(0.9 0.01 85);
---vibeui-testimonials-005-accent:oklch(0.74 0.16 78);
---vibeui-testimonials-005-empty:oklch(0.88 0.01 85);
+--vibeui-testimonials-005-bg:transparent;
+--vibeui-testimonials-005-card:light-dark(oklch(1 0 0),oklch(0.25 0.014 80));
+--vibeui-testimonials-005-ink:light-dark(oklch(0.21 0.016 80),oklch(0.95 0.008 85));
+--vibeui-testimonials-005-muted:light-dark(oklch(0.49 0.016 80),oklch(0.72 0.014 85));
+--vibeui-testimonials-005-border:light-dark(oklch(0.9 0.01 85),oklch(0.35 0.014 85));
+--vibeui-testimonials-005-accent:light-dark(oklch(0.74 0.16 78),oklch(0.8 0.15 80));
+--vibeui-testimonials-005-empty:light-dark(oklch(0.88 0.01 85),oklch(0.4 0.014 85));
 --vibeui-testimonials-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -145,6 +151,28 @@ const DEFAULT_ITEMS: Testimonials005Item[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 function starState(index: number, rating: number) {
   if (rating >= index + 1) {
     return "full"
@@ -158,13 +186,22 @@ export function Testimonials005({
   average = "4,8",
   total = "на основе 1 214 оценок",
   summaryTitle = "Покупатели ставят нам почти пять из пяти",
+  averageLabel = "Средняя оценка {value} из 5",
+  ratingLabel = "Оценка {value} из 5",
   items = DEFAULT_ITEMS,
+  background = "",
   accent,
   className,
   style,
 }: Testimonials005Props) {
   const palette = {
     ...(accent ? { "--vibeui-testimonials-005-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-testimonials-005-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -186,7 +223,7 @@ export function Testimonials005({
             <span
               data-part="stars"
               role="img"
-              aria-label={`Средняя оценка ${average} из 5`}
+              aria-label={averageLabel.replace("{value}", average)}
             >
               {[0, 1, 2, 3, 4].map((index) => (
                 <span
@@ -206,7 +243,10 @@ export function Testimonials005({
                   <span
                     data-part="stars"
                     role="img"
-                    aria-label={`Оценка ${item.rating} из 5`}
+                    aria-label={ratingLabel.replace(
+                      "{value}",
+                      String(item.rating),
+                    )}
                   >
                     {[0, 1, 2, 3, 4].map((index) => (
                       <span

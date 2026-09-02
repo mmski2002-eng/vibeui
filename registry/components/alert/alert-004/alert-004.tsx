@@ -13,21 +13,26 @@ export type Alert004Props = Omit<
   onConfirm?: () => void
   onCancel?: () => void
   accent?: string
+  /** Пусто — подложки нет, алерт лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: алерт, который требует решения прямо здесь. Кнопки стоят
 // под текстом, а не в строке заголовка: решение принимают после того, как
 // дочитали. В опасном режиме подтверждение краснеет, но остаётся вторым по
 // весу — уводить палец на «Удалить» по умолчанию нельзя.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-004"]){
---vibeui-alert-004-fg:oklch(0.24 0.016 265);
---vibeui-alert-004-muted:oklch(0.5 0.014 265);
---vibeui-alert-004-bg:oklch(0.985 0.002 265);
---vibeui-alert-004-border:oklch(0.9 0.006 265);
---vibeui-alert-004-accent:oklch(0.55 0.2 262);
---vibeui-alert-004-accent-fg:oklch(1 0 0);
---vibeui-alert-004-danger:oklch(0.56 0.19 25);
+--vibeui-alert-004-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-alert-004-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-004-bg:transparent;
+--vibeui-alert-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-alert-004-accent-fg:light-dark(oklch(1 0 0),oklch(0.18 0.01 265));
+--vibeui-alert-004-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25));
 --vibeui-alert-004-radius:0.75rem;
 --vibeui-alert-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -86,6 +91,28 @@ border-color:var(--vibeui-alert-004-border);
 `
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Алерт с решением: текст и две кнопки под ним.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -98,12 +125,19 @@ export function Alert004({
   onConfirm,
   onCancel,
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Alert004Props) {
   const palette = {
     ...(accent ? { "--vibeui-alert-004-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-alert-004-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

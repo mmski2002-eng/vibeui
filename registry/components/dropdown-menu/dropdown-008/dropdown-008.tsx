@@ -15,7 +15,17 @@ export type Dropdown008Props = Omit<
   email?: string
   plan?: string
   workspaces?: string[]
+  /** Имя слоя для скринридера; {name} подставляется. */
+  menuLabel?: string
+  /** Заголовок радиогруппы пространств. */
+  spacesLabel?: string
+  /** Пункты между разделителями. */
+  items?: string[]
+  /** Подпись последнего, необратимого действия. */
+  exitLabel?: string
   accent?: string
+  /** Подложка панели и меню. Пусто — собственный фон по теме окружения. */
+  background?: string
 }
 
 // Идея компонента: меню профиля, у которого шапка отвечает на вопрос «под кем
@@ -23,15 +33,18 @@ export type Dropdown008Props = Omit<
 // нажатия «выйти», а в узкой кнопке шапки для них нет места. Пространства —
 // радиогруппа с отметкой: их выбирают, а не выполняют. Выход отделён чертой и
 // стоит последним: это единственное необратимое действие списка.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте панель светлее фона страницы, а её граница светлее панели.
 const STYLES = `
 :where([data-vibeui-block="dropdown-008"]){
---vibeui-dropdown-008-bg:oklch(1 0 0);
---vibeui-dropdown-008-fg:oklch(0.24 0.014 265);
---vibeui-dropdown-008-muted:oklch(0.56 0.014 265);
---vibeui-dropdown-008-border:oklch(0.9 0.006 265);
---vibeui-dropdown-008-hover:oklch(0.96 0.004 265);
---vibeui-dropdown-008-accent:oklch(0.55 0.18 258);
---vibeui-dropdown-008-danger:oklch(0.56 0.19 25);
+--vibeui-dropdown-008-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
+--vibeui-dropdown-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-dropdown-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dropdown-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-dropdown-008-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
+--vibeui-dropdown-008-accent:light-dark(oklch(0.55 0.18 258),oklch(0.72 0.15 258));
+--vibeui-dropdown-008-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25));
 --vibeui-dropdown-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="dropdown-008"]{
@@ -54,7 +67,7 @@ transition:background-color .16s ease;
 [data-vibeui-block="dropdown-008"] [data-part="face"]{
 display:flex;align-items:center;justify-content:center;flex:none;
 width:1.75rem;height:1.75rem;border-radius:9999px;
-background:color-mix(in oklab,var(--vibeui-dropdown-008-accent) 18%,oklch(1 0 0));
+background:color-mix(in oklab,var(--vibeui-dropdown-008-accent) 18%,var(--vibeui-dropdown-008-bg));
 color:var(--vibeui-dropdown-008-accent);
 font-size:0.6875rem;font-weight:700;letter-spacing:0.02em;
 }
@@ -129,6 +142,29 @@ height:1px;margin:0.3125rem 0.25rem;background:var(--vibeui-dropdown-008-border)
 `
 
 const DEFAULT_WORKSPACES = ["Личное", "Студия «Полдень»", "Клиент: Аврора"]
+const DEFAULT_ITEMS = ["Настройки аккаунта", "Счета и оплата"]
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 function initials(name: string) {
   return name
@@ -165,7 +201,12 @@ export function Dropdown008({
   email = "vera@poldenstudio.ru",
   plan = "Pro",
   workspaces = DEFAULT_WORKSPACES,
+  menuLabel = "Профиль: {name}",
+  spacesLabel = "Пространства",
+  items = DEFAULT_ITEMS,
+  exitLabel = "Выйти",
   accent,
+  background = "",
   className,
   style,
   ...props
@@ -176,6 +217,12 @@ export function Dropdown008({
 
   const palette = {
     ...(accent ? { "--vibeui-dropdown-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-dropdown-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -224,7 +271,7 @@ export function Dropdown008({
           ref={menu}
           popover="auto"
           role="menu"
-          aria-label={`Профиль: ${name}`}
+          aria-label={menuLabel.replace("{name}", name)}
           data-part="menu"
           onKeyDown={(event: KeyboardEvent<HTMLDivElement>) => {
             if (event.key === "ArrowDown") {
@@ -247,7 +294,7 @@ export function Dropdown008({
             <span data-part="plan">{plan}</span>
           </div>
           <div data-part="title" id={`${id}-spaces`}>
-            Пространства
+            {spacesLabel}
           </div>
           <div role="group" aria-labelledby={`${id}-spaces`}>
             {workspaces.map((workspace) => (
@@ -284,22 +331,17 @@ export function Dropdown008({
             ))}
           </div>
           <div data-part="rule" role="separator" />
-          <button
-            type="button"
-            role="menuitem"
-            data-part="item"
-            onClick={() => menu.current?.hidePopover()}
-          >
-            Настройки аккаунта
-          </button>
-          <button
-            type="button"
-            role="menuitem"
-            data-part="item"
-            onClick={() => menu.current?.hidePopover()}
-          >
-            Счета и оплата
-          </button>
+          {items.map((item) => (
+            <button
+              key={item}
+              type="button"
+              role="menuitem"
+              data-part="item"
+              onClick={() => menu.current?.hidePopover()}
+            >
+              {item}
+            </button>
+          ))}
           <div data-part="rule" role="separator" />
           <button
             type="button"
@@ -308,7 +350,7 @@ export function Dropdown008({
             data-danger="true"
             onClick={() => menu.current?.hidePopover()}
           >
-            Выйти
+            {exitLabel}
           </button>
         </div>
       </div>

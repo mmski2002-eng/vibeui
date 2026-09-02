@@ -15,19 +15,25 @@ export type Alert012Props = Omit<
   onUpdate?: () => void
   onLater?: () => void
   accent?: string
+  /** Пусто — подложки нет, алерт лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: сообщение о доступном обновлении. Номер версии — моно и
 // в плашке: его сверяют, а не читают. Две-три строки изменений прямо в
 // алерте отвечают на вопрос «зачем обновляться», иначе кнопку жмут вслепую
 // или не жмут вовсе; полный список уходит по ссылке.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-012"]){
---vibeui-alert-012-fg:oklch(0.22 0.014 265);
---vibeui-alert-012-muted:oklch(0.5 0.014 265);
---vibeui-alert-012-bg:oklch(1 0 0);
---vibeui-alert-012-border:oklch(0.9 0.006 265);
---vibeui-alert-012-accent:oklch(0.55 0.2 262);
+--vibeui-alert-012-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.006 265));
+--vibeui-alert-012-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-012-bg:transparent;
+--vibeui-alert-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-012-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-alert-012-accent-fg:light-dark(oklch(1 0 0),oklch(0.18 0.01 265));
 --vibeui-alert-012-radius:0.875rem;
 --vibeui-alert-012-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-alert-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -68,7 +74,7 @@ background:color-mix(in oklab,var(--vibeui-alert-012-accent) 60%,transparent);
 appearance:none;cursor:pointer;border:0;font:inherit;
 display:inline-flex;align-items:center;height:2rem;padding:0 0.9375rem;
 border-radius:0.5rem;
-background:var(--vibeui-alert-012-accent);color:oklch(1 0 0);
+background:var(--vibeui-alert-012-accent);color:var(--vibeui-alert-012-accent-fg);
 font-size:0.8125rem;font-weight:600;
 transition:filter .16s ease;
 }
@@ -98,6 +104,28 @@ const DEFAULT_CHANGES = [
 ]
 
 /**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Алерт доступного обновления: версия, три строки изменений, действие.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -112,12 +140,19 @@ export function Alert012({
   onUpdate,
   onLater,
   accent,
+  background = "",
   className,
   style,
   ...props
 }: Alert012Props) {
   const palette = {
     ...(accent ? { "--vibeui-alert-012-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-alert-012-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 

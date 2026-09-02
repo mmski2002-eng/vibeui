@@ -13,6 +13,10 @@ export type Features008Props = {
   eyebrow?: string
   title?: string
   tabs?: Features008Tab[]
+  /** Название группы вкладок для скринридера: компонент несёт русское. */
+  tablistLabel?: string
+  /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
   className?: string
   style?: CSSProperties
@@ -24,15 +28,20 @@ export type Features008Props = {
 // от них достаются стрелки клавиатуры, фокус и роль radiogroup, которые в
 // самодельных вкладках на div'ах обычно теряются. Сами инпуты уводятся с
 // экрана, но остаются в потоке фокуса, а кольцо рисуется на подписи.
+//
+// Тема берётся из color-scheme окружения через light-dark(): секция темнеет
+// вместе с контекстом и не выкладывает под себя плашку. Тёмная ветка — не
+// инверсия светлой: панель и полоса вкладок там светлее фона, рамки светлее
+// панели, а подпись активной вкладки на светлом акценте становится тёмной.
 const STYLES = `
 :where([data-vibeui-block="features-008"]){
---vibeui-features-008-bg:oklch(0.985 0.004 240);
---vibeui-features-008-fg:oklch(0.2 0.014 240);
---vibeui-features-008-muted:oklch(0.51 0.014 240);
---vibeui-features-008-card:oklch(1 0 0);
---vibeui-features-008-line:oklch(0.89 0.008 240);
---vibeui-features-008-accent:oklch(0.5 0.16 235);
---vibeui-features-008-accent-fg:oklch(0.99 0 0);
+--vibeui-features-008-bg:transparent;
+--vibeui-features-008-fg:light-dark(oklch(0.2 0.014 240),oklch(0.95 0.005 240));
+--vibeui-features-008-muted:light-dark(oklch(0.51 0.014 240),oklch(0.72 0.014 240));
+--vibeui-features-008-card:light-dark(oklch(1 0 0),oklch(0.24 0.012 240));
+--vibeui-features-008-line:light-dark(oklch(0.89 0.008 240),oklch(0.35 0.012 240));
+--vibeui-features-008-accent:light-dark(oklch(0.5 0.16 235),oklch(0.74 0.14 235));
+--vibeui-features-008-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.03 240));
 --vibeui-features-008-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -152,17 +161,47 @@ const DEFAULT_TABS: Features008Tab[] = [
   },
 ]
 
+/**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
 /** Вкладки по возможностям без JavaScript: переключение на радиокнопках и :checked. */
 export function Features008({
   eyebrow = "Возможности",
   title = "Три стороны продукта, между которыми можно переключаться",
   tabs = DEFAULT_TABS,
+  tablistLabel = "Возможности",
+  background = "",
   accent,
   className,
   style,
 }: Features008Props) {
   const palette = {
     ...(accent ? { "--vibeui-features-008-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-features-008-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -193,7 +232,7 @@ export function Features008({
             />
           ))}
 
-          <div data-part="tablist" role="group" aria-label="Возможности">
+          <div data-part="tablist" role="group" aria-label={tablistLabel}>
             {visible.map((tab) => (
               <label
                 key={tab.id}

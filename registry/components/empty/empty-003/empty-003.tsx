@@ -6,9 +6,15 @@ export type Empty003Props = Omit<
 > & {
   query?: string
   keep?: number
+  /** Надпись над разбором запроса. */
+  label?: string
   title?: string
   text?: string
+  /** Подпись кнопки. `{query}` — место укороченного запроса. */
+  actionTemplate?: string
   onAction?: () => void
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -16,13 +22,18 @@ export type Empty003Props = Omit<
 // «попробуйте иначе» слова запроса показаны чипами, а лишние — зачёркнуты:
 // видно, что именно сузило выдачу до нуля. Главное действие ровно одно —
 // повторить поиск по укороченному запросу.
+//
+// Тема берётся из color-scheme окружения через light-dark(): компонент
+// темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="empty-003"]){
---vibeui-empty-003-bg:oklch(1 0 0);
---vibeui-empty-003-fg:oklch(0.21 0.014 265);
---vibeui-empty-003-muted:oklch(0.55 0.014 265);
---vibeui-empty-003-border:oklch(0.91 0.006 265);
---vibeui-empty-003-accent:oklch(0.55 0.17 265);
+--vibeui-empty-003-bg:transparent;
+--vibeui-empty-003-fg:light-dark(oklch(0.21 0.014 265),oklch(0.95 0.005 265));
+--vibeui-empty-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-empty-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-empty-003-strike:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.011 265));
+--vibeui-empty-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-empty-003-accent-fg:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.03 265));
 --vibeui-empty-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="empty-003"]{
@@ -48,7 +59,7 @@ font-size:0.8125rem;font-weight:600;
 }
 [data-vibeui-block="empty-003"] [data-part="word"][data-extra="true"]{
 color:var(--vibeui-empty-003-muted);text-decoration:line-through;
-background:oklch(0.97 0.003 265);
+background:var(--vibeui-empty-003-strike);
 }
 [data-vibeui-block="empty-003"] [data-part="title"]{margin:0;font-size:1rem;font-weight:680;line-height:1.3}
 [data-vibeui-block="empty-003"] [data-part="text"]{
@@ -57,12 +68,34 @@ margin:0;max-width:34ch;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-e
 [data-vibeui-block="empty-003"] [data-part="action"]{
 appearance:none;border:0;cursor:pointer;margin-top:0.5rem;
 height:2.375rem;padding:0 1rem;border-radius:0.75rem;
-background:var(--vibeui-empty-003-accent);color:oklch(0.99 0.01 265);
+background:var(--vibeui-empty-003-accent);color:var(--vibeui-empty-003-accent-fg);
 font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="empty-003"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-empty-003-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="empty-003"] *{animation:none!important;transition:none!important}}
 `
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
 
 /**
  * Пустой поиск с разбором запроса: лишние слова видно, действие одно.
@@ -71,9 +104,12 @@ font:inherit;font-size:0.875rem;font-weight:650;
 export function Empty003({
   query = "карточка товара с ценой и рейтингом",
   keep = 2,
+  label = "Ничего не нашлось по запросу",
   title = "Слишком точный запрос",
   text = "Чем короче запрос, тем больше он находит. Уточнения лучше добавлять фильтрами, а не словами.",
+  actionTemplate = "Искать «{query}»",
   onAction,
+  background = "",
   accent,
   className,
   style,
@@ -81,6 +117,12 @@ export function Empty003({
 }: Empty003Props) {
   const palette = {
     ...(accent ? { "--vibeui-empty-003-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-empty-003-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -99,7 +141,7 @@ export function Empty003({
         className={className}
         style={palette}
       >
-        <p data-part="label">Ничего не нашлось по запросу</p>
+        <p data-part="label">{label}</p>
         <p data-part="words">
           {words.map((word, index) => (
             <span
@@ -114,7 +156,7 @@ export function Empty003({
         <h3 data-part="title">{title}</h3>
         <p data-part="text">{text}</p>
         <button type="button" data-part="action" onClick={onAction}>
-          Искать «{short}»
+          {actionTemplate.replace("{query}", short)}
         </button>
       </div>
     </>

@@ -4,18 +4,23 @@ export type Card010Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
   label?: string
   lines?: number
   media?: boolean
+  /** Пусто — подложки нет, заглушка лежит прямо на фоне страницы. */
+  background?: string
 }
 
 // Идея компонента: заглушка карточки под настоящую. Пропорции повторяют
 // card-004: обложка квадратом, две строки заголовка, короткая строка цены.
 // Совпадение метрик и есть смысл заглушки — иначе при загрузке содержимое
 // прыгает, и это раздражает сильнее, чем пустое место.
+//
+// Тема берётся из color-scheme окружения через light-dark(): в тёмном
+// контексте рамка и плашки светлее фона, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="card-010"]){
---vibeui-card-010-bg:oklch(1 0 0);
---vibeui-card-010-border:oklch(0.91 0.006 265);
---vibeui-card-010-base:oklch(0.93 0.005 265);
---vibeui-card-010-shine:oklch(0.97 0.003 265);
+--vibeui-card-010-bg:transparent;
+--vibeui-card-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-card-010-base:light-dark(oklch(0.93 0.005 265),oklch(0.33 0.01 265));
+--vibeui-card-010-shine:light-dark(oklch(0.97 0.003 265),oklch(0.41 0.012 265));
 }
 [data-vibeui-block="card-010"]{
 display:flex;flex-direction:column;gap:0.5rem;
@@ -50,6 +55,29 @@ animation:vibeui-card-010-sweep 1.4s ease-in-out infinite;
 `
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * плашкам тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Заглушка карточки: обложка и строки повторяют метрики настоящей.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -57,10 +85,21 @@ export function Card010({
   label = "Загружается карточка товара",
   lines = 3,
   media = true,
+  background = "",
   className,
   style,
   ...props
 }: Card010Props) {
+  const palette = {
+    ...(background
+      ? {
+          "--vibeui-card-010-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
+    ...style,
+  } as CSSProperties
+
   return (
     <>
       <style href="vibeui-card-010" precedence="medium">
@@ -70,7 +109,7 @@ export function Card010({
         {...props}
         data-vibeui-block="card-010"
         className={className}
-        style={style as CSSProperties}
+        style={palette}
         role="status"
         aria-busy="true"
         aria-label={label}

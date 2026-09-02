@@ -16,6 +16,12 @@ export type Phoneinput002Props = Omit<
 > & {
   label?: string
   countries?: Phoneinput002Country[]
+  /** Подпись списка кодов для озвучки: компонент несёт русскую. */
+  codeLabel?: string
+  /** Шаблон строки под полем: {country}, {digits} и {code}. */
+  hint?: string
+  /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
+  background?: string
   accent?: string
 }
 
@@ -25,14 +31,17 @@ export type Phoneinput002Props = Omit<
 // поэтому вставленный из буфера «+7 (999) 123-45-67» превращается в тот
 // же номер, что и набранный вручную. Лишние цифры не отбрасываются —
 // они просто не попадают в шаблон.
+//
+// Тема берётся из color-scheme окружения через light-dark(): подложки у
+// компонента по умолчанию нет, он темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="phoneinput-002"]){
---vibeui-phoneinput-002-surface:oklch(1 0 0);
---vibeui-phoneinput-002-surface-border:oklch(0.91 0.006 265);
---vibeui-phoneinput-002-fg:oklch(0.24 0.016 265);
---vibeui-phoneinput-002-muted:oklch(0.54 0.014 265);
---vibeui-phoneinput-002-field-border:oklch(0.85 0.01 265);
---vibeui-phoneinput-002-accent:oklch(0.5 0.16 165);
+--vibeui-phoneinput-002-surface:transparent;
+--vibeui-phoneinput-002-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
+--vibeui-phoneinput-002-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-phoneinput-002-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-phoneinput-002-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-phoneinput-002-accent:light-dark(oklch(0.5 0.16 165),oklch(0.74 0.14 165));
 --vibeui-phoneinput-002-radius:0.625rem;
 --vibeui-phoneinput-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -119,12 +128,38 @@ function applyMask(digits: string, mask: string) {
 }
 
 /**
+ * Ветка темы для заданной подложки. Без неё светлая плашка досталась бы
+ * тексту тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет
+ * фона. Считается один раз при рендере, клиентского кода не добавляет.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+/**
  * Телефон с маской, которая меняется вместе со страной: ввод и вставка
  * из буфера приводятся к одному виду. Один файл, ноль зависимостей.
  */
 export function Phoneinput002({
   label = "Телефон",
   countries = DEFAULT_COUNTRIES,
+  codeLabel = "Код страны",
+  hint = "{country}: {digits} цифр после {code}.",
+  background = "",
   accent,
   className,
   style,
@@ -139,8 +174,18 @@ export function Phoneinput002({
   const limit = (country?.mask.match(/#/g) ?? []).length
   const palette = {
     ...(accent ? { "--vibeui-phoneinput-002-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-phoneinput-002-surface": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
+  const hintText = hint
+    .replace("{country}", country?.name ?? "")
+    .replace("{digits}", String(limit))
+    .replace("{code}", country?.code ?? "")
 
   return (
     <>
@@ -158,7 +203,7 @@ export function Phoneinput002({
           <span data-part="code">
             <select
               name="country"
-              aria-label="Код страны"
+              aria-label={codeLabel}
               value={countryName}
               onChange={(event) => {
                 setCountryName(event.target.value)
@@ -190,7 +235,7 @@ export function Phoneinput002({
           />
         </div>
         <p data-part="hint" id={hintId}>
-          {country?.name}: {limit} цифр после {country?.code}.
+          {hintText}
         </p>
       </div>
     </>

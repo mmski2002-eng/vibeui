@@ -19,7 +19,15 @@ export type Solutions007Props = {
   currency?: string
   stages?: Solutions007Stage[]
   forecastLabel?: string
+  /** Счётчик в шапке, {count} и {sum} — число сделок и их сумма. */
+  countText?: string
+  /** Подпись полосы вероятности, {company} — название компании. */
+  probabilityLabelText?: string
+  /** Локаль форматирования сумм. */
+  numberLocale?: string
   accent?: string
+  /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
+  background?: string
   className?: string
   style?: CSSProperties
 }
@@ -34,14 +42,14 @@ export type Solutions007Props = {
 // перестаёт читаться раньше, чем заканчивается место.
 const STYLES = `
 :where([data-vibeui-block="solutions-007"]){
---vibeui-solutions-007-bg:oklch(1 0 0);
---vibeui-solutions-007-panel:oklch(0.975 0.004 255);
---vibeui-solutions-007-card:oklch(1 0 0);
---vibeui-solutions-007-fg:oklch(0.22 0.014 265);
---vibeui-solutions-007-muted:oklch(0.55 0.014 265);
---vibeui-solutions-007-border:oklch(0.9 0.006 265);
---vibeui-solutions-007-accent:oklch(0.52 0.19 275);
---vibeui-solutions-007-warm:oklch(0.7 0.15 62);
+--vibeui-solutions-007-bg:transparent;
+--vibeui-solutions-007-panel:light-dark(oklch(0.975 0.004 255),oklch(0.25 0.011 260));
+--vibeui-solutions-007-card:light-dark(oklch(1 0 0),oklch(0.3 0.012 260));
+--vibeui-solutions-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-solutions-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-solutions-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-007-accent:light-dark(oklch(0.52 0.19 275),oklch(0.72 0.16 275));
+--vibeui-solutions-007-warm:light-dark(oklch(0.7 0.15 62),oklch(0.79 0.13 64));
 --vibeui-solutions-007-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -114,7 +122,7 @@ display:block;margin-top:0.375rem;font-size:0.6875rem;color:var(--vibeui-solutio
 [data-vibeui-block="solutions-007"] [data-part="forecast"]{
 display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:0.375rem;
 margin:0 1rem 1rem;padding:0.75rem 0.875rem;border-radius:0.875rem;
-background:color-mix(in oklab,var(--vibeui-solutions-007-warm) 12%,var(--vibeui-solutions-007-bg));
+background:color-mix(in oklab,var(--vibeui-solutions-007-warm) 12%,var(--vibeui-solutions-007-card));
 border:1px solid color-mix(in oklab,var(--vibeui-solutions-007-warm) 40%,transparent);
 }
 [data-vibeui-block="solutions-007"] [data-part="forecast"] strong{font-size:1.125rem;font-variant-numeric:tabular-nums}
@@ -185,8 +193,30 @@ const DEFAULT_STAGES: Solutions007Stage[] = [
   },
 ]
 
-function money(value: number, currency: string) {
-  return `${value.toLocaleString("ru-RU")} ${currency}`
+function money(value: number, currency: string, locale: string) {
+  return `${value.toLocaleString(locale)} ${currency}`
+}
+
+/**
+ * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
+ * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
+ */
+function schemeForBackground(background: string): "light" | "dark" | undefined {
+  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
+
+  if (!match) {
+    return undefined
+  }
+
+  const hex =
+    match[1].length === 3
+      ? match[1].replace(/./g, (character) => character + character)
+      : match[1]
+  const [red, green, blue] = [0, 2, 4].map(
+    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
+  )
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
 /**
@@ -199,7 +229,11 @@ export function Solutions007({
   currency = "₽",
   stages = DEFAULT_STAGES,
   forecastLabel = "Взвешенный прогноз квартала",
+  countText = "{count} сделок на {sum}",
+  probabilityLabelText = "Вероятность сделки {company}",
+  numberLocale = "ru-RU",
   accent,
+  background = "",
   className,
   style,
 }: Solutions007Props) {
@@ -212,6 +246,12 @@ export function Solutions007({
 
   const palette = {
     ...(accent ? { "--vibeui-solutions-007-accent": accent } : null),
+    ...(background
+      ? {
+          "--vibeui-solutions-007-bg": background,
+          colorScheme: schemeForBackground(background),
+        }
+      : null),
     ...style,
   } as CSSProperties
 
@@ -232,7 +272,9 @@ export function Solutions007({
             <p data-part="hint">{hint}</p>
           </div>
           <p data-part="hint">
-            {all.length} сделок на {money(total, currency)}
+            {countText
+              .replace("{count}", String(all.length))
+              .replace("{sum}", money(total, currency, numberLocale))}
           </p>
         </header>
 
@@ -246,7 +288,9 @@ export function Solutions007({
                   <h3>
                     {stage.name} · {stage.deals.length}
                   </h3>
-                  <span data-part="column-sum">{money(sum, currency)}</span>
+                  <span data-part="column-sum">
+                    {money(sum, currency, numberLocale)}
+                  </span>
                 </header>
 
                 <ul>
@@ -258,7 +302,7 @@ export function Solutions007({
                       ) : null}
                       <p data-part="money">
                         <span data-part="amount">
-                          {money(deal.amount, currency)}
+                          {money(deal.amount, currency, numberLocale)}
                         </span>
                         <span data-part="probability">{deal.probability}%</span>
                       </p>
@@ -268,7 +312,10 @@ export function Solutions007({
                         aria-valuenow={deal.probability}
                         aria-valuemin={0}
                         aria-valuemax={100}
-                        aria-label={`Вероятность сделки ${deal.company}`}
+                        aria-label={probabilityLabelText.replace(
+                          "{company}",
+                          deal.company,
+                        )}
                       >
                         <span
                           data-part="fill"
@@ -285,7 +332,7 @@ export function Solutions007({
         </div>
 
         <p data-part="forecast">
-          <strong>{money(forecast, currency)}</strong>
+          <strong>{money(forecast, currency, numberLocale)}</strong>
           <span>{forecastLabel}</span>
         </p>
       </section>
